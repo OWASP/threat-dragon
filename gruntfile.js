@@ -6,12 +6,25 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-installer');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-karma');
+	
+	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
+	grunt.registerTask('test', ['karma']);
     
     grunt.initConfig({
+		
+		pkg: grunt.file.readJSON('package.json'),
+		
+        karma: {
+            unit: {
+                configFile: 'td.tests/karma.conf.js'
+            }
+        },		
+		
         bower: {
             install: {
                 options: {
-                    targetDir: './public/libs',
+                    targetDir: 'td/public/libs',
                     layout: 'byComponent',
                     install: true,
                     verbose: false,
@@ -26,9 +39,9 @@ module.exports = function (grunt) {
             minifyjs: {
                 files: [{
                         expand: true,
-                        cwd: 'public/libs',
+                        cwd: 'td/public/libs',
                         src: '**/*.js',
-                        dest: 'public/libs',
+                        dest: 'td/public/libs',
                         ext: '.min.js',
                         extDot: 'first'
                     }]
@@ -45,9 +58,9 @@ module.exports = function (grunt) {
             minifycss: {
                 files: [{
                         expand: true,
-                        cwd: 'public/libs',
+                        cwd: 'td/public/libs',
                         src: '**/*.css',
-                        dest: 'public/libs',
+                        dest: 'td/public/libs',
                         ext: '.min.css',
                         extDot: 'first'
                     }]
@@ -55,14 +68,14 @@ module.exports = function (grunt) {
         },
         wiredep: {
             task: {
-                src: ['public/index.html'],
+                src: ['td/public/index.html'],
                 options: {
                     devDependencies: false,
                     fileTypes: {
                         html: {
                             replace: {
                                 js: function (filePath) {
-                                    var prefixLength = '../bower-packages'.length;
+                                    var prefixLength = '../../bower-packages'.length;
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
@@ -72,7 +85,7 @@ module.exports = function (grunt) {
                                 },
                                 
                                 css: function (filePath) {
-                                    var prefixLength = '../bower-packages'.length;
+                                    var prefixLength = '../../bower-packages'.length;
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
@@ -87,6 +100,4 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
 };
