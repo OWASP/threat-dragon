@@ -9,6 +9,7 @@ describe('diagram controller', function () {
     var mockDatacontext;
     var mockRouteParams;
     var mockDiagramming;
+    var mockThreatEngine;
     
     var mockNewGraph = 'mock new graph';
     var mockThreatModelIdParam = 0;
@@ -19,6 +20,7 @@ describe('diagram controller', function () {
         mockDatacontext = {};
         mockRouteParams = {};
         mockDiagramming = {};
+        mockThreatEngine = {};
         
         angular.mock.module('app')
         
@@ -26,6 +28,7 @@ describe('diagram controller', function () {
             $provide.value('datacontext', mockDatacontext);
             $provide.value('$routeParams', mockRouteParams);
             $provide.value('diagramming', mockDiagramming);
+            $provide.value('threatengine', mockThreatEngine);
         });
         
         angular.mock.inject(function ($rootScope, _$controller_, _$q_, _$httpBackend_) {
@@ -50,6 +53,10 @@ describe('diagram controller', function () {
         
         $controller('diagram as vm', { $scope: $scope });
         $scope.$apply();
+
+        //threatengine mock
+
+
     });
     
     describe('initialisation tests', function () {

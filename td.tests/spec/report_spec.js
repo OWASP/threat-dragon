@@ -51,6 +51,8 @@ describe('report controller', function () {
         spyOn(mockDiagramming, 'newGraph').and.callThrough();
         mockDiagramming.initialise = function () { };
         spyOn(mockDiagramming, 'initialise').and.callThrough();
+        mockDiagramming.scaleContent = function () { };
+        spyOn(mockDiagramming, 'scaleContent').and.callThrough();
         
         
         //$window mock
@@ -119,6 +121,12 @@ describe('report controller', function () {
         it('should initialise the graph', function () {
 
             expect(mockDiagramming.initialise.calls.argsFor(0)[1]).toEqual('diagram JSON');
+
+        });
+
+        it('should scale the diagram content', function () {
+
+            expect(mockDiagramming.scaleContent).toHaveBeenCalled();
 
         });
 

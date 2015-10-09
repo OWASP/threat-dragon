@@ -17,6 +17,7 @@ module.exports = function(config) {
     files: [
         '../td/public/libs/angular/angular.js',
         '../td/public/libs/angular-route/angular-route.js',
+        '../td/public/libs/nools/nools.js',
         '../td/public/libs/jquery/jquery.js',
         '../td/public/libs/bootstrap/bootstrap.js',
         '../td/public/libs/toastr/toastr.js',
