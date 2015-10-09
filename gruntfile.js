@@ -13,7 +13,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
 	grunt.registerTask('release', ['bower', 'uglify', 'cssmin', 'wiredep']);
 	grunt.registerTask('debug', ['bower', 'wiredepdebug']);
-	grunt.registerTask('test', ['karma']);
+	grunt.registerTask('justtest', ['karma']);
+	grunt.registerTask('test', ['bower', 'uglify', 'cssmin', 'wiredep', 'karma']);
     
     grunt.initConfig({
 		
