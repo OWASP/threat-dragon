@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./td/bin/www"
+	"start": "node ./td/bin/www",
+	"test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
@@ -29,7 +30,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-filerev": "^2.3.1",
     "grunt-wiredep": "^2.0.0",
-     "grunt-karma": "^0.12.1",
+    "grunt-karma": "^0.12.1",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.10",

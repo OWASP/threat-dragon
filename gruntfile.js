@@ -2,6 +2,8 @@
 module.exports = function (grunt) {
     
     grunt.loadNpmTasks('grunt-wiredep');
+	grunt.renameTask('wiredep', 'wiredepdebug');
+	grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-installer');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -9,6 +11,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-karma');
 	
 	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
+	grunt.registerTask('release', ['bower', 'uglify', 'cssmin', 'wiredep']);
+	grunt.registerTask('debug', ['bower', 'wiredepdebug']);
 	grunt.registerTask('test', ['karma']);
     
     grunt.initConfig({
@@ -35,6 +39,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+		
         uglify: {
             minifyjs: {
                 files: [{
@@ -50,6 +55,7 @@ module.exports = function (grunt) {
                 sourceMap: true
             }
         },
+		
         cssmin: {
             options: {
                 shorthandCompacting: false,
@@ -66,7 +72,8 @@ module.exports = function (grunt) {
                     }]
             }
         },
-        wiredep: {
+		
+        wiredepdebug: {
             task: {
                 src: ['td/public/index.html'],
                 options: {
@@ -79,7 +86,39 @@ module.exports = function (grunt) {
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
-                                    var minFileName = fileName.split('.')[0] + '.min.js';
+                                    
+                                    return '<script src="libs/' + packageName + fileName + '"></script>';
+                                },
+                                
+                                css: function (filePath) {
+                                    var prefixLength = '../../bower-packages'.length;
+                                    var trimmedPath = filePath.slice(prefixLength);
+                                    var packageName = trimmedPath.slice(1).split('/')[0];
+                                    var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
+                                    
+                                    return '<link href="libs/' + packageName + fileName + '" rel="stylesheet" />';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+		
+		wiredep: {
+            task: {
+                src: ['td/public/index.html'],
+                options: {
+                    devDependencies: false,
+                    fileTypes: {
+                        html: {
+                            replace: {
+                                js: function (filePath) {
+                                    var prefixLength = '../../bower-packages'.length;
+                                    var trimmedPath = filePath.slice(prefixLength);
+                                    var packageName = trimmedPath.slice(1).split('/')[0];
+                                    var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
+									var minFileName = fileName.split('.')[0] + '.min.js';
                                     
                                     return '<script src="libs/' + packageName + minFileName + '"></script>';
                                 },
@@ -89,7 +128,7 @@ module.exports = function (grunt) {
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
-                                    var minFileName = fileName.split('.')[0] + '.min.css';
+									var minFileName = fileName.split('.')[0] + '.min.css';
                                     
                                     return '<link href="libs/' + packageName + minFileName + '" rel="stylesheet" />';
                                 }
@@ -99,5 +138,6 @@ module.exports = function (grunt) {
                 }
             }
         }
+
     });
 };
