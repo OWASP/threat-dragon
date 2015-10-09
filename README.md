@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon)
+
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
 An online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. 
