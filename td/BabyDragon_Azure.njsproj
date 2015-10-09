@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>BabyDragon_Azure</Name>
+    <RootNamespace>BabyDragon_Azure</RootNamespace>
+    <NameOfLastUsedPublishProfile>babydragon</NameOfLastUsedPublishProfile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>926f91e5-0963-44e4-a785-03c101b080ad</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>bin\www</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="gruntfile.js" />
+    <Compile Include="public\app\app.js" />
+    <Compile Include="public\app\common\common.js" />
+    <Compile Include="public\app\common\logger.js" />
+    <Compile Include="public\app\config.exceptionHandler.js" />
+    <Compile Include="public\app\config.js" />
+    <Compile Include="public\app\config.route.js" />
+    <Compile Include="public\app\diagrams\diagram.js" />
+    <Compile Include="public\app\diagrams\diagramdirectives.js" />
+    <Compile Include="public\app\diagrams\elementPropertyDirectives.js" />
+    <Compile Include="public\app\diagrams\joint.shapes.tm.js" />
+    <Compile Include="public\app\directives.js" />
+    <Compile Include="public\app\layout\shell.js" />
+    <Compile Include="public\app\report\report.js" />
+    <Compile Include="public\app\report\reportdirectives.js" />
+    <Compile Include="public\app\services\datacontext.js" />
+    <Compile Include="public\app\services\diagramming.js" />
+    <Compile Include="public\app\services\dialogs.js" />
+    <Compile Include="public\app\services\file.js" />
+    <Compile Include="public\app\services\routemediator.js" />
+    <Compile Include="public\app\services\threatengine.js" />
+    <Compile Include="public\app\threatmodels\threatmodel.js" />
+    <Compile Include="public\app\threatmodels\threatmodels.js" />
+    <Compile Include="public\app\welcome\welcome.js" />
+    <Compile Include="public\libs\angular-mocks\angular-mocks.js" />
+    <Compile Include="public\libs\angular-mocks\angular-mocks.min.js" />
+    <Compile Include="public\libs\angular-route\angular-route.js" />
+    <Compile Include="public\libs\angular-route\angular-route.min.js" />
+    <Compile Include="public\libs\angular-ui-bootstrap-bower\ui-bootstrap-tpls.js" />
+    <Compile Include="public\libs\angular-ui-bootstrap-bower\ui-bootstrap-tpls.min.js" />
+    <Compile Include="public\libs\angular\angular.js" />
+    <Compile Include="public\libs\angular\angular.min.js" />
+    <Compile Include="public\libs\bootstrap\bootstrap.js" />
+    <Compile Include="public\libs\bootstrap\bootstrap.min.js" />
+    <Compile Include="public\libs\joint\joint.js" />
+    <Compile Include="public\libs\joint\joint.min.js" />
+    <Compile Include="public\libs\jquery\jquery.js" />
+    <Compile Include="public\libs\jquery\jquery.min.js" />
+    <Compile Include="public\libs\nools\nools.js" />
+    <Compile Include="public\libs\nools\nools.min.js" />
+    <Compile Include="public\libs\toastr\toastr.js" />
+    <Compile Include="public\libs\toastr\toastr.min.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="bin\www" />
+    <None Include="babydragon.pubxml" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="public\" />
+    <Folder Include="public\app\" />
+    <Folder Include="public\app\common\" />
+    <Folder Include="public\app\diagrams\" />
+    <Folder Include="public\app\layout\" />
+    <Folder Include="public\app\report\" />
+    <Folder Include="public\app\services\" />
+    <Folder Include="public\app\threatmodels\" />
+    <Folder Include="public\app\welcome\" />
+    <Folder Include="public\content\" />
+    <Folder Include="public\content\images\" />
+    <Folder Include="public\content\themes\" />
+    <Folder Include="public\content\themes\sandstone\" />
+    <Folder Include="public\content\themes\superhero\" />
+    <Folder Include="public\content\themes\united\" />
+    <Folder Include="public\content\themes\yeti\" />
+    <Folder Include="public\libs\" />
+    <Folder Include="public\libs\angular-mocks\" />
+    <Folder Include="public\libs\angular-route\" />
+    <Folder Include="public\libs\angular-ui-bootstrap-bower\" />
+    <Folder Include="public\libs\angular\" />
+    <Folder Include="public\libs\bootstrap\" />
+    <Folder Include="public\libs\font-awesome\" />
+    <Folder Include="public\libs\fonts\" />
+    <Folder Include="public\libs\joint\" />
+    <Folder Include="public\libs\jquery\" />
+    <Folder Include="public\libs\nools\" />
+    <Folder Include="public\libs\toastr\" />
+    <Folder Include="routes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="public\app\diagrams\confirmReloadOnDirty.html" />
+    <Content Include="public\app\diagrams\diagrameditor.html" />
+    <Content Include="public\app\diagrams\ElementPropertiesPane.html" />
+    <Content Include="public\app\diagrams\modalAccept.html" />
+    <Content Include="public\app\diagrams\modalIgnore.html" />
+    <Content Include="public\app\diagrams\ThreatEditPane.html" />
+    <Content Include="public\app\diagrams\ThreatSummaryPane.html" />
+    <Content Include="public\app\layout\shell.html" />
+    <Content Include="public\app\layout\structuredExit.html" />
+    <Content Include="public\app\layout\topnav.html" />
+    <Content Include="public\app\report\ElementSummaryPane.html" />
+    <Content Include="public\app\report\threatmodelreport.html" />
+    <Content Include="public\app\threatmodels\confirmReloadOnDirty.html" />
+    <Content Include="public\app\threatmodels\threatmodeldetail.html" />
+    <Content Include="public\app\threatmodels\threatmodeledit.html" />
+    <Content Include="public\app\threatmodels\threatmodels.html" />
+    <Content Include="public\app\welcome\confirmClearLocalStorage.html" />
+    <Content Include="public\app\welcome\welcome.html" />
+    <Content Include="public\content\bootstrap-custom.css" />
+    <Content Include="public\content\bootstrap-theme.min.css" />
+    <Content Include="public\content\images\owasp.png" />
+    <Content Include="public\content\images\thumbnail.jpg" />
+    <Content Include="public\content\joint-custom.css" />
+    <Content Include="public\content\logo-nav.css" />
+    <Content Include="public\content\themes\sandstone\bootstrap-theme.css" />
+    <Content Include="public\content\themes\sandstone\bootstrap-theme.min.css" />
+    <Content Include="public\content\themes\superhero\bootstrap-theme.css" />
+    <Content Include="public\content\themes\superhero\bootstrap-theme.min.css" />
+    <Content Include="public\content\themes\united\bootstrap-theme.css" />
+    <Content Include="public\content\themes\united\bootstrap-theme.css.map" />
+    <Content Include="public\content\themes\united\bootstrap-theme.min.css" />
+    <Content Include="public\content\themes\yeti\bootstrap-theme.css" />
+    <Content Include="public\content\themes\yeti\bootstrap-theme.min.css" />
+    <Content Include="public\index.html" />
+    <Content Include="public\libs\angular-mocks\angular-mocks.min.js.map" />
+    <Content Include="public\libs\angular-route\angular-route.min.js.map" />
+    <Content Include="public\libs\angular-ui-bootstrap-bower\ui-bootstrap-tpls.min.js.map" />
+    <Content Include="public\libs\angular\angular.min.js.map" />
+    <Content Include="public\libs\bootstrap\bootstrap.css" />
+    <Content Include="public\libs\bootstrap\bootstrap.min.css" />
+    <Content Include="public\libs\bootstrap\bootstrap.min.js.map" />
+    <Content Include="public\libs\font-awesome\font-awesome.css" />
+    <Content Include="public\libs\font-awesome\font-awesome.min.css" />
+    <Content Include="public\libs\font-awesome\fontawesome-webfont.eot" />
+    <Content Include="public\libs\font-awesome\fontawesome-webfont.svg" />
+    <Content Include="public\libs\font-awesome\fontawesome-webfont.ttf" />
+    <Content Include="public\libs\font-awesome\fontawesome-webfont.woff" />
+    <Content Include="public\libs\font-awesome\fontawesome-webfont.woff2" />
+    <Content Include="public\libs\font-awesome\FontAwesome.otf" />
+    <Content Include="public\libs\fonts\fontawesome-webfont.eot" />
+    <Content Include="public\libs\fonts\fontawesome-webfont.svg" />
+    <Content Include="public\libs\fonts\fontawesome-webfont.ttf" />
+    <Content Include="public\libs\fonts\fontawesome-webfont.woff" />
+    <Content Include="public\libs\fonts\fontawesome-webfont.woff2" />
+    <Content Include="public\libs\fonts\FontAwesome.otf" />
+    <Content Include="public\libs\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\libs\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\libs\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\libs\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\libs\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="public\libs\joint\joint.css" />
+    <Content Include="public\libs\joint\joint.min.css" />
+    <Content Include="public\libs\joint\joint.min.js.map" />
+    <Content Include="public\libs\jquery\jquery.min.js.map" />
+    <Content Include="public\libs\nools\nools.min.js.map" />
+    <Content Include="public\libs\toastr\toastr.css" />
+    <Content Include="public\libs\toastr\toastr.min.css" />
+    <Content Include="public\libs\toastr\toastr.min.js.map" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config" />
+    <Content Include="bin\ChangeConfig.ps1" />
+    <Content Include="bin\download.ps1" />
+    <Content Include="bin\setup_web.cmd" />
+    <Content Include="bin\node.cmd" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

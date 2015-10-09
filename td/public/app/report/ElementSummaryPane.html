@@ -1,0 +1,75 @@
+﻿<div ng-if="element.properties.outOfScope">
+    <p>
+        This element is out of scope. The stated reason is: {{element.properties.reasonOutOfScope}}
+    </p>
+</div>
+<div ng-if="!element.properties.outOfScope" ng-switch="element.type">
+    <div ng-switch-when="Process">
+        <p>
+            <strong>Privilege level:</strong> {{element.properties.privilegeLevel}}
+        </p>
+    </div>
+    <div ng-switch-when="Actor">
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="element.properties.providesAuthentication" /> Provides authentication
+            </label>
+        </div>
+    </div>
+    <div ng-switch-when="Store">
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isALog" /> Is a log
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="element.properties.storesCredentials" /> Stores credentials
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isEncrypted" /> Is encrypted
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isSigned" /> Is signed
+            </label>
+        </div>
+    </div>
+    <div ng-switch-when="Flow">
+        <strong>Protocol:</strong> {{element.properties.protocol}}
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="selected.elementProperties.isEncrypted"  /> Is encrypted
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-disabled="true" type="checkbox" ng-model="selected.elementProperties.isPublicNetwork"  /> Is over a public network
+            </label>
+        </div>
+    </div>
+    <div ng-switch-default></div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-title">
+            Threats
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="threat in element.properties.threats">
+                    <p><strong>{{threat.title}}</strong> ({{threat.type}}, 
+                        <span ng-class="{Open:'severity-high', Mitigated:'severity-low'}[threat.status]">{{threat.status}}</span>,
+                        <span ng-class="{Low:'severity-low', Medium:'severity-medium', High:'severity-high'}[threat.severity]"> {{threat.severity}} severity</span>)
+                    </p>
+                    <p><strong>Description</strong></p>
+                    <p>{{threat.description}}</p>
+                    <p><strong>Mitigations</strong></p>
+                    <p>{{threat.mitigation}}</p>
+                    <p ng-if="!threat.mitigation || threat.mitigation.length == 0">None</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

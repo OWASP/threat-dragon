@@ -1,0 +1,105 @@
+﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">
+    <p>
+        <a href="/#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
+        <a href="/#/threatmodels"> Threat models</a><span class="glyphicon glyphicon-chevron-right"></span>
+        <a href="/#/threatmodel/{{vm.threatModelId}}"> Threat model detail</a><span class="glyphicon glyphicon-chevron-right"></span>
+        Edit diagram
+    </p>
+    <div ng-show="vm.loaded">
+        <div class="col-lg-2">
+            <accordion close-others="true">
+                <accordion-group is-open="vm.viewStencil">
+                    <accordion-heading>
+                        Edit diagram <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewStencil, 'glyphicon-chevron-right': !vm.viewStencil}"></i>
+                    </accordion-heading>
+                    <div ng-repeat="stencil in vm.stencils">
+                        <div height="120">
+                            <tmt-stencil class="stencil" shape="stencil.shape" padding="5" scale="0.9" action="stencil.action()" />
+                        </div>
+                    </div>
+                </accordion-group>
+                <accordion-group is-open="vm.viewThreats">
+                    <accordion-heading>
+                        Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
+                    </accordion-heading>
+                    <div ng-if="vm.selected.elementProperties">
+                        <div ng-if="!vm.selected.elementProperties.outOfScope">
+                            <tmt-element-threats threats="vm.selected.elementProperties.threats" save="vm.edit()" />
+                        </div>
+                        <div ng-if="vm.selected.elementProperties.outOfScope">
+                            <em>The selected element is out of scope</em>
+                        </div>                       
+                    </div>
+                    <div ng-if="!vm.selected.elementProperties">
+                        <em>Select an element in the diagram to see or edit its threats</em>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <!--Diagram area-->
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-title">Threat model diagram: {{vm.diagramTitle}}</div>
+                <div class="panel-body">
+                    <form name="diagramEditToolBar">
+                        <div class="col-md-12">
+                            <div class="btn-group pull-left" role="group">
+                                <a class="btn btn-default" href="#/threatmodel/{{vm.threatModelId}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">
+                                    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                                </button>
+                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == -vm.maxZoom" data-toggle="tooltip" ng-click="vm.zoomOut()" data-placement="top" title="Zoom out">
+                                    <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+                                </button>
+                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">
+                                    <span class="fa fa-undo" aria-hidden="true"></span>
+                                </button>
+                                <button class="btn btn-default" ng-disabled="vm.selected.element == null || (vm.selected.elementProperties != null && vm.selected.elementProperties.outOfScope)" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">
+                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                                </button>
+                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">
+                                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="tmt-diagram-container">
+                        <tmt-diagram graph="vm.graph" select="vm.select(element)" new-flow="vm.newFlow(source, target)" initialise-graph="vm.initialise(diagram)" height="600" width="800" grid-size="1" interactive="true"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Element properties-->
+        <div class="col-lg-2">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-title">Properties</div>
+                <div class="panel-body">
+                    <div ng-if="vm.selected.elementProperties &&  vm.selected.element.attributes.type != 'tm.Boundary' ">
+                        <tmt-element-properties edit=" vm.edit()" selected="vm.selected" element-type="{{vm.selected.element.attributes.type}}">
+                    </div>
+                    <div ng-if="!vm.selected.elementProperties || vm.selected.element.attributes.type === 'tm.Boundary'">
+                        <em>Select an element in the diagram to see or edit its properties</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="!vm.loaded">
+        <div class="jumbotron">
+            <h1>oooops!</h1>
+            <p>
+                It looks like you tried to edit a threat model diagram that doesn't exist. Maybe you typed the
+                address wrong? Or if you clicked a link to get here, the diagram might have been
+                deleted since you made the link <span class="fa fa-frown-o"></span>
+            </p>
+            <p>
+                <a href="#/threatmodels">Take me back to the list of threat models</a>
+            </p>
+        </div>
+    </div>
+</div>
