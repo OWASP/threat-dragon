@@ -48,6 +48,7 @@
       ".": "nools.js"
     },
     "font-awesome": {
+	  ".": "css/font-awesome.css",
       "../fonts": "fonts/*"
     }
   },
