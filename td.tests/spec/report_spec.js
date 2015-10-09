@@ -87,7 +87,7 @@ describe('report controller', function () {
 
     });
     
-    describe('viewmodel tests', function () {
+    xdescribe('viewmodel tests', function () {
 
         it('should call window.print', function () {
 
@@ -98,7 +98,7 @@ describe('report controller', function () {
 
     });
 
-    describe('viewmodel initialise tests', function () {
+    xdescribe('viewmodel initialise tests', function () {
         
         var mockDiagram = { model: { diagramId: 1, attributes: { cells: { models: [{ id: 0 }, { id: 1 }, { id: 2 }] } } } };
 

@@ -52,7 +52,7 @@ describe('diagram controller', function () {
         $scope.$apply();
     });
     
-    describe('initialisation tests', function () {
+    xdescribe('initialisation tests', function () {
         
         it('should be defined', function () {
             expect($scope.vm).toBeDefined();
