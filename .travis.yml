@@ -5,4 +5,5 @@ before_script:
   - npm install -g grunt-cli
 after_success:
   - npm run codecov
-
+deploy:
+  - azure_web_apps
