@@ -1,6 +1,6 @@
 ﻿#!/usr/bin/env node
 var debug = require('debug')('BabyDragon_Azure');
-var app = require('../app');
+var app = require('./td/app');
 
 app.set('port', process.env.PORT || 3000);
 

@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node ./td/bin/www",
+    "start": "node server.js",
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "codecov": "cat coverage/*/lcov.info | codecov"
   },
