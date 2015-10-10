@@ -6,4 +6,4 @@ before_script:
 after_success:
   - npm run codecov
 deploy:
-  - azure_web_apps
+  provider: azure_web_apps
