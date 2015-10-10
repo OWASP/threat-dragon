@@ -8,17 +8,24 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-installer');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 	
 	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
 	grunt.registerTask('release', ['bower', 'uglify', 'cssmin', 'wiredep']);
 	grunt.registerTask('debug', ['bower', 'wiredepdebug']);
-	grunt.registerTask('justtest', ['karma']);
-	grunt.registerTask('test', ['bower', 'uglify', 'cssmin', 'wiredep', 'karma']);
+	grunt.registerTask('justtest', ['jshint', 'karma']);
+	grunt.registerTask('test', ['bower', 'uglify', 'cssmin', 'wiredep', 'jshint', 'karma']);
     
     grunt.initConfig({
 		
-		pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),
+
+        jshint: {
+            files: {
+                src: ['td/public/app/*.js', 'td/public/app/**/*.js']
+            },
+        },
 		
         karma: {
             unit: {

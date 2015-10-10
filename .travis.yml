@@ -1,9 +1,8 @@
 language: node_js
 node_js:
   - 4.1
-before_install:
-  - pip install codecov
 before_script:
   - npm install -g grunt-cli
 after_success:
-  - codecov
+  - npm run codecov
+
