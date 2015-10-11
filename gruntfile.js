@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 		
         karma: {
             unit: {
-                configFile: 'td.tests/karma.conf.js'
+                configFile: 'karma.conf.js'
             }
         },		
 		
