@@ -34,6 +34,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+        '../td/public/app/config.exceptionHandler.js'
     ],
 
 
