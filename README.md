@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
+
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
 An online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. 
@@ -8,10 +10,6 @@ We are currently maintaining [a working protoype](http://threatdragon.azurewebsi
 An [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon).
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
-
-##Project health
-
-[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master)
 
 ##Getting started
 
