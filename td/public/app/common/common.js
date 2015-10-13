@@ -42,7 +42,7 @@
 
         function stringToFunction(str) {
             var arr = str.split(".");
-
+            /*jshint validthis: true */
             var fn = (window || this);
             for (var i = 0, len = arr.length; i < len; i++) {
                 fn = fn[arr[i]];
@@ -53,7 +53,7 @@
             }
 
             return fn;
-        };
+        }
 
 
         function activateController(promises, controllerId) {

@@ -169,7 +169,7 @@ describe('threatModel controller', function () {
         it('should call deleteThreatModel on the datacontext and navigate to the ThreatModels view', function () {
 
             $scope.vm.threatModel = 'mock threat model';
-            $scope.vm.delete();
+            $scope.vm.deleteModel();
             $scope.$apply();
             expect(mockDatacontext.deleteThreatModel).toHaveBeenCalledWith('mock threat model');
             expect(mockLocation.path).toHaveBeenCalledWith('/threatmodels');

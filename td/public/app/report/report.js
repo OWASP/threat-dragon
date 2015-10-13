@@ -12,6 +12,7 @@
 
     function report($routeParams, $window, common, datacontext, diagramming) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
+        /*jshint validthis: true */
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -34,12 +35,11 @@
             return datacontext.getThreatModelDetail($routeParams.threatModelId).then(function (data) {
                 vm.threatModel = data;
 
-                vm.threatModel.detail.diagrams.forEach(function (diagram)
-                {
+                vm.threatModel.detail.diagrams.forEach(function (diagram) {
                     var graph = diagramming.newGraph();
                     graph.diagramId = diagram.id;
                     diagram.graph = graph;
-                })
+                });
             });
         }
 
@@ -51,14 +51,14 @@
             {
                 diagramming.initialise(diagram.model, data.diagramJson);
                 diagramming.scaleContent(diagram, { maxScale: 4 });
-                diagram.model.attributes.cells.models.forEach(function (element) { getElementProperties(diagram.model.diagramId, element) });
+                diagram.model.attributes.cells.models.forEach(function (element) { getElementProperties(diagram.model.diagramId, element); });
             }
         }
 
         function getElementProperties(diagramId, element)
         {
             datacontext.getElementProperties(diagramId, element.id).then(function (data) {
-                element.properties = data
+                element.properties = data;
             });
         }
         

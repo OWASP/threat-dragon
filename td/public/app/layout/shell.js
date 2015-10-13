@@ -6,6 +6,7 @@
         ['$rootScope', '$location', 'common', 'config', shell]);
 
     function shell($rootScope, $location, common, config) {
+        /*jshint validthis: true */
         var vm = this;
         var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var events = config.events;
@@ -36,5 +37,5 @@
         $rootScope.$on(events.controllerActivateSuccess,
             function (data) { }
         );
-    };
+    }
 })();

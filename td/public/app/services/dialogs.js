@@ -64,7 +64,7 @@
                     cancel: function () { return onCancelPreClose; },
                     parameter: function () { return getParameter; }
                 }
-            }
+            };
             
             if (windowClass) {
 

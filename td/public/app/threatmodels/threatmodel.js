@@ -14,6 +14,7 @@
     function threatModel($rootScope, $scope, $location, $routeParams, dialogs, common, datacontext)
     {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
+        /*jshint validthis: true */
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -28,7 +29,8 @@
         vm.addDiagram = addDiagram;
         vm.save = save;
         vm.reload = reload,
-        vm.delete = deleteThreatModel;
+        /*jshint -W030 */
+        vm.deleteModel = deleteModel;
         vm.cancel = cancel;
         vm.newContributor = '';
         vm.addingContributor = false;
@@ -40,8 +42,8 @@
         vm.startAddingDiagram = startAddingDiagram;
 
         //structured exit
-        $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return  vm.threatModelEditForm.$dirty}}, function (dirty) {
-            if (angular.isDefined(dirty)) { vm.dirty = dirty}
+        $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return vm.threatModelEditForm.$dirty; }}, function (dirty) {
+            if (angular.isDefined(dirty)) { vm.dirty = dirty; }
         });
 
         $scope.$on('$locationChangeStart',
@@ -64,7 +66,8 @@
         {
             if ($routeParams.threatModelId === 'new')
             {
-                return vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] }};
+                vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
+                return vm.threatModel;
             }
 
             return datacontext.getThreatModelDetail($routeParams.threatModelId).then(function (data) {
@@ -77,7 +80,8 @@
                     vm.dirty = false;
                 }
 
-                return vm.threatModel = data;
+                vm.threatModel = data;
+                return vm.threatModel;
             });
         }
 
@@ -93,7 +97,7 @@
         {
             if (vm.dirty)
             {
-                dialogs.confirm('./app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null }, function () { });
+                dialogs.confirm('./app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null; }, function () { });
             }
             else
             {
@@ -101,9 +105,9 @@
             }
         }
 
-        function deleteThreatModel()
+        function deleteModel()
         {
-            datacontext.deleteThreatModel(vm.threatModel).then( onDelete, logError )
+            datacontext.deleteThreatModel(vm.threatModel).then(onDelete, logError);
         }
 
         function onDelete()

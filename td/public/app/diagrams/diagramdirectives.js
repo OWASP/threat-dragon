@@ -28,15 +28,16 @@
                 scope.padding = 0.0;
             }
 
-            var graph = new joint.dia.Graph;
+            var graph = new joint.dia.Graph();
             var ShapeClass = common.utils.stringToFunction(scope.shape.className);
             var cell = new ShapeClass();
+            var diagram;
 
             if (cell.isLink()) {
-                var diagram = linkStencil(cell, scope.shape.label, element, scope.scale, scope.padding, graph);
+                diagram = linkStencil(cell, scope.shape.label, element, scope.scale, scope.padding, graph);
             }
             else {
-                var diagram = elementStencil(cell, scope.shape.label, element, scope.scale, scope.padding, graph)
+                diagram = elementStencil(cell, scope.shape.label, element, scope.scale, scope.padding, graph);
             }
 
             diagram.on('cell:pointerclick', scope.action);
@@ -99,7 +100,7 @@
 
             selectOnScope = scope.select;
                 
-            scope.graph.on('add', function (newCell) { newCell.translate($(element).parent().scrollLeft(), $(element).parent().scrollTop())});
+            scope.graph.on('add', function (newCell) { newCell.translate($(element).parent().scrollLeft(), $(element).parent().scrollTop());});
 
             diagram.on('cell:pointerclick', function (cellView, evt, x, y) {
                 if (!cellView.model.isLink()) {
@@ -207,41 +208,37 @@
                     }
             });
 
-            diagram.setSelected = function (cell) {
+                diagram.setSelected = function (cell) {
 
-                if (selected)
-                {
-                    selected.setUnselected();
-                }
-
-                if (cell)
-                {
-                    var cellView = diagram.findViewByModel(cell);
-
-                    if (cellView)
-                    {
-                        cellView.setSelected();
-                        selected = cellView;
+                    if (selected) {
+                        selected.setUnselected();
                     }
-                }
-                else
-                {
-                    selected = null;
-                }
-            }
+
+                    if (cell) {
+                        var cellView = diagram.findViewByModel(cell);
+
+                        if (cellView) {
+                            cellView.setSelected();
+                            selected = cellView;
+                        }
+                    }
+                    else {
+                        selected = null;
+                    }
+                };
 
             scope.initialiseGraph({ diagram: diagram });
         }
 
         function addLinkFrom(cellView) {
             cellView.linkFrom = true;
-            V(cellView.$el.find('.element-tool-link')[0]).addClass("linking");
+            (new V(cellView.$el.find('.element-tool-link')[0])).addClass("linking");
             log('Select another model element to add a data flow');
         }
 
         function removeLinkFrom(cellView) {
             cellView.linkFrom = false;
-            V(cellView.$el.find('.element-tool-link')[0]).removeClass("linking");
+            (new V(cellView.$el.find('.element-tool-link')[0])).removeClass("linking");
         }
 
         function setSelected(cellView)

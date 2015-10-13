@@ -23,18 +23,18 @@
             //based on SeaSponge (https://github.com/mozilla/seasponge)
             
             //defaults
-            var contentType = contentType || 'text/plain';
-            var fileName = fileName || 'download.txt';
-            var content = content || '';
+            var validatedContentType = contentType || 'text/plain';
+            var validatedFileName = fileName || 'download.txt';
+            var validatedContent = content || '';
 
             //Create Blob
             var blob;
 
-            if (content instanceof Blob) {
-                blob = content;
+            if (validatedContent instanceof Blob) {
+                blob = validatedContent;
             }                
             else {
-                blob = new Blob([content], { type: contentType });
+                blob = new Blob([validatedContent], { type: validatedContentType });
             }
             
             //need handle differently for IE
@@ -44,13 +44,13 @@
             }
             
             if (isIE) {
-                window.navigator.msSaveOrOpenBlob(blob, fileName);
+                window.navigator.msSaveOrOpenBlob(blob, validatedFileName);
             }
             else {
                 var url = $window.URL.createObjectURL(blob);
                 
                 //Create link
-                var link = $('<a>', { download: fileName, href: url }).append('body')[0];
+                var link = $('<a>', { download: validatedFileName, href: url }).append('body')[0];
                 var event;
                 event = new MouseEvent('click');
                 link.dispatchEvent(event);

@@ -6,7 +6,7 @@
         'ui.bootstrap',
         'ngRoute',
         'common'
-    ])
+    ]);
 
     app.run(['$rootScope', 'common',
     function ($rootScope, common) {

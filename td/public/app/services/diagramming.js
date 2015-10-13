@@ -36,13 +36,13 @@
 
         function newGraph()
         {
-            return new joint.dia.Graph;;
+            return new joint.dia.Graph();
         }
 
         function initialise(graph, diagramJson)
         {
             graph.fromJSON(JSON.parse(diagramJson));
-            graph.attributes.cells.models.forEach(function (cell) { addNameProperty(cell) });
+            graph.attributes.cells.models.forEach(function (cell) { addNameProperty(cell); });
         }
         
         function resize(diagram, size)
@@ -63,7 +63,7 @@
 
         function newProcess(graph)
         {
-            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + graph.attributes['cells'].length)
+            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + graph.attributes.cells.length);
             graph.addCell(cell);
 
             return cell;
@@ -71,7 +71,7 @@
 
         function newStore(graph)
         {
-            var cell = newElement('joint.shapes.tm.Store', 50, 50, 'store ' + graph.attributes['cells'].length)
+            var cell = newElement('joint.shapes.tm.Store', 50, 50, 'store ' + graph.attributes.cells.length);
             graph.addCell(cell);
 
             return cell;
@@ -79,7 +79,7 @@
 
         function newActor(graph)
         {
-            var cell = newElement('joint.shapes.tm.Actor', 50, 50, 'actor ' + graph.attributes['cells'].length)
+            var cell = newElement('joint.shapes.tm.Actor', 50, 50, 'actor ' + graph.attributes.cells.length);
             graph.addCell(cell);
 
             return cell;
@@ -87,7 +87,7 @@
 
         function newFlow(graph, source, target)
         {
-            var cell = flow(source, target, 'flow ' + graph.attributes['cells'].length);
+            var cell = flow(source, target, 'flow ' + graph.attributes.cells.length);
             graph.addCell(cell);
 
             return cell;
@@ -143,7 +143,7 @@
         function flow(source, target, label) {
 
             var newTarget = target ? { id: target.id } : { x: 110, y: 100 };
-            var newSource = source ? { id: source.id } : { x: 30, y: 20 }
+            var newSource = source ? { id: source.id } : { x: 30, y: 20 };
 
             var cell = new joint.shapes.tm.Flow({
                 target: newTarget,
@@ -178,14 +178,14 @@
         function addNameProperty(element) {
             if (element.isLink()) {
                 Object.defineProperty(element, 'name', {
-                    get: function () { return wordUnwrap(this.attributes.labels[0].attrs.text.text) },
-                    set: function (value) { editNameLink(this, value) }
+                    get: function () { return wordUnwrap(this.attributes.labels[0].attrs.text.text); },
+                    set: function (value) { editNameLink(this, value); }
                 });
             }
             else {
                 Object.defineProperty(element, 'name', {
-                    get: function () { return wordUnwrap(this.attr('text/text')) },
-                    set: function (value) { editNameElement(this, value) }
+                    get: function () { return wordUnwrap(this.attr('text/text')); },
+                    set: function (value) { editNameElement(this, value); }
                 });
             }
         }

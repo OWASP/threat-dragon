@@ -13,6 +13,7 @@
     function diagram($scope, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming) {
 
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
+        /*jshint validthis: true */
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -20,12 +21,13 @@
         var scope = $scope;
         var elementPropertiesCache = {};
         var deletedElements = {};
-        var diagram = {};
+        var currentDiagram = {};
         var scaleFactor = 1.25;
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'ThreatModelDiagram';
         vm.initialise = initialise,
+        /*jshint -W030 */
         vm.dirty = false;
         vm.graph = diagramming.newGraph();
         vm.newProcess = newProcess;
@@ -90,7 +92,7 @@
         function save()
         {
             var diagramJson = JSON.stringify(vm.graph);
-            var size = { height: diagram.options.height, width: diagram.options.width };
+            var size = { height: currentDiagram.options.height, width: currentDiagram.options.width };
             var diagramData = { diagramJson: diagramJson, size: size };
 
             datacontext.saveThreatModelDiagram(vm.threatModelId, vm.diagramId, diagramData)
@@ -107,7 +109,7 @@
 
         function initialise(newDiagram)
         {
-            diagram = newDiagram
+            currentDiagram = newDiagram;
             datacontext.getThreatModelDiagram(vm.threatModelId, vm.diagramId).then(onGetThreatModelDiagram, onError);
 
             function onGetThreatModelDiagram(data) {
@@ -117,7 +119,7 @@
                 }
                 
                 if (angular.isDefined(data.size)) {
-                    diagramming.resize(diagram, data.size);
+                    diagramming.resize(currentDiagram, data.size);
                 }
                     
                 vm.graph.on('remove', removeElement);
@@ -132,7 +134,7 @@
                     var element = diagramming.getCellById(vm.graph, $routeParams.element);
                     initialSelect(element);
                     //a bit ugly - can we remove the dependency on the diagram?
-                    diagram.setSelected(element);
+                    currentDiagram.setSelected(element);
 
                     //more ugliness, but $evalAsync does not work!?
                     //This is to ensure the stencils are rendered before they are collapsed
@@ -151,18 +153,18 @@
             //avoids the confirmation if you are reloading after an accidental clear of the model
             if (vm.dirty && diagramming.cellCount(vm.graph) > 0)
             {
-                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function () { initialise(diagram) });
+                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function () { initialise(currentDiagram); });
             }
             else
             {
-                initialise(diagram);
+                initialise(currentDiagram);
             }  
         }
 
         function clear()
         {
-            diagramming.getElements(vm.graph).forEach(function (element) { addToDeletedElements(element) });
-            diagramming.getLinks(vm.graph).forEach(function (element) { addToDeletedElements(element) });
+            diagramming.getElements(vm.graph).forEach(function (element) { addToDeletedElements(element); });
+            diagramming.getLinks(vm.graph).forEach(function (element) { addToDeletedElements(element); });
             diagramming.clear(vm.graph);
         }
 
@@ -171,7 +173,7 @@
             if (vm.currentZoomLevel < vm.maxZoom)
             {
                 vm.currentZoomLevel++;
-                diagramming.zoom(diagram, vm.currentZoomLevel);
+                diagramming.zoom(currentDiagram, vm.currentZoomLevel);
             }
         }
 
@@ -179,7 +181,7 @@
         {
             if (vm.currentZoomLevel > -vm.maxZoom) {
                 vm.currentZoomLevel--;
-                diagramming.zoom(diagram, vm.currentZoomLevel);
+                diagramming.zoom(currentDiagram, vm.currentZoomLevel);
             }
         }
 
@@ -199,7 +201,7 @@
             if (vm.selected.element)
             {
                 threatengine.generateForElement(vm.selected.element).then(onGenerateThreats);
-            };
+            }
         }
 
         function onGenerateThreats(threats)
@@ -212,7 +214,7 @@
             {
                 if (threatList.length > 0) {
                     currentThreat = threatList.shift();
-                    dialogs.confirm('./app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false } }, ignoreThreat, 'fade-right');
+                    dialogs.confirm('./app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
                 }
             }
 
@@ -241,7 +243,7 @@
 
             if (elementId)
             {
-                var element = diagramming.getCellById(vm.graph, elementId);
+                element = diagramming.getCellById(vm.graph, elementId);
             }
 
             vm.selected.element = element;         
@@ -262,9 +264,9 @@
                 vm.selected.elementProperties = null;
             }
             
-            //existence test is required to support unit tests where diagram is not initialised
-            if (typeof diagram.setSelected === 'function' || typeof diagram.setSelected === 'object') {
-                diagram.setSelected(element);
+            //existence test is required to support unit tests where currentDiagram is not initialised
+            if (typeof currentDiagram.setSelected === 'function' || typeof currentDiagram.setSelected === 'object') {
+                currentDiagram.setSelected(element);
             }
         }
 
@@ -301,7 +303,7 @@
             vm.selected = {};
             $location.search('element', null);
             //scope.$apply cause an exception when clearing all elements (digest already in progress)
-            if (!clearing) { scope.$apply() }
+            if (!clearing) { scope.$apply(); }
         }
 
         function newProcess()
@@ -324,7 +326,7 @@
 
         function newFlow(source, target) {
 
-            var flow = diagramming.newFlow(vm.graph, source, target)
+            var flow = diagramming.newFlow(vm.graph, source, target);
             elementPropertiesCache[flow.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: flow.id, threats: [] };
         }
 
@@ -340,7 +342,7 @@
             function setDirty()
             {
                 vm.dirty = true;
-                vm.graph.off('change add', setDirty)
+                vm.graph.off('change add', setDirty);
                 scope.$apply();
             }
         }

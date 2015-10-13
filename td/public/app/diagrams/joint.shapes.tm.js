@@ -23,7 +23,7 @@ joint.shapes.tm.Flow = joint.dia.Link.extend({
     '</g>'
     ].join(''),
 
-    setLabel: function (labelText) { this.attributes.labels = [{ position: .5, attrs: { text: { text: labelText, 'font-weight': '400', 'font-size': 'small' } } }]; },
+    setLabel: function (labelText) { this.attributes.labels = [{ position: 0.5, attrs: { text: { text: labelText, 'font-weight': '400', 'font-size': 'small' } } }]; },
 
     defaults: joint.util.deepSupplement({
         type: 'tm.Flow',
@@ -53,7 +53,7 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
     '</g>'
     ].join(''),
 
-    setLabel: function (labelText) { this.attributes.labels = [{ position: .5, attrs: { text: { text: labelText, 'font-weight': '400', 'font-size': 'small' } } }]; },
+    setLabel: function (labelText) { this.attributes.labels = [{ position: 0.5, attrs: { text: { text: labelText, 'font-weight': '400', 'font-size': 'small' } } }]; },
 
     defaults: joint.util.deepSupplement({
         type: 'tm.Boundary',
@@ -79,7 +79,7 @@ joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
 
     defaults: joint.util.deepSupplement({
         attrs: {
-            text: { 'font-weight': 400, 'font-size': 'small', fill: 'black', 'text-anchor': 'middle', 'ref-x': .5, 'ref-y': .5, 'y-alignment': 'middle' },
+            text: { 'font-weight': 400, 'font-size': 'small', fill: 'black', 'text-anchor': 'middle', 'ref-x': 0.5, 'ref-y': 0.5, 'y-alignment': 'middle' },
         },
     }, joint.shapes.basic.Generic.prototype.defaults)
 
@@ -174,7 +174,6 @@ joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
             case 'element-tool-remove':
                 this.model.remove();
                 return;
-                break;
 
             case 'element-tool-link':
                 this._action = 'linkFrom';

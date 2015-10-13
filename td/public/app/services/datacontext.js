@@ -37,7 +37,7 @@
         function clearStorage()
         {
             models = [];
-            localStorage.clear()
+            localStorage.clear();
             return $q.when(models);
         }
 
@@ -139,7 +139,7 @@
 
         function getElementProperties(threatModelId, diagramId, elementId)
         {
-            var elementProperties = models[threatModelId].elementProperties[elementId]
+            var elementProperties = models[threatModelId].elementProperties[elementId];
             return $q.when(elementProperties);
         }
 
@@ -154,18 +154,18 @@
                         var keys = _.keys(threats);
                         
                         if (keys.length > 0) { newKey = parseInt(_.max(keys)) + 1; }
-                        threat.id = newKey;;
+                        threat.id = newKey;
                     }
                 });
             }
             
-            var threatModelId = elementProperties.threatModelId
+            var threatModelId = elementProperties.threatModelId;
             var diagramId = elementProperties.diagramId;
             var elementId = elementProperties.elementId;
             
             var model = models[threatModelId];
             
-            if (angular.isUndefined(model.elementProperties)) { model.elementProperties = {} }
+            if (angular.isUndefined(model.elementProperties)) { model.elementProperties = {}; }
             
             model.elementProperties[elementId] = elementProperties;
             localStorage.models = JSON.stringify(models);

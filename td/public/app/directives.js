@@ -20,7 +20,7 @@
         function link(scope, element, attrs) {
 
             var fileSelect = $(element).children("#fileReader");
-            fileSelect.on('change', function () { readFile() });
+            fileSelect.on('change', function () { readFile(); });
 
             $(element).click(function (e) {
                 if (fileSelect) {

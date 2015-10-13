@@ -12,6 +12,7 @@
 
     function welcome(dialogs, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
+        /*jshint validthis: true */
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -25,12 +26,7 @@
 
         function activate()
         {
-            common.activateController([welcome()], controllerId).then(function () { log('Activated Welcome View'); });
-        }
-
-        function welcome()
-        {
-            getThreatModelCount();
+            common.activateController([getThreatModelCount()], controllerId).then(function () { log('Activated Welcome View'); });
         }
 
         function clearLocalStorage()

@@ -19,15 +19,13 @@
             generateForGraph: generateForGraph
         };
         
-        var Threats = function ()
-        {
+        var Threats = function () {
             this.collection = [];
-        }
+        };
         
-        var Element = function (element)
-        {
+        var Element = function (element) {
             this.type = element.attributes.type;
-        }
+        };
 
         return service;
 

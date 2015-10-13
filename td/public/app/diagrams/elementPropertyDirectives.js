@@ -8,7 +8,7 @@
             var directive =
             {
                 link: link,
-                templateUrl: function (elem, attrs) { return attrs.templateUrl },
+                templateUrl: function (elem, attrs) { return attrs.templateUrl; },
                 restrict: 'E',
                 scope:
                 {
@@ -24,13 +24,13 @@
             function link(scope, element, attrs) {
                 
                 scope.onAction = function () {
-                    
+
                     var el = $("[role='dialog']");
                     var windowClass = el.attr("window-class");
                     el.removeClass(windowClass);
                     el.addClass(scope.newClass);
                     scope.action();
-                }
+                };
             }
 
         }]);
@@ -92,36 +92,36 @@
             }
 
             scope.onNewThreat = function () {
-                dialogs.confirm('./app/diagrams/ThreatEditPane.html', scope.addThreat, function () { return {heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
-            }
+                dialogs.confirm('./app/diagrams/ThreatEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
+            };
 
             scope.onEditThreat = function (index) {
                 editIndex = index;
                 originalThreat = angular.copy(scope.threats[index]);
                 $location.search('threat', originalThreat.id);
                 dialogs.confirm('./app/diagrams/ThreatEditPane.html', scope.editThreat, function () { return { heading: 'Edit Threat', threat: scope.threats[index], editing: true }; }, scope.cancelEdit);
-            }
+            };
 
             scope.removeThreat = function (index) {
-                scope.threats.splice(index,1);
+                scope.threats.splice(index, 1);
                 scope.save();
-            }
+            };
 
             scope.addThreat = function () {
                 scope.threats.push(newThreat);
                 scope.save({ threat: newThreat });
                 reset();
-            }
+            };
 
-            scope.editThreat = function(index) {
+            scope.editThreat = function (index) {
                 scope.save({ threat: scope.threats[index] });
                 reset();
-            }
+            };
 
-            scope.cancelEdit = function() {
+            scope.cancelEdit = function () {
                 scope.threats[editIndex] = originalThreat;
                 reset();
-            }
+            };
 
             var threatId = $routeParams.threat;
 
@@ -130,19 +130,18 @@
                 var matchingIndex = -1;
 
                 scope.threats.forEach(function (threat, index) {
-                    if (threat.id == threatId)
-                    {
+                    if (threat.id == threatId) {
                         matchingIndex = index;
                     }
-                })
+                });
 
                 if (matchingIndex >= 0)
                 {
-                    scope.onEditThreat(matchingIndex)
+                    scope.onEditThreat(matchingIndex);
                 }
                 else
                 {
-                    logError('Invalid threat ID')
+                    logError('Invalid threat ID');
                     $location.search('threat', null);
                 }
             }
