@@ -1,8 +1,5 @@
 'use strict';
 
-
-'$q','$rootScope', 'commonConfig', 'logger'
-
 describe('common service', function () {
     
     var common;

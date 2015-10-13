@@ -1,16 +1,15 @@
 'use strict';
 
-describe('threatengine service:', function () {
+var threatengine;
+var $rootScope;
+var $httpBackend;
 
-    var threatengine;
-    var $rootScope;
-    var $httpBackend;
+describe('threatengine service:', function () {
 
     beforeEach(function () {
 
-        angular.mock.module('app')
-
-        angular.mock.inject(function (_$rootScope_, _threatengine_, _$httpBackend_) {
+        angular.mock.module('app');
+        angular.mock.inject(function (_$rootScope_, _$httpBackend_, _threatengine_) {
             threatengine = _threatengine_;
             $rootScope = _$rootScope_;
             $httpBackend = _$httpBackend_;
@@ -26,7 +25,6 @@ describe('threatengine service:', function () {
         it('process should generate STRIDE', function (done) {
 
             var element = { attributes: { type: 'tm.Process' } };
-            var threats;
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(6);
@@ -46,7 +44,6 @@ describe('threatengine service:', function () {
         it('flow should generate TID', function (done) {
 
             var element = { attributes: { type: 'tm.Flow' } };
-            var threats;
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(3);
@@ -61,10 +58,9 @@ describe('threatengine service:', function () {
 
         });
 
-        xit('actor should generate SR', function (done) {
+        it('actor should generate SR', function (done) {
 
             var element = { attributes: { type: 'tm.Actor' } };
-            var threats;
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(2);
@@ -78,10 +74,9 @@ describe('threatengine service:', function () {
 
         });
 
-       xit('store should generate TRID', function (done) {
+       it('store should generate TRID', function (done) {
 
             var element = { attributes: { type: 'tm.Store' } };
-            var threats;
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(4);
@@ -120,7 +115,7 @@ describe('threatengine service:', function () {
         it('should return an empty array', function () {
 
             var graph = {};
-            var threats = threatengine.generateForElementInContext(graph);
+            var threats = threatengine.generateForGraph(graph);
             expect(threats.length).toEqual(0);
 
         });

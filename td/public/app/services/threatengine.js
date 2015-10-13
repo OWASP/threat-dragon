@@ -3,6 +3,7 @@
 
     // Factory name is handy for logging
     var serviceId = 'threatengine';
+    var flowName = 'threat generation';
 
     // Define the factory on the module.
     // Inject the dependencies. 
@@ -15,7 +16,7 @@
         var service = {
             generateForElement: generateForElement,
             generateForElementInContext: generateForElementInContext,
-            generateForGraph: generateForElement
+            generateForGraph: generateForGraph
         };
         
         var Threats = function ()
@@ -28,35 +29,39 @@
             this.type = element.attributes.type;
         }
 
-        var flow = initialiseFlow();
-
         return service;
 
         function generateForElement(element)
         {         
             //todo: implement proper rule engine, probably rete based
-            
+
+            var flow = initialiseFlow(flowName);
             var threats = new Threats();
             var el = new Element(element);
-            
-            return flow.getSession(threats, el).match().then(function () { return $q.when(threats.collection) });
+            var session = flow.getSession(threats, el);
+            return session.match().then(function () {
+                var result = threats.collection;
+                session.dispose();
+                nools.deleteFlow(flowName);
+                return threats.collection;
+            });
         }
 
-        function generateForElementInContext(element)
+        function generateForElementInContext()
         {
             //todo
             return [];
         }
 
-        function generateForGraph(graph)
+        function generateForGraph()
         {
             //todo
             return [];
         }
 
-        function initialiseFlow()
+        function initialiseFlow(flowName)
         {
-            return nools.flow('Element threat generation', function (flow) { 
+            return nools.flow(flowName, function (flow) { 
 
                 flow.rule('Generic Spoofing Threat Rule', [
                     ['or',
