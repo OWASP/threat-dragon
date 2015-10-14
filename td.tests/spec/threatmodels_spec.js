@@ -7,15 +7,18 @@ describe('threatModels controller', function () {
     var $q;
     var $httpBackend;
     var mockDatacontext;
+    var mockFileService;
     
     beforeEach(function () {
         
         mockDatacontext = {};
+        mockFileService = {};
         
         angular.mock.module('app')
         
         angular.mock.module(function ($provide) {
             $provide.value('datacontext', mockDatacontext);
+            $provide.value('file', mockFileService);
         });
         
         angular.mock.inject(function ($rootScope, _$controller_, _$q_, _$httpBackend_) {
@@ -27,10 +30,16 @@ describe('threatModels controller', function () {
         });
         
         //datacontext mock
-        mockDatacontext.getAllThreatModelDetails = function () { return $q.when([{ id: 0 }, { id: 1 }, { id: 2 }])};
+        mockDatacontext.getAllThreatModelDetails = function () { return $q.when([{ id: 0 }, { id: 1 }, { id: 2 }]);};
         spyOn(mockDatacontext, 'getAllThreatModelDetails').and.callThrough();
-        mockDatacontext.deleteThreatModel = function () { return $q.when(null) };
+        mockDatacontext.deleteThreatModel = function () { return $q.when(null); };
         spyOn(mockDatacontext, 'deleteThreatModel').and.callThrough();
+        mockDatacontext.saveThreatModel = function() { return $q.when(null); };
+        spyOn(mockDatacontext, 'saveThreatModel').and.callThrough();
+
+        //file service mock
+        mockFileService.saveToFile = function () { };
+        spyOn(mockFileService, 'saveToFile');
         
         $controller('threatmodels as vm', { $scope: $scope });
         $scope.$apply();
@@ -66,6 +75,31 @@ describe('threatModels controller', function () {
             expect($scope.vm.threatModels[0].id).toEqual(0);
             expect($scope.vm.threatModels[1].id).toEqual(2);
             expect($scope.vm.threatModels.length).toEqual(2);
+        });
+        
+        it('should call saveToFile on the file service', function () {
+
+            var threatModels = [{ summary: { title: 'model0' } }, { summary: { title: 'model1' } }, { summary: { title: 'model2' } }];
+            var index = 1;
+            var content = JSON.stringify(threatModels[index]);
+            $scope.vm.threatModels = threatModels;
+
+            $scope.vm.saveThreatModelToFile(index);
+            expect(mockFileService.saveToFile).toHaveBeenCalled();
+            expect(mockFileService.saveToFile.calls.argsFor(0)).toEqual([threatModels[index].summary.title.replace(' ', '_') + '.dragon', content, 'application/json']);
+
+        });
+
+        it('should delete the threat model id and save', function () {
+
+            var threatModel = { summary: { id: 1, title: 'model'} };
+            var content = JSON.stringify(threatModel);
+            delete threatModel.summary.id;
+
+            $scope.vm.loadThreatModelFromFile(content);
+            expect(mockDatacontext.saveThreatModel).toHaveBeenCalled();
+            expect(mockDatacontext.saveThreatModel.calls.argsFor(0)).toEqual([threatModel]);
+
         });
 
     });
