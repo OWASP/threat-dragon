@@ -3,3 +3,4 @@ languages:
 exclude_paths:
 - "td/public/libs/**/*.js"
 - "td/public/libs/**/*.min.js"
+- "td.test/spec/*.js"
