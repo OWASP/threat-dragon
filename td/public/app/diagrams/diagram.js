@@ -364,7 +364,7 @@
             {
                 if (deletedElements.hasOwnProperty(key))
                 {
-                    datacontext.deleteElementProperties(vm.threatModelId, vm.diagramId, key);
+                    datacontext.deleteElementProperties(vm.threatModelId, vm.diagramId, key).then(null);
                 }
             }
 

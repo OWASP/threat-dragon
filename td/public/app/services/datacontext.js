@@ -3,16 +3,16 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$q', 'common', 'config', datacontext]);
+        ['$q', 'common', datacontext]);
 
-    function datacontext($q, common, config) {
+    function datacontext($q, common) {
 
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(serviceId);
         var logError = getLogFn(serviceId, 'error');
         var logSuccess = getLogFn(serviceId, 'success');
 
-        var modelsJson = localStorage.models;
+        var modelsJson = localStorage.getItem('models');
         var models = [];
         
         if (angular.isDefined(modelsJson)) { models = JSON.parse(modelsJson); }
@@ -73,7 +73,7 @@
                 }
                 
                 models[threatModel.summary.id] = threatModel;
-                localStorage.models = JSON.stringify(models);
+                localStorage.setItem('models', JSON.stringify(models));
             }
 
             return $q.when(threatModel);
@@ -82,7 +82,7 @@
         function deleteThreatModel(threatModel)
         {
             models.splice(threatModel.summary.id, 1);
-            localStorage.models = JSON.stringify(models);
+            localStorage.setItem('models', JSON.stringify(models));
             return $q.when(threatModel);
         }
 
@@ -131,7 +131,7 @@
             var diagram = threatModel.detail.diagrams[diagramId];
             diagram.diagramJson = diagramData.diagramJson;
             diagram.size = diagramData.size;
-            localStorage.models = JSON.stringify(models);
+            localStorage.setItem('models', JSON.stringify(models));
             return $q.when(null);
         }
 
@@ -168,15 +168,17 @@
             if (angular.isUndefined(model.elementProperties)) { model.elementProperties = {}; }
             
             model.elementProperties[elementId] = elementProperties;
-            localStorage.models = JSON.stringify(models);
+            localStorage.setItem('models', JSON.stringify(models));
 
             return $q.when(elementProperties);
         }
 
         function deleteElementProperties(threatModelId, diagramId, elementId)
         {
+            var properties = models[threatModelId].elementProperties[elementId];
             delete models[threatModelId].elementProperties[elementId];
-            localStorage.models = JSON.stringify(models);
+            localStorage.setItem('models', JSON.stringify(models));
+            return $q.when(properties);
         }
 
 
