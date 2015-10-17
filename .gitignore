@@ -191,7 +191,7 @@ ModelManifest.xml
 # Ignore the bower packages folder since these contain lots of files
 # Including them causes massive CPU usage due to file watching
 
-td/bower-packages/
+bower-packages/
 td/[Oo]bj/
 #td/[Bb]in/
 td/node_modules/
