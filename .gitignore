@@ -200,4 +200,4 @@ threatdragon.tests/[Oo]bj/
 */.ntvs_analysis.dat
 td/.ntvs_analysis.dat
 threatdragon.tests/.ntvs_analysis.dat
-./coverage
+coverage/
