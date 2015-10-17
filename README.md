@@ -68,6 +68,12 @@ To test using PhantomJS (this is what runs on the Travis CI server)
 
 **Note:** If you are on Windows and are having problems installing Karma, the simplest way to resolve this seems to be to install Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in [this link](http://codedmi.com/questions/298619/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau). This sounds mad, but the alternative is a world of pain installing various patches and components one by one. At least it's free :o/
 
+###The unit test coverage progress
+
+The coverage at the moment is not great, but we are working on it...
+
+![codecov.io](https://codecov.io/github/mike-goodwin/owasp-threat-dragon/branch.svg?branch=master)
+
 ##Freshness
 
 npm
