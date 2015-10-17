@@ -200,4 +200,7 @@ threatdragon.tests/[Oo]bj/
 */.ntvs_analysis.dat
 td/.ntvs_analysis.dat
 threatdragon.tests/.ntvs_analysis.dat
+<<<<<<< HEAD
 coverage/
+=======
+>>>>>>> parent of 6c88807... ignoring test coverage files
