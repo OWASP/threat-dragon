@@ -19,6 +19,7 @@ module.exports = function(config) {
         'td/public/libs/angular-route/angular-route.js',
         'td/public/libs/nools/nools.js',
         'td/public/libs/jquery/jquery.js',
+        'td/public/libs/jasmine-jquery/jasmine-jquery.js',
         'td/public/libs/bootstrap/bootstrap.js',
         'td/public/libs/toastr/toastr.js',
         'td/public/libs/lodash/lodash.js',
