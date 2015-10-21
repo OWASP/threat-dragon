@@ -1,6 +1,6 @@
-﻿<ul class="list-group">
+﻿<ul id="threatSummaryPane" class="list-group">
     <li class="list-group-item" ng-repeat="threat in threats">
-        <a href="" ng-click="onEditThreat($index)" data-toggle="tooltip" data-placement="top" title="Edit {{threat.title}}">
+        <a id="editThreat{{$index}}" href="" ng-click="onEditThreat($index)" data-toggle="tooltip" data-placement="top" title="Edit {{threat.title}}">
             <div class="text-overflow"><small>{{threat.title}}</small></div>
         </a>
         <div>
@@ -9,10 +9,10 @@
         <div>
             <span ng-class="{Open:'severity-high fa fa-exclamation-triangle', Mitigated:'severity-low fa fa-check'}[threat.status]" data-toggle="tooltip" data-placement="top" title="{{threat.status}}"></span>
             <span ng-class="{Low:'fa fa-circle severity-low', Medium:'fa fa-circle severity-medium', High:'fa fa-circle severity-high'}[threat.severity]" data-toggle="tooltip" data-placement="top" title="{{threat.severity}}"></span>
-            <span class="pull-right glyphicon glyphicon-remove severity-high" ng-click="removeThreat($index)" data-toggle="tooltip" data-placement="top" title="Remove this threat"></span>
+            <span id="remove{{$index}}" class="pull-right glyphicon glyphicon-remove severity-high" ng-click="removeThreat($index)" data-toggle="tooltip" data-placement="top" title="Remove this threat"></span>
         </div>
     </li>
 </ul> 
-<button class="btn btn-link" ng-click="onNewThreat()">
+<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">
     <span class="glyphicon glyphicon-plus"></span> Add a new threat...
 </button>

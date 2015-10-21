@@ -12,7 +12,6 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
     // list of files / patterns to load in the browser
     files: [
         'td/public/libs/angular/angular.js',
@@ -29,7 +28,8 @@ module.exports = function(config) {
         'td/public/libs/angular-mocks/angular-mocks.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
-        'td.tests/spec/*.js'
+        'td.tests/spec/*.js',
+        'td/public/app/**/*.html'
     ],
 
 
@@ -42,7 +42,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'td/public/app/**/*.js': ['coverage']
+        'td/public/app/**/*.js': ['coverage'],
+        'td/public/app/**/*.html': ['ng-html2js']
     },
 
 
@@ -51,8 +52,16 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage'],
 
+    //config for coverage reporter
     coverageReporter: {
         reporters: [{ type: 'lcov' }]
+    },
+
+    //config for ngHtml2JsPreprocessor
+    ngHtml2JsPreprocessor: {
+        // strip this from the file path
+        stripPrefix: 'td/public',
+        prependPrefix: '.'
     },
 
     // web server port
