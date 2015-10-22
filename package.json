@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS,Firefox",
     "codecov": "cat ./coverage/*/lcov.info | codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
