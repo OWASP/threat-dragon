@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7",
-    "jasmine-jquery": "~2.1.1"
+    "jasmine-jquery": "~2.1.1",
+    "Blob": "*"
   },
   "exportsOverride": {
     "joint": {
@@ -46,7 +47,10 @@
       "../fonts": "fonts/*"
     },
     "nools": {
-      ".": "nools.js"
+        ".": "nools.js"
+    },
+    "Blob": {
+      ".": "Blob.js"
     },
     "font-awesome": {
       ".": "css/font-awesome.css",

@@ -50,7 +50,7 @@
                 var url = $window.URL.createObjectURL(blob);
                 
                 //Create link
-                var link = $('<a>', { download: validatedFileName, href: url }).append('body')[0];
+                var link = $('<a>', { download: validatedFileName, href: url, id: 'downloadlink' }).append('body')[0];
                 var event;
                 event = new MouseEvent('click');
                 link.dispatchEvent(event);

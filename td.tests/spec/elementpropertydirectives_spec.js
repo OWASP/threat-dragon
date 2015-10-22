@@ -25,7 +25,7 @@ describe('element properties directive: ', function () {
 
         $rootScope.$apply();
 
-        $scope.edit = function () { console.log('editing');};
+        $scope.edit = function () { };
         spyOn($scope, 'edit');//.and.callThrough();
 
     });
@@ -216,7 +216,6 @@ describe('element properties directive: ', function () {
             //for some reason this is failing on IE, but passing on everything else
             if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
 
-                console.log(navigator.userAgent);
                 var newProtocol = 'new protocol';
                 angular.element($('input[name="inputProtocol"]')).val(newProtocol).triggerHandler('input');
                 expect(selected.elementProperties.protocol).toEqual(newProtocol);

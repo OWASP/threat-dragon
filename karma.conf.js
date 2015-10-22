@@ -26,6 +26,7 @@ module.exports = function(config) {
         'td/public/libs/joint/joint.js',
         'td/public/libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
         'td/public/libs/angular-mocks/angular-mocks.js',
+        'td/public/libs/Blob/Blob.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
         'td.tests/spec/*.js',
@@ -84,6 +85,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome', 'Firefox', 'IE', 'PhantomJS'],
+    //browsers: ['IE'],
 
 
     // Continuous Integration mode
