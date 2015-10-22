@@ -15,7 +15,7 @@
         var modelsJson = localStorage.getItem('models');
         var models = [];
         
-        if (angular.isDefined(modelsJson)) { models = JSON.parse(modelsJson); }
+        if (angular.isDefined(modelsJson) && modelsJson !== null) { models = JSON.parse(modelsJson); }
 
         var service = {
             clearStorage: clearStorage,
@@ -37,7 +37,7 @@
         function clearStorage()
         {
             models = [];
-            localStorage.clear();
+            localStorage.removeItem('models');
             return $q.when(models);
         }
 

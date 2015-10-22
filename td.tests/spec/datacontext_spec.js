@@ -31,6 +31,9 @@ describe('datacontext service:', function () {
                     setItem: function (key, value) {
                         store[key] = value.toString();
                     },
+                    removeItem: function(key) {
+                        delete store[key];
+                    },
                     clear: function () {
                         store = {};
                     }
@@ -39,6 +42,27 @@ describe('datacontext service:', function () {
 
             Object.defineProperty(window, 'localStorage', { value: mock, configurable: true, enumerable: true, writable: true });
         }
+
+    });
+
+    it('should return a threat model count of zero', function (done) {
+
+        localStorage.clear();
+
+        angular.mock.inject(function (_datacontext_) {
+            datacontext = _datacontext_;
+        });
+
+        $rootScope.$apply();
+
+        datacontext.getThreatModelCount().then(function (count) {
+
+            expect(count).toEqual(0);
+            done();
+
+        });
+
+        $rootScope.$apply();
 
     });
 
@@ -114,10 +138,11 @@ describe('datacontext service:', function () {
 
         it('should clear local storage and return empty models collection', function (done) {
 
-            spyOn(localStorage, 'clear').and.callThrough();
+            spyOn(localStorage, 'removeItem').and.callThrough();
             datacontext.clearStorage().then(function (models) {
 
-                expect(localStorage.clear).toHaveBeenCalled();
+                expect(localStorage.removeItem).toHaveBeenCalled();
+                expect(localStorage.removeItem.calls.argsFor(0)[0]).toEqual('models');
                 expect(models).toEqual([]);
                 done();
 
