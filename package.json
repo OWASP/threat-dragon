@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
-    "codecov": "cat ./coverage/*/lcov.info | codecov"
+    "codecov": "cat ./coverage/Firefox*/lcov.info | codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
