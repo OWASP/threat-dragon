@@ -60,7 +60,7 @@
             var absPathPrevious = previous.split('?')[0];
 
             if (vm.dirty && absPathCurrent != absPathPrevious) {
-                dialogs.stucturedExit(event, function () { }, function () { vm.dirty = false; });
+                dialogs.structuredExit(event, function () { }, function () { vm.dirty = false; });
             }
         });
 

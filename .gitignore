@@ -191,6 +191,8 @@ ModelManifest.xml
 # Ignore the bower packages folder since these contain lots of files
 # Including them causes massive CPU usage due to file watching
 
+# custom
+.vscode/
 bower-packages/
 td/[Oo]bj/
 #td/[Bb]in/
@@ -201,3 +203,5 @@ threatdragon.tests/[Oo]bj/
 td/.ntvs_analysis.dat
 threatdragon.tests/.ntvs_analysis.dat
 coverage/
+typings/
+

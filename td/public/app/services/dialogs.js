@@ -14,14 +14,14 @@
         // Define the functions and properties to reveal.
         var service = {
             confirm: confirm,
-            stucturedExit: stucturedExit
+            structuredExit: structuredExit
         };
 
         return service;
 
-        function stucturedExit(event, cancelNavigation, continueNavigation) {
+        function structuredExit(event, cancelNavigation, continueNavigation) {
 
-            var exitModal = $modal.open({
+            var modal = $modal.open({
                 templateUrl: './app/layout/structuredExit.html',
                 controller: structuredExitModal,
                 keyboard: false,
@@ -34,6 +34,8 @@
             });
 
             event.preventDefault();
+            
+            return modal.result;
         }
 
         function structuredExitModal($scope, $modalInstance, $location, destination, cancel, ok) {
@@ -42,7 +44,7 @@
 
             function onCancel() {
                 cancel(destination);
-                $modalInstance.close();
+                $modalInstance.dismiss();
             }
 
             function onOK() {
@@ -73,6 +75,8 @@
             }
 
             var modal = $modal.open(options);
+            
+            return modal.result;
         }
 
         function confirmModal($scope, $modalInstance, ok, cancel, parameter) {
@@ -86,7 +90,7 @@
 
             function onCancel() {
                 if (angular.isDefined(cancel)) { cancel(); }
-                $modalInstance.close();
+                $modalInstance.dismiss();
             }
 
             function onOK() {

@@ -50,7 +50,7 @@
             function (event, current, previous)
             {
                 if (vm.dirty) {
-                    dialogs.stucturedExit(event, function () { }, function () { vm.dirty = false; });
+                    dialogs.structuredExit(event, function () { }, function () { vm.dirty = false; });
                 }
             });
 

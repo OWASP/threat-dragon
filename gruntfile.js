@@ -11,11 +11,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 	
-	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep']);
-	grunt.registerTask('release', ['bower', 'uglify', 'cssmin', 'wiredep']);
+	grunt.registerTask('default', ['bower', 'uglify', 'cssmin', 'wiredep', 'jshint', 'karma']);
+	grunt.registerTask('release', ['bower', 'uglify', 'cssmin', 'wiredep', 'jshint', 'karma']);
 	grunt.registerTask('debug', ['bower', 'wiredepdebug']);
-	grunt.registerTask('justtest', ['jshint', 'karma']);
-	grunt.registerTask('test', ['bower', 'uglify', 'cssmin', 'wiredep', 'jshint', 'karma']);
+	grunt.registerTask('test', ['jshint', 'karma']);
     
     grunt.initConfig({
 		

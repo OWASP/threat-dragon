@@ -56,13 +56,9 @@ then
 
 The unit tests are written using Jasmine and can be run with Karma using a Grunt task or using npm. Install recent versions of Chrome, Firefox and IE then run the tests using
 
-`grunt justtest`
-
-to do a full release build and then run the tests, do
-
 `grunt test`
 
-To test using PhantomJS (this is what runs on the Travis CI server)
+To test using PhantomJS and Firefox (this is what runs on the Travis CI server)
 
 `npm test`
 
