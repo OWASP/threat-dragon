@@ -2,6 +2,7 @@
 
 var diagramming;
 var common;
+var mockLog;
 
 describe('diagramming service:', function () {
 

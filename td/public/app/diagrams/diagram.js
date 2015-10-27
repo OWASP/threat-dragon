@@ -22,7 +22,6 @@
         var elementPropertiesCache = {};
         var deletedElements = {};
         var currentDiagram = {};
-        var scaleFactor = 1.25;
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'ThreatModelDiagram';

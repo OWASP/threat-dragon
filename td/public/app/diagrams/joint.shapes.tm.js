@@ -109,7 +109,7 @@ joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
         attrs: {
             rect: { fill: 'white', stroke: 'white', 'follow-scale': true, width: 160, height: 80 },
             '.element-store': { d: 'M0 0 H160 M0 80 H160', stroke: 'black', fill: 'white', 'stroke-width': 1, 'follow-scale': true},
-            text: { ref: 'path' }
+            text: { ref: '.element-store' }
         },
         size: { width: 160, height: 80 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
@@ -117,14 +117,14 @@ joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
 
 joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
 
-    markup: '<g class="rotatable"><g class="scalable"><rect/><title class="tooltip"/></g><text/></g>',
+    markup: '<g class="rotatable"><g class="scalable"><rect class="element-actor"/><title class="tooltip"/></g><text/></g>',
 
     defaults: joint.util.deepSupplement({
 
         type: 'tm.Actor',
         attrs: {
-            rect: { fill: 'white', stroke: 'black', 'stroke-width': 1, 'follow-scale': true, width: 160, height: 80 },
-            text: { ref: 'rect'}
+            '.element-actor': { fill: 'white', stroke: 'black', 'stroke-width': 1, 'follow-scale': true, width: 160, height: 80 },
+            text: { ref: '.element-actor'}
         },
         size: { width: 160, height: 80 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
