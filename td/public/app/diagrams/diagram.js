@@ -91,9 +91,13 @@
         function save()
         {
             var diagramJson = JSON.stringify(vm.graph);
-            var size = { height: currentDiagram.options.height, width: currentDiagram.options.width };
-            var diagramData = { diagramJson: diagramJson, size: size };
-
+            var diagramData = { diagramJson: diagramJson };
+            
+            if (angular.isDefined(currentDiagram.options) && angular.isDefined(currentDiagram.options.height) && angular.isDefined(currentDiagram.options.width)) {
+                var size = { height: currentDiagram.options.height, width: currentDiagram.options.width };
+                diagramData.size = size;     
+            }
+            
             datacontext.saveThreatModelDiagram(vm.threatModelId, vm.diagramId, diagramData)
                 .then(flushElementPropertiesCache)
                 .then(flushDeletedElements)
@@ -152,11 +156,11 @@
             //avoids the confirmation if you are reloading after an accidental clear of the model
             if (vm.dirty && diagramming.cellCount(vm.graph) > 0)
             {
-                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function () { initialise(currentDiagram); });
+                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(currentDiagram); });
             }
             else
             {
-                initialise(currentDiagram);
+                vm.initialise(currentDiagram);
             }  
         }
 
