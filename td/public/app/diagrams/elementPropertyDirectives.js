@@ -1,7 +1,39 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('app');  
+    var app = angular.module('app');
+    
+    app.directive('tmtModalClose', [function () {
+        
+        var directive =
+        {
+            link: link,
+            templateUrl: function (elem, attrs) { return attrs.templateUrl; },
+            restrict: 'E',
+            scope:
+            {
+                action: '&',
+                newClass: '@',
+            }
+        };
+        
+        var selectedElement = null;
+        
+        return directive;
+        
+        function link(scope, element, attrs) {
+            
+            scope.onAction = function () {
+
+                var el = $("[role='dialog']");
+                var windowClass = el.attr("window-class");
+                el.removeClass(windowClass);
+                el.addClass(scope.newClass);
+                scope.action();
+            };
+        }
+
+    }]);
 
     app.directive('tmtElementProperties', ['common', function (common) {
 
