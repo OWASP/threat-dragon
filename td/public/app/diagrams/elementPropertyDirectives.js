@@ -17,8 +17,6 @@
             }
         };
         
-        var selectedElement = null;
-        
         return directive;
         
         function link(scope, element, attrs) {
@@ -49,8 +47,6 @@
                 edit: '&'
             }
         };
-
-        var selectedElement = null;
 
         return directive;
 

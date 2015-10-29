@@ -1,5 +1,61 @@
 'use strict';
 
+describe('modal close directive: ', function() {
+    
+    var $rootScope;
+    var $scope;
+    var $compile;
+    var $httpBackend;
+    var elem;
+    
+    beforeEach(function() {
+      
+        angular.mock.module('app');
+        angular.mock.module('./app/diagrams/modalAccept.html');
+        angular.mock.module('./app/diagrams/modalIgnore.html');
+        angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
+            $rootScope = _$rootScope_;
+            $scope = $rootScope.$new();
+            $compile = _$compile_;
+            $httpBackend = _$httpBackend_;
+            $httpBackend.expectGET().respond();
+        });
+
+        $rootScope.$apply();  
+        
+    });
+    
+    it('should add the specified class', function() {
+        
+        $scope.action = function() {};
+        spyOn($scope,'action');
+        var testClass = 'testClass';
+        
+        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close></div>');
+        $compile(elem)($scope);
+        $scope.$digest();
+        setFixtures(elem);
+        var parent = angular.element($("#parent")[0]);
+        ($(elem).find('button')[0]).click();
+        expect(parent).toHaveClass(testClass);
+         
+    });
+    
+    it('should invoke the specified action', function() {
+        
+        $scope.action = function() {};
+        spyOn($scope,'action');
+        var testClass = 'testClass';
+        
+        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close></div>');
+        $compile(elem)($scope);
+        $scope.$digest();
+        setFixtures(elem);
+        ($(elem).find('button')[0]).click();
+        expect($scope.action).toHaveBeenCalled();        
+    });
+});
+
 describe('element properties directive: ', function () {
 
     var $rootScope;
