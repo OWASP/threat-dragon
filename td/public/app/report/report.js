@@ -16,6 +16,7 @@
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logError = getLogFn(controllerId, 'error');
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'Report';
@@ -57,7 +58,7 @@
 
         function getElementProperties(diagramId, element)
         {
-            datacontext.getElementProperties(diagramId, element.id).then(function (data) {
+            datacontext.getElementProperties(vm.threatModel.summary.id, diagramId, element.id).then(function (data) {
                 element.properties = data;
             });
         }
