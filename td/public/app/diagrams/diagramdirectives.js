@@ -20,11 +20,11 @@
 
         function link(scope, element, attrs) {
 
-            if (!scope.scale) {
+            if (angular.isUndefined(scope.scale)) {
                 scope.scale = 1.0;
             }
 
-            if (!scope.padding) {
+            if (angular.isUndefined(scope.padding)) {
                 scope.padding = 0.0;
             }
 

@@ -34,7 +34,7 @@ describe('element summary directive: ', function() {
         $scope.$digest();
         setFixtures(elem);
 		
-		var isolateScope = elem.scope();
+		var isolateScope = elem.isolateScope();
 		expect(isolateScope.element.type).toEqual(elementType);
        
     });  

@@ -20,8 +20,8 @@
 
         function link(scope, element, attrs)
         {
-            var type = scope.element.attributes.type.split('.')[1];
-            scope.element.type = type;
+            var elType = scope.element.attributes.type.split('.')[1];
+            scope.element.type = elType;
         }
 
     }]);
