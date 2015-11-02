@@ -153,14 +153,18 @@ describe('diagram directive: ', function() {
             
             //graph mocks
             var graph = new joint.dia.Graph();;
-            $scope.graph = graph;
             spyOn(graph, 'on').and.callThrough();
+            
+            //scope mocks
+            $scope.graph = graph;
             $scope.initialiseGraph = function() {};
             spyOn($scope, 'initialiseGraph');
             $scope.select = function(element) { };
             spyOn($scope, 'select');
+            $scope.newFlow = function() {};
+            spyOn($scope,'newFlow');
             
-            setFixtures('<tmt-diagram height="' + height + '" width="' + width + '" grid-size="' + gridSize + '" interactive="' + interactive + '" graph="graph" initialise-graph="initialiseGraph(diagram)" select="select(element)" />');
+            setFixtures('<tmt-diagram height="' + height + '" width="' + width + '" grid-size="' + gridSize + '" interactive="' + interactive + '" graph="graph" initialise-graph="initialiseGraph(diagram)" select="select(element)" new-flow="newFlow(source, target)" />');
             elem = angular.element($('tmt-diagram')[0]);
             $compile(elem)($scope);
             $scope.$digest();
@@ -254,6 +258,204 @@ describe('diagram directive: ', function() {
                 expect($scope.select.calls.argsFor(0)).toEqual([null]);
                 
             });
+            
+            it('should remove the link-from from a selected element when unselecting', function() {
+               
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                cellView.linkFrom = true;
+                cellView.$el.find('.element-tool-link').attr('class', 'element-tool-link linking');
+                diagram.setSelected(cell);
+                diagram.trigger('blank:pointerclick', null);
+               
+                expect(cellView.linkFrom).toBe(false);
+                expect(cellView.$el.find('.element-tool-link.linking').length).toEqual(0);
+                
+            });
+            
+            it('should replace the selected element', function() {
+ 
+                var cell1 = new joint.shapes.tm.Process();
+                var cell2 = new joint.shapes.tm.Process();
+                $scope.graph.addCells([cell1, cell2]);
+                var cellView1 = diagram.findViewByModel(cell1); 
+                var cellView2 = diagram.findViewByModel(cell2);      
+                diagram.trigger('cell:pointerclick', cellView1);
+                diagram.trigger('cell:pointerclick', cellView2);
+                expect($scope.select.calls.count()).toEqual(2);             
+                expect($scope.select.calls.argsFor(1)).toEqual([cell2]);     
+                
+            });
+            
+            it('should set/unset the selected properties', function() {
+ 
+                var cell1 = new joint.shapes.tm.Process();
+                var cell2 = new joint.shapes.tm.Process();
+                $scope.graph.addCells([cell1, cell2]);
+                var cellView1 = diagram.findViewByModel(cell1); 
+                var cellView2 = diagram.findViewByModel(cell2);      
+                diagram.setSelected(cell1);
+                spyOn(cellView1,'setUnselected');
+                spyOn(cellView2, 'setSelected');
+                diagram.setSelected(cell2);
+                expect(cellView1.setUnselected).toHaveBeenCalled();             
+                expect(cellView2.setSelected).toHaveBeenCalled();     
+                
+            });
+            
+            it('should unset the selected property', function() {
+ 
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell); 
+                diagram.setSelected(cell);
+                spyOn(cellView,'setUnselected');
+                diagram.setSelected(null);
+                expect(cellView.setUnselected).toHaveBeenCalled();             
+                
+            });
+            
+            it('should set the link-from', function() {
+                
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                cellView._action = 'linkFrom'; 
+                diagram.trigger('cell:pointerclick', cellView);
+                
+                //toHaveClass does not work on SVG elements
+                expect(cellView.$el.find('.element-tool-link.linking').length).toEqual(1);
+                expect(cellView.linkFrom).toBe(true);
+                
+            });
+            
+            it('should unset the link-from (tool element)', function() {
+                
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                cellView.linkFrom = true;
+                cellView.$el.find('.element-tool-link').attr('class', 'element-tool-link linking');
+                diagram.setSelected(cell);
+                cellView._action = 'removeLinkFrom';
+                diagram.trigger('cell:pointerclick', cellView);
+                expect(cellView.linkFrom).toBe(false);
+                expect(cellView.$el.find('.element-tool-link.linking').length).toEqual(0);
+                
+            });
+            
+            it('should unset the link-from (link select)', function() {
+                
+                var cell = new joint.shapes.tm.Process();
+                var flow = new joint.shapes.tm.Flow({source: {x: 1, y: 1}, target: {x:100, y:100}});
+                $scope.graph.addCell([cell, flow]);
+                var cellView = diagram.findViewByModel(cell);
+                cellView.linkFrom = true;
+                cellView.$el.find('.element-tool-link').attr('class', 'element-tool-link linking');
+                diagram.setSelected(cell);
+                var flowView = diagram.findViewByModel(flow);
+                diagram.trigger('link:options', flowView);
+                expect(cellView.linkFrom).toBe(false);
+                expect(cellView.$el.find('.element-tool-link.linking').length).toEqual(0);
+                
+            });
+            
+            it('should link the selected elements', function() {
+                
+                var cell1 = new joint.shapes.tm.Process();
+                var cell2 = new joint.shapes.tm.Process();
+                $scope.graph.addCells([cell1, cell2]);
+                var cellView1 = diagram.findViewByModel(cell1); 
+                var cellView2 = diagram.findViewByModel(cell2); 
+                cellView1.linkFrom = true;
+                cellView1.$el.find('.element-tool-link').attr('class', 'element-tool-link linking');
+                diagram.setSelected(cell1);
+                
+                diagram.trigger('cell:pointerclick', cellView2);
+                expect(cellView1.linkFrom).toBe(false);
+                expect(cellView1.$el.find('.element-tool-link.linking').length).toEqual(0);
+                expect($scope.newFlow).toHaveBeenCalled();
+                expect($scope.newFlow.calls.argsFor(0)[0].cid).toEqual(cell1.cid);
+                expect($scope.newFlow.calls.argsFor(0)[1].cid).toEqual(cell2.cid);
+                
+            });
+            
+            it('should constrain movement to x >= 0', function() {
+                
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                spyOn(cellView, 'getBBox').and.returnValue({x: -5, y: 100});
+                spyOn(cellView, 'pointermove');
+                
+                var x = 10;
+                var y = 20;
+                
+                diagram.trigger('cell:pointermove', cellView, null, x,y);
+                expect(cellView.pointermove).toHaveBeenCalled();
+                expect(cellView.pointermove.calls.argsFor(0)[1]).toEqual(x + gridSize);
+                
+            });
+            
+            it('should constrain movement to y >= 0', function() {
+                
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                spyOn(cellView, 'getBBox').and.returnValue({x: 50, y: -5});
+                spyOn(cellView, 'pointermove');
+                
+                var x = 10;
+                var y = 20;
+                
+                diagram.trigger('cell:pointermove', cellView, null, x,y);
+                expect(cellView.pointermove).toHaveBeenCalled();
+                expect(cellView.pointermove.calls.argsFor(0)[2]).toEqual(y + gridSize);
+                
+            });
+            
+            it('should scroll left', function() {
+                
+                var parent = $(elem).parent();
+                parent.css('overflow','auto');
+                parent.css('width', '50');
+                parent.scrollLeft(50);        
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                var bboxx = 1;
+                spyOn(cellView, 'getBBox').and.returnValue({x: bboxx, y: 50});
+                
+                var x = 10;
+                var y = 20;
+                
+                diagram.trigger('cell:pointermove', cellView, null, x,y);
+                expect(parent.scrollLeft()).toEqual(bboxx);
+                
+            });
+
+            it('should scroll up', function() {
+                
+                var parent = $(elem).parent();
+                parent.css('overflow','auto');
+                parent.css('height', '50');
+                parent.scrollTop(50);        
+                var cell = new joint.shapes.tm.Process();
+                $scope.graph.addCell(cell);
+                var cellView = diagram.findViewByModel(cell);
+                var bboxy = 1;
+                spyOn(cellView, 'getBBox').and.returnValue({x: 50, y: bboxy});
+                
+                var x = 10;
+                var y = 20;
+                
+                diagram.trigger('cell:pointermove', cellView, null, x,y);
+                expect(parent.scrollTop()).toEqual(bboxy);
+                
+            });          
+            
+            
         });
     });
 });
