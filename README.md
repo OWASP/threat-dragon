@@ -66,7 +66,7 @@ To test using PhantomJS and Firefox (this is what runs on the Travis CI server)
 
 ###The unit test coverage progress
 
-The coverage at the moment is not great, but we are working on it...
+We aim to maintain unit test coverage at > 90%
 
 ![codecov.io](https://codecov.io/github/mike-goodwin/owasp-threat-dragon/branch.svg?branch=master)
 
