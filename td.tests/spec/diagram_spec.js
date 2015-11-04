@@ -518,7 +518,7 @@ describe('diagram controller', function () {
         
         beforeEach(function() {
      
-            element = 'element'       
+            element = {element: 'element', elementProperties: 'properties'};       
 
         });
         
@@ -531,7 +531,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             
@@ -552,7 +552,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             

@@ -203,7 +203,7 @@
         {
             if (vm.selected.element)
             {
-                threatengine.generateForElement(vm.selected.element).then(onGenerateThreats);
+                threatengine.generateForElement(vm.selected).then(onGenerateThreats);
             }
         }
 

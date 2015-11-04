@@ -24,11 +24,11 @@ describe('threatengine service:', function () {
 
         it('process should generate STRIDE', function (done) {
 
-            var element = { attributes: { type: 'tm.Process' } };
+            var element = {element: { attributes: { type: 'tm.Process' } }, elementProperties: {} };
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(6);
-                var threatTypes = getThreatTypes(threats);
+                var threatTypes = _.uniq(_.pluck(threats, 'type'));
                 expect(threatTypes.indexOf('Spoofing')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Tampering')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Repudiation')).toBeGreaterThan(-1);
@@ -43,11 +43,11 @@ describe('threatengine service:', function () {
 
         it('flow should generate TID', function (done) {
 
-            var element = { attributes: { type: 'tm.Flow' } };
+            var element = {element: { attributes: { type: 'tm.Flow' } }, elementProperties: {} };
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(3);
-                var threatTypes = getThreatTypes(threats);
+                var threatTypes = _.uniq(_.pluck(threats, 'type'));
                 expect(threatTypes.indexOf('Tampering')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Information disclosure')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Denial of service')).toBeGreaterThan(-1);
@@ -60,11 +60,11 @@ describe('threatengine service:', function () {
 
         it('actor should generate SR', function (done) {
 
-            var element = { attributes: { type: 'tm.Actor' } };
+            var element = {element: { attributes: { type: 'tm.Actor' } }, elementProperties: {} };
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(2);
-                var threatTypes = getThreatTypes(threats);
+                var threatTypes = _.uniq(_.pluck(threats, 'type'));
                 expect(threatTypes.indexOf('Spoofing')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Repudiation')).toBeGreaterThan(-1);
                 done();
@@ -76,11 +76,11 @@ describe('threatengine service:', function () {
 
        it('store should generate TRID', function (done) {
 
-            var element = { attributes: { type: 'tm.Store' } };
+            var element = {element: { attributes: { type: 'tm.Store' } }, elementProperties: {} };
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(4);
-                var threatTypes = getThreatTypes(threats);
+                var threatTypes = _.uniq(_.pluck(threats, 'type'));
                 expect(threatTypes.indexOf('Tampering')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Repudiation')).toBeGreaterThan(-1);
                 expect(threatTypes.indexOf('Information disclosure')).toBeGreaterThan(-1);
@@ -90,6 +90,24 @@ describe('threatengine service:', function () {
 
             $rootScope.$apply();
 
+        });
+        
+        it('should suggest using encryption over public networks', function(done) {
+            
+            var subject = {element: { attributes: { type: 'tm.Flow' } } };
+            subject.elementProperties = {isPublicNetwork: true, isEncrypted: false};
+            
+            threatengine.generateForElement(subject).then(function (threats) {
+                
+                expect(threats).toBeDefined();
+                var ruleIds = _.uniq(_.pluck(threats, 'ruleId'));
+                expect(ruleIds.indexOf('c1cae982-3e92-4bb2-b50b-ea51137fc3a7')).toBeGreaterThan(-1);
+                done();
+                
+            })
+            
+            $rootScope.$apply();
+            
         });
 
     });
@@ -119,23 +137,5 @@ describe('threatengine service:', function () {
             expect(threats.length).toEqual(0);
 
         });
-
     });
-
-    function getThreatTypes(threats) {
-
-        var threatTypes = [];
-
-        threats.forEach(function (threat) {
-
-            if (threatTypes.indexOf(threat.type) < 0) {
-                threatTypes.push(threat.type);
-            }
-
-        });
-
-        return threatTypes;
-
-    }
-
 });
