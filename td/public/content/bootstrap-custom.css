@@ -35,6 +35,11 @@ textarea {
 	resize: none;
 }
 
+/*icon alignment*/
+.icon-align {
+	vertical-align: middle;
+}
+
 /*modals*/
 
 .fade {
