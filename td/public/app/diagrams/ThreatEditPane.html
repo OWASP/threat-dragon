@@ -72,7 +72,11 @@
         <button class="btn btn-default" ng-click="onCancel()">Cancel</button>
     </div>
     <div ng-if="!parameter.editing" class="modal-footer">
-        <tmt-modal-close action="onOK()" new-class="fade-left" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close>
-        <tmt-modal-close action="onCancel()" new-class="fade-down" template-url="./app/diagrams/modalIgnore.html"></tmt-modal-close>
+        <span class="pull-left">
+            <input type="checkbox" ng-model="applyToAll">
+            Do this for all remaining threats 
+        </span>
+        <tmt-modal-close action="onOK(applyToAll)" new-class="fade-left" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close>
+        <tmt-modal-close action="onCancel(applyToAll)" new-class="fade-down" template-url="./app/diagrams/modalIgnore.html"></tmt-modal-close>
     </div>
 </div>

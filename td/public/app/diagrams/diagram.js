@@ -221,16 +221,30 @@
                 }
             }
 
-            function addThreat()
+            function addThreat(applyToAll)
             {
                 vm.dirty = true;
                 vm.selected.elementProperties.threats.push(currentThreat);
-                $timeout(suggestThreat, 500);
+                
+                if(applyToAll)
+                {
+                    threatList.forEach(function(threat) {
+                        
+                        vm.selected.elementProperties.threats.push(threat);
+                    });
+                }
+                else
+                {
+                    $timeout(suggestThreat, 500);    
+                }
             }
 
-            function ignoreThreat()
+            function ignoreThreat(applyToAll)
             {
-                $timeout(suggestThreat, 500);
+                if(!applyToAll)
+                {
+                    $timeout(suggestThreat, 500);
+                }
             }
         }
         

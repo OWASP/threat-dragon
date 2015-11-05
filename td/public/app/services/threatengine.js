@@ -128,7 +128,6 @@
                     [Element, 'el', 'el.type == "tm.Flow" && isTrue(el.properties.isPublicNetwork) && ( isFalse(el.properties.isEncrypted) || isUndefined(el.properties.isEncrypted) )'],
                     [Threats, 'threats']
                 ], function (facts) {
-                    console.log('dsdswdsd');
                     facts.threats.collection.push({
                         ruleId: 'c1cae982-3e92-4bb2-b50b-ea51137fc3a7', 
                         title: 'Use encryption', 

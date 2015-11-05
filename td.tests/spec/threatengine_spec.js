@@ -92,15 +92,20 @@ describe('threatengine service:', function () {
 
         });
         
+        //give a description for the rule
         it('should suggest using encryption over public networks', function(done) {
             
+            //set up the properties of the element
             var subject = {element: { attributes: { type: 'tm.Flow' } } };
             subject.elementProperties = {isPublicNetwork: true, isEncrypted: false};
             
+            //generate the threats
             threatengine.generateForElement(subject).then(function (threats) {
                 
                 expect(threats).toBeDefined();
                 var ruleIds = _.uniq(_.pluck(threats, 'ruleId'));
+                //grab a new UUID for your rule from https://www.guidgenerator.com/ and expect it to 
+                //be in the generated threats
                 expect(ruleIds.indexOf('c1cae982-3e92-4bb2-b50b-ea51137fc3a7')).toBeGreaterThan(-1);
                 done();
                 

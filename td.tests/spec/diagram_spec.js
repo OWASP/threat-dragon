@@ -583,6 +583,31 @@ describe('diagram controller', function () {
             expect($scope.vm.dirty).toBe(true);
         });
         
+        it('should add threats to the element', function() {
+            
+            var threats = ['threat1', 'threat2', 'threat3'];
+            var currentThreat = threats[0];
+            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+            $scope.vm.selected.elementProperties = {threats: []};
+            $scope.vm.dirty = false;
+            
+            $scope.vm.selected.element = element;
+            $scope.vm.generateThreats()
+            $scope.$apply();
+            
+            //argument 0 is confirm - OK/Accept
+            mockDialogs.confirm.calls.argsFor(0)[1](true);
+            $timeout.flush();
+            threats.unshift(currentThreat);
+            expect($scope.vm.selected.elementProperties.threats).toEqual(threats);
+            expect(mockDialogs.confirm.calls.count()).toEqual(1);
+            expect($scope.vm.dirty).toBe(true);            
+            
+        });
+        
         it('should not add a threat to the element', function() {
             
             var threats = ['threat1', 'threat2', 'threat3'];
@@ -603,6 +628,29 @@ describe('diagram controller', function () {
             
             expect($scope.vm.selected.elementProperties.threats).toEqual([]);
             expect(mockDialogs.confirm.calls.count()).toEqual(2);
+            expect($scope.vm.dirty).toBe(false);
+        });
+        
+        it('should not add a threat to the element', function() {
+            
+            var threats = ['threat1', 'threat2', 'threat3'];
+            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+            $scope.vm.selected.elementProperties = {threats: []};
+            $scope.vm.dirty = false;
+            
+            $scope.vm.selected.element = element;
+            $scope.vm.generateThreats()
+            $scope.$apply();
+            
+            //argument 3 is confirm - Cancel/Ignore
+            mockDialogs.confirm.calls.argsFor(0)[3](true);
+            $timeout.flush();
+            
+            expect($scope.vm.selected.elementProperties.threats).toEqual([]);
+            expect(mockDialogs.confirm.calls.count()).toEqual(1);
             expect($scope.vm.dirty).toBe(false);
         });
     });

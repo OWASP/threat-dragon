@@ -81,6 +81,8 @@
 
         function link(scope, element, attrs)
         {
+            scope.applyToAll = false;
+            
             if (!scope.threats)
             {
                 scope.threats = [];

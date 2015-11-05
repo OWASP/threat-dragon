@@ -80,6 +80,8 @@
         }
 
         function confirmModal($scope, $modalInstance, ok, cancel, parameter) {
+            
+            $scope.applyToAll = false;
             $scope.onCancel = onCancel;
             $scope.onOK = onOK;
 
@@ -88,13 +90,13 @@
                 $scope.parameter = parameter();
             }
 
-            function onCancel() {
-                if (angular.isDefined(cancel)) { cancel(); }
+            function onCancel(param) {
+                if (angular.isDefined(cancel)) { cancel(param); }
                 $modalInstance.dismiss();
             }
 
-            function onOK() {
-                if (angular.isDefined(ok)) { ok(); }
+            function onOK(param) {
+                if (angular.isDefined(ok)) { ok(param); }
                 $modalInstance.close();
             }
         }
