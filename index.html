@@ -27,7 +27,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#td-pages-nav-links" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -37,7 +37,7 @@
         </div>
     
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="td-pages-nav-links">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="https://threatdragon.azurewebsites.net/" target="_blank"><span class="fa fa-flask fa-lg"></span> See the prototype</a></li>
                 <li><a href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank"><span class="fa fa-github fa-lg"></span> Visit us on GitHub</a></li>
@@ -53,7 +53,7 @@
         <div class="jumbotron">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+                    <div class="col-lg-4 col-md-5 col-sm-12 hidden-xs">
                         <a href="http://dreamsofmine.deviantart.com/" target="_label"><img src="content/images/threatdragon_logo_image.svg" alt="Image credit to DreamsOfMine" /></a>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
@@ -61,7 +61,7 @@
                             Threat Dragon is an open-source threat modelling tool from OWASP. To use it, you don't need to sign-up or sign-in and it is completely free. All your models are stored on your local device, so your data is never sent to anyone else or stored at some unknown location on the cloud.
                         </p>
                         <p>
-                            Threat Dragon is currently in the early stages of development (an OWASP incubator project) so there might be some bugs.
+                            It is currently in the early stages of development (an OWASP incubator project) so there might be some bugs.
                         </p>
                         <p class="lead text-justify">
                             If you make a model that you want to keep, you can print it to a file or hard copy. You can also save the raw model data as a file to share with friends or move between your devices or browsers.
@@ -79,9 +79,11 @@
             
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
-                    <div class="text-center">
-                        <span class="glyphicon glyphicon-edit fa-4x text-primary"></span>
-                    </div>
+                    <a href="#editing-threat-models">
+                        <div class="text-center">
+                            <span class="glyphicon glyphicon-edit fa-4x text-primary"></span>
+                        </div>
+                    </a>
                     <div>
                         </br><p>How to create, edit, share and export threat models.</p>
                     </div>
@@ -90,9 +92,11 @@
 
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
-                    <div class="text-center">
-                        <span class="fa fa-sitemap fa-4x text-primary"></span>
-                    </div>
+                    <a href="#threat-model-diagrams">
+                        <div class="text-center">
+                            <span class="fa fa-sitemap fa-4x text-primary"></span>
+                        </div>
+                    </a>
                     <div>
                         </br><p>Guidance and documentation for editing threat model diagrams.</p>
                     </div>
@@ -101,9 +105,11 @@
         
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
-                    <div class="text-center">
-                        <span class="glyphicon glyphicon-flash fa-4x text-primary"></span>
-                    </div>
+                    <a href="#threat-generation">
+                        <div class="text-center">
+                            <span class="glyphicon glyphicon-flash fa-4x text-primary"></span>
+                        </div>
+                    </a>
                     <div>
                         </br><p>A description of the rules used for threat generation.</p>
                     </div>
@@ -112,6 +118,81 @@
             
         </div>
                
+    </div>
+    
+    <div class="container-fluid">
+        <div class="panel panel-default" id="editing-threat-models">
+            <div class="panel-heading panel-title">
+                <h2>Creating, editing, sharing and exporting threat models</h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum eros metus, vitae dapibus diam sollicitudin sit amet. Phasellus ipsum erat, placerat sed eros at, ultrices elementum massa. Proin vehicula, nulla eget molestie consequat, massa velit placerat est, ultrices eleifend urna purus nec ligula. Nullam laoreet euismod erat, eget suscipit nisi vulputate ac. Proin ut justo vitae lacus dignissim placerat. Praesent velit nunc, varius id justo a, porta vehicula sem. Donec maximus orci sed turpis sollicitudin, pretium facilisis ex blandit. Fusce condimentum felis at erat eleifend accumsan. Duis ultricies eros pellentesque placerat laoreet. Mauris semper leo ut pharetra aliquam. Cras mi odio, vehicula semper nibh quis, aliquet hendrerit dui. Vivamus euismod erat vel convallis auctor. Nam pharetra enim ut nisi placerat suscipit.
+                </p>
+                <p>
+                Cras congue tortor leo, sit amet malesuada nulla accumsan ut. Suspendisse potenti. Mauris nec dictum diam, sit amet luctus nisi. Proin in laoreet neque, quis dapibus neque. Aenean tincidunt mattis viverra. Phasellus quis nisl nunc. Nunc sit amet leo vel odio ultricies commodo at non diam. Maecenas consectetur orci id felis commodo mollis. Proin a ante tincidunt, feugiat lectus in, rhoncus mauris. Fusce aliquam consequat arcu, non ultricies ex fermentum non. Suspendisse eu purus eu enim aliquam cursus.
+                </p>
+                <p>
+                Pellentesque congue accumsan ligula, ut mollis ex posuere consequat. Cras et nibh velit. Sed nisl nisi, dictum et molestie eu, pretium eu nulla. Quisque imperdiet eleifend arcu, id posuere nisl congue a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis cursus mauris mi, accumsan bibendum justo venenatis ac. Pellentesque vel vehicula mi. Morbi ullamcorper, risus molestie aliquam varius, nulla tellus euismod mauris, ac aliquet nulla neque sed risus. Praesent sit amet feugiat mauris, eu fermentum lacus. Proin imperdiet semper velit eget blandit. Nulla enim dui, feugiat ut laoreet luctus, suscipit a neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi quis orci ut orci fermentum aliquet at nec mauris. Morbi enim justo, pellentesque eu maximus in, aliquet eu lectus. Nulla dui neque, faucibus nec est ac, sollicitudin interdum lorem. Aliquam erat volutpat.
+                </p>
+                <p>
+                Fusce tempor felis magna, quis gravida elit tincidunt sed. Proin suscipit, felis et accumsan rutrum, ipsum ex pulvinar purus, eget luctus nibh augue in sapien. Nullam pellentesque, orci a fringilla gravida, felis ligula viverra dui, ac varius libero nisl et mi. Nunc id nisl et leo rutrum efficitur non quis lorem. Pellentesque congue commodo magna, in bibendum dui iaculis vitae. Sed massa nisi, ullamcorper at odio bibendum, placerat ultrices tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sit amet ipsum a nulla laoreet varius.
+                </p>
+                <p>
+                Aliquam erat volutpat. Sed ultrices purus sit amet leo semper, non tincidunt mi tempor. Aliquam eget tristique purus. Sed aliquam dui magna, ac placerat ipsum volutpat at. Pellentesque varius lobortis massa, eu commodo magna sodales non. Aenean consectetur sed metus non tristique. Nam vitae luctus magna. Sed viverra purus sit amet quam scelerisque, sit amet pretium dui blandit. Nunc a vehicula mi. Maecenas volutpat id urna non sollicitudin. Donec vulputate laoreet justo, eu pharetra purus.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="panel panel-default" id="threat-model-diagrams">
+            <div class="panel-heading panel-title">
+                <h2>Threat model diagrams</h2> 
+            </div>
+            <div class="panel-body">
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum eros metus, vitae dapibus diam sollicitudin sit amet. Phasellus ipsum erat, placerat sed eros at, ultrices elementum massa. Proin vehicula, nulla eget molestie consequat, massa velit placerat est, ultrices eleifend urna purus nec ligula. Nullam laoreet euismod erat, eget suscipit nisi vulputate ac. Proin ut justo vitae lacus dignissim placerat. Praesent velit nunc, varius id justo a, porta vehicula sem. Donec maximus orci sed turpis sollicitudin, pretium facilisis ex blandit. Fusce condimentum felis at erat eleifend accumsan. Duis ultricies eros pellentesque placerat laoreet. Mauris semper leo ut pharetra aliquam. Cras mi odio, vehicula semper nibh quis, aliquet hendrerit dui. Vivamus euismod erat vel convallis auctor. Nam pharetra enim ut nisi placerat suscipit.
+                </p>
+                <p>
+                Cras congue tortor leo, sit amet malesuada nulla accumsan ut. Suspendisse potenti. Mauris nec dictum diam, sit amet luctus nisi. Proin in laoreet neque, quis dapibus neque. Aenean tincidunt mattis viverra. Phasellus quis nisl nunc. Nunc sit amet leo vel odio ultricies commodo at non diam. Maecenas consectetur orci id felis commodo mollis. Proin a ante tincidunt, feugiat lectus in, rhoncus mauris. Fusce aliquam consequat arcu, non ultricies ex fermentum non. Suspendisse eu purus eu enim aliquam cursus.
+                </p>
+                <p>
+                Pellentesque congue accumsan ligula, ut mollis ex posuere consequat. Cras et nibh velit. Sed nisl nisi, dictum et molestie eu, pretium eu nulla. Quisque imperdiet eleifend arcu, id posuere nisl congue a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis cursus mauris mi, accumsan bibendum justo venenatis ac. Pellentesque vel vehicula mi. Morbi ullamcorper, risus molestie aliquam varius, nulla tellus euismod mauris, ac aliquet nulla neque sed risus. Praesent sit amet feugiat mauris, eu fermentum lacus. Proin imperdiet semper velit eget blandit. Nulla enim dui, feugiat ut laoreet luctus, suscipit a neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi quis orci ut orci fermentum aliquet at nec mauris. Morbi enim justo, pellentesque eu maximus in, aliquet eu lectus. Nulla dui neque, faucibus nec est ac, sollicitudin interdum lorem. Aliquam erat volutpat.
+                </p>
+                <p>
+                Fusce tempor felis magna, quis gravida elit tincidunt sed. Proin suscipit, felis et accumsan rutrum, ipsum ex pulvinar purus, eget luctus nibh augue in sapien. Nullam pellentesque, orci a fringilla gravida, felis ligula viverra dui, ac varius libero nisl et mi. Nunc id nisl et leo rutrum efficitur non quis lorem. Pellentesque congue commodo magna, in bibendum dui iaculis vitae. Sed massa nisi, ullamcorper at odio bibendum, placerat ultrices tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sit amet ipsum a nulla laoreet varius.
+                </p>
+                <p>
+                Aliquam erat volutpat. Sed ultrices purus sit amet leo semper, non tincidunt mi tempor. Aliquam eget tristique purus. Sed aliquam dui magna, ac placerat ipsum volutpat at. Pellentesque varius lobortis massa, eu commodo magna sodales non. Aenean consectetur sed metus non tristique. Nam vitae luctus magna. Sed viverra purus sit amet quam scelerisque, sit amet pretium dui blandit. Nunc a vehicula mi. Maecenas volutpat id urna non sollicitudin. Donec vulputate laoreet justo, eu pharetra purus.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default" id="threat-generation">
+            <div class="panel-heading panel-title">
+                <h2>Threat generation rules</h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum eros metus, vitae dapibus diam sollicitudin sit amet. Phasellus ipsum erat, placerat sed eros at, ultrices elementum massa. Proin vehicula, nulla eget molestie consequat, massa velit placerat est, ultrices eleifend urna purus nec ligula. Nullam laoreet euismod erat, eget suscipit nisi vulputate ac. Proin ut justo vitae lacus dignissim placerat. Praesent velit nunc, varius id justo a, porta vehicula sem. Donec maximus orci sed turpis sollicitudin, pretium facilisis ex blandit. Fusce condimentum felis at erat eleifend accumsan. Duis ultricies eros pellentesque placerat laoreet. Mauris semper leo ut pharetra aliquam. Cras mi odio, vehicula semper nibh quis, aliquet hendrerit dui. Vivamus euismod erat vel convallis auctor. Nam pharetra enim ut nisi placerat suscipit.
+                </p>
+                <p>
+                Cras congue tortor leo, sit amet malesuada nulla accumsan ut. Suspendisse potenti. Mauris nec dictum diam, sit amet luctus nisi. Proin in laoreet neque, quis dapibus neque. Aenean tincidunt mattis viverra. Phasellus quis nisl nunc. Nunc sit amet leo vel odio ultricies commodo at non diam. Maecenas consectetur orci id felis commodo mollis. Proin a ante tincidunt, feugiat lectus in, rhoncus mauris. Fusce aliquam consequat arcu, non ultricies ex fermentum non. Suspendisse eu purus eu enim aliquam cursus.
+                </p>
+                <p>
+                Pellentesque congue accumsan ligula, ut mollis ex posuere consequat. Cras et nibh velit. Sed nisl nisi, dictum et molestie eu, pretium eu nulla. Quisque imperdiet eleifend arcu, id posuere nisl congue a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis cursus mauris mi, accumsan bibendum justo venenatis ac. Pellentesque vel vehicula mi. Morbi ullamcorper, risus molestie aliquam varius, nulla tellus euismod mauris, ac aliquet nulla neque sed risus. Praesent sit amet feugiat mauris, eu fermentum lacus. Proin imperdiet semper velit eget blandit. Nulla enim dui, feugiat ut laoreet luctus, suscipit a neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi quis orci ut orci fermentum aliquet at nec mauris. Morbi enim justo, pellentesque eu maximus in, aliquet eu lectus. Nulla dui neque, faucibus nec est ac, sollicitudin interdum lorem. Aliquam erat volutpat.
+                </p>
+                <p>
+                Fusce tempor felis magna, quis gravida elit tincidunt sed. Proin suscipit, felis et accumsan rutrum, ipsum ex pulvinar purus, eget luctus nibh augue in sapien. Nullam pellentesque, orci a fringilla gravida, felis ligula viverra dui, ac varius libero nisl et mi. Nunc id nisl et leo rutrum efficitur non quis lorem. Pellentesque congue commodo magna, in bibendum dui iaculis vitae. Sed massa nisi, ullamcorper at odio bibendum, placerat ultrices tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sit amet ipsum a nulla laoreet varius.
+                </p>
+                <p>
+                Aliquam erat volutpat. Sed ultrices purus sit amet leo semper, non tincidunt mi tempor. Aliquam eget tristique purus. Sed aliquam dui magna, ac placerat ipsum volutpat at. Pellentesque varius lobortis massa, eu commodo magna sodales non. Aenean consectetur sed metus non tristique. Nam vitae luctus magna. Sed viverra purus sit amet quam scelerisque, sit amet pretium dui blandit. Nunc a vehicula mi. Maecenas volutpat id urna non sollicitudin. Donec vulputate laoreet justo, eu pharetra purus.
+                </p>
+            </div>
+        </div>
     </div>
     
     <script src="libs/jquery/jquery.min.js"></script>
