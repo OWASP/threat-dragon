@@ -146,7 +146,7 @@
 
         function reset()
         {
-            initialiseThreat();
+            newThreat = initialiseThreat();
             editIndex = null;
             $location.search('threat', null);
         }
