@@ -54,7 +54,7 @@ then
 
 ##Running the unit tests
 
-The unit tests are written using Jasmine and can be run with Karma using a Grunt task or using npm. Install recent versions of Chrome, Firefox and IE then run the tests using
+The unit tests are written using Jasmine and can be run with Karma using a Grunt task or using npm. This will also run JShint. Install recent versions of Chrome, Firefox and IE then run the tests using
 
 `grunt test`
 
