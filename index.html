@@ -86,7 +86,7 @@
                         </div>
                     </a>
                     <div>
-                        </br><p>Getting up and running for the first time.</p>
+                        </br><p>Getting started with Threat Dragon for the first time.</p>
                     </div>
                 </div>
             </div>
@@ -256,8 +256,6 @@
                 <h2>Threat model diagrams <span class="glyphicon glyphicon-picture fa-lg text-primary pull-right"></span></h2> 
             </div>
             <div class="panel-body">
-                <h3>Basic editing</h3>
-                <hr>
                 <h3>Processes, data stores and actors</h3>
                 <p>
                 Add model elements to your diagram by clicking or tapping the relevant shape in the stencil on the left side of the 
@@ -295,6 +293,47 @@
                 </p>
                 <img src="content/images/flowremove.png" width="100px" alt="flow remove tool" />
                 <hr>
+                <h3>Editing toolbar</h3>
+                The toolbar on the diagram editing page supports some general diagramming features:
+                <hr>
+                <p>
+                <a class="btn btn-default" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a> Cancels the edit and returns to the threat model details view.
+                </p>
+                <p>
+                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="Zoom in">
+                    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="Zoom out">
+                    <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+                </button> Zooms the diagram in and out
+                </p>
+                <p>
+                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="Delete All Elements From This Diagram">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button> Clears all the elements from the model
+                </p>
+                <p>
+                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="Discard Changes And Reopen Diagram">
+                    <span class="fa fa-undo" aria-hidden="true"></span>
+                </button> Reloads the diagram from the last save, discarding any changes.
+                </p>
+                <p>
+                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="Suggest threats for the selected element">
+                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                </button> Generates threats for the selected element using the threat generation rule engine.
+                </p>
+                <div class="alert alert-info" role="alert">
+                    <span class="fa fa-flask"></span> In the current alpha version of OWASP Threat Dragon, the threat generation rule engine is a stub, but you can still manually 
+                    add threats to create a full threat model.
+                </div>
+                <p>
+                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">
+                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                </button> Saves the threat model to your local browser storage.
+                </p>
+                <hr>
                 <h3>Element properties</h3>
                 To edit the properties of a model element, first select it. The element properties are shown on the right side of
                 the diagram editor. In a future version of Threat Dragon, these properties will be used by the threat generation engine to
@@ -323,7 +362,7 @@
     <div class="container-fluid">
         <div class="panel panel-default" id="threat-generation">
             <div class="panel-heading panel-title">
-                <h2>Threat generation rules <span class="glyphicon glyphicon-flash fa-lg text-primary pull-right"></span></h2>
+                <h2><span class="fa fa-flask"></span> Threat generation rules <span class="glyphicon glyphicon-flash fa-lg text-primary pull-right"></span></h2>
             </div>
             <div class="panel-body">
                 <p>
