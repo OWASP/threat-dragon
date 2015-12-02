@@ -3,6 +3,10 @@
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
+<p align="center">
+  <img src="http://mike-goodwin.github.io/owasp-threat-dragon/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
+</p>
+
 Threat Dragon is an online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. 
 The focus will be on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
