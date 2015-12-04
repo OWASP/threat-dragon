@@ -17,7 +17,7 @@
 		{
             var request = {
                 method: 'GET',
-                headers: {Accept: 'text/plain'},
+                headers: {Accept: 'application/json'},
                 url: commonConfig.config.demoModelUrl   
             };
             
