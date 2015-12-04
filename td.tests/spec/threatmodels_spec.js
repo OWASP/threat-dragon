@@ -7,17 +7,20 @@ describe('threatModels controller', function () {
     var $q;
     var $httpBackend;
     var mockDatacontext;
+    var mockWebDatacontext;
     var mockFileService;
     
     beforeEach(function () {
         
         mockDatacontext = {};
+        mockWebDatacontext = {};
         mockFileService = {};
         
         angular.mock.module('app')
         
         angular.mock.module(function ($provide) {
             $provide.value('datacontext', mockDatacontext);
+            $provide.value('webdatacontext', mockWebDatacontext);
             $provide.value('file', mockFileService);
         });
         
@@ -101,6 +104,33 @@ describe('threatModels controller', function () {
             expect(mockDatacontext.saveThreatModel.calls.argsFor(0)).toEqual([threatModel]);
 
         });
+        
+        it('should get the demo model from the webdatacontext and save it', function() {
+            
+            var demoModel = {summary: { id: 1, title: 'demo model'}};
+            mockWebDatacontext.getDemoModel = function() { return $q.when({data: demoModel}) };
+            spyOn(mockWebDatacontext, 'getDemoModel').and.callThrough();
+            
+            $scope.vm.loadDemoModel();
+            $scope.$apply();
+            expect(mockWebDatacontext.getDemoModel).toHaveBeenCalled();
+            expect(mockDatacontext.saveThreatModel).toHaveBeenCalled();
+            expect(mockDatacontext.saveThreatModel.calls.argsFor(0)).toEqual([demoModel]);
+            
+        })
+        
+        it('should error when loading the demo model', function() {
+            
+            var error = {status: 500, statusText: 'Internal server error'};
+            mockWebDatacontext.getDemoModel = function() { return $q.reject(error) };
+            spyOn(mockWebDatacontext, 'getDemoModel').and.callThrough();
+            
+            $scope.vm.loadDemoModel();
+            $scope.$apply();
+            expect(mockWebDatacontext.getDemoModel).toHaveBeenCalled();
+            expect(mockDatacontext.saveThreatModel).not.toHaveBeenCalled();
+ 
+        })
 
     });
 

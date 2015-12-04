@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['common', 'datacontext', 'file', threatModels]);
+        ['common', 'datacontext', 'webdatacontext', 'file', threatModels]);
 
-    function threatModels(common, datacontext, file) {
+    function threatModels(common, datacontext, webdatacontext, file) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
         var vm = this;
@@ -24,6 +24,7 @@
         vm.deleteThreatModel = deleteThreatModel;
         vm.saveThreatModelToFile = saveThreatModelToFile;
         vm.loadThreatModelFromFile = loadThreatModelFromFile;
+        vm.loadDemoModel = loadDemoModel;
 
         activate();
 
@@ -45,6 +46,7 @@
             var threatModel = vm.threatModels[index];
             datacontext.deleteThreatModel(threatModel).then(function () { vm.threatModels.splice(index, 1); }, logError );
         }
+        
         function saveThreatModelToFile(index)
         {
             var threatModel = vm.threatModels[index];
@@ -66,8 +68,23 @@
 
             }
 
+            loadThreatModel(threatModel);
+        }
+        
+        function loadThreatModel(threatModel)
+        {
             delete threatModel.summary.id;
-            datacontext.saveThreatModel(threatModel).then(null);
+            datacontext.saveThreatModel(threatModel).then(null);               
+        }
+        
+        function loadDemoModel()
+        {
+            webdatacontext.getDemoModel().then(function(response){ loadThreatModel(response.data);}, function(response) { onError(response); });
+        
+            function onError(response)
+            {
+                logError('Error loading demo model: ' + response.status + '(' + response.statusText + ')');
+            }
         }
     }
 })();

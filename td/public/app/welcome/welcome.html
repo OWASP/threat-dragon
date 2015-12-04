@@ -13,7 +13,7 @@
                     You can also save the raw model data as a file to share with friends or move between your devices or browsers.
                 </p>
                 <p>
-                    <a class="btn btn-lg btn-default" href="{{vm.threatModelCount > 0 ? '#/threatmodels' : '#/threatmodel/edit/new'}}" role="button">
+                    <a class="btn btn-lg btn-default" href="#/threatmodels" role="button">
                         <span class="glyphicon glyphicon-open"></span>  {{vm.threatModelCount > 0 ? 'Open Local Model' : 'Create Local Model'}}
                     </a>
                     <button ng-disabled="vm.threatModelCount == 0" class="btn btn-lg btn-default" role="button" ng-click="vm.clearLocalStorage()">

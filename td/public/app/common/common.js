@@ -13,8 +13,7 @@
     commonModule.provider('commonConfig', function () {
         this.config = {
             // These are the properties we need to set
-            //controllerActivateSuccessEvent: '',
-            //spinnerToggleEvent: ''
+            demoModelUrl: '/Demo_Threat_Model.json'
         };
 
         this.$get = function () {
