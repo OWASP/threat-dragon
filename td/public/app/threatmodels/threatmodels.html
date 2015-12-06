@@ -3,7 +3,7 @@
         <a href="#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
         Threat models
     </p>
-    <div ng-repeat-start="threatModel in vm.threatModels">
+    <div ng-repeat-start="threatModel in vm.threatModels track by $index">
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading panel-title">
