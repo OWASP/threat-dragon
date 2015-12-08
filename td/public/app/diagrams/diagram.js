@@ -128,7 +128,7 @@
                 vm.graph.on('remove', removeElement);
                 addDirtyEventHandlers();
                 vm.loaded = true;
-                vm.diagramTitle = data.title;
+                vm.diagram = data;
                 elementPropertiesCache = {};
                 deletedElements = {};
                 vm.dirty = false;

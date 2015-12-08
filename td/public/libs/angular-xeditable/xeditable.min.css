@@ -1,0 +1,9 @@
+/*!
+angular-xeditable - 0.1.9
+Edit-in-place for angular.js
+Build date: 2015-03-26 
+*/.editable-wrap,.editable-wrap .editable-input{display:inline-block}.editable-wrap .editable-controls,.editable-wrap .editable-controls>input,.editable-wrap .editable-controls>select,.editable-wrap .editable-controls>textarea,.editable-wrap .editable-error{margin-bottom:0}/*!
+angular-xeditable - 0.1.9
+Edit-in-place for angular.js
+Build date: 2015-03-26 
+*/.editable-buttons,.editable-range output{display:inline-block;vertical-align:top}.editable-wrap{white-space:nowrap;margin:0}.editable-buttons button{margin-left:5px}.editable-input.editable-has-buttons{width:auto}.editable-bstime .editable-input input[type=text]{width:46px}.editable-bstime .well-small{margin-bottom:0;padding:10px}.editable-range output{min-width:30px;text-align:center}.editable-color input[type=color]{width:50px}.editable-checkbox label span,.editable-checklist label span,.editable-radiolist label span{margin-left:7px;margin-right:10px}.editable-hide{display:none!important}.editable-click,a.editable-click{text-decoration:none;color:#428bca;border-bottom:dashed 1px #428bca}.editable-click:hover,a.editable-click:hover{text-decoration:none;color:#2a6496;border-bottom-color:#2a6496}.editable-empty,.editable-empty:focus,.editable-empty:hover,a.editable-empty,a.editable-empty:focus,a.editable-empty:hover{font-style:italic;color:#D14;text-decoration:none}
