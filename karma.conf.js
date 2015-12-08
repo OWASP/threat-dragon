@@ -27,6 +27,7 @@ module.exports = function(config) {
         'td/public/libs/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
         'td/public/libs/angular-mocks/angular-mocks.js',
         'td/public/libs/Blob/Blob.js',
+        'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
         'td.tests/spec/*.js',

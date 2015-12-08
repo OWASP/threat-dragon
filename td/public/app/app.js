@@ -5,7 +5,8 @@
 
         'ui.bootstrap',
         'ngRoute',
-        'common'
+        'common',
+        'xeditable'
     ]);
 
     app.run(['$rootScope', 'common',
@@ -18,5 +19,10 @@
     function ($route, $rootScope, routemediator) {
         routemediator.setRoutingHandlers();
     }]);
+    
+    //config for angular-xeditable
+    app.run(function(editableOptions) {
+        editableOptions.theme = 'bs3';
+    });
 
 })();

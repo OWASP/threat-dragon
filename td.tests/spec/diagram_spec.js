@@ -392,7 +392,7 @@ describe('diagram controller', function () {
             expect(mockDiagramming.resize.calls.argsFor(0)).toEqual([newDiagram, size]);
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
-            expect($scope.vm.diagramTitle).toEqual(title);
+            expect($scope.vm.diagram.title).toEqual(title);
                  
         })
         
@@ -408,7 +408,7 @@ describe('diagram controller', function () {
             expect(mockDiagramming.resize).not.toHaveBeenCalled();
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
-            expect($scope.vm.diagramTitle).toEqual(title);
+            expect($scope.vm.diagram.title).toEqual(title);
                  
         })
         
