@@ -15,8 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.7",
-    "angular-route": "~1.4.7",
+    "angular": "~1.4.3",
+    "angular-route": "~1.4.3",
     "angular-ui-bootstrap-bower": "~0.13.0",
     "nools": "*",
     "jquery": "~2.0.3",
@@ -25,8 +25,7 @@
     "toastr": "~2.1.1",
     "bootstrap": "~3.3.5",
     "joint": "git://github.com/clientIO/joint#~0.9.3",
-    "font-awesome": "~4.3.0",
-    "angular-xeditable": "~0.1.9"
+    "font-awesome": "~4.3.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7",
@@ -48,7 +47,7 @@
       "../fonts": "fonts/*"
     },
     "nools": {
-      ".": "nools.js"
+        ".": "nools.js"
     },
     "Blob": {
       ".": "Blob.js"

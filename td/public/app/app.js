@@ -5,8 +5,7 @@
 
         'ui.bootstrap',
         'ngRoute',
-        'common',
-        'xeditable'
+        'common'
     ]);
 
     app.run(['$rootScope', 'common',
@@ -19,9 +18,5 @@
     function ($route, $rootScope, routemediator) {
         routemediator.setRoutingHandlers();
     }]);
-    
-    app.run(function(editableOptions) {
-        editableOptions.theme = 'bs3';
-    });
 
 })();

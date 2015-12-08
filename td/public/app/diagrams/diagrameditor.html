@@ -39,10 +39,7 @@
         <!--Diagram area-->
         <div class="col-lg-8">
             <div class="panel panel-default">
-                <div class="panel-heading panel-title">
-                    <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
-                    <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>
-                </div>
+                <div class="panel-heading panel-title">Threat model diagram: {{vm.diagramTitle}}</div>
                 <div class="panel-body">
                     <form name="diagramEditToolBar">
                         <div class="col-md-12">
