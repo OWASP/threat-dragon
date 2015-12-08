@@ -6,6 +6,7 @@ describe('threatModels controller', function () {
     var $controller;
     var $q;
     var $httpBackend;
+    var $location;
     var mockDatacontext;
     var mockWebDatacontext;
     var mockFileService;
@@ -24,10 +25,11 @@ describe('threatModels controller', function () {
             $provide.value('file', mockFileService);
         });
         
-        angular.mock.inject(function ($rootScope, _$controller_, _$q_, _$httpBackend_) {
+        angular.mock.inject(function ($rootScope, _$controller_, _$q_, _$httpBackend_, _$location_) {
             $scope = $rootScope.$new();
             $controller = _$controller_;
             $q = _$q_;
+            $location = _$location_
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();
         });
@@ -130,6 +132,21 @@ describe('threatModels controller', function () {
             expect(mockWebDatacontext.getDemoModel).toHaveBeenCalled();
             expect(mockDatacontext.saveThreatModel).not.toHaveBeenCalled();
  
+        })
+        
+        it('should add a new diagram and edit it', function(){
+            
+            spyOn($location, 'path');
+            var threatModel = {summary: {id: 1, title: 'model'}, detail: {diagrams: ['diagram 1', 'diagram 2']}};
+            var diagramCount = threatModel.detail.diagrams.length;
+            $scope.vm.threatModels = [ threatModel ];
+            $scope.vm.addNewDiagram(0);
+            $scope.$apply();
+            
+            expect(mockDatacontext.saveThreatModel).toHaveBeenCalled();
+            expect(threatModel.detail.diagrams.length).toEqual(diagramCount + 1);
+            expect($location.path).toHaveBeenCalled();
+            expect($location.path.calls.argsFor(0)).toEqual(['threatmodel/'+ threatModel.summary.id + '/diagram/' + diagramCount]);
         })
 
     });

@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['common', 'datacontext', 'webdatacontext', 'file', threatModels]);
+        ['$location', 'common', 'datacontext', 'webdatacontext', 'file', threatModels]);
 
-    function threatModels(common, datacontext, webdatacontext, file) {
+    function threatModels($location, common, datacontext, webdatacontext, file) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
         var vm = this;
@@ -25,6 +25,7 @@
         vm.saveThreatModelToFile = saveThreatModelToFile;
         vm.loadThreatModelFromFile = loadThreatModelFromFile;
         vm.loadDemoModel = loadDemoModel;
+        vm.addNewDiagram = addNewDiagram;
 
         activate();
 
@@ -85,6 +86,17 @@
             {
                 logError('Error loading demo model: ' + response.status + '(' + response.statusText + ')');
             }
+        }
+        
+        function addNewDiagram(index)
+        {
+            var threatModel = vm.threatModels[index];
+            var newDiagramId = threatModel.detail.diagrams.length;
+            threatModel.detail.diagrams.push({ id: newDiagramId, title: 'New diagram', thumbnail: "../../content/images/thumbnail.jpg" });
+            datacontext.saveThreatModel(threatModel).then(function() {
+                $location.path('threatmodel/'+ threatModel.summary.id + '/diagram/' + newDiagramId);
+            });
+            
         }
     }
 })();

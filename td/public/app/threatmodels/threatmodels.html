@@ -7,7 +7,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading panel-title">
-                    <a href="#/threatmodel/{{threatModel.summary.id}}"><h4>{{threatModel.summary.title}}</h4></a>
+                    <a href="#/threatmodel/{{threatModel.summary.id}}"><h4>{{threatModel.summary.title}}:{{threatModel.summary.id}}</h4></a>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -23,10 +23,17 @@
                         <a href="#/threatmodel/{{threatModel.summary.id}}/diagram/{{diagram.id}}">
                             <div class="text-overflow">
                                 <small>
-                                    <span class="fa fa-sitemap">
+                                    <span class="glyphicon glyphicon-picture">
                                     </span> {{diagram.title}}
                                 </small>
                             </div>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="" ng-click="vm.addNewDiagram($index)">
+                            <small>
+                                <span class="glyphicon glyphicon-plus"></span> Add a new diagram...
+                            </small>
                         </a>
                     </div>
                 </div>
