@@ -81,7 +81,7 @@ describe('diagram controller', function () {
                 
         });
 
-        it('should be displaying the stencil', function () {
+        it('should be dispalying the stencil', function () {
 
             expect($scope.vm.viewStencil).toBe(true);
             expect($scope.vm.viewThreats).toBe(false);
@@ -392,7 +392,7 @@ describe('diagram controller', function () {
             expect(mockDiagramming.resize.calls.argsFor(0)).toEqual([newDiagram, size]);
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
-            expect($scope.vm.diagram.title).toEqual(title);
+            expect($scope.vm.diagramTitle).toEqual(title);
                  
         })
         
@@ -408,7 +408,7 @@ describe('diagram controller', function () {
             expect(mockDiagramming.resize).not.toHaveBeenCalled();
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
-            expect($scope.vm.diagram.title).toEqual(title);
+            expect($scope.vm.diagramTitle).toEqual(title);
                  
         })
         

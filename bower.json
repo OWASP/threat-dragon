@@ -15,8 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.3",
-    "angular-route": "~1.4.3",
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
     "angular-ui-bootstrap-bower": "~0.13.0",
     "nools": "*",
     "jquery": "~2.0.3",
@@ -29,7 +29,7 @@
     "angular-xeditable": "~0.1.9"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.3",
+    "angular-mocks": "~1.4.7",
     "jasmine-jquery": "~2.1.1",
     "Blob": "*"
   },
