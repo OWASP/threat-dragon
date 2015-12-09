@@ -10,11 +10,13 @@ var routes = require('./routes/index');
 var app = express();
 
 //security headers
+app.set('x-powered-by', false)
 var ninetyDaysInMilliseconds = 7776000000;
 app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
 app.use(helmet.frameguard('deny'));
 app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
