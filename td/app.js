@@ -9,6 +9,13 @@ var routes = require('./routes/index');
 
 var app = express();
 
+//security headers
+var ninetyDaysInMilliseconds = 7776000000;
+app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
+app.use(helmet.frameguard('deny'));
+app.use(helmet.hidePoweredBy());
+app.use(helmet.noSniff());
+
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -17,11 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-//security headers
-app.use(helmet.frameguard('deny'));
-app.use(helmet.hidePoweredBy());
-app.use(helmet.noSniff());
 
 app.use('/', routes);
 
