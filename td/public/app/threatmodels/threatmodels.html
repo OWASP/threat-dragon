@@ -31,8 +31,8 @@
                     </div>
                     <div>
                         <a href="" ng-click="vm.addNewDiagram($index)">
-                            <small>
-                                <span class="glyphicon glyphicon-plus"></span> Add a new diagram...
+                            <small ng-class="{true : 'animated infinite pulse'}[threatModel.detail.diagrams.length == 0]">
+                                <span class="glyphicon glyphicon-plus"></span>Add a new diagram...
                             </small>
                         </a>
                     </div>
