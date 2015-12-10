@@ -17,6 +17,16 @@ app.use(helmet.frameguard('deny'));
 app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
+app.use(helmet.csp({
+  defaultSrc: ["'none'"],
+  scriptSrc: ["'self'"],
+  connectSrc: ["'self'"],
+  styleSrc: ["'self'"],
+  imgSrc: ["'self'"],
+  reportUri: 'https://report-uri.io/report/owaspthreatdragon',
+  setAllHeaders: true
+}));
+
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
