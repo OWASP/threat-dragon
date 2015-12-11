@@ -34,7 +34,7 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 
 `npm install`
 
-All the build workflow task are in the default grunt task, so just do
+All the build workflow tasks are in the default grunt task, so just do
 
 `grunt` or `grunt release`
 
