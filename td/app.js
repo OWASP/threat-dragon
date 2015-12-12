@@ -24,7 +24,7 @@ app.use(helmet.csp({
   connectSrc: ["'self'"],
   styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
   imgSrc: ["'self'", 'data:'],
-  fontSrc: ["'self'", 'http://fonts.gstatic.com'],
+  fontSrc: ["'self'", 'http://fonts.gstatic.com', 'https://fonts.gstatic.com'],
   formAction: ["'self'"],
   reportUri: 'https://report-uri.io/report/owaspthreatdragon'
 }));
