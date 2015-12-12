@@ -22,7 +22,7 @@ app.use(helmet.csp({
   defaultSrc: ["'none'"],
   scriptSrc: ["'self'", "'unsafe-eval'"], //needed for lodash and nools
   connectSrc: ["'self'"],
-  styleSrc: ["'self'", 'http://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
+  styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
   imgSrc: ["'self'", 'data:'],
   fontSrc: ["'self'", 'http://fonts.gstatic.com'],
   formAction: ["'self'"],
