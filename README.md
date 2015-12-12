@@ -73,6 +73,8 @@ We aim to maintain unit test coverage at > 90%
 
 ![codecov.io](https://codecov.io/github/mike-goodwin/owasp-threat-dragon/branch.svg?branch=master)
 
+Also, the code is currently lint free :)
+
 ##Freshness
 
 npm
