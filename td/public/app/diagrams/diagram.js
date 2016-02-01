@@ -326,34 +326,30 @@
         function newProcess()
         {
             var process = diagramming.newProcess(vm.graph);
-            setNewElementProperties(process.id);
+            elementPropertiesCache[process.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: process.id, threats: [] };
         }
 
         function newStore()
         {
             var store = diagramming.newStore(vm.graph);
-            setNewElementProperties(store.id);
+            elementPropertiesCache[store.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: store.id, threats: [] };
         }
 
         function newActor()
         {
             var actor = diagramming.newActor(vm.graph);
-            setNewElementProperties(actor.id);
+            elementPropertiesCache[actor.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: actor.id, threats: [] };
         }
 
         function newFlow(source, target) {
 
             var flow = diagramming.newFlow(vm.graph, source, target);
-            setNewElementProperties(flow.id);
+            elementPropertiesCache[flow.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: flow.id, threats: [] };
         }
 
         function newBoundary() {
             var boundary = diagramming.newBoundary(vm.graph);
-            setNewElementProperties(boundary.id); 
-        }
-        
-        function setNewElementProperties(id) {
-            elementPropertiesCache[id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: id, threats: []}; 
+            elementPropertiesCache[boundary.id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: boundary.id, threats: []};
         }
 
         function addDirtyEventHandlers() {
