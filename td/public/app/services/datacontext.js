@@ -26,10 +26,7 @@
             getThreatModelDetail: getThreatModelDetail,
             getAllThreatModelDetails: getAllThreatModelDetails,
             getThreatModelDiagram: getThreatModelDiagram,
-            saveThreatModelDiagram: saveThreatModelDiagram,
-            getElementProperties: getElementProperties,
-            saveElementProperties: saveElementProperties,
-            deleteElementProperties: deleteElementProperties
+            saveThreatModelDiagram: saveThreatModelDiagram
         };
 
         return service;
@@ -134,53 +131,6 @@
             localStorage.setItem('models', JSON.stringify(models));
             return $q.when(null);
         }
-
-        //diagram element properties
-
-        function getElementProperties(threatModelId, diagramId, elementId)
-        {
-            var elementProperties = models[threatModelId].elementProperties[elementId];
-            return $q.when(elementProperties);
-        }
-
-        function saveElementProperties(elementProperties)
-        {
-            //generate a key for new threats
-            if (angular.isDefined(elementProperties.threats))
-            {
-                elementProperties.threats.forEach(function (threat, index, threats) {
-                    if (angular.isUndefined(threat.id)) {
-                        var newKey = 0;
-                        var keys = _.keys(threats);
-                        
-                        if (keys.length > 0) { newKey = parseInt(_.max(keys)) + 1; }
-                        threat.id = newKey;
-                    }
-                });
-            }
-            
-            var threatModelId = elementProperties.threatModelId;
-            var diagramId = elementProperties.diagramId;
-            var elementId = elementProperties.elementId;
-            
-            var model = models[threatModelId];
-            
-            if (angular.isUndefined(model.elementProperties)) { model.elementProperties = {}; }
-            
-            model.elementProperties[elementId] = elementProperties;
-            localStorage.setItem('models', JSON.stringify(models));
-
-            return $q.when(elementProperties);
-        }
-
-        function deleteElementProperties(threatModelId, diagramId, elementId)
-        {
-            var properties = models[threatModelId].elementProperties[elementId];
-            delete models[threatModelId].elementProperties[elementId];
-            localStorage.setItem('models', JSON.stringify(models));
-            return $q.when(properties);
-        }
-
 
         //key management methods
 

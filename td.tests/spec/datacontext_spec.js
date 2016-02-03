@@ -317,67 +317,6 @@ describe('datacontext service:', function () {
 
         });
 
-        it('should get the specified element properties', function (done) {
-
-            datacontext.getElementProperties(1, 1, '1-1').then(function (properties) {
-
-                expect(properties).toEqual(elementProperties[1]['1-1']);
-                done();
-
-            });
-
-            $rootScope.$apply();
-
-        });
-
-        it('should update the element properties and return it', function (done) {
-
-            elementProperties[1]['1-1'].prop = 'newPropValue';
-            datacontext.saveElementProperties(elementProperties[1]['1-1']).then(function(properties) {
-
-                expect(properties).toEqual(elementProperties[1]['1-1']);
-                expect(JSON.parse(localStorage.getItem('models'))[1].elementProperties['1-1']).toEqual(elementProperties[1]['1-1']);
-                done();
-
-            });
-
-            $rootScope.$apply();
-
-        });
-
-        it('should generate a key for the new threat', function (done) {
-
-            elementProperties[1]['1-1'].threats.push({ title: 'new threat' });
-            datacontext.saveElementProperties(elementProperties[1]['1-1']).then(function (properties) {
-
-                expect(properties.threats[3].id).toBeDefined();
-                expect(JSON.parse(localStorage.getItem('models'))[1].elementProperties['1-1']).toEqual(elementProperties[1]['1-1']);
-                done();
-
-            });
-
-            $rootScope.$apply();
-
-        });
-
-
-        it('should delete the specified element properties and return them', function (done) {
-
-            datacontext.deleteElementProperties(1, 1, '1-1').then(function (properties) {
-
-                var models = JSON.parse(localStorage.getItem('models'));
-                expect(properties).toEqual(elementProperties[1]['1-1']);
-                expect(models[1].elementProperties['0-1']).toEqual(elementProperties[1]['0-1']);
-                expect(models[1].elementProperties['1-1']).toBeUndefined();
-                expect(models[1].elementProperties['2-1']).toEqual(elementProperties[1]['2-1']);
-                done();
-
-            });
-
-            $rootScope.$apply();
-
-        });
-
     });
 
 });

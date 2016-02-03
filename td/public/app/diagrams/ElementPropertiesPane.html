@@ -2,66 +2,66 @@
     <div>
         <div class="form-group">
             <label>Name</label>
-            <input name="nameInput" class="form-control" type="text" ng-model="selected.element.name" ng-change="edit()" placeholder="Element name" />
+            <input name="nameInput" class="form-control" type="text" ng-model="selected.name" ng-change="edit()" placeholder="Element name" />
         </div>
     </div>
     <div class="checkbox">
         <label>
-            <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.elementProperties.outOfScope" ng-change="edit()" /> Out of scope
+            <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.outOfScope" ng-change="edit()" /> Out of scope
         </label>
     </div>
     <div class="form-group">
         <label>Reason for out of scope</label>
-        <textarea name="textareaReasonOutOfScope" ng-disabled="!selected.elementProperties.outOfScope" rows="4" class="form-control" type="text" ng-model="selected.elementProperties.reasonOutOfScope" ng-change="edit()" placeholder="Reason for out of scope"></textarea>
+        <textarea name="textareaReasonOutOfScope" ng-disabled="!selected.outOfScope" rows="4" class="form-control" type="text" ng-model="selected.reasonOutOfScope" ng-change="edit()" placeholder="Reason for out of scope"></textarea>
     </div>
     <div ng-show="elementType === 'tm.Process'">
         <div class="form-group">
             <label>Privilege level</label>
-            <input name="privilegeLevelInput" ng-disabled="selected.elementProperties.outOfScope" class="form-control" type="text" ng-model="selected.elementProperties.privilegeLevel" ng-change="edit()" placeholder="Privilege level" />
+            <input name="privilegeLevelInput" ng-disabled="selected.outOfScope" class="form-control" type="text" ng-model="selected.privilegeLevel" ng-change="edit()" placeholder="Privilege level" />
         </div>
     </div>
     <div ng-show="elementType === 'tm.Actor'">
         <div class="checkbox">
             <label>
-                <input name="checkboxProvidesAuthentication" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.providesAuthentication" ng-change="edit()" /> Provides authentication
+                <input name="checkboxProvidesAuthentication" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.providesAuthentication" ng-change="edit()" /> Provides authentication
             </label>
         </div>
     </div>
     <div ng-show="elementType === 'tm.Store'">
         <div class="checkbox">
             <label>
-                <input name="checkboxIsALog" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.isALog" ng-change="edit()" /> Is a log
+                <input name="checkboxIsALog" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isALog" ng-change="edit()" /> Is a log
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="checkboxStoresCredentials" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.storesCredentials" ng-change="edit()" /> Stores credentials
+                <input name="checkboxStoresCredentials" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesCredentials" ng-change="edit()" /> Stores credentials
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="checkboxIsEncryptedStore" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.isEncrypted" ng-change="edit()" /> Is encrypted
+                <input name="checkboxIsEncryptedStore" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isEncrypted" ng-change="edit()" /> Is encrypted
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="checkboxIsSigned" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.isSigned" ng-change="edit()" /> Is signed
+                <input name="checkboxIsSigned" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isSigned" ng-change="edit()" /> Is signed
             </label>
         </div>
     </div>
     <div ng-show="elementType === 'tm.Flow'">
         <div class="form-group">
             <label>Protocol</label>
-            <input name="inputProtocol" ng-disabled="selected.elementProperties.outOfScope" class="form-control" type="text" ng-model="selected.elementProperties.protocol" ng-change="edit()" placeholder="Protocol" />
+            <input name="inputProtocol" ng-disabled="selected.outOfScope" class="form-control" type="text" ng-model="selected.protocol" ng-change="edit()" placeholder="Protocol" />
         </div>
         <div class="checkbox">
             <label>
-                <input name="checkboxIsEncryptedFlow" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.isEncrypted" ng-change="edit()" /> Is encrypted
+                <input name="checkboxIsEncryptedFlow" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isEncrypted" ng-change="edit()" /> Is encrypted
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input name="checkboxIsPublicNetwork" ng-disabled="selected.elementProperties.outOfScope" type="checkbox" ng-model="selected.elementProperties.isPublicNetwork" ng-change="edit()" /> Is over a public network
+                <input name="checkboxIsPublicNetwork" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isPublicNetwork" ng-change="edit()" /> Is over a public network
             </label>
         </div>
     </div>

@@ -22,15 +22,15 @@
                     <accordion-heading>
                         Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
                     </accordion-heading>
-                    <div ng-if="vm.selected.elementProperties">
-                        <div ng-if="!vm.selected.elementProperties.outOfScope">
-                            <tmt-element-threats threats="vm.selected.elementProperties.threats" save="vm.edit()" />
+                    <div ng-if="vm.selected">
+                        <div ng-if="!vm.selected.outOfScope">
+                            <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" />
                         </div>
-                        <div ng-if="vm.selected.elementProperties.outOfScope">
+                        <div ng-if="vm.selected.outOfScope">
                             <em>The selected element is out of scope</em>
                         </div>                       
                     </div>
-                    <div ng-if="!vm.selected.elementProperties">
+                    <div ng-if="!vm.selected">
                         <em>Select an element in the diagram to see or edit its threats</em>
                     </div>
                 </accordion-group>
@@ -62,7 +62,7 @@
                                 <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">
                                     <span class="fa fa-undo" aria-hidden="true"></span>
                                 </button>
-                                <button class="btn btn-default" ng-disabled="vm.selected.element == null || (vm.selected.elementProperties != null && vm.selected.elementProperties.outOfScope)" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">
+                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">
                                     <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
                                 </button>
                                 <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">
@@ -82,10 +82,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading panel-title">Properties</div>
                 <div class="panel-body">
-                    <div ng-if="vm.selected.elementProperties &&  vm.selected.element.attributes.type != 'tm.Boundary' ">
-                        <tmt-element-properties edit=" vm.edit()" selected="vm.selected" element-type="{{vm.selected.element.attributes.type}}">
+                    <div ng-if="vm.selected &&  vm.selected.attributes.type != 'tm.Boundary' ">
+                        <tmt-element-properties edit=" vm.edit()" selected="vm.selected" element-type="{{vm.selected.attributes.type}}">
                     </div>
-                    <div ng-if="!vm.selected.elementProperties || vm.selected.element.attributes.type === 'tm.Boundary'">
+                    <div ng-if="!vm.selected || vm.selected.attributes.type === 'tm.Boundary'">
                         <em>Select an element in the diagram to see or edit its properties</em>
                     </div>
                 </div>

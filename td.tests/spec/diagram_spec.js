@@ -81,7 +81,7 @@ describe('diagram controller', function () {
                 
         });
 
-        it('should be dispalying the stencil', function () {
+        it('should be displaying the stencil', function () {
 
             expect($scope.vm.viewStencil).toBe(true);
             expect($scope.vm.viewThreats).toBe(false);
@@ -109,7 +109,7 @@ describe('diagram controller', function () {
 
         it('should start with nothing selected', function () {
             
-            expect($scope.vm.selected).toEqual({ element: null, elementProperties: null });
+            expect($scope.vm.selected).toBeNull();
 
         });
 
@@ -176,8 +176,6 @@ describe('diagram controller', function () {
            $scope.vm.graph = graph;
            $scope.vm.clear();
            
-           expect(mockDiagramming.getElements).toHaveBeenCalled();
-           expect(mockDiagramming.getLinks).toHaveBeenCalled();
            expect(mockDiagramming.clear).toHaveBeenCalled();
            expect(mockDiagramming.clear.calls.argsFor(0)).toEqual([ graph ]);
             
@@ -418,30 +416,24 @@ describe('diagram controller', function () {
             var elementId = 'elementId';
             mockRouteParams.element = elementId;
             var element = {id: elementId};
-            var elementProperties = 'element properties';
             mockDiagramming.getCellById = function() { return element; };
             spyOn(mockDiagramming, 'getCellById').and.callThrough();
             newDiagram.setSelected = function() {};
             spyOn(newDiagram, 'setSelected');
             $scope.vm.viewStencil = true;
             $scope.vm.viewThreats = false;
-            mockDatacontext.getElementProperties = function() { return $q.when(elementProperties);};
-            spyOn(mockDatacontext, 'getElementProperties').and.callThrough();
             $scope.vm.initialise(newDiagram);
             $timeout.flush();
             $scope.$apply();
             
-            expect($scope.vm.selected.element).toEqual(element);
-            expect(mockDatacontext.getElementProperties).toHaveBeenCalled();
-            expect(mockDatacontext.getElementProperties.calls.argsFor(0)).toEqual([threatModelId, diagramId, elementId]);
-            expect($scope.vm.selected.elementProperties).toEqual(elementProperties);
+            expect($scope.vm.selected).toEqual(element);
             expect(mockDiagramming.getCellById).toHaveBeenCalled();
             expect(mockDiagramming.getCellById.calls.argsFor(0)).toEqual([graph, elementId]);
             expect(newDiagram.setSelected).toHaveBeenCalled();
             expect(newDiagram.setSelected.calls.argsFor(0)).toEqual([element]);
             expect($scope.vm.viewStencil).toBe(false);
             expect($scope.vm.viewThreats).toBe(true);
-             
+         
         })
         
         it('should error and not load a model', function() {
@@ -518,7 +510,7 @@ describe('diagram controller', function () {
         
         beforeEach(function() {
      
-            element = {element: 'element', elementProperties: 'properties'};       
+            element = {threats: []};       
 
         });
         
@@ -567,10 +559,9 @@ describe('diagram controller', function () {
             spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
-            $scope.vm.selected.elementProperties = {threats: []};
             $scope.vm.dirty = false;
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             
@@ -578,7 +569,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm.calls.argsFor(0)[1]();
             $timeout.flush();
             
-            expect($scope.vm.selected.elementProperties.threats).toEqual([currentThreat]);
+            expect($scope.vm.selected.threats).toEqual([currentThreat]);
             expect(mockDialogs.confirm.calls.count()).toEqual(2);
             expect($scope.vm.dirty).toBe(true);
         });
@@ -591,10 +582,9 @@ describe('diagram controller', function () {
             spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
-            $scope.vm.selected.elementProperties = {threats: []};
             $scope.vm.dirty = false;
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             
@@ -602,7 +592,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm.calls.argsFor(0)[1](true);
             $timeout.flush();
             threats.unshift(currentThreat);
-            expect($scope.vm.selected.elementProperties.threats).toEqual(threats);
+            expect($scope.vm.selected.threats).toEqual(threats);
             expect(mockDialogs.confirm.calls.count()).toEqual(1);
             expect($scope.vm.dirty).toBe(true);            
             
@@ -615,10 +605,9 @@ describe('diagram controller', function () {
             spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
-            $scope.vm.selected.elementProperties = {threats: []};
             $scope.vm.dirty = false;
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             
@@ -626,7 +615,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm.calls.argsFor(0)[3]();
             $timeout.flush();
             
-            expect($scope.vm.selected.elementProperties.threats).toEqual([]);
+            expect($scope.vm.selected.threats).toEqual([]);
             expect(mockDialogs.confirm.calls.count()).toEqual(2);
             expect($scope.vm.dirty).toBe(false);
         });
@@ -638,10 +627,9 @@ describe('diagram controller', function () {
             spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
-            $scope.vm.selected.elementProperties = {threats: []};
             $scope.vm.dirty = false;
             
-            $scope.vm.selected.element = element;
+            $scope.vm.selected = element;
             $scope.vm.generateThreats()
             $scope.$apply();
             
@@ -649,7 +637,7 @@ describe('diagram controller', function () {
             mockDialogs.confirm.calls.argsFor(0)[3](true);
             $timeout.flush();
             
-            expect($scope.vm.selected.elementProperties.threats).toEqual([]);
+            expect($scope.vm.selected.threats).toEqual([]);
             expect(mockDialogs.confirm.calls.count()).toEqual(1);
             expect($scope.vm.dirty).toBe(false);
         });

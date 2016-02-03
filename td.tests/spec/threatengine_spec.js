@@ -24,7 +24,7 @@ describe('threatengine service:', function () {
 
         it('process should generate STRIDE', function (done) {
 
-            var element = {element: { attributes: { type: 'tm.Process' } }, elementProperties: {} };
+            var element = {attributes: { type: 'tm.Process' }};
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(6);
@@ -43,7 +43,7 @@ describe('threatengine service:', function () {
 
         it('flow should generate TID', function (done) {
 
-            var element = {element: { attributes: { type: 'tm.Flow' } }, elementProperties: {} };
+            var element = {attributes: { type: 'tm.Flow' }};
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(3);
@@ -60,7 +60,7 @@ describe('threatengine service:', function () {
 
         it('actor should generate SR', function (done) {
 
-            var element = {element: { attributes: { type: 'tm.Actor' } }, elementProperties: {} };
+            var element = {attributes: { type: 'tm.Actor' }};
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(2);
@@ -76,7 +76,7 @@ describe('threatengine service:', function () {
 
        it('store should generate TRID', function (done) {
 
-            var element = {element: { attributes: { type: 'tm.Store' } }, elementProperties: {} };
+            var element = {attributes: { type: 'tm.Store' }};
             threatengine.generateForElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(4);
@@ -96,8 +96,7 @@ describe('threatengine service:', function () {
         it('should suggest using encryption over public networks', function(done) {
             
             //set up the properties of the element
-            var subject = {element: { attributes: { type: 'tm.Flow' } } };
-            subject.elementProperties = {isPublicNetwork: true, isEncrypted: false};
+            var subject = {attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: false};
             
             //generate the threats
             threatengine.generateForElement(subject).then(function (threats) {

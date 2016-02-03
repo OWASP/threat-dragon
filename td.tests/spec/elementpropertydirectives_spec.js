@@ -82,7 +82,7 @@ describe('element properties directive: ', function () {
         $rootScope.$apply();
 
         $scope.edit = function () { };
-        spyOn($scope, 'edit');//.and.callThrough();
+        spyOn($scope, 'edit');
 
     });
 
@@ -92,7 +92,7 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { element: { name: originalName }, elementProperties: { outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, privilegeLevel: originalPrivilegeLevel } };
+            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, privilegeLevel: originalPrivilegeLevel };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Process">');
@@ -108,10 +108,10 @@ describe('element properties directive: ', function () {
             if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
 
                 var newName = 'new name';
-                expect(selected.element.name).toEqual(originalName);
+                expect(selected.name).toEqual(originalName);
                 angular.element($('input[name="nameInput"]')).val(newName).triggerHandler('input');
                 expect($scope.edit).toHaveBeenCalled();
-                expect(selected.element.name).toEqual(newName);
+                expect(selected.name).toEqual(newName);
 
             }
 
@@ -129,10 +129,10 @@ describe('element properties directive: ', function () {
             if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
 
                 var newPrivilegeLevel = 'new privilege level';
-                expect(selected.element.name).toEqual(originalName);
+                expect(selected.name).toEqual(originalName);
                 angular.element($('input[name="privilegeLevelInput"]')).val(newPrivilegeLevel).triggerHandler('input');
                 expect($scope.edit).toHaveBeenCalled();
-                expect(selected.elementProperties.privilegeLevel).toEqual(newPrivilegeLevel);
+                expect(selected.privilegeLevel).toEqual(newPrivilegeLevel);
 
             }
 
@@ -156,7 +156,7 @@ describe('element properties directive: ', function () {
                 var newReasonOutOfScope = 'new reason out of scope';
                 $('input[name="checkBoxOutOfScope"]').click();
                 angular.element($('textarea[name="textareaReasonOutOfScope"]')).val(newReasonOutOfScope).triggerHandler('input');
-                expect(selected.elementProperties.reasonOutOfScope).toEqual(newReasonOutOfScope);
+                expect(selected.reasonOutOfScope).toEqual(newReasonOutOfScope);
 
             }
 
@@ -168,7 +168,7 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { element: { name: originalName }, elementProperties: { outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, providesAuthentication: false } };
+            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, providesAuthentication: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Actor">');
@@ -181,7 +181,7 @@ describe('element properties directive: ', function () {
         it('should update provides authentication', function () {
 
             $('input[name="checkboxProvidesAuthentication"]').click();
-            expect(selected.elementProperties.providesAuthentication).toBe(true);
+            expect(selected.providesAuthentication).toBe(true);
 
         });
 
@@ -198,7 +198,7 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { element: { name: originalName }, elementProperties: { outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, isALog: false,  storesCredentials: false, isEncrypted: false, isSigned: false } };
+            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, isALog: false,  storesCredentials: false, isEncrypted: false, isSigned: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Store">');
@@ -211,28 +211,28 @@ describe('element properties directive: ', function () {
         it('should update is a log', function () {
 
             $('input[name="checkboxIsALog"]').click();
-            expect(selected.elementProperties.isALog).toBe(true);
+            expect(selected.isALog).toBe(true);
 
         });
 
         it('should update stores credentials', function () {
 
             $('input[name="checkboxStoresCredentials"]').click();
-            expect(selected.elementProperties.storesCredentials).toBe(true);
+            expect(selected.storesCredentials).toBe(true);
 
         });
 
         it('should update is encrypted', function () {
 
             $('input[name="checkboxIsEncryptedStore"]').click();
-            expect(selected.elementProperties.isEncrypted).toBe(true);
+            expect(selected.isEncrypted).toBe(true);
 
         });
 
         it('should update is signed', function () {
 
             $('input[name="checkboxIsSigned"]').click();
-            expect(selected.elementProperties.isSigned).toBe(true);
+            expect(selected.isSigned).toBe(true);
 
         });
 
@@ -257,7 +257,7 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { element: { name: originalName }, elementProperties: { outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, protocol: originalProtocol, isEncrypted: false, isPublicNetwork: false } };
+            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, protocol: originalProtocol, isEncrypted: false, isPublicNetwork: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Flow">');
@@ -274,7 +274,7 @@ describe('element properties directive: ', function () {
 
                 var newProtocol = 'new protocol';
                 angular.element($('input[name="inputProtocol"]')).val(newProtocol).triggerHandler('input');
-                expect(selected.elementProperties.protocol).toEqual(newProtocol);
+                expect(selected.protocol).toEqual(newProtocol);
 
             }
 
@@ -283,14 +283,14 @@ describe('element properties directive: ', function () {
         it('should update is encrypted', function () {
 
             $('input[name="checkboxIsEncryptedFlow"]').click();
-            expect(selected.elementProperties.isEncrypted).toBe(true);
+            expect(selected.isEncrypted).toBe(true);
 
         });
 
         it('should update is public network', function () {
 
             $('input[name="checkboxIsPublicNetwork"]').click();
-            expect(selected.elementProperties.isPublicNetwork).toBe(true);
+            expect(selected.isPublicNetwork).toBe(true);
 
         });
 

@@ -19,8 +19,6 @@
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
         var scope = $scope;
-        var elementPropertiesCache = {};
-        var deletedElements = {};
         var currentDiagram = {};
 
         // Bindable properties and functions are placed on vm.
@@ -99,8 +97,6 @@
             }
             
             datacontext.saveThreatModelDiagram(vm.threatModelId, vm.diagramId, diagramData)
-                .then(flushElementPropertiesCache)
-                .then(flushDeletedElements)
                 .then(onSaveDiagram);
         }
 
@@ -129,8 +125,6 @@
                 addDirtyEventHandlers();
                 vm.loaded = true;
                 vm.diagram = data;
-                elementPropertiesCache = {};
-                deletedElements = {};
                 vm.dirty = false;
                 
                 if ($routeParams.element) {
@@ -166,8 +160,6 @@
 
         function clear()
         {
-            diagramming.getElements(vm.graph).forEach(function (element) { addToDeletedElements(element); });
-            diagramming.getLinks(vm.graph).forEach(function (element) { addToDeletedElements(element); });
             diagramming.clear(vm.graph);
         }
 
@@ -201,7 +193,7 @@
         
         function generateThreats()
         {
-            if (vm.selected.element)
+            if (vm.selected)
             {
                 threatengine.generateForElement(vm.selected).then(onGenerateThreats);
             }
@@ -224,13 +216,19 @@
             function addThreat(applyToAll)
             {
                 vm.dirty = true;
-                vm.selected.elementProperties.threats.push(currentThreat);
+                
+                if (angular.isUndefined(vm.selected.threats))
+                {
+                    vm.selected.threats = [];
+                }
+                
+                vm.selected.threats.push(currentThreat);
                 
                 if(applyToAll)
                 {
                     threatList.forEach(function(threat) {
                         
-                        vm.selected.elementProperties.threats.push(threat);
+                        vm.selected.threats.push(threat);
                     });
                 }
                 else
@@ -250,11 +248,6 @@
         
         function onSelectElement()
         {
-            if (vm.selected.elementProperties)
-            {
-                elementPropertiesCache[vm.selected.element.id] = vm.selected.elementProperties;
-            }
-
             var element = null;
             var elementId = $routeParams.element;
 
@@ -263,23 +256,7 @@
                 element = diagramming.getCellById(vm.graph, elementId);
             }
 
-            vm.selected.element = element;         
-
-            if (element)
-            {
-                if (elementPropertiesCache[element.id])
-                {
-                    vm.selected.elementProperties = elementPropertiesCache[element.id];
-                }
-                else
-                {
-                    datacontext.getElementProperties(vm.threatModelId, vm.diagramId, element.id).then(onGetElementProperties);
-                }
-            }
-            else
-            {
-                vm.selected.elementProperties = null;
-            }
+            vm.selected = element;         
             
             //existence test is required to support unit tests where currentDiagram is not initialised
             if (typeof currentDiagram.setSelected === 'function' || typeof currentDiagram.setSelected === 'object') {
@@ -289,8 +266,7 @@
 
         function initialSelect(element)
         {
-            vm.selected.element = element;
-            datacontext.getElementProperties(vm.threatModelId, vm.diagramId, element.id).then(onGetElementProperties);
+            vm.selected = element;
         }
 
         function select(element)
@@ -306,17 +282,9 @@
             scope.$apply();
         }
 
-        function onGetElementProperties(data)
-        {
-            vm.selected.elementProperties = data;
-            //this could be made more efficient - only add to the cache when dirty?
-            elementPropertiesCache[vm.selected.elementProperties.elementId] = vm.selected.elementProperties;
-        }
-
         function removeElement(element, graph, clearing)
         {
             vm.dirty = true;
-            addToDeletedElements(element);
             vm.selected = {};
             $location.search('element', null);
             //scope.$apply cause an exception when clearing all elements (digest already in progress)
@@ -325,35 +293,27 @@
 
         function newProcess()
         {
-            var process = diagramming.newProcess(vm.graph);
-            setNewElementProperties(process.id);
+            diagramming.newProcess(vm.graph);
         }
 
         function newStore()
         {
-            var store = diagramming.newStore(vm.graph);
-            setNewElementProperties(store.id);
+            diagramming.newStore(vm.graph);
         }
 
         function newActor()
         {
-            var actor = diagramming.newActor(vm.graph);
-            setNewElementProperties(actor.id);
+            diagramming.newActor(vm.graph);
         }
 
         function newFlow(source, target) {
 
-            var flow = diagramming.newFlow(vm.graph, source, target);
-            setNewElementProperties(flow.id);
+            diagramming.newFlow(vm.graph, source, target);
         }
 
         function newBoundary() {
-            var boundary = diagramming.newBoundary(vm.graph);
-            setNewElementProperties(boundary.id); 
-        }
-        
-        function setNewElementProperties(id) {
-            elementPropertiesCache[id] = { threatModelId: vm.threatModelId, diagramId: vm.diagramId, elementId: id, threats: []}; 
+            
+            diagramming.newBoundary(vm.graph);
         }
 
         function addDirtyEventHandlers() {
@@ -364,38 +324,8 @@
             {
                 vm.dirty = true;
                 vm.graph.off('change add', setDirty);
-                scope.$apply();
+                //scope.$apply()
             }
-        }
-
-        function flushElementPropertiesCache()
-        {
-            for (var key in elementPropertiesCache)
-            {
-                if (elementPropertiesCache.hasOwnProperty(key))
-                {
-                    datacontext.saveElementProperties(elementPropertiesCache[key]);
-                }
-            }
-        }
-
-        function flushDeletedElements()
-        {
-            for (var key in deletedElements)
-            {
-                if (deletedElements.hasOwnProperty(key))
-                {
-                    datacontext.deleteElementProperties(vm.threatModelId, vm.diagramId, key).then(null);
-                }
-            }
-
-            deletedElements = {};
-        }
-
-        function addToDeletedElements(element)
-        {
-            delete elementPropertiesCache[element.id];
-            deletedElements[element.id] = element;
         }
     }
 })();

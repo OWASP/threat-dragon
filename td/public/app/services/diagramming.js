@@ -63,7 +63,7 @@
 
         function newProcess(graph)
         {
-            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + graph.attributes.cells.length);
+            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + graph.attributes.cells.length);            
             graph.addCell(cell);
 
             return cell;

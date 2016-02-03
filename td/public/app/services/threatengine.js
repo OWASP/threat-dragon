@@ -24,8 +24,7 @@
         };
         
         var Element = function (element) {
-            this.type = element.element.attributes.type;
-            this.properties = element.elementProperties;
+            this.element = element;
         };
 
         return service;
@@ -63,8 +62,8 @@
 
                 flow.rule('Generic Spoofing Threat Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"'],
-                        [Element, 'el', 'el.type == "tm.Actor"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Actor"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -73,9 +72,9 @@
 
                 flow.rule('Generic Tampering Threat Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"'],
-                        [Element, 'el', 'el.type == "tm.Store"'],
-                        [Element, 'el', 'el.type == "tm.Flow"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Store"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Flow"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -84,9 +83,9 @@
 
                 flow.rule('Generic Repudiation Threat Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"'],
-                        [Element, 'el', 'el.type == "tm.Store"'],
-                        [Element, 'el', 'el.type == "tm.Actor"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Store"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Actor"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -95,9 +94,9 @@
                 
                 flow.rule('Generic Information Disclosure Threat Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"'],
-                        [Element, 'el', 'el.type == "tm.Store"'],
-                        [Element, 'el', 'el.type == "tm.Flow"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Store"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Flow"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -106,9 +105,9 @@
 
                 flow.rule('Generic Denial of Service Threat Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"'],
-                        [Element, 'el', 'el.type == "tm.Store"'],
-                        [Element, 'el', 'el.type == "tm.Flow"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Store"'],
+                        [Element, 'el', 'el.element.attributes.type == "tm.Flow"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -117,7 +116,7 @@
 
                 flow.rule('Generic Elevation of Privilege Rule', [
                     ['or',
-                        [Element, 'el', 'el.type == "tm.Process"']
+                        [Element, 'el', 'el.element.attributes.type == "tm.Process"']
                     ],
                     [Threats, 'threats']
                 ], function (facts) {
@@ -125,7 +124,7 @@
                 });
                 
                 flow.rule('Should encrypt on public network', [
-                    [Element, 'el', 'el.type == "tm.Flow" && isTrue(el.properties.isPublicNetwork) && ( isFalse(el.properties.isEncrypted) || isUndefined(el.properties.isEncrypted) )'],
+                    [Element, 'el', 'el.element.attributes.type == "tm.Flow" && isTrue(el.element.isPublicNetwork) && ( isFalse(el.element.isEncrypted) || isUndefined(el.element.isEncrypted) )'],
                     [Threats, 'threats']
                 ], function (facts) {
                     facts.threats.collection.push({

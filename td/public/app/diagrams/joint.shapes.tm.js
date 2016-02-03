@@ -15,6 +15,41 @@ if (typeof exports === 'object') {
 
 joint.shapes.tm = {};
 
+//utility functions for threat model shapes
+
+joint.shapes.tm.utils = {
+
+    editNameElement: function (element, value) {
+        element.attr('text/text', this.wordWrap(element, value));
+    },
+
+    editNameLink: function (element, value) {
+        element.label(0, { attrs: { text: { text: this.wordWrap(element, value) } } });
+    },
+
+    wordWrap: function (element, text) {
+
+        var size = element.isLink() ? { width: 140, height: 80 } : element.get('size');
+        return joint.util.breakText(text, size);
+    },
+
+    wordUnwrap: function (text) {
+        return text.replace('\n', ' ');
+    },
+    
+    defineProperties: function(proto, properties) {
+        
+        properties.forEach(function(property) {
+            Object.defineProperty(proto, property, {
+                get: function () { return this.prop(property); }, 
+                set: function (value) { this.prop(property, value); }
+            });
+        });
+    }
+};
+
+//data flow shape
+
 joint.shapes.tm.Flow = joint.dia.Link.extend({
 
     arrowheadMarkup: [
@@ -33,6 +68,17 @@ joint.shapes.tm.Flow = joint.dia.Link.extend({
         smooth: true
     }, joint.dia.Link.prototype.defaults)
 });
+
+//flow element properties
+
+Object.defineProperty(joint.shapes.tm.Flow.prototype, 'name', {
+    get: function () { return joint.shapes.tm.utils.wordUnwrap(this.attributes.labels[0].attrs.text.text); },
+    set: function (value) { joint.shapes.tm.utils.editNameLink(this, value); }
+});
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, ['outOfScope', 'reasonOutOfScope', 'protocol', 'isEncrypted', 'isPublicNetwork', 'threats']);
+
+//trust boundary shape
 
 joint.shapes.tm.Boundary = joint.dia.Link.extend({
 
@@ -64,6 +110,8 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
     }, joint.dia.Link.prototype.defaults)
 });
 
+//element with tool bar
+
 joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
 
     toolMarkup: ['<g class="element-tools">',
@@ -85,6 +133,17 @@ joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
 
 });
 
+//tool element properties
+
+Object.defineProperty(joint.shapes.tm.toolElement.prototype, 'name', {
+    get: function () { return joint.shapes.tm.utils.wordUnwrap(this.attr('text/text')); },
+    set: function (value) { joint.shapes.tm.utils.editNameElement(this, value); }
+});
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, ['outOfScope', 'reasonOutOfScope', 'threats']);
+
+//process element shape
+
 joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><circle class="element-process"/><title class="tooltip"/></g><text/></g>',
@@ -98,6 +157,12 @@ joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
         size: { width: 100, height: 100 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
 });
+
+//define process element properties
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Process.prototype, ['privilegeLevel']);
+
+//data store element shape
 
 joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
 
@@ -115,6 +180,12 @@ joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
     }, joint.shapes.tm.toolElement.prototype.defaults)
 });
 
+//data store properties
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, ['isALog','storesCredentials','isEncrypted', 'isSigned']);
+
+//actor element shape
+
 joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
 
     markup: '<g class="rotatable"><g class="scalable"><rect class="element-actor"/><title class="tooltip"/></g><text/></g>',
@@ -129,6 +200,12 @@ joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
         size: { width: 160, height: 80 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
 });
+
+//actor properties
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, ['providesAuthentication']);
+
+//custom views
 
 joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
 
