@@ -105,12 +105,12 @@
             diagram.on('cell:pointerclick', function (cellView, evt, x, y) {
                 if (!cellView.model.isLink()) {
 
-                    if (cellView._action == 'linkFrom') {
+                    if (cellView._action === 'linkFrom') {
 
                         addLinkFrom(cellView);
 
                     }
-                    else if (cellView._action == 'removeLinkFrom') {
+                    else if (cellView._action === 'removeLinkFrom') {
 
                         removeLinkFrom(cellView);
 
