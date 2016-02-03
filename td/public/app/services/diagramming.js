@@ -135,8 +135,6 @@
                 attrs: { text: { text: label } }
             });
 
-            addNameProperty(cell);
-
             return cell;
         }
 
@@ -153,8 +151,6 @@
 
             cell.setLabel(label);
 
-            addNameProperty(cell);
-
             return cell;
         }
 
@@ -170,44 +166,7 @@
                 cell.setLabel(label);
             }
 
-            addNameProperty(cell);
-
             return cell;
         }
-
-        function addNameProperty(element) {
-            if (element.isLink()) {
-                Object.defineProperty(element, 'name', {
-                    get: function () { return wordUnwrap(this.attributes.labels[0].attrs.text.text); },
-                    set: function (value) { editNameLink(this, value); }
-                });
-            }
-            else {
-                Object.defineProperty(element, 'name', {
-                    get: function () { return wordUnwrap(this.attr('text/text')); },
-                    set: function (value) { editNameElement(this, value); }
-                });
-            }
-        }
-
-        function editNameElement(element, value) {
-            element.attr('text/text', wordWrap(element, value));
-        }
-
-        function editNameLink(element, value) {
-            element.label(0, { attrs: { text: { text: wordWrap(element, value) } } });
-        }
-
-        function wordWrap(element, text) {
-
-            var size = element.isLink() ? { width: 140, height: 80 } : element.get('size');
-            return joint.util.breakText(text, size);
-        }
-
-        function wordUnwrap(text) {
-            return text.replace('\n', ' ');
-        }
-
-
     }
 })();
