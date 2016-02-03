@@ -82,11 +82,6 @@
         function link(scope, element, attrs)
         {
             scope.applyToAll = false;
-            
-            if (!scope.threats)
-            {
-                scope.threats = [];
-            }
 
             scope.onNewThreat = function () {
                 dialogs.confirm('./app/diagrams/ThreatEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
@@ -105,6 +100,12 @@
             };
 
             scope.addThreat = function () {
+                
+                if (!scope.threats)
+                {
+                    scope.threats = [];
+                }
+                
                 scope.threats.push(newThreat);
                 scope.save({ threat: newThreat });
                 reset();

@@ -324,7 +324,10 @@
             {
                 vm.dirty = true;
                 vm.graph.off('change add', setDirty);
-                //scope.$apply()
+                //throws exception (digest already in progress)
+                //but removing causes failure to enable save button in diagram editor when moving an element
+                //scope.$apply();
+
             }
         }
     }
