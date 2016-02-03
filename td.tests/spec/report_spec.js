@@ -44,7 +44,6 @@ describe('report controller', function () {
         //datacontext mock
         mockDatacontext.getThreatModelDetail = function () { return $q.when({ detail: { diagrams: [{id: 0}, {id: 1}, {id: 2}]  } }) };
         spyOn(mockDatacontext, 'getThreatModelDetail').and.callThrough();
-        mockDatacontext.getElementProperties = function () { return $q.when('mock element properties')};
         mockDatacontext.getThreatModelDiagram = function () { return $q.when({ diagramJson: 'diagram JSON' }) };
 
         //$routeParams mock
@@ -67,12 +66,6 @@ describe('report controller', function () {
     });
 
     describe('initialisation tests', function () {
-
-        beforeEach(function () {
-
-            spyOn(mockDatacontext, 'getElementProperties').and.callThrough();
-
-        });
 
         it('should be defined', function () {
             expect($scope.vm).toBeDefined();
@@ -146,7 +139,6 @@ describe('report controller', function () {
         beforeEach(function () {
 
             spyOn(mockDatacontext, 'getThreatModelDiagram').and.callThrough();
-            spyOn(mockDatacontext, 'getElementProperties').and.callThrough();
             $scope.vm.threatModel = { summary: { id: 0 } };
             $scope.vm.initialise(mockDiagram);
             $scope.$apply();
@@ -168,22 +160,6 @@ describe('report controller', function () {
         it('should scale the diagram content', function () {
 
             expect(mockDiagramming.scaleContent).toHaveBeenCalled();
-
-        });
-
-        it('should call getElementProperties on the datacontext for each diagram element', function () {
-
-            expect(mockDatacontext.getElementProperties.calls.argsFor(0)).toEqual([0, 1, 0]);
-            expect(mockDatacontext.getElementProperties.calls.argsFor(1)).toEqual([0, 1, 1]);
-            expect(mockDatacontext.getElementProperties.calls.argsFor(2)).toEqual([0, 1, 2]);
-
-        });
-
-        it('should set the element properties for each diagram element', function () {
-
-            expect(mockDiagram.model.attributes.cells.models[0].properties).toEqual('mock element properties');
-            expect(mockDiagram.model.attributes.cells.models[1].properties).toEqual('mock element properties');
-            expect(mockDiagram.model.attributes.cells.models[2].properties).toEqual('mock element properties');
 
         });
 
