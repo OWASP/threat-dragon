@@ -42,7 +42,6 @@
         function initialise(graph, diagramJson)
         {
             graph.fromJSON(JSON.parse(diagramJson));
-            graph.attributes.cells.models.forEach(function (cell) { addNameProperty(cell); });
         }
         
         function resize(diagram, size)
