@@ -52,15 +52,7 @@
             {
                 diagramming.initialise(diagram.model, data.diagramJson);
                 diagramming.scaleContent(diagram, { maxScale: 4 });
-                diagram.model.attributes.cells.models.forEach(function (element) { getElementProperties(diagram.model.diagramId, element); });
             }
-        }
-
-        function getElementProperties(diagramId, element)
-        {
-            datacontext.getElementProperties(vm.threatModel.summary.id, diagramId, element.id).then(function (data) {
-                element.properties = data;
-            });
         }
         
         function print()

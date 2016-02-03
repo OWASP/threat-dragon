@@ -1,45 +1,45 @@
-﻿<div ng-if="element.properties.outOfScope">
+﻿<div ng-if="element.outOfScope">
     <p>
-        This element is out of scope. The stated reason is: {{element.properties.reasonOutOfScope}}
+        This element is out of scope. The stated reason is: {{element.reasonOutOfScope}}
     </p>
 </div>
-<div ng-if="!element.properties.outOfScope" ng-switch="element.type">
+<div ng-if="!element.outOfScope" ng-switch="element.type">
     <div ng-switch-when="Process">
         <p>
-            <strong>Privilege level:</strong> {{element.properties.privilegeLevel}}
+            <strong>Privilege level:</strong> {{element.privilegeLevel}}
         </p>
     </div>
     <div ng-switch-when="Actor">
         <div class="checkbox">
             <label>
-                <input ng-disabled="true" type="checkbox" ng-model="element.properties.providesAuthentication" /> Provides authentication
+                <input ng-disabled="true" type="checkbox" ng-model="element.providesAuthentication" /> Provides authentication
             </label>
         </div>
     </div>
     <div ng-switch-when="Store">
         <div class="checkbox">
             <label>
-                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isALog" /> Is a log
+                <input ng-disabled="true" type="checkbox" ng-model="element.isALog" /> Is a log
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input ng-disabled="true" type="checkbox" ng-model="element.properties.storesCredentials" /> Stores credentials
+                <input ng-disabled="true" type="checkbox" ng-model="element.storesCredentials" /> Stores credentials
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isEncrypted" /> Is encrypted
+                <input ng-disabled="true" type="checkbox" ng-model="element.isEncrypted" /> Is encrypted
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input ng-disabled="true" type="checkbox" ng-model="element.properties.isSigned" /> Is signed
+                <input ng-disabled="true" type="checkbox" ng-model="element.isSigned" /> Is signed
             </label>
         </div>
     </div>
     <div ng-switch-when="Flow">
-        <strong>Protocol:</strong> {{element.properties.protocol}}
+        <strong>Protocol:</strong> {{element.protocol}}
         <div class="checkbox">
             <label>
                 <input ng-disabled="true" type="checkbox" ng-model="selected.elementProperties.isEncrypted"  /> Is encrypted
@@ -58,7 +58,7 @@
         </div>
         <div class="panel-body">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="threat in element.properties.threats">
+                <li class="list-group-item" ng-repeat="threat in element.threats">
                     <p><strong>{{threat.title}}</strong> ({{threat.type}}, 
                         <span ng-class="{Open:'severity-high', Mitigated:'severity-low'}[threat.status]">{{threat.status}}</span>,
                         <span ng-class="{Low:'severity-low', Medium:'severity-medium', High:'severity-high'}[threat.severity]"> {{threat.severity}} severity</span>)
