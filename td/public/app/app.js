@@ -1,5 +1,11 @@
 ﻿(function () {
     'use strict';
+    
+    
+    //temporary fix for Chrome/Jointjs problem
+    SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(toElement) {
+        return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
+    };
 
     var app = angular.module('app', [
 
