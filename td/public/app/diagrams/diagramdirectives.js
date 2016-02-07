@@ -18,7 +18,7 @@
 
         return directive;
 
-        function link(scope, element, attrs) {
+        function link(scope, element) {
 
             if (angular.isUndefined(scope.scale)) {
                 scope.scale = 1.0;
@@ -93,7 +93,7 @@
 
         return directive;
 
-        function link(scope, element, attrs) {
+        function link(scope, element) {
                 
             $(element).parent().height(scope.height);
             var diagram = newDiagram(scope.height - 10, scope.width - 10, scope.gridSize, scope.graph, element[0], scope.interactive);   
@@ -102,7 +102,7 @@
                 
             scope.graph.on('add', function (newCell) { newCell.translate($(element).parent().scrollLeft(), $(element).parent().scrollTop());});
 
-            diagram.on('cell:pointerclick', function (cellView, evt, x, y) {
+            diagram.on('cell:pointerclick', function (cellView) {
                 if (!cellView.model.isLink()) {
 
                     if (cellView._action === 'linkFrom') {
@@ -128,7 +128,7 @@
                 }                    
             });
 
-            diagram.on('blank:pointerclick', function (evt, x, y) {
+            diagram.on('blank:pointerclick', function () {
 
                 if (selected && !selected.model.isLink()) {
                     removeLinkFrom(selected);
@@ -137,7 +137,7 @@
                 setSelected(null);
             });
 
-            diagram.on('link:options', function (evt, cellView, x, y) {
+            diagram.on('link:options', function (evt, cellView) {
 
                 if (selected && !selected.model.isLink()) {
                     removeLinkFrom(selected);
