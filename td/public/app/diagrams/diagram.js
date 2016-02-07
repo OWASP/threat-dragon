@@ -35,7 +35,7 @@
         vm.select = select;
         vm.edit = edit;
         vm.generateThreats = generateThreats;
-        vm.selected = {};
+        vm.selected = null;
         vm.viewStencil = true;
         vm.viewThreats = false;
         vm.stencils = getStencils();

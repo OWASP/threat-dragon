@@ -45,6 +45,28 @@ joint.shapes.tm.utils = {
                 set: function (value) { this.prop(property, value); }
             });
         });
+    },
+    
+    defineOutOfScope: function(proto) {
+            
+        Object.defineProperty(proto, 'outOfScope', {
+        get: function () { return this.prop('outOfScope'); }, 
+        set: function (value) {
+            
+                var originalClass = this.attr('#element-shape/class');
+            
+                if(value)
+                {
+                    this.attr('#element-shape/class', originalClass ? originalClass + ' outOfScopeElement' : 'outOfScopeElement');
+                }
+                else
+                {
+                    this.attr('#element-shape/class', originalClass.replace('outOfScopeElement',''));                
+                }
+                
+                this.prop('outOfScope', value);
+            }
+        });
     }
 };
 
@@ -140,19 +162,20 @@ Object.defineProperty(joint.shapes.tm.toolElement.prototype, 'name', {
     set: function (value) { joint.shapes.tm.utils.editNameElement(this, value); }
 });
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, ['outOfScope', 'reasonOutOfScope', 'threats']);
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, ['reasonOutOfScope', 'threats']);
+joint.shapes.tm.utils.defineOutOfScope(joint.shapes.tm.toolElement.prototype);
 
 //process element shape
 
 joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
 
-    markup: '<g class="rotatable"><g class="scalable"><circle class="element-process"/><title class="tooltip"/></g><text/></g>',
+    markup: '<g class="rotatable"><g class="scalable"><circle id="element-shape"/><title class="tooltip"/></g><text/></g>',
 
     defaults: joint.util.deepSupplement({
         type: 'tm.Process',
         attrs: {
-            '.element-process': { 'stroke-width': 1, r: 30, stroke: 'black', transform: 'translate(30, 30)' },
-            text: { ref: '.element-process'}
+            '#element-shape': { 'stroke-width': 1, r: 30, stroke: 'black', transform: 'translate(30, 30)' },
+            text: { ref: '#element-shape'}
         },
         size: { width: 100, height: 100 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
@@ -166,15 +189,15 @@ joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Process.prototype, ['priv
 
 joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
 
-    markup: '<g class="rotatable"><g class="scalable"><rect/><path class="element-store"/><title class="tooltip"/></g><text/></g>',
+    markup: '<g class="rotatable"><g class="scalable"><rect/><path id="element-shape"/><title class="tooltip"/></g><text/></g>',
     
     defaults: joint.util.deepSupplement({
     
         type: 'tm.Store',
         attrs: {
             rect: { fill: 'white', stroke: 'white', 'follow-scale': true, width: 160, height: 80 },
-            '.element-store': { d: 'M0 0 H160 M0 80 H160', stroke: 'black', fill: 'white', 'stroke-width': 1, 'follow-scale': true},
-            text: { ref: '.element-store' }
+            '#element-shape': { d: 'M0 0 H160 M0 80 H160', stroke: 'black', fill: 'white', 'stroke-width': 1, 'follow-scale': true},
+            text: { ref: '#element-shape' }
         },
         size: { width: 160, height: 80 }
     }, joint.shapes.tm.toolElement.prototype.defaults)
@@ -188,14 +211,14 @@ joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, ['isALog
 
 joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
 
-    markup: '<g class="rotatable"><g class="scalable"><rect class="element-actor"/><title class="tooltip"/></g><text/></g>',
+    markup: '<g class="rotatable"><g class="scalable"><rect id="element-shape"/><title class="tooltip"/></g><text/></g>',
 
     defaults: joint.util.deepSupplement({
 
         type: 'tm.Actor',
         attrs: {
-            '.element-actor': { fill: 'white', stroke: 'black', 'stroke-width': 1, 'follow-scale': true, width: 160, height: 80 },
-            text: { ref: '.element-actor'}
+            '#element-shape': { fill: 'white', stroke: 'black', 'stroke-width': 1, 'follow-scale': true, width: 160, height: 80 },
+            text: { ref: '#element-shape'}
         },
         size: { width: 160, height: 80 }
     }, joint.shapes.tm.toolElement.prototype.defaults)

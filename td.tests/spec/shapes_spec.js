@@ -38,66 +38,201 @@ describe('custom shape tests', function() {
 		translateSeperator = isIE? ' ' : ',';
 		
 	});
-	
-	it('should place a process element', function(){
-		
-		var label = 'new process';
-		var x = 50;
-		var y = 60;
-		var cell = new joint.shapes.tm.Process({
-			position: {x: x, y: y},
-			attr: {text: {text: label}}
-		});
-		
-		graph.addCell(cell);
-		expect(diagramElement).toContainElement('g.element-tools');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-		expect(diagramElement).toContainElement('g.element.tm.Process');
-		expect(diagramElement.find('g.element.tm.Process')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-		expect(diagramElement).toContainElement('circle.element-process');
-		
-	});
-	
-	it('should place an actor element', function(){
-		
-		var label = 'new actor';
-		var x = 50;
-		var y = 60;
-		var cell = new joint.shapes.tm.Actor({
-			position: {x: x, y: y},
-			attr: {text: {text: label}}
-		});
-		
-		graph.addCell(cell);
-		expect(diagramElement).toContainElement('g.element-tools');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-		expect(diagramElement).toContainElement('g.element.tm.Actor');
-		expect(diagramElement.find('g.element.tm.Actor')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-		expect(diagramElement).toContainElement('rect.element-actor');
-		
-	});
-	
-	it('should place a store element', function(){
-		
-		var label = 'new store';
-		var x = 50;
-		var y = 60;
-		var cell = new joint.shapes.tm.Store({
-			position: {x: x, y: y},
-			attr: {text: {text: label}}
-		});
-		
-		graph.addCell(cell);
-		expect(diagramElement).toContainElement('g.element-tools');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-		expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-		expect(diagramElement).toContainElement('g.element.tm.Store');
-		expect(diagramElement.find('g.element.tm.Store')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-		expect(diagramElement).toContainElement('path.element-store');
-		
-	});
+    
+    describe(' :process', function() {
+        
+        var cell;
+        var x;
+        var y;
+        
+        beforeEach(function() {
+            
+            var label = 'new process';
+            x = 50;
+            y = 60;
+            cell = new joint.shapes.tm.Process({
+                position: {x: x, y: y},
+                attr: {text: {text: label}}
+            });
+            
+            graph.addCell(cell);
+            
+        });
+        
+        it('should place a process element', function(){
+            
+            expect(diagramElement).toContainElement('g.element-tools');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
+            expect(diagramElement).toContainElement('g.element.tm.Process');
+            expect(diagramElement.find('g.element.tm.Process')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
+            expect(diagramElement).toContainElement('circle#element-shape');
+            
+        });
+        
+        it('should set the process properties', function() {
+            
+            var testPrivilegeLevel = 'testPrivilegeLevel';
+            cell.privilegeLevel = testPrivilegeLevel;
+            expect(cell.privilegeLevel).toEqual(testPrivilegeLevel);
+            
+            var testReason = 'testReason';
+            cell.reasonOutOfScope = testReason;
+            expect(cell.reasonOutOfScope).toEqual(testReason);
+            
+        });
+        
+        it('should set the out-of-scope class on the process', function() {
+
+            cell.outOfScope = true;
+            expect(cell.outOfScope).toBe(true);
+            expect(diagramElement).toContainElement('circle#element-shape.outOfScopeElement');
+            cell.outOfScope = false; 
+            expect(cell.outOfScope).toBe(false);    
+            expect(diagramElement).not.toContainElement('circle#element-shape.outOfScopeElement');             
+        });
+        
+    });
+    
+    describe(' :actor', function() {
+        
+        var cell;
+        var x;
+        var y;
+        
+        beforeEach(function() {
+
+            var label = 'new actor';
+            x = 50;
+            y = 60;
+            cell = new joint.shapes.tm.Actor({
+                position: {x: x, y: y},
+                attr: {text: {text: label}}
+            });
+            
+            graph.addCell(cell);
+            
+        });
+        
+        it('should place an actor element', function(){
+            
+            expect(diagramElement).toContainElement('g.element-tools');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
+            expect(diagramElement).toContainElement('g.element.tm.Actor');
+            expect(diagramElement.find('g.element.tm.Actor')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
+            expect(diagramElement).toContainElement('rect#element-shape');
+        
+        });
+        
+        it('should set the actor properties', function() {
+            
+            var testProvidesAuthentication = true;
+            cell.providesAuthentication = testProvidesAuthentication;
+            expect(cell.providesAuthentication).toEqual(testProvidesAuthentication);
+            
+            var testReason = 'testReason';
+            cell.reasonOutOfScope = testReason;
+            expect(cell.reasonOutOfScope).toEqual(testReason);
+        });
+        
+        it('should set the out-of-scope class on the actor', function() {
+
+            var label = 'new actor';
+            var x = 50;
+            var y = 60;
+            var cell = new joint.shapes.tm.Actor({
+                position: {x: x, y: y},
+                attr: {text: {text: label}}
+            });
+            
+            graph.addCell(cell);
+            cell.outOfScope = true;
+            expect(cell.outOfScope).toBe(true);  
+            expect(diagramElement).toContainElement('rect#element-shape.outOfScopeElement');
+            cell.outOfScope = false;
+            expect(cell.outOfScope).toBe(false); 
+            expect(diagramElement).not.toContainElement('rect#element-shape.outOfScopeElement');
+            
+        });
+        
+    });
+    
+    describe(' :store', function() {
+        
+        var cell;
+        var x;
+        var y;
+        
+        beforeEach(function() {
+            
+            var label = 'new store';
+            x = 50;
+            y = 60;
+            cell = new joint.shapes.tm.Store({
+                position: {x: x, y: y},
+                attr: {text: {text: label}}
+            });
+            
+            graph.addCell(cell);
+                    
+        });
+        
+        it('should place a store element', function(){
+            
+            expect(diagramElement).toContainElement('g.element-tools');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
+            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
+            expect(diagramElement).toContainElement('g.element.tm.Store');
+            expect(diagramElement.find('g.element.tm.Store')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
+            expect(diagramElement).toContainElement('path#element-shape');
+            
+        });
+        
+        it('should set the store properties', function() {
+            
+            var testIsALog = true;
+            cell.isALog = testIsALog;
+            expect(cell.isALog).toEqual(testIsALog);
+            
+            var testStoresCredentials = true;
+            cell.storesCredentials = testStoresCredentials;
+            expect(cell.storesCredentials).toEqual(testStoresCredentials);
+            
+            var testIsEncrypted = true;
+            cell.isEncrypted = testIsEncrypted;
+            expect(cell.isEncrypted).toEqual(testIsEncrypted);
+            
+            var testIsSigned = true;
+            cell.isSigned = testIsSigned;
+            expect(cell.isSigned).toEqual(testIsSigned);
+            
+            var testReason = 'testReason';
+            cell.reasonOutOfScope = testReason;
+            expect(cell.reasonOutOfScope).toEqual(testReason);
+        });
+        
+        it('should set the out-of-scope class on the store', function() {
+
+            var label = 'new store';
+            var x = 50;
+            var y = 60;
+            var cell = new joint.shapes.tm.Store({
+                position: {x: x, y: y},
+                attr: {text: {text: label}}
+            });
+            
+            graph.addCell(cell);
+            cell.outOfScope = true;
+            expect(cell.outOfScope).toBe(true);    
+            expect(diagramElement).toContainElement('path#element-shape.outOfScopeElement');
+            cell.outOfScope = false;  
+            expect(cell.outOfScope).toBe(false);   
+            expect(diagramElement).not.toContainElement('path#element-shape.outOfScopeElement');
+            
+        });
+        
+    });
 	
 	it('should place a boundary element', function(){
 		

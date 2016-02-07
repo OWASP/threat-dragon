@@ -16,6 +16,13 @@
 	stroke-width: 3
 }
 
+/*threat model out of scope elemens*/
+
+.outOfScopeElement {
+    stroke: grey;
+    stroke-dasharray: 5,2
+}
+
 /*threat model element tools*/
 
 .element .element-tools {
@@ -45,7 +52,6 @@
 	font-weight: 400;
 	font-size: small
 }
-
 
 /* responsive paper */
 
