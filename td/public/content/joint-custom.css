@@ -19,8 +19,8 @@
 /*threat model out of scope elemens*/
 
 .outOfScopeElement {
-    stroke: grey;
-    stroke-dasharray: 5,2
+    stroke-dasharray: 5,2;
+    fill: none
 }
 
 /*threat model element tools*/

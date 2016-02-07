@@ -98,7 +98,24 @@ Object.defineProperty(joint.shapes.tm.Flow.prototype, 'name', {
     set: function (value) { joint.shapes.tm.utils.editNameLink(this, value); }
 });
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, ['outOfScope', 'reasonOutOfScope', 'protocol', 'isEncrypted', 'isPublicNetwork', 'threats']);
+Object.defineProperty(joint.shapes.tm.Flow.prototype, 'outOfScope', {
+get: function () { return this.prop('outOfScope'); }, 
+set: function (value) {
+    
+        if(value)
+        {
+            this.attr('.connection/class', 'connection outOfScopeElement');
+        }
+        else
+        {
+            this.attr('.connection/class', 'connection');                
+        }
+        
+        this.prop('outOfScope', value);
+    }
+});
+
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, ['reasonOutOfScope', 'protocol', 'isEncrypted', 'isPublicNetwork', 'threats']);
 
 //trust boundary shape
 
