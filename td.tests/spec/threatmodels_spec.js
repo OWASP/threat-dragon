@@ -71,15 +71,12 @@ describe('threatModels controller', function () {
 
     describe('viewmodel tests', function () {
         
-        it('should call deleteThreatModel on the datacontext and remove the specified threat model', function () {
+        it('should call deleteThreatModel on the datacontext', function () {
             
-            expect($scope.vm.threatModels.length).toEqual(3);
             $scope.vm.deleteThreatModel(1);
             $scope.$apply();
             expect(mockDatacontext.deleteThreatModel).toHaveBeenCalled();
-            expect($scope.vm.threatModels[0].id).toEqual(0);
-            expect($scope.vm.threatModels[1].id).toEqual(2);
-            expect($scope.vm.threatModels.length).toEqual(2);
+            expect(mockDatacontext.deleteThreatModel.calls.argsFor(0)).toEqual([1]);
         });
         
         it('should call saveToFile on the file service', function () {

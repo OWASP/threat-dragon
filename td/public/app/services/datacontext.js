@@ -76,11 +76,12 @@
             return $q.when(threatModel);
         }
 
-        function deleteThreatModel(threatModel)
+        function deleteThreatModel(index)
         {
-            models.splice(threatModel.summary.id, 1);
+            var model = models[index];
+            models.splice(index, 1);
             localStorage.setItem('models', JSON.stringify(models));
-            return $q.when(threatModel);
+            return $q.when(model);
         }
 
         function getAllThreatModelDetails()

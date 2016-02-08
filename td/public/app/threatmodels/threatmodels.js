@@ -44,8 +44,7 @@
 
         function deleteThreatModel(index)
         {
-            var threatModel = vm.threatModels[index];
-            datacontext.deleteThreatModel(threatModel).then(function () { vm.threatModels.splice(index, 1); }, logError );
+            datacontext.deleteThreatModel(index);
         }
         
         function saveThreatModelToFile(index)

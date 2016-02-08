@@ -216,7 +216,7 @@ describe('datacontext service:', function () {
 
             initialModels.splice(1, 1);
 
-            datacontext.deleteThreatModel(model[1]).then(function (returnModel) {
+            datacontext.deleteThreatModel(1).then(function (returnModel) {
 
                 expect(returnModel).toEqual(model[1]);
                 expect(localStorage.getItem('models')).toEqual(JSON.stringify(initialModels));
