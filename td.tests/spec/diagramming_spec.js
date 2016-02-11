@@ -113,8 +113,6 @@ describe('diagramming service:', function () {
 
         });
 
-
-
         describe('adding element tests', function () {
 
             var graph;
@@ -236,6 +234,20 @@ describe('diagramming service:', function () {
                 expect(links[1] instanceof joint.shapes.tm.Flow).toBe(true);
                 expect(links[2] instanceof joint.shapes.tm.Boundary).toBe(true);
 
+            });
+            
+            it('should return all the elements and links in the graph', function() {
+                
+                var cells = diagramming.getCells(graph);
+                
+                expect(cells.length).toEqual(6);
+                expect(cells[0] instanceof joint.shapes.tm.Process).toBe(true);
+                expect(cells[1] instanceof joint.shapes.tm.Store).toBe(true);
+                expect(cells[2] instanceof joint.shapes.tm.Actor).toBe(true);
+                expect(cells[3] instanceof joint.shapes.tm.Flow).toBe(true);
+                expect(cells[4] instanceof joint.shapes.tm.Flow).toBe(true);
+                expect(cells[5] instanceof joint.shapes.tm.Boundary).toBe(true);                
+                
             });
 
             it('should delete all the elements in the graph', function () {

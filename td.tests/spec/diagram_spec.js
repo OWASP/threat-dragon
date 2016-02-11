@@ -232,6 +232,19 @@ describe('diagram controller', function () {
            expect(mockDiagramming.newFlow.calls.argsFor(0)).toEqual([graph, source, target]);
             
         });
+        
+        it('should set hasOpenThreats on the process', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           $scope.vm.newProcess();
+           console.log($scope.$$watchers);
+           expect(graph.hasOpenThreats).toBe(false);
+           var threat = {threatId: '1', status: 'Open'};
+           graph.cells[0].threats = [threat];
+           expect(graph.cells[0].hasOpenThreats).toBe(true);
+            
+        });
     })
         
     describe('zoom tests', function() {
@@ -356,6 +369,8 @@ describe('diagram controller', function () {
             spyOn(mockDiagramming, 'initialise');
             mockDiagramming.resize = function() { };
             spyOn(mockDiagramming, 'resize');
+            mockDiagramming.getCells = function() { return [] };
+            spyOn(mockDiagramming, 'getCells').and.callThrough();;
             
             newDiagram = {};
             threatModelId = 'threat model id';
@@ -484,7 +499,7 @@ describe('diagram controller', function () {
             rect.remove();
 
             expect($scope.vm.dirty).toBe(true); 
-            expect($scope.vm.selected).toEqual({});
+            expect($scope.vm.selected).toBeNull();
             expect($location.search()).toEqual({});
             
         });

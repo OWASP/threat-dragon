@@ -16,11 +16,24 @@
 	stroke-width: 3
 }
 
-/*threat model out of scope elemens*/
+/*threat model status indicator classes*/
 
-.outOfScopeElement {
+.isOutOfScope {
     stroke-dasharray: 5,2;
     fill: none
+}
+
+.hasOpenThreats {
+    stroke: red;
+}
+
+.marker-target.hasOpenThreats {
+    fill: red
+}
+
+text.hasOpenThreats  {
+    stroke: none;
+    fill: red
 }
 
 /*threat model element tools*/

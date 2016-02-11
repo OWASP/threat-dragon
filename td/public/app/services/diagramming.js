@@ -27,6 +27,7 @@
             newBoundary: newBoundary,
             getElements: getElements,
             getLinks: getLinks,
+            getCells: getCells,
             clear: clear,
             cellCount: cellCount,
             getCellById: getCellById
@@ -108,6 +109,11 @@
         function getLinks(graph)
         {
             return graph.getLinks();
+        }
+        
+        function getCells(graph)
+        {
+            return graph.getCells();
         }
 
         function clear(graph)

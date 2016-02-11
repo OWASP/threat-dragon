@@ -20,6 +20,7 @@
         var logError = getLogFn(controllerId, 'error');
         var scope = $scope;
         var currentDiagram = {};
+        var threatWatchers = [];
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'ThreatModelDiagram';
@@ -115,6 +116,7 @@
                 
                 if (angular.isDefined(data.diagramJson)) {
                     diagramming.initialise(vm.graph, data.diagramJson);
+                    diagramming.getCells(vm.graph).forEach( watchThreats );
                 }
                 
                 if (angular.isDefined(data.size)) {
@@ -282,28 +284,32 @@
             scope.$apply();
         }
 
-        function removeElement(element, graph, clearing)
+        function removeElement(element, graph, state)
         {
             vm.dirty = true;
-            vm.selected = {};
+            vm.selected = null;
+            unWatchThreats(element);
             $location.search('element', null);
             //scope.$apply cause an exception when clearing all elements (digest already in progress)
-            if (!clearing) { scope.$apply(); }
+            if (!state.clear)
+            {
+                scope.$apply();
+            }
         }
 
         function newProcess()
-        {
-            diagramming.newProcess(vm.graph);
+        {   
+            watchThreats(diagramming.newProcess(vm.graph));
         }
 
         function newStore()
         {
-            diagramming.newStore(vm.graph);
+            watchThreats(diagramming.newStore(vm.graph));
         }
 
         function newActor()
         {
-            diagramming.newActor(vm.graph);
+            watchThreats(diagramming.newActor(vm.graph));
         }
 
         function newFlow(source, target) {
@@ -328,6 +334,32 @@
                 //but removing causes failure to enable save button in diagram editor when moving an element
                 //scope.$apply();
 
+            }
+        }
+        
+        function watchThreats(element) {
+            
+            threatWatchers[element.id] = scope.$watch('{ element: "' + element.id + '", threats: vm.graph.getCell("' + element.id + '").threats}', function(newVal) { 
+                
+                var element = vm.graph.getCell(newVal.element);
+                
+                if(newVal.threats) {
+                    
+                    element.hasOpenThreats = newVal.threats.some( function(threat) { return threat.status === 'Open'; });        
+                }
+                else {
+                    element.hasOpenThreats = false;
+                }
+                
+            }, true);        
+        }
+        
+        function unWatchThreats(element) {
+            
+            if (threatWatchers[element.id])
+            {
+                threatWatchers[element.id]();
+                threatWatchers.splice(element.id,1);
             }
         }
     }

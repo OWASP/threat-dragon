@@ -66,7 +66,7 @@ describe('custom shape tests', function() {
             expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
             expect(diagramElement).toContainElement('g.element.tm.Process');
             expect(diagramElement.find('g.element.tm.Process')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('circle#element-shape');
+            expect(diagramElement).toContainElement('circle.element-shape');
             
         });
         
@@ -86,10 +86,20 @@ describe('custom shape tests', function() {
 
             cell.outOfScope = true;
             expect(cell.outOfScope).toBe(true);
-            expect(diagramElement).toContainElement('circle#element-shape.outOfScopeElement');
+            expect(diagramElement).toContainElement('circle.element-shape.isOutOfScope');
             cell.outOfScope = false; 
             expect(cell.outOfScope).toBe(false);    
-            expect(diagramElement).not.toContainElement('circle#element-shape.outOfScopeElement');             
+            expect(diagramElement).not.toContainElement('circle.element-shape.isOutOfScope');             
+        });
+        
+        it('should set the has open threats class on the process', function() {
+
+            cell.hasOpenThreats = true;
+            expect(cell.hasOpenThreats).toBe(true);
+            expect(diagramElement).toContainElement('circle.element-shape.hasOpenThreats');
+            cell.hasOpenThreats = false; 
+            expect(cell.hasOpenThreats).toBe(false);    
+            expect(diagramElement).not.toContainElement('circle.element-shape.hasOpenThreats');             
         });
         
         it('should highlight a cell', function() {
@@ -221,7 +231,7 @@ describe('custom shape tests', function() {
             expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
             expect(diagramElement).toContainElement('g.element.tm.Actor');
             expect(diagramElement.find('g.element.tm.Actor')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('rect#element-shape');
+            expect(diagramElement).toContainElement('rect.element-shape');
         
         });
         
@@ -237,23 +247,25 @@ describe('custom shape tests', function() {
         });
         
         it('should set the out-of-scope class on the actor', function() {
-
-            var label = 'new actor';
-            var x = 50;
-            var y = 60;
-            var cell = new joint.shapes.tm.Actor({
-                position: {x: x, y: y},
-                attr: {text: {text: label}}
-            });
             
             graph.addCell(cell);
             cell.outOfScope = true;
             expect(cell.outOfScope).toBe(true);  
-            expect(diagramElement).toContainElement('rect#element-shape.outOfScopeElement');
+            expect(diagramElement).toContainElement('rect.element-shape.isOutOfScope');
             cell.outOfScope = false;
             expect(cell.outOfScope).toBe(false); 
-            expect(diagramElement).not.toContainElement('rect#element-shape.outOfScopeElement');
+            expect(diagramElement).not.toContainElement('rect.element-shape.isOutOfScope');
             
+        });
+        
+        it('should set the has open threats class on the actor', function() {
+
+            cell.hasOpenThreats = true;
+            expect(cell.hasOpenThreats).toBe(true);
+            expect(diagramElement).toContainElement('rect.element-shape.hasOpenThreats');
+            cell.hasOpenThreats = false; 
+            expect(cell.hasOpenThreats).toBe(false);    
+            expect(diagramElement).not.toContainElement('rect.element-shape.hasOpenThreats');             
         });
         
     });
@@ -285,7 +297,7 @@ describe('custom shape tests', function() {
             expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
             expect(diagramElement).toContainElement('g.element.tm.Store');
             expect(diagramElement.find('g.element.tm.Store')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('path#element-shape');
+            expect(diagramElement).toContainElement('path.element-shape');
             
         });
         
@@ -313,23 +325,25 @@ describe('custom shape tests', function() {
         });
         
         it('should set the out-of-scope class on the store', function() {
-
-            var label = 'new store';
-            var x = 50;
-            var y = 60;
-            var cell = new joint.shapes.tm.Store({
-                position: {x: x, y: y},
-                attr: {text: {text: label}}
-            });
             
             graph.addCell(cell);
             cell.outOfScope = true;
-            expect(cell.outOfScope).toBe(true);    
-            expect(diagramElement).toContainElement('path#element-shape.outOfScopeElement');
-            cell.outOfScope = false;  
-            expect(cell.outOfScope).toBe(false);   
-            expect(diagramElement).not.toContainElement('path#element-shape.outOfScopeElement');
+            expect(cell.outOfScope).toBe(true);
+            expect(diagramElement).toContainElement('path.element-shape.isOutOfScope');
+            cell.outOfScope = false; 
+            expect(cell.outOfScope).toBe(false);    
+            expect(diagramElement).not.toContainElement('path.element-shape.isOutOfScope');  
             
+        });
+        
+        it('should set the has open threats class on the store', function() {
+
+            cell.hasOpenThreats = true;
+            expect(cell.hasOpenThreats).toBe(true);
+            expect(diagramElement).toContainElement('path.element-shape.hasOpenThreats');
+            cell.hasOpenThreats = false; 
+            expect(cell.hasOpenThreats).toBe(false);    
+            expect(diagramElement).not.toContainElement('path.element-shape.hasOpenThreats');             
         });
         
     });
@@ -420,11 +434,24 @@ describe('custom shape tests', function() {
         it('should set the out of scope class on the flow', function() {
             
             graph.addCell(cell);
-            expect($(diagramElement).find('.connection').attr('class')).toEqual('connection');
             cell.outOfScope = true;
             expect(cell.outOfScope).toBe(true);
-            expect($(diagramElement).find('.connection').attr('class')).toEqual('connection outOfScopeElement');
+            expect(diagramElement).toContainElement('path.connection.isOutOfScope');
+            cell.outOfScope = false; 
+            expect(cell.outOfScope).toBe(false);    
+            expect(diagramElement).not.toContainElement('path.connection.isOutOfScope');  
             
+        });
+        
+         it('should set the has open threats class on the store', function() {
+
+            graph.addCell(cell);
+            cell.hasOpenThreats = true;
+            expect(cell.hasOpenThreats).toBe(true);
+            expect(diagramElement).toContainElement('path.connection.hasOpenThreats');
+            cell.hasOpenThreats = false; 
+            expect(cell.hasOpenThreats).toBe(false);    
+            expect(diagramElement).not.toContainElement('path.connection.hasOpenThreats');             
         });
         
         it('should set the flow properties',function() {
@@ -446,7 +473,7 @@ describe('custom shape tests', function() {
         });
     });
 	
-	it('should place a flow elment with source and target', function() {
+	it('should place a flow element with source and target', function() {
 		
 		var source = new joint.shapes.tm.Process({
 			position: {x: 50, y: 50},
