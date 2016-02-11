@@ -299,27 +299,27 @@
 
         function newProcess()
         {   
-            watchThreats(diagramming.newProcess(vm.graph));
+            return watchThreats(diagramming.newProcess(vm.graph));
         }
 
         function newStore()
         {
-            watchThreats(diagramming.newStore(vm.graph));
+            return watchThreats(diagramming.newStore(vm.graph));
         }
 
         function newActor()
         {
-            watchThreats(diagramming.newActor(vm.graph));
+            return watchThreats(diagramming.newActor(vm.graph));
         }
 
         function newFlow(source, target) {
 
-            diagramming.newFlow(vm.graph, source, target);
+            return watchThreats(diagramming.newFlow(vm.graph, source, target));
         }
 
         function newBoundary() {
             
-            diagramming.newBoundary(vm.graph);
+            return diagramming.newBoundary(vm.graph);
         }
 
         function addDirtyEventHandlers() {
@@ -351,7 +351,9 @@
                     element.hasOpenThreats = false;
                 }
                 
-            }, true);        
+            }, true); 
+            
+            return element;       
         }
         
         function unWatchThreats(element) {

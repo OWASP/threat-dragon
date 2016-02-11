@@ -233,18 +233,154 @@ describe('diagram controller', function () {
             
         });
         
+        //helper for threat watcher unit tests
+        function setOpenThreats(cell) {
+        
+            var threat = {threatId: '1', status: 'Mitigated'};
+            cell.threats = [threat];
+            $scope.vm.graph.getCell = function() { return cell; }
+            cell.hasOpenThreats = false;
+            cell.threats[0].status = 'Open';
+            $scope.$apply();
+            expect(cell.hasOpenThreats).toBe(true);   
+            
+        }
+        
+        //helper for threat watcher unit tests
+        function setMitigatedThreats(cell) {
+        
+            var threat = {threatId: '1', status: 'Open'};
+            cell.threats = [threat];
+            $scope.vm.graph.getCell = function() { return cell; }
+            cell.hasOpenThreats = true;
+            cell.threats[0].status = 'Mitigated';
+            $scope.$apply();
+            expect(cell.hasOpenThreats).toBe(false);   
+            
+        }
+
+        //helper for threat watcher unit tests
+        function setNoThreats(cell) {
+        
+            var threat = {threatId: '1', status: 'Open'};
+            cell.threats = [threat];
+            $scope.vm.graph.getCell = function() { return cell; }
+            cell.hasOpenThreats = true;
+            delete cell.threats;
+            $scope.$apply();
+            expect(cell.hasOpenThreats).toBe(false);   
+            
+        }     
+        
+        
         it('should set hasOpenThreats on the process', function() {
             
            var graph = {title: 'test graph'};
            $scope.vm.graph = graph;
-           $scope.vm.newProcess();
-           console.log($scope.$$watchers);
-           expect(graph.hasOpenThreats).toBe(false);
-           var threat = {threatId: '1', status: 'Open'};
-           graph.cells[0].threats = [threat];
-           expect(graph.cells[0].hasOpenThreats).toBe(true);
+           var cell = $scope.vm.newProcess();
+           setOpenThreats(cell)
             
         });
+        
+        it('should unset hasOpenThreats on the process', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newProcess();
+           setMitigatedThreats(cell);
+            
+        });
+        
+        it('should unset hasOpenThreats on the process (no threats)', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newProcess();
+           setNoThreats(cell);
+            
+        });
+        
+        it('should set hasOpenThreats on the actor', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newActor();
+           setOpenThreats(cell)
+            
+        });
+        
+        it('should unset hasOpenThreats on the actor', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newActor();
+           setMitigatedThreats(cell);
+            
+        });
+        
+        it('should unset hasOpenThreats on the actor (no threats)', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newActor();
+           setNoThreats(cell);
+            
+        });
+        
+        it('should set hasOpenThreats on the store', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newStore();
+           setOpenThreats(cell)
+            
+        });
+        
+        it('should unset hasOpenThreats on the store', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newStore();
+           setMitigatedThreats(cell);
+            
+        });
+        
+        it('should unset hasOpenThreats on the store (no threats)', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newStore();
+           setNoThreats(cell);
+            
+        });
+        
+        it('should set hasOpenThreats on the flow', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newFlow('source', 'target');
+           setOpenThreats(cell)
+            
+        });
+        
+        it('should unset hasOpenThreats on the flow', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newFlow('source', 'target');
+           setMitigatedThreats(cell);
+            
+        });
+        
+        it('should unset hasOpenThreats on the flow (no threats)', function() {
+            
+           var graph = {title: 'test graph'};
+           $scope.vm.graph = graph;
+           var cell = $scope.vm.newFlow();
+           setNoThreats(cell);
+            
+        });
+        
     })
         
     describe('zoom tests', function() {
