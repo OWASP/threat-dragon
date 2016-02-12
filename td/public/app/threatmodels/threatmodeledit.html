@@ -2,9 +2,12 @@
 <div data-ng-controller="threatmodel as vm" class="container-fluid">
     <!--breadcrumbs-->
     <p>
-        <a href="/#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodels"> Threat models</a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodel/{{vm.threatModel.summary.id}}"> Threat model detail</a><span class="glyphicon glyphicon-chevron-right"></span>
+        <a href="/#/">Home </a>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <a href="/#/threatmodels"> Threat models</a>
+        <span ng-if="vm.threatModel.summary.id >= 0" class="glyphicon glyphicon-chevron-right"></span>
+        <a ng-if="vm.threatModel.summary.id >= 0" href="/#/threatmodel/{{vm.threatModel.summary.id}}"> Threat model detail</a>
+        <span class="glyphicon glyphicon-chevron-right"></span>
         Edit threat model
     </p>
     <div class="panel panel-default" ng-if="vm.threatModel.summary">
