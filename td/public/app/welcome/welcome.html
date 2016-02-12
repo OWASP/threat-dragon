@@ -16,9 +16,6 @@
                     <a class="btn btn-lg btn-default" href="#/threatmodels" role="button">
                         <span class="glyphicon glyphicon-open"></span>  {{vm.threatModelCount > 0 ? 'Open Local Model' : 'Create Local Model'}}
                     </a>
-                    <a class="btn btn-lg btn-default" href="#/threatmodel/edit/new" role="button">
-                        <span class="glyphicon glyphicon-plus"></span> Add New Model
-                    </a>
                     <button ng-disabled="vm.threatModelCount == 0" class="btn btn-lg btn-default" role="button" ng-click="vm.clearLocalStorage()">
                         <span class="glyphicon glyphicon-remove"></span>  Clear Local Storage
                     </button>
