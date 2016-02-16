@@ -12,25 +12,91 @@
     function diagramming(common) {
 
         var zoomScaleFactor = 1.25;
+        
+        //graph extensions
+        
+        joint.dia.Graph.prototype.initialise = function(diagramJson) {
+            
+            this.fromJSON(JSON.parse(diagramJson));
+            
+        };
+        
+        joint.dia.Graph.prototype.addProcess = function()
+        {
+            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + this.attributes.cells.length);            
+            this.addCell(cell);
 
+            return cell;
+        };
+
+        joint.dia.Graph.prototype.addStore = function()
+        {
+            var cell = newElement('joint.shapes.tm.Store', 50, 50, 'store ' + this.attributes.cells.length);
+            this.addCell(cell);
+
+            return cell;
+        };
+
+        joint.dia.Graph.prototype.addActor = function()
+        {
+            var cell = newElement('joint.shapes.tm.Actor', 50, 50, 'actor ' + this.attributes.cells.length);
+            this.addCell(cell);
+
+            return cell;
+        };
+
+        joint.dia.Graph.prototype.addFlow = function(source, target)
+        {
+            var cell = flow(source, target, 'flow ' + this.attributes.cells.length);
+            this.addCell(cell);
+
+            return cell;
+        };
+
+        joint.dia.Graph.prototype.addBoundary = function()
+        {
+            var cell = boundary();
+            this.addCell(cell);
+
+            return cell;
+        };
+
+        joint.dia.Graph.prototype.clearAll = function()
+        {
+            this.clear(true);
+        };
+
+        joint.dia.Graph.prototype.cellCount = function()
+        {
+            return this.attributes.cells.length;
+        };
+
+        joint.dia.Graph.prototype.getCellById = function(id)
+        {
+            return this.getCell(id);
+        };
+        
+        //diagram extensions
+        
+        joint.dia.Paper.prototype.resize = function (size)
+        {
+            this.setDimensions(size.width, size.height);
+        };
+        
+        joint.dia.Paper.prototype.scaleContent = function()
+        {
+            this.scaleContentToFit();
+        };
+        
+        joint.dia.Paper.prototype.zoom = function(zoomLevel)
+        {
+            var factor = Math.pow(zoomScaleFactor, zoomLevel);
+            this.scale(factor);
+        };
+        
         // Define the functions and properties to reveal.
         var service = {
-            newGraph: newGraph,
-            initialise: initialise,
-            resize: resize,
-            scaleContent: scaleContent,
-            zoom: zoom,
-            newProcess: newProcess,
-            newStore: newStore,
-            newActor: newActor,
-            newFlow: newFlow,
-            newBoundary: newBoundary,
-            getElements: getElements,
-            getLinks: getLinks,
-            getCells: getCells,
-            clear: clear,
-            cellCount: cellCount,
-            getCellById: getCellById
+            newGraph: newGraph
         };
 
         return service;
@@ -38,97 +104,6 @@
         function newGraph()
         {
             return new joint.dia.Graph();
-        }
-
-        function initialise(graph, diagramJson)
-        {
-            graph.fromJSON(JSON.parse(diagramJson));
-        }
-        
-        function resize(diagram, size)
-        {
-            diagram.setDimensions(size.width, size.height);
-        }
-        
-        function scaleContent(diagram)
-        {
-            diagram.scaleContentToFit();
-        }
-
-        function zoom(diagram, zoomLevel)
-        {
-            var factor = Math.pow(zoomScaleFactor, zoomLevel);
-            diagram.scale(factor);
-        }
-
-        function newProcess(graph)
-        {
-            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + graph.attributes.cells.length);            
-            graph.addCell(cell);
-
-            return cell;
-        }
-
-        function newStore(graph)
-        {
-            var cell = newElement('joint.shapes.tm.Store', 50, 50, 'store ' + graph.attributes.cells.length);
-            graph.addCell(cell);
-
-            return cell;
-        }
-
-        function newActor(graph)
-        {
-            var cell = newElement('joint.shapes.tm.Actor', 50, 50, 'actor ' + graph.attributes.cells.length);
-            graph.addCell(cell);
-
-            return cell;
-        }
-
-        function newFlow(graph, source, target)
-        {
-            var cell = flow(source, target, 'flow ' + graph.attributes.cells.length);
-            graph.addCell(cell);
-
-            return cell;
-        }
-
-        function newBoundary(graph)
-        {
-            var cell = boundary();
-            graph.addCell(cell);
-
-            return cell;
-        }
-
-        function getElements(graph)
-        {
-            return graph.getElements();
-        }
-
-        function getLinks(graph)
-        {
-            return graph.getLinks();
-        }
-        
-        function getCells(graph)
-        {
-            return graph.getCells();
-        }
-
-        function clear(graph)
-        {
-            graph.clear(true);
-        }
-
-        function cellCount(graph)
-        {
-            return graph.attributes.cells.length;
-        }
-
-        function getCellById(graph, id)
-        {
-            return graph.getCell(id);
         }
 
         //private

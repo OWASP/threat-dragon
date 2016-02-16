@@ -42,7 +42,7 @@ describe('diagramming service:', function () {
             graph.addCell(rect);
             var graphJson = graph.toJSON();
             var newGraph = new joint.dia.Graph();
-            diagramming.initialise(newGraph, JSON.stringify(graphJson));
+            newGraph.initialise(JSON.stringify(graphJson));
 
             var cell = newGraph.attributes.cells.models[0]
             expect(cell instanceof joint.shapes.basic.Rect).toBe(true);
@@ -73,7 +73,7 @@ describe('diagramming service:', function () {
 
             it('should set the size of the diagram', function () {
 
-                diagramming.resize(diagram, { height: 100, width: 200 });
+                diagram.resize({ height: 100, width: 200 });
                 expect(diagram.options.height).toEqual(100);
                 expect(diagram.options.width).toEqual(200);
 
@@ -88,7 +88,7 @@ describe('diagramming service:', function () {
                 });
 
                 graph.addCell(rect);
-                diagramming.scaleContent(diagram);
+                diagram.scaleContent();
                 var bbox = diagram.getContentBBox();
                 //IE anf FF require rouding and removal of sign on zeros
                 expect(Math.abs(Math.round(bbox.x, 0))).toEqual(0);
@@ -101,11 +101,11 @@ describe('diagramming service:', function () {
             it('should scale the content of the diagram', function () {
 
                 var zoomLevel = -1;
-                diagramming.zoom(diagram, zoomLevel);
+                diagram.zoom(zoomLevel);
                 var result = $('.viewport').attr('transform') === 'scale(0.8,0.8)' || $('.viewport').attr('transform') === 'scale(0.8)'
                 expect(result).toBe(true);
                 zoomLevel = 1;
-                diagramming.zoom(diagram, zoomLevel);
+                diagram.zoom(zoomLevel);
                 result = $('.viewport').attr('transform') === 'scale(1.25,1.25)' || $('.viewport').attr('transform') === 'scale(1.25)'
                 expect(result).toBe(true);
 
@@ -125,7 +125,7 @@ describe('diagramming service:', function () {
 
             it('should add a process element to the graph and return it', function () {
 
-                var newCell = diagramming.newProcess(graph);
+                var newCell = graph.addProcess();
                 expect(newCell instanceof joint.shapes.tm.Process).toBe(true);
 
                 expect(graph.attributes.cells.models.length).toEqual(1);
@@ -136,7 +136,7 @@ describe('diagramming service:', function () {
 
             it('should add a store element to the graph and return it', function () {
 
-                var newCell = diagramming.newStore(graph);
+                var newCell = graph.addStore();
                 expect(newCell instanceof joint.shapes.tm.Store).toBe(true);
 
                 expect(graph.attributes.cells.models.length).toEqual(1);
@@ -147,7 +147,7 @@ describe('diagramming service:', function () {
 
             it('should add a actor element to the graph and return it', function () {
 
-                var newCell = diagramming.newActor(graph);
+                var newCell = graph.addActor(graph);
                 expect(newCell instanceof joint.shapes.tm.Actor).toBe(true);
 
                 expect(graph.attributes.cells.models.length).toEqual(1);
@@ -158,7 +158,7 @@ describe('diagramming service:', function () {
 
             it('should add a boundary element to the graph and return it', function () {
 
-                var newCell = diagramming.newBoundary(graph);
+                var newCell = graph.addBoundary();
                 expect(newCell instanceof joint.shapes.tm.Boundary).toBe(true);
 
                 expect(graph.attributes.cells.models.length).toEqual(1);
@@ -169,7 +169,7 @@ describe('diagramming service:', function () {
 
             it('should add a flow element to the graph and return it', function () {
 
-                var newCell = diagramming.newFlow(graph);
+                var newCell = graph.addFlow();
                 expect(newCell instanceof joint.shapes.tm.Flow).toBe(true);
 
                 expect(graph.attributes.cells.models.length).toEqual(1);
@@ -180,9 +180,9 @@ describe('diagramming service:', function () {
 
             it('should add a flow element to the graph with specified source/target and return it', function () {
 
-                var process = diagramming.newProcess(graph);
-                var actor = diagramming.newActor(graph);
-                var flow = diagramming.newFlow(graph, actor, process);
+                var process = graph.addProcess();
+                var actor = graph.addActor(graph);
+                var flow = graph.addFlow(actor, process);
 
                 expect(flow instanceof joint.shapes.tm.Flow).toBe(true);
                 expect(flow.attributes.source.id).toEqual(actor.id);
@@ -205,18 +205,18 @@ describe('diagramming service:', function () {
             beforeEach(function () {
 
                 graph = new joint.dia.Graph();
-                process = diagramming.newProcess(graph);
-                store = diagramming.newStore(graph);
-                actor = diagramming.newActor(graph);
-                flow1 = diagramming.newFlow(graph, actor, process);
-                flow2 = diagramming.newFlow(graph, store, process);
-                boundary = diagramming.newBoundary(graph);
+                process = graph.addProcess();
+                store = graph.addStore();
+                actor = graph.addActor();
+                flow1 = graph.addFlow(actor, process);
+                flow2 = graph.addFlow(store, process);
+                boundary = graph.addBoundary();
 
             });
 
             it('should return the elements in the graph', function () {
 
-                var elements = diagramming.getElements(graph);
+                var elements = graph.getElements();
 
                 expect(elements.length).toEqual(3);
                 expect(elements[0] instanceof joint.shapes.tm.Process).toBe(true);
@@ -227,7 +227,7 @@ describe('diagramming service:', function () {
 
             it('should return the links in the graph', function () {
 
-                var links = diagramming.getLinks(graph);
+                var links = graph.getLinks();
 
                 expect(links.length).toEqual(3);
                 expect(links[0] instanceof joint.shapes.tm.Flow).toBe(true);
@@ -238,7 +238,7 @@ describe('diagramming service:', function () {
             
             it('should return all the elements and links in the graph', function() {
                 
-                var cells = diagramming.getCells(graph);
+                var cells = graph.getCells();
                 
                 expect(cells.length).toEqual(6);
                 expect(cells[0] instanceof joint.shapes.tm.Process).toBe(true);
@@ -252,9 +252,9 @@ describe('diagramming service:', function () {
 
             it('should delete all the elements in the graph', function () {
 
-                diagramming.clear(graph);
-                var links = diagramming.getLinks(graph);
-                var elements = diagramming.getElements(graph);
+                graph.clearAll();
+                var links = graph.getLinks();
+                var elements = graph.getElements();
 
                 expect(links.length).toEqual(0);
                 expect(elements.length).toEqual(0);
@@ -263,13 +263,13 @@ describe('diagramming service:', function () {
 
             it('should count the elements in the graph', function () {
 
-                expect(diagramming.cellCount(graph)).toEqual(6);
+                expect(graph.cellCount()).toEqual(6);
 
             });
 
             it('should get the specifed element', function () {
 
-                expect(diagramming.getCellById(graph, actor.id)).toEqual(actor);
+                expect(graph.getCellById(actor.id)).toEqual(actor);
 
             });
 
@@ -284,8 +284,8 @@ describe('diagramming service:', function () {
             beforeEach(function () {
 
                 graph = new joint.dia.Graph();
-                process = diagramming.newProcess(graph);
-                flow = diagramming.newFlow(graph);
+                process = graph.addProcess();
+                flow = graph.addFlow();
 
             });
 
@@ -301,7 +301,6 @@ describe('diagramming service:', function () {
 
             });
 
-            //purely to push coverage up
             it('should set the label for an element', function () {
 
                 process.name = 'new name'
@@ -309,7 +308,6 @@ describe('diagramming service:', function () {
 
             });
 
-            //purely to push coverage up
             it('should set the label for an link', function () {
 
                 flow.name = 'new name';

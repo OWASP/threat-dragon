@@ -19,7 +19,6 @@
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
         var scope = $scope;
-        var currentDiagram = {};
         var threatWatchers = [];
 
         // Bindable properties and functions are placed on vm.
@@ -46,6 +45,7 @@
         vm.save = save;
         vm.clear = clear;
         vm.threatModelId = $routeParams.threatModelId;
+        vm.currentDiagram = {};
         vm.diagramId = $routeParams.diagramId;
         vm.currentZoomLevel = 0;
         vm.maxZoom = 4;
@@ -92,8 +92,8 @@
             var diagramJson = JSON.stringify(vm.graph);
             var diagramData = { diagramJson: diagramJson };
             
-            if (angular.isDefined(currentDiagram.options) && angular.isDefined(currentDiagram.options.height) && angular.isDefined(currentDiagram.options.width)) {
-                var size = { height: currentDiagram.options.height, width: currentDiagram.options.width };
+            if (angular.isDefined(vm.currentDiagram.options) && angular.isDefined(vm.currentDiagram.options.height) && angular.isDefined(vm.currentDiagram.options.width)) {
+                var size = { height: vm.currentDiagram.options.height, width: vm.currentDiagram.options.width };
                 diagramData.size = size;     
             }
             
@@ -109,18 +109,18 @@
 
         function initialise(newDiagram)
         {
-            currentDiagram = newDiagram;
+            vm.currentDiagram = newDiagram;
             datacontext.getThreatModelDiagram(vm.threatModelId, vm.diagramId).then(onGetThreatModelDiagram, onError);
 
             function onGetThreatModelDiagram(data) {
                 
                 if (angular.isDefined(data.diagramJson)) {
-                    diagramming.initialise(vm.graph, data.diagramJson);
-                    diagramming.getCells(vm.graph).forEach( watchThreats );
+                    vm.graph.initialise(data.diagramJson);
+                    vm.graph.getCells().forEach( watchThreats );
                 }
                 
                 if (angular.isDefined(data.size)) {
-                    diagramming.resize(currentDiagram, data.size);
+                    vm.currentDiagram.resize(data.size);
                 }
                     
                 vm.graph.on('remove', removeElement);
@@ -130,10 +130,10 @@
                 vm.dirty = false;
                 
                 if ($routeParams.element) {
-                    var element = diagramming.getCellById(vm.graph, $routeParams.element);
+                    var element = vm.graph.getCellById($routeParams.element);
                     initialSelect(element);
                     //a bit ugly - can we remove the dependency on the diagram?
-                    currentDiagram.setSelected(element);
+                    vm.currentDiagram.setSelected(element);
 
                     //more ugliness, but $evalAsync does not work!?
                     //This is to ensure the stencils are rendered before they are collapsed
@@ -150,19 +150,19 @@
         {
             //only ask for confirmation if diagram is dirty AND it has some cells
             //avoids the confirmation if you are reloading after an accidental clear of the model
-            if (vm.dirty && diagramming.cellCount(vm.graph) > 0)
+            if (vm.dirty && vm.graph.cellCount() > 0)
             {
-                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(currentDiagram); });
+                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram); });
             }
             else
             {
-                vm.initialise(currentDiagram);
+                vm.initialise(vm.currentDiagram);
             }  
         }
 
         function clear()
         {
-            diagramming.clear(vm.graph);
+            vm.graph.clearAll();
         }
 
         function zoomIn()
@@ -170,7 +170,7 @@
             if (vm.currentZoomLevel < vm.maxZoom)
             {
                 vm.currentZoomLevel++;
-                diagramming.zoom(currentDiagram, vm.currentZoomLevel);
+                vm.currentDiagram.zoom(vm.currentZoomLevel);
             }
         }
 
@@ -178,7 +178,7 @@
         {
             if (vm.currentZoomLevel > -vm.maxZoom) {
                 vm.currentZoomLevel--;
-                diagramming.zoom(currentDiagram, vm.currentZoomLevel);
+                vm.currentDiagram.zoom(vm.currentZoomLevel);
             }
         }
 
@@ -255,14 +255,14 @@
 
             if (elementId)
             {
-                element = diagramming.getCellById(vm.graph, elementId);
+                element = vm.graph.getCellById(elementId);
             }
 
             vm.selected = element;         
             
             //existence test is required to support unit tests where currentDiagram is not initialised
-            if (typeof currentDiagram.setSelected === 'function' || typeof currentDiagram.setSelected === 'object') {
-                currentDiagram.setSelected(element);
+            if (typeof vm.currentDiagram.setSelected === 'function' || typeof vm.currentDiagram.setSelected === 'object') {
+                vm.currentDiagram.setSelected(element);
             }
         }
 
@@ -299,27 +299,27 @@
 
         function newProcess()
         {   
-            return watchThreats(diagramming.newProcess(vm.graph));
+            return watchThreats(vm.graph.addProcess());
         }
 
         function newStore()
         {
-            return watchThreats(diagramming.newStore(vm.graph));
+            return watchThreats(vm.graph.addStore());
         }
 
         function newActor()
         {
-            return watchThreats(diagramming.newActor(vm.graph));
+            return watchThreats(vm.graph.addActor());
         }
 
         function newFlow(source, target) {
 
-            return watchThreats(diagramming.newFlow(vm.graph, source, target));
+            return watchThreats(vm.graph.addFlow(source, target));
         }
 
         function newBoundary() {
             
-            return diagramming.newBoundary(vm.graph);
+            return vm.graph.addBoundary();
         }
 
         function addDirtyEventHandlers() {

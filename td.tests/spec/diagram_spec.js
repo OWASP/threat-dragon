@@ -149,75 +149,58 @@ describe('diagram controller', function () {
     
     describe('graph tests: ', function() {
         
-        beforeEach(function() {
-            
-            mockDiagramming.getElements = function() { return [{id: 'eid1'}, {id: 'eid2'}]; };
-            spyOn(mockDiagramming, 'getElements').and.callThrough();
-            mockDiagramming.getLinks = function() { return [{id: 'lid1'}, {id: 'lid2'}]; };
-            spyOn(mockDiagramming, 'getLinks').and.callThrough();
-            mockDiagramming.clear = function() { };
-            spyOn(mockDiagramming, 'clear');
-            mockDiagramming.newProcess = function() { return {id: 'processId'}};
-            spyOn(mockDiagramming, 'newProcess').and.callThrough();
-            mockDiagramming.newActor = function() { return {id: 'actorId'}};
-            spyOn(mockDiagramming, 'newActor').and.callThrough();
-            mockDiagramming.newStore = function() { return {id: 'storeId'}};
-            spyOn(mockDiagramming, 'newStore').and.callThrough();
-            mockDiagramming.newBoundary = function() { return {id: 'boundaryId'}};
-            spyOn(mockDiagramming, 'newBoundary').and.callThrough();
-            mockDiagramming.newFlow = function() { return {id: 'flowId'}};
-            spyOn(mockDiagramming, 'newFlow').and.callThrough();  
-            
-        });
-        
         it('should clear all elements and links', function() {
            
            var graph = {title: 'test graph'};
+           graph.clearAll = function() { };
+           spyOn(graph, 'clearAll');
            $scope.vm.graph = graph;
            $scope.vm.clear();
-           
-           expect(mockDiagramming.clear).toHaveBeenCalled();
-           expect(mockDiagramming.clear.calls.argsFor(0)).toEqual([ graph ]);
+           expect(graph.clearAll).toHaveBeenCalled();
             
         });
         
         it('should add a new process', function() {
            
            var graph = {title: 'test graph'};
+           graph.addProcess = function() { return {id: 'processId'}};
+           spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
            $scope.vm.newProcess();
-           expect(mockDiagramming.newProcess).toHaveBeenCalled();
-           expect(mockDiagramming.newProcess.calls.argsFor(0)).toEqual([graph]);
+           expect(graph.addProcess).toHaveBeenCalled();
             
         });
         
         it('should add a new actor', function() {
            
            var graph = {title: 'test graph'};
+           graph.addActor = function() { return {id: 'actorId'}};
+           spyOn(graph, 'addActor').and.callThrough();
            $scope.vm.graph = graph;
            $scope.vm.newActor();
-           expect(mockDiagramming.newActor).toHaveBeenCalled();
-           expect(mockDiagramming.newActor.calls.argsFor(0)).toEqual([graph]);
+           expect(graph.addActor).toHaveBeenCalled();
             
         });
         
         it('should add a new store', function() {
  
            var graph = {title: 'test graph'};
+           graph.addStore = function() { return {id: 'storeId'}};
+           spyOn(graph, 'addStore').and.callThrough();
            $scope.vm.graph = graph;       
            $scope.vm.newStore();
-           expect(mockDiagramming.newStore).toHaveBeenCalled();
-           expect(mockDiagramming.newStore.calls.argsFor(0)).toEqual([graph]);
+           expect(graph.addStore).toHaveBeenCalled();
             
         });
         
         it('should add a new boundary', function() {
             
-           var graph = {title: 'test graph'}; 
+           var graph = {title: 'test graph'};
+           graph.addBoundary = function() { return {id: 'boundaryId'}};
+           spyOn(graph, 'addBoundary').and.callThrough();
            $scope.vm.graph = graph;  
            $scope.vm.newBoundary();
-           expect(mockDiagramming.newBoundary).toHaveBeenCalled();
-           expect(mockDiagramming.newBoundary.calls.argsFor(0)).toEqual([graph]);
+           expect(graph.addBoundary).toHaveBeenCalled();
             
         });
         
@@ -226,10 +209,12 @@ describe('diagram controller', function () {
            var graph = {title: 'test graph'};
            var source = 'source';
            var target = 'target';
+           graph.addFlow = function() { return {id: 'flowId'}};
+           spyOn(graph, 'addFlow').and.callThrough();  
            $scope.vm.graph = graph;
            $scope.vm.newFlow(source, target);
-           expect(mockDiagramming.newFlow).toHaveBeenCalled();
-           expect(mockDiagramming.newFlow.calls.argsFor(0)).toEqual([graph, source, target]);
+           expect(graph.addFlow).toHaveBeenCalled();
+           expect(graph.addFlow.calls.argsFor(0)).toEqual([source, target]);
             
         });
         
@@ -276,6 +261,8 @@ describe('diagram controller', function () {
         it('should set hasOpenThreats on the process', function() {
             
            var graph = {title: 'test graph'};
+           graph.addProcess = function() { return {id: 'processId'}};
+           spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
            var cell = $scope.vm.newProcess();
            setOpenThreats(cell)
@@ -285,6 +272,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the process', function() {
             
            var graph = {title: 'test graph'};
+           graph.addProcess = function() { return {id: 'processId'}};
+           spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
            var cell = $scope.vm.newProcess();
            setMitigatedThreats(cell);
@@ -294,6 +283,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the process (no threats)', function() {
             
            var graph = {title: 'test graph'};
+           graph.addProcess = function() { return {id: 'processId'}};
+           spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
            var cell = $scope.vm.newProcess();
            setNoThreats(cell);
@@ -303,6 +294,8 @@ describe('diagram controller', function () {
         it('should set hasOpenThreats on the actor', function() {
             
            var graph = {title: 'test graph'};
+           graph.addActor = function() { return {id: 'actorId'}};
+           spyOn(graph, 'addActor').and.callThrough();
            $scope.vm.graph = graph;
            var cell = $scope.vm.newActor();
            setOpenThreats(cell)
@@ -312,6 +305,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the actor', function() {
             
            var graph = {title: 'test graph'};
+           graph.addActor = function() { return {id: 'actorId'}};
+           spyOn(graph, 'addActor').and.callThrough();           
            $scope.vm.graph = graph;
            var cell = $scope.vm.newActor();
            setMitigatedThreats(cell);
@@ -321,6 +316,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the actor (no threats)', function() {
             
            var graph = {title: 'test graph'};
+           graph.addActor = function() { return {id: 'actorId'}};
+           spyOn(graph, 'addActor').and.callThrough();           
            $scope.vm.graph = graph;
            var cell = $scope.vm.newActor();
            setNoThreats(cell);
@@ -330,6 +327,8 @@ describe('diagram controller', function () {
         it('should set hasOpenThreats on the store', function() {
             
            var graph = {title: 'test graph'};
+           graph.addStore = function() { return {id: 'storeId'}};
+           spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
            var cell = $scope.vm.newStore();
            setOpenThreats(cell)
@@ -339,6 +338,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the store', function() {
             
            var graph = {title: 'test graph'};
+           graph.addStore = function() { return {id: 'storeId'}};
+           spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
            var cell = $scope.vm.newStore();
            setMitigatedThreats(cell);
@@ -348,6 +349,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the store (no threats)', function() {
             
            var graph = {title: 'test graph'};
+           graph.addStore = function() { return {id: 'storeId'}};
+           spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
            var cell = $scope.vm.newStore();
            setNoThreats(cell);
@@ -357,6 +360,8 @@ describe('diagram controller', function () {
         it('should set hasOpenThreats on the flow', function() {
             
            var graph = {title: 'test graph'};
+           graph.addFlow = function() { return {id: 'flowId'}};
+           spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
            var cell = $scope.vm.newFlow('source', 'target');
            setOpenThreats(cell)
@@ -366,6 +371,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the flow', function() {
             
            var graph = {title: 'test graph'};
+           graph.addFlow = function() { return {id: 'flowId'}};
+           spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
            var cell = $scope.vm.newFlow('source', 'target');
            setMitigatedThreats(cell);
@@ -375,6 +382,8 @@ describe('diagram controller', function () {
         it('should unset hasOpenThreats on the flow (no threats)', function() {
             
            var graph = {title: 'test graph'};
+           graph.addFlow = function() { return {id: 'flowId'}};
+           spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
            var cell = $scope.vm.newFlow();
            setNoThreats(cell);
@@ -385,10 +394,14 @@ describe('diagram controller', function () {
         
     describe('zoom tests', function() {
         
+        var mockDiagram;
+        
         beforeEach(function() {
             
-            mockDiagramming.zoom = function() { };
-            spyOn(mockDiagramming, 'zoom');
+            mockDiagram = {};
+            mockDiagram.zoom = function() { };
+            spyOn(mockDiagram, 'zoom');
+            $scope.vm.currentDiagram = mockDiagram;        
             
         })
         
@@ -397,8 +410,8 @@ describe('diagram controller', function () {
             $scope.vm.maxZoom = 5;
             $scope.vm.currentZoomLevel = 1;
             $scope.vm.zoomIn();
-            expect(mockDiagramming.zoom).toHaveBeenCalled();
-            expect(mockDiagramming.zoom.calls.argsFor(0)[1]).toEqual(2);
+            expect(mockDiagram.zoom).toHaveBeenCalled();
+            expect(mockDiagram.zoom.calls.argsFor(0)).toEqual([2]);
             expect($scope.vm.currentZoomLevel).toEqual(2);
             
         });
@@ -408,7 +421,7 @@ describe('diagram controller', function () {
             $scope.vm.maxZoom = 5;
             $scope.vm.currentZoomLevel = 5;
             $scope.vm.zoomIn();
-            expect(mockDiagramming.zoom).not.toHaveBeenCalled();
+            expect(mockDiagram.zoom).not.toHaveBeenCalled();
             expect($scope.vm.currentZoomLevel).toEqual(5);           
                
         });
@@ -418,8 +431,8 @@ describe('diagram controller', function () {
             $scope.vm.maxZoom = 0;
             $scope.vm.currentZoomLevel = 1;
             $scope.vm.zoomOut();
-            expect(mockDiagramming.zoom).toHaveBeenCalled();
-            expect(mockDiagramming.zoom.calls.argsFor(0)[1]).toEqual(0);
+            expect(mockDiagram.zoom).toHaveBeenCalled();
+            expect(mockDiagram.zoom.calls.argsFor(0)).toEqual([0]);
             expect($scope.vm.currentZoomLevel).toEqual(0);
             
         });
@@ -429,7 +442,7 @@ describe('diagram controller', function () {
             $scope.vm.maxZoom = 0;
             $scope.vm.currentZoomLevel = 0;
             $scope.vm.zoomOut();
-            expect(mockDiagramming.zoom).not.toHaveBeenCalled();
+            expect(mockDiagram.zoom).not.toHaveBeenCalled();
             expect($scope.vm.currentZoomLevel).toEqual(0);           
                
         }); 
@@ -442,14 +455,15 @@ describe('diagram controller', function () {
             //dialogs mock
             mockDialogs.confirm = function() { };
             
-            //diagramming mocks
-            mockDiagramming.cellCount = function() { };
         });
         
         it('should ask for confirmation and reload', function() {
             
             spyOn(mockDialogs, 'confirm');
-            spyOn(mockDiagramming, 'cellCount').and.returnValue(5); 
+            var graph = {};
+            graph.cellCount = function() {};
+            spyOn(graph, 'cellCount').and.returnValue(5); 
+            $scope.vm.graph = graph;
             spyOn($scope.vm, 'initialise');  
             $scope.vm.dirty= true;
             $scope.vm.reload();
@@ -465,7 +479,10 @@ describe('diagram controller', function () {
             
             spyOn(mockDialogs, 'confirm');            
             spyOn($scope.vm, 'initialise');
-            spyOn(mockDiagramming, 'cellCount').and.returnValue(5);  
+            var graph = {};
+            graph.cellCount = function() {};
+            spyOn(graph, 'cellCount').and.returnValue(5); 
+            $scope.vm.graph = graph;
             $scope.vm.dirty= false;
             $scope.vm.reload();
             expect(mockDialogs.confirm).not.toHaveBeenCalled();
@@ -477,7 +494,10 @@ describe('diagram controller', function () {
 
             spyOn(mockDialogs, 'confirm'); 
             spyOn($scope.vm, 'initialise'); 
-            spyOn(mockDiagramming, 'cellCount').and.returnValue(0);  
+            var graph = {};
+            graph.cellCount = function() {};
+            spyOn(graph, 'cellCount').and.returnValue(0); 
+            $scope.vm.graph = graph;
             $scope.vm.dirty= true;
             $scope.vm.reload();
             expect(mockDialogs.confirm).not.toHaveBeenCalled();
@@ -498,15 +518,7 @@ describe('diagram controller', function () {
         beforeEach(function() {
             
             //datacontext mock
-            mockDatacontext.getThreatModelDiagram = function() { return $q.when(true); };            
-            
-            //diagramming mocks
-            mockDiagramming.initialise = function() { };
-            spyOn(mockDiagramming, 'initialise');
-            mockDiagramming.resize = function() { };
-            spyOn(mockDiagramming, 'resize');
-            mockDiagramming.getCells = function() { return [] };
-            spyOn(mockDiagramming, 'getCells').and.callThrough();;
+            mockDatacontext.getThreatModelDiagram = function() { return $q.when(true); };           
             
             newDiagram = {};
             threatModelId = 'threat model id';
@@ -520,6 +532,16 @@ describe('diagram controller', function () {
             $scope.vm.diagramId = diagramId;
             $scope.vm.loaded = false;
             $scope.vm.dirty = true;
+            
+            //diagram mocks
+            newDiagram.resize = function() {};
+            spyOn(newDiagram, 'resize');
+            
+            //graph mocks
+            graph.initialise = function() { };
+            spyOn(graph, 'initialise');
+            graph.getCells = function() { return [] };
+            spyOn(graph, 'getCells').and.callThrough();
          })
     
         it('should initialise a model with Json and size', function() {
@@ -535,10 +557,10 @@ describe('diagram controller', function () {
             
             expect(mockDatacontext.getThreatModelDiagram).toHaveBeenCalled();
             expect(mockDatacontext.getThreatModelDiagram.calls.argsFor(0)).toEqual([threatModelId, diagramId]);    
-            expect(mockDiagramming.initialise).toHaveBeenCalled();
-            expect(mockDiagramming.initialise.calls.argsFor(0)).toEqual([graph, diagramJson]);
-            expect(mockDiagramming.resize).toHaveBeenCalled();
-            expect(mockDiagramming.resize.calls.argsFor(0)).toEqual([newDiagram, size]);
+            expect(graph.initialise).toHaveBeenCalled();
+            expect(graph.initialise.calls.argsFor(0)).toEqual([diagramJson]);
+            expect(newDiagram.resize).toHaveBeenCalled();
+            expect(newDiagram.resize.calls.argsFor(0)).toEqual([size]);
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
             expect($scope.vm.diagram.title).toEqual(title);
@@ -553,8 +575,8 @@ describe('diagram controller', function () {
             
             expect(mockDatacontext.getThreatModelDiagram).toHaveBeenCalled();
             expect(mockDatacontext.getThreatModelDiagram.calls.argsFor(0)).toEqual([threatModelId, diagramId]);    
-            expect(mockDiagramming.initialise).not.toHaveBeenCalled();
-            expect(mockDiagramming.resize).not.toHaveBeenCalled();
+            expect(graph.initialise).not.toHaveBeenCalled();
+            expect(newDiagram.resize).not.toHaveBeenCalled();
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
             expect($scope.vm.diagram.title).toEqual(title);
@@ -567,8 +589,8 @@ describe('diagram controller', function () {
             var elementId = 'elementId';
             mockRouteParams.element = elementId;
             var element = {id: elementId};
-            mockDiagramming.getCellById = function() { return element; };
-            spyOn(mockDiagramming, 'getCellById').and.callThrough();
+            graph.getCellById = function() { return element; };
+            spyOn(graph, 'getCellById').and.callThrough();
             newDiagram.setSelected = function() {};
             spyOn(newDiagram, 'setSelected');
             $scope.vm.viewStencil = true;
@@ -578,8 +600,8 @@ describe('diagram controller', function () {
             $scope.$apply();
             
             expect($scope.vm.selected).toEqual(element);
-            expect(mockDiagramming.getCellById).toHaveBeenCalled();
-            expect(mockDiagramming.getCellById.calls.argsFor(0)).toEqual([graph, elementId]);
+            expect(graph.getCellById).toHaveBeenCalled();
+            expect(graph.getCellById.calls.argsFor(0)).toEqual([elementId]);
             expect(newDiagram.setSelected).toHaveBeenCalled();
             expect(newDiagram.setSelected.calls.argsFor(0)).toEqual([element]);
             expect($scope.vm.viewStencil).toBe(false);

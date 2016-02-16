@@ -56,10 +56,6 @@ describe('report controller', function () {
         //diagramming mock
         mockDiagramming.newGraph = function () { return {} };
         spyOn(mockDiagramming, 'newGraph').and.callThrough();
-        mockDiagramming.initialise = function () { };
-        spyOn(mockDiagramming, 'initialise').and.callThrough();
-        mockDiagramming.scaleContent = function () { };
-        spyOn(mockDiagramming, 'scaleContent').and.callThrough();
 
         $controller('report as vm', { $scope: $scope });
         $scope.$apply();
@@ -134,10 +130,15 @@ describe('report controller', function () {
 
     describe('viewmodel initialise tests: ', function () {
 
-        var mockDiagram = { model: { diagramId: 1, attributes: { cells: { models: [{ id: 0 }, { id: 1 }, { id: 2 }] } } } };
+        var model = { diagramId: 1, attributes: { cells: { models: [{ id: 0 }, { id: 1 }, { id: 2 }] } } };
+        var mockDiagram = { model: model };
 
         beforeEach(function () {
 
+            model.initialise = function () { };
+            spyOn(model, 'initialise').and.callThrough();
+            mockDiagram.scaleContent = function () { };
+            spyOn(mockDiagram, 'scaleContent').and.callThrough();
             spyOn(mockDatacontext, 'getThreatModelDiagram').and.callThrough();
             $scope.vm.threatModel = { summary: { id: 0 } };
             $scope.vm.initialise(mockDiagram);
@@ -153,13 +154,13 @@ describe('report controller', function () {
 
         it('should initialise the graph', function () {
 
-            expect(mockDiagramming.initialise.calls.argsFor(0)[1]).toEqual('diagram JSON');
+            expect(model.initialise.calls.argsFor(0)).toEqual(['diagram JSON']);
 
         });
 
         it('should scale the diagram content', function () {
 
-            expect(mockDiagramming.scaleContent).toHaveBeenCalled();
+            expect(mockDiagram.scaleContent).toHaveBeenCalled();
 
         });
 

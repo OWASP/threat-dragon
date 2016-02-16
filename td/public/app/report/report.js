@@ -50,8 +50,8 @@
 
             function onGetThreatModelDiagram(data)
             {
-                diagramming.initialise(diagram.model, data.diagramJson);
-                diagramming.scaleContent(diagram, { maxScale: 4 });
+                diagram.model.initialise(data.diagramJson);
+                diagram.scaleContent();
             }
         }
         
