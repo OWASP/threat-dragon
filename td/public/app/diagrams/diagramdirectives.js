@@ -11,8 +11,8 @@
             scope: {
                 shape: '=',
                 action: '&',
-                padding: '=',
-                scale: '='
+                padding: '=?',
+                scale: '=?'
             }
         };
 

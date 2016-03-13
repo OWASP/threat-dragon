@@ -24,8 +24,8 @@
     "backbone": "~1.2.1",
     "toastr": "~2.1.1",
     "bootstrap": "~3.3.5",
-    "joint": "git://github.com/clientIO/joint#~0.9.3",
-    "font-awesome": "~4.3.0",
+    "joint": "git://github.com/clientIO/joint#~0.9.6",
+    "font-awesome": "~4.5.0",
     "angular-xeditable": "~0.1.9",
     "animate-css": "~3.4.0"
   },
@@ -74,6 +74,11 @@
       "main": [
         "dist/js/bootstrap.js",
         "dist/css/bootstrap.css"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
       ]
     }
   },

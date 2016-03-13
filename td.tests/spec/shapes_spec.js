@@ -61,13 +61,8 @@ describe('custom shape tests', function() {
         
         it('should place a process element', function(){
             
-            expect(diagramElement).toContainElement('g.element-tools');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-            expect(diagramElement).toContainElement('g.element.tm.Process');
-            expect(diagramElement.find('g.element.tm.Process')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('circle.element-shape');
-            
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect(diagramElement).toContainElement(selector);            
         });
         
         it('should set the process properties', function() {
@@ -106,9 +101,10 @@ describe('custom shape tests', function() {
             
             var cellView = diagram.findViewByModel(cell);
             //jasmine-jquery hasClass matcher does not work - is it because is SVG?
-            expect($(diagramElement).find('g.element.tm.Process').attr('class')).toEqual('element tm Process');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(false);
             cellView.setSelected();
-            expect($(diagramElement).find('g.element.tm.Process').attr('class')).toEqual('element tm Process highlighted');
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
         });
         
         it('should unhighlight a cell', function() {
@@ -116,9 +112,11 @@ describe('custom shape tests', function() {
             var cellView = diagram.findViewByModel(cell);
             cellView.setSelected();
             //jasmine-jquery hasClass matcher does not work - is it because is SVG?
-            expect($(diagramElement).find('g.element.tm.Process').attr('class')).toEqual('element tm Process highlighted');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            cellView.setSelected();
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
             cellView.setUnselected();
-            expect($(diagramElement).find('g.element.tm.Process').attr('class')).toEqual('element tm Process');
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(false);
 
         });
         
@@ -187,8 +185,9 @@ describe('custom shape tests', function() {
             var handlers = {onClick: function() {}};	
             spyOn(handlers, 'onClick');
             diagram.on('cell:pointerclick', handlers.onClick);
-
-            var nonToolElement = diagramElement.find('g.element.tm.Process');
+            
+            var selector = 'g[model-id="' + cell.id + '"]';
+            var nonToolElement = diagramElement.find(selector);
             expect(handlers.onClick).not.toHaveBeenCalled();
             
             //polyfill for firefox - avoids error in JointJS when clientX/Y is undefined
@@ -226,12 +225,8 @@ describe('custom shape tests', function() {
         
         it('should place an actor element', function(){
             
-            expect(diagramElement).toContainElement('g.element-tools');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-            expect(diagramElement).toContainElement('g.element.tm.Actor');
-            expect(diagramElement.find('g.element.tm.Actor')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('rect.element-shape');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect(diagramElement).toContainElement(selector);
         
         });
         
@@ -292,12 +287,8 @@ describe('custom shape tests', function() {
         
         it('should place a store element', function(){
             
-            expect(diagramElement).toContainElement('g.element-tools');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-remove');
-            expect(diagramElement.find('g.element-tools')).toContainElement('g.element-tool-link');
-            expect(diagramElement).toContainElement('g.element.tm.Store');
-            expect(diagramElement.find('g.element.tm.Store')).toHaveAttr('transform', 'translate(' + x + translateSeperator + y + ')');
-            expect(diagramElement).toContainElement('path.element-shape');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect(diagramElement).toContainElement(selector);
             
         });
         
@@ -367,7 +358,8 @@ describe('custom shape tests', function() {
         it('should place a boundary element', function(){
             
             graph.addCell(cell);
-            expect(diagramElement).toContainElement('g.tm.Boundary.link');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect(diagramElement).toContainElement(selector);
         });
 
         it('should set the boundary label', function(){
@@ -399,7 +391,8 @@ describe('custom shape tests', function() {
         it('should place a flow element', function() {
             
             graph.addCell(cell);
-            expect(diagramElement).toContainElement('g.tm.Flow.link');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect(diagramElement).toContainElement(selector);
         });
         
         it('should set the flow label', function(){
@@ -415,9 +408,10 @@ describe('custom shape tests', function() {
             graph.addCell(cell);
             var cellView = diagram.findViewByModel(cell);
             //jasmine-jquery hasClass matcher does not work - is it because is SVG?
-            expect($(diagramElement).find('g.tm.Flow.link').attr('class')).toEqual('tm Flow link');
+            var selector = 'g[model-id="' + cell.id + '"]';
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(false);
             cellView.setSelected();
-            expect($(diagramElement).find('g.tm.Flow.link').attr('class')).toEqual('tm Flow link highlighted');
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
         });
         
         it('should unhighlight a link', function() {
@@ -425,10 +419,11 @@ describe('custom shape tests', function() {
             graph.addCell(cell);
             var cellView = diagram.findViewByModel(cell);
             //jasmine-jquery hasClass matcher does not work - is it because is SVG?
+            var selector = 'g[model-id="' + cell.id + '"]';
             cellView.setSelected();
-            expect($(diagramElement).find('g.tm.Flow.link').attr('class')).toEqual('tm Flow link highlighted');
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
             cellView.setUnselected();
-            expect($(diagramElement).find('g.tm.Flow.link').attr('class')).toEqual('tm Flow link');
+            expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(false);
         });
         
         it('should set the out of scope class on the flow', function() {
