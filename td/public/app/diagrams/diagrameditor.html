@@ -7,21 +7,21 @@
     </p>
     <div ng-show="vm.loaded">
         <div class="col-lg-2">
-            <accordion close-others="true">
-                <accordion-group is-open="vm.viewStencil">
-                    <accordion-heading>
+            <uib-accordion close-others="true">
+                <uib-accordion-group is-open="vm.viewStencil">
+                    <uib-accordion-heading>
                         Edit diagram <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewStencil, 'glyphicon-chevron-right': !vm.viewStencil}"></i>
-                    </accordion-heading>
+                    </uib-accordion-heading>
                     <div ng-repeat="stencil in vm.stencils">
                         <div height="120">
                             <tmt-stencil class="stencil" shape="stencil.shape" padding="5" scale="0.9" action="stencil.action()" />
                         </div>
                     </div>
-                </accordion-group>
-                <accordion-group is-open="vm.viewThreats">
-                    <accordion-heading>
+                </uib-accordion-group>
+                <uib-accordion-group is-open="vm.viewThreats">
+                    <uib-accordion-heading>
                         Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
-                    </accordion-heading>
+                    </uib-accordion-heading>
                     <div ng-if="vm.selected">
                         <div ng-if="!vm.selected.outOfScope">
                             <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" />
@@ -33,8 +33,8 @@
                     <div ng-if="!vm.selected">
                         <em>Select an element in the diagram to see or edit its threats</em>
                     </div>
-                </accordion-group>
-            </accordion>
+                </uib-accordion-group>
+            </uib-accordion>
         </div>
         <!--Diagram area-->
         <div class="col-lg-8">

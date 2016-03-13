@@ -13,11 +13,11 @@ describe('dialogs service:', function () {
 
         angular.mock.module('app');
         angular.mock.module('./app/layout/structuredExit.html');
-        angular.mock.inject(function (_$rootScope_, _$httpBackend_, _$location_, _$modal_, _$timeout_, _dialogs_) {
+        angular.mock.inject(function (_$rootScope_, _$httpBackend_, _$location_, _$uibModal_, _$timeout_, _dialogs_) {
             dialogs = _dialogs_;
             $rootScope = _$rootScope_;
             $location = _$location_;
-            $modal = _$modal_;
+            $modal = _$uibModal_;
             $timeout = _$timeout_;
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();

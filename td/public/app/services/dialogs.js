@@ -7,7 +7,7 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    angular.module('app').factory(serviceId, ['$rootScope', '$location', '$modal', dialogs]);
+    angular.module('app').factory(serviceId, ['$rootScope', '$location', '$uibModal', dialogs]);
 
     function dialogs($rootScope, $location, $modal) {
 
@@ -38,18 +38,18 @@
             return modal.result;
         }
 
-        function structuredExitModal($scope, $modalInstance, $location, destination, cancel, ok) {
+        function structuredExitModal($scope, $uibModalInstance, $location, destination, cancel, ok) {
             $scope.onCancel = onCancel;
             $scope.onOK = onOK;
 
             function onCancel() {
                 cancel(destination);
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             }
 
             function onOK() {
                 ok(destination);
-                $modalInstance.close();
+                $uibModalInstance.close();
                 $location.path(destination);
             }
         }
@@ -79,7 +79,7 @@
             return modal.result;
         }
 
-        function confirmModal($scope, $modalInstance, ok, cancel, parameter) {
+        function confirmModal($scope, $uibModalInstance, ok, cancel, parameter) {
             
             $scope.applyToAll = false;
             $scope.onCancel = onCancel;
@@ -92,12 +92,12 @@
 
             function onCancel(param) {
                 if (angular.isDefined(cancel)) { cancel(param); }
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             }
 
             function onOK(param) {
                 if (angular.isDefined(ok)) { ok(param); }
-                $modalInstance.close();
+                $uibModalInstance.close();
             }
         }
     }

@@ -17,7 +17,6 @@
   "dependencies": {
     "angular": "~1.4.3",
     "angular-route": "~1.4.3",
-    "angular-ui-bootstrap-bower": "~0.13.0",
     "nools": "*",
     "jquery": "~2.0.3",
     "lodash": "~3.10.1",
@@ -27,7 +26,9 @@
     "joint": "git://github.com/clientIO/joint#~0.9.6",
     "font-awesome": "~4.5.0",
     "angular-xeditable": "~0.1.9",
-    "animate-css": "~3.5.1"
+    "animate-css": "~3.5.1",
+    "angular-bootstrap": "^1.2.4",
+    "angular-animate": "~1.4.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7",

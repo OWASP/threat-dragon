@@ -41,8 +41,8 @@
                 <label>Threat status</label>
                 <div>
                     <div class="btn-group" name="statusInput">
-                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" btn-radio="'Open'">Open</label>
-                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" btn-radio="'Mitigated'">Mitigated</label>
+                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="'Open'">Open</label>
+                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="'Mitigated'">Mitigated</label>
                     </div>
                 </div>
             </div>
@@ -50,9 +50,9 @@
                 <label>Severity</label>
                 <div>
                     <div class="btn-group" required>
-                        <label class="btn btn-default" ng-model="parameter.threat.severity" btn-radio="'High'">High</label>
-                        <label class="btn btn-default" ng-model="parameter.threat.severity" btn-radio="'Medium'">Medium</label>
-                        <label class="btn btn-default" ng-model="parameter.threat.severity" btn-radio="'Low'">Low</label>
+                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="'High'">High</label>
+                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="'Medium'">Medium</label>
+                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="'Low'">Low</label>
                     </div>
                 </div>
             </div>

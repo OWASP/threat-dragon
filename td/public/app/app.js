@@ -7,13 +7,7 @@
         return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
     };
 
-    var app = angular.module('app', [
-
-        'ui.bootstrap',
-        'ngRoute',
-        'common',
-        'xeditable'
-    ]);
+    var app = angular.module('app', ['ui.bootstrap', 'ngAnimate' , 'ngRoute', 'common', 'xeditable']);
 
     app.run(['$rootScope', 'common',
     function ($rootScope, common) {
