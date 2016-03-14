@@ -8,7 +8,6 @@ var helmet = require('helmet');
 var routes = require('./routes/index');
 
 var app = express();
-app.use(express.static(path.join(__dirname, 'public')));
 
 //security headers
 app.set('x-powered-by', false)
@@ -29,6 +28,9 @@ app.use(helmet.csp({
   formAction: ["'self'"],
   reportUri: 'https://report-uri.io/report/owaspthreatdragon'
 }));
+
+//static content
+app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware
 app.use(logger('dev'));
