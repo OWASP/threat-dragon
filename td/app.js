@@ -8,6 +8,7 @@ var helmet = require('helmet');
 var routes = require('./routes/index');
 
 var app = express();
+app.use(express.static(path.join(__dirname, 'public')));
 
 //security headers
 app.set('x-powered-by', false)
@@ -29,15 +30,15 @@ app.use(helmet.csp({
   reportUri: 'https://report-uri.io/report/owaspthreatdragon'
 }));
 
-
-// uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/favicon.ico'));
+//middleware
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//routes
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
