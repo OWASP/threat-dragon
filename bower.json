@@ -1,11 +1,11 @@
 {
-  "name": "bower.json",
-  "version": "0.0.0",
+  "name": "owasp-threat-dragon",
+  "version": "0.1.0",
   "authors": [
     "mike-goodwin <mike.goodwin@sage.com>"
   ],
   "description": "OWASP Threat Dragon",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "ignore": [
     "**/.*",
     "node_modules",
