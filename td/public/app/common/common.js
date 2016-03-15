@@ -13,7 +13,7 @@
     commonModule.provider('commonConfig', function () {
         this.config = {
             // These are the properties we need to set
-            demoModelUrl: '/Demo_Threat_Model.json'
+            demoModelUrl: 'public/Demo_Threat_Model.json'
         };
 
         this.$get = function () {

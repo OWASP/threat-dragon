@@ -31,7 +31,7 @@
 
         function clearLocalStorage()
         {
-            dialogs.confirm('./app/welcome/confirmClearLocalStorage.html', executeClearLocalStorage, function () { return vm.threatModelCount; }, function () { });
+            dialogs.confirm('./public/app/welcome/confirmClearLocalStorage.html', executeClearLocalStorage, function () { return vm.threatModelCount; }, function () { });
         }
 
         function executeClearLocalStorage()

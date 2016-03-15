@@ -152,7 +152,7 @@
             //avoids the confirmation if you are reloading after an accidental clear of the model
             if (vm.dirty && vm.graph.cellCount() > 0)
             {
-                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram); });
+                dialogs.confirm('./public/app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram); });
             }
             else
             {
@@ -211,7 +211,7 @@
             {
                 if (threatList.length > 0) {
                     currentThreat = threatList.shift();
-                    dialogs.confirm('./app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
+                    dialogs.confirm('./public/app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
                 }
             }
 

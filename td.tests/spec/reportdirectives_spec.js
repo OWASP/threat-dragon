@@ -11,7 +11,7 @@ describe('element summary directive: ', function() {
     beforeEach(function() {
       
         angular.mock.module('app');
-        angular.mock.module('./app/report/ElementSummaryPane.html');
+        angular.mock.module('./public/app/report/ElementSummaryPane.html');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();

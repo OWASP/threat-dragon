@@ -97,7 +97,7 @@
         {
             if (vm.dirty)
             {
-                dialogs.confirm('./app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null; }, function () { });
+                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null; }, function () { });
             }
             else
             {
@@ -179,7 +179,7 @@
 
         function emptyDiagram()
         {
-            return { title: '', thumbnail: "../../content/images/thumbnail.jpg" };
+            return { title: '', thumbnail: "../public/content/images/thumbnail.jpg" };
         }
     }
 })();

@@ -114,30 +114,30 @@ module.exports = function (grunt) {
 		
 		wiredep: {
             task: {
-                src: ['td/public/index.html'],
+                src: ['td/index.html'],
                 options: {
                     devDependencies: false,
                     fileTypes: {
                         html: {
                             replace: {
                                 js: function (filePath) {
-                                    var prefixLength = '../../bower-packages'.length;
+                                    var prefixLength = '../bower-packages'.length;
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
 									var minFileName = fileName.split('.')[0] + '.min.js';
                                     
-                                    return '<script src="libs/' + packageName + minFileName + '"></script>';
+                                    return '<script src="public/libs/' + packageName + minFileName + '"></script>';
                                 },
                                 
                                 css: function (filePath) {
-                                    var prefixLength = '../../bower-packages'.length;
+                                    var prefixLength = '../bower-packages'.length;
                                     var trimmedPath = filePath.slice(prefixLength);
                                     var packageName = trimmedPath.slice(1).split('/')[0];
                                     var fileName = trimmedPath.slice(trimmedPath.lastIndexOf('/'));
 									var minFileName = fileName.split('.')[0] + '.min.css';
                                     
-                                    return '<link href="libs/' + packageName + minFileName + '" rel="stylesheet" />';
+                                    return '<link href="public/libs/' + packageName + minFileName + '" rel="stylesheet" />';
                                 }
                             }
                         }

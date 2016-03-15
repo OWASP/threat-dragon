@@ -30,7 +30,7 @@
             {
                 url: '/',
                 config: {
-                    templateUrl: 'app/welcome/welcome.html',
+                    templateUrl: './public/app/welcome/welcome.html',
                     title: 'welcome',
                     settings: {
                     }
@@ -38,7 +38,7 @@
             }, {
                 url: '/welcome',
                 config: {
-                    templateUrl: 'app/welcome/welcome.html',
+                    templateUrl: './public/app/welcome/welcome.html',
                     title: 'welcome',
                     settings: {
                     }
@@ -47,7 +47,7 @@
                 url: '/threatmodels',
                 config: {
                     title: 'threatmodels',
-                    templateUrl: 'app/threatmodels/threatmodels.html',
+                    templateUrl: './public/app/threatmodels/threatmodels.html',
                     settings: {
                     }
                 }
@@ -55,7 +55,7 @@
                 url: '/threatmodel/:threatModelId',
                 config: {
                     title: 'threatmodelsdetail',
-                    templateUrl: 'app/threatmodels/threatmodeldetail.html',
+                    templateUrl: './public/app/threatmodels/threatmodeldetail.html',
                     settings: {
                     }
                 }
@@ -63,7 +63,7 @@
                 url: '/threatmodel/edit/:threatModelId',
                 config: {
                     title: 'threatmodeledit',
-                    templateUrl: 'app/threatmodels/threatmodeledit.html',
+                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
                     settings: {
                     }
                 }
@@ -71,7 +71,7 @@
                 url: '/threatmodel/report/:threatModelId',
                 config: {
                     title: 'threatmodelreport',
-                    templateUrl: 'app/report/threatmodelreport.html',
+                    templateUrl: './public/app/report/threatmodelreport.html',
                     settings: {
                     }
                 }
@@ -79,7 +79,7 @@
                 url: '/threatmodel/:threatModelId/diagram/:diagramId',
                 config: {
                     title: 'diagram',
-                    templateUrl: 'app/diagrams/diagrameditor.html',
+                    templateUrl: './public/app/diagrams/diagrameditor.html',
                     reloadOnSearch: false,
                     settings: {
                     }

@@ -468,7 +468,7 @@ describe('diagram controller', function () {
             $scope.vm.dirty= true;
             $scope.vm.reload();
             expect(mockDialogs.confirm).toHaveBeenCalled()
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./app/diagrams/confirmReloadOnDirty.html');
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/confirmReloadOnDirty.html');
             //argument 1 is onOk
             mockDialogs.confirm.calls.argsFor(0)[1]();
             expect($scope.vm.initialise).toHaveBeenCalled();
@@ -703,7 +703,7 @@ describe('diagram controller', function () {
             expect(mockThreatEngine.generateForElement).toHaveBeenCalled();
             expect(mockThreatEngine.generateForElement.calls.argsFor(0)).toEqual([element]);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./app/diagrams/ThreatEditPane.html');
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/ThreatEditPane.html');
             //argument 2 contains the supplied threat
             expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
             expect(threats.length).toEqual(2);

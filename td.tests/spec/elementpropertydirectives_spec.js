@@ -11,8 +11,8 @@ describe('modal close directive: ', function() {
     beforeEach(function() {
       
         angular.mock.module('app');
-        angular.mock.module('./app/diagrams/modalAccept.html');
-        angular.mock.module('./app/diagrams/modalIgnore.html');
+        angular.mock.module('./public/app/diagrams/modalAccept.html');
+        angular.mock.module('./public/app/diagrams/modalIgnore.html');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -31,7 +31,7 @@ describe('modal close directive: ', function() {
         spyOn($scope,'action');
         var testClass = 'testClass';
         
-        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close></div>');
+        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./public/app/diagrams/modalAccept.html"></tmt-modal-close></div>');
         $compile(elem)($scope);
         $scope.$digest();
         setFixtures(elem);
@@ -47,7 +47,7 @@ describe('modal close directive: ', function() {
         spyOn($scope,'action');
         var testClass = 'testClass';
         
-        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./app/diagrams/modalAccept.html"></tmt-modal-close></div>');
+        elem = angular.element('<div id="parent" role="dialog"><tmt-modal-close action="action()" new-class="' + testClass + '" template-url="./public/app/diagrams/modalAccept.html"></tmt-modal-close></div>');
         $compile(elem)($scope);
         $scope.$digest();
         setFixtures(elem);
@@ -70,7 +70,7 @@ describe('element properties directive: ', function () {
     beforeEach(function () {
 
         angular.mock.module('app');
-        angular.mock.module('./app/diagrams/ElementPropertiesPane.html');
+        angular.mock.module('./public/app/diagrams/ElementPropertiesPane.html');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -329,11 +329,11 @@ describe('element threats directive: ', function () {
         mockDialogs = {};
 
         angular.mock.module('app');
-        angular.mock.module('./app/diagrams/ThreatSummaryPane.html');
+        angular.mock.module('./public/app/diagrams/ThreatSummaryPane.html');
         angular.mock.module(function ($provide) {
             $provide.value('dialogs', mockDialogs);
         });
-
+        
         angular.mock.inject(function (_$rootScope_, _$compile_, _$location_, _$routeParams_, _common_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -343,28 +343,26 @@ describe('element threats directive: ', function () {
             common = _common_;
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();
-        });
+        });       
 
         $rootScope.$apply();
-
+        
         $scope.edit = function () { };
         spyOn($scope, 'edit');
-
         $scope.threats = [threat0, threat1, threat2];
 
         //dialogs mocks
         mockDialogs.confirm = function () { };
         spyOn(mockDialogs, 'confirm');
 
-        //logger mocks
-
         elem = angular.element('<tmt-element-threats threats="threats" save="edit()" />');
+        
     });
 
     describe('routing tests', function () {
 
         it('should ignore invalid threat id', function () {
-
+            
             $routeParams.threat = 5;
             $compile(elem)($scope);
             $scope.$digest();
@@ -381,7 +379,7 @@ describe('element threats directive: ', function () {
             $scope.$digest();
             setFixtures(elem);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./app/diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/ThreatEditPane.html')
             var param = mockDialogs.confirm.calls.argsFor(0)[2];
             expect(param().threat).toEqual(threat1);
             expect($location.search().threat).toEqual('1');
@@ -404,7 +402,7 @@ describe('element threats directive: ', function () {
 
             angular.element($('#buttonNewThreat')).triggerHandler('click');
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./app/diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/ThreatEditPane.html')
 
         });
 
@@ -425,7 +423,7 @@ describe('element threats directive: ', function () {
 
             angular.element($('#editThreat1')).triggerHandler('click');
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./app/diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/ThreatEditPane.html')
             expect($location.search().threat).toEqual('1');
 
         });
@@ -462,6 +460,5 @@ describe('element threats directive: ', function () {
         });
 
     });
-
 
 });

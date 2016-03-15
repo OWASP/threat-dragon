@@ -91,7 +91,7 @@
         {
             var threatModel = vm.threatModels[index];
             var newDiagramId = threatModel.detail.diagrams.length;
-            threatModel.detail.diagrams.push({ id: newDiagramId, title: 'New diagram', thumbnail: "../../content/images/thumbnail.jpg" });
+            threatModel.detail.diagrams.push({ id: newDiagramId, title: 'New diagram', thumbnail: "../public/content/images/thumbnail.jpg" });
             datacontext.saveThreatModel(threatModel).then(function() {
                 $location.path('threatmodel/'+ threatModel.summary.id + '/diagram/' + newDiagramId);
             });

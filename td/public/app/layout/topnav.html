@@ -9,7 +9,7 @@
             </button>
             <a href="#/" class="navbar-brand">
                 <div>
-                    <img src="content/images/threatdragon_logo.svg"/>
+                    <img src="public/content/images/threatdragon_logo.svg"/>
                 </div>
             </a>
         </div>
@@ -17,20 +17,30 @@
         <!-- Navigation starts -->
         <div class="navbar-collapse collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+               <li ng-if="!vm.isLoggedIn">
+                    <a class="navbar-link" href="login?loc={{location.path()}}">
+                        <i class="fa fa-sign-in fa-2x icon-align fa-fw"></i> <span>Sign in</span>
+                    </a>
+                </li>
+                <li ng-if="vm.isLoggedIn">
+                    <a class="navbar-link" href="logout">
+                        <i class="fa fa-sign-out fa-2x icon-align fa-fw"></i> <span>Sign out</span>
+                    </a>         
+                </li>
                 <li>
                     <a class="navbar-link" href="http://docs.threatdragon.org/" target="_blank">
-                        <span class="fa fa-question-circle fa-2x icon-align"></span><span> Get some help</span>
+                        <i class="fa fa-question-circle fa-2x icon-align fa-fw"></i><span> Get some help</span>
                     </a>
                 </li>
                 <li>
                     <a class="navbar-link" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
-                        <span class="fa fa-github fa-2x icon-align"></span><span> Visit us on GitHub</span>
+                        <i class="fa fa-github fa-2x icon-align fa-fw"></i><span> Visit us on GitHub</span>
                     </a>
                 </li>
                 <li>
                     <a class="navbar-link" href="https://www.owasp.org" target="_blank">
                         <div>
-                            <img src="content/images/owasp.svg"/>
+                            <img src="public/content/images/owasp.svg"/>
                         </div>
                     </a>
                 </li>

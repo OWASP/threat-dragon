@@ -10,10 +10,6 @@ var passport = require('passport');
 var AzureTablesStore = require('connect-azuretables')(session);
 var app = express();
 
-//sessions
-app.use(session({ store: new AzureTablesStore(), secret: process.env.SESSION_SIGNING_KEY, resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-
 //security headers
 app.set('x-powered-by', false)
 var ninetyDaysInMilliseconds = 7776000000;
@@ -37,13 +33,17 @@ app.use(helmet.csp({
 }));
 
 //static content
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
-//middleware
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+//sessions
+app.use(session({ 
+    store: new AzureTablesStore(), 
+    secret: process.env.SESSION_SIGNING_KEY, 
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -52,6 +52,12 @@ var index = require('./routes/index');
 var logingithub = require('./routes/logingithub');
 app.use('/', index);
 app.use('/', logingithub);
+
+//middleware
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 //// catch 404 and forward to error handler
 //app.use(function (req, res, next) {

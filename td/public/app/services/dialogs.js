@@ -22,7 +22,7 @@
         function structuredExit(event, cancelNavigation, continueNavigation) {
 
             var modal = $modal.open({
-                templateUrl: './app/layout/structuredExit.html',
+                templateUrl: './public/app/layout/structuredExit.html',
                 controller: structuredExitModal,
                 keyboard: false,
                 backdrop: 'static',

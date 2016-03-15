@@ -12,7 +12,7 @@ describe('dialogs service:', function () {
     beforeEach(function () {
 
         angular.mock.module('app');
-        angular.mock.module('./app/layout/structuredExit.html');
+        angular.mock.module('./public/app/layout/structuredExit.html');
         angular.mock.inject(function (_$rootScope_, _$httpBackend_, _$location_, _$uibModal_, _$timeout_, _dialogs_) {
             dialogs = _dialogs_;
             $rootScope = _$rootScope_;
@@ -117,7 +117,7 @@ describe('dialogs service:', function () {
 
         it('should call ok', function (done) {
            
-            dialogs.confirm('./app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose).then(function() {
+            dialogs.confirm('./public/app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose).then(function() {
           
                 expect(callbacks.cancelPreClose).not.toHaveBeenCalled();
                 expect(callbacks.okPreClose).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('dialogs service:', function () {
 
             var windowClass = 'windowClass';
             
-            dialogs.confirm('./app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose, windowClass).then(function() {
+            dialogs.confirm('./public/app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose, windowClass).then(function() {
           
                 var parents = $('#structuredExitModal').parents('.' + windowClass);
                 expect(parents.length).toEqual(1);
@@ -147,7 +147,7 @@ describe('dialogs service:', function () {
         
         it('should call cancel', function (done) {
 
-            dialogs.confirm('./app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose).catch(function() {
+            dialogs.confirm('./public/app/layout/structuredExit.html', callbacks.okPreClose, callbacks.getParameter, callbacks.cancelPreClose).catch(function() {
         
                 expect(callbacks.cancelPreClose).toHaveBeenCalled();
                 expect(callbacks.okPreClose).not.toHaveBeenCalled();
