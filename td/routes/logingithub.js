@@ -26,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 
 //store the original location in the session and redirect to the actual authentication route
 router.get('/login', function(req, res) {
-    req.session.referer = req.query.loc ?  '/#' + req.query.loc : '/#/';
+    req.session.returnTo = req.query.loc ?  '/#' + req.query.loc : '/#/';
     res.redirect('/login/github');
     });
 
@@ -37,24 +37,24 @@ router.get('/login/github', passport.authenticate('github'));
 router.get('/oauth/github', 
   passport.authenticate('github'),
   function(req, res) {
-    var referer = req.session.referer;
-    delete req.session.referer;
+    var returnTo = req.session.returnTo;
+    delete req.session.returnTo;
     res.cookie('idp', 'github', { httpOnly: false });
-    res.redirect(referer || '/' );
+    res.redirect(returnTo || '/' );
   });
 
 //test route to easily check login - todo: delete this 
 router.get('/profile',
   require('connect-ensure-login').ensureLoggedIn('/login/github'),
   function(req, res){
-    res.json(req.user);
+    res.json(req.user.profile);
   });
 
 //destroy the session and cookies
 router.get('/logout',
 function(req, res) {
     res.clearCookie('idp');
-    //req.logOut();
+    req.logOut();
     //logout does not seem to do much/anything so do it by hand
     res.clearCookie('connect.sid');
     req.session.destroy(function() { res.redirect('/'); 

@@ -44,6 +44,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
