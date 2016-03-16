@@ -3,10 +3,7 @@
 
     // Controller name is handy for logging.
     var controllerId = 'welcome';
-
-    // Define the controller on the module.
-    // Inject the dependencies. 
-    // Point to the controller definition function.
+    
     angular.module('app').controller(controllerId,
         ['dialogs', 'common', 'datacontext', welcome]);
 
