@@ -32,7 +32,7 @@ module.exports = function(config) {
         'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
-        'td.tests/spec/*.js',
+        'td.tests/clientspec/*.js',
         'td/public/app/**/*.html'
     ],
 
