@@ -11,7 +11,7 @@ var AzureTablesStore = require('connect-azuretables')(session);
 var app = express();
 
 //security headers
-app.set('x-powered-by', false)
+app.set('x-powered-by', false);
 var ninetyDaysInMilliseconds = 7776000000;
 app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
 app.use(helmet.frameguard('deny'));

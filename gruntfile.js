@@ -21,9 +21,13 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         jshint: {
-            files: {
-                src: ['td/public/app/*.js', 'td/public/app/**/*.js']
+            options: {
+                jshintrc: true,
+                ignores: ['td.test/', 'td/public/libs/']
             },
+            files: {
+                src: ['td']
+            }
         },
 		
         karma: {
