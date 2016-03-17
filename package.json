@@ -49,8 +49,8 @@
     "grunt-filerev": "^2.3.1",
     "grunt-karma": "^0.12.1",
     "grunt-wiredep": "^2.0.0",
-    "istanbul": "^0.4.0",
-    "jasmine": "^2.3.2",
+    "istanbul": "^0.4.2",
+    "jasmine": "^2.4.1",
     "jasmine-core": "^2.3.4",
     "jasmine-spec-reporter": "^2.4.0",
     "jshint": "^2.9.1",
@@ -65,7 +65,7 @@
     "karma-requirejs": "^0.2.2",
     "karma-spec-reporter": "0.0.24",
     "karma-xml-reporter": "^0.1.4",
-    "mockery": "^1.4.1",
+    "mockery": "^1.4.0",
     "phantomjs-prebuilt": "^2.1.5",
     "requirejs": "^2.1.20"
   }
