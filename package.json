@@ -8,7 +8,7 @@
     "test": "npm run-script test-serverx",
     "test-client": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
     "test-server": "node ./node_modules/istanbul/lib/cli.js cover -x td.tests/serverspec/*.js --dir ./coverage/Server/ td.tests/serverspec/jasmine-runner.js",
-    "test-serverx": "istanbul cover ./node_modules/jasmine-node/lib/jasmine-node/cli.js td.tests/serverspec --dir ./coverage/Server/",
+    "test-serverx": "istanbul cover  --dir ./coverage/Server/ ./td.tests/serverspec/jasmine-runner.js",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
     "codecov": "cat './coverage/*/lcov.info' | codecov"
   },
