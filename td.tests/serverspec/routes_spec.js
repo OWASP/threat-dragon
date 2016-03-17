@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 // var mockery = require('mockery');
 // var moduleUnderTest = '../../td/routes/index';
 // mockery.registerAllowable(moduleUnderTest);
