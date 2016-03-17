@@ -1,5 +1,5 @@
 'use strict';
-
+var Jasmine = require('jasmine');
 var mockery = require('mockery');
 var moduleUnderTest = '../../td/routes/index';
 mockery.registerAllowable(moduleUnderTest);
