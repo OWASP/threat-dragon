@@ -9,7 +9,7 @@
     "test-client": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
     "test-server": "istanbul cover -x td.tests/serverspec/*.js -x td.tests/serverspec/support/*.js  --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
-    "codecov": "./node_modules/.bin/codecov"
+    "posttest": "./node_modules/.bin/codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
