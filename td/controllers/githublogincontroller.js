@@ -26,7 +26,7 @@ githubLoginController.ensureLoggedIn = require('connect-ensure-login').ensureLog
 
 //return github profile - just to allow simple testing - remove later
 githubLoginController.profile = function(req, res) {
-    res.json(req.user.profile)  
+    res.json(req.user.profile);
 };
 
 //logout
