@@ -2,5 +2,8 @@
   "spec_dir": "./td.tests/serverspec/",
   "spec_files": [
     "**/*[sS]pec.js"
+  ],
+  "helpers": [
+    "./td.tests/serverspec/helpers/**/*.js"
   ]
 }

@@ -45,14 +45,13 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/configpassport');
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-var index = require('./routes/index');
-var logingithub = require('./routes/logingithub');
-app.use('/', index);
-app.use('/', logingithub);
+var routes = require('./config/configroutes');
+app.use('/', routes);
 
 //middleware
 app.use(logger('dev'));
