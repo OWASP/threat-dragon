@@ -5,9 +5,10 @@
   "scripts": {
     "start": "node server.js",
     "pretest": "node ./node_modules/jshint/bin/jshint td",
-    "test": "npm run-script test-client && npm run-script test-server",
-    "test-client": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
-    "test-server": "istanbul cover --include-all-sources -x **/public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
+    "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
+    "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
+    "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
+    "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
     "codecov": "./node_modules/.bin/codecov"
   },
