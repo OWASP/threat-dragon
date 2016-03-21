@@ -11,7 +11,7 @@ var homeController = require(moduleUnderTest);
 //request/response mocks
 var mockRequest = {};
 var mockResponse = {};
-mockResponse.sendFile = function() {}
+mockResponse.sendFile = function() {};
 
 describe('homecontroller tests', function() {
 
