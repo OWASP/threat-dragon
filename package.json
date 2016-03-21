@@ -7,7 +7,7 @@
     "pretest": "node ./node_modules/jshint/bin/jshint td",
     "test": "npm run-script test-client && npm run-script test-server",
     "test-client": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
-    "test-server": "istanbul cover -x **/td.tests/** ./td.tests/serverspec/support/jasmine-runner.js --dir ./coverage/Server/ ",
+    "test-server": "istanbul cover --include-all-sources -x **/td.tests/** -x **/node_modules/** -x **/bower-packages/** -x **/public/** --root td/ ./td.tests/serverspec/support/jasmine-runner.js --dir ./coverage/Server/ ",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
     "codecov": "./node_modules/.bin/codecov"
   },
