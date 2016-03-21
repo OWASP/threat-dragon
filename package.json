@@ -13,7 +13,6 @@
     "codecov": "./node_modules/.bin/codecov"
   },
   "pre-commit": [
-    "pretest",
     "test"
   ],
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
