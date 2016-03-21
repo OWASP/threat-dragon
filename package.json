@@ -5,11 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "pretest": "node ./node_modules/jshint/bin/jshint td",
-    "testx": "npm run-script test-client && npm run-script test-server-dummy",
-    "test": "npm run-script test-server-dummy",
+    "test": "npm run-script test-client && npm run-script test-server",
     "test-client": "./node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS",
-    "test-server-dummy": "istanbul cover -x **/td.tests/** ./td.tests/serverspec/support/jasmine-runner.js --dir ./coverage/Server/ ",
-    "test-serverx": "istanbul cover --root ./td/ -x td.tests/serverspec/*.js -x td.tests/serverspec/support/*.js -x ./td/public --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
+    "test-server": "istanbul cover -x **/td.tests/** ./td.tests/serverspec/support/jasmine-runner.js --dir ./coverage/Server/ ",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
     "codecov": "./node_modules/.bin/codecov"
   },
