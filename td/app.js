@@ -5,32 +5,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var helmet = require('helmet');
 var passport = require('passport');
 var AzureTablesStore = require('connect-azuretables')(session);
 var app = express();
 
 //security headers
-app.set('x-powered-by', false);
-var ninetyDaysInMilliseconds = 7776000000;
-app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
-app.use(helmet.frameguard('deny'));
-app.use(helmet.hidePoweredBy());
-app.use(helmet.noSniff());
-app.use(helmet.xssFilter());
-// can't currently use CSP as i would like because various 3rd party libs are using inline style and javascript eval()
-app.use(helmet.csp({
-    directives: {
-        defaultSrc: ["'none'"],
-        scriptSrc: ["'self'", "'unsafe-eval'"], //needed for lodash and nools
-        connectSrc: ["'self'"],
-        styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
-        imgSrc: ["'self'", 'data:'],
-        fontSrc: ["'self'", 'http://fonts.gstatic.com', 'https://fonts.gstatic.com'],
-        formAction: ["'self'"],
-        reportUri: 'https://report-uri.io/report/owaspthreatdragon'
-    }
-}));
+require('./config/securityheaders.config')(app);
 
 //static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -45,12 +25,12 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/configpassport');
+require('./config/passport.config');
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-var routes = require('./config/configroutes');
+var routes = require('./config/routes.config');
 app.use('/', routes);
 
 //middleware

@@ -1,6 +1,6 @@
 'use strict';
 
-function finish_test (done) {
+var finish_test = function(done) {
   return function (err) {
     if (err) {
       done.fail(err)
@@ -9,3 +9,5 @@ function finish_test (done) {
     }
   }
 }
+
+module.exports = finish_test;
