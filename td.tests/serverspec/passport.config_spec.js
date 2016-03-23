@@ -20,15 +20,23 @@ describe('passport configuration tests', function() {
     beforeEach(function() {
         
         passport = require('passport');
+        spyOn(passport, 'initialize').and.callThrough();
+        spyOn(passport, 'session').and.callThrough();
         express = require('express');
         app = express();
-        require('../../td/config/passport.config');
-        app.use(passport.initialize());
-        app.use(passport.session());
+        require('../../td/config/passport.config')(app);
         app.get('/', passport.authenticate('github'));
         mock = {done: function() {}};
         spyOn(mock, 'done');
            
+    });
+    
+    it('should initialize passport', function() {
+        expect(passport.initialize).toHaveBeenCalled();
+    });
+    
+    it('should setup passport sessions', function() {
+        expect(passport.session).toHaveBeenCalled();
     });
     
     it('should configure the passport strategy', function(done) {

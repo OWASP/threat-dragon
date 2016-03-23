@@ -21,9 +21,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport.config');
+require('./config/passport.config')(app);
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
