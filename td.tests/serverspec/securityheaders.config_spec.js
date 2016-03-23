@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 var request = require('supertest');
 var express = require('express');
@@ -20,7 +20,7 @@ describe('security header tests', function() {
     
     it('should remove the x-powered-by header', function(done) {
         
-        noXPoweredBy = function(res) {
+        function noXPoweredBy(res) {
 
             if(res.header["x-powered-by"]) { 
                 throw new Error('Found X-Powered-By header: ' + res.header["x-powered-by"]);

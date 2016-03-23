@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 var jasmine = require('jasmine');
 var mockery = require('mockery');
@@ -41,7 +41,7 @@ describe('route config tests', function() {
             
         });
         
-        it('should call the home controller', function(done) {
+        it('/', function(done) {
             
             request(app)
                 .get('/')
