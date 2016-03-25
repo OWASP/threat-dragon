@@ -1,10 +1,8 @@
 ﻿var express = require('express');
-var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var passport = require('passport');
-var AzureTablesStore = require('connect-azuretables')(session);
 var app = express();
 
 //security headers
@@ -14,13 +12,9 @@ require('./config/securityheaders.config')(app);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //sessions
-app.use(session({ 
-    store: new AzureTablesStore(), 
-    secret: process.env.SESSION_SIGNING_KEY, 
-    resave: false,
-    saveUninitialized: false
-}));
+require('./config/session.config')(app);
 
+//passport
 require('./config/passport.config')(app);
 
 //routes
