@@ -37,7 +37,7 @@ describe('route config tests', function() {
             };
             
             mockery.registerMock('../controllers/homecontroller', mockHomeController);
-            app.use('/', require('../../td/config/routes.config'));
+            require('../../td/config/routes.config')(app);
             
         });
         
@@ -99,7 +99,7 @@ describe('route config tests', function() {
         it('/login', function(done){
             
             spyOn(mockGithub, 'doLogin').and.callThrough();
-            app.use('/', require('../../td/config/routes.config'));
+            require('../../td/config/routes.config')(app);
             
             request(app)
                 .get('/login')
@@ -116,8 +116,7 @@ describe('route config tests', function() {
         it('/login/github', function(done){
             
             spyOn(mockGithub, 'doLogin').and.callThrough();
-            
-            app.use('/', require('../../td/config/routes.config'));
+            require('../../td/config/routes.config')(app);
             
             request(app)
                 .get('/login/github')
@@ -137,7 +136,7 @@ describe('route config tests', function() {
                 next();
             });
             
-            app.use('/', require('../../td/config/routes.config'));
+            require('../../td/config/routes.config')(app);
             
             request(app)
                 .get('/oauth/github')
@@ -153,7 +152,7 @@ describe('route config tests', function() {
         
         it('/logout', function(done){
             
-            app.use('/', require('../../td/config/routes.config'));
+            require('../../td/config/routes.config')(app);
             
             request(app)
                 .get('/logout')
