@@ -17,11 +17,13 @@ require('./config/session.config')(app);
 //passport
 require('./config/passport.config')(app);
 
-//routes
+//favicon
 app.use(favicon(__dirname + '/public/favicon.ico'));
+
+//routes
 require('./config/routes.config')(app);
 
-//middleware
+//logger
 app.use(logger('dev'));
 
 //parsers
