@@ -70,7 +70,7 @@
                 }
                 
                 models[threatModel.summary.id] = threatModel;
-                localStorage.setItem('models', JSON.stringify(models));
+                localStorage.setItem('models', JSON.stringify(models, null, '  '));
             }
 
             return $q.when(threatModel);
@@ -80,7 +80,7 @@
         {
             var model = models[index];
             models.splice(index, 1);
-            localStorage.setItem('models', JSON.stringify(models));
+            localStorage.setItem('models', JSON.stringify(models, null, '  '));
             return $q.when(model);
         }
 
@@ -129,7 +129,7 @@
             var diagram = threatModel.detail.diagrams[diagramId];
             diagram.diagramJson = diagramData.diagramJson;
             diagram.size = diagramData.size;
-            localStorage.setItem('models', JSON.stringify(models));
+            localStorage.setItem('models', JSON.stringify(models, null, '  '));
             return $q.when(null);
         }
 

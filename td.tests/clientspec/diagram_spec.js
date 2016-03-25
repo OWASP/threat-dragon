@@ -142,7 +142,7 @@ describe('diagram controller', function () {
             expect(mockDatacontext.saveThreatModelDiagram).toHaveBeenCalled();
             expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[0]).toEqual(threatModelId);
             expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[1]).toEqual(diagramId);
-            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[2].diagramJson).toEqual(JSON.stringify(graph));           
+            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[2].diagramJson).toEqual(graph);           
             expect($scope.vm.dirty).toBe(false);
         })
     })

@@ -119,7 +119,7 @@ describe('datacontext service:', function () {
             }
 
             initialModels = [model[0], model[1], model[2]];
-            localStorage.setItem('models', JSON.stringify(initialModels));
+            localStorage.setItem('models', JSON.stringify(initialModels, null,'  '));
 
             angular.mock.inject(function (_datacontext_) {
                 datacontext = _datacontext_;
@@ -187,7 +187,7 @@ describe('datacontext service:', function () {
                 expect(resultModel.summary.id).toEqual(3);
                 model[3].summary.id = 3;
                 initialModels.push(model[3]);
-                expect(localStorage.getItem('models')).toEqual(JSON.stringify(initialModels));
+                expect(localStorage.getItem('models')).toEqual(JSON.stringify(initialModels, null,'  '));
                 done();
 
             });
@@ -203,7 +203,7 @@ describe('datacontext service:', function () {
             datacontext.saveThreatModel(model[1]).then(function (resultModel) {
 
                 expect(resultModel).toEqual(model[1]);
-                expect(localStorage.getItem('models')).toEqual(JSON.stringify([model[0], model[1], model[2]]));
+                expect(localStorage.getItem('models')).toEqual(JSON.stringify([model[0], model[1], model[2]], null,'  '));
                 done();
 
             });
@@ -219,7 +219,7 @@ describe('datacontext service:', function () {
             datacontext.deleteThreatModel(1).then(function (returnModel) {
 
                 expect(returnModel).toEqual(model[1]);
-                expect(localStorage.getItem('models')).toEqual(JSON.stringify(initialModels));
+                expect(localStorage.getItem('models')).toEqual(JSON.stringify(initialModels, null,'  '));
                 done();
 
             });

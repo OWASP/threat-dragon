@@ -42,7 +42,7 @@ describe('diagramming service:', function () {
             graph.addCell(rect);
             var graphJson = graph.toJSON();
             var newGraph = new joint.dia.Graph();
-            newGraph.initialise(JSON.stringify(graphJson));
+            newGraph.initialise(graphJson);
 
             var cell = newGraph.attributes.cells.models[0]
             expect(cell instanceof joint.shapes.basic.Rect).toBe(true);

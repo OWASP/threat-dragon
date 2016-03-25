@@ -51,7 +51,7 @@
         {
             var threatModel = vm.threatModels[index];
             var fileName = threatModel.summary.title.replace(' ', '_') + '.dragon';
-            var content = JSON.stringify(threatModel);
+            var content = JSON.stringify(threatModel, null, '  ');
             file.saveToFile(fileName, content, 'application/json');
         }
 

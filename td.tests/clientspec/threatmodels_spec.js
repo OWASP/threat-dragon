@@ -83,7 +83,7 @@ describe('threatModels controller', function () {
 
             var threatModels = [{ summary: { title: 'model0' } }, { summary: { title: 'model1' } }, { summary: { title: 'model2' } }];
             var index = 1;
-            var content = JSON.stringify(threatModels[index]);
+            var content = JSON.stringify(threatModels[index], null,'  ');
             $scope.vm.threatModels = threatModels;
 
             $scope.vm.saveThreatModelToFile(index);
@@ -95,7 +95,7 @@ describe('threatModels controller', function () {
         it('should delete the threat model id and save', function () {
 
             var threatModel = { summary: { id: 1, title: 'model'} };
-            var content = JSON.stringify(threatModel);
+            var content = JSON.stringify(threatModel, null,'  ');
             delete threatModel.summary.id;
 
             $scope.vm.loadThreatModelFromFile(content);
