@@ -11,7 +11,6 @@ function configSessions(app) {
         resave: false,
         saveUninitialized: false
     }));
-
-};
+}
 
 module.exports = configSessions;
