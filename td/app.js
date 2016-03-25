@@ -19,7 +19,6 @@ require('./config/passport.config')(app);
 
 //routes
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 require('./config/routes.config')(app);
 
 //middleware
