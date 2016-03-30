@@ -1,15 +1,14 @@
 ﻿var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var passport = require('passport');
 var app = express();
 
-//security headers
-require('./config/securityheaders.config')(app);
-
 //static content
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+//security headers
+require('./config/securityheaders.config')(app);
 
 //sessions
 require('./config/session.config')(app);
@@ -22,9 +21,6 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //routes
 require('./config/routes.config')(app);
-
-//logger
-app.use(logger('dev'));
 
 //parsers
 require('./config/parsers.config')(app);
@@ -59,6 +55,5 @@ require('./config/parsers.config')(app);
 //        error: {}
 //    });
 //});
-
 
 module.exports = app;
