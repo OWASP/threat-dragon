@@ -2,7 +2,8 @@
 var path = require('path');
 var favicon = require('serve-favicon');
 var passport = require('passport');
-var logger = require('morgan');
+var requestLogger = require('morgan');
+var bunyan = require('bunyan');
 var app = express();
 
 //static content
@@ -23,8 +24,11 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 //routes
 require('./config/routes.config')(app);
 
-//log requests
-app.use(logger('dev'));
+//logging
+app.use(requestLogger('dev'));
+var log = bunyan.createLogger({name: 'threatdragon'});
+log.info('hi');
+log.warn({lang: 'fr'}, 'au revoir');
 
 //parsers
 require('./config/parsers.config')(app);

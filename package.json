@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "body-parser": "~1.15.0",
+    "bunyan": "^1.8.0",
     "connect-azuretables": "^1.0.13",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.0",
