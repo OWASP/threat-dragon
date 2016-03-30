@@ -26,9 +26,11 @@ require('./config/routes.config')(app);
 
 //logging
 app.use(requestLogger('dev'));
-var log = bunyan.createLogger({name: 'threatdragon'});
-log.info('hi');
-log.warn({lang: 'fr'}, 'au revoir');
+var log = bunyan.createLogger({
+    name: 'threatdragon',
+    stream: 'bunyan-info-log.log',
+    level: 'info'
+});
 
 //parsers
 require('./config/parsers.config')(app);
@@ -63,5 +65,7 @@ require('./config/parsers.config')(app);
 //        error: {}
 //    });
 //});
+
+log.info('owasp threat dragon application started up');
 
 module.exports = app;
