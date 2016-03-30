@@ -8,7 +8,7 @@ var app = express();
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //security headers
-//require('./config/securityheaders.config')(app);
+require('./config/securityheaders.config')(app);
 
 //sessions
 require('./config/session.config')(app);
