@@ -2,6 +2,7 @@
 var path = require('path');
 var favicon = require('serve-favicon');
 var passport = require('passport');
+var logger = require('morgan');
 var app = express();
 
 //static content
@@ -21,6 +22,9 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //routes
 require('./config/routes.config')(app);
+
+//log requests
+app.use(logger('dev'));
 
 //parsers
 require('./config/parsers.config')(app);
