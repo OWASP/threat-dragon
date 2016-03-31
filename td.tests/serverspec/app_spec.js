@@ -1,10 +1,20 @@
 'use strict';
 
-var path = require('path');
-
 var mockery = require('mockery');
 var request = require('supertest');
 var finish_test = require('./helpers/supertest-jasmine');
+
+//bunyan mockery
+var mockLogger = {
+    info: function() {},
+    error: function() {}
+};
+
+var mockBunyan = {
+    createLogger: function() { 
+        return mockLogger;
+    }
+};
 
 describe('app tests', function() {
     
@@ -12,6 +22,7 @@ describe('app tests', function() {
         mockery.enable({ useCleanCache: true });
         mockery.warnOnUnregistered(false);
         mockery.warnOnReplace(false);
+        mockery.registerMock('bunyan', mockBunyan);
     });
     
     afterEach(function() {
@@ -22,9 +33,28 @@ describe('app tests', function() {
         expect(function() { require('../../td/app')}).not.toThrow();  
     });
     
+    it('should log a startup message', function() {
+        
+        spyOn(mockBunyan, 'createLogger').and.callThrough();
+        spyOn(mockLogger, 'info');
+        spyOn(mockLogger, 'error');
+        require('../../td/app');
+        expect(mockBunyan.createLogger.calls.argsFor(0)).toEqual([{name: 'threatdragon'}]);
+        expect(mockLogger.info).toHaveBeenCalled();
+        expect(mockLogger.error).not.toHaveBeenCalled();
+    });
+    
+    it('should log an error on startup message', function() {
+        
+        spyOn(mockBunyan, 'createLogger').and.callThrough();
+        spyOn(mockLogger, 'info').and.throwError('error');
+        spyOn(mockLogger, 'error');
+        require('../../td/app');
+        expect(mockLogger.error.calls.argsFor(1)).toEqual(['error']);
+    });
+    
     it('should fetch the favicon',function(done) {
         
-        console.log(__dirname);
         var app = require('../../td/app');
         request(app)
         .get('/favicon.ico')
@@ -33,3 +63,6 @@ describe('app tests', function() {
         
     });
 });
+
+
+
