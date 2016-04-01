@@ -23,6 +23,11 @@ describe('githublogincontroller tests', function() {
         mockRequest.session = {};
         mockRequest.query = {};
         mockRequest.logOut = function() {};
+        mockRequest.user = {profile: {username: 'test username'}};
+        mockRequest.log = {
+            info: function() {},
+            error: function() {}
+        };
         
         mockSession = {};
         mockSession.destroy = function(cb) { cb();};
@@ -85,7 +90,15 @@ describe('githublogincontroller tests', function() {
         githubLoginController.logout(mockRequest, mockResponse,next);    
         expect(mockResponse.clearCookie.calls.argsFor(0)).toEqual(['idp']);
         expect(mockResponse.clearCookie.calls.argsFor(1)).toEqual(['connect.sid']);   
-        
+    });
+    
+    it('should log the logout', function() {
+
+        var testUserName = 'test username'
+        mockRequest.user.profile.username = testUserName;
+        spyOn(mockRequest.log, 'info');
+        githubLoginController.logout(mockRequest, mockResponse, next);
+        expect(mockRequest.log.info.calls.argsFor(0)[0].indexOf(testUserName) >= 0).toBe(true);
     });
     
     it('should destroy the session and redirect to app root', function() {
@@ -106,6 +119,15 @@ describe('githublogincontroller tests', function() {
         githubLoginController.setIDP(mockRequest, mockResponse, next);
         expect(mockResponse.cookie.calls.argsFor(0)).toEqual(['idp', 'github', {httpOnly: false}]);
         
+    });
+    
+    it('should log the login', function() {
+
+        var testUserName = 'test username'
+        mockRequest.user.profile.username = testUserName;
+        spyOn(mockRequest.log, 'info');
+        githubLoginController.setIDP(mockRequest, mockResponse, next);
+        expect(mockRequest.log.info.calls.argsFor(0)[0].indexOf(testUserName) >= 0).toBe(true);
     });
     
     it('should redirect to app root', function() {
