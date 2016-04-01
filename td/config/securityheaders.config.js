@@ -20,7 +20,7 @@ var securityHeaders = function (app, forceSecure) {
             styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'http://fonts.gstatic.com', 'https://fonts.gstatic.com'],
-            formAction: ["'self'"],
+            formAction: ["'self'", 'https://github.com'],
             reportUri: 'https://report-uri.io/report/owaspthreatdragon'
         }
     }));

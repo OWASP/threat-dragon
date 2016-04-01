@@ -9,12 +9,22 @@ var finish_test = require('./helpers/supertest-jasmine');
 describe('route config tests', function() {
     
     var app;
+
+    //csrf mockery
+    var mockCsrfProtectionContainer = {
+        mockCsrfProtection: function(req, res, next) {
+            next();
+        }
+    };
+    
+    var mockCsurf = function() { return mockCsrfProtectionContainer.mockCsrfProtection; };
     
     beforeEach(function() {
         
         mockery.enable({useCleanCache: true});
         mockery.warnOnUnregistered(false);
         mockery.warnOnReplace(false);
+        mockery.registerMock('csurf', mockCsurf);
         app = express();
         
     });
@@ -32,7 +42,9 @@ describe('route config tests', function() {
         beforeEach(function() {
             
             var mockHomeController = {};
-            mockHomeController.index = function(req, res, next) { 
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            mockHomeController.index = function(req, res, next) {
+                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
                 res.status(200).send(resultBody);
             };
             
@@ -92,7 +104,7 @@ describe('route config tests', function() {
             spyOn(mockGithub, 'logout').and.callThrough();
             spyOn(mockGithub, 'setIDP').and.callThrough(); 
             mockery.registerMock('../controllers/githublogincontroller', mockGithub);
-            
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();           
             
         });
         
@@ -102,12 +114,14 @@ describe('route config tests', function() {
             require('../../td/config/routes.config')(app);
             
             request(app)
-                .get('/login')
+                .post('/login')
                 .expect(200)
                 .expect(doLoginBody)
                 .expect(function(res) {
+                    expect
                     expect(mockGithub.doLogin).toHaveBeenCalled();
                     expect(mockGithub.startLogin).toHaveBeenCalled();
+                    expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
                 })
                 .end(finish_test(done));
             
@@ -155,10 +169,11 @@ describe('route config tests', function() {
             require('../../td/config/routes.config')(app);
             
             request(app)
-                .get('/logout')
+                .post('/logout')
                 .expect(200)
                 .expect(logoutBody)
                 .expect(function(res) {
+                    expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
                     expect(mockGithub.logout).toHaveBeenCalled();
                 })
                 .end(finish_test(done));

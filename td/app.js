@@ -26,11 +26,11 @@ try
     //logging
     require('./config/loggers.config')(app);
 
-    //routes
-    require('./config/routes.config')(app);
-
     //parsers
     require('./config/parsers.config')(app);
+    
+    //routes
+    require('./config/routes.config')(app);
 
     bunyan.createLogger({name: 'threatdragon'}).info('owasp threat dragon application started up');
 }

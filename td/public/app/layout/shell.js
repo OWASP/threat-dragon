@@ -11,6 +11,7 @@
         var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var events = config.events;
         vm.isLoggedIn = ($cookies.get('idp') === 'github');
+        vm.csrfToken = $cookies.get('XSRF-TOKEN');
 
         activate();
 

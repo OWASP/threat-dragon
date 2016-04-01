@@ -18,31 +18,44 @@
         <div class="navbar-collapse collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                <li ng-if="!vm.isLoggedIn">
-                    <a class="navbar-link" href="login?loc={{location.path()}}">
-                        <i class="fa fa-sign-in fa-2x icon-align fa-fw"></i> <span>Sign in</span>
-                    </a>
+                    <form class="navbar-form" role="login" method="POST" action="login">
+                        <input type="hidden" name="loc" ng-value="location.path()"/>
+                        <input type="hidden" name="_csrf" ng-value="vm.csrfToken"/>
+                        <button type="submit" class="btn btn-primary navbar-btn">
+                            <i class="fa fa-sign-in fa-2x icon-align fa-fw"></i> <span>Sign in</span>
+                        </button>   
+                    </form>
                 </li>
                 <li ng-if="vm.isLoggedIn">
-                    <a class="navbar-link" href="logout">
-                        <i class="fa fa-sign-out fa-2x icon-align fa-fw"></i> <span>Sign out</span>
-                    </a>         
+                    <form class="navbar-form" role="login" method="POST" action="logout">
+                        <input type="hidden" name="_csrf" ng-value="vm.csrfToken"/>
+                        <button type="submit" class="btn btn-primary navbar-btn">
+                            <i class="fa fa-sign-out fa-2x icon-align fa-fw"></i> <span>Sign out</span>
+                        </button>   
+                    </form>      
                 </li>
                 <li>
-                    <a class="navbar-link" href="http://docs.threatdragon.org/" target="_blank">
-                        <i class="fa fa-question-circle fa-2x icon-align fa-fw"></i><span> Get some help</span>
-                    </a>
+                    <form class="navbar-form">
+                        <a class="btn btn-primary navbar-btn" href="http://docs.threatdragon.org/" target="_blank">
+                            <i class="fa fa-question-circle fa-2x icon-align fa-fw"></i><span> Get some help</span>
+                        </a>
+                    </form>
                 </li>
                 <li>
-                    <a class="navbar-link" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
-                        <i class="fa fa-github fa-2x icon-align fa-fw"></i><span> Visit us on GitHub</span>
-                    </a>
+                    <form class="navbar-form"> 
+                        <a class="btn btn-primary navbar-btn" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
+                            <i class="fa fa-github fa-2x icon-align fa-fw"></i><span> Visit us on GitHub</span>
+                        </a>
+                    </form>
                 </li>
                 <li>
-                    <a class="navbar-link" href="https://www.owasp.org" target="_blank">
-                        <div>
-                            <img src="public/content/images/owasp.svg"/>
-                        </div>
-                    </a>
+                    <form class="navbar-form">
+                        <a class="btn btn-primary navbar-btn" href="https://www.owasp.org" target="_blank">
+                            <div>
+                                <img src="public/content/images/owasp.svg"/>
+                            </div>
+                        </a>
+                    </form>
                 </li>
             </ul>
         </div>

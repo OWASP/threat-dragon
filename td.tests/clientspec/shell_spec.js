@@ -133,5 +133,36 @@ describe('shell controller', function () {
         })
         
     });
+    
+    describe('csrf tests', function() {
+        
+        beforeEach(function () {
+            
+            angular.mock.module('app')          
+            
+            angular.mock.inject(function ($rootScope, $location, _$controller_, _$httpBackend_, _$cookies_) {
+                $scope = $rootScope.$new();
+                $location.search('suppressbanner', true)
+                $controller = _$controller_;
+                $httpBackend = _$httpBackend_;
+                $httpBackend.expectGET().respond();
+                $cookies = _$cookies_;
+            });
+            
+        });
+        
+        it('should set the csrf token', function() {
+            
+            var testToken = 'test token';
+            $cookies.get = function() { return testToken; }
+            spyOn($cookies, 'get').and.callThrough();
+            $controller('shell as vm', { $scope: $scope });
+            $scope.$apply();
 
+            expect($cookies.get).toHaveBeenCalled();
+            expect($cookies.get.calls.argsFor(1)).toEqual(['XSRF-TOKEN']);
+            expect($scope.vm.csrfToken).toEqual(testToken);  
+            
+        })        
+    });
 });

@@ -21,7 +21,7 @@ describe('githublogincontroller tests', function() {
 
         mockRequest = {};
         mockRequest.session = {};
-        mockRequest.query = {};
+        mockRequest.body = {};
         mockRequest.logOut = function() {};
         mockRequest.user = {profile: {username: 'test username'}};
         mockRequest.log = {
@@ -58,7 +58,7 @@ describe('githublogincontroller tests', function() {
     it('should store the supplied hash fragment in the session', function() {
         
         var location = '/testlocation';
-        mockRequest.query.loc = location;
+        mockRequest.body.loc = location;
         githubLoginController.startLogin(mockRequest, mockResponse, next);
         expect(mockRequest.session.returnTo).toEqual('/#' + location);
 

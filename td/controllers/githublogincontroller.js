@@ -5,7 +5,7 @@ var githubLoginController = {};
 
 //store original query location and redirect to login
 githubLoginController.startLogin = function(req, res, next) {
-    req.session.returnTo = req.query.loc ?  '/#' + req.query.loc : '/#/';
+    req.session.returnTo = req.body.loc ?  '/#' + req.body.loc : '/#/';
     next();
 };
 
