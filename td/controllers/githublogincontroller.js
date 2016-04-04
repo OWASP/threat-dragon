@@ -5,7 +5,6 @@ var githubLoginController = {};
 
 //store original query location and redirect to login
 githubLoginController.startLogin = function(req, res, next) {
-    req.session.returnTo = req.body.loc ?  '/#' + req.body.loc : '/#/';
     next();
 };
 
@@ -39,7 +38,7 @@ githubLoginController.completeLogin = function(req, res) {
 };
 
 //ensure current user is signed in
-githubLoginController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login/github');
+githubLoginController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 
 //return github profile - just to allow simple testing - remove later
 githubLoginController.profile = function(req, res) {

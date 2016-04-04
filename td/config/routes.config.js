@@ -12,7 +12,8 @@ module.exports = function(app) {
     var csrfProtection = csrf();
     
     //main application entry point
-    router.get('/', csrfProtection, home.index);
+    router.get('/', csrfProtection, github.ensureLoggedIn, home.index);
+    router.get('/login', csrfProtection, home.login);
 
     //github sign in
     router.post('/login', csrfProtection, github.startLogin, github.doLogin);
