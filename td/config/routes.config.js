@@ -17,7 +17,7 @@ module.exports = function(app) {
     //github sign in
     router.post('/login', csrfProtection, github.startLogin, github.doLogin);
     router.get('/login/github', github.doLogin);
-    router.get('/oauth/github', github.doLogin, github.setIDP);
+    router.get('/oauth/github', github.doLogin, github.completeLogin);
     router.get('/profile', github.ensureLoggedIn, github.profile);
     router.post('/logout', csrfProtection, github.logout);
     

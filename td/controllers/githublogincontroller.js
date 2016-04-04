@@ -9,16 +9,32 @@ githubLoginController.startLogin = function(req, res, next) {
     next();
 };
 
-//redirect to github
-githubLoginController.doLogin = passport.authenticate('github');
+//redirect to github with csrf protection
+githubLoginController.doLogin = function(req, res, next) {
 
-//set cookie to determine IDP on the client
-//security exception note - needs to be accessible to script
-githubLoginController.setIDP = function(req, res) {
+    if (!req.session.githubOauthState) {
+        require('crypto').randomBytes(24, function(err, buffer) {
+            var state = buffer.toString('hex');
+            req.session.githubOauthState = state;
+            passport.authenticate('github', { state: state })(req, res, next);
+        });
+    } else {
+        passport.authenticate('github')(req, res, next);
+    }
+}
+
+//complete github oauth sign in with csrf protection
+githubLoginController.completeLogin = function(req, res) {
+    
+    if(!req.query.state || req.session.githubOauthState != req.query.state)
+    {
+        req.log.error('security exception: invalid oauth state value');
+        res.status(400).send('Invalid OAuth state value. Your internet connection may not be secure!');
+    }
+    
     req.log.info(req.user.profile.username + ' logged in via ' + req.user.profile.provider);
     var returnTo = req.session.returnTo;
     delete req.session.returnTo;
-    res.cookie('idp', 'github', { httpOnly: false });
     res.redirect(returnTo || '/' );
 };
 
