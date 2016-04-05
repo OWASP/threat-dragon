@@ -11,6 +11,7 @@ function configLoggers(app) {
         "res",
         "req",
         "short-body",
+        "body",
         "response-hrtime",
         "incoming",
         "user-agent",

@@ -13,14 +13,17 @@ module.exports = function(app) {
     
     //main application entry point
     router.get('/', csrfProtection, github.ensureLoggedIn, home.index);
+    
+    //login/out
     router.get('/login', csrfProtection, home.login);
+    router.get('/logoutform', csrfProtection, home.logoutform);
+    router.post('/logout', csrfProtection, home.logout);
 
     //github sign in
-    router.post('/login', csrfProtection, github.startLogin, github.doLogin);
+    router.post('/login', csrfProtection, github.doLogin);
     router.get('/login/github', github.doLogin);
     router.get('/oauth/github', github.doLogin, github.completeLogin);
     router.get('/profile', github.ensureLoggedIn, github.profile);
-    router.post('/logout', csrfProtection, github.logout);
     
     app.use('/', router);
 };

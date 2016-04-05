@@ -1,0 +1,6 @@
+form.navbar-form(role="login",method="POST",action="logout")
+    input(type="hidden",name="_csrf",value="#{csrfToken}")
+    button.btn.btn-primary.navbar-btn(type="submit")
+        i.fa.fa-sign-out.fa-2x.icon-align.fa-fw  
+        span
+            |Sign out

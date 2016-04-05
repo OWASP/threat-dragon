@@ -17,22 +17,13 @@
         <!-- Navigation starts -->
         <div class="navbar-collapse collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-               <li ng-if="!vm.isLoggedIn">
-                    <form class="navbar-form" role="login" method="POST" action="login">
-                        <input type="hidden" name="loc" ng-value="location.path()"/>
-                        <input type="hidden" name="_csrf" ng-value="vm.csrfToken"/>
-                        <button type="submit" class="btn btn-primary navbar-btn">
-                            <i class="fa fa-sign-in fa-2x icon-align fa-fw"></i> <span>Sign in</span>
-                        </button>   
-                    </form>
-                </li>
-                <li ng-if="vm.isLoggedIn">
-                    <form class="navbar-form" role="login" method="POST" action="logout">
+                <li ng-include="'logoutform'">
+                    <!--<form class="navbar-form" role="login" method="POST" action="logout">
                         <input type="hidden" name="_csrf" ng-value="vm.csrfToken"/>
                         <button type="submit" class="btn btn-primary navbar-btn">
                             <i class="fa fa-sign-out fa-2x icon-align fa-fw"></i> <span>Sign out</span>
                         </button>   
-                    </form>      
+                    </form>      -->
                 </li>
                 <li>
                     <form class="navbar-form">
