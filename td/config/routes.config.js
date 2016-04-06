@@ -12,7 +12,7 @@ module.exports = function(app) {
     var csrfProtection = csrf();
     
     //main application entry point
-    router.get('/', csrfProtection, github.ensureLoggedIn, home.index);
+    router.get('/', csrfProtection, home.ensureLoggedIn, home.index);
     
     //login/out
     router.get('/login', csrfProtection, home.login);
@@ -23,7 +23,6 @@ module.exports = function(app) {
     router.post('/login', csrfProtection, github.doLogin);
     router.get('/login/github', github.doLogin);
     router.get('/oauth/github', github.doLogin, github.completeLogin);
-    router.get('/profile', github.ensureLoggedIn, github.profile);
     
     app.use('/', router);
 };

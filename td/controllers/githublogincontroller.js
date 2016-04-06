@@ -26,7 +26,7 @@ githubLoginController.completeLogin = function(req, res) {
     
     if(!incomingState || expectedState != incomingState)
     {
-        req.log.error({tdSecurity: true, tdIdp: 'github'}, 'invalid oauth state value');
+        req.log.error({security: true, idp: 'github'}, 'invalid oauth state value');
         res.status(400).send('Threat Dragon received an invalid request from GitHub. Your internet connection may not be secure!');
     } else {
         req.log.info({ security: true, userName: req.user.profile.username, idp: req.user.profile.provider }, 'logged in');
@@ -34,14 +34,6 @@ githubLoginController.completeLogin = function(req, res) {
         delete req.session.returnTo;
         res.redirect(returnTo || '/');
     }
-};
-
-//ensure current user is signed in
-githubLoginController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
-
-//return github profile - just to allow simple testing - remove later
-githubLoginController.profile = function(req, res) {
-    res.json(req.user.profile);
 };
 
 module.exports = githubLoginController;

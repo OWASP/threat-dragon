@@ -35,74 +35,144 @@ describe('route config tests', function() {
     
     });
     
-    describe('main application entry point', function() {
+    describe('home controller routes', function() {
         
-        var resultBody = 'called home controller';
+        var indexBody = 'called home controller index';
+        var logoutBody = 'called home controller logout';
+        var loginBody = 'called home controller login';
+        var logoutFormBody = 'called home controller logoutform';
+        var mockHomeController;
+        var mockGithub
         
         beforeEach(function() {
+
+            mockHomeController = {};
+   
+            mockHomeController.ensureLoggedIn = function(req, res, next) {
+                next();
+            };        
             
-            var mockHomeController = {};
-            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            mockHomeController.login = function(req, res, next) {
+                res.status(200).send(loginBody);
+            }
+            
             mockHomeController.index = function(req, res, next) {
-                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
-                res.status(200).send(resultBody);
+                res.status(200).send(indexBody);
             };
             
+            mockHomeController.logout = function(req, res, next) {
+                res.status(200).send(logoutBody);
+            };
+
+            mockHomeController.logoutform = function(req, res, next) {
+                res.status(200).send(logoutFormBody);
+            };      
+                 
             mockery.registerMock('../controllers/homecontroller', mockHomeController);
-            require('../../td/config/routes.config')(app);
             
         });
         
         it('/', function(done) {
-            
+                  
+            mockHomeController.index = function(req, res, next) {
+                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
+                expect(mockHomeController.ensureLoggedIn).toHaveBeenCalled();
+                expect(mockHomeController.index).toHaveBeenCalled();
+                res.status(200).send(indexBody);
+            };
+
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
+            spyOn(mockHomeController, 'index').and.callThrough();
+
+            require('../../td/config/routes.config')(app);
+                   
             request(app)
                 .get('/')
                 .expect(200)
-                .expect(resultBody)
+                .expect(indexBody)
                 .end(finish_test(done));
-            
         });
+        
+        it('/login', function(done){
+            
+            mockHomeController.logout = function(req, res, next) {
+                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
+                expect(mockHomeController.login).toHaveBeenCalled();
+                res.status(200).send(loginBody);
+            };
+                        
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            spyOn(mockHomeController, 'login').and.callThrough();
+            
+            require('../../td/config/routes.config')(app);
+            
+            request(app)
+                .get('/login')
+                .expect(200)
+                .expect(loginBody)
+                .end(finish_test(done));
+        });
+        
+        it('/logout', function(done){
+            
+            mockHomeController.logout = function(req, res, next) {
+                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
+                expect(mockHomeController.logout).toHaveBeenCalled();
+                res.status(200).send(logoutBody);
+            };
+                        
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            spyOn(mockHomeController, 'logout').and.callThrough();
+            
+            require('../../td/config/routes.config')(app);
+            
+            request(app)
+                .post('/logout')
+                .expect(200)
+                .expect(logoutBody)
+                .end(finish_test(done));
+        });
+        
+        it('/logoutform', function(done){
+            
+            mockHomeController.logoutForm = function(req, res, next) {
+                expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
+                expect(mockHomeController.logoutForm).toHaveBeenCalled();
+                res.status(200).send(logoutFormBody);
+            };
+                        
+            spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
+            spyOn(mockHomeController, 'logoutform').and.callThrough();
+            
+            require('../../td/config/routes.config')(app);
+            
+            request(app)
+                .get('/logoutform')
+                .expect(200)
+                .expect(logoutFormBody)
+                .end(finish_test(done));
+        }); 
     });
     
     describe('github signin routes', function() {
         
         var doLoginBody = 'called doLogin';
-        var logoutBody = 'called logout';
-        var setIDPBody = 'called setIDP';
-        var profileBody = 'called profile';
+        var completeLoginBody = 'called completeLogin';
         var mockGithub;
         
         beforeEach(function() {
             
             mockGithub = {};
-            
-            mockGithub.startLogin = function(req, res, next) {
-                next();
-            };
-            
-            mockGithub.ensureLoggedIn = function(req, res, next) {
-                next();
-            };
-            
+                       
             mockGithub.doLogin = function(req, res, next) {
                 res.status(200).send(doLoginBody);
             };
             
-            mockGithub.setIDP = function(req, res, next) {
-                res.status(200).send(setIDPBody);
+            mockGithub.completeLogin = function(req, res, next) {
+                res.status(200).send(completeLoginBody);
             };
-            
-            mockGithub.profile = function(req, res, next) {
-                res.status(200).send(profileBody);
-            };
-            
-            mockGithub.logout = function(req, res, next) {
-                res.status(200).send(logoutBody);
-            };
-            
-            spyOn(mockGithub, 'startLogin').and.callThrough();
-            spyOn(mockGithub, 'logout').and.callThrough();
-            spyOn(mockGithub, 'setIDP').and.callThrough(); 
+
             mockery.registerMock('../controllers/githublogincontroller', mockGithub);
             spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();           
             
@@ -118,9 +188,7 @@ describe('route config tests', function() {
                 .expect(200)
                 .expect(doLoginBody)
                 .expect(function(res) {
-                    expect
                     expect(mockGithub.doLogin).toHaveBeenCalled();
-                    expect(mockGithub.startLogin).toHaveBeenCalled();
                     expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
                 })
                 .end(finish_test(done));
@@ -138,7 +206,6 @@ describe('route config tests', function() {
                 .expect(doLoginBody)
                 .expect(function(res) {
                     expect(mockGithub.doLogin).toHaveBeenCalled();
-                    expect(mockGithub.startLogin).not.toHaveBeenCalled();
                 })
                 .end(finish_test(done));
             
@@ -150,35 +217,20 @@ describe('route config tests', function() {
                 next();
             });
             
+            spyOn(mockGithub, 'completeLogin').and.callThrough();
+            
             require('../../td/config/routes.config')(app);
             
             request(app)
                 .get('/oauth/github')
                 .expect(200)
-                .expect(setIDPBody)
+                .expect(completeLoginBody)
                 .expect(function(res) {
                     expect(mockGithub.doLogin).toHaveBeenCalled();
-                    expect(mockGithub.setIDP).toHaveBeenCalled();
+                    expect(mockGithub.completeLogin).toHaveBeenCalled();
                 })
                 .end(finish_test(done));
             
-        });
-        
-        it('/logout', function(done){
-            
-            require('../../td/config/routes.config')(app);
-            
-            request(app)
-                .post('/logout')
-                .expect(200)
-                .expect(logoutBody)
-                .expect(function(res) {
-                    expect(mockCsrfProtectionContainer.mockCsrfProtection).toHaveBeenCalled();
-                    expect(mockGithub.logout).toHaveBeenCalled();
-                })
-                .end(finish_test(done));
-            
-        }); 
-        
+        });        
     });
 });
