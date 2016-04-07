@@ -1,28 +1,35 @@
 'use strict';
 
-var mockery = require('mockery');
-var request = require('supertest');
-var finish_test = require('./helpers/supertest-jasmine');
-
-//bunyan mockery
-var mockLogger = {
-    info: function() {},
-    error: function() {}
-};
-
-var mockBunyan = {
-    createLogger: function() { 
-        return mockLogger;
-    }
-};
 
 describe('app tests', function() {
+    
+    var mockery = require('mockery');
+    var request = require('supertest');
+    var finish_test = require('./helpers/supertest-jasmine');
+
+    //bunyan mockery
+    var mockLogger = {
+        info: function() {},
+        error: function() {}
+    };
+
+    var mockBunyan = {
+        createLogger: function() { 
+            return mockLogger;
+        }
+    };
+    
+    //skip session config and passport config here since it need LOADS of mocking
+    var mockSessionConfig = function() { };
+    var mockPassportConfig = function() { };
     
     beforeEach(function() {
         mockery.enable({ useCleanCache: true });
         mockery.warnOnUnregistered(false);
         mockery.warnOnReplace(false);
         mockery.registerMock('bunyan', mockBunyan);
+        mockery.registerMock('./config/session.config', mockSessionConfig);
+        mockery.registerMock('./config/passport.config', mockPassportConfig);
     });
     
     afterEach(function() {

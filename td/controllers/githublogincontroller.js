@@ -15,7 +15,7 @@ githubLoginController.doLogin = function(req, res, next) {
     } else {
         passport.authenticate('github')(req, res, next);
     }
-}
+};
 
 //complete github oauth sign in with csrf protection
 githubLoginController.completeLogin = function(req, res) {

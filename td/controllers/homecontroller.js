@@ -10,7 +10,7 @@ homeController.index = function (req, res) {
 };
 
 homeController.login = function (req, res) {
-    res.render('login', { csrfToken: req.csrfToken() })
+    res.render('login', { csrfToken: req.csrfToken() });
 };
 
 //ensure current user is signed in
@@ -18,7 +18,7 @@ homeController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('
 
 //angular template - dynamic for csrf token
 homeController.logoutform = function (req, res) {
-    res.render('logoutform', { csrfToken: req.csrfToken() })
+    res.render('logoutform', { csrfToken: req.csrfToken() });
 };
 
 //logout

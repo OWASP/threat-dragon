@@ -35,6 +35,10 @@ describe('route config tests', function() {
     
     });
     
+    afterAll(function() {
+        mockery.deregisterAll();
+    });
+    
     describe('home controller routes', function() {
         
         var indexBody = 'called home controller index';

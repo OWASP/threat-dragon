@@ -1,7 +1,5 @@
 'use strict';
 
-var requestLogger = require('morgan');
-
 function configLoggers(app) {
 
     //app.use(requestLogger('dev'));
