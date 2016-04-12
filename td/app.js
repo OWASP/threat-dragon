@@ -24,7 +24,7 @@ try {
     app.use(favicon(__dirname + '/public/favicon.ico'));
 
     //logging
-    require('./config/loggers.config')(app);
+    require('./config/loggers.config').config(app);
 
     //parsers
     require('./config/parsers.config')(app);
@@ -32,7 +32,7 @@ try {
     //routes
     require('./config/routes.config')(app);
 
-    bunyan.createLogger({ name: 'threatdragon' }).info('owasp threat dragon application started up');
+    bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 }
 catch (e) {
     var errorLogger = bunyan.createLogger({ name: 'threatdragon' });

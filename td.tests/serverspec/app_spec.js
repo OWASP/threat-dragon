@@ -46,7 +46,7 @@ describe('app tests', function() {
         spyOn(mockLogger, 'info');
         spyOn(mockLogger, 'error');
         require('../../td/app');
-        expect(mockBunyan.createLogger.calls.argsFor(0)).toEqual([{name: 'threatdragon'}]);
+        expect(mockBunyan.createLogger.calls.argsFor(0)).toEqual([{name: 'threatdragon', level: 'info'}]);
         expect(mockLogger.info).toHaveBeenCalled();
         expect(mockLogger.error).not.toHaveBeenCalled();
     });

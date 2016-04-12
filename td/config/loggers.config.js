@@ -1,23 +1,30 @@
 'use strict';
 
-function configLoggers(app) {
+var excludes = [
+    "req-headers",
+    "res-headers",
+    "res",
+    "req",
+    "short-body",
+    "body",
+    "response-hrtime",
+    "incoming",
+    "user-agent",
+    "response-time",
+    "http-version"
+];
 
-    //app.use(requestLogger('dev'));
-    var excludes = [
-        "req-headers",
-        "res-headers",
-        "res",
-        "req",
-        "short-body",
-        "body",
-        "response-hrtime",
-        "incoming",
-        "user-agent",
-        "response-time",
-        "http-version"
-    ];
-    
-    app.use(require('express-bunyan-logger')({name: 'threatdragon', level: 'info', excludes: excludes}));
+var bunyanOptions = {name: 'threatdragon', level: 'info', excludes: excludes};
+
+function configLoggers(app) {   
+    app.use(require('express-bunyan-logger')(bunyanOptions));
 }
 
-module.exports = configLoggers;
+var logger = require('bunyan').createLogger(bunyanOptions);
+
+var loggers = {
+    config: configLoggers,
+    logger: logger   
+};
+
+module.exports = loggers;
