@@ -8,6 +8,7 @@ var algorithm = 'aes256';
 
 function generateIV(cb) {
     crypto.randomBytes(16, function(err, iv) {
+        require('loggers.config').logger.debug('generated iv: ' + iv);
         cb(iv);
     });
 }
@@ -15,6 +16,7 @@ function generateIV(cb) {
 function getPrimaryKey() {
     var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
     var primaryKey = keys.find(function(key) { return key.isPrimary; });
+    require('loggers.config').logger.debug('found primary key');
 
     if (!primaryKey) {
         var message = 'missing primary session encryption key';
@@ -43,6 +45,8 @@ function encryptData(plainText, key, iv) {
     var cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
     cipherText += encryptor.final(outputEncoding);
     var encryptedData = {keyId: key.id, iv: iv.toString(keyEncoding), data: cipherText};
+    require('loggers.config').logger.debug('encrypted session');
+    require('loggers.config').logger.debug(JSON.stringify(encryptedData));
     return encryptedData;
 }
 
