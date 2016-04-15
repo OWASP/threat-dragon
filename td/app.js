@@ -31,6 +31,8 @@ try {
 
     //routes
     require('./config/routes.config')(app);
+console.log('log');
+console.info('info');
 
     bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 }
