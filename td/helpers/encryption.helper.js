@@ -17,7 +17,7 @@ function getPrimaryKey() {
     var primaryKey = keys.find(function(key) { return key.isPrimary; });
 
     if (!primaryKey) {
-        var message = 'missing primary session encryption key'
+        var message = 'missing primary session encryption key';
         require('loggers.config').logger.fatal(message);
         throw message;
     }
