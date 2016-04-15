@@ -52,7 +52,8 @@ describe('encryption helper tests', function() {
         var encryptedData = {keyId: 2, iv: testIV, data: data};
         var mockLogger = {
             logger: {
-                error: function() {}
+                error: function() {},
+                debug: function() {}
             }
         };
         
@@ -71,7 +72,8 @@ describe('encryption helper tests', function() {
         process.env.SESSION_ENCRYPTION_KEYS = "[{\"isPrimary\": false, \"id\": 1, \"value\": \"testkey1\"}]";
         var mockLogger = {
             logger: {
-                fatal: function() {}
+                fatal: function() {},
+                debug: function() {}
             }
         };
         
