@@ -53,7 +53,7 @@ describe('encryption helper tests', function() {
         var mockLogger = {
             logger: {
                 error: function() {},
-                debug: function() {}
+                info: function() {}
             }
         };
         
@@ -73,7 +73,7 @@ describe('encryption helper tests', function() {
         var mockLogger = {
             logger: {
                 fatal: function() {},
-                debug: function() {}
+                info: function() {}
             }
         };
         
