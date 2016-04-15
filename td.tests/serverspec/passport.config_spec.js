@@ -4,6 +4,7 @@ var request = require('supertest');
 var url = require('url');
 var finish_test = require('./helpers/supertest-jasmine');
 var jasmine = require('jasmine');
+var mockery = require('mockery');
 
 describe('passport configuration tests', function() {
     
@@ -16,8 +17,21 @@ describe('passport configuration tests', function() {
     var express;
     var app;
     var mock;
+    var mockEncryptionHelper;
     
     beforeEach(function() {
+        
+        mockery.enable({ useCleanCache: true });
+        mockery.warnOnUnregistered(false);
+        mockery.warnOnReplace(false);
+        
+        //encryption helper mocks
+        mockEncryptionHelper = {
+            encrypt: function() {},
+            decrypt: function() {}
+        };
+        
+        mockery.registerMock('../helpers/encryption.helper', mockEncryptionHelper);
         
         passport = require('passport');
         spyOn(passport, 'initialize').and.callThrough();
@@ -28,7 +42,15 @@ describe('passport configuration tests', function() {
         app.get('/', passport.authenticate('github'));
         mock = {done: function() {}};
         spyOn(mock, 'done');
-           
+        
+    });
+    
+    afterEach(function() {
+        mockery.disable();
+    });
+
+    afterAll(function() {
+        mockery.deregisterAll();
     });
     
     it('should initialize passport', function() {
@@ -66,25 +88,31 @@ describe('passport configuration tests', function() {
         var accessToken = 'access';
         var refreshToken = 'refresh';
         var profile = 'profile';
-
-
-        passport._strategies["github"]._verify(accessToken, refreshToken, profile, mock.done);
-        
+        passport._strategies["github"]._verify(accessToken, refreshToken, profile, mock.done);      
         expect(mock.done).toHaveBeenCalled();
         expect(mock.done.calls.argsFor(0)[1]).toEqual({profile: profile, accessToken: accessToken});
     })
     
     it('should serialize the user', function() {
         
-        passport._serializers[0]('user', mock.done);
-        expect(mock.done.calls.argsFor(0)).toEqual([null, 'user']);
-        
+        mockEncryptionHelper.encrypt = function(plainText, cb) {
+            cb(plainText);
+        };
+        spyOn(mockEncryptionHelper, 'encrypt').and.callThrough();
+        var user = {user: 'user'};
+        passport._serializers[0](user, mock.done);
+        expect(mock.done.calls.argsFor(0)).toEqual([null, JSON.stringify(user)]);       
     });
     
     it('should deserialize the user', function() {
         
-        passport._deserializers[0]('user', mock.done);
-        expect(mock.done.calls.argsFor(0)).toEqual([null, 'user']);
+        var user = {user: 'user'};
+        mockEncryptionHelper.decrypt = function(cipherText) {
+            return cipherText;
+        };
+        spyOn(mockEncryptionHelper, 'decrypt').and.callThrough();
+        passport._deserializers[0](JSON.stringify(user), mock.done);
+        expect(mock.done.calls.argsFor(0)).toEqual([null, user]);
         
     });
 });

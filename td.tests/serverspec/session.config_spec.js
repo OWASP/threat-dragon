@@ -69,9 +69,7 @@ describe('session config tests', function() {
     });
 
     afterEach(function() {
-
         mockery.disable();
-
     });
 
     afterAll(function() {

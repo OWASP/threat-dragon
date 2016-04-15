@@ -28,7 +28,7 @@ function passportConfig(app) {
     passport.serializeUser(function(user, done) {
         cryptoHelper.encrypt(JSON.stringify(user), function(cipherText) {
             done(null, cipherText);
-        })
+        });
     });
     
     //decrypt is syncronous because there is no blocking code  

@@ -30,6 +30,7 @@ describe('githublogincontroller tests', function() {
     beforeEach(function() {
         mockery.enable({useCleanCache: true});
         mockery.warnOnReplace(false);
+        mockery.warnOnUnregistered(false);
         mockery.registerMock('passport', mockPassport);
         mockery.registerMock('crypto', mockCrypto);   
         
