@@ -24,6 +24,7 @@ githubLoginController.doLogin = function(req, res, next) {
 //complete github oauth sign in with csrf protection
 githubLoginController.completeLogin = function(req, res) {
     
+    req.log.info('back from github, completing login')
     var expectedState = req.session.githubOauthState;
     var incomingState = req.query.state;
     delete req.session.githubOauthState;
