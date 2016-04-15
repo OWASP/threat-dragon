@@ -26,26 +26,26 @@ function passportConfig(app) {
     
     //encrypt is async to avoid blocking when generating random iv
     passport.serializeUser(function(user, done) {
-        require('../config/loggers.config').logger.info('serialising user');
+        console.info('serialising user');
         try {
         cryptoHelper.encrypt(JSON.stringify(user), function(cipherText) {
             done(null, cipherText);
         });
         }
         catch(err) {
-            require('../config/loggers.config').logger.info('got an error serialising user: ' + err.message);
+            console.info('got an error serialising user: ' + err.message);
         }
     });
     
     //decrypt is syncronous because there is no blocking code  
     passport.deserializeUser(function(obj, done) {
-        require('../config/loggers.config').logger.info('deserialising user');
+        console.info('deserialising user');
         try {
         var user = JSON.parse(cryptoHelper.decrypt(obj));
         done(null, user);
         }
         catch(err) {
-            require('../config/loggers.config').logger.info('got and error deserialising user: ' + err.message);
+            console.info('got and error deserialising user: ' + err.message);
         }
     });
 }
