@@ -8,7 +8,7 @@ var algorithm = 'aes256';
 
 function generateIV(cb) {
     crypto.randomBytes(16, function(err, iv) {
-        require('loggers.config').logger.debug('generated iv: ' + iv);
+        require('../config/loggers.config').logger.debug('generated iv: ' + iv);
         cb(iv);
     });
 }
@@ -16,11 +16,11 @@ function generateIV(cb) {
 function getPrimaryKey() {
     var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
     var primaryKey = keys.find(function(key) { return key.isPrimary; });
-    require('loggers.config').logger.debug('found primary key');
+    require('../config/loggers.config').logger.debug('found primary key');
 
     if (!primaryKey) {
         var message = 'missing primary session encryption key';
-        require('loggers.config').logger.fatal(message);
+        require('../config/loggers.config').logger.fatal(message);
         throw message;
     }
     
@@ -33,7 +33,7 @@ function getKeyById(id) {
 
     if (!key) {
         var message = 'missing session encryption key id:  ' + id;
-        require('loggers.config').logger.error(message);
+        require('../config/loggers.config').logger.error(message);
         throw message;
     }
     
@@ -45,8 +45,8 @@ function encryptData(plainText, key, iv) {
     var cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
     cipherText += encryptor.final(outputEncoding);
     var encryptedData = {keyId: key.id, iv: iv.toString(keyEncoding), data: cipherText};
-    require('loggers.config').logger.debug('encrypted session');
-    require('loggers.config').logger.debug(JSON.stringify(encryptedData));
+    require('../config/loggers.config').logger.debug('encrypted session');
+    require('../config/loggers.config').logger.debug(JSON.stringify(encryptedData));
     return encryptedData;
 }
 

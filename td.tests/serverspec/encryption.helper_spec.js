@@ -58,7 +58,7 @@ describe('encryption helper tests', function() {
         };
         
         spyOn(mockLogger.logger, 'error');
-        mockery.registerMock('loggers.config', mockLogger);
+        mockery.registerMock('../config/loggers.config', mockLogger);
         spyOn(mockCrypto,'createDecipheriv').and.callThrough();
         var cryptoHelper = require('../../td/helpers/encryption.helper');
         expect(function() {cryptoHelper.decrypt(encryptedData);}).toThrow();
@@ -78,7 +78,7 @@ describe('encryption helper tests', function() {
         };
         
         spyOn(mockLogger.logger, 'fatal');
-        mockery.registerMock('loggers.config', mockLogger);
+        mockery.registerMock('../config/loggers.config', mockLogger);
         var cb = jasmine.createSpy('cb');
         var cryptoHelper = require('../../td/helpers/encryption.helper');
         expect(function() {cryptoHelper.encrypt(plainText, cb);}).toThrow();
