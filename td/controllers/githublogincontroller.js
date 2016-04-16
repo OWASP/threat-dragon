@@ -13,7 +13,7 @@ githubLoginController.doLogin = function(req, res, next) {
             req.session.githubOauthState = state;
             req.log.info('got token:' + state);
             req.log.info('so to authentication...');
-            passport.authenticate('github', { state: state })(req, res, next);
+            passport.authenticate('github', { state: state, failureRedirect: '/error' })(req, res, next);
         });
     } else {
         req.log.info('going straight to authentication...');
