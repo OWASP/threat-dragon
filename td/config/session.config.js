@@ -14,7 +14,7 @@ function configSessions(app) {
     }
 
     app.use(session({
-        store: AzureTablesStoreFactory.create(),
+        store: AzureTablesStoreFactory.create({errorLogger: require('../config/loggers.config').logger.error}),
         secret: process.env.SESSION_SIGNING_KEY,
         resave: false,
         saveUninitialized: false,
