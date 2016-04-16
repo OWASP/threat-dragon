@@ -5,18 +5,13 @@ var githubLoginController = {};
 
 //redirect to github with csrf protection
 githubLoginController.doLogin = function(req, res, next) {
-    req.log.info('doing login');
     if (!req.session.githubOauthState) {
-        req.log.info('generating anti csrf token for github callback');
         require('crypto').randomBytes(32, function(err, buffer) {
             var state = buffer.toString('hex');
             req.session.githubOauthState = state;
-            req.log.info('got token:' + state);
-            req.log.info('so to authentication...');
-            passport.authenticate('github', { state: state, failureRedirect: '/error' })(req, res, next);
+            passport.authenticate('github', { state: state })(req, res, next);
         });
     } else {
-        req.log.info('going straight to authentication...');
         passport.authenticate('github')(req, res, next);
     }
 };

@@ -31,17 +31,8 @@ try {
 
     //routes
     require('./config/routes.config')(app);
-console.log('log');
-console.info('info');
 
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-    bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
-    
-    
+    bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');  
 }
 catch (e) {
     var errorLogger = bunyan.createLogger({ name: 'threatdragon' });

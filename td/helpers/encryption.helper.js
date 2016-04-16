@@ -8,15 +8,14 @@ var algorithm = 'aes256';
 
 function generateIV(cb) {
     crypto.randomBytes(16, function(err, iv) {
-        require('../config/loggers.config').logger.info('generated iv: ' + iv);
         cb(iv);
     });
 }
 
+//primary key is used for encryption
 function getPrimaryKey() {
     var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
     var primaryKey = keys.find(function(key) { return key.isPrimary; });
-    require('../config/loggers.config').logger.info('found primary key');
 
     if (!primaryKey) {
         var message = 'missing primary session encryption key';
@@ -27,6 +26,7 @@ function getPrimaryKey() {
     return {id: primaryKey.id, value: new Buffer(primaryKey.value, keyEncoding)};
 }
 
+//other keys can be used for decryption to support key expiry
 function getKeyById(id) {
     var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
     var key = keys.find(function(key) { return key.id == id; });
@@ -45,8 +45,6 @@ function encryptData(plainText, key, iv) {
     var cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
     cipherText += encryptor.final(outputEncoding);
     var encryptedData = {keyId: key.id, iv: iv.toString(keyEncoding), data: cipherText};
-    require('../config/loggers.config').logger.info('encrypted session');
-    require('../config/loggers.config').logger.info(JSON.stringify(encryptedData));
     return encryptedData;
 }
 
@@ -65,7 +63,6 @@ function encrypt(plainText, cb) {
 }
 
 function decrypt(encryptedData) {
-    require('../config/loggers.config').logger.info('starting encryption');
     var iv = new Buffer(encryptedData.iv, keyEncoding);
     var key = getKeyById(encryptedData.keyId);
     return decryptData(encryptedData.data, key, iv);  
