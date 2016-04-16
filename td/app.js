@@ -5,6 +5,7 @@ var bunyan = require('bunyan');
 
 try {
     var app = express();
+    app.set('trust proxy', true);
     app.set('views', './td/views');
     app.set('view engine', 'jade');
 
