@@ -13,7 +13,6 @@ function passportConfig(app) {
     passport.use(new Strategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: '/oauth/github',
         failureRedirect: 'login/github',
         scope: [ 'user:email','repo' ]
     },
