@@ -3,8 +3,6 @@
 var path = require('path');
 var homeController = {};
 
-console.log(process.env.NODE_ENV);
-
 homeController.index = function (req, res) {
     //angular ajax request need xsrf token as a script accessible cookie
     var cookieOptions = { httpOnly: false };
