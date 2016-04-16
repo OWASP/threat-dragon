@@ -16,6 +16,7 @@ describe('session config tests', function() {
 
     //environment
     var signingKey = 'signingKey';
+    var logger = require('../../td/config/loggers.config').logger;
     process.env.SESSION_SIGNING_KEY = signingKey;
 
     beforeEach(function() {
@@ -24,7 +25,7 @@ describe('session config tests', function() {
         mockery.warnOnUnregistered(false);
         mockery.warnOnReplace(false);
         
-            //connect-azuretables mocks
+        //connect-azuretables mocks
         mockery.registerMock('connect-azuretables', function(session) {
 
             var MockStore = function() { };
@@ -61,6 +62,7 @@ describe('session config tests', function() {
             cb(null, obj);
         });
 
+        spyOn(logger, 'error');
         require('../../td/config/session.config')(app);
         app.use(passport.initialize());
         app.use(passport.session());

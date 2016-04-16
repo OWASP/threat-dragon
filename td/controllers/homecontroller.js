@@ -3,9 +3,19 @@
 var path = require('path');
 var homeController = {};
 
+console.log(process.env.NODE_ENV);
+
 homeController.index = function (req, res) {
     //angular ajax request need xsrf token as a script accessible cookie
-    res.cookie('XSRF-TOKEN', req.csrfToken(), { httpOnly: false });
+    var cookieOptions = { httpOnly: false };
+    
+    if(process.env.NODE_ENV != 'development' && process.env.NODE_ENV) {
+        cookieOptions.secure = true;
+    } else {
+        require('../config/loggers.config').logger.error({security: true}, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
+    }
+    
+    res.cookie('XSRF-TOKEN', req.csrfToken(), cookieOptions);
     res.sendFile(path.join(__dirname, '../', 'index.html'));
 };
 

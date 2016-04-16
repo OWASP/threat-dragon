@@ -8,7 +8,6 @@ mockery.registerAllowable(moduleUnderTest);
 mockery.registerAllowable('path');
 var homeController = require(moduleUnderTest);
 
-
 describe('homecontroller tests', function() {
     
     var mockRequest;
@@ -18,6 +17,7 @@ describe('homecontroller tests', function() {
     beforeEach(function() {
         
         mockery.enable({useCleanCache: true});
+        mockery.warnOnUnregistered(false);
         //request/response mocks
         mockRequest = {};
         mockRequest.log = {info: function() {}};
@@ -61,6 +61,16 @@ describe('homecontroller tests', function() {
         spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
         homeController.index(mockRequest, mockResponse);
         expect(mockResponse.cookie.calls.argsFor(0)).toEqual(['XSRF-TOKEN', testToken, { httpOnly: false }])
+    });
+    
+    it('should log the insecure csrf cookie', function() {
+        
+        var testToken = 'test token'
+        spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
+        var logger = require('../../td/config/loggers.config').logger;
+        spyOn(logger, 'error');
+        homeController.index(mockRequest, mockResponse);
+        expect(logger.error.calls.argsFor(0)[0].security).toBe(true);
     });
     
     it('should pass the csrf token to the login page', function() {
@@ -110,6 +120,28 @@ describe('homecontroller tests', function() {
       expect(mockResponse.redirect.calls.argsFor(0)).toEqual(['/']);
       expect(mockRequest.log.info.calls.argsFor(0)[0].security).toBe(true);
       expect(mockRequest.log.info.calls.argsFor(0)[0].userName).toEqual(testUser);
+    });
+    
+    describe('simulated production environment tests', function() {
+        
+        beforeAll(function() {
+            process.env.NODE_ENV = 'simulated_production' 
+        });
+        
+        afterAll(function() {
+            process.env.NODE_ENV = 'development'
+        });
+        
+        it('should set the secure flag on the XSRF cookie', function() {
+     
+            var testToken = 'test token'
+            spyOn(mockResponse, 'cookie');
+            spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
+            homeController.index(mockRequest, mockResponse);
+            expect(mockResponse.cookie.calls.argsFor(0)).toEqual(['XSRF-TOKEN', testToken, { httpOnly: false, secure: true }])
+            
+        });
+        
     });
     
 });
