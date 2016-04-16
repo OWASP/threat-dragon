@@ -76,7 +76,7 @@ describe('passport configuration tests', function() {
                 });
                 
                 var callBackUrl = url.parse(decodeURIComponent(params["redirect_uri"]));
-                expect(decodeURIComponent(params["scope"])).toEqual('user:email,repo');
+                expect(decodeURIComponent(params["scope"])).toEqual('repo');
                 expect(params["client_id"]).toEqual(clientID);
                 //expect(callBackUrl.path).toEqual('/oauth/github');
             })
@@ -99,9 +99,10 @@ describe('passport configuration tests', function() {
             cb(plainText);
         };
         spyOn(mockEncryptionHelper, 'encrypt').and.callThrough();
-        var user = {user: 'user'};
+        var user = {unnecessary: 'data', accessToken: 'testtoken', profile: {unnecessary: 'data', username: 'testuser', provider: 'testprovider', _json: {repos_url: 'testrepos', unnecessary: 'data'}}};
+        var serialisedUser = {accessToken: 'testtoken', profile: {username: 'testuser', provider: 'testprovider', repos_url: 'testrepos'}};
         passport._serializers[0](user, mock.done);
-        expect(mock.done.calls.argsFor(0)).toEqual([null, JSON.stringify(user)]);       
+        expect(mock.done.calls.argsFor(0)).toEqual([null, JSON.stringify(serialisedUser)]);       
     });
     
     it('should deserialize the user', function() {

@@ -32,12 +32,13 @@ homeController.logoutform = function (req, res) {
 //logout
 homeController.logout = function(req, res) {
     var username = req.user.profile.username;
+    var idp = req.user.profile.provider;
     req.logOut();
     //logout does not seem to do much/anything so do it by hand
     res.clearCookie('connect.sid');
     res.clearCookie('XSRF-TOKEN');
     req.session.destroy(function() {
-        req.log.info({security: true, userName: username}, 'logged out');
+        req.log.info({security: true, userName: username, idp:idp}, 'logged out');
         res.redirect('/'); 
     });
 }; 
