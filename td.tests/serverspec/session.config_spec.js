@@ -65,11 +65,13 @@ describe('session config tests', function() {
         app.use(passport.initialize());
         app.use(passport.session());
         require('../../td/config/parsers.config')(app);
-
+        
+        jasmine.clock().install();
     });
 
     afterEach(function() {
         mockery.disable();
+        jasmine.clock().uninstall();
     });
 
     afterAll(function() {
@@ -77,6 +79,10 @@ describe('session config tests', function() {
     });
 
     it('should set a session cookie', function(done) {
+        
+        var baseTime = new Date(1000);
+        var maxAge = 'Thu, 01 Jan 1970 01:00:01 GMT';
+        jasmine.clock().mockDate(baseTime);
 
         app.post('/',
             passport.authenticate('local', { failureRedirect: '/error' }),
@@ -94,6 +100,7 @@ describe('session config tests', function() {
                 expect(res.headers['set-cookie'][0].indexOf('connect.sid') >= 0).toBe(true);
                 expect(res.headers['set-cookie'][0].indexOf('HttpOnly') >= 0).toBe(true);
                 expect(res.headers['set-cookie'][0].indexOf('Path=/') >= 0).toBe(true);
+                expect(res.headers['set-cookie'][0].indexOf(maxAge) >= 0).toBe(true);
             })
             .end(finish_test(done));
     });
