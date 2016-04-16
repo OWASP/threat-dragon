@@ -17,25 +17,19 @@
         <!-- Navigation starts -->
         <div class="navbar-collapse collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-include="'logoutform'">
-                </li>
                 <li>
-                    <form class="navbar-form">
+                    <form class="navbar-form" role="logout" method="POST" action="logout">
+                        <span ng-include="'logoutform'"></span>
+                        <button class="btn btn-primary navbar-btn" type="submit">
+                            <i class="fa fa-sign-out fa-2x icon-align" title="Sign out"></i> <span> Sign out</span>
+                        </button>
                         <a class="btn btn-primary navbar-btn" href="http://docs.threatdragon.org/" target="_blank">
-                            <i class="fa fa-question-circle fa-2x icon-align fa-fw"></i><span> Get some help</span>
+                            <i title="Get some help" class="fa fa-question-circle fa-2x"></i>
                         </a>
-                    </form>
-                </li>
-                <li>
-                    <form class="navbar-form"> 
                         <a class="btn btn-primary navbar-btn" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
-                            <i class="fa fa-github fa-2x icon-align fa-fw"></i><span> Visit us on GitHub</span>
+                            <i title="Visit us on GitHub" class="fa fa-github fa-2x"></i>
                         </a>
-                    </form>
-                </li>
-                <li>
-                    <form class="navbar-form">
-                        <a class="btn btn-primary navbar-btn" href="https://www.owasp.org" target="_blank">
+                        <a title="Go to the OWASP wiki" class="btn btn-primary navbar-btn" href="https://www.owasp.org" target="_blank">
                             <div>
                                 <img src="public/content/images/owasp.svg"/>
                             </div>
