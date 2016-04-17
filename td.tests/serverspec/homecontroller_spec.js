@@ -83,14 +83,17 @@ describe('homecontroller tests', function() {
         expect(mockResponse.render.calls.argsFor(0)[1].csrfToken).toEqual(testToken);
     });
     
-    it('should pass the csrf token to the logout form', function() {
+    it('should pass the csrf token and username to the logout form', function() {
         
         var testToken = 'test token'
         spyOn(mockResponse, 'render');
         spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
+        var testUser = 'test user';
+        mockRequest.user = {profile: {username: testUser}};
         homeController.logoutform(mockRequest, mockResponse);
         expect(mockResponse.render.calls.argsFor(0)[0]).toEqual('logoutform');
         expect(mockResponse.render.calls.argsFor(0)[1].csrfToken).toEqual(testToken);
+        expect(mockResponse.render.calls.argsFor(0)[1].username).toEqual(testUser);
     });
     
     it('should clear the csrf and session cookies', function() {

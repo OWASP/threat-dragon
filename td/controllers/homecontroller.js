@@ -24,9 +24,9 @@ homeController.login = function (req, res) {
 //ensure current user is signed in
 homeController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 
-//angular template - dynamic for csrf token
+//angular template - dynamic for username and anti-csrf token
 homeController.logoutform = function (req, res) {
-    res.render('logoutform', { csrfToken: req.csrfToken() });
+    res.render('logoutform', { csrfToken: req.csrfToken(), username: req.user.profile.username });
 };
 
 //logout

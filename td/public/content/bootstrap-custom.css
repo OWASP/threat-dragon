@@ -8,6 +8,10 @@
 	height: 420px;
 }
 
+.navbar {
+	font-size: 14px
+}
+
 .text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
