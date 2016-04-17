@@ -3,15 +3,13 @@
 
     var controllerId = 'shell';
     angular.module('app').controller(controllerId,
-        ['$rootScope', '$location', '$cookies', 'common', 'config', shell]);
+        ['$rootScope', '$location', 'common', 'config', shell]);
 
-    function shell($rootScope, $location, $cookies, common, config) {
+    function shell($rootScope, $location, common, config) {
         /*jshint validthis: true */
         var vm = this;
         var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var events = config.events;
-        vm.isLoggedIn = ($cookies.get('idp') === 'github');
-        vm.csrfToken = $cookies.get('XSRF-TOKEN');
 
         activate();
 
