@@ -9,9 +9,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$rootScope','$scope', '$location','$routeParams', 'dialogs', 'common', 'datacontext', threatModel]);
+        ['$scope', '$location', '$routeParams', 'dialogs', 'common', 'datacontext', threatModel]);
 
-    function threatModel($rootScope, $scope, $location, $routeParams, dialogs, common, datacontext)
+    function threatModel($scope, $location, $routeParams, dialogs, common, datacontext)
     {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
@@ -21,7 +21,7 @@
         var logError = getLogFn(controllerId, 'error');
 
         // Bindable properties and functions are placed on vm.
-        vm.title = 'ThreatModelDetail';
+        vm.title = 'Threat Model Details';
         vm.threatModel = {};
         vm.removeContributor = removeContributor;
         vm.addContributor = addContributor;
@@ -30,6 +30,7 @@
         vm.save = save;
         vm.reload = reload,
         /*jshint -W030 */
+        vm.threatModelLocation = threatModelLocation;
         vm.deleteModel = deleteModel;
         vm.cancel = cancel;
         vm.newContributor = '';
@@ -62,15 +63,25 @@
                 .then(function () { log('Activated Threat Model Detail View'); });
         }
 
-        function getThreatModel()
+        function getThreatModel(forceReload)
         {
-            if ($routeParams.threatModelId === 'new')
+            //creating new model
+            if ($location.path() === '/threatmodel/edit/new')
             {
                 vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
+                datacontext.threatModel = vm.threatModel;
+                return vm.threatModel;
+            }
+            
+            //existing model is the correct one
+            if(!forceReload && datacontext.threatModel && datacontext.threatModel.location === $routeParams)
+            {
+                vm.threatModel = datacontext.threatModel;
                 return vm.threatModel;
             }
 
-            return datacontext.getThreatModelDetail($routeParams.threatModelId).then(function (data) {
+            //loading new model
+            return datacontext.load($routeParams).then(function (data) {
 
                 if (vm.threatModelEditForm)
                 {
@@ -85,6 +96,7 @@
             });
         }
 
+
         function save()
         {
             datacontext.saveThreatModel(vm.threatModel).then(function () {
@@ -97,12 +109,17 @@
         {
             if (vm.dirty)
             {
-                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null; }, function () { });
+                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function() { getThreatModel(true); }, function () { return null; }, function () { });
             }
-            else
-            {
-                getThreatModel();
-            }
+        }
+        
+        function threatModelLocation() {
+            var loc = vm.threatModel.location.organisation + '/';
+            loc += vm.threatModel.location.repo + '/';
+            loc += vm.threatModel.location.branch + '/';
+            loc += vm.threatModel.location.model;
+            
+            return loc;
         }
 
         function deleteModel()
@@ -118,13 +135,13 @@
 
         function cancel()
         {
-            if (vm.threatModel.summary.id)
+            if (angular.isDefined(vm.threatModel.summary.id))
             {
-                $location.path('/threatmodel/' + vm.threatModel.summary.id);
+                $location.path('/threatmodel/' + vm.threatModelLocation());
             }
             else
             {
-                $location.path('/threatmodels');
+                $location.path('/');
             } 
         }
 
@@ -179,7 +196,7 @@
 
         function emptyDiagram()
         {
-            return { title: '', thumbnail: "../public/content/images/thumbnail.jpg" };
+            return { title: '', thumbnail: "./public/content/images/thumbnail.jpg" };
         }
     }
 })();

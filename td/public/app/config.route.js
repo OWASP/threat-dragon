@@ -44,25 +44,25 @@
                     }
                 }
             }, {
-                url: '/threatmodels',
+                url: '/threatmodel/:organisation/:repo/:branch/:model',
                 config: {
-                    title: 'threatmodels',
-                    templateUrl: './public/app/threatmodels/threatmodels.html',
-                    settings: {
-                    }
-                }
-            }, {
-                url: '/threatmodel/:threatModelId',
-                config: {
-                    title: 'threatmodelsdetail',
+                    title: 'Threat Model Details',
                     templateUrl: './public/app/threatmodels/threatmodeldetail.html',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/edit/:threatModelId',
+                url: '/threatmodel/edit/:organisation/:repo/:branch/:model',
                 config: {
-                    title: 'threatmodeledit',
+                    title: 'Edit Threat Model',
+                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
+                    settings: {
+                    }
+                }
+            }, {
+                url: '/threatmodel/edit/new',
+                config: {
+                    title: 'Edit New Model',
                     templateUrl: './public/app/threatmodels/threatmodeledit.html',
                     settings: {
                     }

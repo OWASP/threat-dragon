@@ -1,34 +1,85 @@
 ﻿<div data-ng-controller="welcome as vm" class="container-fluid">
     <row>
-        <div class="col-lg-6-offset-3">
-            <div class="welcome jumbotron" height="420">
-                <h1>Welcome!</h1>
-                <p>
-                    Welcome to OWASP Threat Dragon, a completely free open-source threat modelling tool from OWASP. To use Threat Dragon you have
-                    two options. With <strong>option 1</strong> you don't need to sign-up or sign-in. All your models are stored on your local device, so your data is never
-                    sent to anyone else or stored at some unknown location on the cloud. This works best if you are working on your own on a project.
-                 </p>
-                 <p>
-                    With <strong>option 2</strong> you can sign in using your GitHub account and store your models next your GitHub code repo, taking advantage
-                    of their file versioning, backups and general awesomeness. This is the best option if you are working as part of a team or if you want to
-                    work on your models from different devices.
-                 </p>
-                 <p>
-                    Threat Dragon is currently in the early stages of development (an OWASP incubator project) so there might be some bugs and the data 
-                    model might change and leave you unable load your models. If you make a model that you want to keep, you can print it to a file or hard copy.   
-                </p>
-                <p>
-                    <a class="btn btn-lg btn-default" href="#/threatmodels" role="button">
-                        <span class="glyphicon glyphicon-open"></span>  {{vm.threatModelCount > 0 ? 'Open Local Model' : 'Create Local Model'}}
+        <div class="jumbotron">
+            <h1>Welcome!</h1>
+            <p>
+            You're ready to start making your application designs more secure. You can open an existing threat model or create new one by choosing one of
+            the options below.
+            </p>
+            <p>
+            <icon class="fa fa-exclamation-triangle text-primary"></icon> <strong class="text-primary">Warning!</strong> Threat Dragon is still in early development (it is an <a target="_blank" href="https://www.owasp.org/index.php/OWASP_Threat_Dragon">
+            OWASP incubator project</a>) so it might have some bugs and the data model could change without warning, leaving you
+            unable to open your threat models.
+            </p>
+        </div>
+    </row>
+    <row> 
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="jumbotron">
+                <div class="text-center">
+                    <span class="fa fa-github fa-5x text-primary"></span>
+                </div>
+                <div>
+                    <br>
+                    <p>
+                        Open an existing threat model from a GitHub repo
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="jumbotron">
+                <div class="text-center">
+                    <a href="#/threatmodel/edit/new">
+                        <span class="fa fa-plus fa-5x text-primary"></span>
                     </a>
-                    <a class="btn btn-lg btn-default" href="#/threatmodel/edit/new" role="button">
-                        <span class="glyphicon glyphicon-plus"></span> Add New Model
+                </div>
+                <div>
+                    <br>
+                    <p>
+                        Create a completely new, empty threat model
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="jumbotron">
+                <div class="text-center">
+                    <span class="fa fa-folder-open fa-5x text-primary"></span>
+                </div>
+                <div>
+                    <br>
+                    <p>
+                        Import a threat model from a local file
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="jumbotron">
+                <div class="text-center">
+                    <a href="" ng-click="vm.loadDemoModel()">
+                        <span title="Download and explore a sample threat model" class="fa fa-cloud-download fa-5x text-primary"></span>
                     </a>
-                    <button ng-disabled="vm.threatModelCount == 0" class="btn btn-lg btn-default" role="button" ng-click="vm.clearLocalStorage()">
-                        <span class="glyphicon glyphicon-remove"></span>  Clear Local Storage
-                    </button>
-                </p>
+                </div>
+                <div>
+                    <br>
+                    <p>
+                        Download and explore a sample threat model
+                    </p>
+                </div>
             </div>
         </div>
     </row>
+<!--
+    
+            <div>
+            <a href="#/threatmodel/edit/new">
+                <h4><span class="fa fa-plus"></span> Create new threat model...</h4>
+            </a>
+        </div>
+        <div>
+            <h4><tmt-file-read-string label-text="Load a threat model from a file..." action="vm.loadThreatModelFromFile(content)"></tmt-file-read-string></h4>
+        </div>
+
 </div>

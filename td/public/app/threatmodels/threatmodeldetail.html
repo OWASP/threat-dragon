@@ -1,13 +1,8 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-     <p>
-        <a href="#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="#/threatmodels"> Threat models</a><span class="glyphicon glyphicon-chevron-right"></span>
-         Threat model details
-    </p>
     <div ng-if="vm.threatModel.summary">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a href="#/threatmodel/edit/{{vm.threatModel.summary.id}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <a href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -60,7 +55,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group">
-                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModel.summary.id}}" role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">
+                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelLocation()}}" 
+                    role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">
                         <span class="glyphicon glyphicon-edit"></span> Edit
                     </a>
                     <a class="btn btn-default" href="#/threatmodel/report/{{vm.threatModel.summary.id}}/?suppressbanner=true" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="EView and Print Threat Model Report">
@@ -77,12 +73,12 @@
         <div class="jumbotron">
             <h1>oooops!</h1>
             <p>
-                It looks like you tried to view a threat model that doesn't exist. Maybe you typed the
+                It looks like you tried to view an invalid threat model. Maybe you typed the
                 address wrong? Or if you clicked a link to get here, the threat model might have been
                 deleted since you made the link <span class="fa fa-frown-o"></span>
             </p>
             <p>
-                <a href="#/threatmodels">Take me back to the list of threat models</a>
+                <a href="#threatmodels">Take me home</a>
             </p>
         </div>
     </div>

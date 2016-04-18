@@ -24,7 +24,7 @@
                 vm.suppressBanner = false;
             }
 
-            logSuccess('Threat Modelling application loaded!', null, true);
+            logSuccess('Threat Dragon loaded!', null, true);
             common.activateController([], controllerId);
         }
 

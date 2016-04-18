@@ -3,12 +3,12 @@
 
     // Controller name is handy for logging.
     var controllerId = 'welcome';
-    
-    angular.module('app').controller(controllerId,
-        ['dialogs', 'common', 'datacontext', welcome]);
 
-    function welcome(dialogs, common, datacontext) {
-        // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
+    angular.module('app').controller(controllerId,
+        ['$location', 'common', 'datacontext', 'commonConfig', welcome]);
+
+    function welcome($location, common, datacontext, commonConfig, webdatacontext) {
+
         /*jshint validthis: true */
         var vm = this;
         var getLogFn = common.logger.getLogFn;
@@ -16,29 +16,21 @@
 
         // Bindable properties and functions are placed on vm
         vm.title = 'Welcome';
-        vm.clearLocalStorage = clearLocalStorage;
-        vm.threatModelCount = 0;
+        vm.loadDemoModel = loadDemoModel;
 
         activate();
 
-        function activate()
-        {
-            common.activateController([getThreatModelCount()], controllerId).then(function () { log('Activated Welcome View'); });
+        function activate() {
+            common.activateController([], controllerId).then(function () { log('Activated Welcome View'); });
         }
 
-        function clearLocalStorage()
-        {
-            dialogs.confirm('./public/app/welcome/confirmClearLocalStorage.html', executeClearLocalStorage, function () { return vm.threatModelCount; }, function () { });
-        }
-
-        function executeClearLocalStorage()
-        {
-            datacontext.clearStorage().then(function () { getThreatModelCount(); });
-        }
-
-        function getThreatModelCount()
-        {
-            datacontext.getThreatModelCount().then(function (count) { vm.threatModelCount = count; });
+        function loadDemoModel() {
+            var loc = 'threatmodel/';
+            loc += commonConfig.config.demoModelLocation.organisation + '/';
+            loc += commonConfig.config.demoModelLocation.repo + '/';
+            loc += commonConfig.config.demoModelLocation.branch + '/';
+            loc += commonConfig.config.demoModelLocation.model;
+            $location.path(loc);
         }
     }
 })();
