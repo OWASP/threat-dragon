@@ -35,7 +35,7 @@
 			return $http(request).then(onLoaded, onLoadError);
             
             function onLoaded(result) {
-                service.threatModel = JSON.parse(result.data);
+                service.threatModel = result.data;
                 service.threatModel.location = loc;
                 return $q.when(service.threatModel);
             }

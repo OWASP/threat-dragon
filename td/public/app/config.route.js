@@ -76,7 +76,7 @@
                     }
                 }
             }, {
-                url: '/threatmodel/:threatModelId/diagram/:diagramId',
+                url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
                 config: {
                     title: 'diagram',
                     templateUrl: './public/app/diagrams/diagrameditor.html',

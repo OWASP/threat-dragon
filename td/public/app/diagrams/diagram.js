@@ -22,6 +22,7 @@
         var threatWatchers = [];
 
         // Bindable properties and functions are placed on vm.
+        vm.errored = false;
         vm.title = 'ThreatModelDiagram';
         vm.initialise = initialise,
         /*jshint -W030 */
@@ -44,7 +45,12 @@
         vm.reload = reload;
         vm.save = save;
         vm.clear = clear;
-        vm.threatModelId = $routeParams.threatModelId;
+        vm.threatModelLocation = {
+            organisation: $routeParams.organisation,
+            repo: $routeParams.repo,
+            branch: $routeParams.branch,
+            model: $routeParams.model
+        };
         vm.currentDiagram = {};
         vm.diagramId = $routeParams.diagramId;
         vm.currentZoomLevel = 0;
@@ -110,7 +116,14 @@
         function initialise(newDiagram)
         {
             vm.currentDiagram = newDiagram;
-            datacontext.getThreatModelDiagram(vm.threatModelId, vm.diagramId).then(onGetThreatModelDiagram, onError);
+            
+            if(datacontext.threatModel && datacontext.threatModel.location === vm.threatModelLocation) {
+                onGetThreatModelDiagram(datacontext.threatModel.detail.diagrams[vm.diagramId]);
+            }
+            
+            datacontext.load(vm.threatModelLocation).then(function(threatModel) { 
+                onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);}, 
+                onError);
 
             function onGetThreatModelDiagram(data) {
                 
@@ -125,7 +138,6 @@
                     
                 vm.graph.on('remove', removeElement);
                 addDirtyEventHandlers();
-                vm.loaded = true;
                 vm.diagram = data;
                 vm.dirty = false;
                 
@@ -184,7 +196,7 @@
 
         function onError(error)
         {
-            vm.loaded = false;
+            vm.errored = true;
             logError(error);
         }
 

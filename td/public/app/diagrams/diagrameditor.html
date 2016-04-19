@@ -1,11 +1,5 @@
 ﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">
-    <p>
-        <a href="/#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodels"> Threat models</a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodel/{{vm.threatModelId}}"> Threat model detail</a><span class="glyphicon glyphicon-chevron-right"></span>
-        Edit diagram
-    </p>
-    <div ng-show="vm.loaded">
+    <div ng-show="!vm.errored">
         <div class="col-lg-2">
             <uib-accordion close-others="true">
                 <uib-accordion-group is-open="vm.viewStencil">
@@ -39,7 +33,10 @@
         <!--Diagram area-->
         <div class="col-lg-8">
             <div class="panel panel-default">
-                <div class="panel-heading panel-title">
+                <div ng-if="!vm.diagram.title" class="panel-heading panel-title">
+                    <span>Loading...</span>
+                </div>
+                <div ng-if="vm.diagram.title" class="panel-heading panel-title">
                     <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
                     <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>
                 </div>
@@ -92,7 +89,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="!vm.loaded">
+    <div ng-show="vm.errored">
         <div class="jumbotron">
             <h1>oooops!</h1>
             <p>

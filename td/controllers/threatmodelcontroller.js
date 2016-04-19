@@ -10,13 +10,15 @@ threatmodelcontroller.load =  function(req, res) {
         threatModel: req.params.threatModel
     }
     
-    repository.load(modelInfo, req.user.profile.accessToken, function(err, data) {
-        if(!err) {
-            res.json(data.toString('utf8'));
-        } else {
-            res.status(500).json(err);
-        }
-    });
+    res.sendFile(require('path').resolve('td/public/Demo_Threat_Model.json'), {headers: {'Content-Type': 'application/json'}});
+    
+    // repository.load(modelInfo, req.user.profile.accessToken, function(err, data) {
+    //     if(!err) {
+    //         res.json(data.toString('utf8'));
+    //     } else {
+    //         res.status(500).json(err);
+    //     }
+    // });
 }
  
  module.exports = threatmodelcontroller;
