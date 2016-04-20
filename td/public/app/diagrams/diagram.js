@@ -45,12 +45,6 @@
         vm.reload = reload;
         vm.save = save;
         vm.clear = clear;
-        vm.threatModelLocation = {
-            organisation: $routeParams.organisation,
-            repo: $routeParams.repo,
-            branch: $routeParams.branch,
-            model: $routeParams.model
-        };
         vm.currentDiagram = {};
         vm.diagramId = $routeParams.diagramId;
         vm.currentZoomLevel = 0;
@@ -113,16 +107,19 @@
             addDirtyEventHandlers();
         }
 
-        function initialise(newDiagram)
+        function initialise(newDiagram, forceQuery)
         {
             vm.currentDiagram = newDiagram;
+            vm.threatModelLocation = {
+                organisation: $routeParams.organisation,
+                repo: $routeParams.repo,
+                branch: $routeParams.branch,
+                model: $routeParams.model
+            };
             
-            if(datacontext.threatModel && datacontext.threatModel.location === vm.threatModelLocation) {
-                onGetThreatModelDiagram(datacontext.threatModel.detail.diagrams[vm.diagramId]);
-            }
-            
-            datacontext.load(vm.threatModelLocation).then(function(threatModel) { 
-                onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);}, 
+            datacontext.load(vm.threatModelLocation, forceQuery).then(function (threatModel) {
+                onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);
+            },
                 onError);
 
             function onGetThreatModelDiagram(data) {
@@ -164,11 +161,11 @@
             //avoids the confirmation if you are reloading after an accidental clear of the model
             if (vm.dirty && vm.graph.cellCount() > 0)
             {
-                dialogs.confirm('./public/app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram); });
+                dialogs.confirm('./public/app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram, true); });
             }
             else
             {
-                vm.initialise(vm.currentDiagram);
+                vm.initialise(vm.currentDiagram, true);
             }  
         }
 

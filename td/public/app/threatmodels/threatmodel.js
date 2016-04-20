@@ -21,6 +21,7 @@
         var logError = getLogFn(controllerId, 'error');
 
         // Bindable properties and functions are placed on vm.
+        vm.errored = false;
         vm.title = 'Threat Model Details';
         vm.threatModel = {};
         vm.removeContributor = removeContributor;
@@ -72,19 +73,12 @@
                 datacontext.threatModel = vm.threatModel;
                 return vm.threatModel;
             }
+
+            return datacontext.load($routeParams, forceReload).then(onLoad, onError);
             
-            //existing model is the correct one
-            if(!forceReload && datacontext.threatModel && datacontext.threatModel.location === $routeParams)
-            {
-                vm.threatModel = datacontext.threatModel;
-                return vm.threatModel;
-            }
+            function onLoad(data) {
 
-            //loading new model
-            return datacontext.load($routeParams).then(function (data) {
-
-                if (vm.threatModelEditForm)
-                {
+                if (vm.threatModelEditForm) {
                     vm.threatModelEditForm.$setPristine();
                 }
                 else {
@@ -93,7 +87,12 @@
 
                 vm.threatModel = data;
                 return vm.threatModel;
-            });
+            }
+
+            function onError(err) {
+                vm.errored = true;
+                logError(error);
+            }
         }
 
 
@@ -111,15 +110,23 @@
             {
                 dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function() { getThreatModel(true); }, function () { return null; }, function () { });
             }
+            else
+            {
+                getThreatModel(true);
+            }
+   
         }
         
         function threatModelLocation() {
-            var loc = vm.threatModel.location.organisation + '/';
-            loc += vm.threatModel.location.repo + '/';
-            loc += vm.threatModel.location.branch + '/';
-            loc += vm.threatModel.location.model;
-            
-            return loc;
+            if (vm.threatModel.location)
+            {
+                var loc = vm.threatModel.location.organisation + '/';
+                loc += vm.threatModel.location.repo + '/';
+                loc += vm.threatModel.location.branch + '/';
+                loc += vm.threatModel.location.model;
+                
+                return loc;
+            }
         }
 
         function deleteModel()

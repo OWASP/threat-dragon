@@ -21,9 +21,21 @@
 
         return service;
 
-        function load(threatModelLocation) {
+        function load(threatModelLocation, forceQuery) {
             
-            var loc = threatModelLocation;
+            var loc = {
+                organisation: threatModelLocation.organisation,
+                repo: threatModelLocation.repo,
+                branch: threatModelLocation.branch,
+                model: threatModelLocation.model
+            };
+            
+            
+            //don't refetch if the location has not changed
+            if (service.threatModel && JSON.stringify(loc) === JSON.stringify(service.threatModel.location) && !forceQuery) {
+                return $q.when(service.threatModel);
+            }
+                
             var threatModelUri = buildUri(threatModelLocation);
 
             var request = {

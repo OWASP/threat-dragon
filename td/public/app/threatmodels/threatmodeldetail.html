@@ -1,8 +1,9 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="vm.threatModel.summary">
+    <div ng-if="!vm.errored">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <a ng-if="vm.threatModel.location" href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <span ng-if="!vm.threatModel.location">Loading...</span>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -41,7 +42,7 @@
                                 <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
                             </div>
                             <div class="panel-body">
-                                <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}">
+                                <a href="#/threatmodel/{{vm.threatModelLocation()}}/diagram/{{diagram.id}}">
                                     <img src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />
                                 </a>
                             </div>
@@ -69,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="!vm.threatModel.summary">
+    <div ng-if="vm.errored">
         <div class="jumbotron">
             <h1>oooops!</h1>
             <p>
