@@ -3,13 +3,17 @@
 
     var controllerId = 'shell';
     angular.module('app').controller(controllerId,
-        ['$rootScope', '$location', 'common', 'config', shell]);
+        ['$rootScope', '$scope', '$location', 'common', 'config', shell]);
 
-    function shell($rootScope, $location, common, config) {
+    function shell($rootScope, $scope, $location, common, config) {
         /*jshint validthis: true */
         var vm = this;
         var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var events = config.events;
+        
+        $scope.$on('$viewContentLoaded', function(){
+            $rootScope.appLoaded = true;
+        });
 
         activate();
 

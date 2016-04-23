@@ -27,6 +27,11 @@
 </head>
 <body>
     <div data-ng-app="app">
+        <div class="text-center" ng-if="!appLoaded">
+            <img src="public/content/images/threatdragon_logo_image.svg" />
+            <p class="h3">OWASP Threat Dragon is loading. It is worth the wait...</p>
+            <div class="spinner"></div>
+        </div>
         <div data-ng-include="'public/app/layout/shell.html'"></div>
     </div>
 

@@ -10,10 +10,8 @@
     var app = angular.module('app', ['ui.bootstrap', 'ngAnimate' , 'ngRoute', 'common', 'xeditable', 'ngCookies']);
 
     app.run(['$rootScope', '$location',
-    function ($rootScope, $location) {
-        
+    function ($rootScope, $location) { 
         $rootScope.location = $location;
-
     }]);
 
     // Handle routing errors and success events
