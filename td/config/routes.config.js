@@ -26,6 +26,9 @@ module.exports = function(app) {
     router.get('/oauth/github', github.doLogin, github.completeLogin);
     
     //threat models
+    router.get('/threatmodel/repos', home.ensureLoggedIn, threatmodel.repos);
+    // router.get('/threatmodel/:organisation/:repo/branches', home.ensureLoggedIn, threatmodel.branches);
+    // router.get('/threatmodel/:organisation/:repo/:branch/models', home.ensureLoggedIn, threatmodel.models);
     router.get('/threatmodel/:organisation/:repo/:branch/:model', home.ensureLoggedIn, threatmodel.load);
     
     app.use('/', router);

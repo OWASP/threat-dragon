@@ -14,12 +14,30 @@
         var threatModel = null;
 
         var service = {
+            repos: repos,
             load: load,
             save: save,
             threatModel: threatModel
         };
 
         return service;
+        
+        function repos() {
+            
+            var reposUri = 'threatmodel/repos';
+            
+            var request = {
+                method: 'GET',
+                headers: { Accept: 'application/json' },
+                url: reposUri
+            };
+
+            return $http(request).then(onLoadedRepos, onLoadError);
+
+            function onLoadedRepos(result) {
+                return $q.when(result.data);
+            }  
+        }
 
         function load(threatModelLocation, forceQuery) {
             
@@ -44,27 +62,27 @@
                 url: threatModelUri 
             };
             
-			return $http(request).then(onLoaded, onLoadError);
+			return $http(request).then(onLoadedThreatModel, onLoadError);
             
-            function onLoaded(result) {
+            function onLoadedThreatModel(result) {
                 service.threatModel = result.data;
                 service.threatModel.location = loc;
                 return $q.when(service.threatModel);
-            }
-            
-            function onLoadError(err) {
-                service.threatModel = null;
-                return $q.when(err);
             }
         }
         
         function save() {
             
         }
-        
+
         //private functions
+        function onLoadError(err) {
+            service.threatModel = null;
+            return $q.when(err);
+        }
+        
         function buildUri(threatModelLocation) {
-            
+
             var uri = 'threatmodel/';
             uri += threatModelLocation.organisation + '/';
             uri += threatModelLocation.repo + '/';

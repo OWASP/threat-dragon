@@ -1,6 +1,7 @@
 ﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">
     <div ng-show="!vm.errored">
         <div class="col-lg-2">
+            <!--Diagram stencil-->
             <uib-accordion close-others="true">
                 <uib-accordion-group is-open="vm.viewStencil">
                     <uib-accordion-heading>
@@ -12,6 +13,7 @@
                         </div>
                     </div>
                 </uib-accordion-group>
+                <!--Threat pane-->
                 <uib-accordion-group is-open="vm.viewThreats">
                     <uib-accordion-heading>
                         Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
@@ -89,6 +91,7 @@
             </div>
         </div>
     </div>
+    <!--Error content-->
     <div ng-show="vm.errored">
         <div class="jumbotron">
             <h1>oooops!</h1>

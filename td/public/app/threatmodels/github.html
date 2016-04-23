@@ -1,0 +1,32 @@
+<div data-ng-controller="github as vm" class="container-fluid">
+    <row>
+        <div class="jumbotron">
+            <p ng-if="!vm.repo">
+                Select a GitHub repository from the list below, or type it directly into the edit box below and hit Select...
+            </p>
+            <p ng-if="vm.repo && !vm.branch">
+                Now select a branch of <span class="text-primary">{{vm.repo}}</span>
+            </p>
+        </div>
+    </row>
+    <row>  
+        <div ng-if="!vm.repos" class="col-lg-8 col-lg-offset-2 text-center">
+            <p class="h3">Fetching your repos...</p>
+            <div class="spinner"></div>
+        </div>   
+        <div ng-if="vm.repos && !vm.repo" class="col-lg-6 col-lg-offset-3">
+            <div class="list-group">
+                <button ng-repeat="repo in vm.repos" type="button" ng-click="vm.setRepo(repo)" class="list-group-item h4">{{repo}}</button>
+            </div>
+        </div>
+        <div ng-if="vm.repo && !vm.branches" class="col-lg-8 col-lg-offset-2 text-center">
+            <p class="h3">Fetching your branches...</p>
+            <div class="spinner"></div>
+        </div>
+        <div ng-if="vm.repo && vm.branches && !vm.branch" class="col-lg-6 col-lg-offset-3">
+            <div class="list-group">
+                <button ng-repeat="branch in vm.branches" type="button" ng-click="vm.setBranch(branch)" class="list-group-item h4">{{repo}}</button>
+            </div>
+        </div>
+    </row>
+</div>

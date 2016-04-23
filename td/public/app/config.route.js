@@ -44,6 +44,14 @@
                     }
                 }
             }, {
+                url: '/threatmodel/github',
+                config: {
+                    templateUrl: './public/app/threatmodels/github.html',
+                    title: 'github',
+                    settings: {
+                    }
+                }
+            },{
                 url: '/threatmodel/:organisation/:repo/:branch/:model',
                 config: {
                     title: 'Threat Model Details',
@@ -64,14 +72,6 @@
                 config: {
                     title: 'Edit New Model',
                     templateUrl: './public/app/threatmodels/threatmodeledit.html',
-                    settings: {
-                    }
-                }
-            }, {
-                url: '/threatmodel/report/:threatModelId',
-                config: {
-                    title: 'threatmodelreport',
-                    templateUrl: './public/app/report/threatmodelreport.html',
                     settings: {
                     }
                 }

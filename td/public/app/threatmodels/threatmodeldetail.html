@@ -1,9 +1,12 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="!vm.errored">
+    <div ng-if="!vm.threatModel.location">
+        <p class="h3 text-center">Your threat model is loading...</p>
+        <div class="spinner"></div>
+    </div>
+    <div ng-if="!vm.errored && vm.threatModel.location">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a ng-if="vm.threatModel.location" href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
-                <span ng-if="!vm.threatModel.location">Loading...</span>
+                <a href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
