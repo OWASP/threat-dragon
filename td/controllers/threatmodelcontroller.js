@@ -11,7 +11,7 @@ threatmodelcontroller.repos = function (req, res) {
             });
             res.send(responseRepos);
         } else {
-            res.status(500).json(err);
+            res.status(repos.statusCode || 500).json(err);
         }
     });
 };
@@ -31,7 +31,7 @@ threatmodelcontroller.branches = function (req, res){
             });
             res.send(responseBranches);
         } else {
-            res.status(500).json(err);
+            res.status(branches.statusCode || 500).json(err);
         }     
     }); 
 };
@@ -52,12 +52,12 @@ threatmodelcontroller.models = function (req, res){
             });
             res.send(responseModels);
         } else {
-            res.status(500).json(err);
+            res.status(models.statusCode || 500).json(err);
         }     
     }); 
 };
  
-threatmodelcontroller.load = function (req, res) {
+threatmodelcontroller.model = function (req, res) {
     var modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -65,11 +65,11 @@ threatmodelcontroller.load = function (req, res) {
         model: req.params.model
     };
 
-    repository.load(modelInfo, req.user.accessToken, function (err, data) {
+    repository.model(modelInfo, req.user.accessToken, function (err, data) {
         if (!err) {
             res.send(data);
         } else {
-            res.status(500).json(err);
+            res.status(data.statusCode || 500).json(err);
         }
     });
 };

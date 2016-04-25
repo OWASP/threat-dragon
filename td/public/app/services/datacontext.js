@@ -33,11 +33,7 @@
                 url: reposUri
             };
 
-            return $http(request).then(onLoadedRepos, onLoadError);
-
-            function onLoadedRepos(result) {
-                return $q.when(result.data);
-            }  
+            return $http(request);
         }
         
         function branches(organisation, repo) {
@@ -49,11 +45,7 @@
                 url: branchesUri
             };
             
-            return $http(request).then(onLoadedBranches, onLoadError);
-            
-            function onLoadedBranches(result) {
-                return $q.when(result.data);
-            }
+            return $http(request);
         }
         
         function models(organisation, repo, branch) {
@@ -65,11 +57,7 @@
                 url: modelsUri
             };
             
-            return $http(request).then(onLoadedModels, onLoadError);
-            
-            function onLoadedModels(result) {
-                return $q.when(result.data);
-            }
+            return $http(request);
         }
 
         function load(threatModelLocation, forceQuery) {
@@ -100,7 +88,7 @@
             function onLoadedThreatModel(result) {
                 service.threatModel = result.data;
                 service.threatModel.location = loc;
-                return $q.when(service.threatModel);
+                //return $q.when(service.threatModel);
             }
         }
         
@@ -111,7 +99,7 @@
         //private functions
         function onLoadError(err) {
             service.threatModel = null;
-            return $q.when(err);
+            //return $q.when(err);
         }
         
         function buildUri(threatModelLocation) {
@@ -124,35 +112,5 @@
             
             return uri;
         }
-
-        // diagrams
-
-        // function getThreatModelDiagram(threatModelId, diagramId)
-        // {
-        //     var deferred = $q.defer();
-        //     var diagram = {};
-
-        //     var threatModel = models[threatModelId];
-
-        //     if (threatModel) {
-
-        //         diagram = threatModel.detail.diagrams[diagramId];
-                
-        //         if (angular.isDefined(diagram)) {
-        //             deferred.resolve(diagram);
-        //         }
-        //         else {
-        //             deferred.reject('datacontext: Unable to find diagram id = ' + diagramId);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         deferred.reject('datacontext: Unable to find threatmodel id = ' + threatModelId);
-        //     }
-
-        //     return deferred.promise;
-        // }
-
-
     }
 })();

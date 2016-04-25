@@ -1,8 +1,16 @@
 <div data-ng-controller="github as vm" class="container-fluid">
     <row>
-        <div ng-if="vm.repos" class="jumbotron">
+        <div ng-if="vm.repos && !vm.error" class="jumbotron">
             <p class="text-center">
                 Select a GitHub repository from the list below...
+            </p>
+        </div>
+    </row>
+    <row>
+        <div ng-if="vm.error" class="jumbotron">
+            <p class="text-center">
+                <strong>Oops!</strong> Something went wrong fetching your GitHub repos. Check your
+                browser console for details.
             </p>
         </div>
     </row>

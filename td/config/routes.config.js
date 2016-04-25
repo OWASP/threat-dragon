@@ -29,7 +29,7 @@ module.exports = function(app) {
     router.get('/threatmodel/repos', home.ensureLoggedIn, threatmodel.repos);
     router.get('/threatmodel/:organisation/:repo/branches', home.ensureLoggedIn, threatmodel.branches);
     router.get('/threatmodel/:organisation/:repo/:branch/models', home.ensureLoggedIn, threatmodel.models);
-    router.get('/threatmodel/:organisation/:repo/:branch/:model/data', home.ensureLoggedIn, threatmodel.load);
+    router.get('/threatmodel/:organisation/:repo/:branch/:model/data', home.ensureLoggedIn, threatmodel.model);
     
     app.use('/', router);
 };

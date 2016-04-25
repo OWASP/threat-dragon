@@ -20,56 +20,71 @@
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'Load From GitHub ';
-        vm.getRepos = getRepos;
 
         activate();
 
-        function activate()
-        {
+        function activate() {
             common.activateController([load()], controllerId)
                 .then(function () { log('Activated GitHub Controller'); });
         }
-        
+
         function load() {
+            vm.error = null;
             vm.organisation = $routeParams.organisation;
             vm.repo = $routeParams.repo;
             vm.branch = $routeParams.branch;
-            
-            if(!vm.organisation && !vm.repo) {
+
+            if (!vm.organisation && !vm.repo) {
                 getRepos();
             }
-            else
-            {
-                if (!vm.branch) { 
+            else {
+                if (!vm.branch) {
                     getBranches(vm.organisation, vm.repo);
                 }
-                else
-                {
-                    getModels(vm.organisation, vm.repo,vm.branch);
+                else {
+                    getModels(vm.organisation, vm.repo, vm.branch);
                 }
             }
         }
 
-        function getRepos()
-        {
-            return datacontext.repos().then(function (data) {
-                vm.repos = data;
-                return $q.when(vm.repos);
-            });
+        function getRepos() {
+            return datacontext.repos().then(
+                function (response) {
+                    vm.repos = response.data;
+                },
+                function (err) {
+                    vm.repos = [];
+                    onError(err);
+                }
+            );
         }
-        
+
         function getBranches(organisation, repo) {
-            return datacontext.branches(organisation, repo).then(function(data) {
-                vm.branches = data;
-                return $q.when(vm.branches);
-            });
+            return datacontext.branches(organisation, repo).then(
+                function (response) {
+                    vm.branches = response.data;
+                },
+                function (err) {
+                    vm.branches = [];
+                    onError(err);
+                }
+            );
+        }
+
+        function getModels(organisation, repo, branch) {
+            return datacontext.models(organisation, repo, branch).then(
+                function (response) {
+                    vm.models = response.data;
+                },
+                function (err) {
+                    vm.models = [];
+                    onError(err);
+                })
         }
         
-        function getModels(organisation, repo, branch) {
-            return datacontext.models(organisation, repo, branch).then(function(data) {
-                vm.models = data;
-                return $q.when(vm.models);
-            })
+        function onError(err) {
+            vm.error = err;
+            logError(err);
         }
     }
 })();

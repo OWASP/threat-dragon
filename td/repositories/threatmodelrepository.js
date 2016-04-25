@@ -5,61 +5,28 @@ var threatmodelrepository = {};
 
 threatmodelrepository.repos = function (organisation, accessToken, cb) {
     
-    var repos_url = url_base + 'users/' + organisation + '/repos';
-    
-    httpClient(getRequestOptions(repos_url, accessToken), function(err, response, body) {
-        
-        if(err) {
-            cb(err, null);
-        }
-        
-        if (response.statusCode != 200 ) {
-            cb(new Error(response.body), null);
-        } else {
-            cb(null, body);
-        }   
-    });
+    var repos_url = url_base + 'users/';
+    repos_url += organisation + '/repos';
+    executeRequest(getRequestOptions(repos_url, accessToken), cb);
 };
 
 threatmodelrepository.branches = function (repoInfo, accessToken, cb) {
     
-    var branches_url = url_base + 'repos/' + repoInfo.organisation + '/' + repoInfo.repo + '/branches';
-    
-    httpClient(getRequestOptions(branches_url, accessToken), function(err, response, body) {
-        
-        if(err) {
-            cb(err, null);
-        }
-        
-        if (response.statusCode != 200 ) {
-            cb(new Error(response.body), null);
-        } else {
-            cb(null, body);
-        }   
-    });
+    var branches_url = url_base + 'repos/';
+    branches_url += repoInfo.organisation + '/';
+    branches_url += repoInfo.repo + '/branches';
+    executeRequest(getRequestOptions(branches_url, accessToken), cb);
 };
 
 threatmodelrepository.models = function (branchInfo, accessToken, cb) {
     
-    var models_url = url_base + 'repos/' + branchInfo.organisation + '/' + branchInfo.repo + '/contents/ThreatDragonModels?ref=' + branchInfo.branch;
-    
-    httpClient(getRequestOptions(models_url, accessToken), function(err, response, body) {
-        
-        if(err) {
-            cb(err, null);
-        }
-        
-        if (response.statusCode != 200 ) {
-            cb(new Error(response.body), null);
-        } else {
-            cb(null, body)
-        }   
-    });
+    var models_url = url_base + 'repos/' + branchInfo.organisation;
+    models_url += '/' + branchInfo.repo;
+    models_url += '/contents/ThreatDragonModels?ref=' + branchInfo.branch;
+    executeRequest(getRequestOptions(models_url, accessToken), cb);
 };
 
-threatmodelrepository.load = function (modelInfo, accessToken, cb) {
-    
-    'https://raw.githubusercontent.com/mike-goodwin/owasp-threat-dragon-demo/master/ThreatDragonModels/Demo_Threat_Model_0/Demo_Threat_Model_0.json'
+threatmodelrepository.model = function (modelInfo, accessToken, cb) {
     
     var model_url =  'https://raw.githubusercontent.com/' + modelInfo.organisation;
     model_url += '/' + modelInfo.repo;
@@ -67,18 +34,7 @@ threatmodelrepository.load = function (modelInfo, accessToken, cb) {
     model_url += '/ThreatDragonModels/' + modelInfo.model;
     model_url += '/' + modelInfo.model + '.json';
     
-    httpClient(getRequestOptions(model_url, accessToken), function (err, response, body) {
-
-        if (err) {
-            cb(err, null);
-        }
-
-        if (response.statusCode != 200) {
-            cb(new Error(response.body), null);
-        } else {
-            cb(null, body)
-        }
-    });
+    executeRequest(getRequestOptions(model_url, accessToken), cb);
 };
 
 //private functions
@@ -96,17 +52,20 @@ function getRequestOptions(url, accessToken) {
     };
 };
 
-function getBranchUrl(branchName, branches) {
-    var branch_url;
-    var branch = branches.find(function(branch) {
-        return branch.name === branchName;
+function executeRequest(requestOptions, cb) {
+
+    httpClient(requestOptions, function (err, response, body) {
+
+        if (err) {
+            cb(err, { statusCode: 500 });
+        }
+
+        if (response.statusCode != 200) {
+            cb(new Error(response.body), { statusCode: response.statusCode });
+        } else {
+            cb(null, body)
+        }
     });
-    
-    if (branch && branch.commit) {
-        branch_url = branch.commit.url;
-    }
-    
-    return branch_url
 }
 
 module.exports = threatmodelrepository;
