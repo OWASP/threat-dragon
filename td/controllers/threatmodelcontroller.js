@@ -3,26 +3,58 @@ var repository = require('../repositories/threatmodelrepository');
 var threatmodelcontroller = {};
 
 threatmodelcontroller.repos = function (req, res) {
-    repository.repos(req.user.profile.repos_url, req.user.accessToken, function (err, repos) {
+    repository.repos(req.user.profile.username, req.user.accessToken, function (err, repos) {
         if (!err) {
-            
-            var sessionRepos = [];
             var responseRepos = [];
-            repos.forEach(function(repo, index) {
+            repos.forEach(function (repo, index) {
                 responseRepos[index] = repo.full_name;
-                sessionRepos[index] = {
-                    branches_url: repo.branches_url,
-                    full_name: repo.full_name
-                };
             });
-            
-            req.session.repos = sessionRepos;
             res.send(responseRepos);
-
         } else {
             res.status(500).json(err);
         }
     });
+};
+
+threatmodelcontroller.branches = function (req, res){
+    
+    var repoInfo = {
+        organisation: req.params.organisation,
+        repo: req.params.repo
+    };
+    
+    repository.branches(repoInfo, req.user.accessToken, function(err, branches) {
+        if(!err) {
+            var responseBranches = [];
+            branches.forEach(function (branch, index) {
+                responseBranches[index] = branch.name;
+            });
+            res.send(responseBranches);
+        } else {
+            res.status(500).json(err);
+        }     
+    }); 
+};
+
+threatmodelcontroller.models = function (req, res){
+    
+    var branchInfo = {
+        organisation: req.params.organisation,
+        repo: req.params.repo,
+        branch: req.params.branch
+    };
+    
+    repository.models(branchInfo, req.user.accessToken, function(err, models) {
+        if(!err) {
+            var responseModels = [];
+            models.forEach(function (model, index) {
+                responseModels[index] = model.name;
+            });
+            res.send(responseModels);
+        } else {
+            res.status(500).json(err);
+        }     
+    }); 
 };
  
 threatmodelcontroller.load = function (req, res) {
@@ -30,7 +62,7 @@ threatmodelcontroller.load = function (req, res) {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
-        threatModel: req.params.threatModel
+        model: req.params.model
     };
 
     repository.load(modelInfo, req.user.accessToken, function (err, data) {
@@ -41,7 +73,5 @@ threatmodelcontroller.load = function (req, res) {
         }
     });
 };
-
-
  
 module.exports = threatmodelcontroller;

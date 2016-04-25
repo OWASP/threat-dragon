@@ -31,7 +31,7 @@
                 url: '/',
                 config: {
                     templateUrl: './public/app/welcome/welcome.html',
-                    title: 'welcome',
+                    title: 'Welcome Page',
                     settings: {
                     }
                 }
@@ -39,15 +39,31 @@
                 url: '/welcome',
                 config: {
                     templateUrl: './public/app/welcome/welcome.html',
-                    title: 'welcome',
+                    title: 'Welcome Page',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/github',
+                url: '/threatmodel',
                 config: {
-                    templateUrl: './public/app/threatmodels/github.html',
-                    title: 'github',
+                    templateUrl: './public/app/threatmodels/repos.html',
+                    title: 'Choose a Repo',
+                    settings: {
+                    }
+                }
+            }, {
+                url: '/threatmodel/:organisation/:repo',
+                config: {
+                    templateUrl: './public/app/threatmodels/branches.html',
+                    title: 'Choose a Branch',
+                    settings: {
+                    }
+                }
+            }, {
+                url: '/threatmodel/:organisation/:repo/:branch',
+                config: {
+                    templateUrl: './public/app/threatmodels/models.html',
+                    title: 'Choose a Model',
                     settings: {
                     }
                 }
@@ -78,7 +94,7 @@
             }, {
                 url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
                 config: {
-                    title: 'diagram',
+                    title: 'Threat Model Diagram',
                     templateUrl: './public/app/diagrams/diagrameditor.html',
                     reloadOnSearch: false,
                     settings: {

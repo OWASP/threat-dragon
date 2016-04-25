@@ -15,6 +15,8 @@
 
         var service = {
             repos: repos,
+            branches: branches,
+            models: models,
             load: load,
             save: save,
             threatModel: threatModel
@@ -25,7 +27,6 @@
         function repos() {
             
             var reposUri = 'threatmodel/repos';
-            
             var request = {
                 method: 'GET',
                 headers: { Accept: 'application/json' },
@@ -37,6 +38,38 @@
             function onLoadedRepos(result) {
                 return $q.when(result.data);
             }  
+        }
+        
+        function branches(organisation, repo) {
+            
+            var branchesUri = 'threatmodel/' + organisation + '/' + repo + '/branches';
+             var request = {
+                method: 'GET',
+                headers: { Accept: 'application/json' },
+                url: branchesUri
+            };
+            
+            return $http(request).then(onLoadedBranches, onLoadError);
+            
+            function onLoadedBranches(result) {
+                return $q.when(result.data);
+            }
+        }
+        
+        function models(organisation, repo, branch) {
+            
+            var modelsUri = 'threatmodel/' + organisation + '/' + repo + '/' + branch + '/models';
+             var request = {
+                method: 'GET',
+                headers: { Accept: 'application/json' },
+                url: modelsUri
+            };
+            
+            return $http(request).then(onLoadedModels, onLoadError);
+            
+            function onLoadedModels(result) {
+                return $q.when(result.data);
+            }
         }
 
         function load(threatModelLocation, forceQuery) {
@@ -87,7 +120,7 @@
             uri += threatModelLocation.organisation + '/';
             uri += threatModelLocation.repo + '/';
             uri += threatModelLocation.branch + '/';
-            uri += threatModelLocation.model;
+            uri += threatModelLocation.model + '/data';
             
             return uri;
         }

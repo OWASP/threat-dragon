@@ -1,0 +1,20 @@
+<div data-ng-controller="github as vm" class="container-fluid">
+    <row>
+        <div ng-if="vm.repos" class="jumbotron">
+            <p class="text-center">
+                Select a GitHub repository from the list below...
+            </p>
+        </div>
+    </row>
+    <row>  
+        <div ng-if="!vm.repos" class="col-lg-8 col-lg-offset-2 text-center">
+            <p class="h3">Fetching your repos...</p>
+            <div class="spinner"></div>
+        </div>   
+        <div ng-if="vm.repos" class="col-lg-6 col-lg-offset-3">
+            <div class="list-group">
+                <a ng-repeat="repo in vm.repos" href="#threatmodel/{{repo}}" class="list-group-item h4">{{repo}}</a>
+            </div>
+        </div>
+    </row>
+</div>
