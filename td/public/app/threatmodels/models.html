@@ -9,10 +9,11 @@
     </row>
     <row>
         <div ng-if="vm.error" class="jumbotron">
-            <p class="text-center">
-                <strong>Doh!</strong> Something went wrong fetching the threat models for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
+            <h1>oooops!</h1>
+            <p>
+                Something went wrong fetching the threat models for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
                 {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a>. Maybe you typed something wrong? Or maybe that branch does not have any models, or you don't have the right permissions to see it. You could try 
-                <a href="#threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or <a href="#/threatmodel">repo</a>
+                <a href="#threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or <a href="#/threatmodel">repo</a> <span class="fa fa-frown-o"></span>
             </p>
         </div>
     </row>

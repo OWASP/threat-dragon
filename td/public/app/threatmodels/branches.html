@@ -9,10 +9,11 @@
     </row>
     <row>
         <div ng-if="vm.error" class="jumbotron">
-            <p class="text-center">
-                <strong>Dang!</strong> Something went wrong fetching the branches for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}" target="_blank"> 
+            <h1>oooops!</h1>
+            <p>
+                Something went wrong fetching the branches for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}" target="_blank"> 
                 {{vm.organisation}}/{{vm.repo}}</a>. Check your browser console for details. Maybe that repo doesn't exist or maybe you don't have permissions to see it.
-                Try <a href="#/threatmodel">choosing another repo</a>.
+                Try <a href="#/threatmodel">choosing another repo</a> <span class="fa fa-frown-o"></span>
             </p>
         </div>
     </row>

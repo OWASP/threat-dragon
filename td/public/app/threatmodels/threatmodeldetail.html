@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="!vm.threatModel.location">
+    <div ng-if="!vm.threatModel.location && !vm.errored">
         <p class="h3 text-center">Your threat model is loading...</p>
         <div class="spinner"></div>
     </div>

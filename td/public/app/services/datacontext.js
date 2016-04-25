@@ -88,7 +88,7 @@
             function onLoadedThreatModel(result) {
                 service.threatModel = result.data;
                 service.threatModel.location = loc;
-                //return $q.when(service.threatModel);
+                return $q.resolve(service.threatModel);
             }
         }
         
@@ -99,7 +99,7 @@
         //private functions
         function onLoadError(err) {
             service.threatModel = null;
-            //return $q.when(err);
+            return $q.reject(err);
         }
         
         function buildUri(threatModelLocation) {

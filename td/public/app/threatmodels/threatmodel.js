@@ -91,7 +91,7 @@
 
             function onError(err) {
                 vm.errored = true;
-                logError(error);
+                logError(err);
             }
         }
 
