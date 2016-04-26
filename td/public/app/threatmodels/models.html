@@ -25,6 +25,7 @@
         <div ng-if="vm.models" class="col-lg-6 col-lg-offset-3">
             <div class="list-group">
                 <a ng-repeat="model in vm.models" href="#threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}/{{model}}" class="list-group-item h4">{{model}}</a>
+                <a href="#/new/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}" class="list-group-item text-primary h4"><i class="fa fa-plus"></i> <span>Create new model...</spa></a>
             </div>
         </div>
     </row>

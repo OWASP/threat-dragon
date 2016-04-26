@@ -84,7 +84,7 @@
                     }
                 }
             }, {
-                url: '/threatmodel/edit/new',
+                url: '/new/threatmodel/:organisation/:repo/:branch',
                 config: {
                     title: 'Edit New Model',
                     templateUrl: './public/app/threatmodels/threatmodeledit.html',

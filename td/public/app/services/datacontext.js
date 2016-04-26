@@ -3,9 +3,9 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$q', '$http', 'common', datacontext]);
+        ['$q', '$http', '$window', 'common', datacontext]);
 
-    function datacontext($q, $http, common) {
+    function datacontext($q, $http, $window, common) {
 
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(serviceId);
@@ -18,7 +18,7 @@
             branches: branches,
             models: models,
             load: load,
-            save: save,
+            create: create,
             threatModel: threatModel
         };
 
@@ -75,7 +75,7 @@
                 return $q.when(service.threatModel);
             }
                 
-            var threatModelUri = buildUri(threatModelLocation);
+            var threatModelUri = buildUri(loc) + '/data';
 
             var request = {
                 method: 'GET',
@@ -92,8 +92,23 @@
             }
         }
         
-        function save() {
+        function create(threatModelLocation, threatModel) {
+            var loc = {
+                organisation: threatModelLocation.organisation,
+                repo: threatModelLocation.repo,
+                branch: threatModelLocation.branch,
+                model: threatModel.summary.title.replace(' ', '_')
+            };
             
+            var threatModelUri = buildUri(loc) + '/create';
+            
+            var request = {
+                method: 'PUT',
+                url: threatModelUri,
+                data: threatModel
+            };
+            
+            return $http(request);
         }
 
         //private functions
@@ -108,7 +123,7 @@
             uri += threatModelLocation.organisation + '/';
             uri += threatModelLocation.repo + '/';
             uri += threatModelLocation.branch + '/';
-            uri += threatModelLocation.model + '/data';
+            uri += threatModelLocation.model;
             
             return uri;
         }

@@ -37,20 +37,50 @@ threatmodelrepository.model = function (modelInfo, accessToken, cb) {
     executeRequest(getRequestOptions(model_url, accessToken), cb);
 };
 
+threatmodelrepository.create = function(modelInfo, accessToken, cb) {
+    var create_url = url_base + 'repos/' + modelInfo.organisation;
+    create_url += '/' + modelInfo.repo;
+    create_url += '/contents/ThreatDragonModels/' + modelInfo.model;
+    create_url += '/' + modelInfo.model + '.json';
+    
+    var body = {
+        message: "new model test",
+        content: (new Buffer(JSON.stringify(modelInfo.body, null, '  '))).toString('base64'),
+        branch: modelInfo.branch
+    };
+    
+    executeRequest(putRequestOptions(create_url, accessToken, body), cb);
+};
+
 //private functions
 function getRequestOptions(url, accessToken) {
+    
+    var options = baseOptions(url, accessToken);
+    options.json = true;
+    return options;
+};
+
+function putRequestOptions(url, accessToken, body) {
+    
+    var options = baseOptions(url, accessToken);
+    options.method = 'PUT';
+    options.body = JSON.stringify(body);
+        
+    return options;
+}
+
+function baseOptions(url, accessToken) {
     
     var authHeader = 'token ' + accessToken;
     
     return {
         url: url,
-        json: true,
         headers: {
             'Authorization': authHeader,
             'User-Agent': 'OWASP-Threat-Dragon'
         }
-    };
-};
+    };    
+}
 
 function executeRequest(requestOptions, cb) {
 
@@ -60,7 +90,7 @@ function executeRequest(requestOptions, cb) {
             cb(err, { statusCode: 500 });
         }
 
-        if (response.statusCode != 200) {
+        if (response.statusCode != 200 && response.statusCode != 201) {
             cb(new Error(response.body), { statusCode: response.statusCode });
         } else {
             cb(null, body)

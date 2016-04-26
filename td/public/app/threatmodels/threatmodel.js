@@ -67,7 +67,7 @@
         function getThreatModel(forceReload)
         {
             //creating new model
-            if ($location.path() === '/threatmodel/edit/new')
+            if (isNewModel($location.path()))
             {
                 vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
                 datacontext.threatModel = vm.threatModel;
@@ -95,13 +95,14 @@
             }
         }
 
-
-        function save()
-        {
-            datacontext.saveThreatModel(vm.threatModel).then(function () {
-                vm.dirty = false; //prevents structured exit
-                $location.path('/threatmodels');
-            });
+        function save() {
+            if (isNewModel($location.path())) {
+                               
+                datacontext.create($routeParams, vm.threatModel).then(function () {
+                    vm.dirty = false; //prevents structured exit
+                    $location.path('/threatmodels');
+                });
+            }
         }
 
         function reload()
@@ -204,6 +205,10 @@
         function emptyDiagram()
         {
             return { title: '', thumbnail: "./public/content/images/thumbnail.jpg" };
+        }
+        
+        function isNewModel(path) {
+            return path.substr(0, 16) === '/new/threatmodel';
         }
     }
 })();
