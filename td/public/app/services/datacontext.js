@@ -20,6 +20,7 @@
             load: load,
             create: create,
             update: update,
+            saveThreatModelDiagram: saveThreatModelDiagram,
             threatModel: threatModel
         };
 
@@ -126,6 +127,18 @@
             };
 
             return $http(request);
+        }
+        
+        function saveThreatModelDiagram(diagramId, diagramData) {
+            
+            var diagramToSave = service.threatModel.detail.diagrams.find(function(diagram) {
+                return diagram.id == diagramId;
+            });
+            
+            diagramToSave.diagramJson = diagramData.diagramJson;
+            diagramToSave.size = diagramData.size;
+            
+            return update();
         }
 
         //private functions

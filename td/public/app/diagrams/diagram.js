@@ -97,7 +97,7 @@
                 diagramData.size = size;     
             }
             
-            datacontext.saveThreatModelDiagram(vm.threatModelId, vm.diagramId, diagramData)
+            datacontext.saveThreatModelDiagram(vm.diagramId, diagramData)
                 .then(onSaveDiagram);
         }
 
