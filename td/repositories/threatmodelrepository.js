@@ -28,13 +28,13 @@ threatmodelrepository.models = function (branchInfo, accessToken, cb) {
 
 threatmodelrepository.model = function (modelInfo, accessToken, cb) {
     
-    var model_url =  'https://raw.githubusercontent.com/' + modelInfo.organisation;
-    model_url += '/' + modelInfo.repo;
-    model_url += '/' + modelInfo.branch;
-    model_url += '/ThreatDragonModels/' + modelInfo.model;
-    model_url += '/' + modelInfo.model + '.json';
+    var file_url = url_base + 'repos/' + modelInfo.organisation;
+    file_url += '/' + modelInfo.repo;
+    file_url += '/contents/ThreatDragonModels/' + modelInfo.model;
+    file_url += '/' + modelInfo.model + '.json';
+    file_url += '?ref=' + modelInfo.branch;
     
-    executeRequest(getRequestOptions(model_url, accessToken), cb);
+    executeRequest(getRequestOptions(file_url, accessToken), cb);
 };
 
 threatmodelrepository.create = function(modelInfo, accessToken, cb) {

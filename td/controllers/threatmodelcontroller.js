@@ -67,7 +67,8 @@ threatmodelcontroller.model = function (req, res) {
 
     repository.model(modelInfo, req.user.accessToken, function (err, data) {
         if (!err) {
-            res.send(data);
+            var model= (new Buffer(data.content, 'base64')).toString();
+            res.send(model);
         } else {
             res.status(data.statusCode || 500).json(err);
         }
