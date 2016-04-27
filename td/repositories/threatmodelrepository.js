@@ -52,6 +52,36 @@ threatmodelrepository.create = function(modelInfo, accessToken, cb) {
     executeRequest(putRequestOptions(create_url, accessToken, body), cb);
 };
 
+threatmodelrepository.update = function(modelInfo, accessToken, cb) {
+    
+    var file_url = url_base + 'repos/' + modelInfo.organisation;
+    file_url += '/' + modelInfo.repo;
+    file_url += '/contents/ThreatDragonModels/' + modelInfo.model;
+    file_url += '/' + modelInfo.model + '.json';
+    file_url += '?ref=' + modelInfo.branch;
+    
+    executeRequest(getRequestOptions(file_url, accessToken), function(err, result) {
+        if(err) {
+            cb(err, null);
+        } else {
+            
+            var update_url = url_base + 'repos/' + modelInfo.organisation;
+            update_url += '/' + modelInfo.repo;
+            update_url += '/contents/ThreatDragonModels/' + modelInfo.model;
+            update_url += '/' + modelInfo.model + '.json';
+
+            var body = {
+                message: "update model test",
+                content: (new Buffer(JSON.stringify(modelInfo.body, null, '  '))).toString('base64'),
+                branch: modelInfo.branch,
+                sha: result.sha
+            };
+            
+            executeRequest(putRequestOptions(update_url, accessToken, body), cb);
+        }
+    });
+};
+
 //private functions
 function getRequestOptions(url, accessToken) {
     

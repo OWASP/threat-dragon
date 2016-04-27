@@ -19,6 +19,7 @@
             models: models,
             load: load,
             create: create,
+            update: update,
             threatModel: threatModel
         };
 
@@ -108,6 +109,22 @@
                 data: threatModel
             };
             
+            threatModel.location = loc;
+            service.threatModel = threatModel;
+            
+            return $http(request);
+        }
+        
+        function update() {
+
+            var threatModelUri = buildUri(service.threatModel.location) + '/update';
+
+            var request = {
+                method: 'PUT',
+                url: threatModelUri,
+                data: service.threatModel
+            };
+
             return $http(request);
         }
 

@@ -90,18 +90,16 @@
                 vm.threatModel = data;
                 return vm.threatModel;
             }
-
-            function onError(err) {
-                vm.errored = true;
-                logError(err);
-            }
         }
 
         function save() {
-            datacontext.update($routeParams, vm.threatModel).then(function () {
+            
+            datacontext.update().then(onSave, onError);
+
+            function onSave() {
                 vm.dirty = false; //prevents structured exit
-                $location.path('/threatmodels');
-            });
+                $location.path('/threatmodel/' + threatModelLocation());
+            }
         }
 
         function create() {
@@ -110,10 +108,12 @@
             
             function onCreate(saveLocation) {
                 
-                datacontext.create(saveLocation, vm.threatModel).then(function () {
+                datacontext.create(saveLocation, vm.threatModel).then(onCreate, onError);
+                    
+                function onCreate() {
                     vm.dirty = false; //prevents structured exit
                     $location.path('/threatmodel/' + threatModelLocation());
-                });   
+                }
             }
         }
 
@@ -221,6 +221,11 @@
         
         function isNewModel() {
             return $location.path().substr(0, 16) === '/new/threatmodel';
+        }
+
+        function onError(err) {
+            vm.errored = true;
+            logError(err);
         }
     }
 })();

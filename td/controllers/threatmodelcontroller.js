@@ -91,5 +91,23 @@ threatmodelcontroller.create = function(req, res) {
         }        
     }); 
 };
+
+threatmodelcontroller.update = function(req, res) {
+    var modelInfo = {
+        organisation: req.params.organisation,
+        repo: req.params.repo,
+        branch: req.params.branch,
+        model: req.params.model,
+        body: req.body        
+    }
+    
+    repository.update(modelInfo, req.user.accessToken, function (err, data) {
+        if (!err) {
+            res.send(data);
+        } else {
+            res.status(data.statusCode || 500).json(err);
+        }        
+    }); 
+};
  
 module.exports = threatmodelcontroller;
