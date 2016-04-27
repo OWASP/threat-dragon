@@ -147,7 +147,7 @@
                         <button class="btn btn-default" ng-disabled="!vm.dirty" ng-click="vm.reload()" data-toggle="tooltip" data-placement="top" title="Reset Form" type="button">
                             <span class="fa fa-undo"></span> Reload
                         </button>
-                        <button class="btn btn-primary" ng-disabled="!vm.dirty || !vm.threatModelEditForm.$valid" ng-click="vm.save()" data-toggle="tooltip" data-placement="top" title="Save Changes" type="button">
+                        <button class="btn btn-primary" ng-disabled="!vm.dirty || !vm.threatModelEditForm.$valid" ng-click="vm.isNewModel() ? vm.create() : vm.save()" data-toggle="tooltip" data-placement="top" title="Save Changes" type="button">
                             <span class="glyphicon glyphicon-save"></span> Save
                         </button>
                     </div>

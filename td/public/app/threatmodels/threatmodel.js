@@ -29,6 +29,7 @@
         vm.removeDiagram = removeDiagram;
         vm.addDiagram = addDiagram;
         vm.save = save;
+        vm.create = create;
         vm.reload = reload,
         /*jshint -W030 */
         vm.threatModelLocation = threatModelLocation;
@@ -42,6 +43,7 @@
         vm.addingDiagram = false;
         vm.cancelAddingDiagram = cancelAddingDiagram;
         vm.startAddingDiagram = startAddingDiagram;
+        vm.isNewModel = isNewModel;
 
         //structured exit
         $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return vm.threatModelEditForm.$dirty; }}, function (dirty) {
@@ -67,7 +69,7 @@
         function getThreatModel(forceReload)
         {
             //creating new model
-            if (isNewModel($location.path()))
+            if (isNewModel())
             {
                 vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
                 datacontext.threatModel = vm.threatModel;
@@ -96,12 +98,22 @@
         }
 
         function save() {
-            if (isNewModel($location.path())) {
-                               
-                datacontext.create($routeParams, vm.threatModel).then(function () {
+            datacontext.update($routeParams, vm.threatModel).then(function () {
+                vm.dirty = false; //prevents structured exit
+                $location.path('/threatmodels');
+            });
+        }
+
+        function create() {
+            
+            dialogs.githubChooser('./public/app/threatmodels/githubDialog.html', onCreate);
+            
+            function onCreate(saveLocation) {
+                
+                datacontext.create(saveLocation, vm.threatModel).then(function () {
                     vm.dirty = false; //prevents structured exit
-                    $location.path('/threatmodels');
-                });
+                    $location.path('/threatmodel/' + threatModelLocation());
+                });   
             }
         }
 
@@ -207,8 +219,8 @@
             return { title: '', thumbnail: "./public/content/images/thumbnail.jpg" };
         }
         
-        function isNewModel(path) {
-            return path.substr(0, 16) === '/new/threatmodel';
+        function isNewModel() {
+            return $location.path().substr(0, 16) === '/new/threatmodel';
         }
     }
 })();
