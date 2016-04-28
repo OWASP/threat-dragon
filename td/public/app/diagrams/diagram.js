@@ -89,8 +89,7 @@
 
         function save()
         {
-            var diagramJson = JSON.stringify(vm.graph, null, '  ');
-            var diagramData = { diagramJson: vm.graph };
+            var diagramData = { diagramJson: {cells: vm.graph.getCells()} };
             
             if (angular.isDefined(vm.currentDiagram.options) && angular.isDefined(vm.currentDiagram.options.height) && angular.isDefined(vm.currentDiagram.options.width)) {
                 var size = { height: vm.currentDiagram.options.height, width: vm.currentDiagram.options.width };
