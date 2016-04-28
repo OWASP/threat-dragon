@@ -3,7 +3,7 @@ var repository = require('../repositories/threatmodelrepository');
 var threatmodelcontroller = {};
 
 threatmodelcontroller.repos = function (req, res) {
-    repository.repos(req.user.profile.username, req.user.accessToken, function (err, repos) {
+    repository.repos(req.user.accessToken, function (err, repos) {
         if (!err) {
             var responseRepos = [];
             repos.forEach(function (repo, index) {
