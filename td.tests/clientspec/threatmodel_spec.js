@@ -6,16 +6,15 @@ describe('threatModel controller', function () {
     var $controller;
     var $q;
     var $httpBackend;
-    var mockDatacontext;
+    var $location;
     var mockRouteParams;
-    var mockLocation;
+    var mockDatacontext;
     var mockDialogs;
     
     beforeEach(function () {
         
         mockDatacontext = {};
         mockRouteParams = {};
-        mockLocation = {};
         mockDialogs = {};
         
         angular.mock.module('app')
@@ -23,12 +22,12 @@ describe('threatModel controller', function () {
         angular.mock.module(function ($provide) {
             $provide.value('datacontext', mockDatacontext);
             $provide.value('$routeParams', mockRouteParams);
-            $provide.value('$location', mockLocation);
             $provide.value('dialogs', mockDialogs);
         });
         
-        angular.mock.inject(function ($rootScope, _$controller_, _$q_, _$httpBackend_) {
+        angular.mock.inject(function ($rootScope, _$location_,  _$controller_, _$q_, _$httpBackend_) {
             $scope = $rootScope.$new();
+            $location = _$location_;
             $controller = _$controller_;
             $q = _$q_;
             $httpBackend = _$httpBackend_;
@@ -43,11 +42,11 @@ describe('threatModel controller', function () {
         beforeEach(function () {
 
             //datacontext mock
-            mockDatacontext.getThreatModelDetail = function () { return $q.when('mock threat model') };
-            spyOn(mockDatacontext, 'getThreatModelDetail').and.callThrough();
+            mockDatacontext.load = function () { return $q.when('mock threat model') };
+            spyOn(mockDatacontext, 'load').and.callThrough();
                         
             //routeparams mock
-            mockRouteParams.threatModelId = 5;
+            mockRouteParams.id = 'mock route params';
                        
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -58,13 +57,13 @@ describe('threatModel controller', function () {
             expect($scope.vm).toBeDefined();
         });
         
-        it('should have "ThreatModelDetail" for its title', function () {
-            expect($scope.vm.title).toEqual('ThreatModelDetail');
+        it('should have "Threat Model Details" for its title', function () {
+            expect($scope.vm.title).toEqual('Threat Model Details');
         }); 
 
-        it('should call GetThreatModelDetail on the datacontext with parameter 5', function () {
+        it('should call load on the datacontext with $routeParams', function () {
 
-            expect(mockDatacontext.getThreatModelDetail.calls.argsFor(0)).toEqual([5]);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].id).toEqual(mockRouteParams.id);
 
         });
 
@@ -124,71 +123,107 @@ describe('threatModel controller', function () {
         });
 
     });
-
-    describe('edit mode tests', function () {
+    
+    describe('new model tests', function () {
         
-        beforeEach(function () {
-
+        beforeEach(function() {
             //datacontext mock
-            mockDatacontext.getThreatModelDetail = function () { return $q.when('mock threat model') };
-            spyOn(mockDatacontext, 'getThreatModelDetail').and.callThrough();
-            mockDatacontext.saveThreatModel = function () { return $q.when(null) };
-            spyOn(mockDatacontext, 'saveThreatModel').and.callThrough();
-            mockDatacontext.deleteThreatModel = function () { return $q.when(null) };
-            spyOn(mockDatacontext, 'deleteThreatModel').and.callThrough();
-            
-            //routeparams mock
-            mockRouteParams.threatModelId = 'new';
-            
+            mockDatacontext.load = function () { return $q.when('mock threat model') };
+            spyOn(mockDatacontext, 'load').and.callThrough();
             //location mock
-            mockLocation.path = function () { };
-            spyOn(mockLocation, 'path');
+            $location.path('/new/threatmodel');
             
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
-
         });
         
-        it('should not call GetThreatModelDetail on the datacontext and threat model should be new', function () {
+        it('should not call load on the datacontext and threat model should be new', function () {
             
-            expect(mockDatacontext.getThreatModelDetail.calls.count()).toEqual(0);
+            expect(mockDatacontext.load.calls.count()).toEqual(0);
             expect($scope.vm.threatModel).toEqual({ summary: {}, detail: { contributors: [], diagrams: [] } });
 
         });
+    });
 
-        it('should call saveThreatModel on the datacontext and navigate to the ThreatModels view', function () {
+    describe('edit mode tests', function () {
+        
+        var mockThreatModel;
+        var mockPath;
+        var mockModelLocation;
+        
+        beforeEach(function () {
             
-            $scope.vm.threatModel = 'mock threat model';
+            //mock threat model
+            mockThreatModel = {
+                summary: {
+                    id: 0
+                }
+            };
+            
+            mockModelLocation = {
+                organisation: 'org',
+                repo: 'repo',
+                branch: 'branch',
+                model: 'model'
+            };
+           
+            //datacontext mock
+            mockDatacontext.load = function () { return $q.when('mock threat model') };
+            spyOn(mockDatacontext, 'load').and.callThrough();
+            mockDatacontext.deleteModel = function () { return $q.when(null) };
+            spyOn(mockDatacontext, 'deleteModel').and.callThrough();
+            mockDatacontext.update = function () { return $q.when(null) };
+            spyOn(mockDatacontext, 'update').and.callThrough();
+            mockDatacontext.create = function () { return $q.when(null) };
+            spyOn(mockDatacontext, 'create').and.callThrough();
+            
+            //location mock
+            mockPath = '/threatmodel/org/repo/branch/model';
+            $location.path(mockPath);
+            $controller('threatmodel as vm', { $scope: $scope });
+            $scope.$apply();
+        });
+        
+        it('should call update on the datacontext and navigate to the ThreatModel view', function () {
+            
+            $scope.vm.threatModel = mockThreatModel;
+            $scope.vm.threatModel.location = mockModelLocation;
+            spyOn($location, 'path');
             $scope.vm.save();
             $scope.$apply();    
-            expect(mockLocation.path).toHaveBeenCalledWith('/threatmodels');
-            expect(mockDatacontext.saveThreatModel).toHaveBeenCalledWith('mock threat model');
+            expect($location.path).toHaveBeenCalledWith(mockPath);
+            expect(mockDatacontext.update).toHaveBeenCalled();
 
         });
 
-        it('should call deleteThreatModel on the datacontext and navigate to the ThreatModels view', function () {
+        it('should call delete model on the datacontext and navigate to the welcome view', function () {
 
-            $scope.vm.threatModel = 'mock threat model';
+            $scope.vm.threatModel = mockThreatModel;
+            $scope.vm.threatModel.location = mockModelLocation;
+            spyOn($location, 'path');
             $scope.vm.deleteModel();
-            $scope.$apply();
-            expect(mockDatacontext.deleteThreatModel).toHaveBeenCalledWith('mock threat model');
-            expect(mockLocation.path).toHaveBeenCalledWith('/threatmodels');
+            $scope.$apply(); 
+            expect(mockDatacontext.deleteModel).toHaveBeenCalled();
+            expect($location.path).toHaveBeenCalledWith('/');
 
         });
 
         it('should navigate to the specified threat model view', function () {
 
-            $scope.vm.threatModel = { summary: { id: '1' } };
+            $scope.vm.threatModel = mockThreatModel;
+            $scope.vm.threatModel.location = mockModelLocation;
+            spyOn($location, 'path');
             $scope.vm.cancel();
-            expect(mockLocation.path).toHaveBeenCalledWith('/threatmodel/1');
+            expect($location.path).toHaveBeenCalledWith(mockPath);
 
         });
 
-        it('should navigate to the threatmodels view', function () {
+        it('should navigate to the welcome view', function () {
             
-            $scope.vm.threatModel = { summary: {} };
+            $scope.vm.threatModel = {summary: {}};
+            spyOn($location, 'path');
             $scope.vm.cancel();
-            expect(mockLocation.path).toHaveBeenCalledWith('/threatmodels');
+            expect($location.path).toHaveBeenCalledWith('/');
 
         });
         
@@ -278,8 +313,5 @@ describe('threatModel controller', function () {
             expect($scope.vm.newDiagram).toEqual(originalDiagram);
 
         });
-
-
     });  
-
 });

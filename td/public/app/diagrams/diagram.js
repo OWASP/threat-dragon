@@ -151,6 +151,8 @@
                         vm.viewThreats = true;
                     });
                 }
+                
+                vm.loaded = true;
             }
         }
 

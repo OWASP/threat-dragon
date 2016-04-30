@@ -79,7 +79,7 @@
                 function (err) {
                     vm.models = [];
                     onError(err);
-                })
+                });
         }
         
         function onError(err) {

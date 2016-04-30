@@ -15,8 +15,11 @@ describe('diagram controller', function () {
     var mockDialogs;
     
     var mockNewGraph = 'mock new graph';
-    var mockThreatModelIdParam = 0;
-    var mockDiagramIdParam = 1;
+    var mockOrg = 'org';
+    var mockRepo = 'repo';
+    var mockBranch = 'branch';
+    var mockModelName = 'model name';
+    var mockDiagramId = 'diagam';
     
     beforeEach(function () {
         
@@ -47,8 +50,7 @@ describe('diagram controller', function () {
         });
         
         //$routeParams mock
-        mockRouteParams.threatModelId = mockThreatModelIdParam;
-        mockRouteParams.diagramId = mockDiagramIdParam;
+        mockRouteParams.diagramId = mockDiagramId;
 
         //diagramming mock  
         mockDiagramming.newGraph = function () { return mockNewGraph };
@@ -95,15 +97,9 @@ describe('diagram controller', function () {
 
         });
 
-        it('should set the threat model ID from the route params', function () {
-
-            expect($scope.vm.threatModelId).toEqual(mockThreatModelIdParam);
-
-        });
-
         it('should set the diagram ID from the route params', function () {
             
-            expect($scope.vm.diagramId).toEqual(mockDiagramIdParam);
+            expect($scope.vm.diagramId).toEqual(mockDiagramId);
 
         });
 
@@ -128,7 +124,12 @@ describe('diagram controller', function () {
             
             var threatModelId = 'threat model id';
             var diagramId = 'diagram id';
-            var graph = {title: 'test graph', on: function() {}};
+            var cellsArray = ['c1', 'c2', 'c3'];
+            var graph = {
+                title: 'test graph', 
+                on: function() {},
+                getCells: function() { return cellsArray;}
+            };
             
             $scope.vm.threatModelId = threatModelId;
             $scope.vm.diagramId = diagramId;
@@ -140,9 +141,8 @@ describe('diagram controller', function () {
             
             //save
             expect(mockDatacontext.saveThreatModelDiagram).toHaveBeenCalled();
-            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[0]).toEqual(threatModelId);
-            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[1]).toEqual(diagramId);
-            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[2].diagramJson).toEqual(graph);           
+            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[0]).toEqual(diagramId);
+            expect(mockDatacontext.saveThreatModelDiagram.calls.argsFor(0)[1].diagramJson.cells).toEqual(cellsArray);           
             expect($scope.vm.dirty).toBe(false);
         })
     })
@@ -509,7 +509,7 @@ describe('diagram controller', function () {
     describe('model initialisaton tests: ', function() {
         
         var newDiagram;
-        var threatModelId;
+        var threatModel;
         var diagramId;
         var graph;
         var title;
@@ -518,17 +518,23 @@ describe('diagram controller', function () {
         beforeEach(function() {
             
             //datacontext mock
-            mockDatacontext.getThreatModelDiagram = function() { return $q.when(true); };           
-            
+            mockDatacontext.load = function() { return $q.when(true); };           
             newDiagram = {};
-            threatModelId = 'threat model id';
-            diagramId = 'diagram id';
+            
+            threatModel = {
+                detail: {
+                    diagrams: [
+                        { diagramJson: 'd0', size: 's0'},
+                        { diagramJson: 'd1', size: 's1'},
+                        { }
+                    ]
+                }
+            };
+                
+            diagramId = 1;
             graph = new joint.dia.Graph();
-            title = 'diagram title';
-            diagramData = {title: title};
 
             $scope.vm.graph = graph;
-            $scope.vm.threatModelId = threatModelId;
             $scope.vm.diagramId = diagramId;
             $scope.vm.loaded = false;
             $scope.vm.dirty = true;
@@ -542,25 +548,34 @@ describe('diagram controller', function () {
             spyOn(graph, 'initialise');
             graph.getCells = function() { return [] };
             spyOn(graph, 'getCells').and.callThrough();
+            
          })
     
         it('should initialise a model with Json and size', function() {
-        
-            var diagramJson = 'diagram JSON';
-            var size = 'size';
-            diagramData.size = size;
-            diagramData.diagramJson = diagramJson;
             
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.when(diagramData));           
-            $scope.vm.initialise(newDiagram);
+            spyOn(mockDatacontext, 'load').and.returnValue($q.when(threatModel));           
+
+            //$routeParams mock
+            mockRouteParams.organisation = mockOrg;
+            mockRouteParams.repo = mockRepo;
+            mockRouteParams.branch = mockBranch;
+            mockRouteParams.model = mockModelName;
+            
+            var forceQuery = 'force query';
+            
+            $scope.vm.initialise(newDiagram, forceQuery);
             $scope.$apply();
             
-            expect(mockDatacontext.getThreatModelDiagram).toHaveBeenCalled();
-            expect(mockDatacontext.getThreatModelDiagram.calls.argsFor(0)).toEqual([threatModelId, diagramId]);    
+            expect(mockDatacontext.load).toHaveBeenCalled();
+            expect(mockDatacontext.load.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].repo).toEqual(mockRepo);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].branch).toEqual(mockBranch);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].model).toEqual(mockModelName);
+            expect(mockDatacontext.load.calls.argsFor(0)[1]).toEqual(forceQuery);
             expect(graph.initialise).toHaveBeenCalled();
-            expect(graph.initialise.calls.argsFor(0)).toEqual([diagramJson]);
+            expect(graph.initialise.calls.argsFor(0)).toEqual([threatModel.detail.diagrams[1].diagramJson]);
             expect(newDiagram.resize).toHaveBeenCalled();
-            expect(newDiagram.resize.calls.argsFor(0)).toEqual([size]);
+            expect(newDiagram.resize.calls.argsFor(0)).toEqual([threatModel.detail.diagrams[1].size]);
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
             expect($scope.vm.diagram.title).toEqual(title);
@@ -568,13 +583,25 @@ describe('diagram controller', function () {
         })
         
         it('should initialise a model without Json and size', function() {
-                   
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.when(diagramData));           
-            $scope.vm.initialise(newDiagram);
+            
+            //$routeParams mock
+            mockRouteParams.organisation = mockOrg;
+            mockRouteParams.repo = mockRepo;
+            mockRouteParams.branch = mockBranch;
+            mockRouteParams.model = mockModelName;
+            
+            var forceQuery = 'force query';
+            $scope.vm.diagramId = 2;
+            spyOn(mockDatacontext, 'load').and.returnValue($q.when(threatModel));           
+            $scope.vm.initialise(newDiagram, forceQuery);
             $scope.$apply();
             
-            expect(mockDatacontext.getThreatModelDiagram).toHaveBeenCalled();
-            expect(mockDatacontext.getThreatModelDiagram.calls.argsFor(0)).toEqual([threatModelId, diagramId]);    
+            expect(mockDatacontext.load).toHaveBeenCalled();
+            expect(mockDatacontext.load.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].repo).toEqual(mockRepo);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].branch).toEqual(mockBranch);
+            expect(mockDatacontext.load.calls.argsFor(0)[0].model).toEqual(mockModelName);
+            expect(mockDatacontext.load.calls.argsFor(0)[1]).toEqual(forceQuery);
             expect(graph.initialise).not.toHaveBeenCalled();
             expect(newDiagram.resize).not.toHaveBeenCalled();
             expect($scope.vm.loaded).toBe(true);
@@ -585,7 +612,7 @@ describe('diagram controller', function () {
         
         it('should initialise a model and select the specified element', function() {
             
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.when(diagramData));           
+            spyOn(mockDatacontext, 'load').and.returnValue($q.when(threatModel));           
             var elementId = 'elementId';
             mockRouteParams.element = elementId;
             var element = {id: elementId};
@@ -612,7 +639,7 @@ describe('diagram controller', function () {
         it('should error and not load a model', function() {
             
             var errorMessage = 'error message';
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.reject(errorMessage)); 
+            spyOn(mockDatacontext, 'load').and.returnValue($q.reject(errorMessage)); 
             $scope.vm.initialise(newDiagram);
             $scope.$apply();           
                       
@@ -622,7 +649,7 @@ describe('diagram controller', function () {
         
         it('should add a change/add event handler to the graph', function() {
             
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.when(diagramData));           
+            spyOn(mockDatacontext, 'load').and.returnValue($q.when(threatModel));           
             $scope.vm.initialise(newDiagram);
             $scope.$apply();
             expect($scope.vm.dirty).toBe(false);
@@ -649,7 +676,7 @@ describe('diagram controller', function () {
             $scope.vm.selected = rect;
             $location.search('element', rect.cid);
             
-            spyOn(mockDatacontext, 'getThreatModelDiagram').and.returnValue($q.when(diagramData));           
+            spyOn(mockDatacontext, 'load').and.returnValue($q.when(threatModel));           
             $scope.vm.initialise(newDiagram);
             $scope.$apply();
             expect($scope.vm.dirty).toBe(false);
