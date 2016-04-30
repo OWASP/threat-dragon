@@ -20,6 +20,7 @@
             load: load,
             create: create,
             update: update,
+            deleteModel: deleteModel,
             saveThreatModelDiagram: saveThreatModelDiagram,
             threatModel: threatModel
         };
@@ -126,6 +127,18 @@
                 data: service.threatModel
             };
 
+            return $http(request);
+        }
+        
+        function deleteModel() {
+            
+            var threatModelUri = buildUri(service.threatModel.location);
+            
+            var request = {
+                method: 'DELETE',
+                url: threatModelUri
+            };
+            
             return $http(request);
         }
         

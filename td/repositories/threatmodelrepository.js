@@ -32,7 +32,7 @@ threatmodelrepository.create = function(modelInfo, accessToken, cb) {
     var path = getModelPath(modelInfo);
     var client = github.client(accessToken);
     var message = 'Created by OWASP Threat Dragon';
-    var content = getModelContent(modelInfo)
+    var content = getModelContent(modelInfo);
     client.repo(getRepoFullName(modelInfo)).createContents(path, message, content,  modelInfo.branch, cb);
 };
 
@@ -51,6 +51,22 @@ threatmodelrepository.update = function(modelInfo, accessToken, cb) {
         }
     });
 };
+
+threatmodelrepository.deleteModel = function(modelInfo, accessToken, cb) {
+    
+    threatmodelrepository.model(modelInfo, accessToken, function (err, content) {
+        
+        if(err) {
+            cb(err, null);
+        } else {
+            var path = getModelPath(modelInfo);
+            var client = github.client(accessToken);
+            var message = 'Deleted by OWASP Threat Dragon';
+            client.repo(getRepoFullName(modelInfo)).deleteContents(path, message, content.sha, modelInfo.branch, cb);      
+        }
+    });
+};
+
 
 //private functions
 

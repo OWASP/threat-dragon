@@ -131,26 +131,28 @@
         }
         
         function threatModelLocation() {
-            if (vm.threatModel.location)
-            {
-                var loc = vm.threatModel.location.organisation + '/';
+
+            var loc = '';
+
+            if (vm.threatModel.location) {
+                loc += vm.threatModel.location.organisation + '/';
                 loc += vm.threatModel.location.repo + '/';
                 loc += vm.threatModel.location.branch + '/';
                 loc += vm.threatModel.location.model;
-                
-                return loc;
             }
+
+            return loc;
         }
 
         function deleteModel()
         {
-            datacontext.deleteThreatModel(vm.threatModel).then(onDelete, logError);
+            datacontext.deleteModel().then(onDelete, logError);
         }
 
         function onDelete()
         {
             vm.dirty = false;
-            $location.path('/threatmodels');
+            $location.path('/');
         }
 
         function cancel()
