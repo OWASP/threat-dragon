@@ -20,11 +20,7 @@ An [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon
 ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server, althought the server side code does almost nothing so far.
 To build and run locally, follow these steps:
 
-Install Git and node.js. Threat Dragon uses Grunt for its build workflow, so
-
-`npm install -g grunt-cli`
-
-To get the code, go to where you want your code to be located and do
+Install Git and node.js. To get the code, go to where you want your code to be located and do
 
 `git init`
 
@@ -34,10 +30,6 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 
 `npm install`
 
-All the build workflow tasks are in the default grunt task, so just do
-
-`grunt` or `grunt release`
-
 and then start the node web server:
 
 `npm start`
@@ -45,6 +37,10 @@ and then start the node web server:
 If you then browse to `http://localhost:3000` you should see the running application.
 
 ##Debug builds
+
+Threat Dragon uses [Grunt](http://gruntjs.com/) for its build workflow, so if you want to change the build, do
+
+`npm install -g grunt-cli`
 
 The default build minifies the Javascript and CSS. It does build code maps, but if you want to run with
 unminified files, do:
