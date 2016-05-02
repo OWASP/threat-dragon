@@ -97,29 +97,17 @@
             
             var threatModelUri = buildUri(loc) + '/create';
             
-            var request = {
-                method: 'PUT',
-                url: threatModelUri,
-                data: threatModel
-            };
-            
             threatModel.location = loc;
             service.threatModel = threatModel;
             
-            return $http(request);
+            return $http.put(threatModelUri, threatModel);
         }
         
         function update() {
 
             var threatModelUri = buildUri(service.threatModel.location) + '/update';
 
-            var request = {
-                method: 'PUT',
-                url: threatModelUri,
-                data: service.threatModel
-            };
-
-            return $http(request);
+            return $http.put(threatModelUri, service.threatModel);
         }
         
         function deleteModel() {
