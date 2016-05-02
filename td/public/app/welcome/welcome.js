@@ -5,9 +5,9 @@
     var controllerId = 'welcome';
 
     angular.module('app').controller(controllerId,
-        ['$location', 'common', 'datacontext', 'commonConfig', welcome]);
+        ['$location', 'common', 'commonConfig', welcome]);
 
-    function welcome($location, common, datacontext, commonConfig, webdatacontext) {
+    function welcome($location, common, commonConfig) {
 
         /*jshint validthis: true */
         var vm = this;

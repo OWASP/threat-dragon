@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        './node_modules/phantomjs-polyfill-find/find-polyfill.js',
         'td/public/libs/angular/angular.js',
         'td/public/libs/angular-route/angular-route.js',
         'td/public/libs/angular-cookies/angular-cookies.js',

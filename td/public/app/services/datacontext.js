@@ -3,9 +3,9 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$q', '$http', '$window', 'common', datacontext]);
+        ['$q', '$http', 'common', datacontext]);
 
-    function datacontext($q, $http, $window, common) {
+    function datacontext($q, $http, common) {
 
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(serviceId);
@@ -30,37 +30,31 @@
         function repos() {
             
             var reposUri = 'threatmodel/repos';
-            var request = {
-                method: 'GET',
-                headers: { Accept: 'application/json' },
-                url: reposUri
+            var config = {
+                headers: { Accept: 'application/json' }
             };
 
-            return $http(request);
+            return $http.get(reposUri, config);
         }
         
         function branches(organisation, repo) {
             
             var branchesUri = 'threatmodel/' + organisation + '/' + repo + '/branches';
-             var request = {
-                method: 'GET',
-                headers: { Accept: 'application/json' },
-                url: branchesUri
+             var config = {
+                headers: { Accept: 'application/json' }
             };
             
-            return $http(request);
+            return $http.get(branchesUri, config);
         }
         
         function models(organisation, repo, branch) {
             
             var modelsUri = 'threatmodel/' + organisation + '/' + repo + '/' + branch + '/models';
-             var request = {
-                method: 'GET',
-                headers: { Accept: 'application/json' },
-                url: modelsUri
+             var config = {
+                headers: { Accept: 'application/json' }
             };
             
-            return $http(request);
+            return $http.get(modelsUri, config);
         }
 
         function load(threatModelLocation, forceQuery) {
@@ -80,13 +74,11 @@
                 
             var threatModelUri = buildUri(loc) + '/data';
 
-            var request = {
-                method: 'GET',
-                headers: {Accept: 'application/json'},
-                url: threatModelUri 
+            var config = {
+                headers: {Accept: 'application/json'}
             };
             
-			return $http(request).then(onLoadedThreatModel, onLoadError);
+			return $http.get(threatModelUri, config).then(onLoadedThreatModel, onLoadError);
             
             function onLoadedThreatModel(result) {
                 service.threatModel = result.data;
@@ -134,24 +126,33 @@
             
             var threatModelUri = buildUri(service.threatModel.location);
             
-            var request = {
-                method: 'DELETE',
-                url: threatModelUri
-            };
+            return $http.delete(threatModelUri).then(onDeletedModel);
             
-            return $http(request);
+            function onDeletedModel() {
+                service.threatModel = null;
+                return $q.resolve(service.threatModel);
+            }
+            
+            function onDeleteError(error) {
+                return $q.reject(error);
+            }
         }
         
         function saveThreatModelDiagram(diagramId, diagramData) {
+            
+            //console.log(service.threatModel.detail.diagrams);
             
             var diagramToSave = service.threatModel.detail.diagrams.find(function(diagram) {
                 return diagram.id == diagramId;
             });
             
-            diagramToSave.diagramJson = diagramData.diagramJson;
-            diagramToSave.size = diagramData.size;
-            
-            return update();
+            if(diagramToSave) {  
+                diagramToSave.diagramJson = diagramData.diagramJson;
+                diagramToSave.size = diagramData.size;
+                return update();
+            } else {
+                return $q.reject(new Error('invalid diagram id'));
+            }
         }
 
         //private functions

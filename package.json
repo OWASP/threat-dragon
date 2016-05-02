@@ -73,6 +73,7 @@
     "karma-xml-reporter": "^0.1.4",
     "mockery": "^1.4.0",
     "passport-local": "^1.0.0",
+    "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
     "phantomjs-prebuilt": "^2.1.5",
     "requirejs": "^2.1.20",
     "supertest": "^1.2.0"
