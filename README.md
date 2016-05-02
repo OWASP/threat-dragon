@@ -38,6 +38,10 @@ If you then browse to `http://localhost:3000` you should see the running applica
 
 ##Debug builds
 
+Threat Dragon uses [Grunt](http://gruntjs.com/) for its build workflow, so if you want to change the build, do
+
+`npm install -g grunt-cli`
+
 The default build minifies the Javascript and CSS. It does build code maps, but if you want to run with
 unminified files, do:
 
