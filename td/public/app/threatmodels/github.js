@@ -19,7 +19,7 @@
         var logError = getLogFn(controllerId, 'error');
 
         // Bindable properties and functions are placed on vm.
-        vm.title = 'Load From GitHub ';
+        vm.title = 'Load From GitHub';
 
         activate();
 
