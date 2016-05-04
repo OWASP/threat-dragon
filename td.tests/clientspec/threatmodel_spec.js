@@ -7,9 +7,11 @@ describe('threatModel controller', function () {
     var $q;
     var $httpBackend;
     var $location;
+    var common;
     var mockRouteParams;
     var mockDatacontext;
     var mockDialogs;
+    var errorLogger;
     
     beforeEach(function () {
         
@@ -25,11 +27,17 @@ describe('threatModel controller', function () {
             $provide.value('dialogs', mockDialogs);
         });
         
-        angular.mock.inject(function ($rootScope, _$location_,  _$controller_, _$q_, _$httpBackend_) {
+        angular.mock.inject(function ($rootScope, _$location_,  _$controller_, _$q_, _$httpBackend_, _common_) {
             $scope = $rootScope.$new();
             $location = _$location_;
             $controller = _$controller_;
             $q = _$q_;
+            common = _common_;
+            errorLogger = jasmine.createSpy('errorLogger');
+            common.logger.getLogFn = function () {
+                return errorLogger;
+            };
+            
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();
         });
@@ -143,6 +151,67 @@ describe('threatModel controller', function () {
             expect($scope.vm.threatModel).toEqual({ summary: {}, detail: { contributors: [], diagrams: [] } });
 
         });
+        
+        it('should save the the threat model at the specified location', function() {
+            
+            var org = 'org';
+            var repo = 'repo';
+            var branch = 'branch';
+            var model = 'model';
+            
+            var saveLocation = {
+                organisation: org,
+                repo: repo,
+                branch: branch,
+                model: model
+            };
+            
+            var threatModel = {
+                id: 'model id'
+            };
+            
+            mockDialogs.githubChooser = function(template, onCreate) {
+                onCreate(saveLocation);
+            };
+            
+            mockDatacontext.create = function(location, model) {
+                model.location = location;
+                return $q.when(true);
+            }
+            
+            spyOn($location,'path');
+            spyOn(mockDatacontext, 'create').and.callThrough();
+            $scope.vm.threatModel = threatModel;
+            $scope.vm.create();
+            $scope.$apply();
+            expect(mockDatacontext.create.calls.argsFor(0)).toEqual([saveLocation, threatModel]);
+            expect($scope.vm.dirty).toBe(false);
+            expect($location.path.calls.argsFor(0)).toEqual(['/threatmodel/' + org + '/' + repo + '/' + branch + '/' + model]);
+            
+        });
+        
+        it('should error on model creation', function() {
+            
+            mockDialogs.githubChooser = function(template, onCreate) {
+                onCreate(null);
+            };
+            
+            var testError = new Error('test error');
+            
+            mockDatacontext.create = function() {
+                return $q.reject(testError);
+            }
+            
+            spyOn(mockDatacontext, 'create').and.callThrough();
+            
+            $scope.vm.dirty = true;
+            $scope.vm.create();
+            $scope.$apply();
+            expect($scope.vm.dirty).toBe(true);
+            expect($scope.vm.errored).toBe(true);
+            expect(errorLogger.calls.argsFor(1)).toEqual([testError]);
+            
+        });
     });
 
     describe('edit mode tests', function () {
@@ -182,6 +251,20 @@ describe('threatModel controller', function () {
             $location.path(mockPath);
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
+        });
+        
+        it('should check before exiting', function() {
+            
+            mockDialogs.structuredExit = function(event) {
+                event.preventDefault();
+            };
+            
+            spyOn(mockDialogs, 'structuredExit').and.callThrough();
+            
+            $scope.vm.dirty = true;
+            $location.path('/test/');
+            $scope.$apply();
+            expect(mockDialogs.structuredExit).toHaveBeenCalled();
         });
         
         it('should call update on the datacontext and navigate to the ThreatModel view', function () {
