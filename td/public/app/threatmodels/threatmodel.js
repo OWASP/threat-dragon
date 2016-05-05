@@ -104,7 +104,7 @@
 
         function create() {
             
-            dialogs.githubChooser('./public/app/threatmodels/githubDialog.html', onCreate);
+            dialogs.githubChooser(onCreate);
             
             function onCreate(saveLocation) {
                 

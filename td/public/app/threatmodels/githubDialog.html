@@ -1,4 +1,4 @@
-<div>
+<div id="githubChooserModal">
     <div class="modal-header">
         <h3>Save your threat model</h3>
     </div>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-default" ng-disabled="!saveLocation.repo || !saveLocation.branch" ng-click="onOK()">Save</button>
-        <button class="btn btn-primary" ng-click="onCancel()">Cancel</button>
+        <button class="btn btn-default" id="buttonOK" ng-disabled="!saveLocation.repo || !saveLocation.branch" ng-click="onOK()">Save</button>
+        <button class="btn btn-primary" id="buttonCancel" ng-click="onCancel()">Cancel</button>
     </div>
 </div>

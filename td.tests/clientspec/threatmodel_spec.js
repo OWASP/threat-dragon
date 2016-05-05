@@ -170,7 +170,7 @@ describe('threatModel controller', function () {
                 id: 'model id'
             };
             
-            mockDialogs.githubChooser = function(template, onCreate) {
+            mockDialogs.githubChooser = function(onCreate) {
                 onCreate(saveLocation);
             };
             
@@ -192,7 +192,7 @@ describe('threatModel controller', function () {
         
         it('should error on model creation', function() {
             
-            mockDialogs.githubChooser = function(template, onCreate) {
+            mockDialogs.githubChooser = function(onCreate) {
                 onCreate(null);
             };
             

@@ -7,9 +7,12 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    angular.module('app').factory(serviceId, ['$rootScope', '$location', '$uibModal', 'datacontext', dialogs]);
+    angular.module('app').factory(serviceId, ['$rootScope', '$location', '$uibModal', 'common', 'datacontext', dialogs]);
 
-    function dialogs($rootScope, $location, $modal, datacontext) {
+    function dialogs($rootScope, $location, $modal, common, datacontext) {
+
+        var getLogFn = common.logger.getLogFn;
+        var logError = getLogFn(serviceId, 'error');
 
         // Define the functions and properties to reveal.
         var service = {
@@ -102,10 +105,10 @@
             }
         }
         
-        function githubChooser(template, onOkPreClose) {
+        function githubChooser(onOkPreClose) {
             
             var options = {
-                templateUrl: template,
+                templateUrl: './public/app/threatmodels/githubDialog.html',
                 controller: githubChooserModal,
                 keyboard: false,
                 backdrop: 'static',
@@ -167,23 +170,9 @@
             }
             
             function onError(err) {
-                vm.error = err;
+                $scope.error = err;
                 logError(err);
             }
         }
     }
 })();
-
-
-
-        // function getBranches(organisation, repo) {
-        //     return datacontext.branches(organisation, repo).then(
-        //         function (response) {
-        //             vm.branches = response.data;
-        //         },
-        //         function (err) {
-        //             vm.branches = [];
-        //             onError(err);
-        //         }
-        //     );
-        // }
