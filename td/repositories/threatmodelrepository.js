@@ -11,7 +11,7 @@ threatmodelrepository.repos = function (accessToken, cb) {
 threatmodelrepository.branches = function (repoInfo, accessToken, cb) {
     
     var client = github.client(accessToken);
-    client.repo(repoInfo.organisation + '/' + repoInfo.repo).branches(cb);
+    client.repo(getRepoFullName(repoInfo)).branches(cb);
 };
 
 threatmodelrepository.models = function (branchInfo, accessToken, cb) {
