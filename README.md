@@ -17,8 +17,7 @@ An [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon
 
 ##Installing
 
-ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server, althought the server side code does almost nothing so far.
-To build and run locally, follow these steps:
+ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally, follow these steps:
 
 Install Git and node.js. To get the code, go to where you want your code to be located and do
 
