@@ -15,7 +15,7 @@ An [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
 
-##Getting started
+##Installing
 
 ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server, althought the server side code does almost nothing so far.
 To build and run locally, follow these steps:
@@ -30,7 +30,11 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 
 `npm install`
 
-and then start the node web server:
+##Environment settings
+
+##Running the application
+
+Once your environment is set up start the node web server:
 
 `npm start`
 
@@ -38,7 +42,7 @@ If you then browse to `http://localhost:3000` you should see the running applica
 
 ##Debug builds
 
-Threat Dragon uses [Grunt](http://gruntjs.com/) for its build workflow, so if you want to change the build, do
+Threat Dragon currently uses [Grunt](http://gruntjs.com/) for its build workflow, so if you want to change the build, do
 
 `npm install -g grunt-cli`
 
@@ -53,17 +57,17 @@ then
 
 ##Running the unit tests
 
-The unit tests are written using Jasmine and can be run with Karma using a Grunt task or using npm. This will also run JShint. Install recent versions of Chrome, Firefox and IE then run the tests using
+The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm scripts are available:
 
-`grunt test`
-
-To test using PhantomJS and Firefox (this is what runs on the Travis CI server)
-
-`npm test`
+* `test-client-phantomjs`, `test-client-firefox`, `test-client-chrome`, `test-client-ie`: runs client side tests using the specified browser
+* `test-server`: runs the server side tests
+* `test`: runs jshint, client side tests on Firefox and PhantomJS and server side tests (this is what runs on Travis CI)
+* `test-local`: runs jshint, client side tests on all browsers and then the server side tests (useful as a pre-push git hook)
+* `citest`: continously runs client side tests in PhantomJS with `--single-run false` (useful while coding)
 
 **Note:** If you are on Windows and are having problems installing Karma, the simplest way to resolve this seems to be to install Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in [this link](http://codedmi.com/questions/298619/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau). This sounds mad, but the alternative is a world of pain installing various patches and components one by one. At least it's free :o/
 
-###The unit test coverage progress
+###Unit test coverage progress
 
 We aim to maintain unit test coverage at > 90%
 
