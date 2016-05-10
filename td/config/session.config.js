@@ -25,6 +25,7 @@ function configSessions(app) {
     if (process.env.SESSION_STORE != 'local') {
         sessionOptions.store = AzureTablesStoreFactory.create({ errorLogger: logger.error.bind(logger) });
     } else {
+        //use in-memory session store
         logger.error({ security: true }, 'local session store used - should only happen in dev environments');
     }
 
