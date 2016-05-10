@@ -22,6 +22,7 @@
         var threatWatchers = [];
 
         // Bindable properties and functions are placed on vm.
+        vm.errored = false;
         vm.title = 'ThreatModelDiagram';
         vm.initialise = initialise,
         /*jshint -W030 */
@@ -44,7 +45,6 @@
         vm.reload = reload;
         vm.save = save;
         vm.clear = clear;
-        vm.threatModelId = $routeParams.threatModelId;
         vm.currentDiagram = {};
         vm.diagramId = $routeParams.diagramId;
         vm.currentZoomLevel = 0;
@@ -89,15 +89,14 @@
 
         function save()
         {
-            var diagramJson = JSON.stringify(vm.graph);
-            var diagramData = { diagramJson: diagramJson };
+            var diagramData = { diagramJson: {cells: vm.graph.getCells()} };
             
             if (angular.isDefined(vm.currentDiagram.options) && angular.isDefined(vm.currentDiagram.options.height) && angular.isDefined(vm.currentDiagram.options.width)) {
                 var size = { height: vm.currentDiagram.options.height, width: vm.currentDiagram.options.width };
                 diagramData.size = size;     
             }
             
-            datacontext.saveThreatModelDiagram(vm.threatModelId, vm.diagramId, diagramData)
+            datacontext.saveThreatModelDiagram(vm.diagramId, diagramData)
                 .then(onSaveDiagram);
         }
 
@@ -107,10 +106,20 @@
             addDirtyEventHandlers();
         }
 
-        function initialise(newDiagram)
+        function initialise(newDiagram, forceQuery)
         {
             vm.currentDiagram = newDiagram;
-            datacontext.getThreatModelDiagram(vm.threatModelId, vm.diagramId).then(onGetThreatModelDiagram, onError);
+            vm.threatModelLocation = {
+                organisation: $routeParams.organisation,
+                repo: $routeParams.repo,
+                branch: $routeParams.branch,
+                model: $routeParams.model
+            };
+            
+            datacontext.load(vm.threatModelLocation, forceQuery).then(function (threatModel) {
+                onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);
+            },
+                onError);
 
             function onGetThreatModelDiagram(data) {
                 
@@ -125,7 +134,6 @@
                     
                 vm.graph.on('remove', removeElement);
                 addDirtyEventHandlers();
-                vm.loaded = true;
                 vm.diagram = data;
                 vm.dirty = false;
                 
@@ -143,6 +151,8 @@
                         vm.viewThreats = true;
                     });
                 }
+                
+                vm.loaded = true;
             }
         }
 
@@ -152,11 +162,11 @@
             //avoids the confirmation if you are reloading after an accidental clear of the model
             if (vm.dirty && vm.graph.cellCount() > 0)
             {
-                dialogs.confirm('./app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram); });
+                dialogs.confirm('./public/app/diagrams/confirmReloadOnDirty.html', function() { vm.initialise(vm.currentDiagram, true); });
             }
             else
             {
-                vm.initialise(vm.currentDiagram);
+                vm.initialise(vm.currentDiagram, true);
             }  
         }
 
@@ -184,7 +194,7 @@
 
         function onError(error)
         {
-            vm.loaded = false;
+            vm.errored = true;
             logError(error);
         }
 
@@ -211,7 +221,7 @@
             {
                 if (threatList.length > 0) {
                     currentThreat = threatList.shift();
-                    dialogs.confirm('./app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
+                    dialogs.confirm('./public/app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
                 }
             }
 

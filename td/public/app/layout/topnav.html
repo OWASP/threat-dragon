@@ -9,7 +9,7 @@
             </button>
             <a href="#/" class="navbar-brand">
                 <div>
-                    <img src="content/images/threatdragon_logo.svg"/>
+                    <img src="public/content/images/threatdragon_logo.svg"/>
                 </div>
             </a>
         </div>
@@ -18,21 +18,23 @@
         <div class="navbar-collapse collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="navbar-link" href="http://docs.threatdragon.org/" target="_blank">
-                        <span class="fa fa-question-circle fa-2x icon-align"></span><span> Get some help</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="navbar-link" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
-                        <span class="fa fa-github fa-2x icon-align"></span><span> Visit us on GitHub</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="navbar-link" href="https://www.owasp.org" target="_blank">
-                        <div>
-                            <img src="content/images/owasp.svg"/>
-                        </div>
-                    </a>
+                    <form class="navbar-form" role="logout" method="POST" action="logout">
+                        <span ng-include="'logoutform'"></span>
+                        <button class="btn btn-primary navbar-btn" type="submit">
+                            <i class="fa fa-sign-out fa-2x icon-align" title="Sign out"></i> <span> Log out</span>
+                        </button>
+                        <a class="btn btn-primary navbar-btn" href="http://docs.threatdragon.org/" target="_blank">
+                            <i title="Get some help" class="fa fa-question-circle fa-2x"></i>
+                        </a>
+                        <a class="btn btn-primary navbar-btn" href="https://github.com/mike-goodwin/owasp-threat-dragon" target="_blank">
+                            <i title="Visit us on GitHub" class="fa fa-github fa-2x"></i>
+                        </a>
+                        <a title="Go to the OWASP wiki" class="btn btn-primary navbar-btn" href="https://www.owasp.org" target="_blank">
+                            <div>
+                                <img src="public/content/images/owasp.svg"/>
+                            </div>
+                        </a>
+                    </form>
                 </li>
             </ul>
         </div>

@@ -9,9 +9,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$rootScope','$scope', '$location','$routeParams', 'dialogs', 'common', 'datacontext', threatModel]);
+        ['$scope', '$location', '$routeParams', 'dialogs', 'common', 'datacontext', threatModel]);
 
-    function threatModel($rootScope, $scope, $location, $routeParams, dialogs, common, datacontext)
+    function threatModel($scope, $location, $routeParams, dialogs, common, datacontext)
     {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
@@ -21,15 +21,18 @@
         var logError = getLogFn(controllerId, 'error');
 
         // Bindable properties and functions are placed on vm.
-        vm.title = 'ThreatModelDetail';
+        vm.errored = false;
+        vm.title = 'Threat Model Details';
         vm.threatModel = {};
         vm.removeContributor = removeContributor;
         vm.addContributor = addContributor;
         vm.removeDiagram = removeDiagram;
         vm.addDiagram = addDiagram;
         vm.save = save;
+        vm.create = create;
         vm.reload = reload,
         /*jshint -W030 */
+        vm.threatModelLocation = threatModelLocation;
         vm.deleteModel = deleteModel;
         vm.cancel = cancel;
         vm.newContributor = '';
@@ -40,6 +43,7 @@
         vm.addingDiagram = false;
         vm.cancelAddingDiagram = cancelAddingDiagram;
         vm.startAddingDiagram = startAddingDiagram;
+        vm.isNewModel = isNewModel;
 
         //structured exit
         $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return vm.threatModelEditForm.$dirty; }}, function (dirty) {
@@ -62,18 +66,21 @@
                 .then(function () { log('Activated Threat Model Detail View'); });
         }
 
-        function getThreatModel()
+        function getThreatModel(forceReload)
         {
-            if ($routeParams.threatModelId === 'new')
+            //creating new model
+            if (isNewModel())
             {
                 vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
+                datacontext.threatModel = vm.threatModel;
                 return vm.threatModel;
             }
 
-            return datacontext.getThreatModelDetail($routeParams.threatModelId).then(function (data) {
+            return datacontext.load($routeParams, forceReload).then(onLoad, onError);
+            
+            function onLoad(data) {
 
-                if (vm.threatModelEditForm)
-                {
+                if (vm.threatModelEditForm) {
                     vm.threatModelEditForm.$setPristine();
                 }
                 else {
@@ -82,49 +89,81 @@
 
                 vm.threatModel = data;
                 return vm.threatModel;
-            });
+            }
         }
 
-        function save()
-        {
-            datacontext.saveThreatModel(vm.threatModel).then(function () {
+        function save() {
+            
+            datacontext.update().then(onSave, onError);
+
+            function onSave() {
                 vm.dirty = false; //prevents structured exit
-                $location.path('/threatmodels');
-            });
+                $location.path('/threatmodel/' + threatModelLocation());
+            }
+        }
+
+        function create() {
+            
+            dialogs.githubChooser(onCreate);
+            
+            function onCreate(saveLocation) {
+                
+                datacontext.create(saveLocation, vm.threatModel).then(onCreate, onError);
+                    
+                function onCreate() {
+                    vm.dirty = false; //prevents structured exit
+                    $location.path('/threatmodel/' + threatModelLocation());
+                }
+            }
         }
 
         function reload()
         {
             if (vm.dirty)
             {
-                dialogs.confirm('./app/threatmodels/confirmReloadOnDirty.html', getThreatModel, function () { return null; }, function () { });
+                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function() { getThreatModel(true); }, function () { return null; }, function () { });
             }
             else
             {
-                getThreatModel();
+                getThreatModel(true);
             }
+   
+        }
+        
+        function threatModelLocation() {
+
+            var loc = '';
+
+            if (vm.threatModel.location) {
+                loc += vm.threatModel.location.organisation + '/';
+                loc += vm.threatModel.location.repo + '/';
+                loc += vm.threatModel.location.branch + '/';
+                loc += vm.threatModel.location.model;
+            }
+
+            return loc;
         }
 
         function deleteModel()
         {
-            datacontext.deleteThreatModel(vm.threatModel).then(onDelete, logError);
+            datacontext.deleteModel().then(onDelete, logError);
         }
 
         function onDelete()
         {
             vm.dirty = false;
-            $location.path('/threatmodels');
+            $location.path('/');
         }
 
         function cancel()
         {
-            if (vm.threatModel.summary.id)
+            if (angular.isDefined(vm.threatModel.summary.id))
             {
-                $location.path('/threatmodel/' + vm.threatModel.summary.id);
+                $location.path('/threatmodel/' + vm.threatModelLocation());
             }
             else
             {
-                $location.path('/threatmodels');
+                $location.path('/');
             } 
         }
 
@@ -179,7 +218,16 @@
 
         function emptyDiagram()
         {
-            return { title: '', thumbnail: "../../content/images/thumbnail.jpg" };
+            return { title: '', thumbnail: "./public/content/images/thumbnail.jpg" };
+        }
+        
+        function isNewModel() {
+            return $location.path().substr(0, 16) === '/new/threatmodel';
+        }
+
+        function onError(err) {
+            vm.errored = true;
+            logError(err);
         }
     }
 })();

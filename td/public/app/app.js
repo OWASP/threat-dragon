@@ -7,11 +7,11 @@
         return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
     };
 
-    var app = angular.module('app', ['ui.bootstrap', 'ngAnimate' , 'ngRoute', 'common', 'xeditable']);
+    var app = angular.module('app', ['ui.bootstrap', 'ngAnimate' , 'ngRoute', 'common', 'xeditable', 'ngCookies']);
 
-    app.run(['$rootScope', 'common',
-    function ($rootScope, common) {
-
+    app.run(['$rootScope', '$location',
+    function ($rootScope, $location) { 
+        $rootScope.location = $location;
     }]);
 
     // Handle routing errors and success events

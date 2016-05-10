@@ -1,0 +1,6 @@
+{
+  "spec_dir": "./td.tests/serverspec/",
+  "spec_files": [
+    "*[sS]pec.js"
+  ]
+}

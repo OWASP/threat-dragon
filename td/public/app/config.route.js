@@ -30,56 +30,72 @@
             {
                 url: '/',
                 config: {
-                    templateUrl: 'app/welcome/welcome.html',
-                    title: 'welcome',
+                    templateUrl: './public/app/welcome/welcome.html',
+                    title: 'Welcome Page',
                     settings: {
                     }
                 }
             }, {
                 url: '/welcome',
                 config: {
-                    templateUrl: 'app/welcome/welcome.html',
-                    title: 'welcome',
+                    templateUrl: './public/app/welcome/welcome.html',
+                    title: 'Welcome Page',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodels',
+                url: '/threatmodel',
                 config: {
-                    title: 'threatmodels',
-                    templateUrl: 'app/threatmodels/threatmodels.html',
+                    templateUrl: './public/app/threatmodels/repos.html',
+                    title: 'Choose a Repo',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/:threatModelId',
+                url: '/threatmodel/:organisation/:repo',
                 config: {
-                    title: 'threatmodelsdetail',
-                    templateUrl: 'app/threatmodels/threatmodeldetail.html',
+                    templateUrl: './public/app/threatmodels/branches.html',
+                    title: 'Choose a Branch',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/edit/:threatModelId',
+                url: '/threatmodel/:organisation/:repo/:branch',
                 config: {
-                    title: 'threatmodeledit',
-                    templateUrl: 'app/threatmodels/threatmodeledit.html',
+                    templateUrl: './public/app/threatmodels/models.html',
+                    title: 'Choose a Model',
+                    settings: {
+                    }
+                }
+            },{
+                url: '/threatmodel/:organisation/:repo/:branch/:model',
+                config: {
+                    title: 'Threat Model Details',
+                    templateUrl: './public/app/threatmodels/threatmodeldetail.html',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/report/:threatModelId',
+                url: '/threatmodel/edit/:organisation/:repo/:branch/:model',
                 config: {
-                    title: 'threatmodelreport',
-                    templateUrl: 'app/report/threatmodelreport.html',
+                    title: 'Edit Threat Model',
+                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
                     settings: {
                     }
                 }
             }, {
-                url: '/threatmodel/:threatModelId/diagram/:diagramId',
+                url: '/new/threatmodel',
                 config: {
-                    title: 'diagram',
-                    templateUrl: 'app/diagrams/diagrameditor.html',
+                    title: 'Edit New Model',
+                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
+                    settings: {
+                    }
+                }
+            }, {
+                url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
+                config: {
+                    title: 'Threat Model Diagram',
+                    templateUrl: './public/app/diagrams/diagrameditor.html',
                     reloadOnSearch: false,
                     settings: {
                     }

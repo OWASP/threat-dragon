@@ -1,15 +1,5 @@
 ﻿
 <div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <!--breadcrumbs-->
-    <p>
-        <a href="/#/">Home </a>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodels"> Threat models</a>
-        <span ng-if="vm.threatModel.summary.id >= 0" class="glyphicon glyphicon-chevron-right"></span>
-        <a ng-if="vm.threatModel.summary.id >= 0" href="/#/threatmodel/{{vm.threatModel.summary.id}}"> Threat model detail</a>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        Edit threat model
-    </p>
     <div class="panel panel-default" ng-if="vm.threatModel.summary">
         <!--heading-->
         <div class="panel panel-heading">
@@ -157,7 +147,7 @@
                         <button class="btn btn-default" ng-disabled="!vm.dirty" ng-click="vm.reload()" data-toggle="tooltip" data-placement="top" title="Reset Form" type="button">
                             <span class="fa fa-undo"></span> Reload
                         </button>
-                        <button class="btn btn-primary" ng-disabled="!vm.dirty || !vm.threatModelEditForm.$valid" ng-click="vm.save()" data-toggle="tooltip" data-placement="top" title="Save Changes" type="button">
+                        <button class="btn btn-primary" ng-disabled="!vm.dirty || !vm.threatModelEditForm.$valid" ng-click="vm.isNewModel() ? vm.create() : vm.save()" data-toggle="tooltip" data-placement="top" title="Save Changes" type="button">
                             <span class="glyphicon glyphicon-save"></span> Save
                         </button>
                     </div>
@@ -170,12 +160,12 @@
         <div class="jumbotron">
             <h1>oooops!</h1>
             <p>
-                It looks like you tried to edit a threat model that doesn't exist. Maybe you typed the
+                It looks like you tried to edit an invalid threat model. Maybe you typed the
                 address wrong? Or if you clicked a link to get here, the threat model might have been
                 deleted since you made the link <span class="fa fa-frown-o"></span>
             </p>
             <p>
-                <a href="#/threatmodels">Take me back to the list of threat models</a>
+                <a href="#/">Take me home</a>
             </p>
         </div>
     </div>

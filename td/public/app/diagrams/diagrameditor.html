@@ -1,12 +1,7 @@
 ﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">
-    <p>
-        <a href="/#/">Home </a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodels"> Threat models</a><span class="glyphicon glyphicon-chevron-right"></span>
-        <a href="/#/threatmodel/{{vm.threatModelId}}"> Threat model detail</a><span class="glyphicon glyphicon-chevron-right"></span>
-        Edit diagram
-    </p>
-    <div ng-show="vm.loaded">
+    <div ng-show="!vm.errored">
         <div class="col-lg-2">
+            <!--Diagram stencil-->
             <uib-accordion close-others="true">
                 <uib-accordion-group is-open="vm.viewStencil">
                     <uib-accordion-heading>
@@ -18,6 +13,7 @@
                         </div>
                     </div>
                 </uib-accordion-group>
+                <!--Threat pane-->
                 <uib-accordion-group is-open="vm.viewThreats">
                     <uib-accordion-heading>
                         Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
@@ -39,7 +35,10 @@
         <!--Diagram area-->
         <div class="col-lg-8">
             <div class="panel panel-default">
-                <div class="panel-heading panel-title">
+                <div ng-if="!vm.diagram.title" class="panel-heading panel-title">
+                    <span>Loading...</span>
+                </div>
+                <div ng-if="vm.diagram.title" class="panel-heading panel-title">
                     <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
                     <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>
                 </div>
@@ -47,7 +46,7 @@
                     <form name="diagramEditToolBar">
                         <div class="col-md-12">
                             <div class="btn-group pull-left" role="group">
-                                <a class="btn btn-default" href="#/threatmodel/{{vm.threatModelId}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
+                                <a class="btn btn-default" href="#/threatmodel/{{vm.threatModelLocation.organisation}}/{{vm.threatModelLocation.repo}}/{{vm.threatModelLocation.branch}}/{{vm.threatModelLocation.model}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                                 <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">
@@ -92,7 +91,8 @@
             </div>
         </div>
     </div>
-    <div ng-show="!vm.loaded">
+    <!--Error content-->
+    <div ng-show="vm.errored">
         <div class="jumbotron">
             <h1>oooops!</h1>
             <p>

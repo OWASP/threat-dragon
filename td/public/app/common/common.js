@@ -13,7 +13,12 @@
     commonModule.provider('commonConfig', function () {
         this.config = {
             // These are the properties we need to set
-            demoModelUrl: '/Demo_Threat_Model.json'
+            demoModelLocation: {
+                organisation: 'mike-goodwin',
+                repo: 'owasp-threat-dragon-demo',
+                branch: 'master',
+                model: 'Demo_Threat_Model'
+            }
         };
 
         this.$get = function () {

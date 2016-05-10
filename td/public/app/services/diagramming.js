@@ -17,7 +17,7 @@
         
         joint.dia.Graph.prototype.initialise = function(diagramJson) {
             
-            this.fromJSON(JSON.parse(diagramJson));
+            this.fromJSON(diagramJson);
             
         };
         

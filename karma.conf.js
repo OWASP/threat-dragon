@@ -14,8 +14,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        './node_modules/phantomjs-polyfill-find/find-polyfill.js',
         'td/public/libs/angular/angular.js',
         'td/public/libs/angular-route/angular-route.js',
+        'td/public/libs/angular-cookies/angular-cookies.js',
         'td/public/libs/nools/nools.js',
         'td/public/libs/jquery/jquery.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
@@ -31,7 +33,7 @@ module.exports = function(config) {
         'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
-        'td.tests/spec/*.js',
+        'td.tests/clientspec/*.js',
         'td/public/app/**/*.html'
     ],
 
@@ -63,7 +65,7 @@ module.exports = function(config) {
     //config for ngHtml2JsPreprocessor
     ngHtml2JsPreprocessor: {
         // strip this from the file path
-        stripPrefix: 'td/public',
+        stripPrefix: 'td',
         prependPrefix: '.'
     },
 

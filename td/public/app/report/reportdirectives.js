@@ -8,7 +8,7 @@
         var directive =
         {
             link: link,
-            templateUrl: './app/report/ElementSummaryPane.html',
+            templateUrl: './public/app/report/ElementSummaryPane.html',
             restrict: 'E',
             scope:
             {

@@ -1,0 +1,31 @@
+<div data-ng-controller="github as vm" class="container-fluid">
+    <row>
+        <div ng-if="vm.branches && !vm.error" class="jumbotron">
+            <p class="text-center">
+                Select a branch from <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}" target="_blank"> 
+                {{vm.organisation}}/{{vm.repo}}</a> from the list below or <a href="#/threatmodel">choose another repo</a>
+            </p>
+        </div>
+    </row>
+    <row>
+        <div ng-if="vm.error" class="jumbotron">
+            <h1>oooops!</h1>
+            <p>
+                Something went wrong fetching the branches for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}" target="_blank"> 
+                {{vm.organisation}}/{{vm.repo}}</a>. Check your browser console for details. Maybe that repo doesn't exist or maybe you don't have permissions to see it.
+                Try <a href="#/threatmodel">choosing another repo</a> <span class="fa fa-frown-o"></span>
+            </p>
+        </div>
+    </row>
+    <row>  
+        <div ng-if="!vm.branches" class="col-lg-8 col-lg-offset-2 text-center">
+            <p class="h3">Fetching branches for {{vm.organisation}}/{{vm.repo}}...</p>
+            <div class="spinner"></div>
+        </div>   
+        <div ng-if="vm.branches" class="col-lg-6 col-lg-offset-3">
+            <div class="list-group">
+                <a ng-repeat="branch in vm.branches" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{branch}}" class="list-group-item h4">{{branch}}</a>
+            </div>
+        </div>
+    </row>
+</div>

@@ -3,146 +3,161 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$q', 'common', datacontext]);
+        ['$q', '$http', 'common', datacontext]);
 
-    function datacontext($q, common) {
+    function datacontext($q, $http, common) {
 
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(serviceId);
         var logError = getLogFn(serviceId, 'error');
         var logSuccess = getLogFn(serviceId, 'success');
-
-        var modelsJson = localStorage.getItem('models');
-        var models = [];
-        
-        if (angular.isDefined(modelsJson) && modelsJson !== null) { models = JSON.parse(modelsJson); }
+        var threatModel = null;
 
         var service = {
-            clearStorage: clearStorage,
-            getThreatModelCount: getThreatModelCount,
-            getThreatModelSummaries: getThreatModelSummaries,
-            saveThreatModel: saveThreatModel,
-            deleteThreatModel: deleteThreatModel,
-            getThreatModelDetail: getThreatModelDetail,
-            getAllThreatModelDetails: getAllThreatModelDetails,
-            getThreatModelDiagram: getThreatModelDiagram,
-            saveThreatModelDiagram: saveThreatModelDiagram
+            repos: repos,
+            branches: branches,
+            models: models,
+            load: load,
+            create: create,
+            update: update,
+            deleteModel: deleteModel,
+            saveThreatModelDiagram: saveThreatModelDiagram,
+            threatModel: threatModel
         };
 
         return service;
-
-        function clearStorage()
-        {
-            models = [];
-            localStorage.removeItem('models');
-            return $q.when(models);
-        }
-
-        //threat models
-
-        function getThreatModelCount()
-        {
-            var count = models.length;
-            return $q.when(count);
-        }
-
-        function getThreatModelSummaries()
-        {
-            var threatModelSummaries = [];
-            models.forEach(addThreatModelSummary);                
-            return $q.when(threatModelSummaries);
-
-            function addThreatModelSummary(threatModel)
-            {
-                threatModelSummaries.push(threatModel.summary);
-            }
-        }
-
-        function saveThreatModel(threatModel)
-        {
-            if (threatModel)
-            {
-                if (angular.isUndefined(threatModel.summary.id))
-                {
-                    //new model
-                    var newId = getNewThreatModelKey();
-                    threatModel.summary.id = newId;
-                }
-                
-                models[threatModel.summary.id] = threatModel;
-                localStorage.setItem('models', JSON.stringify(models));
-            }
-
-            return $q.when(threatModel);
-        }
-
-        function deleteThreatModel(index)
-        {
-            var model = models[index];
-            models.splice(index, 1);
-            localStorage.setItem('models', JSON.stringify(models));
-            return $q.when(model);
-        }
-
-        function getAllThreatModelDetails()
-        {            
-            return $q.when(models);
-        }
-
-        function getThreatModelDetail(id)
-        {
-            var threatModel = models[id];
-            return $q.when(threatModel);
-        }
-
-        // diagrams
-
-        function getThreatModelDiagram(threatModelId, diagramId)
-        {
-            var deferred = $q.defer();
-            var diagram = {};
-
-            var threatModel = models[threatModelId];
-
-            if (threatModel) {
-
-                diagram = threatModel.detail.diagrams[diagramId];
-                
-                if (angular.isDefined(diagram)) {
-                    deferred.resolve(diagram);
-                }
-                else {
-                    deferred.reject('datacontext: Unable to find diagram id = ' + diagramId);
-                }
-            }
-            else
-            {
-                deferred.reject('datacontext: Unable to find threatmodel id = ' + threatModelId);
-            }
-
-            return deferred.promise;
-        }
-
-        function saveThreatModelDiagram(threatModelId, diagramId, diagramData)
-        {
-            var threatModel = models[threatModelId];
-            var diagram = threatModel.detail.diagrams[diagramId];
-            diagram.diagramJson = diagramData.diagramJson;
-            diagram.size = diagramData.size;
-            localStorage.setItem('models', JSON.stringify(models));
-            return $q.when(null);
-        }
-
-        //key management methods
-
-        function getNewThreatModelKey()
-        {
-            var newKey = 0;
-            var keys = _.keys(models);
+        
+        function repos() {
             
-            if (keys.length > 0) { newKey = parseInt(_.max(keys)) + 1; }
+            var reposUri = 'threatmodel/repos';
+            var config = {
+                headers: { Accept: 'application/json' }
+            };
+
+            return $http.get(reposUri, config);
+        }
+        
+        function branches(organisation, repo) {
             
-            return newKey;
+            var branchesUri = 'threatmodel/' + organisation + '/' + repo + '/branches';
+             var config = {
+                headers: { Accept: 'application/json' }
+            };
+            
+            return $http.get(branchesUri, config);
+        }
+        
+        function models(organisation, repo, branch) {
+            
+            var modelsUri = 'threatmodel/' + organisation + '/' + repo + '/' + branch + '/models';
+             var config = {
+                headers: { Accept: 'application/json' }
+            };
+            
+            return $http.get(modelsUri, config);
+        }
+
+        function load(threatModelLocation, forceQuery) {
+            
+            var loc = {
+                organisation: threatModelLocation.organisation,
+                repo: threatModelLocation.repo,
+                branch: threatModelLocation.branch,
+                model: threatModelLocation.model
+            };
+            
+            
+            //don't refetch if the location has not changed
+            if (service.threatModel && JSON.stringify(loc) === JSON.stringify(service.threatModel.location) && !forceQuery) {
+                return $q.when(service.threatModel);
+            }
+                
+            var threatModelUri = buildUri(loc) + '/data';
+
+            var config = {
+                headers: {Accept: 'application/json'}
+            };
+            
+			return $http.get(threatModelUri, config).then(onLoadedThreatModel, onLoadError);
+            
+            function onLoadedThreatModel(result) {
+                service.threatModel = result.data;
+                service.threatModel.location = loc;
+                return $q.resolve(service.threatModel);
+            }
+        }
+        
+        function create(threatModelLocation, threatModel) {
+            var loc = {
+                organisation: threatModelLocation.organisation,
+                repo: threatModelLocation.repo,
+                branch: threatModelLocation.branch,
+                model: threatModel.summary.title.replace(' ', '_')
+            };
+            
+            var threatModelUri = buildUri(loc) + '/create';
+            
+            threatModel.location = loc;
+            service.threatModel = threatModel;
+            
+            return $http.put(threatModelUri, threatModel);
+        }
+        
+        function update() {
+
+            var threatModelUri = buildUri(service.threatModel.location) + '/update';
+
+            return $http.put(threatModelUri, service.threatModel);
+        }
+        
+        function deleteModel() {
+            
+            var threatModelUri = buildUri(service.threatModel.location);
+            
+            return $http.delete(threatModelUri).then(onDeletedModel);
+            
+            function onDeletedModel() {
+                service.threatModel = null;
+                return $q.resolve(service.threatModel);
+            }
+            
+            function onDeleteError(error) {
+                return $q.reject(error);
+            }
+        }
+        
+        function saveThreatModelDiagram(diagramId, diagramData) {
+            
+            //console.log(service.threatModel.detail.diagrams);
+            
+            var diagramToSave = service.threatModel.detail.diagrams.find(function(diagram) {
+                return diagram.id == diagramId;
+            });
+            
+            if(diagramToSave) {  
+                diagramToSave.diagramJson = diagramData.diagramJson;
+                diagramToSave.size = diagramData.size;
+                return update();
+            } else {
+                return $q.reject(new Error('invalid diagram id'));
+            }
+        }
+
+        //private functions
+        function onLoadError(err) {
+            service.threatModel = null;
+            return $q.reject(err);
+        }
+        
+        function buildUri(threatModelLocation) {
+
+            var uri = 'threatmodel/';
+            uri += threatModelLocation.organisation + '/';
+            uri += threatModelLocation.repo + '/';
+            uri += threatModelLocation.branch + '/';
+            uri += threatModelLocation.model;
+            
+            return uri;
         }
     }
 })();
