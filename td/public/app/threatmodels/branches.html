@@ -26,21 +26,7 @@
             <div class="spinner"></div>
         </div>
         <div ng-if="vm.branches" class="col-lg-6 col-lg-offset-3">
-            <div class="clearfix" ng-if="vm.pagination.prev || vm.pagination.next">
-                <a ng-if="vm.pagination.prev" class="pull-left" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}?page={{vm.pagination.page - 1}}">Previous page</a>
-                <span ng-if="!vm.pagination.prev" class="pull-left text-muted">Previous page</span>
-                <a ng-if="vm.pagination.next" class="pull-right" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}?page={{vm.pagination.page + 1}}">Next page</a>
-                <span ng-if="!vm.pagination.next" class="pull-right text-muted">Next page</span>
-            </div>
-            <div class="list-group">
-                <a ng-repeat="branch in vm.branches" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{branch}}" class="list-group-item h4">{{branch}}</a>
-            </div>
-            <div ng-if="vm.pagination.prev || vm.pagination.next">
-                <a ng-if="vm.pagination.prev" class="pull-left" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}?page={{vm.pagination.page - 1}}">Previous page</a>
-                <span ng-if="!vm.pagination.prev" class="pull-left text-muted">Previous page</span>
-                <a ng-if="vm.pagination.next" class="pull-right" href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}?page={{vm.pagination.page + 1}}">Next page</a>
-                <span ng-if="!vm.pagination.next" class="pull-right text-muted">Next page</span>
-            </div>
+            <tmt-Pager can-previous="vm.pagination.prev" can-next="vm.pagination.next" page="vm.pagination.page" items="vm.branches" previous="vm.previousPage()" next="vm.nextPage()" select="vm.selectBranch(item)" />
         </div>
     </row>
 </div>

@@ -8,7 +8,7 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$q', '$routeParams', '$location','common', 'datacontext', github]);
+        ['$q', '$routeParams', '$location', 'common', 'datacontext', github]);
 
     function github($q, $routeParams, $location, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
@@ -20,6 +20,10 @@
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'Load From GitHub';
+        vm.selectBranch = selectBranch;
+        vm.selectRepo = selectRepo;
+        vm.nextPage = nextPage;
+        vm.previousPage = previousPage;
 
         activate();
 
@@ -66,7 +70,7 @@
                 function (response) {
                     vm.pagination = response.data.pagination;
                     vm.pagination.page = parseInt(vm.pagination.page, 10);
-                    vm.branches = response.data.branches; 
+                    vm.branches = response.data.branches;
                 },
                 function (err) {
                     vm.branches = [];
@@ -85,7 +89,31 @@
                     onError(err);
                 });
         }
-        
+
+        function selectBranch(branch) {
+            $location.url('threatmodel/' + vm.organisation + '/' + vm.repo + '/' + branch);
+        }
+
+        function selectRepo(repoFullName) {
+            $location.url('threatmodel/' + repoFullName);
+        }
+
+        function nextPage() {
+            if (vm.pagination.next) {
+                $location.search('page', vm.pagination.page + 1);
+            } else {
+                logError('Cannot navigate to next page');
+            }
+        }
+
+        function previousPage() {
+            if (vm.pagination.prev) {
+                $location.search('page', vm.pagination.page - 1);
+            } else {
+                logError('Cannot navigate to previous page');
+            }
+        }
+
         function onError(err) {
             vm.error = err;
             logError(err);
