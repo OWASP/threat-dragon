@@ -91,11 +91,11 @@
         }
 
         function selectBranch(branch) {
-            $location.url('threatmodel/' + vm.organisation + '/' + vm.repo + '/' + branch);
+            $location.url(uriPrefix() + 'threatmodel/' + vm.organisation + '/' + vm.repo + '/' + branch);
         }
 
         function selectRepo(repoFullName) {
-            $location.url('threatmodel/' + repoFullName);
+            $location.url(uriPrefix()  + 'threatmodel/' + repoFullName);
         }
 
         function nextPage() {
@@ -112,6 +112,10 @@
             } else {
                 logError('Cannot navigate to previous page');
             }
+        }
+
+        function uriPrefix() {
+            return $location.path().substr(0, 16) === '/new/threatmodel' ? 'new/' : '';
         }
 
         function onError(err) {

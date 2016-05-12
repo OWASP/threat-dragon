@@ -86,12 +86,28 @@
             }, {
                 url: '/new/threatmodel',
                 config: {
-                    title: 'Edit New Model',
-                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
+                    title: 'Choose a Repo For Your New Model',
+                    templateUrl: './public/app/threatmodels/repos.html',
                     settings: {
                     }
                 }
             }, {
+                url: '/new/threatmodel/:organisation/:repo',
+                config: {
+                    title: 'Choose a Branch For Your New Model',
+                    templateUrl: './public/app/threatmodels/branches.html',
+                    settings: {
+                    }
+                }
+            }, {
+                url: '/new/threatmodel/:organisation/:repo/:branch',
+                config: {
+                    title: 'Create a New Model',
+                    templateUrl: './public/app/threatmodels/threatmodeledit.html',
+                    settings: {
+                    }
+                }
+            },{
                 url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
                 config: {
                     title: 'Threat Model Diagram',

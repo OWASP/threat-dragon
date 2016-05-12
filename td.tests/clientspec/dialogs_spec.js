@@ -31,9 +31,7 @@ describe('dialogs service:', function () {
         mockDatacontext = {};
         mockDatacontext.repos = function () { return $q.when({ data: ['org/repo'] }); };
         mockDatacontext.branches = function () { return $q.when({ data: ['branch'] }); };
-
         angular.mock.module('./public/app/layout/structuredExit.html');
-        angular.mock.module('./public/app/threatmodels/githubDialog.html');
         angular.mock.inject(function (_$rootScope_, _$q_, _$httpBackend_, _$location_, _$uibModal_, _$timeout_, _dialogs_, _common_) {
             dialogs = _dialogs_;
             $rootScope = _$rootScope_;
@@ -49,119 +47,10 @@ describe('dialogs service:', function () {
         $rootScope.$apply();
     });
 
-    it('should expose three functions', function () {
+    it('should expose two functions', function () {
 
         expect(dialogs.confirm instanceof Function).toBe(true);
         expect(dialogs.structuredExit instanceof Function).toBe(true);
-        expect(dialogs.githubChooser instanceof Function).toBe(true);
-
-    });
-
-    describe('github chooser tests:', function () {
-
-        var callback;
-
-        beforeEach(function () {
-
-            callback = jasmine.createSpy('callback');
-
-        });
-
-        afterEach(function () {
-
-            angular.element($('#githubChooserModal')).remove();
-
-        });
-
-        it('should fetch the repos', function (done) {
-
-            spyOn(mockDatacontext, 'repos').and.callThrough();
-
-            dialogs.githubChooser(callback).then(function () {
-
-                expect(mockDatacontext.repos).toHaveBeenCalled();
-                done();
-
-            });
-
-            $rootScope.$apply();
-            angular.element($('#buttonOK')).triggerHandler('click');
-        });
-
-        it('should error fetching the repos', function (done) {
-
-            var testError = new Error('error');
-            spyOn(mockDatacontext, 'repos').and.callFake(function () {
-                return $q.reject(testError);
-            });
-
-            dialogs.githubChooser(callback).then(function () {
-
-                expect(logError).toHaveBeenCalled();
-                done();
-
-            });
-
-            $rootScope.$apply();
-            angular.element($('#buttonOK')).triggerHandler('click');
-        });
-
-        it('should fetch the branches', function (done) {
-
-            spyOn(mockDatacontext, 'branches').and.callThrough();
-
-            dialogs.githubChooser(callback).then(function () {
-
-                expect(mockDatacontext.branches).toHaveBeenCalled();
-                done();
-
-            });
-
-            $rootScope.$apply();
-            var repo = 'org/repo';
-            angular.element($('#reposList')).val(repo).triggerHandler('change');
-            angular.element($('#buttonOK')).triggerHandler('click');
-        });
-
-
-        it('should error fetching the branches', function (done) {
-
-            var testError = new Error('error');
-            spyOn(mockDatacontext, 'branches').and.callFake(function () {
-                return $q.reject(testError);
-            });
-
-            dialogs.githubChooser(callback).then(function () {
-
-                expect(logError).toHaveBeenCalled();
-                done();
-
-            });
-
-            $rootScope.$apply();
-            var repo = 'org/repo';
-            angular.element($('#reposList')).val(repo).triggerHandler('change');
-            angular.element($('#buttonOK')).triggerHandler('click');
-        });
-
-        it('should call the callback with the selected repo and branch', function (done) {
-
-            dialogs.githubChooser(callback).then(function () {
-
-                expect(callback.calls.argsFor(0)[0].organisation).toEqual('org');
-                expect(callback.calls.argsFor(0)[0].repo).toEqual('repo');
-                expect(callback.calls.argsFor(0)[0].branch).toEqual('branch');
-                done();
-
-            });
-
-            $rootScope.$apply();
-            var repo = 'org/repo';
-            var branch = 'branch';
-            angular.element($('#reposList')).triggerHandler('change');
-            angular.element($('#branchesList')).triggerHandler('change');
-            angular.element($('#buttonOK')).triggerHandler('click');
-        });
 
     });
 
