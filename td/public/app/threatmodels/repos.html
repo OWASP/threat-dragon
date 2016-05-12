@@ -10,19 +10,30 @@
         <div ng-if="vm.error" class="jumbotron">
             <h1>oooops!</h1>
             <p>
-                Something went wrong fetching your GitHub repos. Maybe you don't have and repos yet? Anyways, check your
-                browser console for details  <span class="fa fa-frown-o"></span>
+                Something went wrong fetching your GitHub repos. Maybe you don't have and repos yet? Anyways, check your browser console
+                for details <span class="fa fa-frown-o"></span>
             </p>
         </div>
     </row>
-    <row>  
+    <row>
         <div ng-if="!vm.repos" class="col-lg-8 col-lg-offset-2 text-center">
             <p class="h3">Fetching your repos...</p>
             <div class="spinner"></div>
-        </div>   
+        </div>
         <div ng-if="vm.repos" class="col-lg-6 col-lg-offset-3">
+            <div class="clearfix" ng-if="vm.pagination.prev || vm.pagination.next">
+                <a ng-if="vm.pagination.prev" class="pull-left" href="#/threatmodel?page={{vm.pagination.page - 1}}">Previous page</a>
+                <span ng-if="!vm.pagination.prev" class="pull-left text-muted">Previous page</span>
+                <a ng-if="vm.pagination.next" class="pull-right" href="#/threatmodel?page={{vm.pagination.page + 1}}">Next page</a>
+                <span ng-if="!vm.pagination.next" class="pull-right text-muted">Next page</span>
+            </div>
             <div class="list-group">
                 <a ng-repeat="repo in vm.repos" href="#threatmodel/{{repo}}" class="list-group-item h4">{{repo}}</a>
+            <div ng-if="vm.pagination.prev || vm.pagination.next">
+                <a ng-if="vm.pagination.prev" class="pull-left" href="#/threatmodel?page={{vm.pagination.page - 1}}">Previous page</a>
+                <span ng-if="!vm.pagination.prev" class="pull-left text-muted">Previous page</span>
+                <a ng-if="vm.pagination.next" class="pull-right" href="#/threatmodel?page={{vm.pagination.page + 1}}">Next page</a>
+                <span ng-if="!vm.pagination.next" class="pull-right text-muted">Next page</span>
             </div>
         </div>
     </row>

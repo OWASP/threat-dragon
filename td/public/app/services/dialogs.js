@@ -38,7 +38,7 @@
             });
 
             event.preventDefault();
-            
+
             return modal.result;
         }
 
@@ -59,7 +59,7 @@
         }
 
         function confirm(template, onOkPreClose, getParameter, onCancelPreClose, windowClass) {
-            
+
             var options = {
                 templateUrl: template,
                 controller: confirmModal,
@@ -71,7 +71,7 @@
                     parameter: function () { return getParameter; }
                 }
             };
-            
+
             if (windowClass) {
 
                 options.windowClass = windowClass;
@@ -79,18 +79,17 @@
             }
 
             var modal = $modal.open(options);
-            
+
             return modal.result;
         }
 
         function confirmModal($scope, $uibModalInstance, ok, cancel, parameter) {
-            
+
             $scope.applyToAll = false;
             $scope.onCancel = onCancel;
             $scope.onOK = onOK;
 
-            if (parameter)
-            {
+            if (parameter) {
                 $scope.parameter = parameter();
             }
 
@@ -104,9 +103,9 @@
                 $uibModalInstance.close();
             }
         }
-        
+
         function githubChooser(onOkPreClose) {
-            
+
             var options = {
                 templateUrl: './public/app/threatmodels/githubDialog.html',
                 controller: githubChooserModal,
@@ -118,12 +117,12 @@
             };
 
             var modal = $modal.open(options);
-            
+
             return modal.result;
         }
 
         function githubChooserModal($scope, $uibModalInstance, datacontext, ok) {
-            
+
             $scope.onCancel = onCancel;
             $scope.onOK = onOK;
             $scope.getRepos = getRepos;
@@ -140,11 +139,13 @@
                 if (angular.isDefined(ok)) { ok($scope.saveLocation); }
                 $uibModalInstance.close();
             }
-            
+
             function getRepos() {
                 return datacontext.repos().then(
                     function (response) {
-                        $scope.repos = response.data;
+                        $scope.pagination = response.data.pagination;
+                        $scope.pagination.page = parseInt($scope.pagination.page, 10);
+                        $scope.repos = response.data.repos;
                     },
                     function (err) {
                         $scope.repos = [];
@@ -152,23 +153,23 @@
                     }
                 );
             }
-            
+
             function getBranches() {
                 $scope.branches = null;
                 $scope.saveLocation.organisation = $scope.saveLocation.repoFullName.split('/')[0];
                 $scope.saveLocation.repo = $scope.saveLocation.repoFullName.split('/')[1];
-                
+
                 return datacontext.branches($scope.saveLocation.organisation, $scope.saveLocation.repo).then(
                     function (response) {
-                        $scope.branches = response.data;
+                        $scope.branches = response.data.branches;
                     },
                     function (err) {
                         $scope.branches = [];
                         onError(err);
                     }
-                );              
+                );
             }
-            
+
             function onError(err) {
                 $scope.error = err;
                 logError(err);

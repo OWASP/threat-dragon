@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$q', '$routeParams', 'common', 'datacontext', github]);
+        ['$q', '$routeParams', '$location','common', 'datacontext', github]);
 
-    function github($q, $routeParams, common, datacontext) {
+    function github($q, $routeParams, $location, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
         var vm = this;
@@ -48,9 +48,11 @@
         }
 
         function getRepos() {
-            return datacontext.repos().then(
+            return datacontext.repos($location.search().page).then(
                 function (response) {
-                    vm.repos = response.data;
+                    vm.pagination = response.data.pagination;
+                    vm.pagination.page = parseInt(vm.pagination.page, 10);
+                    vm.repos = response.data.repos;
                 },
                 function (err) {
                     vm.repos = [];
@@ -60,9 +62,11 @@
         }
 
         function getBranches(organisation, repo) {
-            return datacontext.branches(organisation, repo).then(
+            return datacontext.branches(organisation, repo, $location.search().page).then(
                 function (response) {
-                    vm.branches = response.data;
+                    vm.pagination = response.data.pagination;
+                    vm.pagination.page = parseInt(vm.pagination.page, 10);
+                    vm.branches = response.data.branches; 
                 },
                 function (err) {
                     vm.branches = [];
