@@ -135,7 +135,7 @@ threatmodelcontroller.deleteModel = function(req, res) {
 function getPagination(headers, page) {
     
     var pagination = { page: page, next: false, prev: false };
-    var linkHeader = headers['link'];
+    var linkHeader = headers.link;
     
     if(linkHeader) {
         

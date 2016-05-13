@@ -5,13 +5,13 @@ var threatmodelrepository = {};
 threatmodelrepository.repos = function (page, accessToken, cb) {
 
     var client = github.client(accessToken);
-    client.me().repos(page, 30, cb);
+    client.me().repos(page, cb);
 };
 
 threatmodelrepository.branches = function (repoInfo, accessToken, cb) {
 
     var client = github.client(accessToken);
-    client.repo(getRepoFullName(repoInfo)).branches(repoInfo.page, 30, cb);
+    client.repo(getRepoFullName(repoInfo)).branches(repoInfo.page, cb);
 };
 
 threatmodelrepository.models = function (branchInfo, accessToken, cb) {
