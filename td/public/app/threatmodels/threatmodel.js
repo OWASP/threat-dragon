@@ -1,5 +1,4 @@
-﻿(function ()
-{
+﻿(function () {
     'use strict';
 
     // Controller name is handy for logging
@@ -11,8 +10,7 @@
     angular.module('app').controller(controllerId,
         ['$scope', '$location', '$routeParams', 'dialogs', 'common', 'datacontext', threatModel]);
 
-    function threatModel($scope, $location, $routeParams, dialogs, common, datacontext)
-    {
+    function threatModel($scope, $location, $routeParams, dialogs, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
         var vm = this;
@@ -31,8 +29,8 @@
         vm.save = save;
         vm.create = create;
         vm.reload = reload,
-        /*jshint -W030 */
-        vm.threatModelLocation = threatModelLocation;
+            /*jshint -W030 */
+            vm.threatModelLocation = threatModelLocation;
         vm.deleteModel = deleteModel;
         vm.cancel = cancel;
         vm.newContributor = '';
@@ -46,13 +44,12 @@
         vm.isNewModel = isNewModel;
 
         //structured exit
-        $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return vm.threatModelEditForm.$dirty; }}, function (dirty) {
+        $scope.$watch(function () { if (angular.isDefined(vm.threatModelEditForm)) { return vm.threatModelEditForm.$dirty; } }, function (dirty) {
             if (angular.isDefined(dirty)) { vm.dirty = dirty; }
         });
 
         $scope.$on('$locationChangeStart',
-            function (event, current, previous)
-            {
+            function (event, current, previous) {
                 if (vm.dirty) {
                     dialogs.structuredExit(event, function () { }, function () { vm.dirty = false; });
                 }
@@ -60,24 +57,21 @@
 
         activate();
 
-        function activate()
-        {
+        function activate() {
             common.activateController([getThreatModel()], controllerId)
                 .then(function () { log('Activated Threat Model Detail View'); });
         }
 
-        function getThreatModel(forceReload)
-        {
+        function getThreatModel(forceReload) {
             //creating new model
-            if (isNewModel())
-            {
+            if (isNewModel()) {
                 vm.threatModel = { summary: {}, detail: { contributors: [], diagrams: [] } };
                 datacontext.threatModel = vm.threatModel;
                 return vm.threatModel;
             }
 
             return datacontext.load($routeParams, forceReload).then(onLoad, onError);
-            
+
             function onLoad(data) {
 
                 if (vm.threatModelEditForm) {
@@ -93,7 +87,7 @@
         }
 
         function save() {
-            
+
             datacontext.update().then(onSave, onError);
 
             function onSave() {
@@ -103,33 +97,25 @@
         }
 
         function create() {
-            
-            dialogs.githubChooser(onCreate);
-            
-            function onCreate(saveLocation) {
-                
-                datacontext.create(saveLocation, vm.threatModel).then(onCreate, onError);
-                    
-                function onCreate() {
-                    vm.dirty = false; //prevents structured exit
-                    $location.path('/threatmodel/' + threatModelLocation());
-                }
+
+            datacontext.create($routeParams, vm.threatModel).then(onCreate, onError);
+
+            function onCreate() {
+                vm.dirty = false; //prevents structured exit
+                $location.path('/threatmodel/' + threatModelLocation());
             }
         }
 
-        function reload()
-        {
-            if (vm.dirty)
-            {
-                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function() { getThreatModel(true); }, function () { return null; }, function () { });
+        function reload() {
+            if (vm.dirty) {
+                dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function () { getThreatModel(true); }, function () { return null; }, function () { });
             }
-            else
-            {
+            else {
                 getThreatModel(true);
             }
-   
+
         }
-        
+
         function threatModelLocation() {
 
             var loc = '';
@@ -144,43 +130,35 @@
             return loc;
         }
 
-        function deleteModel()
-        {
+        function deleteModel() {
             datacontext.deleteModel().then(onDelete, logError);
         }
 
-        function onDelete()
-        {
+        function onDelete() {
             vm.dirty = false;
             $location.path('/');
         }
 
-        function cancel()
-        {
-            if (angular.isDefined(vm.threatModel.summary.id))
-            {
+        function cancel() {
+            if (angular.isDefined(vm.threatModel.summary.id)) {
                 $location.path('/threatmodel/' + vm.threatModelLocation());
             }
-            else
-            {
+            else {
                 $location.path('/');
-            } 
+            }
         }
 
-        function removeContributor(index)
-        {
+        function removeContributor(index) {
             vm.threatModel.detail.contributors.splice(index, 1);
             vm.dirty = true;
         }
 
-        function removeDiagram(index)
-        {
+        function removeDiagram(index) {
             vm.threatModel.detail.diagrams.splice(index, 1);
             vm.dirty = true;
         }
 
-        function addContributor()
-        {
+        function addContributor() {
             vm.threatModel.detail.contributors.push({ name: vm.newContributor });
             vm.newContributor = '';
             vm.addingContributor = false;
@@ -196,8 +174,7 @@
             vm.addingContributor = true;
         }
 
-        function addDiagram()
-        {
+        function addDiagram() {
             vm.newDiagram.id = vm.threatModel.detail.diagrams.length;
             vm.threatModel.detail.diagrams.push(vm.newDiagram);
             vm.newDiagram = emptyDiagram();
@@ -205,22 +182,19 @@
             vm.dirty = true;
         }
 
-        function cancelAddingDiagram()
-        {
+        function cancelAddingDiagram() {
             vm.addingDiagram = false;
             vm.newDiagram = emptyDiagram();
         }
 
-        function startAddingDiagram()
-        {
+        function startAddingDiagram() {
             vm.addingDiagram = true;
         }
 
-        function emptyDiagram()
-        {
+        function emptyDiagram() {
             return { title: '', thumbnail: "./public/content/images/thumbnail.jpg" };
         }
-        
+
         function isNewModel() {
             return $location.path().substr(0, 16) === '/new/threatmodel';
         }

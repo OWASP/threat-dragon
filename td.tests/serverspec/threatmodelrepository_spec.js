@@ -10,6 +10,7 @@ describe('threatmodel repository tests', function () {
     var accessToken = 'access token';
     var mocktonode;
     var mockClient;
+    var testPage = 'testPage'
     var repos = 'repos';
     var branches = 'branches';
     var models = 'models';
@@ -38,7 +39,7 @@ describe('threatmodel repository tests', function () {
         spyOn(mocktonode, 'client').and.callThrough();
 
         mockMe = {
-            repos: function (cb) {
+            repos: function (page, cb) {
                 cb(repos);
             }
         };
@@ -48,7 +49,7 @@ describe('threatmodel repository tests', function () {
         }
 
         mockRepo = {
-            branches: function (cb) {
+            branches: function (page, cb) {
                 cb(branches);
             },
             contents: function (message, branch, cb) {
@@ -90,9 +91,9 @@ describe('threatmodel repository tests', function () {
         spyOn(mockMe, 'repos').and.callThrough();
         spyOn(mockClient, 'me').and.callThrough();
         var threatModelRepository = require(moduleUnderTest);
-        threatModelRepository.repos(accessToken, cb);
+        threatModelRepository.repos(testPage, accessToken, cb);
         expect(mocktonode.client.calls.argsFor(0)).toEqual([accessToken]);
-        expect(mockMe.repos.calls.argsFor(0)).toEqual([cb]);
+        expect(mockMe.repos.calls.argsFor(0)).toEqual([testPage, cb]);
         expect(mockClient.me).toHaveBeenCalled();
         expect(cb.calls.argsFor(0)).toEqual([repos]);
 
@@ -105,7 +106,8 @@ describe('threatmodel repository tests', function () {
 
         var repoInfo = {
             organisation: testOrg,
-            repo: testRepo
+            repo: testRepo,
+            page: testPage
         };
 
         spyOn(mockRepo, 'branches').and.callThrough();
@@ -113,7 +115,7 @@ describe('threatmodel repository tests', function () {
         var threatModelRepository = require(moduleUnderTest);
         threatModelRepository.branches(repoInfo, accessToken, cb);
         expect(mocktonode.client.calls.argsFor(0)).toEqual([accessToken]);
-        expect(mockRepo.branches.calls.argsFor(0)).toEqual([cb]);
+        expect(mockRepo.branches.calls.argsFor(0)).toEqual([testPage, cb]);
         expect(mockClient.repo.calls.argsFor(0)).toEqual([testOrg + '/' + testRepo]);
         expect(cb.calls.argsFor(0)).toEqual([branches]);
 

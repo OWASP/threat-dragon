@@ -16,6 +16,7 @@ describe('threat model controller tests', function () {
     var testBranch = 'testBranch';
     var testModel = 'testModel';
     var testBody = 'testBody';
+    var testPage = 'testPage';
 
     beforeEach(function () {
 
@@ -29,7 +30,6 @@ describe('threat model controller tests', function () {
         spyOn(mockResponse, 'send');
         spyOn(mockResponse, 'status').and.callThrough();
 
-
         mockRequest = {
             user: {
                 accessToken: testToken
@@ -39,6 +39,9 @@ describe('threat model controller tests', function () {
                 repo: testRepo,
                 branch: testBranch,
                 model: testModel
+            },
+            query: {
+                page: testPage
             },
             body: testBody
         };
@@ -66,17 +69,23 @@ describe('threat model controller tests', function () {
         var testRepo2 = { full_name: repo2 };
         var testRepo3 = { full_name: repo3 };
         var testRepos = [testRepo1, testRepo2, testRepo3];
+        var link1 = 'url1; rel="link"';
+        var link2 = 'url2; rel="link"';
+        var testLinkHeader = link1 + ',' + link2;
+        var testHeaders = [testLinkHeader];
 
-        mockRepository.repos = function (accessToken, cb) {
-            cb(null, testRepos);
+        mockRepository.repos = function (page, accessToken, cb) {
+            cb(null, testRepos, testHeaders);
         }
 
         spyOn(mockRepository, 'repos').and.callThrough();
 
         var controller = require(moduleUnderTest);
         controller.repos(mockRequest, mockResponse);
-        expect(mockRepository.repos.calls.argsFor(0)[0]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([[repo1, repo2, repo3]]);
+        expect(mockRepository.repos.calls.argsFor(0)[0]).toEqual(testPage);
+        expect(mockRepository.repos.calls.argsFor(0)[1]).toEqual(testToken);
+        expect(mockResponse.send.calls.argsFor(0)[0].repos).toEqual([repo1, repo2, repo3]);
+        expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: false });
 
     });
 
@@ -85,7 +94,7 @@ describe('threat model controller tests', function () {
         var error = new Error('repos error');
         var repos = 'repos';
 
-        mockRepository.repos = function (accessToken, cb) {
+        mockRepository.repos = function (page, accessToken, cb) {
             cb(error, repos);
         }
 
@@ -99,10 +108,10 @@ describe('threat model controller tests', function () {
     it('should return the specified error when fetching the repos for the logged in user', function () {
 
         var error = new Error('repos error');
-        var repos = { statusCode: 400 };
+        error.statusCode = 400;
 
-        mockRepository.repos = function (accessToken, cb) {
-            cb(error, repos);
+        mockRepository.repos = function (page, accessToken, cb) {
+            cb(error, null);
         }
 
         var controller = require(moduleUnderTest);
@@ -121,28 +130,32 @@ describe('threat model controller tests', function () {
         var testBranch2 = { name: branch2 };
         var testBranch3 = { name: branch3 };
         var testBranches = [testBranch1, testBranch2, testBranch3];
+        var link1 = 'url1; rel="link"';
+        var link2 = 'url2; rel="link"';
+        var testLinkHeader = link1 + ',' + link2;
+        var testHeaders = [testLinkHeader];
 
         mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(null, testBranches);
+            cb(null, testBranches, testHeaders);
         }
 
         spyOn(mockRepository, 'branches').and.callThrough();
 
         var controller = require(moduleUnderTest);
         controller.branches(mockRequest, mockResponse);
-        expect(mockRepository.branches.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo });
+        expect(mockRepository.branches.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, page: testPage });
         expect(mockRepository.branches.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([[branch1, branch2, branch3]]);
+        expect(mockResponse.send.calls.argsFor(0)[0].branches).toEqual([branch1, branch2, branch3]);
+        expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, next: false, prev: false });
 
     });
 
     it('should error 500 when fetching the branches for the specified repo', function () {
 
         var error = new Error('branches error');
-        var branches = 'branches';
 
         mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(error, branches);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'branches').and.callThrough();
@@ -154,14 +167,14 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should return the specified error when fetching the branches for the specified repo', function () {
 
         var error = new Error('branches error');
-        var branches = {statusCode: 400};
+        error.statusCode = 400;
 
         mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(error, branches);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'branches').and.callThrough();
@@ -173,7 +186,7 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should fetch the models for the specified repo and branch', function () {
 
         var model1 = 'model1';
@@ -201,10 +214,9 @@ describe('threat model controller tests', function () {
     it('should error 500 when fetching the models for the specified repo and branch', function () {
 
         var error = new Error('models error');
-        var models = 'models';
 
         mockRepository.models = function (branchInfo, accessToken, cb) {
-            cb(error, models);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'models').and.callThrough();
@@ -216,14 +228,14 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
-    it('should return the specified error when fetching the model for the specified repo and branch', function () {
+
+    it('should return the specified error when fetching the models for the specified repo and branch', function () {
 
         var error = new Error('models error');
-        var models = {statusCode: 400};
+        error.statusCode = 400;
 
         mockRepository.models = function (branchInfo, accessToken, cb) {
-            cb(error, models);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'models').and.callThrough();
@@ -235,14 +247,14 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should fetch the specified model', function () {
 
         var model = 'model';
         var base64Model = (new Buffer(model).toString('base64'));
 
         mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(null, {content: base64Model});
+            cb(null, { content: base64Model });
         }
 
         spyOn(mockRepository, 'model').and.callThrough();
@@ -258,10 +270,9 @@ describe('threat model controller tests', function () {
     it('should error 500 when fetching the specified model', function () {
 
         var error = new Error('model error');
-        var model = 'model';
 
         mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(error, model);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'model').and.callThrough();
@@ -273,14 +284,14 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should return the specified error when fetching the specified model', function () {
 
         var error = new Error('model error');
-        var model = {statusCode: 400};
+        error.statusCode = 400;
 
         mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(error, model);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'model').and.callThrough();
@@ -292,7 +303,7 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should create the specified model', function () {
 
         var createResponse = 'create';
@@ -329,11 +340,11 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should return the specified error when creating the specified model', function () {
 
         var error = new Error('create error');
-        var data = {statusCode: 400};
+        var data = { statusCode: 400 };
 
         mockRepository.create = function (modelInfo, accessToken, cb) {
             cb(error, data);
@@ -348,7 +359,7 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should update the specified model', function () {
 
         var updateResponse = 'update';
@@ -385,11 +396,11 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should return the specified error when updating the specified model', function () {
 
         var error = new Error('update error');
-        var data = {statusCode: 400};
+        var data = { statusCode: 400 };
 
         mockRepository.update = function (modelInfo, accessToken, cb) {
             cb(error, data);
@@ -404,7 +415,7 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
- 
+
     it('should delete the specified model', function () {
 
         var deleteResponse = 'delete';
@@ -417,7 +428,7 @@ describe('threat model controller tests', function () {
 
         var controller = require(moduleUnderTest);
         controller.deleteModel(mockRequest, mockResponse);
-        expect(mockRepository.deleteModel.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel});
+        expect(mockRepository.deleteModel.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel });
         expect(mockRepository.deleteModel.calls.argsFor(0)[1]).toEqual(testToken);
         expect(mockResponse.send.calls.argsFor(0)).toEqual([deleteResponse]);
 
@@ -441,11 +452,11 @@ describe('threat model controller tests', function () {
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
     });
-    
+
     it('should return the specified error when deleting the specified model', function () {
 
         var error = new Error('delete error');
-        var data = {statusCode: 400};
+        var data = { statusCode: 400 };
 
         mockRepository.deleteModel = function (modelInfo, accessToken, cb) {
             cb(error, data);
@@ -459,5 +470,140 @@ describe('threat model controller tests', function () {
         expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
         expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
 
+    });
+
+    describe('pagination tests', function () {
+
+        var testRepos;
+        var testBranches;
+
+        beforeEach(function () {
+
+            var repo1 = 'repo1';
+            var repo2 = 'repo2';
+            var repo3 = 'repo3';
+            var testRepo1 = { full_name: repo1 };
+            var testRepo2 = { full_name: repo2 };
+            var testRepo3 = { full_name: repo3 };
+            testRepos = [testRepo1, testRepo2, testRepo3];
+
+            var branch1 = 'branch1';
+            var branch2 = 'branch2';
+            var branch3 = 'branch3';
+            var testBranch1 = { name: branch1 };
+            var testBranch2 = { name: branch2 };
+            var testBranch3 = { name: branch3 };
+            testBranches = [testBranch1, testBranch2, testBranch3];
+
+        });
+
+
+        it('should enable next and disable prev', function () {
+
+            var link1 = 'url1; rel="next"';
+            var link2 = 'url2; rel="link"';
+            var testLinkHeader = link1 + ',' + link2;
+            var testHeaders = {
+                link: testLinkHeader
+            };
+
+            mockRepository.repos = function (page, accessToken, cb) {
+                cb(null, testRepos, testHeaders);
+            }
+
+            var controller = require(moduleUnderTest);
+            controller.repos(mockRequest, mockResponse);
+            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: true });
+
+        });
+
+        it('should enable next and enable prev', function () {
+
+            var link1 = 'url1; rel="next"';
+            var link2 = 'url2; rel="prev"';
+            var testLinkHeader = link1 + ',' + link2;
+            var testHeaders = {
+                link: testLinkHeader
+            };
+
+            mockRepository.repos = function (page, accessToken, cb) {
+                cb(null, testRepos, testHeaders);
+            }
+
+            var controller = require(moduleUnderTest);
+            controller.repos(mockRequest, mockResponse);
+            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: true, next: true });
+
+        });
+
+        it('should disable next and enable prev', function () {
+
+            var link1 = 'url1; rel="link"';
+            var link2 = 'url2; rel="prev"';
+            var testLinkHeader = link1 + ',' + link2;
+            var testHeaders = {
+                link: testLinkHeader
+            };
+
+            mockRepository.repos = function (page, accessToken, cb) {
+                cb(null, testRepos, testHeaders);
+            }
+
+            var controller = require(moduleUnderTest);
+            controller.repos(mockRequest, mockResponse);
+            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: true, next: false });
+
+        });
+
+        it('should disable next and disable prev', function () {
+
+            var link1 = 'url1; rel="link"';
+            var link2 = 'url2; rel="link"';
+            var testLinkHeader = link1 + ',' + link2;
+            var testHeaders = {
+                link: testLinkHeader
+            };
+
+            mockRepository.repos = function (page, accessToken, cb) {
+                cb(null, testRepos, testHeaders);
+            }
+
+            var controller = require(moduleUnderTest);
+            controller.repos(mockRequest, mockResponse);
+            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: false });
+
+        });
+
+        it('should select repos page 1 if not specified', function () {
+
+            var testHeaders = {};
+
+            mockRepository.repos = function (page, accessToken, cb) {
+                cb(null, testRepos, testHeaders);
+            }
+
+            spyOn(mockRepository, 'repos').and.callThrough();
+
+            var controller = require(moduleUnderTest);
+            delete mockRequest.query.page;
+            controller.repos(mockRequest, mockResponse);
+            expect(mockRepository.repos.calls.argsFor(0)[0]).toEqual(1);
+        })
+
+        it('should select branches page 1 if not specified', function () {
+
+            var testHeaders = {};
+
+            mockRepository.branches = function (page, accessToken, cb) {
+                cb(null, testBranches, testHeaders);
+            }
+
+            spyOn(mockRepository, 'branches').and.callThrough();
+
+            var controller = require(moduleUnderTest);
+            delete mockRequest.query.page;
+            controller.branches(mockRequest, mockResponse);
+            expect(mockRepository.branches.calls.argsFor(0)[0].page).toEqual(1);
+        })
     });
 });

@@ -26,10 +26,7 @@
     "joint": "git://github.com/clientIO/joint#~0.9.7",
     "font-awesome": "~4.6.0",
     "angular-xeditable": "~0.1.9",
-    "animate-css": "~3.5.1",
-    "angular-bootstrap": "^1.2.4",
-    "angular-animate": "1.5.0",
-    "angular-cookies": "^1.5.0"
+    "angular-bootstrap": "^1.2.4"
   },
   "devDependencies": {
     "angular-mocks": "1.5.0",

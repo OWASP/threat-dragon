@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$q', '$routeParams', 'common', 'datacontext', github]);
+        ['$q', '$routeParams', '$location', 'common', 'datacontext', github]);
 
-    function github($q, $routeParams, common, datacontext) {
+    function github($q, $routeParams, $location, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         /*jshint validthis: true */
         var vm = this;
@@ -20,6 +20,10 @@
 
         // Bindable properties and functions are placed on vm.
         vm.title = 'Load From GitHub';
+        vm.selectBranch = selectBranch;
+        vm.selectRepo = selectRepo;
+        vm.nextPage = nextPage;
+        vm.previousPage = previousPage;
 
         activate();
 
@@ -48,9 +52,11 @@
         }
 
         function getRepos() {
-            return datacontext.repos().then(
+            return datacontext.repos($location.search().page).then(
                 function (response) {
-                    vm.repos = response.data;
+                    vm.pagination = response.data.pagination;
+                    vm.pagination.page = parseInt(vm.pagination.page, 10);
+                    vm.repos = response.data.repos;
                 },
                 function (err) {
                     vm.repos = [];
@@ -60,9 +66,11 @@
         }
 
         function getBranches(organisation, repo) {
-            return datacontext.branches(organisation, repo).then(
+            return datacontext.branches(organisation, repo, $location.search().page).then(
                 function (response) {
-                    vm.branches = response.data;
+                    vm.pagination = response.data.pagination;
+                    vm.pagination.page = parseInt(vm.pagination.page, 10);
+                    vm.branches = response.data.branches;
                 },
                 function (err) {
                     vm.branches = [];
@@ -81,7 +89,35 @@
                     onError(err);
                 });
         }
-        
+
+        function selectBranch(branch) {
+            $location.url(uriPrefix() + 'threatmodel/' + vm.organisation + '/' + vm.repo + '/' + branch);
+        }
+
+        function selectRepo(repoFullName) {
+            $location.url(uriPrefix()  + 'threatmodel/' + repoFullName);
+        }
+
+        function nextPage() {
+            if (vm.pagination.next) {
+                $location.search('page', vm.pagination.page + 1);
+            } else {
+                logError('Cannot navigate to next page');
+            }
+        }
+
+        function previousPage() {
+            if (vm.pagination.prev) {
+                $location.search('page', vm.pagination.page - 1);
+            } else {
+                logError('Cannot navigate to previous page');
+            }
+        }
+
+        function uriPrefix() {
+            return $location.path().substr(0, 16) === '/new/threatmodel' ? 'new/' : '';
+        }
+
         function onError(err) {
             vm.error = err;
             logError(err);

@@ -32,14 +32,37 @@
                 var reader = new FileReader();
                 reader.onloadend = onLoadEnd;
                 reader.readAsText(fileSelect[0].files[0]);
-                    
-                function onLoadEnd()
-                {
+
+                function onLoadEnd() {
                     var content = reader.result;
                     scope.action({ content: content });
                 }
 
             }
+        }
+
+    }]);
+
+    app.directive('tmtPager', [function () {
+
+        var directive = {
+            templateUrl: './public/app/pager.html',
+            link: link,
+            restrict: 'E',
+            scope: {
+                canPrevious: '=',
+                canNext: '=',
+                page: '=',
+                items: '=',
+                next: '&',
+                previous: '&',
+                select: '&'
+            }
+        };
+
+        return directive;
+
+        function link(scope, element, attrs) {
         }
 
     }]);

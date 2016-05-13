@@ -3,15 +3,17 @@ var repository = require('../repositories/threatmodelrepository');
 var threatmodelcontroller = {};
 
 threatmodelcontroller.repos = function (req, res) {
-    repository.repos(req.user.accessToken, function (err, repos) {
+    
+    var page = req.query.page || 1;
+    repository.repos(page, req.user.accessToken, function (err, repos, headers) {
         if (!err) {
             var responseRepos = [];
             repos.forEach(function (repo, index) {
                 responseRepos[index] = repo.full_name;
             });
-            res.send(responseRepos);
+            res.send({repos: responseRepos, pagination: getPagination(headers, page)});
         } else {
-            res.status(repos.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }
     });
 };
@@ -20,18 +22,19 @@ threatmodelcontroller.branches = function (req, res){
     
     var repoInfo = {
         organisation: req.params.organisation,
-        repo: req.params.repo
+        repo: req.params.repo,
+        page: req.query.page || 1
     };
     
-    repository.branches(repoInfo, req.user.accessToken, function(err, branches) {
+    repository.branches(repoInfo, req.user.accessToken, function(err, branches, headers) {
         if(!err) {
             var responseBranches = [];
             branches.forEach(function (branch, index) {
                 responseBranches[index] = branch.name;
             });
-            res.send(responseBranches);
+            res.send({branches: responseBranches, pagination: getPagination(headers, repoInfo.page)});
         } else {
-            res.status(branches.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }     
     }); 
 };
@@ -52,7 +55,7 @@ threatmodelcontroller.models = function (req, res){
             });
             res.send(responseModels);
         } else {
-            res.status(models.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }     
     }); 
 };
@@ -70,7 +73,7 @@ threatmodelcontroller.model = function (req, res) {
             var model= (new Buffer(data.content, 'base64')).toString();
             res.send(model);
         } else {
-            res.status(data.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }
     });
 };
@@ -127,5 +130,31 @@ threatmodelcontroller.deleteModel = function(req, res) {
         }        
     }); 
 };
+
+//private methods
+function getPagination(headers, page) {
+    
+    var pagination = { page: page, next: false, prev: false };
+    var linkHeader = headers.link;
+    
+    if(linkHeader) {
+        
+        linkHeader.split(',').forEach(function(link) {
+           if (isLinkType('"next"')) {
+               pagination.next = true;
+           }
+           
+           if (isLinkType('"prev"')) {
+               pagination.prev = true;
+           }
+           
+           function isLinkType(type) {
+               return link.split(';')[1].split('=')[1] === type;
+           }
+        });
+    }
+    
+    return pagination;  
+}
  
 module.exports = threatmodelcontroller;
