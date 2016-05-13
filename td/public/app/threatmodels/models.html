@@ -3,7 +3,7 @@
         <div ng-if="vm.models && !vm.error" class="jumbotron">
             <p class="text-center">
                 Select a threat model from <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
-                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a> from the list below, or <a href="#threatmodel/{{vm.organisation}}/{{vm.repo}}">choose another branch</a> or <a href="#/threatmodel">repo</a>
+                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a> from the list below, or <a href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choose another branch</a> or <a href="#/threatmodel">repo</a>
             </p>
         </div>
     </row>
@@ -12,8 +12,9 @@
             <h1>hmm...</h1>
             <p>
                 There were no models found in <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
-                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a>. You can <a href="#/new/threatmodel">create new model</a> or if you are in the wrong place, you could try 
-                <a href="#threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or <a href="#/threatmodel">repo</a> <span class="fa fa-frown-o"></span>
+                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a>. You can <a href="#/new/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}">create new model</a> 
+                or if you are in the wrong place, you could try <a href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or 
+                <a href="#/threatmodel">repo</a> <span class="fa fa-frown-o"></span>
             </p>
         </div>
     </row>

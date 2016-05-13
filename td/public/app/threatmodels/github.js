@@ -24,6 +24,7 @@
         vm.selectRepo = selectRepo;
         vm.nextPage = nextPage;
         vm.previousPage = previousPage;
+        vm.uriPrefix = uriPrefix;
 
         activate();
 
@@ -120,7 +121,7 @@
 
         function onError(err) {
             vm.error = err;
-            logError(err);
+            logError(err.data.message);
         }
     }
 })();

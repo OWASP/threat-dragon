@@ -20,6 +20,8 @@ describe('github controller', function () {
         mockLocation.search = function () {
             return { page: testPage };
         };
+        mockLocation.url = function () { };
+        mockLocation.path = function () { return ''; };
 
         angular.mock.module('app')
 
@@ -96,6 +98,8 @@ describe('github controller', function () {
         it('should not set the repos on the vm', function () {
 
             var testError = new Error('test error');
+            var testErrorMessage;
+            testError.data = { message: testErrorMessage };
 
             mockDatacontext.repos = function () {
                 return $q.reject(testError);
@@ -107,7 +111,140 @@ describe('github controller', function () {
             $scope.$apply();
             expect($scope.vm.repos).toEqual([]);
             expect($scope.vm.error).toEqual(testError);
-            expect(errorLogger.calls.argsFor(0)).toEqual([testError]);
+            expect(errorLogger.calls.argsFor(0)).toEqual([testErrorMessage]);
+        });
+
+        it('should navigate to branch selection', function () {
+
+            var testRepos = 'test repos';
+            var testPagination = {
+                page: 10
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+            spyOn(mockLocation, 'url');
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            var repo = 'org/repo';
+            $scope.vm.selectRepo(repo);
+            expect(mockLocation.url.calls.argsFor(0)).toEqual(['threatmodel/' + repo]);
+
+        });
+
+        it('should navigate to branch seelction (new model)', function () {
+
+            var testRepos = 'test repos';
+            var testPagination = {
+                page: 10
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+            spyOn(mockLocation, 'url');
+            spyOn(mockLocation, 'path').and.returnValue('/new/threatmodel');
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            var repo = 'org/repo';
+            $scope.vm.selectRepo(repo);
+            expect(mockLocation.url.calls.argsFor(0)).toEqual(['new/threatmodel/' + repo]);
+
+        });
+        
+        it('should navigate to the next page', function() {
+            
+            var testRepos = 'test repos';
+            var testPage = 10;
+            var testPagination = {
+                page: testPage,
+                next: true
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            spyOn(mockLocation, 'search');
+            $scope.vm.nextPage();
+            expect(mockLocation.search.calls.argsFor(0)).toEqual(['page', testPage + 1]);            
+        });
+        
+                it('should not navigate to the next page', function() {
+            
+            var testRepos = 'test repos';
+            var testPage = 10;
+            var testPagination = {
+                page: testPage,
+                next: false
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            spyOn(mockLocation, 'search');
+            $scope.vm.nextPage();
+            expect(mockLocation.search).not.toHaveBeenCalled();           
+        });
+
+        it('should navigate to the previous page', function() {
+            
+            var testRepos = 'test repos';
+            var testPage = 10;
+            var testPagination = {
+                page: testPage,
+                prev: true
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            spyOn(mockLocation, 'search');
+            $scope.vm.previousPage();
+            expect(mockLocation.search.calls.argsFor(0)).toEqual(['page', testPage - 1]);            
+        });
+        
+                it('should not navigate to the previous page', function() {
+            
+            var testRepos = 'test repos';
+            var testPage = 10;
+            var testPagination = {
+                page: testPage,
+                prev: false
+            };
+
+            mockDatacontext.repos = function () {
+                return $q.when({ data: { repos: testRepos, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'repos').and.callThrough();
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            spyOn(mockLocation, 'search');
+            $scope.vm.previousPage();
+            expect(mockLocation.search).not.toHaveBeenCalled();          
         });
     });
 
@@ -147,6 +284,8 @@ describe('github controller', function () {
             mockRouteParams.organisation = testOrg;
 
             var testError = new Error('test error');
+            var testErrorMessage;
+            testError.data = { message: testErrorMessage };
 
             mockDatacontext.branches = function () {
                 return $q.reject(testError);
@@ -158,7 +297,62 @@ describe('github controller', function () {
             $scope.$apply();
             expect($scope.vm.branches).toEqual([]);
             expect($scope.vm.error).toEqual(testError);
-            expect(errorLogger.calls.argsFor(0)).toEqual([testError]);
+            expect(errorLogger.calls.argsFor(0)).toEqual([testErrorMessage]);
+        });
+
+        it('should navigate to model selection', function () {
+
+            var testRepo = 'test repo';
+            var testOrg = 'test org';
+            mockRouteParams.repo = testRepo;
+            mockRouteParams.organisation = testOrg;
+
+            var testBranches = 'test branches';
+            var testPagination = {
+                page: 10
+            };
+
+            mockDatacontext.branches = function () {
+                return $q.when({ data: { branches: testBranches, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'branches').and.callThrough();
+            spyOn(mockLocation, 'url');
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            var testBranch = 'testbranch';
+            $scope.vm.selectBranch(testBranch);
+            expect(mockLocation.url.calls.argsFor(0)).toEqual(['threatmodel/' + testOrg + '/' + testRepo + '/' + testBranch]);
+
+        });
+
+        it('should navigate to model selection (new model)', function () {
+
+            var testRepo = 'test repo';
+            var testOrg = 'test org';
+            mockRouteParams.repo = testRepo;
+            mockRouteParams.organisation = testOrg;
+
+            var testBranches = 'test branches';
+            var testPagination = {
+                page: 10
+            };
+
+            mockDatacontext.branches = function () {
+                return $q.when({ data: { branches: testBranches, pagination: testPagination } });
+            };
+
+            spyOn(mockDatacontext, 'branches').and.callThrough();
+            spyOn(mockLocation, 'url');
+            spyOn(mockLocation, 'path').and.returnValue('/new/threatmodel');
+
+            $controller('github as vm', { $scope: $scope });
+            $scope.$apply();
+            var testBranch = 'testbranch';
+            $scope.vm.selectBranch(testBranch);
+            expect(mockLocation.url.calls.argsFor(0)).toEqual(['new/threatmodel/' + testOrg + '/' + testRepo + '/' + testBranch]);
+
         });
     });
 
@@ -199,6 +393,8 @@ describe('github controller', function () {
             mockRouteParams.branch = testBranch;
 
             var testError = new Error('test error');
+            var testErrorMessage;
+            testError.data = { message: testErrorMessage };
 
             mockDatacontext.models = function () {
                 return $q.reject(testError);
@@ -210,7 +406,7 @@ describe('github controller', function () {
             $scope.$apply();
             expect($scope.vm.models).toEqual([]);
             expect($scope.vm.error).toEqual(testError);
-            expect(errorLogger.calls.argsFor(0)).toEqual([testError]);
+            expect(errorLogger.calls.argsFor(0)).toEqual([testErrorMessage]);
         });
     });
 });
