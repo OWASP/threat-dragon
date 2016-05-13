@@ -3,7 +3,7 @@
         <div ng-if="vm.branches && !vm.error" class="jumbotron">
             <p class="text-center">
                 Select a branch from <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}" target="_blank"> 
-                {{vm.organisation}}/{{vm.repo}}</a> from the list below or <a href="#/threatmodel">choose another repo</a>
+                {{vm.organisation}}/{{vm.repo}}</a> from the list below or <a href="#/{{vm.uriPrefix()}}threatmodel">choose another repo</a>
             </p>
         </div>
     </row>
@@ -14,7 +14,7 @@
                 Something went wrong fetching the branches for <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}"
                     target="_blank"> 
                 {{vm.organisation}}/{{vm.repo}}</a>. Check your browser console for details. Maybe that repo doesn't exist
-                or maybe you don't have permissions to see it. Try <a href="#/threatmodel">choosing another repo</a>
+                or maybe you don't have permissions to see it. Try <a href="#/{{vm.uriPefix()}}threatmodel">choosing another repo</a>
                 <span
                     class="fa fa-frown-o"></span>
             </p>
