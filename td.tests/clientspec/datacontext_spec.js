@@ -157,15 +157,13 @@ describe('datacontext service:', function () {
 
     it('should call the create model API', function () {
 
-        var title1 = 'test';
-        var title2 = ' title';
-        var title = 'test_title';
-        var threatModel = { summary: { title: title1 + title2 } };
-        var expectedModel = { summary: { title: title1 + title2 } };
+        var title = 'test title';
+        var threatModel = { summary: { title: title } };
+        var expectedModel = { summary: { title: title } };
         var expectedLocation = location;
         expectedLocation.model = title;
         expectedModel.location = expectedLocation;
-        $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + title + '/create', expectedModel)
+        $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + title + '/create', threatModel)
             .respond(200);
         datacontext.create(location, threatModel);
         $httpBackend.flush();

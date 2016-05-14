@@ -223,7 +223,8 @@ describe('threatModel controller', function () {
             //mock threat model
             mockThreatModel = {
                 summary: {
-                    id: 0
+                    id: 0,
+                    title: 'title'
                 }
             };
 

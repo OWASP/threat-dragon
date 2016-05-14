@@ -102,7 +102,7 @@
                 organisation: threatModelLocation.organisation,
                 repo: threatModelLocation.repo,
                 branch: threatModelLocation.branch,
-                model: threatModel.summary.title.replace(' ', '_')
+                model: threatModel.summary.title
             };
 
             var threatModelUri = buildUri(loc) + '/create';
