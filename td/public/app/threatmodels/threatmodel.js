@@ -140,7 +140,7 @@
         }
 
         function cancel() {
-            if (angular.isDefined(vm.threatModel.summary.id)) {
+            if (angular.isDefined(vm.threatModel.summary.title)) {
                 $location.path('/threatmodel/' + vm.threatModelLocation());
             }
             else {
