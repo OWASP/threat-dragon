@@ -344,10 +344,10 @@ describe('threat model controller tests', function () {
     it('should return the specified error when creating the specified model', function () {
 
         var error = new Error('create error');
-        var data = { statusCode: 400 };
+        error.statusCode = 400 ;
 
         mockRepository.create = function (modelInfo, accessToken, cb) {
-            cb(error, data);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'create').and.callThrough();
@@ -400,10 +400,10 @@ describe('threat model controller tests', function () {
     it('should return the specified error when updating the specified model', function () {
 
         var error = new Error('update error');
-        var data = { statusCode: 400 };
+        error.statusCode = 400;
 
         mockRepository.update = function (modelInfo, accessToken, cb) {
-            cb(error, data);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'update').and.callThrough();
@@ -456,10 +456,10 @@ describe('threat model controller tests', function () {
     it('should return the specified error when deleting the specified model', function () {
 
         var error = new Error('delete error');
-        var data = { statusCode: 400 };
+        error.statusCode = 400;
 
         mockRepository.deleteModel = function (modelInfo, accessToken, cb) {
-            cb(error, data);
+            cb(error, null);
         }
 
         spyOn(mockRepository, 'deleteModel').and.callThrough();

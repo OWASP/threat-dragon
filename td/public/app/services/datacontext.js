@@ -114,10 +114,21 @@
         }
 
         function update() {
-
-            var threatModelUri = buildUri(service.threatModel.location) + '/update';
-
-            return $http.put(threatModelUri, service.threatModel);
+            
+            var oldLocation = Object.assign({}, service.threatModel.location);
+            
+            if (oldLocation.model === service.threatModel.summary.title) {
+                var threatModelUri = buildUri(service.threatModel.location) + '/update';
+                return $http.put(threatModelUri, service.threatModel);         
+            } else {
+                service.threatModel.location.model = service.threatModel.summary.title;
+                return create(service.threatModel.location, service.threatModel).then(onCreated);
+            }
+            
+            function onCreated() {
+                var cleanUplUri = buildUri(oldLocation);
+                return $http.delete(cleanUplUri);
+            }
         }
 
         function deleteModel() {

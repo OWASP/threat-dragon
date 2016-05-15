@@ -97,7 +97,6 @@
         }
 
         function create() {
-
             datacontext.create($routeParams, vm.threatModel).then(onCreate, onError);
 
             function onCreate() {
@@ -201,7 +200,7 @@
 
         function onError(err) {
             vm.errored = true;
-            logError(err);
+            logError(err.data.message);
         }
     }
 })();
