@@ -97,7 +97,6 @@
         }
 
         function create() {
-
             datacontext.create($routeParams, vm.threatModel).then(onCreate, onError);
 
             function onCreate() {
@@ -140,7 +139,7 @@
         }
 
         function cancel() {
-            if (angular.isDefined(vm.threatModel.summary.id)) {
+            if (angular.isDefined(vm.threatModel.summary.title)) {
                 $location.path('/threatmodel/' + vm.threatModelLocation());
             }
             else {
@@ -201,7 +200,7 @@
 
         function onError(err) {
             vm.errored = true;
-            logError(err);
+            logError(err.data.message);
         }
     }
 })();

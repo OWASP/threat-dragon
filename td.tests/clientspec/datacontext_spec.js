@@ -53,11 +53,27 @@ describe('datacontext service:', function () {
         $httpBackend.flush();
 
     });
+    
+    it('should call the repos API with paging', function () {
+
+        $httpBackend.expectGET('threatmodel/repos?page=10', { Accept: 'application/json' }).respond();
+        datacontext.repos(10);
+        $httpBackend.flush();
+
+    });
 
     it('should call the branches API', function () {
 
         $httpBackend.expectGET('threatmodel/' + organisation + '/' + repo + '/branches', { Accept: 'application/json' }).respond();
         datacontext.branches(organisation, repo);
+        $httpBackend.flush();
+
+    });
+    
+    it('should call the branches API with paging', function () {
+
+        $httpBackend.expectGET('threatmodel/' + organisation + '/' + repo + '/branches?page=10', { Accept: 'application/json' }).respond();
+        datacontext.branches(organisation, repo, 10);
         $httpBackend.flush();
 
     });
@@ -157,15 +173,13 @@ describe('datacontext service:', function () {
 
     it('should call the create model API', function () {
 
-        var title1 = 'test';
-        var title2 = ' title';
-        var title = 'test_title';
-        var threatModel = { summary: { title: title1 + title2 } };
-        var expectedModel = { summary: { title: title1 + title2 } };
+        var title = 'test title';
+        var threatModel = { summary: { title: title } };
+        var expectedModel = { summary: { title: title } };
         var expectedLocation = location;
         expectedLocation.model = title;
         expectedModel.location = expectedLocation;
-        $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + title + '/create', expectedModel)
+        $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + title + '/create', threatModel)
             .respond(200);
         datacontext.create(location, threatModel);
         $httpBackend.flush();
@@ -174,8 +188,31 @@ describe('datacontext service:', function () {
 
     it('should call the update model API', function () {
 
-        datacontext.threatModel = { location: location };
+        datacontext.threatModel = {
+            location: location,
+            summary: {
+                title: location.model
+            }
+        };
+
         $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model + '/update', datacontext.threatModel)
+            .respond(200);
+        datacontext.update();
+        $httpBackend.flush();
+    });
+    
+    it('should call the create and delete model APIs', function () {
+
+        datacontext.threatModel = {
+            location: location,
+            summary: {
+                title: location.model + 'x'
+            }
+        };
+
+        $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model + 'x' + '/create', datacontext.threatModel)
+            .respond(200);
+        $httpBackend.expectDELETE('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model)
             .respond(200);
         datacontext.update();
         $httpBackend.flush();
@@ -186,6 +223,9 @@ describe('datacontext service:', function () {
         var diagrams = [{ id: 0 }, { id: 1 }, { id: 2 }];
 
         datacontext.threatModel = {
+            summary: {
+                title: location.model
+            },
             detail: {
                 diagrams: diagrams
             },

@@ -91,7 +91,7 @@ threatmodelcontroller.create = function(req, res) {
         if (!err) {
             res.send(data);
         } else {
-            res.status(data.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }        
     }); 
 };
@@ -109,7 +109,7 @@ threatmodelcontroller.update = function(req, res) {
         if (!err) {
             res.send(data);
         } else {
-            res.status(data.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }        
     }); 
 };
@@ -126,7 +126,7 @@ threatmodelcontroller.deleteModel = function(req, res) {
         if (!err) {
             res.send(data);
         } else {
-            res.status(data.statusCode || 500).json(err);
+            res.status(err.statusCode || 500).json(err);
         }        
     }); 
 };

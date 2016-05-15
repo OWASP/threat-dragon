@@ -7,5 +7,3 @@ before_script:
   - sleep 3 # give xvfb some time to start
 after_success:
   - npm run-script codecov
-deploy:
-  provider: azure_web_apps

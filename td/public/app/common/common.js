@@ -17,7 +17,7 @@
                 organisation: 'mike-goodwin',
                 repo: 'owasp-threat-dragon-demo',
                 branch: 'master',
-                model: 'Demo_Threat_Model'
+                model: 'Demo Threat Model'
             }
         };
 

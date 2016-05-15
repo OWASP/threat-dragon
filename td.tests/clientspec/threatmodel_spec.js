@@ -195,6 +195,8 @@ describe('threatModel controller', function () {
         it('should error on model creation', function () {
 
             var testError = new Error('test error');
+            var testMessage = 'test message';
+            testError.data = {message: testMessage};
 
             mockDatacontext.create = function () {
                 return $q.reject(testError);
@@ -207,7 +209,7 @@ describe('threatModel controller', function () {
             $scope.$apply();
             expect($scope.vm.dirty).toBe(true);
             expect($scope.vm.errored).toBe(true);
-            expect(errorLogger.calls.argsFor(1)).toEqual([testError]);
+            expect(errorLogger.calls.argsFor(1)).toEqual([testMessage]);
 
         });
     });
@@ -223,7 +225,8 @@ describe('threatModel controller', function () {
             //mock threat model
             mockThreatModel = {
                 summary: {
-                    id: 0
+                    id: 0,
+                    title: 'model'
                 }
             };
 

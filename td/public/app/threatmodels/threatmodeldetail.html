@@ -6,7 +6,7 @@
     <div ng-if="!vm.errored && vm.threatModel.location">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a href="#/threatmodel/edit"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <a href="#/threatmodel/edit/{{vm.threatModelLocation()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -82,7 +82,7 @@
                 deleted since you made the link <span class="fa fa-frown-o"></span>
             </p>
             <p>
-                <a href="#threatmodels">Take me home</a>
+                <a href="#">Take me home</a>
             </p>
         </div>
     </div>
