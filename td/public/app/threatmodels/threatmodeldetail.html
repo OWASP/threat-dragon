@@ -33,28 +33,23 @@
                 <div class="col-md-12">{{vm.threatModel.summary.description}}</div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading panel-title">
-                <h4>Threat Model Diagrams</h4>
-            </div>
-            <div class="panel-body">
-                <div ng-repeat-start="diagram in vm.threatModel.detail.diagrams">
-                    <div class="col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-heading panel-title">
-                                <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
-                            </div>
-                            <div class="panel-body">
-                                <a href="#/threatmodel/{{vm.threatModelLocation()}}/diagram/{{diagram.id}}">
-                                    <img src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />
-                                </a>
-                            </div>
+        <div class="panel-body">
+            <div ng-repeat-start="diagram in vm.threatModel.detail.diagrams">
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-title">
+                            <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
+                        </div>
+                        <div class="panel-body">
+                            <a href="#/threatmodel/{{vm.threatModelLocation()}}/diagram/{{diagram.id}}">
+                                <img src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div ng-if="(($index+1) % 5) == 0" class="clearfix visible-lg-block"></div>
-                <div ng-repeat-end ng-hide></div>
             </div>
+            <div ng-if="(($index+1) % 4) == 0" class="clearfix visible-lg-block"></div>
+            <div ng-repeat-end ng-hide></div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -63,9 +58,9 @@
                     role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">
                         <span class="glyphicon glyphicon-edit"></span> Edit
                     </a>
-                    <a class="btn btn-default" href="#/threatmodel/report/{{vm.threatModel.summary.id}}/?suppressbanner=true" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="EView and Print Threat Model Report">
+                    <!--<a class="btn btn-default" href="#/threatmodel/report/{{vm.threatModel.summary.id}}/?suppressbanner=true" target="_blank" role="button" data-toggle="tooltip" data-placement="top" title="EView and Print Threat Model Report">
                         <span class="glyphicon glyphicon-print"></span> Print
-                    </a>
+                    </a>-->
                     <button class="btn btn-default" role="button" ng-click="vm.deleteModel()" data-toggle="tooltip" data-placement="top" title="Delete This Threat Model">
                         <span class="glyphicon glyphicon-remove"></span>  Delete
                     </button>
