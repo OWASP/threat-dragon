@@ -65,13 +65,12 @@
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
                         <p class="lead text-justify">
-                            Threat Dragon is an open-source threat modelling tool from OWASP. To use it, you don't need to sign-up or sign-in and it is completely free. All your models are stored on your local device, so your data is never sent to anyone else or stored at some unknown location on the cloud.
+                            Threat Dragon is an open-source threat modelling tool from OWASP. In the future there will be a cross-platform, installable app
+                            but at the moment there is only an online version. The installable app will work on local files, but the online version stores
+                            its files in GitHub. This means that to use it you have to sign in with a GitHub account.
                         </p>
                         <p>
                             It is currently in the early stages of development (an OWASP incubator project) so there might be some bugs.
-                        </p>
-                        <p class="lead text-justify">
-                            If you make a model that you want to keep, you can print it to a file or hard copy. You can also save the raw model data as a file to share with friends or move between your devices or browsers.
                         </p>
                         </br>
                         <p class="text-right">
@@ -84,7 +83,7 @@
         
         <div class="row">
             
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
                     <a href="#getting-started">
                         <div class="text-center">
@@ -97,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
                     <a href="#threat-model-diagrams">
                         <div class="text-center">
@@ -109,21 +108,8 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                <div class="jumbotron">
-                    <a href="#editing-threat-models">
-                        <div class="text-center">
-                            <span class="glyphicon glyphicon-edit fa-4x text-primary"></span>
-                        </div>
-                    </a>
-                    <div>
-                        </br><p>How to export threat models and share them with friends.</p>
-                    </div>
-                </div>
-            </div>
         
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="jumbotron">
                     <a href="#threat-generation">
                         <div class="text-center">
@@ -145,29 +131,26 @@
                 <h2>Getting started <span class="glyphicon glyphicon-play fa-lg text-primary pull-right"></span></h2>
             </div>
             <div class="panel-body">
-                <h3>Starting from scratch</h3>
+                <h3>Creating a new model</h3>
                 <p>
-                When you browse to Threat Dragon for the first time and hit <a href="https://threatdragon.azurewebsites.net" target="_blank"><code>https://threatdragon.azurewebsites.net</code></a> you will see the Welcome page. To get started with your threat model click or tap
+                Threat Dragon stores its threat models in your GitHub repos. This is so that the models can stay close to the 
+                code they are modelling. Future versions will provide a deeper integration so watch this space but for now, when you login to Threat Dragon for the first time and 
+                hit <a href="https://threatdragon.azurewebsites.net" target="_blank"><code>https://threatdragon.azurewebsites.net</code></a> you will see the Welcome page. To get started with your threat model click or tap
                 </p>
                 <p>
-                <div>
-                    <a class="btn btn-lg btn-default" role="button">
-                        <span class="glyphicon glyphicon-open"></span> Create Local Model
-                    </a>
-                </div>
+                    <span class="fa fa-plus fa-2x text-primary"></span>
                 </p>
                 <p>
-                    and then
+                    You will then be presented with a list of your GitHub repositories. Pick the one where you want to store your new
+                    model. If you have more than 30 repos you might have to page through them until you find the one you want. Once you
+                    have picked your target repo, you will be asked to pick a branch. Again, if you have more than 30 branches you might need
+                    to page. When you pick a branch you will be taken to the threat model edit page where you can enter general information about your model. 
                 </p>
                 <p>
-                    <div>
-                        <h4><a><span class="glyphicon glyphicon-plus"></span> Create new threat model...</a></h4>
-                    </div>
-                </p>              
-                <hr>
-                <p>
-                   This takes you to the threat model edit page where you can enter general information about your model. The <strong>Title</strong> field is mandatory. All the rest are optional, but they provide
-                   context for your model. This can be useful if someone else has to pick the model up in the future. Although only the <strong>Title</strong> field is mandatory, your model will a be pretty useless without <strong>Diagrams</strong>. Add some diagrams to your model by clicking or tapping
+                    The <strong>Title</strong> field is mandatory. All the rest are optional, but they provide
+                    context for your model. This can be useful if someone else has to pick the model up in the future. 
+                    Although only the <strong>Title</strong> field is mandatory, your model will a be pretty useless without <strong>Diagrams</strong>. 
+                    Add some diagrams to your model by clicking or tapping
                 </p>
                 <p>
                 <div>
@@ -215,24 +198,14 @@
                         </button>
                     </div>
                 </p>
+                <p>
+                    Models are saved in your chosen branch at a path like <code>ThreatDragonModels/[model name]/[model title].json</code>. Look at the 
+                    <a href="https://github.com/mike-goodwin/owasp-threat-dragon-demo">Demo Threat Model</a> for an example. Because of this, if you change
+                    title of your model it will delete the old model in GitHub and replace it with one at the new path. 
+                </p>    
                 <hr>
                 <p>
                     <strong class="text-primary">Congratulations!</strong> You have got the basics done. Next step...mapping out your system in a diagram.
-                </p>
-                <hr>
-                <h3>Starting from a file</h3>
-                <p>
-                    If a friend or colleague has sent you a threat model file then you can import it into your local storage. Go to the 
-                    threat models list at <a href="https://threatdragon.azurewebsites.net/#/threatmodels" target="_blank"><code>https://threatdragon.azurewebsites.net/#/threatmodels</code></a>. To import the model, click or tap
-                </p>
-                <p>
-                    <div>
-                        <h4><a><span class="fa fa-folder-open"></span> Load a threat model from a file...</a></h4>
-                    </div>
-                </p>
-                <p>
-                    Now browse to your file. By default it will have file extension <code>.dragon</code>. Open it and you are done!
-                    Your new model should appear in your threat model list.
                 </p>
                 <hr>
                 <h3>Loading a demo model</h3>
@@ -242,11 +215,24 @@
                 </p>
                 <p>
                     <div>
-                        <h4><a><span class="glyphicon glyphicon-cloud-download"></span> Download a demo model...</a></h4>
+                        <span class="fa fa-cloud-download fa-2x text-primary"></span>
                     </div>
                 </p>
                 <p>
                     This should give you some ideas on how to get started with your own model.
+                </p>
+                <hr>
+                <h3>Opening a model from GitHub</h3>
+                <p>
+                    If you have a repository that already has threat models, you can open them by clicking or tapping
+                </p>
+                <p>
+                    <div>
+                        <span class="fa fa-github fa-2x text-primary"></span>
+                    </div>
+                </p>
+                <p>
+                    You will then be able to select a repo and branch and finally you will be able to choose from a list of models.
                 </p>
             </div>
         </div>
@@ -391,42 +377,6 @@
                 Enter the details for your threat in the threat dialog. The <strong>Title</strong> and <strong>STRIDE Threat Type</strong>
                 are mandatory. When you are done, hit <strong>Save</strong>. Your new threat should appear. To edit it again, tap or click
                 its title.
-            </div>
-        </div>
-    </div>
-    
-    <div class="container-fluid">
-        <div class="panel panel-default" id="editing-threat-models">
-            <div class="panel-heading panel-title">
-                <h2>Sharing and exporting threat models <span class="glyphicon glyphicon-edit fa-lg text-primary pull-right"></span></h2>
-            </div>
-            <div class="panel-body">
-                <h3>Sharing</h3>
-                <p>
-                If you would like to share a threat model between your devices or browsers or with a friend you can save the model data
-                as a file. This can be done from the threat models list.
-                </p>
-                <p>
-                    <button class="btn btn-default btn-sm" role="button" data-toggle="tooltip" data-placement="top" title="Save this threat model as a local file">
-                    <span class="glyphicon glyphicon-file"></span>  Save To File
-                    </button>
-                </p>
-                This will save the model data in a local file. The file name will be built from the threat model title by replacing spaces in the title
-                with underscore characters (_). So for example, a threat model called <strong>My Cool Model</strong> will result in a file called 
-                <code>My_Cool_Model.dragon</code>. Another use for this file is if you would like to keep the model in your source control system.
-                <hr>
-                <h3>Printing</h3>
-                <p>
-                You can create a printed version of the model (or a PDF or XPS version if you have the appropriate printer driver). This can be done
-                from either the threat models list or the threat model detail page.
-                </p>
-                <p>
-                    <a class="btn btn-default btn-sm" role="button" data-toggle="tooltip" data-placement="top" title="View and print threat model report">
-                        <span class="glyphicon glyphicon-print"></span> Print
-                    </a>                    
-                </p>
-                This will create a new browser tab with a report style view of the threat model showing the summary data, all the diagrams
-                and all the elements from each diagram with their properties and threats. This can then be printed.              
             </div>
         </div>
     </div>
