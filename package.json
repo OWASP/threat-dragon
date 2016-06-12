@@ -1,0 +1,28 @@
+{
+  "name": "owasp-threat-dragon-core",
+  "version": "0.3.0",
+  "private": false,
+  "scripts": {
+    "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js"
+  },
+  "description": "OWASP Threat Dragon core file",
+  "author": {
+    "name": "mike.goodwin",
+    "email": "mike.goodwin@owasp.org"
+  },
+  "license": "Apache-2.0",
+  "homepage": "http://docs.threatdragon.org/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mike-goodwin/owasp-threat-dragon-core.git"
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "jquery": "^2.2.3",
+    "toastr": "^2.1.2"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.1",
+    "npm-html2js": "^0.1.8"
+  }
+}
