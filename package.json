@@ -5,7 +5,7 @@
   "scripts": {
     "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js"
   },
-  "description": "OWASP Threat Dragon core file",
+  "description": "OWASP Threat Dragon core files",
   "author": {
     "name": "mike.goodwin",
     "email": "mike.goodwin@owasp.org"
