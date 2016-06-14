@@ -3,7 +3,16 @@
   "version": "0.3.1",
   "private": false,
   "scripts": {
-    "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js"
+    "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js",
+    "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
+    "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
+    "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
+    "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
+    "test-client-chrome": "./node_modules/.bin/karma start --browsers Chrome",
+    "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
+    "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
+    "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
+    "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS"
   },
   "description": "OWASP Threat Dragon core files",
   "author": {
@@ -19,10 +28,32 @@
   "dependencies": {
     "angular": "^1.5.0",
     "jquery": "^2.2.3",
+    "lodash": "^4.13.1",
+    "nools": "^0.4.1",
     "toastr": "^2.1.2"
   },
   "devDependencies": {
+    "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
+    "jasmine-node": "^1.14.5",
+    "jasmine-spec-reporter": "^2.4.0",
     "jshint": "^2.9.1",
-    "npm-html2js": "^0.1.8"
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-coverage": "^0.5.5",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-ie-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-ng-html2js-preprocessor": "^0.2.0",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-phantomjs-shim": "^1.4.0",
+    "karma-spec-reporter": "0.0.24",
+    "karma-xml-reporter": "^0.1.4",
+    "npm-html2js": "^0.1.8",
+    "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
+    "phantomjs-prebuilt": "^2.1.5",
+    "q": "^1.4.1",
+    "watchify": "^3.7.0"
   }
 }
