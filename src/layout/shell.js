@@ -1,7 +1,6 @@
-﻿
-'use strict';
+﻿'use strict';
 
-function shell($rootScope, $scope, $location, common, config) {
+function shell($rootScope, $scope, common, config) {
     /*jshint validthis: true */
     var controllerId = 'shell';
     //var vm = this;
