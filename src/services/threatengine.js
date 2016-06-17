@@ -2,7 +2,7 @@
 
 var nools = require('nools');
 
-function threatengine($q) {
+function threatengine() {
 
     var flowName = 'threat generation';
 

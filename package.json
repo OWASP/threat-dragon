@@ -5,14 +5,14 @@
   "scripts": {
     "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
-    "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
+    "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
-    "test-client-chrome": "./node_modules/.bin/karma start --browsers Chrome",
+    "test-client-chrome": "./node_modules/.bin/karma start --single-run --browsers Chrome",
     "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
     "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
-    "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
-    "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS"
+    "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox",
+    "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome"
   },
   "description": "OWASP Threat Dragon core files",
   "author": {
@@ -33,6 +33,9 @@
     "toastr": "^2.1.2"
   },
   "devDependencies": {
+    "browserify-istanbul": "^2.0.0",
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.3",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "jasmine-node": "^1.14.5",
@@ -41,7 +44,7 @@
     "karma": "^0.13.22",
     "karma-browserify": "^5.0.5",
     "karma-chrome-launcher": "^0.2.3",
-    "karma-coverage": "^0.5.5",
+    "karma-coverage": "^1.0.0",
     "karma-firefox-launcher": "^0.1.7",
     "karma-ie-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
@@ -53,7 +56,6 @@
     "npm-html2js": "^0.1.8",
     "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
     "phantomjs-prebuilt": "^2.1.5",
-    "q": "^1.4.1",
     "watchify": "^3.7.0"
   }
 }
