@@ -10,6 +10,6 @@ Threat Dragon is an online threat modelling web application including system dia
 
 We are currently maintaining [a working protoype](http://threatdragon.azurewebsites.net/#/) in sych with the master code branch.
 
-**Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
-
 This repository contains the core files and modules for the project. For more info, go to [the main project repo](https://github.com/mike-goodwin/owasp-threat-dragon).
+
+**Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
