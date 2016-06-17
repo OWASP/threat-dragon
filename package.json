@@ -12,9 +12,10 @@
     "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
     "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox",
-    "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome"
+    "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome",
+    "codecov": "./node_modules/.bin/codecov"
   },
-  "description": "OWASP Threat Dragon core files",
+  "description": "OWASP Threat Dragon core modules",
   "author": {
     "name": "mike.goodwin",
     "email": "mike.goodwin@owasp.org"
