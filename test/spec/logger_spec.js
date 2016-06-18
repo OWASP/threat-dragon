@@ -1,8 +1,5 @@
 'use strict';
 
-
-
-
 var logMessage = 'message';
 var logSource = 'source';
 var logData = 'data';

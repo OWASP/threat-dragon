@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "angular": "^1.5.0",
+    "jointjs": "^0.9.10",
     "jquery": "^2.2.3",
     "lodash": "^4.13.1",
     "nools": "^0.4.1",
@@ -39,6 +40,7 @@
     "istanbul": "^0.4.3",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
+    "jasmine-jquery": "^2.1.1",
     "jasmine-node": "^1.14.5",
     "jasmine-spec-reporter": "^2.4.0",
     "jshint": "^2.9.1",

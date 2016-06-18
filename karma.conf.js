@@ -29,13 +29,13 @@ module.exports = function (config) {
 
     browserify: {
       debug: true,
-      extensions: [".js"],
-      configure: function (bundle) {
-        bundle.on('prebundle', function () {
-          bundle
-            .transform(cover(coverOptions));
-        });
-      }
+      // extensions: [".js"],
+      // configure: function (bundle) {
+      //   bundle.on('prebundle', function () {
+      //     bundle
+      //       .transform(cover(coverOptions));
+      //   });
+      // }
     },
 
     // test results reporter to use
