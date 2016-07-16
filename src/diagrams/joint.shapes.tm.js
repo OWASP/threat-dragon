@@ -3,6 +3,15 @@ var V = joint.V;
 
 joint.shapes.tm = {};
 
+joint.shapes.tm.Highlighter = {
+    highlighter: {
+        name: 'addClass',
+        options: {
+            className: 'highlighted'
+        }
+    }
+};
+
 //utility functions for threat model shapes
 
 joint.shapes.tm.utils = {
@@ -328,11 +337,11 @@ joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
     },
 
     setSelected: function () {
-        this.highlight();
+        this.highlight(null, joint.shapes.tm.Highlighter);
     },
 
     setUnselected: function () {
-        this.unhighlight();
+        this.unhighlight(null, joint.shapes.tm.Highlighter);
     }
 });
 
@@ -345,10 +354,10 @@ joint.shapes.tm.ProcessView = joint.shapes.tm.ToolElementView;
 joint.shapes.tm.LinkView = joint.dia.LinkView.extend({
 
     setSelected: function () {
-        this.highlight();
+        this.highlight(null, joint.shapes.tm.Highlighter);
     },
     setUnselected: function () {
-        this.unhighlight();
+        this.unhighlight(null, joint.shapes.tm.Highlighter);
     }
 });
 
