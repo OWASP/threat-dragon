@@ -109,7 +109,6 @@ describe('custom shape tests', function() {
             var selector = 'g[model-id="' + cell.id + '"]';
             expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(false);
             cellView.setSelected($(diagramElement).find(selector)[0]);
-            console.log($(diagramElement)[0]);
             expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
         });
         
