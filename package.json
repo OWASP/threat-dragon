@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon-core",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": false,
   "scripts": {
     "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js",
