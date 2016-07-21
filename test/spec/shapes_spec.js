@@ -112,7 +112,7 @@ describe('custom shape tests', function() {
             expect($(diagramElement).find(selector).attr('class').indexOf('highlighted') >= 0).toBe(true);
         });
         
-        xit('should unhighlight a cell', function() {
+        it('should unhighlight a cell', function() {
             
             var cellView = diagram.findViewByModel(cell);
             cellView.setSelected();

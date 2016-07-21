@@ -1,22 +1,19 @@
 'use strict';
 
 var diagramming;
-var common;
+var mockCommon;
 var mockLog;
+var joint = require('jointjs');
+var $ = require('jquery');
 
 describe('diagramming service:', function () {
 
     beforeEach(function () {
 
         mockLog = {};
+        mockCommon = {};
 
-        angular.mock.module('app');
-        angular.mock.module('common');
-
-        angular.mock.inject(function (_common_, _diagramming_) {
-            common = _common_;
-            diagramming = _diagramming_;
-        });
+        diagramming = require('../../src/services/diagramming')(mockCommon);
 
     });
 
