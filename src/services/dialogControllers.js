@@ -20,7 +20,7 @@ function structuredExitController($scope, $uibModalInstance, $location, destinat
         $uibModalInstance.close();
         $location.path(destination);
     }
-};
+}
 
 function confirmController($scope, $uibModalInstance, ok, cancel, parameter) {
 
@@ -41,6 +41,6 @@ function confirmController($scope, $uibModalInstance, ok, cancel, parameter) {
         if (angular.isDefined(ok)) { ok(param); }
         $uibModalInstance.close();
     }
-};
+}
 
 module.exports = controllers;
