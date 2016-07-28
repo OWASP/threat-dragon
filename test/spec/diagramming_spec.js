@@ -1,7 +1,6 @@
 'use strict';
 
 var diagramming;
-var mockCommon;
 var mockLog;
 var joint = require('jointjs');
 var $ = require('jquery');
@@ -11,9 +10,7 @@ describe('diagramming service:', function () {
     beforeEach(function () {
 
         mockLog = {};
-        mockCommon = {};
-
-        diagramming = require('../../src/services/diagramming')(mockCommon);
+        diagramming = require('../../src/services/diagramming')();
 
     });
 
@@ -24,6 +21,16 @@ describe('diagramming service:', function () {
             var graph = diagramming.newGraph();
             expect(graph).toBeDefined();
             expect(graph instanceof joint.dia.Graph).toBe(true);;
+
+        });
+
+        it('should expose threat model elements', function() {
+
+            expect(diagramming.Process instanceof Function).toBe(true);
+            expect(diagramming.Store instanceof Function).toBe(true);
+            expect(diagramming.Actor instanceof Function).toBe(true);
+            expect(diagramming.Flow instanceof Function).toBe(true);
+            expect(diagramming.Boundary instanceof Function).toBe(true);
 
         });
 

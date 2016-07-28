@@ -1,8 +1,9 @@
 ﻿'use strict';
 
 var joint = require('jointjs');
+require('./joint.shapes.tm');
 
-function diagramming(common) {
+function diagramming() {
 
     var zoomScaleFactor = 1.25;
 

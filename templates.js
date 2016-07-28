@@ -10,6 +10,22 @@ angular.module('templates', [])
     '    </section>\n' +
     '</div>\n' +
     '')
+  $templateCache.put('layout/structuredExit.html',
+    '﻿<div id="structuredExitModal">\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>Are you sure you want to leave this page?</h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        You have unsaved changes and if you leave this page they will be lost!\n' +
+    '        Press Cancel to stay where you are and keep the unsaved changes,\n' +
+    '        or press OK to leave and lose the unsaved changes.\n' +
+    '    </div>\n' +
+    '    <div class="modal-footer">\n' +
+    '        <button id="buttonOK" class="btn btn-default" ng-click="onOK()">OK</button>\n' +
+    '        <button id="buttonCancel" class="btn btn-primary" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
   $templateCache.put('layout/topnav.html',
     '﻿<nav class="navbar navbar-default navbar-fixed-top">\n' +
     '    <div class="container-fluid">\n' +
