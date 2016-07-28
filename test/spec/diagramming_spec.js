@@ -75,6 +75,13 @@ describe('diagramming service:', function () {
 
             });
 
+            it('should create a new diagram', function() {
+
+                var diagram = diagramming.newDiagram(600, 400, 10, graph, $('#diagramElement'), true);
+                expect(diagram instanceof joint.dia.Paper).toBe(true);
+
+            });
+
             it('should set the size of the diagram', function () {
 
                 diagram.resize({ height: 100, width: 200 });

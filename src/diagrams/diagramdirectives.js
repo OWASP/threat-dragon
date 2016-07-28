@@ -6,7 +6,7 @@ var joint = require('jointjs');
 var V = joint.V;
 var $ = require('jquery');
 
-var stencil = function (common) {
+var stencil = function (diagramming) {
 
     var directive = {
         link: link,
@@ -31,7 +31,7 @@ var stencil = function (common) {
             scope.padding = 0.0;
         }
 
-        var graph = new joint.dia.Graph();
+        var graph = diagramming.newGraph();
         var cell = new scope.shape.class();
         var diagram;
 
@@ -55,7 +55,7 @@ var stencil = function (common) {
         shape.attributes.target = { x: scale * elementWidth - padding, y: 0.5 * scale * elementWidth - padding };
         shape.setLabel(label);
 
-        return newDiagram(0.5 * elementWidth + 2.0 * padding, elementWidth, 1, graph, element[0], false);
+        return diagramming.newDiagram(0.5 * elementWidth + 2.0 * padding, elementWidth, 1, graph, element[0], false);
     }
 
     function elementStencil(shape, label, element, scale, padding, graph) {
@@ -66,12 +66,12 @@ var stencil = function (common) {
         shape.translate(0.5 * (elementWidth - shape.get('size').width), padding);
         shape.attr('text/text', label);
 
-        return newDiagram(shapeHeight + 2.0 * padding, elementWidth, 1, graph, element[0], false);
+        return diagramming.newDiagram(shapeHeight + 2.0 * padding, elementWidth, 1, graph, element[0], false);
     }
 
 };
 
-var diagram = function (common) {
+var diagram = function (common, diagramming) {
 
     var directive = {
         link: link,
@@ -98,7 +98,7 @@ var diagram = function (common) {
     function link(scope, element) {
 
         $(element).parent().height(scope.height);
-        var diagram = newDiagram(scope.height - 10, scope.width - 10, scope.gridSize, scope.graph, element[0], scope.interactive);
+        var diagram = diagramming.newDiagram(scope.height - 10, scope.width - 10, scope.gridSize, scope.graph, element[0], scope.interactive);
 
         selectOnScope = scope.select;
 
@@ -253,20 +253,6 @@ var diagram = function (common) {
     }
 
 };
-
-function newDiagram(height, width, gridSize, graph, target, interactive) {
-
-    var paper = new joint.dia.Paper({
-        el: target,
-        width: width,
-        height: height,
-        gridSize: gridSize,
-        model: graph,
-        interactive: interactive
-    });
-
-    return paper;
-}
 
 module.exports = { stencil: stencil, diagram: diagram };
 

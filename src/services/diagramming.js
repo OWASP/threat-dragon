@@ -80,6 +80,7 @@ function diagramming() {
     // Define the functions and properties to reveal.
     var service = {
         newGraph: newGraph,
+        newDiagram: newDiagram,
         Process: joint.shapes.tm.Process,
         Store: joint.shapes.tm.Store,
         Actor: joint.shapes.tm.Actor,
@@ -91,6 +92,20 @@ function diagramming() {
 
     function newGraph() {
         return new joint.dia.Graph();
+    }
+
+    function newDiagram(height, width, gridSize, graph, target, interactive) {
+
+        var paper = new joint.dia.Paper({
+            el: target,
+            width: width,
+            height: height,
+            gridSize: gridSize,
+            model: graph,
+            interactive: interactive
+        });
+
+        return paper;
     }
 
     //private
