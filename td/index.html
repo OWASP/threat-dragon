@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html>
-
 <head>
     <title data-ng-bind="title">OWASP Threat Dragon</title>
     <meta charset="utf-8" />
@@ -16,16 +15,15 @@
     <!-- endbower -->
 
     <link href="public/libs/united/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="public/content/bootstrap-custom.css" rel="stylesheet" />
+    <link href="public/content/bootstrap-custom.css" rel="stylesheet"/>
     <link href="public/content/joint-custom.css" rel="stylesheet" />
     <link href="public/content/logo-nav.css" rel="stylesheet" />
     <link href="public/content/spinner.css" rel="stylesheet" />
-
+    
     <link rel="shortcut icon" href="public/favicon.ico" type="image/x-icon">
     <link rel="icon" href="public/favicon.ico" type="image/x-icon">
 
 </head>
-
 <body>
     <div data-ng-app="app">
         <div class="text-center" ng-if="!appLoaded">
@@ -36,18 +34,26 @@
         <div data-ng-include="'public/app/layout/shell.html'"></div>
     </div>
 
-    <script src="public/app/threatdragon.js"></script>
-    <!--todo: browserify these -->
-    <script src="public/libs/toastr/toastr.js"></script>
+    <!-- bower:js -->
+    <script src="public/libs/angular/angular.min.js"></script>
+    <script src="public/libs/angular-route/angular-route.min.js"></script>
+    <script src="public/libs/nools/nools.min.js"></script>
+    <script src="public/libs/jquery/jquery.min.js"></script>
     <script src="public/libs/lodash/lodash.min.js"></script>
     <script src="public/libs/backbone/backbone.min.js"></script>
-    <script src="public/libs/joint/joint.js"></script>
+    <script src="public/libs/toastr/toastr.min.js"></script>
+    <script src="public/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="public/libs/joint/joint.min.js"></script>
+    <script src="public/libs/angular-xeditable/xeditable.min.js"></script>
+    <script src="public/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- endbower -->
 
     <!-- common Modules -->
     <script src="public/app/common/common.js"></script>
     <script src="public/app/common/logger.js"></script>
 
     <!-- Bootstrapping -->
+    <script src="public/app/app.js"></script>
     <script src="public/app/config.js"></script>
     <script src="public/app/config.exceptionHandler.js"></script>
     <script src="public/app/config.route.js"></script>
@@ -76,5 +82,5 @@
     <script src="public/app/directives.js"></script>
 
 </body>
-
 </html>
+
