@@ -15,9 +15,6 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
 
 var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable']);
 
-//require core component
-require('owasp-threat-dragon-core');
-
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
         $rootScope.location = $location;
