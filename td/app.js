@@ -7,7 +7,7 @@ try {
     var app = express();
     app.set('trust proxy', true);
     app.set('views', './td/views');
-    app.set('view engine', 'jade');
+    app.set('view engine', 'pug');
 
     //static content
     app.use('/public', express.static(path.join(__dirname, 'public')));

@@ -1,7 +1,7 @@
-include ../../node_modules/jade-bootstrap/components/navbar
-include ../../node_modules/jade-bootstrap/components/navs
-include ../../node_modules/jade-bootstrap/components/buttons
-include ../../node_modules/jade-bootstrap/components/icons
+include ../../node_modules/pug-bootstrap/components/navbar
+include ../../node_modules/pug-bootstrap/components/navs
+include ../../node_modules/pug-bootstrap/components/buttons
+include ../../node_modules/pug-bootstrap/components/icons
 doctype html
 html(lang="en")
     head
@@ -42,7 +42,7 @@ html(lang="en")
                             .row
                                 .col-sm-5.col-sm-offset-7
                                     form(action="login",role="login",method="POST")
-                                        input(type="hidden",name="_csrf",value="#{csrfToken}")
+                                        input(type="hidden",name="_csrf",value=csrfToken)
                                         button.btn.btn-lg.btn-default.btn-block(type="submit")
                                             span.fa.fa-2x.fa-github.icon-align.fa-fw
                                             span Login with GitHub                                            

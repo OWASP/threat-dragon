@@ -43,6 +43,8 @@
     "octonode": "0.7.5",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
+    "pug": "2.0.0-beta11",
+    "pug-bootstrap": "0.0.11",
     "serve-favicon": "2.3.0"
   },
   "devDependencies": {
