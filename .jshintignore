@@ -1,3 +1,4 @@
 td/public/libs/
-
+td/public/app/threatdragon.js
+td/public/app/*.min.js
 td.tests/
