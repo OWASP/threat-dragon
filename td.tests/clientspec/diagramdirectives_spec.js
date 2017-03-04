@@ -439,7 +439,7 @@ describe('diagram directive: ', function() {
                 it('should scroll left', function() {
                     
                     parent.scrollLeft(50);        
-                    var bboxx = 1;
+                    var bboxx = 2;
                     spyOn(cellView, 'getBBox').and.returnValue({x: bboxx, y: 50});
                     
                     diagram.trigger('cell:pointermove', cellView, null, x,y);
@@ -450,7 +450,7 @@ describe('diagram directive: ', function() {
                 it('should scroll up', function() {
                     
                     parent.scrollTop(50);        
-                    var bboxy = 1;
+                    var bboxy = 2;
                     spyOn(cellView, 'getBBox').and.returnValue({x: 50, y: bboxy});
                     
                     diagram.trigger('cell:pointermove', cellView, null, x,y);

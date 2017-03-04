@@ -47,7 +47,7 @@ module.exports = function(config) {
     preprocessors: {
         'td/public/app/**/*.js': ['coverage'],
         'td/public/app/**/*.html': ['ng-html2js'],
-        'test/spec/*.js': ['browserify']
+        'td.tests/clientspec/*.js': ['browserify']
     },
 
     browserify: {
@@ -75,26 +75,19 @@ module.exports = function(config) {
     // web server port
     port: 5858,
 
-
     // enable / disable colors in the output (reporters and logs)
     colors: true,
-
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome', 'Firefox', 'IE', 'PhantomJS'],
-    //browsers: ['IE'],
-    //browsers: ['Firefox'],
-
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

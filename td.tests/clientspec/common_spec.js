@@ -18,7 +18,7 @@ describe('common service', function () {
             $provide.value('logger', mockLogger);
         });
 
-        module('common');
+        angular.module('common');
 
         angular.mock.inject(function ($q, $rootScope, _common_) {
             common = _common_;

@@ -1,41 +1,22 @@
 'use strict';
 
-var logger;
-var $rootScope;
-var $httpBackend;
-var mockLog;
-
 var logMessage = 'message';
 var logSource = 'source';
 var logData = 'data';
 
 describe('logger service:', function () {
 
-    beforeEach(function () {
+    var mockLog = {};
+    //$log mocks
+    mockLog.log = function () { };
+    mockLog.error = function () { };
 
-        mockLog = {};
-
-        angular.mock.module('app');
-
-        angular.mock.module(function ($provide) {
-            $provide.value('$log', mockLog);
-        });
-
-        angular.mock.inject(function (_$rootScope_, _$httpBackend_, _logger_) {
-            logger = _logger_;
-            $rootScope = _$rootScope_;
-            $httpBackend = _$httpBackend_;
-            $httpBackend.expectGET().respond();
-        });
-
-        $rootScope.$apply();
-
-        //$log mocks
-        mockLog.log = function () { };
+    beforeEach(function() {
         spyOn(mockLog, 'log');
-        mockLog.error = function () { };
         spyOn(mockLog, 'error');
     });
+
+    var logger = require('../../td/public/app/common/logger')(mockLog);
 
     describe('log tests:', function () {
 
