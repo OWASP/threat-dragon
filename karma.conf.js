@@ -1,5 +1,5 @@
-// Karma configuration
-// Generated on Thu Jun 18 2015 22:02:08 GMT+0100 (GMT Daylight Time)
+var cover = require('browserify-istanbul');
+var coverOptions = { ignore: ['test/**/*.js'], defaultIgnore: true };
 
 module.exports = function(config) {
   config.set({
@@ -10,13 +10,12 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['phantomjs-shim', 'jasmine'],
+    frameworks: ['phantomjs-shim', 'jasmine', 'browserify'],
 
     // list of files / patterns to load in the browser
     files: [
+        'td/public/app/threatdragon.js',
         './node_modules/phantomjs-polyfill-find/find-polyfill.js',
-        'td/public/libs/angular/angular.js',
-        'td/public/libs/angular-route/angular-route.js',
         'td/public/libs/nools/nools.js',
         'td/public/libs/jquery/jquery.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
@@ -27,7 +26,6 @@ module.exports = function(config) {
         'td/public/libs/joint/joint.js',
         'td/public/libs/angular-bootstrap/ui-bootstrap-tpls.js',
         'td/public/libs/angular-mocks/angular-mocks.js',
-        'td/public/libs/Blob/Blob.js',
         'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
@@ -38,7 +36,9 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'td/public/app/config.exceptionHandler.js'  //enables more specific unit tests
+        'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
+        'td/public/app/app.js',
+        'td/public/app/common/*.js'
     ],
 
 
@@ -46,7 +46,12 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         'td/public/app/**/*.js': ['coverage'],
-        'td/public/app/**/*.html': ['ng-html2js']
+        'td/public/app/**/*.html': ['ng-html2js'],
+        'test/spec/*.js': ['browserify']
+    },
+
+    browserify: {
+      debug: true,
     },
 
 
