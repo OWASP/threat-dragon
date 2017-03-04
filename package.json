@@ -58,7 +58,7 @@
     "pug": "2.0.0-beta11",
     "pug-bootstrap": "0.0.11",
     "serve-favicon": "2.3.0",
-    "toastr": "2.1.2"
+    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "bower": "1.7.9",

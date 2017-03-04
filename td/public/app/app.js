@@ -13,6 +13,7 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
 var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable']);
 
 //require custom modules, services, controllers and directives
+require('./config');
 require('./common');
 
 app.run(['$rootScope', '$location',

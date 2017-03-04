@@ -1,6 +1,7 @@
-'use strict'
+'use strict';
 
-var app = require('angular').module('app');
+var angular = require('angular');
+var app = angular.module('app');
 var commonModule = angular.module('common', []);
 
 commonModule.provider('commonConfig', require('./common').commonConfig);

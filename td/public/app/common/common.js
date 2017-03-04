@@ -16,7 +16,7 @@ var commonConfig = function () {
             config: this.config
         };
     };
-}
+};
 
 var common = function ($q, $rootScope, commonConfig, logger) {
 
@@ -57,6 +57,6 @@ var common = function ($q, $rootScope, commonConfig, logger) {
     function $broadcast() {
         return $rootScope.$broadcast.apply($rootScope, arguments);
     }
-}
+};
 
 module.exports = {commonModule: common, commonConfig: commonConfig};

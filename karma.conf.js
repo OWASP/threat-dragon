@@ -20,7 +20,6 @@ module.exports = function(config) {
         'td/public/libs/jquery/jquery.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
         'td/public/libs/bootstrap/bootstrap.js',
-        'td/public/libs/toastr/toastr.js',
         'td/public/libs/lodash/lodash.js',
         'td/public/libs/backbone/backbone.js',
         'td/public/libs/joint/joint.js',
@@ -38,7 +37,8 @@ module.exports = function(config) {
     exclude: [
         'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
         'td/public/app/app.js',
-        'td/public/app/common/*.js'
+        'td/public/app/common/*.js',
+        'td/public/app/config.js'
     ],
 
 
