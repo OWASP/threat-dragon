@@ -43,6 +43,7 @@ module.exports = function(config) {
         'td/public/app/config.js',
         'td/public/app/services/datacontext.js',
         'td/public/app/services/threatengine.js',
+        'td/public/app/services/routemediator.js',
         'td/public/app/services/index.js'
     ],
 
