@@ -7,6 +7,9 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    //set high to avoid PhantomJS timeout
+    //https://github.com/karma-runner/karma-phantomjs-launcher/issues/126
+    browserNoActivityTimeout: 30000,
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -16,7 +19,6 @@ module.exports = function(config) {
     files: [
         'td/public/app/threatdragon.js',
         './node_modules/phantomjs-polyfill-find/find-polyfill.js',
-        'td/public/libs/nools/nools.js',
         'td/public/libs/jquery/jquery.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
         'td/public/libs/bootstrap/bootstrap.js',
@@ -40,6 +42,7 @@ module.exports = function(config) {
         'td/public/app/common/*.js',
         'td/public/app/config.js',
         'td/public/app/services/datacontext.js',
+        'td/public/app/services/threatengine.js',
         'td/public/app/services/index.js'
     ],
 
