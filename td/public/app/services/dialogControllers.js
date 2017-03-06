@@ -12,10 +12,12 @@ function structuredExitController($scope, $uibModalInstance, $location, destinat
 
     function onCancel() {
         cancel(destination);
+        $uibModalInstance.dismiss();
     }
 
     function onOK() {
         ok(destination);
+        $uibModalInstance.close();
         $location.path(destination);
     }
 }
