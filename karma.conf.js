@@ -25,7 +25,6 @@ module.exports = function(config) {
         'td/public/libs/lodash/lodash.js',
         'td/public/libs/backbone/backbone.js',
         'td/public/libs/joint/joint.js',
-        'td/public/libs/angular-bootstrap/ui-bootstrap-tpls.js',
         'td/public/libs/angular-mocks/angular-mocks.js',
         'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
@@ -44,6 +43,8 @@ module.exports = function(config) {
         'td/public/app/services/datacontext.js',
         'td/public/app/services/threatengine.js',
         'td/public/app/services/routemediator.js',
+        'td/public/app/services/dialogs.js',
+        'td/public/app/services/dialogControllers.js',
         'td/public/app/services/index.js'
     ],
 

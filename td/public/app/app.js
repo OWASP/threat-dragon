@@ -4,13 +4,14 @@
 var angular = require('angular');
 require('angular-route');
 require('angular-xeditable');
+require('angular-animate');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
     return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
 };
 
-var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable']);
+var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable', 'ngAnimate']);
 
 //require custom modules, services, controllers and directives
 require('./config');
