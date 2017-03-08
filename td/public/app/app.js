@@ -15,6 +15,7 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
 var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable', 'ngAnimate']);
 
 //require custom modules, services, controllers and directives
+require('./config.route');
 require('./config');
 require('./common');
 require('./services');

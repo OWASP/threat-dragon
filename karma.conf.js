@@ -32,6 +32,7 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [
         'td/public/app/threatdragon.min.js',
+        'td/public/app/config.route.js',
         'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
         'td/public/app/app.js',
         'td/public/app/common/*.js',
