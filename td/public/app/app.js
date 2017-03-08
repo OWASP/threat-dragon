@@ -21,6 +21,7 @@ require('./common');
 require('./services');
 require('./diagrams');
 require('./layout');
+require('./welcome');
 
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {

@@ -49,7 +49,9 @@ module.exports = function(config) {
         'td/public/app/diagrams/diagramdirectives.js',
         'td/public/app/diagrams/elementPropertyDirectives.js',
         'td/public/app/layout/index.js',
-        'td/public/app/layout/shell.js'
+        'td/public/app/layout/shell.js',
+        'td/public/app/welcome/index.js',
+        'td/public/app/welcome/welcome.js'
     ],
 
 
