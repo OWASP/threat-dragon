@@ -20,6 +20,7 @@ require('./config');
 require('./common');
 require('./services');
 require('./diagrams');
+require('./layout');
 
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
