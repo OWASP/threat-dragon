@@ -29,7 +29,7 @@ function getRoutes() {
         {
             url: '/',
             config: {
-                templateUrl: 'welcome.html',
+                templateUrl: './public/app/welcome/welcome.html',
                 title: 'Welcome Page',
                 settings: {
                 }
@@ -37,7 +37,7 @@ function getRoutes() {
         }, {
             url: '/welcome',
             config: {
-                templateUrl: 'welcome.html',
+                templateUrl: './public/app/welcome/welcome.html',
                 title: 'Welcome Page',
                 settings: {
                 }
@@ -110,7 +110,7 @@ function getRoutes() {
             url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
             config: {
                 title: 'Threat Model Diagram',
-                templateUrl: 'diagrams/diagrameditor.html',
+                templateUrl: './public/app/diagrams/diagrameditor.html',
                 reloadOnSearch: false,
                 settings: {
                 }
