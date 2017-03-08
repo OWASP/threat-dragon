@@ -1,152 +1,154 @@
-﻿(function () {
-    'use strict';
+﻿'use strict';
 
-    // Factory name is handy for logging
-    var serviceId = 'diagramming';
+var joint = require('jointjs');
+require('./joint.shapes.tm');
 
-    // Define the factory on the module.
-    // Inject the dependencies. 
-    // Point to the factory definition function.
-    angular.module('app').factory(serviceId, ['common', diagramming]);
+function diagramming() {
 
-    function diagramming(common) {
+    var zoomScaleFactor = 1.25;
 
-        var zoomScaleFactor = 1.25;
-        
-        //graph extensions
-        
-        joint.dia.Graph.prototype.initialise = function(diagramJson) {
-            
-            this.fromJSON(diagramJson);
-            
-        };
-        
-        joint.dia.Graph.prototype.addProcess = function()
-        {
-            var cell = newElement('joint.shapes.tm.Process', 50, 50, 'process ' + this.attributes.cells.length);            
-            this.addCell(cell);
+    //graph extensions
 
-            return cell;
-        };
+    joint.dia.Graph.prototype.initialise = function (diagramJson) {
 
-        joint.dia.Graph.prototype.addStore = function()
-        {
-            var cell = newElement('joint.shapes.tm.Store', 50, 50, 'store ' + this.attributes.cells.length);
-            this.addCell(cell);
+        this.fromJSON(diagramJson);
 
-            return cell;
-        };
+    };
 
-        joint.dia.Graph.prototype.addActor = function()
-        {
-            var cell = newElement('joint.shapes.tm.Actor', 50, 50, 'actor ' + this.attributes.cells.length);
-            this.addCell(cell);
+    joint.dia.Graph.prototype.addProcess = function () {
+        var cell = newElement(joint.shapes.tm.Process, 50, 50, 'process ' + this.attributes.cells.length);
+        this.addCell(cell);
 
-            return cell;
-        };
+        return cell;
+    };
 
-        joint.dia.Graph.prototype.addFlow = function(source, target)
-        {
-            var cell = flow(source, target, 'flow ' + this.attributes.cells.length);
-            this.addCell(cell);
+    joint.dia.Graph.prototype.addStore = function () {
+        var cell = newElement(joint.shapes.tm.Store, 50, 50, 'store ' + this.attributes.cells.length);
+        this.addCell(cell);
 
-            return cell;
-        };
+        return cell;
+    };
 
-        joint.dia.Graph.prototype.addBoundary = function()
-        {
-            var cell = boundary();
-            this.addCell(cell);
+    joint.dia.Graph.prototype.addActor = function () {
+        var cell = newElement(joint.shapes.tm.Actor, 50, 50, 'actor ' + this.attributes.cells.length);
+        this.addCell(cell);
 
-            return cell;
-        };
+        return cell;
+    };
 
-        joint.dia.Graph.prototype.clearAll = function()
-        {
-            this.clear(true);
-        };
+    joint.dia.Graph.prototype.addFlow = function (source, target) {
+        var cell = flow(source, target, 'flow ' + this.attributes.cells.length);
+        this.addCell(cell);
 
-        joint.dia.Graph.prototype.cellCount = function()
-        {
-            return this.attributes.cells.length;
-        };
+        return cell;
+    };
 
-        joint.dia.Graph.prototype.getCellById = function(id)
-        {
-            return this.getCell(id);
-        };
-        
-        //diagram extensions
-        
-        joint.dia.Paper.prototype.resize = function (size)
-        {
-            this.setDimensions(size.width, size.height);
-        };
-        
-        joint.dia.Paper.prototype.scaleContent = function()
-        {
-            this.scaleContentToFit();
-        };
-        
-        joint.dia.Paper.prototype.zoom = function(zoomLevel)
-        {
-            var factor = Math.pow(zoomScaleFactor, zoomLevel);
-            this.scale(factor);
-        };
-        
-        // Define the functions and properties to reveal.
-        var service = {
-            newGraph: newGraph
-        };
+    joint.dia.Graph.prototype.addBoundary = function () {
+        var cell = boundary();
+        this.addCell(cell);
 
-        return service;
+        return cell;
+    };
 
-        function newGraph()
-        {
-            return new joint.dia.Graph();
-        }
+    joint.dia.Graph.prototype.clearAll = function () {
+        this.clear(true);
+    };
 
-        //private
+    joint.dia.Graph.prototype.cellCount = function () {
+        return this.attributes.cells.length;
+    };
 
-        function newElement(type, x, y, label) {
-            var ShapeClass = common.utils.stringToFunction(type);
-            var cell = new ShapeClass({
-                position: { x: x, y: y },
-                attrs: { text: { text: label } }
-            });
+    joint.dia.Graph.prototype.getCellById = function (id) {
+        return this.getCell(id);
+    };
 
-            return cell;
-        }
+    //diagram extensions
 
-        function flow(source, target, label) {
+    joint.dia.Paper.prototype.resize = function (size) {
+        this.setDimensions(size.width, size.height);
+    };
 
-            var newTarget = target ? { id: target.id } : { x: 110, y: 100 };
-            var newSource = source ? { id: source.id } : { x: 30, y: 20 };
+    joint.dia.Paper.prototype.scaleContent = function () {
+        this.scaleContentToFit();
+    };
 
-            var cell = new joint.shapes.tm.Flow({
-                target: newTarget,
-                source: newSource,
-                vertices: []
-            });
+    joint.dia.Paper.prototype.zoom = function (zoomLevel) {
+        var factor = Math.pow(zoomScaleFactor, zoomLevel);
+        this.scale(factor);
+    };
 
-            cell.setLabel(label);
+    // Define the functions and properties to reveal.
+    var service = {
+        newGraph: newGraph,
+        newDiagram: newDiagram,
+        Process: joint.shapes.tm.Process,
+        Store: joint.shapes.tm.Store,
+        Actor: joint.shapes.tm.Actor,
+        Flow: joint.shapes.tm.Flow,
+        Boundary: joint.shapes.tm.Boundary
+    };
 
-            return cell;
-        }
+    return service;
 
-        function boundary(source, target, label) {
-
-            var cell = new joint.shapes.tm.Boundary({
-                target: target ? target : { x: 110, y: 100 },
-                source: source ? source : { x: 30, y: 20 },
-                vertices: []
-            });
-
-            if (label) {
-                cell.setLabel(label);
-            }
-
-            return cell;
-        }
+    function newGraph() {
+        return new joint.dia.Graph();
     }
-})();
+
+    function newDiagram(height, width, gridSize, graph, target, interactive) {
+
+        var paper = new joint.dia.Paper({
+            el: target,
+            width: width,
+            height: height,
+            gridSize: gridSize,
+            model: graph,
+            interactive: interactive
+        });
+
+        return paper;
+    }
+
+    //private
+
+    function newElement(ShapeClass, x, y, label) {
+        var cell = new ShapeClass({
+            position: { x: x, y: y },
+            attrs: { text: { text: label } }
+        });
+
+        return cell;
+    }
+
+    function flow(source, target, label) {
+
+        var newTarget = target ? { id: target.id } : { x: 110, y: 100 };
+        var newSource = source ? { id: source.id } : { x: 30, y: 20 };
+
+        var cell = new joint.shapes.tm.Flow({
+            target: newTarget,
+            source: newSource,
+            vertices: []
+        });
+
+        cell.setLabel(label);
+
+        return cell;
+    }
+
+    function boundary(source, target, label) {
+
+        var cell = new joint.shapes.tm.Boundary({
+            target: target ? target : { x: 110, y: 100 },
+            source: source ? source : { x: 30, y: 20 },
+            vertices: []
+        });
+
+        if (label) {
+            cell.setLabel(label);
+        }
+
+        return cell;
+    }
+}
+
+module.exports = diagramming;

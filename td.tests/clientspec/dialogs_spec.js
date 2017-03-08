@@ -1,4 +1,5 @@
 'use strict';
+var $ = require('jquery');
 
 describe('dialogs service:', function () {
 

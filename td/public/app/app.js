@@ -5,6 +5,7 @@ var angular = require('angular');
 require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
+var $ = window.jQuery = require('jquery');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
@@ -17,6 +18,7 @@ var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable
 require('./config');
 require('./common');
 require('./services');
+require('./diagrams');
 
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {

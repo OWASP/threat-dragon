@@ -25,27 +25,10 @@ var common = function ($q, $rootScope, commonConfig, logger) {
         $broadcast: $broadcast,
         // generic
         activateController: activateController,
-        logger: logger,
-        utils: { stringToFunction: stringToFunction }
+        logger: logger
     };
 
     return service;
-
-    function stringToFunction(str) {
-        var arr = str.split(".");
-        /*jshint validthis: true */
-        var fn = (window || this);
-        for (var i = 0, len = arr.length; i < len; i++) {
-            fn = fn[arr[i]];
-        }
-
-        if (typeof fn !== "function") {
-            throw new Error("function not found");
-        }
-
-        return fn;
-    }
-
 
     function activateController(promises, controllerId) {
         return $q.all(promises).then(function (eventArgs) {

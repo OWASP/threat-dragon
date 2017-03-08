@@ -78,11 +78,11 @@
         function getStencils() {
 
             var shapes = [
-                { shape: { className: 'joint.shapes.tm.Process', label: 'Process' }, action: newProcess },
-                { shape: { className: 'joint.shapes.tm.Store', label: 'Store'}, action: newStore },
-                { shape: { className: 'joint.shapes.tm.Actor', label: 'Actor'}, action: newActor },
-                { shape: { className: 'joint.shapes.tm.Flow', label: 'Data Flow'}, action: newFlow },
-                { shape: { className: 'joint.shapes.tm.Boundary', label: 'Trust\nBoundary' }, action: newBoundary }];
+                { shape: { getElement: function() { return new diagramming.Process(); }, label: 'Process' }, action: newProcess },
+                { shape: { getElement: function() { return new diagramming.Store(); }, label: 'Store'}, action: newStore },
+                { shape: { getElement: function() { return new diagramming.Actor(); }, label: 'Actor'}, action: newActor },
+                { shape: { getElement: function() { return new diagramming.Flow(); }, label: 'Data Flow'}, action: newFlow },
+                { shape: { getElement: function() { return new diagramming.Boundary(); }, label: 'Trust\nBoundary' }, action: newBoundary }];
 
             return shapes;
         }

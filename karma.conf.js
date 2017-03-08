@@ -9,7 +9,7 @@ module.exports = function(config) {
 
     //set high to avoid PhantomJS timeout
     //https://github.com/karma-runner/karma-phantomjs-launcher/issues/126
-    browserNoActivityTimeout: 30000,
+    browserNoActivityTimeout: 120000,
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -19,14 +19,9 @@ module.exports = function(config) {
     files: [
         'td/public/app/threatdragon.js',
         './node_modules/phantomjs-polyfill-find/find-polyfill.js',
-        'td/public/libs/jquery/jquery.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
         'td/public/libs/bootstrap/bootstrap.js',
-        'td/public/libs/lodash/lodash.js',
-        'td/public/libs/backbone/backbone.js',
-        'td/public/libs/joint/joint.js',
         'td/public/libs/angular-mocks/angular-mocks.js',
-        'td/public/libs/angular-xeditable/xeditable.js',
         'td/public/app/*.js',
         'td/public/app/**/*.js',
         'td.tests/clientspec/*.js',
@@ -36,6 +31,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+        'td/public/app/threatdragon.min.js',
         'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
         'td/public/app/app.js',
         'td/public/app/common/*.js',
@@ -45,7 +41,12 @@ module.exports = function(config) {
         'td/public/app/services/routemediator.js',
         'td/public/app/services/dialogs.js',
         'td/public/app/services/dialogControllers.js',
-        'td/public/app/services/index.js'
+        'td/public/app/services/diagramming.js',
+        'td/public/app/services/joint.shapes.tm.js',
+        'td/public/app/services/index.js',
+        'td/public/app/diagrams/index.js',
+        'td/public/app/diagrams/diagramdirectives.js',
+        'td/public/app/diagrams/elementPropertyDirectives.js'
     ],
 
 

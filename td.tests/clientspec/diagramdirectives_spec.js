@@ -1,21 +1,27 @@
 'use strict';
 
+var $ = require('jquery');
+var joint = require('jointjs');
+require('../../td/public/app/services/joint.shapes.tm');
+
 describe('stencil directive: ', function() {
     
     var $rootScope;
     var $scope;
     var $compile;
     var $httpBackend;
+    var diagramming;
     var elem;
     
     beforeEach(function() {
       
         angular.mock.module('app');
-        angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
+        angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_, _diagramming_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $compile = _$compile_;
             $httpBackend = _$httpBackend_;
+            diagramming = _diagramming_;
             $httpBackend.expectGET().respond();
         });
 
@@ -30,9 +36,7 @@ describe('stencil directive: ', function() {
 
         beforeEach(function() {
             
-            var shapeType = 'joint.shapes.tm.Process';
-            var shapeLabel = 'shape-label';
-            $scope.shape = {className: shapeType, label: shapeLabel};
+            $scope.shape = { getElement: function() { return new diagramming.Process(); }, label: 'Process' };
                 
         });
         
@@ -93,9 +97,7 @@ describe('stencil directive: ', function() {
         
         beforeEach(function() {
             
-            var shapeType = 'joint.shapes.tm.Flow';
-            var shapeLabel = 'shape-label';
-            $scope.shape = {className: shapeType, label: shapeLabel};
+            $scope.shape = $scope.shape = { getElement: function() { return new diagramming.Flow(); }, label: 'Flow' };
                 
         });
         
@@ -126,15 +128,17 @@ describe('diagram directive: ', function() {
     var $scope;
     var $compile;
     var $httpBackend;
+    var diagramming;
     var elem;
     
     beforeEach(function() {
       
         angular.mock.module('app');
-        angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
+        angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_, _diagramming_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $compile = _$compile_;
+            diagramming = _diagramming_;
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();
         });
@@ -253,10 +257,10 @@ describe('diagram directive: ', function() {
             
             it('should select a link', function() {
                 
-                var link = new joint.shapes.tm.Flow( {source: {x: 1, y: 1}, target: {x:100, y:100}});
+                var link = new joint.dia.Link({source: {x: 1, y: 1}, target: {x:100, y:100}});
                 $scope.graph.addCell(link);
                 var cellView = diagram.findViewByModel(link);
-                diagram.trigger('link:options', {}, cellView);
+                diagram.trigger('link:options', cellView, {});
                 expect($scope.select).toHaveBeenCalled();
                 expect($scope.select.calls.argsFor(0)).toEqual([link]);
                 

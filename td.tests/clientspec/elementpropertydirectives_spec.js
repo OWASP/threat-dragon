@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jquery');
+
 describe('modal close directive: ', function() {
     
     var $rootScope;
