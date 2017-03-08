@@ -34,6 +34,6 @@ app.run(['$route', '$rootScope', 'routemediator',
     }]);
 
 //config for angular-xeditable
-app.run(function (editableOptions) {
+app.run(['editableOptions', function (editableOptions) {
     editableOptions.theme = 'bs3';
-});
+}]);

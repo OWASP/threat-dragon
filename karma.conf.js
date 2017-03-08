@@ -17,7 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'td/public/app/threatdragon.js',
+        'td/public/app/threatdragon.min.js',
         './node_modules/phantomjs-polyfill-find/find-polyfill.js',
         'td/public/libs/jasmine-jquery/jasmine-jquery.js',
         'td/public/libs/bootstrap/bootstrap.js',
@@ -31,7 +31,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'td/public/app/threatdragon.min.js',
+        'td/public/app/threatdragon.js', //run tests on minified code
         'td/public/app/config.route.js',
         'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
         'td/public/app/app.js',
