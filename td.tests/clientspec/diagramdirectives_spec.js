@@ -1,5 +1,6 @@
 'use strict';
 
+require('angular-mocks');
 var $ = require('jquery');
 var joint = require('jointjs');
 require('../../td/public/app/services/joint.shapes.tm');

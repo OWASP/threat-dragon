@@ -1,5 +1,7 @@
 'use strict';
 
+require('angular-mocks');
+
 var routemediator;
 var $rootScope;
 var $httpBackend;

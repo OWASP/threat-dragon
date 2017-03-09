@@ -18,12 +18,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'td/public/app/threatdragon.min.js',
-        './node_modules/phantomjs-polyfill-find/find-polyfill.js',
-        'td/public/libs/jasmine-jquery/jasmine-jquery.js',
-        'td/public/libs/bootstrap/bootstrap.js',
-        'td/public/libs/angular-mocks/angular-mocks.js',
-        'td/public/app/*.js',
-        'td/public/app/**/*.js',
         'td.tests/clientspec/*.js',
         'td/public/app/**/*.html'
     ],
@@ -31,32 +25,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'td/public/app/threatdragon.js', //run tests on minified code
-        'td/public/app/config.route.js',
-        'td/public/app/config.exceptionHandler.js',  //enables more specific unit tests
-        'td/public/app/app.js',
-        'td/public/app/common/*.js',
-        'td/public/app/config.js',
-        'td/public/app/directives.js',
-        'td/public/app/services/datacontext.js',
-        'td/public/app/services/threatengine.js',
-        'td/public/app/services/routemediator.js',
-        'td/public/app/services/dialogs.js',
-        'td/public/app/services/dialogControllers.js',
-        'td/public/app/services/diagramming.js',
-        'td/public/app/services/joint.shapes.tm.js',
-        'td/public/app/services/index.js',
-        'td/public/app/diagrams/index.js',
-        'td/public/app/diagrams/diagramdirectives.js',
-        'td/public/app/diagrams/diagram.js',
-        'td/public/app/diagrams/elementPropertyDirectives.js',
-        'td/public/app/layout/index.js',
-        'td/public/app/layout/shell.js',
-        'td/public/app/welcome/index.js',
-        'td/public/app/welcome/welcome.js',
-        'td/public/app/threatmodels/index.js',
-        'td/public/app/threatmodels/github.js',
-        'td/public/app/threatmodels/threatmodel.js'
+
     ],
 
 

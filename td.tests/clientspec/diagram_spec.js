@@ -1,5 +1,6 @@
 ﻿'use strict';
 
+require('angular-mocks');
 var joint = require('jointjs');
 
 describe('diagram controller', function () {
