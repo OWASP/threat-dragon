@@ -23,6 +23,8 @@ require('./diagrams');
 require('./layout');
 require('./welcome');
 
+app.directive('tmtPager', [require('./directives')]);
+
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
         $rootScope.location = $location;
