@@ -22,9 +22,14 @@ require('./services');
 require('./diagrams');
 require('./layout');
 require('./welcome');
-
 app.directive('tmtPager', [require('./directives')]);
 
+//extend exception handler
+app.config(['$provide', function ($provide) {
+    $provide.decorator('$exceptionHandler', ['$delegate', 'config', 'logger', require('./config.exceptionHandler')]);
+}]);
+
+//add location to root scope
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
         $rootScope.location = $location;
