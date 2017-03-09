@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="!vm.threatModel.location && !vm.errored">
+    <div ng-if="!vm.threatModel.location && !vm.errored && !vm.isNewModel">
         <p class="h3 text-center">Your threat model is loading...</p>
         <div class="spinner"></div>
     </div>
@@ -27,8 +27,8 @@
                         <p>
                             <div class="alert alert-info" role="alert">
                                 <span class="fa fa-info-circle" aria-hidden="true"></span>
-                                <span class="sr-only">Warning:</span> Changing the model title will delete the old model and create a new
-                                one to replace it.
+                                <span class="sr-only">Warning:</span> Changing the model title will delete the old model
+                                and create a new one to replace it.
                             </div>
                         </p>
                     </div>
