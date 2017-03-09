@@ -52,7 +52,9 @@ module.exports = function(config) {
         'td/public/app/layout/index.js',
         'td/public/app/layout/shell.js',
         'td/public/app/welcome/index.js',
-        'td/public/app/welcome/welcome.js'
+        'td/public/app/welcome/welcome.js',
+        'td/public/app/threatmodels/index.js',
+        'td/public/app/threatmodels/github.js'
     ],
 
 

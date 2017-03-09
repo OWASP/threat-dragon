@@ -6,6 +6,7 @@ require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
 var $ = window.jQuery = require('jquery');
+require('bootstrap');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
@@ -22,6 +23,7 @@ require('./services');
 require('./diagrams');
 require('./layout');
 require('./welcome');
+require('./threatmodels');
 
 app.directive('tmtPager', [require('./directives')]);
 
