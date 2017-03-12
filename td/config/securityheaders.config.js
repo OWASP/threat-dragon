@@ -5,14 +5,14 @@ var helmet = require('helmet');
 var securityHeaders = function (app, forceSecure) {
     
     app.set('x-powered-by', false);
-    var ninetyDaysInMilliseconds = 7776000000;
-    app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds, force: forceSecure }));
-    app.use(helmet.frameguard('deny'));
+    var ninetyDaysInSeconds = 7776000;
+    app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: forceSecure, includeSubdomains: false }));
+    app.use(helmet.frameguard({action: 'deny'}));
     app.use(helmet.hidePoweredBy());
     app.use(helmet.noSniff());
     app.use(helmet.xssFilter());
     // can't currently use CSP as i would like because various 3rd party libs are using inline style and javascript eval()
-    app.use(helmet.csp({
+    app.use(helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'none'"],
             scriptSrc: ["'self'", "'unsafe-eval'"], //needed for lodash and nools
