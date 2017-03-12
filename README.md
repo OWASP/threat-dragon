@@ -57,7 +57,7 @@ If you then browse to `http://localhost:3000` you should see the running applica
 
 All Threat Dragon build tasks are done using `npm`. The basic one is:
 
-`npm build`
+`npm run build`
 
 See `package.json` for a other build tasks.
 

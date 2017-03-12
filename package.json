@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": false,
   "scripts": {
-    "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts && npm run-script build-templates",
+    "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
     "build-templates": "browserify -t [browserify-ng-html2js --module templates] ./td/public/app/templates.build.js -o ./td/public/app/templates.js",
     "copy-fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./td/public/fonts",
     "bundle-css": "./node_modules/.bin/rework-npm ./td/public/content/app.css -o ./td/public/content/threatdragon.css",
@@ -102,7 +102,7 @@
     "phantomjs-prebuilt": "2.1.14",
     "requirejs": "2.3.3",
     "rework-npm-cli": "0.1.1",
-    "supertest": "1.2.0",
+    "supertest": "3.0.0",
     "uglifycss": "0.0.25",
     "watchify": "3.9.0"
   }
