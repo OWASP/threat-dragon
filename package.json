@@ -7,7 +7,7 @@
     "build-templates": "browserify -t [browserify-ng-html2js --module templates] ./td/public/app/templates.build.js -o ./td/public/app/templates.js",
     "copy-fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./td/public/fonts",
     "bundle-css": "./node_modules/.bin/rework-npm ./td/public/content/app.css -o ./td/public/content/threatdragon.css",
-    "minify-css": "./node_modules/.bin/cleancss ./td/public/content/threatdragon.css -o ./td/public/content/threatdragon.min.css",
+    "minify-css": "./node_modules/.bin/uglifycss ./td/public/content/threatdragon.css > ./td/public/content/threatdragon.min.css",
     "bundle-minify-css": "npm run-script bundle-css && npm run-script minify-css",
     "bundle": "browserify --debug ./td/public/app/app.js -o ./td/public/app/threatdragon.js",
     "bundle-minify": "browserify ./td/public/app/app.js -d -p [minifyify --map ./td/public/app/threatdragon.js.map --output ./td/public/app/threatdragon.js.map ] > ./td/public/app/threatdragon.min.js",
@@ -67,7 +67,7 @@
     "toastr": "2.1.2"
   },
   "devDependencies": {
-    "angular-mocks": "^1.5.0",
+    "angular-mocks": "1.5.0",
     "browserify-istanbul": "2.0.0",
     "codecov": "1.0.1",
     "debug": "2.2.0",
@@ -97,6 +97,7 @@
     "phantomjs-prebuilt": "2.1.14",
     "requirejs": "2.1.20",
     "supertest": "1.2.0",
+    "uglifycss": "0.0.25",
     "watchify": "3.7.0"
   }
 }
