@@ -1,5 +1,5 @@
 {
-  "name": "OWASP-Threat-Dragon",
+  "name": "owasp-threat-dragon",
   "version": "0.2.0",
   "private": false,
   "scripts": {
@@ -12,6 +12,7 @@
     "bundle": "browserify --debug ./td/public/app/app.js -o ./td/public/app/threatdragon.js",
     "bundle-minify": "browserify ./td/public/app/app.js -d -p [minifyify --map ./td/public/app/threatdragon.js.map --output ./td/public/app/threatdragon.js.map ] > ./td/public/app/threatdragon.min.js",
     "start": "node server.js",
+    "debug": "node server.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors td",
     "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
@@ -20,7 +21,7 @@
     "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
     "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
-    "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome",
+    "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
     "codecov": "./node_modules/.bin/codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
