@@ -9,7 +9,8 @@
 }
 
 .navbar-form-text {
-	color: white
+	color: white;
+	cursor: default
 }
 
 .text-overflow {
