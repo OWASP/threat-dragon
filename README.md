@@ -2,7 +2,8 @@
   <img src="http://mike-goodwin.github.io/owasp-threat-dragon/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon.svg)](LICENSE.txt)
+[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on&followRedirects=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon.svg)](LICENSE.txt)
+[![Dependency Status](https://www.versioneye.com/user/projects/56185934a193340f2f000262/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185934a193340f2f000262) 
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
@@ -22,7 +23,7 @@ Install Git and node.js. To get the code, go to where you want your code to be l
 
 `git clone https://github.com/mike-goodwin/owasp-threat-dragon.git`
 
-This installs code in two sub-folders. One for the main application (`td`) and one for the unit tests (`td.tests`). Get all the node packages:
+This installs code in two sub-folders. One for the main application (`td`) and one for the unit tests (`td.tests`). To install, do:
 
 `npm install`
 
@@ -36,9 +37,9 @@ Once a user is signed in, their session information contains an OAuth access tok
 
 `[{\"isPrimary\": true, \"id\": 0, \"value\": \"abcdef\"}, {\"isPrimary\": false, \"id\": 1, \"value\": \"ghijkl\"}]`
 
-By default Threat Dragon used Azure Table Storage for the session store via [connect-azuretables](https://www.npmjs.com/package/connect-azuretables). To make this work you need to specify an Azure Storage Account and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`. See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
+If you are developing locally, you can choose to store the session data in memory using the express-session in-memory store. To do this the `SESSION_STORAGE`environment variale to `local`. As [mentioned in the express-session docs](https://github.com/expressjs/session) this is for development only - it is not suitable for production. To remind you of this, Threat Dragon will write a log message at severity ERROR when it starts if the in memory session store is used.
 
-If you don't want to use Azure Table Storage you can set the `SESSION_STORAGE`environment variale to `local`. Threat Dragon will then use the express-session in-memory session store. As [mentioned in the express-session docs](https://github.com/expressjs/session) this is for development only - it is not suitable for production.
+For production use, Threat Dragon currently supports Azure Table Storage for the session store via [connect-azuretables](https://www.npmjs.com/package/connect-azuretables). To make this store work you need to specify an Azure Storage Account and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`. See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
 
 If you want to use an [alternative session store](https://github.com/expressjs/session#compatible-session-stores) in production, install it and edit the [session.config.js](https://github.com/mike-goodwin/owasp-threat-dragon/blob/master/td/config/session.config.js) file.
 
@@ -46,7 +47,7 @@ Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To over
 
 ##Running the application
 
-Once your environment variables are set up start the node web server:
+Once your environment variables are set up, start the node web server:
 
 `npm start`
 
@@ -54,23 +55,17 @@ If you then browse to `http://localhost:3000` you should see the running applica
 
 ##Debug builds
 
-Threat Dragon currently uses [Grunt](http://gruntjs.com/) for its build workflow, so if you want to change the build, do
+All Threat Dragon build tasks are done using `npm`. The basic one is:
 
-`npm install -g grunt-cli`
+`npm build`
 
-The default build minifies the Javascript and CSS. It does build code maps, but if you want to run with
-unminified files, do:
-
-`grunt debug`
-
-then
-
-`npm start`
+See `package.json` for a other build tasks.
 
 ##Running the unit tests
 
-The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm scripts are available:
+The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm tasks are available:
 
+* `pretest`: runs jshint without the unit tests
 * `test-client-phantomjs`, `test-client-firefox`, `test-client-chrome`, `test-client-ie`: runs client side tests using the specified browser
 * `test-server`: runs the server side tests
 * `test`: runs jshint, client side tests on Firefox and PhantomJS and server side tests (this is what runs on Travis CI)
@@ -87,12 +82,4 @@ We aim to maintain unit test coverage at > 90%
 
 Also, the code is currently lint free :)
 
-##Freshness
 
-npm
-
-[![Dependency Status](https://www.versioneye.com/user/projects/56185934a193340f2f000262/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185934a193340f2f000262) 
-
-bower
-
-[![Dependency Status](https://www.versioneye.com/user/projects/56185933a193340f2800026b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185933a193340f2800026b)
