@@ -1,4 +1,5 @@
-var app = require('angular').module('app');
+var angular= require('angular');
+var app = angular.module('app');
 var diagramdirectives = require('./diagramdirectives');
 var elementPropertyDirectives = require('./elementpropertydirectives');
 var diagram = require('./diagram');

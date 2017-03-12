@@ -5,7 +5,7 @@ var angular = require('angular');
 require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
-var $ = window.jQuery = require('jquery');
+window.jQuery = require('jquery');
 require('bootstrap');
 
 //temporary fix for Chrome/Jointjs problem
