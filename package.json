@@ -43,7 +43,7 @@
     "angular-xeditable": "0.1.12",
     "backbone": "1.3.3",
     "body-parser": "1.17.1",
-    "bootstrap": "3.3.6",
+    "bootstrap": "3.3.7",
     "bunyan": "1.8.0",
     "connect-azuretables": "1.0.14",
     "connect-ensure-login": "0.1.1",
