@@ -3,7 +3,8 @@
 </p>
 
 [![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on&followRedirects=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon.svg)](LICENSE.txt)
-[![Dependency Status](https://www.versioneye.com/user/projects/56185934a193340f2f000262/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185934a193340f2f000262) 
+[![Dependency Status](https://www.versioneye.com/user/projects/56185934a193340f2f000262/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185934a193340f2f000262)
+[![Dependency Status](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon/badge)](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
