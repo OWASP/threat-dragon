@@ -57,7 +57,7 @@
     "jointjs": "0.9.10",
     "jquery": "2.2.3",
     "lodash": "4.13.1",
-    "morgan": "1.7.0",
+    "morgan": "1.8.1",
     "nools": "0.4.1",
     "octonode": "0.7.5",
     "passport": "0.3.2",
