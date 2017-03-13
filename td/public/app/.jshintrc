@@ -1,4 +1,4 @@
 {
-    "jquery": true,
-    "browser": true
+    "browser": true,
+    "browserify": true
 }

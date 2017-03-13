@@ -1,5 +1,7 @@
 'use strict';
 
+require('angular-mocks');
+
 describe('github controller', function () {
 
     var $scope;

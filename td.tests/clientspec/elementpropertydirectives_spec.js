@@ -1,5 +1,8 @@
 'use strict';
 
+require('angular-mocks');
+var $ = require('jquery');
+
 describe('modal close directive: ', function() {
     
     var $rootScope;

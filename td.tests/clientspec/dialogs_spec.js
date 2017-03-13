@@ -1,5 +1,8 @@
 'use strict';
 
+require('angular-mocks');
+var $ = require('jquery');
+
 describe('dialogs service:', function () {
 
     var dialogs;
@@ -9,6 +12,7 @@ describe('dialogs service:', function () {
     var $modal;
     var $timeout;
     var $q;
+    var common;
     var mockCommon;
     var mockDatacontext;
     var logError;

@@ -2,7 +2,8 @@
 // Exclude from testRunner.html which should run exactly what it wants to run
 (function () {
     'use strict';
-    
+
+    /*global angular*/
     var app = angular.module('app');
 
     // Configure by setting an optional string value for appErrorPrefix.
@@ -12,7 +13,7 @@
         $provide.decorator('$exceptionHandler',
             ['$delegate', 'config', 'logger', extendExceptionHandler]);
     }]);
-    
+
     // Extend the $exceptionHandler service to also display a toast.
     function extendExceptionHandler($delegate, config, logger) {
         var appErrorPrefix = config.appErrorPrefix;

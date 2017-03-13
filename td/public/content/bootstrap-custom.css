@@ -8,6 +8,11 @@
 	font-size: 14px
 }
 
+.navbar-form-text {
+	color: white;
+	cursor: default
+}
+
 .text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;

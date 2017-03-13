@@ -1,5 +1,7 @@
 ﻿'use strict';
 
+require('angular-mocks');
+
 describe('threatModel controller', function () {
 
     var $scope;
