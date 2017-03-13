@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
