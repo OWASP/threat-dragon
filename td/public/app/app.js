@@ -27,10 +27,18 @@ require('./threatmodels');
 
 app.directive('tmtPager', [require('./directives')]);
 
+app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
         $rootScope.location = $location;
     }]);
+
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.hashPrefix('');
+}]);
 
 // Handle routing errors and success events
 app.run(['$route', '$rootScope', 'routemediator',

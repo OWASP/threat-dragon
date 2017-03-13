@@ -86,6 +86,11 @@ function datacontext($q, $http, common) {
             service.threatModel.location = loc;
             return $q.resolve(service.threatModel);
         }
+
+        function onLoadError(err) {
+            service.threatModel = null;
+            return $q.reject(err);
+        }
     }
 
     function create(threatModelLocation, threatModel) {
@@ -153,12 +158,6 @@ function datacontext($q, $http, common) {
         } else {
             return $q.reject(new Error('invalid diagram id'));
         }
-    }
-
-    //private functions
-    function onLoadError(err) {
-        service.threatModel = null;
-        return $q.reject(err);
     }
 
     function buildUri(threatModelLocation) {
