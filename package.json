@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -103,7 +103,7 @@
     "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
     "phantomjs-prebuilt": "2.1.14",
     "requirejs": "2.3.3",
-    "rework-npm-cli": "0.1.1",
+    "rework-npm-cli": "0.1.3",
     "supertest": "3.0.0",
     "uglifycss": "0.0.25",
     "watchify": "3.9.0"
