@@ -103,7 +103,7 @@
     "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
     "phantomjs-prebuilt": "2.1.14",
     "requirejs": "2.3.3",
-    "rework-npm-cli": "0.1.1",
+    "rework-npm-cli": "0.1.2",
     "supertest": "3.0.0",
     "uglifycss": "0.0.25",
     "watchify": "3.9.0"
