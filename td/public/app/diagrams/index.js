@@ -1,7 +1,7 @@
 var angular= require('angular');
 var app = angular.module('app');
 var diagramdirectives = require('./diagramdirectives');
-var elementPropertyDirectives = require('./elementpropertydirectives');
+var elementPropertyDirectives = require('./elementpropdirectives');
 var diagram = require('./diagram');
 
 app.directive('tmtStencil', ['diagramming', diagramdirectives.stencil]);
