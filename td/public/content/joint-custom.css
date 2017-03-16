@@ -1,18 +1,18 @@
 ﻿/*threat model element highlighting*/
 
-.element.highlighted rect {
+.joint-element.highlighted rect {
 	stroke-width: 3
 }
 
-.element.highlighted circle {
+.joint-element.highlighted circle {
 	stroke-width: 3
 }
 
-.element.highlighted path {
+.joint-element.highlighted path {
 	stroke-width: 3
 }
 
-.link.highlighted path {
+.joint-link.highlighted path {
 	stroke-width: 3
 }
 
@@ -38,12 +38,12 @@ text.hasOpenThreats  {
 
 /*threat model element tools*/
 
-.element .element-tools {
+.joint-element .element-tools {
 	display: none;
 	cursor: pointer
 }
 
-.element.highlighted .element-tools {
+.joint-element.highlighted .element-tools {
 	display: inline;
 }
 
@@ -57,11 +57,11 @@ text.hasOpenThreats  {
 
 /*threat model link tools*/
 
-.tm.Flow .link-tools .tool-options {
+.joint-type-tm-flow .link-tool .tool-options {
 	display: inline;
 }
 
-.tm.Flow .labels .label text {
+.joint-type-tm-flow .labels .label text {
 	font-weight: 400;
 	font-size: small
 }
@@ -77,7 +77,7 @@ text.hasOpenThreats  {
 
 /*stencil*/
 
-.stencil .element, .stencil .link, .stencil .connection-wrap, .stencil .marker-arrowheads {
+.stencil .joint-element, .stencil .joint-link, .stencil .joint-link .connection-wrap {
 	cursor: pointer;
 }
 
@@ -85,6 +85,6 @@ text.hasOpenThreats  {
 	visibility: hidden;
 }
 
-.stencil .link:hover, .stencil .element:hover path, .stencil .element:hover rect, .stencil .element:hover circle {
+.stencil .joint-link:hover, .stencil .joint-element:hover path, .stencil .joint-element:hover rect, .stencil .joint-element:hover circle {
 	stroke-width: 3;
 }
