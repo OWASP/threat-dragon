@@ -11797,28 +11797,27 @@ a.editable-empty:focus {
   }
 }
 
-/*! JointJS v0.9.9 - JavaScript diagramming library  2016-05-31 
+/*! JointJS v1.0.3 (2016-11-22) - JavaScript diagramming library
 
 
 This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+*/
 
-.element *,
-.joint-highlight-stroke,
+.joint-element *,
 .marker-source,
 .marker-target {
   vector-effect: non-scaling-stroke;
 }
 
-.viewport {
+.joint-viewport {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 
-[magnet=true]:not(.element) {
+[magnet=true]:not(.joint-element) {
   cursor: crosshair;
 }
 
@@ -11828,33 +11827,28 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   opacity: 0;
 }
 
-[magnet=true]:not(.element):hover {
+[magnet=true]:not(.joint-element):hover {
   opacity: .7;
 }
 
-.element {
+.joint-element {
   cursor: move;
 }
 
-.element * {
+.joint-element * {
   user-drag: none;
 }
 
-.paper {
+.joint-paper {
   position: relative;
-}
-
-.joint-highlight-stroke {
-  pointer-events: 'none';
-  fill: none;
 }
 
 .joint-highlight-opacity {
   opacity: .3;
 }
 
-.link .connection,
-.link .connection-wrap {
+.joint-link .connection,
+.joint-link .connection-wrap {
   fill: none;
 }
 
@@ -11872,9 +11866,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   display: none;
 }
 
-.link:hover .link-tools,
-.link:hover .marker-arrowheads,
-.link:hover .marker-vertices {
+.joint-link:hover .link-tools,
+.joint-link:hover .marker-arrowheads,
+.joint-link:hover .marker-vertices {
   opacity: 1;
 }
 
@@ -11896,33 +11890,28 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   opacity: 1;
 }
 
-.element .fobj {
+.joint-element .fobj {
   overflow: hidden;
 }
 
-.element .fobj body {
+.joint-element .fobj body {
   background-color: transparent;
   margin: 0;
+  position: static;
 }
 
-.element .fobj div {
+.joint-element .fobj div {
   text-align: center;
   vertical-align: middle;
   display: table-cell;
   padding: 0 5px;
 }
 
-.paper.joint-theme-dark {
+.joint-paper.joint-theme-dark {
   background-color: #18191b;
 }
 
-.joint-highlight-stroke.joint-theme-dark {
-  stroke: #BF8441;
-  stroke-width: 3px;
-  fill: none;
-}
-
-.link.joint-theme-dark .connection-wrap {
+.joint-link.joint-theme-dark .connection-wrap {
   stroke: #8F8FF3;
   stroke-width: 15;
   stroke-linecap: round;
@@ -11931,61 +11920,60 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   cursor: move;
 }
 
-.link.joint-theme-dark .connection-wrap:hover {
+.joint-link.joint-theme-dark .connection-wrap:hover {
   opacity: .4;
   stroke-opacity: .4;
 }
 
-.link.joint-theme-dark .connection {
+.joint-link.joint-theme-dark .connection {
   stroke-linejoin: round;
 }
 
-.link.joint-theme-dark .link-tools .tool-remove circle {
+.joint-link.joint-theme-dark .link-tools .tool-remove circle {
   fill: #F33636;
 }
 
-.link.joint-theme-dark .link-tools .tool-remove path {
+.joint-link.joint-theme-dark .link-tools .tool-remove path {
   fill: #fff;
 }
 
-.link.joint-theme-dark .link-tools [event="link:options"] circle {
+.joint-link.joint-theme-dark .link-tools [event="link:options"] circle {
   fill: green;
 }
 
-.link.joint-theme-dark .marker-vertex {
+.joint-link.joint-theme-dark .marker-vertex {
   fill: #5652DB;
 }
 
-.link.joint-theme-dark .marker-vertex:hover {
+.joint-link.joint-theme-dark .marker-vertex:hover {
   fill: #8E8CE1;
   stroke: none;
 }
 
-.link.joint-theme-dark .marker-arrowhead {
+.joint-link.joint-theme-dark .marker-arrowhead {
   fill: #5652DB;
 }
 
-.link.joint-theme-dark .marker-arrowhead:hover {
+.joint-link.joint-theme-dark .marker-arrowhead:hover {
   fill: #8E8CE1;
   stroke: none;
 }
 
-.link.joint-theme-dark .marker-vertex-remove-area {
+.joint-link.joint-theme-dark .marker-vertex-remove-area {
   fill: green;
   stroke: #006400;
 }
 
-.link.joint-theme-dark .marker-vertex-remove {
+.joint-link.joint-theme-dark .marker-vertex-remove {
   fill: #fff;
   stroke: #fff;
 }
 
-.joint-highlight-stroke.joint-theme-default {
-  stroke: red;
-  stroke-width: 3px;
+.joint-paper.joint-theme-default {
+  background-color: #FFF;
 }
 
-.link.joint-theme-default .connection-wrap {
+.joint-link.joint-theme-default .connection-wrap {
   stroke: #000;
   stroke-width: 15;
   stroke-linecap: round;
@@ -11994,42 +11982,42 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   cursor: move;
 }
 
-.link.joint-theme-default .connection-wrap:hover {
+.joint-link.joint-theme-default .connection-wrap:hover {
   opacity: .4;
   stroke-opacity: .4;
 }
 
-.link.joint-theme-default .connection {
+.joint-link.joint-theme-default .connection {
   stroke-linejoin: round;
 }
 
-.link.joint-theme-default .link-tools .tool-remove circle {
+.joint-link.joint-theme-default .link-tools .tool-remove circle {
   fill: red;
 }
 
-.link.joint-theme-default .link-tools .tool-remove path {
+.joint-link.joint-theme-default .link-tools .tool-remove path {
   fill: #FFF;
 }
 
-.link.joint-theme-default .marker-vertex {
+.joint-link.joint-theme-default .marker-vertex {
   fill: #1ABC9C;
 }
 
-.link.joint-theme-default .marker-vertex:hover {
+.joint-link.joint-theme-default .marker-vertex:hover {
   fill: #34495E;
   stroke: none;
 }
 
-.link.joint-theme-default .marker-arrowhead {
+.joint-link.joint-theme-default .marker-arrowhead {
   fill: #1ABC9C;
 }
 
-.link.joint-theme-default .marker-arrowhead:hover {
+.joint-link.joint-theme-default .marker-arrowhead:hover {
   fill: #F39C12;
   stroke: none;
 }
 
-.link.joint-theme-default .marker-vertex-remove {
+.joint-link.joint-theme-default .marker-vertex-remove {
   fill: #FFF;
 }
 
@@ -12040,12 +12028,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   font-style: normal;
 }
 
-.joint-highlight-stroke.joint-theme-material {
-  stroke: #ecf0f8;
-  stroke-width: 3px;
-}
-
-.link.joint-theme-material .connection-wrap {
+.joint-link.joint-theme-material .connection-wrap {
   stroke: #000;
   stroke-width: 15;
   stroke-linecap: round;
@@ -12054,55 +12037,50 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   cursor: move;
 }
 
-.link.joint-theme-material .connection-wrap:hover {
+.joint-link.joint-theme-material .connection-wrap:hover {
   opacity: .4;
   stroke-opacity: .4;
 }
 
-.link.joint-theme-material .connection {
+.joint-link.joint-theme-material .connection {
   stroke-linejoin: round;
 }
 
-.link.joint-theme-material .link-tools .tool-remove circle {
+.joint-link.joint-theme-material .link-tools .tool-remove circle {
   fill: #C64242;
 }
 
-.link.joint-theme-material .link-tools .tool-remove path {
+.joint-link.joint-theme-material .link-tools .tool-remove path {
   fill: #FFF;
 }
 
-.link.joint-theme-material .marker-vertex {
+.joint-link.joint-theme-material .marker-vertex {
   fill: #d0d8e8;
 }
 
-.link.joint-theme-material .marker-vertex:hover {
+.joint-link.joint-theme-material .marker-vertex:hover {
   fill: #5fa9ee;
   stroke: none;
 }
 
-.link.joint-theme-material .marker-arrowhead {
+.joint-link.joint-theme-material .marker-arrowhead {
   fill: #d0d8e8;
 }
 
-.link.joint-theme-material .marker-arrowhead:hover {
+.joint-link.joint-theme-material .marker-arrowhead:hover {
   fill: #5fa9ee;
   stroke: none;
 }
 
-.link.joint-theme-material .marker-vertex-remove-area {
+.joint-link.joint-theme-material .marker-vertex-remove-area {
   fill: #5fa9ee;
 }
 
-.link.joint-theme-material .marker-vertex-remove {
+.joint-link.joint-theme-material .marker-vertex-remove {
   fill: #fff;
 }
 
-.joint-highlight-stroke.joint-theme-modern {
-  stroke: #FEB663;
-  stroke-width: 3px;
-}
-
-.link.joint-theme-modern .connection-wrap {
+.joint-link.joint-theme-modern .connection-wrap {
   stroke: #000;
   stroke-width: 15;
   stroke-linecap: round;
@@ -12111,42 +12089,42 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   cursor: move;
 }
 
-.link.joint-theme-modern .connection-wrap:hover {
+.joint-link.joint-theme-modern .connection-wrap:hover {
   opacity: .4;
   stroke-opacity: .4;
 }
 
-.link.joint-theme-modern .connection {
+.joint-link.joint-theme-modern .connection {
   stroke-linejoin: round;
 }
 
-.link.joint-theme-modern .link-tools .tool-remove circle {
+.joint-link.joint-theme-modern .link-tools .tool-remove circle {
   fill: red;
 }
 
-.link.joint-theme-modern .link-tools .tool-remove path {
+.joint-link.joint-theme-modern .link-tools .tool-remove path {
   fill: #FFF;
 }
 
-.link.joint-theme-modern .marker-vertex {
+.joint-link.joint-theme-modern .marker-vertex {
   fill: #1ABC9C;
 }
 
-.link.joint-theme-modern .marker-vertex:hover {
+.joint-link.joint-theme-modern .marker-vertex:hover {
   fill: #34495E;
   stroke: none;
 }
 
-.link.joint-theme-modern .marker-arrowhead {
+.joint-link.joint-theme-modern .marker-arrowhead {
   fill: #1ABC9C;
 }
 
-.link.joint-theme-modern .marker-arrowhead:hover {
+.joint-link.joint-theme-modern .marker-arrowhead:hover {
   fill: #F39C12;
   stroke: none;
 }
 
-.link.joint-theme-modern .marker-vertex-remove {
+.joint-link.joint-theme-modern .marker-vertex-remove {
   fill: #fff;
 }
 
@@ -12156,19 +12134,19 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 /*threat model element highlighting*/
 
-.element.highlighted rect {
+.joint-element.highlighted rect {
   stroke-width: 3;
 }
 
-.element.highlighted circle {
+.joint-element.highlighted circle {
   stroke-width: 3;
 }
 
-.element.highlighted path {
+.joint-element.highlighted path {
   stroke-width: 3;
 }
 
-.link.highlighted path {
+.joint-link.highlighted path {
   stroke-width: 3;
 }
 
@@ -12194,12 +12172,12 @@ text.hasOpenThreats {
 
 /*threat model element tools*/
 
-.element .element-tools {
+.joint-element .element-tools {
   display: none;
   cursor: pointer;
 }
 
-.element.highlighted .element-tools {
+.joint-element.highlighted .element-tools {
   display: inline;
 }
 
@@ -12213,11 +12191,11 @@ text.hasOpenThreats {
 
 /*threat model link tools*/
 
-.tm.Flow .link-tools .tool-options {
+.joint-type-tm-flow .link-tool .tool-options {
   display: inline;
 }
 
-.tm.Flow .labels .label text {
+.joint-type-tm-flow .labels .label text {
   font-weight: 400;
   font-size: small;
 }
@@ -12233,10 +12211,9 @@ text.hasOpenThreats {
 
 /*stencil*/
 
-.stencil .element,
-.stencil .link,
-.stencil .connection-wrap,
-.stencil .marker-arrowheads {
+.stencil .joint-element,
+.stencil .joint-link,
+.stencil .joint-link .connection-wrap {
   cursor: pointer;
 }
 
@@ -12245,10 +12222,10 @@ text.hasOpenThreats {
   visibility: hidden;
 }
 
-.stencil .link:hover,
-.stencil .element:hover path,
-.stencil .element:hover rect,
-.stencil .element:hover circle {
+.stencil .joint-link:hover,
+.stencil .joint-element:hover path,
+.stencil .joint-element:hover rect,
+.stencil .joint-element:hover circle {
   stroke-width: 3;
 }
 

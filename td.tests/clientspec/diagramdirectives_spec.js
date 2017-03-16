@@ -83,7 +83,7 @@ describe('stencil directive: ', function() {
             $scope.$digest();
             
             if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-                expect($(elem).find('.tm.Process').length).toEqual(1);
+                expect($(elem).find("[data-type='tm.Process']").length).toEqual(1);
             } else {              
                 //weaker test for PhantomJS since it does something funny with SVG classes
                 expect($(elem).find('[model-id]').length).toEqual(1);
@@ -110,7 +110,7 @@ describe('stencil directive: ', function() {
             $scope.$digest();
             
             if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-                expect($(elem).find('.tm.Flow').length).toEqual(1);
+                expect($(elem).find("[data-type='tm.Flow']").length).toEqual(1);
             } else {              
                 //weaker test for PhantomJS since it does something funny with SVG classes
                 expect($(elem).find('[model-id]').length).toEqual(1);
@@ -185,7 +185,7 @@ describe('diagram directive: ', function() {
             $compile(elem)($scope);
             $scope.$digest();
             diagramSvg = $(elem).children('svg');
-            viewport = diagramSvg.children('.viewport');
+            viewport = diagramSvg.children('.joint-viewport');
             
         });
     
