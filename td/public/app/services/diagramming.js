@@ -74,7 +74,7 @@ function diagramming() {
 
     joint.dia.Paper.prototype.zoom = function (zoomLevel) {
         var factor = Math.pow(zoomScaleFactor, zoomLevel);
-        this.scale(factor);
+        this.scale(factor, factor);
     };
 
     // Define the functions and properties to reveal.
