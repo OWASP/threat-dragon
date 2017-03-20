@@ -1,4 +1,4 @@
 ﻿'use strict';
 
 require('./config');
-require ('./src/common');
+require ('./common');

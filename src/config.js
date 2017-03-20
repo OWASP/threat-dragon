@@ -1,6 +1,8 @@
 ﻿'use strict';
 
-var app = require('angular').module('app');
+//requiring angular in the core package causes tried to load angular more than once console warning
+//var angular = require('angular');
+var app = angular.module('app');
 var toastr = require('toastr');
 
 // Configure Toastr
@@ -15,7 +17,7 @@ var config = {
     appErrorPrefix: '[Error] ', //Configure the exceptionHandler decorator
     docTitle: 'Threat Dragon: ',
     events: events,
-    version: '0.2.0',
+    version: '0.4.0'
 };
 
 app.value('config', config);

@@ -5,12 +5,14 @@
   "scripts": {
     "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o templates.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
+    "bundle-css": "./node_modules/.bin/rework-npm ./src/content/app.css -o ./src/content/threatdragon-core.css",
+    "minify-css": "./node_modules/.bin/uglifycss ./content/threatdragon-core.css > ./content/threatdragon-core.min.css",
+    "bundle-minify-css": "npm run-script bundle-css && npm run-script minify-css",
     "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
     "test-client-chrome": "./node_modules/.bin/karma start --single-run --browsers Chrome",
     "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
-    "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome",
     "codecov": "./node_modules/.bin/codecov"
@@ -26,6 +28,8 @@
     "type": "git",
     "url": "git://github.com/mike-goodwin/owasp-threat-dragon-core.git"
   },
+  "main": "./src/index.js",
+  "style": "./src/content/threatdragon-core.css",
   "dependencies": {
    "angular": "1.6.3",
    "jquery": "3.0.0",
