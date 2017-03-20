@@ -2,6 +2,7 @@
 
 var commonConfig = function () {
     this.config = {
+        controllerActivateSuccessEvent: 'ControllerActivateSuccess',
         demoModelLocation: {
             organisation: 'mike-goodwin',
             repo: 'owasp-threat-dragon-demo',

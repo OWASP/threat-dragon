@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 var toastr = require('toastr');
 
 function logger($log) {

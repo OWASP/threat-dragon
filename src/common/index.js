@@ -1,10 +1,8 @@
-var common = require('./common');
-var logger = require('./logger');
+'use strict';
 
-var commonModule = require('angular').module('common', []);
-commonModule.provider('commonConfig', common.commonConfig);
-commonModule.factory('common', ['$q','$rootScope', 'commonConfig', 'logger', common.commonModule]);
-commonModule.factory('logger', ['$log', logger]);
+var angular = require('angular');
+var commonModule = angular.module('common', []);
 
-
-
+commonModule.provider('commonConfig', require('./common').commonConfig);
+commonModule.factory('common', ['$q','$rootScope', 'commonConfig', 'logger', require('./common').commonModule]);
+commonModule.factory('logger', ['$log', require('./logger')]);
