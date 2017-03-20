@@ -17,8 +17,7 @@ var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable
 
 //require custom modules, services, controllers and directives
 require('./config.route');
-require('./config');
-require('./common');
+require('owasp-threat-dragon-core');
 require('./services');
 require('./diagrams');
 require('./layout');

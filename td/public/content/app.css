@@ -1,5 +1,6 @@
 @import "bootstrap";
-@import "toastr";
+/*@import "toastr";*/
+@import "owasp-threat-dragon-core";
 @import "font-awesome";
 @import "angular-xeditable";
 @import "jointjs";
