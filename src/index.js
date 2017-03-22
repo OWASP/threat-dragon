@@ -1,4 +1,5 @@
 ﻿'use strict';
-
+require('./services/joint.shapes.tm');
 require('./config');
-require ('./common');
+require('./common');
+require('./services');
