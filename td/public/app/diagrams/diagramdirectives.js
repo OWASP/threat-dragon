@@ -1,8 +1,6 @@
 ﻿'use strict';
 
 var angular = require('angular');
-var joint = require('jointjs');
-var V = joint.V;
 var $ = require('jquery');
 
 var stencil = function (diagramming) {
@@ -231,14 +229,12 @@ var diagram = function (common, diagramming) {
     }
 
     function addLinkFrom(cellView) {
-        cellView.linkFrom = true;
-        (new V(cellView.$el.find('.element-tool-link')[0])).addClass("linking");
+        cellView.addLinkFrom();
         log('Select another model element to add a data flow');
     }
 
     function removeLinkFrom(cellView) {
-        cellView.linkFrom = false;
-        (new V(cellView.$el.find('.element-tool-link')[0])).removeClass("linking");
+        cellView.removeLinkFrom();
     }
 
     function setSelected(cellView) {

@@ -2,6 +2,7 @@
 
 require('angular-mocks');
 var $ = require('jquery');
+require('jasmine-jquery');
 
 describe('modal close directive: ', function() {
     
