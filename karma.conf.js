@@ -16,7 +16,9 @@ module.exports = function (config) {
     frameworks: ['phantomjs-shim', 'jasmine', 'browserify'],
 
     // list of files / patterns to load in the browser
-    files: ['test/spec/*.js'],
+    files: [
+      'test/spec/*.js'
+    ],
 
     // list of files to exclude
     exclude: [],
@@ -44,7 +46,7 @@ module.exports = function (config) {
 
     //config for coverage reporter
     coverageReporter: {
-        reporters: [{ type: 'lcov' }]
+      reporters: [{ type: 'lcov' }]
     },
 
     // web server port
