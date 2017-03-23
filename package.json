@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -58,10 +58,9 @@
     "jointjs": "1.0.3",
     "jquery": "3.0.0",
     "lodash": "4.13.1",
-    "owasp-threat-dragon-core": "0.4.2",
     "morgan": "1.8.1",
-    "nools": "0.4.4",
     "octonode": "0.7.10",
+    "owasp-threat-dragon-core": "0.4.2",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
     "pug": "2.0.0-beta11",
