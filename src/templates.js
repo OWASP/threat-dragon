@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -332,6 +332,21 @@ angular.module('templates', [])
     '    <div class="modal-footer">\n' +
     '        <button id="buttonOK" class="btn btn-default" ng-click="onOK()">OK</button>\n' +
     '        <button id="buttonCancel" class="btn btn-primary" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
+  $templateCache.put('threatmodels/confirmReloadOnDirty.html',
+    '﻿<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>Are you sure?</h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        Your threat model has unsaved changes and if you reload they will be lost!\n' +
+    '        Press Cancel to keep the unsaved changes, or press OK to reload the threat model and lose the unsaved changes.\n' +
+    '    </div>\n' +
+    '    <div class="modal-footer">\n' +
+    '        <button class="btn btn-default" ng-click="onOK()">OK</button>\n' +
+    '        <button class="btn btn-primary" ng-click="onCancel()">Cancel</button>\n' +
     '    </div>\n' +
     '</div>\n' +
     '')
