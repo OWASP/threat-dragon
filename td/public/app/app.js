@@ -23,8 +23,6 @@ require('./layout');
 require('./welcome');
 require('./threatmodels');
 
-app.directive('tmtPager', [require('./directives')]);
-
 app.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
