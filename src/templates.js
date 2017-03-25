@@ -1,6 +1,21 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
-    $templateCache.put('diagrams/ElementPropertiesPane.html',
+    $templateCache.put('diagrams/confirmReloadOnDirty.html',
+    '﻿<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>Are you sure?</h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        Your diagram has unsaved changes and if you reload they will be lost!\n' +
+    '        Press Cancel to keep the unsaved changes, or press OK to reload the diagram and lose the unsaved changes.\n' +
+    '    </div>\n' +
+    '    <div class="modal-footer">\n' +
+    '        <button class="btn btn-default" ng-click="onOK()">OK</button>\n' +
+    '        <button class="btn btn-primary" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
+  $templateCache.put('diagrams/ElementPropertiesPane.html',
     '﻿<form name="elementPropertiesEditForm">\n' +
     '    <div>\n' +
     '        <div class="form-group">\n' +
