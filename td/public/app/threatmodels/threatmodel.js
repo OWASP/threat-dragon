@@ -100,7 +100,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     function reload() {
         if (vm.dirty) {
-            dialogs.confirm('./public/app/threatmodels/confirmReloadOnDirty.html', function () { getThreatModel(true); }, function () { return null; }, function () { });
+            dialogs.confirm('threatmodels/confirmReloadOnDirty.html', function () { getThreatModel(true); }, function () { return null; }, function () { });
         }
         else {
             getThreatModel(true);
