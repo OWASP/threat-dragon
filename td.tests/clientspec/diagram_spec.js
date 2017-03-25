@@ -733,7 +733,7 @@ describe('diagram controller', function () {
             expect(mockThreatEngine.generateForElement).toHaveBeenCalled();
             expect(mockThreatEngine.generateForElement.calls.argsFor(0)).toEqual([element]);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/ThreatEditPane.html');
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html');
             //argument 2 contains the supplied threat
             expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
             expect(threats.length).toEqual(2);

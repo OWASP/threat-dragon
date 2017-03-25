@@ -196,7 +196,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
         function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                dialogs.confirm('./public/app/diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
+                dialogs.confirm('diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
             }
         }
 
