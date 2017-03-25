@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -306,6 +306,19 @@ angular.module('templates', [])
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
     '</button>')
+  $templateCache.put('layout/pager.html',
+    '<div class="clearfix" ng-if="canPrevious || canNext">\n' +
+    '    <button ng-disabled="!canPrevious" class="pull-left btn btn-link" ng-click="previous()">Previous page</button>\n' +
+    '    <button ng-disabled="!canNext" class="pull-right  btn btn-link" href="" ng-click="next()">Next page</button>\n' +
+    '</div>\n' +
+    '<div class="list-group">\n' +
+    '    <a ng-repeat="item in items" ng-click="select({item: item})" class="list-group-item h4">{{item}}</a>\n' +
+    '</div>\n' +
+    '<div ng-if="(canPrevious || canNext) && items.length >= 10">\n' +
+    '    <button ng-disabled="!canPrevious" class="pull-left btn btn-link" ng-click="previous()">Previous page</button>\n' +
+    '    <button ng-disabled="!canNext" class="pull-right  btn btn-link" href="" ng-click="next()">Next page</button>\n' +
+    '</div>\n' +
+    '')
   $templateCache.put('layout/structuredExit.html',
     '﻿<div id="structuredExitModal">\n' +
     '    <div class="modal-header">\n' +
