@@ -5,3 +5,4 @@ require('./config');
 require('./common');
 require('./services');
 require('./diagrams');
+require('./layout');
