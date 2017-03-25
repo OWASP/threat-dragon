@@ -19,7 +19,6 @@ var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable
 require('./config.route');
 require('owasp-threat-dragon-core');
 require('./services');
-require('./diagrams');
 require('./layout');
 require('./welcome');
 require('./threatmodels');

@@ -110,7 +110,7 @@ function getRoutes() {
             url: '/threatmodel/:organisation/:repo/:branch/:model/diagram/:diagramId',
             config: {
                 title: 'Threat Model Diagram',
-                templateUrl: './public/app/diagrams/diagrameditor.html',
+                templateUrl: 'diagrams/diagrameditor.html',
                 reloadOnSearch: false,
                 settings: {
                 }
