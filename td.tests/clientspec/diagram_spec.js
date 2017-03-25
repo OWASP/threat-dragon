@@ -471,7 +471,7 @@ describe('diagram controller', function () {
             $scope.vm.dirty= true;
             $scope.vm.reload();
             expect(mockDialogs.confirm).toHaveBeenCalled()
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('./public/app/diagrams/confirmReloadOnDirty.html');
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/confirmReloadOnDirty.html');
             //argument 1 is onOk
             mockDialogs.confirm.calls.argsFor(0)[1]();
             expect($scope.vm.initialise).toHaveBeenCalled();
