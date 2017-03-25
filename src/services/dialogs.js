@@ -10,7 +10,7 @@ function dialogs($location, $modal) {
     function structuredExit(event, cancelNavigation, continueNavigation) {
 
         var modal = $modal.open({
-            templateUrl: './public/app/layout/structuredExit.html',
+            templateUrl: 'layout/structuredExit.html',
             controller: 'structuredExitController',
             keyboard: false,
             backdrop: 'static',
