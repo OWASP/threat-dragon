@@ -1,3 +1,2 @@
-td/public/app/threatdragon.js
-td/public/app/*.min.js
-td.tests/
+tests/
+src/templates.js
