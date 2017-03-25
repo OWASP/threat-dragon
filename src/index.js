@@ -6,3 +6,4 @@ require('./common');
 require('./services');
 require('./diagrams');
 require('./layout');
+require('./threatmodels');

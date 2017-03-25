@@ -1,6 +1,4 @@
 'use strict';
-//requiring angular in the core package causes tried to load angular more than once console warning
-//var angular = require('angular');
 var commonModule = angular.module('common', []);
 
 commonModule.provider('commonConfig', [require('./common').commonConfig]);

@@ -1,5 +1,5 @@
-//requiring angular in the core package causes tried to load angular more than once console warning
-//var angular = require('angular');
+'use strict';
+
 var app = angular.module('app');
 var diagramdirectives = require('./diagramdirectives');
 var elementPropertyDirectives = require('./elementpropdirectives');

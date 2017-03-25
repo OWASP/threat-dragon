@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -350,5 +350,277 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>\n' +
     '')
+  $templateCache.put('threatmodels/threatmodeldetail.html',
+    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '    <div ng-if="!vm.threatModel.location && !vm.errored">\n' +
+    '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
+    '        <div class="spinner"></div>\n' +
+    '    </div>\n' +
+    '    <div ng-if="!vm.errored && vm.threatModel.location">\n' +
+    '        <div class="panel panel-default">\n' +
+    '            <div class="panel-heading panel-title">\n' +
+    '                <a href="#/threatmodel/edit/{{vm.threatModelLocation()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>\n' +
+    '            </div>\n' +
+    '            <div class="panel-body">\n' +
+    '                <div class="col-md-2">\n' +
+    '                    <div><strong>Owner: </strong></div>\n' +
+    '                    <div>{{vm.threatModel.summary.owner}}</div>\n' +
+    '                </div>\n' +
+    '                <div class="col-md-2">\n' +
+    '                    <div><strong>Reviewer: </strong></div>\n' +
+    '                    <div>{{vm.threatModel.detail.reviewer}}</div>\n' +
+    '                </div>\n' +
+    '                <div class="col-md-8">\n' +
+    '                    <div><strong>Contributors: </strong></div>\n' +
+    '                    <div>\n' +
+    '                        <span ng-repeat="contributor in vm.threatModel.detail.contributors"> {{contributor.name}}<span ng-show=" ! $last ">;</span></span>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="panel panel-default">\n' +
+    '            <div class="panel-heading panel-title">\n' +
+    '                <h4>High level system description</h4>\n' +
+    '            </div>\n' +
+    '            <div class="panel-body">\n' +
+    '                <div class="col-md-12">{{vm.threatModel.summary.description}}</div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="panel-body">\n' +
+    '            <div ng-repeat-start="diagram in vm.threatModel.detail.diagrams">\n' +
+    '                <div class="col-md-3">\n' +
+    '                    <div class="panel panel-default">\n' +
+    '                        <div class="panel-heading panel-title">\n' +
+    '                            <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>\n' +
+    '                        </div>\n' +
+    '                        <div class="panel-body">\n' +
+    '                            <a href="#/threatmodel/{{vm.threatModelLocation()}}/diagram/{{diagram.id}}">\n' +
+    '                                <img ng-src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />\n' +
+    '                            </a>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div ng-if="(($index+1) % 4) == 0" class="clearfix visible-lg-block"></div>\n' +
+    '            <div ng-repeat-end ng-hide></div>\n' +
+    '        </div>\n' +
+    '        <div class="row">\n' +
+    '            <div class="col-md-12">\n' +
+    '                <div class="btn-group pull-right" role="group">\n' +
+    '                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelLocation()}}" \n' +
+    '                    role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">\n' +
+    '                        <span class="glyphicon glyphicon-edit"></span> Edit\n' +
+    '                    </a>\n' +
+    '                    <button class="btn btn-default" role="button" ng-click="vm.deleteModel()" data-toggle="tooltip" data-placement="top" title="Delete This Threat Model">\n' +
+    '                        <span class="glyphicon glyphicon-remove"></span>  Delete\n' +
+    '                    </button>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div ng-if="vm.errored">\n' +
+    '        <div class="jumbotron">\n' +
+    '            <h1>oooops!</h1>\n' +
+    '            <p>\n' +
+    '                It looks like you tried to view an invalid threat model. Maybe you typed the\n' +
+    '                address wrong? Or if you clicked a link to get here, the threat model might have been\n' +
+    '                deleted since you made the link <span class="fa fa-frown-o"></span>\n' +
+    '            </p>\n' +
+    '            <p>\n' +
+    '                <a href="#">Take me home</a>\n' +
+    '            </p>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>')
+  $templateCache.put('threatmodels/threatmodeledit.html',
+    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '    <div ng-if="!vm.threatModel.location && !vm.errored && !vm.isNewModel">\n' +
+    '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
+    '        <div class="spinner"></div>\n' +
+    '    </div>\n' +
+    '    <div class="panel panel-default" ng-if="vm.threatModel.summary">\n' +
+    '        <!--heading-->\n' +
+    '        <div class="panel panel-heading">\n' +
+    '            <h4>Editing: {{vm.threatModel.summary.title}}</h4>\n' +
+    '        </div>\n' +
+    '        <div class="panel panel-body">\n' +
+    '            <form name="vm.threatModelEditForm">\n' +
+    '                <!--title-->\n' +
+    '                <div class="form-group col-md-12">\n' +
+    '                    <label>Title</label>\n' +
+    '                    <input name="threatModelTitle" class="form-control" type="text" ng-model="vm.threatModel.summary.title" ng-required="true"\n' +
+    '                        placeholder="Threat model title" />\n' +
+    '                    <div ng-show="vm.threatModelEditForm.threatModelTitle.$dirty && !vm.threatModelEditForm.threatModelTitle.$valid">\n' +
+    '                        <p>\n' +
+    '                            <div class="alert alert-danger" role="alert">\n' +
+    '                                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>\n' +
+    '                                <span class="sr-only">Error:</span> The threat model title cannot be empty.\n' +
+    '                            </div>\n' +
+    '                        </p>\n' +
+    '                    </div>\n' +
+    '                    <div ng-show="vm.threatModelEditForm.threatModelTitle.$viewValue != vm.threatModel.location.model && !vm.isNewModel()">\n' +
+    '                        <p>\n' +
+    '                            <div class="alert alert-info" role="alert">\n' +
+    '                                <span class="fa fa-info-circle" aria-hidden="true"></span>\n' +
+    '                                <span class="sr-only">Warning:</span> Changing the model title will delete the old model\n' +
+    '                                and create a new one to replace it.\n' +
+    '                            </div>\n' +
+    '                        </p>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <!--Owner-->\n' +
+    '                <div class="form-group col-md-6">\n' +
+    '                    <label>Owner</label>\n' +
+    '                    <input class="form-control" type="text" ng-model="vm.threatModel.summary.owner" placeholder="The owner of the threat model"\n' +
+    '                    />\n' +
+    '                </div>\n' +
+    '                <!--reviewer-->\n' +
+    '                <div class="form-group col-md-6">\n' +
+    '                    <label>Reviewer</label>\n' +
+    '                    <input class="form-control" type="text" ng-model="vm.threatModel.detail.reviewer" placeholder="The reviewer of the threat model"\n' +
+    '                    />\n' +
+    '                </div>\n' +
+    '                <!--description-->\n' +
+    '                <div class="form-group col-md-12">\n' +
+    '                    <label>High level system description</label>\n' +
+    '                    <textarea rows="5" class="form-control" ng-model="vm.threatModel.summary.description" placeholder="A high level description of the system"></textarea>\n' +
+    '                </div>\n' +
+    '                <!--contributors-->\n' +
+    '                <div class="form-group col-md-12">\n' +
+    '                    <label>Contributors</label>\n' +
+    '                    <div ng-repeat="contributor in vm.threatModel.detail.contributors" ng-form="contributorSubForm">\n' +
+    '                        <div class="col-md-6">\n' +
+    '                            <p>\n' +
+    '                                <div class="input-group">\n' +
+    '                                    <input name="contributorName" class="form-control" type="text" ng-model="contributor.name" required placeholder="The name of a contributor to the threat model"\n' +
+    '                                    />\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-default" data-toggle="tooltip" ng-click="vm.removeContributor($index)" data-placement="top" title="Remove This Contributor" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-remove"></span>                                    Remove\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                </div>\n' +
+    '                            </p>\n' +
+    '                            <div ng-show="contributorSubForm.contributorName.$dirty && !contributorSubForm.contributorName.$valid">\n' +
+    '                                <p>\n' +
+    '                                    <div class="alert alert-danger" role="alert">\n' +
+    '                                        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>\n' +
+    '                                        <span class="sr-only">Error:</span> The contributor name cannot be empty.\n' +
+    '                                    </div>\n' +
+    '                                </p>\n' +
+    '                            </div>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div ng-repeat-end>\n' +
+    '                        <div class="col-md-6">\n' +
+    '                            <p>\n' +
+    '                                <div class="input-group" ng-show="vm.addingContributor">\n' +
+    '                                    <input class="form-control" name="newContributorNameInput" type="text" ng-model="vm.newContributor" placeholder="The name of a contributor"\n' +
+    '                                    />\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-default" ng-disabled="vm.newContributor.length == 0" data-toggle="tooltip" ng-click="vm.addContributor()" data-placement="top" title="Add this contributor" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-plus"></span>                                    Add\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-link" data-toggle="tooltip" ng-click="vm.cancelAddingContributor()" data-placement="top" title="Cancel adding this contributor" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-remove"></span>                                    Cancel\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                </div>\n' +
+    '                                <div ng-hide="vm.addingContributor">\n' +
+    '                                    <button class="btn btn-link" ng-click="vm.startAddingContributor()">\n' +
+    '                                        <span class="glyphicon glyphicon-plus"></span> Add a new contributor...\n' +
+    '                                    </button>\n' +
+    '                                </div>\n' +
+    '                            </p>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <!--diagrams-->\n' +
+    '                <div class="form-group col-md-12">\n' +
+    '                    <label>Diagrams</label>\n' +
+    '                    <div ng-repeat="diagram in vm.threatModel.detail.diagrams" ng-form="diagramSubForm">\n' +
+    '                        <div class="col-md-6">\n' +
+    '                            <p>\n' +
+    '                                <div class="input-group">\n' +
+    '                                    <input name="diagramTitle" class="form-control" type="text" ng-model="diagram.title" required placeholder="Diagram title"\n' +
+    '                                    />\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-default" data-toggle="tooltip" ng-click="vm.removeDiagram($index)" data-placement="top" title="Remove This Diagram" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-remove"></span>                                    Remove\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                </div>\n' +
+    '                            </p>\n' +
+    '                            <div ng-show="diagramSubForm.diagramTitle.$dirty && !diagramSubForm.diagramTitle.$valid">\n' +
+    '                                <p>\n' +
+    '                                    <div class="alert alert-danger" role="alert">\n' +
+    '                                        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>\n' +
+    '                                        <span class="sr-only">Error:</span> The diagram title cannot be empty.\n' +
+    '                                    </div>\n' +
+    '                                </p>\n' +
+    '                            </div>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div ng-repeat-end>\n' +
+    '                        <div class="col-md-6">\n' +
+    '                            <p>\n' +
+    '                                <div class="input-group" ng-show="vm.addingDiagram">\n' +
+    '                                    <input class="form-control" type="text" ng-model="vm.newDiagram.title" placeholder="Diagram title" />\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-default" ng-disabled="vm.newDiagram.title.length == 0" data-toggle="tooltip" ng-click="vm.addDiagram()" data-placement="top" title="Add this diagram" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-plus"></span>                                    Add\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-link" data-toggle="tooltip" ng-click="vm.cancelAddingDiagram()" data-placement="top" title="Cancel adding this diagram" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-remove"></span>                                    Cancel\n' +
+    '                                    </button>\n' +
+    '                                    </span>\n' +
+    '                                </div>\n' +
+    '                                <div ng-hide="vm.addingDiagram">\n' +
+    '                                    <button class="btn btn-link" ng-click="vm.startAddingDiagram()">\n' +
+    '                                        <span class="glyphicon glyphicon-plus"></span> Add a new diagram...\n' +
+    '                                    </button>\n' +
+    '                                </div>\n' +
+    '                            </p>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <!--buttons-->\n' +
+    '                <div class="col-md-3 col-md-offset-9">\n' +
+    '                    <div class="btn-group pull-right" role="group">\n' +
+    '                        <button class="btn btn-default" ng-click="vm.cancel()" data-toggle="tooltip" data-placement="top" title="Cancel Editing"\n' +
+    '                            type="button">\n' +
+    '                            <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '                        </button>\n' +
+    '                        <button class="btn btn-default" ng-disabled="!vm.dirty" ng-click="vm.reload()" data-toggle="tooltip" data-placement="top"\n' +
+    '                            title="Reset Form" type="button">\n' +
+    '                            <span class="fa fa-undo"></span> Reload\n' +
+    '                        </button>\n' +
+    '                        <button class="btn btn-primary" ng-disabled="!vm.dirty || !vm.threatModelEditForm.$valid" ng-click="vm.isNewModel() ? vm.create() : vm.save()"\n' +
+    '                            data-toggle="tooltip" data-placement="top" title="Save Changes" type="button">\n' +
+    '                            <span class="glyphicon glyphicon-save"></span> Save\n' +
+    '                        </button>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </form>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <!--oops-->\n' +
+    '    <div ng-if="vm.errored">\n' +
+    '        <div class="jumbotron">\n' +
+    '            <h1>oooops!</h1>\n' +
+    '            <p>\n' +
+    '                It looks like you tried to edit an invalid threat model. Maybe you typed the address wrong? Or if you clicked a link to get\n' +
+    '                here, the threat model might have been deleted since you made the link <span class="fa fa-frown-o"></span>\n' +
+    '            </p>\n' +
+    '            <p>\n' +
+    '                <a href="#/">Take me home</a>\n' +
+    '            </p>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>')
 
   }]);

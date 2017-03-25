@@ -1,7 +1,5 @@
 ﻿'use strict';
 
-//requiring angular in the core package causes tried to load angular more than once console warning
-//var angular = require('angular');
 var app = angular.module('app');
 var toastr = require('toastr');
 

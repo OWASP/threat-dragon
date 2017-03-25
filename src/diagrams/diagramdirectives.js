@@ -1,6 +1,5 @@
 ﻿'use strict';
-//requiring angular in the core package causes tried to load angular more than once console warning
-//var angular = require('angular');
+
 var $ = require('jquery');
 
 var stencil = function (diagramming) {
