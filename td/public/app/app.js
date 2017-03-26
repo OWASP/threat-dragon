@@ -2,18 +2,18 @@
 'use strict';
 
 var angular = require('angular');
+require('angular-ui-bootstrap');
 require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
 window.jQuery = require('jquery');
-require('bootstrap');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
     return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
 };
 
-var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'common', 'xeditable', 'ngAnimate', 'templates']);
+var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'common']);
 
 //require custom modules, services, controllers and directives
 require('./config.route');
