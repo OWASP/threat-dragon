@@ -1,9 +1,10 @@
 {
   "name": "owasp-threat-dragon-core",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "private": false,
   "scripts": {
-    "build": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o ./src/templates.js",
+    "build": "npm run bundle-css && npm run build-templates",
+    "build-templates": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o ./src/templates.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
     "bundle-css": "./node_modules/.bin/rework-npm ./src/content/app.css -o ./src/content/threatdragon-core.css",
     "minify-css": "./node_modules/.bin/uglifycss ./content/threatdragon-core.css > ./content/threatdragon-core.min.css",
@@ -17,7 +18,7 @@
     "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome",
     "codecov": "./node_modules/.bin/codecov"
   },
-  "description": "OWASP Threat Dragon core modules",
+  "description": "OWASP Threat Dragon core module",
   "author": {
     "name": "mike.goodwin",
     "email": "mike.goodwin@owasp.org"
@@ -31,9 +32,9 @@
   "main": "./src/index.js",
   "style": "./src/content/threatdragon-core.css",
   "dependencies": {
-    "angular": "1.6.3",    
-    "angular-route": "1.6.3",
+    "angular": "1.6.3",
     "angular-ui-bootstrap": "2.5.0",
+    "bootstrap": "3.3.7",
     "jointjs": "1.0.3",
     "jquery": "3.0.0",
     "lodash": "4.13.1",

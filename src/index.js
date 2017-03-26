@@ -1,4 +1,6 @@
 ﻿'use strict';
+window.jQuery = require('jquery');
+require('bootstrap');
 require('./services/joint.shapes.tm');
 require('./templates');
 require('./config');
