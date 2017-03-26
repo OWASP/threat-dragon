@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
