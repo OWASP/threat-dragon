@@ -14,7 +14,7 @@ describe('stencil directive: ', function () {
 
     beforeEach(function () {
 
-        angular.mock.module('app');
+        angular.mock.module('owasp-threat-dragon-core');
 
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_, _diagramming_) {
             $rootScope = _$rootScope_;
@@ -133,7 +133,7 @@ describe('diagram directive: ', function () {
 
     beforeEach(function () {
 
-        angular.mock.module('app');
+        angular.mock.module('owasp-threat-dragon-core');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_, _diagramming_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();

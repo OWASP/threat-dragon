@@ -1,10 +1,13 @@
 ﻿'use strict';
 window.jQuery = require('jquery');
 require('bootstrap');
-require('./services/joint.shapes.tm');
+require('angular-route');
+require('angular-ui-bootstrap');
 require('./templates');
-require('./config');
 require('./common');
+angular.module('owasp-threat-dragon-core', ['common', 'ui.bootstrap', 'ngRoute', 'templates']);
+require('./services/joint.shapes.tm');
+require('./config');
 require('./services');
 require('./diagrams');
 require('./layout');

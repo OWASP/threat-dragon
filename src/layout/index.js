@@ -1,3 +1,3 @@
-var app = angular.module('app');
+var core = angular.module('owasp-threat-dragon-core');
 var directives = require('./directives');
-app.directive('tmtPager', [directives]);
+core.directive('tmtPager', [directives]);

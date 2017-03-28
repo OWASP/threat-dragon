@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app');
+var core = angular.module('owasp-threat-dragon-core');
 var toastr = require('toastr');
 
 // Configure Toastr
@@ -18,9 +18,9 @@ var config = {
     version: '0.4.0'
 };
 
-app.value('config', config);
+core.value('config', config);
 
-app.config(['$logProvider', function ($logProvider) {
+core.config(['$logProvider', function ($logProvider) {
     // turn debugging off/on (no info or warn)
     if ($logProvider.debugEnabled) {
         $logProvider.debugEnabled(true);
@@ -28,6 +28,6 @@ app.config(['$logProvider', function ($logProvider) {
 }]);
 
 //Configure the common services via commonConfig
-app.config(['commonConfigProvider', function (cfg) {
+core.config(['commonConfigProvider', function (cfg) {
     cfg.config.controllerActivateSuccessEvent = config.events.controllerActivateSuccess;
 }]);

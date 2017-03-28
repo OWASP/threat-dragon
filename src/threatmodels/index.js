@@ -1,5 +1,5 @@
 'use strict';
 
-var app = angular.module('app');
+var core = angular.module('owasp-threat-dragon-core');
 var threatmodel = require('./threatmodel');
-app.controller('threatmodel', ['$scope', '$location', '$routeParams', 'dialogs', 'common', 'datacontext', threatmodel]);
+core.controller('threatmodel', ['$scope', '$location', '$routeParams', 'dialogs', 'common', 'datacontext', threatmodel]);
