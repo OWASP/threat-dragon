@@ -1,0 +1,65 @@
+'use strict';
+
+require('angular-mocks');
+
+describe('threatmodellocator service:', function () {
+
+    var threatmodellocator;
+    var $rootScope;
+
+    beforeEach(function () {
+
+        angular.mock.module('app');
+
+        angular.mock.inject(function (_$rootScope_, _threatmodellocator_) {
+            $rootScope = _$rootScope_;
+            threatmodellocator = _threatmodellocator_;
+        });
+
+        $rootScope.$apply();
+    });
+
+    it('should return the new model location', function () {
+        expect(threatmodellocator.newModelLocation).toEqual('/new/threatmodel');
+    });
+
+    it('should return a model location object', function () {
+
+        var organisation = 'organisation';
+        var repo = 'repo';
+        var branch = 'branch';
+        var model = 'model';
+
+        var params = {
+            organisation: organisation,
+            repo: repo,
+            branch: branch,
+            model: model
+        }
+
+        var location = threatmodellocator.getModelLocation(params);
+
+        expect(location.organisation).toEqual(organisation);
+        expect(location.repo).toEqual(repo);
+        expect(location.branch).toEqual(branch);
+        expect(location.model).toEqual(model);
+    });
+
+    it('should return a model path', function () {
+
+        var organisation = 'organisation';
+        var repo = 'repo';
+        var branch = 'branch';
+        var model = 'model';
+
+        var params = {
+            organisation: organisation,
+            repo: repo,
+            branch: branch,
+            model: model
+        }
+
+        var path = 'organisation/repo/branch/model'
+        expect(threatmodellocator.getModelPath(params)).toEqual(path);
+    });
+});
