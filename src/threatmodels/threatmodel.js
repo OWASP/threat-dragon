@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-function threatModel($scope, $location, $routeParams, dialogs, common, datacontext) {
+function threatModel($scope, $location, $routeParams, dialogs, common, datacontext, threatmodellocator) {
     // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
     /*jshint validthis: true */
     var vm = this;
@@ -63,7 +63,9 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
             return vm.threatModel;
         }
 
-        return datacontext.load($routeParams, forceReload).then(onLoad, onError);
+        var location = threatmodellocator.getModelLocation($routeParams);
+
+        return datacontext.load(location, forceReload).then(onLoad, onError);
 
         function onLoad(data) {
 
@@ -113,10 +115,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
         var loc = '';
 
         if (vm.threatModel.location) {
-            loc += vm.threatModel.location.organisation + '/';
-            loc += vm.threatModel.location.repo + '/';
-            loc += vm.threatModel.location.branch + '/';
-            loc += vm.threatModel.location.model;
+            loc = threatmodellocator.getModelPath(vm.threatModel.location);
         }
 
         return loc;
@@ -188,7 +187,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function isNewModel() {
-        return $location.path().substr(0, 16) === '/new/threatmodel';
+        return $location.path().substr(0, 16) === threatmodellocator.newModelLocation;
     }
 
     function onError(err) {

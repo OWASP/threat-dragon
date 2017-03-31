@@ -13,6 +13,7 @@ describe('threatModel controller', function () {
     var mockRouteParams;
     var mockDatacontext;
     var mockDialogs;
+    var mockThreatModelLocator;
     var errorLogger;
     var org = 'org';
     var repo = 'repo';
@@ -23,6 +24,10 @@ describe('threatModel controller', function () {
 
         mockDatacontext = {};
         mockDialogs = {};
+        mockThreatModelLocator = {
+            getModelLocation: function () { },
+            getModelPath: function() { }
+        };
         mockRouteParams = {
             organisation: org,
             repo: repo,
@@ -36,6 +41,7 @@ describe('threatModel controller', function () {
             $provide.value('datacontext', mockDatacontext);
             $provide.value('$routeParams', mockRouteParams);
             $provide.value('dialogs', mockDialogs);
+            $provide.value('threatmodellocator', mockThreatModelLocator);
         });
 
         angular.mock.inject(function ($rootScope, _$location_, _$controller_, _$q_, _$httpBackend_, _common_) {
@@ -58,11 +64,17 @@ describe('threatModel controller', function () {
 
     describe('initialisation tests', function () {
 
+        var location = 'mock location';
+
         beforeEach(function () {
 
             //datacontext mock
             mockDatacontext.load = function () { return $q.when('mock threat model') };
             spyOn(mockDatacontext, 'load').and.callThrough();
+
+            //model locatormock
+            location = 'location';
+            spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(location);
 
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -77,9 +89,13 @@ describe('threatModel controller', function () {
             expect($scope.vm.title).toEqual('Threat Model Details');
         });
 
-        it('should call load on the datacontext with $routeParams', function () {
+        it('should call load on the datacontext with location', function () {
+            expect(mockDatacontext.load.calls.argsFor(0)[0]).toEqual(location);
+        });
 
-            expect(mockDatacontext.load.calls.argsFor(0)[0]).toEqual(mockRouteParams);
+        it('should call get the model location from the route params', function () {
+
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0]).toEqual(mockRouteParams);
 
         });
 
@@ -142,12 +158,17 @@ describe('threatModel controller', function () {
 
     describe('new model tests', function () {
 
+        var mockPath = 'mock path';
+
         beforeEach(function () {
             //datacontext mock
             mockDatacontext.load = function () { return $q.when('mock threat model') };
             spyOn(mockDatacontext, 'load').and.callThrough();
-            //location mock
-            $location.path('/new/threatmodel');
+            //location and locator mock
+            var newLocation = '/new/threatmodel';
+            $location.path(newLocation);
+            mockThreatModelLocator.newModelLocation = newLocation;
+            spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
 
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -188,9 +209,10 @@ describe('threatModel controller', function () {
             $scope.vm.threatModel = threatModel;
             $scope.vm.create();
             $scope.$apply();
+            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockRouteParams]);
             expect(mockDatacontext.create.calls.argsFor(0)).toEqual([mockRouteParams, threatModel]);
             expect($scope.vm.dirty).toBe(false);
-            expect($location.path.calls.argsFor(0)).toEqual(['/threatmodel/' + org + '/' + repo + '/' + branch + '/' + model]);
+            expect($location.path.calls.argsFor(0)).toEqual(['/threatmodel/' + mockPath]);
 
         });
 
@@ -198,7 +220,7 @@ describe('threatModel controller', function () {
 
             var testError = new Error('test error');
             var testMessage = 'test message';
-            testError.data = {message: testMessage};
+            testError.data = { message: testMessage };
 
             mockDatacontext.create = function () {
                 return $q.reject(testError);
@@ -250,8 +272,12 @@ describe('threatModel controller', function () {
             spyOn(mockDatacontext, 'create').and.callThrough();
 
             //location mock
-            mockPath = '/threatmodel/org/repo/branch/model';
+            mockPath = 'mock path';
             $location.path(mockPath);
+
+            //locator mocks
+            spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
+
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
         });
@@ -277,7 +303,8 @@ describe('threatModel controller', function () {
             spyOn($location, 'path');
             $scope.vm.save();
             $scope.$apply();
-            expect($location.path).toHaveBeenCalledWith(mockPath);
+            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockModelLocation]);
+            expect($location.path).toHaveBeenCalledWith('/threatmodel/' + mockPath);
             expect(mockDatacontext.update).toHaveBeenCalled();
 
         });
@@ -300,7 +327,8 @@ describe('threatModel controller', function () {
             $scope.vm.threatModel.location = mockModelLocation;
             spyOn($location, 'path');
             $scope.vm.cancel();
-            expect($location.path).toHaveBeenCalledWith(mockPath);
+            expect($location.path).toHaveBeenCalledWith('/threatmodel/' + mockPath);
+            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockModelLocation]);
 
         });
 
