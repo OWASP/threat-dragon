@@ -111,14 +111,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function threatModelLocation() {
-
-        var loc = '';
-
-        if (vm.threatModel.location) {
-            loc = threatmodellocator.getModelPath(vm.threatModel.location);
-        }
-
-        return loc;
+        return threatmodellocator.getModelPath($routeParams);
     }
 
     function deleteModel() {

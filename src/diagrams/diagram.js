@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-function diagram($scope, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming) {
+function diagram($scope, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming, threatmodellocator) {
 
     // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
     /*jshint validthis: true */
@@ -97,12 +97,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function initialise(newDiagram, forceQuery) {
         vm.currentDiagram = newDiagram;
-        vm.threatModelLocation = {
-            organisation: $routeParams.organisation,
-            repo: $routeParams.repo,
-            branch: $routeParams.branch,
-            model: $routeParams.model
-        };
+        vm.threatModelLocation = threatmodellocator.getModelLocation($routeParams);
 
         datacontext.load(vm.threatModelLocation, forceQuery).then(function (threatModel) {
             onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);

@@ -15,6 +15,7 @@ describe('diagram controller', function () {
     var mockDiagramming;
     var mockThreatEngine;
     var mockDialogs;
+    var mockThreatModelLocator;
     
     var mockNewGraph = 'mock new graph';
     var mockOrg = 'org';
@@ -30,6 +31,7 @@ describe('diagram controller', function () {
         mockDiagramming = {};
         mockThreatEngine = {};
         mockDialogs = {};
+        mockThreatModelLocator = {};
         
         angular.mock.module('owasp-threat-dragon-core')
         
@@ -39,6 +41,7 @@ describe('diagram controller', function () {
             $provide.value('diagramming', mockDiagramming);
             $provide.value('threatengine', mockThreatEngine);
             $provide.value('dialogs', mockDialogs);
+            $provide.value('threatmodellocator', mockThreatModelLocator);
         });
         
         angular.mock.inject(function ($rootScope, _$location_, _$controller_, _$q_, _$timeout_, _$httpBackend_) {
@@ -516,12 +519,18 @@ describe('diagram controller', function () {
         var graph;
         var title;
         var diagramData;
+        var mockLocation
         
         beforeEach(function() {
             
             //datacontext mock
             mockDatacontext.load = function() { return $q.when(true); };           
             newDiagram = {};
+
+            //locator mock
+            mockLocation = 'mock location';
+            mockThreatModelLocator.getModelLocation = function() {};
+            spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(mockLocation);
             
             threatModel = {
                 detail: {
@@ -572,11 +581,11 @@ describe('diagram controller', function () {
             $scope.$apply();
             
             expect(mockDatacontext.load).toHaveBeenCalled();
-            expect(mockDatacontext.load.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].repo).toEqual(mockRepo);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].branch).toEqual(mockBranch);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].model).toEqual(mockModelName);
-            expect(mockDatacontext.load.calls.argsFor(0)[1]).toEqual(forceQuery);
+            expect(mockDatacontext.load.calls.argsFor(0)).toEqual([mockLocation, forceQuery]);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].repo).toEqual(mockRepo);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].branch).toEqual(mockBranch);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].model).toEqual(mockModelName);
             expect(graph.initialise).toHaveBeenCalled();
             expect(graph.initialise.calls.argsFor(0)).toEqual([threatModel.detail.diagrams[1].diagramJson]);
             expect(newDiagram.resize).toHaveBeenCalled();
@@ -602,11 +611,11 @@ describe('diagram controller', function () {
             $scope.$apply();
             
             expect(mockDatacontext.load).toHaveBeenCalled();
-            expect(mockDatacontext.load.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].repo).toEqual(mockRepo);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].branch).toEqual(mockBranch);
-            expect(mockDatacontext.load.calls.argsFor(0)[0].model).toEqual(mockModelName);
-            expect(mockDatacontext.load.calls.argsFor(0)[1]).toEqual(forceQuery);
+            expect(mockDatacontext.load.calls.argsFor(0)).toEqual([mockLocation, forceQuery]);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].organisation).toEqual(mockOrg);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].repo).toEqual(mockRepo);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].branch).toEqual(mockBranch);
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0].model).toEqual(mockModelName);
             expect(graph.initialise).not.toHaveBeenCalled();
             expect(newDiagram.resize).not.toHaveBeenCalled();
             expect($scope.vm.loaded).toBe(true);
