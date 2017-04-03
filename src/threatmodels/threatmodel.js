@@ -23,6 +23,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     vm.create = create;
     vm.reload = reload,
     /*jshint -W030 */
+    vm.threatModelPath = threatModelPath;
     vm.threatModelLocation = threatModelLocation;
     vm.deleteModel = deleteModel;
     vm.cancel = cancel;
@@ -87,7 +88,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
         function onSave() {
             vm.dirty = false; //prevents structured exit
-            $location.path('/threatmodel/' + threatModelLocation());
+            $location.path('/threatmodel/' + threatModelPath());
         }
     }
 
@@ -96,7 +97,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
         function onCreate() {
             vm.dirty = false; //prevents structured exit
-            $location.path('/threatmodel/' + threatModelLocation());
+            $location.path('/threatmodel/' + threatModelPath());
         }
     }
 
@@ -110,8 +111,25 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     }
 
+    function threatModelPath() {
+        var path = '';
+
+        if (datacontext.threatModelLocation) {
+            path = threatmodellocator.getModelPath(datacontext.threatModelLocation);
+        }
+
+        return path;
+    }
+
     function threatModelLocation() {
-        return threatmodellocator.getModelPath($routeParams);
+
+        var loc = {};
+
+        if (datacontext.threatModelLocation) {
+            loc = threatmodellocator.getModelLocation(datacontext.threatModelLocation);
+        }
+        
+        return loc;
     }
 
     function deleteModel() {
@@ -125,7 +143,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     function cancel() {
         if (!_.isUndefined(vm.threatModel.summary.title)) {
-            $location.path('/threatmodel/' + vm.threatModelLocation());
+            $location.path('/threatmodel/' + vm.threatModelPath());
         }
         else {
             $location.path('/');

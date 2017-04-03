@@ -1,12 +1,12 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="!vm.threatModel.location && !vm.errored">
+    <div ng-if="!vm.threatModel.summary && !vm.errored">
         <p class="h3 text-center">Your threat model is loading...</p>
         <div class="spinner"></div>
     </div>
-    <div ng-if="!vm.errored && vm.threatModel.location">
+    <div ng-if="!vm.errored && vm.threatModel.summary">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a href="#/threatmodel/edit/{{vm.threatModelLocation()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <a href="#/threatmodel/edit/{{vm.threatModelPath()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -41,7 +41,7 @@
                             <a href="#/threatmodel/{{vm.threatModel.summary.id}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
                         </div>
                         <div class="panel-body">
-                            <a href="#/threatmodel/{{vm.threatModelLocation()}}/diagram/{{diagram.id}}">
+                            <a href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}">
                                 <img ng-src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />
                             </a>
                         </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group">
-                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelLocation()}}" 
+                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelPath()}}" 
                     role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">
                         <span class="glyphicon glyphicon-edit"></span> Edit
                     </a>

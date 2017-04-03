@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">
-    <div ng-if="!vm.threatModel.location && !vm.errored && !vm.isNewModel">
+    <div ng-if="!vm.threatModel.summary && !vm.errored && !vm.isNewModel">
         <p class="h3 text-center">Your threat model is loading...</p>
         <div class="spinner"></div>
     </div>
@@ -23,7 +23,7 @@
                             </div>
                         </p>
                     </div>
-                    <div ng-show="vm.threatModelEditForm.threatModelTitle.$viewValue != vm.threatModel.location.model && !vm.isNewModel()">
+                    <div ng-show="vm.threatModelEditForm.threatModelTitle.$viewValue != vm.threatModelLocation().model && !vm.isNewModel()">                      
                         <p>
                             <div class="alert alert-info" role="alert">
                                 <span class="fa fa-info-circle" aria-hidden="true"></span>

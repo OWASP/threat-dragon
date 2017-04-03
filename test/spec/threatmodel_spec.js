@@ -22,11 +22,10 @@ describe('threatModel controller', function () {
 
     beforeEach(function () {
 
-        mockDatacontext = {};
         mockDialogs = {};
         mockThreatModelLocator = {
             getModelLocation: function () { },
-            getModelPath: function() { }
+            getModelPath: function () { }
         };
         mockRouteParams = {
             organisation: org,
@@ -34,6 +33,7 @@ describe('threatModel controller', function () {
             branch: branch,
             model: model
         };
+        mockDatacontext = {};
 
         angular.mock.module('owasp-threat-dragon-core')
 
@@ -71,10 +71,12 @@ describe('threatModel controller', function () {
             //datacontext mock
             mockDatacontext.load = function () { return $q.when('mock threat model') };
             spyOn(mockDatacontext, 'load').and.callThrough();
+            mockDatacontext.threatModelLocation = mockRouteParams;
 
             //model locatormock
             location = 'location';
             spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(location);
+            spyOn(mockThreatModelLocator, 'getModelPath');
 
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -97,6 +99,29 @@ describe('threatModel controller', function () {
 
             expect(mockThreatModelLocator.getModelLocation.calls.argsFor(0)[0]).toEqual(mockRouteParams);
 
+        });
+
+        it('should get the threat model location', function () {
+            $scope.vm.threatModelLocation();
+            expect(mockThreatModelLocator.getModelLocation.calls.argsFor(1)[0]).toEqual(mockRouteParams);
+        });
+
+        it('should not call the locator to get the location', function () {
+            mockDatacontext.threatModelLocation = null;
+            $scope.vm.threatModelLocation();
+            expect(mockThreatModelLocator.getModelLocation).toHaveBeenCalledTimes(1);
+        });
+
+        it('should get the threat model path', function () {
+
+            var result = $scope.vm.threatModelPath();
+            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)[0]).toEqual(mockRouteParams);
+        });
+
+        it('should not call the locator to get the path', function () {
+            mockDatacontext.threatModelLocation = null;
+            $scope.vm.threatModelPath();
+            expect(mockThreatModelLocator.getModelPath).not.toHaveBeenCalled();
         });
 
         it('threatmodel should be set to "mock threat model"', function () {
@@ -200,7 +225,7 @@ describe('threatModel controller', function () {
             };
 
             mockDatacontext.create = function (location, model) {
-                model.location = location;
+                mockDatacontext.threatModelLocation = location;
                 return $q.when(true);
             }
 
@@ -266,7 +291,7 @@ describe('threatModel controller', function () {
             spyOn(mockDatacontext, 'load').and.callThrough();
             mockDatacontext.deleteModel = function () { return $q.when(null) };
             spyOn(mockDatacontext, 'deleteModel').and.callThrough();
-            mockDatacontext.update = function () { return $q.when(null) };
+            mockDatacontext.update = function (location) { return $q.when(null) };
             spyOn(mockDatacontext, 'update').and.callThrough();
             mockDatacontext.create = function () { return $q.when(null) };
             spyOn(mockDatacontext, 'create').and.callThrough();
@@ -299,8 +324,8 @@ describe('threatModel controller', function () {
         it('should call update on the datacontext and navigate to the ThreatModel view', function () {
 
             $scope.vm.threatModel = mockThreatModel;
-            $scope.vm.threatModel.location = mockModelLocation;
             spyOn($location, 'path');
+            mockDatacontext.threatModelLocation = mockRouteParams;
             $scope.vm.save();
             $scope.$apply();
             expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockModelLocation]);
@@ -324,7 +349,7 @@ describe('threatModel controller', function () {
         it('should navigate to the specified threat model view', function () {
 
             $scope.vm.threatModel = mockThreatModel;
-            $scope.vm.threatModel.location = mockModelLocation;
+            mockDatacontext.threatModelLocation = mockRouteParams;
             spyOn($location, 'path');
             $scope.vm.cancel();
             expect($location.path).toHaveBeenCalledWith('/threatmodel/' + mockPath);
