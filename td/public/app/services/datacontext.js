@@ -1,8 +1,9 @@
 ﻿'use strict';
 
-function datacontext($q, $http, common) {
+function datacontext($q, $http, common, threatmodellocator) {
 
     var threatModel = null;
+    var threatModelLocation = null;
 
     var service = {
         repos: repos,
@@ -13,7 +14,8 @@ function datacontext($q, $http, common) {
         update: update,
         deleteModel: deleteModel,
         saveThreatModelDiagram: saveThreatModelDiagram,
-        threatModel: threatModel
+        threatModel: threatModel,
+        threatModelLocation: threatModelLocation
     };
 
     return service;
@@ -58,18 +60,18 @@ function datacontext($q, $http, common) {
         return $http.get(modelsUri, config);
     }
 
-    function load(threatModelLocation, forceQuery) {
+    function load(location, forceQuery) {
 
         var loc = {
-            organisation: threatModelLocation.organisation,
-            repo: threatModelLocation.repo,
-            branch: threatModelLocation.branch,
-            model: threatModelLocation.model
+            organisation: location.organisation,
+            repo: location.repo,
+            branch: location.branch,
+            model: location.model
         };
 
 
         //don't refetch if the location has not changed
-        if (service.threatModel && JSON.stringify(loc) === JSON.stringify(service.threatModel.location) && !forceQuery) {
+        if (service.threatModel && JSON.stringify(loc) === JSON.stringify(service.threatModelLocation) && !forceQuery) {
             return $q.when(service.threatModel);
         }
 
@@ -83,12 +85,13 @@ function datacontext($q, $http, common) {
 
         function onLoadedThreatModel(result) {
             service.threatModel = result.data;
-            service.threatModel.location = loc;
+            service.threatModelLocation = loc;
             return $q.resolve(service.threatModel);
         }
 
         function onLoadError(err) {
             service.threatModel = null;
+            service.threatModelLocation = null;
             return $q.reject(err);
         }
     }
@@ -103,7 +106,7 @@ function datacontext($q, $http, common) {
 
         var threatModelUri = buildUri(loc) + '/create';
 
-        threatModel.location = loc;
+        service.threatModelLocation = loc;
         service.threatModel = threatModel;
 
         return $http.put(threatModelUri, threatModel);
@@ -111,30 +114,31 @@ function datacontext($q, $http, common) {
 
     function update() {
 
-        var oldLocation = Object.assign({}, service.threatModel.location);
+        var oldLocation = Object.assign({}, service.threatModelLocation);
 
         if (oldLocation.model === service.threatModel.summary.title) {
-            var threatModelUri = buildUri(service.threatModel.location) + '/update';
+            var threatModelUri = buildUri(service.threatModelLocation) + '/update';
             return $http.put(threatModelUri, service.threatModel);
         } else {
-            service.threatModel.location.model = service.threatModel.summary.title;
-            return create(service.threatModel.location, service.threatModel).then(onCreated);
+            service.threatModelLocation.model = service.threatModel.summary.title;
+            return create(service.threatModelLocation, service.threatModel).then(onCreated);
         }
 
         function onCreated() {
-            var cleanUplUri = buildUri(oldLocation);
-            return $http.delete(cleanUplUri);
+            var cleanUpUri = buildUri(oldLocation);
+            return $http.delete(cleanUpUri);
         }
     }
 
     function deleteModel() {
 
-        var threatModelUri = buildUri(service.threatModel.location);
+        var threatModelUri = buildUri(service.threatModelLocation);
 
         return $http.delete(threatModelUri).then(onDeletedModel, onDeleteError);
 
         function onDeletedModel() {
             service.threatModel = null;
+            service.threatModelLocation = null;
             return $q.resolve(service.threatModel);
         }
 
@@ -144,8 +148,6 @@ function datacontext($q, $http, common) {
     }
 
     function saveThreatModelDiagram(diagramId, diagramData) {
-
-        //console.log(service.threatModel.detail.diagrams);
 
         var diagramToSave = service.threatModel.detail.diagrams.find(function (diagram) {
             return diagram.id == diagramId;
@@ -162,13 +164,7 @@ function datacontext($q, $http, common) {
 
     function buildUri(threatModelLocation) {
 
-        var uri = 'threatmodel/';
-        uri += threatModelLocation.organisation + '/';
-        uri += threatModelLocation.repo + '/';
-        uri += threatModelLocation.branch + '/';
-        uri += threatModelLocation.model;
-
-        return uri;
+        return 'threatmodel/' + threatmodellocator.getModelPath(threatModelLocation);
     }
 }
 
