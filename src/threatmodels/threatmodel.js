@@ -25,6 +25,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     /*jshint -W030 */
     vm.threatModelPath = threatModelPath;
     vm.threatModelLocation = threatModelLocation;
+    vm.willMoveThreatModel = willMoveThreatModel;
     vm.deleteModel = deleteModel;
     vm.cancel = cancel;
     vm.newContributor = '';
@@ -112,24 +113,15 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function threatModelPath() {
-        var path = '';
-
-        if (datacontext.threatModelLocation) {
-            path = threatmodellocator.getModelPath(datacontext.threatModelLocation);
-        }
-
-        return path;
+        return threatmodellocator.getModelPath($routeParams);
     }
 
     function threatModelLocation() {
+        return threatmodellocator.getModelLocation($routeParams);
+    }
 
-        var loc = {};
-
-        if (datacontext.threatModelLocation) {
-            loc = threatmodellocator.getModelLocation(datacontext.threatModelLocation);
-        }
-        
-        return loc;
+    function willMoveThreatModel(changes) {
+        return threatmodellocator.willMoveModel($routeParams, changes);
     }
 
     function deleteModel() {

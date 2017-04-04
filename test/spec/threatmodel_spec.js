@@ -25,7 +25,8 @@ describe('threatModel controller', function () {
         mockDialogs = {};
         mockThreatModelLocator = {
             getModelLocation: function () { },
-            getModelPath: function () { }
+            getModelPath: function () { },
+            willMoveModel: function () { }
         };
         mockRouteParams = {
             organisation: org,
@@ -77,6 +78,7 @@ describe('threatModel controller', function () {
             location = 'location';
             spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(location);
             spyOn(mockThreatModelLocator, 'getModelPath');
+            spyOn(mockThreatModelLocator, 'willMoveModel');
 
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -106,22 +108,16 @@ describe('threatModel controller', function () {
             expect(mockThreatModelLocator.getModelLocation.calls.argsFor(1)[0]).toEqual(mockRouteParams);
         });
 
-        it('should not call the locator to get the location', function () {
-            mockDatacontext.threatModelLocation = null;
-            $scope.vm.threatModelLocation();
-            expect(mockThreatModelLocator.getModelLocation).toHaveBeenCalledTimes(1);
-        });
-
         it('should get the threat model path', function () {
 
             var result = $scope.vm.threatModelPath();
             expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)[0]).toEqual(mockRouteParams);
         });
 
-        it('should not call the locator to get the path', function () {
-            mockDatacontext.threatModelLocation = null;
-            $scope.vm.threatModelPath();
-            expect(mockThreatModelLocator.getModelPath).not.toHaveBeenCalled();
+        it('should check if the model will move', function () {
+            var changes = {data: 'change'};
+            var result = $scope.vm.willMoveThreatModel(changes);
+            expect(mockThreatModelLocator.willMoveModel.calls.argsFor(0)).toEqual([mockRouteParams,changes]);
         });
 
         it('threatmodel should be set to "mock threat model"', function () {

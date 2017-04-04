@@ -23,7 +23,7 @@
                             </div>
                         </p>
                     </div>
-                    <div ng-show="vm.threatModelEditForm.threatModelTitle.$viewValue != vm.threatModelLocation().model && !vm.isNewModel()">                      
+                    <div ng-show="vm.willMoveThreatModel({model: vm.threatModelEditForm.threatModelTitle.$viewValue}) && !vm.isNewModel()">                      
                         <p>
                             <div class="alert alert-info" role="alert">
                                 <span class="fa fa-info-circle" aria-hidden="true"></span>
