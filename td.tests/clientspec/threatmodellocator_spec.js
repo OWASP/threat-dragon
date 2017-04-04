@@ -62,4 +62,45 @@ describe('threatmodellocator service:', function () {
         var path = 'organisation/repo/branch/model'
         expect(threatmodellocator.getModelPath(params)).toEqual(path);
     });
+
+    it('should move the model', function () {
+
+        var organisation = 'organisation';
+        var repo = 'repo';
+        var branch = 'branch';
+        var model = 'model';
+
+        var params = {
+            organisation: organisation,
+            repo: repo,
+            branch: branch,
+            model: model
+        };
+
+        expect(threatmodellocator.willMoveModel(params, { model: 'new model' })).toBe(true);
+    });
+
+    it('should not move the model', function () {
+
+        var organisation = 'organisation';
+        var repo = 'repo';
+        var branch = 'branch';
+        var model = 'model';
+
+        var params = {
+            organisation: organisation,
+            repo: repo,
+            branch: branch,
+            model: model
+        };
+
+        var changes = {
+            organisation: organisation + 'x',
+            repo: repo + 'x',
+            branch: branch + 'x',
+            model: model
+        };
+
+        expect(threatmodellocator.willMoveModel(params, changes)).toBe(false);
+    });
 });

@@ -5,6 +5,7 @@ function threatmodellocator() {
     var service = {
         getModelLocation: getModelLocation,
         getModelPath: getModelPath,
+        willMoveModel: willMoveModel,
         newModelLocation: '/new/threatmodel'
     };
 
@@ -30,6 +31,10 @@ function threatmodellocator() {
         path += params.model;
 
         return path;
+    }
+
+    function willMoveModel(params, changes) {
+        return changes.model != params.model;
     }
 }
 
