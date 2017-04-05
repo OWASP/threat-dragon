@@ -222,7 +222,7 @@ describe('threatModel controller', function () {
 
             mockDatacontext.create = function (location, model) {
                 mockDatacontext.threatModelLocation = location;
-                return $q.when(true);
+                return $q.when({location: location});
             }
 
             spyOn($location, 'path');
@@ -287,9 +287,9 @@ describe('threatModel controller', function () {
             spyOn(mockDatacontext, 'load').and.callThrough();
             mockDatacontext.deleteModel = function () { return $q.when(null) };
             spyOn(mockDatacontext, 'deleteModel').and.callThrough();
-            mockDatacontext.update = function (location) { return $q.when(null) };
+            mockDatacontext.update = function (location) { return $q.when({location: mockModelLocation}) };
             spyOn(mockDatacontext, 'update').and.callThrough();
-            mockDatacontext.create = function () { return $q.when(null) };
+            mockDatacontext.create = function () { return $q.when({location: mockModelLocation}) };
             spyOn(mockDatacontext, 'create').and.callThrough();
 
             //location mock

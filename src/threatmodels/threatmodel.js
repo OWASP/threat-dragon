@@ -87,18 +87,18 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
         datacontext.update().then(onSave, onError);
 
-        function onSave() {
+        function onSave(result) {
             vm.dirty = false; //prevents structured exit
-            $location.path('/threatmodel/' + threatModelPath());
+            $location.path('/threatmodel/' + threatmodellocator.getModelPath(result.location));
         }
     }
 
     function create() {
         datacontext.create($routeParams, vm.threatModel).then(onCreate, onError);
 
-        function onCreate() {
+        function onCreate(result) {
             vm.dirty = false; //prevents structured exit
-            $location.path('/threatmodel/' + threatModelPath());
+            $location.path('/threatmodel/' + threatmodellocator.getModelPath(result.location));
         }
     }
 
