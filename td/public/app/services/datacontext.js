@@ -105,11 +105,19 @@ function datacontext($q, $http, common, threatmodellocator) {
         };
 
         var threatModelUri = buildUri(loc) + '/create';
-
-        service.threatModelLocation = loc;
         service.threatModel = threatModel;
 
-        return $http.put(threatModelUri, threatModel);
+        return $http.put(threatModelUri, threatModel).then(onCreated, onCreateError);
+
+        function onCreated() {
+            service.threatModelLocation = loc;
+            return $q.resolve({ model: service.threatModel, location: service.threatModelLocation });
+        }
+
+        function onCreateError(response){
+            service.threatModelLocation = null;
+            return $q.reject(response);
+        }
     }
 
     function update() {
@@ -121,12 +129,16 @@ function datacontext($q, $http, common, threatmodellocator) {
             return $http.put(threatModelUri, service.threatModel);
         } else {
             service.threatModelLocation.model = service.threatModel.summary.title;
-            return create(service.threatModelLocation, service.threatModel).then(onCreated);
+            return create(service.threatModelLocation, service.threatModel).then(onCreated).then(onCreateCompleted);
         }
 
         function onCreated() {
             var cleanUpUri = buildUri(oldLocation);
             return $http.delete(cleanUpUri);
+        }
+
+        function onCreateCompleted() {
+            return $q.resolve({model: service.threatModel, location: service.threatModelLocation});
         }
     }
 
