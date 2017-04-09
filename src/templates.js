@@ -64,7 +64,7 @@ angular.module('templates', [])
     '                    <form name="diagramEditToolBar">\n' +
     '                        <div class="col-md-12">\n' +
     '                            <div class="btn-group pull-left" role="group">\n' +
-    '                                <a class="btn btn-default" href="#/threatmodel/{{vm.threatModelLocation.organisation}}/{{vm.threatModelLocation.repo}}/{{vm.threatModelLocation.branch}}/{{vm.threatModelLocation.model}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
+    '                                <a class="btn btn-default" href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
     '                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">\n' +

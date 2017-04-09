@@ -113,7 +113,6 @@ describe('diagram controller', function () {
             expect($scope.vm.selected).toBeNull();
 
         });
-
     });
 
     describe('save tests: ', function () {
@@ -530,7 +529,9 @@ describe('diagram controller', function () {
             //locator mock
             mockLocation = 'mock location';
             mockThreatModelLocator.getModelLocation = function() {};
+            mockThreatModelLocator.getModelPath = function() {};
             spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(mockLocation);
+            spyOn(mockThreatModelLocator, 'getModelPath');
             
             threatModel = {
                 detail: {
@@ -563,7 +564,16 @@ describe('diagram controller', function () {
             //dialogs mock
             mockDialogs.structuredExit = function() { };
             
-         })
+         });
+
+         
+        it('should get the threat model path', function() {
+
+            $scope.vm.getThreatModelPath();
+            expect(mockThreatModelLocator.getModelPath).toHaveBeenCalled();
+            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockRouteParams]);
+
+        });
     
         it('should initialise a model with Json and size', function() {
             

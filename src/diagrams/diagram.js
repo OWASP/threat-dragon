@@ -26,6 +26,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     vm.newFlow = newFlow;
     vm.newActor = newActor;
     vm.newBoundary = newBoundary;
+    vm.getThreatModelPath = getThreatModelPath;
     vm.select = select;
     vm.edit = edit;
     vm.generateThreats = generateThreats;
@@ -97,9 +98,9 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function initialise(newDiagram, forceQuery) {
         vm.currentDiagram = newDiagram;
-        vm.threatModelLocation = threatmodellocator.getModelLocation($routeParams);
+        var threatModelLocation = threatmodellocator.getModelLocation($routeParams);
 
-        datacontext.load(vm.threatModelLocation, forceQuery).then(function (threatModel) {
+        datacontext.load(threatModelLocation, forceQuery).then(function (threatModel) {
             onGetThreatModelDiagram(threatModel.detail.diagrams[vm.diagramId]);
         },
             onError);
@@ -175,6 +176,10 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function edit() {
         vm.dirty = true;
+    }
+
+    function getThreatModelPath() {
+        return threatmodellocator.getModelPath($routeParams);
     }
 
     function generateThreats() {
