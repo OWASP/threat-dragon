@@ -125,7 +125,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function deleteModel() {
-        datacontext.deleteModel().then(onDelete, logError);
+        dialogs.confirm('threatmodels/confirmDelete.html', function () { datacontext.deleteModel().then(onDelete, logError); }, function () { return null; }, function () { });
     }
 
     function onDelete() {

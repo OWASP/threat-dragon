@@ -335,6 +335,21 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>\n' +
     '')
+  $templateCache.put('threatmodels/confirmDelete.html',
+    '<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>Are you sure?</h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        You are about to delete this threat model. It cannot be undone!\n' +
+    '        Press Cancel to keep the threat model, or press OK to delete the threat model.\n' +
+    '    </div>\n' +
+    '    <div class="modal-footer">\n' +
+    '        <button class="btn btn-default" ng-click="onOK()">OK</button>\n' +
+    '        <button class="btn btn-primary" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
   $templateCache.put('threatmodels/confirmReloadOnDirty.html',
     '<div>\n' +
     '    <div class="modal-header">\n' +

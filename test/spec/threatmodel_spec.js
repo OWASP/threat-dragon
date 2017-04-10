@@ -115,9 +115,9 @@ describe('threatModel controller', function () {
         });
 
         it('should check if the model will move', function () {
-            var changes = {data: 'change'};
+            var changes = { data: 'change' };
             var result = $scope.vm.willMoveThreatModel(changes);
-            expect(mockThreatModelLocator.willMoveModel.calls.argsFor(0)).toEqual([mockRouteParams,changes]);
+            expect(mockThreatModelLocator.willMoveModel.calls.argsFor(0)).toEqual([mockRouteParams, changes]);
         });
 
         it('threatmodel should be set to "mock threat model"', function () {
@@ -222,7 +222,7 @@ describe('threatModel controller', function () {
 
             mockDatacontext.create = function (location, model) {
                 mockDatacontext.threatModelLocation = location;
-                return $q.when({location: location});
+                return $q.when({ location: location });
             }
 
             spyOn($location, 'path');
@@ -287,9 +287,9 @@ describe('threatModel controller', function () {
             spyOn(mockDatacontext, 'load').and.callThrough();
             mockDatacontext.deleteModel = function () { return $q.when(null) };
             spyOn(mockDatacontext, 'deleteModel').and.callThrough();
-            mockDatacontext.update = function (location) { return $q.when({location: mockModelLocation}) };
+            mockDatacontext.update = function (location) { return $q.when({ location: mockModelLocation }) };
             spyOn(mockDatacontext, 'update').and.callThrough();
-            mockDatacontext.create = function () { return $q.when({location: mockModelLocation}) };
+            mockDatacontext.create = function () { return $q.when({ location: mockModelLocation }) };
             spyOn(mockDatacontext, 'create').and.callThrough();
 
             //location mock
@@ -332,13 +332,44 @@ describe('threatModel controller', function () {
 
         it('should call delete model on the datacontext and navigate to the welcome view', function () {
 
+            //mock dialog - cancel
+            mockDialogs.confirm = function (template, onOkPreClose, getParameter, onCancelPreClose) {
+                onCancelPreClose();
+            }
+
+            //mock dialog - ok
+            mockDialogs.confirm = function (template, onOkPreClose, getParameter, onCancelPreClose) {
+                onOkPreClose();
+            }
+
+            spyOn(mockDialogs, 'confirm').and.callThrough();
             $scope.vm.threatModel = mockThreatModel;
             $scope.vm.threatModel.location = mockModelLocation;
             spyOn($location, 'path');
             $scope.vm.deleteModel();
             $scope.$apply();
+            expect(mockDialogs.confirm).toHaveBeenCalled();
             expect(mockDatacontext.deleteModel).toHaveBeenCalled();
             expect($location.path).toHaveBeenCalledWith('/');
+
+        });
+
+        it('should not call delete model on the datacontext and navigate to the welcome view', function () {
+
+            //mock dialog - cancel
+            mockDialogs.confirm = function (template, onOkPreClose, getParameter, onCancelPreClose) {
+                onCancelPreClose();
+            }
+
+            spyOn(mockDialogs, 'confirm').and.callThrough();
+            $scope.vm.threatModel = mockThreatModel;
+            $scope.vm.threatModel.location = mockModelLocation;
+            spyOn($location, 'path');
+            $scope.vm.deleteModel();
+            $scope.$apply();
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDatacontext.deleteModel).not.toHaveBeenCalled();
+            expect($location.path).not.toHaveBeenCalled();
 
         });
 
