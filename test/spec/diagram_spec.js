@@ -530,8 +530,10 @@ describe('diagram controller', function () {
             mockLocation = 'mock location';
             mockThreatModelLocator.getModelLocation = function() {};
             mockThreatModelLocator.getModelPath = function() {};
+            mockThreatModelLocator.getModelPathFromRouteParams = function () { },
             spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(mockLocation);
             spyOn(mockThreatModelLocator, 'getModelPath');
+            spyOn(mockThreatModelLocator, 'getModelPathFromRouteParams');
             
             threatModel = {
                 detail: {
@@ -570,8 +572,8 @@ describe('diagram controller', function () {
         it('should get the threat model path', function() {
 
             $scope.vm.getThreatModelPath();
-            expect(mockThreatModelLocator.getModelPath).toHaveBeenCalled();
-            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockRouteParams]);
+            expect(mockThreatModelLocator.getModelPathFromRouteParams).toHaveBeenCalled();
+            expect(mockThreatModelLocator.getModelPathFromRouteParams.calls.argsFor(0)).toEqual([mockRouteParams]);
 
         });
     

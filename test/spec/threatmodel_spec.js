@@ -19,6 +19,7 @@ describe('threatModel controller', function () {
     var repo = 'repo';
     var branch = 'branch';
     var model = 'model';
+    var file = 'file';
 
     beforeEach(function () {
 
@@ -26,13 +27,15 @@ describe('threatModel controller', function () {
         mockThreatModelLocator = {
             getModelLocation: function () { },
             getModelPath: function () { },
+            getModelPathFromRouteParams: function () { },
             willMoveModel: function () { }
         };
         mockRouteParams = {
             organisation: org,
             repo: repo,
             branch: branch,
-            model: model
+            model: model,
+            file: file
         };
         mockDatacontext = {};
 
@@ -78,6 +81,7 @@ describe('threatModel controller', function () {
             location = 'location';
             spyOn(mockThreatModelLocator, 'getModelLocation').and.returnValue(location);
             spyOn(mockThreatModelLocator, 'getModelPath');
+            spyOn(mockThreatModelLocator, 'getModelPathFromRouteParams');
             spyOn(mockThreatModelLocator, 'willMoveModel');
 
             $controller('threatmodel as vm', { $scope: $scope });
@@ -111,7 +115,7 @@ describe('threatModel controller', function () {
         it('should get the threat model path', function () {
 
             var result = $scope.vm.threatModelPath();
-            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)[0]).toEqual(mockRouteParams);
+            expect(mockThreatModelLocator.getModelPathFromRouteParams.calls.argsFor(0)[0]).toEqual(mockRouteParams);
         });
 
         it('should check if the model will move', function () {
@@ -190,7 +194,6 @@ describe('threatModel controller', function () {
             $location.path(newLocation);
             mockThreatModelLocator.newModelLocation = newLocation;
             spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
-
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
         });
@@ -208,12 +211,14 @@ describe('threatModel controller', function () {
             var repo = 'repo';
             var branch = 'branch';
             var model = 'model';
+            var file = 'file';
 
             mockRouteParams = {
                 organisation: org,
                 repo: repo,
                 branch: branch,
-                model: model
+                model: model,
+                file: file
             };
 
             var threatModel = {
@@ -298,6 +303,7 @@ describe('threatModel controller', function () {
 
             //locator mocks
             spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
+            spyOn(mockThreatModelLocator, 'getModelPathFromRouteParams').and.returnValue(mockPath);
 
             $controller('threatmodel as vm', { $scope: $scope });
             $scope.$apply();
@@ -380,7 +386,8 @@ describe('threatModel controller', function () {
             spyOn($location, 'path');
             $scope.vm.cancel();
             expect($location.path).toHaveBeenCalledWith('/threatmodel/' + mockPath);
-            expect(mockThreatModelLocator.getModelPath.calls.argsFor(0)).toEqual([mockModelLocation]);
+            expect(mockThreatModelLocator.getModelPathFromRouteParams).toHaveBeenCalled();
+            expect(mockThreatModelLocator.getModelPathFromRouteParams.calls.argsFor(0)).toEqual([mockRouteParams]);
 
         });
 

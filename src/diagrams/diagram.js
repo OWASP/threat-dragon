@@ -179,7 +179,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     }
 
     function getThreatModelPath() {
-        return threatmodellocator.getModelPath($routeParams);
+        return threatmodellocator.getModelPathFromRouteParams($routeParams);
     }
 
     function generateThreats() {

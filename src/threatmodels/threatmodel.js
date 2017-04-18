@@ -113,7 +113,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function threatModelPath() {
-        return threatmodellocator.getModelPath($routeParams);
+        return threatmodellocator.getModelPathFromRouteParams($routeParams);
     }
 
     function threatModelLocation() {
