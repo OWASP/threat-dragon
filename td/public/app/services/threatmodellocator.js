@@ -5,6 +5,7 @@ function threatmodellocator() {
     var service = {
         getModelLocation: getModelLocation,
         getModelPath: getModelPath,
+        getModelPathFromRouteParams: getModelPath,
         willMoveModel: willMoveModel,
         newModelLocation: '/new/threatmodel'
     };
