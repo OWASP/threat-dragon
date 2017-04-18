@@ -63,6 +63,24 @@ describe('threatmodellocator service:', function () {
         expect(threatmodellocator.getModelPath(params)).toEqual(path);
     });
 
+        it('should return a model path based on the route params', function () {
+
+        var organisation = 'organisation';
+        var repo = 'repo';
+        var branch = 'branch';
+        var model = 'model';
+
+        var params = {
+            organisation: organisation,
+            repo: repo,
+            branch: branch,
+            model: model
+        }
+
+        var path = 'organisation/repo/branch/model'
+        expect(threatmodellocator.getModelPathFromRouteParams(params)).toEqual(path);
+    });
+
     it('should move the model', function () {
 
         var organisation = 'organisation';
