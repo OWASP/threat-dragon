@@ -14,7 +14,7 @@ function passportConfig(app) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         failureRedirect: 'login/github',
-        scope: [ 'repo' ]
+        scope: [ 'public_repo' ]
     },
     function(accessToken, refreshToken, profile, done) {
         return done(null, {profile: profile, accessToken: accessToken});
