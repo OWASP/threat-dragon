@@ -76,7 +76,7 @@ describe('passport configuration tests', function() {
                 });
                 
                 var callBackUrl = url.parse(decodeURIComponent(params["redirect_uri"]));
-                expect(decodeURIComponent(params["scope"])).toEqual('repo');
+                expect(decodeURIComponent(params["scope"])).toEqual('public_repo');
                 expect(params["client_id"]).toEqual(clientID);
                 //expect(callBackUrl.path).toEqual('/oauth/github');
             })
