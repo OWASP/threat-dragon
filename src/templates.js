@@ -206,7 +206,7 @@ angular.module('templates', [])
   $templateCache.put('diagrams/ThreatEditPane.html',
     '<div>\n' +
     '    <div class="modal-header">\n' +
-    '        <h3>{{parameter.heading}}</h3>\n' +
+    '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
     '    </div>\n' +
     '    <div class="modal-body">\n' +
     '        <form name="threatEditForm">\n' +

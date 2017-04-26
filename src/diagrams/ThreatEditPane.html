@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-        <h3>{{parameter.heading}}</h3>
+        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>
     </div>
     <div class="modal-body">
         <form name="threatEditForm">

@@ -189,6 +189,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     }
 
     function onGenerateThreats(threats) {
+        var threatTotal = threats.length;
         var threatList = threats;
         var currentThreat;
         suggestThreat();
@@ -196,7 +197,20 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
         function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                dialogs.confirm('diagrams/ThreatEditPane.html', addThreat, function () { return { heading: 'Add this threat?', threat: currentThreat, editing: false }; }, ignoreThreat, 'fade-right');
+                dialogs.confirm('diagrams/ThreatEditPane.html',
+                    addThreat,
+                    function () {
+                        return {
+                            heading: 'Add this threat?',
+                            threat: currentThreat,
+                            editing: false,
+                            threatIndex: threatTotal - threatList.length,
+                            threatTotal: threatTotal
+                        };
+                    },
+                    ignoreThreat,
+                    'fade-right'
+                );
             }
         }
 
