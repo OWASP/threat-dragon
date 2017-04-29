@@ -10,7 +10,7 @@
 
 Threat Dragon is an online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus will be on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
-We are currently maintaining [a working protoype](http://threatdragon.azurewebsites.net/#/) in sych with the master code branch.
+We are currently maintaining [a working protoype](https://threatdragon.org/) in synch with the master code branch.
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
 
