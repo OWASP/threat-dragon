@@ -98,7 +98,7 @@ describe('datacontext service:', function () {
         datacontext.load(location);
         $httpBackend.flush();
         expect(datacontext.threatModel.data).toEqual(data);
-        expect(datacontext.threatModel.location).toEqual(location);
+        expect(datacontext.threatModelLocation).toEqual(location);
 
     });
 
@@ -166,12 +166,13 @@ describe('datacontext service:', function () {
 
     it('should call the delete model API', function () {
 
-        datacontext.threatModel = { location: location };
+        datacontext.threatModelLocation = location;
         $httpBackend.expectDELETE('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model)
             .respond(200);
         datacontext.deleteModel();
         $httpBackend.flush();
         expect(datacontext.threatModel).toBeNull();
+        expect(datacontext.threatModelLocation).toBeNull();
     });
 
     it('should call the create model API', function () {
@@ -181,37 +182,39 @@ describe('datacontext service:', function () {
         var expectedModel = { summary: { title: title } };
         var expectedLocation = location;
         expectedLocation.model = title;
-        expectedModel.location = expectedLocation;
         $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + title + '/create', threatModel)
             .respond(200);
         datacontext.create(location, threatModel);
         $httpBackend.flush();
         expect(datacontext.threatModel).toEqual(expectedModel);
+        expect(datacontext.threatModelLocation).toEqual(expectedLocation);
     });
 
     it('should call the update model API', function () {
 
         datacontext.threatModel = {
-            location: location,
             summary: {
                 title: location.model
             }
         };
+        datacontext.threatModelLocation = location;
 
         $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model + '/update', datacontext.threatModel)
             .respond(200);
         datacontext.update();
         $httpBackend.flush();
+        expect(datacontext.threatModelLocation).toEqual(location);
     });
     
     it('should call the create and delete model APIs', function () {
 
         datacontext.threatModel = {
-            location: location,
             summary: {
                 title: location.model + 'x'
             }
         };
+
+        datacontext.threatModelLocation = location;
 
         $httpBackend.expectPUT('threatmodel/' + organisation + '/' + repo + '/' + branch + '/' + model + 'x' + '/create', datacontext.threatModel)
             .respond(200);
@@ -219,6 +222,7 @@ describe('datacontext service:', function () {
             .respond(200);
         datacontext.update();
         $httpBackend.flush();
+        expect(datacontext.threatModelLocation).toEqual(location);
     });
 
     it('should call the update model API with a new diagram', function () {
@@ -231,9 +235,10 @@ describe('datacontext service:', function () {
             },
             detail: {
                 diagrams: diagrams
-            },
-            location: location
+            }
         };
+
+        datacontext.threatModelLocation = location;
 
         var newDiagramData = {
             diagramJson: 'json',
