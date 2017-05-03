@@ -38,7 +38,7 @@ Once a user is signed in, their session information contains an OAuth access tok
 
 `[{\"isPrimary\": true, \"id\": 0, \"value\": \"abcdef\"}, {\"isPrimary\": false, \"id\": 1, \"value\": \"ghijkl\"}]`
 
-If you are developing locally, you can choose to store the session data in memory using the express-session in-memory store. To do this the `SESSION_STORAGE`environment variale to `local`. As [mentioned in the express-session docs](https://github.com/expressjs/session) this is for development only - it is not suitable for production. To remind you of this, Threat Dragon will write a log message at severity ERROR when it starts if the in memory session store is used.
+If you are developing locally, you can choose to store the session data in memory using the express-session in-memory store. To do this the `SESSION_STORE`environment variale to `local`. As [mentioned in the express-session docs](https://github.com/expressjs/session) this is for development only - it is not suitable for production. To remind you of this, Threat Dragon will write a log message at severity ERROR when it starts if the in memory session store is used.
 
 For production use, Threat Dragon currently supports Azure Table Storage for the session store via [connect-azuretables](https://www.npmjs.com/package/connect-azuretables). To make this store work you need to specify an Azure Storage Account and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`. See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
 
