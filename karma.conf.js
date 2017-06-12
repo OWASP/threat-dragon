@@ -38,11 +38,19 @@ module.exports = function (config) {
 
     // test results reporter to use
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec', 'coverage'],
+    reporters: ['spec', 'coverage', 'threshold'],
 
     //config for coverage reporter
     coverageReporter: {
       reporters: [{ type: 'lcov' }]
+    },
+
+    //config for threashhold reporter
+    thresholdReporter: {
+      statements: 90,
+      branches: 80,
+      functions: 90,
+      lines: 90
     },
 
     // web server port
