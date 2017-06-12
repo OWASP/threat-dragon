@@ -1,9 +1,9 @@
-var cover = require('browserify-istanbul');
+// var cover = require('browserify-istanbul');
 
-var coverOptions = {
-  ignore: ['test/**/*.js'],
-  defaultIgnore: true
-}
+// var coverOptions = {
+//   ignore: ['test/**/*.js'],
+//   defaultIgnore: true
+// }
 
 module.exports = function (config) {
   config.set({
@@ -26,18 +26,14 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/spec/*.js': ['browserify']
+      'test/**/*.js': ['browserify']
     },
 
     browserify: {
-      debug: true,
-      // extensions: [".js"],
-      // configure: function (bundle) {
-      //   bundle.on('prebundle', function () {
-      //     bundle
-      //       .transform(cover(coverOptions));
-      //   });
-      // }
+      transform: [
+        require("browserify-istanbul")
+      ],
+      debug: true
     },
 
     // test results reporter to use
