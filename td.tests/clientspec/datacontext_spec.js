@@ -1,7 +1,7 @@
 'use strict';
 
-require('angular-mocks');
-require('phantomjs-polyfill-find'); 
+//require('angular-mocks');
+//require('phantomjs-polyfill-find'); 
 
 describe('datacontext service:', function () {
 

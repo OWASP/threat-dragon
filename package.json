@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -57,7 +57,7 @@
     "lodash": "3.10.1",
     "morgan": "1.8.1",
     "octonode": "0.7.10",
-    "owasp-threat-dragon-core": "0.4.18",
+    "owasp-threat-dragon-core": "0.4.19",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
     "pug": "2.0.0-beta11",
@@ -91,6 +91,7 @@
     "karma-phantomjs-launcher": "1.0.4",
     "karma-phantomjs-shim": "1.4.0",
     "karma-spec-reporter": "0.0.30",
+    "karma-threshold-reporter": "^0.1.15",
     "karma-xml-reporter": "0.1.4",
     "minifyify": "7.3.5",
     "mockery": "2.0.0",
