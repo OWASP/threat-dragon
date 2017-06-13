@@ -2,15 +2,20 @@
   <img src="http://mike-goodwin.github.io/owasp-threat-dragon/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon-core/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-drago-core?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on&followRedirects=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon-core.svg)](LICENSE.txt)
+[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon-core/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-drago-core?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core)
+[![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon-core.svg)](LICENSE.txt)
 [![Dependency Status](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon-core/badge)](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon-core)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
-Threat Dragon is an online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus will be on great UX, a powerful rule engine and integration with other development lifecycle tools.
+Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
-We are currently maintaining [a working protoype](http://threatdragon.azurewebsites.net/#/) in sych with the master code branch.
+The application comes in two variants:
 
-This repository contains the core files and modules for the project. For more info, go to [the main project repo](https://github.com/mike-goodwin/owasp-threat-dragon).
+1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](http://threatdragon.org) in sych with the master code branch.
+
+2. [**An desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are builds available for Windows and OSX (Linux will follow at some point). For this variant, models arfe stored on the local filesystem.
+
+This repository contains the core files and modules that are shared between both the web and desktop varians.
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
