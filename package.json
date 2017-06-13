@@ -10,14 +10,5 @@
   "dependencies": {
   },
   "devDependencies": {
-    "bower": "^1.6.5",
-    "grunt": "^0.4.5",
-    "grunt-bower-installer": "^0.3.6",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-cssmin": "^0.14.0",
-    "grunt-contrib-uglify": "^0.10.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-filerev": "^2.3.1",
-    "grunt-wiredep": "^2.0.0"
   }
 }
