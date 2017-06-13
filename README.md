@@ -3,18 +3,25 @@
 </p>
 
 [![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on&followRedirects=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon.svg)](LICENSE.txt)
-[![Dependency Status](https://www.versioneye.com/user/projects/56185934a193340f2f000262/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56185934a193340f2f000262)
 [![Dependency Status](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon/badge)](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
-Threat Dragon is an online threat modelling web application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus will be on great UX, a powerful rule engine and integration with other development lifecycle tools.
+Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
-We are currently maintaining [a working protoype](https://threatdragon.org/) in synch with the master code branch.
+The application comes in two variants:
 
-**Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
+1. [**A web application (this repo)**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in sych with the master code branch.
 
-##Installing
+2. [**An desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are builds available for Windows and OSX (Linux will follow at some point). For this variant, models arfe stored on the local filesystem.
+
+[End user help](http://docs.threatdragon.org/) is available for both variants.
+
+This repository contains the files for the web application variant.
+
+Core files that are shared between both thbe desktop and web variants stored in an [seperate repo](https://github.com/mike-goodwin/owasp-threat-dragon-core) and are installable as a [seperate package](https://www.npmjs.com/package/owasp-threat-dragon-core).
+
+## Installing
 
 ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally, follow these steps:
 
@@ -28,7 +35,7 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 
 `npm install`
 
-##Environment variables
+## Environment variables
 
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and [register it as a GitHub application](https://github.com/settings/applications/new). Once you have done that you need to set the Client ID and Client Secret as environment variables (`GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`).
 
@@ -46,7 +53,7 @@ If you want to use an [alternative session store](https://github.com/expressjs/s
 
 Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes, set the `NODE_ENV` environment variable to `development`. 
 
-##Running the application
+## Running the application
 
 Once your environment variables are set up, start the node web server:
 
@@ -54,15 +61,15 @@ Once your environment variables are set up, start the node web server:
 
 If you then browse to `http://localhost:3000` you should see the running application.
 
-##Debug builds
+## Building
 
-All Threat Dragon build tasks are done using `npm`. The basic one is:
+The basic build script is:
 
 `npm run build`
 
-See `package.json` for a other build tasks.
+See `package.json` for other build tasks.
 
-##Running the unit tests
+## Running the unit tests
 
 The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm tasks are available:
 
@@ -75,12 +82,12 @@ The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A f
 
 **Note:** If you are on Windows and are having problems installing Karma, the simplest way to resolve this seems to be to install Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in [this link](http://codedmi.com/questions/298619/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau). This sounds mad, but the alternative is a world of pain installing various patches and components one by one. At least it's free :o/
 
-###Unit test coverage progress
+# Contributing #
 
-We aim to maintain unit test coverage at > 90%
+PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch.
 
-![codecov.io](https://codecov.io/github/mike-goodwin/owasp-threat-dragon/branch.svg?branch=master)
+# Project leader #
 
-Also, the code is currently lint free :)
+Mike Goodwin (mike.goodwin@owasp.org)
 
 
