@@ -12,7 +12,7 @@ Threat Dragon is a free, open-source, cross-platform threat modelling applicatio
 
 The application comes in two variants:
 
-1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](http://threatdragon.org) in sych with the master code branch.
+1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in sych with the master code branch.
 
 2. [**An desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are builds available for Windows and OSX (Linux will follow at some point). For this variant, models arfe stored on the local filesystem.
 
