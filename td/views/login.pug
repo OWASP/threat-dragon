@@ -21,6 +21,13 @@ html(lang="en")
                 .navbar-header
                     a.navbar-brand(href="/")
                         |Threat Dragon
+                .navbar-right
+                    a.btn.btn-primary(href="http://docs.threatdragon.org/",target="_blank")
+                        span.fa.fa-question-circle.fa-2x(title="Get some help") 
+                    a.btn.btn-primary(href="https://github.com/mike-goodwin/owasp-threat-dragon",target="_blank")
+                        span.fa.fa-github.fa-2x(title="Visit us on GitHub")
+                    a.btn.btn-primary(href="https://www.owasp.org/index.php/OWASP_Threat_Dragon",target="_blank",title="Visit the OWASP project page")
+                        img(src="public/content/images/owasp.svg") 
     body
         block body
             .container
@@ -34,9 +41,9 @@ html(lang="en")
                                     h1 Welcome!
                                     p
                                         |Threat Dragon is a free, open-source threat modeling tool from OWASP. 
-                                        |It can be used as a standalone desktop app for Windows, MacOS and Linux 
-                                        |or as a web application. We think the desktop app is great, but if you choose 
-                                        |the online version you get to unleash the awesome power of GitHub on your threat models! 
+                                        |It can be used as a #[a(href="http://docs.threatdragon.org/#downloads",target="_blank") standalone desktop app] for Windows and MacOS (Linux coming soon) 
+                                        |or as a web application. The desktop app is great if you want to try the application without giving it access to your GitHub repos,
+                                        |but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! 
                                         |Obviously, to do this you need to log in first...
                             .row
                                 .col-sm-5.col-sm-offset-7
