@@ -16,6 +16,8 @@ The application comes in two variants:
 
 2. [**An desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are builds available for Windows and OSX (Linux will follow at some point). For this variant, models arfe stored on the local filesystem.
 
+[End user help](http://docs.threatdragon.org/) is available for both variants.
+
 This repository contains the core files and modules that are shared between both the web and desktop varians.
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
