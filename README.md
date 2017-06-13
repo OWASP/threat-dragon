@@ -20,4 +20,36 @@ The application comes in two variants:
 
 This repository contains the core files and modules that are shared between both the web and desktop varians.
 
-**Project leader:** Mike Goodwin (mike.goodwin@owasp.org)
+# Installing and building #
+
+Clone the repo and run
+
+`npm install`
+
+There are a number of test scripts included in `package.json`. For example:
+
+`npm run test-client-chrome`
+
+The main test script runs tests on PhantomJS and FireFox (and also lints the code):
+
+`npm test`
+
+There are two main build script, one to pre-compile the angular templates to JavaScript:
+
+`npm run build-templates`
+
+and one to bundle and minify the core CSS:
+
+`npm run bundle-css`
+
+Both of these can be run together using
+
+`npm run build`
+
+# Contributing #
+
+PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch.
+
+# Project leader #
+
+Mike Goodwin (mike.goodwin@owasp.org)
