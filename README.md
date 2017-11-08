@@ -7,25 +7,25 @@
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
-Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
+Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a threat rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
 The application comes in two variants:
 
-1. [**A web application (this repo)**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in sych with the master code branch.
+1. [**A web application (this repo)**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**An desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are builds available for Windows and OSX (Linux will follow at some point). For this variant, models arfe stored on the local filesystem.
+2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electron](https://electron.atom.io/). There are released build images available for both Windows and OSX (a Linux install package will follow at some point). Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
 [End user help](http://docs.threatdragon.org/) is available for both variants.
 
 This repository contains the files for the web application variant.
 
-Core files that are shared between both thbe desktop and web variants stored in an [seperate repo](https://github.com/mike-goodwin/owasp-threat-dragon-core) and are installable as a [seperate package](https://www.npmjs.com/package/owasp-threat-dragon-core).
+Core files that are shared between both the desktop and web variants are stored in an [seperate repo](https://github.com/mike-goodwin/owasp-threat-dragon-core) and are installable as a [seperate package](https://www.npmjs.com/package/owasp-threat-dragon-core).
 
 ## Installing
 
-ThreatDragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally, follow these steps:
+Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally follow these steps:
 
-Install Git and node.js. To get the code, go to where you want your code to be located and do
+Install git and node.js - which includes the node package manager npm. To get the code, navigate to where you want your code to be located and do
 
 `git init`
 
