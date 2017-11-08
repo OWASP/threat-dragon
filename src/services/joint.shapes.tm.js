@@ -46,7 +46,7 @@ joint.shapes.tm.utils = {
     wordWrap: function (element, text) {
 
         var size = element.isLink() ? { width: 140, height: 80 } : element.get('size');
-        return joint.util.breakText(text, size);
+        return joint.util.breakText(text, size, {});
     },
 
     wordUnwrap: function (text) {
