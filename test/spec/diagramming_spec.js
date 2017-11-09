@@ -111,11 +111,12 @@ describe('diagramming service:', function () {
 
                 var zoomLevel = -1;
                 diagram.zoom(zoomLevel);
-                var result = $('.joint-viewport').attr('transform') === 'scale(0.8,0.8)' || $('.joint-viewport').attr('transform') === 'scale(0.8)'
+                console.log($('.joint-viewport').attr('transform'));
+                var result = $('.joint-viewport').attr('transform') === 'matrix(0.8,0,0,0.8,0,0)' || $('.joint-viewport').attr('transform') === 'matrix(0.8 0 0 0.8 0 0)'
                 expect(result).toBe(true);
                 zoomLevel = 1;
                 diagram.zoom(zoomLevel);
-                result = $('.joint-viewport').attr('transform') === 'scale(1.25,1.25)' || $('.joint-viewport').attr('transform') === 'scale(1.25)'
+                result = $('.joint-viewport').attr('transform') === 'matrix(1.25,0,0,1.25,0,0)' || $('.joint-viewport').attr('transform') === 'matrix(1.25 0 0 1.25 0 0)'
                 expect(result).toBe(true);
 
             });
