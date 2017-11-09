@@ -1,12 +1,12 @@
-language: node_js
-node_js:
-  - 4.1
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
-after_success:
-  - npm run-script codecov
+# language: node_js
+# node_js:
+#   - 4.1
+# before_script:
+#   - "export DISPLAY=:99.0"
+#   - "sh -e /etc/init.d/xvfb start"
+#   - sleep 3 # give xvfb some time to start
+# after_success:
+#   - npm run-script codecov
 
 env:
   global:
@@ -21,8 +21,8 @@ addons:
   coverity_scan:
     project:
       name: "mike-goodwin/owasp-threat-dragon-core"
-      description: "<Your project description here>"
+      description: "Core file for OWASP Threat Dragon"
     notification_email: mike.goodwin@owasp.org
     build_command_prepend: ""
-    build_command:   ""
+    build_command:   "npm install"
     branch_pattern: sast
