@@ -24,5 +24,5 @@ addons:
       description: "Core file for OWASP Threat Dragon"
     notification_email: mike.goodwin@owasp.org
     build_command_prepend: ""
-    build_command:   "cov-build --dir cov-int --no-command --fs-capture-search src"
+    build_command:   "--dir cov-int --no-command --fs-capture-search src"
     branch_pattern: sast
