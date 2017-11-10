@@ -1,9 +1,29 @@
 language: node_js
 node_js:
-  - 4.1
+  - 6.10
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+script: if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then npm test ; fi
 after_success:
   - npm run-script codecov
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "dedGDBAcFlo9sVzERbwbgJC9NNF/wfkJBd8Zma7kZ3cW8OBvEJSvznBhhxiAL+c79LO9M8VxyVqrgAdhI5ih/E0xnu1Gom4pDoml3eiBGIPg1f7sqYNpf0u5toKG1WwORBYPFOD8OOD2BWH3/oI0CfpnnU5GPKxV5fG9yYx0dehLB+Bx4SYt+xPhWs5APocBah75/jDY8twX/6vX64S3xdLHb0ro979p1qKSZGWPk5GpH6QkBF/KSli0zEYkJfZZmbpo2PUbynX21Uf6R5Gv8W8NGUC/fkCJl82p9eJkKT8sGZHSegJ7+Sk3wc1NjdWcjyey7tlkCc/mM4zbZXdaey4k4YAvaqBX8FkdfHpgiZZemwlIW6g6p+Q+IVaobvhlY6r8O7oannGU+fJrdeVDv/ZmjXkHeZMdsX33x3C76KLRO9Pcl/ANGbUAPrxD39fdrGtIEUVb2yWc07aSu6qiucsVZ50n3nXbgsFNkykKZSBe3Vvtghhp+BmXZv3hEohjdb4Ce7+VAnn4SBIdT2n2q73iazWZGWNSliVAyGG4OlACndKLCsn7ip+0B16WUYHB53Sve6vgXKEBushJII0pFy6RbqROQUD2VaKNP/YOdWj1OyJR/r+k94Lmsh3eXhVkHt7+FpqwEFzla0jvati7Q0WFVoKvlrrYYzLbYzdqPRU="
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "mike-goodwin/owasp-threat-dragon-core"
+      description: "Core file for OWASP Threat Dragon"
+    notification_email: mike.goodwin@owasp.org
+    build_command_prepend: ""
+    build_command:   "--no-command --fs-capture-search src"
+    branch_pattern: sast
