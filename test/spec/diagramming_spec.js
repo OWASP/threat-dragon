@@ -111,13 +111,21 @@ describe('diagramming service:', function () {
 
                 var zoomLevel = -1;
                 diagram.zoom(zoomLevel);
-                console.log($('.joint-viewport').attr('transform'));
-                var result = $('.joint-viewport').attr('transform') === 'matrix(0.8,0,0,0.8,0,0)' || $('.joint-viewport').attr('transform') === 'matrix(0.8 0 0 0.8 0 0)'
-                expect(result).toBe(true);
+                expect(getScaleFactors($('.joint-viewport').attr('transform'))).toEqual([0.8,0,0,0.8,0,0]);
                 zoomLevel = 1;
                 diagram.zoom(zoomLevel);
-                result = $('.joint-viewport').attr('transform') === 'matrix(1.25,0,0,1.25,0,0)' || $('.joint-viewport').attr('transform') === 'matrix(1.25 0 0 1.25 0 0)'
-                expect(result).toBe(true);
+                expect(getScaleFactors($('.joint-viewport').attr('transform'))).toEqual([1.25,0,0,1.25,0,0]);
+
+                //different browsers return slightly different transform formats and precision
+                function getScaleFactors(transform) {
+                    transform = transform.substr(7);
+                    transform = transform.substr(0, transform.length - 1);
+                    var delimiter = transform.indexOf(',') >= 0 ? ',' : ' ';
+                    var scaleFactors = transform.split(delimiter);
+                    var roundedScaleFactors = scaleFactors.map(x => Math.round(x*100)/100);
+                    return roundedScaleFactors;
+
+                }
 
             });
 
