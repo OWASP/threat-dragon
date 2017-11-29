@@ -183,7 +183,7 @@ describe('diagram directive: ', function () {
             elem = angular.element($('tmt-diagram')[0]);
             $compile(elem)($scope);
             $scope.$digest();
-            diagramSvg = $(elem).children('svg');
+            diagramSvg = $(elem).find('svg');
             viewport = diagramSvg.children('.joint-viewport');
 
         });

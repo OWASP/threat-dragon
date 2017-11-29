@@ -75,7 +75,7 @@ describe('diagramming service:', function () {
 
             it('should create a new diagram', function() {
 
-                var diagram = diagramming.newDiagram(600, 400, 10, graph, $('#diagramElement'), true);
+                var diagram = diagramming.newDiagram(600, 400, 10, graph, $('#diagramElement')[0], true);
                 expect(diagram instanceof joint.dia.Paper).toBe(true);
 
             });

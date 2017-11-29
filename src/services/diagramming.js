@@ -96,13 +96,14 @@ function diagramming() {
     function newDiagram(height, width, gridSize, graph, target, interactive) {
 
         var paper = new joint.dia.Paper({
-            el: target,
             width: width,
             height: height,
             gridSize: gridSize,
             model: graph,
             interactive: interactive
         });
+
+        target.appendChild(paper.el);
 
         return paper;
     }
