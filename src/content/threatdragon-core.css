@@ -8518,7 +8518,7 @@ button.toast-close-button {
   }
 }
 
-/*! JointJS v1.0.3 (2016-11-22) - JavaScript diagramming library
+/*! JointJS v1.1.0 (2017-03-31) - JavaScript diagramming library
 
 
 This Source Code Form is subject to the terms of the Mozilla Public
@@ -8536,6 +8536,16 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+
+.joint-paper-background,
+.joint-paper-grid,
+.joint-paper>svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 [magnet=true]:not(.joint-element) {

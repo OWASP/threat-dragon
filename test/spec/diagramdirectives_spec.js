@@ -183,7 +183,7 @@ describe('diagram directive: ', function () {
             elem = angular.element($('tmt-diagram')[0]);
             $compile(elem)($scope);
             $scope.$digest();
-            diagramSvg = $(elem).children('svg');
+            diagramSvg = $(elem).find('svg');
             viewport = diagramSvg.children('.joint-viewport');
 
         });
@@ -200,7 +200,7 @@ describe('diagram directive: ', function () {
 
             expect(elem.isolateScope().height).toEqual(height);
             //jasmine-jquery toHaveAttr does not work for SVG
-            expect(diagramSvg.attr('height')).toEqual((height - 10).toString());
+            expect(diagramSvg.attr('height')).toEqual('100%');
 
         });
 
@@ -208,7 +208,7 @@ describe('diagram directive: ', function () {
 
             expect(elem.isolateScope().width).toEqual(width);
             //jasmine-jquery toHaveAttr does not work for SVG
-            expect(diagramSvg.attr('width')).toEqual((width - 10).toString());
+            expect(diagramSvg.attr('width')).toEqual('100%');
 
         });
 

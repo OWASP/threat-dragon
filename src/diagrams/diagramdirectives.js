@@ -190,11 +190,6 @@ var diagram = function (common, diagramming) {
                 $(element).parent().scrollTop(bbox.y);
             }
 
-            //scroll the diagram up
-            if (bbox.y <= $(element).parent().scrollTop()) {
-                $(element).parent().scrollTop(bbox.y);
-            }
-
             //scroll the diagram down
             if (bbox.y + bbox.height - $(element).parent().scrollTop() >= $(element).parent().height() && bbox.y + bbox.height < diagram.options.height) {
                 $(element).parent().scrollTop(bbox.y + bbox.height - $(element).parent().height());

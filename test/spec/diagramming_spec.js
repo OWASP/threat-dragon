@@ -75,7 +75,7 @@ describe('diagramming service:', function () {
 
             it('should create a new diagram', function() {
 
-                var diagram = diagramming.newDiagram(600, 400, 10, graph, $('#diagramElement'), true);
+                var diagram = diagramming.newDiagram(600, 400, 10, graph, $('#diagramElement')[0], true);
                 expect(diagram instanceof joint.dia.Paper).toBe(true);
 
             });
@@ -111,12 +111,21 @@ describe('diagramming service:', function () {
 
                 var zoomLevel = -1;
                 diagram.zoom(zoomLevel);
-                var result = $('.joint-viewport').attr('transform') === 'scale(0.8,0.8)' || $('.joint-viewport').attr('transform') === 'scale(0.8)'
-                expect(result).toBe(true);
+                expect(getScaleFactors($('.joint-viewport').attr('transform'))).toEqual([0.8,0,0,0.8,0,0]);
                 zoomLevel = 1;
                 diagram.zoom(zoomLevel);
-                result = $('.joint-viewport').attr('transform') === 'scale(1.25,1.25)' || $('.joint-viewport').attr('transform') === 'scale(1.25)'
-                expect(result).toBe(true);
+                expect(getScaleFactors($('.joint-viewport').attr('transform'))).toEqual([1.25,0,0,1.25,0,0]);
+
+                //different browsers return slightly different transform formats and precision
+                function getScaleFactors(transform) {
+                    transform = transform.substr(7);
+                    transform = transform.substr(0, transform.length - 1);
+                    var delimiter = transform.indexOf(',') >= 0 ? ',' : ' ';
+                    var scaleFactors = transform.split(delimiter);
+                    var roundedScaleFactors = scaleFactors.map(function(x) { return Math.round(x*100)/100;});
+                    return roundedScaleFactors;
+
+                }
 
             });
 
