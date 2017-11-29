@@ -7,8 +7,6 @@
     "build-templates": "./node_modules/.bin/npm-html2js -b src -i src/**/*.html --module templates -o ./src/templates.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
     "bundle-css": "./node_modules/.bin/rework-npm ./src/content/app.css -o ./src/content/threatdragon-core.css",
-    "minify-css": "./node_modules/.bin/uglifycss ./content/threatdragon-core.css > ./content/threatdragon-core.min.css",
-    "bundle-minify-css": "npm run-script bundle-css && npm run-script minify-css",
     "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
