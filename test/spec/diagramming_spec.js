@@ -122,7 +122,7 @@ describe('diagramming service:', function () {
                     transform = transform.substr(0, transform.length - 1);
                     var delimiter = transform.indexOf(',') >= 0 ? ',' : ' ';
                     var scaleFactors = transform.split(delimiter);
-                    var roundedScaleFactors = scaleFactors.map(x => Math.round(x*100)/100);
+                    var roundedScaleFactors = scaleFactors.map(function(x) { return Math.round(x*100)/100;});
                     return roundedScaleFactors;
 
                 }
