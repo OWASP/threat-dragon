@@ -66,7 +66,7 @@
     "snyk": "^1.52.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.6.8",
+    "angular-mocks": "1.6.7",
     "browserify": "14.5.0",
     "browserify-css": "0.13.1",
     "browserify-istanbul": "3.0.1",

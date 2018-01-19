@@ -1,18 +1,19 @@
 'use strict';
 
-//require('angular-mocks');
-
 describe('threatmodellocator service:', function () {
 
     var threatmodellocator;
     var $rootScope;
+    var $httpBackend;
 
     beforeEach(function () {
 
         angular.mock.module('app');
 
-        angular.mock.inject(function (_$rootScope_, _threatmodellocator_) {
+        angular.mock.inject(function (_$rootScope_, _$httpBackend_, _threatmodellocator_) {
             $rootScope = _$rootScope_;
+            $httpBackend = _$httpBackend_;
+            $httpBackend.expectGET().respond();
             threatmodellocator = _threatmodellocator_;
         });
 
