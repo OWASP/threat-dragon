@@ -33,7 +33,7 @@
   "style": "./src/content/threatdragon-core.css",
   "dependencies": {
     "angular": "1.6.7",
-    "angular-route": "1.6.6",
+    "angular-route": "1.6.7",
     "angular-ui-bootstrap": "2.5.6",
     "bootstrap": "3.3.7",
     "jointjs": "1.1.0",
@@ -44,7 +44,7 @@
     "snyk": "^1.52.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.6.6",
+    "angular-mocks": "1.6.7",
     "browserify": "14.5.0",
     "browserify-css": "0.13.1",
     "browserify-istanbul": "3.0.1",
