@@ -32,10 +32,10 @@
   "main": "./src/index.js",
   "style": "./src/content/threatdragon-core.css",
   "dependencies": {
-    "angular": "1.6.7",
-    "angular-route": "1.6.7",
+    "angular": "1.6.8",
+    "angular-route": "1.6.8",
     "angular-ui-bootstrap": "2.5.6",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "jointjs": "1.1.0",
     "jquery": "3.0.0",
     "lodash": "4.13.1",
@@ -44,7 +44,7 @@
     "snyk": "^1.52.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.6.7",
+    "angular-mocks": "1.6.8",
     "browserify": "14.5.0",
     "browserify-css": "0.13.1",
     "browserify-istanbul": "3.0.1",
