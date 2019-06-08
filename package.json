@@ -38,7 +38,7 @@
     "bootstrap": "3.4.1",
     "jointjs": "1.1.0",
     "jquery": "3.0.0",
-    "lodash": "4.13.1",
+    "lodash": "4.17.11",
     "nools": "0.4.4",
     "toastr": "2.1.2",
     "snyk": "^1.52.0"
