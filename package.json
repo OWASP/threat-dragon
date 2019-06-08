@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -21,9 +21,7 @@
     "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers PhantomJS",
-    "codecov": "./node_modules/.bin/codecov",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "codecov": "./node_modules/.bin/codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
@@ -37,9 +35,9 @@
     "url": "git://github.com/mike-goodwin/owasp-threat-dragon.git"
   },
   "dependencies": {
-    "angular": "1.6.8",
-    "angular-animate": "1.6.8",
-    "angular-route": "1.6.8",
+    "angular": "1.7.8",
+    "angular-animate": "1.7.8",
+    "angular-route": "1.7.8",
     "angular-ui-bootstrap": "2.5.6",
     "angular-xeditable": "0.8.0",
     "body-parser": "1.18.2",
@@ -55,9 +53,9 @@
     "helmet": "3.9.0",
     "jquery": "3.0.0",
     "lodash": "4.13.1",
-    "morgan": "1.9.0",
-    "octonode": "0.9.1",
-    "owasp-threat-dragon-core": "0.5.1",
+    "morgan": "1.9.1",
+    "octonode": "0.9.5",
+    "owasp-threat-dragon-core": "0.5.2",
     "passport": "0.4.0",
     "passport-github": "1.1.0",
     "pug": "2.0.0-rc.4",
@@ -66,7 +64,7 @@
     "snyk": "^1.52.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.6.7",
+    "angular-mocks": "1.7.8",
     "browserify": "14.5.0",
     "browserify-css": "0.13.1",
     "browserify-istanbul": "3.0.1",
