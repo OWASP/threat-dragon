@@ -457,7 +457,7 @@ describe('diagram directive: ', function () {
                     spyOn(cellView, 'getBBox').and.returnValue({ x: bboxx, y: 50 });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollLeft()).toEqual(bboxx);
+                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx);
 
                 });
 
@@ -468,7 +468,7 @@ describe('diagram directive: ', function () {
                     spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: bboxy });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollTop()).toEqual(bboxy);
+                    expect(Math.round(parent.scrollTop())).toEqual(bboxy);
 
                 });
 
@@ -480,7 +480,7 @@ describe('diagram directive: ', function () {
                     spyOn(cellView, 'getBBox').and.returnValue({ x: bboxx, y: 50, width: bboxwidth });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollLeft()).toEqual(bboxx + bboxwidth - elWidth);
+                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx + bboxwidth - elWidth);
 
                 });
 
@@ -492,7 +492,7 @@ describe('diagram directive: ', function () {
                     spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: bboxy, height: bboxheight });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollTop()).toEqual(bboxy + bboxheight - elHeight);
+                    expect(Math.round(parent.scrollTop())).toEqual(bboxy + bboxheight - elHeight);
 
                 });
 
@@ -505,7 +505,7 @@ describe('diagram directive: ', function () {
                     spyOn(diagram, 'setDimensions').and.callThrough();
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollLeft()).toEqual(bboxx + bboxwidth - width);
+                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx + bboxwidth - width);
                     expect(diagram.setDimensions).toHaveBeenCalled();
                     expect(diagram.setDimensions.calls.argsFor(0)).toEqual([bboxx + bboxwidth, height - 10]);
 
@@ -522,7 +522,7 @@ describe('diagram directive: ', function () {
                     var y = 20;
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(parent.scrollTop()).toEqual(bboxy + bboxheight - height);
+                    expect(Math.round(parent.scrollTop())).toEqual(bboxy + bboxheight - height);
                     expect(diagram.setDimensions).toHaveBeenCalled();
                     expect(diagram.setDimensions.calls.argsFor(0)).toEqual([width - 10, bboxy + bboxheight]);
 
