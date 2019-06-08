@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -42,7 +42,7 @@
     "angular-xeditable": "0.8.0",
     "body-parser": "1.18.2",
     "bunyan": "1.8.12",
-    "connect-azuretables": "1.0.19",
+    "connect-azuretables": "1.0.20",
     "connect-ensure-login": "0.1.1",
     "cookie-parser": "1.4.3",
     "csurf": "1.9.0",
