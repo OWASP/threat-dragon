@@ -411,10 +411,10 @@ describe('diagram directive: ', function () {
                 var cell;
                 var cellView;
                 var parent;
-                var x = 10;
+                var x = 80;
                 var y = 20;
-                var elWidth = 50;
-                var elHeight = 50;
+                var elWidth = 100;
+                var elHeight = 100;
 
                 beforeEach(function () {
 
@@ -472,27 +472,26 @@ describe('diagram directive: ', function () {
 
                 });
 
+                //this test behaves differently on firefox
+                //on ff parent.width() = 100, on other browser it = 70
                 it('should scroll the diagram to the right', function () {
 
                     parent.scrollLeft(50);
-                    var bboxx = 10;
                     var bboxwidth = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: bboxx, y: 50, width: bboxwidth });
-
+                    spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: 50, width: bboxwidth });
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx + bboxwidth - elWidth);
+                    expect(Math.round(parent.scrollLeft())).toEqual(x + bboxwidth - parent.width());
 
                 });
 
                 it('should scroll down', function () {
 
                     parent.scrollTop(50);
-                    var bboxy = 10;
                     var bboxheight = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: bboxy, height: bboxheight });
+                    spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: y, height: bboxheight });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollTop())).toEqual(bboxy + bboxheight - elHeight);
+                    expect(Math.round(parent.scrollTop())).toEqual(y + bboxheight - parent.height());
 
                 });
 

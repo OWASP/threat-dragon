@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon-core",
-  "version": "0.5.2",
+  "version": "0.5.5",
   "private": false,
   "scripts": {
     "build": "npm run bundle-css && npm run build-templates",
@@ -34,8 +34,8 @@
     "angular-route": "1.7.8",
     "angular-ui-bootstrap": "2.5.6",
     "bootstrap": "3.4.1",
-    "jointjs": "1.1.0",
-    "jquery": "3.0.0",
+    "jointjs": "2.2.1",
+    "jquery": "3.3.1",
     "lodash": "4.17.11",
     "nools": "0.4.4",
     "toastr": "2.1.2",
