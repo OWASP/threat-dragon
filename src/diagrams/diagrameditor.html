@@ -46,7 +46,7 @@
                     <form name="diagramEditToolBar">
                         <div class="col-md-12">
                             <div class="btn-group pull-left" role="group">
-                                <a class="btn btn-default" href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
+                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                                 <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">
