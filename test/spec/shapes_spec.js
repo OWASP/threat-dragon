@@ -89,6 +89,15 @@ describe('custom shape tests', function () {
 
         });
 
+        it('should remove line breaks from process name', function () {
+
+            var multiLineName = '1\n2\n3';
+            var singleLineName = '1 2 3';
+            cell.name = multiLineName;
+            expect(cell.name).toEqual(singleLineName);
+
+        });
+
         it('should set the out-of-scope class on the process', function () {
 
             cell.outOfScope = true;
@@ -269,6 +278,15 @@ describe('custom shape tests', function () {
             expect(cell.reasonOutOfScope).toEqual(testReason);
         });
 
+        it('should remove line breaks from actor name', function () {
+
+            var multiLineName = '1\n2\n3';
+            var singleLineName = '1 2 3';
+            cell.name = multiLineName;
+            expect(cell.name).toEqual(singleLineName);
+
+        });
+
         it('should set the out-of-scope class on the actor', function () {
 
             graph.addCell(cell);
@@ -341,6 +359,15 @@ describe('custom shape tests', function () {
             var testReason = 'testReason';
             cell.reasonOutOfScope = testReason;
             expect(cell.reasonOutOfScope).toEqual(testReason);
+        });
+
+        it('should remove line breaks from store name', function () {
+
+            var multiLineName = '1\n2\n3';
+            var singleLineName = '1 2 3';
+            cell.name = multiLineName;
+            expect(cell.name).toEqual(singleLineName);
+
         });
 
         it('should set the out-of-scope class on the store', function () {
@@ -429,6 +456,15 @@ describe('custom shape tests', function () {
             cell.setLabel(label);
             graph.addCell(cell);
             expect(diagramElement.find('g.label').find('tspan')[0]).toContainText(label);
+        });
+
+        it('should remove line breaks from flow name', function () {
+
+            var multiLineName = '1\n2\n3';
+            var singleLineName = '1 2 3';
+            cell.name = multiLineName;
+            expect(cell.name).toEqual(singleLineName);
+
         });
 
         it('should highlight a link', function () {
