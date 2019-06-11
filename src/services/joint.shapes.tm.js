@@ -49,8 +49,11 @@ joint.shapes.tm.utils = {
         return joint.util.breakText(text, size, {});
     },
 
+    //since i'm an idiot with regex - the final gm is to ensure all instances are matched (g)
+    //across all line (m)
     wordUnwrap: function (text) {
-        return text.replace('\n', ' ');
+        var regex = /\n/gm;
+        return text.replace(regex, ' ');
     },
 
     defineProperties: function (proto, properties) {

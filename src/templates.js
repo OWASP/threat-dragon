@@ -64,7 +64,7 @@ angular.module('templates', [])
     '                    <form name="diagramEditToolBar">\n' +
     '                        <div class="col-md-12">\n' +
     '                            <div class="btn-group pull-left" role="group">\n' +
-    '                                <a class="btn btn-default" href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
+    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
     '                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">\n' +
@@ -374,7 +374,7 @@ angular.module('templates', [])
     '    <div ng-if="!vm.errored && vm.threatModel.summary">\n' +
     '        <div class="panel panel-default">\n' +
     '            <div class="panel-heading panel-title">\n' +
-    '                <a href="#/threatmodel/edit/{{vm.threatModelPath()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>\n' +
+    '                <a ng-href="#/threatmodel/edit/{{vm.threatModelPath()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>\n' +
     '            </div>\n' +
     '            <div class="panel-body">\n' +
     '                <div class="col-md-2">\n' +
@@ -406,10 +406,10 @@ angular.module('templates', [])
     '                <div class="col-md-3">\n' +
     '                    <div class="panel panel-default">\n' +
     '                        <div class="panel-heading panel-title">\n' +
-    '                            <a href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>\n' +
+    '                            <a ng-href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
-    '                            <a href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}">\n' +
+    '                            <a ng-href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}">\n' +
     '                                <img ng-src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />\n' +
     '                            </a>\n' +
     '                        </div>\n' +
@@ -422,7 +422,7 @@ angular.module('templates', [])
     '        <div class="row">\n' +
     '            <div class="col-md-12">\n' +
     '                <div class="btn-group pull-right" role="group">\n' +
-    '                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelPath()}}" \n' +
+    '                    <a class="btn btn-primary" ng-href="#/threatmodel/edit/{{vm.threatModelPath()}}" \n' +
     '                    role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">\n' +
     '                        <span class="glyphicon glyphicon-edit"></span> Edit\n' +
     '                    </a>\n' +

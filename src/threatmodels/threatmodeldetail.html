@@ -6,7 +6,7 @@
     <div ng-if="!vm.errored && vm.threatModel.summary">
         <div class="panel panel-default">
             <div class="panel-heading panel-title">
-                <a href="#/threatmodel/edit/{{vm.threatModelPath()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
+                <a ng-href="#/threatmodel/edit/{{vm.threatModelPath()}}"><h4>{{vm.threatModel.summary.title}}</h4></a>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -38,10 +38,10 @@
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-title">
-                            <a href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
+                            <a ng-href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}"><h6>{{diagram.title}}</h6></a>
                         </div>
                         <div class="panel-body">
-                            <a href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}">
+                            <a ng-href="#/threatmodel/{{vm.threatModelPath()}}/diagram/{{diagram.id}}">
                                 <img ng-src="{{diagram.thumbnail}}" class="img-thumbnail center-block" alt="Thumbnail of {{diagram.title}}" />
                             </a>
                         </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group">
-                    <a class="btn btn-primary" href="#/threatmodel/edit/{{vm.threatModelPath()}}" 
+                    <a class="btn btn-primary" ng-href="#/threatmodel/edit/{{vm.threatModelPath()}}" 
                     role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">
                         <span class="glyphicon glyphicon-edit"></span> Edit
                     </a>
