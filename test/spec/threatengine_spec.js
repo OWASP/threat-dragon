@@ -88,6 +88,63 @@ describe('threatengine service:', function () {
 
         });
 
+        //give a description for the rule
+        it('should suggest using encryption over public networks (undefined encryption)', function (done) {
+
+            //set up the properties of the element
+            var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true };
+
+            //generate the threats
+            threatengine.generateForElement(subject).then(function (threats) {
+
+                expect(threats).toBeDefined();
+                var ruleIds = _.uniq(_.map(threats, 'ruleId'));
+                //grab a new UUID for your rule from https://www.guidgenerator.com/ and expect it to 
+                //be in the generated threats
+                expect(ruleIds.indexOf('c1cae982-3e92-4bb2-b50b-ea51137fc3a7')).toBeGreaterThan(-1);
+                done();
+            })
+
+        });
+
+        //give a description for the rule
+        it('should not suggest using encryption over public networks (not public)', function (done) {
+
+            //set up the properties of the element
+            var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: false, isEncrypted: true };
+
+            //generate the threats
+            threatengine.generateForElement(subject).then(function (threats) {
+
+                expect(threats).toBeDefined();
+                var ruleIds = _.uniq(_.map(threats, 'ruleId'));
+                //grab a new UUID for your rule from https://www.guidgenerator.com/ and expect it to 
+                //be in the generated threats
+                expect(ruleIds.indexOf('c1cae982-3e92-4bb2-b50b-ea51137fc3a7')).toEqual(-1);
+                done();
+            })
+
+        });
+
+        //give a description for the rule
+        it('should not suggest using encryption over public networks (already encrypted)', function (done) {
+
+            //set up the properties of the element
+            var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: true };
+
+            //generate the threats
+            threatengine.generateForElement(subject).then(function (threats) {
+
+                expect(threats).toBeDefined();
+                var ruleIds = _.uniq(_.map(threats, 'ruleId'));
+                //grab a new UUID for your rule from https://www.guidgenerator.com/ and expect it to 
+                //be in the generated threats
+                expect(ruleIds.indexOf('c1cae982-3e92-4bb2-b50b-ea51137fc3a7')).toEqual(-1);
+                done();
+            })
+
+        });
+
     });
 
     describe('element in context generation tests', function () {
