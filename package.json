@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon-core",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "private": false,
   "scripts": {
     "build": "npm run bundle-css && npm run build-templates",
@@ -36,13 +36,14 @@
     "bootstrap": "3.4.1",
     "jointjs": "2.2.1",
     "jquery": "3.3.1",
+    "json-rules-engine": "3.0.2",
     "lodash": "4.17.11",
-    "nools": "0.4.4",
-    "toastr": "2.1.2",
-    "snyk": "^1.52.0"
+    "snyk": "^1.52.0",
+    "toastr": "2.1.2"
   },
   "devDependencies": {
     "angular-mocks": "1.7.8",
+    "babel-polyfill": "6.26.0",
     "browserify": "14.5.0",
     "browserify-css": "0.13.1",
     "browserify-istanbul": "3.0.1",
