@@ -16,13 +16,13 @@ var securityHeaders = function (app, forceSecure) {
     app.use(helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'none'"],
-            scriptSrc: ["'self'", "'unsafe-eval'"], //needed for lodash and nools
+            scriptSrc: ["'self'"],
             connectSrc: ["'self'"],
             styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'http://fonts.gstatic.com', 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],
-            reportUri: 'https://report-uri.io/report/owaspthreatdragon'
+            reportUri: 'https://owaspthreatdragon.report-uri.com/r/d/csp/enforce'
         }
     }));
 };
