@@ -64,6 +64,9 @@ angular.module('templates', [])
     '                    <form name="diagramEditToolBar">\n' +
     '                        <div class="col-md-12">\n' +
     '                            <div class="btn-group pull-left" role="group">\n' +
+    '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
+    '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
+    '                                </button>\n' +
     '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
@@ -89,7 +92,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                    </form>\n' +
     '                    <div class="tmt-diagram-container">\n' +
-    '                        <tmt-diagram graph="vm.graph" select="vm.select(element)" new-flow="vm.newFlow(source, target)" initialise-graph="vm.initialise(diagram)" height="600" width="800" grid-size="1" interactive="true"/>\n' +
+    '                        <tmt-diagram graph="vm.graph" select="vm.select(element)" new-flow="vm.newFlow(source, target)" initialise-graph="vm.initialise(diagram)" height="600" width="800" grid-size="10" interactive="true"/>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +

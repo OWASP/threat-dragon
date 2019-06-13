@@ -480,7 +480,7 @@ describe('diagram directive: ', function () {
                     var bboxwidth = 100;
                     spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: 50, width: bboxwidth });
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollLeft())).toEqual(x + bboxwidth - parent.width());
+                    expect(Math.round(parent.scrollLeft())).toEqual(Math.round(x + bboxwidth - parent.width()));
 
                 });
 
@@ -491,7 +491,7 @@ describe('diagram directive: ', function () {
                     spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: y, height: bboxheight });
 
                     diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollTop())).toEqual(y + bboxheight - parent.height());
+                    expect(Math.round(parent.scrollTop())).toEqual(Math.round(y + bboxheight - parent.height()));
 
                 });
 

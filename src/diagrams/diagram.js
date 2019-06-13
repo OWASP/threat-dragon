@@ -30,6 +30,8 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     vm.select = select;
     vm.edit = edit;
     vm.generateThreats = generateThreats;
+    vm.setGrid = setGrid;
+    vm.showGrid = false;
     vm.selected = null;
     vm.viewStencil = true;
     vm.viewThreats = false;
@@ -166,6 +168,14 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
         if (vm.currentZoomLevel > -vm.maxZoom) {
             vm.currentZoomLevel--;
             vm.currentDiagram.zoom(vm.currentZoomLevel);
+        }
+    }
+
+    function setGrid() {
+        if (vm.showGrid) {
+            vm.currentDiagram.drawGrid();
+        } else {
+            vm.currentDiagram.clearGrid();
         }
     }
 
