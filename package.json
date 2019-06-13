@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "private": false,
   "scripts": {
     "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
@@ -55,13 +55,12 @@
     "lodash": "4.17.11",
     "morgan": "1.9.1",
     "octonode": "0.9.5",
-    "owasp-threat-dragon-core": "0.5.7",
+    "owasp-threat-dragon-core": "0.5.8",
     "passport": "0.4.0",
     "passport-github": "1.1.0",
     "pug": "2.0.3",
     "pug-bootstrap": "0.0.16",
-    "serve-favicon": "2.4.5",
-    "snyk": "^1.52.0"
+    "serve-favicon": "2.4.5"
   },
   "devDependencies": {
     "angular-mocks": "1.7.8",
@@ -103,6 +102,5 @@
     "supertest": "3.0.0",
     "uglifycss": "0.0.27",
     "watchify": "3.9.0"
-  },
-  "snyk": true
+  }
 }
