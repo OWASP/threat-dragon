@@ -451,6 +451,40 @@ describe('diagram controller', function () {
                
         }); 
     });
+
+    describe('grid tests', function() {
+
+        var mockDiagram;
+
+        beforeEach(function() {
+            
+            mockDiagram = {};
+            $scope.vm.currentDiagram = mockDiagram;        
+            
+        })
+        
+        it('should turn on the grid', function() {
+            
+            mockDiagram.drawGrid = function() {};
+            spyOn(mockDiagram, 'drawGrid');
+            $scope.vm.showGrid = true;
+            $scope.vm.setGrid();
+            expect(mockDiagram.drawGrid).toHaveBeenCalled();
+            
+        });
+
+        it('should turn off the grid', function() {
+            
+            mockDiagram.clearGrid = function() {};
+            spyOn(mockDiagram, 'clearGrid');
+            $scope.vm.showGrid = false;
+            $scope.vm.setGrid();
+            expect(mockDiagram.clearGrid).toHaveBeenCalled();
+            
+        });
+
+
+    });
     
     describe('confirmation tests: ', function() {
         
