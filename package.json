@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon-core",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "private": false,
   "scripts": {
     "build": "npm run bundle-css && npm run build-templates",

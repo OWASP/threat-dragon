@@ -92,7 +92,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                    </form>\n' +
     '                    <div class="tmt-diagram-container">\n' +
-    '                        <tmt-diagram graph="vm.graph" select="vm.select(element)" new-flow="vm.newFlow(source, target)" initialise-graph="vm.initialise(diagram)" height="600" width="800" grid-size="10" interactive="true"/>\n' +
+    '                        <tmt-diagram graph="vm.graph" select="vm.select(element)" new-flow="vm.newFlow(source, target)" initialise-graph="vm.initialise(diagram)" height="600" width="800" grid-size="1" interactive="true"/>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +

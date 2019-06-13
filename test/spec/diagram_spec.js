@@ -467,19 +467,27 @@ describe('diagram controller', function () {
             
             mockDiagram.drawGrid = function() {};
             spyOn(mockDiagram, 'drawGrid');
+            mockDiagram.setGridSize = function() {};
+            spyOn(mockDiagram, 'setGridSize');
             $scope.vm.showGrid = true;
             $scope.vm.setGrid();
             expect(mockDiagram.drawGrid).toHaveBeenCalled();
-            
+            expect(mockDiagram.setGridSize).toHaveBeenCalled();
+            expect(mockDiagram.setGridSize.calls.argsFor(0)).toEqual([10]);
+              
         });
 
         it('should turn off the grid', function() {
             
             mockDiagram.clearGrid = function() {};
             spyOn(mockDiagram, 'clearGrid');
+            mockDiagram.setGridSize = function() {};
+            spyOn(mockDiagram, 'setGridSize');
             $scope.vm.showGrid = false;
             $scope.vm.setGrid();
             expect(mockDiagram.clearGrid).toHaveBeenCalled();
+            expect(mockDiagram.setGridSize).toHaveBeenCalled();
+            expect(mockDiagram.setGridSize.calls.argsFor(0)).toEqual([1]);
             
         });
 
