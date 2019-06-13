@@ -13,6 +13,8 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     var logError = getLogFn(controllerId, 'error');
     var scope = $scope;
     var threatWatchers = [];
+    var gridSizeOn = 10;
+    var gridSizeOff = 1;
 
     // Bindable properties and functions are placed on vm.
     vm.errored = false;
@@ -173,9 +175,11 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function setGrid() {
         if (vm.showGrid) {
+            vm.currentDiagram.setGridSize(gridSizeOn);
             vm.currentDiagram.drawGrid();
         } else {
             vm.currentDiagram.clearGrid();
+            vm.currentDiagram.setGridSize(gridSizeOff);
         }
     }
 
