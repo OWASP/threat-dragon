@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 var crypto = require('crypto');
 var inputEncoding = 'ascii';

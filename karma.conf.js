@@ -1,6 +1,3 @@
-var cover = require('browserify-istanbul');
-var coverOptions = { ignore: ['test/**/*.js'], defaultIgnore: true };
-
 module.exports = function (config) {
     config.set({
 
