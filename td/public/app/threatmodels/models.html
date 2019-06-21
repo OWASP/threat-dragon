@@ -2,8 +2,8 @@
     <row>
         <div ng-if="vm.models && !vm.error" class="jumbotron">
             <p class="text-center">
-                Select a threat model from <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
-                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a> from the list below, or <a href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choose another branch</a> or <a href="#/threatmodel">repo</a>
+                Select a threat model from <a ng-href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
+                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a> from the list below, or <a ng-href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choose another branch</a> or <a href="#/threatmodel">repo</a>
             </p>
         </div>
     </row>
@@ -11,10 +11,10 @@
         <div ng-if="vm.error" class="jumbotron">
             <h1>hmm...</h1>
             <p>
-                There were no models found in <a href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
-                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a>. You can <a href="#/new/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}">create new model</a> 
-                or if you are in the wrong place, you could try <a href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or 
-                <a href="#/threatmodel">repo</a> <span class="fa fa-frown-o"></span>
+                There were no models found in <a ng-href="https://github.com/{{vm.organisation}}/{{vm.repo}}/tree/{{vm.branch}}" target="_blank"> 
+                {{vm.organisation}}/{{vm.repo}}/{{vm.branch}}</a>. You can <a ng-href="#/new/threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}">create new model</a> 
+                or if you are in the wrong place, you could try <a ng-href="#/threatmodel/{{vm.organisation}}/{{vm.repo}}">choosing another branch</a> or 
+                <a ng-href="#/threatmodel">repo</a> <span class="fa fa-frown-o"></span>
             </p>
         </div>
     </row>
@@ -25,7 +25,7 @@
         </div>   
         <div ng-if="vm.models" class="col-lg-6 col-lg-offset-3">
             <div class="list-group">
-                <a ng-repeat="model in vm.models" href="#threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}/{{model}}" class="list-group-item h4">{{model}}</a>
+                <a ng-repeat="model in vm.models" ng-href="#threatmodel/{{vm.organisation}}/{{vm.repo}}/{{vm.branch}}/{{model}}" class="list-group-item h4">{{model}}</a>
             </div>
         </div>
     </row>

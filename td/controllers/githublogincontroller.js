@@ -1,4 +1,4 @@
-'use  strict';
+'use strict';
 var passport = require('passport');
 
 var githubLoginController = {};
