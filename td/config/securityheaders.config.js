@@ -18,9 +18,9 @@ var securityHeaders = function (app, forceSecure) {
             defaultSrc: ["'none'"],
             scriptSrc: ["'self'"],
             connectSrc: ["'self'"],
-            styleSrc: ["'self'", 'http://fonts.googleapis.com', 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
+            styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
             imgSrc: ["'self'", 'data:'],
-            fontSrc: ["'self'", 'http://fonts.gstatic.com', 'https://fonts.gstatic.com', 'data:'],
+            fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],
             reportUri: 'https://owaspthreatdragon.report-uri.com/r/d/csp/enforce'
         }
