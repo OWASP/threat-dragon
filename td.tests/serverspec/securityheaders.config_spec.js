@@ -78,9 +78,9 @@ describe('security header tests', function () {
     it('should set CSP', function (done) {
 
         var csp = 'default-src \'none\'; script-src \'self\'; conn' +
-            'ect-src \'self\'; style-src \'self\' http://fonts.googleapis.com https://fonts.googleapis.com \'' +
-            'unsafe-inline\'; img-src \'self\' data:; font-src \'self\' http://fonts.gstatic.com https://font' +
-            's.gstatic.com data:; form-action \'self\' https://github.com; report-uri https://owaspthreatdragon.report-uri.com/r/d/csp/enforce';
+            'ect-src \'self\'; style-src \'self\' https://fonts.googleapis.com \'' +
+            'unsafe-inline\'; img-src \'self\' data:; font-src \'self\' https://fonts.gstatic.com ' +
+            'data:; form-action \'self\' https://github.com; report-uri https://owaspthreatdragon.report-uri.com/r/d/csp/enforce';
 
         request(app)
             .get('/')
