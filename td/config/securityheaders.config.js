@@ -18,7 +18,7 @@ var securityHeaders = function (app, forceSecure) {
             defaultSrc: ["'none'"],
             scriptSrc: ["'self'"],
             connectSrc: ["'self'"],
-            styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
+            styleSrc: ["'self'", 'https://fonts.googleapis.com'],
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],
