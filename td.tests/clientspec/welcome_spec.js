@@ -25,7 +25,7 @@ describe('welcome controller', function () {
         $scope.$apply();
     });
     
-    describe('initilisation tests', function () {
+    describe('initialisation tests', function () {
 
         it('should be defined', function () {
             expect($scope.vm).toBeDefined();
