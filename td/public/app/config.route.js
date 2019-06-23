@@ -83,6 +83,14 @@ function getRoutes() {
                 }
             }
         }, {
+            url: '/threatmodel/report/:organisation/:repo/:branch/:model',
+            config: {
+                title: 'Threat Model Report',
+                templateUrl: './public/app/threatmodels/webreport.html',
+                settings: {
+                }
+            }
+        }, {
             url: '/new/threatmodel',
             config: {
                 title: 'Choose a Repo For Your New Model',
