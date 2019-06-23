@@ -429,6 +429,10 @@ angular.module('templates', [])
     '                    role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">\n' +
     '                        <span class="glyphicon glyphicon-edit"></span> Edit\n' +
     '                    </a>\n' +
+    '                    <a class="btn btn-default" ng-href="#/threatmodel/report/{{vm.threatModelPath()}}" \n' +
+    '                    role="button" data-toggle="tooltip" data-placement="top" title="View Or Print Threat Model Report">\n' +
+    '                        <span class="glyphicon glyphicon-file"></span> Report\n' +
+    '                    </a>\n' +
     '                    <button class="btn btn-default" role="button" ng-click="vm.deleteModel()" data-toggle="tooltip" data-placement="top" title="Delete This Threat Model">\n' +
     '                        <span class="glyphicon glyphicon-remove"></span>  Delete\n' +
     '                    </button>\n' +
@@ -639,6 +643,10 @@ angular.module('templates', [])
     '            </p>\n' +
     '        </div>\n' +
     '    </div>\n' +
+    '</div>')
+  $templateCache.put('threatmodels/threatmodelreport.html',
+    '<div>\n' +
+    '    Placeholder content for threat model report from core\n' +
     '</div>')
 
   }]);
