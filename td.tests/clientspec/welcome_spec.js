@@ -11,7 +11,7 @@ describe('welcome controller', function () {
     
     beforeEach(function () {
         
-        angular.mock.module('app')
+        angular.mock.module('app');
         
         angular.mock.inject(function ($rootScope, _$controller_, _$location_, _$httpBackend_) {
             $scope = $rootScope.$new();
