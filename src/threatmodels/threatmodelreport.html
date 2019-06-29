@@ -1,3 +1,23 @@
-<div>
-    Placeholder content for threat model report from core
+<div ng-if="model.summary">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-title">
+            <h4>Threat model report for {{model.summary.title}}</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-2">
+                <div><strong>Owner: </strong></div>
+                <div>{{model.summary.owner}}</div>
+            </div>
+            <div class="col-md-2">
+                <div><strong>Reviewer: </strong></div>
+                <div>{{model.detail.reviewer}}</div>
+            </div>
+            <div class="col-md-8">
+                <div><strong>Contributors: </strong></div>
+                <div>
+                    <span ng-repeat="contributor in model.detail.contributors"> {{contributor.name}}<span ng-show=" ! $last ">;</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

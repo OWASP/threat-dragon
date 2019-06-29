@@ -9,6 +9,7 @@ function threatModelReport() {
             restrict: 'E',
             scope:
             {
+                model: '=',
                 loaded: '&'
             }
         };
@@ -16,6 +17,7 @@ function threatModelReport() {
     return directive;
 
     function link(scope, element, attrs) {
+        console.log(scope.model);
         scope.loaded();
     }
 
