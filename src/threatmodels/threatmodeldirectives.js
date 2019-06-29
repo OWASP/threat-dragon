@@ -10,17 +10,28 @@ function threatModelReport() {
             scope:
             {
                 model: '=',
-                loaded: '&'
+                loaded: '&',
+                print: '&'
             }
         };
 
     return directive;
 
     function link(scope, element, attrs) {
-        console.log(scope.model);
+        scope.generatePDF = generatePDF;
+        scope.isPrinting = false;
         scope.loaded();
-    }
 
+        function generatePDF() {
+            scope.isPrinting = true;
+            scope.print({done: onPrinted});
+
+            function onPrinted() {
+                scope.isPrinting = false;
+                scope.$apply();
+            }
+        }
+    }
 }
 
 module.exports = {

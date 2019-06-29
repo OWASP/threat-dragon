@@ -675,6 +675,15 @@ angular.module('templates', [])
     '            <div class="col-md-12">{{model.summary.description}}</div>\n' +
     '        </div>\n' +
     '    </div>\n' +
+    '    <div ng-if="!isPrinting" class="row">\n' +
+    '        <div class="col-md-12">\n' +
+    '            <div class="btn-group pull-right" role="group">\n' +
+    '                <button class="btn btn-primary" role="button" ng-click="generatePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                    <span class="fa fa-file-pdf-o"></span> Save PDF\n' +
+    '                </button>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
     '</div>')
 
   }]);
