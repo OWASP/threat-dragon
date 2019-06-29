@@ -667,6 +667,14 @@ angular.module('templates', [])
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
+    '    <div class="panel panel-default">\n' +
+    '        <div class="panel-heading panel-title">\n' +
+    '            <h4>High level system description</h4>\n' +
+    '        </div>\n' +
+    '        <div class="panel-body">\n' +
+    '            <div class="col-md-12">{{model.summary.description}}</div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
     '</div>')
 
   }]);
