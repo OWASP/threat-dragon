@@ -431,7 +431,7 @@ angular.module('templates', [])
     '                    </a>\n' +
     '                    <a class="btn btn-default" ng-href="#/threatmodel/report/{{vm.threatModelPath()}}" \n' +
     '                    role="button" data-toggle="tooltip" data-placement="top" title="View Or Print Threat Model Report">\n' +
-    '                        <span class="glyphicon glyphicon-file"></span> Report\n' +
+    '                        <span class="fa fa-file-text"></span> Report\n' +
     '                    </a>\n' +
     '                    <button class="btn btn-default" role="button" ng-click="vm.deleteModel()" data-toggle="tooltip" data-placement="top" title="Delete This Threat Model">\n' +
     '                        <span class="glyphicon glyphicon-remove"></span> Delete\n' +
@@ -675,13 +675,18 @@ angular.module('templates', [])
     '            <div class="col-md-12">{{model.summary.description}}</div>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '    <div ng-if="!isPrinting" class="row">\n' +
+    '    <div ng-if="!isPrintingOrSaving" class="row">\n' +
     '        <div class="col-md-12">\n' +
     '            <div class="btn-group pull-right" role="group">\n' +
-    '                <button class="btn btn-primary" role="button" ng-click="generatePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
-    '                    <span class="fa fa-file-pdf-o"></span> Save PDF\n' +
+    '                <button class="btn btn-primary" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                    <span class="fa fa-floppy-o"></span> Save PDF\n' +
     '                </button>\n' +
-    '            </div>\n' +
+    '                <button class="btn btn-default" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
+    '                    <span class="glyphicon glyphicon-print"></span> Print\n' +
+    '                </button>\n' +
+    '                <button class="btn btn-default" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
+    '                    <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '                </button>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '</div>')

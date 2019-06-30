@@ -28,13 +28,18 @@
             <div class="col-md-12">{{model.summary.description}}</div>
         </div>
     </div>
-    <div ng-if="!isPrinting" class="row">
+    <div ng-if="!isPrintingOrSaving" class="row">
         <div class="col-md-12">
             <div class="btn-group pull-right" role="group">
-                <button class="btn btn-primary" role="button" ng-click="generatePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">
-                    <span class="fa fa-file-pdf-o"></span> Save PDF
+                <button class="btn btn-primary" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">
+                    <span class="fa fa-floppy-o"></span> Save PDF
                 </button>
-            </div>
+                <button class="btn btn-default" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">
+                    <span class="glyphicon glyphicon-print"></span> Print
+                </button>
+                <button class="btn btn-default" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
         </div>
     </div>
 </div>
