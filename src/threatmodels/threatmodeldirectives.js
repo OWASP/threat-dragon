@@ -11,7 +11,7 @@ function threatModelReport() {
             {
                 model: '=',
                 loaded: '&',
-                print: '&'
+                save: '&'
             }
         };
 
@@ -24,9 +24,9 @@ function threatModelReport() {
 
         function generatePDF() {
             scope.isPrinting = true;
-            scope.print({done: onPrinted});
+            scope.save({done: done});
 
-            function onPrinted() {
+            function done() {
                 scope.isPrinting = false;
                 scope.$apply();
             }
