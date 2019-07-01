@@ -4,7 +4,7 @@ var core = angular.module('owasp-threat-dragon-core');
 var toastr = require('toastr');
 
 // Configure Toastr
-toastr.options.timeOut = 4000;
+toastr.options.timeOut = 1000;
 toastr.options.positionClass = 'toast-bottom-right';
 
 var events = {
@@ -22,9 +22,10 @@ core.value('config', config);
 
 core.config(['$logProvider', function ($logProvider) {
     // turn debugging off/on (no info or warn)
-    if ($logProvider.debugEnabled) {
-        $logProvider.debugEnabled(true);
-    }
+    // if ($logProvider.debugEnabled) {
+    //     $logProvider.debugEnabled(true);
+    // }
+    $logProvider.debugEnabled(false);
 }]);
 
 //Configure the common services via commonConfig
