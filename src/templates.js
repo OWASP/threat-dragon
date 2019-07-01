@@ -1,7 +1,7 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('diagrams/confirmReloadOnDirty.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -129,7 +129,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ElementPropertiesPane.html',
-    '﻿<form name="elementPropertiesEditForm">\n' +
+    '<form name="elementPropertiesEditForm">\n' +
     '    <div>\n' +
     '        <div class="form-group">\n' +
     '            <label>Name</label>\n' +
@@ -199,15 +199,15 @@ angular.module('templates', [])
     '</form>\n' +
     '')
   $templateCache.put('diagrams/modalAccept.html',
-    '﻿<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
+    '<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
     '    Accept\n' +
     '</button>')
   $templateCache.put('diagrams/modalIgnore.html',
-    '﻿<button class="btn btn-default" ng-click="onAction()">\n' +
+    '<button class="btn btn-default" ng-click="onAction()">\n' +
     '    Ignore\n' +
     '</button>')
   $templateCache.put('diagrams/ThreatEditPane.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
     '    </div>\n' +
@@ -291,7 +291,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ThreatSummaryPane.html',
-    '﻿<ul id="threatSummaryPane" class="list-group">\n' +
+    '<ul id="threatSummaryPane" class="list-group">\n' +
     '    <li class="list-group-item" ng-repeat="threat in threats">\n' +
     '        <a id="editThreat{{$index}}" href="" ng-click="onEditThreat($index)" data-toggle="tooltip" data-placement="top" title="Edit {{threat.title}}">\n' +
     '            <div class="text-overflow"><small>{{threat.title}}</small></div>\n' +
@@ -323,7 +323,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('layout/structuredExit.html',
-    '﻿<div id="structuredExitModal">\n' +
+    '<div id="structuredExitModal">\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure you want to leave this page?</h3>\n' +
     '    </div>\n' +
@@ -354,7 +354,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/confirmReloadOnDirty.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -369,7 +369,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/threatmodeldetail.html',
-    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -455,7 +455,7 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>')
   $templateCache.put('threatmodels/threatmodeledit.html',
-    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored && !vm.isNewModel">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -648,7 +648,7 @@ angular.module('templates', [])
     '<div ng-if="model.summary">\n' +
     '    <div class="panel panel-default">\n' +
     '        <div class="panel-heading panel-title">\n' +
-    '            <h4>Threat model report for {{model.summary.title}}</h4>\n' +
+    '            <h4 id="titleText">Threat model report for {{model.summary.title}}</h4>\n' +
     '        </div>\n' +
     '        <div class="panel-body">\n' +
     '            <div class="col-md-2">\n' +
@@ -678,13 +678,13 @@ angular.module('templates', [])
     '    <div ng-if="!isPrintingOrSaving" class="row">\n' +
     '        <div class="col-md-12">\n' +
     '            <div class="btn-group pull-right" role="group">\n' +
-    '                <button class="btn btn-primary" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                <button class="btn btn-primary" id="savePDFButton" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
     '                    <span class="fa fa-floppy-o"></span> Save PDF\n' +
     '                </button>\n' +
-    '                <button class="btn btn-default" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
+    '                <button class="btn btn-default" id="printButton" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
     '                    <span class="glyphicon glyphicon-print"></span> Print\n' +
     '                </button>\n' +
-    '                <button class="btn btn-default" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
+    '                <button class="btn btn-default" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
     '                    <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
     '                </button>\n' +
     '        </div>\n' +
