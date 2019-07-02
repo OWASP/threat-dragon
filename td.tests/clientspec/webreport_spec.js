@@ -5,18 +5,28 @@ describe('webreport controller', function () {
     var $scope;
     var $controller;
     var $httpBackend;
-    var $location;
+    var $q;
     var common;
+    var mockDatacontext = {
+        load: function() { return $q.when(null);}
+    }
+    var mockThreatModelLocator = {
+        getModelLocation: function() {}
+    }
     
     beforeEach(function () {
         
-        angular.mock.module('app')
+        angular.mock.module('app');
+        angular.mock.module(function ($provide) {
+            $provide.value('datacontext', mockDatacontext);
+            $provide.value('threatmodellocator', mockThreatModelLocator);
+        });
         
-        angular.mock.inject(function ($rootScope, _$controller_, _$location_, _$httpBackend_, _common_) {
+        angular.mock.inject(function ($rootScope, _$q_, _$controller_, _$httpBackend_, _common_) {
             $scope = $rootScope.$new();
+            $q = _$q_;
             $controller = _$controller_;
-            $location = _$location_;
-            common= _common_
+            common = _common_
             $httpBackend = _$httpBackend_;
             $httpBackend.expectGET().respond();
         });

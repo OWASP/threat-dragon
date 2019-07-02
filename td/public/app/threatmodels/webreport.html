@@ -1,18 +1,11 @@
 <div data-ng-controller="webreport as vm" class="container-fluid">
     <div ng-if="!vm.error && !vm.loaded">
-            <p class="h3 text-center">Your threat model report is loading...</p>
-            <div class="spinner"></div>
+        <p class="h3 text-center">Your threat model report is loading...</p>
+        <div class="spinner"></div>
     </div>
     <row>
         <div ng-if="!vm.error">
-            <div class="panel panel-default">
-                <div class="panel-heading panel-title">
-                    <h4>Outer Threat Model Report container placeholder...</h4>
-                </div>
-                <div class="panel-body">
-                    <tmt-threat-model-report loaded="vm.onLoaded()">
-                </div>
-            </div>
+            <tmt-threat-model-report loaded="vm.onLoaded()" print="vm.printPDF(done)" model="vm.threatModel">
         </div>
     </row>
     <row>

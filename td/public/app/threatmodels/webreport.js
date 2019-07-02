@@ -1,6 +1,6 @@
 'use strict';
 
-function webreport($q, $routeParams, $location, common, datacontext) {
+function webreport($timeout, $routeParams, common, datacontext, threatmodellocator) {
     // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
     /*jshint validthis: true */
     var vm = this;
@@ -8,23 +8,31 @@ function webreport($q, $routeParams, $location, common, datacontext) {
     var getLogFn = common.logger.getLogFn;
     var log = getLogFn(controllerId);
     var logError = getLogFn(controllerId, 'error');
-
-    // Bindable properties and functions are placed on vm.
     vm.title = 'Threat Model Report';
+    vm.threatModel = {};
     vm.error = null;
     vm.loaded = false;
     vm.onLoaded = onLoaded;
     vm.onError = onError;
+    vm.printPDF = printPDF;
 
     activate();
 
     function activate() {
-        common.activateController([load()], controllerId)
-            .then(function () { log('Activated WebReport Controller'); });
+        common.activateController([getThreatModel()], controllerId)
+            .then(function () { log('Activated Web Report Controller'); });
     }
 
-    function load() {
-        //do all the loading stuff
+    function getThreatModel(forceReload) {
+
+        var location = threatModelLocation();
+
+        return datacontext.load(location, forceReload).then(onLoad, onError);
+
+        function onLoad(data) {
+            vm.threatModel = data;
+            return vm.threatModel;
+        }
     }
 
     function onLoaded() {
@@ -35,6 +43,21 @@ function webreport($q, $routeParams, $location, common, datacontext) {
     function onError(err) {
         vm.error = err;
         logError(err.data.message);
+    }
+
+    function threatModelLocation() {
+        return threatmodellocator.getModelLocation($routeParams);
+    }
+
+    function printPDF(done) {
+        
+        //use timeout to ensure the buttons etc. are not visible on the printed page
+        //seems ugly, but works
+        $timeout(function() {
+            console.log('printing pdf');
+            window.print();
+            done();
+        });       
     }
 }
 
