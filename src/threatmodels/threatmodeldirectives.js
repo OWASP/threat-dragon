@@ -13,14 +13,17 @@ function threatModelReport($location, $routeParams, threatmodellocator) {
             {
                 model: '=',
                 loaded: '&',
-                save: '&',
-                print: '&'
+                save: '&?',
+                print: '&?'
             }
         };
 
     return directive;
 
     function link(scope, element, attrs) {
+        
+        scope.printable = _.isFunction(scope.print);
+        scope.saveable = _.isFunction(scope.save);
         scope.savePDF = savePDF;
         scope.printPDF = printPDF;
         scope.cancel = cancel;

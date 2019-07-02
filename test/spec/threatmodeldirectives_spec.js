@@ -118,6 +118,39 @@ describe('threat model report directive: ', function () {
         expect($(elem).find('#printButton').length).toEqual(1);
 
     })
+    it('should suppress the save button', function() {
+
+        var testModelTitle = 'test model title';
+        var testModel = {
+            summary: {
+                title: testModelTitle
+            }
+        };
+        $scope.testModel = testModel;
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" print="print(done)">');
+        elem = angular.element($('tmt-threat-model-report'));
+        $compile(elem)($scope);
+        $scope.$digest();
+        expect($(elem).find('#saveButton').length).toEqual(0);
+
+    });
+
+    it('should suppress the print button', function() {
+
+        var testModelTitle = 'test model title';
+        var testModel = {
+            summary: {
+                title: testModelTitle
+            }
+        };
+        $scope.testModel = testModel;
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" save="save(done)">');
+        elem = angular.element($('tmt-threat-model-report'));
+        $compile(elem)($scope);
+        $scope.$digest();
+        expect($(elem).find('#printButton').length).toEqual(0);
+
+    });
 
     it('should cancel the report and return to the model detail page', function() {
 
