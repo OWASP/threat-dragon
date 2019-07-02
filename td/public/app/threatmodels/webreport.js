@@ -54,7 +54,6 @@ function webreport($timeout, $routeParams, common, datacontext, threatmodellocat
         //use timeout to ensure the buttons etc. are not visible on the printed page
         //seems ugly, but works
         $timeout(function() {
-            console.log('printing pdf');
             window.print();
             done();
         });       
