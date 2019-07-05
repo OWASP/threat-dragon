@@ -645,6 +645,29 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>')
   $templateCache.put('threatmodels/threatmodelreport.html',
+    '<div ng-if="!isPrintingOrSaving" class="panel panel-default">\n' +
+    '    <div class="panel-body">\n' +
+    '        <div class="pull-left">\n' +
+    '            <div>\n' +
+    '                <input type="checkbox" name="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements\n' +
+    '            </div>\n' +
+    '            <div>\n' +
+    '                <input type="checkbox" name="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="btn-group pull-right" role="group">\n' +
+    '            <button ng-if="saveable" class="btn btn-default" id="savePDFButton" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                <span class="fa fa-floppy-o"></span> Save PDF\n' +
+    '            </button>\n' +
+    '            <button ng-if="printable" class="btn btn-default" id="printButton" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
+    '                <span class="glyphicon glyphicon-print"></span> Print\n' +
+    '            </button>\n' +
+    '            <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
+    '                <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '            </button>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>\n' +
     '<div ng-if="model.summary">\n' +
     '    <div class="panel panel-default">\n' +
     '        <div class="panel-heading panel-title">\n' +
@@ -693,9 +716,9 @@ angular.module('templates', [])
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
-    '                            <div ng-if="element.threats.length > 0">\n' +
+    '                            <div ng-if="hasOpenThreats(element) || (showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
-    '                                    <div class="panel panel-default">\n' +
+    '                                    <div ng-if="threat.status == \'Open\' || showMitigated" class="panel panel-default">\n' +
     '                                        <div class="panel-heading panel-title">\n' +
     '                                            <div>\n' +
     '                                                {{threat.title}}\n' +
@@ -719,7 +742,7 @@ angular.module('templates', [])
     '                                    </div>\n' +
     '                                </div>\n' +
     '                            </div>\n' +
-    '                            <div ng-if="element.threats.length == 0 || !element.threats">\n' +
+    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!hasOpenThreats(element) && !showMitigated)">\n' +
     '                                <div>\n' +
     '                                    <em>No threats listed.</em>\n' +
     '                                </div>\n' +
@@ -727,7 +750,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
-    '                <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
+    '                <div ng-if="showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
     '                    <div class="panel panel-default">\n' +
     '                        <div class="panel-heading panel-title">\n' +
     '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +

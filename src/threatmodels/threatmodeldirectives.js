@@ -29,6 +29,25 @@ function threatModelReport($location, $routeParams, threatmodellocator) {
         scope.cancel = cancel;
         scope.isPrintingOrSaving = false;
         scope.loaded();
+        scope.showMitigated = true;
+        scope.showOutOfScope = true;
+        scope.toggleShowOutOfScope = toggleShowOutOfScope;
+        scope.toggleShowMitigated = toggleShowMitigated;
+        scope.hasOpenThreats = hasOpenThreats;
+
+        function hasOpenThreats(element) {
+            return (element.threats && element.threats.some( function(threat) {
+                return threat.status == 'Open';
+            }));
+        };
+
+        function toggleShowOutOfScope() {
+            scope.showOutOfScope = !scope.showOutOfScope;
+        }
+
+        function toggleShowMitigated() {
+            scope.showMitigated = !scope.showMitigated;
+        }
 
         function savePDF() {
             scope.isPrintingOrSaving = true;
