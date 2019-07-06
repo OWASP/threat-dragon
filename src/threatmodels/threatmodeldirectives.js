@@ -33,13 +33,6 @@ function threatModelReport($location, $routeParams, threatmodellocator) {
         scope.showOutOfScope = true;
         scope.toggleShowOutOfScope = toggleShowOutOfScope;
         scope.toggleShowMitigated = toggleShowMitigated;
-        scope.hasOpenThreats = hasOpenThreats;
-
-        function hasOpenThreats(element) {
-            return (element.threats && element.threats.some( function(threat) {
-                return threat.status == 'Open';
-            }));
-        }
 
         function toggleShowOutOfScope() {
             scope.showOutOfScope = !scope.showOutOfScope;

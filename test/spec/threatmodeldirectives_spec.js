@@ -2,6 +2,7 @@
 
 var $ = require('jquery');
 require('jasmine-jquery');
+var fs = require('fs');
 
 describe('threat model report directive: ', function () {
 
@@ -50,6 +51,33 @@ describe('threat model report directive: ', function () {
         $scope.$digest();
         expect($scope.loaded).toHaveBeenCalled();
 
+    });
+
+    it('should toggle mitigated threats', function() {
+
+        var testModel = require('./test model.json');
+        $scope.testModel = testModel;
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
+        elem = angular.element($('tmt-threat-model-report'));
+        $compile(elem)($scope);
+        $scope.$digest();
+
+        expect($(elem).find('.threat').length).toEqual(2);
+        angular.element($('#cbShowMitigated')).triggerHandler('click');
+        expect($(elem).find('.threat').length).toEqual(1);
+    });
+
+    it('should toggle out of scope elements', function() {
+
+        var testModel = require('./test model.json');
+        $scope.testModel = testModel;
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
+        elem = angular.element($('tmt-threat-model-report'));
+        $compile(elem)($scope);
+        $scope.$digest();
+        expect($(elem).find('.model-element').length).toEqual(2);
+        angular.element($('#cbShowOutOfScope')).triggerHandler('click');
+        expect($(elem).find('.model-element').length).toEqual(1);
     });
 
     it('should set the model', function() {

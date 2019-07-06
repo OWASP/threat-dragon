@@ -649,10 +649,10 @@ angular.module('templates', [])
     '    <div class="panel-body">\n' +
     '        <div class="pull-left">\n' +
     '            <div>\n' +
-    '                <input type="checkbox" name="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements\n' +
+    '                <input type="checkbox" id="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements\n' +
     '            </div>\n' +
     '            <div>\n' +
-    '                <input type="checkbox" name="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats\n' +
+    '                <input type="checkbox" id="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="btn-group pull-right" role="group">\n' +
@@ -705,7 +705,7 @@ angular.module('templates', [])
     '            </div>\n' +
     '            <div class="panel-body">\n' +
     '                <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: false}">\n' +
-    '                    <div class="panel panel-default">\n' +
+    '                    <div class="panel panel-default model-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
     '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
     '                            <span ng-switch="element.type">\n' +
@@ -716,9 +716,9 @@ angular.module('templates', [])
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
-    '                            <div ng-if="hasOpenThreats(element) || (showMitigated && element.threats.length > 0)">\n' +
+    '                            <div ng-if="element.hasOpenThreats || (showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
-    '                                    <div ng-if="threat.status == \'Open\' || showMitigated" class="panel panel-default">\n' +
+    '                                    <div ng-if="threat.status == \'Open\' || showMitigated" class="panel panel-default threat">\n' +
     '                                        <div class="panel-heading panel-title">\n' +
     '                                            <div>\n' +
     '                                                {{threat.title}}\n' +
@@ -742,7 +742,7 @@ angular.module('templates', [])
     '                                    </div>\n' +
     '                                </div>\n' +
     '                            </div>\n' +
-    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!hasOpenThreats(element) && !showMitigated)">\n' +
+    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!element.hasOpenThreats && !showMitigated)">\n' +
     '                                <div>\n' +
     '                                    <em>No threats listed.</em>\n' +
     '                                </div>\n' +
@@ -751,7 +751,7 @@ angular.module('templates', [])
     '                    </div>\n' +
     '                </div>\n' +
     '                <div ng-if="showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
-    '                    <div class="panel panel-default">\n' +
+    '                    <div class="panel panel-default model-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
     '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
     '                            <span ng-switch="element.type">\n' +

@@ -2,10 +2,10 @@
     <div class="panel-body">
         <div class="pull-left">
             <div>
-                <input type="checkbox" name="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements
+                <input type="checkbox" id="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements
             </div>
             <div>
-                <input type="checkbox" name="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats
+                <input type="checkbox" id="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats
             </div>
         </div>
         <div class="btn-group pull-right" role="group">
@@ -58,7 +58,7 @@
             </div>
             <div class="panel-body">
                 <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: '!tm.Boundary'} && {outOfScope: false}">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default model-element">
                         <div class="panel-heading panel-title">
                             {{element.type == 'tm.Flow'? element.labels[0].attrs.text.text : element.attrs.text.text}}
                             <span ng-switch="element.type">
@@ -69,9 +69,9 @@
                             </span>
                         </div>
                         <div class="panel-body">
-                            <div ng-if="hasOpenThreats(element) || (showMitigated && element.threats.length > 0)">
+                            <div ng-if="element.hasOpenThreats || (showMitigated && element.threats.length > 0)">
                                 <div ng-repeat="threat in element.threats">
-                                    <div ng-if="threat.status == 'Open' || showMitigated" class="panel panel-default">
+                                    <div ng-if="threat.status == 'Open' || showMitigated" class="panel panel-default threat">
                                         <div class="panel-heading panel-title">
                                             <div>
                                                 {{threat.title}}
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-if="element.threats.length == 0 || !element.threats || (!hasOpenThreats(element) && !showMitigated)">
+                            <div ng-if="element.threats.length == 0 || !element.threats || (!element.hasOpenThreats && !showMitigated)">
                                 <div>
                                     <em>No threats listed.</em>
                                 </div>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div ng-if="showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: '!tm.Boundary'} && {outOfScope: true}">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default model-element">
                         <div class="panel-heading panel-title">
                             {{element.type == 'tm.Flow'? element.labels[0].attrs.text.text : element.attrs.text.text}}
                             <span ng-switch="element.type">
