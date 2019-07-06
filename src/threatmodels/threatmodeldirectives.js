@@ -39,7 +39,7 @@ function threatModelReport($location, $routeParams, threatmodellocator) {
             return (element.threats && element.threats.some( function(threat) {
                 return threat.status == 'Open';
             }));
-        };
+        }
 
         function toggleShowOutOfScope() {
             scope.showOutOfScope = !scope.showOutOfScope;
