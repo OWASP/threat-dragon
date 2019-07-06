@@ -80,6 +80,19 @@ describe('threat model report directive: ', function () {
         expect($(elem).find('.model-element').length).toEqual(1);
     });
 
+    it('should toggle diagrams', function() {
+
+        var testModel = require('./test model.json');
+        $scope.testModel = testModel;
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
+        elem = angular.element($('tmt-threat-model-report'));
+        $compile(elem)($scope);
+        $scope.$digest();
+        expect($(elem).find('.tmt-diagram-container').length).toEqual(0);
+        angular.element($('#cbShowDiagrams')).triggerHandler('click');
+        expect($(elem).find('.tmt-diagram-container').length).toEqual(1);
+    });
+
     it('should set the model', function() {
 
         var testModelTitle = 'test model title';

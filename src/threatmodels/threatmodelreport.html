@@ -7,6 +7,9 @@
             <div>
                 <input type="checkbox" id="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats
             </div>
+            <div>
+                <input type="checkbox" id="cbShowDiagrams" ng-model="showDiagrams" ng-click="toggleShowDiagrams()"> Include threat model diagrams
+            </div>
         </div>
         <div class="btn-group pull-right" role="group">
             <button ng-if="saveable" class="btn btn-default" id="savePDFButton" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">
@@ -57,6 +60,9 @@
                 <h4>{{diagram.title}}</h4>
             </div>
             <div class="panel-body">
+                <div ng-if="showDiagrams" class="tmt-diagram-container">
+                    <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>
+                </div>
                 <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: '!tm.Boundary'} && {outOfScope: false}">
                     <div class="panel panel-default model-element">
                         <div class="panel-heading panel-title">
