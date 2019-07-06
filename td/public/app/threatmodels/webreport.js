@@ -10,7 +10,7 @@ function webreport($timeout, $routeParams, common, datacontext, threatmodellocat
     var logError = getLogFn(controllerId, 'error');
     vm.title = 'Threat Model Report';
     vm.threatModel = {};
-    vm.error = null;
+    vm.error = false;
     vm.loaded = false;
     vm.onLoaded = onLoaded;
     vm.onError = onError;
