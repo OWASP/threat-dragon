@@ -429,8 +429,12 @@ angular.module('templates', [])
     '                    role="button" data-toggle="tooltip" data-placement="top" title="Edit This Threat Model">\n' +
     '                        <span class="glyphicon glyphicon-edit"></span> Edit\n' +
     '                    </a>\n' +
+    '                    <a class="btn btn-default" ng-href="#/threatmodel/report/{{vm.threatModelPath()}}" \n' +
+    '                    role="button" data-toggle="tooltip" data-placement="top" title="View Or Print Threat Model Report">\n' +
+    '                        <span class="fa fa-file-text"></span> Report\n' +
+    '                    </a>\n' +
     '                    <button class="btn btn-default" role="button" ng-click="vm.deleteModel()" data-toggle="tooltip" data-placement="top" title="Delete This Threat Model">\n' +
-    '                        <span class="glyphicon glyphicon-remove"></span>  Delete\n' +
+    '                        <span class="glyphicon glyphicon-remove"></span> Delete\n' +
     '                    </button>\n' +
     '                </div>\n' +
     '            </div>\n' +
@@ -637,6 +641,154 @@ angular.module('templates', [])
     '            <p>\n' +
     '                <a href="#/">Take me home</a>\n' +
     '            </p>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>')
+  $templateCache.put('threatmodels/threatmodelreport.html',
+    '<div ng-if="!isPrintingOrSaving" class="panel panel-default">\n' +
+    '    <div class="panel-body">\n' +
+    '        <div class="pull-left">\n' +
+    '            <div>\n' +
+    '                <input type="checkbox" id="cbShowOutOfScope" ng-model="reportOptions.showOutOfScope"> Show out of scope elements\n' +
+    '            </div>\n' +
+    '            <div>\n' +
+    '                <input type="checkbox" id="cbShowMitigated" ng-model="reportOptions.showMitigated"> Show mitigated threats\n' +
+    '            </div>\n' +
+    '            <div>\n' +
+    '                <input type="checkbox" id="cbShowDiagrams" ng-model="reportOptions.showDiagrams""> Include threat model diagrams\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="btn-group pull-right" role="group">\n' +
+    '            <button ng-if="saveable" class="btn btn-default" id="savePDFButton" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                <span class="fa fa-floppy-o"></span> Save PDF\n' +
+    '            </button>\n' +
+    '            <button ng-if="printable" class="btn btn-default" id="printButton" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
+    '                <span class="glyphicon glyphicon-print"></span> Print\n' +
+    '            </button>\n' +
+    '            <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
+    '                <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '            </button>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '<div ng-if="model.summary">\n' +
+    '    <div class="panel panel-default">\n' +
+    '        <div class="panel-heading panel-title">\n' +
+    '            <h4 id="titleText">Threat model report for {{model.summary.title}}</h4>\n' +
+    '        </div>\n' +
+    '        <div class="panel-body">\n' +
+    '            <div class="col-md-2">\n' +
+    '                <div><strong>Owner: </strong></div>\n' +
+    '                <div>{{model.summary.owner}}</div>\n' +
+    '            </div>\n' +
+    '            <div class="col-md-2">\n' +
+    '                <div><strong>Reviewer: </strong></div>\n' +
+    '                <div>{{model.detail.reviewer}}</div>\n' +
+    '            </div>\n' +
+    '            <div class="col-md-8">\n' +
+    '                <div><strong>Contributors: </strong></div>\n' +
+    '                <div>\n' +
+    '                    <span ng-repeat="contributor in model.detail.contributors"> {{contributor.name}}<span ng-show=" ! $last ">;</span></span>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div class="panel panel-default">\n' +
+    '        <div class="panel-heading panel-title">\n' +
+    '            <h4>High level system description</h4>\n' +
+    '        </div>\n' +
+    '        <div class="panel-body">\n' +
+    '            <div class="col-md-12">{{model.summary.description}}</div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div ng-repeat="diagram in model.detail.diagrams">\n' +
+    '        <div class="panel panel-default">\n' +
+    '            <div class="panel-heading panel-title">\n' +
+    '                <h4>{{diagram.title}}</h4>\n' +
+    '            </div>\n' +
+    '            <div class="panel-body">\n' +
+    '                <div ng-if="reportOptions.showDiagrams" class="tmt-diagram-container">\n' +
+    '                    <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>\n' +
+    '                </div>\n' +
+    '                <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: false}">\n' +
+    '                    <div class="panel panel-default model-element">\n' +
+    '                        <div class="panel-heading panel-title">\n' +
+    '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
+    '                            <span ng-switch="element.type">\n' +
+    '                                <span ng-switch-when="tm.Store">(Data Store)</span>\n' +
+    '                                <span ng-switch-when="tm.Flow">(Data Flow)</span>\n' +
+    '                                <span ng-switch-when="tm.Process">(Process)</span>\n' +
+    '                                <span ng-switch-when="tm.Actor">(External Actor)</span>\n' +
+    '                            </span>\n' +
+    '                        </div>\n' +
+    '                        <div class="panel-body">\n' +
+    '                            <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">\n' +
+    '                                <div ng-repeat="threat in element.threats">\n' +
+    '                                    <div ng-if="threat.status == \'Open\' || reportOptions.showMitigated" class="panel panel-default threat">\n' +
+    '                                        <div class="panel-heading panel-title">\n' +
+    '                                            <div>\n' +
+    '                                                {{threat.title}}\n' +
+    '                                            </div>\n' +
+    '                                            <em class="small">\n' +
+    '                                                {{threat.type}},\n' +
+    '                                                <span ng-class="{Mitigated:\'text-success\', Open:\'text-danger\'}[threat.status]">{{threat.status}}</span>,\n' +
+    '                                                <span ng-class="{Low:\'text-success\', Medium:\'text-warning\', High:\'text-danger\'}[threat.severity]">{{threat.severity}} Severity</span>                   \n' +
+    '                                            </em>  \n' +
+    '                                        </div>\n' +
+    '                                        <div class="panel-body">\n' +
+    '                                            <div class="col-md-12">\n' +
+    '                                                <div><strong>Description: </strong></div>\n' +
+    '                                                <div>{{threat.description}}</div>\n' +
+    '                                            </div>\n' +
+    '                                            <div class="col-md-12">\n' +
+    '                                                <div><strong>Mitigation: </strong></div>\n' +
+    '                                                <div>{{threat.mitigation}}</div>\n' +
+    '                                            </div>\n' +
+    '                                        </div>\n' +
+    '                                    </div>\n' +
+    '                                </div>\n' +
+    '                            </div>\n' +
+    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!element.hasOpenThreats && !reportOptions.showMitigated)">\n' +
+    '                                <div>\n' +
+    '                                    <em>No threats listed.</em>\n' +
+    '                                </div>\n' +
+    '                            </div>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div ng-if="reportOptions.showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
+    '                    <div class="panel panel-default model-element">\n' +
+    '                        <div class="panel-heading panel-title">\n' +
+    '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
+    '                            <span ng-switch="element.type">\n' +
+    '                                <span ng-switch-when="tm.Store">(Data Store)</span>\n' +
+    '                                <span ng-switch-when="tm.Flow">(Data Flow)</span>\n' +
+    '                                <span ng-switch-when="tm.Process">(Process)</span>\n' +
+    '                                <span ng-switch-when="tm.Actor">(External Actor)</span>\n' +
+    '                            </span>\n' +
+    '                        </div>\n' +
+    '                        <div class="panel-body">\n' +
+    '                            <div><strong>Out of scope reason: </strong></div>\n' +
+    '                            <div>{{element.reasonOutOfScope}}</div>                           \n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div ng-if="!isPrintingOrSaving" class="row">\n' +
+    '        <div class="col-md-12">\n' +
+    '            <div class="btn-group pull-right" role="group">\n' +
+    '                <button ng-if="saveable" class="btn btn-default" id="savePDFButton" role="button" ng-click="savePDF()" data-toggle="tooltip" data-placement="top" title="Save Threat Model Report As PDF">\n' +
+    '                    <span class="fa fa-floppy-o"></span> Save PDF\n' +
+    '                </button>\n' +
+    '                <button ng-if="printable" class="btn btn-default" id="printButton" role="button" ng-click="printPDF()" data-toggle="tooltip" data-placement="top" title="Print Threat Model Report">\n' +
+    '                    <span class="glyphicon glyphicon-print"></span> Print\n' +
+    '                </button>\n' +
+    '                <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
+    '                    <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '                </button>\n' +
+    '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '</div>')
