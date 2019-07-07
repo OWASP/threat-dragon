@@ -11,7 +11,7 @@ describe('welcome controller', function () {
     
     beforeEach(function () {
         
-        angular.mock.module('app')
+        angular.mock.module('app');
         
         angular.mock.inject(function ($rootScope, _$controller_, _$location_, _$httpBackend_) {
             $scope = $rootScope.$new();
@@ -25,7 +25,7 @@ describe('welcome controller', function () {
         $scope.$apply();
     });
     
-    describe('initilisation tests', function () {
+    describe('initialisation tests', function () {
 
         it('should be defined', function () {
             expect($scope.vm).toBeDefined();
