@@ -1,7 +1,7 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('diagrams/confirmReloadOnDirty.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -129,7 +129,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ElementPropertiesPane.html',
-    '﻿<form name="elementPropertiesEditForm">\n' +
+    '<form name="elementPropertiesEditForm">\n' +
     '    <div>\n' +
     '        <div class="form-group">\n' +
     '            <label>Name</label>\n' +
@@ -199,15 +199,15 @@ angular.module('templates', [])
     '</form>\n' +
     '')
   $templateCache.put('diagrams/modalAccept.html',
-    '﻿<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
+    '<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
     '    Accept\n' +
     '</button>')
   $templateCache.put('diagrams/modalIgnore.html',
-    '﻿<button class="btn btn-default" ng-click="onAction()">\n' +
+    '<button class="btn btn-default" ng-click="onAction()">\n' +
     '    Ignore\n' +
     '</button>')
   $templateCache.put('diagrams/ThreatEditPane.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
     '    </div>\n' +
@@ -291,7 +291,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ThreatSummaryPane.html',
-    '﻿<ul id="threatSummaryPane" class="list-group">\n' +
+    '<ul id="threatSummaryPane" class="list-group">\n' +
     '    <li class="list-group-item" ng-repeat="threat in threats">\n' +
     '        <a id="editThreat{{$index}}" href="" ng-click="onEditThreat($index)" data-toggle="tooltip" data-placement="top" title="Edit {{threat.title}}">\n' +
     '            <div class="text-overflow"><small>{{threat.title}}</small></div>\n' +
@@ -323,7 +323,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('layout/structuredExit.html',
-    '﻿<div id="structuredExitModal">\n' +
+    '<div id="structuredExitModal">\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure you want to leave this page?</h3>\n' +
     '    </div>\n' +
@@ -354,7 +354,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/confirmReloadOnDirty.html',
-    '﻿<div>\n' +
+    '<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -369,7 +369,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/threatmodeldetail.html',
-    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -455,7 +455,7 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>')
   $templateCache.put('threatmodels/threatmodeledit.html',
-    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored && !vm.isNewModel">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -649,13 +649,13 @@ angular.module('templates', [])
     '    <div class="panel-body">\n' +
     '        <div class="pull-left">\n' +
     '            <div>\n' +
-    '                <input type="checkbox" id="cbShowOutOfScope" ng-model="showOutOfScope" ng-click="toggleShowOutOfScope()"> Show out of scope elements\n' +
+    '                <input type="checkbox" id="cbShowOutOfScope" ng-model="reportOptions.showOutOfScope"> Show out of scope elements\n' +
     '            </div>\n' +
     '            <div>\n' +
-    '                <input type="checkbox" id="cbShowMitigated" ng-model="showMitigated" ng-click="toggleShowMitigated()"> Show mitigated threats\n' +
+    '                <input type="checkbox" id="cbShowMitigated" ng-model="reportOptions.showMitigated"> Show mitigated threats\n' +
     '            </div>\n' +
     '            <div>\n' +
-    '                <input type="checkbox" id="cbShowDiagrams" ng-model="showDiagrams" ng-click="toggleShowDiagrams()"> Include threat model diagrams\n' +
+    '                <input type="checkbox" id="cbShowDiagrams" ng-model="reportOptions.showDiagrams""> Include threat model diagrams\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="btn-group pull-right" role="group">\n' +
@@ -707,7 +707,7 @@ angular.module('templates', [])
     '                <h4>{{diagram.title}}</h4>\n' +
     '            </div>\n' +
     '            <div class="panel-body">\n' +
-    '                <div ng-if="showDiagrams" class="tmt-diagram-container">\n' +
+    '                <div ng-if="reportOptions.showDiagrams" class="tmt-diagram-container">\n' +
     '                    <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>\n' +
     '                </div>\n' +
     '                <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: false}">\n' +
@@ -722,9 +722,9 @@ angular.module('templates', [])
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
-    '                            <div ng-if="element.hasOpenThreats || (showMitigated && element.threats.length > 0)">\n' +
+    '                            <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
-    '                                    <div ng-if="threat.status == \'Open\' || showMitigated" class="panel panel-default threat">\n' +
+    '                                    <div ng-if="threat.status == \'Open\' || reportOptions.showMitigated" class="panel panel-default threat">\n' +
     '                                        <div class="panel-heading panel-title">\n' +
     '                                            <div>\n' +
     '                                                {{threat.title}}\n' +
@@ -748,7 +748,7 @@ angular.module('templates', [])
     '                                    </div>\n' +
     '                                </div>\n' +
     '                            </div>\n' +
-    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!element.hasOpenThreats && !showMitigated)">\n' +
+    '                            <div ng-if="element.threats.length == 0 || !element.threats || (!element.hasOpenThreats && !reportOptions.showMitigated)">\n' +
     '                                <div>\n' +
     '                                    <em>No threats listed.</em>\n' +
     '                                </div>\n' +
@@ -756,7 +756,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
-    '                <div ng-if="showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
+    '                <div ng-if="reportOptions.showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
     '                    <div class="panel panel-default model-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
     '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +

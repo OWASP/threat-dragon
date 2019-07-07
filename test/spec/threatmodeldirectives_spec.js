@@ -53,7 +53,7 @@ describe('threat model report directive: ', function () {
 
     });
 
-    it('should toggle mitigated threats', function() {
+    it('should hide mitigated threats', function() {
 
         var testModel = require('./test model.json');
         $scope.testModel = testModel;
@@ -62,8 +62,10 @@ describe('threat model report directive: ', function () {
         $compile(elem)($scope);
         $scope.$digest();
 
+        var cb = $(elem).find('#cbShowMitigated');
+        expect(cb.prop('checked')).toEqual(true);
         expect($(elem).find('.threat').length).toEqual(2);
-        angular.element($('#cbShowMitigated')).triggerHandler('click');
+        cb.click();
         expect($(elem).find('.threat').length).toEqual(1);
     });
 
@@ -75,8 +77,10 @@ describe('threat model report directive: ', function () {
         elem = angular.element($('tmt-threat-model-report'));
         $compile(elem)($scope);
         $scope.$digest();
+        var cb = $(elem).find('#cbShowOutOfScope');
+        expect(cb.prop('checked')).toEqual(true);
         expect($(elem).find('.model-element').length).toEqual(2);
-        angular.element($('#cbShowOutOfScope')).triggerHandler('click');
+        cb.click();
         expect($(elem).find('.model-element').length).toEqual(1);
     });
 
@@ -88,8 +92,11 @@ describe('threat model report directive: ', function () {
         elem = angular.element($('tmt-threat-model-report'));
         $compile(elem)($scope);
         $scope.$digest();
+
+        var cb = $(elem).find('#cbShowDiagrams');
+        expect(cb.prop('checked')).toEqual(false);
         expect($(elem).find('.tmt-diagram-container').length).toEqual(0);
-        angular.element($('#cbShowDiagrams')).triggerHandler('click');
+        cb.click();
         expect($(elem).find('.tmt-diagram-container').length).toEqual(1);
     });
 

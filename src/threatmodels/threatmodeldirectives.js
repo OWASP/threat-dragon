@@ -20,7 +20,7 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
 
     return directive;
 
-    function link(scope, element, attrs) {
+    function link(scope) {
         
         scope.printable = _.isFunction(scope.print);
         scope.saveable = _.isFunction(scope.save);
@@ -28,14 +28,14 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
         scope.printPDF = printPDF;
         scope.cancel = cancel;
         scope.isPrintingOrSaving = false;
-        scope.showMitigated = true;
-        scope.showOutOfScope = true;
-        scope.showDiagrams = false;
-        scope.toggleShowOutOfScope = toggleShowOutOfScope;
-        scope.toggleShowMitigated = toggleShowMitigated;
-        scope.toggleShowDiagrams = toggleShowDiagrams;
         scope.initialise = initialise;
         scope.graphs = null;
+    
+        scope.reportOptions = {
+            showMitigated: true,
+            showOutOfScope: true,
+            showDiagrams: false
+        };
 
         primeGraphs();
         scope.loaded();
@@ -44,18 +44,6 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
             initialiseGraphs();
             diagram.removeTools();
             diagram.scaleContentToFit();
-        }
-
-        function toggleShowOutOfScope() {
-            scope.showOutOfScope = !scope.showOutOfScope;
-        }
-
-        function toggleShowMitigated() {
-            scope.showMitigated = !scope.showMitigated;
-        }
-
-        function toggleShowDiagrams() {
-            scope.showDiagrams = !scope.showDiagrams;
         }
 
         function savePDF() {
