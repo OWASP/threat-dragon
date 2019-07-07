@@ -184,15 +184,17 @@ describe('dialogs controllers:', function () {
 
     });
 
-    describe('confirm', function () {
+    describe('confirm - defined parameters', function () {
 
         var cancel;
         var ok;
-        var param = 'param';
-        var parameter = function() { return param;};
+        var param;
+        var parameter;
 
         beforeEach(function () {
 
+            param = 'param';
+            parameter = function() { return param;};
             cancel = jasmine.createSpy('cancel');
             ok = jasmine.createSpy('ok');
             controllers.confirmController(mockScope, mockUibModalInstance, ok, cancel, parameter);
@@ -223,6 +225,50 @@ describe('dialogs controllers:', function () {
             expect(mockUibModalInstance.dismiss).toHaveBeenCalled();
             expect(cancel.calls.argsFor(0)).toEqual([param]);
             expect(ok).not.toHaveBeenCalled();
+
+        });
+    });
+
+    //not very useful tests just to exercise some branches that were not covered
+    describe('confirm - missing parameters', function () {
+
+        var cancel;
+        var ok;
+        var param;
+        var parameter;
+
+        beforeEach(function () {
+
+            param = null;
+            cancel = jasmine.createSpy('cancel');
+            ok = jasmine.createSpy('ok');
+            delete mockScope.parameter;
+            controllers.confirmController(mockScope, mockUibModalInstance, null, null, null);
+            spyOn(mockUibModalInstance, 'dismiss');
+            spyOn(mockUibModalInstance, 'close');
+
+        });
+
+        it('should set not scope fields', function () {
+
+            expect(mockScope.parameter).not.toBeDefined();
+            expect(mockScope.applyToAll).toBe(false);
+
+        });
+
+        it('should not call ok', function () {
+
+            mockScope.onOK(param);
+            expect(mockUibModalInstance.close).toHaveBeenCalled();
+            expect(ok).not.toHaveBeenCalled();
+
+        });
+
+        it('should not call cancel', function () {
+
+            mockScope.onCancel(param);
+            expect(mockUibModalInstance.dismiss).toHaveBeenCalled();
+            expect(cancel).not.toHaveBeenCalled();
 
         });
     });
