@@ -1,6 +1,6 @@
 {
   "name": "OWASP-Threat-Dragon",
-  "version": "0.0.3",
+  "version": "0.6.0",
   "private": true,
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool - docs",
   "author": {
@@ -8,6 +8,7 @@
     "email": "mike.goodwin@owasp.org"
   },
   "dependencies": {
+    "bootstrap": "3.4.1"
   },
   "devDependencies": {
   }
