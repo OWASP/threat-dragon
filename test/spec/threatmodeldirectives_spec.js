@@ -94,10 +94,10 @@ describe('threat model report directive: ', function () {
         $scope.$digest();
 
         var cb = $(elem).find('#cbShowDiagrams');
-        expect(cb.prop('checked')).toEqual(false);
-        expect($(elem).find('.tmt-diagram-container').length).toEqual(0);
-        cb.click();
+        expect(cb.prop('checked')).toEqual(true);
         expect($(elem).find('.tmt-diagram-container').length).toEqual(1);
+        cb.click();
+        expect($(elem).find('.tmt-diagram-container').length).toEqual(0);
     });
 
     it('should set the model', function() {
