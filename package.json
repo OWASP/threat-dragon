@@ -60,7 +60,7 @@
     "passport-github": "1.1.0",
     "pug": "^2.0.4",
     "pug-bootstrap": "0.0.16",
-    "serve-favicon": "2.4.5"
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "angular-mocks": "1.7.8",
@@ -77,7 +77,7 @@
     "jasmine-jquery": "2.1.1",
     "jasmine-node": "1.14.5",
     "jasmine-spec-reporter": "4.2.1",
-    "jshint": "2.9.5",
+    "jshint": "^2.10.2",
     "karma": "1.7.1",
     "karma-browserify": "5.1.1",
     "karma-chrome-launcher": "2.2.0",
