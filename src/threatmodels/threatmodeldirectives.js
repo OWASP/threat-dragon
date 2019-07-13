@@ -34,7 +34,7 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
         scope.reportOptions = {
             showMitigated: true,
             showOutOfScope: true,
-            showDiagrams: false
+            showDiagrams: true
         };
 
         primeGraphs();

@@ -710,11 +710,11 @@ angular.module('templates', [])
     '                <div ng-if="reportOptions.showDiagrams" class="tmt-diagram-container">\n' +
     '                    <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>\n' +
     '                </div>\n' +
-    '                <div ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: false}">\n' +
-    '                    <div class="panel panel-default model-element">\n' +
+    '                <div ng-repeat="element in graphs[diagram.id].getCells() | filter:{outOfScope: \'!true\'}">\n' +
+    '                    <div ng-if="element.attributes.type != \'tm.Boundary\'" class="panel panel-default model-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
-    '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
-    '                            <span ng-switch="element.type">\n' +
+    '                            {{element.name}}\n' +
+    '                            <span ng-switch="element.attributes.type">\n' +
     '                                <span ng-switch-when="tm.Store">(Data Store)</span>\n' +
     '                                <span ng-switch-when="tm.Flow">(Data Flow)</span>\n' +
     '                                <span ng-switch-when="tm.Process">(Process)</span>\n' +
@@ -756,15 +756,15 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
-    '                <div ng-if="reportOptions.showOutOfScope" ng-repeat="element in diagram.diagramJson.cells | filter:{ type: \'!tm.Boundary\'} && {outOfScope: true}">\n' +
+    '                <div ng-if="reportOptions.showOutOfScope" ng-repeat="element in graphs[diagram.id].getCells() | filter:{outOfScope: true}">\n' +
     '                    <div class="panel panel-default model-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
-    '                            {{element.type == \'tm.Flow\'? element.labels[0].attrs.text.text : element.attrs.text.text}}\n' +
-    '                            <span ng-switch="element.type">\n' +
-    '                                <span ng-switch-when="tm.Store">(Data Store)</span>\n' +
-    '                                <span ng-switch-when="tm.Flow">(Data Flow)</span>\n' +
-    '                                <span ng-switch-when="tm.Process">(Process)</span>\n' +
-    '                                <span ng-switch-when="tm.Actor">(External Actor)</span>\n' +
+    '                            {{element.name}} (out of scope \n' +
+    '                            <span ng-switch="element.attributes.type">\n' +
+    '                                <span ng-switch-when="tm.Store">Data Store)</span>\n' +
+    '                                <span ng-switch-when="tm.Flow">Data Flow)</span>\n' +
+    '                                <span ng-switch-when="tm.Process">Process)</span>\n' +
+    '                                <span ng-switch-when="tm.Actor">External Actor)</span>\n' +
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
