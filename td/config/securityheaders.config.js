@@ -6,7 +6,7 @@ var securityHeaders = function (app, forceSecure) {
     
     app.set('x-powered-by', false);
     var ninetyDaysInSeconds = 7776000;
-    app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: forceSecure, includeSubdomains: false }));
+    app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: forceSecure, includeSubDomains: false }));
     app.use(helmet.frameguard({action: 'deny'}));
     app.use(helmet.hidePoweredBy());
     app.use(helmet.noSniff());
