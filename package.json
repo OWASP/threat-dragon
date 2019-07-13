@@ -75,7 +75,7 @@
     "jasmine": "2.8.0",
     "jasmine-core": "2.8.0",
     "jasmine-jquery": "2.1.1",
-    "jasmine-node": "1.14.5",
+    "jasmine-node": "^3.0.0",
     "jasmine-spec-reporter": "4.2.1",
     "jshint": "^2.10.2",
     "karma": "^4.2.0",
