@@ -129,6 +129,7 @@ joint.shapes.tm.Flow = joint.dia.Link.extend({
 
     defaults: joint.util.deepSupplement({
         type: 'tm.Flow',
+        size: { width: 10, height: 10 },
         attrs: {
             '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
         },
@@ -172,6 +173,7 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
 
     defaults: joint.util.deepSupplement({
         type: 'tm.Boundary',
+        size: { width: 10, height: 10 },
         attrs: {
             '.connection': { stroke: 'green', 'stroke-width': 3, 'stroke-dasharray': '10,5' }
         },

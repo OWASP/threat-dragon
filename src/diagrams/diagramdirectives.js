@@ -146,53 +146,67 @@ var diagram = function (common, diagramming) {
 
         diagram.on('cell:pointermove', function (cellView, evt, x, y) {
 
-            var bbox = cellView.getBBox();
             var constrained = false;
             var constrainedX = x;
             var constrainedY = y;
+            var cellWidth = cellView.model.attributes.size.width;
+            var cellHeight = cellView.model.attributes.size.height;
+
+            if (cellView.model.attributes.type == 'tm.Flow' || cellView.model.attributes.type == 'tm.Boundary') {
+                //can not use boundary box for these two elements otherwise TD crashes
+                var cellX = x;
+                var cellY = y;
+            } else {
+                //use boundary box to get better scrolling for these elements
+                var bbox = cellView.getBBox();
+                var cellX = bbox.x;
+                var cellY = bbox.y;
+            }
 
             //minimum x
-            if (bbox.x <= 0) {
+            if (cellX <= 0) {
                 constrainedX = x + scope.gridSize;
                 constrained = true;
+                cellX = 0;
             }
 
             //expand the diagram right
-            if (bbox.x + bbox.width >= diagram.options.width) {
-                diagram.setDimensions(bbox.x + bbox.width, diagram.options.height);
+            if (cellX + cellWidth >= diagram.options.width) {
+                diagram.setDimensions(cellX + cellWidth, diagram.options.height);
                 $(element).parent().scrollLeft(diagram.options.width - scope.width);
             }
 
             //scroll the diagram left
-            if (bbox.x <= $(element).parent().scrollLeft()) {
-                $(element).parent().scrollLeft(bbox.x);
+            if (cellX <= $(element).parent().scrollLeft()) {
+                $(element).parent().scrollLeft(cellX);
             }
 
             //scroll the diagram right
-            if (bbox.x + bbox.width - $(element).parent().scrollLeft() >= $(element).parent().width() && bbox.x + bbox.width < diagram.options.width) {
-                $(element).parent().scrollLeft(bbox.x + bbox.width - $(element).parent().width());
+            if (cellX + cellWidth - $(element).parent().scrollLeft() >= $(element).parent().width() && cellX + cellWidth < diagram.options.width) {
+                $(element).parent().scrollLeft(cellX + cellWidth- $(element).parent().width());
             }
 
             //minimum y
-            if (bbox.y <= 0) {
+            if (cellY <= 0) {
                 constrainedY = y + scope.gridSize;
                 constrained = true;
+                cellY = 0;
             }
 
             //expand the diagram down
-            if (bbox.y + bbox.height >= diagram.options.height) {
-                diagram.setDimensions(diagram.options.width, bbox.y + bbox.height);
+            if (cellY + cellHeight >= diagram.options.height) {
+                diagram.setDimensions(diagram.options.width, cellY + cellHeight);
                 $(element).parent().scrollTop(diagram.options.height - scope.height);
             }
 
             //scroll the diagram up
-            if (bbox.y <= $(element).parent().scrollTop()) {
-                $(element).parent().scrollTop(bbox.y);
+            if (cellY <= $(element).parent().scrollTop()) {
+                $(element).parent().scrollTop(cellY);
             }
 
             //scroll the diagram down
-            if (bbox.y + bbox.height - $(element).parent().scrollTop() >= $(element).parent().height() && bbox.y + bbox.height < diagram.options.height) {
-                $(element).parent().scrollTop(bbox.y + bbox.height - $(element).parent().height());
+            if (cellY + cellHeight - $(element).parent().scrollTop() >= $(element).parent().height() && cellY + cellHeight < diagram.options.height) {
+                $(element).parent().scrollTop(cellY + cellHeight - $(element).parent().height());
             }
 
             if (constrained) {
@@ -244,5 +258,3 @@ var diagram = function (common, diagramming) {
 };
 
 module.exports = { stencil: stencil, diagram: diagram };
-
-
