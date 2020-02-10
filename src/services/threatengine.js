@@ -56,7 +56,7 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Actor'                        
+                    value: 'tm.Actor'
                 }]
             },
             event: {
@@ -83,12 +83,12 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Store'                        
+                    value: 'tm.Store'
                 } , {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Flow'                        
+                    value: 'tm.Flow'
                 }]
             },
             event: {
@@ -115,12 +115,12 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Store'                        
+                    value: 'tm.Store'
                 } , {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Actor'                        
+                    value: 'tm.Actor'
                 }]
             },
             event: {
@@ -147,19 +147,19 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Store'                        
+                    value: 'tm.Store'
                 } , {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Flow'                        
+                    value: 'tm.Flow'
                 }]
             },
             event: {
                 type: '13000296-b17d-4b72-9cc4-f5cc33f80e4c',
                 params: {
                     ruleId: '13000296-b17d-4b72-9cc4-f5cc33f80e4c',
-                    title: 'Generic informtion disclosure threat',
+                    title: 'Generic information disclosure threat',
                     type: 'Information disclosure',
                     status: 'Open',
                     severity: 'Medium',
@@ -179,12 +179,12 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Store'                        
+                    value: 'tm.Store'
                 } , {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Flow'                        
+                    value: 'tm.Flow'
                 }]
             },
             event: {
@@ -206,7 +206,7 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.attributes.type',
                     operator: 'equal',
-                    value: 'tm.Process'                       
+                    value: 'tm.Process'
                 }]
             },
             event: {
@@ -233,9 +233,9 @@ function threatengine() {
                     fact: 'el',
                     path: '.element.isPublicNetwork',
                     operator: 'equal',
-                    value: true                                            
+                    value: true
                 } , {
-                    any: [{                    
+                    any: [{
                         fact: 'el',
                         path: '.element.isEncrypted',
                         operator: 'equal',
@@ -244,8 +244,8 @@ function threatengine() {
                         fact: 'el',
                         path: '.element.isEncrypted',
                         operator: 'equal',
-                        value: undefined   
-                    }]                                                                                
+                        value: undefined
+                    }]
                 }]
             },
             event: {
