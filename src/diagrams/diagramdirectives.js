@@ -151,16 +151,14 @@ var diagram = function (common, diagramming) {
             var constrainedY = y;
             var cellWidth = cellView.model.attributes.size.width;
             var cellHeight = cellView.model.attributes.size.height;
+            var cellX = x;
+            var cellY = y;
+            var bbox = cellView.getBBox();
 
-            if (cellView.model.attributes.type == 'tm.Flow' || cellView.model.attributes.type == 'tm.Boundary') {
-                //can not use boundary box for these two elements otherwise TD crashes
-                var cellX = x;
-                var cellY = y;
-            } else {
-                //use boundary box to get better scrolling for these elements
-                var bbox = cellView.getBBox();
-                var cellX = bbox.x;
-                var cellY = bbox.y;
+            if (cellView.model.attributes.type != 'tm.Flow' && cellView.model.attributes.type != 'tm.Boundary') {
+                //boundary box gives better scrolling for elements other than flow & boundary
+                cellX = bbox.x;
+                cellY = bbox.y;
             }
 
             //minimum x
