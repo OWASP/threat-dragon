@@ -5,4 +5,5 @@ coverage/
 typings/
 cov-int/
 npm-debug.log
-
+# core does not use a package lock file
+package-lock.json
