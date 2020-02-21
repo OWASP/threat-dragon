@@ -119,3 +119,8 @@ If you are not a PGP user, you can easily send an encrypted email from https://f
 # Project leader #
 
 Mike Goodwin (mike.goodwin@owasp.org)
+
+## Main collaborator ##
+
+Jon Gadsden (jon.gadsden@owasp.org)
+
