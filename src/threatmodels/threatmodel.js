@@ -18,6 +18,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     vm.removeContributor = removeContributor;
     vm.addContributor = addContributor;
     vm.removeDiagram = removeDiagram;
+    vm.duplicateDiagram = duplicateDiagram;
     vm.addDiagram = addDiagram;
     vm.save = save;
     vm.create = create;
@@ -149,6 +150,25 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     function removeDiagram(index) {
         vm.threatModel.detail.diagrams.splice(index, 1);
+
+        var diagramsArrayLength = vm.threatModel.detail.diagrams.length
+        
+        vm.threatModel.detail.diagrams.forEach(function (item, index) {
+            item.id = index
+        });
+        
+        vm.dirty = true;
+    }
+
+    function duplicateDiagram(index) {
+        var duplicatedDiagram = angular.copy(vm.threatModel.detail.diagrams[index]);
+        vm.newDiagram.title = "Copy of " + duplicatedDiagram.title;
+        vm.newDiagram.id = vm.threatModel.detail.diagrams.length;
+        vm.newDiagram.diagramJson = duplicatedDiagram.diagramJson;
+        vm.newDiagram.size = duplicatedDiagram.size;
+        vm.threatModel.detail.diagrams.push(vm.newDiagram);
+        vm.newDiagram = emptyDiagram();
+        vm.addingDiagram = false;
         vm.dirty = true;
     }
 

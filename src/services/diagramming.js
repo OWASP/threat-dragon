@@ -49,6 +49,15 @@ function diagramming() {
         return cell;
     };
 
+    joint.dia.Graph.prototype.duplicateElement = function (cell) {
+        var cloneDict = this.cloneCells([cell]) 
+        var firstElement = Object.keys(cloneDict)[0]
+        var clonedCell = cloneDict[firstElement]  
+        this.addCell(clonedCell);
+
+        return clonedCell;
+    };
+
     joint.dia.Graph.prototype.clearAll = function () {
         this.clear(true);
     };
