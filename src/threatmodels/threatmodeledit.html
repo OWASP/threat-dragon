@@ -112,9 +112,12 @@
                                     <input name="diagramTitle" class="form-control" type="text" ng-model="diagram.title" required placeholder="Diagram title"
                                     />
                                     <span class="input-group-btn">
+                                        <button class="btn btn-primary" data-toggle="tooltip" ng-click="vm.duplicateDiagram($index)" data-placement="top" title="Duplicate This Diagram" aria-hidden="true" type="button">
+                                            <span class="glyphicon glyphicon-duplicate"></span>                                    Duplicate
+                                        </button>
                                         <button class="btn btn-default" data-toggle="tooltip" ng-click="vm.removeDiagram($index)" data-placement="top" title="Remove This Diagram" aria-hidden="true" type="button">
                                             <span class="glyphicon glyphicon-remove"></span>                                    Remove
-                                    </button>
+                                        </button>
                                     </span>
                                 </div>
                             </p>

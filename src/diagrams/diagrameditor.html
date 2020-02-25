@@ -67,6 +67,9 @@
                                 <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">
                                     <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
                                 </button>
+                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                                </button>
                                 <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">
                                     <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
                                 </button>
