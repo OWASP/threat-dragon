@@ -7,3 +7,5 @@ cov-int/
 npm-debug.log
 # core does not use a package lock file
 package-lock.json
+# ignore Apple's desktop store files
+**/.DS_Store
