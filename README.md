@@ -9,13 +9,19 @@
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
-Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon). The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
+Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a rule
+engine to auto-generate threats/mitigations. It is an [OWASP Incubator Project](https://owasp.org/www-project-threat-dragon/).
+The focus of the project is on great UX, a powerful rule engine and integration with other development lifecycle tools.
 
 The application comes in two variants:
 
-1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in sych with the master code branch.
+1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files
+are stored in GitHub (other storage will become available). We are currently maintaining
+[a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electon](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux. For this variant models are stored on the local filesystem.
+2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on
+[Electron](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as
+rpm and debian packages for Linux. For this variant models are stored on the local filesystem.
 
 [End user help](http://docs.threatdragon.org/) is available for both variants.
 
@@ -49,12 +55,14 @@ Both of these can be run together using
 
 # Contributing #
 
-PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch.
+PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage
+relatively high, so please try to include tests in any PRs and make PRs on the development branch.
 
 
 # Vulnerability disclosure #
 
-If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority. For secure disclosure, please email mike.goodwin@owasp.org using the following PGP key:
+If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
+For secure disclosure, please email mike.goodwin@owasp.org using the following PGP key:
 
 ```-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: FlowCrypt 5.1.8 Gmail Encryption flowcrypt.com
