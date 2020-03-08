@@ -15,11 +15,6 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     var threatWatchers = [];
     var gridSizeOn = 10;
     var gridSizeOff = 1;
-    var elementsDict = { "tm.Process" : newProcess,
-                        "tm.Store" : newStore,
-                        "tm.Actor" : newActor,
-                        "tm.Flow" : newFlow,
-                        "tm.Boundary" : newBoundary}
 
     // Bindable properties and functions are placed on vm.
     vm.errored = false;
@@ -220,15 +215,15 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
             var newElement = cloneElement(vm.selected);
 
             if (newElement.attributes.type == "tm.Flow") {    
-                newElement.attributes.source = {'x' : 30, 'y' : 20}
-                newElement.attributes.target = {'x' : 110, 'y' : 100}
-                newElement.attributes.labels[0].attrs.text['text'] = 'Copy of ' + newElement.attributes.labels[0].attrs.text['text']
-                delete newElement.attributes.vertices
+                newElement.attributes.source = {'x' : 30, 'y' : 20};
+                newElement.attributes.target = {'x' : 110, 'y' : 100};
+                newElement.attributes.labels[0].attrs.text.text = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;
+                delete newElement.attributes.vertices;
             }
             else {
-                var height = newElement.attributes.size.height + 20
-                newElement.attributes.position.y += height
-                newElement.attributes.attrs.text.text = 'Copy of ' + newElement.attributes.attrs.text.text
+                var height = newElement.attributes.size.height + 20;
+                newElement.attributes.position.y += height;
+                newElement.attributes.attrs.text.text = 'Copy of ' + newElement.attributes.attrs.text.text;
             }
 
             var diagramData = { diagramJson: { cells: vm.graph.getCells() } };

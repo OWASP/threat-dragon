@@ -208,6 +208,18 @@ describe('diagramming service:', function () {
 
             });
 
+            it('should duplicate a process element to the graph and return it', function () {
+
+                var process = graph.addProcess();
+                expect(graph.attributes.cells.models.length).toEqual(1);
+                var newProcess = graph.duplicateElement(process);
+
+                expect(graph.attributes.cells.models.length).toEqual(2);
+                var cell = graph.attributes.cells.models[1]
+                expect(cell instanceof joint.shapes.tm.Process).toBe(true);
+
+            });
+
         });
 
         describe('multi element tests', function () {

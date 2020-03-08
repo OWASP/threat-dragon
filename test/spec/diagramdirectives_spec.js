@@ -474,7 +474,8 @@ describe('diagram directive: ', function () {
 
                 //this test behaves differently on firefox
                 //on ff parent.width() = 100, on other browser it = 70
-                it('should scroll the diagram to the right', function () {
+                // skipped test to be reinstated, see https://github.com/mike-goodwin/owasp-threat-dragon-core/issues/68
+                xit('should scroll the diagram to the right', function () {
 
                     parent.scrollLeft(50);
                     var bboxwidth = 100;
@@ -484,7 +485,8 @@ describe('diagram directive: ', function () {
 
                 });
 
-                it('should scroll down', function () {
+                // skipped test to be reinstated, see https://github.com/mike-goodwin/owasp-threat-dragon-core/issues/68
+                xit('should scroll down', function () {
 
                     parent.scrollTop(50);
                     var bboxheight = 100;
@@ -495,7 +497,8 @@ describe('diagram directive: ', function () {
 
                 });
 
-                it('should expand the diagram to the right', function () {
+                // skipped test to be reinstated, see https://github.com/mike-goodwin/owasp-threat-dragon-core/issues/68
+                xit('should expand the diagram to the right', function () {
 
                     parent.scrollLeft(50);
                     var bboxx = 550;
@@ -510,7 +513,8 @@ describe('diagram directive: ', function () {
 
                 });
 
-                it('should expand the diagram down', function () {
+                // skipped test to be reinstated, see https://github.com/mike-goodwin/owasp-threat-dragon-core/issues/68
+                xit('should expand the diagram down', function () {
 
                     parent.scrollTop(50);
                     var bboxy = 350;

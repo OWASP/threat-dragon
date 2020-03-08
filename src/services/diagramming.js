@@ -50,9 +50,9 @@ function diagramming() {
     };
 
     joint.dia.Graph.prototype.duplicateElement = function (cell) {
-        var cloneDict = this.cloneCells([cell]) 
-        var firstElement = Object.keys(cloneDict)[0]
-        var clonedCell = cloneDict[firstElement]  
+        var cloneDict = this.cloneCells([cell]);
+        var firstElement = Object.keys(cloneDict)[0];
+        var clonedCell = cloneDict[firstElement];
         this.addCell(clonedCell);
 
         return clonedCell;

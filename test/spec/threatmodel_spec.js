@@ -446,13 +446,42 @@ describe('threatModel controller', function () {
 
         it('should add a new diagram', function () {
 
-            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0, datat: 0 }, { id: 1, data: 1 }, { id: 2, data: 2 }] } };
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0, data: 0 }, { id: 1, data: 1 }, { id: 2, data: 2 }] } };
             $scope.vm.addingDiagram = true;
             $scope.vm.newDiagram = { data: 3 };
             $scope.vm.dirty = false;
             $scope.vm.addDiagram();
 
-            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0, datat: 0 }, { id: 1, data: 1 }, { id: 2, data: 2 }, { id: 3, data: 3 }]);
+            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0, data: 0 }, { id: 1, data: 1 }, { id: 2, data: 2 }, { id: 3, data: 3 }]);
+            expect($scope.vm.dirty).toBe(true);
+            expect($scope.vm.addingDiagram).toBe(false);
+            expect($scope.vm.newDiagram).toEqual($scope.vm.newDiagram);
+
+        });
+
+        it('should add a new diagram after deletion', function () {
+
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0, data: 0 }, { id: 2, data: 2 }, { id: 5, data: 5 }] } };
+            $scope.vm.addingDiagram = true;
+            $scope.vm.newDiagram = { data: 1 };
+            $scope.vm.dirty = false;
+            $scope.vm.addDiagram();
+
+            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0, data: 0 }, { id: 2, data: 2 }, { id: 5, data: 5 }, { id: 1, data: 1 }]);
+            expect($scope.vm.dirty).toBe(true);
+            expect($scope.vm.addingDiagram).toBe(false);
+            expect($scope.vm.newDiagram).toEqual($scope.vm.newDiagram);
+
+        });
+
+        it('should copy a new diagram', function () {
+
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }] } };
+            $scope.vm.addingDiagram = true;
+            $scope.vm.dirty = false;
+            $scope.vm.duplicateDiagram(1);
+
+            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }, { id: 2, title: "Copy of 1", diagramJson: "", size: 0, thumbnail: './public/content/images/thumbnail.jpg' }]);
             expect($scope.vm.dirty).toBe(true);
             expect($scope.vm.addingDiagram).toBe(false);
             expect($scope.vm.newDiagram).toEqual($scope.vm.newDiagram);
