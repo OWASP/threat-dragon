@@ -27,6 +27,13 @@ describe('logger service:', function () {
             expect(typeof logFn).toEqual('function');
         });
 
+        it('getLogFn with no log type should return a log function', function () {
+
+            var logFn = logger.getLogFn('source');
+            expect(logFn).toBeDefined();
+            expect(typeof logFn).toEqual('function');
+        });
+
         it('getLogFn with invalid log type should return a log function', function () {
 
             var logFn = logger.getLogFn('source', 'invalid');
@@ -36,14 +43,14 @@ describe('logger service:', function () {
 
         it('getLogFn(success) should return a function', function () {
 
-            var logFn = logger.getLogFn('success');
+            var logFn = logger.getLogFn('source', 'success');
             expect(logFn).toBeDefined();
             expect(typeof logFn).toEqual('function');
         });
 
         it('getLogFn(error) should return a function', function () {
 
-            var logFn = logger.getLogFn('error');
+            var logFn = logger.getLogFn('source', 'error');
             expect(logFn).toBeDefined();
             expect(typeof logFn).toEqual('function');
         });

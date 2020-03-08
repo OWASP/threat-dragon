@@ -185,6 +185,21 @@ describe('diagramming service:', function () {
 
             });
 
+            it('should add a boundary element with label to the graph and return it', function () {
+
+                var testLabel = "test label";
+                var target = { x: 10, y: 20 };
+                var source = { x: 30, y: 40 };
+                var newCell = graph.addBoundary(source, target, testLabel);
+                expect(newCell instanceof joint.shapes.tm.Boundary).toBe(true);
+
+                expect(graph.attributes.cells.models.length).toEqual(1);
+                var cell = graph.attributes.cells.models[0]
+                expect(cell instanceof joint.shapes.tm.Boundary).toBe(true);
+                expect(cell.attributes.labels[0].attrs.text.text).toBe(testLabel);
+
+            });
+
             it('should add a flow element to the graph and return it', function () {
 
                 var newCell = graph.addFlow();
