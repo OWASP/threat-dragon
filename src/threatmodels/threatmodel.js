@@ -37,6 +37,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     vm.addingDiagram = false;
     vm.cancelAddingDiagram = cancelAddingDiagram;
     vm.startAddingDiagram = startAddingDiagram;
+    vm.newID = newID;
     vm.isNewModel = isNewModel;
 
     //structured exit
@@ -160,15 +161,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     function duplicateDiagram(index) {
         var duplicatedDiagram = angular.copy(vm.threatModel.detail.diagrams[index]);
         vm.newDiagram.title = "Copy of " + duplicatedDiagram.title;
-
-        // find an empty slot in the array of IDs, or add to the end
-        vm.newDiagram.id = 0;
-        vm.threatModel.detail.diagrams.forEach(function (item) {
-            if (vm.newDiagram.id == item.id) {
-                vm.newDiagram.id += 1;
-            }
-        });
-
+        vm.newDiagram.id = newID();
         vm.newDiagram.diagramJson = duplicatedDiagram.diagramJson;
         vm.newDiagram.size = duplicatedDiagram.size;
         vm.threatModel.detail.diagrams.push(vm.newDiagram);
@@ -194,14 +187,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function addDiagram() {
-        // find an empty slot in the array of IDs, or add to the end
-        vm.newDiagram.id = 0;
-        vm.threatModel.detail.diagrams.forEach(function (item) {
-            if (vm.newDiagram.id == item.id) {
-                vm.newDiagram.id += 1;
-            }
-        });
-
+        vm.newDiagram.id = newID();
         vm.threatModel.detail.diagrams.push(vm.newDiagram);
         vm.newDiagram = emptyDiagram();
         vm.addingDiagram = false;
@@ -223,6 +209,17 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     function isNewModel() {
         return $location.path().substr(0, 16) === threatmodellocator.newModelLocation;
+    }
+
+    function newID() {
+        // find an empty slot in the array of IDs, or add to the end
+        var id = 0;
+        vm.threatModel.detail.diagrams.forEach(function (item) {
+            if (id == item.id) {
+                id += 1;
+            }
+        });
+        return id;
     }
 
     function onError(err) {
