@@ -42,17 +42,17 @@ function diagramming() {
         return cell;
     };
 
-    joint.dia.Graph.prototype.addBoundary = function () {
-        var cell = boundary();
+    joint.dia.Graph.prototype.addBoundary = function (source, target, label) {
+        var cell = boundary(source, target, label);
         this.addCell(cell);
 
         return cell;
     };
 
     joint.dia.Graph.prototype.duplicateElement = function (cell) {
-        var cloneDict = this.cloneCells([cell]) 
-        var firstElement = Object.keys(cloneDict)[0]
-        var clonedCell = cloneDict[firstElement]  
+        var cloneDict = this.cloneCells([cell]);
+        var firstElement = Object.keys(cloneDict)[0];
+        var clonedCell = cloneDict[firstElement];
         this.addCell(clonedCell);
 
         return clonedCell;

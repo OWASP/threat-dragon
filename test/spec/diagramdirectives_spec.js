@@ -405,128 +405,309 @@ describe('diagram directive: ', function () {
                 expect($scope.newFlow.calls.argsFor(0)[1].cid).toEqual(cell2.cid);
 
             });
+        });
+    });
+    describe('resize and scroll: ', function () {
 
-            describe('resize and scroll: ', function () {
+        var height;
+        var width;
+        var gridSize;
+        var interactive;
+        var diagram;
+        var cell;
+        var cellView;
+        var parent;
 
-                var cell;
-                var cellView;
-                var parent;
-                var x = 80;
-                var y = 20;
-                var elWidth = 100;
-                var elHeight = 100;
+        beforeEach(function () {
 
-                beforeEach(function () {
+            height = 400;
+            width = 600;
+            gridSize = 4;
+            interactive = true;
 
-                    cell = new joint.shapes.basic.Rect();
-                    $scope.graph.addCell(cell);
-                    cellView = diagram.findViewByModel(cell);
-                    parent = $(elem).parent();
-                    parent.css('overflow', 'auto');
-                    parent.css('width', elWidth.toString());
-                    parent.css('height', elHeight.toString());
+            //graph mocks
+            var graph = new joint.dia.Graph();;
+            spyOn(graph, 'on').and.callThrough();
 
-                });
+            //scope mocks
+            $scope.graph = graph;
+            $scope.initialiseGraph = function () { };
+            spyOn($scope, 'initialiseGraph');
+            $scope.select = function (element) { };
+            spyOn($scope, 'select');
 
-                it('should constrain movement to x >= 0', function () {
+        });
 
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: -5, y: 100 });
-                    spyOn(cellView, 'pointermove');
+        describe('Actor resize and scroll: ', function () {
 
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(cellView.pointermove).toHaveBeenCalled();
-                    expect(cellView.pointermove.calls.argsFor(0)[1]).toEqual(x + gridSize);
+            beforeEach(function () {
 
-                });
+                $scope.newActor = function () { };
+                spyOn($scope, 'newActor');
 
-                it('should constrain movement to y >= 0', function () {
+                setFixtures('<tmt-diagram height="' + height + '" width="' + width + '" grid-size="' + gridSize + '" interactive="' + interactive + '" graph="graph" initialise-graph="initialiseGraph(diagram)" select="select(element)" new-actor="newActor(source, target)" />');
+                elem = angular.element($('tmt-diagram')[0]);
+                $compile(elem)($scope);
+                $scope.$digest();
+                diagram = $scope.initialiseGraph.calls.argsFor(0)[0];
+                cell = new joint.shapes.basic.Rect();
+                $scope.graph.addCell(cell);
+                cellView = diagram.findViewByModel(cell);
+                cellView.model.attributes.size.width = 160;
+                cellView.model.attributes.size.height = 80;
+                parent = $(elem).parent();
+                parent.css('overflow', 'auto');
+                parent.css('width', '400');
+                parent.css('height', '250');
 
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: -5 });
-                    spyOn(cellView, 'pointermove');
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(cellView.pointermove).toHaveBeenCalled();
-                    expect(cellView.pointermove.calls.argsFor(0)[2]).toEqual(y + gridSize);
-
-                });
-
-                it('should scroll left', function () {
-
-                    parent.scrollLeft(50);
-                    var bboxx = 2;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: bboxx, y: 50 });
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx);
-
-                });
-
-                it('should scroll up', function () {
-
-                    parent.scrollTop(50);
-                    var bboxy = 2;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: bboxy });
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollTop())).toEqual(bboxy);
-
-                });
-
-                //this test behaves differently on firefox
-                //on ff parent.width() = 100, on other browser it = 70
-                it('should scroll the diagram to the right', function () {
-
-                    parent.scrollLeft(50);
-                    var bboxwidth = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: 50, width: bboxwidth });
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollLeft())).toEqual(Math.round(x + bboxwidth - parent.width()));
-
-                });
-
-                it('should scroll down', function () {
-
-                    parent.scrollTop(50);
-                    var bboxheight = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: x, y: y, height: bboxheight });
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollTop())).toEqual(Math.round(y + bboxheight - parent.height()));
-
-                });
-
-                it('should expand the diagram to the right', function () {
-
-                    parent.scrollLeft(50);
-                    var bboxx = 550;
-                    var bboxwidth = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: bboxx, y: 50, width: bboxwidth });
-                    spyOn(diagram, 'setDimensions').and.callThrough();
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollLeft())).toEqual(bboxx + bboxwidth - width);
-                    expect(diagram.setDimensions).toHaveBeenCalled();
-                    expect(diagram.setDimensions.calls.argsFor(0)).toEqual([bboxx + bboxwidth, height - 10]);
-
-                });
-
-                it('should expand the diagram down', function () {
-
-                    parent.scrollTop(50);
-                    var bboxy = 350;
-                    var bboxheight = 100;
-                    spyOn(cellView, 'getBBox').and.returnValue({ x: 50, y: bboxy, height: bboxheight });
-                    spyOn(diagram, 'setDimensions').and.callThrough();
-                    var x = 10;
-                    var y = 20;
-
-                    diagram.trigger('cell:pointermove', cellView, null, x, y);
-                    expect(Math.round(parent.scrollTop())).toEqual(bboxy + bboxheight - height);
-                    expect(diagram.setDimensions).toHaveBeenCalled();
-                    expect(diagram.setDimensions.calls.argsFor(0)).toEqual([width - 10, bboxy + bboxheight]);
-
-                });
             });
+
+            it('should constrain movement to x >= 0', function () {
+	
+	            var moveX = -5;
+	            var moveY = 100;
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(cellView, 'pointermove');
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(cellView.pointermove).toHaveBeenCalled();
+	            expect(cellView.pointermove.calls.argsFor(0)[1]).toEqual(moveX + gridSize);
+	
+	        });
+	
+	        it('should constrain movement to y >= 0', function () {
+	
+	            var moveX = 50;
+	            var moveY = -5;
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(cellView, 'pointermove');
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(cellView.pointermove).toHaveBeenCalled();
+	            expect(cellView.pointermove.calls.argsFor(0)[2]).toEqual(moveY + gridSize);
+	
+	        });
+	
+	        it('should scroll the diagram left', function () {
+	
+	            var moveX = 2;
+	            var moveY = 50;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(moveX);
+	
+	        });
+	
+	        it('should scroll the diagram up', function () {
+	
+	            var moveX = 50;
+	            var moveY = 2;
+	            parent.scrollTop(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(moveY);
+	
+	        });
+	
+	        it('should scroll the diagram right', function () {
+	
+	            var moveX = 300;
+	            var moveY = 50;
+	            var cellWidth = cellView.model.attributes.size.width;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(Math.round(moveX + cellWidth - parent.width()));
+	            expect(diagram.setDimensions).not.toHaveBeenCalled();
+	
+	        });
+	
+	        it('should scroll the diagram down', function () {
+	
+	            var moveX = 50;
+	            var moveY = 300;
+	            var cellHeight = cellView.model.attributes.size.height;
+	            parent.scrollTop(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(Math.round(moveY + cellHeight - parent.height()));
+	            expect(diagram.setDimensions).not.toHaveBeenCalled();
+	
+	        });
+	
+	        it('should expand the diagram right', function () {
+	
+	            var moveX = 550;
+	            var moveY = 30;
+	            var cellWidth = cellView.model.attributes.size.width;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(diagram.options.width - width);
+	            expect(diagram.setDimensions).toHaveBeenCalled();
+	            expect(diagram.setDimensions.calls.argsFor(0)).toEqual([moveX + cellWidth, diagram.options.height]);
+	
+	        });
+	
+	        it('should expand the diagram down', function () {
+	
+	            var moveX = 50;
+	            var moveY = 350;
+	            var cellHeight = cellView.model.attributes.size.height;
+	            parent.scrollTop(30);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(diagram.options.height - height);
+	            expect(diagram.setDimensions).toHaveBeenCalled();
+	            expect(diagram.setDimensions.calls.argsFor(0)).toEqual([diagram.options.width, moveY + cellHeight]);
+	
+	        });
+        });
+
+        describe('Boundary resize and scroll: ', function () {
+
+            beforeEach(function () {
+
+                $scope.newBoundary = function () { };
+                spyOn($scope, 'newBoundary');
+
+                setFixtures('<tmt-diagram height="' + height + '" width="' + width + '" grid-size="' + gridSize + '" interactive="' + interactive + '" graph="graph" initialise-graph="initialiseGraph(diagram)" select="select(element)" new-boundary="newBoundary()" />');
+                elem = angular.element($('tmt-diagram')[0]);
+                $compile(elem)($scope);
+                $scope.$digest();
+                diagram = $scope.initialiseGraph.calls.argsFor(0)[0];
+                cell = new joint.shapes.basic.Rect();
+                $scope.graph.addCell(cell);
+                cellView = diagram.findViewByModel(cell);
+                cellView.model.attributes.size.width = 10;
+                cellView.model.attributes.size.height = 10;
+                parent = $(elem).parent();
+                parent.css('overflow', 'auto');
+                parent.css('width', '400');
+                parent.css('height', '250');
+
+            });
+
+            it('should constrain movement to x >= 0', function () {
+	
+	            var moveX = -5;
+	            var moveY = 100;
+	            spyOn(cellView, 'pointermove');
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(cellView.pointermove).toHaveBeenCalled();
+	            expect(cellView.pointermove.calls.argsFor(0)[1]).toEqual(moveX + gridSize);
+	
+	        });
+	
+	        it('should constrain movement to y >= 0', function () {
+	
+	            var moveX = 50;
+	            var moveY = -5;
+	            spyOn(cellView, 'pointermove');
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(cellView.pointermove).toHaveBeenCalled();
+	            expect(cellView.pointermove.calls.argsFor(0)[2]).toEqual(moveY + gridSize);
+	
+	        });
+	
+	        it('should scroll the diagram left', function () {
+	
+	            var moveX = 2;
+	            var moveY = 50;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(moveX);
+	
+	        });
+	
+	        it('should scroll the diagram up', function () {
+	
+	            var moveX = 50;
+	            var moveY = 2;
+	            parent.scrollTop(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(moveY);
+	
+	        });
+	
+	        it('should scroll the diagram right', function () {
+	
+	            var moveX = 500;
+	            var moveY = 50;
+	            var cellWidth = cellView.model.attributes.size.width;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(Math.round(moveX + cellWidth - parent.width()));
+	            expect(diagram.setDimensions).not.toHaveBeenCalled();
+	
+	        });
+	
+	        it('should scroll the diagram down', function () {
+	
+	            var moveX = 50;
+	            var moveY = 300;
+	            var cellHeight = cellView.model.attributes.size.height;
+	            parent.scrollTop(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(Math.round(moveY + cellHeight - parent.height()));
+	            expect(diagram.setDimensions).not.toHaveBeenCalled();
+	
+	        });
+	
+	        it('should expand the diagram right', function () {
+	
+	            var moveX = 750;
+	            var moveY = 30;
+	            var cellWidth = cellView.model.attributes.size.width;
+	            parent.scrollLeft(50);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollLeft())).toEqual(diagram.options.width - width);
+	            expect(diagram.setDimensions).toHaveBeenCalled();
+	            expect(diagram.setDimensions.calls.argsFor(0)).toEqual([moveX + cellWidth, diagram.options.height]);
+	
+	        });
+	
+	        it('should expand the diagram down', function () {
+	
+	            var moveX = 50;
+	            var moveY = 450;
+	            var cellHeight = cellView.model.attributes.size.height;
+	            parent.scrollTop(30);
+	            spyOn(cellView, 'getBBox').and.returnValue({ x: moveX, y: moveY });
+	            spyOn(diagram, 'setDimensions').and.callThrough();
+	
+	            diagram.trigger('cell:pointermove', cellView, null, moveX, moveY);
+	            expect(Math.round(parent.scrollTop())).toEqual(diagram.options.height - height);
+	            expect(diagram.setDimensions).toHaveBeenCalled();
+	            expect(diagram.setDimensions.calls.argsFor(0)).toEqual([diagram.options.width, moveY + cellHeight]);
+	
+	        });
         });
     });
 });
