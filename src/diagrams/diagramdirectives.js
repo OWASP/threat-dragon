@@ -161,7 +161,7 @@ var diagram = function (common, diagramming) {
                 cellY = bbox.y;
             }
 
-            //minimum x
+            //constrain movement to x >= 0
             if (cellX <= 0) {
                 constrainedX = x + scope.gridSize;
                 constrained = true;
@@ -181,10 +181,10 @@ var diagram = function (common, diagramming) {
 
             //scroll the diagram right
             if (cellX + cellWidth - $(element).parent().scrollLeft() >= $(element).parent().width() && cellX + cellWidth < diagram.options.width) {
-                $(element).parent().scrollLeft(cellX + cellWidth- $(element).parent().width());
+                $(element).parent().scrollLeft(cellX + cellWidth - $(element).parent().width());
             }
 
-            //minimum y
+            //constrain movement to y >= 0
             if (cellY <= 0) {
                 constrainedY = y + scope.gridSize;
                 constrained = true;
