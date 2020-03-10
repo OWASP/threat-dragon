@@ -1,7 +1,7 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
     $templateCache.put('diagrams/confirmReloadOnDirty.html',
-    '<div>\n' +
+    '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -16,7 +16,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/diagrameditor.html',
-    '<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
+    '﻿<div data-ng-controller="diagram as vm" class="container-fluid diagram-container">\n' +
     '    <div ng-show="!vm.errored">\n' +
     '        <div class="col-lg-2">\n' +
     '            <!--Diagram stencil-->\n' +
@@ -85,6 +85,9 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
+    '                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>\n' +
+    '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
@@ -129,7 +132,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ElementPropertiesPane.html',
-    '<form name="elementPropertiesEditForm">\n' +
+    '﻿<form name="elementPropertiesEditForm">\n' +
     '    <div>\n' +
     '        <div class="form-group">\n' +
     '            <label>Name</label>\n' +
@@ -199,15 +202,15 @@ angular.module('templates', [])
     '</form>\n' +
     '')
   $templateCache.put('diagrams/modalAccept.html',
-    '<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
+    '﻿<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
     '    Accept\n' +
     '</button>')
   $templateCache.put('diagrams/modalIgnore.html',
-    '<button class="btn btn-default" ng-click="onAction()">\n' +
+    '﻿<button class="btn btn-default" ng-click="onAction()">\n' +
     '    Ignore\n' +
     '</button>')
   $templateCache.put('diagrams/ThreatEditPane.html',
-    '<div>\n' +
+    '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
     '    </div>\n' +
@@ -291,7 +294,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('diagrams/ThreatSummaryPane.html',
-    '<ul id="threatSummaryPane" class="list-group">\n' +
+    '﻿<ul id="threatSummaryPane" class="list-group">\n' +
     '    <li class="list-group-item" ng-repeat="threat in threats">\n' +
     '        <a id="editThreat{{$index}}" href="" ng-click="onEditThreat($index)" data-toggle="tooltip" data-placement="top" title="Edit {{threat.title}}">\n' +
     '            <div class="text-overflow"><small>{{threat.title}}</small></div>\n' +
@@ -323,7 +326,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('layout/structuredExit.html',
-    '<div id="structuredExitModal">\n' +
+    '﻿<div id="structuredExitModal">\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure you want to leave this page?</h3>\n' +
     '    </div>\n' +
@@ -354,7 +357,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/confirmReloadOnDirty.html',
-    '<div>\n' +
+    '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
     '    </div>\n' +
@@ -369,7 +372,7 @@ angular.module('templates', [])
     '</div>\n' +
     '')
   $templateCache.put('threatmodels/threatmodeldetail.html',
-    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -455,7 +458,7 @@ angular.module('templates', [])
     '    </div>\n' +
     '</div>')
   $templateCache.put('threatmodels/threatmodeledit.html',
-    '<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
+    '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored && !vm.isNewModel">\n' +
     '        <p class="h3 text-center">Your threat model is loading...</p>\n' +
     '        <div class="spinner"></div>\n' +
@@ -569,9 +572,12 @@ angular.module('templates', [])
     '                                    <input name="diagramTitle" class="form-control" type="text" ng-model="diagram.title" required placeholder="Diagram title"\n' +
     '                                    />\n' +
     '                                    <span class="input-group-btn">\n' +
+    '                                        <button class="btn btn-primary" data-toggle="tooltip" ng-click="vm.duplicateDiagram($index)" data-placement="top" title="Duplicate This Diagram" aria-hidden="true" type="button">\n' +
+    '                                            <span class="glyphicon glyphicon-duplicate"></span>                                    Duplicate\n' +
+    '                                        </button>\n' +
     '                                        <button class="btn btn-default" data-toggle="tooltip" ng-click="vm.removeDiagram($index)" data-placement="top" title="Remove This Diagram" aria-hidden="true" type="button">\n' +
     '                                            <span class="glyphicon glyphicon-remove"></span>                                    Remove\n' +
-    '                                    </button>\n' +
+    '                                        </button>\n' +
     '                                    </span>\n' +
     '                                </div>\n' +
     '                            </p>\n' +
