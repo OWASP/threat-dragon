@@ -14,7 +14,7 @@ The application comes in two variants:
 
 1. [**A web application (this repo)**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electron](https://electron.atom.io/). There are released build images available for both Windows and OSX (a Linux install package will follow at some point). Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
+2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electron](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux. Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
 [End user help](http://docs.threatdragon.org/) is available for both variants.
 
