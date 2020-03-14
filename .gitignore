@@ -1,6 +1,10 @@
 node_modules/
-.vscode/
 npm-debug.log
 coverage/
 typings/
 
+# ignore Apple's desktop store files
+**/.DS_Store
+# ignore VS and Eclipse files
+.vscode/
+.settings/
