@@ -222,21 +222,32 @@ describe('diagram controller', function () {
             
         });
 
-        // not working :-(
-        xit('should duplicate a flow element', function() {
+        it('should duplicate a flow element', function() {
 
-            var element = {type: "tm.Flow", id: 'elementId'};
-            spyOn($scope.vm, 'cloneElement');
+            var graph = {title: 'test graph'};
+            var label = [{ attrs : { text : { text : "flowName"} } } ];
+            var element = {id: 'elementId', attributes: {type : "tm.Flow", labels : label}};
+            graph.duplicateElement = function() { return {id: 'newElementId', attributes: {type : "tm.Flow", labels : label}}};
+            graph.getCells = function() {};
+            graph.initialise = function() {};
+            spyOn($scope.vm, 'cloneElement').and.callThrough();
+            $scope.vm.graph = graph;
             $scope.vm.selected = element;
             $scope.vm.duplicateElement();
             expect($scope.vm.cloneElement).toHaveBeenCalled();
         });
 
-        // not working :-(
-        xit('should duplicate an actor element', function() {
+        it('should duplicate an actor element', function() {
 
-            var element = {type: "tm.Actor", id: 'elementId'};
-            spyOn($scope.vm, 'cloneElement');
+            var graph = {title: 'test graph'};
+            var label = { text : { text : "actorName"} };
+            var element = {id: 'elementId', attributes: {type : "tm.Actor", position : { y : 10}, attrs : label}};
+            graph.duplicateElement = function() { return {id: 'newElementId', 
+                                    attributes: {type : "tm.Actor", size : {height : 30}, position : { y : 10}, attrs : label}}};
+            graph.getCells = function() {};
+            graph.initialise = function() {};
+            spyOn($scope.vm, 'cloneElement').and.callThrough();
+            $scope.vm.graph = graph;
             $scope.vm.selected = element;
             $scope.vm.duplicateElement();
             expect($scope.vm.cloneElement).toHaveBeenCalled();
