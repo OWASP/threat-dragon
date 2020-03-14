@@ -212,7 +212,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function duplicateElement() {
         if (vm.selected) {
-            var newElement = cloneElement(vm.selected);
+            var newElement = vm.cloneElement(vm.selected);
 
             if (newElement.attributes.type == "tm.Flow") {    
                 newElement.attributes.source = {'x' : 30, 'y' : 20};
