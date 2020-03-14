@@ -325,12 +325,14 @@ describe('diagramming service:', function () {
             var graph;
             var process;
             var flow;
+            var boundary;
 
             beforeEach(function () {
 
                 graph = new joint.dia.Graph();
                 process = graph.addProcess();
                 flow = graph.addFlow();
+                boundary = graph.addBoundary();
 
             });
 
@@ -346,6 +348,12 @@ describe('diagramming service:', function () {
 
             });
 
+            it('should get the label for a boundary', function () {
+
+                expect(boundary.name).toEqual('boundary 2');
+
+            });
+
             it('should set the label for an element', function () {
 
                 process.name = 'new name'
@@ -357,6 +365,13 @@ describe('diagramming service:', function () {
 
                 flow.name = 'new name';
                 expect(flow.name).toEqual('new name');
+
+            });
+
+            it('should set the label for a boundary', function () {
+
+                boundary.name = 'new name';
+                expect(boundary.name).toEqual('new name');
 
             });
 

@@ -181,6 +181,31 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
     }, joint.dia.Link.prototype.defaults)
 });
 
+//trust boundary properties
+
+Object.defineProperty(joint.shapes.tm.Boundary.prototype, 'name', {
+    get: function () { 
+            //Need to make it backward compatible with prev versions that do not have name 
+            //on the boundaries by creating an empty string field
+            var nameProperty = "";
+            if ('labels' in this.attributes) {
+                nameProperty = this.attributes.labels[0].attrs.text.text;
+            }
+            return joint.shapes.tm.utils.wordUnwrap(nameProperty); 
+        },
+    set: function (value) { 
+            joint.shapes.tm.utils.editNameLink(this, value); 
+
+            //For backward compatibility: Adjust old boundary attributes with current ones
+            if (!('font-weight' in this.attributes.labels[0].attrs.text) || !('font-size' in this.attributes.labels[0].attrs.text)) {
+                this.attributes.labels[0] = { position: 0.5, attrs: { text: { text: value, 'font-weight': '400', 'font-size': 'small' } } };
+                
+                var diagramData = { diagramJson: { cells: this.graph.getCells() } };
+                this.graph.initialise(diagramData.diagramJson);
+            }
+        }
+});
+
 //element with tool bar
 
 joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
