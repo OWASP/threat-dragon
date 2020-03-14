@@ -220,6 +220,12 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
                 newElement.attributes.labels[0].attrs.text.text = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;
                 delete newElement.attributes.vertices;
             }
+            else if (newElement.attributes.type == "tm.Boundary") {
+                newElement.attributes.source = {'x' : 30, 'y' : 20};
+                newElement.attributes.target = {'x' : 110, 'y' : 100};
+                newElement.attributes.labels[0].attrs.text.text = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;
+                delete newElement.attributes.vertices;
+            }
             else {
                 var height = newElement.attributes.size.height + 20;
                 newElement.attributes.position.y += height;
