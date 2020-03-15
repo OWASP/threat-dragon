@@ -1,4 +1,3 @@
-﻿#!/usr/bin/env node
 var debug = require('debug')('OWASP Threat Dragon');
 var app = require('./td/app');
 
