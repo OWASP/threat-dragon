@@ -21,7 +21,9 @@
     "test-server": "istanbul cover --include-all-sources -x public/** --root ./td/ --dir ./coverage/Server/ ./td.tests/serverspec/support/jasmine-runner.js",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox && npm run-script test-server",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers Firefox",
-    "codecov": "./node_modules/.bin/codecov"
+    "codecov": "./node_modules/.bin/codecov",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
@@ -60,7 +62,8 @@
     "passport-github": "1.1.0",
     "pug": "^2.0.4",
     "pug-bootstrap": "0.0.16",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "snyk": "^1.298.1"
   },
   "devDependencies": {
     "angular-mocks": "1.7.8",
@@ -102,5 +105,6 @@
     "supertest": "^4.0.2",
     "uglifycss": "0.0.29",
     "watchify": "^3.11.1"
-  }
+  },
+  "snyk": true
 }
