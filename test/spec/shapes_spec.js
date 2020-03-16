@@ -425,6 +425,16 @@ describe('custom shape tests', function () {
             expect(diagramElement.find('g.label').find('tspan')[0]).toContainText(label);
         });
 
+        it('should remove line breaks from boundary name', function () {
+
+            var label = 'boundary';
+            cell.setLabel(label);
+            var multiLineName = '1\n2\n3';
+            var singleLineName = '1 2 3';
+            cell.name = multiLineName;
+            expect(cell.name).toEqual(singleLineName);
+        });
+
     });
 
     describe(' :flow', function () {
