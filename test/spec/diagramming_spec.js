@@ -348,9 +348,9 @@ describe('diagramming service:', function () {
 
             });
 
-            it('should get the label for a boundary', function () {
+            it('should get an empty label for a boundary', function () {
 
-                expect(boundary.name).toEqual('boundary 2');
+                expect(boundary.name).toEqual('');
 
             });
 
