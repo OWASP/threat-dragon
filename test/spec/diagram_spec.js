@@ -253,6 +253,22 @@ describe('diagram controller', function () {
             expect($scope.vm.cloneElement).toHaveBeenCalled();
         });
 
+        it('should duplicate a boundary element', function() {
+
+            var graph = {title: 'test graph'};
+            var label = { text : { text : "boundaryName"} };
+            var element = {id: 'elementId', attributes: {type : "tm.Boundary", position : { y : 10}, attrs : label}};
+            graph.duplicateElement = function() { return {id: 'newElementId', 
+                                    attributes: {type : "tm.Boundary", size : {height : 30}, position : { y : 10}, attrs : label}}};
+            graph.getCells = function() {};
+            graph.initialise = function() {};
+            spyOn($scope.vm, 'cloneElement').and.callThrough();
+            $scope.vm.graph = graph;
+            $scope.vm.selected = element;
+            $scope.vm.duplicateElement();
+            expect($scope.vm.cloneElement).toHaveBeenCalled();
+        });
+
         it('should not duplicate an element - no element selected', function() {
 
             var graph = {title: 'test graph'};
