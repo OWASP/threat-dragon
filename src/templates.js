@@ -82,7 +82,7 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
     '                                    <span class="fa fa-undo" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
@@ -105,10 +105,10 @@ angular.module('templates', [])
     '            <div class="panel panel-default">\n' +
     '                <div class="panel-heading panel-title">Properties</div>\n' +
     '                <div class="panel-body">\n' +
-    '                    <div ng-if="vm.selected && vm.selected.attributes.type != \'tm.Boundary\' ">\n' +
+    '                    <div ng-if="vm.selected">\n' +
     '                        <tmt-element-properties edit=" vm.edit()" selected="vm.selected" element-type="{{vm.selected.attributes.type}}">\n' +
     '                    </div>\n' +
-    '                    <div ng-if="!vm.selected || vm.selected.attributes.type === \'tm.Boundary\'">\n' +
+    '                    <div ng-if="!vm.selected">\n' +
     '                        <em>Select an element in the diagram to see or edit its properties</em>\n' +
     '                    </div>\n' +
     '                </div>\n' +
@@ -139,14 +139,16 @@ angular.module('templates', [])
     '            <input name="nameInput" class="form-control" type="text" ng-model="selected.name" ng-change="edit()" placeholder="Element name" />\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '    <div class="checkbox">\n' +
-    '        <label>\n' +
-    '            <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.outOfScope" ng-change="edit()" /> Out of scope\n' +
-    '        </label>\n' +
-    '    </div>\n' +
-    '    <div class="form-group">\n' +
-    '        <label>Reason for out of scope</label>\n' +
-    '        <textarea name="textareaReasonOutOfScope" ng-disabled="!selected.outOfScope" rows="4" class="form-control" type="text" ng-model="selected.reasonOutOfScope" ng-change="edit()" placeholder="Reason for out of scope"></textarea>\n' +
+    '    <div ng-show="elementType !== \'tm.Boundary\'">\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.outOfScope" ng-change="edit()" /> Out of scope\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="form-group">\n' +
+    '            <label>Reason for out of scope</label>\n' +
+    '            <textarea name="textareaReasonOutOfScope" ng-disabled="!selected.outOfScope" rows="4" class="form-control" type="text" ng-model="selected.reasonOutOfScope" ng-change="edit()" placeholder="Reason for out of scope"></textarea>\n' +
+    '        </div>\n' +
     '    </div>\n' +
     '    <div ng-show="elementType === \'tm.Process\'">\n' +
     '        <div class="form-group">\n' +

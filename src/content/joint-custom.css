@@ -66,6 +66,10 @@ text.hasOpenThreats  {
 	font-size: small
 }
 
+.joint-type-tm-boundary .link-tool .tool-options {
+	display: inline;
+}  
+
 /* responsive paper */
 
 .tmt-diagram-container {

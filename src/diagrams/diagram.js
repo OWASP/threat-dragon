@@ -214,16 +214,23 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
         if (vm.selected) {
             var newElement = vm.cloneElement(vm.selected);
 
-            if (newElement.attributes.type == "tm.Flow") {    
+            var label = "";
+            if (typeof newElement.attributes.labels != "undefined"){
+                label = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;   
+            }
+
+            if (newElement.attributes.type == "tm.Flow" || newElement.attributes.type == "tm.Boundary") {    
                 newElement.attributes.source = {'x' : 30, 'y' : 20};
                 newElement.attributes.target = {'x' : 110, 'y' : 100};
-                newElement.attributes.labels[0].attrs.text.text = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;
+                if (label != ""){
+                    newElement.attributes.labels[0].attrs.text.text = label;
+                }
                 delete newElement.attributes.vertices;
             }
             else {
                 var height = newElement.attributes.size.height + 20;
                 newElement.attributes.position.y += height;
-                newElement.attributes.attrs.text.text = 'Copy of ' + newElement.attributes.attrs.text.text;
+                newElement.attributes.attrs.text.text = label;
             }
 
             var diagramData = { diagramJson: { cells: vm.graph.getCells() } };

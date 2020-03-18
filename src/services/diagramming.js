@@ -43,7 +43,8 @@ function diagramming() {
     };
 
     joint.dia.Graph.prototype.addBoundary = function (source, target, label) {
-        var cell = boundary(source, target, label);
+        var name = label ? label : "";
+        var cell = boundary(source, target, name);
         this.addCell(cell);
 
         return cell;
