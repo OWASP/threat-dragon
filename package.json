@@ -36,7 +36,7 @@
     "angular-route": "1.7.8",
     "angular-ui-bootstrap": "2.5.6",
     "bootstrap": "3.4.1",
-    "jointjs": "^3.1.1",
+    "jointjs": "^2.2.1",
     "jquery": "^3.4.1",
     "json-rules-engine": "3.0.2",
     "lodash": "^4.17.15",
