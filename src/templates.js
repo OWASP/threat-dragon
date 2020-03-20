@@ -140,6 +140,10 @@ angular.module('templates', [])
     '        </div>\n' +
     '    </div>\n' +
     '    <div ng-show="elementType !== \'tm.Boundary\'">\n' +
+    '        <div class="form-group">\n' +
+    '            <label>Description</label>\n' +
+    '            <textarea name="textareaDescription" rows="4" class="form-control" type="text" ng-model="selected.description" ng-change="edit()" placeholder="Description"></textarea>\n' +
+    '        </div>\n' +
     '        <div class="checkbox">\n' +
     '            <label>\n' +
     '                <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.outOfScope" ng-change="edit()" /> Out of scope\n' +
@@ -730,6 +734,8 @@ angular.module('templates', [])
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
+    '                            <div><strong>Description: </strong></div>\n' +
+    '                            <div>{{element.description}}</div>                           \n' +
     '                            <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
     '                                    <div ng-if="threat.status == \'Open\' || reportOptions.showMitigated" class="panel panel-default threat">\n' +
@@ -799,6 +805,7 @@ angular.module('templates', [])
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '</div>')
+    '</div>\n' +
+    '')
 
   }]);

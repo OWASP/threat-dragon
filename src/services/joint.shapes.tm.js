@@ -146,7 +146,7 @@ Object.defineProperty(joint.shapes.tm.Flow.prototype, 'name', {
 
 joint.shapes.tm.utils.defineOutOfScope(joint.shapes.tm.Flow.prototype, 'connection');
 joint.shapes.tm.utils.defineHasOpenThreats(joint.shapes.tm.Flow.prototype, ['connection', 'marker-target']);
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, ['reasonOutOfScope', 'protocol', 'isEncrypted', 'isPublicNetwork', 'threats']);
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, ['description', 'reasonOutOfScope', 'protocol', 'isEncrypted', 'isPublicNetwork', 'threats']);
 
 //trust boundary shape
 
@@ -236,7 +236,7 @@ Object.defineProperty(joint.shapes.tm.toolElement.prototype, 'name', {
     set: function (value) { joint.shapes.tm.utils.editNameElement(this, value); }
 });
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, ['reasonOutOfScope', 'threats']);
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, ['description', 'reasonOutOfScope', 'threats']);
 joint.shapes.tm.utils.defineOutOfScope(joint.shapes.tm.toolElement.prototype, 'element-shape');
 joint.shapes.tm.utils.defineHasOpenThreats(joint.shapes.tm.toolElement.prototype, ['element-shape', 'element-text']);
 

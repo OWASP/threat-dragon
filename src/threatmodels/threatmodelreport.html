@@ -75,6 +75,8 @@
                             </span>
                         </div>
                         <div class="panel-body">
+                            <div><strong>Description: </strong></div>
+                            <div>{{element.description}}</div>                           
                             <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">
                                 <div ng-repeat="threat in element.threats">
                                     <div ng-if="threat.status == 'Open' || reportOptions.showMitigated" class="panel panel-default threat">

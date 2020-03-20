@@ -62,6 +62,7 @@ describe('element properties directive: ', function () {
     var selected;
     var elem;
     var originalName = 'original name';
+    var originalDescription = 'original description';
     var originalReasonOutOfScope = 'reason out of scope';
     var fixtures;
 
@@ -89,7 +90,7 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, privilegeLevel: originalPrivilegeLevel };
+            selected = { name: originalName, outOfScope: false, description: originalDescription, reasonOutOfScope: originalReasonOutOfScope, privilegeLevel: originalPrivilegeLevel };
             $scope.selected = selected;
             setFixtures('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Process">');
             elem = angular.element($('tmt-element-properties'));
@@ -108,6 +109,19 @@ describe('element properties directive: ', function () {
                 angular.element($('input[name="nameInput"]')).val(newName).triggerHandler('input');
                 expect($scope.edit).toHaveBeenCalled();
                 expect(selected.name).toEqual(newName);
+
+            }
+
+        });
+
+        it('should update the process description', function () {
+
+            //expect to fail on IE, but pass on everything else
+            if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
+
+                var newDescription = 'new description';
+                angular.element($('textarea[name="textareaDescription"]')).val(newDescription).triggerHandler('input');
+                expect(selected.description).toEqual(newDescription);
 
             }
 
@@ -160,17 +174,62 @@ describe('element properties directive: ', function () {
 
     });
 
+
+    describe('boundary element editing', function () {
+
+        beforeEach(function () {
+
+            selected = { name: originalName };
+            $scope.selected = selected;
+
+            elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Boundary">');
+            $compile(elem)($scope);
+            $scope.$digest();
+            setFixtures(elem);
+
+        });
+
+        it('should update the boundary name', function () {
+
+            //expect to fail on IE, but pass on everything else
+            if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
+
+                var newName = 'new name';
+                expect(selected.name).toEqual(originalName);
+                angular.element($('input[name="nameInput"]')).val(newName).triggerHandler('input');
+                expect($scope.edit).toHaveBeenCalled();
+                expect(selected.name).toEqual(newName);
+
+            }
+
+        });
+
+    });
+
     describe('actor element editing', function () {
 
         beforeEach(function () {
 
-            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, providesAuthentication: false };
+            selected = { name: originalName, outOfScope: false, description: originalDescription, reasonOutOfScope: originalReasonOutOfScope, providesAuthentication: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Actor">');
             $compile(elem)($scope);
             $scope.$digest();
             setFixtures(elem);
+
+        });
+
+        it('should update the actor description', function () {
+
+            //expect to fail on IE, but pass on everything else
+            if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
+
+                var newDescription = 'new description';
+                angular.element($('textarea[name="textareaDescription"]')).val(newDescription).triggerHandler('input');
+                expect(selected.description).toEqual(newDescription);
+
+            }
 
         });
 
@@ -194,13 +253,26 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, isALog: false, storesCredentials: false, isEncrypted: false, isSigned: false };
+            selected = { name: originalName, outOfScope: false, description: originalDescription, reasonOutOfScope: originalReasonOutOfScope, isALog: false, storesCredentials: false, isEncrypted: false, isSigned: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Store">');
             $compile(elem)($scope);
             $scope.$digest();
             setFixtures(elem);
+
+        });
+
+        it('should update the store description', function () {
+
+            //expect to fail on IE, but pass on everything else
+            if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
+
+                var newDescription = 'new description';
+                angular.element($('textarea[name="textareaDescription"]')).val(newDescription).triggerHandler('input');
+                expect(selected.description).toEqual(newDescription);
+
+            }
 
         });
 
@@ -253,13 +325,26 @@ describe('element properties directive: ', function () {
 
         beforeEach(function () {
 
-            selected = { name: originalName, outOfScope: false, reasonOutOfScope: originalReasonOutOfScope, protocol: originalProtocol, isEncrypted: false, isPublicNetwork: false };
+            selected = { name: originalName, outOfScope: false, description: originalDescription, reasonOutOfScope: originalReasonOutOfScope, protocol: originalProtocol, isEncrypted: false, isPublicNetwork: false };
             $scope.selected = selected;
 
             elem = angular.element('<tmt-element-properties edit="edit()" selected="selected" element-type="tm.Flow">');
             $compile(elem)($scope);
             $scope.$digest();
             setFixtures(elem);
+
+        });
+
+        it('should update the flow description', function () {
+
+            //expect to fail on IE, but pass on everything else
+            if (navigator.userAgent.indexOf('MSIE') < 0 && navigator.appVersion.indexOf('Trident/') < 0) {
+
+                var newDescription = 'new description';
+                angular.element($('textarea[name="textareaDescription"]')).val(newDescription).triggerHandler('input');
+                expect(selected.description).toEqual(newDescription);
+
+            }
 
         });
 

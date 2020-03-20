@@ -6,6 +6,10 @@
         </div>
     </div>
     <div ng-show="elementType !== 'tm.Boundary'">
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="textareaDescription" rows="4" class="form-control" type="text" ng-model="selected.description" ng-change="edit()" placeholder="Description"></textarea>
+        </div>
         <div class="checkbox">
             <label>
                 <input name="checkboxOutOfScope" type="checkbox" ng-model="selected.outOfScope" ng-change="edit()" /> Out of scope

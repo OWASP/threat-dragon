@@ -46,6 +46,7 @@
                   "$$hashKey": "object:106"
                 }
               ],
+              "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "attrs": {
@@ -74,6 +75,7 @@
               "id": "55c21e9a-c5fa-4db9-bc23-b0462e9ee5b8",
               "z": 2,
               "hasOpenThreats": false,
+              "description": "Test description",
               "outOfScope": true,
               "reasonOutOfScope": "Test reason",
               "attrs": {
