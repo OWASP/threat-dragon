@@ -83,6 +83,10 @@ describe('custom shape tests', function () {
             cell.privilegeLevel = testPrivilegeLevel;
             expect(cell.privilegeLevel).toEqual(testPrivilegeLevel);
 
+            var testDescription = 'testDescription';
+            cell.description = testDescription;
+            expect(cell.description).toEqual(testDescription);
+
             var testReason = 'testReason';
             cell.reasonOutOfScope = testReason;
             expect(cell.reasonOutOfScope).toEqual(testReason);
@@ -273,6 +277,10 @@ describe('custom shape tests', function () {
             cell.providesAuthentication = testProvidesAuthentication;
             expect(cell.providesAuthentication).toEqual(testProvidesAuthentication);
 
+            var testDescription = 'testDescription';
+            cell.description = testDescription;
+            expect(cell.description).toEqual(testDescription);
+
             var testReason = 'testReason';
             cell.reasonOutOfScope = testReason;
             expect(cell.reasonOutOfScope).toEqual(testReason);
@@ -356,6 +364,10 @@ describe('custom shape tests', function () {
             cell.isSigned = testIsSigned;
             expect(cell.isSigned).toEqual(testIsSigned);
 
+            var testDescription = 'testDescription';
+            cell.description = testDescription;
+            expect(cell.description).toEqual(testDescription);
+
             var testReason = 'testReason';
             cell.reasonOutOfScope = testReason;
             expect(cell.reasonOutOfScope).toEqual(testReason);
@@ -433,6 +445,16 @@ describe('custom shape tests', function () {
             var singleLineName = '1 2 3';
             cell.name = multiLineName;
             expect(cell.name).toEqual(singleLineName);
+        });
+
+        it('should set the boundary properties', function () {
+
+            graph.addCell(cell);
+
+            var testDescription = 'testDescription';
+            cell.description = testDescription;
+            expect(cell.description).toEqual(testDescription);
+
         });
 
     });
@@ -534,6 +556,10 @@ describe('custom shape tests', function () {
             var testIsPublicNetwork = true;
             cell.isPublicNetwork = testIsPublicNetwork;
             expect(cell.isPublicNetwork).toEqual(testIsPublicNetwork);
+
+            var testDescription = 'testDescription';
+            cell.description = testDescription;
+            expect(cell.description).toEqual(testDescription);
 
             var testProtocol = 'testProtocol';
             cell.protocol = testProtocol;

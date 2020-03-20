@@ -55,7 +55,7 @@ describe('threat model report directive: ', function () {
 
     it('should hide mitigated threats', function() {
 
-        var testModel = require('./test model.json');
+        var testModel = require('./test-model.json');
         $scope.testModel = testModel;
         setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
         elem = angular.element($('tmt-threat-model-report'));
@@ -71,7 +71,7 @@ describe('threat model report directive: ', function () {
 
     it('should toggle out of scope elements', function() {
 
-        var testModel = require('./test model.json');
+        var testModel = require('./test-model.json');
         $scope.testModel = testModel;
         setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
         elem = angular.element($('tmt-threat-model-report'));
@@ -86,7 +86,7 @@ describe('threat model report directive: ', function () {
 
     it('should toggle diagrams', function() {
 
-        var testModel = require('./test model.json');
+        var testModel = require('./test-model.json');
         $scope.testModel = testModel;
         setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel">');
         elem = angular.element($('tmt-threat-model-report'));
