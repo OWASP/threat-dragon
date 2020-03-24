@@ -165,6 +165,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
 
     function clear() {
         vm.graph.clearAll();
+        vm.currentDiagram.resize( { height: '590', width: '790' } );
     }
 
     function zoomIn() {
