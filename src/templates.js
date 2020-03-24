@@ -70,12 +70,6 @@ angular.module('templates', [])
     '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
-    '                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == vm.maxZoom"  data-toggle="tooltip" ng-click="vm.zoomIn()" data-placement="top" title="Zoom in">\n' +
-    '                                    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\n' +
-    '                                </button>\n' +
-    '                                <button class="btn btn-default" type="button" ng-disabled="vm.currentZoomLevel == -vm.maxZoom" data-toggle="tooltip" ng-click="vm.zoomOut()" data-placement="top" title="Zoom out">\n' +
-    '                                    <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>\n' +
-    '                                </button>\n' +
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
