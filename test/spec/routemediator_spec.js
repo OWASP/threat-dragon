@@ -32,13 +32,14 @@ describe('routemediator service:', function () {
 
         routeMediator = require('../../src/services/routemediator')(mockRootScope, mockLocation, mockConfig, mockLogger);
 
+        current = { name: 'testName', title: 'testTitle' };
+
     });
 
     describe('tests:', function () {
 
         it('route error should log warning and set location.path to /', function () {
 
-            current = { name: 'name' };
             var errorMessage = 'Error routing: ' + current.name;
             spyOn(mockLocation, 'path');
             routeMediator.setRoutingHandlers();
@@ -50,9 +51,9 @@ describe('routemediator service:', function () {
 
         it('route change success should set document title', function () {
 
-            current = { title: 'title' };
+            var docTitle = 'docTitle ' + current.title;
             routeMediator.setRoutingHandlers();
-            expect(mockRootScope.title).toEqual('docTitle title');
+            expect(mockRootScope.title).toEqual(docTitle);
 
         });
     });
