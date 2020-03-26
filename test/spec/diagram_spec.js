@@ -159,8 +159,14 @@ describe('diagram controller', function () {
            graph.clearAll = function() { };
            spyOn(graph, 'clearAll');
            $scope.vm.graph = graph;
+           var currentDiagram = {};
+           currentDiagram.resize = function() { };
+           spyOn(currentDiagram, 'resize');
+           $scope.vm.currentDiagram = currentDiagram;
+
            $scope.vm.clear();
            expect(graph.clearAll).toHaveBeenCalled();
+           expect(currentDiagram.resize).toHaveBeenCalled();
             
         });
         
