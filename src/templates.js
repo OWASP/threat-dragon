@@ -73,7 +73,7 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
+    '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
     '                                    <span class="fa fa-undo" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats()" data-placement="top" title="Suggest threats for the selected element">\n' +
@@ -82,7 +82,7 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="!vm.dirty" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">\n' +
+    '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                            </div>\n' +
