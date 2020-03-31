@@ -57,7 +57,7 @@
     "lodash": "^4.17.14",
     "morgan": "1.9.1",
     "octonode": "0.9.5",
-    "owasp-threat-dragon-core": "^0.7.1",
+    "owasp-threat-dragon-core": "^0.8.0",
     "passport": "0.4.0",
     "passport-github": "1.1.0",
     "pug": "^2.0.4",
