@@ -51,7 +51,7 @@
             <h4>High level system description</h4>
         </div>
         <div class="panel-body">
-            <div class="col-md-12">{{model.summary.description}}</div>
+            <div class="col-md-12"><p style="white-space: pre;">{{model.summary.description}}</p></div>
         </div>
     </div>
     <div ng-repeat="diagram in model.detail.diagrams">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="panel-body">
                             <div><strong>Description: </strong></div>
-                            <div>{{element.description}}</div>                           
+                            <div><p style="white-space: pre;">{{element.description}}</p></div>
                             <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">
                                 <div ng-repeat="threat in element.threats">
                                     <div ng-if="threat.status == 'Open' || reportOptions.showMitigated" class="panel panel-default threat">
@@ -87,17 +87,17 @@
                                             <em class="small">
                                                 {{threat.type}},
                                                 <span ng-class="{Mitigated:'text-success', Open:'text-danger'}[threat.status]">{{threat.status}}</span>,
-                                                <span ng-class="{Low:'text-success', Medium:'text-warning', High:'text-danger'}[threat.severity]">{{threat.severity}} Severity</span>                   
-                                            </em>  
+                                                <span ng-class="{Low:'text-success', Medium:'text-warning', High:'text-danger'}[threat.severity]">{{threat.severity}} Severity</span>
+                                            </em>
                                         </div>
                                         <div class="panel-body">
                                             <div class="col-md-12">
                                                 <div><strong>Description: </strong></div>
-                                                <div>{{threat.description}}</div>
+                                                <div><p style="white-space: pre;">{{threat.description}}</p></div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div><strong>Mitigation: </strong></div>
-                                                <div>{{threat.mitigation}}</div>
+                                                <div><p style="white-space: pre;">{{threat.mitigation}}</p></div>
                                             </div>
                                         </div>
                                     </div>
@@ -123,8 +123,10 @@
                             </span>
                         </div>
                         <div class="panel-body">
+                            <div><strong>Description: </strong></div>
+                            <div><p style="white-space: pre;">{{element.description}}</p></div>
                             <div><strong>Out of scope reason: </strong></div>
-                            <div>{{element.reasonOutOfScope}}</div>                           
+                            <div><p style="white-space: pre;">{{element.reasonOutOfScope}}</p></div>
                         </div>
                     </div>
                 </div>
