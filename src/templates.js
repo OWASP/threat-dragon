@@ -404,7 +404,7 @@ angular.module('templates', [])
     '                <h4>High level system description</h4>\n' +
     '            </div>\n' +
     '            <div class="panel-body">\n' +
-    '                <div class="col-md-12">{{vm.threatModel.summary.description}}</div>\n' +
+    '                <div class="col-md-12"><p style="white-space: pre;">{{vm.threatModel.summary.description}}</p></div>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="panel-body">\n' +
@@ -456,7 +456,8 @@ angular.module('templates', [])
     '            </p>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '</div>')
+    '</div>\n' +
+    '')
   $templateCache.put('threatmodels/threatmodeledit.html',
     '﻿<div data-ng-controller="threatmodel as vm" class="container-fluid">\n' +
     '    <div ng-if="!vm.threatModel.summary && !vm.errored && !vm.isNewModel">\n' +
@@ -704,7 +705,7 @@ angular.module('templates', [])
     '            <h4>High level system description</h4>\n' +
     '        </div>\n' +
     '        <div class="panel-body">\n' +
-    '            <div class="col-md-12">{{model.summary.description}}</div>\n' +
+    '            <div class="col-md-12"><p style="white-space: pre;">{{model.summary.description}}</p></div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    <div ng-repeat="diagram in model.detail.diagrams">\n' +
@@ -729,7 +730,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
     '                            <div><strong>Description: </strong></div>\n' +
-    '                            <div>{{element.description}}</div>                           \n' +
+    '                            <div><p style="white-space: pre;">{{element.description}}</p></div>\n' +
     '                            <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
     '                                    <div ng-if="threat.status == \'Open\' || reportOptions.showMitigated" class="panel panel-default threat">\n' +
@@ -740,17 +741,17 @@ angular.module('templates', [])
     '                                            <em class="small">\n' +
     '                                                {{threat.type}},\n' +
     '                                                <span ng-class="{Mitigated:\'text-success\', Open:\'text-danger\'}[threat.status]">{{threat.status}}</span>,\n' +
-    '                                                <span ng-class="{Low:\'text-success\', Medium:\'text-warning\', High:\'text-danger\'}[threat.severity]">{{threat.severity}} Severity</span>                   \n' +
-    '                                            </em>  \n' +
+    '                                                <span ng-class="{Low:\'text-success\', Medium:\'text-warning\', High:\'text-danger\'}[threat.severity]">{{threat.severity}} Severity</span>\n' +
+    '                                            </em>\n' +
     '                                        </div>\n' +
     '                                        <div class="panel-body">\n' +
     '                                            <div class="col-md-12">\n' +
     '                                                <div><strong>Description: </strong></div>\n' +
-    '                                                <div>{{threat.description}}</div>\n' +
+    '                                                <div><p style="white-space: pre;">{{threat.description}}</p></div>\n' +
     '                                            </div>\n' +
     '                                            <div class="col-md-12">\n' +
     '                                                <div><strong>Mitigation: </strong></div>\n' +
-    '                                                <div>{{threat.mitigation}}</div>\n' +
+    '                                                <div><p style="white-space: pre;">{{threat.mitigation}}</p></div>\n' +
     '                                            </div>\n' +
     '                                        </div>\n' +
     '                                    </div>\n' +
@@ -776,8 +777,10 @@ angular.module('templates', [])
     '                            </span>\n' +
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
+    '                            <div><strong>Description: </strong></div>\n' +
+    '                            <div><p style="white-space: pre;">{{element.description}}</p></div>\n' +
     '                            <div><strong>Out of scope reason: </strong></div>\n' +
-    '                            <div>{{element.reasonOutOfScope}}</div>                           \n' +
+    '                            <div><p style="white-space: pre;">{{element.reasonOutOfScope}}</p></div>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
