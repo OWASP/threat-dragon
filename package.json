@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "build": "npm run bundle-css && npm run build-templates",
-    "build-templates": "./node_modules/.bin/npm-html2js -b src -i 'src/**/*.html' --module templates -o './src/templates.js'",
+    "build-templates": "./node_modules/.bin/npm-html2js -b src -i \"src/**/*.html\" --module templates -o ./src/templates.js\"",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors src",
     "bundle-css": "./node_modules/.bin/rework-npm ./src/content/app.css -o ./src/content/threatdragon-core.css",
     "test": "npm run-script test-client-phantomjs && npm run-script test-client-firefox",
@@ -36,6 +36,7 @@
     "angular-route": "1.7.8",
     "angular-ui-bootstrap": "2.5.6",
     "bootstrap": "3.4.1",
+    "hotkeys-js": "^3.7.6",
     "jointjs": "^2.2.1",
     "jquery": "^3.4.1",
     "json-rules-engine": "3.0.2",

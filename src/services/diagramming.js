@@ -113,6 +113,11 @@ function diagramming() {
             interactive: interactive
         });
 
+        paper.el.setAttribute('tabindex', '0');
+        paper.el.addEventListener('mousedown', function() {
+            this.focus();
+        });
+
         target.appendChild(paper.el);
 
         return paper;
