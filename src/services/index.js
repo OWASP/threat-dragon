@@ -6,3 +6,4 @@ core.controller('structuredExitController', ['$scope', '$uibModalInstance', '$lo
 core.controller('confirmController', ['$scope', '$uibModalInstance', 'ok', 'cancel', 'parameter', require('./dialogControllers').confirmController]);
 core.factory('dialogs', ['$location', '$uibModal', require('./dialogs')]);
 core.factory('diagramming', [require('./diagramming')]);
+core.value('hotkeys', require('hotkeys-js'));

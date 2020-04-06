@@ -8869,6 +8869,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   stroke-width: 3;
 }
 
+.joint-paper:focus {
+  outline: none;
+}
+
 /*threat model status indicator classes*/
 
 .isOutOfScope {

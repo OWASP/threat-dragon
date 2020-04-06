@@ -9,6 +9,7 @@ npm-debug.log
 package-lock.json
 # ignore Apple's desktop store files
 **/.DS_Store
-# ignore VS and Eclipse files
+# ignore IDE files
 .vscode/
 .settings/
+*.iml

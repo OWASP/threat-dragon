@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-function diagram($scope, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming, threatmodellocator) {
+function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming, threatmodellocator, hotkeys) {
 
     // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
     /*jshint validthis: true */
@@ -37,6 +37,7 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     vm.setGrid = setGrid;
     vm.showGrid = false;
     vm.selected = null;
+    vm.copied = null;
     vm.viewStencil = true;
     vm.viewThreats = false;
     vm.stencils = getStencils();
@@ -56,6 +57,10 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     vm.currentZoomLevel = 0;
     vm.maxZoom = 4;
 
+    hotkeys('Escape', escapeHotkey);
+    hotkeys('Cmd+C, Ctrl+C', copyHotkey);
+    hotkeys('Cmd+V, Ctrl+V', pasteHotkey);
+
     //structured exit
     $scope.$on('$locationChangeStart', function (event, current, previous) {
         //suppress structured exit when only search changes
@@ -70,6 +75,13 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
     //element select
     $scope.$on('$locationChangeSuccess', function (event, current, previous) {
         onSelectElement();
+    });
+
+
+    $scope.$on('$destroy', function () {
+        hotkeys.unbind('Escape');
+        hotkeys.unbind('Cmd+C', 'Ctrl+C');
+        hotkeys.unbind('Cmd+V', 'Ctrl+V');
     });
 
     activate();
@@ -398,6 +410,32 @@ function diagram($scope, $location, $routeParams, $timeout, dialogs, common, dat
         if (threatWatchers[element.id]) {
             threatWatchers[element.id]();
             threatWatchers.splice(element.id, 1);
+        }
+    }
+
+    function escapeHotkey(event, handler) {
+        // if the current diagram is active
+        if (vm.currentDiagram.el === $document[0].activeElement) {
+            select(null);
+        }
+    }
+
+    function copyHotkey(event, handler) {
+        // if the current diagram is active
+        if (vm.currentDiagram.el === $document[0].activeElement) {
+            if (vm.selected) {
+                vm.copied = vm.selected;
+            }
+        }
+    }
+
+    function pasteHotkey(event, handler) {
+        // if the current diagram is active
+        if (vm.currentDiagram.el === $document[0].activeElement) {
+            if (vm.copied) {
+                vm.select(vm.copied);
+                vm.duplicateElement();
+            }
         }
     }
 }
