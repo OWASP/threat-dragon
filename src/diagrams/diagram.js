@@ -57,9 +57,9 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.currentZoomLevel = 0;
     vm.maxZoom = 4;
 
-    hotkeys("Escape", escapeHotkey);
-    hotkeys("Ctrl+C", copyHotkey);
-    hotkeys("Ctrl+V", pasteHotkey);
+    hotkeys('Escape', escapeHotkey);
+    hotkeys('Cmd+C, Ctrl+C', copyHotkey);
+    hotkeys('Cmd+V, Ctrl+V', pasteHotkey);
 
     //structured exit
     $scope.$on('$locationChangeStart', function (event, current, previous) {
@@ -79,9 +79,9 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
 
 
     $scope.$on('$destroy', function () {
-        hotkeys.unbind("Escape");
-        hotkeys.unbind("Ctrl+C");
-        hotkeys.unbind("Ctrl+V");
+        hotkeys.unbind('Escape');
+        hotkeys.unbind('Cmd+C', 'Ctrl+C');
+        hotkeys.unbind('Cmd+V', 'Ctrl+V');
     });
 
     activate();
