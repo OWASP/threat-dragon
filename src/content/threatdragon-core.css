@@ -8851,6 +8851,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   fill: #fff;
 }
 
+/*threat model report*/
+
+.report {
+  white-space: pre-wrap;
+}
+
 /*threat model element highlighting*/
 
 .joint-element.highlighted rect {

@@ -51,7 +51,7 @@
             <h4>High level system description</h4>
         </div>
         <div class="panel-body">
-            <div class="col-md-12"><p style="white-space: pre;">{{model.summary.description}}</p></div>
+            <div class="col-md-12"><p class="report">{{model.summary.description}}</p></div>
         </div>
     </div>
     <div ng-repeat="diagram in model.detail.diagrams">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="panel-body">
                             <div><strong>Description: </strong></div>
-                            <div><p style="white-space: pre;">{{element.description}}</p></div>
+                            <div><p class="report">{{element.description}}</p></div>
                             <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">
                                 <div ng-repeat="threat in element.threats">
                                     <div ng-if="threat.status == 'Open' || reportOptions.showMitigated" class="panel panel-default threat">
@@ -93,11 +93,11 @@
                                         <div class="panel-body">
                                             <div class="col-md-12">
                                                 <div><strong>Description: </strong></div>
-                                                <div><p style="white-space: pre;">{{threat.description}}</p></div>
+                                                <div><p class="report">{{threat.description}}</p></div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div><strong>Mitigation: </strong></div>
-                                                <div><p style="white-space: pre;">{{threat.mitigation}}</p></div>
+                                                <div><p class="report">{{threat.mitigation}}</p></div>
                                             </div>
                                         </div>
                                     </div>
@@ -124,9 +124,9 @@
                         </div>
                         <div class="panel-body">
                             <div><strong>Description: </strong></div>
-                            <div><p style="white-space: pre;">{{element.description}}</p></div>
+                            <div><p class="report">{{element.description}}</p></div>
                             <div><strong>Out of scope reason: </strong></div>
-                            <div><p style="white-space: pre;">{{element.reasonOutOfScope}}</p></div>
+                            <div><p class="report">{{element.reasonOutOfScope}}</p></div>
                         </div>
                     </div>
                 </div>

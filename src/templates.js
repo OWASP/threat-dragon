@@ -404,7 +404,7 @@ angular.module('templates', [])
     '                <h4>High level system description</h4>\n' +
     '            </div>\n' +
     '            <div class="panel-body">\n' +
-    '                <div class="col-md-12"><p style="white-space: pre;">{{vm.threatModel.summary.description}}</p></div>\n' +
+    '                <div class="col-md-12"><p class="report">{{vm.threatModel.summary.description}}</p></div>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="panel-body">\n' +
@@ -705,7 +705,7 @@ angular.module('templates', [])
     '            <h4>High level system description</h4>\n' +
     '        </div>\n' +
     '        <div class="panel-body">\n' +
-    '            <div class="col-md-12"><p style="white-space: pre;">{{model.summary.description}}</p></div>\n' +
+    '            <div class="col-md-12"><p class="report">{{model.summary.description}}</p></div>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '    <div ng-repeat="diagram in model.detail.diagrams">\n' +
@@ -730,7 +730,7 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
     '                            <div><strong>Description: </strong></div>\n' +
-    '                            <div><p style="white-space: pre;">{{element.description}}</p></div>\n' +
+    '                            <div><p class="report">{{element.description}}</p></div>\n' +
     '                            <div ng-if="element.hasOpenThreats || (reportOptions.showMitigated && element.threats.length > 0)">\n' +
     '                                <div ng-repeat="threat in element.threats">\n' +
     '                                    <div ng-if="threat.status == \'Open\' || reportOptions.showMitigated" class="panel panel-default threat">\n' +
@@ -747,11 +747,11 @@ angular.module('templates', [])
     '                                        <div class="panel-body">\n' +
     '                                            <div class="col-md-12">\n' +
     '                                                <div><strong>Description: </strong></div>\n' +
-    '                                                <div><p style="white-space: pre;">{{threat.description}}</p></div>\n' +
+    '                                                <div><p class="report">{{threat.description}}</p></div>\n' +
     '                                            </div>\n' +
     '                                            <div class="col-md-12">\n' +
     '                                                <div><strong>Mitigation: </strong></div>\n' +
-    '                                                <div><p style="white-space: pre;">{{threat.mitigation}}</p></div>\n' +
+    '                                                <div><p class="report">{{threat.mitigation}}</p></div>\n' +
     '                                            </div>\n' +
     '                                        </div>\n' +
     '                                    </div>\n' +
@@ -778,9 +778,9 @@ angular.module('templates', [])
     '                        </div>\n' +
     '                        <div class="panel-body">\n' +
     '                            <div><strong>Description: </strong></div>\n' +
-    '                            <div><p style="white-space: pre;">{{element.description}}</p></div>\n' +
+    '                            <div><p class="report">{{element.description}}</p></div>\n' +
     '                            <div><strong>Out of scope reason: </strong></div>\n' +
-    '                            <div><p style="white-space: pre;">{{element.reasonOutOfScope}}</p></div>\n' +
+    '                            <div><p class="report">{{element.reasonOutOfScope}}</p></div>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
