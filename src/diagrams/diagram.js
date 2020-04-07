@@ -228,8 +228,11 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
             var newElement = vm.cloneElement(vm.selected);
 
             var label = "";
-            if (typeof newElement.attributes.labels != "undefined"){
+            if (typeof newElement.attributes.labels != "undefined") {
                 label = 'Copy of ' + newElement.attributes.labels[0].attrs.text.text;   
+            }
+            else {
+                label = 'Copy of ' + newElement.attributes.attrs.text.text;
             }
 
             if (newElement.attributes.type == "tm.Flow" || newElement.attributes.type == "tm.Boundary") {    
