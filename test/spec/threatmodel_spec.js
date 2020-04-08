@@ -490,12 +490,12 @@ describe('threatModel controller', function () {
 
         it('should remove the specified diagram and set the dirty flag', function () {
 
-            $scope.vm.threatModel = { detail: { diagrams: [0, 1, 2] } };
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0 }, { id: 1 }, { id: 2 }] } };
             $scope.vm.dirty = false;
             $scope.vm.removeDiagram(1);
 
             expect($scope.vm.dirty).toBe(true);
-            expect($scope.vm.threatModel.detail.diagrams).toEqual([0, 2]);
+            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0 }, { id: 1 }]);
 
         });
 
