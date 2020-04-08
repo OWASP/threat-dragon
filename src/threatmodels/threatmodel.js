@@ -156,6 +156,12 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     function removeDiagram(index) {
         vm.threatModel.detail.diagrams.splice(index, 1);
         vm.dirty = true;
+        //the ids must be in numerical order, otherwise diagrams are not indexed correctly
+        var id = 0;
+        vm.threatModel.detail.diagrams.forEach(function (item) {
+            item.id = id;
+            id += 1;
+        });
     }
 
     function duplicateDiagram(index) {
