@@ -153,9 +153,16 @@ describe('diagram controller', function () {
     
     describe('graph tests: ', function() {
         
+        var graph;
+
+        beforeEach(function() {
+
+           graph = {title: 'test graph'};
+
+        })
+
         it('should clear all elements and links', function() {
            
-           var graph = {title: 'test graph'};
            graph.clearAll = function() { };
            spyOn(graph, 'clearAll');
            $scope.vm.graph = graph;
@@ -172,7 +179,6 @@ describe('diagram controller', function () {
         
         it('should add a new process', function() {
            
-           var graph = {title: 'test graph'};
            graph.addProcess = function() { return {id: 'processId'}};
            spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
@@ -183,7 +189,6 @@ describe('diagram controller', function () {
         
         it('should add a new actor', function() {
            
-           var graph = {title: 'test graph'};
            graph.addActor = function() { return {id: 'actorId'}};
            spyOn(graph, 'addActor').and.callThrough();
            $scope.vm.graph = graph;
@@ -194,7 +199,6 @@ describe('diagram controller', function () {
         
         it('should add a new store', function() {
  
-           var graph = {title: 'test graph'};
            graph.addStore = function() { return {id: 'storeId'}};
            spyOn(graph, 'addStore').and.callThrough();
            $scope.vm.graph = graph;       
@@ -205,7 +209,6 @@ describe('diagram controller', function () {
         
         it('should add a new boundary', function() {
             
-           var graph = {title: 'test graph'};
            graph.addBoundary = function() { return {id: 'boundaryId'}};
            spyOn(graph, 'addBoundary').and.callThrough();
            $scope.vm.graph = graph;  
@@ -216,7 +219,6 @@ describe('diagram controller', function () {
         
         it('should add a new flow', function() {
             
-           var graph = {title: 'test graph'};
            var source = 'source';
            var target = 'target';
            graph.addFlow = function() { return {id: 'flowId'}};
@@ -230,7 +232,6 @@ describe('diagram controller', function () {
 
         it('should duplicate a flow element', function() {
 
-            var graph = {title: 'test graph'};
             var label = [{ attrs : { text : { text : "flowName"} } } ];
             var element = {id: 'elementId', attributes: {type : "tm.Flow", labels : label}};
             graph.duplicateElement = function() { return {id: 'newElementId', attributes: {type : "tm.Flow", labels : label}}};
@@ -245,7 +246,6 @@ describe('diagram controller', function () {
 
         it('should duplicate an actor element', function() {
 
-            var graph = {title: 'test graph'};
             var label = { text : { text : "actorName"} };
             var element = {id: 'elementId', attributes: {type : "tm.Actor", position : { y : 10}, attrs : label}};
             graph.duplicateElement = function() { return {id: 'newElementId', 
@@ -261,7 +261,6 @@ describe('diagram controller', function () {
 
         it('should duplicate a boundary element', function() {
 
-            var graph = {title: 'test graph'};
             var label = { text : { text : "boundaryName"} };
             var element = {id: 'elementId', attributes: {type : "tm.Boundary", position : { y : 10}, attrs : label}};
             graph.duplicateElement = function() { return {id: 'newElementId', 
@@ -277,7 +276,6 @@ describe('diagram controller', function () {
 
         it('should not duplicate an element - no element selected', function() {
 
-            var graph = {title: 'test graph'};
             graph.cloneElement = function() { return {"type": "tm.Flow", id: 'elementId'}};
             spyOn(graph, 'cloneElement').and.callThrough();
             $scope.vm.selected = null;
@@ -289,7 +287,6 @@ describe('diagram controller', function () {
         it('should clone an element', function() {
 
             var element = {id: 'elementId'};
-            var graph = {title: 'test graph'};
             graph.duplicateElement = function() { return {id: 'elementId'}};
             spyOn(graph, 'duplicateElement').and.callThrough();
             $scope.vm.graph = graph;
@@ -341,7 +338,6 @@ describe('diagram controller', function () {
         
         it('should set hasOpenThreats on the process', function() {
             
-           var graph = {title: 'test graph'};
            graph.addProcess = function() { return {id: 'processId'}};
            spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
@@ -352,7 +348,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the process', function() {
             
-           var graph = {title: 'test graph'};
            graph.addProcess = function() { return {id: 'processId'}};
            spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
@@ -363,7 +358,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the process (no threats)', function() {
             
-           var graph = {title: 'test graph'};
            graph.addProcess = function() { return {id: 'processId'}};
            spyOn(graph, 'addProcess').and.callThrough();
            $scope.vm.graph = graph;
@@ -374,7 +368,6 @@ describe('diagram controller', function () {
         
         it('should set hasOpenThreats on the actor', function() {
             
-           var graph = {title: 'test graph'};
            graph.addActor = function() { return {id: 'actorId'}};
            spyOn(graph, 'addActor').and.callThrough();
            $scope.vm.graph = graph;
@@ -385,7 +378,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the actor', function() {
             
-           var graph = {title: 'test graph'};
            graph.addActor = function() { return {id: 'actorId'}};
            spyOn(graph, 'addActor').and.callThrough();           
            $scope.vm.graph = graph;
@@ -396,7 +388,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the actor (no threats)', function() {
             
-           var graph = {title: 'test graph'};
            graph.addActor = function() { return {id: 'actorId'}};
            spyOn(graph, 'addActor').and.callThrough();           
            $scope.vm.graph = graph;
@@ -407,7 +398,6 @@ describe('diagram controller', function () {
         
         it('should set hasOpenThreats on the store', function() {
             
-           var graph = {title: 'test graph'};
            graph.addStore = function() { return {id: 'storeId'}};
            spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
@@ -418,7 +408,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the store', function() {
             
-           var graph = {title: 'test graph'};
            graph.addStore = function() { return {id: 'storeId'}};
            spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
@@ -429,7 +418,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the store (no threats)', function() {
             
-           var graph = {title: 'test graph'};
            graph.addStore = function() { return {id: 'storeId'}};
            spyOn(graph, 'addStore').and.callThrough();           
            $scope.vm.graph = graph;
@@ -440,7 +428,6 @@ describe('diagram controller', function () {
         
         it('should set hasOpenThreats on the flow', function() {
             
-           var graph = {title: 'test graph'};
            graph.addFlow = function() { return {id: 'flowId'}};
            spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
@@ -451,7 +438,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the flow', function() {
             
-           var graph = {title: 'test graph'};
            graph.addFlow = function() { return {id: 'flowId'}};
            spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
@@ -462,7 +448,6 @@ describe('diagram controller', function () {
         
         it('should unset hasOpenThreats on the flow (no threats)', function() {
             
-           var graph = {title: 'test graph'};
            graph.addFlow = function() { return {id: 'flowId'}};
            spyOn(graph, 'addFlow').and.callThrough();             
            $scope.vm.graph = graph;
