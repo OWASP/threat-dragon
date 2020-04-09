@@ -673,7 +673,7 @@ angular.module('templates', [])
     '                <span class="glyphicon glyphicon-print"></span> Print\n' +
     '            </button>\n' +
     '            <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
-    '                <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '                <span class="glyphicon glyphicon-remove"></span> Return\n' +
     '            </button>\n' +
     '        </div>\n' +
     '    </div>\n' +
@@ -797,7 +797,7 @@ angular.module('templates', [])
     '                    <span class="glyphicon glyphicon-print"></span> Print\n' +
     '                </button>\n' +
     '                <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
-    '                    <span class="glyphicon glyphicon-remove"></span> Cancel\n' +
+    '                    <span class="glyphicon glyphicon-remove"></span> Return\n' +
     '                </button>\n' +
     '            </div>\n' +
     '        </div>\n' +
