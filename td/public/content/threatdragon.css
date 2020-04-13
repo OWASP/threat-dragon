@@ -8851,6 +8851,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   fill: #fff;
 }
 
+/*threat model report*/
+
+.report {
+  white-space: pre-wrap;
+}
+
 /*threat model element highlighting*/
 
 .joint-element.highlighted rect {
@@ -8867,6 +8873,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 .joint-link.highlighted path {
   stroke-width: 3;
+}
+
+.joint-paper:focus {
+  outline: none;
 }
 
 /*threat model status indicator classes*/
@@ -8917,6 +8927,10 @@ text.hasOpenThreats {
 .joint-type-tm-flow .labels .label text {
   font-weight: 400;
   font-size: small;
+}
+
+.joint-type-tm-boundary .link-tool .tool-options {
+  display: inline;
 }
 
 /* responsive paper */
