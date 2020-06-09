@@ -25,7 +25,7 @@ To get the code, go to where you want your code to be located and do
 
 `git init`
 
-`git clone https://github.com/mike-goodwin/owasp-threat-dragon.git`
+`git clone https://github.com/owasp/threat-dragon.git`
 
 This installs code in two sub-folders. One for the main application (`td`) and one for the unit tests (`td.tests`). Get all the node packages:
 
