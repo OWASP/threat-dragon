@@ -34,7 +34,7 @@
   "homepage": "http://docs.threatdragon.org/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mike-goodwin/owasp-threat-dragon.git"
+    "url": "git://github.com/owasp/threat-dragon.git"
   },
   "dependencies": {
     "angular": "1.7.8",

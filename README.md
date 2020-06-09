@@ -1,7 +1,7 @@
 Note that this repository has been migrated from Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon) , which has the issues and pull requests from October 2015 up to June 2020.
 
 <p align="center">
-  <img src="http://mike-goodwin.github.io/owasp-threat-dragon/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
+  <img src="https://raw.githubusercontent.com/owasp/threat-dragon-desktop/master/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
 [![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-dragon?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon) [![SecurityHeaders.io](https://securityheadersiobadges.azurewebsites.net/create/badge?domain=https://threatdragon.azurewebsites.net/)](https://securityheaders.io/?q=https://threatdragon.azurewebsites.net/&hide=on&followRedirects=on) [![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon.svg)](LICENSE.txt)
@@ -14,15 +14,15 @@ Threat Dragon is a free, open-source, cross-platform threat modelling applicatio
 
 The application comes in two variants:
 
-1. [**A web application (this repo)**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
+1. [**A web application (this repo)**](https://github.com/owasp/threat-dragon): For the web application, models files are stored in GitHub (other storage will become available). We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on [Electron](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux. Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
+2. [**A desktop application**](https://github.com/owasp/threat-dragon-desktop): This is based on [Electron](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux. Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
 [End user help](http://docs.threatdragon.org/) is available for both variants.
 
 This repository contains the files for the web application variant.
 
-Core files that are shared between both the desktop and web variants are stored in an [seperate repo](https://github.com/mike-goodwin/owasp-threat-dragon-core) and are installable as a [seperate package](https://www.npmjs.com/package/owasp-threat-dragon-core).
+Core files that are shared between both the desktop and web variants are stored in an [seperate repo](https://github.com/owasp/threat-dragon-core) and are installable as a [seperate package](https://www.npmjs.com/package/owasp-threat-dragon-core).
 
 ## Installing
 
@@ -32,7 +32,7 @@ Install git and node.js - which includes the node package manager npm. To get th
 
 `git init`
 
-`git clone https://github.com/mike-goodwin/owasp-threat-dragon.git`
+`git clone https://github.com/owasp/threat-dragon.git`
 
 This installs code in two sub-folders. One for the main application (`td`) and one for the unit tests (`td.tests`). To install, do:
 
@@ -52,7 +52,7 @@ If you are developing locally, you can choose to store the session data in memor
 
 For production use, Threat Dragon currently supports Azure Table Storage for the session store via [connect-azuretables](https://www.npmjs.com/package/connect-azuretables). To make this store work you need to specify an Azure Storage Account and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`. See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
 
-If you want to use an [alternative session store](https://github.com/expressjs/session#compatible-session-stores) in production, install it and edit the [session.config.js](https://github.com/mike-goodwin/owasp-threat-dragon/blob/master/td/config/session.config.js) file.
+If you want to use an [alternative session store](https://github.com/expressjs/session#compatible-session-stores) in production, install it and edit the [session.config.js](https://github.com/owasp/threat-dragon/blob/master/td/config/session.config.js) file.
 
 Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes, set the `NODE_ENV` environment variable to `development`. 
 
