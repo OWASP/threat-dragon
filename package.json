@@ -27,7 +27,7 @@
   "homepage": "http://docs.threatdragon.org/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mike-goodwin/owasp-threat-dragon-core.git"
+    "url": "git://github.com/owasp/threat-dragon-core.git"
   },
   "main": "./src/index.js",
   "style": "./src/content/threatdragon-core.css",
