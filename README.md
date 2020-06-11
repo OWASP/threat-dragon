@@ -1,7 +1,7 @@
 Note that this repository has been migrated from Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon-core) , which has the issues and pull requests from June 2016 up to June 2020.
 
 <p align="center">
-  <img src="http://mike-goodwin.github.io/owasp-threat-dragon/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
+  <img src="https://raw.githubusercontent.com/owasp/threat-dragon-desktop/master/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
 [![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon-core/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-drago-core?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core)
@@ -17,11 +17,11 @@ The focus of the project is on great UX, a powerful rule engine and integration 
 
 The application comes in two variants:
 
-1. [**A web application**](https://github.com/mike-goodwin/owasp-threat-dragon): For the web application, models files
+1. [**A web application**](https://github.com/owasp/threat-dragon): For the web application, models files
 are stored in GitHub (other storage will become available). We are currently maintaining
 [a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**A desktop application**](https://github.com/mike-goodwin/owasp-threat-dragon-desktop): This is based on
+2. [**A desktop application**](https://github.com/owasp/threat-dragon-desktop): This is based on
 [Electron](https://electron.atom.io/). There are installers available for both Windows and Mac OSX, as well as
 rpm and debian packages for Linux. For this variant models are stored on the local filesystem.
 
@@ -129,8 +129,4 @@ If you are not a PGP user, you can easily send an encrypted email from https://f
 # Project leader #
 
 Mike Goodwin (mike.goodwin@owasp.org)
-
-## Main collaborator ##
-
-Jon Gadsden (jon.gadsden@owasp.org)
 
