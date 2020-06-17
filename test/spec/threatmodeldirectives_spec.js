@@ -128,7 +128,7 @@ describe('threat model report directive: ', function () {
             }
         };
         $scope.testModel = testModel;
-        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" save="save(done)">');
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" save="save(done)" hide-controls="false">');
         elem = angular.element($('tmt-threat-model-report'));
         $compile(elem)($scope);
         $scope.$digest();
@@ -152,7 +152,7 @@ describe('threat model report directive: ', function () {
             }
         };
         $scope.testModel = testModel;
-        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" print="print(done)">');
+        setFixtures('<tmt-threat-model-report loaded="loaded()" model="testModel" print="print(done)" hide-controls="false">');
         elem = angular.element($('tmt-threat-model-report'));
         $compile(elem)($scope);
         $scope.$digest();
