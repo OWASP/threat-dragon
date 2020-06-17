@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 var _ = require('lodash');
 
@@ -13,6 +13,7 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
             {
                 model: '=',
                 loaded: '&',
+                isPrintingOrSaving: '=hideControls',
                 save: '&?',
                 print: '&?'
             }
@@ -27,7 +28,6 @@ function threatModelReport($location, $routeParams, threatmodellocator, diagramm
         scope.savePDF = savePDF;
         scope.printPDF = printPDF;
         scope.cancel = cancel;
-        scope.isPrintingOrSaving = false;
         scope.initialise = initialise;
         scope.graphs = null;
     
