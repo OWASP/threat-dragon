@@ -41,7 +41,7 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and [register it as a GitHub application](https://github.com/settings/applications/new). Once you have done that you need to set the Client ID and Client Secret as environment variables (`GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`).
 
-You also need to set a session signing key environment variable (`SESSION_SIGNING_KEY`).
+You also need to set a session signing key environment variable (`SESSION_SIGNING_KEY`). Setting up these environment variables has caused some confusion in the past, so there is a [step-by-step guide](setup-env.md) to this. 
 
 Once a user is signed in, their session information contains an OAuth access token with write access to their GitHub repos. For security, this is encrypted before storage in the session. The session encryption supports multiple keys so that they can be expired without any interruption to the running application. The primary key is always used for encryption. Retired keys can be kept available for decrypting existing sessions. Once all sessions are using the new primary key (typically this will be around 60 minutes maximum), the old one can be safely removed. The keys are stored as a JSON string in  the `SESSION_ENCRYPTION_KEYS` environment variable. For example:
 
