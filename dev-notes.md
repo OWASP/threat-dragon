@@ -1,10 +1,10 @@
-## [OWASP](https://www.owasp.org) [Threat Dragon](https://owasp.org/www-project-threat-dragon/) ##
+## Developer notes for [OWASP](https://www.owasp.org) [Threat Dragon](https://owasp.org/www-project-threat-dragon/) ##
 
-### Notes for developers ###
+### Overview ###
 
 This is a collection of notes used during development, most of which should be up to date - if not then raise an issue.
-
-#### Overview ####
+The recipes are for both Windows and Linux/MacOS; in general the `npm` and `git` commands are the same on all platforms,
+but some of the commands (eg `cd ../..`) need to be modified if running on a Windows platform.
 
 Threat Dragon is a [node.js](https://nodejs.org)
 [single page application](https://en.wikipedia.org/wiki/Single-page_application) built on [Angular](https://angular.io/)
@@ -19,14 +19,14 @@ The web application repo, which also relies on the core functions, is at: https:
 Both application variants install `threat-dragon-core` as part of the install process `npm install`, under directory
 `node-modules/owasp-threat-dragon-core`. This package is downloaded during install from the [npmjs registry](https://www.npmjs.com/) as the [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) package.
 
-#### Documentation, demo and dev websites ####
+### Documentation, demo and dev websites ###
 The public sites are updated from the orginal repo at https://github.com/mike-goodwin/owasp-threat-dragon .
 These sites can only be updated by the admin of this repo, Mike Goodwin.
 * merges to `master` branch will update online demo at https://threatdragon.org/
 * merges to `development` branch will update snapshot at https://threatdragondev.azurewebsites.net/
 * merges to `gh-pages` branch will update documentaion at https://docs.threatdragon.org/
 
-* #### Install and run web application ####
+* ### Install and run web application ###
 Some [environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) need to be set up
 for the webapp to run
 ```
@@ -46,7 +46,7 @@ for the webapp to run
 ```
 Navigate in a browser to http://localhost:3000/ to test the app
 
-* #### Install and run desktop application ####
+* ### Install and run desktop application ###
 ```
 ~> git clone git@github.com:OWASP/threat-dragon-desktop.git
 ~> cd threat-dragon-desktop
@@ -57,7 +57,7 @@ Navigate in a browser to http://localhost:3000/ to test the app
 ~/threat-dragon-desktop> npm run start
 ```
 
-* #### Develop web application ####
+* ### Develop web application ###
 Install:
 ```
 git clone git@github.com:OWASP/threat-dragon.git -b your-dev-branch-name
@@ -71,7 +71,7 @@ Make changes to code, and depending on the changes (eg .html or .css), `npm run 
 
 Run modified app with `npm run start`, and navigate in a browser to http://localhost:3000/
 
-* #### Develop desktop application ####
+* ### Develop desktop application ###
 Install:
 ```
 git clone git@github.com:OWASP/threat-dragon-desktop.git -b your-dev-branch-name
@@ -86,7 +86,7 @@ Make changes to code, and depending on the changes (eg .html or .css), `npm run 
 
 Run modified app with either `./electron . run -vv` or `npm run start`
 
-* #### Develop core functions using web app ####
+* ### Develop core functions using web app ###
 Install and build as before
 ```
 ~> git clone git@github.com:OWASP/threat-dragon.git
@@ -106,11 +106,11 @@ Replace the TD core using:
 ~/threat-dragon/node_modules/owasp-threat-dragon-core> npm run build
 ~/threat-dragon/node_modules/owasp-threat-dragon-core> npm run pretest
 ~/threat-dragon/node_modules/owasp-threat-dragon-core> npm test
+~/threat-dragon/node_modules/owasp-threat-dragon-core> cd ../..
 ```
 Rebuild the webapp using the swapped in core package,
 [setting environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) :
 ```
-~/threat-dragon/node_modules/owasp-threat-dragon-core> cd ../..
 ~/threat-dragon> npm run build
 ~/threat-dragon> export GITHUB_CLIENT_ID=<the client id>
 ~/threat-dragon> export GITHUB_CLIENT_SECRET=<the client secret>
@@ -130,7 +130,7 @@ command `npm run build` in core directory and then webapp directory:
 ~/threat-dragon> npm run build
 ~/threat-dragon> npm run start
 ```
-* #### Develop core functions using desktop app ####
+* ### Develop core functions using desktop app ###
 Install and build as before
 ```
 ~> git clone git@github.com:OWASP/threat-dragon-desktop.git
@@ -150,10 +150,10 @@ Replace the TD core using:
 ~/threat-dragon-desktop/node_modules/owasp-threat-dragon-core> npm run build
 ~/threat-dragon-desktop/node_modules/owasp-threat-dragon-core> npm run pretest
 ~/threat-dragon-desktop/node_modules/owasp-threat-dragon-core> npm test
+~/threat-dragon-desktop/node_modules/owasp-threat-dragon-core> cd ../..
 ```
 Rebuild the desktop app using the swapped in core package:
 ```
-~/threat-dragon-desktop/node_modules/owasp-threat-dragon-core> cd ../..
 ~/threat-dragon-desktop> npm run build-content
 ~/threat-dragon-desktop> ln -sf node_modules/electron/cli.js electron
 ~/threat-dragon-desktop> ./electron . run --verbose
@@ -168,7 +168,7 @@ command ` npm run build-content` in desktop directory:
 ~/threat-dragon-desktop> npm run build-content
 ~/threat-dragon-desktop> ./electron . run --verbose
 ```
-* #### Keep branches in sync ####
+* ### Keep branches in sync ###
 Say your fork or branch is out of sync with the main OWASP repo, usually some commits behind.
 This example is for `threat-dragon-desktop` repo, but the same applies to `threat-dragon`
 and `threat-dragon-core` repos:
@@ -181,7 +181,7 @@ git fetch original
 Apply the changes with `git merge original/main` or `git rebase --no-ff original/main` .
 When happy with _everything_ then `git push --force` to update your repo
 
-* #### TD Core release ####
+* ### TD Core release ###
 1. create branch `release-ready` in [core repo](https://github.com/OWASP/threat-dragon-core)
 1. `git clone git@github.com:OWASP/threat-dragon-core.git -b release-ready`
 1. `cd threat-dragon-core`
@@ -205,7 +205,7 @@ When happy with _everything_ then `git push --force` to update your repo
 1. update package on [npmjs registry](https://www.npmjs.com/) with `npm publish`
 1. check that [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) is at correct version
 
-* #### Webapp release ####
+* ### Webapp release ###
 1. create branch `release-ready` in [webapp repo](https://github.com/OWASP/threat-dragon)
 1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
 1. `cd threat-dragon`
@@ -221,10 +221,11 @@ When happy with _everything_ then `git push --force` to update your repo
 1. `cd threat-dragon`
 1. `git tag v1.3`
 1. `git push origin v1.3`
+
 Test the release as in 'Install and run web application' above, ideally on all of Windows, linux and MacOS.
 In general if it works on one platform then it will work on the others, so one platform may be sufficient
 
-* #### Tag the desktop release ####
+* ### Tag the desktop release ###
 1. create branch `release-ready` in [desktop repo](https://github.com/OWASP/threat-dragon-desktop)
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git -b release-ready`
 1. `cd threat-dragon-desktop`
@@ -241,7 +242,7 @@ In general if it works on one platform then it will work on the others, so one p
 1. `git tag v1.3`
 1. `git push origin v1.3`
 
-* #### Windows installer for TD desktop ####
+* ### Windows installer for TD desktop ###
 Create windows .exe and test it on a windows box
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
 1. `cd threat-dragon-desktop`
@@ -252,7 +253,7 @@ Create windows .exe and test it on a windows box
 1. `npm run build-win`
 1. make sure the installer works, navigate to `.exe` and run
 
-* #### Linux installers for TD desktop ####
+* ### Linux installers for TD desktop ###
 Create linux .rpm, .deb .snap, AppImage and test them on a linux box
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
 1. `cd threat-dragon-desktop`
@@ -266,7 +267,7 @@ Create linux .rpm, .deb .snap, AppImage and test them on a linux box
 1. navigate to Snap .snap file and run
 1. navigate to AppImage file and run
 
-* #### MacOS installer for TD desktop ####
+* ### MacOS installer for TD desktop ###
 Create MscOS .deb installer and test it on a mac
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
 1. `cd threat-dragon-desktop`
@@ -277,7 +278,7 @@ Create MscOS .deb installer and test it on a mac
 1. `** `npm run build-osx`
 1. make sure the installer works, navigate to .dmg and run
 
-* #### TD desktop release ####
+* ### TD desktop release ###
 1. tag the desktop release, see above
 1. create the windows installer as above
 1. create the linux installers as above
