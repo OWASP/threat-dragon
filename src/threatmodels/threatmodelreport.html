@@ -56,7 +56,7 @@
     </div>
     <div ng-repeat="diagram in model.detail.diagrams">
         <div class="panel panel-default">
-            <div class="panel-heading panel-title">
+            <div class="panel-heading panel-title tmt-diagram-title">
                 <h4>{{diagram.title}}</h4>
             </div>
             <div class="panel-body">
@@ -64,7 +64,7 @@
                     <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>
                 </div>
                 <div ng-repeat="element in graphs[diagram.id].getCells() | filter:{outOfScope: '!true'}">
-                    <div ng-if="element.attributes.type != 'tm.Boundary'" class="panel panel-default model-element">
+                    <div ng-if="element.attributes.type != 'tm.Boundary'" class="panel panel-default model-element tmt-diagram-element">
                         <div class="panel-heading panel-title">
                             {{element.name}}
                             <span ng-switch="element.attributes.type">

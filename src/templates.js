@@ -710,7 +710,7 @@ angular.module('templates', [])
     '    </div>\n' +
     '    <div ng-repeat="diagram in model.detail.diagrams">\n' +
     '        <div class="panel panel-default">\n' +
-    '            <div class="panel-heading panel-title">\n' +
+    '            <div class="panel-heading panel-title tmt-diagram-title">\n' +
     '                <h4>{{diagram.title}}</h4>\n' +
     '            </div>\n' +
     '            <div class="panel-body">\n' +
@@ -718,7 +718,7 @@ angular.module('templates', [])
     '                    <tmt-diagram graph="graphs[diagram.id]" initialise-graph="initialise(diagram)" height="487" width="650" grid-size="1" interactive="false"/>\n' +
     '                </div>\n' +
     '                <div ng-repeat="element in graphs[diagram.id].getCells() | filter:{outOfScope: \'!true\'}">\n' +
-    '                    <div ng-if="element.attributes.type != \'tm.Boundary\'" class="panel panel-default model-element">\n' +
+    '                    <div ng-if="element.attributes.type != \'tm.Boundary\'" class="panel panel-default model-element tmt-diagram-element">\n' +
     '                        <div class="panel-heading panel-title">\n' +
     '                            {{element.name}}\n' +
     '                            <span ng-switch="element.attributes.type">\n' +
