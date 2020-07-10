@@ -86,7 +86,7 @@ The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A f
 
 # Contributing #
 
-PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch.
+PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch. There are some [developer notes](https://github.com/OWASP/threat-dragon-core/blob/main/dev-notes.md) in the core [threat dragon](https://github.com/OWASP/threat-dragon-core) repo to help getting started with this project.
 
 # Vulnerability disclosure #
 
