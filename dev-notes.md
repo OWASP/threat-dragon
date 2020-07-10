@@ -20,7 +20,7 @@ Both application variants install `threat-dragon-core` as part of the install pr
 `node-modules/owasp-threat-dragon-core`. This package is downloaded during install from the [npmjs registry](https://www.npmjs.com/) as the [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) package.
 
 ### Documentation, demo and dev websites ###
-The public sites are updated from the orginal repo at https://github.com/mike-goodwin/owasp-threat-dragon .
+The public sites are updated from the original repo at https://github.com/mike-goodwin/owasp-threat-dragon .
 These sites can only be updated by the admin of this repo, Mike Goodwin.
 * merges to `master` branch will update online demo at https://threatdragon.org/
 * merges to `development` branch will update snapshot at https://threatdragondev.azurewebsites.net/
@@ -56,9 +56,10 @@ Navigate in a browser to http://localhost:3000/ to test the app
 ~/threat-dragon-desktop> npm test
 ~/threat-dragon-desktop> npm run start
 ```
+The electron-based application should launch itself
 
 * ### Develop web application ###
-Install:
+Install (same steps above):
 ```
 git clone git@github.com:OWASP/threat-dragon.git -b your-dev-branch-name
 cd threat-dragon
@@ -121,7 +122,7 @@ Rebuild the webapp using the swapped in core package,
 ~/threat-dragon> npm run start
 ```
 The webapp can now be run as normal and tested by navigating in a browser to http://localhost:3000/ .
-If changes are made to the core files then (depending on the changes) need to rebuild using
+If changes are made to the core files, then to see them in the webapp (depending on the changes) need to rebuild using
 command `npm run build` in core directory and then webapp directory:
 ```
 ~/threat-dragon> cd node_modules/owasp-threat-dragon-core
@@ -158,7 +159,7 @@ Rebuild the desktop app using the swapped in core package:
 ~/threat-dragon-desktop> ln -sf node_modules/electron/cli.js electron
 ~/threat-dragon-desktop> ./electron . run --verbose
 ```
-The desktop will run as before. If changes are made to the core files then (depending on the changes)
+The desktop will run as before. If changes are made to the core files, then to see them in the desktop (depending on the changes)
 need to rebuild using command ` npm run build` in core directory and then
 command ` npm run build-content` in desktop directory:
 ```
@@ -268,7 +269,7 @@ Create linux .rpm, .deb .snap, AppImage and test them on a linux box
 1. navigate to AppImage file and run
 
 * ### MacOS installer for TD desktop ###
-Create MscOS .deb installer and test it on a mac
+Create MacOS .deb installer and test it on a mac
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
 1. `cd threat-dragon-desktop`
 1. `npm install`
@@ -283,6 +284,6 @@ Create MscOS .deb installer and test it on a mac
 1. create the windows installer as above
 1. create the linux installers as above
 1. create the MacOS installer as above
-1. create ther release in [OWASP desktop repo](https://github.com/OWASP/threat-dragon-desktop) using tag v1.3
+1. create the release in [OWASP desktop repo](https://github.com/OWASP/threat-dragon-desktop) using tag v1.3
 1. add the release notes to this release
 1. attach installer files to this release
