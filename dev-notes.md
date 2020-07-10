@@ -1,6 +1,6 @@
-## Developer notes for [OWASP](https://www.owasp.org) [Threat Dragon](https://owasp.org/www-project-threat-dragon/) ##
+# Developer notes for [OWASP](https://www.owasp.org) [Threat Dragon](https://owasp.org/www-project-threat-dragon/) #
 
-### Overview ###
+## Overview ##
 
 This is a collection of notes used during development, most of which should be up to date - if not then raise an issue.
 The recipes are for both Windows and Linux/MacOS; in general the `npm` and `git` commands are the same on all platforms,
@@ -19,12 +19,14 @@ The web application repo, which also relies on the core functions, is at: https:
 Both application variants install `threat-dragon-core` as part of the install process `npm install`, under directory
 `node-modules/owasp-threat-dragon-core`. This package is downloaded during install from the [npmjs registry](https://www.npmjs.com/) as the [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) package.
 
-### Documentation, demo and dev websites ###
+## Documentation, demo and dev websites ##
 The public sites are updated from the original repo at https://github.com/mike-goodwin/owasp-threat-dragon .
 These sites can only be updated by the admin of this repo, Mike Goodwin.
 * merges to `master` branch will update online demo at https://threatdragon.org/
 * merges to `development` branch will update snapshot at https://threatdragondev.azurewebsites.net/
 * merges to `gh-pages` branch will update documentaion at https://docs.threatdragon.org/
+
+## Install and Run Codebase ##
 
 * ### Install and run web application ###
 Some [environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) need to be set up
@@ -58,8 +60,10 @@ Navigate in a browser to http://localhost:3000/ to test the app
 ```
 The electron-based application should launch itself
 
+## Development ##
+
 * ### Develop web application ###
-Install (same steps above):
+Install as before:
 ```
 git clone git@github.com:OWASP/threat-dragon.git -b your-dev-branch-name
 cd threat-dragon
@@ -181,6 +185,8 @@ git fetch original
 ```
 Apply the changes with `git merge original/main` or `git rebase --no-ff original/main` .
 When happy with _everything_ then `git push --force` to update your repo
+
+## Create New Releases ##
 
 * ### TD Core release ###
 1. create branch `release-ready` in [core repo](https://github.com/OWASP/threat-dragon-core)
