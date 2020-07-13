@@ -210,7 +210,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function emptyDiagram() {
-        return { title: '', thumbnail: './public/content/images/thumbnail.jpg' };
+        return { title: '', thumbnail: './public/content/images/thumbnail.stride.jpg', model: 'STRIDE' };
     }
 
     function isNewModel() {

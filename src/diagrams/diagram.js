@@ -219,7 +219,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
 
     function generateThreats() {
         if (vm.selected) {
-            threatengine.generateForElement(vm.selected).then(onGenerateThreats);
+            threatengine.generatePerElement(vm.selected, vm.diagram.model).then(onGenerateThreats);
         }
     }
 
