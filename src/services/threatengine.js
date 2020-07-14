@@ -2,14 +2,6 @@
 
 var Engine = require('json-rules-engine').Engine;
 
-/* STRIDE per Element
-          S | T | R | I | D | E
-ACTOR   | X |   | X |   |   |
-STORE   |   | X | X | X | X |
-PROCESS | X | X | X | X | X | X
-FLOW    |   | X |   | X | X |
-*/
-
 function threatengine() {
 
   var service = {
@@ -67,6 +59,13 @@ function threatengine() {
 
   function initialiseRules(engine) {
 
+    /* STRIDE per Element
+              S | T | R | I | D | E
+    ACTOR   | X |   | X |   |   |
+    STORE   |   | X | X | X | X |
+    PROCESS | X | X | X | X | X | X
+    FLOW    |   | X |   | X | X |
+    */
     engine.addRule({
       conditions: {
         all: [
@@ -306,6 +305,7 @@ function threatengine() {
       }
     });
 
+    /* STRIDE using context */
     engine.addRule({
       conditions: {
         all: [

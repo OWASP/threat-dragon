@@ -269,6 +269,8 @@ describe('threatModel controller', function () {
         var mockThreatModel;
         var mockPath;
         var mockModelLocation;
+        var diagramThumbnail;
+        var diagramModel;
 
         beforeEach(function () {
 
@@ -300,6 +302,8 @@ describe('threatModel controller', function () {
             //location mock
             mockPath = 'mock path';
             $location.path(mockPath);
+            diagramThumbnail = './public/content/images/thumbnail.stride.jpg';
+            diagramModel = 'STRIDE';
 
             //locator mocks
             spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
@@ -481,7 +485,7 @@ describe('threatModel controller', function () {
             $scope.vm.dirty = false;
             $scope.vm.duplicateDiagram(1);
 
-            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }, { id: 2, title: "Copy of 1", diagramJson: "", size: 0, thumbnail: './public/content/images/thumbnail.jpg' }]);
+            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }, { id: 2, title: "Copy of 1", diagramJson: "", size: 0, thumbnail: diagramThumbnail, model: diagramModel }]);
             expect($scope.vm.dirty).toBe(true);
             expect($scope.vm.addingDiagram).toBe(false);
             expect($scope.vm.newDiagram).toEqual($scope.vm.newDiagram);
