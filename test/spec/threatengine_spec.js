@@ -10,7 +10,7 @@ describe('threatengine service:', function () {
         it('process should generate STRIDE', function (done) {
 
             var element = { attributes: { type: 'tm.Process' } };
-            threatengine.generateForElement(element).then(function (threats) {
+            threatengine.generatePerElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(6);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -27,7 +27,7 @@ describe('threatengine service:', function () {
         it('flow should generate TID', function (done) {
 
             var element = { attributes: { type: 'tm.Flow' } };
-            threatengine.generateForElement(element).then(function (threats) {
+            threatengine.generatePerElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(3);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -42,7 +42,7 @@ describe('threatengine service:', function () {
         it('actor should generate SR', function (done) {
 
             var element = { attributes: { type: 'tm.Actor' } };
-            threatengine.generateForElement(element).then(function (threats) {
+            threatengine.generatePerElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(2);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -56,7 +56,7 @@ describe('threatengine service:', function () {
         it('store should generate TRID', function (done) {
 
             var element = { attributes: { type: 'tm.Store' } };
-            threatengine.generateForElement(element).then(function (threats) {
+            threatengine.generatePerElement(element).then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(4);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -76,7 +76,7 @@ describe('threatengine service:', function () {
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: false };
 
             //generate the threats
-            threatengine.generateForElement(subject).then(function (threats) {
+            threatengine.generatePerElement(subject).then(function (threats) {
 
                 expect(threats).toBeDefined();
                 var ruleIds = _.uniq(_.map(threats, 'ruleId'));
@@ -95,7 +95,7 @@ describe('threatengine service:', function () {
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true };
 
             //generate the threats
-            threatengine.generateForElement(subject).then(function (threats) {
+            threatengine.generatePerElement(subject).then(function (threats) {
 
                 expect(threats).toBeDefined();
                 var ruleIds = _.uniq(_.map(threats, 'ruleId'));
@@ -114,7 +114,7 @@ describe('threatengine service:', function () {
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: false, isEncrypted: true };
 
             //generate the threats
-            threatengine.generateForElement(subject).then(function (threats) {
+            threatengine.generatePerElement(subject).then(function (threats) {
 
                 expect(threats).toBeDefined();
                 var ruleIds = _.uniq(_.map(threats, 'ruleId'));
@@ -133,7 +133,7 @@ describe('threatengine service:', function () {
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: true };
 
             //generate the threats
-            threatengine.generateForElement(subject).then(function (threats) {
+            threatengine.generatePerElement(subject).then(function (threats) {
 
                 expect(threats).toBeDefined();
                 var ruleIds = _.uniq(_.map(threats, 'ruleId'));

@@ -217,9 +217,9 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         return threatmodellocator.getModelPathFromRouteParams($routeParams);
     }
 
-    function generateThreats() {
+    function generateThreats(model) {
         if (vm.selected) {
-            threatengine.generateForElement(vm.selected).then(onGenerateThreats);
+            threatengine.generatePerElement(vm.selected, model).then(onGenerateThreats);
         }
     }
 

@@ -22,7 +22,7 @@ describe('diagram controller', function () {
     var mockRepo = 'repo';
     var mockBranch = 'branch';
     var mockModelName = 'model name';
-    var mockDiagramId = 'diagam';
+    var mockDiagramId = 'diagram';
     
     beforeEach(function () {
         
@@ -621,7 +621,6 @@ describe('diagram controller', function () {
         var diagramId;
         var graph;
         var title;
-        var diagramData;
         var mockLocation
         
         beforeEach(function() {
@@ -737,7 +736,6 @@ describe('diagram controller', function () {
             expect($scope.vm.loaded).toBe(true);
             expect($scope.vm.dirty).toBe(false);
             expect($scope.vm.diagram.title).toEqual(title);
-                 
         })
         
         it('should initialise a model and select the specified element', function() {
@@ -837,6 +835,7 @@ describe('diagram controller', function () {
     describe('threat generation tests: ', function() {
         
         var element;
+        var methodology;
         
         beforeEach(function() {
      
@@ -848,8 +847,8 @@ describe('diagram controller', function () {
             
             var threats = ['threat1', 'threat2', 'threat3'];
             var currentThreat = threats[0];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             
@@ -857,8 +856,8 @@ describe('diagram controller', function () {
             $scope.vm.generateThreats()
             $scope.$apply();
             
-            expect(mockThreatEngine.generateForElement).toHaveBeenCalled();
-            expect(mockThreatEngine.generateForElement.calls.argsFor(0)).toEqual([element]);
+            expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
+            expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
             expect(mockDialogs.confirm).toHaveBeenCalled();
             expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html');
             //argument 2 contains the supplied threat
@@ -869,8 +868,8 @@ describe('diagram controller', function () {
         it('should generate no threats', function() {
             
             var threats = [];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             
@@ -885,8 +884,8 @@ describe('diagram controller', function () {
             
             var threats = ['threat1', 'threat2', 'threat3'];
             var currentThreat = threats[0];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
@@ -908,8 +907,8 @@ describe('diagram controller', function () {
             
             var threats = ['threat1', 'threat2', 'threat3'];
             var currentThreat = threats[0];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
@@ -931,8 +930,8 @@ describe('diagram controller', function () {
         it('should not add a threat to the element', function() {
             
             var threats = ['threat1', 'threat2', 'threat3'];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
@@ -953,8 +952,8 @@ describe('diagram controller', function () {
         it('should not add a threat to the element', function() {
             
             var threats = ['threat1', 'threat2', 'threat3'];
-            mockThreatEngine.generateForElement = function() { return $q.when(threats); };
-            spyOn(mockThreatEngine, 'generateForElement').and.callThrough();
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
