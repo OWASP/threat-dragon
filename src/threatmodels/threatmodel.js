@@ -166,14 +166,17 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
 
     function duplicateDiagram(index) {
         var duplicatedDiagram = angular.copy(vm.threatModel.detail.diagrams[index]);
-        var newDiagram = {};
-        newDiagram.title = "Copy of " + duplicatedDiagram.title;
-        newDiagram.id = newID();
-        newDiagram.diagramJson = duplicatedDiagram.diagramJson;
-        newDiagram.size = duplicatedDiagram.size;
-        newDiagram.model = duplicatedDiagram.model;
-        newDiagram.thumbnail = duplicatedDiagram.thumbnail;
-        vm.threatModel.detail.diagrams.push(newDiagram);
+        vm.newDiagram.title = "Copy of " + duplicatedDiagram.title;
+        vm.newDiagram.id = newID();
+        vm.newDiagram.diagramJson = duplicatedDiagram.diagramJson;
+        vm.newDiagram.size = duplicatedDiagram.size;
+        if (duplicatedDiagram.model != null && duplicatedDiagram.thumbnail != null) {
+            vm.newDiagram.model = duplicatedDiagram.model;
+            vm.newDiagram.thumbnail = duplicatedDiagram.thumbnail;
+        }
+        vm.threatModel.detail.diagrams.push(vm.newDiagram);
+        vm.newDiagram = emptyDiagram();
+        vm.addingDiagram = false;
         vm.dirty = true;
     }
 
