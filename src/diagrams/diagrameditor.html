@@ -40,7 +40,11 @@
                 </div>
                 <div ng-if="vm.diagram.title" class="panel-heading panel-title">
                     <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
-                    <!-- span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible" title="Edit title"></span -->
+                    <span class="pull-right">
+                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'STRIDE'">STRIDE</label>
+                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'CIA'">CIA</label>
+                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'LINDDUN'">LINDDUN</label>
+                    </span>
                 </div>
                 <div class="panel-body">
                     <form name="diagramEditToolBar">
@@ -58,7 +62,7 @@
                                 <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">
                                     <span class="fa fa-undo" aria-hidden="true"></span>
                                 </button>
-                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == 'tm.Boundary'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.model)" data-placement="top" title="Suggest threats for the selected element">
+                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == 'tm.Boundary'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">
                                     <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
                                 </button>
                                 <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">

@@ -14,17 +14,17 @@ function threatengine() {
     this.element = element;
   };
 
-  var model = 'STRIDE';
+  var diagramType = 'STRIDE';
 
   return service;
 
-  function generatePerElement(element, methodology) {
+  function generatePerElement(element, type) {
     //implements one of {STRIDE per Element, LINDDUN per element, CIA}
-    model = methodology;
+    diagramType = type;
     var engine = new Engine();
     initialiseRules(engine);
     engine.addFact('el', new Element(element));
-    engine.addFact('model', getModel);
+    engine.addFact('diagramType', getModel);
 
     return engine.run().then(onCompleted);
 
@@ -38,9 +38,9 @@ function threatengine() {
   }
 
   function getModel() {
-    //diagram.model in 'STRIDE', 'LINDDUN', 'CIA'
-    if (model == 'STRIDE' || model ==  'LINDDUN' || model == 'CIA') {
-      return model;
+    //diagram.diagramType in 'STRIDE', 'LINDDUN', 'CIA'
+    if (diagramType == 'STRIDE' || diagramType ==  'LINDDUN' || diagramType == 'CIA') {
+      return diagramType;
     } else {
       //if unrecognised then return default of STRIDE
       return 'STRIDE';
@@ -70,7 +70,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -108,7 +108,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -151,7 +151,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -194,7 +194,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -237,7 +237,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -280,7 +280,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },
@@ -310,7 +310,7 @@ function threatengine() {
       conditions: {
         all: [
           {
-            fact: 'model',
+            fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
           },

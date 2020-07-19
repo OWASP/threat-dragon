@@ -57,8 +57,12 @@ angular.module('templates', [])
     '                    <span>Loading...</span>\n' +
     '                </div>\n' +
     '                <div ng-if="vm.diagram.title" class="panel-heading panel-title">\n' +
-    '                    <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>\n' +
-    '                    <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>\n' +
+    '                    <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>\n' +
+    '                    <span class="pull-right">\n' +
+    '                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="\'STRIDE\'">STRIDE</label>\n' +
+    '                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="\'CIA\'">CIA</label>\n' +
+    '                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="\'LINDDUN\'">LINDDUN</label>\n' +
+    '                    </span>\n' +
     '                </div>\n' +
     '                <div class="panel-body">\n' +
     '                    <form name="diagramEditToolBar">\n' +
@@ -67,7 +71,7 @@ angular.module('templates', [])
     '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
     '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
+    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Close Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">\n' +
@@ -76,7 +80,7 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
     '                                    <span class="fa fa-undo" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.model)" data-placement="top" title="Suggest threats for the selected element">\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
@@ -311,7 +315,11 @@ angular.module('templates', [])
     '</ul> \n' +
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
-    '</button>')
+    '</button>\n' +
+    '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> STRIDE per element...\n' +
+    '</button>\n' +
+    '')
   $templateCache.put('layout/pager.html',
     '<div class="clearfix" ng-if="canPrevious || canNext">\n' +
     '    <button ng-disabled="!canPrevious" class="pull-left btn btn-link" ng-click="previous()">Previous page</button>\n' +
