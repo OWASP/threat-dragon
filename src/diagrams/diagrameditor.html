@@ -39,8 +39,8 @@
                     <span>Loading...</span>
                 </div>
                 <div ng-if="vm.diagram.title" class="panel-heading panel-title">
-                    <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
-                    <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>
+                    <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
+                    <!-- span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible" title="Edit title"></span -->
                 </div>
                 <div class="panel-body">
                     <form name="diagramEditToolBar">
