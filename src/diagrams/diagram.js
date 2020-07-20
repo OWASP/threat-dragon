@@ -264,7 +264,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                dialogs.confirm('diagrams/ThreatEditPane.html',
+                dialogs.confirm('diagrams/StrideEditPane.html',
                     addThreat,
                     function () {
                         return {

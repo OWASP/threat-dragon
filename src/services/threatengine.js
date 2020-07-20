@@ -354,6 +354,149 @@ function threatengine() {
         }
       }
     });
+
+    /* CIA per Element is all three for all elements except boundary */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'CIA'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Actor'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '0f20e64c-5d03-42ac-b0ae-ed105a38ee1f',
+        params: {
+          ruleId: '0f20e64c-5d03-42ac-b0ae-ed105a38ee1f',
+          title: 'Generic threat to Confidentiality',
+          type: 'Confidentiality',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to confidentiality'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'CIA'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Actor'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '42511938-37d9-4bb6-866c-947a7c776e7e',
+        params: {
+          ruleId: '42511938-37d9-4bb6-866c-947a7c776e7e',
+          title: 'Generic threat to Integrity',
+          type: 'Integrity',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to integrity'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'CIA'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Actor'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Availability',
+          type: 'Availability',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to availability'
+        }
+      }
+    });
   }
 }
 

@@ -859,7 +859,7 @@ describe('diagram controller', function () {
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
             expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html');
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html');
             //argument 2 contains the supplied threat
             expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
             expect(threats.length).toEqual(2);

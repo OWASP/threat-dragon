@@ -80,14 +80,14 @@ function elementThreats($routeParams, $location, common, dialogs) {
         scope.applyToAll = false;
 
         scope.onNewThreat = function () {
-            dialogs.confirm('diagrams/ThreatEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
+            dialogs.confirm('diagrams/StrideEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
         };
 
         scope.onEditThreat = function (index) {
             editIndex = index;
             originalThreat = angular.copy(scope.threats[index]);
             $location.search('threat', originalThreat.id);
-            dialogs.confirm('diagrams/ThreatEditPane.html', scope.editThreat, function () { return { heading: 'Edit Threat', threat: scope.threats[index], editing: true }; }, scope.cancelEdit);
+            dialogs.confirm('diagrams/StrideEditPane.html', scope.editThreat, function () { return { heading: 'Edit Threat', threat: scope.threats[index], editing: true }; }, scope.cancelEdit);
         };
 
         scope.removeThreat = function (index) {

@@ -1,6 +1,87 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
-    $templateCache.put('diagrams/confirmReloadOnDirty.html',
+    $templateCache.put('diagrams/CiaEditPane.html',
+    '﻿<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        <form name="threatEditForm">\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Title</label>\n' +
+    '                <input name="titleInput" class="form-control" ng-required="true" type="text" ng-model="parameter.threat.title" placeholder="A short title for the threat" />\n' +
+    '                <div ng-show="!threatEditForm.titleInput.$valid && threatEditForm.titleInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat title cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>STRIDE threat type</label>\n' +
+    '                <select name="typeInput" class="form-control" ng-required="true" ng-model="parameter.threat.type">\n' +
+    '                    <option selected>Confidentiality</option>\n' +
+    '                    <option>Integrity</option>\n' +
+    '                    <option>Availability</option>\n' +
+    '                </select>\n' +
+    '                <div ng-show="!threatEditForm.typeInput.$valid && threatEditForm.typeInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat type cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-left">\n' +
+    '                <label>Threat status</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-right">\n' +
+    '                <label>Severity</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" required>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Medium\'">Medium</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Low\'">Low</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="clearfix"></div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Description</label>\n' +
+    '                <textarea name="descriptionInput" ng-model="parameter.threat.description" class="form-control" rows="5" placeholder="Detailed description of the threat"></textarea>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Mitigations</label>\n' +
+    '                <textarea name="mitigationInput" ng-model="parameter.threat.mitigation" class="form-control" rows="5" placeholder="Mitigations for the threat"></textarea>\n' +
+    '            </div>\n' +
+    '        </form>\n' +
+    '    </div>\n' +
+    '    <div ng-if="parameter.editing" class="modal-footer">\n' +
+    '        <button class="btn btn-primary" ng-disabled="!threatEditForm.$dirty || !threatEditForm.$valid" ng-click="onOK()">Save</button>\n' +
+    '        <button class="btn btn-default" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '    <div ng-if="!parameter.editing" class="modal-footer">\n' +
+    '        <span class="pull-left">\n' +
+    '            <input type="checkbox" ng-model="applyToAll">\n' +
+    '            Do this for all remaining threats \n' +
+    '        </span>\n' +
+    '        <tmt-modal-close action="onOK(applyToAll)" new-class="fade-left" template-url="diagrams/modalAccept.html"></tmt-modal-close>\n' +
+    '        <tmt-modal-close action="onCancel(applyToAll)" new-class="fade-down" template-url="diagrams/modalIgnore.html"></tmt-modal-close>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
+  $templateCache.put('diagrams/confirmReloadOnDirty.html',
     '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
@@ -213,7 +294,7 @@ angular.module('templates', [])
     '﻿<button class="btn btn-default" ng-click="onAction()">\n' +
     '    Ignore\n' +
     '</button>')
-  $templateCache.put('diagrams/ThreatEditPane.html',
+  $templateCache.put('diagrams/StrideEditPane.html',
     '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
@@ -317,7 +398,7 @@ angular.module('templates', [])
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
     '</button>\n' +
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> STRIDE per element...\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Threats per element...\n' +
     '</button>\n' +
     '')
   $templateCache.put('layout/pager.html',
