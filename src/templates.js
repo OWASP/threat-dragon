@@ -482,7 +482,7 @@ angular.module('templates', [])
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
     '</button>\n' +
-    '<button id="buttonNewThreat" class="btn btn-link" ng-click="generateThreats(type)">\n' +
+    '<button id="buttonNewThreat" class="btn btn-link" ng-click="vm.generateThreats(type)">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element...\n' +
     '</button>\n' +
     '')

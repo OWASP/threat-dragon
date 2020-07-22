@@ -265,18 +265,12 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         var threatList = threats;
         var currentThreat;
         var template;
-//        if (type == 'CIA') {
-//            template = "diagrams/CiaEditPane.html";
-//        } else if (type == 'LINDDUN') {
-//            template = "diagrams/LinddunEditPane.html";
-//        } else {
-            template = "diagrams/StrideEditPane.html";
-//        }
-        suggestThreat(template);
+        suggestThreat();
 
-        function suggestThreat(template) {
+        function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
+                selectTemplate(currentThreat.modelType);
                 dialogs.confirm(template,
                     addThreat,
                     function () {
@@ -317,6 +311,18 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         function ignoreThreat(applyToAll) {
             if (!applyToAll) {
                 $timeout(suggestThreat, 500);
+            }
+        }
+
+        function selectTemplate(type) {
+            if (type == null) {
+                template = 'diagrams/StrideEditPane.html';
+            } else if (type == 'CIA') {
+                template = 'diagrams/CiaEditPane.html';
+            } else if (type == 'LINDDUN') {
+                template = 'diagrams/LinddunEditPane.html';
+            } else {
+                template = 'diagrams/StrideEditPane.html';
             }
         }
     }

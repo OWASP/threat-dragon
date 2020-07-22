@@ -97,6 +97,7 @@ function threatengine() {
           ruleId: 'b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc',
           title: 'Generic spoofing threat',
           type: 'Spoofing',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic spoofing threat'
@@ -140,6 +141,7 @@ function threatengine() {
           ruleId: '4adaa48a-0345-4533-a189-64c98c4420dd',
           title: 'Generic tampering threat',
           type: 'Tampering',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic tampering threat'
@@ -183,6 +185,7 @@ function threatengine() {
           ruleId: '87bc37e2-798e-4d68-bb96-feb1da26da48',
           title: 'Generic repudiation threat',
           type: 'Repudiation',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic repudiation threat'
@@ -226,6 +229,7 @@ function threatengine() {
           ruleId: '13000296-b17d-4b72-9cc4-f5cc33f80e4c',
           title: 'Generic information disclosure threat',
           type: 'Information disclosure',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic information disclosure threat'
@@ -269,6 +273,7 @@ function threatengine() {
           ruleId: 'edb05d76-a695-455f-947b-7d67b78bc31d',
           title: 'Generic DoS threat',
           type: 'Denial of service',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic DoS threat'
@@ -298,6 +303,7 @@ function threatengine() {
           ruleId: 'c1377855-ea20-4c97-8861-f95c364fb8d2',
           title: 'Generic elevation threat',
           type: 'Elevation of privilege',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic elevation threat'
@@ -347,6 +353,7 @@ function threatengine() {
           ruleId: 'c1cae982-3e92-4bb2-b50b-ea51137fc3a7',
           title: 'Use encryption',
           type: 'Information disclosure',
+          modelType: 'STRIDE',
           status: 'Open',
           severity: 'High',
           description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker.',
@@ -372,6 +379,7 @@ function threatengine() {
           ruleId: '0f20e64c-5d03-42ac-b0ae-ed105a38ee1f',
           title: 'Generic threat to Confidentiality',
           type: 'Confidentiality',
+          modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to confidentiality'
@@ -394,6 +402,7 @@ function threatengine() {
           ruleId: '42511938-37d9-4bb6-866c-947a7c776e7e',
           title: 'Generic threat to Integrity',
           type: 'Integrity',
+          modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to integrity'
@@ -416,6 +425,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Availability',
           type: 'Availability',
+          modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to availability'
@@ -444,6 +454,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Linkability',
           type: 'Linkability',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to linkability'
@@ -466,6 +477,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Identifiability',
           type: 'Identifiability',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to identifiability'
@@ -508,6 +520,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Non-repudiation',
           type: 'Non-repudiation',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to non-repudiation'
@@ -550,6 +563,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Detectability',
           type: 'Detectability',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to detectability'
@@ -592,6 +606,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Disclosure of information',
           type: 'Disclosure of information',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to disclosure of information'
@@ -620,6 +635,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Unawareness',
           type: 'Unawareness',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to unawareness'
@@ -662,6 +678,7 @@ function threatengine() {
           ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
           title: 'Generic threat to Non-compliance',
           type: 'Non-compliance',
+          modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to non-compliance'
