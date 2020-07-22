@@ -363,31 +363,6 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'CIA'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Actor'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
           }
         ]
       },
@@ -410,31 +385,6 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'CIA'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Actor'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
           }
         ]
       },
@@ -457,31 +407,6 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'CIA'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Actor'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
           }
         ]
       },
@@ -494,6 +419,252 @@ function threatengine() {
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to availability'
+        }
+      }
+    });
+    /*        L | I | N | D | D | U | N
+    ACTOR   | X | X |   |   |   | X |
+    STORE   | X | X | X | X | X |   | X
+    FLOW    | X | X | X | X | X |   | X
+    PROCESS | X | X | X | X | X |   | X
+    */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Linkability',
+          type: 'Linkability',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to linkability'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Identifiability',
+          type: 'Identifiability',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to identifiability'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Non-repudiation',
+          type: 'Non-repudiation',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to non-repudiation'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Detectability',
+          type: 'Detectability',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to detectability'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Disclosure of information',
+          type: 'Disclosure of information',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to disclosure of information'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            fact: 'el',
+            path: '.element.attributes.type',
+            operator: 'equal',
+            value: 'tm.Actor'
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Unawareness',
+          type: 'Unawareness',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to unawareness'
+        }
+      }
+    });
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            any: [
+              {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Store'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Flow'
+              }, {
+                fact: 'el',
+                path: '.element.attributes.type',
+                operator: 'equal',
+                value: 'tm.Process'
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        params: {
+          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          title: 'Generic threat to Non-compliance',
+          type: 'Non-compliance',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'A generic threat to non-compliance'
         }
       }
     });

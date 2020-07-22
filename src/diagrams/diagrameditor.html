@@ -16,11 +16,11 @@
                 <!--Threat pane-->
                 <div uib-accordion-group is-open="vm.viewThreats">
                     <uib-accordion-heading>
-                        Edit threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
+                        Manage threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
                     </uib-accordion-heading>
                     <div ng-if="vm.selected">
                         <div ng-if="!vm.selected.outOfScope">
-                            <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" />
+                            <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" type="vm.diagram.diagramType" />
                         </div>
                         <div ng-if="vm.selected.outOfScope">
                             <em>The selected element is out of scope</em>
@@ -40,10 +40,10 @@
                 </div>
                 <div ng-if="vm.diagram.title" class="panel-heading panel-title">
                     <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
-                    <span class="pull-right">
-                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'STRIDE'">STRIDE</label>
-                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'CIA'">CIA</label>
-                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'LINDDUN'">LINDDUN</label>
+                    <span class="pull-right" >
+                        <button class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'STRIDE'" ng-click="vm.setThumbnail()" >STRIDE</button>
+                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'CIA'" ng-click="vm.setThumbnail()" >CIA</label>
+                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'LINDDUN'" ng-click="vm.setThumbnail()" >LINDDUN</label>
                     </span>
                 </div>
                 <div class="panel-body">

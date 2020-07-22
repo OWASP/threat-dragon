@@ -37,6 +37,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.setGrid = setGrid;
     vm.showGrid = false;
     vm.selected = null;
+    vm.setThumbnail = setThumbnail;
     vm.copied = null;
     vm.viewStencil = true;
     vm.viewThreats = false;
@@ -204,6 +205,10 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         }
     }
 
+    function setThumbnail() {
+        vm.currentDiagram.thumbnail = "./public/content/images/thumbnail.linddun.jpg";
+    }
+
     function onError(error) {
         vm.errored = true;
         logError(error);
@@ -259,12 +264,20 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         var threatTotal = threats.length;
         var threatList = threats;
         var currentThreat;
-        suggestThreat();
+        var template;
+//        if (type == 'CIA') {
+//            template = "diagrams/CiaEditPane.html";
+//        } else if (type == 'LINDDUN') {
+//            template = "diagrams/LinddunEditPane.html";
+//        } else {
+            template = "diagrams/StrideEditPane.html";
+//        }
+        suggestThreat(template);
 
-        function suggestThreat() {
+        function suggestThreat(template) {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                dialogs.confirm('diagrams/StrideEditPane.html',
+                dialogs.confirm(template,
                     addThreat,
                     function () {
                         return {

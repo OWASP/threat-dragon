@@ -64,6 +64,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             scope:
             {
                 threats: '=',
+                type: '=',
                 save: '&'
             }
         };
@@ -79,8 +80,16 @@ function elementThreats($routeParams, $location, common, dialogs) {
     function link(scope, element, attrs) {
         scope.applyToAll = false;
 
-        scope.onNewThreat = function () {
-            dialogs.confirm('diagrams/StrideEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
+        scope.onNewThreat = function (type) {
+            var template;
+            if (type == 'CIA') {
+                template = "diagrams/CiaEditPane.html";
+            } else if (type == 'LINDDUN') {
+                template = "diagrams/LinddunEditPane.html";
+            } else {
+                template = "diagrams/StrideEditPane.html";
+            }
+            dialogs.confirm(template, scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
         };
 
         scope.onEditThreat = function (index) {
