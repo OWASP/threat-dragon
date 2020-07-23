@@ -63,6 +63,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             restrict: 'E',
             scope:
             {
+                suggest: '=',
                 threats: '=',
                 type: '=',
                 save: '&'
@@ -79,6 +80,10 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
     function link(scope, element, attrs) {
         scope.applyToAll = false;
+
+        scope.onSuggestThreats = function () {
+            scope.suggest(scope.type);
+        };
 
         scope.onNewThreat = function () {
             newThreat = initialiseThreat(scope.type);

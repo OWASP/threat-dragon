@@ -119,7 +119,7 @@ angular.module('templates', [])
     '                    </uib-accordion-heading>\n' +
     '                    <div ng-if="vm.selected">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" type="vm.diagram.diagramType" />\n' +
+    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +
@@ -482,7 +482,7 @@ angular.module('templates', [])
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
     '</button>\n' +
-    '<button id="buttonNewThreat" class="btn btn-link" ng-click="vm.generateThreats(type)">\n' +
+    '<button id="buttonNewThreat" class="btn btn-link" ng-click="onSuggestThreats()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element...\n' +
     '</button>\n' +
     '')
