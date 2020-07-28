@@ -64,6 +64,10 @@ text.hasOpenThreats  {
   fill: green;
 }
 
+.btn-diagram-type {
+	padding-top: 0px;
+}
+
 /*threat model link tools*/
 
 .joint-type-tm-flow .link-tool .tool-options {

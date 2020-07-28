@@ -41,9 +41,9 @@
                 <div ng-if="vm.diagram.title" class="panel-heading panel-title">
                     <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>
                     <span class="pull-right" >
-                        <button class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'STRIDE'" ng-click="vm.setThumbnail()" >STRIDE</button>
-                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'CIA'" ng-click="vm.setThumbnail()" >CIA</label>
-                        <label class="btn btn-default" ng-model="vm.diagram.diagramType" uib-btn-radio="'LINDDUN'" ng-click="vm.setThumbnail()" >LINDDUN</label>
+                        <button class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="'STRIDE'" >STRIDE</button>
+                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="'CIA'" >CIA</label>
+                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="'LINDDUN'" >LINDDUN</label>
                     </span>
                 </div>
                 <div class="panel-body">

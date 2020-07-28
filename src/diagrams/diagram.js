@@ -37,7 +37,6 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.setGrid = setGrid;
     vm.showGrid = false;
     vm.selected = null;
-    vm.setThumbnail = setThumbnail;
     vm.copied = null;
     vm.viewStencil = true;
     vm.viewThreats = false;
@@ -203,10 +202,6 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
             vm.currentDiagram.clearGrid();
             vm.currentDiagram.setGridSize(gridSizeOff);
         }
-    }
-
-    function setThumbnail() {
-        vm.currentDiagram.thumbnail = "./public/content/images/thumbnail.linddun.jpg";
     }
 
     function onError(error) {
