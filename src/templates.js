@@ -140,9 +140,9 @@ angular.module('templates', [])
     '                <div ng-if="vm.diagram.title" class="panel-heading panel-title">\n' +
     '                    <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>\n' +
     '                    <span class="pull-right" >\n' +
-    '                        <button class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'STRIDE\'" >STRIDE</button>\n' +
-    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'CIA\'" >CIA</label>\n' +
-    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'LINDDUN\'" >LINDDUN</label>\n' +
+    '                        <button class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" ng-click="vm.updateDiagramType()" uib-btn-radio="\'STRIDE\'" >STRIDE</button>\n' +
+    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" ng-click="vm.updateDiagramType()" uib-btn-radio="\'CIA\'" >CIA</label>\n' +
+    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" ng-click="vm.updateDiagramType()" uib-btn-radio="\'LINDDUN\'" >LINDDUN</label>\n' +
     '                    </span>\n' +
     '                </div>\n' +
     '                <div class="panel-body">\n' +
