@@ -455,6 +455,26 @@ describe('diagram controller', function () {
            setNoThreats(cell);
             
         });
+
+        it('should update the thumbnail after a diagram type change', function() {
+            
+            var type = "CIA"
+            var diagram = {};
+            $scope.vm.diagram = diagram
+            $scope.vm.diagram.diagramType = type;
+            $scope.vm.updateDiagramType();
+            expect($scope.vm.diagram.thumbnail).toEqual('./public/content/images/thumbnail.cia.jpg');
+
+            type = "LINDDUN"
+            $scope.vm.diagram.diagramType = type;
+            $scope.vm.updateDiagramType();
+            expect($scope.vm.diagram.thumbnail).toEqual('./public/content/images/thumbnail.linddun.jpg');
+            
+            type = "Everything Else"
+            $scope.vm.diagram.diagramType = type;
+            $scope.vm.updateDiagramType();
+            expect($scope.vm.diagram.thumbnail).toEqual('./public/content/images/thumbnail.stride.jpg');
+         });
         
     })
         
