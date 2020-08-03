@@ -45,6 +45,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.zoomOut = zoomOut;
     vm.reload = reload;
     vm.save = save;
+    vm.updateDiagramType = updateDiagramType;
     //fix, maybe hack (?) for desktop app issue https://github.com/mike-goodwin/owasp-threat-dragon-desktop/issues/43
     //is setting values on parent scope code smell?
     //the reason is that the menu is defined on the shell controller whereas the save needs to be aware of the diagram controller
@@ -454,6 +455,19 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
                 vm.select(vm.copied);
                 vm.duplicateElement();
             }
+        }
+    }
+
+    function updateDiagramType() {
+        var type = vm.diagram.diagramType;
+        if (type == null) {
+            vm.diagram.thumbnail = './public/content/images/thumbnail.stride.jpg';
+        } else if (type == 'CIA') {
+            vm.diagram.thumbnail = './public/content/images/thumbnail.cia.jpg';
+        } else if (type == 'LINDDUN') {
+            vm.diagram.thumbnail = './public/content/images/thumbnail.linddun.jpg';
+        } else {
+            vm.diagram.thumbnail = './public/content/images/thumbnail.stride.jpg';
         }
     }
 }
