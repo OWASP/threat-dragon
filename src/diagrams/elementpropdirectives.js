@@ -63,12 +63,14 @@ function elementThreats($routeParams, $location, common, dialogs) {
             restrict: 'E',
             scope:
             {
+                suggest: '=',
                 threats: '=',
+                type: '=',
                 save: '&'
             }
         };
 
-    var newThreat = initialiseThreat();
+    var newThreat;
     var editIndex = null;
     var originalThreat = {};
     var getLogFn = common.logger.getLogFn;
@@ -79,15 +81,21 @@ function elementThreats($routeParams, $location, common, dialogs) {
     function link(scope, element, attrs) {
         scope.applyToAll = false;
 
+        scope.onSuggestThreats = function () {
+            scope.suggest(scope.type);
+        };
+
         scope.onNewThreat = function () {
-            dialogs.confirm('diagrams/ThreatEditPane.html', scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, reset);
+            newThreat = initialiseThreat(scope.type);
+            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
         };
 
         scope.onEditThreat = function (index) {
+            var threat = scope.threats[index];
             editIndex = index;
             originalThreat = angular.copy(scope.threats[index]);
             $location.search('threat', originalThreat.id);
-            dialogs.confirm('diagrams/ThreatEditPane.html', scope.editThreat, function () { return { heading: 'Edit Threat', threat: scope.threats[index], editing: true }; }, scope.cancelEdit);
+            dialogs.confirm(getTemplate(threat.modelType), scope.editThreat, function () { return { heading: 'Edit Threat', threat: threat, editing: true }; }, scope.cancelEdit);
         };
 
         scope.removeThreat = function (index) {
@@ -103,17 +111,21 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
             scope.threats.push(newThreat);
             scope.save({ threat: newThreat });
-            reset();
+            reset(scope.type);
+        };
+
+        scope.cancelAdd = function () {
+            reset(scope.type);
         };
 
         scope.editThreat = function () {
             scope.save();
-            reset();
+            reset(scope.type);
         };
 
         scope.cancelEdit = function () {
             scope.threats[editIndex] = originalThreat;
-            reset();
+            reset(scope.type);
         };
 
         var threatId = $routeParams.threat;
@@ -137,14 +149,31 @@ function elementThreats($routeParams, $location, common, dialogs) {
         }
     }
 
-    function reset() {
-        newThreat = initialiseThreat();
+    function reset(modelType) {
+        newThreat = initialiseThreat(modelType);
         editIndex = null;
         $location.search('threat', null);
     }
 
-    function initialiseThreat() {
-        return { status: 'Open', severity: 'Medium' };
+    function initialiseThreat(modelType) {
+        if (modelType == null){
+            return { status: 'Open', severity: 'Medium', modelType: 'UNDEFINED' };
+        }
+        return { status: 'Open', severity: 'Medium', modelType: modelType };
+    }
+
+    function getTemplate(type) {
+        var template;
+        if (type == null) {
+            template = 'diagrams/StrideEditPane.html';
+        } else if (type == 'CIA') {
+            template = 'diagrams/CiaEditPane.html';
+        } else if (type == 'LINDDUN') {
+            template = 'diagrams/LinddunEditPane.html';
+        } else {
+            template = 'diagrams/StrideEditPane.html';
+        }
+        return template;
     }
 
 }

@@ -49,7 +49,7 @@ module.exports = function (config) {
     //config for threashhold reporter
     thresholdReporter: {
       statements: 90,
-      branches: 80,
+      branches: 75,
       functions: 90,
       lines: 90
     },

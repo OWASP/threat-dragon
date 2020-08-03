@@ -1,6 +1,87 @@
 angular.module('templates', [])
   .run(['$templateCache', function($templateCache) {
-    $templateCache.put('diagrams/confirmReloadOnDirty.html',
+    $templateCache.put('diagrams/CiaEditPane.html',
+    '﻿<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        <form name="threatEditForm">\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Title</label>\n' +
+    '                <input name="titleInput" class="form-control" ng-required="true" type="text" ng-model="parameter.threat.title" placeholder="A short title for the threat" />\n' +
+    '                <div ng-show="!threatEditForm.titleInput.$valid && threatEditForm.titleInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat title cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>CIA threat type</label>\n' +
+    '                <select name="typeInput" class="form-control" ng-required="true" ng-model="parameter.threat.type">\n' +
+    '                    <option selected>Confidentiality</option>\n' +
+    '                    <option>Integrity</option>\n' +
+    '                    <option>Availability</option>\n' +
+    '                </select>\n' +
+    '                <div ng-show="!threatEditForm.typeInput.$valid && threatEditForm.typeInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat type cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-left">\n' +
+    '                <label>Threat status</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-right">\n' +
+    '                <label>Severity</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" required>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Medium\'">Medium</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Low\'">Low</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="clearfix"></div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Description</label>\n' +
+    '                <textarea name="descriptionInput" ng-model="parameter.threat.description" class="form-control" rows="5" placeholder="Detailed description of the threat"></textarea>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Mitigations</label>\n' +
+    '                <textarea name="mitigationInput" ng-model="parameter.threat.mitigation" class="form-control" rows="5" placeholder="Mitigations for the threat"></textarea>\n' +
+    '            </div>\n' +
+    '        </form>\n' +
+    '    </div>\n' +
+    '    <div ng-if="parameter.editing" class="modal-footer">\n' +
+    '        <button class="btn btn-primary" ng-disabled="!threatEditForm.$dirty || !threatEditForm.$valid" ng-click="onOK()">Save</button>\n' +
+    '        <button class="btn btn-default" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '    <div ng-if="!parameter.editing" class="modal-footer">\n' +
+    '        <span class="pull-left">\n' +
+    '            <input type="checkbox" ng-model="applyToAll">\n' +
+    '            Do this for all remaining threats \n' +
+    '        </span>\n' +
+    '        <tmt-modal-close action="onOK(applyToAll)" new-class="fade-left" template-url="diagrams/modalAccept.html"></tmt-modal-close>\n' +
+    '        <tmt-modal-close action="onCancel(applyToAll)" new-class="fade-down" template-url="diagrams/modalIgnore.html"></tmt-modal-close>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
+  $templateCache.put('diagrams/confirmReloadOnDirty.html',
     '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>Are you sure?</h3>\n' +
@@ -34,11 +115,11 @@ angular.module('templates', [])
     '                <!--Threat pane-->\n' +
     '                <div uib-accordion-group is-open="vm.viewThreats">\n' +
     '                    <uib-accordion-heading>\n' +
-    '                        Edit threats <i class="pull-right glyphicon" ng-class="{\'glyphicon-chevron-down\': vm.viewThreats, \'glyphicon-chevron-right\': !vm.viewThreats}"></i>\n' +
+    '                        Manage threats <i class="pull-right glyphicon" ng-class="{\'glyphicon-chevron-down\': vm.viewThreats, \'glyphicon-chevron-right\': !vm.viewThreats}"></i>\n' +
     '                    </uib-accordion-heading>\n' +
     '                    <div ng-if="vm.selected">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats threats="vm.selected.threats" save="vm.edit()" />\n' +
+    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +
@@ -57,8 +138,12 @@ angular.module('templates', [])
     '                    <span>Loading...</span>\n' +
     '                </div>\n' +
     '                <div ng-if="vm.diagram.title" class="panel-heading panel-title">\n' +
-    '                    <span editable-text="vm.diagram.title" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>\n' +
-    '                    <span class="pull-right glyphicon glyphicon-edit" ng-click="diagramTitleInput.$show()" ng-hide="diagramTitleInput.$visible"></span>\n' +
+    '                    <span editable-text="vm.diagram.title" ng-click="diagramTitleInput.$show()" onaftersave="vm.save()" e-form="diagramTitleInput" e-required e-placeholder="Diagram title">{{ vm.diagram.title }}</span>\n' +
+    '                    <span class="pull-right" >\n' +
+    '                        <button class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'STRIDE\'" >STRIDE</button>\n' +
+    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'CIA\'" >CIA</label>\n' +
+    '                        <label class="btn btn-default btn-diagram-type" ng-model="vm.diagram.diagramType" uib-btn-radio="\'LINDDUN\'" >LINDDUN</label>\n' +
+    '                    </span>\n' +
     '                </div>\n' +
     '                <div class="panel-body">\n' +
     '                    <form name="diagramEditToolBar">\n' +
@@ -67,7 +152,7 @@ angular.module('templates', [])
     '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
     '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Cancel Edit">\n' +
+    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Close Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
     '                                </a>\n' +
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">\n' +
@@ -76,7 +161,7 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
     '                                    <span class="fa fa-undo" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.model)" data-placement="top" title="Suggest threats for the selected element">\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
@@ -201,6 +286,91 @@ angular.module('templates', [])
     '    </div>\n' +
     '</form>\n' +
     '')
+  $templateCache.put('diagrams/LinddunEditPane.html',
+    '﻿<div>\n' +
+    '    <div class="modal-header">\n' +
+    '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
+    '    </div>\n' +
+    '    <div class="modal-body">\n' +
+    '        <form name="threatEditForm">\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Title</label>\n' +
+    '                <input name="titleInput" class="form-control" ng-required="true" type="text" ng-model="parameter.threat.title" placeholder="A short title for the threat" />\n' +
+    '                <div ng-show="!threatEditForm.titleInput.$valid && threatEditForm.titleInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat title cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>LINDDUN threat type</label>\n' +
+    '                <select name="typeInput" class="form-control" ng-required="true" ng-model="parameter.threat.type">\n' +
+    '                    <option selected>Linkability</option>\n' +
+    '                    <option>Identifiability</option>\n' +
+    '                    <option>Non-repudiation</option>\n' +
+    '                    <option>Detectability</option>\n' +
+    '                    <option>Disclosure of information</option>\n' +
+    '                    <option>Unawareness</option>\n' +
+    '                    <option>Non-compliance</option>\n' +
+    '                </select>\n' +
+    '                <div ng-show="!threatEditForm.typeInput.$valid && threatEditForm.typeInput.$dirty">\n' +
+    '                    <p>\n' +
+    '                        <div class="alert alert-danger" role="alert">\n' +
+    '                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>\n' +
+    '                            <span class="sr-only">Error:</span>\n' +
+    '                            The threat type cannot be empty.\n' +
+    '                        </div>\n' +
+    '                    </p>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-left">\n' +
+    '                <label>Threat status</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="form-group pull-right">\n' +
+    '                <label>Severity</label>\n' +
+    '                <div>\n' +
+    '                    <div class="btn-group" required>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Medium\'">Medium</label>\n' +
+    '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'Low\'">Low</label>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="clearfix"></div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Description</label>\n' +
+    '                <textarea name="descriptionInput" ng-model="parameter.threat.description" class="form-control" rows="5" placeholder="Detailed description of the threat"></textarea>\n' +
+    '            </div>\n' +
+    '            <div class="form-group">\n' +
+    '                <label>Mitigations</label>\n' +
+    '                <textarea name="mitigationInput" ng-model="parameter.threat.mitigation" class="form-control" rows="5" placeholder="Mitigations for the threat"></textarea>\n' +
+    '            </div>\n' +
+    '        </form>\n' +
+    '    </div>\n' +
+    '    <div ng-if="parameter.editing" class="modal-footer">\n' +
+    '        <button class="btn btn-primary" ng-disabled="!threatEditForm.$dirty || !threatEditForm.$valid" ng-click="onOK()">Save</button>\n' +
+    '        <button class="btn btn-default" ng-click="onCancel()">Cancel</button>\n' +
+    '    </div>\n' +
+    '    <div ng-if="!parameter.editing" class="modal-footer">\n' +
+    '        <span class="pull-left">\n' +
+    '            <input type="checkbox" ng-model="applyToAll">\n' +
+    '            Do this for all remaining threats \n' +
+    '        </span>\n' +
+    '        <tmt-modal-close action="onOK(applyToAll)" new-class="fade-left" template-url="diagrams/modalAccept.html"></tmt-modal-close>\n' +
+    '        <tmt-modal-close action="onCancel(applyToAll)" new-class="fade-down" template-url="diagrams/modalIgnore.html"></tmt-modal-close>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '')
   $templateCache.put('diagrams/modalAccept.html',
     '﻿<button class="btn btn-primary" ng-disabled="parameter.editing && (!threatEditForm.$dirty || !threatEditForm.$valid)" ng-click="onAction()">\n' +
     '    Accept\n' +
@@ -209,7 +379,7 @@ angular.module('templates', [])
     '﻿<button class="btn btn-default" ng-click="onAction()">\n' +
     '    Ignore\n' +
     '</button>')
-  $templateCache.put('diagrams/ThreatEditPane.html',
+  $templateCache.put('diagrams/StrideEditPane.html',
     '﻿<div>\n' +
     '    <div class="modal-header">\n' +
     '        <h3>{{parameter.heading}}<span class="pull-right" ng-if="parameter.threatTotal"> ({{parameter.threatIndex}} of {{parameter.threatTotal}})</span></h3>\n' +
@@ -311,7 +481,11 @@ angular.module('templates', [])
     '</ul> \n' +
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
     '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
-    '</button>')
+    '</button>\n' +
+    '<button id="buttonNewThreat" class="btn btn-link" ng-click="onSuggestThreats()">\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element...\n' +
+    '</button>\n' +
+    '')
   $templateCache.put('layout/pager.html',
     '<div class="clearfix" ng-if="canPrevious || canNext">\n' +
     '    <button ng-disabled="!canPrevious" class="pull-left btn btn-link" ng-click="previous()">Previous page</button>\n' +

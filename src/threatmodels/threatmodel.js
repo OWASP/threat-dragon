@@ -170,8 +170,8 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
         vm.newDiagram.id = newID();
         vm.newDiagram.diagramJson = duplicatedDiagram.diagramJson;
         vm.newDiagram.size = duplicatedDiagram.size;
-        if (duplicatedDiagram.model != null && duplicatedDiagram.thumbnail != null) {
-            vm.newDiagram.model = duplicatedDiagram.model;
+        if (duplicatedDiagram.diagramType != null && duplicatedDiagram.thumbnail != null) {
+            vm.newDiagram.diagramType = duplicatedDiagram.diagramType;
             vm.newDiagram.thumbnail = duplicatedDiagram.thumbnail;
         }
         vm.threatModel.detail.diagrams.push(vm.newDiagram);
@@ -214,7 +214,7 @@ function threatModel($scope, $location, $routeParams, dialogs, common, dataconte
     }
 
     function emptyDiagram() {
-        return { title: '', thumbnail: './public/content/images/thumbnail.stride.jpg', model: 'STRIDE' };
+        return { title: '', thumbnail: './public/content/images/thumbnail.stride.jpg', diagramType: 'STRIDE' };
     }
 
     function isNewModel() {

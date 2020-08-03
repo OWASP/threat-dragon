@@ -459,7 +459,7 @@ describe('element threats directive: ', function () {
             $scope.$digest();
             setFixtures(elem);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
             var param = mockDialogs.confirm.calls.argsFor(0)[2];
             expect(param().threat).toEqual(threat1);
             expect($location.search().threat).toEqual('1');
@@ -482,7 +482,7 @@ describe('element threats directive: ', function () {
 
             angular.element($('#buttonNewThreat')).triggerHandler('click');
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
 
         });
 
@@ -503,7 +503,7 @@ describe('element threats directive: ', function () {
 
             angular.element($('#editThreat1')).triggerHandler('click');
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/ThreatEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
             expect($location.search().threat).toEqual('1');
 
         });
