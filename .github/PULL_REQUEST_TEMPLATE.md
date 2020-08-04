@@ -5,14 +5,17 @@ If this is a bug fix, make sure your description includes "fixes #xxxx", or
 The first three fields are mandatory:
 
 **- Summary**
+
 Explain the motivation for making this change.
 What existing issue does the pull request solve?
 
 **- Test**
+
 Ensure the the code passes the `npm run-script pretest` and the `npm test` stages.
 
 
 **- Description for the changelog**
+
 Write a short (one line) summary that describes the changes in this
 pull request for inclusion in the changelog:
 
