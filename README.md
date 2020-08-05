@@ -29,6 +29,10 @@ rpm and debian packages for Linux. For this variant models are stored on the loc
 
 This repository contains the core files and modules that are shared between both the web and desktop variant.
 
+## Code of Conduct ##
+
+We ask that everyone who contributes to the Threat Dragon project follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 # Installing and building #
 
 Clone the repo and run
@@ -57,9 +61,10 @@ Both of these can be run together using
 
 # Contributing #
 
-PRs, feature requests, bug reports and feedback of any kind are very welcome. We are trying to keep the test coverage
-relatively high, so please try to include tests in any PRs and make PRs on the development branch. There are some
-[developer notes](dev-notes.md) to help get started.
+Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for [contributors](CONTRIBUTING.md). 
+
+We are trying to keep the test coverage relatively high, so please try to include tests in any PRs and make PRs on the development branch.
+There are some [developer notes](dev-notes.md) to help get started.
 
 
 # Vulnerability disclosure #
