@@ -5,7 +5,7 @@ There are several ways you can contribute:
 
 ## Got a Question or Problem?
 If you have a question or problem relating to using Threat Dragon then the first thing to do is to check the
-[Frequently Asked Questions](https://owasp.org/www-project-threat-dragon/) tab on the [OWASP project page](https://owasp.org/www-project-threat-dragon/).
+[Frequently Asked Questions](https://owasp.org/www-project-threat-dragon/#div-faqs) tab on the [OWASP project page](https://owasp.org/www-project-threat-dragon/).
 Threat Dragon documentation is [available online](http://docs.threatdragon.org).
 
 If this does not help then ask one of the [leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/master/leaders.md).
