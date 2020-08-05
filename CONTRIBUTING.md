@@ -28,7 +28,7 @@ to give any credit for the valuable assistance they provide.
 If you have a suggestion for new functionality then you can raise this request in an issue on the Threat Dragon
 [core repo](https://github.com/OWASP/threat-dragon-core/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=).
 
-Again it is worth checking tosee if its [already been reported](https://github.com/OWASP/threat-dragon-core/issues), 
+Again it is worth checking to see if its [already been reported](https://github.com/OWASP/threat-dragon-core/issues), 
 and include as much information as you can so that we can fully understand your requirements.
 
 ## Coding
@@ -37,7 +37,7 @@ There is always lots of coding to be done! Threat Dragon is split into 3 repos, 
 * [TD desktop app repo](https://github.com/OWASP/threat-dragon-desktop/issues)
 * [TD core repo](https://github.com/OWASP/threat-dragon-core/issues)
 
-There are some [Development Notes](https://github.com/OWASP/threat-dragon-core/blob/main/dev-notes.md) that should help you to get started.
+There are some [Development Notes](https://github.com/OWASP/threat-dragon-core/blob/main/dev-notes.md) that should help you to get started, as well as a template for the [Pull Requests](.github/PULL_REQUEST_TEMPLATE.md).
 
 ### Improve Existing Threat Engine or Write New Ones
 The threat engines define how Threat Dragon can automatically suggest threats which could uncover vulnerabilities.
