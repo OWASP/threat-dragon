@@ -46,7 +46,9 @@ for the webapp to run
 ~/threat-dragon> export SESSION_ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "<32 char key>"}]'
 ~/threat-dragon> npm run start
 ```
-Navigate in a browser to http://localhost:3000/ to test the app
+Navigate in a browser to http://localhost:3000/ to test the app.
+If there is an error such as 'Cannot GET /' then make sure the 
+[environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) are set up. 
 
 * ### Install and run desktop application ###
 ```
@@ -74,7 +76,9 @@ npm test
 ```
 Make changes to code, and depending on the changes (eg .html or .css), `npm run build`
 
-Run modified app with `npm run start`, and navigate in a browser to http://localhost:3000/
+Run modified app with `npm run start`, and navigate in a browser to http://localhost:3000/ .
+As above, if there is an error such as 'Cannot GET /' then ensure the 
+[environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) are set up. 
 
 * ### Develop desktop application ###
 Install:
