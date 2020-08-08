@@ -1,6 +1,0 @@
-languages:
-  JavaScript: true
-exclude_paths:
-- "test/spec/*.js"
-- "src/templates.js"
-- "src/content/threatdragon-core.css"

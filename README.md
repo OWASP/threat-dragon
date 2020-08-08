@@ -4,10 +4,10 @@ Note that this repository has been migrated from Mike Goodwin's [original](https
   <img src="https://raw.githubusercontent.com/owasp/threat-dragon-desktop/main/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build Status](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core.svg?branch=master)](https://travis-ci.org/mike-goodwin/owasp-threat-dragon-core) [![codecov.io](http://codecov.io/github/mike-goodwin/owasp-threat-dragon-core/coverage.svg?branch=master)](http://codecov.io/github/mike-goodwin/owasp-threat-drago-core?branch=master) [![Code Climate](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core/badges/gpa.svg)](https://codeclimate.com/github/mike-goodwin/owasp-threat-dragon-core)
-[![GitHub license](https://img.shields.io/github/license/mike-goodwin/owasp-threat-dragon-core.svg)](LICENSE.txt)
-[![Dependency Status](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon-core/badge)](https://dependencyci.com/github/mike-goodwin/owasp-threat-dragon-core)
-[![Known Vulnerabilities](https://snyk.io/test/github/mike-goodwin/owasp-threat-dragon-core/badge.svg)](https://snyk.io/test/github/mike-goodwin/owasp-threat-dragon-core)
+[![Build Status](https://travis-ci.org/owasp/threat-dragon-core.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon-core)
+[![codecov.io](http://codecov.io/github/owasp/threat-dragon-core/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon-core?branch=main)
+[![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon-core.svg)](LICENSE.txt)
+[![Known Vulnerabilities](https://snyk.io/test/github/owasp/threat-dragon-core/badge.svg)](https://snyk.io/test/github/owasp/threat-dragon-core)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
 
