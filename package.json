@@ -56,7 +56,7 @@
     "morgan": "1.9.1",
     "octonode": "0.9.5",
     "owasp-threat-dragon-core": "^1.2.0",
-    "passport": "0.4.0",
+    "passport": "0.4.1",
     "passport-github": "1.1.0",
     "pug": "^2.0.4",
     "pug-bootstrap": "0.0.16",
