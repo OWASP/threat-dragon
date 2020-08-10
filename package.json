@@ -35,7 +35,7 @@
     "url": "git://github.com/owasp/threat-dragon.git"
   },
   "dependencies": {
-    "angular": "1.7.8",
+    "angular": "1.8.0",
     "angular-animate": "1.7.8",
     "angular-route": "1.7.8",
     "angular-ui-bootstrap": "2.5.6",
