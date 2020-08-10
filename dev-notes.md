@@ -216,6 +216,17 @@ When happy with _everything_ then `git push --force` to update your repo
 1. update package on [npmjs registry](https://www.npmjs.com/) with `npm publish`
 1. check that [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) is at correct version
 
+It is good to keep Mike Goodwin's area up to date with releases from the OWASP area. For example with version 1.3:
+1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
+1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-core.git -b version-1.3
+1. cd owasp-threat-dragon-core/
+1. git remote add upstream https://github.com/owasp/threat-dragon-core
+1. git fetch upstream
+1. git rebase upstream/main
+1. git status
+1. git push
+1. create pull request from branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
+
 * ### Webapp release ###
 1. create branch `release-ready` in [webapp repo](https://github.com/OWASP/threat-dragon)
 1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
