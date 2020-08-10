@@ -20,25 +20,25 @@ function github($q, $routeParams, $location, common, datacontext) {
     activate();
 
     function activate() {
-        common.activateController([load()], controllerId)
+        common.activateController([getLocation()], controllerId)
             .then(function () { log('Activated GitHub Controller'); });
     }
 
-    function load() {
+    function getLocation() {
         vm.error = null;
         vm.organisation = $routeParams.organisation;
         vm.repo = $routeParams.repo;
         vm.branch = $routeParams.branch;
 
         if (!vm.organisation && !vm.repo) {
-            getRepos();
+            return getRepos();
         }
         else {
             if (!vm.branch) {
-                getBranches(vm.organisation, vm.repo);
+                return getBranches(vm.organisation, vm.repo);
             }
             else {
-                getModels(vm.organisation, vm.repo, vm.branch);
+                return getModels(vm.organisation, vm.repo, vm.branch);
             }
         }
     }
