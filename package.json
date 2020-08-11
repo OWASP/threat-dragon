@@ -13,6 +13,8 @@
     "bundle-minify": "browserify ./td/public/app/app.js -d -p [minifyify --map ./td/public/app/threatdragon.js.map --output ./td/public/app/threatdragon.js.map ] > ./td/public/app/threatdragon.min.js",
     "start": "node server.js",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors td",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk protect",
     "test": "npm run-script test-client-firefox && npm run-script test-server",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
@@ -60,7 +62,8 @@
     "passport-github": "1.1.0",
     "pug": "^2.0.4",
     "pug-bootstrap": "0.0.16",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "snyk": "^1.362.1"
   },
   "devDependencies": {
     "angular-mocks": "1.8.0",
@@ -102,5 +105,6 @@
     "supertest": "^4.0.2",
     "uglifycss": "0.0.29",
     "watchify": "^3.11.1"
-  }
+  },
+  "snyk": true
 }
