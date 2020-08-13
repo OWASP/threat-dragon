@@ -3,7 +3,10 @@
 ## Reporting a Vulnerability
 
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
-For secure disclosure, please email mike.goodwin@owasp.org using the following PGP key:
+For secure disclosure send an encrypted email to [Mike Goodwin](https://flowcrypt.com/me/mikegoodwin)
+or [Jon Gadsden](https://flowcrypt.com/me/jongadsden).
+
+Otherwise email mike.goodwin@owasp.org using the following PGP key:
 
 ```-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: FlowCrypt 5.1.8 Gmail Encryption flowcrypt.com
@@ -62,5 +65,3 @@ Odp+4g==
 =8d0U
 -----END PGP PUBLIC KEY BLOCK-----
 ```
-
-If you are not a PGP user, you can easily send an encrypted email from https://flowcrypt.com/me/mikegoodwin
