@@ -1,6 +1,7 @@
 ﻿'use strict';
 
 var _ = require('lodash');
+var ipc = require('electron').ipcRenderer;
 
 function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming, threatmodellocator, hotkeys) {
 
@@ -15,7 +16,6 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     var threatWatchers = [];
     var gridSizeOn = 10;
     var gridSizeOff = 1;
-    var ipc = require('electron').ipcRenderer;
 
     // Bindable properties and functions are placed on vm.
     vm.errored = false;
@@ -477,11 +477,13 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
 
     function setDirty() {
         vm.dirty = true;
+        //Use to communicate with ipcMain on Threat-Dragon-Desktop to listen for unsaved Changes
         ipc.send('vmIsDirty', true);
     }
 
     function setClean() {
         vm.dirty = false;
+        //Use to communicate with ipcMain on Threat-Dragon-Desktop to listen for unsaved Changes
         ipc.send('vmIsDirty', false);
     }
 }
