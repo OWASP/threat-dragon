@@ -20,7 +20,7 @@
                     </uib-accordion-heading>
                     <div ng-if="vm.selected">
                         <div ng-if="!vm.selected.outOfScope">
-                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />
+                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />
                         </div>
                         <div ng-if="vm.selected.outOfScope">
                             <em>The selected element is out of scope</em>

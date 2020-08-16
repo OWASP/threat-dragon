@@ -15,6 +15,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     var threatWatchers = [];
     var gridSizeOn = 10;
     var gridSizeOff = 1;
+    var ipc = require('electron').ipcRenderer;
 
     // Bindable properties and functions are placed on vm.
     vm.errored = false;
@@ -57,6 +58,8 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.diagramId = $routeParams.diagramId;
     vm.currentZoomLevel = 0;
     vm.maxZoom = 4;
+    vm.setDirty = setDirty;
+    vm.setClean = setClean;
 
     hotkeys('Escape', escapeHotkey);
     hotkeys('Cmd+C, Ctrl+C', copyHotkey);
@@ -69,7 +72,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         var absPathPrevious = previous.split('?')[0];
 
         if (vm.dirty && absPathCurrent != absPathPrevious) {
-            dialogs.structuredExit(event, function () { }, function () { vm.dirty = false; });
+            dialogs.structuredExit(event, function () { }, function () { vm.setClean(); });
         }
     });
 
@@ -117,7 +120,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     }
 
     function onSaveDiagram() {
-        vm.dirty = false;
+        vm.setClean();
         addDirtyEventHandlers();
     }
 
@@ -144,7 +147,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
             vm.graph.on('remove', removeElement);
             addDirtyEventHandlers();
             vm.diagram = data;
-            vm.dirty = false;
+            vm.setClean();
 
             if ($routeParams.element) {
                 var element = vm.graph.getCellById($routeParams.element);
@@ -211,7 +214,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     }
 
     function edit() {
-        vm.dirty = true;
+        vm.setDirty();
     }
 
     function getThreatModelPath() {
@@ -285,7 +288,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         }
 
         function addThreat(applyToAll) {
-            vm.dirty = true;
+            vm.setDirty();
 
             if (_.isUndefined(vm.selected.threats)) {
                 vm.selected.threats = [];
@@ -355,7 +358,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     }
 
     function removeElement(element, graph, state) {
-        vm.dirty = true;
+        vm.setDirty();
         vm.selected = null;
         unWatchThreats(element);
         $location.search('element', null);
@@ -396,7 +399,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         vm.graph.on('change add', setDirty);
 
         function setDirty() {
-            vm.dirty = true;
+            vm.setDirty();
             vm.graph.off('change add', setDirty);
             //throws exception (digest already in progress)
             //but removing causes failure to enable save button in diagram editor when moving an element
@@ -469,6 +472,17 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         } else {
             vm.diagram.thumbnail = './public/content/images/thumbnail.stride.jpg';
         }
+        vm.setDirty();
+    }
+
+    function setDirty() {
+        vm.dirty = true;
+        ipc.send('vmIsDirty', true);
+    }
+
+    function setClean() {
+        vm.dirty = false;
+        ipc.send('vmIsDirty', false);
     }
 }
 
