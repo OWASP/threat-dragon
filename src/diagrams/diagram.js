@@ -4,7 +4,7 @@ var _ = require('lodash');
 var ipc;
 
 try {
-    //In the desktop version, a renderer will be created to listen for unsave changes
+    //In the desktop version, a renderer will be created to listen for unsaved changes
     ipc = window.require("electron").ipcRenderer;
   } catch (er) {
     ipc = {};
