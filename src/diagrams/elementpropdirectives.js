@@ -67,7 +67,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
                 threats: '=',
                 type: '=',
                 save: '&',
-                setdirty: '='
+                setdirty: '&'
             }
         };
 

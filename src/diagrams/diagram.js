@@ -1,7 +1,15 @@
 ﻿'use strict';
 
 var _ = require('lodash');
-var ipc = require('electron').ipcRenderer;
+var ipc;
+
+try {
+    //In the desktop version, a renderer will be created to listen for unsave changes
+    ipc = window.require("electron").ipcRenderer;
+  } catch (er) {
+    ipc = {};
+    ipc.send = function(){};
+  }
 
 function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, common, datacontext, threatengine, diagramming, threatmodellocator, hotkeys) {
 
