@@ -18,7 +18,10 @@
                     <uib-accordion-heading>
                         Manage threats <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': vm.viewThreats, 'glyphicon-chevron-right': !vm.viewThreats}"></i>
                     </uib-accordion-heading>
-                    <div ng-if="vm.selected">
+                    <div ng-if="!vm.selected">
+                        <em>Select an element in the diagram to see or edit its threats</em>
+                    </div>
+                    <div ng-if="vm.selected && vm.selected.attributes.type != 'tm.Boundary'">
                         <div ng-if="!vm.selected.outOfScope">
                             <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />
                         </div>
@@ -26,8 +29,8 @@
                             <em>The selected element is out of scope</em>
                         </div>                       
                     </div>
-                    <div ng-if="!vm.selected">
-                        <em>Select an element in the diagram to see or edit its threats</em>
+                    <div ng-if="vm.selected && vm.selected.attributes.type == 'tm.Boundary'">
+                        <em>Threats are not associated with trust boundaries</em>
                     </div>
                 </div>
             </uib-accordion>

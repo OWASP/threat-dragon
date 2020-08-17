@@ -117,7 +117,10 @@ angular.module('templates', [])
     '                    <uib-accordion-heading>\n' +
     '                        Manage threats <i class="pull-right glyphicon" ng-class="{\'glyphicon-chevron-down\': vm.viewThreats, \'glyphicon-chevron-right\': !vm.viewThreats}"></i>\n' +
     '                    </uib-accordion-heading>\n' +
-    '                    <div ng-if="vm.selected">\n' +
+    '                    <div ng-if="!vm.selected">\n' +
+    '                        <em>Select an element in the diagram to see or edit its threats</em>\n' +
+    '                    </div>\n' +
+    '                    <div ng-if="vm.selected && vm.selected.attributes.type != \'tm.Boundary\'">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
     '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />\n' +
     '                        </div>\n' +
@@ -125,8 +128,8 @@ angular.module('templates', [])
     '                            <em>The selected element is out of scope</em>\n' +
     '                        </div>                       \n' +
     '                    </div>\n' +
-    '                    <div ng-if="!vm.selected">\n' +
-    '                        <em>Select an element in the diagram to see or edit its threats</em>\n' +
+    '                    <div ng-if="vm.selected && vm.selected.attributes.type == \'tm.Boundary\'">\n' +
+    '                        <em>Threats are not associated with trust boundaries</em>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '            </uib-accordion>\n' +
