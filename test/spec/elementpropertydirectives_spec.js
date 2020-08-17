@@ -532,13 +532,13 @@ describe('element threats directive: ', function () {
             var onCancel = mockDialogs.confirm.calls.argsFor(0)[3];
             onCancel();
             expect($scope.edit).not.toHaveBeenCalled();
+            expect($scope.setDirty).not.toHaveBeenCalled();
             expect($location.search().threat).toBeUndefined();
 
         });
 
         it('should remove a threat', function () {
 
-            $scope.dirty = false;
             angular.element($('#remove1')).triggerHandler('click');
             expect($scope.edit).toHaveBeenCalled();
             expect($scope.setDirty).toHaveBeenCalled();
