@@ -119,7 +119,7 @@ angular.module('templates', [])
     '                    </uib-accordion-heading>\n' +
     '                    <div ng-if="vm.selected">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
+    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +

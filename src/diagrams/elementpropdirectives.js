@@ -66,8 +66,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
                 suggest: '=',
                 threats: '=',
                 type: '=',
-                save: '&',
-                setdirty: '&'
+                save: '&'
             }
         };
 
@@ -102,7 +101,6 @@ function elementThreats($routeParams, $location, common, dialogs) {
         scope.removeThreat = function (index) {
             scope.threats.splice(index, 1);
             scope.save();
-            scope.setdirty();
         };
 
         scope.addThreat = function () {
@@ -113,7 +111,6 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
             scope.threats.push(newThreat);
             scope.save({ threat: newThreat });
-            scope.setdirty();
             reset(scope.type);
         };
 
@@ -123,7 +120,6 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
         scope.editThreat = function () {
             scope.save();
-            scope.setdirty();
             reset(scope.type);
         };
 
