@@ -431,11 +431,14 @@ describe('element threats directive: ', function () {
         spyOn($scope, 'edit');
         $scope.threats = [threat0, threat1, threat2];
 
+        $scope.setDirty = function() {}
+        spyOn($scope, 'setDirty');
+
         //dialogs mocks
         mockDialogs.confirm = function () { };
         spyOn(mockDialogs, 'confirm');
 
-        elem = angular.element('<tmt-element-threats threats="threats" save="edit()" />');
+        elem = angular.element('<tmt-element-threats threats="threats" save="edit()" setdirty="setDirty" />');
 
     });
 
@@ -495,6 +498,7 @@ describe('element threats directive: ', function () {
             onOK();
             expect($scope.threats.length).toEqual(originalLength + 1);
             expect($scope.edit).toHaveBeenCalled();
+            expect($scope.setDirty).toHaveBeenCalled();
             expect(param().editing).toBe(true);
 
         });
@@ -517,6 +521,7 @@ describe('element threats directive: ', function () {
             expect(param().threat).toEqual(threat1);
             expect(param().editing).toBe(true);
             expect($scope.edit).toHaveBeenCalled();
+            expect($scope.setDirty).toHaveBeenCalled();
             expect($location.search().threat).toBeUndefined();
 
         });
@@ -527,6 +532,7 @@ describe('element threats directive: ', function () {
             var onCancel = mockDialogs.confirm.calls.argsFor(0)[3];
             onCancel();
             expect($scope.edit).not.toHaveBeenCalled();
+            expect($scope.setDirty).not.toHaveBeenCalled();
             expect($location.search().threat).toBeUndefined();
 
         });
@@ -535,6 +541,7 @@ describe('element threats directive: ', function () {
 
             angular.element($('#remove1')).triggerHandler('click');
             expect($scope.edit).toHaveBeenCalled();
+            expect($scope.setDirty).toHaveBeenCalled();
             expect($scope.threats).toEqual([threat0, threat2]);
 
         });
