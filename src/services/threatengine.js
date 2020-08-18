@@ -449,9 +449,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '896abdef-0e7e-46ec-aeaa-b8e70c233d57',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '896abdef-0e7e-46ec-aeaa-b8e70c233d57',
           title: 'Generic threat to Linkability',
           type: 'Linkability',
           modelType: 'LINDDUN',
@@ -472,9 +472,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '9128c587-bc76-41d0-a02d-5de3b539ecc0',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '9128c587-bc76-41d0-a02d-5de3b539ecc0',
           title: 'Generic threat to Identifiability',
           type: 'Identifiability',
           modelType: 'LINDDUN',
@@ -515,9 +515,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '74834f24-8f89-40bb-b0c6-d1fdd8b8accc',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '74834f24-8f89-40bb-b0c6-d1fdd8b8accc',
           title: 'Generic threat to Non-repudiation',
           type: 'Non-repudiation',
           modelType: 'LINDDUN',
@@ -558,9 +558,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: 'df43b091-9ffb-44e3-9eb9-471b9ee56d39',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: 'df43b091-9ffb-44e3-9eb9-471b9ee56d39',
           title: 'Generic threat to Detectability',
           type: 'Detectability',
           modelType: 'LINDDUN',
@@ -601,9 +601,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '9d576610-5c53-4f84-90c5-ec70751a339d',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '9d576610-5c53-4f84-90c5-ec70751a339d',
           title: 'Generic threat to Disclosure of information',
           type: 'Disclosure of information',
           modelType: 'LINDDUN',
@@ -630,9 +630,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '8d0993c0-9d92-4c51-99f5-6772270a7d88',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '8d0993c0-9d92-4c51-99f5-6772270a7d88',
           title: 'Generic threat to Unawareness',
           type: 'Unawareness',
           modelType: 'LINDDUN',
@@ -673,9 +673,9 @@ function threatengine() {
         ]
       },
       event: {
-        type: '52453492-f49f-411e-a59d-5fc2dd98664b',
+        type: '6e80d2fc-747a-4ae8-a435-acce06617139',
         params: {
-          ruleId: '52453492-f49f-411e-a59d-5fc2dd98664b',
+          ruleId: '6e80d2fc-747a-4ae8-a435-acce06617139',
           title: 'Generic threat to Non-compliance',
           type: 'Non-compliance',
           modelType: 'LINDDUN',
