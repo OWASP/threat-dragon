@@ -274,6 +274,7 @@ Create windows .exe and test it on a windows box
 1. `npm test`
 1. `npm run build-win`
 1. make sure the installer works, navigate to `.exe` and run
+1. obtain SHA256 of .exe file using `shasum -a256`
 
 * ### Linux installers for TD desktop ###
 Create linux .rpm, .deb .snap, AppImage and test them on a linux box
@@ -288,6 +289,7 @@ Create linux .rpm, .deb .snap, AppImage and test them on a linux box
 1. navigate to .deb package and run
 1. navigate to Snap .snap file and run
 1. navigate to AppImage file and run
+1. obtain SHA256 of .deb, .rpm, .snap and .AppImage files using `shasum -a256`
 
 * ### MacOS installer for TD desktop ###
 Create MacOS .deb installer and test it on a mac
@@ -299,6 +301,7 @@ Create MacOS .deb installer and test it on a mac
 1. `npm test`
 1. `** `npm run build-osx`
 1. make sure the installer works, navigate to .dmg and run
+1. obtain SHA256 of .dmg file using `shasum -a256`
 
 * ### TD desktop release ###
 1. tag the desktop release, see above
@@ -308,3 +311,4 @@ Create MacOS .deb installer and test it on a mac
 1. create the release in [OWASP desktop repo](https://github.com/OWASP/threat-dragon-desktop) using tag v1.3
 1. add the release notes to this release
 1. attach installer files to this release
+1. list SHA256 for each installer file: .exe, .dmg, .deb, .rpm, .snap and .AppImage
