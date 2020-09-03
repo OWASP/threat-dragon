@@ -44,7 +44,7 @@ for the webapp to run
 ~/threat-dragon> export SESSION_STORE=local
 ~/threat-dragon> export SESSION_SIGNING_KEY=<32 char key>
 ~/threat-dragon> export SESSION_ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "<32 char key>"}]'
-~/threat-dragon> npm run start
+~/threat-dragon> npm start
 ```
 Navigate in a browser to http://localhost:3000/ to test the app.
 If there is an error such as 'Cannot GET /' then make sure the 
@@ -58,9 +58,9 @@ If there is an error such as 'Cannot GET /' then make sure the
 ~/threat-dragon-desktop> npm run pretest
 ~/threat-dragon-desktop> npm run build-content
 ~/threat-dragon-desktop> npm test
-~/threat-dragon-desktop> npm run start
+~/threat-dragon-desktop> npm start
 ```
-The electron-based application should launch itself
+The electron-based application should then launch
 
 ## Development ##
 
@@ -196,18 +196,18 @@ When happy with _everything_ then `git push --force` to update your repo
 1. create branch `release-ready` in [core repo](https://github.com/OWASP/threat-dragon-core)
 1. `git clone git@github.com:OWASP/threat-dragon-core.git -b release-ready`
 1. `cd threat-dragon-core`
+1. update `package.json` version declaration to, eg `"version": "1.3.1",`
 1. `npm install`
 1. `npm run pretest`
 1. `npm run build`
 1. `npm test`
-1. update `package.json` version declaration to `  "version": "1.3.0",`
 1. `git commit -a -m"<some release message>"`
 1. `git push`
 1. merge branch in [core repo](https://github.com/OWASP/threat-dragon-core) and then checkout master:
 1. `git clone git@github.com:OWASP/threat-dragon-core.git`
 1. `cd threat-dragon-core`
-1. `git tag v1.3`
-1. `git push origin v1.3`
+1. `git tag v1.3.1`
+1. `git push origin v1.3.1`
 1. `npm install`
 1. `npm run pretest`
 1. `npm run build`
@@ -216,26 +216,27 @@ When happy with _everything_ then `git push --force` to update your repo
 1. update package on [npmjs registry](https://www.npmjs.com/) with `npm publish`
 1. check that [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) is at correct version
 
-It is good to keep Mike Goodwin's area up to date with releases from the OWASP area. For example with version 1.3:
-1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
-1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-core.git -b version-1.3
+It is good to keep Mike Goodwin's area up to date with releases from the OWASP area. For example with version 1.3.1:
+1. Creat branch `version-1.3.1` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
+1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-core.git -b version-1.3.1
 1. cd owasp-threat-dragon-core/
 1. git remote add upstream https://github.com/owasp/threat-dragon-core
 1. git fetch upstream
 1. git rebase upstream/main
 1. git status
 1. git push
-1. create pull request from branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
+1. create pull request from branch `version-1.3.1` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
 
 * ### Webapp release ###
 1. create branch `release-ready` in [webapp repo](https://github.com/OWASP/threat-dragon)
 1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
 1. `cd threat-dragon`
+1. ensure `package.json` specifies the latest version of core package, eg `"owasp-threat-dragon-core": "1.3.1",`
+1. update `package.json` version declaration to, eg `"version": "1.3.0",`
 1. `npm install`
 1. `npm run pretest`
 1. `npm run build`
 1. `npm test`
-1. update `package.json` version declaration to `  "version": "1.3.0",`
 1. `git commit -a -m"<some release message>"`
 1. `git push`
 1. merge branch in [webapp repo](https://github.com/OWASP/threat-dragon) and then checkout master:
@@ -247,15 +248,27 @@ It is good to keep Mike Goodwin's area up to date with releases from the OWASP a
 Test the release as in 'Install and run web application' above, ideally on all of Windows, linux and MacOS.
 In general if it works on one platform then it will work on the others, so one platform may be sufficient
 
+Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.3.0:
+1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon.git
+1. git clone git@github.com:mike-goodwin/owasp-threat-dragon.git -b version-1.3
+1. cd owasp-threat-dragon/
+1. git remote add upstream https://github.com/owasp/threat-dragon
+1. git fetch upstream
+1. git rebase upstream/main
+1. git status
+1. git push
+1. create pull request from branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon.git
+
 * ### Tag the desktop release ###
 1. create branch `release-ready` in [desktop repo](https://github.com/OWASP/threat-dragon-desktop)
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git -b release-ready`
 1. `cd threat-dragon-desktop`
+1. ensure `package.json` specifies the latest version of core package, eg `"owasp-threat-dragon-core": "1.3.1",`
+1. update `package.json` version declaration to, eg `"version": "1.3.0",`
 1. `npm install`
 1. `npm run pretest`
 1. `npm run build-content`
 1. `npm test`
-1. update `package.json` version declaration to `  "version": "1.3.0",`
 1. `git commit -a -m"<some release message>"`
 1. `git push`
 1. merge branch in [desktop repo](https://github.com/OWASP/threat-dragon-desktop) and then checkout master:
@@ -312,3 +325,14 @@ Create MacOS .deb installer and test it on a mac
 1. add the release notes to this release
 1. attach installer files to this release
 1. list SHA256 for each installer file: .exe, .dmg, .deb, .rpm, .snap and .AppImage
+
+Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.3.0:
+1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
+1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-desktop.git -b version-1.3
+1. cd owasp-threat-dragon-desktop/
+1. git remote add upstream https://github.com/owasp/threat-dragon-desktop
+1. git fetch upstream
+1. git rebase upstream/main
+1. git status
+1. git push
+1. create pull request from branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
