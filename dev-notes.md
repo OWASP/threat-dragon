@@ -217,7 +217,7 @@ When happy with _everything_ then `git push --force` to update your repo
 1. check that [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) is at correct version
 
 It is good to keep Mike Goodwin's area up to date with releases from the OWASP area. For example with version 1.3.1:
-1. Creat branch `version-1.3.1` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
+1. Create branch `version-1.3.1` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
 1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-core.git -b version-1.3.1
 1. cd owasp-threat-dragon-core/
 1. git remote add upstream https://github.com/owasp/threat-dragon-core
@@ -249,7 +249,7 @@ Test the release as in 'Install and run web application' above, ideally on all o
 In general if it works on one platform then it will work on the others, so one platform may be sufficient
 
 Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.3.0:
-1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon.git
+1. Create branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon.git
 1. git clone git@github.com:mike-goodwin/owasp-threat-dragon.git -b version-1.3
 1. cd owasp-threat-dragon/
 1. git remote add upstream https://github.com/owasp/threat-dragon
@@ -289,21 +289,6 @@ Create windows .exe and test it on a windows box
 1. make sure the installer works, navigate to `.exe` and run
 1. obtain SHA256 of .exe file using `shasum -a256`
 
-* ### Linux installers for TD desktop ###
-Create linux .rpm, .deb .snap, AppImage and test them on a linux box
-1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
-1. `cd threat-dragon-desktop`
-1. `npm install`
-1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
-1. `npm run pretest`
-1. `npm test`
-1. `npm run build-lin`
-1. make sure the installers work
-1. navigate to .deb package and run
-1. navigate to Snap .snap file and run
-1. navigate to AppImage file and run
-1. obtain SHA256 of .deb, .rpm, .snap and .AppImage files using `shasum -a256`
-
 * ### MacOS installer for TD desktop ###
 Create MacOS .deb installer and test it on a mac
 1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
@@ -312,9 +297,25 @@ Create MacOS .deb installer and test it on a mac
 1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
 1. `npm run pretest`
 1. `npm test`
-1. `** `npm run build-osx`
+1. `npm run build`
 1. make sure the installer works, navigate to .dmg and run
-1. obtain SHA256 of .dmg file using `shasum -a256`
+1. obtain SHA256 of .dmg, .snap and .AppImage files using `shasum -a256`
+1. note that the .snap and .AppImage files should be tested on linux, see below
+
+* ### Linux installers for TD desktop ###
+Create linux .rpm, .deb .snap, AppImage and test them on a linux box
+1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
+1. `cd threat-dragon-desktop`
+1. `npm install`
+1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
+1. `npm run pretest`
+1. `npm test`
+1. `npm run build`
+1. make sure the installers work
+1. navigate to .deb or .rpm package and run
+1. obtain (from MacOS build) the Snap .snap file and run
+1. obtain (from MacOS build) the AppImage file and run
+1. obtain SHA256 of .deb and .rpm files using `shasum -a256`
 
 * ### TD desktop release ###
 1. tag the desktop release, see above
@@ -327,7 +328,7 @@ Create MacOS .deb installer and test it on a mac
 1. list SHA256 for each installer file: .exe, .dmg, .deb, .rpm, .snap and .AppImage
 
 Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.3.0:
-1. Creat branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
+1. Create branch `version-1.3` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
 1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-desktop.git -b version-1.3
 1. cd owasp-threat-dragon-desktop/
 1. git remote add upstream https://github.com/owasp/threat-dragon-desktop
