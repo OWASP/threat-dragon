@@ -299,8 +299,7 @@ Create MacOS .deb installer and test it on a mac
 1. `npm test`
 1. `npm run build-osx`
 1. make sure the installer works, navigate to .dmg and run
-1. obtain SHA256 of .dmg, .snap and .AppImage files using `shasum -a256`
-1. note that the .snap and .AppImage files should be tested on linux, see below
+1. obtain SHA256 of .dmg file using `shasum -a256`
 
 * ### Linux installers for TD desktop ###
 Create linux .rpm, .deb .snap, AppImage and test them on a linux box
@@ -311,11 +310,9 @@ Create linux .rpm, .deb .snap, AppImage and test them on a linux box
 1. `npm run pretest`
 1. `npm test`
 1. `npm run build-lin`
-1. make sure the installers work
-1. navigate to .deb or .rpm package and run
-1. obtain (from MacOS build) the Snap .snap file and run
-1. obtain (from MacOS build) the AppImage file and run
-1. obtain SHA256 of .deb and .rpm files using `shasum -a256`
+1. make sure the installers work, navigate to .deb or .rpm package and test
+1. test the Snap .snap and AppImage files
+1. obtain SHA256 of .deb, .rpm, .snap and .AppImage files using `shasum -a256`
 
 * ### TD desktop release ###
 1. tag the desktop release, see above
