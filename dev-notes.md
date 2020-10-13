@@ -19,12 +19,14 @@ The web application repo, which also relies on the core functions, is at: https:
 Both application variants install `threat-dragon-core` as part of the install process `npm install`, under directory
 `node-modules/owasp-threat-dragon-core`. This package is downloaded during install from the [npmjs registry](https://www.npmjs.com/) as the [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) package.
 
-## Documentation, demo and dev websites ##
+## Demo and dev websites ##
 The public sites are updated from the original repo at https://github.com/mike-goodwin/owasp-threat-dragon .
 These sites can only be updated by the admin of this repo, Mike Goodwin.
 * merges to `master` branch will update online demo at https://threatdragon.org/
 * merges to `development` branch will update snapshot at https://threatdragondev.azurewebsites.net/
-* merges to `gh-pages` branch will update documentaion at https://docs.threatdragon.org/
+
+## Documentation ##
+The documentation website is at https://github.com/threatdragon/threatdragon.github.io and will update documentaion at https://threatdragon.github.io
 
 ## Install and Run Codebase ##
 

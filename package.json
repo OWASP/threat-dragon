@@ -24,7 +24,7 @@
     "email": "mike.goodwin@owasp.org"
   },
   "license": "Apache-2.0",
-  "homepage": "http://docs.threatdragon.org/",
+  "homepage": "https://threatdragon.github.io",
   "repository": {
     "type": "git",
     "url": "git://github.com/owasp/threat-dragon-core.git"
