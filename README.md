@@ -27,7 +27,7 @@ We are currently maintaining [a working protoype](https://threatdragon.org) in s
 There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux.
 Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
-[End user help](http://docs.threatdragon.org/) is available for both variants.
+[End user help](https://threatdragon.github.io) is available for both variants.
 
 This repository contains the files for the web application variant.
 
