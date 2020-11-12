@@ -33,7 +33,7 @@
   "style": "./src/content/threatdragon-core.css",
   "dependencies": {
     "angular": "^1.8.0",
-    "angular-route": "1.8.1",
+    "angular-route": "1.8.2",
     "angular-ui-bootstrap": "2.5.6",
     "bootstrap": "3.4.1",
     "hotkeys-js": "^3.7.6",
