@@ -1,34 +1,20 @@
+**Summary**
 <!--
-Please provide enough information so that others can review your pull request.
-If this is a bug fix, make sure your description includes "fixes #xxxx", or
-"closes #xxxx", where #xxxx is the issue number.
-The first three fields are mandatory:
--->
-**- Summary**
-
-<!--
-Explain the motivation for making this change.
 What existing issue does the pull request solve?
+Please provide enough information so that others can review your pull request
 -->
 
-**- Tests**
-
+**Description for the changelog**
 <!--
-Demonstrate the code is solid.
-Ensure the the code passes the `npm run-script pretest` and the `npm test` stages.
+A short (one line) summary that describes the changes in this
+pull request for inclusion in the change log
+If this is a bug fix, your description sahould include "fixes #xxxx", or
+"closes #xxxx", where #xxxx is the issue number
 -->
 
-**- Description for the changelog**
-
-<!--
-Write a short (one line) summary that describes the changes in this
-pull request for inclusion in the changelog:
--->
-
-**- Any other info**
-
+**Other info**
 <!--
 Thanks for submitting a pull request!
-Please make sure you've read and understood our contributing guidelines;
+Please make sure you read our contributing guidelines;
 https://github.com/OWASP/threat-dragon/blob/main/CONTRIBUTING.md
 -->
