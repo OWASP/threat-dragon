@@ -18,10 +18,10 @@ Describe what you expected to happen
 -->
 
 **Environment**
- - Platform: [e.g. Laptop, Smartphone]
- - OS: [e.g. MacOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+ - Version: [e.g. 1.3.1]
+ - Platform: Web App
+ - OS: [MacOS / Windows / Linux]
+ - Browser: [e.g. chrome, safari]
 
 **To Reproduce**
 <!--
