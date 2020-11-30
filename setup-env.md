@@ -26,6 +26,7 @@ command line:
 * `export SESSION_STORE=local`
 * SESSION_SIGNING_KEY as the random 32 character hexadecimal key, for example `export SESSION_SIGNING_KEY=11223344556677889900aabbccddeeff`
 * SESSION_ENCRYPTION_KEYS has the same 32 character key, for example `export SESSION_ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "11223344556677889900aabbccddeeff"}]'`
+* GITHUB_SCOPE - set this to `repo` if you want access also to private repos
 
 Similarly for Windows, from the terminal used to start Threat Dragon enter at the
 command line:
