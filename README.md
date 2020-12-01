@@ -8,7 +8,6 @@ which has the issues and pull requests from October 2015 up to June 2020.
 [![Build Status](https://travis-ci.org/owasp/threat-dragon.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon)
 [![codecov.io](http://codecov.io/github/owasp/threat-dragon/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon?branch=main)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
-[![Known Vulnerabilities](https://snyk.io/test/github/owasp/threat-dragon/badge.svg)](https://snyk.io/test/github/owasp/threat-dragon)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/OWASP/threat-dragon.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OWASP/threat-dragon/context:javascript)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
