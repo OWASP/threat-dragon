@@ -14,9 +14,7 @@
     "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
     "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox",
     "citest": "./node_modules/.bin/karma start --single-run false --browsers Chrome",
-    "codecov": "./node_modules/.bin/codecov",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "codecov": "./node_modules/.bin/codecov"
   },
   "description": "OWASP Threat Dragon core module",
   "author": {
@@ -76,8 +74,6 @@
     "npm-html2js": "0.1.8",
     "phantomjs-polyfill-find": "ptim/phantomjs-polyfill-find",
     "requirejs": "2.3.5",
-    "snyk": "^1.299.0",
     "watchify": "3.9.0"
-  },
-  "snyk": true
+  }
 }

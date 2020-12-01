@@ -7,7 +7,6 @@ Note that this repository has been migrated from Mike Goodwin's [original](https
 [![Build Status](https://travis-ci.org/owasp/threat-dragon-core.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon-core)
 [![codecov.io](http://codecov.io/github/owasp/threat-dragon-core/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon-core?branch=main)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon-core.svg)](LICENSE.txt)
-[![Known Vulnerabilities](https://snyk.io/test/github/owasp/threat-dragon-core/badge.svg)](https://snyk.io/test/github/owasp/threat-dragon-core)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/OWASP/threat-dragon-core.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OWASP/threat-dragon-core/context:javascript)
 
 # [OWASP](https://www.owasp.org) Threat Dragon #
