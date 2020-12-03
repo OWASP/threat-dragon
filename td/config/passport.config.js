@@ -9,12 +9,14 @@ function passportConfig(app) {
     app.use(passport.initialize());
     app.use(passport.session());
     
+    var scope = process.env.GITHUB_SCOPE === undefined ? 'public_repo' : process.env.GITHUB_SCOPE;
+
     //github sigin
     passport.use(new Strategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         failureRedirect: 'login/github',
-        scope: [ 'public_repo' ]
+        scope: [ scope ]
     },
     function(accessToken, refreshToken, profile, done) {
         return done(null, {profile: profile, accessToken: accessToken});
