@@ -14,6 +14,8 @@ module.exports = function(app) {
     
     //main application entry point
     router.get('/', csrfProtection, home.ensureLoggedIn, home.index);
+
+    router.get('/healthz', function(req, res){ res.send('true');});
     
     //login/out
     router.get('/login', csrfProtection, home.login);
