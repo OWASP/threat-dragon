@@ -10,3 +10,10 @@ package-lock.json
 # ignore VS and Eclipse files
 .vscode/
 .settings/
+
+# compiled files
+
+public/app/threatdragon.js
+public/app/threatdragon.js.map
+public/app/threatdragon.min.js
+dist/

@@ -38,7 +38,7 @@ describe('passport configuration tests', function() {
         spyOn(passport, 'session').and.callThrough();
         express = require('express');
         app = express();
-        require('../../td/config/passport.config')(app);
+        require('../../server/config/passport.config')(app);
         app.get('/', passport.authenticate('github'));
         mock = {done: function() {}};
         spyOn(mock, 'done');

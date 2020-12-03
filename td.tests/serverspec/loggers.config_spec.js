@@ -10,7 +10,7 @@ describe('loggers config tests', function() {
     
     beforeEach(function() {
         app = require('express')();
-        loggers = require('../../td/config/loggers.config');
+        loggers = require('../../server/config/loggers.config');
     });
     
     it('should set the logger on requests', function(done) {

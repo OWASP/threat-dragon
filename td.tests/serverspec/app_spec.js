@@ -37,7 +37,7 @@ describe('app tests', function() {
     });
     
     it('should not throw', function() {
-        expect(function() { require('../../td/app')}).not.toThrow();  
+        expect(function() { require('../../server/app')}).not.toThrow();  
     });
     
     it('should log a startup message', function() {
@@ -45,7 +45,7 @@ describe('app tests', function() {
         spyOn(mockBunyan, 'createLogger').and.callThrough();
         spyOn(mockLogger, 'info');
         spyOn(mockLogger, 'error');
-        require('../../td/app');
+        require('../../server/app');
         expect(mockBunyan.createLogger.calls.argsFor(0)).toEqual([{name: 'threatdragon', level: 'info'}]);
         expect(mockLogger.info).toHaveBeenCalled();
         expect(mockLogger.error).not.toHaveBeenCalled();
@@ -56,13 +56,13 @@ describe('app tests', function() {
         spyOn(mockBunyan, 'createLogger').and.callThrough();
         spyOn(mockLogger, 'info').and.throwError('error');
         spyOn(mockLogger, 'error');
-        require('../../td/app');
+        require('../../server/app');
         expect(mockLogger.error.calls.argsFor(1)).toEqual(['error']);
     });
     
     it('should fetch the favicon',function(done) {
         
-        var app = require('../../td/app');
+        var app = require('../../server/app');
         request(app)
         .get('/favicon.ico')
         .expect(200)

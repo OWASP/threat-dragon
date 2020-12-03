@@ -60,7 +60,7 @@ describe('encryption helper tests', function() {
         spyOn(mockLogger.logger, 'error');
         mockery.registerMock('../config/loggers.config', mockLogger);
         spyOn(mockCrypto,'createDecipheriv').and.callThrough();
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         expect(function() {cryptoHelper.decrypt(encryptedData);}).toThrow();
         expect(mockLogger.logger.error).toHaveBeenCalled();
         
@@ -80,7 +80,7 @@ describe('encryption helper tests', function() {
         spyOn(mockLogger.logger, 'fatal');
         mockery.registerMock('../config/loggers.config', mockLogger);
         var cb = jasmine.createSpy('cb');
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         expect(function() {cryptoHelper.encrypt(plainText, cb);}).toThrow();
         expect(mockLogger.logger.fatal).toHaveBeenCalled();
         
@@ -91,7 +91,7 @@ describe('encryption helper tests', function() {
         var testIV = 'test iv';
         var data = 'test cipher text';
         var encryptedData = {keyId: 1, iv: testIV, data: data};
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         spyOn(mockCrypto,'createDecipheriv').and.callThrough();
         cryptoHelper.decrypt(encryptedData);
         expect(mockCrypto.createDecipheriv.calls.argsFor(0)[1]).toEqual(new Buffer('testkey1', 'ascii'));
@@ -103,7 +103,7 @@ describe('encryption helper tests', function() {
         var testIV = 'test iv';
         var data = 'test cipher text';
         var encryptedData = {keyId: 1, iv: testIV, data: data};
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         var plainText = cryptoHelper.decrypt(encryptedData);
         expect(plainText).toEqual('plain text');
     });
@@ -111,7 +111,7 @@ describe('encryption helper tests', function() {
     it('should encrypt with the primary key and a random iv', function() {
         
         var plainText = 'test plain text';
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         var cb = jasmine.createSpy('cb');
         spyOn(mockCrypto,'createCipheriv').and.callThrough();
         cryptoHelper.encrypt(plainText, cb);
@@ -122,7 +122,7 @@ describe('encryption helper tests', function() {
     it('should attach the key id and IV to the encrypted data', function() {
         
         var plainText = 'test plain text';
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         var cb = jasmine.createSpy('cb');
         cryptoHelper.encrypt(plainText, cb);
         expect(cb).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('encryption helper tests', function() {
     it('should encrypt the data', function() {
         
         var plainText = 'test plain text';
-        var cryptoHelper = require('../../td/helpers/encryption.helper');
+        var cryptoHelper = require('../../server/helpers/encryption.helper');
         var cb = jasmine.createSpy('cb');
         cryptoHelper.encrypt(plainText, cb);
         expect(cb).toHaveBeenCalled();
