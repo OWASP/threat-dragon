@@ -10,3 +10,6 @@ package-lock.json
 # ignore VS and Eclipse files
 .vscode/
 .settings/
+# ignore IntelliJ IDEA files
+.idea/
+
