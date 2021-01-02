@@ -3,7 +3,7 @@
 describe('threatengine service:', function () {
     
     var _ = require('lodash');
-    var threatengine = require('../../src/services/threatengine')();
+    var threatengine = require('../../../src/services/threatengine')();
 
     describe('element generation tests:', function () {
 

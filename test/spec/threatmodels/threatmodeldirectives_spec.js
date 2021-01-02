@@ -223,7 +223,7 @@ describe('threat model report directive: ', function () {
 
     })
 
-    it('should cancel the report and return to the welcome', function() {
+    it('should cancel the report and return to the welcome page', function() {
 
         var testModelOwner = 'test owner';
         var testModel = {

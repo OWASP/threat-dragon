@@ -16,7 +16,7 @@ describe('logger service:', function () {
         spyOn(mockLog, 'error');
     });
 
-    var logger = require('../../src/common/logger')(mockLog);
+    var logger = require('../../../src/common/logger')(mockLog);
 
     describe('log tests:', function () {
 
