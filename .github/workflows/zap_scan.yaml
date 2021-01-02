@@ -1,0 +1,15 @@
+name: OWASP ZAP Baseline Scan
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:     
+    - name: ZAP Baseline Scan
+      uses: zaproxy/action-baseline@v0.3.0
+      with:
+        target: "https://threatdragon.org/"
