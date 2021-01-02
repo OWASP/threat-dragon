@@ -1,12 +1,12 @@
 name: OWASP ZAP Baseline Scan
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+    types: [ closed ]
 
 jobs:
-  build:
+  merge_job:
+    # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:     
     - name: ZAP Baseline Scan
