@@ -3,7 +3,7 @@
 var jasmine = require('jasmine');
 var request = require('supertest');
 var express = require('express');
-var finish_test = require('./helpers/supertest-jasmine');
+var finish_test = require('../supertest-jasmine');
 
 describe('request parser tests', function() {
     
@@ -12,7 +12,7 @@ describe('request parser tests', function() {
     beforeEach(function() {
         
         app = express();
-        require('../../td/config/parsers.config')(app);
+        require('../../../td/config/parsers.config')(app);
         
     });
     

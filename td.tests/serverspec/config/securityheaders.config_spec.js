@@ -2,7 +2,7 @@
 
 var request = require('supertest');
 var express = require('express');
-var finish_test = require('./helpers/supertest-jasmine');
+var finish_test = require('../supertest-jasmine');
 
 describe('security header tests', function () {
 
@@ -11,7 +11,7 @@ describe('security header tests', function () {
     beforeEach(function () {
 
         app = express();
-        require('../../td/config/securityheaders.config')(app, true);
+        require('../../../td/config/securityheaders.config')(app, true);
         app.get('/', function (req, res) {
             res.status(200).send('result');
         });

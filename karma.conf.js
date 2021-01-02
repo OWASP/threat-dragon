@@ -15,7 +15,7 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             'td/public/app/app.js',
-            'td.tests/clientspec/*.js',
+            'td.tests/clientspec/**/*.js',
             'td/public/app/**/*.html'
         ],
 

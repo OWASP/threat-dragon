@@ -2,7 +2,7 @@
 
 var request = require('supertest');
 var url = require('url');
-var finish_test = require('./helpers/supertest-jasmine');
+var finish_test = require('../supertest-jasmine');
 var jasmine = require('jasmine');
 var mockery = require('mockery');
 
@@ -38,7 +38,7 @@ describe('passport configuration tests', function() {
         spyOn(passport, 'session').and.callThrough();
         express = require('express');
         app = express();
-        require('../../td/config/passport.config')(app);
+        require('../../../td/config/passport.config')(app);
         app.get('/', passport.authenticate('github'));
         mock = {done: function() {}};
         spyOn(mock, 'done');

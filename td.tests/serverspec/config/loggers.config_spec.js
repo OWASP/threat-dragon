@@ -1,7 +1,7 @@
 'use strict';
 
 var request = require('supertest');
-var finish_test = require('./helpers/supertest-jasmine');
+var finish_test = require('../supertest-jasmine');
 
 describe('loggers config tests', function() {
     
@@ -10,7 +10,7 @@ describe('loggers config tests', function() {
     
     beforeEach(function() {
         app = require('express')();
-        loggers = require('../../td/config/loggers.config');
+        loggers = require('../../../td/config/loggers.config');
     });
     
     it('should set the logger on requests', function(done) {

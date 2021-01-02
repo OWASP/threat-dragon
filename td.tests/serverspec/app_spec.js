@@ -5,7 +5,7 @@ describe('app tests', function() {
     
     var mockery = require('mockery');
     var request = require('supertest');
-    var finish_test = require('./helpers/supertest-jasmine');
+    var finish_test = require('./supertest-jasmine');
 
     //bunyan mockery
     var mockLogger = {
