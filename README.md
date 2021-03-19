@@ -72,7 +72,6 @@ There are some [developer notes](dev-notes.md) to help get started.
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
 For secure disclosure, please see the [security policy](SECURITY.md).
 
-# Project leader #
-
-Mike Goodwin (mike.goodwin@owasp.org)
-
+### Project leaders
+* Mike Goodwin (mike.goodwin@owasp.org)
+* Jon Gadsden (jon.gadsden@owasp.org)
