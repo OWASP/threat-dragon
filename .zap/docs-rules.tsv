@@ -1,0 +1,7 @@
+10015 IGNORE  (Incomplete or No Cache-control and Pragma HTTP Header Set)
+10020	IGNORE	(X-Frame-Options Header Not Set)
+10021 IGNORE  (X-Content-Type-Options Header Missing)
+10038 IGNORE  (Content Security Policy (CSP) Header Not Set)
+10050 IGNORE  (Retrieved from Cache)
+10098 IGNORE	(Cross-Domain Misconfiguration)
+10109 IGNORE  (Modern Web Application)
