@@ -13,5 +13,5 @@ jobs:
       uses: zaproxy/action-baseline@v0.4.0
       with:
         target: "https://threatdragon.github.io/"
-        rules_file_name: ".zap/docs-rules.tsv"
+        rules_file_name: "/.zap/docs-rules.tsv"
         cmd_options: '-a'
