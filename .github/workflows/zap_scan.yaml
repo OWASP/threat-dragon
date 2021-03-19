@@ -8,4 +8,4 @@ jobs:
     - name: ZAP Baseline Scan
       uses: zaproxy/action-baseline@v0.3.0
       with:
-        target: "https://threatdragon.org/"
+        target: "https://threatdragon.github.io/"
