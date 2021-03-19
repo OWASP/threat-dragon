@@ -1,11 +1,17 @@
-name: OWASP ZAP Baseline Scan
+name: OWASP ZAP baseline scan for Threat Dragon
 on: [push, pull_request]
 
 jobs:
-  zap_scan:
+  zap_docs_scan:
     runs-on: ubuntu-latest
     steps:     
-    - name: ZAP Baseline Scan
-      uses: zaproxy/action-baseline@v0.3.0
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: main
+    - name: ZAP Docs scan
+      uses: zaproxy/action-baseline@v0.4.0
       with:
         target: "https://threatdragon.github.io/"
+        rules_file_name: ".zap/docs-rules.tsv"
+        cmd_options: '-a'
