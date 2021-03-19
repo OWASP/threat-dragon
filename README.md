@@ -11,8 +11,9 @@ Threat Dragon is an [OWASP Incubator Project](https://owasp.org/www-project-thre
 please contribute your ideas and time if you can.
 
 ## Testing the docs pages
-* make sure you have jekyll installed, following the [github docs](https://docs.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll)
+* make sure you have jekyll installed, following the
+[github docs](https://docs.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll)
 * run the site locally with `bundle exec jekyll serve`
-* browse to http://127.0.0.1:4000/ to check all is good
+* browse to http://localhost:4000/ to check all is good
 
 **Project leader:** Mike Goodwin (mike.goodwin@owasp.org)

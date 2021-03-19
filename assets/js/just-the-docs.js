@@ -59,7 +59,7 @@ jtd.getTheme = function() {
 
 jtd.setTheme = function(theme) {
   var cssFile = document.querySelector('[rel="stylesheet"]');
-  cssFile.setAttribute('href', 'http://localhost:4000/assets/css/just-the-docs-' + theme + '.css');
+  cssFile.setAttribute('href', 'http://threatdragon.github.io/assets/css/just-the-docs-' + theme + '.css');
 }
 
 // Document ready
