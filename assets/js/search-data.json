@@ -1,0 +1,224 @@
+{"0": {
+    "doc": "About",
+    "title": "OWASP Threat Dragon",
+    "content": "Threat Dragon is a free, open-source, cross-platform threat modeling application including system diagramming and a rule engine to auto-generate threats/mitigations. Threat Dragon supports STRIDE1, LINDUN2 and CIA3. It is an OWASP Incubator Project and follows the values and principles of the threat modeling manifesto. The roadmap for the project is a great UX, a powerful rule engine and integration with other development lifecycle tools. There is a good overview of threat modeling and risk assessment from OWASP, and this expands on what the Threat Dragon project aims for: . | designing the data flow diagram | automatic determining and ranking threats | suggested mitigations | entry of mitigations and counter measures | . The application comes in two variants: . | A desktop application: This is based on Electron, with model files stored on the local filesystem. There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux. | A web application: For the web application model files are stored in GitHub, with other storage methods to follow. | . 1: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege 2: Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance 3: Confidentiality, Integrity, Availability . ",
+    "url": "http://localhost:4000/about#owasp-threat-dragon",
+    "relUrl": "/about#owasp-threat-dragon"
+  },"1": {
+    "doc": "About",
+    "title": "About",
+    "content": " ",
+    "url": "http://localhost:4000/about",
+    "relUrl": "/about"
+  },"2": {
+    "doc": "Application interface",
+    "title": "OWASP Threat Dragon",
+    "content": "Future versions of Threat Dragon should provide an application programming interface to support CI/CD pipleines and the like. At present it provides a very minimal application programming interface, but this is being worked on. Notional ideas for this API are: . | provide pdf output | list unmitigated threats | list mitigated threats | statistics | . ",
+    "url": "http://localhost:4000/api/#owasp-threat-dragon",
+    "relUrl": "/api/#owasp-threat-dragon"
+  },"3": {
+    "doc": "Application interface",
+    "title": "Application interface",
+    "content": " ",
+    "url": "http://localhost:4000/api/",
+    "relUrl": "/api/"
+  },"4": {
+    "doc": "Command line interface",
+    "title": "OWASP Threat Dragon",
+    "content": "With the desktop version of Threat Dragon installed, and if the executable is in the environment path, then Threat Dragon can be run from the command line. For example after install on MacOS and Linux: . OWASP-Threat-Dragon . or after install on Windows: . OWASP-Threat-Dragon.exe . AppImage does not need installation, so after downloading version 1.3.1 (for example) just run: ./OWASP-Threat-Dragon-1.3.1.AppImage . There is also a command line interface which can be used (again if the executable is in the environment path) to directly access some of Threat Dragon’s functionality. For example run this command to get help : . OWASP-Threat-Dragon --help . Or to export a given threat model file to pdf : . OWASP-Threat-Dragon --pdf ./threat-model.json --verbose . If on Windows: . OWASP-Threat-Dragon.exe --pdf .\\threat-model.json --verbose . or using AppImage (using version 1.3.1 for example): ./OWASP-Threat-Dragon-1.3.1.AppImage --pdf ./threat-model.json --verbose . Note that the path to the JSON file needs to be resolvable, so use the full path or the ‘./’ if the file is in the working directory. Here is the help contents for version 1.3.1 : . OWASP-Threat-Dragon --help Usage: OWASP-Threat-Dragon &lt;command&gt; [options] Commands: OWASP-Threat-Dragon edit &lt;json&gt; Edit JSON threat model [aliases: e] OWASP-Threat-Dragon open &lt;json&gt; Open JSON threat model [aliases: o] OWASP-Threat-Dragon pdf &lt;json&gt; Export JSON threat model as PDF [aliases: p] OWASP-Threat-Dragon print &lt;json&gt; Print JSON threat model [aliases: p] OWASP-Threat-Dragon run Run threat dragon application[aliases: r, x] Options: --version Show version number [boolean] --verbose, -v Increasing levels of verbosity [count] --help Show help [boolean] . Verbosity can be increased from the default of ‘error’: -v warnings and info -vv verbose and debug -vvv silly . ",
+    "url": "http://localhost:4000/cli/#owasp-threat-dragon",
+    "relUrl": "/cli/#owasp-threat-dragon"
+  },"5": {
+    "doc": "Command line interface",
+    "title": "Command line interface",
+    "content": " ",
+    "url": "http://localhost:4000/cli/",
+    "relUrl": "/cli/"
+  },"6": {
+    "doc": "Contributing",
+    "title": "OWASP Threat Dragon",
+    "content": "Contributing . Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for contributors. We are trying to keep the test coverage relatively high, so please try to update tests in any PRs. There are some developer notes in the core threat dragon repo to help get started with this project. Vulnerability disclosure . If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority. For secure disclosure, please see the security policy. Project leader . Mike Goodwin (mike.goodwin@owasp.org) . ",
+    "url": "http://localhost:4000/contribute/#owasp-threat-dragon",
+    "relUrl": "/contribute/#owasp-threat-dragon"
+  },"7": {
+    "doc": "Contributing",
+    "title": "Contributing",
+    "content": " ",
+    "url": "http://localhost:4000/contribute/",
+    "relUrl": "/contribute/"
+  },"8": {
+    "doc": "Getting started",
+    "title": "OWASP Threat Dragon",
+    "content": "Getting started with Threat Dragon models . ",
+    "url": "http://localhost:4000/getting-started/#owasp-threat-dragon",
+    "relUrl": "/getting-started/#owasp-threat-dragon"
+  },"9": {
+    "doc": "Getting started",
+    "title": "Create a new model",
+    "content": "If using the Web application . The Threat Dragon web variant stores its threat models in your GitHub repos. This is so that the models can stay close to the code they are modelling. Future versions will provide a deeper integration so watch this space but for now, when you login to Threat Dragon for the first time you will need to access Github. To get started with your threat model access the welcome page and select click on the plus area. You will then be presented with a list of your GitHub repositories. Pick the one where you want to store your new model. If you have more than 30 repos you might have to page through them until you find the one you want. Once you have picked your target repo, you will be asked to pick a branch. Again, if you have more than 30 branches you might need to page. When you pick a branch you will be taken to the threat model edit page where you can enter general information about your model. If using the Desktop application . The Threat Dragon desktop variant stores its threat models on your local filesystem. To get started with your threat model start the applications and from the welcome page select on the plus area, or pull down menu ‘New’. You will then need to save the model file - we did ot this way so that you can nbe sure your model can be saved. You will then be taken straight to the threat model edit page where you can enter general information about your model. ",
+    "url": "http://localhost:4000/getting-started/#create-a-new-model",
+    "relUrl": "/getting-started/#create-a-new-model"
+  },"10": {
+    "doc": "Getting started",
+    "title": "Threat model edit page",
+    "content": "The Title field is mandatory. All the rest are optional, but they provide context for your model. This can be useful if someone else has to pick the model up in the future. Click on the Edit button to start editing the threat model details. | Title - mandatory, all orhter fields are optional | Owner - typically a dev team or an individual | Reviewer - only one reviewer at present | High level system description - provides context for your model | Contributors - giving credit where it is due | . You can add new contributors by clickin on ‘Add a new contributor …’. Add some diagrams to your model by clicking on ‘Add a new diagram …’ . Name your diagram and then Add to confirm or Cancel if you change your mind. At this stage you are just listing the diagrams and naming them. You add all the diagram elements later. Once you have entered all the details you need remember to click Save. You can also Cancel to exit without saving, or Reload to undo any changes and revert to your last save. In the web variant of Threat Dragon, models are saved in your chosen branch at a path like ThreatDragonModels/[model name]/[model title].json, Look at the Demo Threat Model for an example. Because of this, if you change title of your model it will delete the old model in GitHub and replace it with one at the new path. This does not apply to the desktop variant. Congratulations! You have got the basics done. Next step … mapping out your system in a diagram. ",
+    "url": "http://localhost:4000/getting-started/#threat-model-edit-page",
+    "relUrl": "/getting-started/#threat-model-edit-page"
+  },"11": {
+    "doc": "Getting started",
+    "title": "Loading a demo model",
+    "content": "If you are wondering how to start you can load a sample threat model. On the welcome page you can download an example by clicking on the download area. If you are using the desktop application you can select ‘Open Demo Model’ pull down menu. This should give you some ideas on how to get started with your own model, and has diagrams, model details and threats as examples. ",
+    "url": "http://localhost:4000/getting-started/#loading-a-demo-model",
+    "relUrl": "/getting-started/#loading-a-demo-model"
+  },"12": {
+    "doc": "Getting started",
+    "title": "Opening an existing model",
+    "content": "Web application . If you have a repository that already has threat models, you can open them by clicking on the open area on the Welcome page. You will then be able to select a repo and branch and then you will be able to choose from a list of models. Desktop application . If you have an existing model file saved locally, you can open it by clicking on the open area on the Welcome page. You will then be able to navigate to the model file in your local file system and open it. The demo model should give you some ideas on how to get started with your own model. ",
+    "url": "http://localhost:4000/getting-started/#opening-an-existing-model",
+    "relUrl": "/getting-started/#opening-an-existing-model"
+  },"13": {
+    "doc": "Getting started",
+    "title": "Threat model report",
+    "content": "From the Threat Model details view you can see a summary report of your model listing the diagrams, elements and threats. Towards the bottom right of the page click on the Report button. You can then customise the report to show or hide: . | Out of scope model elements | Mitigated threats | Threat model diagrams | . On the desktop variant of Threat Dragon you can Print the report or Save it as a PDF. On the web variant, you can Print the report and then, on most browsers, the print dialog allows you to save the report as a PDF. ",
+    "url": "http://localhost:4000/getting-started/#threat-model-report",
+    "relUrl": "/getting-started/#threat-model-report"
+  },"14": {
+    "doc": "Getting started",
+    "title": "Getting started",
+    "content": " ",
+    "url": "http://localhost:4000/getting-started/",
+    "relUrl": "/getting-started/"
+  },"15": {
+    "doc": "Desktop application install",
+    "title": "OWASP Threat Dragon",
+    "content": "Threat Dragon comes in two variants, desktop application and web application. ",
+    "url": "http://localhost:4000/install-desktop/#owasp-threat-dragon",
+    "relUrl": "/install-desktop/#owasp-threat-dragon"
+  },"16": {
+    "doc": "Desktop application install",
+    "title": "Desktop application install instructions",
+    "content": "Installable versions are available for download from the OWASP GitHub area: . | Windows (64 bit) installer | MacOS installer | Linux snap, AppImage, debian and rpm installers | . Linux installer and AppImage . Packages for both Debian and Fedora Linux on AMD64 and X86-64bit platforms can be downloaded from the releases folder. Alternatively a platform independent snap installer can be downloaded, or use the AppImage provided. MacOS installer . Download the .dmg MacOS installer from the releases folder. Open the download and drag ‘OWASP Threat Dragon’ to the application directory. When the copy has finished then Threat Dragon can be run from launchpad or Finder -&gt; Applications. If an error message pops up when running for the first time, along the lines of ‘OWASP Threat Dragon cannot be opened because the developer cannot be verified’ or “OWASP ZAP” cannot be opened because the developer cannot be verified, macOS cannot verify that this app is free from malware then follow this FAQ to resolve this. Windows installer . Download the Windows .exe installer from the releases folder. Run the installer and invoke the application from the shortcut. The current versions of the desktop application are not code-signed, so you may get a warning when installing. Command line using npm . For the latest versions of code between releases, npm can be used to install and run Threat Dragon locally: . git clone https://github.com/owasp/threat-dragon-desktop . npm install . Then to run it: . npm run start . There is a limited command line interface, with help: . npm run help . For example to export a given threat model file to pdf : . npm run pdf ./threat-model.json . ",
+    "url": "http://localhost:4000/install-desktop/#desktop-application-install-instructions",
+    "relUrl": "/install-desktop/#desktop-application-install-instructions"
+  },"17": {
+    "doc": "Desktop application install",
+    "title": "Desktop application install",
+    "content": " ",
+    "url": "http://localhost:4000/install-desktop/",
+    "relUrl": "/install-desktop/"
+  },"18": {
+    "doc": "Web application install",
+    "title": "OWASP Threat Dragon",
+    "content": "Threat Dragon comes in two variants, desktop application and web application. ",
+    "url": "http://localhost:4000/install-webapp/#owasp-threat-dragon",
+    "relUrl": "/install-webapp/#owasp-threat-dragon"
+  },"19": {
+    "doc": "Web application install",
+    "title": "Web application install instructions",
+    "content": "The web application can be run locally or from a server. Installing . Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally follow these steps: . Install git and node.js - which includes the node package manager npm. To get the code, navigate to where you want your code to be located and do . git init . git clone https://github.com/owasp/threat-dragon.git . This installs code in two sub-folders. One for the main application (td) and one for the unit tests (td.tests). To install, do: . npm install . Environment variables . Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and register it as a GitHub application. Once you have done that you need to set the Client ID and Client Secret as environment variables (GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET). You also need to set a session signing key environment variable (SESSION_SIGNING_KEY). Setting up these environment variables has caused some confusion in the past, so there is a step-by-step guide to this. Once a user is signed in, their session information contains an OAuth access token with write access to their GitHub repos. For security, this is encrypted before storage in the session. The session encryption supports multiple keys so that they can be expired without any interruption to the running application. The primary key is always used for encryption. Retired keys can be kept available for decrypting existing sessions. Once all sessions are using the new primary key (typically this will be around 60 minutes maximum), the old one can be safely removed. The keys are stored as a JSON string in the SESSION_ENCRYPTION_KEYS environment variable. For example: . [{\\\"isPrimary\\\": true, \\\"id\\\": 0, \\\"value\\\": \\\"abcdef\\\"}, {\\\"isPrimary\\\": false, \\\"id\\\": 1, \\\"value\\\": \\\"ghijkl\\\"}] . If you are developing locally, you can choose to store the session data in memory using the express-session in-memory store. To do this the SESSION_STOREenvironment variale to local. As mentioned in the express-session docs this is for development only - it is not suitable for production. To remind you of this, Threat Dragon will write a log message at severity ERROR when it starts if the in memory session store is used. For production use, Threat Dragon currently supports Azure Table Storage for the session store via connect-azuretables. To make this store work you need to specify an Azure Storage Account and key as environment variables AZURE_STORAGE_ACCOUNT and AZURE_STORAGE_ACCESS_KEY. See the connect-azuretables documentation for more options. If you want to use an alternative session store in production, install it and edit the session.config.js file. Lastly, by default, Threat Dragon will set the secure flag on cookies. To override this for development purposes, set the NODE_ENV environment variable to development. Running the application . Once your environment variables are set up, start the node web server: . npm start . If you then browse to http://localhost:3000 you should see the running application. ",
+    "url": "http://localhost:4000/install-webapp/#web-application-install-instructions",
+    "relUrl": "/install-webapp/#web-application-install-instructions"
+  },"20": {
+    "doc": "Web application install",
+    "title": "Web application install",
+    "content": " ",
+    "url": "http://localhost:4000/install-webapp/",
+    "relUrl": "/install-webapp/"
+  },"21": {
+    "doc": "Install",
+    "title": "OWASP Threat Dragon",
+    "content": "Threat Dragon comes in two variants, desktop application and web application. Web application . The web application can be run locally or from a server, and is downloaded from the Threat Dragon repo. There is some configuration necessary, so see the install instructions for configuring the application. Desktop application . Installable versions are available for download from the OWASP GitHub area: . | Windows (64 bit) installer | MacOS installer | Linux snap, AppImage, debian and rpm installers | . See the detailed install instructions. ",
+    "url": "http://localhost:4000/install/#owasp-threat-dragon",
+    "relUrl": "/install/#owasp-threat-dragon"
+  },"22": {
+    "doc": "Install",
+    "title": "Install",
+    "content": " ",
+    "url": "http://localhost:4000/install/",
+    "relUrl": "/install/"
+  },"23": {
+    "doc": "Web app environment",
+    "title": "OWASP Threat Dragon",
+    "content": "Setting up the web application environment variables for Threat Dragon. Values for the environment variables . | In your github account, go to Settings -&gt; 'Developer settings' -&gt; 'OAuth Apps' -&gt; 'New OAuth App' . | fill out the form with the following: Application name: not critical, suggest something like ‘Threat Dragon’ Homepage URL: http://localhost:3000 Application description: not critical, suggest something like ‘Threat Dragon for local development’ Authorization callback URL: http://localhost:3000/oauth/github . | Register the application, an example screenshot is at the bottom of this document . | In this new OAuth App, note the values for Client ID (something like 01234567890123456789) and Client Secret (something like 0123456789abcdef0123456789abcdef01234567) . | Generate a random 32 character hexadecimal key (something like 11223344556677889900aabbccddeeff) . | . You now have all the info to set up the environment variables. Set up the environment variables . For MacOS and Linux go into the terminal from which you start Threat Dragon and enter at the command line: . | GITHUB_CLIENT_ID from Client ID above, for example export GITHUB_CLIENT_ID=01234567890123456789 | GITHUB_CLIENT_SECRET from Client Secret above, for example export GITHUB_CLIENT_SECRET=0123456789abcdef0123456789abcdef01234567 | export NODE_ENV=development | export SESSION_STORE=local | SESSION_SIGNING_KEY as the random 32 character hexadecimal key, for example export SESSION_SIGNING_KEY=11223344556677889900aabbccddeeff | SESSION_ENCRYPTION_KEYS has the same 32 character key, for example export SESSION_ENCRYPTION_KEYS='[{\"isPrimary\": true, \"id\": 0, \"value\": \"11223344556677889900aabbccddeeff\"}]' | GITHUB_SCOPE - set this to repo if you want access also to private repos | . Similarly for Windows, from the terminal used to start Threat Dragon enter at the command line: . | set GITHUB_CLIENT_ID=01234567890123456789 | set GITHUB_CLIENT_SECRET=0123456789abcdef0123456789abcdef01234567 | set NODE_ENV=development | set SESSION_STORE=local | set SESSION_SIGNING_KEY=11223344556677889900aabbccddeeff | set SESSION_ENCRYPTION_KEYS='[{\"isPrimary\": true, \"id\": 0, \"value\": \"11223344556677889900aabbccddeeff\"}]' | . You should now be able to start the threat dragon webapp using npm run-script start and then navigate in a browser to “http://localhost:3000/” . What it looks like . Example screenshot of registering a new OAuth application: . ",
+    "url": "http://localhost:4000/setup-env/#owasp-threat-dragon",
+    "relUrl": "/setup-env/#owasp-threat-dragon"
+  },"24": {
+    "doc": "Web app environment",
+    "title": "Web app environment",
+    "content": " ",
+    "url": "http://localhost:4000/setup-env/",
+    "relUrl": "/setup-env/"
+  },"25": {
+    "doc": "Threat generation",
+    "title": "OWASP Threat Dragon",
+    "content": "Threat generation rules for Threat Dragon . Threat Dragon provides rules to generate suggested threats for elements on the diagram, except for trust boundaries. The suggested threats can be individually accepted or ignored, and other threats added manually. ",
+    "url": "http://localhost:4000/threat-generation/#owasp-threat-dragon",
+    "relUrl": "/threat-generation/#owasp-threat-dragon"
+  },"26": {
+    "doc": "Threat generation",
+    "title": "Adding and editing threats",
+    "content": "To add threats to elements in your diagram, select an element and click on ‘Edit Threats’ to the left side of the diagram editor. This will collapse the model element stencil and show the threats for the selected element. To add a new threat select ‘+ Add a new threat …’ . Enter the details for your threat in the threat dialog. Values for ‘Title’ and ‘Threat Type’ are mandatory. When you are done hit Save and your new threat should appear. To edit it again click on the threat title. ",
+    "url": "http://localhost:4000/threat-generation/#adding-and-editing-threats",
+    "relUrl": "/threat-generation/#adding-and-editing-threats"
+  },"27": {
+    "doc": "Threat generation",
+    "title": "STRIDE, LINDDUN and CIA",
+    "content": "The threat model can have different types of threats added to it according to your preferred methodology. Currently the supported methodologies are STRIDE, LINDDUN and CIA; these can be selected using the radio buttons on the diagram. NOTE it is OK to select one methodology, enter some threats into the model, and then change the model methodology. No threats are removed when you do this, and your previous threats will still be retained in the model. For example if a threat is added using CIA and the model is then changed to LINDDUN, then the CIA threat is still in the model and can be edited as before. In addition if LINDDUN threats are added and then the model is changed back to CIA then both LINDDUN and CIA threats are in the model and both types can be edited. Of course, same goes for STRIDE and so on. ",
+    "url": "http://localhost:4000/threat-generation/#stride-linddun-and-cia",
+    "relUrl": "/threat-generation/#stride-linddun-and-cia"
+  },"28": {
+    "doc": "Threat generation",
+    "title": "Threat generation",
+    "content": " ",
+    "url": "http://localhost:4000/threat-generation/",
+    "relUrl": "/threat-generation/"
+  },"29": {
+    "doc": "Threat model diagrams",
+    "title": "OWASP Threat Dragon",
+    "content": "Creating the Threat Dragon diagrams . Once you have created or opened an existing threat model file the next step is to edit the threat model diagrams. Click on the diagram you wish to edit and you will be taken to the diagram editor. Diagram title . To edit the diagram title, click on the diagram title itself. Edit the title and then save (or cancel) your changes. ",
+    "url": "http://localhost:4000/threat-model-diagrams/#owasp-threat-dragon",
+    "relUrl": "/threat-model-diagrams/#owasp-threat-dragon"
+  },"30": {
+    "doc": "Threat model diagrams",
+    "title": "Processes, data stores and actors",
+    "content": "Add model elements to your diagram by clicking or tapping the relevant shape in the stencil on the left side of the diagram editor. Once added they can be selected by clicking them to see their properties and threats and dragged around the diagram. To delete an element, first select it and then click on the red icon in the element’s top left corner like so: . ",
+    "url": "http://localhost:4000/threat-model-diagrams/#processes-data-stores-and-actors",
+    "relUrl": "/threat-model-diagrams/#processes-data-stores-and-actors"
+  },"31": {
+    "doc": "Threat model diagrams",
+    "title": "Data flows and trust boundaries",
+    "content": "Data flows and trust boundaries can be added to the diagram by clicking their shape in the stencil on the left side of the diagram editor. Once added, their ends can be dragged around the diagram. To connect the end of a data flow to a process, data store or actor, you can drag one of its ends onto the element. An easier way to draw data flows between elements is to select your first element, then click the grey link tool, next to the red remove tool near the top right of the selected element. This turns the link tool green. Then, when you click another element, a new data flow will be created, linking the first element to the second. Extra vertices can be added by clicking at some point on the line. These new vertices can also be dragged to position the data flow or trust boundary. Vertices can be removed by clicking the remove tool that appears when you mouse near to the vertex. A data flow can be selected by clicking the Link options tool that appears when you mouse near to the link. Once selected you can edit its properties or add threats to it. Trust boundaries cannot be selected. Data flows and trust boundaries can be deleted by clicking the red remove tool that appears when you mouse near to them. ",
+    "url": "http://localhost:4000/threat-model-diagrams/#data-flows-and-trust-boundaries",
+    "relUrl": "/threat-model-diagrams/#data-flows-and-trust-boundaries"
+  },"32": {
+    "doc": "Threat model diagrams",
+    "title": "Out of scope elements",
+    "content": "Processes, data stores, actors and data flows can be marked as out of scope. You can use this for elements that are needed to help a diagram make sense, but for which you are not interested in creating threats. To help reviewers (and as a reminder for future-you) you can specify a reason why elements have been marked out of scope. Threat generation is disabled for these elements. Out of scope elements are indicated in diagrams with dashed lines: . ",
+    "url": "http://localhost:4000/threat-model-diagrams/#out-of-scope-elements",
+    "relUrl": "/threat-model-diagrams/#out-of-scope-elements"
+  },"33": {
+    "doc": "Threat model diagrams",
+    "title": "Elements with open threats",
+    "content": "Processes, data stores, actors and data flows that have open (unmitigated) threats are highlighted in red so that you know where to focus your attention: . ",
+    "url": "http://localhost:4000/threat-model-diagrams/#elements-with-open-threats",
+    "relUrl": "/threat-model-diagrams/#elements-with-open-threats"
+  },"34": {
+    "doc": "Threat model diagrams",
+    "title": "Editing toolbar",
+    "content": "The toolbar on the diagram editing page supports some general diagramming features: . | Toggle gridlines on/off. When gridlines are on, elements snap to them for neater models | Cancel the edit and return to the threat model details view | Clear all the elements from the model | Reload the diagram from the last save, discarding any changes | Generate threats for the selected element using the threat generation rule engine | Duplicate the selected element as a new element | Save the threat model to your local browser storage | . ",
+    "url": "http://localhost:4000/threat-model-diagrams/#editing-toolbar",
+    "relUrl": "/threat-model-diagrams/#editing-toolbar"
+  },"35": {
+    "doc": "Threat model diagrams",
+    "title": "Element properties",
+    "content": "To edit the properties of a model element, first select it. The element properties are shown on the right side of the diagram editor. In a future version of Threat Dragon, these properties will be used by the threat generation engine to suggest threats and mitigations for your model. ",
+    "url": "http://localhost:4000/threat-model-diagrams/#element-properties",
+    "relUrl": "/threat-model-diagrams/#element-properties"
+  },"36": {
+    "doc": "Threat model diagrams",
+    "title": "Threat model diagrams",
+    "content": " ",
+    "url": "http://localhost:4000/threat-model-diagrams/",
+    "relUrl": "/threat-model-diagrams/"
+  }
+}

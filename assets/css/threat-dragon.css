@@ -1,0 +1,12 @@
+.image-left {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  float: left;
+}
+.image-right {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  float: right;
+}
