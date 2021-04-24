@@ -22,6 +22,9 @@ describe('app tests', function() {
     //skip session config and passport config here since it need LOADS of mocking
     var mockSessionConfig = function() { };
     var mockPassportConfig = function() { };
+    var mockEnvConfig = {
+        tryLoadDotEnv: function () {}
+    };
     
     beforeEach(function() {
         mockery.enable({ useCleanCache: true });
@@ -30,6 +33,7 @@ describe('app tests', function() {
         mockery.registerMock('bunyan', mockBunyan);
         mockery.registerMock('./config/session.config', mockSessionConfig);
         mockery.registerMock('./config/passport.config', mockPassportConfig);
+        mockery.registerMock('./config/env.config', mockEnvConfig);
     });
     
     afterEach(function() {
@@ -68,6 +72,12 @@ describe('app tests', function() {
         .expect(200)
         .end(finish_test(done));
         
+    });
+
+    it('should attempt to load configuration from .env', function () {
+        spyOn(mockEnvConfig, 'tryLoadDotEnv');
+        require('../../td/app');
+        expect(mockEnvConfig.tryLoadDotEnv).toHaveBeenCalledTimes(1);
     });
 });
 
