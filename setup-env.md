@@ -50,4 +50,4 @@ You should now be able to start the threat dragon webapp using `npm run-script s
 Example screenshot of registering a new OAuth application:
 
 
-![Register new OAuth application](/td/public/content/images/register-new-OAuth-application.png)
+![Register new OAuth application](/td.site/content/images/register-new-OAuth-application.png)

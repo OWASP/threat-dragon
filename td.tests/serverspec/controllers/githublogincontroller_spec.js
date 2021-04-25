@@ -2,7 +2,7 @@
 
 require('jasmine');
 var mockery = require('mockery');
-var moduleUnderTest = '../../../td/controllers/githublogincontroller';
+var moduleUnderTest = '../../../td.server/controllers/githublogincontroller';
 
 //request/response mocks
 var mockRequest;

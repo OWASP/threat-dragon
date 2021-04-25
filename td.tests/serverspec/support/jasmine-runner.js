@@ -8,7 +8,7 @@ var noop = function() {};
 
 // this errors because connect-azuretables needs a connection string
 // var glob = require('glob');
-// glob.sync('./td/**/*.js', {ignore: ['./td/public/**/*.js']}).forEach(function(file) {require('../../../' + file)});
+// glob.sync('./td/**/*.js', {ignore: ['./td.site/**/*.js']}).forEach(function(file) {require('../../../' + file)});
 
 var jrunner = new Jasmine();
 jrunner.configureDefaultReporter({print: noop});    // remove default reporter logs

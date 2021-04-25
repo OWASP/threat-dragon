@@ -3,7 +3,7 @@
 require('jasmine');
 var path = require('path');
 var mockery = require('mockery');
-var moduleUnderTest = '../../../td/controllers/homecontroller';
+var moduleUnderTest = '../../../td.server/controllers/homecontroller';
 mockery.registerAllowable(moduleUnderTest);
 mockery.registerAllowable('path');
 var homeController = require(moduleUnderTest);
@@ -51,7 +51,7 @@ describe('homecontroller tests', function() {
         spyOn(mockResponse,'sendFile');
         homeController.index(mockRequest,mockResponse);
         expect(mockResponse.sendFile).toHaveBeenCalled();
-        expect(mockResponse.sendFile.calls.argsFor(0)[0]).toEqual(path.join(__dirname, '../../../td/index.html')); 
+        expect(mockResponse.sendFile.calls.argsFor(0)[0]).toEqual(path.join(__dirname, '../../../td.server/index.html')); 
     });
     
     it('should set the csrf cookie', function() {
@@ -67,7 +67,7 @@ describe('homecontroller tests', function() {
         
         var testToken = 'test token'
         spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        var logger = require('../../../td/config/loggers.config').logger;
+        var logger = require('../../../td.server/config/loggers.config').logger;
         spyOn(logger, 'error');
         homeController.index(mockRequest, mockResponse);
         expect(logger.error.calls.argsFor(0)[0].security).toBe(true);
