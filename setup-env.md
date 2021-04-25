@@ -18,13 +18,6 @@
 
 You now have all the info to set up the environment variables.
 
-# Configuring Environment Variables
-Environment variables can be configured by exporting variables to your terminal from which you'll be running Threat Dragon, or by using a `.env` file as described below.  
-
-## Dotenv
-Place a file named `.env` at the root of the project with your environment variables.  The `example.env` is there for reference.  The application will load any variables in this file as environment variables.
-
-## MacOS / Linux
 For MacOS and Linux go into the terminal from which you start Threat Dragon and enter at the
 command line:
 * GITHUB_CLIENT_ID from Client ID above, for example `export GITHUB_CLIENT_ID=01234567890123456789`
@@ -35,7 +28,6 @@ command line:
 * SESSION_ENCRYPTION_KEYS has the same 32 character key, for example `export SESSION_ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "11223344556677889900aabbccddeeff"}]'`
 * GITHUB_SCOPE - set this to `repo` if you want access also to private repos
 
-## Windows
 Similarly for Windows, from the terminal used to start Threat Dragon enter at the
 command line:
 * `set GITHUB_CLIENT_ID=01234567890123456789`
@@ -50,4 +42,4 @@ You should now be able to start the threat dragon webapp using `npm run-script s
 Example screenshot of registering a new OAuth application:
 
 
-![Register new OAuth application](/td.site/content/images/register-new-OAuth-application.png)
+![Register new OAuth application](/td/public/content/images/register-new-OAuth-application.png)
