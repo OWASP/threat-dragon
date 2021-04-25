@@ -13,3 +13,5 @@ package-lock.json
 # ignore IntelliJ IDEA files
 .idea/
 
+# ignore .env file with sensitive information/secrets
+.env

@@ -9,6 +9,9 @@ try {
     app.set('views', './td/views');
     app.set('view engine', 'pug');
 
+    // environment configuration
+    require('./config/env.config').tryLoadDotEnv();
+
     //static content
     app.use('/public', express.static(path.join(__dirname, 'public')));
 
