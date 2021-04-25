@@ -1,5 +1,7 @@
-name: OWASP ZAP baseline scan for Threat Dragon
-on: [push, pull_request]
+name: OWASP ZAP scan
+on:
+  pull_request:
+    types: [ closed ]
 
 jobs:
   zap_docs_scan:
