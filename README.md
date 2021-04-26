@@ -51,7 +51,7 @@ This installs code in two sub-folders. One for the main application (`td`) and o
 ### Docker
 To run Threat Dragon using docker, configure your environment using dotenv as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it -p 3000:3000 $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
+- `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
 
 ## Environment variables
 
