@@ -12,7 +12,7 @@ describe('request parser tests', function() {
     beforeEach(function() {
         
         app = express();
-        require('../../../td.server/config/parsers.config')(app);
+        require('../../src/config/parsers.config')(app);
         
     });
     

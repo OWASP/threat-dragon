@@ -13,5 +13,5 @@ var noop = function() {};
 var jrunner = new Jasmine();
 jrunner.configureDefaultReporter({print: noop});    // remove default reporter logs
 jasmine.getEnv().addReporter(new SpecReporter({spec: {displayPending: true}}));   // add jasmine-spec-reporter
-jrunner.loadConfigFile('./td.tests/serverspec/support/jasmine.json'); // load jasmine.json configuration
+jrunner.loadConfigFile('./test/support/jasmine.json'); // load jasmine.json configuration
 jrunner.execute();

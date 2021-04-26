@@ -3,7 +3,7 @@
 require('jasmine');
 var path = require('path');
 var mockery = require('mockery');
-var moduleUnderTest = '../../../td.server/controllers/homecontroller';
+var moduleUnderTest = '../../src/controllers/homecontroller';
 mockery.registerAllowable(moduleUnderTest);
 mockery.registerAllowable('path');
 var homeController = require(moduleUnderTest);
@@ -67,7 +67,7 @@ describe('homecontroller tests', function() {
         
         var testToken = 'test token'
         spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        var logger = require('../../../td.server/config/loggers.config').logger;
+        var logger = require('../../src/config/loggers.config').logger;
         spyOn(logger, 'error');
         homeController.index(mockRequest, mockResponse);
         expect(logger.error.calls.argsFor(0)[0].security).toBe(true);

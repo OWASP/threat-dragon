@@ -4,18 +4,19 @@ var favicon = require('serve-favicon');
 var bunyan = require('bunyan');
 
 var upDir = '..' + path.sep;
+var siteDir = path.join(__dirname, upDir, upDir, 'td.site');
 
 try {
     var app = express();
     app.set('trust proxy', true);
-    app.set('views', path.join(__dirname, upDir, 'td.site', 'views'));
+    app.set('views', path.join(siteDir, 'views'));
     app.set('view engine', 'pug');
 
     // environment configuration
     require('./config/env.config').tryLoadDotEnv();
 
     //static content
-    app.use('/public', express.static(path.join(__dirname, upDir, 'td.site')));
+    app.use('/public', express.static(siteDir));
 
     //security headers
     require('./config/securityheaders.config')(app);
@@ -27,7 +28,7 @@ try {
     require('./config/passport.config')(app);
 
     //favicon
-    app.use(favicon(path.join(__dirname, upDir, 'td.site', 'favicon.ico')));
+    app.use(favicon(path.join(siteDir, 'favicon.ico')));
 
     //logging
     require('./config/loggers.config').config(app);

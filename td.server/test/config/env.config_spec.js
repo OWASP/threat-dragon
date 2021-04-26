@@ -33,7 +33,7 @@ describe('environment configuration tests', function() {
             mockery.registerMock('fs', mockFs);
             spyOn(mockFs, 'existsSync').and.callThrough();
     
-            var envConfig = require('../../../td.server/config/env.config.js');
+            var envConfig = require('../../src/config/env.config.js');
             envConfig.tryLoadDotEnv();
         });
 
@@ -55,7 +55,7 @@ describe('environment configuration tests', function() {
             mockery.registerMock('fs', mockFs);
             spyOn(mockFs, 'existsSync').and.callThrough();
     
-            var envConfig = require('../../../td.server/config/env.config.js');
+            var envConfig = require('../../src/config/env.config.js');
             envConfig.tryLoadDotEnv();
         });
 

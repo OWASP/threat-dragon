@@ -6,7 +6,7 @@ describe('threat model controller tests', function () {
 
     var testToken = 'test token';
     var mockery = require('mockery');
-    var moduleUnderTest = '../../../td.server/controllers/threatmodelcontroller';
+    var moduleUnderTest = '../../src/controllers/threatmodelcontroller';
     var mockRepository = {};
     var mockRequest;
     var mockResponse = {};

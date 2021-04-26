@@ -89,7 +89,7 @@ describe('route config tests', function () {
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
             spyOn(mockHomeController, 'index').and.callThrough();
 
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/')
@@ -109,7 +109,7 @@ describe('route config tests', function () {
             spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
             spyOn(mockHomeController, 'login').and.callThrough();
 
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/login')
@@ -129,7 +129,7 @@ describe('route config tests', function () {
             spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
             spyOn(mockHomeController, 'logout').and.callThrough();
 
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .post('/logout')
@@ -149,7 +149,7 @@ describe('route config tests', function () {
             spyOn(mockCsrfProtectionContainer, 'mockCsrfProtection').and.callThrough();
             spyOn(mockHomeController, 'logoutform').and.callThrough();
 
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/logoutform')
@@ -185,7 +185,7 @@ describe('route config tests', function () {
         it('/login', function (done) {
 
             spyOn(mockGithub, 'doLogin').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .post('/login')
@@ -202,7 +202,7 @@ describe('route config tests', function () {
         it('/login/github', function (done) {
 
             spyOn(mockGithub, 'doLogin').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/login/github')
@@ -223,7 +223,7 @@ describe('route config tests', function () {
 
             spyOn(mockGithub, 'completeLogin').and.callThrough();
 
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/oauth/github')
@@ -302,7 +302,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'repos').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/threatmodel/repos')
@@ -320,7 +320,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'branches').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/threatmodel/org/repo/branches')
@@ -338,7 +338,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'models').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/threatmodel/org/repo/branch/models')
@@ -356,7 +356,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'model').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .get('/threatmodel/org/repo/branch/model/data')
@@ -374,7 +374,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'deleteModel').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .delete('/threatmodel/org/repo/branch/model')
@@ -393,7 +393,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'create').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .put('/threatmodel/org/repo/branch/model/create')
@@ -412,7 +412,7 @@ describe('route config tests', function () {
 
             spyOn(mockThreatModel, 'update').and.callThrough();
             spyOn(mockHomeController, 'ensureLoggedIn').and.callThrough();
-            require('../../../td.server/config/routes.config')(app);
+            require('../../src/config/routes.config')(app);
 
             request(app)
                 .put('/threatmodel/org/repo/branch/model/update')

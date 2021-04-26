@@ -2,7 +2,7 @@
 
 require('jasmine');
 var mockery = require('mockery');
-var moduleUnderTest = '../../../td.server/repositories/threatmodelrepository';
+var moduleUnderTest = '../../src/repositories/threatmodelrepository';
 mockery.registerAllowable(moduleUnderTest);
 
 describe('threatmodel repository tests', function () {

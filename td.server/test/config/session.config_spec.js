@@ -16,7 +16,7 @@ describe('session config tests', function() {
 
     //environment
     var signingKey = 'signingKey';
-    var logger = require('../../../td.server/config/loggers.config').logger;
+    var logger = require('../../src/config/loggers.config').logger;
     process.env.SESSION_SIGNING_KEY = signingKey;
 
     beforeEach(function() {
@@ -63,10 +63,10 @@ describe('session config tests', function() {
         });
 
         spyOn(logger, 'error');
-        require('../../../td.server/config/session.config')(app);
+        require('../../src/config/session.config')(app);
         app.use(passport.initialize());
         app.use(passport.session());
-        require('../../../td.server/config/parsers.config')(app);
+        require('../../src/config/parsers.config')(app);
         
         jasmine.clock().install();
     });

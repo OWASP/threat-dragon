@@ -14,7 +14,8 @@ homeController.index = function (req, res) {
     }
     
     res.cookie('XSRF-TOKEN', req.csrfToken(), cookieOptions);
-    res.sendFile(path.join(__dirname, '..' + path.sep, '..' + path.sep, 'td.site', 'index.html'));
+    var upDir = '..' + path.sep;
+    res.sendFile(path.join(__dirname, upDir, upDir, upDir, 'td.site', 'index.html'));
 };
 
 homeController.login = function (req, res) {
