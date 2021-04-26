@@ -1,5 +1,5 @@
 var debug = require('debug')('OWASP Threat Dragon');
-var app = require('./td.server/app');
+var app = require('./td.server/src/app');
 
 app.set('port', process.env.PORT || 3000);
 

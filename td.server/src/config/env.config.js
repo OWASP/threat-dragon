@@ -10,7 +10,7 @@ var dotenv = require('dotenv');
  */
 function tryLoadDotEnv () {
     var upDir = '..' + path.sep;
-    var dotEnvPath = path.join(__dirname, upDir, upDir, '.env');
+    var dotEnvPath = path.join(__dirname, upDir, upDir, upDir, '.env');
     if (fs.existsSync(dotEnvPath)) {
         dotenv.config();
     }
