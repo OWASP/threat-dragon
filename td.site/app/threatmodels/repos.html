@@ -1,0 +1,27 @@
+<div data-ng-controller="github as vm" class="container-fluid">
+    <row>
+        <div ng-if="vm.repos && !vm.error" class="jumbotron">
+            <p class="text-center">
+                Select a GitHub repository from the list below...
+            </p>
+        </div>
+    </row>
+    <row>
+        <div ng-if="vm.error" class="jumbotron">
+            <h1>oooops!</h1>
+            <p>
+                Something went wrong fetching your GitHub repos. Maybe you don't have and repos yet? Anyways, check your browser console
+                for details <span class="fa fa-frown-o"></span>
+            </p>
+        </div>
+    </row>
+    <row>
+        <div ng-if="!vm.repos" class="col-lg-8 col-lg-offset-2 text-center">
+            <p class="h3">Fetching your repos...</p>
+            <div class="spinner"></div>
+        </div>
+        <div ng-if="vm.repos" class="col-lg-6 col-lg-offset-3">
+            <tmt-Pager can-previous="vm.pagination.prev" can-next="vm.pagination.next" page="vm.pagination.page" items="vm.repos" previous="vm.previousPage()" next="vm.nextPage()" select="vm.selectRepo(item)" />
+        </div>
+    </row>
+</div>
