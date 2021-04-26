@@ -14,9 +14,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'td/public/app/app.js',
+            'td.site/app/app.js',
             'td.tests/clientspec/**/*.js',
-            'td/public/app/**/*.html'
+            'td.site/app/**/*.html'
         ],
 
         // list of files to exclude
@@ -26,8 +26,8 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'td/public/app/**/*.html': ['ng-html2js'],
-            'td/public/app/app.js': ['browserify'],
+            'td.site/app/**/*.html': ['ng-html2js'],
+            'td.site/app/app.js': ['browserify'],
             'td.tests/clientspec/test.js': ['browserify']
         },
 
