@@ -19,7 +19,7 @@ before_install:
 
 install:
   - npm install
-  - npm run-script build
+  - npm run-script install-server
   - cd td.server && npm install
 
 after_success:
