@@ -11,7 +11,7 @@
     "bundle": "browserify --debug ./td.site/app/app.js -o ./td.site/app/threatdragon.js",
     "bundle-minify": "browserify ./td.site/app/app.js -d -p [minifyify --map ./td.site/app/threatdragon.js.map --output ./td.site/app/threatdragon.js.map ] > ./td.site/app/threatdragon.min.js",
     "start": "node server.js",
-    "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors td.site",
+    "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors td.site && cd td.server && npm run pretest",
     "test": "npm run-script test-client-firefox && npm run-script test-server",
     "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
