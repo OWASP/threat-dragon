@@ -20,6 +20,8 @@ before_install:
 install:
   - npm install
   - npm run-script build
+  - cd td.server && npm install
 
 after_success:
   - npm run-script codecov
+  - cd td.server && npm run codecov
