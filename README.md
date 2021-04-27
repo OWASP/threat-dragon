@@ -44,9 +44,12 @@ Install git and node.js - which includes the node package manager npm. To get th
 
 `git clone https://github.com/owasp/threat-dragon.git`
 
-This installs code in two sub-folders. One for the main application (`td`) and one for the unit tests (`td.tests`). To install, do:
+This installs code in two sub-folders. One for the back-end application (`td.server`) and one for the front-end (`td.site`). To install, do:
 
 `npm install`
+and go into the `server` directory and run `npm install` there as well, eg: `cd td.server && npm install`
+
+Running `npm run start` from the root directory of the repository will start the front-end and the server.
 
 ### Docker
 To run Threat Dragon using docker, configure your environment using dotenv as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
@@ -104,14 +107,18 @@ See `package.json` for other build tasks.
 
 ## Running the unit tests
 
-The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm tasks are available:
+The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm tasks are available, and these are split between the front-end and back-end directories.
 
+For front-end (root of the project):
 * `pretest`: runs jshint without the unit tests
 * `test-client-phantomjs`, `test-client-firefox`, `test-client-chrome`, `test-client-ie`: runs client side tests using the specified browser
-* `test-server`: runs the server side tests
-* `test`: runs jshint, client side tests on Firefox and PhantomJS and server side tests (this is what runs on Travis CI)
-* `test-local`: runs jshint, client side tests on all browsers and then the server side tests (useful as a pre-push git hook)
+* `test`: runs jshint, client side tests on Firefox and PhantomJS (this is what runs on Travis CI)
+* `test-local`: runs jshint, client side tests on all browsers (useful as a pre-push git hook)
 * `citest`: continously runs client side tests in PhantomJS with `--single-run false` (useful while coding)
+
+For the back-end (from the `td.server` directory):
+* `pretest`: runs jshint without the unit tests
+* `test`: runs the server side tests
 
 **Note:** If you are on Windows and are having problems installing Karma, the simplest way to resolve this seems to be to install
 Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in

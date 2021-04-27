@@ -1,0 +1,52 @@
+{
+  "name": "owasp-threat-dragon-server",
+  "version": "1.3.1",
+  "private": false,
+  "scripts": {
+    "start": "echo 'Please run npm run start from the root of this repo' && exit 1",
+    "pretest": "jshint --verbose --show-non-errors src",
+    "test": "istanbul cover --include-all-sources -x ./test --root ./src --dir ../coverage/Server/ ./test/support/jasmine-runner.js",
+    "codecov": "./node_modules/.bin/codecov"
+  },
+  "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
+  "author": {
+    "name": "mike.goodwin",
+    "email": "mike.goodwin@owasp.org"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://threatdragon.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/owasp/threat-dragon.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bunyan": "1.8.14",
+    "connect-azuretables": "1.0.20",
+    "connect-ensure-login": "0.1.1",
+    "cookie-parser": "^1.4.4",
+    "csurf": "^1.10.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-bunyan-logger": "^1.3.3",
+    "express-session": "^1.16.2",
+    "helmet": "^3.18.0",
+    "octonode": "0.9.5",
+    "passport": "0.4.1",
+    "passport-github": "1.1.0",
+    "pug": "^3.0.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "codecov": "^3.6.5",
+    "istanbul": "0.4.5",
+    "jasmine": "^2.99.0",
+    "jasmine-core": "^3.4.0",
+    "jasmine-node": "^3.0.0",
+    "jasmine-spec-reporter": "4.2.1",
+    "jshint": "^2.10.2",
+    "mockery": "2.1.0",
+    "passport-local": "1.0.0",
+    "supertest": "^4.0.2"
+  }
+}

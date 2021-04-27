@@ -1,0 +1,8 @@
+paths:
+  - td.server/src
+  - td.site/
+paths_ignore:
+  - td.server/src/node_modules
+  - td.server/test
+  - node_modules
+  - td.tests
