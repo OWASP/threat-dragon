@@ -1,6 +1,6 @@
 name: OWASP ZAP scan
 on:
-  pull_request:
+  pull_request_target:
     types: [ closed ]
 
 jobs:
