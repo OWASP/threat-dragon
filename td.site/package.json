@@ -7,7 +7,7 @@
     "bundle": "webpack",
     "clean": "rimraf ../dist",
     "pretest": "jshint --verbose --show-non-errors src",
-    "test": "npm-run-all test:firefox",
+    "test": "npm-run-all build test:firefox",
     "test:phantomjs": "karma start --single-run --browsers PhantomJS",
     "test:firefox": "karma start --single-run --browsers Firefox",
     "test:chrome": "karma start --single-run --browsers Chrome",
