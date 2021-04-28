@@ -15,3 +15,5 @@ package-lock.json
 
 # ignore .env file with sensitive information/secrets
 .env
+
+dist/

@@ -1,0 +1,26 @@
+<div data-ng-controller="webreport as vm" class="container-fluid">
+    <div ng-if="!vm.error && !vm.loaded">
+        <p class="h3 text-center">Your threat model report is loading...</p>
+        <div class="spinner"></div>
+    </div>
+    <row>
+        <div ng-if="!vm.error">
+            <tmt-threat-model-report loaded="vm.onLoaded()" print="vm.printPDF(done)" model="vm.threatModel">
+        </div>
+    </row>
+    <row>
+        <div ng-if="vm.error">
+            <div class="jumbotron">
+                <h1>oooops!</h1> 
+                <p>
+                    It looks like you tried to view a report for an invalid threat model. Maybe you typed the
+                    address wrong? Or if you clicked a link to get here, the threat model might have been
+                    deleted since you made the link <span class="fa fa-frown-o"></span>
+                </p>
+                <p>
+                    <a href="#">Take me home</a>
+                </p>
+            </div>
+        </div>
+    </row>
+</div>
