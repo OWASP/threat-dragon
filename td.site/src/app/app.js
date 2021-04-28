@@ -15,7 +15,6 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
 };
 
 var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'owasp-threat-dragon-core', 'common']);
-app.value('hotkeys', require('hotkeys-js'));
 
 //require custom modules, services, controllers and directives
 require('./config.route');
