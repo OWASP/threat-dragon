@@ -5,18 +5,20 @@ RUN npm ci --only=production
 
 
 FROM node:14 as build-frontend
-WORKDIR /app
-COPY package* ./
-RUN npm ci --only=production
+WORKDIR /app/td.site
+COPY ./td.site/package* ./
+RUN npm ci
+COPY ./td.site/src ./src
+COPY ./td.site/webpack.config.js ./
+RUN npm run build
 
 
 FROM gcr.io/distroless/nodejs:14
 WORKDIR /app
 
-COPY server.js .
-COPY ./td.server/src /app/td.server/src
-COPY --from=build-backend /app /app/td.server/src
-COPY ./td.site /app/td.site
-COPY --from=build-frontend /app /app
+COPY ./td.server/src ./td.server/src
+COPY --from=build-backend /app ./td.server/src
+COPY --from=build-frontend /app/dist /app/dist
+COPY ./td.server/index.js ./td.server/index.js
 
-CMD ["server.js"]
+CMD ["td.server/index.js"]

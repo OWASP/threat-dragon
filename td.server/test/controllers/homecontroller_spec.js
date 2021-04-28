@@ -51,7 +51,7 @@ describe('homecontroller tests', function() {
         spyOn(mockResponse,'sendFile');
         homeController.index(mockRequest,mockResponse);
         expect(mockResponse.sendFile).toHaveBeenCalled();
-        expect(mockResponse.sendFile.calls.argsFor(0)[0]).toEqual(path.join(__dirname, '../../../td.site/index.html')); 
+        expect(mockResponse.sendFile.calls.argsFor(0)[0]).toEqual(path.join(__dirname, '../../../dist/index.html')); 
     });
     
     it('should set the csrf cookie', function() {

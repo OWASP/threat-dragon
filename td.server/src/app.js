@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var bunyan = require('bunyan');
 
 var upDir = '..' + path.sep;
-var siteDir = path.join(__dirname, upDir, upDir, 'td.site');
+var siteDir = path.join(__dirname, upDir, upDir, 'dist');
 
 try {
     var app = express();
