@@ -5,7 +5,10 @@
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
     "pretest": "jshint --verbose --show-non-errors src",
-    "test": "istanbul cover --include-all-sources -x ./test --root ./src --dir ../coverage/Server/ ./test/support/jasmine-runner.js"
+    "test": "istanbul cover --include-all-sources -x ./test --root ./src --dir ../coverage/Server/ ./test/support/jasmine-runner.js",
+    "transpile": "babel ./src --out-dir dist",
+    "clean": "rimraf dist",
+    "build": "npm-run-all clean transpile"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
@@ -37,6 +40,9 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
     "codecov": "^3.6.5",
     "istanbul": "0.4.5",
     "jasmine": "^2.99.0",
@@ -45,6 +51,8 @@
     "jasmine-spec-reporter": "4.2.1",
     "jshint": "^2.10.2",
     "mockery": "2.1.0",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
     "passport-local": "1.0.0",
     "supertest": "^4.0.2"
   }

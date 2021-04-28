@@ -44,8 +44,6 @@ and [docs.threatdragon.org](https://docs.threatdragon.org/) websites.
 ~> git clone --recursive git@github.com:OWASP/threat-dragon.git
 ~> cd threat-dragon
 ~/threat-dragon> npm install
-~/threat-dragon> npm run pretest
-~/threat-dragon> npm run build
 ~/threat-dragon> npm test
 ~/threat-dragon> export GITHUB_CLIENT_ID=<the client id>
 ~/threat-dragon> export GITHUB_CLIENT_SECRET=<the client secret>
@@ -97,12 +95,10 @@ Install as before:
 git clone --recursive git@github.com:OWASP/threat-dragon.git -b your-dev-branch-name
 cd threat-dragon
 npm install
-npm run pretest
-npm run build
 npm test
 ```
 
-Make changes to code, and depending on the changes (eg .html or .css), `npm run build`
+After making changes to the code, run `npm run build`.
 
 Run modified app with `npm run start`, and navigate in a browser to http://localhost:3000/ .
 As above, if there is an error such as 'Cannot GET /' then ensure the 
@@ -132,23 +128,21 @@ Install and build as before
 ~> git clone --recursive git@github.com:OWASP/threat-dragon.git
 ~> cd threat-dragon
 ~/threat-dragon> npm install
-~/threat-dragon> npm run pretest
-~/threat-dragon> npm run build
 ~/threat-dragon> npm test
 ```
 
 Replace the TD core using:
 
 ```
-~/threat-dragon> cd node_modules
-~/threat-dragon/node_modules> rm -rf owasp-threat-dragon-core
-~/threat-dragon/node_modules> git clone git@github.com:OWASP/threat-dragon-core.git owasp-threat-dragon-core
-~/threat-dragon/node_modules> cd owasp-threat-dragon-core
-~/threat-dragon/node_modules/owasp-threat-dragon-core> npm install
-~/threat-dragon/node_modules/owasp-threat-dragon-core> npm run build
-~/threat-dragon/node_modules/owasp-threat-dragon-core> npm run pretest
-~/threat-dragon/node_modules/owasp-threat-dragon-core> npm test
-~/threat-dragon/node_modules/owasp-threat-dragon-core> cd ../..
+~/threat-dragon/td.site> cd node_modules
+~/threat-dragon/td.site/node_modules> rm -rf owasp-threat-dragon-core
+~/threat-dragon/td.site/node_modules> git clone git@github.com:OWASP/threat-dragon-core.git owasp-threat-dragon-core
+~/threat-dragon/td.site/node_modules> cd owasp-threat-dragon-core
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> npm install
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> npm run build
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> npm run pretest
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> npm test
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> cd ../..
 ```
 
 Rebuild the webapp using the swapped in core package,
@@ -170,8 +164,8 @@ If changes are made to the core files, then to see them in the webapp (depending
 command `npm run build` in core directory and then webapp directory:
 
 ```
-~/threat-dragon> cd node_modules/owasp-threat-dragon-core
-~/threat-dragon/node_modules/owasp-threat-dragon-core> npm run build
+~/threat-dragon> cd td.site/node_modules/owasp-threat-dragon-core
+~/threat-dragon/td.site/node_modules/owasp-threat-dragon-core> npm run build
 ~/threat-dragon> cd -
 ~/threat-dragon> npm run build
 ~/threat-dragon> npm run start

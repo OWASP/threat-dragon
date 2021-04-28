@@ -13,7 +13,7 @@ try {
     app.set('view engine', 'pug');
 
     // environment configuration
-    require('./config/env.config').tryLoadDotEnv();
+    require('./config/env.config').default.tryLoadDotEnv();
 
     //static content
     app.use('/public', express.static(siteDir));

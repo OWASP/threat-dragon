@@ -1,7 +1,9 @@
 FROM node:14 as build-backend
 WORKDIR /app
 COPY ./td.server/package* ./
-RUN npm ci --only=production
+RUN npm ci
+COPY ./td.server/src ./src
+RUN npm run build
 
 
 FROM node:14 as build-frontend
@@ -16,7 +18,7 @@ RUN npm run build
 FROM gcr.io/distroless/nodejs:14
 WORKDIR /app
 
-COPY ./td.server/src ./td.server/src
+COPY --from=build-backend /app ./td.server
 COPY --from=build-backend /app ./td.server/src
 COPY --from=build-frontend /app/dist /app/dist
 COPY ./td.server/index.js ./td.server/index.js
