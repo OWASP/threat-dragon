@@ -44,17 +44,16 @@ Install git and node.js - which includes the node package manager npm. To get th
 
 `git clone https://github.com/owasp/threat-dragon.git`
 
-This installs code in two sub-folders. One for the back-end application (`td.server`) and one for the front-end (`td.site`). To install, do:
+This installs code in two sub-folders. One for the back-end application (`td.server`) and one for the front-end (`td.site`).  Please read the [Environment Variables](setup-env.md) to configure your environment before running the application.  To run the application, run the following commands from the root of the repository:
+- `npm install`
+- `npm run start`
 
-`npm install`
-and go into the `server` directory and run `npm install` there as well, eg: `cd td.server && npm install`
-
-Running `npm run start` from the root directory of the repository will start the front-end and the server.
+If you then browse to `http://localhost:3000` you should see the running application.
 
 ### Docker
 To run Threat Dragon using docker, configure your environment using dotenv as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
+- `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ## Environment variables
 
@@ -89,14 +88,6 @@ install it and edit the [session.config.js](https://github.com/owasp/threat-drag
 Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes,
 set the `NODE_ENV` environment variable to `development`. 
 
-## Running the application
-
-Once your environment variables are set up, start the node web server:
-
-`npm start`
-
-If you then browse to `http://localhost:3000` you should see the running application.
-
 ## Building
 
 The basic build script is:
@@ -109,16 +100,20 @@ See `package.json` for other build tasks.
 
 The unit tests are written using Jasmine and Karma. Coverage is by Istanbul. A few different npm tasks are available, and these are split between the front-end and back-end directories.
 
-For front-end (root of the project):
-* `pretest`: runs jshint without the unit tests
-* `test-client-phantomjs`, `test-client-firefox`, `test-client-chrome`, `test-client-ie`: runs client side tests using the specified browser
+To run all tests (back-end and front-end), from the root of the repository:
+- `npm run test`: This runs jshint, the back-end, and front-end unit tests.  It uses the Firefox browser by default for Karma testing.  This is what is run on Travis CI
+
+
+For front-end (run from `td.site`):
+* `npm run pretest`: runs jshint without the unit tests
+* `npm run test:phantomjs`, `npm run test:firefox`, `npm run test:chrome`, `npm run test:ie`: runs client side tests using the specified browser
 * `test`: runs jshint, client side tests on Firefox and PhantomJS (this is what runs on Travis CI)
-* `test-local`: runs jshint, client side tests on all browsers (useful as a pre-push git hook)
+* `test:local`: runs jshint, client side tests on all browsers (useful as a pre-push git hook), but requires Internet Explorer
 * `citest`: continously runs client side tests in PhantomJS with `--single-run false` (useful while coding)
 
 For the back-end (from the `td.server` directory):
-* `pretest`: runs jshint without the unit tests
-* `test`: runs the server side tests
+* `npm run pretest`: runs jshint without the unit tests
+* `npm run test`: runs the server side tests
 
 **Note:** If you are on Windows and are having problems installing Karma, the simplest way to resolve this seems to be to install
 Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in

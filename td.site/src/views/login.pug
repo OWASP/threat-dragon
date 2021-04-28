@@ -1,7 +1,7 @@
-include ../../node_modules/pug-bootstrap/components/navbar
-include ../../node_modules/pug-bootstrap/components/navs
-include ../../node_modules/pug-bootstrap/components/buttons
-include ../../node_modules/pug-bootstrap/components/icons
+include ./navbar
+include ./navs
+include ./buttons
+include ./icons
 doctype html
 html(lang="en")
     head
@@ -14,8 +14,7 @@ html(lang="en")
         title= title
         block styles
             link(rel="stylesheet",href="./public/content/threatdragon.min.css")
-            link(rel="stylesheet",href="./public/content/bootstrap-theme.min.css")
-            link(rel="stylesheet",href="./public/content/bootstrap-custom.css")
+            link(rel="stylesheet",href="./public/content/bootstrap.min.css")
         nav.navbar.navbar-default
             .container-fluid
                 .navbar-header

@@ -3,35 +3,17 @@
   "version": "1.3.1",
   "private": false,
   "scripts": {
-    "build": "npm run-script bundle && npm run-script bundle-minify && npm run-script bundle-css && npm run-script bundle-minify-css && npm run-script copy-fonts",
-    "build:test": "npm-run-all clean copy-fonts copy-images bundle-css minify-css clean-css",
-    "copy-fonts": "copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ../dist/fonts",
-    "copy-images": "copyfiles -f ./src/content/images/*.* ../dist/content/images",
-    "bundle-css": "rework-npm ./src/content/app.css -o ../dist/content/threatdragon.css",
-    "minify-css": "uglifycss ./src/content/threatdragon.css > ./src/content/threatdragon.min.css",
-    "clean-css": "rimraf ../dist/content/threatdragon.css",
-    "copy-app": "copyfiles -f ./src/app/config.exceptionHandler.js ../dist/app",
-    "bundle-ng": "browserify ./src/app/app.js -d | exorcist ../dist/app/threatdragon.js.map > ../dist/app/threatdragon.min.js",
-    "build:app": "npm-run-all clean copy-app bundle-ng",
+    "build": "npm-run-all clean bundle",
+    "bundle": "webpack",
     "clean": "rimraf ../dist",
-
-
-
-
-
-    "bundle-minify-css": "npm run-script bundle-css && npm run-script minify-css",
-    "bundle": "browserify --debug ./src/app/app.js | exorcist -o ./src/app/threatdragon.js",
-    "bundle-minify": "browserify ./src/app/app.js -d -p [minifyify --map ./src/app/threatdragon.js.map --output ./src/app/threatdragon.js.map ] > ./src/app/threatdragon.min.js",
-    "start": "node server.js",
-    "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors td.site && cd td.server && npm run pretest",
-    "test": "npm run-script test-client-firefox && npm run-script test-server",
-    "test-client-phantomjs": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
-    "test-client-firefox": "./node_modules/.bin/karma start --single-run --browsers Firefox",
-    "test-client-chrome": "./node_modules/.bin/karma start --single-run --browsers Chrome",
-    "test-client-ie": "./node_modules/.bin/karma start --single-run --browsers IE",
-    "test-local": "npm run-script pretest && npm run-script test-client-chrome && npm run-script test-client-ie && npm run-script test-client-phantomjs && npm run-script test-client-firefox",
-    "citest": "./node_modules/.bin/karma start --single-run false --browsers Firefox",
-    "codecov": "./node_modules/.bin/codecov"
+    "pretest": "jshint --verbose --show-non-errors src",
+    "test": "npm-run-all test:firefox",
+    "test:phantomjs": "karma start --single-run --browsers PhantomJS",
+    "test:firefox": "karma start --single-run --browsers Firefox",
+    "test:chrome": "karma start --single-run --browsers Chrome",
+    "test:ie": "karma start --single-run --browsers IE",
+    "test:local": "npm-run-all pretest test:chrome test:ie test:phantomjs test:firefox",
+    "citest": "karma start --single-run false --browsers Firefox"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
   "author": {
@@ -64,9 +46,9 @@
     "browserify-istanbul": "3.0.1",
     "browserify-ng-html2js": "1.3.0",
     "codecov": "^3.6.5",
-    "copyfiles": "^2.1.1",
-    "debug": "^4.1.1",
-    "exorcist": "^2.0.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "css-loader": "^5.2.4",
+    "css-minimizer-webpack-plugin": "^2.0.0",
     "istanbul": "0.4.5",
     "jasmine": "^2.99.0",
     "jasmine-core": "^3.4.0",
@@ -87,15 +69,14 @@
     "karma-spec-reporter": "0.0.32",
     "karma-threshold-reporter": "^0.1.15",
     "karma-xml-reporter": "0.1.4",
-    "minifyify": "7.3.5",
+    "mini-css-extract-plugin": "^1.5.0",
     "mockery": "2.1.0",
     "npm-run-all": "^4.1.5",
     "phantomjs-polyfill-find": "0.0.1",
     "phantomjs-prebuilt": "2.1.16",
     "requirejs": "^2.3.6",
-    "rework-npm-cli": "0.1.3",
     "rimraf": "^2.7.1",
-    "uglifycss": "0.0.29",
-    "watchify": "^3.11.1"
+    "webpack": "^5.36.0",
+    "webpack-cli": "^4.6.0"
   }
 }
