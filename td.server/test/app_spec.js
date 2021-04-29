@@ -23,7 +23,9 @@ describe('app tests', function() {
     var mockSessionConfig = function() { };
     var mockPassportConfig = function() { };
     var mockEnvConfig = {
-        tryLoadDotEnv: function () {}
+        default: {
+            tryLoadDotEnv: function () {}
+        }
     };
     
     beforeEach(function() {
@@ -75,9 +77,9 @@ describe('app tests', function() {
     });
 
     it('should attempt to load configuration from .env', function () {
-        spyOn(mockEnvConfig, 'tryLoadDotEnv');
+        spyOn(mockEnvConfig.default, 'tryLoadDotEnv');
         require('../src/app');
-        expect(mockEnvConfig.tryLoadDotEnv).toHaveBeenCalledTimes(1);
+        expect(mockEnvConfig.default.tryLoadDotEnv).toHaveBeenCalledTimes(1);
     });
 });
 

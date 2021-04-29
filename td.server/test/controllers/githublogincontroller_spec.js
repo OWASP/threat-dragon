@@ -1,13 +1,13 @@
 'use strict';
 
-require('jasmine');
+// require('jasmine');
 var mockery = require('mockery');
 var moduleUnderTest = '../../src/controllers/githublogincontroller';
 
 //request/response mocks
 var mockRequest;
 var mockResponse;
-var next = jasmine.createSpy('next');
+// var next = jasmine.createSpy('next');
 mockery.registerAllowable(moduleUnderTest);
 
 //passport mocks
@@ -54,7 +54,7 @@ describe('githublogincontroller tests', function() {
         mockery.disable();
     });
     
-    afterAll(function() {
+    after(function() {
         mockery.deregisterAll();  
     });
     

@@ -76,7 +76,7 @@ describe('session config tests', function() {
         jasmine.clock().uninstall();
     });
 
-    afterAll(function() {
+    after(function() {
         mockery.deregisterAll();
     });
 

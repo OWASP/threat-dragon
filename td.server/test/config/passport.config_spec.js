@@ -3,7 +3,7 @@
 var request = require('supertest');
 var url = require('url');
 var finish_test = require('../supertest-jasmine');
-var jasmine = require('jasmine');
+// var jasmine = require('jasmine');
 var mockery = require('mockery');
 
 describe('passport configuration tests', function() {
@@ -49,7 +49,7 @@ describe('passport configuration tests', function() {
         mockery.disable();
     });
 
-    afterAll(function() {
+    after(function() {
         mockery.deregisterAll();
     });
     

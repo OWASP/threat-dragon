@@ -1,6 +1,6 @@
 'use strict';
 
-var jasmine = require('jasmine');
+// var jasmine = require('jasmine');
 var mockery = require('mockery');
 var request = require('supertest');
 var express = require('express');
@@ -35,7 +35,7 @@ describe('route config tests', function () {
 
     });
 
-    afterAll(function () {
+    after(function () {
         mockery.deregisterAll();
     });
 

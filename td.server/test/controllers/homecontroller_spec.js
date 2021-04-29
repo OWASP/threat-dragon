@@ -1,6 +1,6 @@
 'use strict';
 
-require('jasmine');
+// require('jasmine');
 var path = require('path');
 var mockery = require('mockery');
 var moduleUnderTest = '../../src/controllers/homecontroller';
@@ -37,12 +37,10 @@ describe('homecontroller tests', function() {
     });
     
     afterEach(function() {
-    
         mockery.disable();
-    
     });
     
-    afterAll(function() {
+    after(function() {
         mockery.deregisterAll();
     });
     
@@ -127,11 +125,11 @@ describe('homecontroller tests', function() {
     
     describe('simulated production environment tests', function() {
         
-        beforeAll(function() {
+        before(function() {
             process.env.NODE_ENV = 'simulated_production' 
         });
         
-        afterAll(function() {
+        after(function() {
             process.env.NODE_ENV = 'development'
         });
         
