@@ -1,148 +1,157 @@
-'use strict';
+import { expect } from 'chai';
+import sinon from 'sinon';
 
-// require('jasmine');
-var path = require('path');
-var mockery = require('mockery');
-var moduleUnderTest = '../../src/controllers/homecontroller';
-mockery.registerAllowable(moduleUnderTest);
-mockery.registerAllowable('path');
-var homeController = require(moduleUnderTest);
+import homeController from '../../src/controllers/homecontroller.js';
+import loggers from '../../src/config/loggers.config.js';
 
-describe('homecontroller tests', function() {
-    
-    var mockRequest;
-    var mockResponse;
-    var testUser = 'test user';
+describe('homecontroller tests', () => {
+    const mockRequest = {
+        log: {
+            info: () => {}
+        },
+        csrfToken: () => 'some_token',
+        logOut: () => {},
+        user: {
+            profile: {
+                username: 'test user',
+                provider: 'idp'
+            }
+        },
+        session: {
+            destroy: () => {}
+        }
+    };
 
-    beforeEach(function() {
+    const mockResponse = {
+        sendFile: () => {},
+        cookie: () => {},
+        clearCookie: () => {},
+        render: () => {},
+        redirect: () => {}
+    };
+    
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    describe('index', () => {
+        beforeEach(() => {
+            sinon.spy(mockResponse, 'cookie');
+            sinon.spy(mockResponse, 'sendFile');
+            sinon.spy(loggers.logger, 'error');
+            homeController.index(mockRequest, mockResponse);
+        });
+
+        it('should send the home page file', () => {
+            expect(mockResponse.sendFile).to.have.been.calledWith(sinon.match(/index\.html$/));
+        });
         
-        mockery.enable({useCleanCache: true});
-        mockery.warnOnUnregistered(false);
-        //request/response mocks
-        mockRequest = {};
-        mockRequest.log = {info: function() {}};
-        mockRequest.csrfToken = function() { };
-        mockRequest.logOut = function() { };
-        mockRequest.user = {profile: {username: testUser}};
-        mockRequest.session = {
-            destroy: function() { }
-        };
-        
-        mockResponse = {};
-        mockResponse.sendFile = function() {};
-        mockResponse.cookie = function() {};
-        mockResponse.clearCookie = function() {};
-        mockResponse.render = function() {};
-        mockResponse.redirect = function() {};
+        it('should set the csrf cookie', () => {
+            expect(mockResponse.cookie).to.have.been.calledWith(
+                'XSRF-TOKEN',
+                mockRequest.csrfToken(),
+                { httpOnly: false }
+            );
+        });
+
+        it('should log the insecure csrf cookie', () => {
+            expect(loggers.logger.error).to.have.been.calledWith(
+                { security: true },
+                sinon.match.string
+            );
+        });
+    });
+
+    describe('login', () => {
+        beforeEach(() => {
+            sinon.spy(mockResponse, 'render');
+            homeController.login(mockRequest, mockResponse);
+        });
+
+        it('should pass the csrf token to the login page', () => {
+            expect(mockResponse.render).to.have.been.calledWith(
+                'login',
+                { csrfToken: mockRequest.csrfToken() }
+            );
+        });
     });
     
-    afterEach(function() {
-        mockery.disable();
+    describe('logoutform', () => {
+        beforeEach(() => {
+            sinon.spy(mockResponse, 'render');
+            homeController.logoutform(mockRequest, mockResponse);
+        });
+
+        it('should pass the csrf token and username to the logout form', () => {
+            expect(mockResponse.render).to.have.been.calledWith(
+                'logoutform',
+                {
+                    csrfToken: mockRequest.csrfToken(),
+                    username: mockRequest.user.profile.username
+                }
+            );
+        });
     });
     
-    after(function() {
-        mockery.deregisterAll();
-    });
-    
-    it('should send the home page file', function() {
-        
-        spyOn(mockResponse,'sendFile');
-        homeController.index(mockRequest,mockResponse);
-        expect(mockResponse.sendFile).toHaveBeenCalled();
-        expect(mockResponse.sendFile.calls.argsFor(0)[0]).toEqual(path.join(__dirname, '../../../dist/index.html')); 
-    });
-    
-    it('should set the csrf cookie', function() {
-        
-        var testToken = 'test token'
-        spyOn(mockResponse, 'cookie');
-        spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        homeController.index(mockRequest, mockResponse);
-        expect(mockResponse.cookie.calls.argsFor(0)).toEqual(['XSRF-TOKEN', testToken, { httpOnly: false }])
-    });
-    
-    it('should log the insecure csrf cookie', function() {
-        
-        var testToken = 'test token'
-        spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        var logger = require('../../src/config/loggers.config').logger;
-        spyOn(logger, 'error');
-        homeController.index(mockRequest, mockResponse);
-        expect(logger.error.calls.argsFor(0)[0].security).toBe(true);
-    });
-    
-    it('should pass the csrf token to the login page', function() {
-        
-        var testToken = 'test token'
-        spyOn(mockResponse, 'render');
-        spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        homeController.login(mockRequest, mockResponse);
-        expect(mockResponse.render.calls.argsFor(0)[0]).toEqual('login');
-        expect(mockResponse.render.calls.argsFor(0)[1].csrfToken).toEqual(testToken);
-    });
-    
-    it('should pass the csrf token and username to the logout form', function() {
-        
-        var testToken = 'test token'
-        spyOn(mockResponse, 'render');
-        spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-        var testUser = 'test user';
-        mockRequest.user = {profile: {username: testUser}};
-        homeController.logoutform(mockRequest, mockResponse);
-        expect(mockResponse.render.calls.argsFor(0)[0]).toEqual('logoutform');
-        expect(mockResponse.render.calls.argsFor(0)[1].csrfToken).toEqual(testToken);
-        expect(mockResponse.render.calls.argsFor(0)[1].username).toEqual(testUser);
-    });
-    
-    it('should clear the csrf and session cookies', function() {
-      
-      spyOn(mockResponse, 'clearCookie');
-      homeController.logout(mockRequest, mockResponse);
-      expect(mockResponse.clearCookie.calls.argsFor(0)).toEqual(['connect.sid']);
-      expect(mockResponse.clearCookie.calls.argsFor(1)).toEqual(['XSRF-TOKEN']);
-    });
-    
-    it('should destroy the session', function() {
-      
-      spyOn(mockRequest.session, 'destroy');
-      homeController.logout(mockRequest, mockResponse);
-      expect(mockRequest.session.destroy).toHaveBeenCalled();
-    });  
-     
-    it('should write the logout to the log and redirect', function() {
-      
-      mockRequest.session.destroy = function(cb) {
-          cb();
-      };
-      
-      spyOn(mockResponse, 'redirect');
-      spyOn(mockRequest.log, 'info');
-      homeController.logout(mockRequest, mockResponse);
-      expect(mockResponse.redirect.calls.argsFor(0)).toEqual(['/']);
-      expect(mockRequest.log.info.calls.argsFor(0)[0].security).toBe(true);
-      expect(mockRequest.log.info.calls.argsFor(0)[0].userName).toEqual(testUser);
+    describe('logout', () => {
+        beforeEach(() => {
+            const mockDestroy = (cb) => cb();
+            sinon.spy(mockRequest, 'logOut');
+            sinon.spy(mockResponse, 'clearCookie');
+            sinon.stub(mockRequest.session, 'destroy').callsFake(mockDestroy);
+            sinon.spy(mockRequest.log, 'info');
+            sinon.spy(mockResponse, 'redirect');
+            homeController.logout(mockRequest, mockResponse);
+        });
+
+        it('should clear the CSRF cookie', () => {
+            expect(mockResponse.clearCookie).to.have.been.calledWith('XSRF-TOKEN');
+        });
+
+        it('should clear the session cookie', () => {
+            expect(mockResponse.clearCookie).to.have.been.calledWith('connect.sid');
+        });
+
+        it('should destroy the session', () => {
+            expect(mockRequest.session.destroy).to.have.been.calledOnce;
+        });
+
+        it('should write the logout to the log', () => {
+            expect(mockRequest.log.info).to.have.been.calledWith(
+                {
+                    security: true,
+                    userName: mockRequest.user.profile.username,
+                    idp: mockRequest.user.profile.provider
+                },
+                sinon.match.string
+            );
+        });
+
+        it('should redirect the user', () => {
+            expect(mockResponse.redirect).to.have.been.calledWith('/');
+        });
     });
     
     describe('simulated production environment tests', function() {
-        
-        before(function() {
-            process.env.NODE_ENV = 'simulated_production' 
+        beforeEach(() => {
+            process.env.NODE_ENV = 'simulated_production';
+            sinon.spy(mockResponse, 'cookie');
+            homeController.index(mockRequest, mockResponse);
         });
-        
-        after(function() {
-            process.env.NODE_ENV = 'development'
+
+        afterEach(() => {
+            process.env.NODE_ENV = 'development';
         });
         
         it('should set the secure flag on the XSRF cookie', function() {
-     
-            var testToken = 'test token'
-            spyOn(mockResponse, 'cookie');
-            spyOn(mockRequest, 'csrfToken').and.returnValue(testToken);
-            homeController.index(mockRequest, mockResponse);
-            expect(mockResponse.cookie.calls.argsFor(0)).toEqual(['XSRF-TOKEN', testToken, { httpOnly: false, secure: true }])
-            
+            expect(mockResponse.cookie).to.have.been.calledWith(
+                'XSRF-TOKEN',
+                mockRequest.csrfToken(),
+                {
+                    httpOnly: false,
+                    secure: true
+                }
+            );
         });
-        
     });
-    
 });
