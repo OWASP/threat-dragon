@@ -5,9 +5,9 @@ var csrf = require('csurf');
 var home = require('../controllers/homecontroller');
 var github = require('../controllers/githublogincontroller');
 var threatmodel = require('../controllers/threatmodelcontroller');
-var router = express.Router();
 
 module.exports = function(app) {
+    var router = express.Router();
     
     //anti csrf
     var csrfProtection = csrf();
