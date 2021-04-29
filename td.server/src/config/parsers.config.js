@@ -11,4 +11,8 @@ var parsers = function (app) {
     
 };
 
-module.exports = parsers;
+var exports = {
+    config: parsers
+};
+
+module.exports = exports;

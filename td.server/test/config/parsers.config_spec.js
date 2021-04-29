@@ -7,7 +7,7 @@ describe('request parser tests', () => {
     
     beforeEach(() => {
         app = express();
-        require('../../src/config/parsers.config')(app);
+        require('../../src/config/parsers.config').config(app);
     });
     
     it('should parse the json in the request body', (done) => {

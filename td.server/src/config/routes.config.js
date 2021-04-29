@@ -6,7 +6,7 @@ var home = require('../controllers/homecontroller');
 var github = require('../controllers/githublogincontroller');
 var threatmodel = require('../controllers/threatmodelcontroller');
 
-module.exports = function(app) {
+function addRoutes(app) {
     var router = express.Router();
     
     //anti csrf
@@ -37,5 +37,10 @@ module.exports = function(app) {
     router.put('/threatmodel/:organisation/:repo/:branch/:model/update', csrfProtection, home.ensureLoggedIn, threatmodel.update);
     
     app.use('/', router);
+}
+
+var exports = {
+    config: addRoutes
 };
 
+module.exports = exports;

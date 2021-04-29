@@ -24,7 +24,7 @@ describe('session config tests', () => {
 
     describe('dev environment', () => {
         beforeEach(() => {
-            sessionConfig(mockApp);
+            sessionConfig.config(mockApp);
         });
 
         it('logs an error about insecure cookies', () => {

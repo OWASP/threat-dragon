@@ -17,3 +17,4 @@ package-lock.json
 .env
 
 dist/
+.nyc_output

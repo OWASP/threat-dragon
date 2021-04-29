@@ -19,14 +19,14 @@ describe('route config tests', () => {
         delete: () => {}
     };
 
-    beforeEach(function () {
+    beforeEach(() => {
         sinon.stub(express, 'Router').returns(mockRouter);
         sinon.spy(mockApp, 'use');
         sinon.spy(mockRouter, 'get');
         sinon.spy(mockRouter, 'post');
         sinon.spy(mockRouter, 'put');
         sinon.spy(mockRouter, 'delete');
-        routeConfig(mockApp);
+        routeConfig.config(mockApp);
     });
 
     afterEach(() => {
