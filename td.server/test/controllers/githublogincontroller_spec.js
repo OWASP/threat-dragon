@@ -1,159 +1,164 @@
-'use strict';
+import crypto from 'crypto';
+import { expect } from 'chai';
+import passport from 'passport';
+import sinon from 'sinon';
 
-// require('jasmine');
-var mockery = require('mockery');
-var moduleUnderTest = '../../src/controllers/githublogincontroller';
+import githubLoginController from '../../src/controllers/githublogincontroller.js';
 
-//request/response mocks
-var mockRequest;
-var mockResponse;
-// var next = jasmine.createSpy('next');
-mockery.registerAllowable(moduleUnderTest);
+describe('githublogincontroller tests', () => {
+    let mockRequest, next;
+    const mockResponse = {
+        status: () => {},
+        send: () => {},
+        redirect: () => {}
+    };
 
-//passport mocks
-var mockPassport = {
-    authenticate: function() { 
-        return function() { };
-    }
-};
-
-//crypto mocks
-var mockBuffer = 'test buffer';
-var mockCrypto = {
-    randomBytes: function(length, cb) {
-        cb(null, mockBuffer);
-    },
-};
-
-describe('githublogincontroller tests', function() {
-
-    beforeEach(function() {
-        mockery.enable({useCleanCache: true});
-        mockery.warnOnReplace(false);
-        mockery.warnOnUnregistered(false);
-        mockery.registerMock('passport', mockPassport);
-        mockery.registerMock('crypto', mockCrypto);   
-        
+    beforeEach(() => {
         mockRequest = {
             session: {},
+            query: {},
             log: {
-                error: function() {},
-                info: function() {}
+                info: () => {},
+                error: () => {}
+            },
+            user: {
+                profile: {
+                    username: 'test user',
+                    provider: 'github'
+                }
             }
-        }
-        
-        mockResponse = {
-            status: function() { return mockResponse;},
-            send: function() {},
-            redirect: function() {}
-        }
-        
+        };
+        next = sinon.spy();
     });
     
-    afterEach(function() {
-        mockery.disable();
-    });
-    
-    after(function() {
-        mockery.deregisterAll();  
-    });
-    
-    it('should set the github oauth state', function() {    
-        spyOn(mockPassport, 'authenticate').and.callThrough();
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.doLogin(mockRequest, mockResponse, next);
-        expect(mockPassport.authenticate.calls.argsFor(0)[1].state).toEqual(mockBuffer);
-    });
-    
-    it('should not set the github oauth state', function() {
-        spyOn(mockPassport, 'authenticate').and.callThrough();
-        var githubLoginController = require(moduleUnderTest);
-        mockRequest.session.githubOauthState = {};
-        githubLoginController.doLogin(mockRequest, mockResponse, next);
-        expect(mockPassport.authenticate.calls.argsFor(0)[1]).not.toBeDefined();         
-    });
-    
-    it('should log an error for invalid oauth state', function() {
-        mockRequest.session.githubOauthState = 'original state';
-        mockRequest.query = {state: 'incoming state'};
-        spyOn(mockRequest.log, 'error');
-        spyOn(mockResponse, 'status').and.callThrough();
-        spyOn(mockResponse, 'send');
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockRequest.log.error.calls.argsFor(0)[0].security).toBe(true);
-        expect(mockRequest.log.error.calls.argsFor(0)[0].idp).toEqual('github');
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(mockResponse.send).toHaveBeenCalled();
-    });
-    
-    it('should log an error for missing oauth state', function() {
-        mockRequest.session.githubOauthState = 'original state';
-        mockRequest.query = {};
-        spyOn(mockRequest.log, 'error');
-        spyOn(mockResponse, 'status').and.callThrough();
-        spyOn(mockResponse, 'send');
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockRequest.log.error.calls.argsFor(0)[0].security).toBe(true);
-        expect(mockRequest.log.error.calls.argsFor(0)[0].idp).toEqual('github');
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(mockResponse.send).toHaveBeenCalled();
-    });
-    
-    it('should log successful login', function() {
-        mockRequest.session.githubOauthState = 'state';
-        mockRequest.query = {state: 'state'};
-        var userName = 'test user name';
-        var idp = 'test idp';
-        mockRequest.user = {profile: {username: userName, provider: idp}};
-        spyOn(mockRequest.log, 'info');
-        spyOn(mockRequest.log, 'error');
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockRequest.log.info.calls.argsFor(0)[0].security).toBe(true);
-        expect(mockRequest.log.info.calls.argsFor(0)[0].idp).toEqual(idp);
-        expect(mockRequest.log.info.calls.argsFor(0)[0].userName).toEqual(userName);
-        expect(mockRequest.log.error).not.toHaveBeenCalled();
+    afterEach(() => {
+        sinon.restore();
     });
 
-    it('should redirect to the default route', function() {
-        mockRequest.session.githubOauthState = 'state';
-        mockRequest.query = {state: 'state'};
-        var userName = 'test user name';
-        var idp = 'test idp';
-        mockRequest.user = {profile: {}};
-        spyOn(mockResponse, 'redirect');
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockResponse.redirect.calls.argsFor(0)).toEqual(['/']);
+    describe('doLogin', () => {
+        describe('without oauth state', () => {
+            const buff = Buffer.from('asdfasdf');
+            beforeEach(() => {
+                const randomBytes = (num, cb) => cb(null, buff);
+                sinon.stub(crypto, 'randomBytes').callsFake(randomBytes);
+                sinon.spy(passport, 'authenticate');
+                githubLoginController.doLogin(mockRequest, mockResponse, next);
+            });
+
+            it('should set the github oauth state', () => {
+                expect(mockRequest.session.githubOauthState.length).to.be.greaterThan(1);
+            });
+
+            it('should authenticate with passport', () => {
+                expect(passport.authenticate).to.have.been.calledWith(
+                    'github',
+                    { state: buff.toString('hex') }
+                );
+            });
+        });
+
+        describe('with oauth state', () => {
+            const oauthState = 'test value';
+            beforeEach(() => {
+                mockRequest.session.githubOauthState = oauthState;
+                sinon.spy(passport, 'authenticate');
+                githubLoginController.doLogin(mockRequest, mockResponse, next);
+            });
+
+            it('should not set the oauth state', () => {
+                expect(mockRequest.session.githubOauthState).to.eq(oauthState);
+            });
+
+            it('should authenticate with passport', () => {
+                expect(passport.authenticate).to.have.been.calledWith('github');
+            });
+        });
+
     });
-    
-    it('should redirect to the specified route', function() {
-        mockRequest.session.githubOauthState = 'state';
-        var returnTo = 'return to';
-        mockRequest.session.returnTo = returnTo;
-        mockRequest.query = {state: 'state'};
-        var userName = 'test user name';
-        var idp = 'test idp';
-        mockRequest.user = {profile: {}};
-        spyOn(mockResponse, 'redirect');
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockResponse.redirect.calls.argsFor(0)).toEqual([returnTo]);
-    });
-   
-    it('should clear the return to and oauth state session values', function() {
-        mockRequest.session.githubOauthState = 'state';
-        var returnTo = 'return to';
-        mockRequest.session.returnTo = returnTo;
-        mockRequest.query = {state: 'state'};
-        var userName = 'test user name';
-        var idp = 'test idp';
-        mockRequest.user = {profile: {}};
-        var githubLoginController = require(moduleUnderTest);
-        githubLoginController.completeLogin(mockRequest, mockResponse);
-        expect(mockRequest.session.returnTo).not.toBeDefined();
-        expect(mockRequest.session.githubOauthState).not.toBeDefined();
+
+
+    describe('completeLogin', () => {
+        beforeEach(() => {
+
+        });
+
+        describe('with error', () => {
+            beforeEach(() => {
+                sinon.spy(mockRequest.log, 'error');
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'send');
+            });
+
+            it('logs an error for invalid oauth state', () => {
+                mockRequest.session.githubOauthState = 'aaaa';
+                mockRequest.query.state = 'bbbbb';
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockRequest.log.error).to.have.been.calledWith(
+                    {
+                        security: true,
+                        idp: 'github'
+                    },
+                    sinon.match('invalid oauth state value')
+                );
+            });
+
+            it('logs an error for missing oauth state', () => {
+                mockRequest.session.githubOauthState = 'aaaa';
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockRequest.log.error).to.have.been.calledWith(
+                    {
+                        security: true,
+                        idp: 'github'
+                    },
+                    sinon.match('invalid oauth state value')
+                );
+            });
+        });
+
+        describe('without error', () => {
+            beforeEach(() => {
+                mockRequest.session.githubOauthState = 'aaaa';
+                mockRequest.query.state = 'aaaa';
+                sinon.spy(mockRequest.log, 'info');
+                sinon.spy(mockResponse, 'redirect');
+            });
+
+            it('logs a successful login', () => {
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockRequest.log.info).to.have.been.calledWith(
+                    {
+                        security: true,
+                        userName: mockRequest.user.profile.username,
+                        idp: mockRequest.user.profile.provider
+                    },
+                    'logged in'
+                );
+            });
+
+            it('redirects to the default route', () => {
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockResponse.redirect).to.have.been.calledWith('/');
+            });
+
+            it('redirects to the specified route', () => {
+                const returnTo = '/somewhere/else';
+                mockRequest.session.returnTo = returnTo;
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockResponse.redirect).to.have.been.calledWith(returnTo);
+            });
+
+            it('deletes the returnTo property', () => {
+                const returnTo = '/somewhere/else';
+                mockRequest.session.returnTo = returnTo;
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockRequest.session.returnTo).to.be.undefined;
+            });
+
+            it('deletes the oauth state property', () => {
+                githubLoginController.completeLogin(mockRequest, mockResponse, next);
+                expect(mockRequest.session.githubOauthState).to.be.undefined;
+            });
+        });
+
     });
 });

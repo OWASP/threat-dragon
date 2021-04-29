@@ -44,8 +44,6 @@ function encryptData(plainText, key, iv) {
     var encryptor = crypto.createCipheriv(algorithm, key.value, iv);
     var cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
     cipherText += encryptor.final(outputEncoding);
-    console.log('LEO LEO LEO');
-    console.log(cipherText);
     var encryptedData = {keyId: key.id, iv: iv.toString(keyEncoding), data: cipherText};
     return encryptedData;
 }
