@@ -49,6 +49,7 @@ function create() {
         var errorLogger = bunyan.createLogger({ name: 'threatdragon' });
         errorLogger.error('owasp threat dragon failed to start up');
         errorLogger.error(e.message);
+        return null;
     }
 }
 

@@ -118,7 +118,7 @@ The basic build script is:
 See `package.json` for other build tasks.
 
 ## Running the unit tests
-The unit tests are written using Jasmine and Karma, coverage is provided by Istanbul.
+The unit tests are written using Mocha and Karma, coverage is provided by Istanbul via `nyc`.
 A few different npm tasks are available, and these are split between the front-end and back-end directories.
 
 For front-end (root of the project):
