@@ -4,7 +4,8 @@
   "private": false,
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
-    "pretest": "jshint --verbose --show-non-errors src",
+    "pretest": "npm run lint",
+    "lint": "eslint src --fix",
     "test": "istanbul cover --include-all-sources -x ./test --root ./src --dir ../coverage/Server/ ./test/support/jasmine-runner.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
@@ -38,12 +39,12 @@
   },
   "devDependencies": {
     "codecov": "^3.6.5",
+    "eslint": "^7.25.0",
     "istanbul": "0.4.5",
     "jasmine": "^2.99.0",
     "jasmine-core": "^3.4.0",
     "jasmine-node": "^3.0.0",
     "jasmine-spec-reporter": "4.2.1",
-    "jshint": "^2.10.2",
     "mockery": "2.1.0",
     "passport-local": "1.0.0",
     "supertest": "^4.0.2"
