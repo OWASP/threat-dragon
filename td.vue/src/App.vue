@@ -1,32 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+    <td-navbar />
+    <b-container id="app">
+      <router-view />
+    </b-container>
   </div>
 </template>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #ffffff;
+  margin-top: 10vh;
 }
 </style>
+
+<script>
+import TdNavbar from '@/components/Navbar.vue'
+
+export default {
+  name: 'TdApp',
+  components: {
+    TdNavbar
+  }
+}
+</script>
