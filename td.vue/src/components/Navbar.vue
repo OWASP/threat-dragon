@@ -1,15 +1,52 @@
 <template>
-  <nav class="navbar fixed-top">
-    <a class="navbar-brand" href="#">
+  <b-navbar toggleable="lg" fixed="top">
+    <b-navbar-brand to="/">
       <b-img src="@/assets/threatdragon_logo.svg" alt="Threat Dragon Logo" />
-    </a>
-  </nav>
+    </b-navbar-brand>
+
+    <b-collapse id="nav-collapse" is-nav>
+        <!-- TODO:
+        <b-nav-item href="#">Link</b-nav-item>
+        -->
+    </b-collapse>
+
+    <b-navbar-nav class="ml-auto">
+        <!-- TODO: Only show this if the user is logged in -->
+        <b-nav-text class="logged-in-as">Logged in as {someone}</b-nav-text>
+        <b-nav-item href="#">
+            <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" size="2x"></font-awesome-icon>
+        </b-nav-item>
+        <!-- End logged in only -->
+        <b-nav-item href="https://docs.threatdragon.org/" target="_blank">
+            <font-awesome-icon icon="question-circle" class="td-fa-nav" size="2x"></font-awesome-icon>
+        </b-nav-item>
+        <b-nav-item href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank">
+            <font-awesome-icon icon="gift" class="td-fa-nav" size="2x"></font-awesome-icon>
+        </b-nav-item>
+        <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank">
+            <b-img src="@/assets/owasp.svg" class="td-fa-nav" />
+        </b-nav-item>
+    </b-navbar-nav>
+  </b-navbar>
 </template>
 
 <style lang="scss" scoped>
 .navbar {
     background-color: $theme-primary;
     border-color: $theme-secondary;
+}
+
+.nav-link, .logged-in-as {
+    color: #ffffff !important;
+}
+
+.logged-in-as {
+    margin-right: 10px;
+}
+
+.td-fa-nav {
+    font-size: 1.5rem;
+    margin: 0 5px 0 5px;
 }
 </style>
 
