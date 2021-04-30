@@ -3,8 +3,6 @@ npm-debug.log
 coverage/
 typings/
 
-# package lock is not used
-package-lock.json
 # ignore Apple's desktop store files
 **/.DS_Store
 # ignore VS and Eclipse files

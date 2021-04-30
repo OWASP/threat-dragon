@@ -50,8 +50,7 @@ To get the code, navigate to where you want your code to be located and do
 This installs code in two sub-folders.
 One for the back-end application (`td.server`) and one for the front-end (`td.site`).
 
-To install, do: `npm install` and go into the `server` directory and run `npm install` there as well,
-eg: `cd td.server && npm install`
+To install, run: `npm install` from the root of the project.  A `postinstall` script is run that will install dependencies in both the `server` and `site` directories as well.
 
 Running `npm run start` from the root directory of the repository will start the front-end and the server.
 
