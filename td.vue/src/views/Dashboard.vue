@@ -43,7 +43,7 @@ export default {
         return {
             actions: [
                 {
-                    to: '/',
+                    to: '/datasource',
                     description: 'Create a completely new, empty threat model',
                     icon: 'github',
                     iconPreface: 'fab'

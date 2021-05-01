@@ -24,12 +24,6 @@ describe('router', () => {
         });
     });
 
-    it('defines a home route', () => {
-        const homeRoute = router.getRoutes()
-            .find(x => x.name === 'Home');
-        expect(homeRoute.path).toEqual('');
-    });
-
     describe('dashboard', () => {
         let dashboardRoute;
 
@@ -51,6 +45,31 @@ describe('router', () => {
 
             it('uses the dashboard view', () => {
                 expect(dashboardComponent.default.name).toEqual('Dashboard');
+            });
+        });
+    });
+
+    describe('datasource', () => {
+        let datasourceRoute;
+
+        beforeEach(() => {
+            datasourceRoute = router.getRoutes()
+                .find(x => x.name === 'Datasource');
+        });
+
+        it('uses the /datasource path', () => {
+            expect(datasourceRoute.path).toEqual('/datasource');
+        });
+
+        describe('lazily loaded component', () => {
+            let datasourceComponent;
+
+            beforeEach(async () => {
+                datasourceComponent = await datasourceRoute.components.default();
+            });
+
+            it('uses the dashboard view', () => {
+                expect(datasourceComponent.default.name).toEqual('Datasource');
             });
         });
     });

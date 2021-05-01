@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
@@ -14,6 +15,11 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')   
+    },
+    {
+        path: '/datasource',
+        name: 'Datasource',
+        component: () => import(/* webpackChunkName: "datasource" */ '../views/Datasource.vue')   
     }
 ];
 

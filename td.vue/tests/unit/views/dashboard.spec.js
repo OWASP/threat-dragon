@@ -22,7 +22,7 @@ describe('Dashboard.vue', () => {
         });
     });
 
-    it('renders the home view', () => {
+    it('renders the dashboard view', () => {
         expect(wrapper.exists()).toBe(true);
     });
 
