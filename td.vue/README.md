@@ -1,4 +1,5 @@
 # OWASP Threat Dragon Site
+This is a Vue project that serveas as the front end of the OWASP Threat Dragon website project.
 
 ## Project setup
 ```
@@ -19,11 +20,26 @@ npm run build
 ```
 npm run test:unit
 ```
+For continuous testing:
+```
+npm run test:unit -- --watch
+```
 
 ### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Styles
+SCSS is used.  For most things, you can use a scoped scss style block inside your `.vue` file.
+For gobal variables, put it in the appropriately named file in the `src/styles` directory.
+Any variables or mixins defined there will be available in all components.
+
+## Font Awesome
+Rather than loading all FA icons, we selectively choose the ones that we need.  These are defined in `src/plugins/fontawesome-vue.js`.
+To bring in a new icon, import it from the appropriate node_module, and then add it to the `library.add(...)` call.
+You do not need to import anything in your components or pages, they are globally available.
+
+## Bootstrap
+This project uses bootstrap-vue, and it is available globally as well.
+https://bootstrap-vue.org/docs

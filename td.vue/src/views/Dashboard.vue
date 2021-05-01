@@ -4,7 +4,7 @@
             <b-col>
                 <b-jumbotron header="Welcome!">
                     <p>
-                        You;re ready to start making your application designs more secure.
+                        You're ready to start making your application designs more secure.
                         You can open an existing threat model or create a new one by choosing
                         one of the options below.
                     </p>
@@ -12,52 +12,14 @@
             </b-col>
         </b-row>
         <b-row>
-            <!-- TODO: Make these components -->
-            <b-col lg>
-                <b-jumbotron class="text-center">
-                    <span>
-                        <font-awesome-icon
-                        :icon="['fab', 'github']"
-                        size="4x"
-                        class="action-icon"
-                        ></font-awesome-icon>
-                    </span>
-                    <br />
-                    <span>
-                        Open an existing threat model from a GitHub repo
-                    </span>
-                </b-jumbotron>
-            </b-col>
-            <b-col lg>
-                <b-jumbotron class="text-center">
-                    <span>
-                        <font-awesome-icon
-                        icon="plus"
-                        size="4x"
-                        class="action-icon"
-                        ></font-awesome-icon>
-                    </span>
-                    <br />
-                    <span>
-                        Create a completely new, empty threat model
-                    </span>
-                </b-jumbotron>
-            </b-col>
-            <b-col lg>
-                <b-jumbotron class="text-center">
-                    <span>
-                        <font-awesome-icon
-                        icon="cloud-download-alt"
-                        size="4x"
-                        class="action-icon"
-                        ></font-awesome-icon>
-                    </span>
-                    <br />
-                    <span>
-                        Download and explore a sample threat model
-                    </span>
-                </b-jumbotron>
-            </b-col>
+            <td-dashboard-action
+                v-for="(action, idx) in actions"
+                :key="idx"
+                :to="action.to"
+                :icon="action.icon"
+                :iconPreface="action.iconPreface"
+                :description="action.description"
+            ></td-dashboard-action>
         </b-row>
     </div>
 </template>
@@ -70,7 +32,34 @@
 </style>
 
 <script>
+import TdDashboardAction from '@/components/DashboardAction.vue';
+
 export default {
-    name: 'Dasboard'
+    name: 'Dasboard',
+    components: {
+        TdDashboardAction
+    },
+    data: () => {
+        return {
+            actions: [
+                {
+                    to: '/',
+                    description: 'Create a completely new, empty threat model',
+                    icon: 'github',
+                    iconPreface: 'fab'
+                },
+                {
+                    to: '/',
+                    description: 'Create a completely new, empty threat model',
+                    icon: 'plus'
+                },
+                {
+                    to: '/',
+                    description: 'Download and explore a sample threat model',
+                    icon: 'cloud-download-alt'
+                },
+            ]
+        };
+    }
 };
 </script>
