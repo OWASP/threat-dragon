@@ -7,8 +7,9 @@ describe('service/providers.js', () => {
         });
 
         it('prevents mutations', () => {
-            providers.allProviders.github = 'foobar';
-            expect(providers.allProviders.github).toEqual('github');
+            expect(() => {
+                providers.allProviders.github = 'foobar';
+            }).toThrowError('Cannot assign to read only property');
         });
     });
 });
