@@ -13,17 +13,17 @@
     <b-navbar-nav class="ml-auto">
         <!-- TODO: Only show this if the user is logged in -->
         <b-nav-text class="logged-in-as">Logged in as {someone}</b-nav-text>
-        <b-nav-item href="#">
+        <b-nav-item href="#" id="nav-sign-out">
             <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" size="2x"></font-awesome-icon>
         </b-nav-item>
         <!-- End logged in only -->
-        <b-nav-item href="https://docs.threatdragon.org/" target="_blank">
+        <b-nav-item href="https://docs.threatdragon.org/" target="_blank" id="nav-docs">
             <font-awesome-icon icon="question-circle" class="td-fa-nav" size="2x"></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank">
+        <b-nav-item href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank" id="nav-tm-cheat-sheet">
             <font-awesome-icon icon="gift" class="td-fa-nav" size="2x"></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank">
+        <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank" id="nav-owasp-td">
             <b-img src="@/assets/owasp.svg" class="td-fa-nav" />
         </b-nav-item>
     </b-navbar-nav>
