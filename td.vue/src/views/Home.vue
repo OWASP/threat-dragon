@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col md=4>
-          <b-img alt="Threat Dragon Logo" src="@/assets/threatdragon_logo_image.svg" />
+          <b-img id="home-td-logo" alt="Threat Dragon Logo" src="@/assets/threatdragon_logo_image.svg" />
         </b-col>
         <b-col md=8>
           <b-row>
