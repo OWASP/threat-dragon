@@ -1,0 +1,10 @@
+- favicon
+- title
+- dashboardAction.spec.js
+- Data source selection page (github repo, think of the future though)
+- Other pages
+- authentication / authorization
+- dev server configuration (proxy, vue.config.js)
+- Vuex for API and local/session storage
+- Do a POC to use no back-end whatsoever (demo and test only)
+- 
