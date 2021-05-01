@@ -25,13 +25,23 @@
 export default {
     name: 'TdDashboardAction',
     props: {
-        to: String,
-        icon: String,
+        to: {
+            type: String,
+            required: true
+        },
+        icon: {
+            type: String,
+            required: true
+        },
         iconPreface: {
             type: String,
-            default: 'fas'
+            default: 'fas',
+            required: false
         },
-        description: String
+        description: {
+            type: String,
+            required: true
+        }
     }
 };
 </script>
