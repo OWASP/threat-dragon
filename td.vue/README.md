@@ -24,6 +24,7 @@ For continuous testing:
 ```
 npm run test:unit -- --watch
 ```
+Jest coverage will only show coverage for files containing executable javascript.  This means that vue components without any JS logic will not be included in the coverage report.  This is a known limitation.  If you are reading this and there's a workaround or you know of another way of getting better coverage for `.vue` files, please open an issue or submit a PR! :)
 
 ### Lints and fixes files
 ```
