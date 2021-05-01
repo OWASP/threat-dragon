@@ -16,5 +16,7 @@ module.exports = {
         '!**/coverage/**',
         '!src/main.js', // Bootstrap code
         '!src/plugins/*.js' // Boostrap code
-    ]
+    ],
+    resetMocks: true,
+    restoreMocks: true
 };
