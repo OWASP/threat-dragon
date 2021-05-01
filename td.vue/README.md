@@ -44,3 +44,8 @@ You do not need to import anything in your components or pages, they are globall
 ## Bootstrap
 This project uses bootstrap-vue, and it is available globally as well.
 https://bootstrap-vue.org/docs
+
+## Adding providers
+Add a new service named <provider>.provider.js in `src/service`.  See [github.provider.js](src/service/github.provider.js) as an example.
+This will need the following:
+    - `dashboardActions`: An array of objects that describe the actions a user can take from the dashboard (after selecting the provider)

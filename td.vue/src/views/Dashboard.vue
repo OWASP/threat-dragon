@@ -33,32 +33,16 @@
 
 <script>
 import TdDashboardAction from '@/components/DashboardAction.vue';
+import { getDashboardActions } from '@/service/providers.js';
 
 export default {
     name: 'Dashboard',
     components: {
         TdDashboardAction
     },
-    data: () => {
+    data() {
         return {
-            actions: [
-                {
-                    to: '/datasource',
-                    description: 'Create a completely new, empty threat model',
-                    icon: 'github',
-                    iconPreface: 'fab'
-                },
-                {
-                    to: '/',
-                    description: 'Create a completely new, empty threat model',
-                    icon: 'plus'
-                },
-                {
-                    to: '/',
-                    description: 'Download and explore a sample threat model',
-                    icon: 'cloud-download-alt'
-                },
-            ]
+            actions: getDashboardActions(this.$store.state.provider.provider)
         };
     }
 };

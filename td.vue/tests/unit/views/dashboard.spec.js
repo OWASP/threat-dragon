@@ -1,24 +1,34 @@
 import { BootstrapVue, BJumbotron } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { mount, createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex';
 
 import Dashboard from '@/views/Dashboard.vue';
 import DashboardAction from '@/components/DashboardAction.vue';
 
 describe('Dashboard.vue', () => {
-    let wrapper, localVue;
+    let wrapper, localVue, mockStore;
 
     beforeEach(() => {
         const template = '<div />';
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
+        localVue.use(Vuex);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
+        mockStore = new Vuex.Store({
+            state: {
+                provider: {
+                    provider: 'github'
+                }
+            }
+        });
         wrapper = mount(Dashboard, {
             localVue,
             stubs: {
                 'font-awesome-icon': { template },
                 'router-link': { template }
-            }
+            },
+            store: mockStore
         });
     });
 

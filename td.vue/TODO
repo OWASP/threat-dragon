@@ -1,6 +1,6 @@
 - favicon
 - title
-- Update datasource view to be dynamic based on context (eg github repo, git branch, etc)
+- Configure vuex to use session storage or similar, especially for development
 - Other pages
 - authentication / authorization
 - dev server configuration (proxy, vue.config.js)
