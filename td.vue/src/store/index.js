@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import provider from './modules/provider.js'
+import provider from './modules/provider.js';
 
 Vue.use(Vuex);
 

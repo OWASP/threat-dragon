@@ -20,7 +20,7 @@ describe('router', () => {
         });
 
         it('uses the home view', () => {
-            expect(homeRoute.components.default.name).toEqual('Home')
+            expect(homeRoute.components.default.name).toEqual('Home');
         });
     });
 
