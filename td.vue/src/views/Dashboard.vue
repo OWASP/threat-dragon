@@ -35,7 +35,7 @@
 import TdDashboardAction from '@/components/DashboardAction.vue';
 
 export default {
-    name: 'Dasboard',
+    name: 'Dashboard',
     components: {
         TdDashboardAction
     },

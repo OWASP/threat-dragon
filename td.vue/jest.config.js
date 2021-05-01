@@ -14,6 +14,7 @@ module.exports = {
         'src/**/*.{js,vue}',
         '!**/node_modules/**',
         '!**/coverage/**',
-        '!src/main.js'
+        '!src/main.js', // Bootstrap code
+        '!src/plugins/*.js' // Boostrap code
     ]
 };
