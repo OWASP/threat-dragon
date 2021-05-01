@@ -1,5 +1,4 @@
 import { BootstrapVue, BButton, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
-import { expect } from 'chai';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
@@ -18,31 +17,31 @@ describe('Home.vue', () => {
     });
 
     it('renders the home view', () => {
-        expect(wrapper.exists()).to.be.true;
+        expect(wrapper.exists()).toBe(true);
     });
 
     it('has a b-container', () => {
-        expect(wrapper.findComponent(BContainer).exists()).to.be.true;
+        expect(wrapper.findComponent(BContainer).exists()).toBe(true);
     });
 
     it('has a jumbotron', () => {
-        expect(wrapper.findComponent(BJumbotron).exists()).to.be.true;
+        expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
     });
 
     it('displays the title', () => {
-        expect(wrapper.find('h1.display-3').text()).to.contain('OWASP');
+        expect(wrapper.find('h1.display-3').text()).toContain('OWASP');
     });
 
     it('displays the threat dragon log', () => {
         expect(wrapper.findComponent(BImg).attributes('src'))
-            .to.contain('threatdragon_logo_image').and.contain('.svg');
+            .toContain('threatdragon_logo_image');
     });
 
     it('has the description of the project', () => {
-        expect(wrapper.find('p').exists()).to.be.true;
+        expect(wrapper.find('p').exists()).toBe(true);
     });
 
     it('has a github login button', () => {
-        expect(wrapper.findComponent(BButton).attributes('id')).to.eq('github-login-btn');
+        expect(wrapper.findComponent(BButton).attributes('id')).toEqual('github-login-btn');
     });
 });

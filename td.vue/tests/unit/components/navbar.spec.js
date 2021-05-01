@@ -7,7 +7,6 @@ import {
     BNavText,
     BNavItem
 } from 'bootstrap-vue';
-import { expect } from 'chai';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
@@ -26,7 +25,7 @@ describe('components/Navbar.vue', () => {
     });
 
     it('renders the navbar', () => {
-        expect(wrapper.exists()).to.be.true;
+        expect(wrapper.exists()).toBe(true);
     });
 
     describe('brand', () => {
@@ -36,20 +35,20 @@ describe('components/Navbar.vue', () => {
             navbarBrand = wrapper.findComponent(BNavbarBrand);
         });
         it('renders the navbar-brand', () => {
-            expect(navbarBrand.exists()).to.be.true;
+            expect(navbarBrand.exists()).toBe(true);
         });
 
         it('routes to the home page', () => {
-            expect(navbarBrand.attributes('to')).to.eq('/');
+            expect(navbarBrand.attributes('to')).toEqual('/');
         });
 
         it('renders the brand image', () => {
-            expect(navbarBrand.findComponent(BImg).exists()).to.be.true;
+            expect(navbarBrand.findComponent(BImg).exists()).toBe(true);
         });
 
         it('displays threatdragon_logo.svg', () => {
             expect(navbarBrand.findComponent(BImg).attributes('src'))
-                .to.contain('threatdragon_logo').and.contain('.svg');
+                .toContain('threatdragon_logo');
         });
     });
 
@@ -61,7 +60,7 @@ describe('components/Navbar.vue', () => {
         });
 
         it('renders the b-collapse', () => {
-            expect(collapse.exists()).to.be.true;
+            expect(collapse.exists()).toBe(true);
         });
     });
 
@@ -75,11 +74,11 @@ describe('components/Navbar.vue', () => {
         });
 
         it('renders the nav', () => {
-            expect(nav.exists()).to.be.true;
+            expect(nav.exists()).toBe(true);
         });
 
         it('has the logged in text', () => {
-            expect(nav.findComponent(BNavText).text()).to.contain('Logged in as');
+            expect(nav.findComponent(BNavText).text()).toContain('Logged in as');
         });
 
         describe('sign out', () => {
@@ -92,12 +91,12 @@ describe('components/Navbar.vue', () => {
             });
 
             it('has the sign out button', () => {
-                expect(signOut.exists()).to.be.true;
+                expect(signOut.exists()).toBe(true);
             });
 
             it('uses fa sign-out-alt', () => {
                 expect(signOut.findComponent(FontAwesomeIcon).attributes('icon'))
-                    .to.eq('sign-out-alt');
+                    .toEqual('sign-out-alt');
             });
         });
 
@@ -112,7 +111,7 @@ describe('components/Navbar.vue', () => {
 
             it('uses fa question-circle', () => {
                 expect(docs.findComponent(FontAwesomeIcon).attributes('icon'))
-                    .to.eq('question-circle');
+                    .toEqual('question-circle');
             });
         });
 
@@ -127,7 +126,7 @@ describe('components/Navbar.vue', () => {
 
             it('uses fa gift', () => {
                 expect(cheatSheet.findComponent(FontAwesomeIcon).attributes('icon'))
-                    .to.eq('gift');
+                    .toEqual('gift');
             });
         });
 
@@ -142,7 +141,7 @@ describe('components/Navbar.vue', () => {
 
             it('uses the OWASP image', () => {
                 expect(tdOwasp.findComponent(BImg).attributes('src'))
-                    .to.contain('owasp').and.contain('.svg');
+                    .toContain('owasp');
             });
         });
     });

@@ -1,5 +1,4 @@
 import { BootstrapVue, BJumbotron } from 'bootstrap-vue';
-import { expect } from 'chai';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { mount, createLocalVue } from '@vue/test-utils';
 
@@ -24,14 +23,14 @@ describe('Dashboard.vue', () => {
     });
 
     it('renders the home view', () => {
-        expect(wrapper.exists()).to.be.true;
+        expect(wrapper.exists()).toBe(true);
     });
 
     it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).exists()).to.be.true;
+        expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
     });
 
     it('has multiple actions', () => {
-        expect(wrapper.findAllComponents(DashboardAction).length).to.be.greaterThan(1);
+        expect(wrapper.findAllComponents(DashboardAction).length).toBeGreaterThan(1);
     });
 });

@@ -1,5 +1,4 @@
 import { BootstrapVue, BContainer } from 'bootstrap-vue';
-import { expect } from 'chai';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import App from '@/App.vue';
@@ -18,14 +17,14 @@ describe('App.vue', () => {
     });
 
     it('renders the app', () => {
-        expect(wrapper.exists()).to.be.true;
+        expect(wrapper.exists()).toBe(true);
     });
 
     it('has the navbar', () => {
-        expect(wrapper.findComponent(Navbar).exists()).to.be.true;
+        expect(wrapper.findComponent(Navbar).exists()).toBe(true);
     });
 
     it('has a b-container', () => {
-        expect(wrapper.findComponent(BContainer).exists()).to.be.true;
+        expect(wrapper.findComponent(BContainer).exists()).toBe(true);
     });
 });
