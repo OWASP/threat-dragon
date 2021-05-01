@@ -10,6 +10,7 @@
         -->
     </b-collapse>
 
+    <!-- TODO: Hide if collapse -->
     <b-navbar-nav class="ml-auto">
         <!-- TODO: Only show this if the user is logged in -->
         <b-nav-text class="logged-in-as">Logged in as {someone}</b-nav-text>

@@ -22,7 +22,7 @@
           </b-row>
           <b-row>
             <b-col class="mt-5 mr-5 text-right">
-              <b-btn variant="secondary" id="github-login-btn">
+              <b-btn variant="secondary" to="/dashboard" id="github-login-btn">
                 <span class="login-btn-icon">
                 <font-awesome-icon
                   :icon="['fab', 'github']"

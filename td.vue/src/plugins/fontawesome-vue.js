@@ -6,13 +6,15 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faSignOutAlt,
     faQuestionCircle,
-    faGift
+    faGift,
+    faPlus,
+    faCloudDownloadAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 // Add icons to the library for use
-library.add(faSignOutAlt, faQuestionCircle, faGift, faGithub);
+library.add(faSignOutAlt, faQuestionCircle, faGift, faGithub, faPlus, faCloudDownloadAlt);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
