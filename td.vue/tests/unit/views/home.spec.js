@@ -1,42 +1,48 @@
-import { BootstrapVue, BContainer, BJumbotron, BImg } from 'bootstrap-vue'
-import { expect } from 'chai'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { BootstrapVue, BButton, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
+import { expect } from 'chai';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 
-import Home from '@/views/Home.vue'
+import Home from '@/views/Home.vue';
 
 describe('Home.vue', () => {
-  let wrapper, localVue
+    let wrapper, localVue;
 
-  beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(BootstrapVue)
-    wrapper = shallowMount(Home, {
-      localVue
-    })
-  })
+    beforeEach(() => {
+        localVue = createLocalVue();
+        localVue.use(BootstrapVue);
+        localVue.component('font-awesome-icon', FontAwesomeIcon);
+        wrapper = shallowMount(Home, {
+            localVue
+        });
+    });
 
-  it('renders the home view', () => {
-    expect(wrapper.exists()).to.be.true
-  })
+    it('renders the home view', () => {
+        expect(wrapper.exists()).to.be.true;
+    });
 
-  it('has a b-container', () => {
-    expect(wrapper.findComponent(BContainer).exists()).to.be.true
-  })
+    it('has a b-container', () => {
+        expect(wrapper.findComponent(BContainer).exists()).to.be.true;
+    });
 
-  it('has a jumbotron', () => {
-    expect(wrapper.findComponent(BJumbotron).exists()).to.be.true
-  })
+    it('has a jumbotron', () => {
+        expect(wrapper.findComponent(BJumbotron).exists()).to.be.true;
+    });
 
-  it('displays the title', () => {
-    expect(wrapper.find('h1.display-3').text()).to.contain('OWASP')
-  })
+    it('displays the title', () => {
+        expect(wrapper.find('h1.display-3').text()).to.contain('OWASP');
+    });
 
-  it('displays the threat dragon log', () => {
-    expect(wrapper.findComponent(BImg).attributes('src'))
-      .to.contain('threatdragon_logo_image').and.contain('.svg')
-  })
+    it('displays the threat dragon log', () => {
+        expect(wrapper.findComponent(BImg).attributes('src'))
+            .to.contain('threatdragon_logo_image').and.contain('.svg');
+    });
 
-  it('has the description of the project', () => {
-    expect(wrapper.find('p').exists()).to.be.true
-  })
-})
+    it('has the description of the project', () => {
+        expect(wrapper.find('p').exists()).to.be.true;
+    });
+
+    it('has a github login button', () => {
+        expect(wrapper.findComponent(BButton).attributes('id')).to.eq('github-login-btn');
+    });
+});

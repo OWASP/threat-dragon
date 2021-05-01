@@ -20,14 +20,37 @@
               power of GitHub on your threat models! Obviously, to do this you need to log in first.
             </p>
           </b-row>
+          <b-row>
+            <b-col class="mt-5 mr-5 text-right">
+              <b-btn variant="secondary" id="github-login-btn">
+                <span class="login-btn-icon">
+                <font-awesome-icon
+                  :icon="['fab', 'github']"
+                  size="2x"
+                  color="white"
+                  class="mr-2"
+                ></font-awesome-icon>
+                </span>
+                <span>
+                Login with Github
+                </span>
+              </b-btn>
+            </b-col>
+          </b-row>
         </b-col>
       </b-row>
     </b-jumbotron>
   </b-container>
 </template>
 
+<style lang="scss" scoped>
+.login-btn-icon {
+  display: block;
+}
+</style>
+
 <script>
 export default {
-  name: 'Home'
-}
+    name: 'Home'
+};
 </script>

@@ -52,6 +52,6 @@
 
 <script>
 export default {
-  name: 'TdNavbar'
-}
+    name: 'TdNavbar'
+};
 </script>

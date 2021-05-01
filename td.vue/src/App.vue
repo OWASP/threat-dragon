@@ -21,12 +21,12 @@
 </style>
 
 <script>
-import TdNavbar from '@/components/Navbar.vue'
+import TdNavbar from '@/components/Navbar.vue';
 
 export default {
-  name: 'TdApp',
-  components: {
-    TdNavbar
-  }
-}
+    name: 'TdApp',
+    components: {
+        TdNavbar
+    }
+};
 </script>
