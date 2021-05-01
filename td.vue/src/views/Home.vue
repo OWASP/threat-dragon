@@ -22,8 +22,9 @@
           </b-row>
           <b-row>
             <b-col class="mt-5 mr-5 text-right">
-              <b-btn variant="secondary" to="/dashboard" id="github-login-btn">
+              <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn">
                 <span class="login-btn-icon">
+                <!-- TODO: Make component and load from available providers on backend -->
                 <font-awesome-icon
                   :icon="['fab', 'github']"
                   size="2x"
@@ -50,7 +51,22 @@
 </style>
 
 <script>
+import { allProviders } from '@/service/providers.js';
+import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import router from '@/router/index.js';
+
 export default {
-    name: 'Home'
+    name: 'Home',
+    data() {
+        return {
+            allProviders
+        };
+    },
+    methods: {
+        onProviderClick(providerName) {
+            this.$store.dispatch(PROVIDER_SELECTED, providerName);
+            router.push('/dashboard');
+        }
+    }
 };
 </script>
