@@ -25,6 +25,11 @@ const routes = [
         path: '/branch',
         name: 'Branch',
         component: () => import(/* webpackChunkName: "branch" */ '../views/Branch.vue')
+    },
+    {
+        path: '/threatmodel-select',
+        name: 'ThreatmodelSelect',
+        component: () => import(/* webpackChunkName: "threatmodel-select" */ '../views/ThreatmodelSelect.vue')
     }
 ];
 

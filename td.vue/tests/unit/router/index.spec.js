@@ -98,4 +98,29 @@ describe('router', () => {
             });
         });
     });
+
+    describe('threatmodel-select', () => {
+        let threatmodelSelectRoute;
+
+        beforeEach(() => {
+            threatmodelSelectRoute = router.getRoutes()
+                .find(x => x.name === 'ThreatmodelSelect');
+        });
+
+        it('uses the /threatmodel-select path', () => {
+            expect(threatmodelSelectRoute.path).toEqual('/threatmodel-select');
+        });
+
+        describe('lazily loaded component', () => {
+            let threatmodelSelectComponent;
+
+            beforeEach(async () => {
+                threatmodelSelectComponent = await threatmodelSelectRoute.components.default();
+            });
+
+            it('uses the threatmodel select view', () => {
+                expect(threatmodelSelectComponent.default.name).toEqual('ThreatmodelSelect');
+            });
+        });
+    });
 });

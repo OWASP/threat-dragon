@@ -3,7 +3,10 @@ import {
     DATASOURCE_PROVIDER_SELECTED,
     DATASOURCE_REPOSITORY_SELECTED,
     DATASOURCE_REPOSITORY_CLEAR,
-    DATASOURCE_BRANCH_SELECTED
+    DATASOURCE_BRANCH_SELECTED,
+    DATASOURCE_BRANCH_CLEAR,
+    DATASOURCE_THREATMODEL_CLEAR,
+    DATASOURCE_THREATMODEL_SELECTED
 } from '../actions/datasource.js';
 import { allProviders } from '../../service/providers.js';
 
@@ -25,7 +28,10 @@ const actions = {
     [DATASOURCE_PROVIDER_SELECTED]: ({ commit }, provider) => commit(DATASOURCE_PROVIDER_SELECTED, provider),
     [DATASOURCE_REPOSITORY_SELECTED]: ({ commit }, repositoryName) => commit(DATASOURCE_REPOSITORY_SELECTED, repositoryName),
     [DATASOURCE_REPOSITORY_CLEAR]: ({ commit }) => commit(DATASOURCE_REPOSITORY_CLEAR),
-    [DATASOURCE_BRANCH_SELECTED]: ({ commit }, branch) => commit(DATASOURCE_BRANCH_SELECTED, branch)
+    [DATASOURCE_BRANCH_SELECTED]: ({ commit }, branch) => commit(DATASOURCE_BRANCH_SELECTED, branch),
+    [DATASOURCE_BRANCH_CLEAR]: ({ commit }) => commit(DATASOURCE_BRANCH_CLEAR),
+    [DATASOURCE_THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(DATASOURCE_THREATMODEL_SELECTED, threatModel),
+    [DATASOURCE_THREATMODEL_CLEAR]: ({ commit }) => commit(DATASOURCE_THREATMODEL_CLEAR)
 };
 
 const mutations = {
@@ -42,9 +48,19 @@ const mutations = {
     },
     [DATASOURCE_REPOSITORY_CLEAR]: (state) => {
         state[state.provider].repositoryName = '';
+        state[state.provider].branch = '';
     },
     [DATASOURCE_BRANCH_SELECTED]: (state, branch) => {
         state[state.provider].branch = branch;
+    },
+    [DATASOURCE_BRANCH_CLEAR]: (state) => {
+        state[state.provider].branch = '';
+    },
+    [DATASOURCE_THREATMODEL_SELECTED]: (state, threatModel) => {
+        state[state.provider].threatModel = threatModel;
+    },
+    [DATASOURCE_THREATMODEL_CLEAR]: (state) => {
+        state[state.provider].threatModel = '';
     }
 };
 
