@@ -1,4 +1,4 @@
-import { PROVIDER_CLEAR, PROVIDER_SELECTED } from '../actions/provider.js';
+import { AUTH_PROVIDER_CLEAR, AUTH_PROVIDER_SELECTED } from '../actions/auth.js';
 import { allProviders } from '../../service/providers.js';
 
 /**
@@ -15,13 +15,13 @@ const state = {
 };
 
 const actions = {
-    [PROVIDER_CLEAR]: ({ commit }) => commit(PROVIDER_CLEAR),
-    [PROVIDER_SELECTED]: ({ commit }, provider) => commit(PROVIDER_SELECTED, provider)
+    [AUTH_PROVIDER_CLEAR]: ({ commit }) => commit(AUTH_PROVIDER_CLEAR),
+    [AUTH_PROVIDER_SELECTED]: ({ commit }, provider) => commit(AUTH_PROVIDER_SELECTED, provider)
 };
 
 const mutations = {
-    [PROVIDER_CLEAR]: (state) => clearState(state),
-    [PROVIDER_SELECTED]: (state, provider) => {
+    [AUTH_PROVIDER_CLEAR]: (state) => clearState(state),
+    [AUTH_PROVIDER_SELECTED]: (state, provider) => {
         if (!allProviders[provider]) {
             throw new Error(`"${provider}" is not a recognized provider`);
         }

@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 
 import Home from '@/views/Home.vue';
 import router from '@/router/index.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { AUTH_PROVIDER_SELECTED } from '@/store/actions/auth.js';
 
 describe('Home.vue', () => {
     let wrapper, localVue, mockStore;
@@ -17,7 +17,7 @@ describe('Home.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
             actions: {
-                [PROVIDER_SELECTED]: () => {}
+                [AUTH_PROVIDER_SELECTED]: () => {}
             }
         });
     });

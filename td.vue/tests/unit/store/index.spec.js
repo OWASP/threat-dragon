@@ -7,7 +7,7 @@ describe('store/index.js', () => {
         expect(store).toBeInstanceOf(Vuex.Store);
     });
 
-    it('defines the provider module', () => {
-        expect(store.state.provider).toBeInstanceOf(Object);
+    it('defines the auth module', () => {
+        expect(store.state.auth).toBeInstanceOf(Object);
     });
 });

@@ -1,7 +1,7 @@
-import providerModule from '@/store/modules/provider.js';
-import { PROVIDER_CLEAR, PROVIDER_SELECTED } from '../../../../src/store/actions/provider';
+import providerModule from '@/store/modules/auth.js';
+import { AUTH_PROVIDER_CLEAR, AUTH_PROVIDER_SELECTED } from '../../../../src/store/actions/auth.js';
 
-describe('store/modules/provider.js', () => {
+describe('store/modules/auth.js', () => {
     const mocks = {
         commit: () => {}
     };
@@ -19,26 +19,26 @@ describe('store/modules/provider.js', () => {
     describe('actions', () => {
         describe('selected', () => {
             it('is a function', () => {
-                expect(providerModule.actions[PROVIDER_SELECTED]).toBeInstanceOf(Function);
+                expect(providerModule.actions[AUTH_PROVIDER_SELECTED]).toBeInstanceOf(Function);
             });
 
             it('commits the provider', () => {
                 const provider = 'foobar';
                 jest.spyOn(mocks, 'commit');
-                providerModule.actions[PROVIDER_SELECTED](mocks, provider);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, provider);
+                providerModule.actions[AUTH_PROVIDER_SELECTED](mocks, provider);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_PROVIDER_SELECTED, provider);
             });
         });
 
         describe('clear', () => {
             it('is a function', () => {
-                expect(providerModule.actions[PROVIDER_CLEAR]).toBeInstanceOf(Function);
+                expect(providerModule.actions[AUTH_PROVIDER_CLEAR]).toBeInstanceOf(Function);
             });
 
             it('commits PROVIDER_CLEAR', () => {
                 jest.spyOn(mocks, 'commit');
-                providerModule.actions[PROVIDER_CLEAR](mocks);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                providerModule.actions[AUTH_PROVIDER_CLEAR](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_PROVIDER_CLEAR);
             });
         });
     });
@@ -47,7 +47,7 @@ describe('store/modules/provider.js', () => {
         describe('clear', () => {
             it('resets state.provider', () => {
                 providerModule.state.provider = 'foobar';
-                providerModule.mutations[PROVIDER_CLEAR](providerModule.state);
+                providerModule.mutations[AUTH_PROVIDER_CLEAR](providerModule.state);
                 expect(providerModule.state.provider).toEqual('');
             });
         });
@@ -60,13 +60,13 @@ describe('store/modules/provider.js', () => {
             it('throws an error if an unrecognized provider is used', () => {
                 const fakeProvider = 'fake';
                 expect(
-                    () => providerModule.mutations[PROVIDER_SELECTED](providerModule.state, fakeProvider)
+                    () => providerModule.mutations[AUTH_PROVIDER_SELECTED](providerModule.state, fakeProvider)
                 ).toThrowError(`"${fakeProvider}" is not a recognized provider`);
             });
 
             it('sets the selected provider', () => {
                 const provider = 'github';
-                providerModule.mutations[PROVIDER_SELECTED](providerModule.state, provider);
+                providerModule.mutations[AUTH_PROVIDER_SELECTED](providerModule.state, provider);
                 expect(providerModule.state.provider).toEqual(provider);
             });
         });
