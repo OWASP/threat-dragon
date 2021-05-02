@@ -28,7 +28,7 @@ describe('service/providers.js', () => {
 
         it('throws an error when no actions are configured', () => {
             expect(() => {
-                providers.getDashboardActions('testingOnly')
+                providers.getDashboardActions('testingOnly');
             }).toThrowError(`No dashboard actions configured`);
         });
     });

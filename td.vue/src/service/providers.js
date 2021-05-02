@@ -1,25 +1,42 @@
 import githubProvider from './github.provider.js';
 
-export const allProviders = Object.freeze({
-    github: 'github',
-    testingOnly: 'testingOnly'
-});
+const providers = {
+    github: {
+        key: 'github',
+        displayName: 'GitHub',
+        provider: githubProvider
+    },
+    testingOnly: {
+        key: 'testingOnly',
+        displayName: 'Fake Datasource'
+    }
+};
+
+export const allProviders = (() => {
+    const _providers = {};
+    Object.keys(providers).forEach(key => _providers[key] = providers[key].key);
+    return Object.freeze(_providers);
+})();
+
+export const getDisplayName = (providerKey) => providers[providerKey].displayName;
 
 /**
  * Gets the dashboard actions based on the selected provider
- * @param {string} provider
+ * @param {string} providerKey
  * @returns {Object[]}
  */
-export const getDashboardActions = (provider) => {
-    if (!allProviders[provider]) {
-        throw new Error(`Unknown provider: ${provider}`);
+export const getDashboardActions = (providerKey) => {
+    const provider = providers[providerKey];
+
+    if (!provider) {
+        throw new Error(`Unknown provider: ${providerKey}`);
     }
 
-    if (provider === allProviders.github) {
-        return githubProvider.dashboardActions;
+    if (!provider.provider || ! provider.provider.dashboardActions) {
+        throw new Error(`No dashboard actions configured for provider ${providerKey}`);
     }
 
-    throw new Error(`No dashboard actions configured for provider ${provider}`);
+    return provider.provider.dashboardActions;
 };
 
 export default {

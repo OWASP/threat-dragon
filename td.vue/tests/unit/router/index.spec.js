@@ -49,27 +49,52 @@ describe('router', () => {
         });
     });
 
-    describe('datasource', () => {
-        let datasourceRoute;
+    describe('repository', () => {
+        let repositoryRoute;
 
         beforeEach(() => {
-            datasourceRoute = router.getRoutes()
-                .find(x => x.name === 'Datasource');
+            repositoryRoute = router.getRoutes()
+                .find(x => x.name === 'Repository');
         });
 
-        it('uses the /datasource path', () => {
-            expect(datasourceRoute.path).toEqual('/datasource');
+        it('uses the /repository path', () => {
+            expect(repositoryRoute.path).toEqual('/repository');
         });
 
         describe('lazily loaded component', () => {
-            let datasourceComponent;
+            let repositoryComponent;
 
             beforeEach(async () => {
-                datasourceComponent = await datasourceRoute.components.default();
+                repositoryComponent = await repositoryRoute.components.default();
             });
 
-            it('uses the dashboard view', () => {
-                expect(datasourceComponent.default.name).toEqual('Datasource');
+            it('uses the repository view', () => {
+                expect(repositoryComponent.default.name).toEqual('Repository');
+            });
+        });
+    });
+
+    describe('branch', () => {
+        let branchRoute;
+
+        beforeEach(() => {
+            branchRoute = router.getRoutes()
+                .find(x => x.name === 'Branch');
+        });
+
+        it('uses the /branch path', () => {
+            expect(branchRoute.path).toEqual('/branch');
+        });
+
+        describe('lazily loaded component', () => {
+            let branchComponent;
+
+            beforeEach(async () => {
+                branchComponent = await branchRoute.components.default();
+            });
+
+            it('uses the branch view', () => {
+                expect(branchComponent.default.name).toEqual('Branch');
             });
         });
     });

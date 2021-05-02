@@ -17,9 +17,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')   
     },
     {
-        path: '/datasource',
-        name: 'Datasource',
-        component: () => import(/* webpackChunkName: "datasource" */ '../views/Datasource.vue')   
+        path: '/repository',
+        name: 'Repository',
+        component: () => import(/* webpackChunkName: "repository" */ '../views/Repository.vue')
+    },
+    {
+        path: '/branch',
+        name: 'Branch',
+        component: () => import(/* webpackChunkName: "branch" */ '../views/Branch.vue')
     }
 ];
 
