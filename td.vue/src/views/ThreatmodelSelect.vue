@@ -4,7 +4,7 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        Select a branch from <a href="javascript:void(0)" target="_blank">{{ repoName }}</a>
+                        Select a Threat Model from <a href="javascript:void(0)" target="_blank">{{ `${repoName}/${branch}` }}</a>
                         from the list below, or choose another
                         <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">branch</a>
                         or

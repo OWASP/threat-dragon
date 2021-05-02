@@ -6,7 +6,7 @@ const dashboardActions = ([
         iconPreface: 'fab'
     },
     {
-        to: '/',
+        to: '/repository',
         description: 'Create a completely new, empty threat model',
         icon: 'plus'
     },
