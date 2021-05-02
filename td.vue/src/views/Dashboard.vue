@@ -42,7 +42,7 @@ export default {
     },
     data() {
         return {
-            actions: getDashboardActions(this.$store.state.auth.provider)
+            actions: getDashboardActions(this.$store.state.datasource.provider)
         };
     }
 };

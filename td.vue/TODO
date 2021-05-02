@@ -1,6 +1,5 @@
 - favicon
 - title
-- Configure vuex to use session storage or similar, especially for development
 - Other pages
 - authentication / authorization
 - dev server configuration (proxy, vue.config.js)

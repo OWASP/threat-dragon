@@ -1,11 +1,11 @@
-import { AUTH_PROVIDER_SELECTED, AUTH_PROVIDER_CLEAR } from '@/store/actions/auth.js';
+import { DATASOURCE_PROVIDER_SELECTED, DATASOURCE_PROVIDER_CLEAR } from '@/store/actions/datasource.js';
 
-describe('store/actions/auth.js', () => {
+describe('store/actions/datasource.js', () => {
     it('defines a selected action', () => {
-        expect(AUTH_PROVIDER_SELECTED).not.toBeUndefined();
+        expect(DATASOURCE_PROVIDER_SELECTED).not.toBeUndefined();
     });
 
     it('defines a clear action', () => {
-        expect(AUTH_PROVIDER_CLEAR).not.toBeUndefined();
+        expect(DATASOURCE_PROVIDER_CLEAR).not.toBeUndefined();
     });
 });

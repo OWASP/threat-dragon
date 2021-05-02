@@ -1,7 +1,7 @@
-import providerModule from '@/store/modules/auth.js';
-import { AUTH_PROVIDER_CLEAR, AUTH_PROVIDER_SELECTED } from '../../../../src/store/actions/auth.js';
+import providerModule from '@/store/modules/datasource.js';
+import { DATASOURCE_PROVIDER_CLEAR, DATASOURCE_PROVIDER_SELECTED } from '../../../../src/store/actions/datasource.js';
 
-describe('store/modules/auth.js', () => {
+describe('store/modules/datasource.js', () => {
     const mocks = {
         commit: () => {}
     };
@@ -19,26 +19,26 @@ describe('store/modules/auth.js', () => {
     describe('actions', () => {
         describe('selected', () => {
             it('is a function', () => {
-                expect(providerModule.actions[AUTH_PROVIDER_SELECTED]).toBeInstanceOf(Function);
+                expect(providerModule.actions[DATASOURCE_PROVIDER_SELECTED]).toBeInstanceOf(Function);
             });
 
             it('commits the provider', () => {
                 const provider = 'foobar';
                 jest.spyOn(mocks, 'commit');
-                providerModule.actions[AUTH_PROVIDER_SELECTED](mocks, provider);
-                expect(mocks.commit).toHaveBeenCalledWith(AUTH_PROVIDER_SELECTED, provider);
+                providerModule.actions[DATASOURCE_PROVIDER_SELECTED](mocks, provider);
+                expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_PROVIDER_SELECTED, provider);
             });
         });
 
         describe('clear', () => {
             it('is a function', () => {
-                expect(providerModule.actions[AUTH_PROVIDER_CLEAR]).toBeInstanceOf(Function);
+                expect(providerModule.actions[DATASOURCE_PROVIDER_CLEAR]).toBeInstanceOf(Function);
             });
 
             it('commits PROVIDER_CLEAR', () => {
                 jest.spyOn(mocks, 'commit');
-                providerModule.actions[AUTH_PROVIDER_CLEAR](mocks);
-                expect(mocks.commit).toHaveBeenCalledWith(AUTH_PROVIDER_CLEAR);
+                providerModule.actions[DATASOURCE_PROVIDER_CLEAR](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_PROVIDER_CLEAR);
             });
         });
     });
@@ -47,7 +47,7 @@ describe('store/modules/auth.js', () => {
         describe('clear', () => {
             it('resets state.provider', () => {
                 providerModule.state.provider = 'foobar';
-                providerModule.mutations[AUTH_PROVIDER_CLEAR](providerModule.state);
+                providerModule.mutations[DATASOURCE_PROVIDER_CLEAR](providerModule.state);
                 expect(providerModule.state.provider).toEqual('');
             });
         });
@@ -60,13 +60,13 @@ describe('store/modules/auth.js', () => {
             it('throws an error if an unrecognized provider is used', () => {
                 const fakeProvider = 'fake';
                 expect(
-                    () => providerModule.mutations[AUTH_PROVIDER_SELECTED](providerModule.state, fakeProvider)
+                    () => providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, fakeProvider)
                 ).toThrowError(`"${fakeProvider}" is not a recognized provider`);
             });
 
             it('sets the selected provider', () => {
                 const provider = 'github';
-                providerModule.mutations[AUTH_PROVIDER_SELECTED](providerModule.state, provider);
+                providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, provider);
                 expect(providerModule.state.provider).toEqual(provider);
             });
         });

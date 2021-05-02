@@ -17,7 +17,7 @@ describe('Dashboard.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
             state: {
-                auth: {
+                datasource: {
                     provider: 'github'
                 }
             }

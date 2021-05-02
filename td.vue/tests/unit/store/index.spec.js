@@ -8,6 +8,6 @@ describe('store/index.js', () => {
     });
 
     it('defines the auth module', () => {
-        expect(store.state.auth).toBeInstanceOf(Object);
+        expect(store.state.datasource).toBeInstanceOf(Object);
     });
 });

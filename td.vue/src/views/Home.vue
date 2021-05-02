@@ -52,7 +52,7 @@
 
 <script>
 import { allProviders } from '@/service/providers.js';
-import { AUTH_PROVIDER_SELECTED } from '@/store/actions/auth.js';
+import { DATASOURCE_PROVIDER_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
 export default {
@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         onProviderClick(providerName) {
-            this.$store.dispatch(AUTH_PROVIDER_SELECTED, providerName);
+            this.$store.dispatch(DATASOURCE_PROVIDER_SELECTED, providerName);
             router.push('/dashboard');
         }
     }
