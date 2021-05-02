@@ -27,4 +27,8 @@ var securityHeaders = function (app, forceSecure) {
     }));
 };
 
-module.exports = securityHeaders;
+var exports = {
+    config: securityHeaders
+};
+
+module.exports = exports;

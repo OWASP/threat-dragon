@@ -20,7 +20,7 @@ function getPrimaryKey() {
     if (!primaryKey) {
         var message = 'missing primary session encryption key';
         require('../config/loggers.config').logger.fatal(message);
-        throw message;
+        throw new Error(message);
     }
     
     return {id: primaryKey.id, value: new Buffer(primaryKey.value, keyEncoding)};
@@ -34,7 +34,7 @@ function getKeyById(id) {
     if (!key) {
         var message = 'missing session encryption key id:  ' + id;
         require('../config/loggers.config').logger.error(message);
-        throw message;
+        throw new Error(message);
     }
     
     return {id: key.id, value: new Buffer(key.value, keyEncoding)};       
@@ -56,8 +56,8 @@ function decryptData(cipherText, key, iv) {
 }
 
 function encrypt(plainText, cb) {
+    var key = getPrimaryKey();
     generateIV(function(iv) {
-        var key = getPrimaryKey();
         cb(encryptData(plainText, key, iv));
     });
 }

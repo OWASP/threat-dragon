@@ -1,70 +1,47 @@
-var mockery =  require('mockery');
+import dotenv from 'dotenv';
+import { expect } from 'chai';
+import fs from 'fs';
+import sinon from 'sinon';
 
-describe('environment configuration tests', function() {
-    var mockFs;
-    var mockDotEnv = {
-        config: function () {}
-    };
+import envConfig from '../../src/config/env.config.js';
 
+describe('environment configuration tests', () => {
 
     beforeEach(function() {
-        mockery.enable({ useCleanCache: true });
-        mockery.warnOnUnregistered(false);
-        mockery.warnOnReplace(false);
-
-        mockery.registerMock('dotenv', mockDotEnv);
-        spyOn(mockDotEnv, 'config');
+        sinon.stub(dotenv, 'config');
     });
     
     afterEach(function() {
-        mockery.disable();
-    });
-
-    afterAll(function() {
-        mockery.deregisterAll();
+        sinon.restore();
     });
 
     describe('with .env file present', function () {
         beforeEach(() => {
-            mockFs = {
-                existsSync: function () { return true; }
-            };
-
-            mockery.registerMock('fs', mockFs);
-            spyOn(mockFs, 'existsSync').and.callThrough();
-    
-            var envConfig = require('../../src/config/env.config.js');
+            sinon.stub(fs, 'existsSync').returns(true);
             envConfig.tryLoadDotEnv();
         });
 
         it('checks if ../../.env exists', () => {
-            expect(mockFs.existsSync).toHaveBeenCalledTimes(1);
+            expect(fs.existsSync).to.have.been.calledOnce;
         });
 
         it('calls dotenv.config', () => {
-            expect(mockDotEnv.config).toHaveBeenCalledTimes(1);
+            expect(dotenv.config).to.have.been.calledOnce;
         });
     });
 
     describe('without a .env file present', function () {
         beforeEach(() => {
-            mockFs = {
-                existsSync: function () { return false; }
-            };
-
-            mockery.registerMock('fs', mockFs);
-            spyOn(mockFs, 'existsSync').and.callThrough();
-    
-            var envConfig = require('../../src/config/env.config.js');
+            sinon.stub(fs, 'existsSync').returns(false);
             envConfig.tryLoadDotEnv();
         });
 
         it('checks if ../../.env exists', () => {
-            expect(mockFs.existsSync).toHaveBeenCalledTimes(1);
+            expect(fs.existsSync).to.have.been.calledOnce;
         });
 
         it('calls dotenv.config', () => {
-            expect(mockDotEnv.config).not.toHaveBeenCalled();
+            expect(dotenv.config).not.to.have.been.called;
         });
     });
 });

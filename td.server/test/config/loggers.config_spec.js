@@ -1,39 +1,36 @@
-'use strict';
+import { expect } from 'chai';
+import request from 'supertest';
+import sinon from 'sinon';
 
-var request = require('supertest');
-var finish_test = require('../supertest-jasmine');
-
-describe('loggers config tests', function() {
+describe('loggers config tests', () => {
+    let app;
+    let loggers;
     
-    var app;
-    var loggers;
-    
-    beforeEach(function() {
+    beforeEach(() => {
         app = require('express')();
         loggers = require('../../src/config/loggers.config');
     });
     
-    it('should set the logger on requests', function(done) {
-
+    it('should set the logger on requests', (done) => {
         loggers.config(app);
-        app.get('/test', function(req, res){
-            expect(req.log).toBeDefined();
+        app.get('/test', (req, res) => {
+            expect(req.log).not.to.be.undefined;
             res.status(200).send('result');
         });
         
         request(app)
-        .get('/test')
-        .expect(200)
-        .end(finish_test(done));
+            .get('/test')
+            .expect(200)
+            .end(done);
     });
     
     it('should log to stdout', function() {
-        var testMessage = 'test log';
-        var logger = loggers.logger;
-        spyOn(process.stdout, 'write').and.callThrough();
+        const testMessage = 'test log';
+        const logger = loggers.logger;
+        sinon.spy(process.stdout, 'write');
         logger.info(testMessage);
-        var message = JSON.parse(process.stdout.write.calls.argsFor(0)[0]);
-        expect(message.name).toEqual('threatdragon');
-        expect(message.msg).toEqual(testMessage);
+        const message = JSON.parse(process.stdout.write.getCall(0).args[0]);
+        expect(message.name).to.eq('threatdragon');
+        expect(message.msg).to.eq(testMessage);
     });
 });

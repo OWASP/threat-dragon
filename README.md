@@ -50,8 +50,7 @@ To get the code, navigate to where you want your code to be located and do
 This installs code in two sub-folders.
 One for the back-end application (`td.server`) and one for the front-end (`td.site`).
 
-To install, do: `npm install` and go into the `server` directory and run `npm install` there as well,
-eg: `cd td.server && npm install`
+To install, run: `npm install` from the root of the project.  A `postinstall` script is run that will install dependencies in both the `server` and `site` directories as well.
 
 Running `npm run start` from the root directory of the repository will start the front-end and the server.
 
@@ -59,7 +58,7 @@ Running `npm run start` from the root directory of the repository will start the
 To run Threat Dragon in a docker container, configure your environment using dotenv
 as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
+- `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ## Environment variables
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
@@ -118,7 +117,7 @@ The basic build script is:
 See `package.json` for other build tasks.
 
 ## Running the unit tests
-The unit tests are written using Jasmine and Karma, coverage is provided by Istanbul.
+The unit tests are written using Mocha and Karma, coverage is provided by Istanbul via `nyc`.
 A few different npm tasks are available, and these are split between the front-end and back-end directories.
 
 For front-end (root of the project):

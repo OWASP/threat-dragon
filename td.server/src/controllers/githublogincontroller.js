@@ -23,7 +23,7 @@ githubLoginController.completeLogin = function(req, res) {
     var incomingState = req.query.state;
     delete req.session.githubOauthState;
     
-    if(!incomingState || expectedState != incomingState)
+    if(!incomingState || expectedState !== incomingState)
     {
         req.log.error({security: true, idp: 'github'}, 'invalid oauth state value');
         res.status(400).send('Threat Dragon received an invalid request from GitHub. Your internet connection may not be secure!');

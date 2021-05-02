@@ -1,609 +1,517 @@
-'use strict'
+import { expect } from 'chai';
+import sinon from 'sinon';
 
-require('jasmine');
+import threatModelController from '../../src/controllers/threatmodelcontroller.js';
+import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
-describe('threat model controller tests', function () {
+describe('threat model controller tests', () => {
+    const headers = {
+        link: 'url1; rel="link", url2; rel="link"'
+    };
+    const mockResponse = {
+        send: () => {},
+        status: () => {},
+        json: () => {}
+    };
+    let mockRequest;
 
-    var testToken = 'test token';
-    var mockery = require('mockery');
-    var moduleUnderTest = '../../src/controllers/threatmodelcontroller';
-    var mockRepository = {};
-    var mockRequest;
-    var mockResponse = {};
-    var jsonSpy;
-    var testOrg = 'org';
-    var testRepo = 'repo';
-    var testBranch = 'testBranch';
-    var testModel = 'testModel';
-    var testBody = 'testBody';
-    var testPage = 'testPage';
-
-    beforeEach(function () {
-
-        jsonSpy = jasmine.createSpy('jsonSpy');
-
-        mockResponse.send = function () { };
-        mockResponse.status = function () {
-            return { json: jsonSpy };
-        }
-
-        spyOn(mockResponse, 'send');
-        spyOn(mockResponse, 'status').and.callThrough();
-
+    beforeEach(() => {
         mockRequest = {
             user: {
-                accessToken: testToken
+                accessToken: 'token'
             },
             params: {
-                organisation: testOrg,
-                repo: testRepo,
-                branch: testBranch,
-                model: testModel
+                organisation: 'test org',
+                repo: 'test repo',
+                branch: 'test branch',
+                model: 'test model'
             },
             query: {
-                page: testPage
+                page: 'test page'
             },
-            body: testBody
+            body: 'test body'
         };
-
-        mockery.enable({ useCleanCache: true });
-        mockery.warnOnReplace(false);
-        mockery.warnOnUnregistered(false);
-        mockery.registerMock('../repositories/threatmodelrepository', mockRepository);
     });
 
-    afterEach(function () {
-        mockery.disable();
+    afterEach(() => {
+        sinon.restore();
     });
 
-    afterAll(function () {
-        mockery.deregisterAll();
-    });
-
-    it('should fetch the repos for the logged in user', function () {
-
-        var repo1 = 'repo1';
-        var repo2 = 'repo2';
-        var repo3 = 'repo3';
-        var testRepo1 = { full_name: repo1 };
-        var testRepo2 = { full_name: repo2 };
-        var testRepo3 = { full_name: repo3 };
-        var testRepos = [testRepo1, testRepo2, testRepo3];
-        var link1 = 'url1; rel="link"';
-        var link2 = 'url2; rel="link"';
-        var testLinkHeader = link1 + ',' + link2;
-        var testHeaders = [testLinkHeader];
-
-        mockRepository.repos = function (page, accessToken, cb) {
-            cb(null, testRepos, testHeaders);
-        }
-
-        spyOn(mockRepository, 'repos').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.repos(mockRequest, mockResponse);
-        expect(mockRepository.repos.calls.argsFor(0)[0]).toEqual(testPage);
-        expect(mockRepository.repos.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)[0].repos).toEqual([repo1, repo2, repo3]);
-        expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: false });
-
-    });
-
-    it('should error 500 when fetching the repos for the logged in user', function () {
-
-        var error = new Error('repos error');
-        var repos = 'repos';
-
-        mockRepository.repos = function (page, accessToken, cb) {
-            cb(error, repos);
-        }
-
-        var controller = require(moduleUnderTest);
-        controller.repos(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-    });
-
-    it('should return the specified error when fetching the repos for the logged in user', function () {
-
-        var error = new Error('repos error');
-        error.statusCode = 400;
-
-        mockRepository.repos = function (page, accessToken, cb) {
-            cb(error, null);
-        }
-
-        var controller = require(moduleUnderTest);
-        controller.repos(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-    });
-
-    it('should fetch the branches for the specified repo', function () {
-
-        var branch1 = 'branch1';
-        var branch2 = 'branch2';
-        var branch3 = 'branch3';
-        var testBranch1 = { name: branch1 };
-        var testBranch2 = { name: branch2 };
-        var testBranch3 = { name: branch3 };
-        var testBranches = [testBranch1, testBranch2, testBranch3];
-        var link1 = 'url1; rel="link"';
-        var link2 = 'url2; rel="link"';
-        var testLinkHeader = link1 + ',' + link2;
-        var testHeaders = [testLinkHeader];
-
-        mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(null, testBranches, testHeaders);
-        }
-
-        spyOn(mockRepository, 'branches').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.branches(mockRequest, mockResponse);
-        expect(mockRepository.branches.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, page: testPage });
-        expect(mockRepository.branches.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)[0].branches).toEqual([branch1, branch2, branch3]);
-        expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, next: false, prev: false });
-
-    });
-
-    it('should error 500 when fetching the branches for the specified repo', function () {
-
-        var error = new Error('branches error');
-
-        mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'branches').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.branches(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when fetching the branches for the specified repo', function () {
-
-        var error = new Error('branches error');
-        error.statusCode = 400;
-
-        mockRepository.branches = function (repoInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'branches').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.branches(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should fetch the models for the specified repo and branch', function () {
-
-        var model1 = 'model1';
-        var model2 = 'model2';
-        var model3 = 'model3';
-        var testModel1 = { name: model1 };
-        var testModel2 = { name: model2 };
-        var testModel3 = { name: model3 };
-        var testModels = [testModel1, testModel2, testModel3];
-
-        mockRepository.models = function (branchInfo, accessToken, cb) {
-            cb(null, testModels);
-        }
-
-        spyOn(mockRepository, 'models').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.models(mockRequest, mockResponse);
-        expect(mockRepository.models.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch });
-        expect(mockRepository.models.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([[model1, model2, model3]]);
-
-    });
-
-    it('should error 500 when fetching the models for the specified repo and branch', function () {
-
-        var error = new Error('models error');
-
-        mockRepository.models = function (branchInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'models').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.models(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when fetching the models for the specified repo and branch', function () {
-
-        var error = new Error('models error');
-        error.statusCode = 400;
-
-        mockRepository.models = function (branchInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'models').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.models(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should fetch the specified model', function () {
-
-        var model = 'model';
-        var base64Model = (new Buffer(model).toString('base64'));
-
-        mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(null, { content: base64Model });
-        }
-
-        spyOn(mockRepository, 'model').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.model(mockRequest, mockResponse);
-        expect(mockRepository.model.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel });
-        expect(mockRepository.model.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([model]);
-
-    });
-
-    it('should error 500 when fetching the specified model', function () {
-
-        var error = new Error('model error');
-
-        mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'model').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.model(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when fetching the specified model', function () {
-
-        var error = new Error('model error');
-        error.statusCode = 400;
-
-        mockRepository.model = function (modelInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'model').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.model(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should create the specified model', function () {
-
-        var createResponse = 'create';
-
-        mockRepository.create = function (modelInfo, accessToken, cb) {
-            cb(null, createResponse);
-        }
-
-        spyOn(mockRepository, 'create').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.create(mockRequest, mockResponse);
-        expect(mockRepository.create.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel, body: testBody });
-        expect(mockRepository.create.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([createResponse]);
-
-    });
-
-    it('should error 500 when creating the specified model', function () {
-
-        var error = new Error('create error');
-        var data = 'create';
-
-        mockRepository.create = function (modelInfo, accessToken, cb) {
-            cb(error, data);
-        }
-
-        spyOn(mockRepository, 'create').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.create(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when creating the specified model', function () {
-
-        var error = new Error('create error');
-        error.statusCode = 400 ;
-
-        mockRepository.create = function (modelInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'create').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.create(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should update the specified model', function () {
-
-        var updateResponse = 'update';
-
-        mockRepository.update = function (modelInfo, accessToken, cb) {
-            cb(null, updateResponse);
-        }
-
-        spyOn(mockRepository, 'update').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.update(mockRequest, mockResponse);
-        expect(mockRepository.update.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel, body: testBody });
-        expect(mockRepository.update.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([updateResponse]);
-
-    });
-
-    it('should error 500 when updating the specified model', function () {
-
-        var error = new Error('update error');
-        var data = 'update';
-
-        mockRepository.update = function (modelInfo, accessToken, cb) {
-            cb(error, data);
-        }
-
-        spyOn(mockRepository, 'update').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.update(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when updating the specified model', function () {
-
-        var error = new Error('update error');
-        error.statusCode = 400;
-
-        mockRepository.update = function (modelInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'update').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.update(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should delete the specified model', function () {
-
-        var deleteResponse = 'delete';
-
-        mockRepository.deleteModel = function (modelInfo, accessToken, cb) {
-            cb(null, deleteResponse);
-        }
-
-        spyOn(mockRepository, 'deleteModel').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.deleteModel(mockRequest, mockResponse);
-        expect(mockRepository.deleteModel.calls.argsFor(0)[0]).toEqual({ organisation: testOrg, repo: testRepo, branch: testBranch, model: testModel });
-        expect(mockRepository.deleteModel.calls.argsFor(0)[1]).toEqual(testToken);
-        expect(mockResponse.send.calls.argsFor(0)).toEqual([deleteResponse]);
-
-    });
-
-    it('should error 500 when deleting the specified model', function () {
-
-        var error = new Error('delete error');
-        var data = 'delete';
-
-        mockRepository.deleteModel = function (modelInfo, accessToken, cb) {
-            cb(error, data);
-        }
-
-        spyOn(mockRepository, 'deleteModel').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.deleteModel(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([500]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    it('should return the specified error when deleting the specified model', function () {
-
-        var error = new Error('delete error');
-        error.statusCode = 400;
-
-        mockRepository.deleteModel = function (modelInfo, accessToken, cb) {
-            cb(error, null);
-        }
-
-        spyOn(mockRepository, 'deleteModel').and.callThrough();
-
-        var controller = require(moduleUnderTest);
-        controller.deleteModel(mockRequest, mockResponse);
-        expect(mockResponse.send).not.toHaveBeenCalled();
-        expect(mockResponse.status.calls.argsFor(0)).toEqual([400]);
-        expect(jsonSpy.calls.argsFor(0)).toEqual([error]);
-
-    });
-
-    describe('pagination tests', function () {
-
-        var testRepos;
-        var testBranches;
-
-        beforeEach(function () {
-
-            var repo1 = 'repo1';
-            var repo2 = 'repo2';
-            var repo3 = 'repo3';
-            var testRepo1 = { full_name: repo1 };
-            var testRepo2 = { full_name: repo2 };
-            var testRepo3 = { full_name: repo3 };
-            testRepos = [testRepo1, testRepo2, testRepo3];
-
-            var branch1 = 'branch1';
-            var branch2 = 'branch2';
-            var branch3 = 'branch3';
-            var testBranch1 = { name: branch1 };
-            var testBranch2 = { name: branch2 };
-            var testBranch3 = { name: branch3 };
-            testBranches = [testBranch1, testBranch2, testBranch3];
-
+    describe('GET repos', () => {
+        const repos = [
+            { full_name: 'repo1' },
+            { full_name: 'repo2' },
+            { full_name: 'repo3' }
+        ];
+
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, repos, headers); };
+                sinon.stub(threatModelRepository, 'repos').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.repos(mockRequest, mockResponse);
+            });
+
+            it('should fetch the repos for the logged in user', () => {
+                expect(threatModelRepository.repos).to.have.been.calledWith(
+                    mockRequest.query.page,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should send a response', () => {
+                expect(mockResponse.send).to.have.been.calledOnce;
+            });
+
+            it('should return the repo data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(sinon.match({
+                    repos: sinon.match.array.deepEquals(repos.map(x => x.full_name))
+                }));
+            });
         });
 
+        describe('with error', () => {
+            const err = new Error('whoops');
 
-        it('should enable next and disable prev', function () {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null, null); };
+                sinon.stub(threatModelRepository, 'repos').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.repos(mockRequest, mockResponse);
+            });
 
-            var link1 = 'url1; rel="next"';
-            var link2 = 'url2; rel="link"';
-            var testLinkHeader = link1 + ',' + link2;
-            var testHeaders = {
-                link: testLinkHeader
+            it('should return a 500 error if if fails to fetch the repos', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('GET branches', () => {
+        const branches = [
+            { name: 'branch1' },
+            { name: 'branch2' },
+            { name: 'branch3' }
+        ];
+        let repoInfo;
+
+        beforeEach(() => {
+            repoInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                page: mockRequest.query.page
             };
-
-            mockRepository.repos = function (page, accessToken, cb) {
-                cb(null, testRepos, testHeaders);
-            }
-
-            var controller = require(moduleUnderTest);
-            controller.repos(mockRequest, mockResponse);
-            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: true });
-
         });
 
-        it('should enable next and enable prev', function () {
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, branches, headers); };
+                sinon.stub(threatModelRepository, 'branches').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.branches(mockRequest, mockResponse);
+            });
 
-            var link1 = 'url1; rel="next"';
-            var link2 = 'url2; rel="prev"';
-            var testLinkHeader = link1 + ',' + link2;
-            var testHeaders = {
-                link: testLinkHeader
+            it('should fetch the branches for the specified repo', () => {
+                expect(threatModelRepository.branches).to.have.been.calledWith(
+                    repoInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should return the branch data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(sinon.match({
+                    branches: sinon.match.array.deepEquals(branches.map(x => x.name))
+                }));
+            });
+        });
+
+        describe('with error', () => {
+            const err = new Error('whoops');
+
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null, null); };
+                sinon.stub(threatModelRepository, 'branches').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.branches(mockRequest, mockResponse);
+            });
+
+            it('should return a 500 error if if fails to fetch the branches', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('GET models', () => {
+        const models = [
+            { name: 'model1' },
+            { name: 'model2' },
+            { name: 'model3' }
+        ];
+        let branchInfo;
+
+        beforeEach(() => {
+            branchInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                branch: mockRequest.params.branch
             };
-
-            mockRepository.repos = function (page, accessToken, cb) {
-                cb(null, testRepos, testHeaders);
-            }
-
-            var controller = require(moduleUnderTest);
-            controller.repos(mockRequest, mockResponse);
-            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: true, next: true });
-
         });
 
-        it('should disable next and enable prev', function () {
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, models); };
+                sinon.stub(threatModelRepository, 'models').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.models(mockRequest, mockResponse);
+            });
 
-            var link1 = 'url1; rel="link"';
-            var link2 = 'url2; rel="prev"';
-            var testLinkHeader = link1 + ',' + link2;
-            var testHeaders = {
-                link: testLinkHeader
+            it('should fetch the models for the specified repo', () => {
+                expect(threatModelRepository.models).to.have.been.calledWith(
+                    branchInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should return the model data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(
+                    sinon.match(sinon.match.array.deepEquals(models.map(x => x.name))));
+            });
+        });
+
+        describe('with error', () => {
+            const err = new Error('whoops');
+
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null); };
+                sinon.stub(threatModelRepository, 'models').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.models(mockRequest, mockResponse);
+            });
+
+            it('should return a 500 error if if fails to fetch the models', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('GET model', () => {
+        let modelInfo, encodedModel;
+
+        beforeEach(() => {
+            modelInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                branch: mockRequest.params.branch,
+                model: mockRequest.params.model
             };
-
-            mockRepository.repos = function (page, accessToken, cb) {
-                cb(null, testRepos, testHeaders);
-            }
-
-            var controller = require(moduleUnderTest);
-            controller.repos(mockRequest, mockResponse);
-            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: true, next: false });
-
+            encodedModel = Buffer.from(modelInfo.model).toString('base64');
         });
 
-        it('should disable next and disable prev', function () {
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, { content: encodedModel }); };
+                sinon.stub(threatModelRepository, 'model').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.model(mockRequest, mockResponse);
+            });
 
-            var link1 = 'url1; rel="link"';
-            var link2 = 'url2; rel="link"';
-            var testLinkHeader = link1 + ',' + link2;
-            var testHeaders = {
-                link: testLinkHeader
+            it('should fetch the specified model', () => {
+                expect(threatModelRepository.model).to.have.been.calledWith(
+                    modelInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should return the model data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(mockRequest.params.model);
+            });
+        });
+
+        describe('with error', () => {
+            const err = new Error('whoops');
+
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null); };
+                sinon.stub(threatModelRepository, 'model').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.model(mockRequest, mockResponse);
+            });
+
+            it('should return a 500 error if if fails to fetch the model', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('CREATE model', () => {
+        let modelInfo;
+
+        beforeEach(() => {
+            modelInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                branch: mockRequest.params.branch,
+                model: mockRequest.params.model,
+                body: mockRequest.body
             };
-
-            mockRepository.repos = function (page, accessToken, cb) {
-                cb(null, testRepos, testHeaders);
-            }
-
-            var controller = require(moduleUnderTest);
-            controller.repos(mockRequest, mockResponse);
-            expect(mockResponse.send.calls.argsFor(0)[0].pagination).toEqual({ page: testPage, prev: false, next: false });
-
         });
 
-        it('should select repos page 1 if not specified', function () {
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, modelInfo.model); };
+                sinon.stub(threatModelRepository, 'create').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.create(mockRequest, mockResponse);
+            });
 
-            var testHeaders = {};
+            it('should create the specified model', () => {
+                expect(threatModelRepository.create).to.have.been.calledWith(
+                    modelInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
 
-            mockRepository.repos = function (page, accessToken, cb) {
-                cb(null, testRepos, testHeaders);
-            }
+            it('should return the model data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(mockRequest.params.model);
+            });
+        });
 
-            spyOn(mockRepository, 'repos').and.callThrough();
+        describe('with error', () => {
+            const err = new Error('whoops');
 
-            var controller = require(moduleUnderTest);
-            delete mockRequest.query.page;
-            controller.repos(mockRequest, mockResponse);
-            expect(mockRepository.repos.calls.argsFor(0)[0]).toEqual(1);
-        })
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null); };
+                sinon.stub(threatModelRepository, 'create').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.create(mockRequest, mockResponse);
+            });
 
-        it('should select branches page 1 if not specified', function () {
+            it('should return a 500 error if if fails to create the model', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
 
-            var testHeaders = {};
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
 
-            mockRepository.branches = function (page, accessToken, cb) {
-                cb(null, testBranches, testHeaders);
-            }
+    describe('UPDATE model', () => {
+        let modelInfo;
 
-            spyOn(mockRepository, 'branches').and.callThrough();
+        beforeEach(() => {
+            modelInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                branch: mockRequest.params.branch,
+                model: mockRequest.params.model,
+                body: mockRequest.body
+            };
+        });
 
-            var controller = require(moduleUnderTest);
-            delete mockRequest.query.page;
-            controller.branches(mockRequest, mockResponse);
-            expect(mockRepository.branches.calls.argsFor(0)[0].page).toEqual(1);
-        })
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, modelInfo.model); };
+                sinon.stub(threatModelRepository, 'update').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.update(mockRequest, mockResponse);
+            });
+
+            it('should update the specified model', () => {
+                expect(threatModelRepository.update).to.have.been.calledWith(
+                    modelInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should return the model data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(mockRequest.params.model);
+            });
+        });
+
+        describe('with error', () => {
+            const err = new Error('whoops');
+
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null); };
+                sinon.stub(threatModelRepository, 'update').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.update(mockRequest, mockResponse);
+            });
+
+            it('should return a 500 error if if fails to update the model', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('DELETE model', () => {
+        let modelInfo;
+
+        beforeEach(() => {
+            modelInfo = {
+                organisation: mockRequest.params.organisation,
+                repo: mockRequest.params.repo,
+                branch: mockRequest.params.branch,
+                model: mockRequest.params.model
+            };
+        });
+
+        describe('without error', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, modelInfo.model); };
+                sinon.stub(threatModelRepository, 'deleteModel').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+                threatModelController.deleteModel(mockRequest, mockResponse);
+            });
+
+            it('should delete the specified model', () => {
+                expect(threatModelRepository.deleteModel).to.have.been.calledWith(
+                    modelInfo,
+                    mockRequest.user.accessToken,
+                    sinon.match.any
+                );
+            });
+
+            it('should return data', () => {
+                expect(mockResponse.send).to.have.been.calledWith(mockRequest.params.model);
+            });
+        });
+
+        describe('with error', () => {
+            const err = new Error('whoops');
+
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(err, null); };
+                sinon.stub(threatModelRepository, 'deleteModel').callsFake(mockRepo);
+                sinon.stub(mockResponse, 'status').returns(mockResponse);
+                sinon.spy(mockResponse, 'json');
+                threatModelController.deleteModel(mockRequest, mockResponse);
+            });
+
+            it('should return a 500 error if if fails to delete the model', () => {
+                expect(mockResponse.status).to.have.been.calledWith(500);
+            });
+
+            it('should return the error', () => {
+                expect(mockResponse.json).to.have.been.calledWith(err);
+            });
+        });
+    });
+
+    describe('pagination tests', () => {
+        const repos = [
+            { full_name: 'repo1' },
+            { full_name: 'repo2' },
+            { full_name: 'repo3' }
+        ];
+    
+        describe('repos', () => {
+            beforeEach(() => {
+                const mockRepo = (page, token, cb) => { cb(null, repos, headers); };
+                sinon.stub(threatModelRepository, 'repos').callsFake(mockRepo);
+                sinon.stub(threatModelRepository, 'branches').callsFake(mockRepo);
+                sinon.spy(mockResponse, 'send');
+            });
+
+            it('should enable next and disable prev', () => {
+                headers.link = 'url1; rel="next", url2; rel="link"';
+                threatModelController.repos(mockRequest, mockResponse);
+                expect(mockResponse.send).to.have.been.calledWith({
+                    repos: sinon.match.any,
+                    pagination: {
+                        page: mockRequest.query.page,
+                        prev: false,
+                        next: true
+                    }
+                });
+            });
+
+            it('should enable next and enable prev', () => {
+                headers.link = 'url1; rel="next", url2; rel="prev"';
+                threatModelController.repos(mockRequest, mockResponse);
+                expect(mockResponse.send).to.have.been.calledWith({
+                    repos: sinon.match.any,
+                    pagination: {
+                        page: mockRequest.query.page,
+                        prev: true,
+                        next: true
+                    }
+                });
+            });
+            
+            it('should disable next and enable prev', () => {
+                headers.link = 'url1; rel="link", url2; rel="prev"';
+                threatModelController.repos(mockRequest, mockResponse);
+                expect(mockResponse.send).to.have.been.calledWith({
+                    repos: sinon.match.any,
+                    pagination: {
+                        page: mockRequest.query.page,
+                        prev: true,
+                        next: false
+                    }
+                });
+            });
+            
+            it('should disable next and disable prev', () => {
+                headers.link = 'url1; rel="link", url2; rel="link"';
+                threatModelController.repos(mockRequest, mockResponse);
+                expect(mockResponse.send).to.have.been.calledWith({
+                    repos: sinon.match.any,
+                    pagination: {
+                        page: mockRequest.query.page,
+                        prev: false,
+                        next: false
+                    }
+                });
+            });
+
+            it('should select repos page 1 if not specified', () => {
+                mockRequest.query.page = '';
+                threatModelController.repos(mockRequest, mockResponse);
+                expect(threatModelRepository.repos).to.have.been.calledWith(1, sinon.match.any, sinon.match.any);
+            });
+
+            it('should select branches page 1 if not specified', () => {
+                mockRequest.query.page = '';
+                threatModelController.branches(mockRequest, mockResponse);
+                expect(threatModelRepository.branches).to.have.been.calledWith(
+                    sinon.match({ page: 1 }),
+                    sinon.match.any,
+                    sinon.match.any
+                );
+            });
+        });
     });
 });

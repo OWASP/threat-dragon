@@ -32,4 +32,8 @@ function configSessions(app) {
     app.use(session(sessionOptions));
 }
 
-module.exports = configSessions;
+var exports = {
+    config: configSessions
+};
+
+module.exports = exports;

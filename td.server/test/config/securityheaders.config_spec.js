@@ -11,7 +11,7 @@ describe('security header tests', function () {
     beforeEach(function () {
 
         app = express();
-        require('../../src/config/securityheaders.config')(app, true);
+        require('../../src/config/securityheaders.config').config(app, true);
         app.get('/', function (req, res) {
             res.status(200).send('result');
         });

@@ -1,119 +1,85 @@
-'use strict';
+import { expect } from 'chai';
+import passport from 'passport';
+import sinon from 'sinon';
 
-var request = require('supertest');
-var url = require('url');
-var finish_test = require('../supertest-jasmine');
-var jasmine = require('jasmine');
-var mockery = require('mockery');
+import passportConfig from '../../src/config/passport.config.js';
 
-describe('passport configuration tests', function() {
-    
-    var clientID = 'id';
-    var clientSecret = 'secret';
-    process.env.GITHUB_CLIENT_ID = clientID;
+describe('passport configuration tests', () => {
+    const clientId = 'clientid',
+        clientSecret = 'clientsecret',
+        mockApp = {
+            use: () => {}
+        };
+
+    process.env.IS_TEST = 'true';
+    process.env.GITHUB_CLIENT_ID = clientId;
     process.env.GITHUB_CLIENT_SECRET = clientSecret;
-    
-    var passport;
-    var express;
-    var app;
-    var mock;
-    var mockEncryptionHelper;
-    
-    beforeEach(function() {
-        
-        mockery.enable({ useCleanCache: true });
-        mockery.warnOnUnregistered(false);
-        mockery.warnOnReplace(false);
-        
-        //encryption helper mocks
-        mockEncryptionHelper = {
-            encrypt: function() {},
-            decrypt: function() {}
-        };
-        
-        mockery.registerMock('../helpers/encryption.helper', mockEncryptionHelper);
-        
-        passport = require('passport');
-        spyOn(passport, 'initialize').and.callThrough();
-        spyOn(passport, 'session').and.callThrough();
-        express = require('express');
-        app = express();
-        require('../../src/config/passport.config')(app);
-        app.get('/', passport.authenticate('github'));
-        mock = {done: function() {}};
-        spyOn(mock, 'done');
-        
-    });
-    
-    afterEach(function() {
-        mockery.disable();
+
+    beforeEach(() => {
+        sinon.stub(passport, 'initialize');
+        sinon.stub(passport, 'session');
+        sinon.stub(passport, 'use');
+        sinon.stub(passport, 'serializeUser');
+        sinon.stub(passport, 'deserializeUser');
     });
 
-    afterAll(function() {
-        mockery.deregisterAll();
+    afterEach(() => {
+        sinon.restore();
     });
-    
-    it('should initialize passport', function() {
-        expect(passport.initialize).toHaveBeenCalled();
+
+    describe('default scope', () => {
+
+        beforeEach(() => {
+            passportConfig.config(mockApp);
+        });
+
+        it('initializes passport', () => {
+            expect(passport.initialize).to.have.been.calledOnce;
+        });
+
+        it('sets up passport sessions', () => {
+            expect(passport.session).to.have.been.calledOnce;
+        });
+
+        it('configures the strategy', () => {
+            const expected = new passportConfig.TestingStrategy({
+                clientID: clientId,
+                clientSecret: clientSecret,
+                failureRedirect: 'login/github',
+                scope: [ 'public_repo' ]
+            });
+            expect(passport.use).to.have.been.calledWith(expected);
+        });
+
+        it('stores the user', () => {
+            expect(passport.serializeUser).to.have.been.calledOnce;
+        });
+
+        it('deserializes the user', () => {
+            expect(passport.deserializeUser).to.have.been.calledOnce;
+        });
     });
-    
-    it('should setup passport sessions', function() {
-        expect(passport.session).toHaveBeenCalled();
-    });
-    
-    it('should configure the passport strategy', function(done) {
-        
-        request(app).get('/')
-            .expect(302)
-            .expect(function(res) {
-                
-                var location = url.parse(res.header.location);
-                var params = {};
-                location.query.split('&').forEach(function(item) {
-                    var key = item.split('=')[0];
-                    var value = item.split('=')[1];
-                    params[key] = value;
-                });
-                
-                var callBackUrl = url.parse(decodeURIComponent(params["redirect_uri"]));
-                expect(decodeURIComponent(params["scope"])).toEqual('public_repo');
-                expect(params["client_id"]).toEqual(clientID);
-                //expect(callBackUrl.path).toEqual('/oauth/github');
-            })
-            .end(finish_test(done));       
-    });
-    
-    it('should store the access token and profile', function() {
-        
-        var accessToken = 'access';
-        var refreshToken = 'refresh';
-        var profile = 'profile';
-        passport._strategies["github"]._verify(accessToken, refreshToken, profile, mock.done);      
-        expect(mock.done).toHaveBeenCalled();
-        expect(mock.done.calls.argsFor(0)[1]).toEqual({profile: profile, accessToken: accessToken});
-    })
-    
-    it('should serialize the user', function() {
-        
-        mockEncryptionHelper.encrypt = function(plainText, cb) {
-            cb(plainText);
-        };
-        spyOn(mockEncryptionHelper, 'encrypt').and.callThrough();
-        var user = {unnecessary: 'data', accessToken: 'testtoken', profile: {unnecessary: 'data', username: 'testuser', provider: 'testprovider', _json: {repos_url: 'testrepos', unnecessary: 'data'}}};
-        var serialisedUser = {accessToken: 'testtoken', profile: {username: 'testuser', provider: 'testprovider', repos_url: 'testrepos'}};
-        passport._serializers[0](user, mock.done);
-        expect(mock.done.calls.argsFor(0)).toEqual([null, JSON.stringify(serialisedUser)]);       
-    });
-    
-    it('should deserialize the user', function() {
-        
-        var user = {user: 'user'};
-        mockEncryptionHelper.decrypt = function(cipherText) {
-            return cipherText;
-        };
-        spyOn(mockEncryptionHelper, 'decrypt').and.callThrough();
-        passport._deserializers[0](JSON.stringify(user), mock.done);
-        expect(mock.done.calls.argsFor(0)).toEqual([null, user]);
-        
+
+    describe('with alternate scope', () => {
+        const scope = 'blah';
+
+        beforeEach(() => {
+            process.env.GITHUB_SCOPE = scope;
+            passportConfig.config(mockApp);
+        });
+
+        afterEach(() => {
+            delete process.env.GITHUB_SCOPE;
+        });
+
+        it('uses the defined scope', () => {
+            const expected = new passportConfig.TestingStrategy({
+                clientID: clientId,
+                clientSecret: clientSecret,
+                failureRedirect: 'login/github',
+                scope: [scope]
+            });
+            expect(passport.use).to.have.been.calledWith(expected);
+        });
     });
 });
