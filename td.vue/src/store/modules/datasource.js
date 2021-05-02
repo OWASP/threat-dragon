@@ -26,6 +26,7 @@ const mutations = {
             throw new Error(`"${provider}" is not a recognized provider`);
         }
         state.provider = provider;
+        state[provider] = {};
     }
 };
 

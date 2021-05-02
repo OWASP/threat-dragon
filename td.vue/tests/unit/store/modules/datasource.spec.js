@@ -1,3 +1,4 @@
+import { allProviders } from '@/service/providers.js';
 import providerModule from '@/store/modules/datasource.js';
 import { DATASOURCE_PROVIDER_CLEAR, DATASOURCE_PROVIDER_SELECTED } from '../../../../src/store/actions/datasource.js';
 
@@ -65,9 +66,15 @@ describe('store/modules/datasource.js', () => {
             });
 
             it('sets the selected provider', () => {
-                const provider = 'github';
+                const provider = allProviders.github;
                 providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, provider);
                 expect(providerModule.state.provider).toEqual(provider);
+            });
+
+            it('sets the provider config object', () => {
+                const provider = allProviders.github;
+                providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, provider);
+                expect(providerModule.state[provider]).toBeInstanceOf(Object);
             });
         });
     });
