@@ -1,13 +1,18 @@
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
+import env from '../env/Env.js';
+import GithubEnv from '../env/Github.js';
+import SessionEnv from '../env/Session.js';
 
+// TODO: Ensure that all existing process.env[prop] props are covered
+// TODO: Update README
+// TODO: Update setup-env.md
+// TODO: Test with docker (file based config)
+// TODO: Update docs repo
 const tryLoadDotEnv = () => {
-    const upDir = `..${path.sep}`;
-    const dotEnvPath = path.join(__dirname, upDir, upDir, upDir, '.env');
-    if (fs.existsSync(dotEnvPath)) {
-        dotenv.config();
-    }
+    const github = new GithubEnv();
+    const session = new SessionEnv();
+    env.addProvider(github);
+    env.addProvider(session);
+    env.hydrate();
 };
 
 export default { tryLoadDotEnv };
