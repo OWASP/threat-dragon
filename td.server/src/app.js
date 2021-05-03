@@ -9,6 +9,7 @@ var parsers = require('./config/parsers.config.js');
 var passport = require('./config/passport.config.js');
 var routes = require('./config/routes.config.js');
 var securityHeaders = require('./config/securityheaders.config.js');
+var session = require('./config/session.config.js');
 
 var upDir = '..' + path.sep;
 var siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -30,7 +31,7 @@ function create() {
         securityHeaders.default.config(app);
 
         //sessions
-        require('./config/session.config').config(app);
+        session.default.config(app);
 
         //passport
         passport.default.config(app);

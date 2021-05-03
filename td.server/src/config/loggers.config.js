@@ -21,7 +21,7 @@ const configLoggers = (app) => {
     app.use(expressBunyanLogger(bunyanOptions));
 };
 
-const logger = bunyan.createLogger(bunyanOptions);
+export const logger = bunyan.createLogger(bunyanOptions);
 
 export default {
     configLoggers,

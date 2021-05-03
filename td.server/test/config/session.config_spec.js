@@ -1,7 +1,8 @@
-import AzureTablesStoreFactory from 'connect-azuretables';
 import { expect } from 'chai';
+import session from 'express-session';
 import sinon from 'sinon';
 
+import azureTableSession from '../../src/config/azuretablesession.config.js';
 import env from '../../src/env/Env.js';
 import loggers from '../../src/config/loggers.config.js';
 import sessionConfig from '../../src/config/session.config.js';
@@ -25,7 +26,8 @@ describe('session config tests', () => {
         const mockEnv = {
             config: {
                 SESSION_SIGNING_KEY: sessionSigningKey,
-                SESSION_STORE: 'local'
+                SESSION_STORE: 'local',
+                NODE_ENV: 'development'
             }
         };
         beforeEach(() => {
@@ -62,7 +64,9 @@ describe('session config tests', () => {
         };
         beforeEach(() => {
             sinon.stub(env, 'get').returns(mockEnv);
-            sinon.spy(AzureTablesStoreFactory);
+            sinon.stub(loggers.logger, 'info');
+            sinon.stub(azureTableSession, 'config');
+            sessionConfig.config(mockApp);
         });
 
         afterEach(() => {
@@ -74,7 +78,7 @@ describe('session config tests', () => {
         });
 
         it('sets the session store to azure table storage', () => {
-            expect(loggers.logger.error).not.to.have.been.called;
+            expect(azureTableSession.config).to.have.been.calledOnce;
         });
     });
 });
