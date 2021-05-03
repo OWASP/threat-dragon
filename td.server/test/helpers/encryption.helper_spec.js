@@ -1,142 +1,176 @@
-'use strict';
+import crypto, { createDecipheriv } from 'crypto';
+import { expect } from 'chai';
+import sinon from 'sinon';
 
-var mockery =  require('mockery');
-var mockCrypto;
-var mockDecryptor;
-var mockEncryptor;
-var testRandomIV = 'test random IV';
+import encryptionHelper from '../../src/helpers/encryption.helper.js';
+import env from '../../src/env/Env.js';
+import loggers from '../../src/config/loggers.config.js';
 
-describe('encryption helper tests', function() {
+describe('encryption helper tests', () => {
+    const plainText = 'test plain text';
+    const encryptedText = 'encrypted';
+    const randomIv = 'test random iv';
+    const mockRandomBytes = (bytes, cb) => cb(null, randomIv);
+    const sessionEncryptionKeys = 
+    [
+        {
+            isPrimary: true,
+            id: 0,
+            value: 'testkey0'
+        },
+        {
+            isPrimary: false,
+            id: 1,
+            value: 'testkey1'
+        }
+    ];
+    const mockDecryptor = {
+        update: () => '',
+        final: () => ''
+    };
+    const mockCreateCipheriv = {
+        update: () => '',
+        final: () => ''
+    };
 
-    beforeEach(function() {
+    let mockEnv;
 
-        mockery.enable({ useCleanCache: true });
-        mockery.warnOnUnregistered(false);
-        mockery.warnOnReplace(false);
-
-        process.env.SESSION_ENCRYPTION_KEYS = "[{\"isPrimary\": true, \"id\": 0, \"value\": \"testkey0\"}, {\"isPrimary\": false, \"id\": 1, \"value\": \"testkey1\"}]";
-
-        //crypto mockery
-        mockDecryptor = {
-            update: function() { return 'plain '; },
-            final: function() { return 'text'; }
-        };
-
-        mockEncryptor = {
-            update: function() { return 'cipher '; },
-            final: function() { return 'text'; }
-        };
-
-        mockCrypto = {
-            createCipheriv: function() { return mockEncryptor; },
-            createDecipheriv: function() { return mockDecryptor; },
-            randomBytes: function(len, cb) { cb(null, testRandomIV); }
-        };
-
-        mockery.registerMock('crypto', mockCrypto);
-
+    beforeEach(() => {
+        sinon.stub(crypto, 'createDecipheriv').returns(mockDecryptor);
+        sinon.stub(crypto, 'createCipheriv').returns(mockCreateCipheriv);
+        sinon.stub(crypto, 'randomBytes').callsFake(mockRandomBytes);
     });
+        
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    describe('with invalid keys', () => {
+        beforeEach(() => {
+            const badSessionKeys = [
+                {
+                    isPrimary: false,
+                    id: 1,
+                    value: 'testkey1'
+                }
+            ];
+            mockEnv = {
+                config: {
+                    SESSION_ENCRYPTION_KEYS: JSON.stringify(badSessionKeys)
+                }
+            };
+            sinon.stub(env, 'get').returns(mockEnv);
+        });
     
-    afterEach(function() {
-        mockery.disable();
+        it('should log an invalid primary key error and throw', () => {
+            process.env.SESSION_ENCRYPTION_KEYS = JSON.stringify(
+                [
+                    {
+                        isPrimary: false,
+                        id: 1,
+                        value: 'testkey1'
+                    }
+                ]
+            );
+            const cb = sinon.spy();
+            sinon.spy(loggers.logger, 'fatal');
+            expect(() => encryptionHelper.encrypt('test plain text', cb)).to.throw();
+            expect(loggers.logger.fatal).to.have.been.called;
+        });
     });
 
-    afterAll(function() {
-        mockery.deregisterAll();
-    });
-    
-    it('should log an invalid key error and throw', function() {
+    describe('with valid session encryption keys', () => {
+        beforeEach(() => {
+            mockEnv = {
+                config: {
+                    SESSION_ENCRYPTION_KEYS: JSON.stringify(sessionEncryptionKeys)
+                }
+            };
+            sinon.stub(env, 'get').returns(mockEnv);
+        });
+
+        it('should log an invalid key error and throw', () => {
+            const encryptedData = {
+                keyId: 2,
+                iv: 'test iv',
+                data: 'test cipher text'
+            };
+            sinon.spy(loggers.logger, 'error');
+            expect(() => encryptionHelper.decrypt(encryptedData)).to.throw();
+            expect(loggers.logger.error).to.have.been.called;
+        });
         
-        var testIV = 'test iv';
-        var data = 'test cipher text';
-        var encryptedData = {keyId: 2, iv: testIV, data: data};
-        var mockLogger = {
-            logger: {
-                error: function() {},
-                info: function() {}
-            }
-        };
+        it('should decrypt with the specified key and iv', () => {
+            const encryptionKey = sessionEncryptionKeys.find(x => x.id === 1);
+            const encryptedData = {
+                keyId: encryptionKey.id,
+                iv: 'test iv',
+                data: 'test cipher data'
+            };
+
+            encryptionHelper.decrypt(encryptedData);
+
+            expect(crypto.createDecipheriv).to.have.been.calledWith(
+                'aes256',
+                Buffer.from(encryptionKey.value, 'ascii'),
+                Buffer.from(encryptedData.iv, 'ascii')
+            );
+        });
         
-        spyOn(mockLogger.logger, 'error');
-        mockery.registerMock('../config/loggers.config', mockLogger);
-        spyOn(mockCrypto,'createDecipheriv').and.callThrough();
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        expect(function() {cryptoHelper.decrypt(encryptedData);}).toThrow();
-        expect(mockLogger.logger.error).toHaveBeenCalled();
+        it('should decrypt the ciphertext', () => {
+            const encryptedData = {
+                keyId: 1,
+                iv: 'test iv',
+                data: 'test cipher text'
+            };
+
+            sinon.stub(mockDecryptor, 'update').returns('');
+            sinon.stub(mockDecryptor, 'final').returns(plainText);
+
+            expect(encryptionHelper.decrypt(encryptedData)).to.eq(plainText);
+        });
         
-    });
-    
-    it('should log an invalid primary key error and throw', function() {
+        it('should encrypt with the primary key and a random iv', () => {
+            const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
+
+            const callback = sinon.spy();
+            sinon.stub(mockCreateCipheriv, 'update').returns('');
+            sinon.stub(mockCreateCipheriv, 'final').returns('');
+            
+            encryptionHelper.encrypt(plainText, callback);
+            expect(crypto.createCipheriv).to.have.been.calledWith(
+                'aes256',
+                Buffer.from(encryptionKey.value, 'ascii'),
+                randomIv
+            );
+        });
         
-        var plainText = 'test plain text';
-        process.env.SESSION_ENCRYPTION_KEYS = "[{\"isPrimary\": false, \"id\": 1, \"value\": \"testkey1\"}]";
-        var mockLogger = {
-            logger: {
-                fatal: function() {},
-                info: function() {}
-            }
-        };
+        it('should attach the key id and IV to the encrypted data', () => {
+            const callback = sinon.spy();
+            sinon.stub(mockCreateCipheriv, 'update').returns('');
+            sinon.stub(mockCreateCipheriv, 'final').returns('');
+
+            encryptionHelper.encrypt(plainText, callback);
+            expect(callback).to.have.been.called;
+            expect(mockCreateCipheriv.update).to.have.been.calledWith(
+                plainText,
+                'ascii',
+                'base64'
+            );
+        });
         
-        spyOn(mockLogger.logger, 'fatal');
-        mockery.registerMock('../config/loggers.config', mockLogger);
-        var cb = jasmine.createSpy('cb');
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        expect(function() {cryptoHelper.encrypt(plainText, cb);}).toThrow();
-        expect(mockLogger.logger.fatal).toHaveBeenCalled();
-        
-    });
-    
-    it('should decrypt with the specified key and iv', function() {
-        
-        var testIV = 'test iv';
-        var data = 'test cipher text';
-        var encryptedData = {keyId: 1, iv: testIV, data: data};
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        spyOn(mockCrypto,'createDecipheriv').and.callThrough();
-        cryptoHelper.decrypt(encryptedData);
-        expect(mockCrypto.createDecipheriv.calls.argsFor(0)[1]).toEqual(new Buffer('testkey1', 'ascii'));
-        expect(mockCrypto.createDecipheriv.calls.argsFor(0)[2]).toEqual(new Buffer(testIV, 'ascii'));
-    });
-    
-    it('should decrypt the ciphertext', function() {
-        
-        var testIV = 'test iv';
-        var data = 'test cipher text';
-        var encryptedData = {keyId: 1, iv: testIV, data: data};
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        var plainText = cryptoHelper.decrypt(encryptedData);
-        expect(plainText).toEqual('plain text');
-    });
-    
-    it('should encrypt with the primary key and a random iv', function() {
-        
-        var plainText = 'test plain text';
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        var cb = jasmine.createSpy('cb');
-        spyOn(mockCrypto,'createCipheriv').and.callThrough();
-        cryptoHelper.encrypt(plainText, cb);
-        expect(mockCrypto.createCipheriv.calls.argsFor(0)[1]).toEqual(new Buffer('testkey0', 'ascii'));
-        expect(mockCrypto.createCipheriv.calls.argsFor(0)[2]).toEqual(testRandomIV);
-    });
-    
-    it('should attach the key id and IV to the encrypted data', function() {
-        
-        var plainText = 'test plain text';
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        var cb = jasmine.createSpy('cb');
-        cryptoHelper.encrypt(plainText, cb);
-        expect(cb).toHaveBeenCalled();
-        expect(cb.calls.argsFor(0)[0].iv).toEqual(testRandomIV);
-        expect(cb.calls.argsFor(0)[0].keyId).toEqual(0);        
-    });
-    
-    it('should encrypt the data', function() {
-        
-        var plainText = 'test plain text';
-        var cryptoHelper = require('../../src/helpers/encryption.helper');
-        var cb = jasmine.createSpy('cb');
-        cryptoHelper.encrypt(plainText, cb);
-        expect(cb).toHaveBeenCalled();
-        expect(cb.calls.argsFor(0)[0].data).toEqual('cipher text');    
+        it('should encrypt the data', () => {
+            const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
+            const callback = sinon.spy();
+            sinon.stub(mockCreateCipheriv, 'update').returns('');
+            sinon.stub(mockCreateCipheriv, 'final').returns(encryptedText);
+
+            encryptionHelper.encrypt(plainText, callback);
+            expect(callback).to.have.been.calledWith(sinon.match({ 
+                keyId: encryptionKey.id,
+                iv: randomIv,
+                data: encryptedText
+            }));
+        });
     });
 });

@@ -1,70 +1,47 @@
-var mockery =  require('mockery');
+import { expect } from 'chai';
+import sinon from 'sinon';
 
-describe('environment configuration tests', function() {
-    var mockFs;
-    var mockDotEnv = {
-        config: function () {}
+import env from '../../src/env/Env.js';
+import envConfig from '../../src/config/env.config.js';
+import GithubEnv from '../../src/env/Github.js';
+import SessionEnv from '../../src/env/Session.js';
+import ThreatDragonEnv from '../../src/env/ThreatDragon.js';
+
+describe('environment configuration tests', () => {
+    const mockEnv = {
+        addProvider: () => {},
+        hydrate: () => {}
     };
 
-
     beforeEach(function() {
-        mockery.enable({ useCleanCache: true });
-        mockery.warnOnUnregistered(false);
-        mockery.warnOnReplace(false);
-
-        mockery.registerMock('dotenv', mockDotEnv);
-        spyOn(mockDotEnv, 'config');
+        sinon.stub(env, 'get').returns(mockEnv);
+        sinon.spy(mockEnv, 'addProvider');
+        sinon.spy(mockEnv, 'hydrate');
+        envConfig.tryLoadDotEnv();
     });
     
     afterEach(function() {
-        mockery.disable();
+        sinon.restore();
     });
 
-    afterAll(function() {
-        mockery.deregisterAll();
-    });
-
-    describe('with .env file present', function () {
-        beforeEach(() => {
-            mockFs = {
-                existsSync: function () { return true; }
-            };
-
-            mockery.registerMock('fs', mockFs);
-            spyOn(mockFs, 'existsSync').and.callThrough();
-    
-            var envConfig = require('../../src/config/env.config.js');
-            envConfig.tryLoadDotEnv();
+    describe('tryLoadDotEnv', () => {
+        it('adds a github provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(GithubEnv));
         });
 
-        it('checks if ../../.env exists', () => {
-            expect(mockFs.existsSync).toHaveBeenCalledTimes(1);
+        it('adds the session provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(SessionEnv));
         });
 
-        it('calls dotenv.config', () => {
-            expect(mockDotEnv.config).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe('without a .env file present', function () {
-        beforeEach(() => {
-            mockFs = {
-                existsSync: function () { return false; }
-            };
-
-            mockery.registerMock('fs', mockFs);
-            spyOn(mockFs, 'existsSync').and.callThrough();
-    
-            var envConfig = require('../../src/config/env.config.js');
-            envConfig.tryLoadDotEnv();
+        it('adds the threat dragon provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(ThreatDragonEnv));
         });
 
-        it('checks if ../../.env exists', () => {
-            expect(mockFs.existsSync).toHaveBeenCalledTimes(1);
-        });
-
-        it('calls dotenv.config', () => {
-            expect(mockDotEnv.config).not.toHaveBeenCalled();
+        it('hydrates the config', () => {
+            expect(mockEnv.hydrate).to.have.been.calledOnce;
         });
     });
 });

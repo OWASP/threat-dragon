@@ -1,33 +1,24 @@
-'use strict';
+import { expect } from 'chai';
+import express from 'express';
+import request from 'supertest';
 
-var jasmine = require('jasmine');
-var request = require('supertest');
-var express = require('express');
-var finish_test = require('../supertest-jasmine');
-
-describe('request parser tests', function() {
+describe('request parser tests', () => {
+    let app;
     
-    var app;
-    
-    beforeEach(function() {
-        
+    beforeEach(() => {
         app = express();
-        require('../../src/config/parsers.config')(app);
-        
+        require('../../src/config/parsers.config').config(app);
     });
     
-    it('should parse the json in the request body', function(done) {
-        
-        var id = 'id';
-        var collection = ['1', '2', '3'];
-        var nested = {n1: '1', n2: '2'};
-        var body = {id: id, collection: collection, nested: nested};
-        var bodyText = JSON.stringify(body);
+    it('should parse the json in the request body', (done) => {
+        const id = 'id';
+        const collection = ['1', '2', '3'];
+        const nested = {n1: '1', n2: '2'};
+        const body = {id: id, collection: collection, nested: nested};
+        const bodyText = JSON.stringify(body);
         
         app.post('/', function(req, res) {
-            expect(req.body.id).toEqual(id);
-            expect(req.body.collection).toEqual(collection);
-            expect(req.body.nested).toEqual(nested);
+            expect(req.body).to.deep.eq(body);
             res.status(200);
             res.send('result');
         });
@@ -40,21 +31,18 @@ describe('request parser tests', function() {
             .end(done);
     });
     
-    it('should parse a url encoded body', function(done) {
-        
-        var id = 'id';
-        var collection = ['1', '2', '3'];
-        var nested = {n1: '1', n2: '2'};
-        var body = {id: id, collection: collection, nested: nested};
-        var bodyText = JSON.stringify(body);
+    it('should parse a url encoded body', (done) => {
+        const id = 'id';
+        const collection = ['1', '2', '3'];
+        const nested = {n1: '1', n2: '2'};
+        const body = {id: id, collection: collection, nested: nested};
         
         app.post('/', function(req, res) {
-            expect(req.body.id).toEqual(id);
-            expect(req.body["collection[0]"]).toEqual(collection[0]);
-            expect(req.body["collection[1]"]).toEqual(collection[1]);
-            expect(req.body["collection[2]"]).toEqual(collection[2]);
-            expect(req.body["nested[n1]"]).toEqual(nested.n1);
-            expect(req.body["nested[n2]"]).toEqual(nested.n2);
+            expect(req.body["collection[0]"]).to.eq(collection[0]);
+            expect(req.body["collection[1]"]).to.eq(collection[1]);
+            expect(req.body["collection[2]"]).to.eq(collection[2]);
+            expect(req.body["nested[n1]"]).to.eq(nested.n1);
+            expect(req.body["nested[n2]"]).to.eq(nested.n2);
             res.status(200);
             res.send('result');
         });
@@ -67,13 +55,12 @@ describe('request parser tests', function() {
             .end(done);
     });
     
-    it('should parse a cookie', function(done) {
-        
-        var cookieName = 'cookieName';
-        var cookieValue = 'cookieValue';
+    it('should parse a cookie', (done) => {
+        const cookieName = 'cookieName';
+        const cookieValue = 'cookieValue';
         
         app.post('/', function(req, res) {
-            expect(req.cookies[cookieName]).toEqual(cookieValue);
+            expect(req.cookies[cookieName]).to.eq(cookieValue);
             res.status(200);
             res.send('result');
         });
@@ -83,6 +70,6 @@ describe('request parser tests', function() {
             .set('Cookie', cookieName + '=' + cookieValue)
             .send('body')
             .expect(200)
-            .end(finish_test(done));
+            .end(done);
     });
 });

@@ -1,24 +1,16 @@
-var fs = require('fs');
-var path = require('path');
+import env from '../env/Env.js';
+import GithubEnv from '../env/Github.js';
+import SessionEnv from '../env/Session.js';
+import ThreatDragonEnv from '../env/ThreatDragon.js';
 
-var dotenv = require('dotenv');
-
-/**
- * Attempts to load configuration as environment variables
- * from the .env file at the root of the project.
- * If the file does not exist, no-op
- */
-function tryLoadDotEnv () {
-    var upDir = '..' + path.sep;
-    var dotEnvPath = path.join(__dirname, upDir, upDir, upDir, '.env');
-    if (fs.existsSync(dotEnvPath)) {
-        dotenv.config();
-    }
-}
-
-var envConfig = {
-    tryLoadDotEnv: tryLoadDotEnv
+const tryLoadDotEnv = () => {
+    const github = new GithubEnv();
+    const session = new SessionEnv();
+    const threatDragon = new ThreatDragonEnv();
+    env.get().addProvider(github);
+    env.get().addProvider(session);
+    env.get().addProvider(threatDragon);
+    env.get().hydrate();
 };
 
-module.exports = envConfig;
-
+export default { tryLoadDotEnv };
