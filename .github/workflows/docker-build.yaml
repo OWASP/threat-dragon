@@ -1,7 +1,7 @@
 name: Build Docker Image
 on:
   push:
-    branches: [ feature/docker-build-github-action ]
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
