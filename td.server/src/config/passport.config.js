@@ -2,6 +2,7 @@
 
 var passport = require('passport');
 
+var env = require('../env/Env.js');
 var GithubStrategy = require('passport-github').Strategy;
 var passportHelper = require('../helpers/passport.helper.js');
 
@@ -20,7 +21,7 @@ function TestingStrategy(cfg) {
  * https://github.com/sinonjs/sinon/issues/1892
  */
 function getStrategy() {
-    return process.env.IS_TEST === 'true' ? TestingStrategy : GithubStrategy;
+    return env.default.get().config.IS_TEST === 'true' ? TestingStrategy : GithubStrategy;
 }
 
 function passportConfig(app) {
@@ -28,13 +29,13 @@ function passportConfig(app) {
     app.use(passport.initialize());
     app.use(passport.session());
     
-    var scope = process.env.GITHUB_SCOPE === undefined ? 'public_repo' : process.env.GITHUB_SCOPE;
+    var scope = env.default.get().config.GITHUB_SCOPE || 'public_repo';
 
     var Strategy = getStrategy();
     //github sigin
     passport.use(new Strategy({
-        clientID: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        clientID: env.default.get().config.GITHUB_CLIENT_ID,
+        clientSecret: env.default.get().config.GITHUB_CLIENT_SECRET,
         failureRedirect: 'login/github',
         scope: [ scope ]
     },

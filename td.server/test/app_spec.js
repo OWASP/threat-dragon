@@ -110,10 +110,17 @@ describe('app tests', () => {
 
         beforeEach(() => {
             sinon.stub(envConfig, 'tryLoadDotEnv').throws(err);
-            appFactory.create();
+            // appFactory.create();
+        });
+
+        it('rethrows the error', () => {
+            expect(() => {
+                appFactory.create();
+            }).to.throw('whoops!');
         });
 
         it('logs an error on startup', () => {
+            try { appFactory.create() } catch (ex) {}
             expect(mockLogger.error).to.have.been.calledTwice;
         });
     });

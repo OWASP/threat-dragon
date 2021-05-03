@@ -70,38 +70,6 @@ You also need to set a session signing key environment variable (`SESSION_SIGNIN
 Setting up these environment variables has caused some confusion in the past,
 so there is a [step-by-step guide](setup-env.md) to this. 
 
-Once a user is signed in, their session information contains an OAuth access token
-with write access to their GitHub repos.
-For security, this is encrypted before storage in the session.
-The session encryption supports multiple keys so that they can be expired
-without any interruption to the running application. The primary key is always used for encryption.
-Retired keys can be kept available for decrypting existing sessions.
-Once all sessions are using the new primary key (typically this will be around 60 minutes maximum),
-the old one can be safely removed.
-The keys are stored as a JSON string in  the `SESSION_ENCRYPTION_KEYS` environment variable. For example:
-
-`[{\"isPrimary\": true, \"id\": 0, \"value\": \"abcdef\"}, {\"isPrimary\": false, \"id\": 1, \"value\": \"ghijkl\"}]`
-
-If you are developing locally, you can choose to store the session data in memory
-using the express-session in-memory store. To do this set the `SESSION_STORE`environment variable to `local`.
-As [mentioned in the express-session docs](https://github.com/expressjs/session) this is for
-development only - it is not suitable for production.
-To remind you of this, Threat Dragon will write a log message at severity ERROR when
-it starts if the in memory session store is used.
-
-For production use, Threat Dragon currently supports Azure Table Storage for the session store via
-[connect-azuretables](https://www.npmjs.com/package/connect-azuretables).
-To make this store work you need to specify an Azure Storage Account
-and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`.
-See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
-
-If you want to use an [alternative session store](https://github.com/expressjs/session#compatible-session-stores)
-in production, install it and edit the
-[session.config.js](https://github.com/owasp/threat-dragon/blob/master/td/config/session.config.js) file.
-
-Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes,
-set the `NODE_ENV` environment variable to `development`. 
-
 ## Running the application
 Once your environment variables are set up, start the node web server:
 

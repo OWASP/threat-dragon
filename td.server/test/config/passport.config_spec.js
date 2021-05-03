@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import passport from 'passport';
 import sinon from 'sinon';
 
+import env from '../../src/env/Env.js';
 import passportConfig from '../../src/config/passport.config.js';
 
 describe('passport configuration tests', () => {
@@ -10,10 +11,6 @@ describe('passport configuration tests', () => {
         mockApp = {
             use: () => {}
         };
-
-    process.env.IS_TEST = 'true';
-    process.env.GITHUB_CLIENT_ID = clientId;
-    process.env.GITHUB_CLIENT_SECRET = clientSecret;
 
     beforeEach(() => {
         sinon.stub(passport, 'initialize');
@@ -28,8 +25,16 @@ describe('passport configuration tests', () => {
     });
 
     describe('default scope', () => {
+        const mockEnv = {
+            config: {
+                IS_TEST: 'true',
+                GITHUB_CLIENT_ID: clientId,
+                GITHUB_CLIENT_SECRET: clientSecret
+            }
+        };
 
         beforeEach(() => {
+            sinon.stub(env, 'get').returns(mockEnv);
             passportConfig.config(mockApp);
         });
 
@@ -62,14 +67,18 @@ describe('passport configuration tests', () => {
 
     describe('with alternate scope', () => {
         const scope = 'blah';
+        const mockEnv = {
+            config: {
+                IS_TEST: 'true',
+                GITHUB_CLIENT_ID: clientId,
+                GITHUB_CLIENT_SECRET: clientSecret,
+                GITHUB_SCOPE: scope
+            }
+        };
 
         beforeEach(() => {
-            process.env.GITHUB_SCOPE = scope;
+            sinon.stub(env, 'get').returns(mockEnv);
             passportConfig.config(mockApp);
-        });
-
-        afterEach(() => {
-            delete process.env.GITHUB_SCOPE;
         });
 
         it('uses the defined scope', () => {

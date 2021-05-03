@@ -2,6 +2,7 @@
 var express = require('express');
 var path = require('path');
 
+var env = require('./env/Env.js');
 var expressHelper = require('./helpers/express.helper.js');
 
 var upDir = '..' + path.sep;
@@ -43,7 +44,7 @@ function create() {
 
         bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 
-        app.set('port', process.env.PORT || 3000);
+        app.set('port', env.default.get().config.PORT || 3000);
 
         return app;
     }

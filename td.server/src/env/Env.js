@@ -129,6 +129,16 @@ export class Env {
     }
 }
 
-const env = new Env();
+let env = null;
 
-export default env;
+const get = () => {
+    if (env === null) {
+        env = new Env();
+    }
+    return env;
+};
+
+export default {
+    get,
+    Env
+};
