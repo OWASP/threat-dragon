@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import request from 'supertest';
 import sinon from 'sinon';
 
+import loggers from '../../src/config/loggers.config.js';
+
 describe('loggers config tests', () => {
     let app;
-    let loggers;
     
     beforeEach(() => {
         app = require('express')();
-        loggers = require('../../src/config/loggers.config');
     });
     
     it('should set the logger on requests', (done) => {
-        loggers.config(app);
+        loggers.configLoggers(app);
         app.get('/test', (req, res) => {
             expect(req.log).not.to.be.undefined;
             res.status(200).send('result');

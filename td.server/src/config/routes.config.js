@@ -1,46 +1,37 @@
-﻿'use strict';
+﻿import csrf from 'csurf';
+import express from 'express';
 
-var express = require('express');
-var csrf = require('csurf');
-var home = require('../controllers/homecontroller');
-var github = require('../controllers/githublogincontroller');
-var threatmodel = require('../controllers/threatmodelcontroller');
+import githubController from '../controllers/githublogincontroller.js';
+import homeController from '../controllers/homecontroller.js';
+import threatmodelController from '../controllers/threatmodelcontroller.js';
 
-function addRoutes(app) {
-    var router = express.Router();
-    
-    //anti csrf
-    var csrfProtection = csrf();
-    
-    //main application entry point
-    router.get('/', csrfProtection, home.ensureLoggedIn, home.index);
+const config = (app) => {
+    const router = express.Router();
 
-    router.get('/healthz', function(req, res){ res.send('true');});
-    
-    //login/out
-    router.get('/login', csrfProtection, home.login);
-    router.get('/logoutform', csrfProtection, home.logoutform);
-    router.post('/logout', csrfProtection, home.logout);
+    const csrfProtection = csrf();
 
-    //github sign in
-    router.post('/login', csrfProtection, github.doLogin);
-    router.get('/login/github', github.doLogin);
-    router.get('/oauth/github', github.doLogin, github.completeLogin);
-    
-    //threat models
-    router.get('/threatmodel/repos', home.ensureLoggedIn, threatmodel.repos);
-    router.get('/threatmodel/:organisation/:repo/branches', home.ensureLoggedIn, threatmodel.branches);
-    router.get('/threatmodel/:organisation/:repo/:branch/models', home.ensureLoggedIn, threatmodel.models);
-    router.get('/threatmodel/:organisation/:repo/:branch/:model/data', home.ensureLoggedIn, threatmodel.model);
-    router.delete('/threatmodel/:organisation/:repo/:branch/:model', csrfProtection, home.ensureLoggedIn, threatmodel.deleteModel);
-    router.put('/threatmodel/:organisation/:repo/:branch/:model/create', csrfProtection, home.ensureLoggedIn, threatmodel.create);
-    router.put('/threatmodel/:organisation/:repo/:branch/:model/update', csrfProtection, home.ensureLoggedIn, threatmodel.update);
-    
+    router.get('/', csrfProtection, homeController.ensureLoggedIn, homeController.index);
+    router.get('/healthz', (req, res) => res.send('true'));
+
+    router.get('/login', csrfProtection, homeController.login);
+    router.get('/logoutform', csrfProtection, homeController.logoutform);
+    router.post('/logout', csrfProtection, homeController.logout);
+
+    router.post('/login', csrfProtection, githubController.doLogin);
+    router.get('/login/github', githubController.doLogin);
+    router.get('/oauth/github', githubController.doLogin, githubController.completeLogin);
+
+    router.get('/threatmodel/repos', homeController.ensureLoggedIn, threatmodelController.repos);
+    router.get('/threatmodel/:organisation/:repo/branches', homeController.ensureLoggedIn, threatmodelController.branches);
+    router.get('/threatmodel/:organisation/:repo/:branch/models', homeController.ensureLoggedIn, threatmodelController.models);
+    router.get('/threatmodel/:organisation/:repo/:branch/:model/data', homeController.ensureLoggedIn, threatmodelController.model);
+    router.delete('/threatmodel/:organisation/:repo/:branch/:model', csrfProtection, homeController.ensureLoggedIn, threatmodelController.deleteModel);
+    router.put('/threatmodel/:organisation/:repo/:branch/:model/create', csrfProtection, homeController.ensureLoggedIn, threatmodelController.create);
+    router.put('/threatmodel/:organisation/:repo/:branch/:model/update', csrfProtection, homeController.ensureLoggedIn, threatmodelController.update);
+
     app.use('/', router);
-}
-
-var exports = {
-    config: addRoutes
 };
 
-module.exports = exports;
+export default {
+    config
+};

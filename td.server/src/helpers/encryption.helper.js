@@ -22,7 +22,7 @@ function getPrimaryKey() {
 
     if (!primaryKey) {
         var message = 'missing primary session encryption key';
-        require('../config/loggers.config').logger.fatal(message);
+        require('../config/loggers.config').default.logger.fatal(message);
         throw new Error(message);
     }
     
@@ -36,7 +36,7 @@ function getKeyById(id) {
 
     if (!key) {
         var message = 'missing session encryption key id:  ' + id;
-        require('../config/loggers.config').logger.error(message);
+        require('../config/loggers.config').default.logger.error(message);
         throw new Error(message);
     }
     
