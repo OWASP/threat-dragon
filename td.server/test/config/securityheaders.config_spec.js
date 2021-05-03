@@ -1,106 +1,73 @@
-'use strict';
+import { expect } from 'chai';
+import helmet from 'helmet';
+import sinon from 'sinon';
 
-var request = require('supertest');
-var express = require('express');
-var finish_test = require('../supertest-jasmine');
+import securityHeaders from '../../src/config/securityheaders.config.js';
 
-describe('security header tests', function () {
+describe('config/securityHeaders.config.js', () => {
+    const mockApp = {
+        set: () => {},
+        use: (fn) => {
+            if (fn) { fn(); }
+        }
+    };
+    let hstsSpy;
 
-    var app;
-
-    beforeEach(function () {
-
-        app = express();
-        require('../../src/config/securityheaders.config').config(app, true);
-        app.get('/', function (req, res) {
-            res.status(200).send('result');
-        });
-
+    beforeEach(() => {
+        hstsSpy = sinon.spy();
+        sinon.spy(mockApp, 'set');
+        sinon.spy(mockApp, 'use');
+        sinon.stub(helmet, 'hsts');
+        sinon.stub(helmet, 'frameguard');
+        sinon.stub(helmet, 'hidePoweredBy');
+        sinon.stub(helmet, 'noSniff');
+        sinon.stub(helmet, 'xssFilter');
+        sinon.stub(helmet, 'referrerPolicy');
+        sinon.stub(helmet, 'contentSecurityPolicy');
+        securityHeaders.config(mockApp, true);
     });
 
-    it('should remove the x-powered-by header', function (done) {
+    afterEach(() => {
+        sinon.restore();
+    });
 
-        function noXPoweredBy(res) {
+    it('removes the x-powered-by header', () => {
+        expect(mockApp.set).to.have.been.calledWith('x-powered-by', false);
+    });
 
-            if (res.header["x-powered-by"]) {
-                throw new Error('Found X-Powered-By header: ' + res.header["x-powered-by"]);
-            };
+    it('applies the HSTS', () => {
+        const expectedCfg = {
+            maxAge: 7776000,
+            force: true,
+            includeSubDomains: false
         };
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect(noXPoweredBy)
-            .end(finish_test(done));
+        expect(helmet.hsts).to.have.been.calledWith(expectedCfg);
     });
 
-    it('should set x-frame-options DENY', function (done) {
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('x-frame-options', 'DENY')
-            .end(finish_test(done));
-
+    it('applies the frameguard', () => {
+        expect(helmet.frameguard).to.have.been.calledWith({ action: 'deny' });
     });
 
-    it('should set x-content-type-options nosniff', function (done) {
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('x-content-type-options', 'nosniff')
-            .end(finish_test(done));
-
+    it('removes the powered by using helmet', () => {
+        expect(helmet.hidePoweredBy).to.have.been.calledOnce;
     });
 
-    it('should set x-xss-protection', function (done) {
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('x-xss-protection', '1; mode=block')
-            .end(finish_test(done));
-
+    it('adds noSniff', () => {
+        expect(helmet.noSniff).to.have.been.calledOnce;
     });
 
-    it('should set HSTS polcy', function (done) {
-
-        request(app)
-            .get('/')
-            .set('protocol', 'https')
-            .expect(200)
-            .expect('strict-transport-security', 'max-age=7776000')
-            .end(finish_test(done));
-
+    it('adds an xss filter', () => {
+        expect(helmet.xssFilter).to.have.been.calledOnce;
     });
 
-    it('should set CSP', function (done) {
-
-        var csp = 'default-src \'none\'; script-src \'self\'; conn' +
-            'ect-src \'self\'; style-src \'self\' https://fonts.googleapis.com \'' +
-            'unsafe-inline\'; img-src \'self\' data:; font-src \'self\' https://fonts.gstatic.com ' +
-            'data:; form-action \'self\' https://github.com; report-uri https://owaspthreatdragon.report-uri.com/r/d/csp/enforce';
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('content-security-policy', csp)
-            .expect('x-content-security-policy', csp)
-            .expect('x-webkit-csp', csp)
-            .end(finish_test(done));
-
+    it('adds the referrer policy', () => {
+        const expected = {
+            policy: 'strict-origin-when-cross-origin'
+        };
+        expect(helmet.referrerPolicy).to.have.been.calledWith(expected);
     });
 
-    it('should set a referrer policy', function (done) {
-
-        var referrer = 'strict-origin-when-cross-origin';
-
-        request(app)
-            .get('/')
-            .expect(200)
-            .expect('referrer-policy', referrer)
-            .end(finish_test(done));
-
+    it('adds a CSP', () => {
+        expect(helmet.contentSecurityPolicy).to.have.been.calledWith(sinon.match.object);
     });
 });
