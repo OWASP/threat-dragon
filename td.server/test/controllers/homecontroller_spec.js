@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import loggers from '../../src/config/loggers.config.js';
 
@@ -134,13 +135,14 @@ describe('homecontroller tests', () => {
     
     describe('simulated production environment tests', function() {
         beforeEach(() => {
-            process.env.NODE_ENV = 'simulated_production';
+            const mockEnv = {
+                config: {
+                    NODE_ENV: 'simulated_production'
+                }
+            };
+            sinon.stub(env, 'get').returns(mockEnv);
             sinon.spy(mockResponse, 'cookie');
             homeController.index(mockRequest, mockResponse);
-        });
-
-        afterEach(() => {
-            process.env.NODE_ENV = 'development';
         });
         
         it('should set the secure flag on the XSRF cookie', function() {

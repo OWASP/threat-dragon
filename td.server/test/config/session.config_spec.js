@@ -2,6 +2,7 @@ import AzureTablesStoreFactory from 'connect-azuretables';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import env from '../../src/env/Env.js';
 import loggers from '../../src/config/loggers.config.js';
 import sessionConfig from '../../src/config/session.config.js';
 
@@ -12,8 +13,6 @@ describe('session config tests', () => {
     const sessionSigningKey = 'somekey';
 
     beforeEach(() => {
-        process.env.SESSION_SIGNING_KEY = sessionSigningKey;
-        process.env.SESSION_STORE = 'local';
         sinon.spy(mockApp, 'use');
         sinon.spy(loggers.logger, 'error');
     });
@@ -23,7 +22,14 @@ describe('session config tests', () => {
     });
 
     describe('dev environment', () => {
+        const mockEnv = {
+            config: {
+                SESSION_SIGNING_KEY: sessionSigningKey,
+                SESSION_STORE: 'local'
+            }
+        };
         beforeEach(() => {
+            sinon.stub(env, 'get').returns(mockEnv);
             sessionConfig.config(mockApp);
         });
 
@@ -47,9 +53,15 @@ describe('session config tests', () => {
     });
 
     describe('prod environment', () => {
+        const mockEnv = {
+            config: {
+                SESSION_SIGNING_KEY: sessionSigningKey,
+                SESSION_STORE: 'azure',
+                NODE_ENV: 'simulated_production'
+            }
+        };
         beforeEach(() => {
-            process.env.NODE_ENV = 'simulated_production';
-            process.env.SESSION_STORE = 'azure';
+            sinon.stub(env, 'get').returns(mockEnv);
             sinon.spy(AzureTablesStoreFactory);
         });
 

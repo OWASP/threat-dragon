@@ -1,6 +1,6 @@
 module.exports = {
     "env": {
-        "es2021": true,
+        "es2015": true,
         "node": true
     },
     "extends": "eslint:recommended",
@@ -21,7 +21,7 @@ module.exports = {
         "block-spacing": "off",
         "brace-style": "off",
         "capitalized-comments": "off",
-        "class-methods-use-this": "error",
+        "class-methods-use-this": "off",
         "comma-dangle": "off",
         "comma-spacing": [
             "error",
@@ -148,7 +148,6 @@ module.exports = {
         "no-nonoctal-decimal-escape": "error",
         "no-octal-escape": "error",
         "no-param-reassign": "error",
-        "no-plusplus": "error",
         "no-promise-executor-return": "error",
         "no-proto": "error",
         "no-restricted-exports": "error",
@@ -225,7 +224,10 @@ module.exports = {
             "error",
             "last"
         ],
-        "sort-imports": "error",
+        "sort-imports": ["error", {
+            "allowSeparatedGroups": true,
+            "ignoreCase": true
+        }],
         "sort-keys": "off",
         "sort-vars": "error",
         "space-before-blocks": "off",

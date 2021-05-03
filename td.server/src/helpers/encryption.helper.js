@@ -1,6 +1,9 @@
 'use strict';
 
 var crypto = require('crypto');
+
+var env = require('../env/Env.js');
+
 var inputEncoding = 'ascii';
 var outputEncoding = 'base64';
 var keyEncoding = 'ascii';
@@ -14,7 +17,7 @@ function generateIV(cb) {
 
 //primary key is used for encryption
 function getPrimaryKey() {
-    var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
+    var keys = JSON.parse(env.default.get().config.SESSION_ENCRYPTION_KEYS);
     var primaryKey = keys.find(function(key) { return key.isPrimary; });
 
     if (!primaryKey) {
@@ -28,7 +31,7 @@ function getPrimaryKey() {
 
 //other keys can be used for decryption to support key expiry
 function getKeyById(id) {
-    var keys = JSON.parse(process.env.SESSION_ENCRYPTION_KEYS);
+    var keys = JSON.parse(env.default.get().config.SESSION_ENCRYPTION_KEYS);
     var key = keys.find(function(key) { return key.id == id; });
 
     if (!key) {

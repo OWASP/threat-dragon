@@ -1,13 +1,16 @@
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
+import env from '../env/Env.js';
+import GithubEnv from '../env/Github.js';
+import SessionEnv from '../env/Session.js';
+import ThreatDragonEnv from '../env/ThreatDragon.js';
 
 const tryLoadDotEnv = () => {
-    const upDir = `..${path.sep}`;
-    const dotEnvPath = path.join(__dirname, upDir, upDir, upDir, '.env');
-    if (fs.existsSync(dotEnvPath)) {
-        dotenv.config();
-    }
+    const github = new GithubEnv();
+    const session = new SessionEnv();
+    const threatDragon = new ThreatDragonEnv();
+    env.get().addProvider(github);
+    env.get().addProvider(session);
+    env.get().addProvider(threatDragon);
+    env.get().hydrate();
 };
 
 export default { tryLoadDotEnv };

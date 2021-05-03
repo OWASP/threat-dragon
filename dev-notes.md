@@ -381,4 +381,23 @@ Keep Mike Goodwin's area up to date with this release from the OWASP area. For e
 1. `git push`
 1. create pull request from branch `version-1.3.1` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
 
+#### Adding new config / env variables
+All env vars should be read from [(td.server/src/env/Env.js).get()](td.server/src/env/Env.js), as not all environment variables will always be able to be put on `process.env`.
+`Env` is a class that is meant to be extended by sub-configuration files.  See [Github.js](td.server/src/env/Env.js) for an example.
+
+Required properties:
+* `name`: when calling super in the constructor
+* `get prefix()`: Think of this like namespacing the configuration, `GITHUB_` for example
+* `get properties()`: An array describing the expected configuration, for example: `[ { key: 'CLIENT_ID', required: true }]`
+
+You can add to existing configurations, or create a new one.
+If creating a new configuration by extending the Env class, you also need to update [env.config.js](td.server/src/config/env.config.js) with the following:
+```
+import MyConfig from '../env/MyConfig.js`;
+
+...
+const myConfig = new MyConfig();
+env.get().addProvider(myConfig);
+```
+
 _Threat Dragon: making threat models more dragony_

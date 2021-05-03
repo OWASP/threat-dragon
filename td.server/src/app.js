@@ -2,6 +2,7 @@
 var express = require('express');
 var path = require('path');
 
+var env = require('./env/Env.js');
 var expressHelper = require('./helpers/express.helper.js');
 
 var upDir = '..' + path.sep;
@@ -43,13 +44,15 @@ function create() {
 
         bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 
+        app.set('port', env.default.get().config.PORT || 3000);
+
         return app;
     }
     catch (e) {
         var errorLogger = bunyan.createLogger({ name: 'threatdragon' });
         errorLogger.error('owasp threat dragon failed to start up');
         errorLogger.error(e.message);
-        return null;
+        throw e;
     }
 }
 

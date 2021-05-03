@@ -1,47 +1,47 @@
-import dotenv from 'dotenv';
 import { expect } from 'chai';
-import fs from 'fs';
 import sinon from 'sinon';
 
+import env from '../../src/env/Env.js';
 import envConfig from '../../src/config/env.config.js';
+import GithubEnv from '../../src/env/Github.js';
+import SessionEnv from '../../src/env/Session.js';
+import ThreatDragonEnv from '../../src/env/ThreatDragon.js';
 
 describe('environment configuration tests', () => {
+    const mockEnv = {
+        addProvider: () => {},
+        hydrate: () => {}
+    };
 
     beforeEach(function() {
-        sinon.stub(dotenv, 'config');
+        sinon.stub(env, 'get').returns(mockEnv);
+        sinon.spy(mockEnv, 'addProvider');
+        sinon.spy(mockEnv, 'hydrate');
+        envConfig.tryLoadDotEnv();
     });
     
     afterEach(function() {
         sinon.restore();
     });
 
-    describe('with .env file present', function () {
-        beforeEach(() => {
-            sinon.stub(fs, 'existsSync').returns(true);
-            envConfig.tryLoadDotEnv();
+    describe('tryLoadDotEnv', () => {
+        it('adds a github provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(GithubEnv));
         });
 
-        it('checks if ../../.env exists', () => {
-            expect(fs.existsSync).to.have.been.calledOnce;
+        it('adds the session provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(SessionEnv));
         });
 
-        it('calls dotenv.config', () => {
-            expect(dotenv.config).to.have.been.calledOnce;
-        });
-    });
-
-    describe('without a .env file present', function () {
-        beforeEach(() => {
-            sinon.stub(fs, 'existsSync').returns(false);
-            envConfig.tryLoadDotEnv();
+        it('adds the threat dragon provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(ThreatDragonEnv));
         });
 
-        it('checks if ../../.env exists', () => {
-            expect(fs.existsSync).to.have.been.calledOnce;
-        });
-
-        it('calls dotenv.config', () => {
-            expect(dotenv.config).not.to.have.been.called;
+        it('hydrates the config', () => {
+            expect(mockEnv.hydrate).to.have.been.calledOnce;
         });
     });
 });

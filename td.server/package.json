@@ -6,6 +6,7 @@
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
     "pretest": "npm run lint",
     "test": "nyc mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
+    "test:unit": "nyc mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
     "lint": "eslint src --fix",
