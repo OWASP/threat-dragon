@@ -7,6 +7,7 @@ var expressHelper = require('./helpers/express.helper.js');
 var loggers = require('./config/loggers.config.js');
 var parsers = require('./config/parsers.config.js');
 var passport = require('./config/passport.config.js');
+var routes = require('./config/routes.config.js');
 
 var upDir = '..' + path.sep;
 var siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -43,7 +44,7 @@ function create() {
         parsers.default.config(app);
 
         //routes
-        require('./config/routes.config').config(app);
+        routes.default.config(app);
 
         bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 
