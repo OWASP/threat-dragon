@@ -60,6 +60,8 @@ Environment variables are configured via [dotenv](https://github.com/motdotla/do
 
 To get started, copy [example.env](example.env) to `.env` at the root of the project and update the variables as appropriate. 
 
+**Note**: Do not use the `export` or `set` keywork inside your env file, as this will not work from a docker context.  The `dotenv` package will automatically export the variables for you.
+
 Alternatively, you can also set your environment variables via [command line](#command-line) if you'd prefer.
 
 ___
@@ -108,6 +110,54 @@ in production, install it and edit the
 
 Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes,
 set the `NODE_ENV` environment variable to `development`. 
+___
+
+## File Based Secrets
+If using file based secrets, add `_FILE` to the end of the secret name, and the value should point to the file location.
+This is particularly useful if you are running Threat Dragon in docker, as you can use docker secrets.
+
+An example using docker secrets:
+- Create your secrets, for example: `echo "01234567890123456789" | docker secret create github_client_id -`
+- Create a docker compose file (example below)
+- Deploy to your docker swarm, for example: `docker stack deploy --compose-file docker-compose.yaml owasp-threatdragon`
+
+Example compose file:
+```
+version: '3.1'
+services:
+  threatdragon:
+    image: owasp-threat-dragon:dev
+    ports:
+      - 3000:3000
+    environment:
+      GITHUB_CLIENT_ID_FILE: /run/secrets/github_client_id
+      GITHUB_CLIENT_SECRET_FILE: /run/secrets/github_client_secret
+      NODE_ENV_FILE: /run/secrets/node_env
+      SESSION_STORE_FILE: /run/secrets/session_store
+      SESSION_SIGNING_KEY_FILE: /run/secrets/session_signing_key
+      SESSION_ENCRYPTION_KEYS_FILE: /run/secrets/session_encryption_keys
+    secrets:
+      - github_client_id
+      - github_client_secret
+      - node_env
+      - session_store
+      - session_signing_key
+      - session_encryption_keys
+
+secrets:
+  github_client_id:
+    external: true
+  github_client_secret:
+    external: true
+  node_env:
+    external: true
+  session_store:
+    external: true
+  session_signing_key:
+    external: true
+  session_encryption_keys:
+    external: true
+```
 ___
 
 ## Command Line

@@ -3,8 +3,6 @@ import GithubEnv from '../env/Github.js';
 import SessionEnv from '../env/Session.js';
 import ThreatDragonEnv from '../env/ThreatDragon.js';
 
-// TODO: Test with docker (file based config)
-// TODO: Update docs repo
 const tryLoadDotEnv = () => {
     const github = new GithubEnv();
     const session = new SessionEnv();
