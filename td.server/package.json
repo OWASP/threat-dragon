@@ -24,7 +24,6 @@
     "url": "git://github.com/owasp/threat-dragon.git"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "bunyan": "1.8.14",
     "connect-azuretables": "1.0.20",
     "connect-ensure-login": "0.1.1",
