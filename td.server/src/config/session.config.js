@@ -8,7 +8,7 @@ var env = require('../env/Env.js');
 function configSessions(app) {
 
     var cookieOptions = { maxAge: 3600000 };
-    var logger = require('../config/loggers.config').logger;
+    var logger = require('../config/loggers.config').default.logger;
 
     if (env.default.get().config.NODE_ENV && env.default.get().config.NODE_ENV != 'development') {
         cookieOptions.secure = true;

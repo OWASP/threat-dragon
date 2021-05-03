@@ -4,6 +4,7 @@ var path = require('path');
 
 var env = require('./env/Env.js');
 var expressHelper = require('./helpers/express.helper.js');
+var loggers = require('./config/loggers.config.js');
 
 var upDir = '..' + path.sep;
 var siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -34,7 +35,7 @@ function create() {
         app.use(expressHelper.default.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
 
         //logging
-        require('./config/loggers.config').config(app);
+        loggers.default.configLoggers(app);
 
         //parsers
         require('./config/parsers.config').config(app);

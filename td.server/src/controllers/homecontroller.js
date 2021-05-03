@@ -12,7 +12,7 @@ homeController.index = function (req, res) {
     if(env.default.get().config.NODE_ENV != 'development' && env.default.get().config.NODE_ENV) {
         cookieOptions.secure = true;
     } else {
-        require('../config/loggers.config').logger.error({security: true}, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
+        require('../config/loggers.config').default.logger.error({security: true}, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
     }
     
     res.cookie('XSRF-TOKEN', req.csrfToken(), cookieOptions);
