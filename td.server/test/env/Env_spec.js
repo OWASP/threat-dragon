@@ -250,6 +250,10 @@ describe('env/Env.js', () => {
                 sinon.stub(env._logger, 'fatal');
             });
 
+            afterEach(() => {
+                delete process.env.TEST1;
+            });
+
             it('attempts to read a file based property', () => {
                 try { env._loadConfig(); } catch (e) { }
                 expect(env.tryReadFromFile).to.have.been.calledWith('TEST_TEST1');
@@ -277,6 +281,11 @@ describe('env/Env.js', () => {
 
                 sinon.stub(env._logger, 'debug');
                 config = env._loadConfig();
+            });
+
+            afterEach(() => {
+                delete process.env.TEST_TEST1;
+                delete process.env.TEST_TEST2;
             });
 
             it('logs a debug message', () => {
