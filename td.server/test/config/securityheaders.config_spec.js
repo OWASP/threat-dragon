@@ -11,10 +11,8 @@ describe('config/securityHeaders.config.js', () => {
             if (fn) { fn(); }
         }
     };
-    let hstsSpy;
 
     beforeEach(() => {
-        hstsSpy = sinon.spy();
         sinon.spy(mockApp, 'set');
         sinon.spy(mockApp, 'use');
         sinon.stub(helmet, 'hsts');
