@@ -8,6 +8,7 @@ var loggers = require('./config/loggers.config.js');
 var parsers = require('./config/parsers.config.js');
 var passport = require('./config/passport.config.js');
 var routes = require('./config/routes.config.js');
+var securityHeaders = require('./config/securityheaders.config.js');
 
 var upDir = '..' + path.sep;
 var siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -26,7 +27,7 @@ function create() {
         app.use('/public', express.static(siteDir));
 
         //security headers
-        require('./config/securityheaders.config').config(app);
+        securityHeaders.default.config(app);
 
         //sessions
         require('./config/session.config').config(app);
