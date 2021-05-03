@@ -1,59 +1,65 @@
-'use strict';
+import passport from 'passport';
 
-var passport = require('passport');
-
-var env = require('../env/Env.js');
-var GithubStrategy = require('passport-github').Strategy;
-var passportHelper = require('../helpers/passport.helper.js');
+import env from '../env/Env.js';
+import { Strategy as GithubStrategy } from 'passport-github';
+import passportHelper from '../helpers/passport.helper.js';
 
 /**
- * A fake strategy only used for testing, see comments below
- * @param {object} cfg
+ * A fake strategy only used for testing
  */
-function TestingStrategy(cfg) {
-    this.cfg = cfg;
+class TestingStrategy {
+
+    /**
+     * @constructor
+     * @param {object} cfg
+     */
+    constructor(cfg) {
+        this.cfg = cfg;
+    }
 }
 
 /**
- * Here for testing only.  If someone has a better way, please
- * do so.  I couldn't find a way of mocking a constructor function
- * due to language constraints
- * https://github.com/sinonjs/sinon/issues/1892
+ * Here for testing only: If there's a better way, please open a PR
+ * I couldn't find a reliable way of mocking a constructor function
+ * due to language constraints: https://github.com/sinonjs/sinon/issues/1892
+ * @returns {Class}
  */
-function getStrategy() {
-    return env.default.get().config.IS_TEST === 'true' ? TestingStrategy : GithubStrategy;
-}
+const getStrategy = () => (env.get().config.IS_TEST === 'true' ? TestingStrategy : GithubStrategy);
 
-function passportConfig(app) {
-    
+/**
+ * The passport strategy callback
+ * @param {string} accessToken
+ * @param {string} refreshToken
+ * @param {object} profile
+ * @param {Function} done
+ * @returns {Function}
+ */
+const strategyCallback = (accessToken, refreshToken, profile, done) => done(null, {profile: profile, accessToken: accessToken});
+
+/**
+ * Configures the application to use Passport based on the environment
+ * @param {object} app
+ */
+const config = (app) => {
     app.use(passport.initialize());
     app.use(passport.session());
-    
-    var scope = env.default.get().config.GITHUB_SCOPE || 'public_repo';
 
-    var Strategy = getStrategy();
-    //github sigin
-    passport.use(new Strategy({
-        clientID: env.default.get().config.GITHUB_CLIENT_ID,
-        clientSecret: env.default.get().config.GITHUB_CLIENT_SECRET,
+    const githubScope = env.get().config.GITHUB_SCOPE || 'public_repo';
+
+    const Strategy = getStrategy();
+    const githubConfig = {
+        clientID: env.get().config.GITHUB_CLIENT_ID,
+        clientSecret: env.get().config.GITHUB_CLIENT_SECRET,
         failureRedirect: 'login/github',
-        scope: [ scope ]
-    },
-    function(accessToken, refreshToken, profile, done) {
-        return done(null, {profile: profile, accessToken: accessToken});
-    }));
+        scope: [ githubScope ]
+    };
 
-    //serialisation/deserialisation of users
-    //session contains sensitive info like access tokens so encrypt it before storage
-    
-    //encrypt is async to avoid blocking when generating random iv
-    passport.serializeUser(passportHelper.default.serializeUser);
-    passport.deserializeUser(passportHelper.default.deserializeUser);
-}
-
-var exports = {
-    config: passportConfig,
-    TestingStrategy: TestingStrategy
+    passport.use(new Strategy(githubConfig, strategyCallback));
+    passport.serializeUser(passportHelper.serializeUser);
+    passport.deserializeUser(passportHelper.deserializeUser);
 };
 
-module.exports = exports;
+export default {
+    config,
+    TestingStrategy
+};

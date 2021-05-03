@@ -6,6 +6,7 @@ var env = require('./env/Env.js');
 var expressHelper = require('./helpers/express.helper.js');
 var loggers = require('./config/loggers.config.js');
 var parsers = require('./config/parsers.config.js');
+var passport = require('./config/passport.config.js');
 
 var upDir = '..' + path.sep;
 var siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -30,7 +31,7 @@ function create() {
         require('./config/session.config').config(app);
 
         //passport
-        require('./config/passport.config').config(app);
+        passport.default.config(app);
 
         //favicon
         app.use(expressHelper.default.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
