@@ -114,7 +114,7 @@ ___
 
 ## File Based Secrets
 If using file based secrets, add `_FILE` to the end of the secret name, and the value should point to the file location.
-This is particularly useful if you are running Threat Dragon in docker, as you can use docker secrets.
+This is particularly useful if you are running Threat Dragon in docker context, as you can use docker secrets or orchestrator such as kubernetes.
 
 An example using docker secrets:
 - Create your secrets, for example: `echo "01234567890123456789" | docker secret create github_client_id -`
