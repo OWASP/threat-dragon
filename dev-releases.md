@@ -39,7 +39,7 @@ It is good to keep Mike Goodwin's area up to date with releases from the OWASP a
 1. git push
 1. create pull request from branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
 
-### Webapp release
+### Web app release
 1. create branch `release-ready` in [webapp repo](https://github.com/OWASP/threat-dragon)
 1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
 1. `cd threat-dragon`
@@ -56,6 +56,14 @@ It is good to keep Mike Goodwin's area up to date with releases from the OWASP a
 1. `cd threat-dragon`
 1. `git tag v1.4.0`
 1. `git push origin v1.4.0`
+
+### Publish docker image
+1. `docker build -t owasp-threat-dragon:v1.4.0 .`
+1. `docker tag owasp-threat-dragon:v1.4.0 threatdragon/owasp-threat-dragon:v1.4.0`
+1. `docker images`
+1. `docker login` using docker credentials
+1. `docker push threatdragon/owasp-threat-dragon:v1.4.0`
+1. check using `docker pull threatdragon/owasp-threat-dragon:v1.4.0`
 
 Test the release as in 'Install and run web application' above, ideally on all of Windows, linux and MacOS.
 In general if it works on one platform then it will work on the others, so one platform may be sufficient
