@@ -19,7 +19,7 @@ before_install:
 
 install:
   - npm install
-  - npm run-script build
+  - npm run build
 
 after_success:
-  - npm run-script codecov
+  - npm run codecov

@@ -1,0 +1,53 @@
+include ./navbar
+include ./navs
+include ./buttons
+include ./icons
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport",content="width=device-width, initial-scale=1")
+        meta(name="description",content="")
+        meta(name="author",content="")
+        link(rel="icon",href="./public/favicon.ico")
+        title= title
+        block styles
+            link(rel="stylesheet",href="./public/content/threatdragon.min.css")
+            link(rel="stylesheet",href="./public/content/bootstrap.min.css")
+        nav.navbar.navbar-default
+            .container-fluid
+                .navbar-header
+                    a.navbar-brand(href="/")
+                        |Threat Dragon
+                .navbar-right
+                    a.btn.btn-primary(href="https://threatdragon.github.io/",target="_blank")
+                        span.fa.fa-question-circle.fa-2x(title="Get some help") 
+                    a.btn.btn-primary(href="https://github.com/OWASP/threat-dragon",target="_blank")
+                        span.fa.fa-github.fa-2x(title="Visit us on GitHub")
+                    a.btn.btn-primary(href="https://owasp.org/www-project-threat-dragon/",target="_blank",title="Visit the OWASP project page")
+                        img(src="public/content/images/owasp.svg") 
+    body
+        block body
+            .container
+                .jumbotron
+                    .row
+                        .col-sm-4
+                            img(src="./public/content/images/threatdragon_logo_image.svg")
+                        .col-sm-8
+                            .row
+                                .col-sm-12
+                                    h1 Welcome!
+                                    p
+                                        |Threat Dragon is a free, open-source threat modeling tool from OWASP. 
+                                        |It can be used as a #[a(href="https://threatdragon.github.io/#downloads",target="_blank") standalone desktop app] for Windows, MacOS and Linux 
+                                        |or as a web application. The desktop app is great if you want to try the application without giving it access to your GitHub repos,
+                                        |but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! 
+                                        |Obviously, to do this you need to log in first...
+                            .row
+                                .col-sm-5.col-sm-offset-7
+                                    form(action="login",role="login",method="POST")
+                                        input(type="hidden",name="_csrf",value=csrfToken)
+                                        button.btn.btn-lg.btn-default.btn-block(type="submit")
+                                            span.fa.fa-2x.fa-github.icon-align.fa-fw
+                                            span Login with GitHub                                            

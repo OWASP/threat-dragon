@@ -1,0 +1,8 @@
+.env
+node_modules
+*/node_modules
+coverage
+dist/
+*/dist
+docs/
+.github
