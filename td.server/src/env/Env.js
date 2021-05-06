@@ -3,8 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import logger from '../config/loggers.config.js';
-
-const upDir = `..${path.sep}`;
+import { upDir } from '../helpers/path.helper.js';
 
 export class Env {
 

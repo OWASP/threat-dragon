@@ -1,69 +1,68 @@
-﻿var bunyan = require('bunyan');
-var express = require('express');
-var path = require('path');
+﻿import bunyan from 'bunyan';
+import express from 'express';
+import path from 'path';
 
-var env = require('./env/Env.js');
-var expressHelper = require('./helpers/express.helper.js');
-var loggers = require('./config/loggers.config.js');
-var parsers = require('./config/parsers.config.js');
-var passport = require('./config/passport.config.js');
-var routes = require('./config/routes.config.js');
-var securityHeaders = require('./config/securityheaders.config.js');
-var session = require('./config/session.config.js');
+import env from './env/Env.js';
+import envConfig from './config/env.config';
+import expressHelper from './helpers/express.helper.js';
+import loggers from './config/loggers.config.js';
+import parsers from './config/parsers.config.js';
+import passport from './config/passport.config.js';
+import routes from './config/routes.config.js';
+import securityHeaders from './config/securityheaders.config.js';
+import session from './config/session.config.js';
+import { upDir } from './helpers/path.helper.js';
 
-var upDir = '..' + path.sep;
-var siteDir = path.join(__dirname, upDir, upDir, 'dist');
+const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 
-function create() {
+const create = () => {
     try {
-        var app = expressHelper.default.getInstance();
+        const app = expressHelper.getInstance();
         app.set('trust proxy', true);
         app.set('views', path.join(siteDir, 'views'));
         app.set('view engine', 'pug');
 
         // environment configuration
-        require('./config/env.config').default.tryLoadDotEnv();
+        envConfig.tryLoadDotEnv();
 
         //static content
         app.use('/public', express.static(siteDir));
 
         //security headers
-        securityHeaders.default.config(app);
+        securityHeaders.config(app);
 
         //sessions
-        session.default.config(app);
+        session.config(app);
 
         //passport
-        passport.default.config(app);
+        passport.config(app);
 
         //favicon
-        app.use(expressHelper.default.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
+        app.use(expressHelper.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
 
         //logging
-        loggers.default.configLoggers(app);
+        loggers.configLoggers(app);
 
         //parsers
-        parsers.default.config(app);
+        parsers.config(app);
 
         //routes
-        routes.default.config(app);
+        routes.config(app);
 
         bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 
-        app.set('port', env.default.get().config.PORT || 3000);
+        app.set('port', env.get().config.PORT || 3000);
 
         return app;
     }
     catch (e) {
-        var errorLogger = bunyan.createLogger({ name: 'threatdragon' });
+        const errorLogger = bunyan.createLogger({ name: 'threatdragon' });
         errorLogger.error('owasp threat dragon failed to start up');
         errorLogger.error(e.message);
         throw e;
     }
-}
-
-var appFactory = {
-    create: create
 };
 
-module.exports = appFactory;
+export default {
+    create
+};
