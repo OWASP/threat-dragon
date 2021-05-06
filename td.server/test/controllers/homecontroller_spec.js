@@ -3,12 +3,12 @@ import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
-import loggers from '../../src/config/loggers.config.js';
 
 describe('homecontroller tests', () => {
     const mockRequest = {
         log: {
-            info: () => {}
+            info: () => {},
+            error: () => {}
         },
         csrfToken: () => 'some_token',
         logOut: () => {},
@@ -37,9 +37,15 @@ describe('homecontroller tests', () => {
 
     describe('index', () => {
         beforeEach(() => {
+            const mockEnv = {
+                config: {
+                    NODE_ENV: 'development'
+                }
+            };
+            sinon.stub(env, 'get').returns(mockEnv);
             sinon.spy(mockResponse, 'cookie');
             sinon.spy(mockResponse, 'sendFile');
-            sinon.spy(loggers.logger, 'error');
+            sinon.spy(mockRequest.log, 'error');
             homeController.index(mockRequest, mockResponse);
         });
 
@@ -51,12 +57,12 @@ describe('homecontroller tests', () => {
             expect(mockResponse.cookie).to.have.been.calledWith(
                 'XSRF-TOKEN',
                 mockRequest.csrfToken(),
-                { httpOnly: false }
+                { httpOnly: false, secure: false }
             );
         });
 
         it('should log the insecure csrf cookie', () => {
-            expect(loggers.logger.error).to.have.been.calledWith(
+            expect(mockRequest.log.error).to.have.been.calledWith(
                 { security: true },
                 sinon.match.string
             );

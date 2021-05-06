@@ -1,49 +1,87 @@
-'use strict';
+import connectEnsureLoggedIn from 'connect-ensure-login';
+import path from 'path';
 
-var path = require('path');
+import env from '../env/Env.js';
+import { upDir } from '../helpers/path.helper.js';
 
-var env = require('../env/Env.js');
-var homeController = {};
+/**
+ * The path to the index.html file
+ * @type {String}
+ */
+const indexHtmlPath = path.join(__dirname, upDir, upDir, upDir, 'dist', 'index.html');
 
-homeController.index = function (req, res) {
+/**
+ * Serves the index.html page for the SPA
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object}
+ */
+const index = (req, res) => {
     //angular ajax request need xsrf token as a script accessible cookie
-    var cookieOptions = { httpOnly: false };
-    
-    if(env.default.get().config.NODE_ENV != 'development' && env.default.get().config.NODE_ENV) {
-        cookieOptions.secure = true;
-    } else {
-        require('../config/loggers.config').default.logger.error({security: true}, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
+    const cookieOptions = {
+        httpOnly: false,
+        secure: env.get().config.NODE_ENV !== 'development'
+    };
+
+    if (!cookieOptions.secure) {
+        req.log.error({ security: true }, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
     }
-    
+
     res.cookie('XSRF-TOKEN', req.csrfToken(), cookieOptions);
-    var upDir = '..' + path.sep;
-    res.sendFile(path.join(__dirname, upDir, upDir, upDir, 'dist', 'index.html'));
+    res.sendFile(indexHtmlPath);
 };
 
-homeController.login = function (req, res) {
-    res.render('login', { csrfToken: req.csrfToken() });
-};
+/**
+ * Renders the login view
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object}
+ */
+const login = (req, res) => res.render('login', { csrfToken: req.csrfToken() });
 
-//ensure current user is signed in
-homeController.ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
+/**
+ * Ensures the current user is logged in
+ */
+const ensureLoggedIn = connectEnsureLoggedIn.ensureLoggedIn('/login');
 
-//angular template - dynamic for username and anti-csrf token
-homeController.logoutform = function (req, res) {
-    res.render('logoutform', { csrfToken: req.csrfToken(), username: req.user.profile.username });
-};
+/**
+ * Gets the angular view for the logout form
+ * Dynamic for username and anti-csrf token
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object}
+ */
+const logoutform = (req, res) => res.render('logoutform', {
+        csrfToken: req.csrfToken(),
+        username: req.user.profile.username
+    });
 
-//logout
-homeController.logout = function(req, res) {
-    var username = req.user.profile.username;
-    var idp = req.user.profile.provider;
+/**
+ * Logs the user out
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object}
+ */
+const logout = (req, res) => {
+    const userName = req.user.profile.username;
+    const idp = req.user.profile.provider;
+
     req.logOut();
-    //logout does not seem to do much/anything so do it by hand
+
+    // Ensure cookies are cleared
     res.clearCookie('connect.sid');
     res.clearCookie('XSRF-TOKEN');
-    req.session.destroy(function() {
-        req.log.info({security: true, userName: username, idp:idp}, 'logged out');
-        res.redirect('/'); 
-    });
-}; 
 
-module.exports = homeController;
+    return req.session.destroy(() => {
+        req.log.info({ security: true, userName, idp }, 'logged out');
+        return res.redirect('/');
+    });
+};
+
+export default {
+    ensureLoggedIn,
+    index,
+    login,
+    logout,
+    logoutform
+};
