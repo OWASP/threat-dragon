@@ -1,0 +1,133 @@
+{
+  "summary": {
+    "title": "Test1",
+    "description": "test1 description"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "Test1DFD",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0,
+        "$$hashKey": "object:14",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 361,
+                "y": 104
+              },
+              "angle": 0,
+              "id": "d6803902-2c81-4d0d-bba5-6c719a92bb4a",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "process 0"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 612,
+                "y": 114
+              },
+              "angle": 0,
+              "id": "2bf80de5-767f-40b1-8c4a-bf0d20a51819",
+              "z": 2,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Generic spoofing threat",
+                  "type": "Spoofing",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "[MHC-1440] A generic spoofing threat",
+                  "mitigation": "step 1\nstep2\nsteps",
+                  "$$hashKey": "object:59"
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "Generic repudiation threat",
+                  "type": "Repudiation",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "[MHC-1441] A generic repudiation threat",
+                  "mitigation": "mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations mitigations",
+                  "$$hashKey": "object:68"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "actor 1"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "d6803902-2c81-4d0d-bba5-6c719a92bb4a"
+              },
+              "target": {
+                "id": "2bf80de5-767f-40b1-8c4a-bf0d20a51819"
+              },
+              "vertices": [],
+              "id": "89d03c04-c728-45be-9187-5d69c4caa034",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "flow 2",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 3,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 835
+        }
+      }
+    ]
+  }
+}
