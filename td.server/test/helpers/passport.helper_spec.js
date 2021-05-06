@@ -3,6 +3,7 @@ import sinon from 'sinon';
 
 import encryptionHelper from '../../src/helpers/encryption.helper.js';
 import passportHelper from '../../src/helpers/passport.helper.js';
+import { logger } from '../../src/config/loggers.config.js';
 
 describe('passport helper', () => {
     const user = {
@@ -18,7 +19,7 @@ describe('passport helper', () => {
     let doneFn;
 
     beforeEach(() => {
-        doneFn = sinon.spy();
+        doneFn = sinon.stub();
     });
 
     afterEach(() => {
@@ -35,14 +36,32 @@ describe('passport helper', () => {
             }
         };
 
-        beforeEach(() => {
-            const encryptMock = (text, cb) => cb(text);
-            sinon.stub(encryptionHelper, 'encrypt').callsFake(encryptMock);
-            passportHelper.serializeUser(user, doneFn);
+        describe('without error', () => {
+            beforeEach(async () => {
+                sinon.stub(encryptionHelper, 'encryptPromise').resolves(storedUserExpected);
+                await passportHelper.serializeUser(user, doneFn);
+            });
+    
+            it('returns the encrypted user', () => {
+                expect(doneFn).to.have.been.calledWith(null, storedUserExpected);
+            });
         });
 
-        it('returns the encrypted the user', () => {
-            expect(doneFn).to.have.been.calledWith(null, JSON.stringify(storedUserExpected));
+        describe('with error', () => {
+            const err = 'whoops';
+            beforeEach(async () => {
+                sinon.stub(encryptionHelper, 'encryptPromise').rejects(err);
+                sinon.stub(logger, 'error');
+                await passportHelper.serializeUser(user, doneFn);
+            });
+
+            it('provides done with an error', () => {
+                expect(doneFn).to.have.been.calledWith(sinon.match.any);
+            });
+
+            it('logs the error', () => {
+                expect(logger.error).to.have.been.calledOnce;
+            });
         });
     });
 

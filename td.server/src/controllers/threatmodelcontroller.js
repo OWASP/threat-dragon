@@ -1,160 +1,161 @@
-'use strict';
-var repository = require('../repositories/threatmodelrepository');
-var threatmodelcontroller = {};
+import repository from '../repositories/threatmodelrepository.js';
+import { serverError } from './errors.js';
 
-threatmodelcontroller.repos = function (req, res) {
-    
-    var page = req.query.page || 1;
-    repository.repos(page, req.user.accessToken, function (err, repos, headers) {
-        if (!err) {
-            var responseRepos = [];
-            repos.forEach(function (repo, index) {
-                responseRepos[index] = repo.full_name;
-            });
-            res.send({repos: responseRepos, pagination: getPagination(headers, page)});
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }
-    });
+const repos = async (req, res) => {
+    const page = req.query.page || 1;
+    try {
+        const reposResp = await repository.reposAsync(page, req.user.accessToken);
+        const repos = reposResp[0];
+        const headers = reposResp[1];
+        const repoNames = repos.map((x) => x.full_name);
+        return res.status(200).json({
+            repos: repoNames,
+            pagination: getPagination(headers, page)
+        });
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error fetching repositories', res);
+    }
 };
 
-threatmodelcontroller.branches = function (req, res){
-    
-    var repoInfo = {
+const branches = async (req, res) => {
+    const repoInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         page: req.query.page || 1
     };
-    
-    repository.branches(repoInfo, req.user.accessToken, function(err, branches, headers) {
-        if(!err) {
-            var responseBranches = [];
-            branches.forEach(function (branch, index) {
-                responseBranches[index] = branch.name;
-            });
-            res.send({branches: responseBranches, pagination: getPagination(headers, repoInfo.page)});
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }     
-    }); 
+
+    try {
+        const branchesResp = await repository.branchesAsync(repoInfo, req.user.accessToken);
+        const branches = branchesResp[0],
+            headers = branchesResp[1];
+        const branchNames = branches.map((x) => x.name);
+
+        return res.status(200).json({
+            branches: branchNames,
+            pagination: getPagination(headers, repoInfo.page)
+        });
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error fetching branches', res);
+    }
 };
 
-threatmodelcontroller.models = function (req, res){
-    
-    var branchInfo = {
+const models = async (req, res) => {
+    const branchInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch
     };
-    
-    repository.models(branchInfo, req.user.accessToken, function(err, models) {
-        if(!err) {
-            var responseModels = [];
-            models.forEach(function (model, index) {
-                responseModels[index] = model.name;
-            });
-            res.send(responseModels);
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }     
-    }); 
+
+    try {
+        const modelsResp = await repository.modelsAsync(branchInfo, req.user.accessToken);
+        const modelNames = modelsResp[0].map((x) => x.name);
+
+        return res.status(200).json(modelNames);
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error fetching models', res);
+    }
 };
- 
-threatmodelcontroller.model = function (req, res) {
-    var modelInfo = {
+
+const model = async (req, res) => {
+    const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model
     };
 
-    repository.model(modelInfo, req.user.accessToken, function (err, data) {
-        if (!err) {
-            var model= (new Buffer(data.content, 'base64')).toString();
-            res.send(model);
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }
-    });
+    try {
+        const modelResp = await repository.modelAsync(modelInfo, req.user.accessToken);
+        return res.status(200).send(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error fetching model', res);
+    }
 };
 
-threatmodelcontroller.create = function(req, res) {
-    var modelInfo = {
+const create = async (req, res) => {
+    const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model,
         body: req.body        
     };
-    
-    repository.create(modelInfo, req.user.accessToken, function (err, data) {
-        if (!err) {
-            res.send(data);
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }        
-    }); 
+
+    try {
+        const modelResp = await repository.createAsync(modelInfo, req.user.accessToken);
+        return res.status(201).send(modelResp);
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error creating model', res);
+    }
 };
 
-threatmodelcontroller.update = function(req, res) {
-    var modelInfo = {
+const update = async (req, res) => {
+    const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model,
         body: req.body        
     };
-    
-    repository.update(modelInfo, req.user.accessToken, function (err, data) {
-        if (!err) {
-            res.send(data);
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }        
-    }); 
+
+    try {
+        const modelResp = await repository.updateAsync(modelInfo, req.user.accessToken);
+        return res.send(modelResp);
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error updating model', res);
+    }
 };
 
-threatmodelcontroller.deleteModel = function(req, res) {
-    var modelInfo = {
+const deleteModel = async (req, res) => {
+    const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model,      
     };
-    
-    repository.deleteModel(modelInfo, req.user.accessToken, function (err, data) {
-        if (!err) {
-            res.send(data);
-        } else {
-            res.status(err.statusCode || 500).json(err);
-        }        
-    }); 
+
+    try {
+        const delResp = await repository.deleteAsync(modelInfo, req.user.accessToken);
+        return res.send(delResp);
+    } catch (err) {
+        req.log.error({ security: false, userName: req.user.profile.username }, err);
+        return serverError('Error deleting model', res);
+    }
 };
 
-//private methods
-function getPagination(headers, page) {
-    
-    var pagination = { page: page, next: false, prev: false };
-    var linkHeader = headers.link;
-    
-    if(linkHeader) {
-        
-        linkHeader.split(',').forEach(function(link) {
-           if (isLinkType('"next"')) {
-               pagination.next = true;
-           }
-           
-           if (isLinkType('"prev"')) {
-               pagination.prev = true;
-           }
-           
-           function isLinkType(type) {
-               return link.split(';')[1].split('=')[1] === type;
-           }
+const getPagination = (headers, page) => {
+    const pagination = { page: page, next: false, prev: false };
+    const linkHeader = headers.link;
+
+    if (linkHeader) {
+        linkHeader.split(',').forEach((link) => {
+            const isLinkType = (type) => link.split(';')[1].split('=')[1] === type;
+
+            if (isLinkType('"next"')) {
+                pagination.next = true;
+            }
+            
+            if (isLinkType('"prev"')) {
+                pagination.prev = true;
+            }
         });
     }
     
     return pagination;  
-}
- 
-module.exports = threatmodelcontroller;
+};
+
+export default {
+    branches,
+    create,
+    deleteModel,
+    model,
+    models,
+    repos,
+    update
+};

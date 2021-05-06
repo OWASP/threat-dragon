@@ -1,79 +1,113 @@
-'use strict';
+import crypto from 'crypto';
 
-var crypto = require('crypto');
+import cryptoPromise from './crypto.promise.js';
+import env from '../env/Env.js';
+import { logger } from '../config/loggers.config.js';
 
-var env = require('../env/Env.js');
+const inputEncoding = 'ascii';
+const outputEncoding = 'base64';
+const keyEncoding = 'ascii';
+const algorithm = 'aes256';
 
-var inputEncoding = 'ascii';
-var outputEncoding = 'base64';
-var keyEncoding = 'ascii';
-var algorithm = 'aes256';
-
-function generateIV(cb) {
-    crypto.randomBytes(16, function(err, iv) {
-        cb(iv);
-    });
-}
-
-//primary key is used for encryption
-function getPrimaryKey() {
-    var keys = JSON.parse(env.default.get().config.SESSION_ENCRYPTION_KEYS);
-    var primaryKey = keys.find(function(key) { return key.isPrimary; });
+/**
+ * Gets the primary key used for encryption
+ * @returns {Object}
+ */
+const getPrimaryKey = () => {
+    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const primaryKey = keys.find((key) => key.isPrimary);
 
     if (!primaryKey) {
-        var message = 'missing primary session encryption key';
-        require('../config/loggers.config').default.logger.fatal(message);
+        const message = 'missing primary session encryption key';
+        logger.fatal(message);
         throw new Error(message);
     }
     
-    return {id: primaryKey.id, value: new Buffer(primaryKey.value, keyEncoding)};
-}
-
-//other keys can be used for decryption to support key expiry
-function getKeyById(id) {
-    var keys = JSON.parse(env.default.get().config.SESSION_ENCRYPTION_KEYS);
-    var key = keys.find(function(key) { return key.id == id; });
-
-    if (!key) {
-        var message = 'missing session encryption key id:  ' + id;
-        require('../config/loggers.config').default.logger.error(message);
-        throw new Error(message);
-    }
-    
-    return {id: key.id, value: new Buffer(key.value, keyEncoding)};       
-}
-
-function encryptData(plainText, key, iv) {
-    var encryptor = crypto.createCipheriv(algorithm, key.value, iv);
-    var cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
-    cipherText += encryptor.final(outputEncoding);
-    var encryptedData = {keyId: key.id, iv: iv.toString(keyEncoding), data: cipherText};
-    return encryptedData;
-}
-
-function decryptData(cipherText, key, iv) {
-    var decryptor = crypto.createDecipheriv(algorithm, key.value, iv);
-    var plainText = decryptor.update(cipherText, outputEncoding, inputEncoding);
-    plainText += decryptor.final(inputEncoding);
-    return plainText;
-}
-
-function encrypt(plainText, cb) {
-    var key = getPrimaryKey();
-    generateIV(function(iv) {
-        cb(encryptData(plainText, key, iv));
-    });
-}
-
-function decrypt(encryptedData) {
-    var iv = new Buffer(encryptedData.iv, keyEncoding);
-    var key = getKeyById(encryptedData.keyId);
-    return decryptData(encryptedData.data, key, iv);  
-}
-
-var helper = {
-    encrypt: encrypt,
-    decrypt: decrypt
+    return {
+        id: primaryKey.id,
+        value: Buffer.from(primaryKey.value, keyEncoding)
+    };
 };
 
-module.exports = helper;
+/**
+ * Gets a key by its id
+ * Other keys can be used for decryption to support key expiry
+ * @param {String} id
+ * @returns {Object}
+ */
+const getKeyById = (id) => {
+    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const key = keys.find((key) => key.id === id);
+
+    if (!key) {
+        const message = `Missing session encryption key id: ${id}`;
+        logger.error(message);
+        throw new Error(message);
+    }
+    
+    return {
+        id: key.id,
+        value: Buffer.from(key.value, keyEncoding)
+    };       
+};
+
+/**
+ * Encrypts plaintext data using the given key and initialization vector
+ * @param {String} plainText
+ * @param {Object} key
+ * @param {String} iv
+ * @returns {Object}
+ */
+const encryptData = (plainText, key, iv) => {
+    const encryptor = crypto.createCipheriv(algorithm, key.value, iv);
+    let cipherText = encryptor.update(plainText, inputEncoding, outputEncoding);
+    cipherText += encryptor.final(outputEncoding);
+    return {
+        keyId: key.id,
+        iv: iv.toString(keyEncoding),
+        data: cipherText
+    };
+};
+
+/**
+ * Decrypts a ciphertext using the given key and initialization vector
+ * @param {String} cipherText
+ * @param {Object} key
+ * @param {String} iv
+ * @returns {String}
+ */
+const decryptData = (cipherText, key, iv) => {
+    const decryptor = crypto.createDecipheriv(algorithm, key.value, iv);
+    const plainText = decryptor.update(cipherText, outputEncoding, inputEncoding);
+    return `${plainText}${decryptor.final(inputEncoding)}`;
+};
+
+/**
+ * Encrypts a plaintext to a ciphertext
+ * This uses the configured encryption keys
+ * See setup-env.md for more information
+ * @param {String} plainText
+ * @returns {Promise<Object>}
+ */
+const encryptPromise = (plainText) => {
+    const key = getPrimaryKey();
+    return cryptoPromise.randomBytes(16).
+        then((iv) => encryptData(plainText, key, iv));
+};
+
+/**
+ * Decrypts a ciphertext using the configured encryption keys
+ * See setup-env.md for more information
+ * @param {Object} encryptedData
+ * @returns {String}
+ */
+const decrypt = (encryptedData) => {
+    var iv = Buffer.from(encryptedData.iv, keyEncoding);
+    const key = getKeyById(encryptedData.keyId);
+    return decryptData(encryptedData.data, key, iv);  
+};
+
+export default {
+    decrypt,
+    encryptPromise
+};

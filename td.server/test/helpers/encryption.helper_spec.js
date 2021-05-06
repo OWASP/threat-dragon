@@ -2,15 +2,15 @@ import crypto, { createDecipheriv } from 'crypto';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import cryptoPromise from '../../src/helpers/crypto.promise.js';
 import encryptionHelper from '../../src/helpers/encryption.helper.js';
 import env from '../../src/env/Env.js';
-import loggers from '../../src/config/loggers.config.js';
+import { logger } from '../../src/config/loggers.config.js';
 
 describe('encryption helper tests', () => {
     const plainText = 'test plain text';
     const encryptedText = 'encrypted';
     const randomIv = 'test random iv';
-    const mockRandomBytes = (bytes, cb) => cb(null, randomIv);
     const sessionEncryptionKeys = 
     [
         {
@@ -38,7 +38,7 @@ describe('encryption helper tests', () => {
     beforeEach(() => {
         sinon.stub(crypto, 'createDecipheriv').returns(mockDecryptor);
         sinon.stub(crypto, 'createCipheriv').returns(mockCreateCipheriv);
-        sinon.stub(crypto, 'randomBytes').callsFake(mockRandomBytes);
+        sinon.stub(cryptoPromise, 'randomBytes').resolves(randomIv);
     });
         
     afterEach(() => {
@@ -63,19 +63,9 @@ describe('encryption helper tests', () => {
         });
     
         it('should log an invalid primary key error and throw', () => {
-            process.env.SESSION_ENCRYPTION_KEYS = JSON.stringify(
-                [
-                    {
-                        isPrimary: false,
-                        id: 1,
-                        value: 'testkey1'
-                    }
-                ]
-            );
-            const cb = sinon.spy();
-            sinon.spy(loggers.logger, 'fatal');
-            expect(() => encryptionHelper.encrypt('test plain text', cb)).to.throw();
-            expect(loggers.logger.fatal).to.have.been.called;
+            sinon.spy(logger, 'fatal');
+            expect(() => encryptionHelper.encryptPromise('test plain text')).to.throw();
+            expect(logger.fatal).to.have.been.called;
         });
     });
 
@@ -95,9 +85,9 @@ describe('encryption helper tests', () => {
                 iv: 'test iv',
                 data: 'test cipher text'
             };
-            sinon.spy(loggers.logger, 'error');
+            sinon.spy(logger, 'error');
             expect(() => encryptionHelper.decrypt(encryptedData)).to.throw();
-            expect(loggers.logger.error).to.have.been.called;
+            expect(logger.error).to.have.been.called;
         });
         
         it('should decrypt with the specified key and iv', () => {
@@ -130,14 +120,13 @@ describe('encryption helper tests', () => {
             expect(encryptionHelper.decrypt(encryptedData)).to.eq(plainText);
         });
         
-        it('should encrypt with the primary key and a random iv', () => {
+        it('should encrypt with the primary key with a random iv', async () => {
             const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
 
-            const callback = sinon.spy();
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns('');
             
-            encryptionHelper.encrypt(plainText, callback);
+            await encryptionHelper.encryptPromise(plainText);
             expect(crypto.createCipheriv).to.have.been.calledWith(
                 'aes256',
                 Buffer.from(encryptionKey.value, 'ascii'),
@@ -145,13 +134,11 @@ describe('encryption helper tests', () => {
             );
         });
         
-        it('should attach the key id and IV to the encrypted data', () => {
-            const callback = sinon.spy();
+        it('should attach the key id and IV to the encrypted data', async () => {
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns('');
 
-            encryptionHelper.encrypt(plainText, callback);
-            expect(callback).to.have.been.called;
+            await encryptionHelper.encryptPromise(plainText);
             expect(mockCreateCipheriv.update).to.have.been.calledWith(
                 plainText,
                 'ascii',
@@ -159,18 +146,17 @@ describe('encryption helper tests', () => {
             );
         });
         
-        it('should encrypt the data', () => {
+        it('should encrypt the data', async () => {
             const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
-            const callback = sinon.spy();
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns(encryptedText);
 
-            encryptionHelper.encrypt(plainText, callback);
-            expect(callback).to.have.been.calledWith(sinon.match({ 
+            const res = await encryptionHelper.encryptPromise(plainText);
+            expect(res).to.deep.equal({ 
                 keyId: encryptionKey.id,
                 iv: randomIv,
                 data: encryptedText
-            }));
+            });
         });
     });
 });
