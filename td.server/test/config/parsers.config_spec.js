@@ -2,12 +2,14 @@ import { expect } from 'chai';
 import express from 'express';
 import request from 'supertest';
 
+import parsers from '../../src/config/parsers.config.js';
+
 describe('request parser tests', () => {
     let app;
     
     beforeEach(() => {
         app = express();
-        require('../../src/config/parsers.config').config(app);
+        parsers.config(app);
     });
     
     it('should parse the json in the request body', (done) => {
@@ -38,15 +40,15 @@ describe('request parser tests', () => {
         const body = {id: id, collection: collection, nested: nested};
         
         app.post('/', function(req, res) {
-            expect(req.body["collection[0]"]).to.eq(collection[0]);
-            expect(req.body["collection[1]"]).to.eq(collection[1]);
-            expect(req.body["collection[2]"]).to.eq(collection[2]);
-            expect(req.body["nested[n1]"]).to.eq(nested.n1);
-            expect(req.body["nested[n2]"]).to.eq(nested.n2);
+            expect(req.body.collection[0]).to.eq(collection[0]);
+            expect(req.body.collection[1]).to.eq(collection[1]);
+            expect(req.body.collection[2]).to.eq(collection[2]);
+            expect(req.body.nested.n1).to.eq(nested.n1);
+            expect(req.body.nested.n2).to.eq(nested.n2);
             res.status(200);
             res.send('result');
         });
-        
+
         request(app)
             .post('/')
             .type('form')

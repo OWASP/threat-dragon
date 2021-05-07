@@ -1,8 +1,8 @@
-import crypto from 'crypto';
 import { expect } from 'chai';
 import passport from 'passport';
 import sinon from 'sinon';
 
+import cryptoPromise from '../../src/helpers/crypto.promise.js';
 import githubLoginController from '../../src/controllers/githublogincontroller.js';
 
 describe('githublogincontroller tests', () => {
@@ -10,7 +10,8 @@ describe('githublogincontroller tests', () => {
     const mockResponse = {
         status: () => {},
         send: () => {},
-        redirect: () => {}
+        redirect: () => {},
+        json: () => {}
     };
 
     beforeEach(() => {
@@ -29,6 +30,7 @@ describe('githublogincontroller tests', () => {
             }
         };
         next = sinon.spy();
+        sinon.stub(mockResponse, 'status').returns(mockResponse);
     });
     
     afterEach(() => {
@@ -38,11 +40,11 @@ describe('githublogincontroller tests', () => {
     describe('doLogin', () => {
         describe('without oauth state', () => {
             const buff = Buffer.from('asdfasdf');
-            beforeEach(() => {
-                const randomBytes = (num, cb) => cb(null, buff);
-                sinon.stub(crypto, 'randomBytes').callsFake(randomBytes);
+
+            beforeEach(async () => {
+                sinon.stub(cryptoPromise, 'randomBytes').resolves(buff);
                 sinon.spy(passport, 'authenticate');
-                githubLoginController.doLogin(mockRequest, mockResponse, next);
+                await githubLoginController.doLogin(mockRequest, mockResponse, next);
             });
 
             it('should set the github oauth state', () => {
@@ -59,10 +61,11 @@ describe('githublogincontroller tests', () => {
 
         describe('with oauth state', () => {
             const oauthState = 'test value';
-            beforeEach(() => {
+
+            beforeEach(async () => {
                 mockRequest.session.githubOauthState = oauthState;
                 sinon.spy(passport, 'authenticate');
-                githubLoginController.doLogin(mockRequest, mockResponse, next);
+                await githubLoginController.doLogin(mockRequest, mockResponse, next);
             });
 
             it('should not set the oauth state', () => {
@@ -85,7 +88,6 @@ describe('githublogincontroller tests', () => {
         describe('with error', () => {
             beforeEach(() => {
                 sinon.spy(mockRequest.log, 'error');
-                sinon.stub(mockResponse, 'status').returns(mockResponse);
                 sinon.spy(mockResponse, 'send');
             });
 

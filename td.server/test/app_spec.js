@@ -36,7 +36,7 @@ describe('app tests', () => {
         sinon.stub(sessionConfig, 'config');
         sinon.stub(expressHelper, 'getFaviconMiddleware');
         sinon.stub(passportConfig, 'config');
-        sinon.stub(loggersConfig, 'config');
+        sinon.stub(loggersConfig, 'configLoggers');
         sinon.stub(parsersConfig, 'config');
         sinon.stub(routesConfig, 'config');
     });
@@ -89,7 +89,7 @@ describe('app tests', () => {
         });
 
         it('uses the loggers config', () => {
-            expect(loggersConfig.config).to.have.been.calledOnce;
+            expect(loggersConfig.configLoggers).to.have.been.calledOnce;
         });
 
         it('uses the parsers config', () => {

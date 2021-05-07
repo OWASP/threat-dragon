@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "private": false,
   "scripts": {
     "start": "npm-run-all build start:server",
@@ -19,7 +19,7 @@
     "build:server": "cd td.server && npm run build",
     "codecov": "./node_modules/.bin/codecov"
   },
-  "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
+  "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
     "name": "mike.goodwin",
     "email": "mike.goodwin@owasp.org"

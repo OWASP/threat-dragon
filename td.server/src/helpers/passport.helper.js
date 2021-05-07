@@ -1,4 +1,5 @@
 import encryptionHelper from './encryption.helper.js';
+import { logger } from '../config/loggers.config.js';
 
 const serializeUser = (user, done) => {
     const userToStore = {
@@ -10,9 +11,12 @@ const serializeUser = (user, done) => {
         }
     };
     
-    encryptionHelper.encrypt(JSON.stringify(userToStore), (cipherText) => {
-        done(null, cipherText);
-    });
+    return encryptionHelper.encryptPromise(JSON.stringify(userToStore)).
+        then((cipherText) => done(null, cipherText)).
+        catch((e) => {
+            logger.error({ security: true }, e);
+            done(e);
+        });
 };
 
 const deserializeUser = (obj, done) => {

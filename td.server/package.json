@@ -1,6 +1,6 @@
 {
   "name": "owasp-threat-dragon-server",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "private": false,
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
@@ -12,7 +12,7 @@
     "lint": "eslint src --fix",
     "build": "npm-run-all clean transpile"
   },
-  "description": "OWASP Threat Dragon - a free, open source threat modelling tool",
+  "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
     "name": "mike.goodwin",
     "email": "mike.goodwin@owasp.org"
@@ -24,7 +24,7 @@
     "url": "git://github.com/owasp/threat-dragon.git"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "@babel/runtime": "^7.14.0",
     "bunyan": "1.8.14",
     "connect-azuretables": "1.0.20",
     "connect-ensure-login": "0.1.1",
@@ -35,7 +35,7 @@
     "express-bunyan-logger": "^1.3.3",
     "express-session": "^1.16.2",
     "helmet": "^3.18.0",
-    "octonode": "0.9.5",
+    "octonode": "^0.10.2",
     "passport": "0.4.1",
     "passport-github": "1.1.0",
     "pug": "^3.0.2",
@@ -44,9 +44,11 @@
   "devDependencies": {
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.13.16",
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
     "@babel/register": "^7.13.16",
     "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "codecov": "^3.6.5",
     "eslint": "^7.25.0",
     "mocha": "^8.3.2",

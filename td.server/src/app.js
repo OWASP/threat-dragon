@@ -1,63 +1,68 @@
-﻿var bunyan = require('bunyan');
-var express = require('express');
-var path = require('path');
+﻿import bunyan from 'bunyan';
+import express from 'express';
+import path from 'path';
 
-var env = require('./env/Env.js');
-var expressHelper = require('./helpers/express.helper.js');
+import env from './env/Env.js';
+import envConfig from './config/env.config';
+import expressHelper from './helpers/express.helper.js';
+import loggers from './config/loggers.config.js';
+import parsers from './config/parsers.config.js';
+import passport from './config/passport.config.js';
+import routes from './config/routes.config.js';
+import securityHeaders from './config/securityheaders.config.js';
+import session from './config/session.config.js';
+import { upDir } from './helpers/path.helper.js';
 
-var upDir = '..' + path.sep;
-var siteDir = path.join(__dirname, upDir, upDir, 'dist');
+const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 
-function create() {
+const create = () => {
     try {
-        var app = expressHelper.default.getInstance();
+        const app = expressHelper.getInstance();
         app.set('trust proxy', true);
         app.set('views', path.join(siteDir, 'views'));
         app.set('view engine', 'pug');
 
         // environment configuration
-        require('./config/env.config').default.tryLoadDotEnv();
+        envConfig.tryLoadDotEnv();
 
         //static content
         app.use('/public', express.static(siteDir));
 
         //security headers
-        require('./config/securityheaders.config').config(app);
+        securityHeaders.config(app);
 
         //sessions
-        require('./config/session.config').config(app);
+        session.config(app);
 
         //passport
-        require('./config/passport.config').config(app);
+        passport.config(app);
 
         //favicon
-        app.use(expressHelper.default.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
+        app.use(expressHelper.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
 
         //logging
-        require('./config/loggers.config').config(app);
+        loggers.configLoggers(app);
 
         //parsers
-        require('./config/parsers.config').config(app);
+        parsers.config(app);
 
         //routes
-        require('./config/routes.config').config(app);
+        routes.config(app);
 
         bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
 
-        app.set('port', env.default.get().config.PORT || 3000);
+        app.set('port', env.get().config.PORT || 3000);
 
         return app;
     }
     catch (e) {
-        var errorLogger = bunyan.createLogger({ name: 'threatdragon' });
+        const errorLogger = bunyan.createLogger({ name: 'threatdragon' });
         errorLogger.error('owasp threat dragon failed to start up');
         errorLogger.error(e.message);
         throw e;
     }
-}
-
-var appFactory = {
-    create: create
 };
 
-module.exports = appFactory;
+export default {
+    create
+};

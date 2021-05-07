@@ -5,254 +5,195 @@ import sinon from 'sinon';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
 describe('threatmodel repository tests', () => {
+    const info = {
+        body: {
+            content: 'test content',
+            id: 1
+        },
+        branch: 'testBranch',
+        organisation: 'test org',
+        page: 'testPage',
+        repo: 'test repo'
+    };
+    const content = [{
+        sha: 'asdf'
+    }];
     const accessToken = 'access token';
-    const testPage = 'testPage'
-
-    let mockCb;
-
+    const repoFullName = `${info.organisation}/${info.repo}`;
+    const modelContent = JSON.stringify(info.body, null, '  ');
+    const modelPath = `ThreatDragonModels/${info.model}/${info.model}.json`;
+    
     const mockClient = {
         me: () => {},
+        reposAsync: () => {},
         repo: () => {}
+    };
+    
+    const mockRepo = {
+        branchesAsync: () => {},
+        contentsAsync: () => {},
+        createContentsAsync: () => {},
+        deleteContentsAsync: () => {},
+        updateContentsAsync: () => {}
     };
 
     beforeEach(() => {
-        mockCb = sinon.spy();
+        sinon.stub(github, 'client').returns(mockClient);
+        sinon.stub(mockClient, 'repo').returns(mockRepo);
+        sinon.stub(mockRepo, 'contentsAsync').resolves(content);
     });
 
     afterEach(() => {
         sinon.restore();
     });
 
-    it('should fetch the logged in users repos', () => {
-        const mockMe = { repos: () => {} };
-        sinon.stub(mockClient, 'me').returns(mockMe);
-        sinon.stub(github, 'client').returns(mockClient);
-        sinon.spy(mockMe, 'repos');
-        threatModelRepository.repos(testPage, accessToken, mockCb);
+    describe('reposAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockClient, 'me').returns(mockClient);
+            sinon.spy(mockClient, 'reposAsync');
+            await threatModelRepository.reposAsync(info.page, accessToken);
+        });
 
-        expect(github.client).to.have.been.calledWith(accessToken);
-        expect(mockMe.repos).to.have.been.calledWith(testPage, mockCb);
+        it('creates the github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
+
+        it('calls me', () => {
+            expect(mockClient.me).to.have.been.calledOnce;
+        });
+
+        it('calls reposAsync', () => {
+            expect(mockClient.reposAsync).to.have.been.calledWith(info.page);
+        });
     });
     
-    it('should fetch the branches for the specified repo', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            page: testPage
-        };
+    describe('branchesAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockRepo, 'branchesAsync').resolves();
+            await threatModelRepository.branchesAsync(info, accessToken);
+        });
 
-        const mockRepo = { branches: () => {} };
-        sinon.stub(mockClient, 'repo').returns(mockRepo);
-        sinon.stub(github, 'client').returns(mockClient);
-        sinon.spy(mockRepo, 'branches');
+        it('creates the client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
 
-        threatModelRepository.branches(info, accessToken, mockCb);
-        
-        expect(github.client).to.have.been.calledWith(accessToken);
-        expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-        expect(mockRepo.branches).to.have.been.calledWith(info.page, mockCb);
+        it('gets the repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(repoFullName);
+        });
+
+        it('gets the branches for the repo', () => {
+            expect(mockRepo.branchesAsync).to.have.been.calledWith(info.page);
+        });
+    });
+
+    describe('modelsAsync', () => {
+        beforeEach(async () => {
+            await threatModelRepository.modelsAsync(info, accessToken);
+        });
+
+        it('should create the github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
+
+        it('should get the repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(repoFullName);
+        });
+
+        it('should get the contents', () => {
+            expect(mockRepo.contentsAsync).to.have.been
+                .calledWith('ThreatDragonModels', info.branch);
+        });
     });
     
-    it('should fetch the models for the specified repo and branch', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            branch: 'test branch'
-        };
-
-        const mockRepo = { contents: () => {} };
-        sinon.stub(mockClient, 'repo').returns(mockRepo);
-        sinon.stub(github, 'client').returns(mockClient);
-        sinon.spy(mockRepo, 'contents');
-
-        threatModelRepository.models(info, accessToken, mockCb);
-
-        expect(github.client).to.have.been.calledWith(accessToken);
-        expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-        expect(mockRepo.contents).to.have.been.calledWith('ThreatDragonModels', info.branch, mockCb);
-    });
-
-    it('should fetch the specified model', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            branch: 'test branch',
-            model: 'test model'
-        };
-        const modelPath = `ThreatDragonModels/${info.model}/${info.model}.json`;
-
-        const mockRepo = { contents: () => {} };
-        sinon.stub(mockClient, 'repo').returns(mockRepo);
-        sinon.stub(github, 'client').returns(mockClient);
-        sinon.spy(mockRepo, 'contents');
-
-        threatModelRepository.model(info, accessToken, mockCb);
-
-        expect(github.client).to.have.been.calledWith(accessToken);
-        expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-        expect(mockRepo.contents).to.have.been.calledWith(modelPath, info.branch, mockCb);
-    });
-
-    it('should create the specified model', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            branch: 'test branch',
-            model: 'test model',
-            body: {
-                content: 'test content',
-                id: 1
-            }
-        };
-        const modelPath = `ThreatDragonModels/${info.model}/${info.model}.json`;
-
-        const mockRepo = { createContents: () => {} };
-        sinon.stub(mockClient, 'repo').returns(mockRepo);
-        sinon.stub(github, 'client').returns(mockClient);
-        sinon.spy(mockRepo, 'createContents');
-
-        threatModelRepository.create(info, accessToken, mockCb);
-
-        expect(github.client).to.have.been.calledWith(accessToken);
-        expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-        expect(mockRepo.createContents).to.have.been.calledWith(
-            modelPath,
-            'Created by OWASP Threat Dragon',
-            JSON.stringify(info.body, null, '  '),
-            info.branch,
-            mockCb
-        );
-    });
-
-    describe('update', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            branch: 'test branch',
-            model: 'test model',
-            body: {
-                content: 'test content',
-                id: 1
-            }
-        };
-        const modelPath = `ThreatDragonModels/${info.model}/${info.model}.json`;
-
-        describe('with error', () => {
-            const err = new Error('whoops!');
-
-            beforeEach(() => {
-                const modelMock = (mInfo, token, cb) => { cb(err); };
-                sinon.stub(threatModelRepository, 'model').callsFake(modelMock);
-
-                threatModelRepository.update(info, accessToken, mockCb);
-            });
-
-            it('calls the callback with an error', () => {
-                expect(mockCb).to.have.been.calledWith(err);
-            });
+    describe('modelAsync', () => {
+        beforeEach(async () => {
+            await threatModelRepository.modelAsync(info, accessToken);
         });
 
-        describe('without error', () => {
-            const content = {
-                sha: 'asdf'
-            };
-            let mockRepo;
+        it('should create the github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
 
-            beforeEach(() => {
-                const modelMock = (mInfo, token, cb) => { cb(null, content); };
-                mockRepo = { updateContents: () => {} };
-                sinon.stub(threatModelRepository, 'model').callsFake(modelMock);
-                sinon.stub(github, 'client').returns(mockClient);
-                sinon.stub(mockClient, 'repo').returns(mockRepo);
-                sinon.spy(mockRepo, 'updateContents');
+        it('should get the repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(repoFullName);
+        });
 
-                threatModelRepository.update(info, accessToken, mockCb);
-            });
+        it('should get the contents', () => {
+            expect(mockRepo.contentsAsync).to.have.been.calledWith(modelPath, info.branch);
+        });
+    });
 
-            it('creates a github client', () => {
-                expect(github.client).to.have.been.calledWith(accessToken);
-            });
+    describe('createAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockRepo, 'createContentsAsync').resolves();
+            await threatModelRepository.createAsync(info, accessToken);
+        });
 
-            it('calls client.repo', () => {
-                expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-            });
+        it('should create the github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
 
-            it('calls repo.updateContents', () => {
-                expect(mockRepo.updateContents).to.have.been.calledWith(
-                    modelPath,
-                    'Updated by OWASP Threat Dragon',
-                    JSON.stringify(info.body, null, '  '),
-                    content.sha,
-                    info.branch,
-                    mockCb
-                );
-            });
+        it('should get the repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(repoFullName);
+        });
+
+        it('should get the contents', () => {
+            expect(mockRepo.createContentsAsync).to.have.been.calledWith(
+                modelPath,
+                'Created by OWASP Threat Dragon',
+                modelContent,
+                info.branch
+            );
+        });
+    });
+
+    describe('updateAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockRepo, 'updateContentsAsync');
+            await threatModelRepository.updateAsync(info, accessToken);
+        });
+
+        it('creates a github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
+
+        it('calls client.repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
+        });
+
+        it('calls repo.updateContents', () => {
+            expect(mockRepo.updateContentsAsync).to.have.been.calledWith(
+                modelPath,
+                'Updated by OWASP Threat Dragon',
+                JSON.stringify(info.body, null, '  '),
+                content[0].sha,
+                info.branch
+            );
         });
     });
 
 
-    describe('delete', () => {
-        const info = {
-            organisation: 'test org',
-            repo: 'test repo',
-            branch: 'test branch',
-            model: 'test model',
-            body: {
-                content: 'test content',
-                id: 1
-            }
-        };
-        const modelPath = `ThreatDragonModels/${info.model}/${info.model}.json`;
-
-        describe('with error', () => {
-            const err = new Error('whoops!');
-
-            beforeEach(() => {
-                const modelMock = (mInfo, token, cb) => { cb(err); };
-                sinon.stub(threatModelRepository, 'model').callsFake(modelMock);
-
-                threatModelRepository.deleteModel(info, accessToken, mockCb);
-            });
-
-            it('calls the callback with an error', () => {
-                expect(mockCb).to.have.been.calledWith(err);
-            });
+    describe('deleteAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockRepo, 'deleteContentsAsync').resolves();
+            await threatModelRepository.deleteAsync(info, accessToken);
         });
 
-        describe('without error', () => {
-            const content = {
-                sha: 'asdf'
-            };
-            let mockRepo;
+        it('creates a github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
 
-            beforeEach(() => {
-                const modelMock = (mInfo, token, cb) => { cb(null, content); };
-                mockRepo = { deleteContents: () => {} };
-                sinon.stub(threatModelRepository, 'model').callsFake(modelMock);
-                sinon.stub(github, 'client').returns(mockClient);
-                sinon.stub(mockClient, 'repo').returns(mockRepo);
-                sinon.spy(mockRepo, 'deleteContents');
+        it('calls client.repo', () => {
+            expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
+        });
 
-                threatModelRepository.deleteModel(info, accessToken, mockCb);
-            });
-
-            it('creates a github client', () => {
-                expect(github.client).to.have.been.calledWith(accessToken);
-            });
-
-            it('calls client.repo', () => {
-                expect(mockClient.repo).to.have.been.calledWith(`${info.organisation}/${info.repo}`);
-            });
-
-            it('calls repo.deleteContents', () => {
-                expect(mockRepo.deleteContents).to.have.been.calledWith(
-                    modelPath,
-                    'Deleted by OWASP Threat Dragon',
-                    content.sha,
-                    info.branch,
-                    mockCb
-                );
-            });
+        it('calls repo.deleteContents', () => {
+            expect(mockRepo.deleteContentsAsync).to.have.been.calledWith(
+                modelPath,
+                'Deleted by OWASP Threat Dragon',
+                content[0].sha,
+                info.branch
+            );
         });
     });
 });

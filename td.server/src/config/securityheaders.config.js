@@ -1,11 +1,9 @@
-'use strict';
+import helmet from 'helmet';
 
-var helmet = require('helmet');
-
-var securityHeaders = function (app, forceSecure) {
-    
+const config = (app, forceSecure) => {
     app.set('x-powered-by', false);
-    var ninetyDaysInSeconds = 7776000;
+    const ninetyDaysInSeconds = 7776000;
+    // Is forceSecure ever used?
     app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: forceSecure, includeSubDomains: false }));
     app.use(helmet.frameguard({action: 'deny'}));
     app.use(helmet.hidePoweredBy());
@@ -27,8 +25,6 @@ var securityHeaders = function (app, forceSecure) {
     }));
 };
 
-var exports = {
-    config: securityHeaders
+export default {
+    config
 };
-
-module.exports = exports;

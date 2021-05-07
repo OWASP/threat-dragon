@@ -1,6 +1,7 @@
-'use strict';
+import bunyan from 'bunyan';
+import expressBunyanLogger from 'express-bunyan-logger';
 
-var excludes = [
+const excludes = [
     "req-headers",
     "res-headers",
     "res",
@@ -14,17 +15,15 @@ var excludes = [
     "http-version"
 ];
 
-var bunyanOptions = {name: 'threatdragon', level: 'info', excludes: excludes};
+const bunyanOptions = {name: 'threatdragon', level: 'info', excludes: excludes};
 
-function configLoggers(app) {   
-    app.use(require('express-bunyan-logger')(bunyanOptions));
-}
-
-var logger = require('bunyan').createLogger(bunyanOptions);
-
-var loggers = {
-    config: configLoggers,
-    logger: logger   
+const configLoggers = (app) => {   
+    app.use(expressBunyanLogger(bunyanOptions));
 };
 
-module.exports = loggers;
+export const logger = bunyan.createLogger(bunyanOptions);
+
+export default {
+    configLoggers,
+    logger
+};
