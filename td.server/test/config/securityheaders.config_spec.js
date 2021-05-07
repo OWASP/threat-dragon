@@ -2,19 +2,14 @@ import { expect } from 'chai';
 import helmet from 'helmet';
 import sinon from 'sinon';
 
+import { getMockApp } from '../express.mocks.js';
 import securityHeaders from '../../src/config/securityheaders.config.js';
 
 describe('config/securityHeaders.config.js', () => {
-    const mockApp = {
-        set: () => {},
-        use: (fn) => {
-            if (fn) { fn(); }
-        }
-    };
+    let mockApp;
 
     beforeEach(() => {
-        sinon.spy(mockApp, 'set');
-        sinon.spy(mockApp, 'use');
+        mockApp = getMockApp();
         sinon.stub(helmet, 'hsts');
         sinon.stub(helmet, 'frameguard');
         sinon.stub(helmet, 'hidePoweredBy');

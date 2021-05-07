@@ -3,34 +3,16 @@ import passport from 'passport';
 import sinon from 'sinon';
 
 import cryptoPromise from '../../src/helpers/crypto.promise.js';
+import { getMockRequest, getMockResponse } from '../express.mocks.js';
 import githubLoginController from '../../src/controllers/githublogincontroller.js';
 
 describe('githublogincontroller tests', () => {
-    let mockRequest, next;
-    const mockResponse = {
-        status: () => {},
-        send: () => {},
-        redirect: () => {},
-        json: () => {}
-    };
+    let mockResponse, mockRequest, next;
 
     beforeEach(() => {
-        mockRequest = {
-            session: {},
-            query: {},
-            log: {
-                info: () => {},
-                error: () => {}
-            },
-            user: {
-                profile: {
-                    username: 'test user',
-                    provider: 'github'
-                }
-            }
-        };
+        mockRequest = getMockRequest();
+        mockResponse = getMockResponse();
         next = sinon.spy();
-        sinon.stub(mockResponse, 'status').returns(mockResponse);
     });
     
     afterEach(() => {
@@ -81,16 +63,7 @@ describe('githublogincontroller tests', () => {
 
 
     describe('completeLogin', () => {
-        beforeEach(() => {
-
-        });
-
         describe('with error', () => {
-            beforeEach(() => {
-                sinon.spy(mockRequest.log, 'error');
-                sinon.spy(mockResponse, 'send');
-            });
-
             it('logs an error for invalid oauth state', () => {
                 mockRequest.session.githubOauthState = 'aaaa';
                 mockRequest.query.state = 'bbbbb';
@@ -121,8 +94,6 @@ describe('githublogincontroller tests', () => {
             beforeEach(() => {
                 mockRequest.session.githubOauthState = 'aaaa';
                 mockRequest.query.state = 'aaaa';
-                sinon.spy(mockRequest.log, 'info');
-                sinon.spy(mockResponse, 'redirect');
             });
 
             it('logs a successful login', () => {

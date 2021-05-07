@@ -3,16 +3,16 @@ import passport from 'passport';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
+import { getMockApp } from '../express.mocks.js';
 import passportConfig from '../../src/config/passport.config.js';
 
 describe('passport configuration tests', () => {
+    let mockApp;
     const clientId = 'clientid',
-        clientSecret = 'clientsecret',
-        mockApp = {
-            use: () => {}
-        };
+        clientSecret = 'clientsecret';
 
     beforeEach(() => {
+        mockApp = getMockApp();
         sinon.stub(passport, 'initialize');
         sinon.stub(passport, 'session');
         sinon.stub(passport, 'use');

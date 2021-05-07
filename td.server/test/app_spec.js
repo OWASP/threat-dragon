@@ -6,6 +6,7 @@ import sinon from 'sinon';
 import appFactory from '../src/app.js';
 import envConfig from '../src/config/env.config.js';
 import expressHelper from '../src/helpers/express.helper.js';
+import { getMockApp } from './express.mocks.js';
 import loggersConfig from '../src/config/loggers.config.js';
 import parsersConfig from '../src/config/parsers.config.js';
 import passportConfig from '../src/config/passport.config.js';
@@ -14,19 +15,15 @@ import securityHeaders from '../src/config/securityheaders.config.js';
 import sessionConfig from '../src/config/session.config.js';
 
 describe('app tests', () => {
-    const mockExpress = {
-        set: () => {},
-        use: () => {}
-    };
+    let mockApp;
     const mockLogger = {
         info: () => {},
         error: () => {}
     };
 
     beforeEach(() => {
-        sinon.stub(expressHelper, 'getInstance').returns(mockExpress);
-        sinon.spy(mockExpress, 'set');
-        sinon.spy(mockExpress, 'use');
+        mockApp = getMockApp();
+        sinon.stub(expressHelper, 'getInstance').returns(mockApp);
         sinon.stub(express, 'static');
         sinon.stub(bunyan, 'createLogger').returns(mockLogger);
         sinon.spy(mockLogger, 'info');
@@ -52,15 +49,15 @@ describe('app tests', () => {
         });
 
         it('trusts proxies', () => {
-            expect(mockExpress.set).to.have.been.calledWith('trust proxy', true);
+            expect(mockApp.set).to.have.been.calledWith('trust proxy', true);
         });
 
         it('uses views', () => {
-            expect(mockExpress.set).to.have.been.calledWith('views', sinon.match('views'));
+            expect(mockApp.set).to.have.been.calledWith('views', sinon.match('views'));
         });
 
         it('uses the pug view engine', () => {
-            expect(mockExpress.set).to.have.been.calledWith('view engine', 'pug');
+            expect(mockApp.set).to.have.been.calledWith('view engine', 'pug');
         });
 
         it('uses dotenv config', () => {
@@ -68,7 +65,7 @@ describe('app tests', () => {
         });
         
         it('uses /public for static content', () => {
-            expect(mockExpress.use).to.have.been.calledWith('/public', sinon.match.any);
+            expect(mockApp.use).to.have.been.calledWith('/public', sinon.match.any);
             expect(express.static).to.have.been.calledWith(sinon.match('dist'));
         });
 
