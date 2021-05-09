@@ -5,7 +5,7 @@ import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import { getMockRequest, getMockResponse } from '../express.mocks.js';
 
-xdescribe('homecontroller tests', () => {
+describe('homecontroller tests', () => {
     let mockRequest, mockResponse;
 
     beforeEach(() => {
@@ -44,19 +44,6 @@ xdescribe('homecontroller tests', () => {
             expect(mockRequest.log.error).to.have.been.calledWith(
                 { security: true },
                 sinon.match.string
-            );
-        });
-    });
-
-    describe('login', () => {
-        beforeEach(() => {
-            homeController.login(mockRequest, mockResponse);
-        });
-
-        it('should pass the csrf token to the login page', () => {
-            expect(mockResponse.render).to.have.been.calledWith(
-                'login',
-                { csrfToken: mockRequest.csrfToken() }
             );
         });
     });

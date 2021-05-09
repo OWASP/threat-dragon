@@ -25,6 +25,7 @@ describe('threatmodel repository tests', () => {
     
     const mockClient = {
         me: () => {},
+        infoAsync: () => Promise.resolve([{}, {}]),
         reposAsync: () => {},
         repo: () => {}
     };
@@ -45,6 +46,26 @@ describe('threatmodel repository tests', () => {
 
     afterEach(() => {
         sinon.restore();
+    });
+
+    describe('userAsync', () => {
+        beforeEach(async () => {
+            sinon.stub(mockClient, 'me').returns(mockClient);
+            sinon.spy(mockClient, 'infoAsync');
+            await threatModelRepository.userAsync(accessToken);
+        });
+
+        it('creates the github client', () => {
+            expect(github.client).to.have.been.calledWith(accessToken);
+        });
+
+        it('calls me', () => {
+            expect(mockClient.me).to.have.been.calledOnce;
+        });
+
+        it('calls infoAsync', () => {
+            expect(mockClient.infoAsync).to.have.been.calledOnce;
+        });
     });
 
     describe('reposAsync', () => {

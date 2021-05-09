@@ -1,4 +1,4 @@
-import { serverError } from './errors.js';
+import errors from './errors.js';
 
 /**
  * Wraps a function to be sent using a standardized JSON format
@@ -17,7 +17,7 @@ const sendResponse = (fn, req, res) => {
         return res.status(200).json(respObj);
     } catch (e) {
         req.log.error(e);
-        return serverError('Internal Server Error', res);
+        return errors.serverError('Internal Server Error', res);
     }
 };
 
@@ -38,7 +38,7 @@ const sendResponseAsync = async (asyncFn, req, res) => {
         });
     } catch (e) {
         req.log.error(e);
-        return serverError('Internal Server Error', res);
+        return errors.serverError('Internal Server Error', res);
     }
 };
 
