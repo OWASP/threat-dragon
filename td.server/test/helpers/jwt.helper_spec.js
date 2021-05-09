@@ -38,7 +38,7 @@ describe('helpers/jwt.helper.js', () => {
         it('uses the provider and user for the JWT', () => {
             const jwtObj = {
                 provider: {
-                    [providerName]: cipherText
+                    [providerName]: encodeURIComponent(JSON.stringify(cipherText))
                 },
                 user
             };
@@ -65,6 +65,24 @@ describe('helpers/jwt.helper.js', () => {
                     expiresIn: '5m'
                 }
             );
+        });
+    });
+
+    describe('verifyToken', () => {
+        const token = { foo: 'bar' };
+        beforeEach(() => {
+            sinon.stub(jsonwebtoken, 'verify');
+            jwtHelper.verifyToken(token);
+        });
+
+        it('passes the token', () => {
+            expect(jsonwebtoken.verify).to.have.been
+                .calledWith(token, sinon.match.any);
+        });
+
+        it('passes the signing key', () => {
+            expect(jsonwebtoken.verify).to.have.been
+                .calledWith(sinon.match.any, config.JWT_SIGNING_KEY);
         });
     });
 });

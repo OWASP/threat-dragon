@@ -1,8 +1,11 @@
 - favicon
 - title
-- Other pages
-- authentication / authorization
-- dev server configuration (proxy, vue.config.js)
-- Vuex for API and local/session storage
+- edit views
+- authentication / authorization improvements
+- Loading indicators
+- Pagination
+- refresh tokens
+- Update back-end to use the same data format for everything
+- Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
-- 
+- BUG: JWT sometimes cannot decode, JSON.parse fails (Probably due to IV having unicode characters?)

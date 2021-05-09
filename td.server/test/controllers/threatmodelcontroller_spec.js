@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import responseWrapper from '../../src/controllers/responseWrapper.js';
 import threatModelController from '../../src/controllers/threatmodelcontroller.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
@@ -10,9 +11,11 @@ describe('threat model controller tests', () => {
         link: 'url1; rel="link", url2; rel="link"'
     };
     const err = new Error('whoops');
+    const mockWrapper = async (p) => await p();
     let mockRequest, mockResponse;
 
     beforeEach(() => {
+        sinon.stub(responseWrapper, 'sendResponseAsync').callsFake(mockWrapper);
         mockRequest = Object.assign(getMockRequest(), {
             params: {
                 organisation: 'test org',
@@ -38,55 +41,22 @@ describe('threat model controller tests', () => {
             { full_name: 'repo2' },
             { full_name: 'repo3' }
         ];
+        let result;
 
-        describe('without error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'reposAsync').resolves([repos, {}]);
-                await threatModelController.repos(mockRequest, mockResponse);
-            });
-
-            it('should fetch the repos for the logged in user', () => {
-                expect(threatModelRepository.reposAsync).to.have.been.calledWith(
-                    mockRequest.query.page,
-                    mockRequest.user.accessToken
-                );
-            });
-
-            it('should send a response', () => {
-                expect(mockResponse.json).to.have.been.calledOnce;
-            });
-
-            it('should return the repo data', () => {
-                expect(mockResponse.json).to.have.been.calledWith(sinon.match({
-                    repos: sinon.match.array.deepEquals(repos.map(x => x.full_name))
-                }));
-            });
+        beforeEach(async () => {
+            sinon.stub(threatModelRepository, 'reposAsync').resolves([repos, {}]);
+            result = await threatModelController.repos(mockRequest, mockResponse);
         });
 
-        describe('with error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'reposAsync').throws(err);
-                await threatModelController.repos(mockRequest, mockResponse);
-            });
+        it('should fetch the repos for the logged in user', () => {
+            expect(threatModelRepository.reposAsync).to.have.been.calledWith(
+                mockRequest.query.page,
+                mockRequest.provider.access_token
+            );
+        });
 
-            it('should return a 500 error if if fails to fetch the repos', () => {
-                expect(mockResponse.status).to.have.been.calledWith(500);
-            });
-
-            it('should return the error', () => {
-                expect(mockResponse.json).to.have.been.calledWith({
-                    status: 500,
-                    message: 'Internal Server Error',
-                    details: 'Error fetching repositories'
-                });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
+        it('should return the repo data', () => {
+            expect(result.repos).to.deep.equal(repos.map(x => x.full_name));
         });
     });
 
@@ -96,61 +66,29 @@ describe('threat model controller tests', () => {
             { name: 'branch2' },
             { name: 'branch3' }
         ];
-        let repoInfo;
+        let repoInfo, result;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             repoInfo = {
                 organisation: mockRequest.params.organisation,
                 repo: mockRequest.params.repo,
                 page: mockRequest.query.page
             };
+            sinon.stub(threatModelRepository, 'branchesAsync').resolves([branches, []]);
+            result = await threatModelController.branches(mockRequest, mockResponse);
         });
 
-        describe('without error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'branchesAsync').resolves([branches, []]);
-                await threatModelController.branches(mockRequest, mockResponse);
-            });
-
-            it('should fetch the branches for the specified repo', () => {
-                expect(threatModelRepository.branchesAsync).to.have.been.calledWith(
-                    repoInfo,
-                    mockRequest.user.accessToken
-                );
-            });
-
-            it('should return the branch data', () => {
-                expect(mockResponse.json).to.have.been.calledWith(sinon.match({
-                    branches: sinon.match.array.deepEquals(branches.map(x => x.name))
-                }));
-            });
+        it('should fetch the branches for the specified repo', () => {
+            expect(threatModelRepository.branchesAsync).to.have.been.calledWith(
+                repoInfo,
+                mockRequest.provider.access_token
+            );
         });
 
-        describe('with error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'branchesAsync').throws(err);
-                await threatModelController.branches(mockRequest, mockResponse);
-            });
-
-            it('should return a 500 error if if fails to fetch the branches', () => {
-                expect(mockResponse.status).to.have.been.calledWith(500);
-            });
-
-            it('should return the error', () => {
-                expect(mockResponse.json).to.have.been.calledWith({
-                    status: 500,
-                    message: 'Internal Server Error',
-                    details: 'Error fetching branches'
-                });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
+        it('should return the branch data', () => {
+            expect(result.branches).to.deep.equal(branches.map(x => x .name));
         });
+
     });
 
     describe('GET models', () => {
@@ -159,118 +97,55 @@ describe('threat model controller tests', () => {
             { name: 'model2' },
             { name: 'model3' }
         ];
-        let branchInfo;
+        let branchInfo, result;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             branchInfo = {
                 organisation: mockRequest.params.organisation,
                 repo: mockRequest.params.repo,
                 branch: mockRequest.params.branch
             };
+            sinon.stub(threatModelRepository, 'modelsAsync').resolves([models]);
+            result = await threatModelController.models(mockRequest, mockResponse);
         });
 
-        describe('without error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'modelsAsync').resolves([models]);
-                await threatModelController.models(mockRequest, mockResponse);
-            });
 
-            it('should fetch the models for the specified repo', () => {
-                expect(threatModelRepository.modelsAsync).to.have.been.calledWith(
-                    branchInfo,
-                    mockRequest.user.accessToken,
-                );
-            });
-
-            it('should return the model data', () => {
-                expect(mockResponse.json).to.have.been.calledWith(
-                    sinon.match(sinon.match.array.deepEquals(models.map(x => x.name))));
-            });
+        it('should fetch the models for the specified repo', () => {
+            expect(threatModelRepository.modelsAsync).to.have.been.calledWith(
+                branchInfo,
+                mockRequest.provider.access_token
+            );
         });
 
-        describe('with error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'modelsAsync').throws(err);
-                await threatModelController.models(mockRequest, mockResponse);
-            });
-
-            it('should return a 500 error if if fails to fetch the models', () => {
-                expect(mockResponse.status).to.have.been.calledWith(500);
-            });
-
-            it('should return the error', () => {
-                expect(mockResponse.json).to.have.been.calledWith({
-                    status: 500,
-                    message: 'Internal Server Error',
-                    details: 'Error fetching models'
-                });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
+        it('should return the model data', () => {
+            expect(result).to.deep.equal(models.map(x => x.name));
         });
     });
 
     describe('GET model', () => {
-        let modelInfo, encodedModel;
+        let modelInfo, encodedModel, result;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             modelInfo = {
                 organisation: mockRequest.params.organisation,
                 repo: mockRequest.params.repo,
                 branch: mockRequest.params.branch,
                 model: mockRequest.params.model
             };
-            encodedModel = Buffer.from(modelInfo.model).toString('base64');
+            encodedModel = Buffer.from(JSON.stringify(modelInfo.model)).toString('base64');
+            sinon.stub(threatModelRepository, 'modelAsync').resolves([{ content: encodedModel }]);
+            result = await threatModelController.model(mockRequest, mockResponse);
         });
 
-        describe('without error', () => {
-            beforeEach(async () => {
-                const encodedModel = Buffer.from(mockRequest.params.model).toString('base64');
-                sinon.stub(threatModelRepository, 'modelAsync').resolves([{ content: encodedModel }]);
-                await threatModelController.model(mockRequest, mockResponse);
-            });
-
-            it('should fetch the specified model', () => {
-                expect(threatModelRepository.modelAsync).to.have.been.calledWith(
-                    modelInfo,
-                    mockRequest.user.accessToken
-                );
-            });
-
-            it('should return the model data', () => {
-                expect(mockResponse.send).to.have.been.calledWith(mockRequest.params.model);
-            });
+        it('should fetch the specified model', () => {
+            expect(threatModelRepository.modelAsync).to.have.been.calledWith(
+                modelInfo,
+                mockRequest.provider.access_token
+            );
         });
 
-        describe('with error', () => {
-            beforeEach(async () => {
-                sinon.stub(threatModelRepository, 'modelAsync').throws(err);
-                await threatModelController.model(mockRequest, mockResponse);
-            });
-
-            it('should return a 500 error if if fails to fetch the model', () => {
-                expect(mockResponse.status).to.have.been.calledWith(500);
-            });
-
-            it('should return the error', () => {
-                expect(mockResponse.json).to.have.been.calledWith({
-                    status: 500,
-                    message: 'Internal Server Error',
-                    details: 'Error fetching model'
-                });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
+        it('should return the model data', () => {
+            expect(result).to.eq(mockRequest.params.model);
         });
     });
 
@@ -463,53 +338,41 @@ describe('threat model controller tests', () => {
 
             it('should enable next and disable prev', async () => {
                 headers.link = 'url1; rel="next", url2; rel="link"';
-                await threatModelController.repos(mockRequest, mockResponse);
-                expect(mockResponse.json).to.have.been.calledWith({
-                    repos: sinon.match.any,
-                    pagination: {
-                        page: mockRequest.query.page,
-                        prev: false,
-                        next: true
-                    }
+                const resp = await threatModelController.repos(mockRequest, mockResponse);
+                expect(resp.pagination).to.deep.equal({
+                    page: mockRequest.query.page,
+                    prev: false,
+                    next: true
                 });
             });
 
             it('should enable next and enable prev', async () => {
                 headers.link = 'url1; rel="next", url2; rel="prev"';
-                await threatModelController.repos(mockRequest, mockResponse);
-                expect(mockResponse.json).to.have.been.calledWith({
-                    repos: sinon.match.any,
-                    pagination: {
-                        page: mockRequest.query.page,
-                        prev: true,
-                        next: true
-                    }
+                const resp = await threatModelController.repos(mockRequest, mockResponse);
+                expect(resp.pagination).to.deep.equal({
+                    page: mockRequest.query.page,
+                    prev: true,
+                    next: true
                 });
             });
             
             it('should disable next and enable prev', async () => {
                 headers.link = 'url1; rel="link", url2; rel="prev"';
-                await threatModelController.repos(mockRequest, mockResponse);
-                expect(mockResponse.json).to.have.been.calledWith({
-                    repos: sinon.match.any,
-                    pagination: {
-                        page: mockRequest.query.page,
-                        prev: true,
-                        next: false
-                    }
+                const resp = await threatModelController.repos(mockRequest, mockResponse);
+                expect(resp.pagination).to.deep.equal({
+                    page: mockRequest.query.page,
+                    prev: true,
+                    next: false
                 });
             });
             
             it('should disable next and disable prev', async () => {
                 headers.link = 'url1; rel="link", url2; rel="link"';
-                await threatModelController.repos(mockRequest, mockResponse);
-                expect(mockResponse.json).to.have.been.calledWith({
-                    repos: sinon.match.any,
-                    pagination: {
-                        page: mockRequest.query.page,
-                        prev: false,
-                        next: false
-                    }
+                const resp = await threatModelController.repos(mockRequest, mockResponse);
+                expect(resp.pagination).to.deep.equal({
+                    page: mockRequest.query.page,
+                    prev: false,
+                    next: false
                 });
             });
 

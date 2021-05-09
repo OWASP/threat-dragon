@@ -7,10 +7,8 @@ import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
 import loggers from './config/loggers.config.js';
 import parsers from './config/parsers.config.js';
-import passport from './config/passport.config.js';
 import routes from './config/routes.config.js';
 import securityHeaders from './config/securityheaders.config.js';
-import session from './config/session.config.js';
 import { upDir } from './helpers/path.helper.js';
 
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
@@ -25,23 +23,17 @@ const create = () => {
         // environment configuration
         envConfig.tryLoadDotEnv();
 
+        //logging
+        loggers.configLoggers(app);
+
         //static content
         app.use('/public', express.static(siteDir));
 
         //security headers
         securityHeaders.config(app);
 
-        //sessions
-        session.config(app);
-
-        //passport
-        passport.config(app);
-
         //favicon
         app.use(expressHelper.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
-
-        //logging
-        loggers.configLoggers(app);
 
         //parsers
         parsers.config(app);

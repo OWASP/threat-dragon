@@ -14,8 +14,8 @@
                         v-for="(repo, idx) in repositories"
                         :key="idx"
                         href="javascript:void(0)"
-                        @click="onRepoClick(repo.value)"
-                    >{{ repo.name }}</b-list-group-item>
+                        @click="onRepoClick(repo)"
+                    >{{ repo }}</b-list-group-item>
                 </b-list-group>
             </b-col>
         </b-row>
@@ -26,27 +26,17 @@
 import { mapState } from 'vuex';
 
 import { getDisplayName } from '@/service/providers.js';
-import { DATASOURCE_REPOSITORY_SELECTED } from '@/store/actions/datasource.js';
+import { DATASOURCE_REPOSITORY_FETCH, DATASOURCE_REPOSITORY_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
 export default {
     name: 'Repository',
     computed: mapState({
-        provider: state => getDisplayName(state.datasource.provider)
+        provider: state => getDisplayName(state.datasource.provider),
+        repositories: state => state.datasource.repos
     }),
-    data: () => {
-        return {
-            repositories: [
-                { name: 'item1', value: 'item1' },
-                { name: 'item2', value: 'item2' },
-                { name: 'item3', value: 'item3' },
-                { name: 'item4', value: 'item4' },
-                { name: 'item5', value: 'item5' },
-                { name: 'item6', value: 'item6' },
-                { name: 'item7', value: 'item7' },
-                { name: 'item8', value: 'item8' }
-            ]
-        };
+    mounted() {
+        this.$store.dispatch(DATASOURCE_REPOSITORY_FETCH);
     },
     methods: {
         onRepoClick(repoName) {

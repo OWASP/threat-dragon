@@ -2,6 +2,7 @@ import express from 'express';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import bearer from '../../src/config/bearer.config.js';
 import githubController from '../../src/controllers/githublogincontroller.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import { getMockApp } from '../express.mocks.js';
@@ -14,7 +15,8 @@ describe('route config tests', () => {
         get: () => {},
         post: () => {},
         put: () => {},
-        delete: () => {}
+        delete: () => {},
+        use: () => {}
     };
 
     beforeEach(() => {
@@ -24,6 +26,7 @@ describe('route config tests', () => {
         sinon.spy(mockRouter, 'post');
         sinon.spy(mockRouter, 'put');
         sinon.spy(mockRouter, 'delete');
+        sinon.spy(mockRouter, 'use');
         routeConfig.config(mockApp);
     });
 
@@ -92,34 +95,30 @@ describe('route config tests', () => {
     });
 
     describe('threat models', () => {
-        it('routes GET /threatmodel/repos', () => {
+        it('routes GET /api/threatmodel/repos', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/threatmodel/repos',
-                homeController.ensureLoggedIn,
+                '/api/threatmodel/repos',
                 threatmodelController.repos
             );
         });
         
-        it('routes GET /threatmodel/:organisation/:repo/branches', () => {
+        it('routes GET /api/threatmodel/:organisation/:repo/branches', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/branches',
-                homeController.ensureLoggedIn,
+                '/api/threatmodel/:organisation/:repo/branches',
                 threatmodelController.branches
             );
         });
         
-        it('routes GET /threatmodel/:organisation/:repo/:branch/models', () => {
+        it('routes GET /api/threatmodel/:organisation/:repo/:branch/models', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/:branch/models',
-                homeController.ensureLoggedIn,
+                '/api/threatmodel/:organisation/:repo/:branch/models',
                 threatmodelController.models
             );
         });
         
-        it('routes GET /threatmodel/:organisation/:repo/:branch/:model/data', () => {
+        it('routes GET /api/threatmodel/:organisation/:repo/:branch/:model/data', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/:branch/:model/data',
-                homeController.ensureLoggedIn,
+                '/api/threatmodel/:organisation/:repo/:branch/:model/data',
                 threatmodelController.model
             );
         });
@@ -150,5 +149,9 @@ describe('route config tests', () => {
                 threatmodelController.update
             );
         });
+    });
+
+    it('adds bearer token middleware', () => {
+        expect(mockRouter.use).to.have.been.calledWith(bearer.middleware);
     });
 });

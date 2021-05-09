@@ -2,6 +2,7 @@ import {
     DATASOURCE_PROVIDER_SELECTED,
     DATASOURCE_PROVIDER_CLEAR,
     DATASOURCE_REPOSITORY_SELECTED,
+    DATASOURCE_REPOSITORY_FETCH,
     DATASOURCE_REPOSITORY_CLEAR,
     DATASOURCE_BRANCH_SELECTED,
     DATASOURCE_BRANCH_CLEAR,
@@ -20,6 +21,10 @@ describe('store/actions/datasource.js', () => {
 
     it('defines a repository selected action', () => {
         expect(DATASOURCE_REPOSITORY_SELECTED).not.toBeUndefined();
+    });
+
+    it('defines a repository fetch action', () => {
+        expect(DATASOURCE_REPOSITORY_FETCH).not.toBeUndefined();
     });
 
     it('defines a repository clear action', () => {

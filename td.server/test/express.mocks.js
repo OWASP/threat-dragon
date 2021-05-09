@@ -26,7 +26,11 @@ export const getMockRequest = () => {
                 provider: 'fake idp'
             }
         },
+        provider: {
+            access_token: 'blah'
+        },
         params: {},
+        headers: {},
         query: {},
         session: {
             destroy: (cb) => { if(cb) { cb(); }}

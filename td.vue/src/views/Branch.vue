@@ -4,7 +4,8 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        Select a branch from <a href="javascript:void(0)" target="_blank">{{ repoName }}</a>
+                        Select a branch from
+                        <a :href="`https://www.github.com/${repoName}`" target="_blank">{{ repoName }}</a>
                         from the list below or
                         <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">choose another repo</a>
                     </h4>
@@ -18,8 +19,8 @@
                         v-for="(branch, idx) in branches"
                         :key="idx"
                         href="javascript:void(0)"
-                        @click="onBranchClick(branch.value)"
-                    >{{ branch.name }}</b-list-group-item>
+                        @click="onBranchClick(branch)"
+                    >{{ branch }}</b-list-group-item>
                 </b-list-group>
             </b-col>
         </b-row>
@@ -29,27 +30,17 @@
 <script>
 import { mapState } from 'vuex';
 
-import { DATASOURCE_REPOSITORY_CLEAR, DATASOURCE_BRANCH_SELECTED } from '@/store/actions/datasource.js';
+import { DATASOURCE_REPOSITORY_CLEAR, DATASOURCE_BRANCH_SELECTED, DATASOURCE_BRANCH_FETCH } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
 export default {
     name: 'Branch',
     computed: mapState({
-        repoName: state => state.datasource[state.datasource.provider].repositoryName
+        repoName: state => state.datasource[state.datasource.provider].repositoryName,
+        branches: state => state.datasource.branches
     }),
-    data: () => {
-        return {
-            branches: [
-                { name: 'item1', value: 'item1' },
-                { name: 'item2', value: 'item2' },
-                { name: 'item3', value: 'item3' },
-                { name: 'item4', value: 'item4' },
-                { name: 'item5', value: 'item5' },
-                { name: 'item6', value: 'item6' },
-                { name: 'item7', value: 'item7' },
-                { name: 'item8', value: 'item8' }
-            ]
-        };
+    mounted() {
+        this.$store.dispatch(DATASOURCE_BRANCH_FETCH, this.repoName);
     },
     methods: {
         selectRepoClick() {

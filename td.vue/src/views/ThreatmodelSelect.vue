@@ -4,7 +4,8 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        Select a Threat Model from <a href="javascript:void(0)" target="_blank">{{ `${repoName}/${branch}` }}</a>
+                        Select a Threat Model from
+                        <a :href="`https://www.github.com/${repoName}`" target="_blank">{{ `${repoName}/${branch}` }}</a>
                         from the list below, or choose another
                         <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">branch</a>
                         or
@@ -20,8 +21,8 @@
                         v-for="(threatModel, idx) in threatModels"
                         :key="idx"
                         href="javascript:void(0)"
-                        @click="onThreatmodelClick(threatModel.value)"
-                    >{{ threatModel.name }}</b-list-group-item>
+                        @click="onThreatmodelClick(threatModel)"
+                    >{{ threatModel }}</b-list-group-item>
                 </b-list-group>
             </b-col>
         </b-row>
@@ -34,6 +35,7 @@ import { mapState } from 'vuex';
 import {
     DATASOURCE_BRANCH_CLEAR,
     DATASOURCE_REPOSITORY_CLEAR,
+    DATASOURCE_THREATMODELS_FETCH,
     DATASOURCE_THREATMODEL_SELECTED
 } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
@@ -42,21 +44,15 @@ export default {
     name: 'ThreatmodelSelect',
     computed: mapState({
         repoName: state => state.datasource[state.datasource.provider].repositoryName,
-        branch: state => state.datasource[state.datasource.provider].branch
+        branch: state => state.datasource[state.datasource.provider].branch,
+        threatModels: state => state.datasource.models
     }),
-    data: () => {
-        return {
-            threatModels: [
-                { name: 'item1', value: 'item1' },
-                { name: 'item2', value: 'item2' },
-                { name: 'item3', value: 'item3' },
-                { name: 'item4', value: 'item4' },
-                { name: 'item5', value: 'item5' },
-                { name: 'item6', value: 'item6' },
-                { name: 'item7', value: 'item7' },
-                { name: 'item8', value: 'item8' }
-            ]
+    mounted() {
+        const deets = {
+            repoName: this.repoName,
+            branch: this.branch
         };
+        this.$store.dispatch(DATASOURCE_THREATMODELS_FETCH, deets);
     },
     methods: {
         selectBranchClick() {
@@ -68,7 +64,12 @@ export default {
             router.push('/repository');
         },
         onThreatmodelClick(threatModel) {
-            this.$store.dispatch(DATASOURCE_THREATMODEL_SELECTED, threatModel);
+            const deets = {
+                repoName: this.repoName,
+                branch: this.branch,
+                threatModel
+            };
+            this.$store.dispatch(DATASOURCE_THREATMODEL_SELECTED, deets);
             router.push('/threatmodel');
         }
     }

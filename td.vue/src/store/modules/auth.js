@@ -15,7 +15,8 @@ const actions = {
 const mutations = {
     [AUTH_SET_JWT]: (state, jwt) => {
         const tokenBody = jwt.split('.')[1];
-        const jwtBody = JSON.parse(atob(tokenBody));
+        const decodedBody = atob(tokenBody);
+        const jwtBody = JSON.parse(decodedBody);
         state.jwt = jwt;
         Vue.set(state, 'jwtBody', jwtBody);
         Vue.set(state, 'user', jwtBody.user);

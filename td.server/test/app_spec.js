@@ -9,10 +9,8 @@ import expressHelper from '../src/helpers/express.helper.js';
 import { getMockApp } from './express.mocks.js';
 import loggersConfig from '../src/config/loggers.config.js';
 import parsersConfig from '../src/config/parsers.config.js';
-import passportConfig from '../src/config/passport.config.js';
 import routesConfig from '../src/config/routes.config.js';
 import securityHeaders from '../src/config/securityheaders.config.js';
-import sessionConfig from '../src/config/session.config.js';
 
 describe('app tests', () => {
     let mockApp;
@@ -30,9 +28,7 @@ describe('app tests', () => {
         sinon.spy(mockLogger, 'error');
 
         sinon.stub(securityHeaders, 'config');
-        sinon.stub(sessionConfig, 'config');
         sinon.stub(expressHelper, 'getFaviconMiddleware');
-        sinon.stub(passportConfig, 'config');
         sinon.stub(loggersConfig, 'configLoggers');
         sinon.stub(parsersConfig, 'config');
         sinon.stub(routesConfig, 'config');
@@ -71,14 +67,6 @@ describe('app tests', () => {
 
         it('uses the security headers config', () => {
             expect(securityHeaders.config).to.have.been.calledOnce;
-        });
-
-        it('uses the session config', () => {
-            expect(sessionConfig.config).to.have.been.calledOnce;
-        });
-
-        it('uses the passport config', () => {
-            expect(passportConfig.config).to.have.been.calledOnce;
         });
 
         it('uses the favicon middleware', () => {

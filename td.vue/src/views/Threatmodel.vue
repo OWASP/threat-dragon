@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div v-if="model">
         <!-- metadata -->
         <b-row class="mb-4">
             <b-col>
                 <b-card
-                    header="Ttile Goes Here">
+                    :header="model.summary.title">
                     <b-row class="tm-card">
                         <b-col md=2>
                             <div>
                                 <strong>Owner:</strong>
                             </div>
                             <div>
-                                The Owner
+                                {{ model.summary.owner }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -19,7 +19,7 @@
                                 <strong>Reviewer:</strong>
                             </div>
                             <div>
-                                The Reviewer(s)
+                                {{ model.detail.reviewer }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -27,7 +27,7 @@
                                 <strong>Contributors:</strong>
                             </div>
                             <div>
-                                The Contributors
+                                {{ contributors }}
                             </div>
                         </b-col>
                     </b-row>
@@ -42,7 +42,7 @@
                     header="High level system description">
                     <b-row class="tm-card">
                         <b-col>
-                            <p>This is where the description goes</p>
+                            <p>{{ model.summary.description }}</p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -53,19 +53,19 @@
         <b-row class="mb-4">
             <b-col
                 md="3"
-                v-for="(diagram, idx) in diagrams"
+                v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
             >
                 <b-card>
                     <template #header>
                         <h6 class="diagram-header-text">
-                            <router-link to="/">{{ diagram.name }}</router-link>
+                            <router-link to="/">{{ diagram.title }}</router-link>
                         </h6>
                     </template>
                     <router-link to="/">
                         <b-img-lazy
                             class="m-auto d-block"
-                            :src="require(`../assets/thumbnail.${diagram.type.toLowerCase()}.jpg`)"
+                            :src="require(`../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`)"
                             :alt="`${diagram.type} Diagram`" />
                     </router-link>
                 </b-card>
@@ -103,6 +103,8 @@
 </style>
 
 <script>
+import { mapState } from 'vuex';
+
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -110,16 +112,10 @@ export default {
     components: {
         TdFormButton
     },
-    data() {
-        return {
-            // TODO: All props will be computed using mapState and will come from the API
-            diagrams: [
-                { name: 'foo', type: 'LINDDUN' },
-                { name: 'foo', type: 'STRIDE' },
-                { name: 'foo', type: 'CIA' }
-            ]
-        };
-    },
+    computed: mapState({
+        model: (state) => state.datasource.threatModel,
+        contributors: (state) => state.datasource.threatModel.detail.contributors.map(x => x.name).join(', ')
+    }),
     methods: {
         onEditClick(evt) {
             evt.preventDefault();

@@ -63,9 +63,6 @@ describe('Home.vue', () => {
     describe('provider selected', () => {
         beforeEach(() => {
             jest.spyOn(mockStore, 'dispatch');
-            console.log('LEO LEO LEO');
-            console.log(router.path);
-            console.log(router);
             if (router.path !== '/') {
                 router.push('/');
             }
