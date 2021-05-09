@@ -1,135 +1,257 @@
 import { allProviders } from '@/service/providers.js';
-//import providerModule from '@/store/modules/datasource.js';
+import datasourceModule from '@/store/modules/datasource.js';
 import {
+    DATASOURCE_PROVIDER_SELECTED,
+    DATASOURCE_PROVIDER_CLEAR,
+    DATASOURCE_REPOSITORY_FETCH,
+    DATASOURCE_REPOSITORY_SELECTED,
+    DATASOURCE_REPOSITORY_CLEAR,
+    DATASOURCE_BRANCH_FETCH,
     DATASOURCE_BRANCH_SELECTED,
     DATASOURCE_BRANCH_CLEAR,
-    DATASOURCE_PROVIDER_CLEAR,
-    DATASOURCE_PROVIDER_SELECTED,
-    DATASOURCE_REPOSITORY_CLEAR,
-    DATASOURCE_REPOSITORY_SELECTED,
-    DATASOURCE_THREATMODEL_CLEAR,
-    DATASOURCE_THREATMODEL_SELECTED
+    DATASOURCE_THREATMODELS_FETCH,
+    DATASOURCE_THREATMODEL_SELECTED,
+    DATASOURCE_THREATMODEL_CLEAR
 } from '@/store/actions/datasource.js';
+import threatmodelApi from '@/service/threatmodelApi.js';
+import datasource from '../../../../src/store/modules/datasource';
 
-xdescribe('store/modules/datasource.js', () => {
+describe('store/modules/datasource.js', () => {
     const mocks = {
-        commit: () => {}
+        commit: () => {},
+        rootState: {
+            auth: {
+                jwt: 'foo'
+            }
+        }
     };
+
+    beforeEach(() => {
+        jest.spyOn(mocks, 'commit');
+    });
 
     describe('state', () => {
         it('is an object', () => {
-            expect(providerModule.state).toBeInstanceOf(Object);
+            expect(datasourceModule.state).toBeInstanceOf(Object);
         });
 
         it('has a provider property', () => {
-            expect(providerModule.state.provider).not.toBeUndefined();
+            expect(datasourceModule.state.provider).not.toBeUndefined();
+        });
+
+        it('has a repos property', () => {
+            expect(datasourceModule.state.repos).not.toBeUndefined();
+        });
+
+        it('has a branches property', () => {
+            expect(datasourceModule.state.branches).not.toBeUndefined();
+        });
+
+        it('has a models property', () => {
+            expect(datasourceModule.state.models).not.toBeUndefined();
+        });
+
+        it('has a threatModel property', () => {
+            expect(datasourceModule.state.threatModel).not.toBeUndefined();
         });
     });
 
     describe('actions', () => {
         describe('provider', () => {
+
+            describe('clear', () => {
+                it('is a function', () => {
+                    expect(datasourceModule.actions[DATASOURCE_PROVIDER_CLEAR]).toBeInstanceOf(Function);
+                });
+    
+                it('commits PROVIDER_CLEAR', () => {
+                    datasourceModule.actions[DATASOURCE_PROVIDER_CLEAR](mocks);
+                    expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_PROVIDER_CLEAR);
+                });
+            });
+
             describe('selected', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_PROVIDER_SELECTED]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_PROVIDER_SELECTED]).toBeInstanceOf(Function);
                 });
     
                 it('commits the provider', () => {
                     const provider = 'foobar';
-                    jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_PROVIDER_SELECTED](mocks, provider);
+                    datasourceModule.actions[DATASOURCE_PROVIDER_SELECTED](mocks, provider);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_PROVIDER_SELECTED, provider);
-                });
-            });
-    
-            describe('clear', () => {
-                it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_PROVIDER_CLEAR]).toBeInstanceOf(Function);
-                });
-    
-                it('commits PROVIDER_CLEAR', () => {
-                    jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_PROVIDER_CLEAR](mocks);
-                    expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_PROVIDER_CLEAR);
                 });
             });
         });
 
         describe('repository', () => {
+            describe('fetch', () => {
+                const resp = {
+                    data: {
+                        repos: [ 'foo', 'bar' ]
+                    }
+                };
+
+                beforeEach(async () => {
+                    jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue(resp);
+                    await datasourceModule.actions[DATASOURCE_REPOSITORY_FETCH](mocks);
+                });
+
+                it('calls the repos api', () => {
+                    expect(threatmodelApi.reposAsync).toHaveBeenCalledWith(mocks.rootState.auth.jwt);
+                });
+
+                it('commits the repositories', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(
+                        DATASOURCE_REPOSITORY_FETCH,
+                        resp.data.repos
+                    );
+                });
+            });
+
             describe('selected', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_REPOSITORY_SELECTED]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_REPOSITORY_SELECTED]).toBeInstanceOf(Function);
                 });
     
                 it('commits the repository', () => {
                     const repository = 'foobar';
-                    jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_REPOSITORY_SELECTED](mocks, repository);
+                    datasourceModule.actions[DATASOURCE_REPOSITORY_SELECTED](mocks, repository);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_REPOSITORY_SELECTED, repository);
                 });
             });
     
             describe('clear', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_REPOSITORY_CLEAR]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_REPOSITORY_CLEAR]).toBeInstanceOf(Function);
                 });
     
                 it('commits REPOSITORY_CLEAR', () => {
-                    jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_REPOSITORY_CLEAR](mocks);
+                    datasourceModule.actions[DATASOURCE_REPOSITORY_CLEAR](mocks);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_REPOSITORY_CLEAR);
                 });
             });
         });
 
         describe('branch', () => {
+
+            describe('fetch', () => {
+                const resp = {
+                    data: {
+                        branches: [ 'branch1', 'branch2' ]
+                    }
+                };
+                const repo = 'foobar';
+
+                beforeEach(async () => {
+                    jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue(resp);
+                    await datasourceModule.actions[DATASOURCE_BRANCH_FETCH](mocks, repo);
+                });
+
+                it('calls the branches api', () => {
+                    expect(threatmodelApi.branchesAsync).toHaveBeenCalledWith(repo, mocks.rootState.auth.jwt);
+                });
+
+                it('commits the branches', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(
+                        DATASOURCE_BRANCH_FETCH,
+                        resp.data.branches
+                    );
+                });
+            });
+
             describe('selected', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_BRANCH_SELECTED]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_BRANCH_SELECTED]).toBeInstanceOf(Function);
                 });
     
                 it('commits the branch', () => {
                     const branch = 'foobar';
                     jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_BRANCH_SELECTED](mocks, branch);
+                    datasourceModule.actions[DATASOURCE_BRANCH_SELECTED](mocks, branch);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_BRANCH_SELECTED, branch);
                 });
             });
     
             describe('clear', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_BRANCH_CLEAR]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_BRANCH_CLEAR]).toBeInstanceOf(Function);
                 });
     
                 it('commits REPOSITORY_CLEAR', () => {
                     jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_BRANCH_CLEAR](mocks);
+                    datasourceModule.actions[DATASOURCE_BRANCH_CLEAR](mocks);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_BRANCH_CLEAR);
                 });
             });
         });
 
         describe('threatmodel', () => {
+
+            describe('fetch', () => {
+                const resp = {
+                    data: [ 'blah', 'blah2' ]
+                };
+                const deets = {
+                    repoName: 'repo',
+                    branch: 'branch'
+                };
+
+                beforeEach(async () => {
+                    jest.spyOn(threatmodelApi, 'modelsAsync').mockResolvedValue(resp);
+                    await datasourceModule.actions[DATASOURCE_THREATMODELS_FETCH](mocks, deets);
+                });
+
+                it('calls the models api', () => {
+                    expect(threatmodelApi.modelsAsync).toHaveBeenCalledWith(deets.repoName, deets.branch, mocks.rootState.auth.jwt);
+                });
+
+                it('commits the models', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(
+                        DATASOURCE_THREATMODELS_FETCH,
+                        resp.data
+                    );
+                });
+            });
+
             describe('selected', () => {
-                it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_THREATMODEL_SELECTED]).toBeInstanceOf(Function);
+                const resp = {
+                    data: {
+                        foo: 'bar'
+                    }
+                };
+                const deets = {
+                    repoName: 'repo',
+                    branch: 'branch',
+                    threatModel: 'my awesome model'
+                };
+
+                beforeEach(async () => {
+                    jest.spyOn(threatmodelApi, 'modelAsync').mockResolvedValue(resp);
+                    await datasourceModule.actions[DATASOURCE_THREATMODEL_SELECTED](mocks, deets);
+                });
+
+                it('retrieves the threat model', () => {
+                    expect(threatmodelApi.modelAsync).toHaveBeenCalledWith(
+                        deets.repoName,
+                        deets.branch,
+                        deets.threatModel,
+                        mocks.rootState.auth.jwt
+                    );
                 });
     
                 it('commits the threatmodel', () => {
-                    const threatModel = 'foobar';
-                    jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_THREATMODEL_SELECTED](mocks, threatModel);
-                    expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_THREATMODEL_SELECTED, threatModel);
+                    expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_THREATMODEL_SELECTED, resp.data);
                 });
             });
     
             describe('clear', () => {
                 it('is a function', () => {
-                    expect(providerModule.actions[DATASOURCE_THREATMODEL_CLEAR]).toBeInstanceOf(Function);
+                    expect(datasourceModule.actions[DATASOURCE_THREATMODEL_CLEAR]).toBeInstanceOf(Function);
                 });
     
                 it('commits THREATMODEL_CLEAR', () => {
                     jest.spyOn(mocks, 'commit');
-                    providerModule.actions[DATASOURCE_THREATMODEL_CLEAR](mocks);
+                    datasourceModule.actions[DATASOURCE_THREATMODEL_CLEAR](mocks);
                     expect(mocks.commit).toHaveBeenCalledWith(DATASOURCE_THREATMODEL_CLEAR);
                 });
             });
@@ -137,124 +259,170 @@ xdescribe('store/modules/datasource.js', () => {
     });
 
     describe('mutations', () => {
+        afterEach(() => {
+            datasourceModule.state.provider = '';
+        });
         describe('provider', () => {
             describe('clear', () => {
                 it('resets state.provider', () => {
-                    providerModule.state.provider = 'foobar';
-                    providerModule.mutations[DATASOURCE_PROVIDER_CLEAR](providerModule.state);
-                    expect(providerModule.state.provider).toEqual('');
+                    datasourceModule.state.provider = 'foobar';
+                    datasourceModule.state.foobar = {};
+                    datasourceModule.mutations[DATASOURCE_PROVIDER_CLEAR](datasourceModule.state);
+                    expect(datasourceModule.state.provider).toEqual('');
                 });
             });
     
             describe('selected', () => {
-                afterEach(() => {
-                    providerModule.state.provider = '';
-                });
-    
                 it('throws an error if an unrecognized provider is used', () => {
                     const fakeProvider = 'fake';
                     expect(
-                        () => providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, fakeProvider)
+                        () => datasourceModule.mutations[DATASOURCE_PROVIDER_SELECTED](datasourceModule.state, fakeProvider)
                     ).toThrowError(`"${fakeProvider}" is not a recognized provider`);
                 });
     
                 it('sets the selected provider', () => {
                     const provider = allProviders.github;
-                    providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, provider);
-                    expect(providerModule.state.provider).toEqual(provider);
+                    datasourceModule.mutations[DATASOURCE_PROVIDER_SELECTED](datasourceModule.state, provider);
+                    expect(datasourceModule.state.provider).toEqual(provider);
                 });
     
                 it('sets the provider config object', () => {
                     const provider = allProviders.github;
-                    providerModule.mutations[DATASOURCE_PROVIDER_SELECTED](providerModule.state, provider);
-                    expect(providerModule.state[provider]).toBeInstanceOf(Object);
+                    datasourceModule.mutations[DATASOURCE_PROVIDER_SELECTED](datasourceModule.state, provider);
+                    expect(datasourceModule.state[provider]).toBeInstanceOf(Object);
                 });
             });
         });
 
         describe('repository', () => {
-            describe('clear', () => {
-                it('resets state[provider].repository', () => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {
-                        repositoryName: 'foobar'
-                    };
-                    providerModule.mutations[DATASOURCE_REPOSITORY_CLEAR](providerModule.state);
-                    expect(providerModule.state.github.repositoryName).toEqual('');
+            afterEach(() => {
+                datasourceModule.state.provider = '';
+                datasource.state.repos.length = 0;
+                delete datasourceModule.state.github;
+            });
+
+            describe('fetch', () => {
+                const repos = [ 'one', 'two', 'three' ];
+                
+                beforeEach(() => {
+                    datasourceModule.mutations[DATASOURCE_REPOSITORY_FETCH](datasourceModule.state, repos);
                 });
 
-                it('resets state[provider].branch', () => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {
-                        repositoryName: 'foobar',
-                        branch: 'baz'
-                    };
-                    providerModule.mutations[DATASOURCE_REPOSITORY_CLEAR](providerModule.state);
-                    expect(providerModule.state.github.branch).toEqual('');
+                it('sets the repos', () => {
+                    expect(datasource.state.repos).toEqual(repos);
                 });
             });
     
             describe('selected', () => {
-                afterEach(() => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {};
+                beforeEach(() => {
+                    datasourceModule.state.provider = 'github';
+                    datasourceModule.state.github = {};
                 });
     
                 it('sets the selected repo', () => {
                     const repo = 'foobar';
-                    providerModule.mutations[DATASOURCE_REPOSITORY_SELECTED](providerModule.state, repo);
-                    expect(providerModule.state.github.repositoryName).toEqual(repo);
+                    datasourceModule.mutations[DATASOURCE_REPOSITORY_SELECTED](datasourceModule.state, repo);
+                    expect(datasourceModule.state.github.repositoryName).toEqual(repo);
+                });
+            });
+
+            describe('clear', () => {
+                it('resets state[provider].repository', () => {
+                    datasourceModule.state.provider = 'github';
+                    datasourceModule.state.github = {
+                        repositoryName: 'foobar'
+                    };
+                    datasourceModule.mutations[DATASOURCE_REPOSITORY_CLEAR](datasourceModule.state);
+                    expect(datasourceModule.state.github.repositoryName).toEqual('');
+                });
+
+                it('resets state[provider].branch', () => {
+                    datasourceModule.state.provider = 'github';
+                    datasourceModule.state.github = {
+                        repositoryName: 'foobar',
+                        branch: 'baz'
+                    };
+                    datasourceModule.mutations[DATASOURCE_REPOSITORY_CLEAR](datasourceModule.state);
+                    expect(datasourceModule.state.github.branch).toEqual('');
                 });
             });
         });
 
         describe('branch', () => {
-            describe('clear', () => {
-                it('resets state[provider].branch', () => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {
-                        repositoryName: 'foobar',
-                        branch: 'baz'
-                    };
-                    providerModule.mutations[DATASOURCE_BRANCH_CLEAR](providerModule.state);
-                    expect(providerModule.state.github.branch).toEqual('');
+            beforeEach(() => {
+                datasourceModule.state.provider = 'github';
+                datasourceModule.state.github = {
+                    repositoryName: 'foobar'
+                };
+            });
+
+            describe('fetch', () => {
+                const branches = [ 'b1', 'b2' ];
+                beforeEach(() => {
+                    datasourceModule.mutations[DATASOURCE_BRANCH_FETCH](datasourceModule.state, branches);
+                });
+
+                afterEach(() => {
+                    datasourceModule.state.branches.length = 0;
+                })
+
+                it('sets the branches', () => {
+                    expect(datasourceModule.state.branches).toEqual(branches);
                 });
             });
+            
             describe('selected', () => {
-                beforeEach(() => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {};
-                });
-    
                 it('sets the selected repo', () => {
                     const branch = 'foobar';
-                    providerModule.mutations[DATASOURCE_BRANCH_SELECTED](providerModule.state, branch);
-                    expect(providerModule.state.github.branch).toEqual(branch);
+                    datasourceModule.mutations[DATASOURCE_BRANCH_SELECTED](datasourceModule.state, branch);
+                    expect(datasourceModule.state.github.branch).toEqual(branch);
+                });
+            });
+
+            describe('clear', () => {
+                it('resets state[provider].branch', () => {
+                    datasourceModule.state.github.branch = 'baz';
+                    datasourceModule.mutations[DATASOURCE_BRANCH_CLEAR](datasourceModule.state);
+                    expect(datasourceModule.state.github.branch).toEqual('');
                 });
             });
         });
 
         describe('threatmodel', () => {
-            describe('clear', () => {
-                it('resets state[provider].threatmodel', () => {
-                    providerModule.state.github = {
-                        threatModel: 'foo'
-                    };
-                    providerModule.mutations[DATASOURCE_THREATMODEL_CLEAR](providerModule.state);
-                    expect(providerModule.state.github.threatModel).toEqual('');
+            beforeEach(() => {
+                datasourceModule.state.provider = 'github';
+                datasourceModule.state.github = {};
+                datasourceModule.state.models.length = 0;
+                delete datasourceModule.state.threatModel;
+            });
+
+            describe('fetch', () => {
+                const models = [ 'tm1', 'tm2' ];
+
+                beforeEach(() => {
+                    datasourceModule.mutations[DATASOURCE_THREATMODELS_FETCH](datasourceModule.state, models);
+                });
+
+                it('sets the threat models', () => {
+                    expect(datasourceModule.state.models).toEqual(models);
                 });
             });
 
             describe('selected', () => {
-                beforeEach(() => {
-                    providerModule.state.provider = 'github';
-                    providerModule.state.github = {};
-                });
-    
                 it('sets the selected threatmodel', () => {
                     const threatModel = 'foobar';
-                    providerModule.mutations[DATASOURCE_THREATMODEL_SELECTED](providerModule.state, threatModel);
-                    expect(providerModule.state.github.threatModel).toEqual(threatModel);
+                    datasourceModule.mutations[DATASOURCE_THREATMODEL_SELECTED](datasourceModule.state, threatModel);
+                    expect(datasourceModule.state.threatModel).toEqual(threatModel);
+                });
+            });
+
+            describe('clear', () => {
+                it('resets state[provider].threatmodel', () => {
+                    datasourceModule.state.github = {
+                        threatModel: 'foo'
+                    };
+                    datasourceModule.mutations[DATASOURCE_THREATMODEL_CLEAR](datasourceModule.state);
+                    expect(datasourceModule.state.github.threatModel).toEqual('');
                 });
             });
         });
@@ -262,7 +430,7 @@ xdescribe('store/modules/datasource.js', () => {
 
     describe('getters', () => {
         it('is an object', () => {
-            expect(providerModule.getters).toBeInstanceOf(Object);
+            expect(datasourceModule.getters).toBeInstanceOf(Object);
         });
     });
 });

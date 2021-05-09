@@ -1,11 +1,13 @@
 import {
     DATASOURCE_PROVIDER_SELECTED,
     DATASOURCE_PROVIDER_CLEAR,
-    DATASOURCE_REPOSITORY_SELECTED,
     DATASOURCE_REPOSITORY_FETCH,
+    DATASOURCE_REPOSITORY_SELECTED,
     DATASOURCE_REPOSITORY_CLEAR,
+    DATASOURCE_BRANCH_FETCH,
     DATASOURCE_BRANCH_SELECTED,
     DATASOURCE_BRANCH_CLEAR,
+    DATASOURCE_THREATMODELS_FETCH,
     DATASOURCE_THREATMODEL_SELECTED,
     DATASOURCE_THREATMODEL_CLEAR
 } from '@/store/actions/datasource.js';
@@ -31,12 +33,20 @@ describe('store/actions/datasource.js', () => {
         expect(DATASOURCE_REPOSITORY_CLEAR).not.toBeUndefined();
     });
 
+    it('defines a brarnch fetch action', () => {
+        expect(DATASOURCE_BRANCH_FETCH).not.toBeUndefined();
+    });
+
     it('defines a brarnch selected action', () => {
         expect(DATASOURCE_BRANCH_SELECTED).not.toBeUndefined();
     });
 
     it('defines a brarnch clear action', () => {
         expect(DATASOURCE_BRANCH_CLEAR).not.toBeUndefined();
+    });
+
+    it('defines a threatmodel fetch action', () => {
+        expect(DATASOURCE_THREATMODELS_FETCH).not.toBeUndefined();
     });
 
     it('defines a threatmodel selected action', () => {

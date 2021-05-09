@@ -1,5 +1,4 @@
 import api from './api.js';
-import store from '../store/index.js';
 
 const resource = '/api/threatmodel';
 
@@ -9,21 +8,47 @@ const extractRepoParts = (fullRepoName) => {
     return { org, repo };
 };
 
-const reposAsync = () => api.getAsync(`${resource}/repos`, store.state.auth.jwt);
+/**
+ * Gets the repos for the given user
+ * @param {String} token The JWT
+ * @returns {Promise}
+ */
+const reposAsync = (token) => api.getAsync(`${resource}/repos`, token);
 
-const branchesAsync = (fullRepoName) => {
+/**
+ * Gets the branches for the given repository
+ * @param {String} fullRepoName
+ * @param {String} token The JWT
+ * @returns {Promise}
+ */
+const branchesAsync = (fullRepoName, token) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`, store.state.auth.jwt);
+    return api.getAsync(`${resource}/${org}/${repo}/branches`, token);
 };
 
-const modelsAsync = (fullRepoName, branch) => {
+/**
+ * Gets them models available on a given branch in a given repo
+ * @param {String} fullRepoName
+ * @param {String} branch
+ * @param {String} token The JWT
+ * @returns {Promise}
+ */
+const modelsAsync = (fullRepoName, branch, token) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/models`, store.state.auth.jwt);
+    return api.getAsync(`${resource}/${org}/${repo}/${branch}/models`, token);
 };
 
-const modelAsync = (fullRepoName, branch, model) => {
+/**
+ * Gets the given model data
+ * @param {String} fullRepoName
+ * @param {String} branch
+ * @param {String} model
+ * @param {String} token
+ * @returns {Promise}
+ */
+const modelAsync = (fullRepoName, branch, model, token) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`, store.state.auth.jwt);
+    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`, token);
 }
 
 export default {

@@ -40,26 +40,29 @@ const state = {
 const actions = {
     [DATASOURCE_PROVIDER_CLEAR]: ({ commit }) => commit(DATASOURCE_PROVIDER_CLEAR),
     [DATASOURCE_PROVIDER_SELECTED]: ({ commit }, provider) => commit(DATASOURCE_PROVIDER_SELECTED, provider),
-    [DATASOURCE_REPOSITORY_FETCH]: async ({ commit }) => {
-        const resp = await threatmodelApi.reposAsync();
+    
+    [DATASOURCE_REPOSITORY_FETCH]: async ({ commit, rootState }) => {
+        const resp = await threatmodelApi.reposAsync(rootState.auth.jwt);
         commit(DATASOURCE_REPOSITORY_FETCH, resp.data.repos);
     },
     [DATASOURCE_REPOSITORY_SELECTED]: ({ commit }, repositoryName) => commit(DATASOURCE_REPOSITORY_SELECTED, repositoryName),
     [DATASOURCE_REPOSITORY_CLEAR]: ({ commit }) => commit(DATASOURCE_REPOSITORY_CLEAR),
-    [DATASOURCE_BRANCH_FETCH]: async ({ commit }, repoName) => {
-        const resp = await threatmodelApi.branchesAsync(repoName);
+    
+    [DATASOURCE_BRANCH_FETCH]: async ({ commit, rootState }, repoName) => {
+        const resp = await threatmodelApi.branchesAsync(repoName, rootState.auth.jwt);
         commit(DATASOURCE_BRANCH_FETCH, resp.data.branches);
     },
     [DATASOURCE_BRANCH_SELECTED]: ({ commit }, branch) => commit(DATASOURCE_BRANCH_SELECTED, branch),
     [DATASOURCE_BRANCH_CLEAR]: ({ commit }) => commit(DATASOURCE_BRANCH_CLEAR),
-    [DATASOURCE_THREATMODELS_FETCH]: async ({ commit }, repoDeets) => {
+    
+    [DATASOURCE_THREATMODELS_FETCH]: async ({ commit, rootState }, repoDeets) => {
         const { repoName, branch } = repoDeets;
-        const resp = await threatmodelApi.modelsAsync(repoName, branch);
+        const resp = await threatmodelApi.modelsAsync(repoName, branch, rootState.auth.jwt);
         commit(DATASOURCE_THREATMODELS_FETCH, resp.data);
     },
-    [DATASOURCE_THREATMODEL_SELECTED]: async ({ commit }, deets) => {
+    [DATASOURCE_THREATMODEL_SELECTED]: async ({ commit, rootState }, deets) => {
         const { repoName, branch, threatModel } = deets;
-        const resp = await threatmodelApi.modelAsync(repoName, branch, threatModel);
+        const resp = await threatmodelApi.modelAsync(repoName, branch, threatModel, rootState.auth.jwt);
         commit(DATASOURCE_THREATMODEL_SELECTED, resp.data);
     },
     [DATASOURCE_THREATMODEL_CLEAR]: ({ commit }) => commit(DATASOURCE_THREATMODEL_CLEAR)
@@ -74,6 +77,8 @@ const mutations = {
         state.provider = provider;
         state[provider] = {};
     },
+    
+
     [DATASOURCE_REPOSITORY_FETCH]: (state, repos) => {
         state.repos.length = 0;
         repos.forEach((repo, idx) => {
@@ -87,6 +92,7 @@ const mutations = {
         state[state.provider].repositoryName = '';
         state[state.provider].branch = '';
     },
+
     [DATASOURCE_BRANCH_FETCH]: (state, branches) => {
         state.branches.length = 0;
         branches.forEach((branch, idx) => {
@@ -99,6 +105,7 @@ const mutations = {
     [DATASOURCE_BRANCH_CLEAR]: (state) => {
         state[state.provider].branch = '';
     },
+
     [DATASOURCE_THREATMODELS_FETCH]: (state, models) => {
         state.models.length = 0;
         models.forEach((model, idx) => {

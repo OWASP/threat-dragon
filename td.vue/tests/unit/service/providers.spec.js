@@ -1,4 +1,4 @@
-import providers from '@/service/providers.js';
+import providers, { getDisplayName } from '@/service/providers.js';
 
 describe('service/providers.js', () => {
     describe('allProviders', () => {
@@ -30,6 +30,12 @@ describe('service/providers.js', () => {
             expect(() => {
                 providers.getDashboardActions('testingOnly');
             }).toThrowError(`No dashboard actions configured`);
+        });
+    });
+
+    describe('getDisplayName', () => {
+        it('gets the display name of a provider', () => {
+            expect(getDisplayName('github')).toEqual('GitHub');
         });
     });
 });
