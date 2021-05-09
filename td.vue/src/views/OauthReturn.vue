@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- TODO: Please wait or something -->
+        <!-- Add loading indicator -->
     </div>
 </template>
 
@@ -8,18 +8,17 @@
 import { mapState } from 'vuex';
 
 import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import loginApi from '@/service/loginApi.js';
 import router from '@/router/index.js';
 
 export default {
     name: 'OAuthReturn',
     computed: mapState({
-        provider: state => state.datasource.provider
+        provider: state => state.provider.selected
     }),
     async mounted() {
-        // TODO: Add error handling
-        const tokenReq = await fetch(`/api/oauth/${this.provider}?code=${this.$route.query.code}`);
-        const tokenResp = await tokenReq.json();
-        this.$store.dispatch(AUTH_SET_JWT, tokenResp.data);
+        const resp = await loginApi.completeLoginAsync(this.provider, this.$route.query.code);
+        this.$store.dispatch(AUTH_SET_JWT, resp.data);
         router.push('/dashboard');
     }
 }

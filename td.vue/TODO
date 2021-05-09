@@ -6,6 +6,7 @@
 - authentication / authorization improvements
 - Loading indicators
 - Pagination
+- Deep linking
 - refresh tokens
 - Warn when token expiring
 - Get refresh token when making API calls

@@ -3,9 +3,10 @@ import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Repository from '@/views/Repository.vue';
+import { REPOSITORY_FETCH, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import router from '@/router/index.js';
 
-xdescribe('Repository.vue', () => {
+describe('Repository.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
@@ -14,20 +15,28 @@ xdescribe('Repository.vue', () => {
         localVue.use(Vuex);
         mockStore = new Vuex.Store({
             state: {
-                datasource: {
-                    provider: 'github',
-                    github: {}
+                provider: {
+                    selected: 'github'
+                },
+                repo: {
+                    all: [ 'repo1', 'repo2' ]
                 }
             },
             actions: {
-                [DATASOURCE_REPOSITORY_SELECTED]: () => {}
+                [REPOSITORY_FETCH]: () => {},
+                [REPOSITORY_SELECTED]: () => {}
             }
         });
         jest.spyOn(mockStore, 'dispatch');
+        router.push = jest.fn();
         wrapper = mount(Repository, {
             localVue,
             store: mockStore
         });
+    });
+
+    it('fetches the repos', () => {
+        expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH);
     });
 
     describe('layout', () => {
@@ -53,13 +62,9 @@ xdescribe('Repository.vue', () => {
     });
 
     describe('selecting a repo', () => {
-        beforeEach(() => {
-            router.push('/');
-        });
-
         it('dispatches the repository_selected event', async () => {
             await wrapper.findComponent(BListGroupItem).trigger('click');
-            expect(mockStore.dispatch).toHaveBeenCalled();
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, expect.anything());
         });
 
         it('navigates to the branch view', async () => {
