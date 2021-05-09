@@ -1,0 +1,3 @@
+export const BRANCH_CLEAR = 'BRANCH_CLEAR';
+export const BRANCH_FETCH = 'BRANCH_FETCH';
+export const BRANCH_SELECTED = 'BRANCH_SELECTED';

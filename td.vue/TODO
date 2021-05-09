@@ -2,11 +2,14 @@
 - title
 - edit views
 - Update tests (most are broken after backend integration)
+- Refactor views to use new stores and actions
+- Logout
 - authentication / authorization improvements
 - Loading indicators
 - Pagination
 - refresh tokens
-- Update back-end to use the same data format for everything
+- Warn when token expiring
+- Get refresh token when making API calls
 - Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
 - BUG: JWT sometimes cannot decode, JSON.parse fails (Probably due to IV having unicode characters?)
