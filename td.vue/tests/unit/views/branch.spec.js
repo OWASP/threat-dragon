@@ -3,7 +3,6 @@ import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Branch from '@/views/Branch.vue';
-import { DATASOURCE_REPOSITORY_CLEAR, DATASOURCE_BRANCH_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
 xdescribe('Branch.vue', () => {

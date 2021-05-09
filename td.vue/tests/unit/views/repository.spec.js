@@ -3,7 +3,6 @@ import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Repository from '@/views/Repository.vue';
-import { DATASOURCE_REPOSITORY_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
 xdescribe('Repository.vue', () => {

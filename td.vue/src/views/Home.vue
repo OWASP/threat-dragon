@@ -53,8 +53,7 @@
 
 <script>
 import { allProviders } from '@/service/providers.js';
-import { DATASOURCE_PROVIDER_SELECTED } from '@/store/actions/datasource.js';
-import router from '@/router/index.js';
+import providerActions from '@/store/actions/provider.js';
 
 export default {
     name: 'Home',
@@ -65,7 +64,7 @@ export default {
     },
     methods: {
         async onProviderClick(providerName) {
-            this.$store.dispatch(DATASOURCE_PROVIDER_SELECTED, providerName);
+            this.$store.dispatch(providerActions.selected, providerName);
             const loginUrlReq = await fetch(`/api/login/${providerName}`);
             const resp = await loginUrlReq.json();
             window.location.href = resp.data;

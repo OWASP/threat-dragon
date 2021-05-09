@@ -27,7 +27,7 @@ const actions = {
             rootState.repo.selected,
             rootState.branch.selected,
             state.selected,
-            rootState.auth.selected
+            rootState.auth.jwt
         );
         commit(THREATMODEL_FETCH, resp.data);
     },

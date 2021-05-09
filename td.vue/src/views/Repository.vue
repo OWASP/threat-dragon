@@ -26,21 +26,21 @@
 import { mapState } from 'vuex';
 
 import { getDisplayName } from '@/service/providers.js';
-import { DATASOURCE_REPOSITORY_FETCH, DATASOURCE_REPOSITORY_SELECTED } from '@/store/actions/datasource.js';
+import repoActions from '@/store/actions/repository.js';
 import router from '@/router/index.js';
 
 export default {
     name: 'Repository',
     computed: mapState({
-        provider: state => getDisplayName(state.datasource.provider),
-        repositories: state => state.datasource.repos
+        provider: state => getDisplayName(state.provider.selected),
+        repositories: state => state.repo.all
     }),
     mounted() {
-        this.$store.dispatch(DATASOURCE_REPOSITORY_FETCH);
+        this.$store.dispatch(repoActions.fetch);
     },
     methods: {
         onRepoClick(repoName) {
-            this.$store.dispatch(DATASOURCE_REPOSITORY_SELECTED, repoName);
+            this.$store.dispatch(repoActions.selected, repoName);
             router.push('/branch');
         }
     }

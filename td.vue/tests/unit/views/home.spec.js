@@ -5,7 +5,6 @@ import Vuex from 'vuex';
 
 import Home from '@/views/Home.vue';
 import router from '@/router/index.js';
-import { DATASOURCE_PROVIDER_SELECTED } from '@/store/actions/datasource.js';
 
 xdescribe('Home.vue', () => {
     let wrapper, localVue, mockStore;

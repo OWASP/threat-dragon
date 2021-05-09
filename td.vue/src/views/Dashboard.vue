@@ -32,6 +32,8 @@
 </style>
 
 <script>
+import { mapState } from 'vuex';
+
 import TdDashboardAction from '@/components/DashboardAction.vue';
 import { getDashboardActions } from '@/service/providers.js';
 
@@ -40,10 +42,8 @@ export default {
     components: {
         TdDashboardAction
     },
-    data() {
-        return {
-            actions: getDashboardActions(this.$store.state.datasource.provider)
-        };
-    }
+    computed: mapState({
+        actions: state => getDashboardActions(state.provider.selected)
+    })
 };
 </script>

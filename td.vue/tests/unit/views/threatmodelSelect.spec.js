@@ -4,11 +4,6 @@ import Vuex from 'vuex';
 
 import ThreatmodelSelect from '@/views/ThreatmodelSelect.vue';
 import router from '@/router/index.js';
-import {
-    DATASOURCE_REPOSITORY_CLEAR,
-    DATASOURCE_BRANCH_CLEAR,
-    DATASOURCE_THREATMODEL_SELECTED
-} from '@/store/actions/datasource.js';
 
 xdescribe('ThreatmodelSelect.vue', () => {
     let wrapper, localVue, mockStore;

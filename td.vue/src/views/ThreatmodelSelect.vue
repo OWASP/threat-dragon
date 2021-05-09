@@ -32,44 +32,36 @@
 <script>
 import { mapState } from 'vuex';
 
-import {
-    DATASOURCE_BRANCH_CLEAR,
-    DATASOURCE_REPOSITORY_CLEAR,
-    DATASOURCE_THREATMODELS_FETCH,
-    DATASOURCE_THREATMODEL_SELECTED
-} from '@/store/actions/datasource.js';
+import branchActions from '@/store/actions/branch.js';
+import repoActions from '@/store/actions/repository.js';
+import threatmodelActions from '@/store/actions/threatmodel.js';
 import router from '@/router/index.js';
 
 export default {
     name: 'ThreatmodelSelect',
     computed: mapState({
-        repoName: state => state.datasource[state.datasource.provider].repositoryName,
-        branch: state => state.datasource[state.datasource.provider].branch,
-        threatModels: state => state.datasource.models
+        repoName: state => state.repo.selected,
+        branch: state => state.branch.selected,
+        threatModels: state => state.threatmodel.all
     }),
     mounted() {
         const deets = {
             repoName: this.repoName,
             branch: this.branch
         };
-        this.$store.dispatch(DATASOURCE_THREATMODELS_FETCH, deets);
+        this.$store.dispatch(threatmodelActions.fetchAll);
     },
     methods: {
         selectBranchClick() {
-            this.$store.dispatch(DATASOURCE_BRANCH_CLEAR);
+            this.$store.dispatch(branchActions.clear);
             router.push('/branch');
         },
         selectRepoClick() {
-            this.$store.dispatch(DATASOURCE_REPOSITORY_CLEAR);
+            this.$store.dispatch(repoActions.clear);
             router.push('/repository');
         },
         onThreatmodelClick(threatModel) {
-            const deets = {
-                repoName: this.repoName,
-                branch: this.branch,
-                threatModel
-            };
-            this.$store.dispatch(DATASOURCE_THREATMODEL_SELECTED, deets);
+            this.$store.dispatch(threatmodelActions.selected, threatModel);
             router.push('/threatmodel');
         }
     }

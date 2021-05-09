@@ -113,8 +113,8 @@ export default {
         TdFormButton
     },
     computed: mapState({
-        model: (state) => state.datasource.threatModel,
-        contributors: (state) => state.datasource.threatModel.detail.contributors.map(x => x.name).join(', ')
+        model: (state) => state.threatmodel.data,
+        contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', ')
     }),
     methods: {
         onEditClick(evt) {

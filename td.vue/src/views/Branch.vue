@@ -30,25 +30,26 @@
 <script>
 import { mapState } from 'vuex';
 
-import { DATASOURCE_REPOSITORY_CLEAR, DATASOURCE_BRANCH_SELECTED, DATASOURCE_BRANCH_FETCH } from '@/store/actions/datasource.js';
+import branchActions from '@/store/actions/branch.js';
+import repoActions from '@/store/actions/repository.js'
 import router from '@/router/index.js';
 
 export default {
     name: 'Branch',
     computed: mapState({
-        repoName: state => state.datasource[state.datasource.provider].repositoryName,
-        branches: state => state.datasource.branches
+        repoName: state => state.repo.selected,
+        branches: state => state.branch.all
     }),
     mounted() {
-        this.$store.dispatch(DATASOURCE_BRANCH_FETCH, this.repoName);
+        this.$store.dispatch(branchActions.fetch);
     },
     methods: {
         selectRepoClick() {
-            this.$store.dispatch(DATASOURCE_REPOSITORY_CLEAR);
+            this.$store.dispatch(repoActions.clear);
             router.push('/repository');
         },
         onBranchClick(branch) {
-            this.$store.dispatch(DATASOURCE_BRANCH_SELECTED, branch);
+            this.$store.dispatch(branchActions.selected, branch);
             router.push('/threatmodel-select');
         }
     }

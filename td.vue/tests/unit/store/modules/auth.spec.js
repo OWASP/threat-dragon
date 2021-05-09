@@ -1,5 +1,5 @@
-import authModule from '@/store/modules/auth.js';
-import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT } from '@/store/actions/auth.js';
+import authModule, { clearState } from '@/store/modules/auth.js';
 
 describe('store/modules/auth.js', () => {
     const mocks = {
@@ -7,6 +7,14 @@ describe('store/modules/auth.js', () => {
     };
     const jwtBody = { foo: 'bar', user: { username: 'whatever' }};
     const jwt = 'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah';
+
+    beforeEach(() => {
+        jest.spyOn(mocks, 'commit');
+    });
+
+    afterEach(() => {
+        clearState(authModule.state);
+    });
 
     describe('state', () => {
         it('is an object', () => {
@@ -27,25 +35,49 @@ describe('store/modules/auth.js', () => {
     });
 
     describe('actions', () => {
-        describe('set jwt', () => {
-                it('is a function', () => {
-                    expect(authModule.actions[AUTH_SET_JWT]).toBeInstanceOf(Function);
-                });
+        describe('clear', () => {
+            it('commits clear', () => {
+                authModule.actions[AUTH_CLEAR](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_CLEAR);
+            });
+        });
 
-                it('commits the jwt', () => {
-                    jest.spyOn(mocks, 'commit');
-                    authModule.actions[AUTH_SET_JWT](mocks, jwt);
-                    expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, jwt);
-                });
+        describe('set jwt', () => {
+            it('is a function', () => {
+                expect(authModule.actions[AUTH_SET_JWT]).toBeInstanceOf(Function);
+            });
+
+            it('commits the jwt', () => {
+                authModule.actions[AUTH_SET_JWT](mocks, jwt);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, jwt);
+            });
         });
     });
 
     describe('mutations', () => {
+        describe('clear', () => {
+            beforeEach(() => {
+                authModule.state.jwt = 'test';
+                authModule.state.user = { foo: 'bar' };
+                authModule.state.jwtBody = { bar: 'baz' };
+                authModule.mutations[AUTH_CLEAR](authModule.state);
+            });
+
+            it('clears the jwt', () => {
+                expect(authModule.state.jwt).toEqual('');
+            });
+
+            it('clears the user', () => {
+                expect(authModule.state.user).toEqual({});
+            });
+
+            it('clears the jwtBody', () => {
+                expect(authModule.state.jwtBody).toEqual({});
+            });
+        });
+
         describe('set jwt', () => {
             beforeEach(() => {
-                authModule.state.jwt = '';
-                authModule.state.user = {};
-                authModule.state.jwtBody = {};
                 authModule.mutations[AUTH_SET_JWT](authModule.state, jwt);
             });
 
