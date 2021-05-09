@@ -5,7 +5,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import TdFormButton from '@/components/FormButton.vue';
 
 describe('components/FormButton.vue', () => {
-    const onClick = () => {},
+    const onBtnClick = () => {},
         icon = 'icon',
         iconPreface = 'foo',
         text = 'bar',
@@ -20,7 +20,7 @@ describe('components/FormButton.vue', () => {
         wrapper = shallowMount(TdFormButton, {
             localVue,
             propsData: {
-                onClick,
+                onBtnClick,
                 icon,
                 iconPreface,
                 text,
@@ -29,12 +29,12 @@ describe('components/FormButton.vue', () => {
         });
     });
 
-    it('reads the onClick value', () => {
-        expect(wrapper.props().onClick).toEqual(onClick);
+    it('reads the onBtnClick value', () => {
+        expect(wrapper.props().onBtnClick).toEqual(onBtnClick);
     });
 
-    it('requires the onClick prop', () => {
-        expect(TdFormButton.props.onClick.required).toBe(true);
+    it('requires the onBtnClick prop', () => {
+        expect(TdFormButton.props.onBtnClick.required).toBe(true);
     });
 
     it('reads the icon value', () => {

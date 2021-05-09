@@ -1,6 +1,6 @@
 <template>
     <b-btn
-        @click="onClick"
+        @click="onBtnClick"
         :class="{ 'td-primary-btn': isPrimary, 'td-default-btn': !isPrimary }"
     >
         <font-awesome-icon
@@ -27,7 +27,7 @@ button {
 export default {
     name: 'TdFormButton',
     props: {
-        onClick: {
+        onBtnClick: {
             type: Function,
             required: true
         },

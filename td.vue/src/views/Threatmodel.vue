@@ -1,7 +1,7 @@
 <template>
     <div v-if="model">
         <!-- metadata -->
-        <b-row class="mb-4">
+        <b-row class="mb-4" id="title_row">
             <b-col>
                 <b-card
                     :header="model.summary.title">
@@ -10,7 +10,7 @@
                             <div>
                                 <strong>Owner:</strong>
                             </div>
-                            <div>
+                            <div id="tm_owner">
                                 {{ model.summary.owner }}
                             </div>
                         </b-col>
@@ -18,7 +18,7 @@
                             <div>
                                 <strong>Reviewer:</strong>
                             </div>
-                            <div>
+                            <div id="tm_reviewer">
                                 {{ model.detail.reviewer }}
                             </div>
                         </b-col>
@@ -26,7 +26,7 @@
                             <div>
                                 <strong>Contributors:</strong>
                             </div>
-                            <div>
+                            <div id="tm_contributors">
                                 {{ contributors }}
                             </div>
                         </b-col>
@@ -42,7 +42,7 @@
                     header="High level system description">
                     <b-row class="tm-card">
                         <b-col>
-                            <p>{{ model.summary.description }}</p>
+                            <p id="tm_description">{{ model.summary.description }}</p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -52,6 +52,7 @@
         <!-- Diagrams -->
         <b-row class="mb-4">
             <b-col
+                class="tm_diagram"
                 md="3"
                 v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
@@ -76,15 +77,15 @@
                 <b-btn-group>
                     <td-form-button
                         :isPrimary="true"
-                        :onClick="onEditClick"
+                        :onBtnClick="onEditClick"
                         icon="edit"
                         text="Edit" />
                     <td-form-button
-                        :onClick="onReportClick"
+                        :onBtnClick="onReportClick"
                         icon="file-alt"
                         text="Report" />
                     <td-form-button
-                        :onClick="onDeleteClick"
+                        :onBtnClick="onDeleteClick"
                         icon="times"
                         text="Delete" />
                 </b-btn-group>
