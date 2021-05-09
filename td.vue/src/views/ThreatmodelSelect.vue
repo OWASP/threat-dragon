@@ -45,10 +45,6 @@ export default {
         threatModels: state => state.threatmodel.all
     }),
     mounted() {
-        const deets = {
-            repoName: this.repoName,
-            branch: this.branch
-        };
         this.$store.dispatch(threatmodelActions.fetchAll);
     },
     methods: {

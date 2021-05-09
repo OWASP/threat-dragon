@@ -2,10 +2,16 @@ import { BootstrapVue, BContainer, BJumbotron, BListGroup, BListGroupItem } from
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { BRANCH_CLEAR } from '@/store/actions/branch.js';
+import { REPOSITORY_CLEAR } from '@/store/actions/repository.js';
+import { THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED } from '@/store/actions/threatmodel.js';
 import ThreatmodelSelect from '@/views/ThreatmodelSelect.vue';
 import router from '@/router/index.js';
 
-xdescribe('ThreatmodelSelect.vue', () => {
+describe('ThreatmodelSelect.vue', () => {
+    const repo = 'repo';
+    const branch = 'branch';
+    const threatModels = [ 'tm1', 'tm2' ];
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
@@ -14,24 +20,27 @@ xdescribe('ThreatmodelSelect.vue', () => {
         localVue.use(Vuex);
         mockStore = new Vuex.Store({
             state: {
-                datasource: {
-                    provider: 'github',
-                    github: {
-                        branch: 'foo'
-                    }
-                }
+                repo: { selected: repo },
+                branch: { selected: branch },
+                threatmodel: { all: threatModels }
             },
             actions: {
-                [DATASOURCE_REPOSITORY_CLEAR]: () => {},
-                [DATASOURCE_BRANCH_CLEAR]: () => {},
-                [DATASOURCE_THREATMODEL_SELECTED]: () => {}
+                [BRANCH_CLEAR]: () => {},
+                [REPOSITORY_CLEAR]: () => {},
+                [THREATMODEL_FETCH_ALL]: () => {},
+                [THREATMODEL_SELECTED]: () => {}
             }
         });
         jest.spyOn(mockStore, 'dispatch');
+        router.push = jest.fn();
         wrapper = mount(ThreatmodelSelect, {
             localVue,
             store: mockStore
         });
+    });
+
+    it('loads the threatmodels', () => {
+        expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH_ALL);
     });
 
     describe('layout', () => {
@@ -57,27 +66,18 @@ xdescribe('ThreatmodelSelect.vue', () => {
     });
 
     describe('going back to repo page', () => {
-        beforeEach(() => {
-            router.push('/');
-        });
-
         it('dispatches the repository_clear event', async () => {
             await wrapper.find('#return-to-repo').trigger('click');
-            expect(mockStore.dispatch).toHaveBeenCalled();
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
         });
 
         it('navigates to the repository view', async () => {
-            jest.spyOn(router, 'push');
             await wrapper.find('#return-to-repo').trigger('click');
             expect(router.push).toHaveBeenCalledWith('/repository');
         });
     });
 
     describe('going back to branch page', () => {
-        beforeEach(() => {
-            router.push('/');
-        });
-
         it('dispatches the branch_clear event', async () => {
             await wrapper.find('#return-to-branch').trigger('click');
             expect(mockStore.dispatch).toHaveBeenCalled();
@@ -91,17 +91,12 @@ xdescribe('ThreatmodelSelect.vue', () => {
     });
 
     describe('selecting a threat model', () => {
-        beforeEach(() => {
-            router.push('/');
-        });
-
         it('dispatches the threatmodel_selected event', async () => {
             await wrapper.findComponent(BListGroupItem).trigger('click');
-            expect(mockStore.dispatch).toHaveBeenCalled();
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_SELECTED, 'tm1');
         });
 
         it('navigates to the threatmodel view', async () => {
-            jest.spyOn(router, 'push');
             await wrapper.findComponent(BListGroupItem).trigger('click');
             expect(router.push).toHaveBeenCalledWith('/threatmodel');
         });
