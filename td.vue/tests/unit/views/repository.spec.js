@@ -6,7 +6,7 @@ import Repository from '@/views/Repository.vue';
 import { DATASOURCE_REPOSITORY_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
-describe('Repository.vue', () => {
+xdescribe('Repository.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {

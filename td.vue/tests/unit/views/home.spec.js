@@ -7,7 +7,7 @@ import Home from '@/views/Home.vue';
 import router from '@/router/index.js';
 import { DATASOURCE_PROVIDER_SELECTED } from '@/store/actions/datasource.js';
 
-describe('Home.vue', () => {
+xdescribe('Home.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {

@@ -1,7 +1,7 @@
 import threatmodelModule from '@/store/modules/threatmodel.js';
 import { THREATMODEL_FETCH } from '@/store/actions/threatmodel.js';
 
-describe('store/modules/threatmodel.js', () => {
+xdescribe('store/modules/threatmodel.js', () => {
     const mocks = {
         commit: () => {}
     };

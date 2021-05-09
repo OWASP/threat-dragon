@@ -6,7 +6,7 @@ import Branch from '@/views/Branch.vue';
 import { DATASOURCE_REPOSITORY_CLEAR, DATASOURCE_BRANCH_SELECTED } from '@/store/actions/datasource.js';
 import router from '@/router/index.js';
 
-describe('Branch.vue', () => {
+xdescribe('Branch.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {

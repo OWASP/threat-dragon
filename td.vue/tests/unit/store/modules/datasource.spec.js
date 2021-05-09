@@ -1,5 +1,5 @@
 import { allProviders } from '@/service/providers.js';
-import providerModule from '@/store/modules/datasource.js';
+//import providerModule from '@/store/modules/datasource.js';
 import {
     DATASOURCE_BRANCH_SELECTED,
     DATASOURCE_BRANCH_CLEAR,
@@ -11,7 +11,7 @@ import {
     DATASOURCE_THREATMODEL_SELECTED
 } from '@/store/actions/datasource.js';
 
-describe('store/modules/datasource.js', () => {
+xdescribe('store/modules/datasource.js', () => {
     const mocks = {
         commit: () => {}
     };

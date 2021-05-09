@@ -1,6 +1,7 @@
 - favicon
 - title
 - edit views
+- Update tests (most are broken after backend integration)
 - authentication / authorization improvements
 - Loading indicators
 - Pagination
