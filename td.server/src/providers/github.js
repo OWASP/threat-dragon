@@ -12,7 +12,7 @@ import repo from '../repositories/threatmodelrepository.js';
  * Determines if the GitHub provider is configured
  * @returns {Boolean}
  */
-const isConfigured = () => !!env.get().config.GITHUB_CLIENT_ID;
+const isConfigured = () => Boolean(env.get().config.GITHUB_CLIENT_ID);
 
 /**
  * Gets the Github OAuth Login URL
@@ -60,7 +60,7 @@ const completeLoginAsync = async (code) => {
         username: fullUser.login,
         repos_url: fullUser.repos_url
     };
-    return await jwt.createAsync('github', providerResp.data, user);
+    return jwt.createAsync('github', providerResp.data, user);
 };
 
 export default {

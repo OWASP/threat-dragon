@@ -9,9 +9,7 @@ const oauthReturn = (req, res) => {
     return res.redirect(redirectUrl);
 };
 
-const completeLogin = async (req, res) => await responseWrapper.sendResponseAsync(async () => {
-    return await provider.completeLoginAsync(req.query.code);
-}, req, res);
+const completeLogin = (req, res) => responseWrapper.sendResponseAsync(() => provider.completeLoginAsync(req.query.code), req, res);
 
 
 export default {

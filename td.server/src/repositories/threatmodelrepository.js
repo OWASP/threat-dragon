@@ -4,7 +4,8 @@ const reposAsync = (page, accessToken) => github.client(accessToken).me().
 reposAsync(page);
 
 const userAsync = async (accessToken) => {
-    const resp = await github.client(accessToken).me().infoAsync();
+    const resp = await github.client(accessToken).me().
+infoAsync();
     return resp[0];
 };
 
