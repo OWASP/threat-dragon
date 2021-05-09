@@ -1,20 +1,18 @@
 import { expect } from 'chai';
-import session from 'express-session';
 import sinon from 'sinon';
 
 import azureTableSession from '../../src/config/azuretablesession.config.js';
 import env from '../../src/env/Env.js';
 import loggers from '../../src/config/loggers.config.js';
+import { getMockApp } from '../express.mocks.js';
 import sessionConfig from '../../src/config/session.config.js';
 
 describe('session config tests', () => {
-    const mockApp = {
-        use: () => {}
-    };
     const sessionSigningKey = 'somekey';
+    let mockApp;
 
     beforeEach(() => {
-        sinon.spy(mockApp, 'use');
+        mockApp = getMockApp();
         sinon.spy(loggers.logger, 'error');
     });
 

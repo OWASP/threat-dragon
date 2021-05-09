@@ -4,14 +4,12 @@ import sinon from 'sinon';
 
 import githubController from '../../src/controllers/githublogincontroller.js';
 import homeController from '../../src/controllers/homecontroller.js';
+import { getMockApp } from '../express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 
 xdescribe('route config tests', () => {
-    const mockApp = {
-        use: () => {}
-    };
-
+    let mockApp;
     const mockRouter = {
         get: () => {},
         post: () => {},
@@ -20,8 +18,8 @@ xdescribe('route config tests', () => {
     };
 
     beforeEach(() => {
+        mockApp = getMockApp();
         sinon.stub(express, 'Router').returns(mockRouter);
-        sinon.spy(mockApp, 'use');
         sinon.spy(mockRouter, 'get');
         sinon.spy(mockRouter, 'post');
         sinon.spy(mockRouter, 'put');

@@ -3,34 +3,16 @@ import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
+import { getMockRequest, getMockResponse } from '../express.mocks.js';
 
 xdescribe('homecontroller tests', () => {
-    const mockRequest = {
-        log: {
-            info: () => {},
-            error: () => {}
-        },
-        csrfToken: () => 'some_token',
-        logOut: () => {},
-        user: {
-            profile: {
-                username: 'test user',
-                provider: 'idp'
-            }
-        },
-        session: {
-            destroy: () => {}
-        }
-    };
+    let mockRequest, mockResponse;
 
-    const mockResponse = {
-        sendFile: () => {},
-        cookie: () => {},
-        clearCookie: () => {},
-        render: () => {},
-        redirect: () => {}
-    };
-    
+    beforeEach(() => {
+        mockRequest = getMockRequest();
+        mockResponse = getMockResponse();
+    });
+
     afterEach(() => {
         sinon.restore();
     });
@@ -43,9 +25,6 @@ xdescribe('homecontroller tests', () => {
                 }
             };
             sinon.stub(env, 'get').returns(mockEnv);
-            sinon.spy(mockResponse, 'cookie');
-            sinon.spy(mockResponse, 'sendFile');
-            sinon.spy(mockRequest.log, 'error');
             homeController.index(mockRequest, mockResponse);
         });
 
@@ -71,7 +50,6 @@ xdescribe('homecontroller tests', () => {
 
     describe('login', () => {
         beforeEach(() => {
-            sinon.spy(mockResponse, 'render');
             homeController.login(mockRequest, mockResponse);
         });
 
@@ -85,7 +63,6 @@ xdescribe('homecontroller tests', () => {
     
     describe('logoutform', () => {
         beforeEach(() => {
-            sinon.spy(mockResponse, 'render');
             homeController.logoutform(mockRequest, mockResponse);
         });
 
@@ -102,12 +79,6 @@ xdescribe('homecontroller tests', () => {
     
     describe('logout', () => {
         beforeEach(() => {
-            const mockDestroy = (cb) => cb();
-            sinon.spy(mockRequest, 'logOut');
-            sinon.spy(mockResponse, 'clearCookie');
-            sinon.stub(mockRequest.session, 'destroy').callsFake(mockDestroy);
-            sinon.spy(mockRequest.log, 'info');
-            sinon.spy(mockResponse, 'redirect');
             homeController.logout(mockRequest, mockResponse);
         });
 
@@ -147,7 +118,6 @@ xdescribe('homecontroller tests', () => {
                 }
             };
             sinon.stub(env, 'get').returns(mockEnv);
-            sinon.spy(mockResponse, 'cookie');
             homeController.index(mockRequest, mockResponse);
         });
         
