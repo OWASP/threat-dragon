@@ -8,7 +8,7 @@ import { getMockApp } from '../express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 
-xdescribe('route config tests', () => {
+describe('route config tests', () => {
     let mockApp;
     const mockRouter = {
         get: () => {},
@@ -51,11 +51,10 @@ xdescribe('route config tests', () => {
     });
 
     describe('login and logout', () => {
-        it('routes GET /login', () => {
+        it('routes GET /api/login/github', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/login',
-                sinon.match.any, // csrf protection
-                homeController.login
+                '/api/login/github',
+                githubController.login
             );
         });
 
@@ -77,26 +76,17 @@ xdescribe('route config tests', () => {
     });
 
     describe('github sign in', () => {
-        it('routes POST /login', () => {
-            expect(mockRouter.post).to.have.been.calledWith(
-                '/login',
-                sinon.match.any, // csrf protection
-                githubController.doLogin
-            );
-        });
-
-        it('routes GET /login/github', () => {
+        it('routes GET /api/oauth/github', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/login/github',
-                githubController.doLogin
-            );
-        });
-
-        it('routes GET /oauth/github', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/oauth/github',
-                githubController.doLogin,
+                '/api/oauth/github',
                 githubController.completeLogin
+            );
+        });
+
+        it('routes GET /api/oauth/return', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/oauth/return',
+                githubController.oauthReturn
             );
         });
     });
