@@ -35,7 +35,7 @@
 import { mapState } from 'vuex';
 
 import branchActions from '@/store/actions/branch.js';
-import repoActions from '@/store/actions/repository.js'
+import repoActions from '@/store/actions/repository.js';
 import router from '@/router/index.js';
 
 export default {

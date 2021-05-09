@@ -10,7 +10,7 @@ describe('Repository.vue', () => {
     const jwt = 'foobar';
     const code = '1234-12345';
     const provider = 'test';
-    let wrapper, localVue, mockStore;
+    let localVue, mockStore;
 
     beforeEach(() => {
         localVue = createLocalVue();
@@ -29,7 +29,7 @@ describe('Repository.vue', () => {
         router.query = { code: code };
         jest.spyOn(mockStore, 'dispatch');
         jest.spyOn(loginApi, 'completeLoginAsync').mockResolvedValue({ data: jwt });
-        wrapper = mount(OAuthReturn, {
+        mount(OAuthReturn, {
             localVue,
             store: mockStore,
             router

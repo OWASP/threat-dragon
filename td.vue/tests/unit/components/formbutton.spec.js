@@ -1,6 +1,6 @@
-import { BButton, BootstrapVue } from 'bootstrap-vue';
+import { BootstrapVue } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdFormButton from '@/components/FormButton.vue';
 

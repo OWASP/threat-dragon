@@ -21,5 +21,5 @@ export default {
         this.$store.dispatch(AUTH_SET_JWT, resp.data);
         router.push('/dashboard');
     }
-}
+};
 </script>

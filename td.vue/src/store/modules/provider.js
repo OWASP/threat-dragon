@@ -9,7 +9,7 @@ import providers from '../../service/providers.js';
 
 export const clearState = (state) => {
     state.all.length = 0;
-    state.selected = ''
+    state.selected = '';
 };
 
 const state = {
@@ -21,13 +21,13 @@ const actions = {
     [PROVIDER_CLEAR]: ({ commit }) => commit(PROVIDER_CLEAR),
     [PROVIDER_FETCH]: ({ commit }) => {
         // TODO: Get a list of configured providers from the backend
-        commit(PROVIDER_FETCH, Object.keys(providers.allProviders))
+        commit(PROVIDER_FETCH, Object.keys(providers.allProviders));
     },
     [PROVIDER_SELECTED]: ({ commit }, providerName) => {
         if (!providerName || !providers.allProviders[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
-        commit(PROVIDER_SELECTED, providerName)
+        commit(PROVIDER_SELECTED, providerName);
     }
 };
 

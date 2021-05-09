@@ -49,7 +49,7 @@ const modelsAsync = (fullRepoName, branch, token) => {
 const modelAsync = (fullRepoName, branch, model, token) => {
     const { org, repo } = extractRepoParts(fullRepoName);
     return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`, token);
-}
+};
 
 export default {
     branchesAsync,
