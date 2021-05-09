@@ -2,7 +2,6 @@
 - title
 - edit views
 - Update tests (most are broken after backend integration)
-- Refactor views to use new stores and actions
 - Logout
 - authentication / authorization improvements
 - Loading indicators

@@ -6,7 +6,7 @@ import Vuex from 'vuex';
 import Dashboard from '@/views/Dashboard.vue';
 import DashboardAction from '@/components/DashboardAction.vue';
 
-describe('Dashboard.vue', () => {
+xdescribe('Dashboard.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {

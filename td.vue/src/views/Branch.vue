@@ -5,7 +5,11 @@
                 <b-jumbotron class="text-center">
                     <h4>
                         Select a branch from
-                        <a :href="`https://www.github.com/${repoName}`" target="_blank">{{ repoName }}</a>
+                        <a
+                            id="repo_link"
+                            :href="`https://www.github.com/${repoName}`"
+                            target="_blank"
+                        >{{ repoName }}</a>
                         from the list below or
                         <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">choose another repo</a>
                     </h4>
