@@ -32,7 +32,7 @@ describe('Branch.vue', () => {
             }
         });
         jest.spyOn(mockStore, 'dispatch');
-        jest.spyOn(router, 'push').mockImplementation(() => {});
+        router.push = jest.fn();
         wrapper = mount(Branch, {
             localVue,
             store: mockStore

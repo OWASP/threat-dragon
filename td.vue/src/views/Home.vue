@@ -53,6 +53,7 @@
 
 <script>
 import { allProviders } from '@/service/providers.js';
+import loginApi from '@/service/loginApi.js';
 import providerActions from '@/store/actions/provider.js';
 
 export default {
@@ -65,8 +66,7 @@ export default {
     methods: {
         async onProviderClick(providerName) {
             this.$store.dispatch(providerActions.selected, providerName);
-            const loginUrlReq = await fetch(`/api/login/${providerName}`);
-            const resp = await loginUrlReq.json();
+            const resp = await loginApi.loginAsync(providerName);
             window.location.href = resp.data;
         }
     }

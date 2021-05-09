@@ -6,7 +6,7 @@ import Vuex from 'vuex';
 import Dashboard from '@/views/Dashboard.vue';
 import DashboardAction from '@/components/DashboardAction.vue';
 
-xdescribe('Dashboard.vue', () => {
+describe('Dashboard.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
@@ -17,8 +17,8 @@ xdescribe('Dashboard.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
             state: {
-                datasource: {
-                    provider: 'github'
+                provider: {
+                    selected: 'github'
                 }
             }
         });
@@ -37,7 +37,7 @@ xdescribe('Dashboard.vue', () => {
     });
 
     it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
+        expect(wrapper.findComponent(BJumbotron).text()).toContain('Welcome!');
     });
 
     it('has multiple actions', () => {

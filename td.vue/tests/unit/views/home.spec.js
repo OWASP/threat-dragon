@@ -4,9 +4,12 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Home from '@/views/Home.vue';
-import router from '@/router/index.js';
+import loginApi from '@/service/loginApi.js';
+import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 
-xdescribe('Home.vue', () => {
+describe('Home.vue', () => {
+    const redirectUrl = 'https://threatdragon.org';
+
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
@@ -16,18 +19,24 @@ xdescribe('Home.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
             actions: {
-                [DATASOURCE_PROVIDER_SELECTED]: () => {}
+                [PROVIDER_SELECTED]: () => {}
             }
+        });
+        jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: redirectUrl });
+        jest.spyOn(mockStore, 'dispatch');
+
+        // There may be a better way of doing this
+        // Source: https://remarkablemark.org/blog/2018/11/17/mock-window-location/
+        delete window.location;
+        window.location = { replace: jest.fn() };
+
+        wrapper = shallowMount(Home, {
+            localVue,
+            store: mockStore
         });
     });
 
     describe('layout', () => {
-        beforeEach(() => {
-            wrapper = shallowMount(Home, {
-                localVue,
-                store: mockStore
-            });
-        });
 
         it('renders the home view', () => {
             expect(wrapper.exists()).toBe(true);
@@ -59,17 +68,7 @@ xdescribe('Home.vue', () => {
         });
     });
 
-    describe('provider selected', () => {
-        beforeEach(() => {
-            jest.spyOn(mockStore, 'dispatch');
-            if (router.path !== '/') {
-                router.push('/');
-            }
-            wrapper = shallowMount(Home, {
-                localVue,
-                store: mockStore
-            });
-        });
+    describe('login with github', () => {
 
         it('dispatches the provider selected event to the store', async () => {
             await wrapper.findComponent(FontAwesomeIcon).trigger('click');
@@ -77,14 +76,8 @@ xdescribe('Home.vue', () => {
         });
 
         it('gets the oauth login link', async () => {
-
-            // TODO: Update home to use a service call as opposed to 
-            // window.fetch directly
-            // mock out the service call, that can be tested
-            // elsewhere.  The only place ever mocking fetch should
-            // really be the api spec
             await wrapper.findComponent(FontAwesomeIcon).trigger('click');
-            expect(router.push).toHaveBeenCalledWith('/dashboard');
+            expect(loginApi.loginAsync).toHaveBeenCalledWith('github');
         });
     });
 });
