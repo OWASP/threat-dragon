@@ -32,14 +32,6 @@ const index = (req, res) => {
 };
 
 /**
- * Renders the login view
- * @param {Object} req
- * @param {Object} res
- * @returns {Object}
- */
-const login = (req, res) => res.render('login', { csrfToken: req.csrfToken() });
-
-/**
  * Ensures the current user is logged in
  */
 const ensureLoggedIn = connectEnsureLoggedIn.ensureLoggedIn('/login');
@@ -81,7 +73,6 @@ const logout = (req, res) => {
 export default {
     ensureLoggedIn,
     index,
-    login,
     logout,
     logoutform
 };

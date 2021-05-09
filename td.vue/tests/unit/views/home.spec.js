@@ -63,7 +63,12 @@ describe('Home.vue', () => {
     describe('provider selected', () => {
         beforeEach(() => {
             jest.spyOn(mockStore, 'dispatch');
-            router.push('/');
+            console.log('LEO LEO LEO');
+            console.log(router.path);
+            console.log(router);
+            if (router.path !== '/') {
+                router.push('/');
+            }
             wrapper = shallowMount(Home, {
                 localVue,
                 store: mockStore
@@ -75,8 +80,13 @@ describe('Home.vue', () => {
             expect(mockStore.dispatch).toHaveBeenCalled();
         });
 
-        it('navigates to the dasbnoard page', async () => {
-            jest.spyOn(router, 'push');
+        it('gets the oauth login link', async () => {
+
+            // TODO: Update home to use a service call as opposed to 
+            // window.fetch directly
+            // mock out the service call, that can be tested
+            // elsewhere.  The only place ever mocking fetch should
+            // really be the api spec
             await wrapper.findComponent(FontAwesomeIcon).trigger('click');
             expect(router.push).toHaveBeenCalledWith('/dashboard');
         });

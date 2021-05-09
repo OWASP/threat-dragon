@@ -4,7 +4,6 @@
  */
 import { logger } from '../config/loggers.config.js';
 
-
 /**
  * Sends an error to the client
  * @param {String} error
@@ -61,7 +60,7 @@ export const unauthorized = (res) => sendError('You must login to continue', 401
  */
 export const forbidden = (res) => sendError('Forbidden', 403, 'Forbidden', res);
 
-module.exports = {
+export default {
     badRequest,
     forbidden,
     notFound,

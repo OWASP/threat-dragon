@@ -123,4 +123,54 @@ describe('router', () => {
             });
         });
     });
+
+    describe('threatmodel', () => {
+        let tmRoute;
+
+        beforeEach(() => {
+            tmRoute = router.getRoutes()
+                .find(x => x.name === 'Threatmodel');
+        });
+
+        it('uses the /branch path', () => {
+            expect(tmRoute.path).toEqual('/threatmodel');
+        });
+
+        describe('lazily loaded component', () => {
+            let tmComponent;
+
+            beforeEach(async () => {
+                tmComponent = await tmRoute.components.default();
+            });
+
+            it('uses the branch view', () => {
+                expect(tmComponent.default.name).toEqual('ThreatModel');
+            });
+        });
+    });
+
+    describe('oauth-return', () => {
+        let oauthReturnRoute;
+
+        beforeEach(() => {
+            oauthReturnRoute = router.getRoutes()
+                .find(x => x.name === 'OAuthReturn');
+        });
+
+        it('uses the /branch path', () => {
+            expect(oauthReturnRoute.path).toEqual('/oauth-return');
+        });
+
+        describe('lazily loaded component', () => {
+            let oauthReturnComponent;
+
+            beforeEach(async () => {
+                oauthReturnComponent = await oauthReturnRoute.components.default();
+            });
+
+            it('uses the branch view', () => {
+                expect(oauthReturnComponent.default.name).toEqual('OAuthReturn');
+            });
+        });
+    });
 });

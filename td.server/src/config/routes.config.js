@@ -13,13 +13,12 @@ const config = (app) => {
     router.get('/', csrfProtection, homeController.ensureLoggedIn, homeController.index);
     router.get('/healthz', (req, res) => res.send('true'));
 
-    router.get('/login', csrfProtection, homeController.login);
     router.get('/logoutform', csrfProtection, homeController.logoutform);
     router.post('/logout', csrfProtection, homeController.logout);
 
-    router.post('/login', csrfProtection, githubController.doLogin);
-    router.get('/login/github', githubController.doLogin);
-    router.get('/oauth/github', githubController.doLogin, githubController.completeLogin);
+    router.get('/api/login/github', githubController.login);
+    router.get('/api/oauth/return', githubController.oauthReturn);
+    router.get('/api/oauth/github', githubController.completeLogin);
 
     router.get('/threatmodel/repos', homeController.ensureLoggedIn, threatmodelController.repos);
     router.get('/threatmodel/:organisation/:repo/branches', homeController.ensureLoggedIn, threatmodelController.branches);

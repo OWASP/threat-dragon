@@ -6,6 +6,7 @@
     "start": "npm-run-all build start:server",
     "start:server": "node td.server/index.js",
     "postinstall": "npm-run-all install:server install:site",
+    "start:dev": "cd td.server && npm run start:dev",
     "install:server": "cd td.server && npm install",
     "install:site": "cd td.site && npm install",
     "test": "npm-run-all build pretest test:site test:server",

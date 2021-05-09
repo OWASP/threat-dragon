@@ -25,6 +25,7 @@
               <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn">
                 <span class="login-btn-icon">
                 <!-- TODO: Make component and load from available providers on backend -->
+                <!-- TODO: Need CSRF -->
                 <font-awesome-icon
                   :icon="['fab', 'github']"
                   size="2x"
@@ -63,9 +64,11 @@ export default {
         };
     },
     methods: {
-        onProviderClick(providerName) {
+        async onProviderClick(providerName) {
             this.$store.dispatch(DATASOURCE_PROVIDER_SELECTED, providerName);
-            router.push('/dashboard');
+            const loginUrlReq = await fetch(`/api/login/${providerName}`);
+            const resp = await loginUrlReq.json();
+            window.location.href = resp.data;
         }
     }
 };

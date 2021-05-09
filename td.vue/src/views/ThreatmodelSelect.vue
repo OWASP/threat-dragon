@@ -20,7 +20,7 @@
                         v-for="(threatModel, idx) in threatModels"
                         :key="idx"
                         href="javascript:void(0)"
-                        @click="onThreatmodelClick(threatModels.value)"
+                        @click="onThreatmodelClick(threatModel.value)"
                     >{{ threatModel.name }}</b-list-group-item>
                 </b-list-group>
             </b-col>
@@ -69,8 +69,7 @@ export default {
         },
         onThreatmodelClick(threatModel) {
             this.$store.dispatch(DATASOURCE_THREATMODEL_SELECTED, threatModel);
-            // router.push('/threatmodel-select');
-            // TODO
+            router.push('/threatmodel');
         }
     }
 };

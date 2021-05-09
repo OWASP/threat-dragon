@@ -7,7 +7,7 @@ import homeController from '../../src/controllers/homecontroller.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 
-describe('route config tests', () => {
+xdescribe('route config tests', () => {
     const mockApp = {
         use: () => {}
     };

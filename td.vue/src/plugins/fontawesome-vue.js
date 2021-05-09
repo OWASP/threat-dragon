@@ -8,13 +8,26 @@ import {
     faQuestionCircle,
     faGift,
     faPlus,
-    faCloudDownloadAlt
+    faCloudDownloadAlt,
+    faEdit,
+    faFileAlt,
+    faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 // Add icons to the library for use
-library.add(faSignOutAlt, faQuestionCircle, faGift, faGithub, faPlus, faCloudDownloadAlt);
+library.add(
+    faSignOutAlt,
+    faQuestionCircle,
+    faGift,
+    faGithub,
+    faPlus,
+    faCloudDownloadAlt,
+    faEdit,
+    faFileAlt,
+    faTimes
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

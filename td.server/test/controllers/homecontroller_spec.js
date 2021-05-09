@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
 
-describe('homecontroller tests', () => {
+xdescribe('homecontroller tests', () => {
     const mockRequest = {
         log: {
             info: () => {},

@@ -13,7 +13,8 @@ class ThreatDragonEnv extends Env {
         return [
             { key: 'NODE_ENV', required: false },
             { key: 'PORT', required: false },
-            { key: 'IS_TEST', required: false}
+            { key: 'IS_TEST', required: false },
+            { key: 'JWT_SIGNING_KEY', required: true }
         ];
     }
 }

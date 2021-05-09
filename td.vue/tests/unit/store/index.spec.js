@@ -7,7 +7,11 @@ describe('store/index.js', () => {
         expect(store).toBeInstanceOf(Vuex.Store);
     });
 
-    it('defines the auth module', () => {
+    it('defines the datasource module', () => {
         expect(store.state.datasource).toBeInstanceOf(Object);
+    });
+
+    it('defines the auth module', () => {
+        expect(store.state.auth).toBeInstanceOf(Object);
     });
 });

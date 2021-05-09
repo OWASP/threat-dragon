@@ -42,4 +42,11 @@ describe('env/ThreatDragon.js', () => {
             .required;
         expect(isRequired).to.be.false;
     });
+
+    it('has the required property JWT_SIGNING_KEY', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'JWT_SIGNING_KEY')
+            .required;
+        expect(isRequired).to.be.true;
+    });
 });

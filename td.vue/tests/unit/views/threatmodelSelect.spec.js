@@ -105,10 +105,10 @@ describe('ThreatmodelSelect.vue', () => {
             expect(mockStore.dispatch).toHaveBeenCalled();
         });
 
-        xit('navigates to the TODO view', async () => {
+        it('navigates to the threatmodel view', async () => {
             jest.spyOn(router, 'push');
             await wrapper.findComponent(BListGroupItem).trigger('click');
-            expect(router.push).toHaveBeenCalledWith('/threatmodel-select');
+            expect(router.push).toHaveBeenCalledWith('/threatmodel');
         });
     });
 });
