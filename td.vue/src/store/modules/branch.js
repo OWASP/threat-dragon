@@ -20,7 +20,7 @@ const state = {
 const actions = {
     [BRANCH_CLEAR]: ({ commit }) => commit(BRANCH_CLEAR),
     [BRANCH_FETCH]: async ({ commit, rootState }) => {
-        const resp = await threatmodelApi.branchesAsync(rootState.repo.selected, rootState.auth.jwt);
+        const resp = await threatmodelApi.branchesAsync(rootState.repo.selected);
         commit(BRANCH_FETCH, resp.data.branches);
     },
     [BRANCH_SELECTED]: ({ commit }, branch) => commit(BRANCH_SELECTED, branch)

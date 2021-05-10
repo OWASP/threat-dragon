@@ -121,7 +121,7 @@ export default {
     },
     computed: mapState({
         model: (state) => state.threatmodel.data,
-        contributors: (state) => state.threatmodel.data.contributors.map(x => x.name).join(', ')
+        contributors: (state) => state.threatmodel.data.contributors.join(', ')
     }),
     methods: {
         onEditClick(evt) {

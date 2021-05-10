@@ -19,8 +19,8 @@ const state = {
 
 const actions = {
     [REPOSITORY_CLEAR]: ({ commit }) => commit(REPOSITORY_CLEAR),
-    [REPOSITORY_FETCH]: async ({ commit, rootState }) => {
-        const resp = await threatmodelApi.reposAsync(rootState.auth.jwt);
+    [REPOSITORY_FETCH]: async ({ commit }) => {
+        const resp = await threatmodelApi.reposAsync();
         commit(REPOSITORY_FETCH, resp.data.repos);
     },
     [REPOSITORY_SELECTED]: ({ commit }, repo) => commit(REPOSITORY_SELECTED, repo)

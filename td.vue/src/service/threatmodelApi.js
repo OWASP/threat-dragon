@@ -10,32 +10,29 @@ const extractRepoParts = (fullRepoName) => {
 
 /**
  * Gets the repos for the given user
- * @param {String} token The JWT
  * @returns {Promise}
  */
-const reposAsync = (token) => api.getAsync(`${resource}/repos`, token);
+const reposAsync = () => api.getAsync(`${resource}/repos`);
 
 /**
  * Gets the branches for the given repository
  * @param {String} fullRepoName
- * @param {String} token The JWT
  * @returns {Promise}
  */
-const branchesAsync = (fullRepoName, token) => {
+const branchesAsync = (fullRepoName) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`, token);
+    return api.getAsync(`${resource}/${org}/${repo}/branches`);
 };
 
 /**
  * Gets them models available on a given branch in a given repo
  * @param {String} fullRepoName
  * @param {String} branch
- * @param {String} token The JWT
  * @returns {Promise}
  */
-const modelsAsync = (fullRepoName, branch, token) => {
+const modelsAsync = (fullRepoName, branch) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/models`, token);
+    return api.getAsync(`${resource}/${org}/${repo}/${branch}/models`);
 };
 
 /**
@@ -43,12 +40,11 @@ const modelsAsync = (fullRepoName, branch, token) => {
  * @param {String} fullRepoName
  * @param {String} branch
  * @param {String} model
- * @param {String} token
  * @returns {Promise}
  */
-const modelAsync = (fullRepoName, branch, model, token) => {
+const modelAsync = (fullRepoName, branch, model) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`, token);
+    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`);
 };
 
 export default {

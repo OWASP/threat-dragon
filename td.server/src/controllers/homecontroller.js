@@ -27,7 +27,7 @@ const index = (req, res) => {
  */
 const logoutform = (req, res) => res.render('logoutform', {
         username: req.user.profile.username
-    });
+});
 
 /**
  * Logs the user out

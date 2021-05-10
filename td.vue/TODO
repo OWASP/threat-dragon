@@ -1,3 +1,4 @@
+- Resolve npm vulns
 - Loading indicators
 - Pagination
 - Deep linking (redo routing entirely, match old way?)

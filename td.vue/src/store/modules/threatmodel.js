@@ -26,16 +26,14 @@ const actions = {
         const resp = await threatmodelApi.modelAsync(
             rootState.repo.selected,
             rootState.branch.selected,
-            state.selected,
-            rootState.auth.jwt
+            state.selected
         );
         commit(THREATMODEL_FETCH, resp.data);
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
         const resp = await threatmodelApi.modelsAsync(
             rootState.repo.selected,
-            rootState.branch.selected,
-            rootState.auth.jwt
+            rootState.branch.selected
         );
         commit(THREATMODEL_FETCH_ALL, resp.data);
     },

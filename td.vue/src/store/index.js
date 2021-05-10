@@ -10,13 +10,25 @@ import vuexPersist from '../plugins/vuex-persist.js';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-    modules: {
-        auth,
-        branch,
-        provider,
-        repo,
-        threatmodel
-    },
-    plugins: [ vuexPersist.session.plugin ]
-});
+let store = null;
+
+const get = () => {
+    if (store === null) {
+        store = new Vuex.Store({
+            modules: {
+                auth,
+                branch,
+                provider,
+                repo,
+                threatmodel
+            },
+            plugins: [ vuexPersist.session.plugin ]
+        });
+    }
+
+    return store;
+};
+
+export default {
+    get
+};

@@ -1,119 +1,51 @@
 import api from '@/service/api.js';
+import httpClient from '@/service/httpClient.js';
 
 describe('service/api.js', () => {
     const url = 'http://threatdragon.org/api/foobar';
+    const mockResp = { data: 'foo' };
+    const mockClient = {
+        get: () => mockResp,
+        post: () => mockResp
+    };
 
-    const successMock = () => ({
-        status: 200,
-        json: () => Promise.resolve({})
+    let res;
+
+    beforeEach(() => {
+        jest.spyOn(httpClient, 'get').mockReturnValue(mockClient);
+        jest.spyOn(mockClient, 'get');
+        jest.spyOn(mockClient, 'post');
     });
 
     describe('getAsync', () => {
-        describe('without JWT', () => {
-            beforeEach(async () => {
-                global.fetch = jest.fn().mockImplementation(successMock);
-                await api.getAsync(url);
-            });
-
-            it('passes the provided url to fetch', () => {
-                expect(global.fetch).toHaveBeenCalledWith(url, expect.anything());
-            });
-    
-            it('sets the method to GET', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({ method: 'GET' })
-                );
-            });
-
-            it('sets the accept header', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({ headers: { Accept: 'application/json' }})
-                );
-            });
+        beforeEach(async () => {
+            res = await api.getAsync(url);
         });
 
-        describe('with JWT', () => {
-            const jwt = 'blah';
+        it('calls client.get', () => {
+            expect(mockClient.get).toHaveBeenCalledWith(url);
+        });
 
-            beforeEach(async () => {
-                global.fetch = jest.fn().mockImplementation(successMock);
-                await api.getAsync(url, jwt);
-            });
-
-            it('sets the authorization header', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({
-                        headers: expect.objectContaining({ authorization: `Bearer ${jwt}` })
-                    })
-                );
-            });
+        it('returns the data', () => {
+            expect(res).toEqual(mockResp.data);
         });
     });
 
     describe('postAsync', () => {
-        describe('without JWT or body', () => {
-            beforeEach(async () => {
-                global.fetch = jest.fn().mockImplementation(successMock);
-                await api.postAsync(url);
-            });
-
-            it('passes the provided url to fetch', () => {
-                expect(global.fetch).toHaveBeenCalledWith(url, expect.anything());
-            });
-    
-            it('sets the method to POST', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({ method: 'POST' })
-                );
-            });
-
-            it('sets the accept header', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({
-                        headers: expect.objectContaining({ Accept: 'application/json' })
-                    })
-                );
-            });
-
-            it('sets the Content-Type header', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({
-                        headers: expect.objectContaining({ 'Content-Type': 'application/json' })
-                    })
-                );
-            });
+        it('passes the url without a body', async () => {
+            await api.postAsync(url);
+            expect(mockClient.post).toHaveBeenCalledWith(url, undefined);
         });
 
-        describe('with JWT and body', () => {
-            const jwt = 'blah';
+        it('passes the body', async () => {
             const body = { foo: 'bar' };
+            await api.postAsync(url, body);
+            expect(mockClient.post).toHaveBeenCalledWith(expect.anything(), body);
+        });
 
-            beforeEach(async () => {
-                global.fetch = jest.fn().mockImplementation(successMock);
-                await api.postAsync(url, body, jwt);
-            });
-
-            it('sets the authorization header', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({
-                        headers: expect.objectContaining({ authorization: `Bearer ${jwt}` })
-                    })
-                );
-            });
-
-            it('sets the post body', () => {
-                expect(global.fetch).toHaveBeenCalledWith(
-                    expect.anything(),
-                    expect.objectContaining({ body: JSON.stringify(body) })
-                );
-            });
+        it('returns the data', async () => {
+            res = await api.postAsync(url);
+            expect(res).toEqual(mockResp.data);
         });
     });
 });

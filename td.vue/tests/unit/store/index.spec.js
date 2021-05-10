@@ -1,18 +1,24 @@
 import Vuex from 'vuex';
 
-import store from '@/store/index.js';
+import storeFactory from '@/store/index.js';
 
-describe('store/index.js', () => {
+describe('store.get()/index.js', () => {
+    let store;
+
+    beforeEach(() => {
+        store = storeFactory.get();
+    });
+
     it('is a vuex store', () => {
         expect(store).toBeInstanceOf(Vuex.Store);
     });
 
-    it('defines the branch module', () => {
-        expect(store.state.branch).toBeInstanceOf(Object);
-    });
-
     it('defines the auth module', () => {
         expect(store.state.auth).toBeInstanceOf(Object);
+    });
+
+    it('defines the branch module', () => {
+        expect(store.state.branch).toBeInstanceOf(Object);
     });
 
     it('defines the provider module', () => {

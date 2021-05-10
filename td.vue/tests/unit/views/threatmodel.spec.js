@@ -6,7 +6,7 @@ import router from '@/router/index.js';
 import ThreatModel from '@/views/Threatmodel.vue';
 
 describe('views/Threatmodel.vue', () => {
-    const contributors = [{ name: 'foo' }, { name: 'bar' }];
+    const contributors = ['foo', 'bar' ];
     const owner = 'owner';
     const reviewer = 'reviewer';
     const title = 'title';
@@ -63,7 +63,7 @@ describe('views/Threatmodel.vue', () => {
         });
 
         it('shows the contributors', () => {
-            const expected = contributors.map(x => x.name).join(', ');
+            const expected = contributors.join(', ');
             expect(wrapper.find('#tm_contributors').text()).toEqual(expected);
         });
 
