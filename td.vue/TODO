@@ -1,4 +1,4 @@
-- Loading indicators
+- Loading indicator (WIP, see app and loader store)
 - Pagination
 - Deep linking (redo routing entirely, match old way?)
 - refresh tokens

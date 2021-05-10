@@ -99,7 +99,7 @@
     font-size: 14px;
 }
 .diagram-header-text a {
-    color: $font-color;
+    color: $black;
 }
 
 .td-diagram-thumb {

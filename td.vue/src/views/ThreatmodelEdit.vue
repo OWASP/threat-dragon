@@ -73,6 +73,7 @@
                                     id="contributors"
                                     placeholder="Add a new contributor"
                                     v-model="model.contributors"
+                                    variant="primary"
                                 ></b-form-tags>
                             </b-form-group>
                         </b-col>
@@ -99,7 +100,7 @@
                                     type="text"
                                 ></b-form-input>
                                 <b-input-group-append>
-                                    <b-button class="remove-diagram-btn">
+                                    <b-button variant="secondary">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         Remove
                                     </b-button>
@@ -141,22 +142,13 @@
     </b-row>
 </template>
 
-<!-- Note that this one is not scoped.  The badges are outside of this scope -->
-<style lang="scss">
-.badge-secondary {
-    background-color: $theme-primary;
-    padding: 5px 10px;
-}
-</style>
-
 <style lang="scss" scoped>
 .add-diagram-link {
-    color: $theme-primary;
+    color: $orange;
     font-size: 14px;
 }
 
 .remove-diagram-btn {
-    background-color: $form-btn-color;
     font-size: 14px;
 }
 </style>

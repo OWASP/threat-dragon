@@ -2,6 +2,7 @@
     <b-btn
         @click="onBtnClick"
         :class="{ 'td-primary-btn': isPrimary, 'td-default-btn': !isPrimary }"
+        :variant="isPrimary ? 'primary' : 'secondary'"
     >
         <font-awesome-icon
             v-if="icon"
@@ -14,12 +15,6 @@
 <style lang="scss" scoped>
 button {
     font-size: 14px;
-}
-.td-primary-btn {
-    background-color: $theme-primary;
-}
-.td-default-btn {
-    background-color: $form-btn-color;
 }
 </style>
 

@@ -51,8 +51,8 @@
 
 <style lang="scss" scoped>
 .navbar {
-  background-color: $theme-primary;
-  border-color: $theme-secondary;
+  background-color: $orange;
+  border-color: $orange-alt;
 }
 
 .nav-link,

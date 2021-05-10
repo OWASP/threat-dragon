@@ -12,7 +12,7 @@
         </b-col>
         <b-col md=8>
           <b-row>
-            <p>
+            <p class="td-description">
               Threat Dragon is a free, open-source threat modeling tool from OWASP. It can be used
               as a standalone desktop app for Windows, MacOS and Linux or as a web application. The
               desktop app is great if you want to try the application without giving it access to
@@ -47,6 +47,10 @@
 <style lang="scss" scoped>
 .login-btn-icon {
   display: block;
+}
+
+.td-description {
+  font-size: 20px;
 }
 </style>
 

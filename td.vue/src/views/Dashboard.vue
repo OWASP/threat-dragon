@@ -26,7 +26,7 @@
 
 <style lang="scss" scoped>
 .action-icon {
-    color: $theme-primary;
+    color: $orange;
     margin-bottom: 15px;
 }
 </style>
