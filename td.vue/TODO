@@ -1,6 +1,7 @@
-- Loading indicator (WIP, see app and loader store)
-- Pagination
+- Update tests for httpClient (missing coverage for response interceptor)
+- Add tests for ThreatmodelEdit view
 - Deep linking (redo routing entirely, match old way?)
+- Pagination
 - refresh tokens
 - Get refresh token when making API calls
 - Warn when token expiring

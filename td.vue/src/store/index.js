@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import auth from './modules/auth.js';
 import branch from './modules/branch.js';
+import loader from './modules/loader.js';
 import provider from './modules/provider.js';
 import repo from './modules/repository.js';
 import threatmodel from './modules/threatmodel.js';
@@ -18,6 +19,7 @@ const get = () => {
             modules: {
                 auth,
                 branch,
+                loader,
                 provider,
                 repo,
                 threatmodel

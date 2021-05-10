@@ -14,6 +14,9 @@ describe('service/httpClient.js', () => {
         interceptors: {
             request: {
                 use: () => {}
+            },
+            response: {
+                use: () => {}
             }
         }
     };
@@ -21,12 +24,13 @@ describe('service/httpClient.js', () => {
 
     beforeEach(() => {
         axios.create = jest.fn().mockReturnValue(clientMock);
-        jest.spyOn(storeFactory, 'get').mockReturnValue({ state: { auth: { jwt: '' }}});
+        jest.spyOn(clientMock.interceptors.request, 'use');
+        jest.spyOn(clientMock.interceptors.response, 'use');
+        jest.spyOn(storeFactory, 'get').mockReturnValue({ dispatch: () => {}, state: { auth: { jwt: '' }}});
     });
 
     describe('defaults', () => {
         beforeEach(() => {
-            jest.spyOn(clientMock.interceptors.request, 'use');
             client = httpClient.createClient();
         });
     
@@ -57,7 +61,7 @@ describe('service/httpClient.js', () => {
 
         describe('with a jwt', () => {
             beforeEach(() => {
-                storeFactory.get.mockReturnValue({ state: { auth: { jwt: 'foobar' }}});
+                storeFactory.get.mockReturnValue({ dispatch: () => {}, state: { auth: { jwt: 'foobar' }}});
                 clientMock.interceptors.request.use = (fn) => fn(config);
                 client = httpClient.createClient();
             });
@@ -82,9 +86,9 @@ describe('service/httpClient.js', () => {
             const err = new Error('whoops!');
 
             beforeEach(() => {
-                clientMock.interceptors.request.use = (fn, errFn) => errFn(err);
+                clientMock.interceptors.request.use = (fn, errFn) => errFn(err).then(() => {}).catch(() => {});
                 console.error = jest.fn();
-                client = httpClient.createClient();
+                httpClient.createClient();
             });
 
             it('logs the error', () => {

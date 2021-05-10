@@ -21,6 +21,10 @@ describe('store.get()/index.js', () => {
         expect(store.state.branch).toBeInstanceOf(Object);
     });
 
+    it('defines the loader module', () => {
+        expect(store.state.loader).toBeInstanceOf(Object);
+    });
+
     it('defines the provider module', () => {
         expect(store.state.provider).toBeInstanceOf(Object);
     });
