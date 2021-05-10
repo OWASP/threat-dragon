@@ -2,7 +2,6 @@ import { BootstrapVue, BCard } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import TdFormButton from '@/components/FormButton.vue';
 import ThreatModel from '@/views/Threatmodel.vue';
 
 describe('views/Threatmodel.vue', () => {
@@ -79,65 +78,51 @@ describe('views/Threatmodel.vue', () => {
         });
     });
 
-    xdescribe('form actions', () => {
+    describe('form actions', () => {
+        const evt = { preventDefault: jest.fn() };
         beforeEach(() => {
             jest.spyOn(console, 'log');
         });
 
         describe('edit', () => {
-            let editBtn;
-
             beforeEach(() => {
-                editBtn = wrapper.findAllComponents(TdFormButton)
-                    .filter(x => x.attributes('text') === 'Edit')
-                    .at(0);
+                ThreatModel.methods.onEditClick(evt);
             });
 
-            it('uses the edit icon', () => {
-                expect(editBtn.attributes('icon')).toEqual('edit');
+            it('prevents the default event', () => {
+                expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('calls console.log and needs to be updated', async () => {
-                await editBtn.trigger('click');
+            it('logs to the console and needs to be removed...', () => {
                 expect(console.log).toHaveBeenCalled();
             });
         });
 
         describe('report', () => {
-            let reportBtn;
-
             beforeEach(() => {
-                reportBtn = wrapper.findAllComponents(TdFormButton)
-                    .filter(x => x.attributes('text') === 'Report')
-                    .at(0);
+                ThreatModel.methods.onReportClick(evt);
             });
 
-            it('uses the file-alt icon', () => {
-                expect(reportBtn.attributes('icon')).toEqual('file-alt');
+            it('prevents the default event', () => {
+                expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('calls console.log and needs to be updated', async () => {
-                await reportBtn.trigger('click');
-                // write test
+            it('logs to the console and needs to be removed...', () => {
+                expect(console.log).toHaveBeenCalled();
             });
         });
 
         describe('delete', () => {
-            let deleteBtn;
-
             beforeEach(() => {
-                deleteBtn = wrapper.findAllComponents(TdFormButton)
-                    .filter(x => x.attributes('text') === 'Delete')
-                    .at(0);
+                ThreatModel.methods.onDeleteClick(evt);
             });
 
-            it('uses the times icon', () => {
-                expect(deleteBtn.attributes('icon')).toEqual('times');
+            it('prevents the default event', () => {
+                expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('calls console.log and needs to be updated', async () => {
-                await deleteBtn.trigger('click');
-                // write test
+            it('logs to the console and needs to be removed...', () => {
+                expect(console.log).toHaveBeenCalled();
             });
         });
     });
