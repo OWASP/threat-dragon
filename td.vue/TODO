@@ -1,15 +1,12 @@
-- favicon
-- title
-- edit views
-- Brand brings you to dashboard if logged in
+- Brand should bring you to dashboard if logged in
 - Navbar needs to get username and hide if not logged in
 - Loading indicators
 - Pagination
-- Deep linking
+- Deep linking (redo routing entirely, match old way?)
 - refresh tokens
-- Warn when token expiring
 - Get refresh token when making API calls
+- Warn when token expiring
 - Logout
 - Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
-- BUG: Sometimes auth fails, dev server only says "cannot proxy request", no errors on backend
+- BUG: Development (webpack) proxy fails sometimes saying the backend is not reachable, not sure why.  Hopefully only a dev error
