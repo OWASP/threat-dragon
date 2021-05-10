@@ -1,6 +1,7 @@
 import repository from '../repositories/threatmodelrepository.js';
 import responseWrapper from './responseWrapper.js';
 import { serverError } from './errors.js';
+import tmVersion from '../helpers/threatmodel.version.js';
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;
@@ -51,7 +52,13 @@ const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
         model: req.params.model
     };
     const modelResp = await repository.modelAsync(modelInfo, req.provider.access_token);
-    return JSON.parse(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
+    const model = JSON.parse(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
+
+    if (tmVersion.isVersion1x(model)) {
+        // Consider saving this immediately?
+        return tmVersion.convertToVersion2(model);
+    }
+    return model;
 }, req, res);
 
 const create = async (req, res) => {

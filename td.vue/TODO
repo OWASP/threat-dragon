@@ -1,15 +1,15 @@
 - favicon
 - title
 - edit views
-- Update tests (most are broken after backend integration)
-- Logout
-- authentication / authorization improvements
+- Brand brings you to dashboard if logged in
+- Navbar needs to get username and hide if not logged in
 - Loading indicators
 - Pagination
 - Deep linking
 - refresh tokens
 - Warn when token expiring
 - Get refresh token when making API calls
+- Logout
 - Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
-- BUG: JWT sometimes cannot decode, JSON.parse fails (Probably due to IV having unicode characters?)
+- BUG: Sometimes auth fails, dev server only says "cannot proxy request", no errors on backend

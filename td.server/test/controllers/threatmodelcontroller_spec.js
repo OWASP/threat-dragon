@@ -21,7 +21,7 @@ describe('threat model controller tests', () => {
                 organisation: 'test org',
                 repo: 'test repo',
                 branch: 'test branch',
-                model: 'test model'
+                model: { version: '2.0' }
             },
             query: {
                 page: 'test page'
@@ -145,7 +145,7 @@ describe('threat model controller tests', () => {
         });
 
         it('should return the model data', () => {
-            expect(result).to.eq(mockRequest.params.model);
+            expect(result).to.deep.equal(mockRequest.params.model);
         });
     });
 

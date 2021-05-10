@@ -2,6 +2,7 @@ import { BootstrapVue, BCard } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import router from '@/router/index.js';
 import ThreatModel from '@/views/Threatmodel.vue';
 
 describe('views/Threatmodel.vue', () => {
@@ -25,20 +26,17 @@ describe('views/Threatmodel.vue', () => {
             state: {
                 threatmodel: {
                     data: {
-                        detail: {
-                            contributors,
-                            reviewer,
-                            diagrams
-                        },
-                        summary: {
-                            owner,
-                            title,
-                            description
-                        }
+                        contributors,
+                        reviewer,
+                        diagrams,
+                        owner,
+                        title,
+                        description
                     }
                 }
             }
         });
+        router.push = jest.fn();
 
         wrapper = shallowMount(ThreatModel, {
             localVue,
@@ -80,6 +78,7 @@ describe('views/Threatmodel.vue', () => {
 
     describe('form actions', () => {
         const evt = { preventDefault: jest.fn() };
+
         beforeEach(() => {
             jest.spyOn(console, 'log');
         });
@@ -93,8 +92,8 @@ describe('views/Threatmodel.vue', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('logs to the console and needs to be removed...', () => {
-                expect(console.log).toHaveBeenCalled();
+            it('navigates to the edit view', () => {
+                expect(router.push).toHaveBeenCalledWith('/threatmodel-edit');
             });
         });
 
@@ -123,6 +122,18 @@ describe('views/Threatmodel.vue', () => {
 
             it('logs to the console and needs to be removed...', () => {
                 expect(console.log).toHaveBeenCalled();
+            });
+        });
+
+        describe('getThumbnailUrl', () => {
+            const base = '../assets/thumbnail';
+
+            it('returns the base thumbnail if no diagram type is present', () => {
+                expect(ThreatModel.methods.getThumbnailUrl()).toEqual(`${base}.jpg`);
+            });
+
+            it('returns the thumbnail for the diagram type', () => {
+                expect(ThreatModel.methods.getThumbnailUrl({ diagramType: 'foo' })).toEqual(`${base}.foo.jpg`);
             });
         });
     });

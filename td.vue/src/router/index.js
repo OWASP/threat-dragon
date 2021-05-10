@@ -40,6 +40,11 @@ const routes = [
         path: '/oauth-return',
         name: 'OAuthReturn',
         component: () => import(/* webpackChunkName: "oauth-return" */ '../views/OauthReturn.vue')
+    },
+    {
+        path: '/threatmodel-edit',
+        name: 'ThreatmodelEdit',
+        component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatmodelEdit.vue')
     }
 ];
 

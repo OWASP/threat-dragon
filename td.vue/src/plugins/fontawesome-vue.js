@@ -11,7 +11,9 @@ import {
     faCloudDownloadAlt,
     faEdit,
     faFileAlt,
-    faTimes
+    faTimes,
+    faUndo,
+    faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -26,7 +28,9 @@ library.add(
     faCloudDownloadAlt,
     faEdit,
     faFileAlt,
-    faTimes
+    faTimes,
+    faUndo,
+    faSave
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -4,14 +4,14 @@
         <b-row class="mb-4" id="title_row">
             <b-col>
                 <b-card
-                    :header="model.summary.title">
+                    :header="model.title">
                     <b-row class="tm-card">
                         <b-col md=2>
                             <div>
                                 <strong>Owner:</strong>
                             </div>
                             <div id="tm_owner">
-                                {{ model.summary.owner }}
+                                {{ model.owner }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -19,7 +19,7 @@
                                 <strong>Reviewer:</strong>
                             </div>
                             <div id="tm_reviewer">
-                                {{ model.detail.reviewer }}
+                                {{ model.reviewer }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -42,7 +42,7 @@
                     header="High level system description">
                     <b-row class="tm-card">
                         <b-col>
-                            <p id="tm_description">{{ model.summary.description }}</p>
+                            <p id="tm_description">{{ model.description }}</p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -53,8 +53,8 @@
         <b-row class="mb-4">
             <b-col
                 class="tm_diagram"
-                md="3"
-                v-for="(diagram, idx) in model.detail.diagrams"
+                lg="3"
+                v-for="(diagram, idx) in model.diagrams"
                 :key="idx"
             >
                 <b-card>
@@ -65,8 +65,8 @@
                     </template>
                     <router-link to="/">
                         <b-img-lazy
-                            class="m-auto d-block"
-                            :src="require(`../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`)"
+                            class="m-auto d-block td-diagram-thumb"
+                            :src="require(`../assets/thumbnail${diagram.diagramType ? '.' + diagram.diagramType.toLowerCase() : ''}.jpg`)"
                             :alt="`${diagram.type} Diagram`" />
                     </router-link>
                 </b-card>
@@ -101,11 +101,17 @@
 .diagram-header-text a {
     color: $font-color;
 }
+
+.td-diagram-thumb {
+    max-width: 200px;
+    max-height: 160px;
+}
 </style>
 
 <script>
 import { mapState } from 'vuex';
 
+import router from '@/router/index.js';
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -115,12 +121,12 @@ export default {
     },
     computed: mapState({
         model: (state) => state.threatmodel.data,
-        contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', ')
+        contributors: (state) => state.threatmodel.data.contributors.map(x => x.name).join(', ')
     }),
     methods: {
         onEditClick(evt) {
             evt.preventDefault();
-            console.log('Edit clicked!');
+            router.push('/threatmodel-edit');
         },
         onReportClick(evt) {
             evt.preventDefault();
@@ -129,6 +135,12 @@ export default {
         onDeleteClick(evt) {
             evt.preventDefault();
             console.log('Delete clicked!');
+        },
+        getThumbnailUrl(diagram) {
+            if (!diagram || !diagram.diagramType) {
+                return '../assets/thumbnail.jpg';
+            }
+            return `../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
         }
     }
 };
