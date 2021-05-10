@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { getMockRequest, getMockResponse } from '../express.mocks.js';
 import threatModelController from '../../src/controllers/threatmodelcontroller.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
@@ -8,22 +9,11 @@ describe('threat model controller tests', () => {
     const headers = {
         link: 'url1; rel="link", url2; rel="link"'
     };
-    const mockResponse = {
-        send: () => {},
-        status: () => {},
-        json: () => {}
-    };
     const err = new Error('whoops');
-    let mockRequest;
+    let mockRequest, mockResponse;
 
     beforeEach(() => {
-        mockRequest = {
-            user: {
-                accessToken: 'token',
-                profile: {
-                    username: 'foobar'
-                }
-            },
+        mockRequest = Object.assign(getMockRequest(), {
             params: {
                 organisation: 'test org',
                 repo: 'test repo',
@@ -33,15 +23,9 @@ describe('threat model controller tests', () => {
             query: {
                 page: 'test page'
             },
-            body: 'test body',
-            log: {
-                error: () => {}
-            }
-        };
-        sinon.stub(mockResponse, 'status').returns(mockResponse);
-        sinon.spy(mockResponse, 'json');
-        sinon.spy(mockResponse, 'send');
-        sinon.spy(mockRequest.log, 'error');
+            body: 'test body'
+        });
+        mockResponse = getMockResponse();
     });
 
     afterEach(() => {

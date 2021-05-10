@@ -2,18 +2,15 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import error from '../../src/controllers/errors.js';
+import { getMockResponse } from '../express.mocks.js';
 import { logger } from '../../src/config/loggers.config.js';
 
 describe('controllers/error.js', () => {
     const errorMsg = 'Whoopsies';
-    const resStub = {
-        status: () => {},
-        json: () => {}
-    };
+    let mockResponse;
 
     beforeEach(() => {
-        sinon.stub(resStub, 'status').returns(resStub);
-        sinon.stub(resStub, 'json').returns(resStub);
+        mockResponse = getMockResponse();
         sinon.stub(logger, 'debug');
     });
 
@@ -25,7 +22,7 @@ describe('controllers/error.js', () => {
         let res;
 
         beforeEach(() => {
-            res = error.serverError(errorMsg, resStub);
+            res = error.serverError(errorMsg, mockResponse);
         });
 
         it('defines a serverError function', () => {
@@ -33,7 +30,7 @@ describe('controllers/error.js', () => {
         });
 
         it('responds with a status code of 500', () => {
-            expect(resStub.status).to.have.been.calledWith(500);
+            expect(mockResponse.status).to.have.been.calledWith(500);
         });
 
         it('sets the json body', () => {
@@ -42,11 +39,11 @@ describe('controllers/error.js', () => {
                 message: 'Internal Server Error',
                 details: errorMsg
             };
-            expect(resStub.json).to.have.been.calledWith(expected);
+            expect(mockResponse.json).to.have.been.calledWith(expected);
         });
 
         it('returns the res object', () => {
-            expect(res).to.deep.equal(resStub);
+            expect(res).to.deep.equal(mockResponse);
         });
 
         it('logs the error to the debug log', () => {
@@ -58,7 +55,7 @@ describe('controllers/error.js', () => {
         let res;
 
         beforeEach(() => {
-            res = error.notFound(errorMsg, resStub);
+            res = error.notFound(errorMsg, mockResponse);
         });
 
         it('defines a notFound function', () => {
@@ -66,7 +63,7 @@ describe('controllers/error.js', () => {
         });
 
         it('responds with a status code of 404', () => {
-            expect(resStub.status).to.have.been.calledWith(404);
+            expect(mockResponse.status).to.have.been.calledWith(404);
         });
 
         it('sets the json body', () => {
@@ -75,11 +72,11 @@ describe('controllers/error.js', () => {
                 message: 'Not Found',
                 details: errorMsg
             };
-            expect(resStub.json).to.have.been.calledWith(expected);
+            expect(mockResponse.json).to.have.been.calledWith(expected);
         });
 
         it('returns the res object', () => {
-            expect(res).to.deep.equal(resStub);
+            expect(res).to.deep.equal(mockResponse);
         });
 
         it('logs the error to the debug log', () => {
@@ -91,7 +88,7 @@ describe('controllers/error.js', () => {
         let res;
 
         beforeEach(() => {
-            res = error.badRequest(errorMsg, resStub);
+            res = error.badRequest(errorMsg, mockResponse);
         });
 
         it('defines a badRequest function', () => {
@@ -99,7 +96,7 @@ describe('controllers/error.js', () => {
         });
 
         it('responds with a status code of 400', () => {
-            expect(resStub.status).to.have.been.calledWith(400);
+            expect(mockResponse.status).to.have.been.calledWith(400);
         });
 
         it('sets the json body', () => {
@@ -108,11 +105,11 @@ describe('controllers/error.js', () => {
                 message: 'Bad Request',
                 details: errorMsg
             };
-            expect(resStub.json).to.have.been.calledWith(expected);
+            expect(mockResponse.json).to.have.been.calledWith(expected);
         });
 
         it('returns the res object', () => {
-            expect(res).to.deep.equal(resStub);
+            expect(res).to.deep.equal(mockResponse);
         });
 
         it('logs the error to the debug log', () => {
@@ -124,7 +121,7 @@ describe('controllers/error.js', () => {
         let res;
 
         beforeEach(() => {
-            res = error.forbidden(resStub);
+            res = error.forbidden(mockResponse);
         });
 
         it('defines a forbidden function', () => {
@@ -132,7 +129,7 @@ describe('controllers/error.js', () => {
         });
 
         it('responds with a status code of 403', () => {
-            expect(resStub.status).to.have.been.calledWith(403);
+            expect(mockResponse.status).to.have.been.calledWith(403);
         });
 
         it('sets the json body', () => {
@@ -141,11 +138,11 @@ describe('controllers/error.js', () => {
                 message: 'Forbidden',
                 details: 'Forbidden'
             };
-            expect(resStub.json).to.have.been.calledWith(expected);
+            expect(mockResponse.json).to.have.been.calledWith(expected);
         });
 
         it('returns the res object', () => {
-            expect(res).to.deep.equal(resStub);
+            expect(res).to.deep.equal(mockResponse);
         });
 
         it('logs the error to the debug log', () => {

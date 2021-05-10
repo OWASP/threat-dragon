@@ -102,7 +102,7 @@ const encryptPromise = (plainText) => {
  * @returns {String}
  */
 const decrypt = (encryptedData) => {
-    var iv = Buffer.from(encryptedData.iv, keyEncoding);
+    const iv = Buffer.from(encryptedData.iv, keyEncoding);
     const key = getKeyById(encryptedData.keyId);
     return decryptData(encryptedData.data, key, iv);  
 };
