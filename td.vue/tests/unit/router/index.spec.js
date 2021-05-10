@@ -132,7 +132,7 @@ describe('router', () => {
                 .find(x => x.name === 'Threatmodel');
         });
 
-        it('uses the /branch path', () => {
+        it('uses the /threatmodel path', () => {
             expect(tmRoute.path).toEqual('/threatmodel');
         });
 
@@ -143,7 +143,7 @@ describe('router', () => {
                 tmComponent = await tmRoute.components.default();
             });
 
-            it('uses the branch view', () => {
+            it('uses the threatmodel view', () => {
                 expect(tmComponent.default.name).toEqual('ThreatModel');
             });
         });
@@ -157,7 +157,7 @@ describe('router', () => {
                 .find(x => x.name === 'OAuthReturn');
         });
 
-        it('uses the /branch path', () => {
+        it('uses the /oauth-return path', () => {
             expect(oauthReturnRoute.path).toEqual('/oauth-return');
         });
 
@@ -170,6 +170,31 @@ describe('router', () => {
 
             it('uses the branch view', () => {
                 expect(oauthReturnComponent.default.name).toEqual('OAuthReturn');
+            });
+        });
+    });
+
+    describe('threatmodel-edit', () => {
+        let repositoryRoute;
+
+        beforeEach(() => {
+            repositoryRoute = router.getRoutes()
+                .find(x => x.name === 'ThreatmodelEdit');
+        });
+
+        it('uses the /threatmodel-edit path', () => {
+            expect(repositoryRoute.path).toEqual('/threatmodel-edit');
+        });
+
+        describe('lazily loaded component', () => {
+            let repositoryComponent;
+
+            beforeEach(async () => {
+                repositoryComponent = await repositoryRoute.components.default();
+            });
+
+            it('uses the threatmodeledit view', () => {
+                expect(repositoryComponent.default.name).toEqual('ThreatmodelEdit');
             });
         });
     });
