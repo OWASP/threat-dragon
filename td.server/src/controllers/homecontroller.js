@@ -1,7 +1,5 @@
-import connectEnsureLoggedIn from 'connect-ensure-login';
 import path from 'path';
 
-import env from '../env/Env.js';
 import { upDir } from '../helpers/path.helper.js';
 
 /**
@@ -17,34 +15,17 @@ const indexHtmlPath = path.join(__dirname, upDir, upDir, upDir, 'dist', 'index.h
  * @returns {Object}
  */
 const index = (req, res) => {
-    //angular ajax request need xsrf token as a script accessible cookie
-    const cookieOptions = {
-        httpOnly: false,
-        secure: env.get().config.NODE_ENV !== 'development'
-    };
-
-    if (!cookieOptions.secure) {
-        req.log.error({ security: true }, 'secure anti-XSRF cookie flag was false - should only happen in dev environments');
-    }
-
-    res.cookie('XSRF-TOKEN', req.csrfToken(), cookieOptions);
     res.sendFile(indexHtmlPath);
 };
 
 /**
- * Ensures the current user is logged in
- */
-const ensureLoggedIn = connectEnsureLoggedIn.ensureLoggedIn('/login');
-
-/**
  * Gets the angular view for the logout form
- * Dynamic for username and anti-csrf token
+ * Dynamic for username
  * @param {Object} req
  * @param {Object} res
  * @returns {Object}
  */
 const logoutform = (req, res) => res.render('logoutform', {
-        csrfToken: req.csrfToken(),
         username: req.user.profile.username
     });
 
@@ -60,10 +41,6 @@ const logout = (req, res) => {
 
     req.logOut();
 
-    // Ensure cookies are cleared
-    res.clearCookie('connect.sid');
-    res.clearCookie('XSRF-TOKEN');
-
     return req.session.destroy(() => {
         req.log.info({ security: true, userName, idp }, 'logged out');
         return res.redirect('/');
@@ -71,7 +48,6 @@ const logout = (req, res) => {
 };
 
 export default {
-    ensureLoggedIn,
     index,
     logout,
     logoutform

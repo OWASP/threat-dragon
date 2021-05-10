@@ -42,8 +42,6 @@ describe('route config tests', () => {
         it('routes GET /', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/',
-                sinon.match.any, // csrf protection,
-                homeController.ensureLoggedIn,
                 homeController.index
             );
         });
@@ -64,7 +62,6 @@ describe('route config tests', () => {
         it('routes GET /logoutform', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/logoutform',
-                sinon.match.any, // csrf protection
                 homeController.logoutform
             );
         });
@@ -72,7 +69,6 @@ describe('route config tests', () => {
         it('routes POST /logout', () => {
             expect(mockRouter.post).to.have.been.calledWith(
                 '/logout',
-                sinon.match.any, // csrf protection
                 homeController.logout
             );
         });
@@ -126,8 +122,6 @@ describe('route config tests', () => {
         it('routes DELETE /threatmodel/:organisation/:repo/:branch/:model', () => {
             expect(mockRouter.delete).to.have.been.calledWith(
                 '/threatmodel/:organisation/:repo/:branch/:model',
-                sinon.match.any, // csrf protection
-                homeController.ensureLoggedIn,
                 threatmodelController.deleteModel
             );
         });
@@ -135,8 +129,6 @@ describe('route config tests', () => {
         it('routes PUT /threatmodel/:organisation/:repo/:branch/:model/create', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/threatmodel/:organisation/:repo/:branch/:model/create',
-                sinon.match.any, // csrf protection
-                homeController.ensureLoggedIn,
                 threatmodelController.create
             );
         });
@@ -144,8 +136,6 @@ describe('route config tests', () => {
         it('routes PUT /threatmodel/:organisation/:repo/:branch/:model/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/threatmodel/:organisation/:repo/:branch/:model/update',
-                sinon.match.any, // csrf protection
-                homeController.ensureLoggedIn,
                 threatmodelController.update
             );
         });

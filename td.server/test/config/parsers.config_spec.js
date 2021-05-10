@@ -56,22 +56,4 @@ describe('request parser tests', () => {
             .expect(200)
             .end(done);
     });
-    
-    it('should parse a cookie', (done) => {
-        const cookieName = 'cookieName';
-        const cookieValue = 'cookieValue';
-        
-        app.post('/', function(req, res) {
-            expect(req.cookies[cookieName]).to.eq(cookieValue);
-            res.status(200);
-            res.send('result');
-        });
-        
-        request(app)
-            .post('/')
-            .set('Cookie', cookieName + '=' + cookieValue)
-            .send('body')
-            .expect(200)
-            .end(done);
-    });
 });

@@ -31,21 +31,6 @@ describe('homecontroller tests', () => {
         it('should send the home page file', () => {
             expect(mockResponse.sendFile).to.have.been.calledWith(sinon.match(/index\.html$/));
         });
-        
-        it('should set the csrf cookie', () => {
-            expect(mockResponse.cookie).to.have.been.calledWith(
-                'XSRF-TOKEN',
-                mockRequest.csrfToken(),
-                { httpOnly: false, secure: false }
-            );
-        });
-
-        it('should log the insecure csrf cookie', () => {
-            expect(mockRequest.log.error).to.have.been.calledWith(
-                { security: true },
-                sinon.match.string
-            );
-        });
     });
     
     describe('logoutform', () => {
@@ -53,11 +38,10 @@ describe('homecontroller tests', () => {
             homeController.logoutform(mockRequest, mockResponse);
         });
 
-        it('should pass the csrf token and username to the logout form', () => {
+        it('should pass the username to the logout form', () => {
             expect(mockResponse.render).to.have.been.calledWith(
                 'logoutform',
                 {
-                    csrfToken: mockRequest.csrfToken(),
                     username: mockRequest.user.profile.username
                 }
             );
@@ -67,14 +51,6 @@ describe('homecontroller tests', () => {
     describe('logout', () => {
         beforeEach(() => {
             homeController.logout(mockRequest, mockResponse);
-        });
-
-        it('should clear the CSRF cookie', () => {
-            expect(mockResponse.clearCookie).to.have.been.calledWith('XSRF-TOKEN');
-        });
-
-        it('should clear the session cookie', () => {
-            expect(mockResponse.clearCookie).to.have.been.calledWith('connect.sid');
         });
 
         it('should destroy the session', () => {
@@ -94,29 +70,6 @@ describe('homecontroller tests', () => {
 
         it('should redirect the user', () => {
             expect(mockResponse.redirect).to.have.been.calledWith('/');
-        });
-    });
-    
-    describe('simulated production environment tests', function() {
-        beforeEach(() => {
-            const mockEnv = {
-                config: {
-                    NODE_ENV: 'simulated_production'
-                }
-            };
-            sinon.stub(env, 'get').returns(mockEnv);
-            homeController.index(mockRequest, mockResponse);
-        });
-        
-        it('should set the secure flag on the XSRF cookie', function() {
-            expect(mockResponse.cookie).to.have.been.calledWith(
-                'XSRF-TOKEN',
-                mockRequest.csrfToken(),
-                {
-                    httpOnly: false,
-                    secure: true
-                }
-            );
         });
     });
 });

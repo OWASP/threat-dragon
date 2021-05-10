@@ -25,7 +25,6 @@
               <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn">
                 <span class="login-btn-icon">
                 <!-- TODO: Make component and load from available providers on backend -->
-                <!-- TODO: Need CSRF -->
                 <font-awesome-icon
                   :icon="['fab', 'github']"
                   size="2x"
