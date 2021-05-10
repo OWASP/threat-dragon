@@ -1,22 +1,20 @@
 <template>
   <b-navbar toggleable="lg" fixed="top">
-    <b-navbar-brand to="/">
+    <b-navbar-brand :to="username ? '/dashboard' : '/'">
       <b-img src="@/assets/threatdragon_logo.svg" alt="Threat Dragon Logo" />
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
-        <!-- TODO: Only show this if the user is logged in -->
-        <b-nav-text class="logged-in-as">Logged in as {someone}</b-nav-text>
-        <b-nav-item href="#" id="nav-sign-out">
+        <b-nav-text v-show="username" class="logged-in-as">Logged in as {{ username }}</b-nav-text>
+        <b-nav-item v-show="username" href="#" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
             size="2x"
           ></font-awesome-icon>
         </b-nav-item>
-        <!-- End logged in only -->
         <b-nav-item
           href="https://docs.threatdragon.org/"
           target="_blank"
@@ -73,7 +71,15 @@
 </style>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'TdNavbar',
+    computed: {
+        ...mapGetters([
+            'username',
+            'isLoggedIn'
+        ])
+    }
 };
 </script>

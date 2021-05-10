@@ -40,7 +40,8 @@ describe('helpers/jwt.helper.js', () => {
                 provider: {
                     [providerName]: encodeURIComponent(JSON.stringify(cipherText))
                 },
-                user
+                user,
+                iat: sinon.match.any
             };
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 jwtObj,

@@ -96,8 +96,22 @@ describe('store/modules/auth.js', () => {
     });
 
     describe('getters', () => {
-        it('is an object', () => {
-            expect(authModule.getters).toBeInstanceOf(Object);
+        beforeEach(() => {
+            const now = new Date().getTime();
+            authModule.state.user = { username: 'foo' };
+            authModule.state.jwtBody = {
+                exp: now + 5000,
+                iat: now - 1000
+            };
+        });
+
+        it('gets the username', () => {
+            expect(authModule.getters.username(authModule.state)).toEqual('foo');
+        });
+
+        it('gets an empty string when there is no username', () => {
+            authModule.state.user = {};
+            expect(authModule.getters.username(authModule.state)).toEqual('');
         });
     });
 });

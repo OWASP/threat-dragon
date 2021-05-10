@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 import { AUTH_CLEAR, AUTH_SET_JWT } from '../actions/auth.js';
 
 export const clearState = (state) => {
@@ -26,13 +24,14 @@ const mutations = {
         const decodedBody = atob(tokenBody);
         const jwtBody = JSON.parse(decodedBody);
         state.jwt = jwt;
-        Vue.set(state, 'jwtBody', jwtBody);
-        Vue.set(state, 'user', jwtBody.user);
+        state.jwtBody = jwtBody;
+        state.user = jwtBody.user;
     }
 };
 
-// TODO: Getts for isLoggedIn, tokenExpired, etc etc
-const getters = {};
+const getters = {
+    username: (state) => state.user.username || ''
+};
 
 export default {
     state,

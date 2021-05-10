@@ -9,18 +9,26 @@ import {
 } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex';
 
 import Navbar from '@/components/Navbar.vue';
 
 describe('components/Navbar.vue', () => {
-    let wrapper, localVue;
+    let wrapper, localVue, mockStore;
 
     beforeEach(() => {
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
+        localVue.use(Vuex);
+        mockStore = new Vuex.Store({
+            getters: {
+                username: () => 'foobar'
+            }
+        });
         wrapper = shallowMount(Navbar, {
-            localVue
+            localVue,
+            store: mockStore
         });
     });
 
@@ -38,8 +46,8 @@ describe('components/Navbar.vue', () => {
             expect(navbarBrand.exists()).toBe(true);
         });
 
-        it('routes to the home page', () => {
-            expect(navbarBrand.attributes('to')).toEqual('/');
+        it('routes to the dashboard page', () => {
+            expect(navbarBrand.attributes('to')).toEqual('/dashboard');
         });
 
         it('renders the brand image', () => {

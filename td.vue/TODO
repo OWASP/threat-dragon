@@ -1,5 +1,3 @@
-- Brand should bring you to dashboard if logged in
-- Navbar needs to get username and hide if not logged in
 - Loading indicators
 - Pagination
 - Deep linking (redo routing entirely, match old way?)

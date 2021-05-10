@@ -11,7 +11,7 @@ const createAsync = async (providerName, providerOptions, user) => {
         [providerName]: providerOptsEncoded
     };
     // Explore other options including issuer, scope, etc
-    return jsonwebtoken.sign({ provider, user }, key, {
+    return jsonwebtoken.sign({ provider, user, iat: new Date().getTime() }, key, {
         expiresIn: '5m'
     });
 };
