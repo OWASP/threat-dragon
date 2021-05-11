@@ -19,9 +19,11 @@ jobs:
 
       - name: Get latest Chrome
         uses: browser-actions/setup-chrome@latest
+          with:
+            chrome-version: stable
 
       - name: Install NPM Dependencies
         run: cd td.vue && npm ci
 
       - name: Run e2e tests
-        run: cd td.vue && npm run test:e2e
+        run: cd td.vue && npm run test:e2e-ci

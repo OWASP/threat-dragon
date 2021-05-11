@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e-ci": "vue-cli-service test:e2e --headless",
     "test:e2e-firefox": "vue-cli-service test:e2e --env firefox --headless",
     "lint": "vue-cli-service lint"
   },
