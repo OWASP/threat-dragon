@@ -21,7 +21,7 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           curl -sS -o - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
-          sudo apt-get install -y firefox-esr
+          sudo apt-get install -y firefox
 
       - name: Install NPM Dependencies
         run: cd td.vue && npm ci
