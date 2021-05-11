@@ -14,14 +14,11 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install Browsers
-        run: |
-          sudo apt-get update
-          sudo apt-get install -yq libnss3 unzip openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          curl -sS -o - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
-          sudo apt-get install -y firefox
+      - name: Get latest Firefox
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Get latest Chrome
+        uses: browser-actions/setup-chrome@latest
 
       - name: Install NPM Dependencies
         run: cd td.vue && npm ci
