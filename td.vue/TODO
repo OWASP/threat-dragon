@@ -6,7 +6,6 @@
 - Add report feature
 - Add the download from github feature
 - Pagination
-- Update httpClient tests to cover new interceptor and refresh token logic
 - Update env loading on backend to load defaults if present
 - Audit the env variables
     - Add new variables as needed for auth, encryption, etc

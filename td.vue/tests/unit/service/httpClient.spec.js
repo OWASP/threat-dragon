@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { AUTH_SET_JWT } from '@/store/actions/auth.js';
 import httpClient from '@/service/httpClient.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader';
 import storeFactory from '@/store/index.js';
@@ -114,10 +115,16 @@ describe('service/httpClient.js', () => {
     });
 
     describe('response', () => {
+        const errorIntercept = (err) => (fn, errFn) => errFn(err).then(() => {}).catch(() => {});
+        const tokens = { accessToken: 'token', refreshToken: 'refresh' };
+
+        beforeEach(() => {
+            jest.spyOn(mockStore, 'dispatch');
+            console.error = jest.fn();
+        });
 
         describe('without an error', () => {
             beforeEach(() => {
-                jest.spyOn(mockStore, 'dispatch');
                 clientMock.interceptors.response.use = (fn) => fn();
                 client = httpClient.createClient();
             });
@@ -127,18 +134,99 @@ describe('service/httpClient.js', () => {
             });
         });
 
-        // TODO: Cover refresh token logic, look at coverage report
-        xdescribe('with error', () => {
-            const err = new Error('whoops!');
+        describe('with error', () => {
+
+            describe('with a non-401 error', () => {
+                const error = { response: { status: 500 }};
+                
+                beforeEach(() => {
+                    clientMock.interceptors.response.use = errorIntercept(error);
+                    httpClient.createClient();
+                });
+
+                it('logs the error', () => {
+                    expect(console.error).toHaveBeenCalledTimes(1);
+                });
+                
+                it('dispatches the loader finished event', () => {
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                });
+            });
+
+            describe('without a refresh token present', () => {
+                const error = { response: { status: 401 }};
+
+                beforeEach(() => {
+                    clientMock.interceptors.response.use = errorIntercept(error);
+                    httpClient.createClient();
+                });
+
+                it('logs the error', () => {
+                    expect(console.error).toHaveBeenCalledTimes(1);
+                });
+
+                it('dispatches the loader finished event', () => {
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                });
+            });
+
+            describe('with a successful refresh attempt', () => {
+                const error = { response: { status: 401 }, config: { foo: 'bar', headers: {} }};
+
+                beforeEach(() => {
+                    mockStore.state.auth.refreshToken = tokens.refreshToken;
+                    clientMock.interceptors.response.use = errorIntercept(error);
+                    const postResp = {
+                        data: {
+                            data: {
+                                accessToken: tokens.accessToken,
+                                refreshToken: tokens.refreshToken
+                            }
+                        }
+                    };
+                    axios.post = jest.fn().mockReturnValue(postResp);
+                    axios.request = jest.fn();
+                    httpClient.createClient();
+                });
+
+                it('attempts to get a new JWT', () => {
+                    expect(axios.post).toHaveBeenCalledWith('/api/token/refresh', { refreshToken: tokens.refreshToken });
+                });
+
+                it('dispatches the set jwt event', () => {
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(AUTH_SET_JWT, tokens);
+                });
+
+                it('sets the bearer token on the config', () => {
+                    expect(error.config.headers.authorization).toEqual(`Bearer ${tokens.accessToken}`);
+                });
+
+                it('retries the request', () => {
+                    expect(axios.request).toHaveBeenCalledWith(error.config);
+                });
+
+                it('dispatches the loader finished event', () => {
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                });
+            });
+        });
+
+        describe('with unsucessful refresh attempt', () => {
+            const error = { response: { status: 401 }, config: { foo: 'bar', headers: {} }};
 
             beforeEach(() => {
-                clientMock.interceptors.response.use = (fn, errFn) => errFn(err).then(() => {}).catch(() => {});
-                console.error = jest.fn();
+                mockStore.state.auth.refreshToken = tokens.refreshToken;
+                clientMock.interceptors.response.use = errorIntercept(error);
+                axios.post = jest.fn().mockRejectedValue('whoops!');
                 httpClient.createClient();
             });
 
+            it('attempts to refresh the token', () => {
+                expect(axios.post).toHaveBeenCalledWith('/api/token/refresh', { refreshToken: tokens.refreshToken });
+            });
+
             it('logs the error', () => {
-                expect(console.error).toHaveBeenCalledWith(err);
+                expect(console.error).toHaveBeenCalled();
             });
         });
     });
