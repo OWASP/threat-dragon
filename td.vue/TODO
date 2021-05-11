@@ -1,11 +1,11 @@
-- Update tests for httpClient (missing coverage for response interceptor)
+- Create separate token repository in td.server
 - Add tests for ThreatmodelEdit view
 - Deep linking (redo routing entirely, match old way?)
 - Pagination
 - refresh tokens
-- Get refresh token when making API calls
-- Warn when token expiring
+- Use refresh token when making API calls (if 401 response)
 - Logout
+- Warn when token expiring
 - Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
 - BUG: Development (webpack) proxy fails sometimes saying the backend is not reachable, not sure why.  Hopefully only a dev error

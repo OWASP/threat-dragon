@@ -5,8 +5,9 @@
 import axios from 'axios';
 
 import env from '../env/Env.js';
-import jwt from '../helpers/jwt.helper.js';
 import repo from '../repositories/threatmodelrepository.js';
+
+const name = 'github';
 
 /**
  * Determines if the GitHub provider is configured
@@ -60,12 +61,16 @@ const completeLoginAsync = async (code) => {
         username: fullUser.login,
         repos_url: fullUser.repos_url
     };
-    return jwt.createAsync('github', providerResp.data, user);
+    return {
+        user,
+        opts: providerResp.data
+    };
 };
 
 export default {
     completeLoginAsync,
     getOauthReturnUrl,
     getOauthRedirectUrl,
-    isConfigured
+    isConfigured,
+    name
 };

@@ -1,7 +1,8 @@
 ﻿import express from 'express';
 
+import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
-import githubController from '../controllers/githublogincontroller.js';
+import healthcheck from '../controllers/healthcheck.js';
 import homeController from '../controllers/homecontroller.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 
@@ -13,13 +14,13 @@ import threatmodelController from '../controllers/threatmodelcontroller.js';
  */
 const unauthRoutes = (router) => {
     router.get('/', homeController.index);
-    router.get('/healthz', (req, res) => res.send('true'));
+    router.get('/healthz', healthcheck.healthz);
     router.get('/logoutform', homeController.logoutform);
     router.post('/logout', homeController.logout);
 
-    router.get('/api/login/github', githubController.login);
-    router.get('/api/oauth/return', githubController.oauthReturn);
-    router.get('/api/oauth/github', githubController.completeLogin);
+    router.get('/api/login/:provider', auth.login);
+    router.get('/api/oauth/return', auth.oauthReturn);
+    router.get('/api/oauth/:provider', auth.completeLogin);
 };
 
 /**

@@ -6,7 +6,10 @@ describe('store/modules/auth.js', () => {
         commit: () => {}
     };
     const jwtBody = { foo: 'bar', user: { username: 'whatever' }};
-    const jwt = 'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah';
+    const apiResp = {
+        accessToken: 'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah',
+        refreshToken: 'howrefreshing'
+    };
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
@@ -23,6 +26,10 @@ describe('store/modules/auth.js', () => {
 
         it('has a jwt property', () => {
             expect(authModule.state.jwt).not.toBeUndefined();
+        });
+
+        it('has a refreshToken property', () => {
+            expect(authModule.state.refreshToken).not.toBeUndefined();
         });
 
         it('has a user property', () => {
@@ -47,9 +54,9 @@ describe('store/modules/auth.js', () => {
                 expect(authModule.actions[AUTH_SET_JWT]).toBeInstanceOf(Function);
             });
 
-            it('commits the jwt', () => {
-                authModule.actions[AUTH_SET_JWT](mocks, jwt);
-                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, jwt);
+            it('commits the tokens', () => {
+                authModule.actions[AUTH_SET_JWT](mocks, apiResp);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, apiResp);
             });
         });
     });
@@ -60,11 +67,16 @@ describe('store/modules/auth.js', () => {
                 authModule.state.jwt = 'test';
                 authModule.state.user = { foo: 'bar' };
                 authModule.state.jwtBody = { bar: 'baz' };
+                authModule.state.refreshToken = 'refresh';
                 authModule.mutations[AUTH_CLEAR](authModule.state);
             });
 
             it('clears the jwt', () => {
                 expect(authModule.state.jwt).toEqual('');
+            });
+
+            it('clears the refresh token', () => {
+                expect(authModule.state.refreshToken).toEqual('');
             });
 
             it('clears the user', () => {
@@ -78,11 +90,15 @@ describe('store/modules/auth.js', () => {
 
         describe('set jwt', () => {
             beforeEach(() => {
-                authModule.mutations[AUTH_SET_JWT](authModule.state, jwt);
+                authModule.mutations[AUTH_SET_JWT](authModule.state, apiResp);
             });
 
             it('sets the jwt', () => {
-                expect(authModule.state.jwt).toEqual(jwt);
+                expect(authModule.state.jwt).toEqual(apiResp.accessToken);
+            });
+
+            it('sets the refreshToken', () => {
+                expect(authModule.state.refreshToken).toEqual(apiResp.refreshToken);
             });
 
             it('sets the user', () => {

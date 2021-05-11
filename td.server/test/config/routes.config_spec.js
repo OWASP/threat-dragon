@@ -2,8 +2,9 @@ import express from 'express';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import auth from '../../src/controllers/auth.js';
 import bearer from '../../src/config/bearer.config.js';
-import githubController from '../../src/controllers/githublogincontroller.js';
+import healthcheck from '../../src/controllers/healthcheck.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import { getMockApp } from '../express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
@@ -22,7 +23,7 @@ describe('route config tests', () => {
     beforeEach(() => {
         mockApp = getMockApp();
         sinon.stub(express, 'Router').returns(mockRouter);
-        sinon.spy(mockRouter, 'get');
+        sinon.stub(mockRouter, 'get');
         sinon.spy(mockRouter, 'post');
         sinon.spy(mockRouter, 'put');
         sinon.spy(mockRouter, 'delete');
@@ -47,15 +48,15 @@ describe('route config tests', () => {
         });
 
         it('routes GET /healthz', () => {
-            expect(mockRouter.get).to.have.been.calledWith('/', sinon.match.func);
+            expect(mockRouter.get).to.have.been.calledWith('/healthz', healthcheck.healthz);
         });
     });
 
     describe('login and logout', () => {
-        it('routes GET /api/login/github', () => {
+        it('routes GET /api/login/:provider', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/api/login/github',
-                githubController.login
+                '/api/login/:provider',
+                auth.login
             );
         });
 
@@ -75,17 +76,17 @@ describe('route config tests', () => {
     });
 
     describe('github sign in', () => {
-        it('routes GET /api/oauth/github', () => {
+        it('routes GET /api/oauth/provider', () => {
             expect(mockRouter.get).to.have.been.calledWith(
-                '/api/oauth/github',
-                githubController.completeLogin
+                '/api/oauth/:provider',
+                auth.completeLogin
             );
         });
 
         it('routes GET /api/oauth/return', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/oauth/return',
-                githubController.oauthReturn
+                auth.oauthReturn
             );
         });
     });

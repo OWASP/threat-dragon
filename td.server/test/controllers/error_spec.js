@@ -150,5 +150,38 @@ describe('controllers/error.js', () => {
         });
     });
 
+    describe('Unauthorized', () => {
+        let res;
+
+        beforeEach(() => {
+            res = error.unauthorized(mockResponse);
+        });
+
+        it('defines an unauthorized function', () => {
+            expect(error.unauthorized).to.be.a('function');
+        });
+
+        it('responds with a status code of 401', () => {
+            expect(mockResponse.status).to.have.been.calledWith(401);
+        });
+
+        it('sets the json body', () => {
+            const expected = {
+                status: 401,
+                message: 'Unauthorized',
+                details: 'You must login to continue'
+            };
+            expect(mockResponse.json).to.have.been.calledWith(expected);
+        });
+
+        it('returns the res object', () => {
+            expect(res).to.deep.equal(mockResponse);
+        });
+
+        it('logs the error to the debug log', () => {
+            expect(logger.debug).to.have.been.calledOnce;
+        });
+    });
+
 
 });

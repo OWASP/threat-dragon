@@ -43,4 +43,19 @@ describe('helpers/threatmodel.version.js', () => {
             expect(tmVersion.convertToVersion2(original)).to.deep.equal(expected);
         });
     });
+
+    describe('defaults', () => {
+        const original = { summary: {}, detail: { diagrams: [] } };
+        it('uses defaults', () => {
+            expect(tmVersion.convertToVersion2(original)).to.deep.equal({
+                version: '2.0',
+                title: '',
+                owner: '',
+                reviewer: '',
+                description: '',
+                contributors: [],
+                diagrams: []
+            });
+        });
+    });
 });

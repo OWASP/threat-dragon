@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import jwt from '../../src/helpers/jwt.helper.js';
 import githubProvider from '../../src/providers/github.js';
 import repo from '../../src/repositories/threatmodelrepository.js';
 
@@ -102,7 +101,6 @@ describe('providers/github.js', () => {
         beforeEach(async () => {
             sinon.stub(axios, 'post').resolves({ data: { access_token: '' }});
             sinon.stub(env, 'get').returns({ config });
-            sinon.stub(jwt, 'createAsync').resolves({});
             sinon.stub(repo, 'userAsync').resolves({});
 
             await githubProvider.completeLoginAsync(code);
@@ -126,10 +124,6 @@ describe('providers/github.js', () => {
 
         it('gets the user info from the repo', () => {
             expect(repo.userAsync).to.have.been.calledOnce;
-        });
-
-        it('creates a JWT', () => {
-            expect(jwt.createAsync).to.have.been.calledOnce;
         });
     });
 });

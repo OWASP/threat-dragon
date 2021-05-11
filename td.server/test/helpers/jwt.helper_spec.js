@@ -9,7 +9,8 @@ import jwtHelper from '../../src/helpers/jwt.helper.js';
 describe('helpers/jwt.helper.js', () => {
     const cipherText = 'foobar';
     const config = {
-        JWT_SIGNING_KEY: 'asdfasdfasdf'
+        JWT_SIGNING_KEY: 'asdfasdfasdf',
+        JWT_REFRESH_SIGNING_KEY: 'sadfasdfasdf'
     };
 
     beforeEach(() => {
@@ -40,8 +41,7 @@ describe('helpers/jwt.helper.js', () => {
                 provider: {
                     [providerName]: encodeURIComponent(JSON.stringify(cipherText))
                 },
-                user,
-                iat: sinon.match.any
+                user
             };
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 jwtObj,
@@ -54,6 +54,14 @@ describe('helpers/jwt.helper.js', () => {
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 sinon.match.any,
                 config.JWT_SIGNING_KEY,
+                sinon.match.any
+            );
+        });
+
+        it('uses the refresh signing key', () => {
+            expect(jsonwebtoken.sign).to.have.been.calledWith(
+                sinon.match.any,
+                config.JWT_REFRESH_SIGNING_KEY,
                 sinon.match.any
             );
         });
