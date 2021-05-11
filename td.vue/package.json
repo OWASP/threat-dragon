@@ -9,6 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e-ci": "vue-cli-service test:e2e --headless",
     "test:e2e-firefox": "vue-cli-service test:e2e --env firefox --headless",
+    "test:e2e-chrome": "vue-cli-service test:e2e --env chrome --headless",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

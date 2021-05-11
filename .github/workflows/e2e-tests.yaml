@@ -28,4 +28,4 @@ jobs:
         run: cd td.vue && npm ci
 
       - name: Run e2e tests
-        run: cd td.vue && npm run test:e2e-firefox
+        run: cd td.vue && npm run test:e2e-ci
