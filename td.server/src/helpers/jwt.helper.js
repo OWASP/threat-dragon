@@ -11,7 +11,7 @@ const createAsync = async (providerName, providerOptions, user) => {
     };
     // Explore other options including issuer, scope, etc
     const accessToken = jsonwebtoken.sign({ provider, user }, env.get().config.JWT_SIGNING_KEY, {
-        expiresIn: '15s'
+        expiresIn: '5m'
     });
 
     const refreshToken = jsonwebtoken.sign({ provider, user }, env.get().config.JWT_REFRESH_SIGNING_KEY, {
