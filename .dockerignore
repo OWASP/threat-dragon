@@ -1,8 +1,11 @@
-.env
-node_modules
-*/node_modules
+.github
 coverage
+*/coverage
 dist/
 */dist
+node_modules
+*/node_modules
+.env
 docs/
-.github
+*.log
+*/.nyc_output

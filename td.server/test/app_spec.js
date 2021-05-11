@@ -28,7 +28,6 @@ describe('app tests', () => {
         sinon.spy(mockLogger, 'error');
 
         sinon.stub(securityHeaders, 'config');
-        sinon.stub(expressHelper, 'getFaviconMiddleware');
         sinon.stub(loggersConfig, 'configLoggers');
         sinon.stub(parsersConfig, 'config');
         sinon.stub(routesConfig, 'config');
@@ -67,10 +66,6 @@ describe('app tests', () => {
 
         it('uses the security headers config', () => {
             expect(securityHeaders.config).to.have.been.calledOnce;
-        });
-
-        it('uses the favicon middleware', () => {
-            expect(expressHelper.getFaviconMiddleware).to.have.been.calledOnce;
         });
 
         it('uses the loggers config', () => {

@@ -32,9 +32,6 @@ const create = () => {
         //security headers
         securityHeaders.config(app);
 
-        //favicon
-        app.use(expressHelper.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
-
         //parsers
         parsers.config(app);
 
