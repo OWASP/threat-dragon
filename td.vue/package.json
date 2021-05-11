@@ -36,7 +36,7 @@
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.2",
-    "chromedriver": "^84.0.1",
+    "chromedriver": "^90.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^24.3.6",
