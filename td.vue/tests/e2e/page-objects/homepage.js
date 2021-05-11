@@ -36,7 +36,10 @@ module.exports = {
             selector: '#app',
 
             elements: {
-                logo: 'img'
+                logo: '#home-td-logo',
+                headline: '.display-3',
+                description: '.td-description',
+                githubLogin: '#github-login-btn'
             },
 
             // - a page object section can also have sub-sections
