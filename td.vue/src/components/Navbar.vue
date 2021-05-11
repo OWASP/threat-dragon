@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" fixed="top">
+  <b-navbar toggleable="lg" fixed="top" id="navbar">
     <b-navbar-brand :to="username ? '/dashboard' : '/'">
       <b-img src="@/assets/threatdragon_logo.svg" alt="Threat Dragon Logo" />
     </b-navbar-brand>
