@@ -28,9 +28,11 @@ const middleware = (req, res, next) => {
         req.user = user;
         return next();
     } catch (e) {
-        // Catch a specific error or error code for an expired token
-        // as opposed to an invalid token
-        // expired should get unauthorized?
+        if (e.name === 'TokenExpiredError') {
+            req.log.debug({ security: true }, 'Expired JWT');
+            return errors.unauthorized(res);
+        }
+        
         req.log.error({ security: true }, 'Error decoding JWT');
         req.log.error({ security: true }, e);
         return errors.badRequest('Invalid JWT', res);

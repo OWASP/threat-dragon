@@ -1,10 +1,11 @@
 - Add tests for ThreatmodelEdit view
 - Deep linking (redo routing entirely, match old way?)
+- Update flow to create a new diagram
+- Add report feature
+- Add the download from github feature
 - Pagination
-- refresh tokens
-- Use refresh token when making API calls (if 401 response)
 - Logout
-- Warn when token expiring
+- Update httpClient tests to cover new interceptor and refresh token logic
 - Error handling for API requests that might fail (toast service?)
+- Gracefully handle an expired refresh token (TODO in httpClient)
 - Do a POC to use no back-end whatsoever (demo and test only)
-- BUG: Development (webpack) proxy fails sometimes saying the backend is not reachable, not sure why.  Hopefully only a dev error

@@ -48,8 +48,10 @@ const refresh = (req, res) => {
     }
     return responseWrapper.sendResponseAsync(async () => {
         const { provider, user } = tokenBody;
-        const { accessToken } = await jwtHelper.createAsync(provider.name, provider, user);
-        return { accessToken };
+        const { accessToken }  = await jwtHelper.createAsync(provider.name, provider, user);
+        
+        // Limit the time refresh tokens live, so do not provide a new one.
+        return { accessToken, refreshToken: req.body.refreshToken };
     }, req, res);
 };
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { AUTH_SET_JWT } from '../store/actions/auth.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '../store/actions/loader.js';
 import storeFactory from '../store/index.js';
 
@@ -19,7 +20,6 @@ const createClient = () => {
     client.defaults.headers.post['Content-Type'] = 'application/json';
     
     client.interceptors.request.use((config) => {
-        // TODO: We can handle expired tokens here
         const store = storeFactory.get();
         store.dispatch(LOADER_STARTED);
 
@@ -30,6 +30,8 @@ const createClient = () => {
         return config;
     }, (err) => {
         console.error(err);
+        const store = storeFactory.get();
+        store.dispatch(LOADER_FINISHED);
         return Promise.reject(err);
     });
 
@@ -38,14 +40,46 @@ const createClient = () => {
         const store = storeFactory.get();
         store.dispatch(LOADER_FINISHED);
         return resp;
-    }, (err) => {
-        // TODO: Notify the user that there was an error
-        // TODO: Handle JWT errors, redirect to login, something else?
-        console.error(err);
-        return Promise.reject(err);
+    }, async (err) => {
+        const store = storeFactory.get();
+
+        const logAndExit = () => {
+            console.error(err);
+            store.dispatch(LOADER_FINISHED);
+            return Promise.reject(err);
+        };
+        
+        if (err.response.status !== 401) {
+            return logAndExit();
+        }
+
+        const refreshToken = store.state.auth.refreshToken;
+        if (!refreshToken) {
+            return logAndExit();
+        }
+
+        // Do not use this axios instance for the refresh token
+        // Should this request fail and we use the same instance,
+        // we could be stuck in an infinte loop
+        try {
+            const response = await axios.post('/api/token/refresh', { refreshToken });
+            const tokens = response.data.data;
+            store.dispatch(AUTH_SET_JWT, tokens);
+            err.config.headers.authorization = `Bearer ${tokens.accessToken}`;
+            const retryResp = await axios.request(err.config);
+            store.dispatch(LOADER_FINISHED);
+            return retryResp;
+        } catch (retryError) {
+            // TODO: Check if retry error is still a 401, maybe we have an outdated refresh token
+            // If that's the case, perform a full logout
+            // Tell the user that they've been logged out
+            // Bring them back to the home page
+            console.error('Error retrying after refresh token update');
+            console.error(retryError);
+            return await logAndExit();
+        }
     });
 
-    // TODO: Add interceptor for response
     return client;
 };
 
