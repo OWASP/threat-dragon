@@ -7,8 +7,9 @@ module.exports = {
     desiredCapabilities: {
         chromeOptions: {
             args: [
-                "window-size=1280,800",
-                "--incognito"
+                '--disable-gpu',
+                'window-size=1920,1080',
+                '--incognito'
             ]
         }
     }
