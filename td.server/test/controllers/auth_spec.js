@@ -8,6 +8,7 @@ import { getMockRequest, getMockResponse } from '../express.mocks.js';
 import jwtHelper from '../../src/helpers/jwt.helper.js';
 import providers from '../../src/providers/index.js';
 import responseWrapper from '../../src/controllers/responseWrapper.js';
+import tokenRepo from '../../src/repositories/token.js';
 
 describe('controllers/auth.js', () => {
     const providerStub = {
@@ -23,6 +24,7 @@ describe('controllers/auth.js', () => {
         mockResponse = getMockResponse();
         sinon.stub(responseWrapper, 'sendResponse').callsFake((fn) => fn());
         sinon.stub(responseWrapper, 'sendResponseAsync').callsFake(async (p) => { await p(); });
+        sinon.stub(tokenRepo, 'add');
     });
 
     afterEach(() => {
@@ -128,6 +130,10 @@ describe('controllers/auth.js', () => {
                     optsStub,
                     userStub
                 );
+            });
+
+            it('stores the refresh token', () => {
+                expect(tokenRepo.add).to.have.been.calledWith(tokensStub.refreshToken);
             });
 
             it('returns the tokens', () => {

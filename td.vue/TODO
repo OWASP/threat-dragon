@@ -1,4 +1,3 @@
-- Create separate token repository in td.server
 - Add tests for ThreatmodelEdit view
 - Deep linking (redo routing entirely, match old way?)
 - Pagination

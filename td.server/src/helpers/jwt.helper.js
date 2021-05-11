@@ -23,7 +23,10 @@ const createAsync = async (providerName, providerOptions, user) => {
 
 const verifyToken = (token) => jsonwebtoken.verify(token, env.get().config.JWT_SIGNING_KEY);
 
+const verifyRefresh = (token) => jsonwebtoken.verify(token, env.get().config.JWT_REFRESH_SIGNING_KEY);
+
 export default {
     createAsync,
-    verifyToken
+    verifyToken,
+    verifyRefresh
 };

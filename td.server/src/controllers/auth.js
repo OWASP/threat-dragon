@@ -3,13 +3,7 @@ import errors from './errors.js';
 import jwtHelper from '../helpers/jwt.helper.js';
 import providers from '../providers/index.js';
 import responseWrapper from './responseWrapper.js';
-
-/**
- * Consider saving this somewhere other than in-memory
- * Every time the server restarts, we lose the refresh tokens
- * @type {Array<String>}
- */
-const refreshTokens = [];
+import tokenRepo from '../repositories/token.js';
 
 const login = (req, res) => {
     try {
@@ -36,7 +30,7 @@ const completeLogin = (req, res) => {
         return responseWrapper.sendResponseAsync(async () => {
             const { user, opts } = await provider.completeLoginAsync(req.query.code);
             const { accessToken, refreshToken } = await jwtHelper.createAsync(provider.name, opts, user);
-            refreshTokens.push(refreshToken);
+            tokenRepo.add(refreshToken);
             return {
                 accessToken,
                 refreshToken
