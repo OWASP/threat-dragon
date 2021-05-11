@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import bearer from '../../src/config/bearer.config.js';
-import encryptionHelper from '../../src/helpers/encryption.helper.js';
 import errors from '../../src/controllers/errors.js';
 import { getMockRequest, getMockResponse } from '../express.mocks.js';
 import jwt from '../../src/helpers/jwt.helper.js';
@@ -27,7 +26,7 @@ describe('config/bearer.config.js', () => {
         const provider = { foo: 'bar' };
         const verifyResult = {
             provider: {
-                'foobar': encodeURIComponent(JSON.stringify(provider))
+                'foobar': provider
             },
             user: {
                 username: 'whatever'
@@ -37,7 +36,6 @@ describe('config/bearer.config.js', () => {
         beforeEach(() => {
             req.headers.authorization = `Bearer ${validToken}`;
             sinon.stub(jwt, 'verifyToken').returns(verifyResult);
-            sinon.stub(encryptionHelper, 'decrypt').returns(JSON.stringify(provider));
             bearer.middleware(req, res, next);
         });
 
@@ -46,15 +44,11 @@ describe('config/bearer.config.js', () => {
         });
 
         it('sets the provider', () => {
-            expect(req.provider).to.deep.eq(provider);
+            expect(req.provider).to.deep.eq(verifyResult.provider);
         });
 
         it('sets the user', () => {
             expect(req.user).to.deep.eq(verifyResult.user);
-        });
-
-        it('decrypts the provider info', () => {
-            expect(encryptionHelper.decrypt).to.have.been.calledWith(provider);
         });
 
         it('calls next', () => {

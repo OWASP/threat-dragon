@@ -1,4 +1,3 @@
-import encryptionHelper from '../helpers/encryption.helper.js';
 import errors from '../controllers/errors.js';
 import jwt from '../helpers/jwt.helper.js';
 
@@ -25,9 +24,7 @@ const middleware = (req, res, next) => {
 
     try {
         const { provider, user } = jwt.verifyToken(token);
-        const providerName = Object.keys(provider)[0];
-        const decodedProvider = JSON.parse(decodeURIComponent(provider[providerName]));
-        req.provider = JSON.parse(encryptionHelper.decrypt(decodedProvider));
+        req.provider = provider;
         req.user = user;
         return next();
     } catch (e) {

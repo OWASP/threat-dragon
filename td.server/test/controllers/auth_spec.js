@@ -153,4 +153,41 @@ describe('controllers/auth.js', () => {
             });
         });
     });
+
+    describe('refresh', () => {
+        describe('with an invalid token', () => {
+            beforeEach(() => {
+                sinon.stub(tokenRepo, 'verify').returns(false);
+                sinon.stub(errors, 'unauthorized');
+                auth.refresh(mockRequest, mockResponse);
+            });
+
+            it('sends an unauthorized response', () => {
+                expect(errors.unauthorized).to.have.been.calledOnce;
+            });
+        });
+
+        describe('with a valid token', () => {
+            const user = { name: 'foo' };
+            const provider = { name: 'bar', bar: {} };
+            beforeEach(() => {
+                mockRequest.body.refreshToken = 'foobar';
+                sinon.stub(tokenRepo, 'verify').returns({ provider, user });
+                sinon.stub(jwtHelper, 'createAsync').resolves({ accessToken: 'blah' });
+                auth.refresh(mockRequest, mockResponse);
+            });
+
+            it('verifies the token', () => {
+                expect(tokenRepo.verify).to.have.been.calledWith(mockRequest.body.refreshToken);
+            });
+
+            it('uses the responseWrapper', () => {
+                expect(responseWrapper.sendResponseAsync).to.have.been.calledOnce;
+            });
+
+            it('creates a new token', () => {
+                expect(jwtHelper.createAsync).to.have.been.calledWith(provider.name, provider, user);
+            });
+        });
+    });
 });

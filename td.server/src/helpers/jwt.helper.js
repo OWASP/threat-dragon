@@ -21,9 +21,26 @@ const createAsync = async (providerName, providerOptions, user) => {
     return { accessToken, refreshToken };
 };
 
-const verifyToken = (token) => jsonwebtoken.verify(token, env.get().config.JWT_SIGNING_KEY);
+const decodeProvider = (encodedProvider) => {
+    const providerName = Object.keys(encodedProvider)[0];
+    const decodedProvider = JSON.parse(decodeURIComponent(encodedProvider[providerName]));
+    const provider = JSON.parse(encryptionHelper.decrypt(decodedProvider));
+    provider.name = providerName;
+    return provider;
+};
 
-const verifyRefresh = (token) => jsonwebtoken.verify(token, env.get().config.JWT_REFRESH_SIGNING_KEY);
+const decode = (token, key) => {
+    const { provider, user } = jsonwebtoken.verify(token, key);
+    const decodedProvider = decodeProvider(provider);
+    return {
+        provider: decodedProvider,
+        user
+    };
+};
+
+const verifyToken = (token) => decode(token, env.get().config.JWT_SIGNING_KEY);
+
+const verifyRefresh = (token) => decode(token, env.get().config.JWT_REFRESH_SIGNING_KEY);
 
 export default {
     createAsync,

@@ -41,21 +41,28 @@ const completeLogin = (req, res) => {
     }
 };
 
+const refresh = (req, res) => {
+    const tokenBody = tokenRepo.verify(req.body.refreshToken);
+    if (!tokenBody) {
+        return errors.unauthorized(res);
+    }
+    return responseWrapper.sendResponseAsync(async () => {
+        const { provider, user } = tokenBody;
+        const { accessToken } = await jwtHelper.createAsync(provider.name, provider, user);
+        return { accessToken };
+    }, req, res);
+};
+
 const logout = (req, res) => {
     // Delete refresh token
     req.log.error('Not implemented');
     res.status(400).json({ status: 400, message: 'Not implemented on the server' });
 };
 
-// const refresh = (req, res) => {
-//     // verify tokens
-//     console.log('TODO');
-// };
-
 export default {
     completeLogin,
     login,
     logout,
-    oauthReturn //,
-    // refresh
+    oauthReturn,
+    refresh
 };

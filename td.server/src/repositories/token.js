@@ -34,7 +34,7 @@ const remove = (token) => {
 /**
  * Verifies that a refresh token is valid
  * @param {String} token
- * @returns {Boolean}
+ * @returns {Object} The decoded token
  */
 const verify = (token) => {
     if (refreshTokens.indexOf(token) === -1) {
@@ -44,8 +44,7 @@ const verify = (token) => {
     try {
         // Refresh tokens are just JWTs.  The JWTs have a default expiration time
         // Ensure that it is a valid (signed) token, and that it is not expired
-        jwtHelper.verifyRefresh(token);
-        return true;
+        return jwtHelper.verifyRefresh(token);
     } catch (err) {
         logger.info({ security: true }, 'Error verifying refresh token');
         logger.info({ security: true }, err);

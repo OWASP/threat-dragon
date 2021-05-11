@@ -45,7 +45,7 @@ describe('repositories/token.js', () => {
         describe('with a valid token', () => {
             beforeEach(() => {
                 tokenRepo.add(token);
-                sinon.stub(jwtHelper, 'verifyRefresh');
+                sinon.stub(jwtHelper, 'verifyRefresh').returns(true);
             });
 
             it('verifies the token', () => {

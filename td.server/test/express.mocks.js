@@ -32,6 +32,7 @@ export const getMockRequest = () => {
         params: {},
         headers: {},
         query: {},
+        body: {},
         session: {
             destroy: (cb) => { if(cb) { cb(); }}
         },

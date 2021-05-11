@@ -78,9 +78,10 @@ describe('helpers/jwt.helper.js', () => {
     });
 
     describe('verifyToken', () => {
-        const token = { foo: 'bar' };
+        const token = { foo: 'bar', provider: { foo: '%7B%22foo%22%3A%22bar%22%7D' } };
         beforeEach(() => {
-            sinon.stub(jsonwebtoken, 'verify');
+            sinon.stub(jsonwebtoken, 'verify').returns(token);
+            sinon.stub(encryptionHelper, 'decrypt').returns('{}');
             jwtHelper.verifyToken(token);
         });
 
@@ -92,6 +93,25 @@ describe('helpers/jwt.helper.js', () => {
         it('passes the signing key', () => {
             expect(jsonwebtoken.verify).to.have.been
                 .calledWith(sinon.match.any, config.JWT_SIGNING_KEY);
+        });
+    });
+
+    describe('verifyRefresh', () => {
+        const token = { foo: 'bar', provider: { foo: '%7B%22foo%22%3A%22bar%22%7D' } };
+        beforeEach(() => {
+            sinon.stub(jsonwebtoken, 'verify').returns(token);
+            sinon.stub(encryptionHelper, 'decrypt').returns('{}');
+            jwtHelper.verifyRefresh(token);
+        });
+
+        it('passes the token', () => {
+            expect(jsonwebtoken.verify).to.have.been
+                .calledWith(token, sinon.match.any);
+        });
+
+        it('passes the signing key', () => {
+            expect(jsonwebtoken.verify).to.have.been
+                .calledWith(sinon.match.any, config.JWT_REFRESH_SIGNING_KEY);
         });
     });
 });
