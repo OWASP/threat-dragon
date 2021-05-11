@@ -6,6 +6,11 @@
 - Pagination
 - Logout
 - Update httpClient tests to cover new interceptor and refresh token logic
+- Update env loading on backend to load defaults if present
+- Audit the env variables
+    - Add new variables as needed for auth, encryption, etc
+    - Remove any unused variables from Env classes
+    - Update documentation
 - Error handling for API requests that might fail (toast service?)
 - Gracefully handle an expired refresh token (TODO in httpClient)
 - Do a POC to use no back-end whatsoever (demo and test only)
