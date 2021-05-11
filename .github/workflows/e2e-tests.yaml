@@ -1,8 +1,6 @@
 name: Run e2e test
 on:
   push:
-    # TODO: Do we only want this on main?
-    branches: [ '*' ]
 jobs:
   e2e:
     runs-on: ubuntu-latest
