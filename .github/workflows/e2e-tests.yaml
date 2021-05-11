@@ -18,9 +18,7 @@ jobs:
         uses: browser-actions/setup-firefox@latest
 
       - name: Get latest Chrome
-        uses: browser-actions/setup-chrome@latest
-          with:
-            chrome-version: stable
+        uses: browser-actions/setup-chrome@stable
 
       - name: Install NPM Dependencies
         run: cd td.vue && npm ci
