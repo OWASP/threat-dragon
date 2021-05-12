@@ -24,8 +24,43 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build (do not push)
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: false
+          tags: "owasp-threat-dragon:dev"
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
       - name: Install NPM Dependencies
         run: cd td.vue && npm ci
+
+      - name: Run Dockerized Threat Dragon
+        run: docker run -d -p 3000:3000 owasp-threat-dragon:dev
+        env:
+          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
+          JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
+          SESION_SIGNING_KEY: ${{ secrets.CI_SESION_SIGNING_KEY }}
+          SESSION_STORE: local
 
       - name: Run e2e tests
         run: cd td.vue && npm run test:e2e-ci
