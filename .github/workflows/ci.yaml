@@ -1,6 +1,8 @@
 name: Run e2e test
 on:
   push:
+env:
+  TAG: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 jobs:
   server_unit_tests:
     runs-on: ubuntu-latest
@@ -82,7 +84,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "imoshtokill/threat-dragon-dev:latest"
+          tags: "imoshtokill/threat-dragon-dev:${GITHUB_SHA::8}"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -94,7 +96,7 @@ jobs:
         working-directory: td.vue
     services:
       threatdragon:
-        image: imoshtokill/threat-dragon-dev:latest
+        image: imoshtokill/threat-dragon-dev:${GITHUB_SHA::8}
         ports:
           - 3000:3000
         env:
@@ -136,7 +138,7 @@ jobs:
     needs: [docker_build_and_publish]
     services:
       threatdragon:
-        image: imoshtokill/threat-dragon-dev:latest
+        image: imoshtokill/threat-dragon-dev:${GITHUB_SHA::8}
         ports:
           - 3000:3000
         env:
