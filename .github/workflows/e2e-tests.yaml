@@ -58,11 +58,12 @@ jobs:
           SESSION_STORE: local
 
     steps:
-      - name: Get docker logs
-        run: docker logs threatdragon
 
       - name: Get all containers
         run: docker ps -a
+        
+      - name: Get docker logs
+        run: docker logs threatdragon
 
       - name: Checkout
         uses: actions/checkout@v2
