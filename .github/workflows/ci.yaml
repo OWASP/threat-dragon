@@ -20,7 +20,7 @@ jobs:
         run: npm ci
 
       - name: lint
-        run: npm pretest
+        run: npm run pretest
 
       - name: Unit Test
         run: npm run test:unit
