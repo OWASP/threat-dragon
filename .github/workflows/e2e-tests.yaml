@@ -39,12 +39,10 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Get threat dragon logs
-        run: docker logs threatdragon
-
   test:
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
+    needs: build_image
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:latest
@@ -65,7 +63,7 @@ jobs:
         run: docker ps -a
 
       - name: Get docker logs
-        run: docker logs $(docker ps -qa)
+        run: docker logs "${{ job.services.threatdragon.id }}"
 
       - name: Checkout
         uses: actions/checkout@v2
