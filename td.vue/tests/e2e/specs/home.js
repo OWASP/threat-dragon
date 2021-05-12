@@ -3,23 +3,23 @@ module.exports = {
 
     'has a welcome message': (browser) => {
         const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@app');
+        homepage.waitForElementVisible('@welcome');
 
-        const app = homepage.section.app;
-        app.expect.element('@logo').to.be.visible;
-        app.expect.element('@headline').text.to.equal('OWASP Threat Dragon');
-        app.expect.element('@description').text.to.contain('open-source');
+        const welcome = homepage.section.welcome;
+        welcome.expect.element('@logo').to.be.visible;
+        welcome.expect.element('@headline').text.to.equal('OWASP Threat Dragon');
+        welcome.expect.element('@description').text.to.contain('open-source');
 
         browser.end();
     },
 
     'displays the login options': (browser) => {
         const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@app');
+        homepage.waitForElementVisible('@welcome');
 
-        const app = homepage.section.app;
-        app.expect.element('@githubLogin').to.be.visible;
-        app.expect.element('@localLogin').to.be.visible;
+        const welcome = homepage.section.welcome;
+        welcome.expect.element('@githubLogin').to.be.visible;
+        welcome.expect.element('@localLogin').to.be.visible;
 
         browser.end();
     }

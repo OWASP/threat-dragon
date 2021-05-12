@@ -3,10 +3,10 @@ module.exports = {
 
     'logs in using the local session': (browser) => {
         const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@app');
-        const app = homepage.section.app;
-        app.waitForElementVisible('@localLogin');
-        app.click('@localLogin');
+        homepage.waitForElementVisible('@welcome');
+        const welcome = homepage.section.welcome;
+        welcome.waitForElementVisible('@localLogin');
+        welcome.click('@localLogin');
         browser.expect.url().to.contain('/#/dashboard');
 
         browser.end();

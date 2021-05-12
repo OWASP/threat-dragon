@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-jumbotron>
+    <b-jumbotron  id="welcome-jumbotron">
       <b-row class="text-center mb-2">
         <b-col md=12>
           <h1 class="display-3 text-center">OWASP Threat Dragon</h1>

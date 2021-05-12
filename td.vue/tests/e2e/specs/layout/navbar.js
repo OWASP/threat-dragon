@@ -7,7 +7,7 @@ module.exports = {
     // TODO: Test brand link brings you to /dashboard if logged in
 
     'has a brand that links to the home page': (browser) => {
-        const homepage = browser.page.homepage();
+        const homepage = browser.page.layout();
         homepage.waitForElementVisible('@navbar');
 
         const navbar = homepage.section.navbar;
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     'links to the threat dragon docs': async (browser) => {
-        const homepage = browser.page.homepage();
+        const homepage = browser.page.layout();
         homepage.verifyLinkOpensNewTab(
             homepage.section.navbar.elements.docsLink,
             'https://docs.threatdragon.org/'
@@ -28,7 +28,7 @@ module.exports = {
     },
 
     'links to OWASP\'s Threat Modeling Cheat Sheet': async (browser) => {
-        const homepage = browser.page.homepage();
+        const homepage = browser.page.layout();
         homepage.verifyLinkOpensNewTab(
             homepage.section.navbar.elements.cheatSheetLink,
             'https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html'
@@ -37,7 +37,7 @@ module.exports = {
     },
 
     'links to OWASP\'s Threat Dragon project page': async (browser) => {
-        const homepage = browser.page.homepage();
+        const homepage = browser.page.layout();
         homepage.verifyLinkOpensNewTab(
             homepage.section.navbar.elements.projectLink,
             'https://owasp.org/www-project-threat-dragon/'
