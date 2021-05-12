@@ -1,7 +1,7 @@
 paths:
   - td.server/src
-  - td.site/src
+  - td.vue/src
 paths_ignore:
   - td.server/test
-  - td.site/test
+  - td.vue/test
   - node_modules

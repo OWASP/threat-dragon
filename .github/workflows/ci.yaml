@@ -2,9 +2,56 @@ name: Run e2e test
 on:
   push:
 jobs:
-  build_image:
+  server_unit_tests:
     runs-on: ubuntu-latest
-    concurrency: ci-${{ github.ref }}
+    defaults:
+      run:
+        working-directory: td.server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: npm ci
+        run: npm ci
+
+      - name: lint
+        run: npm pretest
+
+      - name: Unit Test
+        run: npm run test:unit
+
+  site_unit_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: npm ci
+        run: npm ci
+
+      - name: lint
+        run: npm run lint
+
+      - name: Unit Test
+        run: npm run test:unit
+
+  
+  docker_build_and_publish:
+    runs-on: ubuntu-latest
+    needs: [site_unit_tests, server_unit_tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,10 +86,12 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-  test:
+  e2e_tests:
     runs-on: ubuntu-latest
-    concurrency: ci-${{ github.ref }}
-    needs: build_image
+    needs: [docker_build_and_publish, site_unit_tests, server_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:latest
@@ -58,13 +107,6 @@ jobs:
           SESSION_STORE: local
 
     steps:
-
-      - name: Sleep for ten seconds
-        run: sleep 10
-
-      - name: Get docker logs
-        run: docker logs "${{ job.services.threatdragon.id }}"
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -83,8 +125,8 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Install NPM Dependencies
-        run: cd td.vue && npm ci
+      - name: npm ci
+        run: npm ci
 
       - name: Run e2e tests
-        run: cd td.vue && npm run test:e2e-ci
+        run: npm run test:e2e-ci
