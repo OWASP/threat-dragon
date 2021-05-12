@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -58,6 +58,12 @@ jobs:
           SESSION_STORE: local
 
     steps:
+      - name: Get docker logs
+        run: docker logs threatdragon
+
+      - name: Get all containers
+        run: docker ps -a
+
       - name: Checkout
         uses: actions/checkout@v2
 
