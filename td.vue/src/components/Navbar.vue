@@ -77,8 +77,7 @@ export default {
     name: 'TdNavbar',
     computed: {
         ...mapGetters([
-            'username',
-            'isLoggedIn'
+            'username'
         ])
     }
 };

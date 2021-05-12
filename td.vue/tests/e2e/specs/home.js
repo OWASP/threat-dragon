@@ -19,6 +19,7 @@ module.exports = {
 
         const app = homepage.section.app;
         app.expect.element('@githubLogin').to.be.visible;
+        app.expect.element('@localLogin').to.be.visible;
 
         browser.end();
     }

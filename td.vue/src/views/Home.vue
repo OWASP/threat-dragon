@@ -22,7 +22,7 @@
           </b-row>
           <b-row>
             <b-col class="mt-5 mr-5 text-right">
-              <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn">
+              <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn" class="m-1">
                 <span class="login-btn-icon">
                 <!-- TODO: Make component and load from available providers on backend -->
                 <font-awesome-icon
@@ -34,6 +34,19 @@
                 </span>
                 <span>
                 Login with Github
+                </span>
+              </b-btn>
+              <b-btn variant="secondary" @click="onProviderClick(allProviders.local)" id="local-login-btn" class="m-1">
+                <span class="login-btn-icon">
+                <font-awesome-icon
+                  :icon="['fab', 'vuejs']"
+                  size="2x"
+                  color="white"
+                  class="mr-2"
+                ></font-awesome-icon>
+                </span>
+                <span>
+                Local Session
                 </span>
               </b-btn>
             </b-col>
@@ -56,8 +69,10 @@
 
 <script>
 import { allProviders } from '@/service/providers.js';
+import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/loginApi.js';
 import providerActions from '@/store/actions/provider.js';
+import router from '@/router/index.js';
 
 export default {
     name: 'Home',
@@ -69,6 +84,12 @@ export default {
     methods: {
         async onProviderClick(providerName) {
             this.$store.dispatch(providerActions.selected, providerName);
+
+            if (providerName === allProviders.local) {
+                this.$store.dispatch(AUTH_SET_LOCAL);
+                return router.push('/dashboard');
+            }
+          
             const resp = await loginApi.loginAsync(providerName);
             window.location.href = resp.data;
         }

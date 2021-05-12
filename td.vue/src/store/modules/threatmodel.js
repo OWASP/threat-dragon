@@ -23,19 +23,23 @@ const state = {
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_FETCH]: async ({ commit, state, rootState }) => {
-        const resp = await threatmodelApi.modelAsync(
-            rootState.repo.selected,
-            rootState.branch.selected,
-            state.selected
-        );
-        commit(THREATMODEL_FETCH, resp.data);
+        if (rootState.provider.selected !== 'local') {
+            const resp = await threatmodelApi.modelAsync(
+                rootState.repo.selected,
+                rootState.branch.selected,
+                state.selected
+            );
+            commit(THREATMODEL_FETCH, resp.data);
+        }
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
-        const resp = await threatmodelApi.modelsAsync(
-            rootState.repo.selected,
-            rootState.branch.selected
-        );
-        commit(THREATMODEL_FETCH_ALL, resp.data);
+        if (rootState.provider.selected !== 'local') {
+            const resp = await threatmodelApi.modelsAsync(
+                rootState.repo.selected,
+                rootState.branch.selected
+            );
+            commit(THREATMODEL_FETCH_ALL, resp.data);
+        }
     },
     [THREATMODEL_SELECTED]: ({ commit, dispatch }, threatModel) => {
         commit(THREATMODEL_SELECTED, threatModel);

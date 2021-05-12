@@ -1,4 +1,5 @@
 import githubProvider from './github.provider.js';
+import sessionProvider from './session.provider.js';
 
 const providers = {
     github: {
@@ -6,9 +7,10 @@ const providers = {
         displayName: 'GitHub',
         provider: githubProvider
     },
-    testingOnly: {
-        key: 'testingOnly',
-        displayName: 'Fake Datasource'
+    local: {
+        key: 'local',
+        displayName: 'Local Session',
+        provider: sessionProvider
     }
 };
 
@@ -32,11 +34,11 @@ export const getDashboardActions = (providerKey) => {
         throw new Error(`Unknown provider: ${providerKey}`);
     }
 
-    if (!provider.provider || ! provider.provider.dashboardActions) {
+    if (!provider.provider || ! provider.provider.getDashboardActions()) {
         throw new Error(`No dashboard actions configured for provider ${providerKey}`);
     }
 
-    return provider.provider.dashboardActions;
+    return provider.provider.getDashboardActions();
 };
 
 export default {

@@ -1,4 +1,4 @@
-import { AUTH_CLEAR, AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import authModule, { clearState } from '@/store/modules/auth.js';
 
 describe('store/modules/auth.js', () => {
@@ -42,23 +42,21 @@ describe('store/modules/auth.js', () => {
     });
 
     describe('actions', () => {
-        describe('clear', () => {
-            it('commits clear', () => {
-                authModule.actions[AUTH_CLEAR](mocks);
-                expect(mocks.commit).toHaveBeenCalledWith(AUTH_CLEAR);
-            });
+        it('commits clear', () => {
+            authModule.actions[AUTH_CLEAR](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(AUTH_CLEAR);
         });
 
-        describe('set jwt', () => {
-            it('is a function', () => {
-                expect(authModule.actions[AUTH_SET_JWT]).toBeInstanceOf(Function);
-            });
-
-            it('commits the tokens', () => {
-                authModule.actions[AUTH_SET_JWT](mocks, apiResp);
-                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, apiResp);
-            });
+        it('commits set jwt', () => {
+            authModule.actions[AUTH_SET_JWT](mocks, apiResp);
+            expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, apiResp);
         });
+
+        it('commits set local', () => {
+            authModule.actions[AUTH_SET_LOCAL](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL);
+        });
+
     });
 
     describe('mutations', () => {
@@ -107,6 +105,28 @@ describe('store/modules/auth.js', () => {
 
             it('sets the jwtBody', () => {
                 expect(authModule.state.jwtBody).toEqual(jwtBody);
+            });
+        });
+
+        describe('set local', () => {
+            beforeEach(() => {
+                authModule.mutations[AUTH_SET_LOCAL](authModule.state);
+            });
+
+            it('sets the username to "Guest"', () => {
+                expect(authModule.state.user.username).toEqual('Guest');
+            });
+
+            it('does not set the jwt', () => {
+                expect(authModule.state.jwt).toEqual('');
+            });
+
+            it('does not set the jwt body', () => {
+                expect(authModule.state.jwtBody).toEqual({});
+            });
+
+            it('does not set the refresh token', () => {
+                expect(authModule.state.refreshToken).toEqual('');
             });
         });
     });

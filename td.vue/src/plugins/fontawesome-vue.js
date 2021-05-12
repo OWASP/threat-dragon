@@ -16,7 +16,7 @@ import {
     faSave
 } from '@fortawesome/free-solid-svg-icons';
 
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
 
 // Add icons to the library for use
 library.add(
@@ -24,6 +24,7 @@ library.add(
     faQuestionCircle,
     faGift,
     faGithub,
+    faVuejs,
     faPlus,
     faCloudDownloadAlt,
     faEdit,

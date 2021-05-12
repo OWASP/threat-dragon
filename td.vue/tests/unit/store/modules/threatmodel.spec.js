@@ -3,28 +3,33 @@ import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
 
 describe('store/modules/threatmodel.js', () => {
+    const getRootState = () => ({
+        auth: {
+            jwt: 'test'
+        },
+        repo: {
+            selected: 'foobar'
+        },
+        branch: {
+            selected: 'myBranch'
+        },
+        provider: {
+            selected: 'foo'
+        }
+    });
     const mocks = {
         commit: () => {},
         dispatch: () => {},
-        rootState: {
-            auth: {
-                jwt: 'test'
-            },
-            repo: {
-                selected: 'foobar'
-            },
-            branch: {
-                selected: 'myBranch'
-            }
-        },
+        rootState: getRootState(),
         state: {
-            selected: 'model1'
+            selected: 'test tm'
         }
     };
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
         jest.spyOn(mocks, 'dispatch');
+        mocks.rootState = getRootState();
     });
 
     afterEach(() => {
@@ -60,6 +65,13 @@ describe('store/modules/threatmodel.js', () => {
                 data
             );
         });
+
+        it('does not do a fetch if using a local provider', async () => {
+            jest.spyOn(threatmodelApi, 'modelAsync');
+            mocks.rootState.provider.selected = 'local';
+            await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
+            expect(threatmodelApi.modelAsync).not.toHaveBeenCalled();
+        });
         
         it('commits the fetch all action', async () => {
             const data = 'foobar';
@@ -69,6 +81,13 @@ describe('store/modules/threatmodel.js', () => {
                 THREATMODEL_FETCH_ALL,
                 data
             );
+        });
+
+        it('does not do a fetch all if using a local provider', async () => {
+            jest.spyOn(threatmodelApi, 'modelsAsync');
+            mocks.rootState.provider.selected = 'local';
+            await threatmodelModule.actions[THREATMODEL_FETCH_ALL](mocks);
+            expect(threatmodelApi.modelsAsync).not.toHaveBeenCalled();
         });
 
         describe('selected', () => {

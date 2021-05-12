@@ -1,8 +1,8 @@
 const getDashboardActions = () => ([
     {
-        to: '/repository',
+        to: '/threatmodel-select',
         description: 'Open an existing threat model',
-        icon: 'github',
+        icon: 'vuejs',
         iconPreface: 'fab'
     },
     {

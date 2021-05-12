@@ -1,3 +1,4 @@
+- Do a POC to use no back-end whatsoever (demo and test only)
 - Gracefully handle an expired refresh token (TODO in httpClient)
 - Logout
 - Add tests for ThreatmodelEdit view
@@ -12,5 +13,4 @@
     - Remove any unused variables from Env classes
     - Update documentation
 - Error handling for API requests that might fail (toast service?)
-- Do a POC to use no back-end whatsoever (demo and test only)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)

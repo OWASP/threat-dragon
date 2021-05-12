@@ -1,4 +1,4 @@
-import { AUTH_CLEAR, AUTH_SET_JWT } from '../actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL } from '../actions/auth.js';
 
 export const clearState = (state) => {
     state.jwt = '';
@@ -16,7 +16,8 @@ const state = {
 
 const actions = {
     [AUTH_CLEAR]: ({ commit }) => commit(AUTH_CLEAR),
-    [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens)
+    [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens),
+    [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL)
 };
 
 const mutations = {
@@ -30,6 +31,11 @@ const mutations = {
         state.jwtBody = jwtBody;
         state.user = jwtBody.user;
         state.refreshToken = refreshToken;
+    },
+    [AUTH_SET_LOCAL]: (state) => {
+        state.user = {
+            username: 'Guest'
+        };
     }
 };
 

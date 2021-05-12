@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import Home from '@/views/Home.vue';
 import loginApi from '@/service/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import router from '@/router/index.js';
 
 describe('Home.vue', () => {
     const redirectUrl = 'https://threatdragon.org';
@@ -19,6 +21,7 @@ describe('Home.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
             actions: {
+                [AUTH_SET_LOCAL]: () => {},
                 [PROVIDER_SELECTED]: () => {}
             }
         });
@@ -29,10 +32,12 @@ describe('Home.vue', () => {
         // Source: https://remarkablemark.org/blog/2018/11/17/mock-window-location/
         delete window.location;
         window.location = { replace: jest.fn() };
+        router.push = jest.fn();
 
         wrapper = shallowMount(Home, {
             localVue,
-            store: mockStore
+            store: mockStore,
+            // router
         });
     });
 
@@ -69,15 +74,34 @@ describe('Home.vue', () => {
     });
 
     describe('login with github', () => {
-
-        it('dispatches the provider selected event to the store', async () => {
-            await wrapper.findComponent(FontAwesomeIcon).trigger('click');
-            expect(mockStore.dispatch).toHaveBeenCalled();
+        beforeEach(async () => {
+            await wrapper.find('#github-login-btn').trigger('click');
         });
 
-        it('gets the oauth login link', async () => {
-            await wrapper.findComponent(FontAwesomeIcon).trigger('click');
+        it('dispatches the provider selected event to the store', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'github');
+        });
+
+        it('gets the oauth login link', () => {
             expect(loginApi.loginAsync).toHaveBeenCalledWith('github');
+        });
+    });
+
+    describe('local session login', () => {
+        beforeEach(async () => {
+            await wrapper.find('#local-login-btn').trigger('click');
+        });
+
+        it('dispatches the provider selected event to the store', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
+        });
+
+        it('does not send an API request', () => {
+            expect(loginApi.loginAsync).not.toHaveBeenCalled();
+        });
+
+        it('navigates to the dashboard', () => {
+            expect(router.push).toHaveBeenCalledWith('/dashboard');
         });
     });
 });
