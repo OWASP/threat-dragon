@@ -1,8 +1,6 @@
 name: Run e2e test
 on:
   push:
-env:
-  TAG: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 jobs:
   server_unit_tests:
     runs-on: ubuntu-latest
