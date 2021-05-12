@@ -36,6 +36,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
+      -name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build (do not push)
         id: docker_build
         uses: docker/build-push-action@v2
@@ -43,8 +49,8 @@ jobs:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: false
-          tags: "owasp-threat-dragon:dev"
+          push: true
+          tags: "imoshtokill/threat-dragon-dev:latest"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -52,7 +58,7 @@ jobs:
         run: cd td.vue && npm ci
 
       - name: Run Dockerized Threat Dragon
-        run: docker run -d -p 3000:3000 owasp-threat-dragon:dev
+        run: docker run -d -p 3000:3000 imoshtokill/threat-dragon-dev:latest
         env:
           GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
