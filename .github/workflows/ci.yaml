@@ -82,7 +82,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "imoshtokill/threat-dragon-dev:test-${{ GITHUB_RUN_ID }}"
+          tags: imoshtokill/threat-dragon-dev:test-${{ GITHUB_RUN_ID }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
