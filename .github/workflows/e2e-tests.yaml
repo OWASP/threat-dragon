@@ -61,9 +61,9 @@ jobs:
 
       - name: Get all containers
         run: docker ps -a
-        
+
       - name: Get docker logs
-        run: docker logs threatdragon
+        run: docker logs $(docker ps -qa)
 
       - name: Checkout
         uses: actions/checkout@v2
