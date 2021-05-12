@@ -82,7 +82,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: imoshtokill/threat-dragon-dev:test-${{ GITHUB_RUN_ID }}
+          tags: "imoshtokill/threat-dragon-dev:test-$GITHUB_RUN_ID"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -94,7 +94,7 @@ jobs:
         working-directory: td.vue
     services:
       threatdragon:
-        image: imoshtokill/threat-dragon-dev:test-${{ GITHUB_RUN_ID }}
+        image: "imoshtokill/threat-dragon-dev:test-$GITHUB_RUN_ID"
         ports:
           - 3000:3000
         env:
@@ -136,7 +136,7 @@ jobs:
     needs: [docker_build_and_publish]
     services:
       threatdragon:
-        image: imoshtokill/threat-dragon-dev:test-${{ GITHUB_RUN_ID }}
+        image: "imoshtokill/threat-dragon-dev:test-$GITHUB_RUN_ID"
         ports:
           - 3000:3000
         env:
