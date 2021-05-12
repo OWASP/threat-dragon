@@ -20,7 +20,7 @@ jobs:
         run: npm ci
 
       - name: lint
-        run: npm run pretest
+        run: npm run lint
 
       - name: Unit Test
         run: npm run test:unit
@@ -88,7 +88,7 @@ jobs:
 
   e2e_tests:
     runs-on: ubuntu-latest
-    needs: [docker_build_and_publish, site_unit_tests, server_unit_tests]
+    needs: [docker_build_and_publish]
     defaults:
       run:
         working-directory: td.vue
@@ -130,3 +130,33 @@ jobs:
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
+
+  zap_scan:
+    runs-on: ubuntu-latest
+    needs: [docker_build_and_publish]
+    defaults:
+      run:
+        working-directory: td.vue
+    services:
+      threatdragon:
+        image: imoshtokill/threat-dragon-dev:latest
+        ports:
+          - 3000:3000
+        env:
+          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
+          JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
+          SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
+          SESSION_STORE: local
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.4.0
+        with:
+          target: "http://localhost:3000/"
+          rules_file_name: '.github/workflows/.zap-rules-web.tsv'
+          cmd_options: '-a -j'

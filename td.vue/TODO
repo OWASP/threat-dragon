@@ -14,4 +14,3 @@
 - Error handling for API requests that might fail (toast service?)
 - Do a POC to use no back-end whatsoever (demo and test only)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
-- Add a github action to run e2e tests
