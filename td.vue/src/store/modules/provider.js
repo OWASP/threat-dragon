@@ -21,10 +21,10 @@ const actions = {
     [PROVIDER_CLEAR]: ({ commit }) => commit(PROVIDER_CLEAR),
     [PROVIDER_FETCH]: ({ commit }) => {
         // TODO: Get a list of configured providers from the backend
-        commit(PROVIDER_FETCH, Object.keys(providers.allProviders));
+        commit(PROVIDER_FETCH, Object.keys(providers.providerNames));
     },
     [PROVIDER_SELECTED]: ({ commit }, providerName) => {
-        if (!providerName || !providers.allProviders[providerName]) {
+        if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
         commit(PROVIDER_SELECTED, providerName);

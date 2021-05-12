@@ -22,33 +22,11 @@
           </b-row>
           <b-row>
             <b-col class="mt-5 mr-5 text-right">
-              <b-btn variant="secondary" @click="onProviderClick(allProviders.github)" id="github-login-btn" class="m-1">
-                <span class="login-btn-icon">
-                <!-- TODO: Make component and load from available providers on backend -->
-                <font-awesome-icon
-                  :icon="['fab', 'github']"
-                  size="2x"
-                  color="white"
-                  class="mr-2"
-                ></font-awesome-icon>
-                </span>
-                <span>
-                Login with Github
-                </span>
-              </b-btn>
-              <b-btn variant="secondary" @click="onProviderClick(allProviders.local)" id="local-login-btn" class="m-1">
-                <span class="login-btn-icon">
-                <font-awesome-icon
-                  :icon="['fab', 'vuejs']"
-                  size="2x"
-                  color="white"
-                  class="mr-2"
-                ></font-awesome-icon>
-                </span>
-                <span>
-                Local Session
-                </span>
-              </b-btn>
+              <!-- TODO: Load providers based on server config -->
+              <td-provider-login-button
+                v-for="(provider, idx) in allProviders"
+                :key="idx"
+                :provider="provider" />
             </b-col>
           </b-row>
         </b-col>
@@ -68,31 +46,20 @@
 </style>
 
 <script>
+
+
 import { allProviders } from '@/service/providers.js';
-import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
-import loginApi from '@/service/loginApi.js';
-import providerActions from '@/store/actions/provider.js';
-import router from '@/router/index.js';
+import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 export default {
     name: 'Home',
+    components: {
+        TdProviderLoginButton
+    },
     data() {
         return {
             allProviders
         };
-    },
-    methods: {
-        async onProviderClick(providerName) {
-            this.$store.dispatch(providerActions.selected, providerName);
-
-            if (providerName === allProviders.local) {
-                this.$store.dispatch(AUTH_SET_LOCAL);
-                return router.push('/dashboard');
-            }
-          
-            const resp = await loginApi.loginAsync(providerName);
-            window.location.href = resp.data;
-        }
     }
 };
 </script>

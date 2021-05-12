@@ -5,16 +5,22 @@ const providers = {
     github: {
         key: 'github',
         displayName: 'GitHub',
-        provider: githubProvider
+        provider: githubProvider,
+        icon: ['fab', 'github']
     },
     local: {
         key: 'local',
         displayName: 'Local Session',
-        provider: sessionProvider
+        provider: sessionProvider,
+        icon: ['fab', 'vuejs']
     }
 };
 
 export const allProviders = (() => {
+    return Object.freeze(providers);
+})();
+
+export const providerNames = (() => {
     const _providers = {};
     Object.keys(providers).forEach(key => _providers[key] = providers[key].key);
     return Object.freeze(_providers);
@@ -43,5 +49,6 @@ export const getDashboardActions = (providerKey) => {
 
 export default {
     allProviders,
+    providerNames,
     getDashboardActions
 };

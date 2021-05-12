@@ -1,4 +1,4 @@
-import { BootstrapVue, BButton, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
+import { BootstrapVue, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -8,6 +8,7 @@ import Home from '@/views/Home.vue';
 import loginApi from '@/service/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import router from '@/router/index.js';
+import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 describe('Home.vue', () => {
     const redirectUrl = 'https://threatdragon.org';
@@ -68,40 +69,8 @@ describe('Home.vue', () => {
             expect(wrapper.find('p').exists()).toBe(true);
         });
     
-        it('has a github login button', () => {
-            expect(wrapper.findComponent(BButton).attributes('id')).toEqual('github-login-btn');
-        });
-    });
-
-    describe('login with github', () => {
-        beforeEach(async () => {
-            await wrapper.find('#github-login-btn').trigger('click');
-        });
-
-        it('dispatches the provider selected event to the store', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'github');
-        });
-
-        it('gets the oauth login link', () => {
-            expect(loginApi.loginAsync).toHaveBeenCalledWith('github');
-        });
-    });
-
-    describe('local session login', () => {
-        beforeEach(async () => {
-            await wrapper.find('#local-login-btn').trigger('click');
-        });
-
-        it('dispatches the provider selected event to the store', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
-        });
-
-        it('does not send an API request', () => {
-            expect(loginApi.loginAsync).not.toHaveBeenCalled();
-        });
-
-        it('navigates to the dashboard', () => {
-            expect(router.push).toHaveBeenCalledWith('/dashboard');
+        it('has a login button', () => {
+            expect(wrapper.findComponent(TdProviderLoginButton).exists()).toEqual(true);
         });
     });
 });

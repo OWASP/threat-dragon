@@ -31,11 +31,11 @@ describe('store/modules/provider.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
         });
         
-        it('commits the fetch action will allProviders', () => {
+        it('commits the fetch action will providerNames', () => {
             providerModule.actions[PROVIDER_FETCH](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(
                 PROVIDER_FETCH,
-                Object.keys(providerService.allProviders)
+                Object.keys(providerService.providerNames)
             );
         });
         
@@ -49,8 +49,8 @@ describe('store/modules/provider.js', () => {
             });
 
             it('commits the selected provider', () => {
-                providerModule.actions[PROVIDER_SELECTED](mocks, providerService.allProviders.github);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, providerService.allProviders.github);
+                providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
+                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, providerService.providerNames.github);
             });
         });
     });
@@ -74,7 +74,7 @@ describe('store/modules/provider.js', () => {
         });
 
         describe('fetch', () => {
-            const providerNames = Object.keys(providerService.allProviders);
+            const providerNames = Object.keys(providerService.providerNames);
 
             beforeEach(() => {
                 providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
