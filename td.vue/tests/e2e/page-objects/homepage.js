@@ -22,6 +22,7 @@ module.exports = {
 
     // Or a page objects can also have sections
     sections: {
+        // TODO: Navbar is not a section of the homepage, it should be part of layout, make a new page object
         navbar: {
             selector: '#navbar',
             elements: {
