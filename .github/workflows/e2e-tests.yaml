@@ -54,7 +54,7 @@ jobs:
           JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
           JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
           SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          SESION_SIGNING_KEY: ${{ secrets.CI_SESION_SIGNING_KEY }}
+          SESION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
           SESSION_STORE: local
 
     steps:
