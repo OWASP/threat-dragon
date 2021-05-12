@@ -4,6 +4,7 @@ on:
 jobs:
   build_image:
     runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,6 +44,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:latest
