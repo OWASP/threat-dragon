@@ -159,4 +159,5 @@ jobs:
         with:
           target: "http://localhost:3000/"
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
-          cmd_options: '-a -j'
+          cmd_options: '-a -j -l WARN'
+          fail_action: true
