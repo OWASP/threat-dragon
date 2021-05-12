@@ -59,8 +59,8 @@ jobs:
 
     steps:
 
-      - name: Get all containers
-        run: docker ps -a
+      - name: Sleep for ten seconds
+        run: sleep 10
 
       - name: Get docker logs
         run: docker logs "${{ job.services.threatdragon.id }}"
