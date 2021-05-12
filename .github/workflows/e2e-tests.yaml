@@ -2,28 +2,9 @@ name: Run e2e test
 on:
   push:
 jobs:
-  e2e:
+  build_image:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Get latest Firefox
-        uses: browser-actions/setup-firefox@latest
-        with:
-          firefox-version: latest
-
-      - name: Get stable Chrome
-        uses: browser-actions/setup-chrome@latest
-        with:
-          chrome-version: stable
-
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -54,11 +35,16 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Install NPM Dependencies
-        run: cd td.vue && npm ci
+      - name: Get threat dragon logs
+        run: docker logs threatdragon
 
-      - name: Run Dockerized Threat Dragon
-        run: docker run -d -p 3000:3000 --name=threatdragon imoshtokill/threat-dragon-dev:latest
+  test:
+    runs-on: ubuntu-latest
+    services:
+      threatdragon:
+        image: imoshtokill/threat-dragon-dev:latest
+        ports:
+          - 3000:3000
         env:
           GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
@@ -68,8 +54,27 @@ jobs:
           SESION_SIGNING_KEY: ${{ secrets.CI_SESION_SIGNING_KEY }}
           SESSION_STORE: local
 
-      - name: Get threat dragon logs
-        run: docker logs threatdragon
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Get latest Firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: latest
+
+      - name: Get stable Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+
+      - name: Install NPM Dependencies
+        run: cd td.vue && npm ci
 
       - name: Run e2e tests
         run: cd td.vue && npm run test:e2e-ci
