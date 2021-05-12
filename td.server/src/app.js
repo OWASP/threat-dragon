@@ -26,11 +26,11 @@ const create = () => {
         //logging
         loggers.configLoggers(app);
 
-        //static content
-        app.use('/public', express.static(siteDir));
-
         //security headers
         securityHeaders.config(app);
+
+        //static content
+        app.use('/public', express.static(siteDir));
 
         //parsers
         parsers.config(app);

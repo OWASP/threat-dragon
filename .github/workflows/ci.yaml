@@ -173,5 +173,5 @@ jobs:
       - name: Upload scan report
         uses: actions/upload-artifact@v2
         with:
-          name: zap_report
+          name: zap_report.zip
           path: zap/report.html

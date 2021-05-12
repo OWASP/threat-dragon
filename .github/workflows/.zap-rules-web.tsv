@@ -2,5 +2,4 @@
 10099	OUTOFSCOPE	.*vendor.*\.js
 10055	IGNORE	(CSP: style-src unsafe-inline)
 10063	IGNORE	(Feature Policy Header Not Set)
-10021	IGNORE	(X-Content-Type-Options Header Missing)
 
