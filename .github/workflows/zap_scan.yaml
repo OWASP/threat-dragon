@@ -1,0 +1,22 @@
+name: OWASP ZAP scan
+on:
+  pull_request:
+    types: [ closed ]
+  schedule:
+    # Runs every Monday At 01:00.
+    - cron:  '0 1 * * 1'
+jobs:
+  zap_docs_scan:
+    runs-on: ubuntu-latest
+    steps:     
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: main
+    - run: ls -l '${{ github.workspace }}/.zap-rules-docs.tsv'
+    - name: ZAP Docs scan
+      uses: zaproxy/action-baseline@v0.4.0
+      with:
+        target: "https://threatdragon.github.io/"
+        rules_file_name: '.zap-rules-docs.tsv'
+        cmd_options: '-a'

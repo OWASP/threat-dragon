@@ -1,0 +1,46 @@
+# Site settings
+# Used to personalize the Threat Dragon site
+# Accessed via {{ site.title }}, {{ site.email }}, and so on, in the HTML files
+# Create custom variable,
+# and they will be accessible in the templates via {{ site.myvariable }}
+
+title: Threat Dragon
+email: jon.gadsden@owasp.org
+description: >- # this means to ignore newlines until "baseurl:"
+  OWASP Threat Dragon, for threat modelling activities
+baseurl: ""
+url: ""
+twitter_username: ThreatDragon
+github_username:  threatdragon
+
+# Build settings
+remote_theme: pmarsceill/just-the-docs
+plugins:
+  - jekyll-feed
+  - webrick
+search_enabled: false
+
+# Aux links for the upper right navigation
+aux_links:
+  "Try the web app":
+    - "//threatdragon.org"
+  "Download the desktop app":
+    - "//github.com/OWASP/threat-dragon-desktop/releases"
+  "Source code on GitHub":
+    - "//github.com/OWASP/threat-dragon"
+  "OWASP project page":
+    - "//owasp.org/www-project-threat-dragon"
+# Make Aux links open in a new tab
+aux_links_new_tab: true
+
+webrick:
+  headers:
+    Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+    X-Frame-Options: DENY
+    X-Content-Type-Options: nosniff
+    X-Permitted-Cross-Domain-Policies: none
+    Referrer-Policy: no-referrer
+    Access-Control-Allow-Origin: https://threatdragon.github.io
+    Cache-Control: no-cache, no-stor
+    Pragma: no-cache
+    Expires: 0
