@@ -27,7 +27,7 @@ and threats and dragged around the diagram.
 To delete an element, first select it and then click on the red icon in the
 element's top left corner like so:
 
-![the element delete tool](/public/images/processelement.png)
+![the element delete tool](../public/images/processelement.png)
 
 ## Data flows and trust boundaries
 
@@ -42,23 +42,23 @@ then click the grey link tool, next to the red remove tool near the top right of
 This turns the link tool green. Then, when you click another element, a new data flow will be created,
 linking the first element to the second.
 
-![the element link tool](/public/images/actorelement.png)
+![the element link tool](../public/images/actorelement.png)
 
 Extra vertices can be added by clicking at some point on the line.
 These new vertices can also be dragged to position the data flow or trust boundary.
 Vertices can be removed by clicking the remove tool that appears when you mouse near to the vertex.
 
-![vertex remove tool](/public/images/vertexremove.png)
+![vertex remove tool](../public/images/vertexremove.png)
 
 A data flow can be selected by clicking the Link options tool that appears when you mouse near to the link.
 Once selected you can edit its properties or add threats to it. Trust boundaries cannot be selected.
 
-![flow select tool](/public/images/flowselect.png)
+![flow select tool](../public/images/flowselect.png)
 
 Data flows and trust boundaries can be deleted by clicking the red remove tool
 that appears when you mouse near to them.
 
-![flow remove tool](/public/images/flowremove.png)
+![flow remove tool](../public/images/flowremove.png)
 
 ## Out of scope elements
 
@@ -70,13 +70,13 @@ why elements have been marked out of scope.
 Threat generation is disabled for these elements.
 Out of scope elements are indicated in diagrams with dashed lines:
 
-![out of scope elements with dashed lines](/public/images/outofscope.png)
+![out of scope elements with dashed lines](../public/images/outofscope.png)
 
 ## Elements with open threats
 
 Processes, data stores, actors and data flows that have open (unmitigated) threats are highlighted in red so that you know where to focus your attention:
 
-![elements with open threats are red](/public/images/openthreats.png)
+![elements with open threats are red](../public/images/openthreats.png)
 
 ## Editing toolbar
 The toolbar on the diagram editing page supports some general diagramming features:

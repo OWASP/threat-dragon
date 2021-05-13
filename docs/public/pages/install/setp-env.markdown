@@ -66,4 +66,4 @@ and then navigate in a browser to "http://localhost:3000/"
 ### What it looks like
 Example screenshot of registering a new OAuth application:
 
-![Register new OAuth application](/public/images/register-new-OAuth-application.png)
+![Register new OAuth application](../public/images/register-new-OAuth-application.png)

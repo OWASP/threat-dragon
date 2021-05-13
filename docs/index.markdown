@@ -22,7 +22,7 @@ permalink: /
 
 ## [OWASP](https://www.owasp.org) Threat Dragon
 
-![Cupcake Image](/public/images/threatdragonx256.png){: .image-left }
+![Cupcake Image](public/images/threatdragonx256.png){: .image-left }
 
 Threat Dragon is an open-source threat modelling tool from OWASP.
 It comes as a web application or an Electron based installable desktop app for MacOS, Windows and Linux.
@@ -37,4 +37,4 @@ You can find the source code for Threat Dragon on GitHub
 [OWASP][owasp-organization] / [threat-dragon](https://github.com/OWASP/threat-dragon)
 where you can also ask for changes or report any issues.
 
-![OWASP logo](/public/images/owasp.png){: .image-right }
+![OWASP logo](public/images/owasp.png){: .image-right }
