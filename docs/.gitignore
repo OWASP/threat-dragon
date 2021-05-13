@@ -1,0 +1,13 @@
+# # jekyll generated files
+_site
+
+# ignore Apple's desktop store files
+.DS_Store
+**/.DS_Store
+# ignore VS and Eclipse files
+.vscode/
+.settings/
+.jshint*
+# ignore IntelliJ IDEA files
+.idea/
+
