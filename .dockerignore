@@ -6,6 +6,5 @@ dist/
 node_modules
 */node_modules
 .env
-docs/
 *.log
 */.nyc_output

@@ -1,3 +1,12 @@
+# Builds the docs
+FROM        ruby:2.6 as build-docs
+RUN         gem install jekyll bundler
+WORKDIR     /td.docs
+COPY        ./docs/Gemfile* ./
+RUN         bundle install
+COPY        ./docs .
+RUN         bundle exec jekyll build -b docs/
+
 # Builds td.server.  This step requires dev dependencies 
 # that do not need to be included in the final image
 FROM        node:14 as build-backend
@@ -31,6 +40,7 @@ RUN         npm ci --only=production
 # production dependencies
 FROM        gcr.io/distroless/nodejs:14
 WORKDIR     /app
+COPY        --from=build-docs /td.docs/_site /app/docs
 COPY        --from=deps-backend /app ./td.server
 COPY        --from=build-backend /app/dist ./td.server/dist
 COPY        --from=build-frontend /app/td.vue/dist /app/dist

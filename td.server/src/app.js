@@ -12,6 +12,7 @@ import securityHeaders from './config/securityheaders.config.js';
 import { upDir } from './helpers/path.helper.js';
 
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
+const docsDir = path.join(__dirname, upDir, upDir, 'docs');
 
 const create = () => {
     try {
@@ -31,6 +32,7 @@ const create = () => {
 
         //static content
         app.use('/public', express.static(siteDir));
+        app.use('/docs', express.static(docsDir));
 
         //parsers
         parsers.config(app);
