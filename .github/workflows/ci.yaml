@@ -229,6 +229,10 @@ jobs:
     # There is an action to build and deploy a heroku app
     # We already built the container though, so why not just re-tag and push
     steps:
+      # Required for the Heroku action
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Pull docker image
         run: docker pull imoshtokill/threat-dragon-dev:ci-latest
 
