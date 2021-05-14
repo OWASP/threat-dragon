@@ -229,10 +229,6 @@ jobs:
     # There is an action to build and deploy a heroku app
     # We already built the container though, so why not just re-tag and push
     steps:
-      # Required for the Heroku action
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Pull docker image
         run: docker pull imoshtokill/threat-dragon-dev:ci-latest
 
@@ -249,10 +245,7 @@ jobs:
       - name: Push to Heroku
         run: docker push registry.heroku.com/threatdragon-v2/web
 
-      - name: Deploy Heroku App
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: threatdragon-v2
-          heroku_email: "leo.reading@owasp.org"
-          usedocker: true
+      - name: Deploy to Heroku
+        run: heroku container:deploy web --app threatdragon-v2
+        env:
+          HEROKU_API_KEY: ${{ secretions.HEROKU_API_KEY }}
