@@ -246,6 +246,6 @@ jobs:
         run: docker push registry.heroku.com/threatdragon-v2/web
 
       - name: Deploy to Heroku
-        run: heroku container:deploy web --app threatdragon-v2
+        run: heroku container:release web --app threatdragon-v2
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
