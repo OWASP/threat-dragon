@@ -49,6 +49,9 @@ jobs:
       - name: Unit Test
         run: npm run test:unit
 
+      - name: Upload codecov report
+        run: npm run codecov
+
   
   docker_build_and_publish:
     runs-on: ubuntu-latest

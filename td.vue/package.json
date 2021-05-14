@@ -10,7 +10,8 @@
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
     "test:e2e-firefox": "vue-cli-service test:e2e --env firefox --headless",
     "test:e2e-chrome": "vue-cli-service test:e2e --env chrome --headless",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "codecov": "codecov"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -38,6 +39,7 @@
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.2",
     "chromedriver": "^90.0.0",
+    "codecov": "^3.8.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^24.3.6",
