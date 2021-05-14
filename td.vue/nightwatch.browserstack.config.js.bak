@@ -3,7 +3,10 @@ const nightwatch_config = {
     // We do not have any custom assertions as of now
     // Tests will fail to start if we do not have anything in the path
     custom_assertions_path: '',
-
+    test_workers: {
+        enabled: true,
+        workers: 'auto'
+    },
     desiredCapabilities: {
         chromeOptions: {
             args: [
@@ -13,11 +16,13 @@ const nightwatch_config = {
             ]
         }
     },
-
     selenium: {
         "start_process": false,
         "host": "hub-cloud.browserstack.com",
         "port": 443
+    },
+    afterTest: function (test, context, { error, result, duration, passed, retries }) {
+        browser.executeScript(`browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"${passed ? 'passed' : 'failed'}","reason": ""}}`);
     },
 
     test_settings: {
@@ -32,7 +37,6 @@ const nightwatch_config = {
         }
     }
 };
-
 
 // Code to copy seleniumhost/port into test settings
 for (let i in nightwatch_config.test_settings) {
