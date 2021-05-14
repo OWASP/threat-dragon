@@ -9,6 +9,7 @@ source "https://rubygems.org"
 # Happy Jekylling!
 gem "jekyll", "~> 4.2.0"
 
+# Theme
 gem "owasp-td-jekyll", "~> 0.1.2"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and

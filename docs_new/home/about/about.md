@@ -2,7 +2,7 @@
 layout: page
 title: About
 nav_order: 0
-path: /about/
+path: /about
 group: About
 ---
 

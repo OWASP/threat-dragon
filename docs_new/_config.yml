@@ -46,16 +46,16 @@ header_links:
 
 # TODO: Update relative_urls
 homeLinks:
-  - relative_url: something
+  - relative_url: /usage/install/desktop
     description: Download the Desktop Application
     fa_class: fas fa-cloud-download-alt
-  - relative_url: something
+  - relative_url: /usage/modeling/gettingstarted
     description: Getting started with Threat Dragon
     fa_class: fas fa-play-circle
-  - relative_url: something
+  - relative_url: /usage/modeling/diagrams
     description: How to use Diagrams
     fa_class: fas fa-project-diagram
-  - relative_url: something
+  - relative_url: /usage/modeling/threats
     description: Rules Used for Threat Generation
     fa_class: fas fa-bolt
 
@@ -65,6 +65,21 @@ nav:
       groups:
         - name: About
           fa_class: fas fa-info-circle
+    - name: Usage
+      groups:
+        - name: Installation
+          fa_class: fas fa-power-off
+        - name: Modeling
+          fa_class: fas fa-project-diagram
+    - name: Development
+      groups:
+        - name: Environment
+          fa_class: fas fa-cog
+        - name: CLI
+          fa_class: fas fa-layer-group
+        - name: API
+          fa_class: fas fa-server
+
 
 
 # Build settings
