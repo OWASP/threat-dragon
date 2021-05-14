@@ -33,6 +33,7 @@ export const getMockRequest = () => {
         headers: {},
         query: {},
         body: {},
+        get: () => {},
         session: {
             destroy: (cb) => { if(cb) { cb(); }}
         },
@@ -53,6 +54,7 @@ export const getMockRequest = () => {
     sinon.spy(mockRequest.log, 'info');
     sinon.spy(mockRequest.log, 'warn');
     sinon.spy(mockRequest.session, 'destroy');
+    sinon.stub(mockRequest, 'get');
 
     return mockRequest;
 };

@@ -5,6 +5,7 @@ import path from 'path';
 import env from './env/Env.js';
 import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
+import https from './config/https.config.js';
 import loggers from './config/loggers.config.js';
 import parsers from './config/parsers.config.js';
 import routes from './config/routes.config.js';
@@ -29,6 +30,9 @@ const create = () => {
 
         //security headers
         securityHeaders.config(app);
+
+        // Force HTTPS in production
+        app.use(https.middleware);
 
         //static content
         app.use('/public', express.static(siteDir));
