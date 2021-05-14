@@ -26,6 +26,10 @@ jobs:
       - name: Unit Test
         run: npm run test:unit
 
+      - name: Upload codecov report
+        run: npm run codecov
+        #if: github.ref == 'refs/heads/v2-development'
+
   site_unit_tests:
     runs-on: ubuntu-latest
     defaults:
@@ -51,6 +55,7 @@ jobs:
 
       - name: Upload codecov report
         run: npm run codecov
+        #if: github.ref == 'refs/heads/v2-development'
 
   
   docker_build_and_publish:

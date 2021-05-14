@@ -11,7 +11,8 @@
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
     "lint": "eslint src --fix",
-    "build": "npm-run-all clean transpile"
+    "build": "npm-run-all clean transpile",
+    "codecov": "npm run codecov"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
@@ -45,7 +46,7 @@
     "@babel/register": "^7.13.16",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "codecov": "^3.6.5",
+    "codecov": "^3.8.2",
     "eslint": "^7.25.0",
     "mocha": "^8.3.2",
     "nodemon": "^2.0.7",
