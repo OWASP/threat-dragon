@@ -45,4 +45,4 @@ for (let i in nightwatch_config.test_settings) {
     config['selenium_port'] = nightwatch_config.selenium.port;
 }
 
-export default nightwatch_config;
+module.exports = nightwatch_config;
