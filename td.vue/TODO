@@ -15,6 +15,4 @@
 - Error handling for API requests that might fail (toast service?)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Cross-browser testing
-- Update README with badges
-- Remove travis
 - Document architecture
