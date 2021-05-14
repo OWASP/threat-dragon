@@ -106,6 +106,7 @@ jobs:
           SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
           SESSION_STORE: local
+          NODE_ENV: development
 
     steps:
       - name: Checkout
@@ -148,6 +149,7 @@ jobs:
           SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
           SESSION_STORE: local
+          NODE_ENV: development
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -194,6 +196,7 @@ jobs:
           SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
           SESSION_STORE: local
+          NODE_ENV: development
     steps:
       - name: Checkout
         uses: actions/checkout@v2
