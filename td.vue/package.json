@@ -9,7 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "codecov": "codecov",
-    "test:browserstack:chrome": "vue-cli-service test:browserstack -c browserstack_config/nightwatch.conf.js -e chrome -t \"tests/e2e/specs/test.js\"",
+    "test:browserstack:chrome": "vue-cli-service test:e2e -c browserstack_config/nightwatch.conf.js",
     "test:browserstack:firefox": "vue-cli-service test:browserstack -c browserstack_config/nightwatch.conf.js -e firefox tests/e2e/specs/test.js",
     "test:e2e-chrome": "vue-cli-service test:e2e --env chrome --headless",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
