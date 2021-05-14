@@ -4,7 +4,8 @@ which has the issues and pull requests from October 2015 up to June 2020.
 <p align="center">
   <img src="https://raw.githubusercontent.com/owasp/threat-dragon-desktop/main/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
-[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml)
+
+[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml) 
 [![codecov.io](http://codecov.io/github/owasp/threat-dragon/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon?branch=main)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/OWASP/threat-dragon.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OWASP/threat-dragon/context:javascript)
