@@ -225,7 +225,7 @@ jobs:
 
   deploy_heroku:
     runs-on: ubuntu-latest
-    needs: [zap_scan_docs, zap_scan_web]
+    needs: [zap_scan_docs, zap_scan_web, e2e_tests]
     # There is an action to build and deploy a heroku app
     # We already built the container though, so why not just re-tag and push
     steps:
