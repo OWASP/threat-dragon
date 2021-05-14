@@ -14,11 +14,11 @@ const nightwatch_config = {
         }
     },
 
-    selenium: {
-        "start_process": false,
-        "host": "hub-cloud.browserstack.com",
-        "port": 443
-    },
+    // selenium: {
+    //     "start_process": false,
+    //     "host": "hub-cloud.browserstack.com",
+    //     "port": 443
+    // },
 
     test_settings: {
         default: {
