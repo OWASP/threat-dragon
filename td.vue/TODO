@@ -17,5 +17,4 @@
 - Cross-browser testing
 - Update README with badges
 - Remove travis
-- Fix codecov reporting
 - Document architecture
