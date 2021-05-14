@@ -122,3 +122,4 @@ For secure disclosure, please see the [security policy](SECURITY.md).
 ### Project leaders
 * Mike Goodwin (mike.goodwin@owasp.org)
 * Jon Gadsden (jon.gadsden@owasp.org)
+* Leo Reading (leo.reading@owasp.org)
