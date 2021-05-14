@@ -240,7 +240,7 @@ jobs:
           password: ${{ secrets.HEROKU_API_KEY }}
 
       - name: Tag Heroku image
-        run: docker tag imoshtokill/threat-dragon-dev:ci-latest 
+        run: docker tag imoshtokill/threat-dragon-dev:ci-latest registry.heroku.com/threatdragon-v2/web
 
       - name: Push to Heroku
         run: docker push registry.heroku.com/threatdragon-v2/web
