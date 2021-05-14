@@ -248,4 +248,4 @@ jobs:
       - name: Deploy to Heroku
         run: heroku container:deploy web --app threatdragon-v2
         env:
-          HEROKU_API_KEY: ${{ secretions.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
