@@ -148,7 +148,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: e2e_vids.zip
-          path: tests/e2e/videos
+          path: tests/e2e/videos/
 
   zap_scan_web:
     runs-on: ubuntu-latest
