@@ -110,7 +110,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
-          tags: threat-dragon-dev:${{ steps.vars.outputs.image }}
+          tags: ${{ steps.vars.outputs.image }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
