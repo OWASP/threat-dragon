@@ -119,6 +119,9 @@ jobs:
       - name: Start registry
         run: docker run -d -p 5000:5000 --name registry -v /home/runner/registry:/var/lib/registry registry:2
 
+      - name: Wait for registry ready
+        run: npm wait-for tcp:5000
+
       - name: Build and Push Docker Image
         id: docker_build
         uses: docker/build-push-action@v2
