@@ -1,0 +1,18 @@
+name: Trivy Daily Container Scan
+on:
+  schedule:
+    - cron: '0 20 * * *'
+jobs:
+  build:
+    name: Scan with Trivy
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'imoshtokill/threat-dragon-dev:ci-latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
