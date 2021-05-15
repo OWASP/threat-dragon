@@ -126,12 +126,14 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t ${{ steps.vars.outputs.image }} . \
+          docker build -t tmp . \
             --cache-from=type=local,src=/tmp/.buildx-cache \
-            --cache-to=type=local,dest=/tmp/.buildx-cache
+            --cache-to=type=local,dest=/tmp/.buildx-cache && \
+            docker tag tmp ${{ steps.vars.outputs.image }} && \
+            docker push ${{ steps.vars.outputs.image }}
 
-      - name: Push image
-        run: docker push ${{ steps.vars.outputs.image }}
+      # - name: Push image
+      #   run: docker push ${{ steps.vars.outputs.image }}
 
       # - name: Build and Push Docker Image
       #   id: docker_build
