@@ -191,7 +191,7 @@ jobs:
 
       - name: Set Vars
         id: vars
-        run: echo "::set-output name=image::owasp-threat-dragon:$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=image::localhost:5000/owasp-threat-dragon:$(git rev-parse --short HEAD)"
 
       - name: Set registry cache
         uses: actions/cache@v2
