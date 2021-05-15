@@ -124,6 +124,9 @@ jobs:
       - name: Wait for registry ready
         run: npx wait-on tcp:5000
 
+      - name: Get logs from registry
+        run: docker logs registry
+
       - name: Build image
         run: |
           docker build -t ${{ steps.vars.outputs.image }} . \
