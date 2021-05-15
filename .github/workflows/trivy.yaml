@@ -1,8 +1,10 @@
-name: build
+name: Trivy Daily Container Scan
 on:
   push:
     branches:
       - 'v2/*'
+  schedule:
+    - cron: '0 20 * * *'
 jobs:
   build:
     name: Scan with Trivy
