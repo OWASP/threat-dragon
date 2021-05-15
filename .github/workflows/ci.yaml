@@ -88,7 +88,7 @@ jobs:
         ports:
           - 5000:5000
         volumes:
-          - /tmp/docker-registry:/var/lib/registry
+          - /home/runner/docker-registry:/var/lib/registry
     env:
       DOCKER_BUILDKIT: '1'
     steps:
@@ -99,7 +99,7 @@ jobs:
         id: cache-docker
         uses: actions/cache@v1
         with:
-          path: /tmp/docker-registry
+          path: /home/runner/docker-registry
           key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-docker-
