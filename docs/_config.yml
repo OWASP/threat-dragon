@@ -65,6 +65,8 @@ nav:
       groups:
         - name: About
           fa_class: fas fa-info-circle
+        - name: Trust
+          fa_class: fas fa-lock
     - name: Usage
       groups:
         - name: Installation
