@@ -20,8 +20,6 @@ jobs:
         with:
           node-version: '14'
 
-    # Create a cache for the npm dependencies to speed up the build
-    # https://stackoverflow.com/a/57958803/3033053
     - name: Cache NPM dependencies
       uses: actions/cache@v1
       with:
