@@ -124,6 +124,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+    # TODO: Get the localhost up and running, then run the server
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:ci-latest
@@ -155,6 +156,14 @@ jobs:
         uses: browser-actions/setup-chrome@latest
         with:
           chrome-version: stable
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-site-
 
       - name: npm ci
         run: npm ci
