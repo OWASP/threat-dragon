@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import env from '../../src/env/Env.js';
 import envConfig from '../../src/config/env.config.js';
 import GithubEnv from '../../src/env/Github.js';
-import SessionEnv from '../../src/env/Session.js';
+import EncryptionEnv from '../../src/env/Encryption.js';
 import ThreatDragonEnv from '../../src/env/ThreatDragon.js';
 
 describe('environment configuration tests', () => {
@@ -30,9 +30,9 @@ describe('environment configuration tests', () => {
             .calledWith(sinon.match.instanceOf(GithubEnv));
         });
 
-        it('adds the session provider', () => {
+        it('adds the encryption provider', () => {
             expect(mockEnv.addProvider).to.have.been
-            .calledWith(sinon.match.instanceOf(SessionEnv));
+            .calledWith(sinon.match.instanceOf(EncryptionEnv));
         });
 
         it('adds the threat dragon provider', () => {
