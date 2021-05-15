@@ -39,10 +39,10 @@ To create a GitHub OAuth Application:
 1. Log into your GitHub account, go to `Settings -> 'Developer settings' -> 'OAuth Apps' -> 'New OAuth App'`
 2. Fill out the form with the following:
 - **Application name**: A unique identifier for the application.  This is not critical, we suggest something like 'Threat Dragon'
-- **Homepage URL**: For local development, use `http://localhost:3000`
-  - Threat Dragon defaults to port 3000, but is configurable.  If you plan to run it on another port, be sure to use that port instead!
+- **Homepage URL**: For local development, use `http://localhost:8080`
+  - Threat Dragon's server defaults to port 3000, but is configurable.  If you plan to run it on another port, be sure to use that port for the auth callback url instead!
 - **Application description**: A description for your OAuth app.  This is not critical, we suggest something like 'Threat Dragon for local development'
-- **Authorization callback URL**: `http://localhost:3000/oauth/github`
+- **Authorization callback URL**: `http://localhost:3000/api/oauth/return`
   - Again, if you plan to run Threat Dragon on another port, use that port instead!
 3. Register the application, an [example screenshot](#github-oauth-app-screenshot) is at the bottom of this document
 4. Create a client_secret
