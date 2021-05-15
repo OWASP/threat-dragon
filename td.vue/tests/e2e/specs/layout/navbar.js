@@ -1,47 +1,31 @@
-module.exports = {
-    beforeEach: (browser) => browser.init(),
+describe('navbar', () => {
+    const verifyExternalUrl = (selector, url) => {
+        cy.get(selector)
+            .find('a')
+            .should('have.attr', 'href', url)
+            .and('have.attr', 'rel', 'noopener');
+    };
 
-    // TODO: Test for logged in message
-    // TODO: Test for logout button
-    // TODO: Test logout functionality
-    // TODO: Test brand link brings you to /dashboard if logged in
+    before(() => {
+        cy.visit('/');
+    });
 
-    'has a brand that links to the home page': (browser) => {
-        const homepage = browser.page.layout();
-        homepage.waitForElementVisible('@navbar');
+    it('has a link to the home page', () => {
+        cy.get('.navbar-brand').should('have.attr', 'href', '#/');
+    });
+    
+    it('links to the threat dragon docs', () => {
+        verifyExternalUrl('#nav-docs', 'https://docs.threatdragon.org/');
+    });
 
-        const navbar = homepage.section.navbar;
-        navbar.expect.element('@brand').to.be.visible;
-        navbar.click('@brandLink');
-        navbar.expect.url().to.equal(`${browser.launch_url}#/`);
-
-        browser.end();
-    },
-
-    'links to the threat dragon docs': async (browser) => {
-        const homepage = browser.page.layout();
-        homepage.verifyLinkOpensNewTab(
-            homepage.section.navbar.elements.docsLink,
-            'https://docs.threatdragon.org/'
-        );
-        browser.end();
-    },
-
-    'links to OWASP\'s Threat Modeling Cheat Sheet': async (browser) => {
-        const homepage = browser.page.layout();
-        homepage.verifyLinkOpensNewTab(
-            homepage.section.navbar.elements.cheatSheetLink,
+    it('links to the OWASP Threat Modeling Cheat Sheet', () => {
+        verifyExternalUrl(
+            '#nav-tm-cheat-sheet',
             'https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html'
         );
-        browser.end();
-    },
+    });
 
-    'links to OWASP\'s Threat Dragon project page': async (browser) => {
-        const homepage = browser.page.layout();
-        homepage.verifyLinkOpensNewTab(
-            homepage.section.navbar.elements.projectLink,
-            'https://owasp.org/www-project-threat-dragon/'
-        );
-        browser.end();
-    }
-};
+    it('links to the OWASP Threat Dragon page', () => {
+        verifyExternalUrl('#nav-owasp-td', 'https://owasp.org/www-project-threat-dragon/');
+    });
+});

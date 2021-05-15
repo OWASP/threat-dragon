@@ -1,26 +1,21 @@
-module.exports = {
-    beforeEach: (browser) => browser.init(),
+describe('home', () => {
+    before(() => {
+        cy.visit('/');
+    });
 
-    'has a welcome message': (browser) => {
-        const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@welcome');
+    it('has a welcome message', () => {
+        cy.contains('OWASP Threat Dragon');
+    });
 
-        const welcome = homepage.section.welcome;
-        welcome.expect.element('@logo').to.be.visible;
-        welcome.expect.element('@headline').text.to.equal('OWASP Threat Dragon');
-        welcome.expect.element('@description').text.to.contain('open-source');
+    it('describes the application', () => {
+        cy.contains('open-source threat modeling tool');
+    });
 
-        browser.end();
-    },
+    it('shows the threat dragon logo', () => {
+        cy.get('#home-td-logo').should('be', 'visible');
+    });
 
-    'displays the login options': (browser) => {
-        const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@welcome');
-
-        const welcome = homepage.section.welcome;
-        welcome.expect.element('@githubLogin').to.be.visible;
-        welcome.expect.element('@localLogin').to.be.visible;
-
-        browser.end();
-    }
-};
+    it('displays the login options', () => {
+        cy.get('#local-login-btn').should('be.visible');
+    });
+});

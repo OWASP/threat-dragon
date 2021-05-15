@@ -1,0 +1,63 @@
+{
+    "browsers": [
+        {
+            "browser": "chrome",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "edge",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "chrome",
+            "os": "OS X Big Sur",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "OS X Big Sur",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        }
+    ],
+    "run_settings": {
+        "cypress_config_file": "cypress.browserstack.json",
+        "project_name": "threat-dragon",
+        "exclude": [],
+        "parallels": "5",
+        "npm_dependencies": {
+            "@vue/cli-plugin-babel": "~4.5.0",
+            "cypress": "^7.3.0"
+        },
+        "package_config_options": {},
+        "headless": true
+    },
+    "connection_settings": {
+        "local": true,
+        "local_identifier": null,
+        "local_mode": null,
+        "local_config_file": null
+    },
+    "disable_usage_reporting": false
+}

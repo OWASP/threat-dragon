@@ -143,6 +143,12 @@ jobs:
       - name: Run e2e tests
         run: npm run test:e2e-ci
 
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e_vids.zip
+          path: tests/e2e/videos
+
   zap_scan_web:
     runs-on: ubuntu-latest
     needs: [docker_build_and_publish]

@@ -2,6 +2,7 @@ name: CI Pipeline
 concurrency: browserstack_e2e
 on:
   push:
+  ## TODO: Only on pushes to main or v2-development
 jobs:
   docker_build_and_publish:
     runs-on: ubuntu-latest
@@ -86,7 +87,11 @@ jobs:
           local-identifier: random
 
       - name: Run e2e tests
-        run: npm run test:browserstack:chrome
+        run: npm run test:e2e-browserstack
+        env:
+          BROWSERSTACK_LOCAL: true
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Stop BrowserStackLocal
         uses: browserstack/github-actions/setup-local@master
