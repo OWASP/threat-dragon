@@ -22,7 +22,7 @@ group: Testing
 </div>
 
 
-## Running E2E Tests
+## Running Unit Tests
 
 ### Jest (td.vue)
 Unit testing for the vue application is done using [jest](https://jestjs.io/), and lives in the `td.vue/tests/unit` directory.  To run the tests locally, navigate to the `td.vue` directory and run:
