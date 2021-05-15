@@ -82,6 +82,7 @@ jobs:
   docker_build_and_publish:
     runs-on: ubuntu-latest
     needs: [site_unit_tests, server_unit_tests]
+    services:
       registry:
         image: registry:2
         ports:
