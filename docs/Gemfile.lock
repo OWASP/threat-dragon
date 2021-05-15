@@ -44,7 +44,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.4.0)
-    owasp-td-jekyll (0.1.3)
+    owasp-td-jekyll (0.2.0)
       jekyll (~> 4.2)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
@@ -67,7 +67,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 4.2.0)
   jekyll-feed (~> 0.12)
-  owasp-td-jekyll (~> 0.1.3)
+  owasp-td-jekyll (~> 0.2.0)
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)
