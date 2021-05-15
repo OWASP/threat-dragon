@@ -1,4 +1,4 @@
-name: Trivy Daily Container Scan
+name: Trivy Scan
 on:
   schedule:
     - cron: '0 20 * * *'
