@@ -10,11 +10,11 @@ const createAsync = async (providerName, providerOptions, user) => {
         [providerName]: providerOptsEncoded
     };
     // Explore other options including issuer, scope, etc
-    const accessToken = jsonwebtoken.sign({ provider, user }, env.get().config.JWT_SIGNING_KEY, {
+    const accessToken = jsonwebtoken.sign({ provider, user }, env.get().config.ENCRYPTION_JWT_SIGNING_KEY, {
         expiresIn: '5m'
     });
 
-    const refreshToken = jsonwebtoken.sign({ provider, user }, env.get().config.JWT_REFRESH_SIGNING_KEY, {
+    const refreshToken = jsonwebtoken.sign({ provider, user }, env.get().config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY, {
         expiresIn: '6h'
     });
 
@@ -38,9 +38,9 @@ const decode = (token, key) => {
     };
 };
 
-const verifyToken = (token) => decode(token, env.get().config.JWT_SIGNING_KEY);
+const verifyToken = (token) => decode(token, env.get().config.ENCRYPTION_JWT_SIGNING_KEY);
 
-const verifyRefresh = (token) => decode(token, env.get().config.JWT_REFRESH_SIGNING_KEY);
+const verifyRefresh = (token) => decode(token, env.get().config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY);
 
 export default {
     createAsync,

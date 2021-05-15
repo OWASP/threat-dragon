@@ -9,8 +9,8 @@ import jwtHelper from '../../src/helpers/jwt.helper.js';
 describe('helpers/jwt.helper.js', () => {
     const cipherText = 'foobar';
     const config = {
-        JWT_SIGNING_KEY: 'asdfasdfasdf',
-        JWT_REFRESH_SIGNING_KEY: 'sadfasdfasdf'
+        ENCRYPTION_JWT_SIGNING_KEY: 'asdfasdfasdf',
+        ENCRYPTION_JWT_REFRESH_SIGNING_KEY: 'sadfasdfasdf'
     };
 
     beforeEach(() => {
@@ -53,7 +53,7 @@ describe('helpers/jwt.helper.js', () => {
         it('uses the JWT signing key', () => {
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 sinon.match.any,
-                config.JWT_SIGNING_KEY,
+                config.ENCRYPTION_JWT_SIGNING_KEY,
                 sinon.match.any
             );
         });
@@ -61,7 +61,7 @@ describe('helpers/jwt.helper.js', () => {
         it('uses the refresh signing key', () => {
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 sinon.match.any,
-                config.JWT_REFRESH_SIGNING_KEY,
+                config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY,
                 sinon.match.any
             );
         });
@@ -69,7 +69,7 @@ describe('helpers/jwt.helper.js', () => {
         it('uses sensible options for the JWT', () => {
             expect(jsonwebtoken.sign).to.have.been.calledWith(
                 sinon.match.any,
-                config.JWT_SIGNING_KEY,
+                config.ENCRYPTION_JWT_SIGNING_KEY,
                 {
                     expiresIn: '5m'
                 }
@@ -92,7 +92,7 @@ describe('helpers/jwt.helper.js', () => {
 
         it('passes the signing key', () => {
             expect(jsonwebtoken.verify).to.have.been
-                .calledWith(sinon.match.any, config.JWT_SIGNING_KEY);
+                .calledWith(sinon.match.any, config.ENCRYPTION_JWT_SIGNING_KEY);
         });
     });
 
@@ -111,7 +111,7 @@ describe('helpers/jwt.helper.js', () => {
 
         it('passes the signing key', () => {
             expect(jsonwebtoken.verify).to.have.been
-                .calledWith(sinon.match.any, config.JWT_REFRESH_SIGNING_KEY);
+                .calledWith(sinon.match.any, config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY);
         });
     });
 });

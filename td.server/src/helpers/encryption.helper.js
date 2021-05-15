@@ -14,11 +14,11 @@ const algorithm = 'aes256';
  * @returns {Object}
  */
 const getPrimaryKey = () => {
-    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const keys = JSON.parse(env.get().config.ENCRYPTION_KEYS);
     const primaryKey = keys.find((key) => key.isPrimary);
 
     if (!primaryKey) {
-        const message = 'missing primary session encryption key';
+        const message = 'missing primary encryption key';
         logger.fatal(message);
         throw new Error(message);
     }
@@ -36,11 +36,11 @@ const getPrimaryKey = () => {
  * @returns {Object}
  */
 const getKeyById = (id) => {
-    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const keys = JSON.parse(env.get().config.ENCRYPTION_KEYS);
     const key = keys.find((key) => key.id === id);
 
     if (!key) {
-        const message = `Missing session encryption key id: ${id}`;
+        const message = `Missing encryption key id: ${id}`;
         logger.error(message);
         throw new Error(message);
     }

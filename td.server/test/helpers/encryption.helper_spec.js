@@ -11,7 +11,7 @@ describe('encryption helper tests', () => {
     const plainText = 'test plain text';
     const encryptedText = 'encrypted';
     const randomIv = 'test random iv';
-    const sessionEncryptionKeys = 
+    const encryptionKeys = 
     [
         {
             isPrimary: true,
@@ -47,7 +47,7 @@ describe('encryption helper tests', () => {
 
     describe('with invalid keys', () => {
         beforeEach(() => {
-            const badSessionKeys = [
+            const badKeys = [
                 {
                     isPrimary: false,
                     id: 1,
@@ -56,7 +56,7 @@ describe('encryption helper tests', () => {
             ];
             mockEnv = {
                 config: {
-                    SESSION_ENCRYPTION_KEYS: JSON.stringify(badSessionKeys)
+                    ENCRYPTION_KEYS: JSON.stringify(badKeys)
                 }
             };
             sinon.stub(env, 'get').returns(mockEnv);
@@ -69,11 +69,11 @@ describe('encryption helper tests', () => {
         });
     });
 
-    describe('with valid session encryption keys', () => {
+    describe('with valid encryption keys', () => {
         beforeEach(() => {
             mockEnv = {
                 config: {
-                    SESSION_ENCRYPTION_KEYS: JSON.stringify(sessionEncryptionKeys)
+                    ENCRYPTION_KEYS: JSON.stringify(encryptionKeys)
                 }
             };
             sinon.stub(env, 'get').returns(mockEnv);
@@ -91,7 +91,7 @@ describe('encryption helper tests', () => {
         });
         
         it('should decrypt with the specified key and iv', () => {
-            const encryptionKey = sessionEncryptionKeys.find(x => x.id === 1);
+            const encryptionKey = encryptionKeys.find(x => x.id === 1);
             const encryptedData = {
                 keyId: encryptionKey.id,
                 iv: 'test iv',
@@ -121,7 +121,7 @@ describe('encryption helper tests', () => {
         });
         
         it('should encrypt with the primary key with a random iv', async () => {
-            const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
+            const encryptionKey = encryptionKeys.find(x => x.isPrimary);
 
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns('');
@@ -147,7 +147,7 @@ describe('encryption helper tests', () => {
         });
         
         it('should encrypt the data', async () => {
-            const encryptionKey = sessionEncryptionKeys.find(x => x.isPrimary);
+            const encryptionKey = encryptionKeys.find(x => x.isPrimary);
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns(encryptedText);
 

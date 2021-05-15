@@ -112,11 +112,9 @@ jobs:
         env:
           GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-          JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-          JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-          SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
-          SESSION_STORE: local
+          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           NODE_ENV: development
 
     steps:
@@ -161,11 +159,9 @@ jobs:
         env:
           GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-          JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-          JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-          SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
-          SESSION_STORE: local
+          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           NODE_ENV: development
     steps:
       - name: Checkout
@@ -208,11 +204,9 @@ jobs:
         env:
           GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-          JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-          JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-          SESSION_ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_SIGNING_KEY }}
-          SESSION_STORE: local
+          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
           NODE_ENV: development
     steps:
       - name: Checkout
