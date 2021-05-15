@@ -99,8 +99,8 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
-          with:
-            install: true
+        with:
+          install: true
 
       - name: Set registry cache
         uses: actions/cache@v2
