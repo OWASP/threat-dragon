@@ -20,13 +20,19 @@ jobs:
         with:
           node-version: '14'
 
-      # Create a cache for the npm dependencies to speed up the build
-      # https://stackoverflow.com/a/57958803/3033053
-      - name: Cache NPM dependencies
+      - name: Cache NPM dir
         uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-modules-server-${{ github.sha }}
           restore-keys: |
             ${{ runner.OS }}-npm-cache-server-
 
@@ -57,7 +63,7 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Cache NPM dependencies
+      - name: Cache NPM dir
         uses: actions/cache@v1
         with:
           path: ~/.npm
@@ -79,7 +85,7 @@ jobs:
         if: github.ref == 'refs/heads/v2-development'
 
   
-  docker_build_and_publish:
+  build_docker_image:
     runs-on: ubuntu-latest
     needs: [site_unit_tests, server_unit_tests]
     steps:
@@ -94,7 +100,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Cache Docker layers
+      - name: Setup dockerx cache
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
@@ -117,7 +123,7 @@ jobs:
 
   e2e_tests:
     runs-on: ubuntu-latest
-    needs: [docker_build_and_publish]
+    needs: [build_docker_image]
     defaults:
       run:
         working-directory: td.vue
@@ -154,16 +160,26 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Cache NPM dependencies
+      - name: Cache node_modules
         uses: actions/cache@v1
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache-modules-server-${{ github.sha }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
+            ${{ runner.OS }}-npm-cache-server-
 
-      - name: npm ci
-        run: npm ci
+      - name: Set Vars
+        id: vars
+        run: echo "::set-output name=image::owasp-threat-dragon:$(git rev-parse --short HEAD)"
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      # TODO: This will fail without env vars, but I'm just wondering what is going to happen
+      # if we don't re-build or pull from anywhere
+      - name: Start threat dragon server
+        run: docker run -d -p 3000:3000 ${{ steps.buildx.outputs.name }}
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
@@ -176,7 +192,7 @@ jobs:
 
   zap_scan_web:
     runs-on: ubuntu-latest
-    needs: [docker_build_and_publish]
+    needs: [build_docker_image]
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:ci-latest
@@ -221,7 +237,7 @@ jobs:
 
   zap_scan_docs:
     runs-on: ubuntu-latest
-    needs: [docker_build_and_publish]
+    needs: [build_docker_image]
     services:
       threatdragon:
         image: imoshtokill/threat-dragon-dev:ci-latest
