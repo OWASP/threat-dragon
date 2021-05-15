@@ -1,14 +1,13 @@
-module.exports = {
-    beforeEach: (browser) => browser.init(),
+describe('login', () => {
+    beforeEach(() => {
+        cy.visit('/');
+    });
 
-    'logs in using the local session': (browser) => {
-        const homepage = browser.page.homepage();
-        homepage.waitForElementVisible('@welcome');
-        const welcome = homepage.section.welcome;
-        welcome.waitForElementVisible('@localLogin');
-        welcome.click('@localLogin');
-        browser.expect.url().to.contain('/#/dashboard');
-
-        browser.end();
-    }
-};
+    describe('local login', () => {
+        it('logs in using the local storage option', () => {
+            cy.get('#local-login-btn').click();
+            cy.contains('Logged in as Guest');
+            cy.url().should('contain', '/dashboard');
+        });
+    });
+});

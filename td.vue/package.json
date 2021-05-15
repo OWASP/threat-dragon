@@ -8,8 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
-    "test:e2e-firefox": "vue-cli-service test:e2e --env firefox --headless",
-    "test:e2e-chrome": "vue-cli-service test:e2e --env chrome --headless",
+    "test:e2e-browserstack": "browserstack-cypress run --sync",
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
   },
@@ -28,7 +27,7 @@
   "devDependencies": {
     "@babel/polyfill": "^7.11.5",
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-e2e-nightwatch": "~4.5.0",
+    "@vue/cli-plugin-e2e-cypress": "^4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
@@ -38,6 +37,7 @@
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.2",
+    "browserstack-cypress-cli": "^1.8.1",
     "chromedriver": "^90.0.0",
     "codecov": "^3.8.2",
     "eslint": "^6.7.2",

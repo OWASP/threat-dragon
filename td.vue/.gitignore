@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 *.log
 tests/e2e/reports/
+tests/e2e/videos
+log/
+results/

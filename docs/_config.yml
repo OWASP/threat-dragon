@@ -79,6 +79,10 @@ nav:
           fa_class: fas fa-layer-group
         - name: API
           fa_class: fas fa-server
+        - name: Testing
+          fa_class: fas fa-heartbeat
+        - name: Actions
+          fa_class: fab fa-github-alt
 
 
 
