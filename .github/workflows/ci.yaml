@@ -1,5 +1,4 @@
 name: CI Pipeline
-concurrency: ci_testing
 on:
   push:
     branches:
