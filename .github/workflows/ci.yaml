@@ -195,6 +195,12 @@ jobs:
         id: vars
         run: echo "::set-output name=image::localhost:5000/owasp-threat-dragon:$(git rev-parse --short HEAD)"
 
+      - name: Wait for registry ready
+        run: npx wait-on tcp:5000
+
+      - name: Pull image
+        run: docker pull ${{ steps.vars.outputs.image }}
+        
       - name: Run Threat Dragon
         run: docker run -d -p 3000:3000 ${{ steps.vars.outputs.image }}
 
