@@ -3,7 +3,7 @@
     <td-navbar />
     <b-container fluid id="app">
     <b-alert show variant="danger">
-        This is version <strong>2.0</strong> of OWASP Threat Dragon and is still under development.  Do not use this to edit existing models, as it may break them.
+        This is version <strong>2.0</strong> of OWASP Threat Dragon and is still under development.  Do not use this to edit existing models, as it might break them!
     </b-alert>
       <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
         <router-view />
