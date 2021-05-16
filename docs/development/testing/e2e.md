@@ -46,3 +46,7 @@ At the time of writing, Cypress has some limitations as far as browser support. 
 ## Writing E2E Tests
 
 If you are new to cypress, we strongly suggest reading through the [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress).  Cypress is significantly different from many of the existing webdriver based frameworks and has a bit of a learning curve.  The introduction document is a bit lengthy, but does a wonderful job of preparing you to begin writing tests using cypress.
+
+A full test suite lives in `td.vue/tests/e2e/specs`.  This is where most of the functional e2e tests should live.
+
+A smaller subset of tests, called "smoke tests", live in `td.vue/tests/e2e/smokes`.  Smoke tests are run against a deployment as a sanity check to ensure that the deployment succeeded and there are no glaring issues in the deployment.  Smoke tests should be quick and only check the bare basics. 

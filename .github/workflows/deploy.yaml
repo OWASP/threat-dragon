@@ -3,8 +3,7 @@ concurrency: deploy
 on:
   push:
     branches:
-      # TODO: - 'v2-development'
-      - 'v2/continuous-deployment'
+      - 'v2-development'
 jobs:
   publish_docker:
     runs-on: ubuntu-latest

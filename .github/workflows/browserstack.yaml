@@ -3,9 +3,6 @@ concurrency: browserstack_e2e
 on:
   schedule:
     - cron: '0 23 * * *'
-  push:
-    branches:
-      - 'v2-development'
 jobs:
   browserstack_e2e:
     runs-on: ubuntu-latest
