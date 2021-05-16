@@ -119,6 +119,9 @@ jobs:
       run:
         working-directory: td.vue
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Run Threat Dragon
         run: |
           docker run -d \
@@ -130,9 +133,6 @@ jobs:
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
             ${{ env.image_name }}
-
-      - name: Checkout
-        uses: actions/checkout@v2
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
