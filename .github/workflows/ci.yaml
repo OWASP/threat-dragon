@@ -175,6 +175,7 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
 
   zap_scan_web:
     runs-on: ubuntu-latest
@@ -244,6 +245,7 @@ jobs:
         with:
           name: zap_report_web.zip
           path: zap/report_web.html
+        if: ${{ always() }}
 
 
   zap_scan_docs:
@@ -314,3 +316,4 @@ jobs:
         with:
           name: zap_report_docs.zip
           path: zap/report_docs.html
+        if: ${{ always() }}

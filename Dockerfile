@@ -85,4 +85,5 @@ COPY        --from=deps-backend /app ./td.server
 COPY        --from=build-backend /app/dist ./td.server/dist
 COPY        --from=build-frontend /app/dist /app/dist
 COPY        ./td.server/index.js ./td.server/index.js
+HEALTHCHECK --interval=10s --timeout=2s --start-period=2s CMD ["/nodejs/bin/node", "./td.server/dist/healthcheck.js"]
 CMD         ["td.server/index.js"]

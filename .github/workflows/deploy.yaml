@@ -1,0 +1,111 @@
+name: Deploy
+concurrency: deploy
+on:
+  push:
+    branches:
+      # TODO: - 'v2-development'
+      - 'v2/continuous-deployment'
+jobs:
+  publish_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile' )}}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: imoshtokill/threat-dragon:v2
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [publish_docker]
+    # There is an action to build and deploy a heroku app
+    # We already built the container though, so why not just re-tag and push
+    steps:
+      - name: Pull docker image
+        run: docker pull imoshtokill/threat-dragon:v2
+
+      - name: Login to Heroku Registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.heroku.com
+          username: _
+          password: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Tag Heroku image
+        run: docker tag imoshtokill/threat-dragon:v2 registry.heroku.com/threatdragon-v2/web
+
+      - name: Push to Heroku
+        run: docker push registry.heroku.com/threatdragon-v2/web
+
+      - name: Deploy to Heroku
+        run: heroku container:release web --app threatdragon-v2
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  smoke_tests:
+    runs-on: ubuntu-latest
+    needs: [publish_docker]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-site-
+
+      - name: npm ci
+        run: npm ci
+
+      - name: Run cross-browser smoke tests
+        run: npm run test:e2e-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
+      - name: Rollback if smokes fail
+        run: heroku rollback --app threatdragon-v2
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

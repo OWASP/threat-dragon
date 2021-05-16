@@ -42,7 +42,7 @@
         }
     ],
     "run_settings": {
-        "cypress_config_file": "cypress.browserstack.json",
+        "cypress_config_file": "cypress.nightly.json",
         "project_name": "threat-dragon",
         "exclude": [],
         "parallels": "5",
@@ -54,7 +54,7 @@
         "headless": true
     },
     "connection_settings": {
-        "local": true,
+        "local": false,
         "local_identifier": null,
         "local_mode": null,
         "local_config_file": null
