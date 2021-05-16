@@ -104,13 +104,6 @@ jobs:
       - name: Run cross-browser smoke tests
         run: npm run test:e2e-smokes
 
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v2
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
-
   rollback:
     runs-on: ubuntu-latest
     needs: [smoke_tests]
