@@ -181,7 +181,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t ${{ steps.vars.outputs.image }} . \
+          docker build -t ${{ steps.vars.outputs.image }} ../ \
             --cache-from=type=local,src=/tmp/.buildx-cache \
             --cache-to=type=local,dest=/tmp/.buildx-cache \
             --load
