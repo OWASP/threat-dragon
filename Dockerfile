@@ -70,7 +70,6 @@ RUN         ./cyclonedx convert \
 
 # Builds the docs, including the SBOMs from this build
 FROM        docs-setup as build-docs
-RUN         gem install jekyll bundler
 COPY        --from=build-canonical-bom boms/canonical_json_bom.json _data/canonical_json_bom.json
 COPY        --from=build-canonical-bom boms/* downloads/
 RUN         bundle exec jekyll build -b docs/
