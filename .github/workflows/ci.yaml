@@ -168,7 +168,7 @@ jobs:
             ${{ steps.vars.outputs.image }}
 
       - name: npm ci
-        run: npm ci --only=dev
+        run: npm ci
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
