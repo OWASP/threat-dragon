@@ -5,6 +5,7 @@ on:
       - 'v2-development'
       - 'v2/*'
 jobs:
+
   server_unit_tests:
     runs-on: ubuntu-latest
     defaults:
