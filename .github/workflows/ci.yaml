@@ -63,14 +63,6 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-npm-cache-site-
 
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: ./node_modules
-          key: ${{ runner.OS }}-npm-cache-modules-site-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
-
       - name: npm ci
         run: npm ci
 
@@ -121,19 +113,6 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
-    # services:
-      # threatdragon:
-      #   image: imoshtokill/threat-dragon-dev:ci-latest
-      #   ports:
-      #     - 3000:3000
-      #   env:
-      #     GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
-      #     GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-      #     ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-      #     ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-      #     ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-      #     NODE_ENV: development
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -143,11 +122,11 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Cache node_modules
+      - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.OS }}-npm-cache-modules-site-${{ github.sha }}
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-npm-cache-site-
 
@@ -188,6 +167,9 @@ jobs:
             -e NODE_ENV='development' \
             ${{ steps.vars.outputs.image }}
 
+      - name: npm ci
+        run: npm ci --only=dev
+
       - name: Run e2e tests
         run: npm run test:e2e-ci
 
@@ -200,21 +182,46 @@ jobs:
   zap_scan_web:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
-    services:
-      threatdragon:
-        image: imoshtokill/threat-dragon-dev:ci-latest
-        ports:
-          - 3000:3000
-        env:
-          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
-          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          NODE_ENV: development
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set Vars
+        id: vars
+        run: echo "::set-output name=image::owasp-threat-dragon:$(git rev-parse --short HEAD)"
+      
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Setup dockerx cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile' )}}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build image
+        run: |
+          docker build -t ${{ steps.vars.outputs.image }} . \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache \
+            --load
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            ${{ steps.vars.outputs.image }}
 
       # There's probably a better way of doing this.
       # Not a great idea to chmod 777, even if it's only
@@ -245,21 +252,46 @@ jobs:
   zap_scan_docs:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
-    services:
-      threatdragon:
-        image: imoshtokill/threat-dragon-dev:ci-latest
-        ports:
-          - 3000:3000
-        env:
-          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
-          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
-          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
-          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
-          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          NODE_ENV: development
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set Vars
+        id: vars
+        run: echo "::set-output name=image::owasp-threat-dragon:$(git rev-parse --short HEAD)"
+      
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Setup dockerx cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile' )}}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build image
+        run: |
+          docker build -t ${{ steps.vars.outputs.image }} . \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache \
+            --load
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            ${{ steps.vars.outputs.image }}
 
       # There's probably a better way of doing this.
       # Not a great idea to chmod 777, even if it's only
