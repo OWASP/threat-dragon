@@ -187,7 +187,16 @@ jobs:
             --load
 
       - name: Run Threat Dragon
-        run: docker run -d -p 3000:3000 ${{ steps.vars.outputs.image }}
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID=${{ secrets.CI_GITHUB_CLIENT_ID }} \
+            -e GITHUB_CLIENT_SECRET=${{ secrets.CI_GITHUB_CLIENT_SECRET }} \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY=${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }} \
+            -e ENCRYPTION_JWT_SIGNING_KEY=${{ secrets.CI_JWT_SIGNING_KEY }} \
+            -e ENCRYPTION_KEYS=${{ secrets.CI_SESSION_ENCRYPTION_KEYS }} \
+            -e NODE_ENV=development \
+            ${{ steps.vars.outputs.image }}
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
