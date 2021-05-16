@@ -49,8 +49,7 @@ RUN         ./cyclonedx convert \
                 --output-file boms/canonical_xml_bom.xml
 
 # Builds the docs, including the SBOMs from this build
-FROM        ruby:2.6 as build-docs
-RUN         gem install jekyll bundler
+FROM        imoshtokill/jekyll-bundler as build-docs
 WORKDIR     /td.docs
 COPY        ./docs/Gemfile* ./
 RUN         bundle install
