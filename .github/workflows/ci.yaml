@@ -66,7 +66,7 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ./node_modules
           key: ${{ runner.OS }}-npm-cache-modules-site-${{ github.sha }}
           restore-keys: |
             ${{ runner.OS }}-npm-cache-site-
@@ -146,7 +146,7 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ./node_modules
           key: ${{ runner.OS }}-npm-cache-modules-site-${{ github.sha }}
           restore-keys: |
             ${{ runner.OS }}-npm-cache-site-
