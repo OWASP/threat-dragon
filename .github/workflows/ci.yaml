@@ -112,6 +112,7 @@ jobs:
       - name: Push image
         run: docker push ${{ env.image_name }}
 
+
   e2e_tests:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
