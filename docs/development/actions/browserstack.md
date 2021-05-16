@@ -11,7 +11,7 @@ group: Actions
 
 Thunderhead leverages Browserstack to check compatability across different browsers.  The [e2e page]({{ '/testing/e2e' | relative_url }}) has a complete browser testing matrix.
 
-Because this action is time-consuming, it is only run against the main branch.  
+Because cross browser testing has diminishing returns, it is only run against the latest deployed version (from main) once per day.
 
 An example of what the results might look like:
 ![Browserstack Results]({{ '/assets/images/browserstack_result.png' | relative_url }}){:.img .img-fluid}

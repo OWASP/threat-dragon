@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
-    "test:e2e-browserstack": "browserstack-cypress run --sync",
+    "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
+    "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
   },

@@ -1,4 +1,5 @@
 - Do a POC to use no back-end whatsoever (demo and test only)
+- Fetch actions need to clear the associated state
 - Gracefully handle an expired refresh token (TODO in httpClient)
 - Logout
 - Add tests for ThreatmodelEdit view
@@ -10,7 +11,3 @@
 - Error handling for API requests that might fail (toast service?)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture
-- Create deployment pipeline separate from the other actions
-    - Clean up the other actions a bit
-    - Make a separate E2E test suite for smoke tests
-    - Add a smoke test for SBOM
