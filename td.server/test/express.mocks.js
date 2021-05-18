@@ -38,7 +38,6 @@ export const getMockRequest = () => {
             destroy: (cb) => { if(cb) { cb(); }}
         },
         csrfToken: () => 'some_token',
-        logOut: () => {},
         log: {
             error: () => {},
             debug: () => {},

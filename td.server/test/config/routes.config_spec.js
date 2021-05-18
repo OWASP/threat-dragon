@@ -52,7 +52,7 @@ describe('route config tests', () => {
         });
     });
 
-    describe('login and logout', () => {
+    describe('login/logout', () => {
         it('routes GET /api/login/:provider', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/login/:provider',
@@ -60,17 +60,10 @@ describe('route config tests', () => {
             );
         });
 
-        it('routes GET /logoutform', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/logoutform',
-                homeController.logoutform
-            );
-        });
-
-        it('routes POST /logout', () => {
+        it('routes POST /api/logout', () => {
             expect(mockRouter.post).to.have.been.calledWith(
-                '/logout',
-                homeController.logout
+                '/api/logout',
+                auth.logout
             );
         });
     });

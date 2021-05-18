@@ -7,6 +7,7 @@ describe('service/loginApi.js', () => {
 
     beforeEach(() => {
         jest.spyOn(api, 'getAsync').mockResolvedValue({ data: '' });
+        jest.spyOn(api, 'postAsync').mockResolvedValue({ data: '' });
     });
 
     describe('loginAsync', () => {
@@ -29,4 +30,18 @@ describe('service/loginApi.js', () => {
         });
     });
 
+    describe('logoutAsync', () => {
+        const refreshToken = 'foobar';
+        beforeEach(async () => {
+            await loginApi.logoutAsync(refreshToken);
+        });
+
+        it('calls the logout endpoint', () => {
+            expect(api.postAsync).toHaveBeenCalledWith('/api/logout', expect.anything());
+        });
+
+        it('passes the refresh token', () => {
+            expect(api.postAsync).toHaveBeenCalledWith(expect.anything(), { refreshToken });
+        });
+    });
 });

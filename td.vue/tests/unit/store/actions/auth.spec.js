@@ -1,4 +1,4 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
 
 describe('store/actions/auth.js', () => {
     it('defines a clear action', () => {
@@ -11,5 +11,9 @@ describe('store/actions/auth.js', () => {
 
     it('defines a set local action', () => {
         expect(AUTH_SET_LOCAL).not.toBeUndefined();
+    });
+
+    it('defines a logout action', () => {
+        expect(LOGOUT).not.toBeUndefined();
     });
 });

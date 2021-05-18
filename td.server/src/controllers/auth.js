@@ -41,6 +41,25 @@ const completeLogin = (req, res) => {
     }
 };
 
+const logout = (req, res) => responseWrapper.sendResponse(() => {
+    try {
+        const refreshToken = req.body.refreshToken;
+        if (!refreshToken) {
+            req.log.warn({ security: true }, 'Attempting to log out without a refresh token');
+            // Return OK even though it's not really ok
+            // If this happens, it could be a client error, or it could be
+            // something more nefarious. 
+            return '';
+        }
+
+        tokenRepo.remove(refreshToken);
+        return '';
+    } catch (e) {
+        req.log.error({ security: true }, e);
+        return '';
+    }
+}, req, res);
+
 const refresh = (req, res) => {
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
     if (!tokenBody) {
@@ -53,12 +72,6 @@ const refresh = (req, res) => {
         // Limit the time refresh tokens live, so do not provide a new one.
         return { accessToken, refreshToken: req.body.refreshToken };
     }, req, res);
-};
-
-const logout = (req, res) => {
-    // Delete refresh token
-    req.log.error('Not implemented');
-    res.status(400).json({ status: 400, message: 'Not implemented on the server' });
 };
 
 export default {
