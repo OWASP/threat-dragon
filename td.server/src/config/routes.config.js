@@ -15,8 +15,6 @@ import threatmodelController from '../controllers/threatmodelcontroller.js';
 const unauthRoutes = (router) => {
     router.get('/', homeController.index);
     router.get('/healthz', healthcheck.healthz);
-    router.get('/logoutform', homeController.logoutform);
-    router.post('/logout', homeController.logout);
 
     router.get('/api/login/:provider', auth.login);
     router.get('/api/oauth/return', auth.oauthReturn);
@@ -31,6 +29,7 @@ const unauthRoutes = (router) => {
  * @returns {express.Router}
  */
 const routes = (router) => {
+    router.post('/api/logout', auth.logout);
     router.get('/api/threatmodel/repos', threatmodelController.repos);
     router.get('/api/threatmodel/:organisation/:repo/branches', threatmodelController.branches);
     router.get('/api/threatmodel/:organisation/:repo/:branch/models', threatmodelController.models);

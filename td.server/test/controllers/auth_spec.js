@@ -65,6 +65,44 @@ describe('controllers/auth.js', () => {
         });
     });
 
+    describe('logout', () => {
+        const refresh = 'asdf';
+
+        describe('with refresh token', () => {
+            beforeEach(() => {
+                sinon.stub(tokenRepo, 'remove');
+                mockRequest.body.refreshToken = refresh;
+                auth.logout(mockRequest, mockResponse);
+            });
+
+            it('removes the refresh token', () => {
+                expect(tokenRepo.remove).to.have.been.calledWith(refresh);
+            });
+        });
+
+        describe('without a refresh token', () => {
+            beforeEach(() => {
+                auth.logout(mockRequest, mockResponse);
+            });
+
+            it('logs a warning', () => {
+                expect(mockRequest.log.warn).to.have.been.calledOnce;
+            });
+        });
+
+        describe('with an error removing the token', () => {
+            beforeEach(() => {
+                sinon.stub(tokenRepo, 'remove').throws('whoops!');
+                mockRequest.body.refreshToken = refresh;
+                auth.logout(mockRequest, mockResponse);
+            });
+
+            it('logs an error', () => {
+                expect(mockRequest.log.error).to.have.been.calledOnce;
+            });
+        });
+    });
+
     describe('oauthReturn', () => {
         beforeEach(() => {
             mockRequest.query.code = '12345';
