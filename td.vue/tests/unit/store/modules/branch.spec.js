@@ -5,6 +5,7 @@ import threatmodelApi from '@/service/threatmodelApi.js';
 describe('store/modules/branch.js', () => {
     const mocks = {
         commit: () => {},
+        dispatch: () => {},
         rootState: {
             auth: {
                 jwt: 'test'
@@ -17,6 +18,7 @@ describe('store/modules/branch.js', () => {
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
+        jest.spyOn(mocks, 'dispatch');
     });
 
     afterEach(() => {
@@ -38,15 +40,25 @@ describe('store/modules/branch.js', () => {
             branchModule.actions[BRANCH_CLEAR](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(BRANCH_CLEAR);
         });
-        
-        it('commits the fetch action', async () => {
+
+        describe('fetch', () => {
             const branches = [ 'foo', 'bar' ];
-            jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue({ data: { branches }});
-            await branchModule.actions[BRANCH_FETCH](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(
-                BRANCH_FETCH,
-                branches
-            );
+
+            beforeEach(async () => {
+                jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue({ data: { branches }});
+                await branchModule.actions[BRANCH_FETCH](mocks);
+            });
+
+            it('dispatches the clear event', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+            });
+
+            it('commits the fetch action', () => {
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    BRANCH_FETCH,
+                    branches
+                );
+            });
         });
 
         it('commits the selected branch', () => {

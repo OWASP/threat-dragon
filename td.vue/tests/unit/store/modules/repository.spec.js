@@ -5,6 +5,7 @@ import threatmodelApi from '@/service/threatmodelApi.js';
 describe('store/modules/repository.js', () => {
     const mocks = {
         commit: () => {},
+        dispatch: () => {},
         rootState: {
             auth: {
                 jwt: 'test'
@@ -14,6 +15,7 @@ describe('store/modules/repository.js', () => {
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
+        jest.spyOn(mocks, 'dispatch');
     });
 
     afterEach(() => {
@@ -35,15 +37,25 @@ describe('store/modules/repository.js', () => {
             repoModule.actions[REPOSITORY_CLEAR](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_CLEAR);
         });
-        
-        it('commits the fetch action', async () => {
+
+        describe('fetch', () => {
             const repos = [ 'foo', 'bar' ];
-            jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos }});
-            await repoModule.actions[REPOSITORY_FETCH](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(
-                REPOSITORY_FETCH,
-                repos
-            );
+
+            beforeEach(async () => {
+                jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos }});
+                await repoModule.actions[REPOSITORY_FETCH](mocks);
+            });
+
+            it('dispatches the clear event', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+            });
+
+            it('commits the fetch action', () => {
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    REPOSITORY_FETCH,
+                    repos
+                );
+            });
         });
 
         it('commits the selected repo', () => {

@@ -19,7 +19,8 @@ const state = {
 
 const actions = {
     [BRANCH_CLEAR]: ({ commit }) => commit(BRANCH_CLEAR),
-    [BRANCH_FETCH]: async ({ commit, rootState }) => {
+    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }) => {
+        dispatch(BRANCH_CLEAR);
         const resp = await threatmodelApi.branchesAsync(rootState.repo.selected);
         commit(BRANCH_FETCH, resp.data.branches);
     },
@@ -29,7 +30,6 @@ const actions = {
 const mutations = {
     [BRANCH_CLEAR]: (state) => clearState(state),
     [BRANCH_FETCH]: (state, branches) => {
-        state.all.length = 0;
         branches.forEach((branch, idx) => Vue.set(state.all, idx, branch));
     },
     [BRANCH_SELECTED]: (state, repo) => {
