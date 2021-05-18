@@ -22,7 +22,8 @@ const state = {
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
-    [THREATMODEL_FETCH]: async ({ commit, state, rootState }) => {
+    [THREATMODEL_FETCH]: async ({ commit, dispatch, state, rootState }) => {
+        dispatch(THREATMODEL_CLEAR);
         if (rootState.provider.selected !== 'local') {
             const resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,

@@ -1,5 +1,4 @@
 - Do a POC to use no back-end whatsoever (demo and test only)
-- Fetch actions need to clear the associated state
 - Deep linking (redo routing entirely, match old way?)
 - Gracefully handle an expired refresh token (TODO in httpClient)
 - Add tests for ThreatmodelEdit view

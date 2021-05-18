@@ -19,7 +19,8 @@ const state = {
 
 const actions = {
     [PROVIDER_CLEAR]: ({ commit }) => commit(PROVIDER_CLEAR),
-    [PROVIDER_FETCH]: ({ commit }) => {
+    [PROVIDER_FETCH]: ({ commit, dispatch }) => {
+        dispatch(PROVIDER_CLEAR);
         // TODO: Get a list of configured providers from the backend
         commit(PROVIDER_FETCH, Object.keys(providers.providerNames));
     },
