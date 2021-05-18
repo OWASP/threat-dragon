@@ -1,9 +1,8 @@
 - Do a POC to use no back-end whatsoever (demo and test only)
 - Fetch actions need to clear the associated state
-- Gracefully handle an expired refresh token (TODO in httpClient)
-- Logout
-- Add tests for ThreatmodelEdit view
 - Deep linking (redo routing entirely, match old way?)
+- Gracefully handle an expired refresh token (TODO in httpClient)
+- Add tests for ThreatmodelEdit view
 - Update flow to create a new diagram
 - Add report feature
 - Add the download from github feature
