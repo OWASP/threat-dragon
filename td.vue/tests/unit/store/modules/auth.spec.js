@@ -1,22 +1,27 @@
 import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
 import authModule, { clearState } from '@/store/modules/auth.js';
 import { BRANCH_CLEAR } from '@/store/actions/branch.js';
+import loginApi from '@/service/loginApi.js';
 import { PROVIDER_CLEAR } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR } from '@/store/actions/repository.js';
 import { THREATMODEL_CLEAR } from '@/store/actions/threatmodel.js';
 
 describe('store/modules/auth.js', () => {
-    const mocks = {
+    const getMocks = () => ({
         commit: () => {},
-        dispatch: () => {}
-    };
+        dispatch: () => {},
+        rootState: {}
+    });
     const jwtBody = { foo: 'bar', user: { username: 'whatever' }};
     const apiResp = {
         accessToken: 'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah',
         refreshToken: 'howrefreshing'
     };
+    let mocks;
 
     beforeEach(() => {
+        mocks = getMocks();
+        loginApi.logoutAsync = jest.fn();
         jest.spyOn(mocks, 'commit');
         jest.spyOn(mocks, 'dispatch');
     });
@@ -64,28 +69,110 @@ describe('store/modules/auth.js', () => {
         });
         
         describe('logout', () => {
-            beforeEach(() => {
-                authModule.actions[LOGOUT](mocks);
+
+            describe('local provider', () => {     
+                beforeEach(() => {
+                    mocks.rootState.provider = { selected: 'local' };
+                    authModule.actions[LOGOUT](mocks);
+                });
+
+                it('should not call the API', () => {
+                    expect(loginApi.logoutAsync).not.toHaveBeenCalled();
+                });
+
+                it('dispatches the AUTH_CLEAR action', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
+                });
+
+                it('dispatches the BRANCH_CLEAR action', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                });
+
+                it('dispatches the PROVIDER_CLEAR action', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                });
+
+                it('dispatches the REPOSITORY_CLEAR action', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                });
+
+                it('dispatches the THREATMODEL_CLEAR action', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                });
             });
 
-            it('dispatches the AUTH_CLEAR action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
-            });
+            describe('remote provider', () => {  
+                describe('without error', () => {
+                    beforeEach(() => {
+                        mocks.rootState.provider = { selected: 'github' };
+                        mocks.state = { refreshToken: 'token' };
+                        authModule.actions[LOGOUT](mocks);
+                    });
 
-            it('dispatches the BRANCH_CLEAR action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
-            });
+                    it('calls the API', () => {
+                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(mocks.state.refreshToken);
+                    });
+    
+                    it('dispatches the AUTH_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
+                    });
+    
+                    it('dispatches the BRANCH_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                    });
+    
+                    it('dispatches the PROVIDER_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                    });
+    
+                    it('dispatches the REPOSITORY_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                    });
+    
+                    it('dispatches the THREATMODEL_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                    });
+                });
 
-            it('dispatches the PROVIDER_CLEAR action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
-            });
+                describe('with error', () => {
+                    const err = new Error('whoops!');
 
-            it('dispatches the REPOSITORY_CLEAR action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
-            });
+                    beforeEach(() => {
+                        mocks.rootState.provider = { selected: 'github' };
+                        mocks.state = { refreshToken: 'token' };
+                        console.error = jest.fn();
+                        loginApi.logoutAsync.mockRejectedValue(err);
+                        authModule.actions[LOGOUT](mocks);
+                    });
 
-            it('dispatches the THREATMODEL_CLEAR action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                    it('calls the API', () => {
+                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(mocks.state.refreshToken);
+                    });
+
+                    it('logs the error', () => {
+                        expect(console.error).toHaveBeenCalledWith('Error calling logout api', err);
+                    });
+    
+                    it('dispatches the AUTH_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
+                    });
+    
+                    it('dispatches the BRANCH_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                    });
+    
+                    it('dispatches the PROVIDER_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                    });
+    
+                    it('dispatches the REPOSITORY_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                    });
+    
+                    it('dispatches the THREATMODEL_CLEAR action', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                    });
+                });
             });
         });
     });
