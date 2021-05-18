@@ -19,7 +19,8 @@ const state = {
 
 const actions = {
     [REPOSITORY_CLEAR]: ({ commit }) => commit(REPOSITORY_CLEAR),
-    [REPOSITORY_FETCH]: async ({ commit }) => {
+    [REPOSITORY_FETCH]: async ({ commit, dispatch }) => {
+        dispatch(REPOSITORY_CLEAR);
         const resp = await threatmodelApi.reposAsync();
         commit(REPOSITORY_FETCH, resp.data.repos);
     },

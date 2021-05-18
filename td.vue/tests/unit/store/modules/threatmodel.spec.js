@@ -55,22 +55,41 @@ describe('store/modules/threatmodel.js', () => {
             threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CLEAR);
         });
-        
-        it('commits the fetch action', async () => {
-            const data = 'foobar';
-            jest.spyOn(threatmodelApi, 'modelAsync').mockResolvedValue({ data });
-            await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(
-                THREATMODEL_FETCH,
-                data
-            );
-        });
 
-        it('does not do a fetch if using a local provider', async () => {
-            jest.spyOn(threatmodelApi, 'modelAsync');
-            mocks.rootState.provider.selected = 'local';
-            await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
-            expect(threatmodelApi.modelAsync).not.toHaveBeenCalled();
+        describe('fetch', () => {
+            const data = 'foobar';
+
+            beforeEach(() => {
+                jest.spyOn(threatmodelApi, 'modelAsync').mockResolvedValue({ data });
+            });
+            
+            describe('local provider', () => {
+                beforeEach(async () => {                    
+                    mocks.rootState.provider.selected = 'local';
+                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
+                });
+
+                it('does not do a fetch if using a local provider', () => {
+                    expect(threatmodelApi.modelAsync).not.toHaveBeenCalled();
+                });
+            });
+
+            describe('back-end provider', () => {
+                beforeEach(async () => {
+                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
+                });
+
+                it('dispatches the clear event', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                });
+            
+                it('commits the fetch action', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(
+                        THREATMODEL_FETCH,
+                        data
+                    );
+                });
+            });
         });
         
         it('commits the fetch all action', async () => {

@@ -4,11 +4,13 @@ import providerService from '@/service/providers.js';
 
 describe('store/modules/provider.js', () => {
     const mocks = {
-        commit: () => {}
+        commit: () => {},
+        dispatch: () => {}
     };
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
+        jest.spyOn(mocks, 'dispatch');
     });
 
     afterEach(() => {
@@ -31,12 +33,21 @@ describe('store/modules/provider.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
         });
         
-        it('commits the fetch action will providerNames', () => {
-            providerModule.actions[PROVIDER_FETCH](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(
-                PROVIDER_FETCH,
-                Object.keys(providerService.providerNames)
-            );
+        describe('fetch', () => {
+            beforeEach(() => {
+                providerModule.actions[PROVIDER_FETCH](mocks);
+            });
+
+            it('dispatches the clear action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+            });
+
+            it('commits the fetch action will providerNames', () => {
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    PROVIDER_FETCH,
+                    Object.keys(providerService.providerNames)
+                );
+            });
         });
         
         describe('selected', () => {
