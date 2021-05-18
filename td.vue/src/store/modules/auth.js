@@ -1,4 +1,8 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL } from '../actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '../actions/auth.js';
+import { BRANCH_CLEAR } from '../actions/branch.js';
+import { PROVIDER_CLEAR } from '../actions/provider.js';
+import { REPOSITORY_CLEAR } from '../actions/repository.js';
+import { THREATMODEL_CLEAR } from '../actions/threatmodel.js';
 
 export const clearState = (state) => {
     state.jwt = '';
@@ -17,7 +21,14 @@ const state = {
 const actions = {
     [AUTH_CLEAR]: ({ commit }) => commit(AUTH_CLEAR),
     [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens),
-    [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL)
+    [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL),
+    [LOGOUT]: ({ dispatch }) => {
+        dispatch(AUTH_CLEAR);
+        dispatch(BRANCH_CLEAR);
+        dispatch(PROVIDER_CLEAR);
+        dispatch(REPOSITORY_CLEAR);
+        dispatch(THREATMODEL_CLEAR);
+    }
 };
 
 const mutations = {

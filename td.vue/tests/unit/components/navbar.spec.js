@@ -11,7 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { LOGOUT } from '@/store/actions/auth.js';
 import Navbar from '@/components/Navbar.vue';
+import router from '@/router/index.js';
 
 describe('components/Navbar.vue', () => {
     let wrapper, localVue, mockStore;
@@ -24,7 +26,8 @@ describe('components/Navbar.vue', () => {
         mockStore = new Vuex.Store({
             getters: {
                 username: () => 'foobar'
-            }
+            },
+            dispatch: () => {}
         });
         wrapper = shallowMount(Navbar, {
             localVue,
@@ -96,6 +99,8 @@ describe('components/Navbar.vue', () => {
                 signOut = navItems
                     .filter(x => x.attributes('id') === 'nav-sign-out')
                     .at(0);
+                router.push = jest.fn();
+                mockStore.dispatch = jest.fn();
             });
 
             it('has the sign out button', () => {
@@ -105,6 +110,16 @@ describe('components/Navbar.vue', () => {
             it('uses fa sign-out-alt', () => {
                 expect(signOut.findComponent(FontAwesomeIcon).attributes('icon'))
                     .toEqual('sign-out-alt');
+            });
+
+            it('dispatches the logout event', async () => {
+                await signOut.trigger('click');
+                expect(mockStore.dispatch).toHaveBeenCalledWith(LOGOUT);
+            });
+
+            it('navigates to the home page', async () => {
+                await signOut.trigger('click');
+                expect(router.push).toHaveBeenCalledWith('/');
             });
         });
 

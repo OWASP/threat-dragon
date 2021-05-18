@@ -1,9 +1,14 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
 import authModule, { clearState } from '@/store/modules/auth.js';
+import { BRANCH_CLEAR } from '@/store/actions/branch.js';
+import { PROVIDER_CLEAR } from '@/store/actions/provider.js';
+import { REPOSITORY_CLEAR } from '@/store/actions/repository.js';
+import { THREATMODEL_CLEAR } from '@/store/actions/threatmodel.js';
 
 describe('store/modules/auth.js', () => {
     const mocks = {
-        commit: () => {}
+        commit: () => {},
+        dispatch: () => {}
     };
     const jwtBody = { foo: 'bar', user: { username: 'whatever' }};
     const apiResp = {
@@ -13,6 +18,7 @@ describe('store/modules/auth.js', () => {
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
+        jest.spyOn(mocks, 'dispatch');
     });
 
     afterEach(() => {
@@ -56,7 +62,32 @@ describe('store/modules/auth.js', () => {
             authModule.actions[AUTH_SET_LOCAL](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL);
         });
+        
+        describe('logout', () => {
+            beforeEach(() => {
+                authModule.actions[LOGOUT](mocks);
+            });
 
+            it('dispatches the AUTH_CLEAR action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
+            });
+
+            it('dispatches the BRANCH_CLEAR action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+            });
+
+            it('dispatches the PROVIDER_CLEAR action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+            });
+
+            it('dispatches the REPOSITORY_CLEAR action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+            });
+
+            it('dispatches the THREATMODEL_CLEAR action', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+            });
+        });
     });
 
     describe('mutations', () => {

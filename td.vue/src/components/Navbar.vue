@@ -8,7 +8,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-text v-show="username" class="logged-in-as">Logged in as {{ username }}</b-nav-text>
-        <b-nav-item v-show="username" href="#" id="nav-sign-out">
+        <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
@@ -73,12 +73,22 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import { LOGOUT } from '@/store/actions/auth.js';
+import router from '@/router/index.js';
+
 export default {
     name: 'TdNavbar',
     computed: {
         ...mapGetters([
             'username'
         ])
+    },
+    methods: {
+        onLogOut(evt) {
+            evt.preventDefault();
+            this.$store.dispatch(LOGOUT);
+            router.push('/');
+        }
     }
 };
 </script>
