@@ -1,3 +1,4 @@
+- Run smoke tests on PRs
 - Empty state on list views
 -- List views should probably be a separate component to handle empty state
 -- Handle pagination
