@@ -1,12 +1,17 @@
+import { providerTypes } from './providerTypes.js';
+
+const providerType = providerTypes.local;
+
 const getDashboardActions = () => ([
     {
-        to: '/repository',
+        to: `/${providerType}/threatmodels`,
         description: 'Open an existing threat model',
-        icon: 'github',
+        icon: 'vuejs',
         iconPreface: 'fab'
     },
     {
-        to: '/repository',
+        // TODO: Create page
+        to: `/${providerType}/:threatmodel/edit`,
         description: 'Create a completely new, empty threat model',
         icon: 'plus'
     },

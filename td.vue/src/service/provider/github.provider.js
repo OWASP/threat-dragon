@@ -1,12 +1,16 @@
+import { providerTypes } from './providerTypes.js';
+
+const providerType = providerTypes.git;
+
 const getDashboardActions = () => ([
     {
-        to: '/threatmodel-select',
+        to: `/${providerType}/github/repository`,
         description: 'Open an existing threat model',
-        icon: 'vuejs',
+        icon: 'github',
         iconPreface: 'fab'
     },
     {
-        to: '/repository',
+        to: `/${providerType}/github/repository`,
         description: 'Create a completely new, empty threat model',
         icon: 'plus'
     },

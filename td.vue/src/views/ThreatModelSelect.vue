@@ -5,7 +5,11 @@
                 <b-jumbotron class="text-center">
                     <h4>
                         Select a Threat Model from
-                        <a :href="`https://www.github.com/${repoName}`" target="_blank">{{ `${repoName}/${branch}` }}</a>
+                        <a
+                            :href="`https://www.github.com/${repoName}`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >{{ `${repoName}/${branch}` }}</a>
                         from the list below, or choose another
                         <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">branch</a>
                         or
@@ -34,32 +38,48 @@
 import { mapState } from 'vuex';
 
 import branchActions from '@/store/actions/branch.js';
+import { getProviderType } from '@/service/provider/providers.js';
+import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import threatmodelActions from '@/store/actions/threatmodel.js';
-import router from '@/router/index.js';
 
 export default {
-    name: 'ThreatmodelSelect',
+    name: 'ThreatModelSelect',
     computed: mapState({
-        repoName: state => state.repo.selected,
         branch: state => state.branch.selected,
+        provider: state => state.provider.selected,
+        providerType: state => getProviderType(state.provider.selected),
+        repoName: state => state.repo.selected,
         threatModels: state => state.threatmodel.all
     }),
     mounted() {
+        if (this.provider !== this.$route.params.provider) {
+            this.$store.dispatch(providerActions.selected, this.$route.params.provider);
+        }
+        
+        if (this.repoName !== this.$route.params.repository) {
+            this.$store.dispatch(repoActions.selected, this.$route.params.repository);
+        }
+
+        if (this.branch !== this.$route.params.branch) {
+            this.$store.dispatch(branchActions.selected, this.$route.params.branch);
+        }
+
         this.$store.dispatch(threatmodelActions.fetchAll);
     },
     methods: {
         selectBranchClick() {
             this.$store.dispatch(branchActions.clear);
-            router.push('/branch');
+            this.$router.push({ name: 'gitBranch', params: { provider: this.provider, repository: this.repoName }});
         },
         selectRepoClick() {
             this.$store.dispatch(repoActions.clear);
-            router.push('/repository');
+            this.$router.push({ name: 'gitRepository', params: { provider: this.provider }});
         },
-        onThreatmodelClick(threatModel) {
-            this.$store.dispatch(threatmodelActions.selected, threatModel);
-            router.push('/threatmodel');
+        onThreatmodelClick(threatmodel) {
+            this.$store.dispatch(threatmodelActions.selected, threatmodel);
+            const params = Object.assign({}, this.$route.params, { threatmodel });
+            this.$router.push({ name: `${this.providerType}ThreatModel` , params });
         }
     }
 };

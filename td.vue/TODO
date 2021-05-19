@@ -1,11 +1,12 @@
+- Empty state on list views
+-- List views should probably be a separate component to handle empty state
+-- Handle pagination
 - Do a POC to use no back-end whatsoever (demo and test only)
-- Deep linking (redo routing entirely, match old way?)
 - Gracefully handle an expired refresh token (TODO in httpClient)
 - Add tests for ThreatmodelEdit view
 - Update flow to create a new diagram
 - Add report feature
 - Add the download from github feature
-- Pagination
 - Error handling for API requests that might fail (toast service?)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture

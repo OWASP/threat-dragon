@@ -9,6 +9,7 @@
                             id="repo_link"
                             :href="`https://www.github.com/${repoName}`"
                             target="_blank"
+                            rel="noopener noreferrer"
                         >{{ repoName }}</a>
                         from the list below or
                         <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">choose another repo</a>
@@ -35,26 +36,35 @@
 import { mapState } from 'vuex';
 
 import branchActions from '@/store/actions/branch.js';
+import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
-import router from '@/router/index.js';
 
 export default {
     name: 'Branch',
     computed: mapState({
-        repoName: state => state.repo.selected,
-        branches: state => state.branch.all
+        branches: state => state.branch.all,
+        provider: state => state.provider.selected,
+        repoName: state => state.repo.selected
     }),
     mounted() {
+        if (this.provider !== this.$route.params.provider) {
+            this.$store.dispatch(providerActions.selected, this.$route.params.provider);
+        }
+        
+        if (this.repoName !== this.$route.params.repository) {
+            this.$store.dispatch(repoActions.selected, this.$route.params.repository);
+        }
+
         this.$store.dispatch(branchActions.fetch);
     },
     methods: {
         selectRepoClick() {
             this.$store.dispatch(repoActions.clear);
-            router.push('/repository');
+            this.$router.push({ name: 'gitRepository' });
         },
         onBranchClick(branch) {
             this.$store.dispatch(branchActions.selected, branch);
-            router.push('/threatmodel-select');
+            this.$router.push({ name: 'gitThreatModelSelect', params: { provider: this.provider, repository: this.repoName, branch }});
         }
     }
 };

@@ -14,7 +14,7 @@ describe('store/modules/threatmodel.js', () => {
             selected: 'myBranch'
         },
         provider: {
-            selected: 'foo'
+            selected: 'github'
         }
     });
     const mocks = {
@@ -76,7 +76,7 @@ describe('store/modules/threatmodel.js', () => {
 
             describe('back-end provider', () => {
                 beforeEach(async () => {
-                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
+                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks, 'tm');
                 });
 
                 it('dispatches the clear event', () => {
@@ -120,7 +120,7 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('dispatches the fetch event', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH);
+                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
             });
         });
     });

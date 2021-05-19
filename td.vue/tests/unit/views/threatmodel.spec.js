@@ -3,7 +3,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import router from '@/router/index.js';
-import ThreatModel from '@/views/Threatmodel.vue';
+import ThreatModel from '@/views/ThreatModel.vue';
 
 describe('views/Threatmodel.vue', () => {
     const contributors = ['foo', 'bar' ];

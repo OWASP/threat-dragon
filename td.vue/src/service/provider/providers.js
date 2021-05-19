@@ -1,17 +1,20 @@
 import githubProvider from './github.provider.js';
-import sessionProvider from './session.provider.js';
+import localProvider from './local.provider.js';
+import { providerTypes } from './providerTypes.js';
 
 const providers = {
     github: {
         key: 'github',
         displayName: 'GitHub',
         provider: githubProvider,
+        type: providerTypes.git,
         icon: ['fab', 'github']
     },
     local: {
         key: 'local',
         displayName: 'Local Session',
-        provider: sessionProvider,
+        provider: localProvider,
+        type: providerTypes.local,
         icon: ['fab', 'vuejs']
     }
 };
@@ -27,6 +30,8 @@ export const providerNames = (() => {
 })();
 
 export const getDisplayName = (providerKey) => providers[providerKey].displayName;
+
+export const getProviderType = (providerKey) => providers[providerKey].type;
 
 /**
  * Gets the dashboard actions based on the selected provider
