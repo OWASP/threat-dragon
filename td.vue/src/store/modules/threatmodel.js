@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import { getProviderType } from '../../service/provider/providers.js';
+import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_FETCH,
@@ -22,13 +24,13 @@ const state = {
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
-    [THREATMODEL_FETCH]: async ({ commit, dispatch, state, rootState }) => {
+    [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
-        if (rootState.provider.selected !== 'local') {
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
             const resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,
                 rootState.branch.selected,
-                state.selected
+                threatModel
             );
             commit(THREATMODEL_FETCH, resp.data);
         }
@@ -44,7 +46,7 @@ const actions = {
     },
     [THREATMODEL_SELECTED]: ({ commit, dispatch }, threatModel) => {
         commit(THREATMODEL_SELECTED, threatModel);
-        dispatch(THREATMODEL_FETCH);
+        dispatch(THREATMODEL_FETCH, threatModel);
     }
 };
 
@@ -57,8 +59,8 @@ const mutations = {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
-    [THREATMODEL_SELECTED]: (state, repo) => {
-        state.selected = repo;
+    [THREATMODEL_SELECTED]: (state, threatModel) => {
+        state.selected = threatModel;
     }
 };
 

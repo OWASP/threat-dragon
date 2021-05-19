@@ -3,7 +3,7 @@
         <b-row>
             <b-col>
                 <b-jumbotron class="text-center">
-                    <h4>Select a {{ provider }} repository from the list below</h4>
+                    <h4>Select a {{ providerDisplayName }} repository from the list below</h4>
                 </b-jumbotron>
             </b-col>
         </b-row>
@@ -25,24 +25,29 @@
 <script>
 import { mapState } from 'vuex';
 
-import { getDisplayName } from '@/service/providers.js';
+import { getDisplayName } from '@/service/provider/providers.js';
+import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
-import router from '@/router/index.js';
 
 export default {
     name: 'Repository',
     computed: mapState({
-        provider: state => getDisplayName(state.provider.selected),
+        provider: state => state.provider.selected,
+        providerDisplayName: state => getDisplayName(state.provider.selected),
         repositories: state => state.repo.all
     }),
     mounted() {
+        if (this.provider !== this.$route.params.provider) {
+            this.$store.dispatch(providerActions.selected, this.$route.params.provider);
+        }
+
         this.$store.dispatch(repoActions.fetch);
     },
     methods: {
         onRepoClick(repoName) {
             this.$store.dispatch(repoActions.selected, repoName);
-            router.push('/branch');
-        }
+            this.$router.push({ name: 'gitBranch', params: { provider: this.provider, repository: repoName } });
+        },
     }
 };
 </script>

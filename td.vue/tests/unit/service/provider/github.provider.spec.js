@@ -1,4 +1,4 @@
-import github from '@/service/github.provider.js';
+import github from '@/service/provider/github.provider.js';
 
 describe('service/github.provider.js', () => {
     describe('getDashboardActions', () => {
@@ -11,7 +11,7 @@ describe('service/github.provider.js', () => {
             });
 
             it('links to the repository page', () => {
-                expect(action.to).toEqual('/repository');
+                expect(action.to).toEqual('/git/github/repository');
             });
 
             it('uses the github icon', () => {
@@ -28,7 +28,7 @@ describe('service/github.provider.js', () => {
             });
 
             it('links to the repository page', () => {
-                expect(action.to).toEqual('/repository');
+                expect(action.to).toEqual('/git/github/repository');
             });
 
             it('uses the plus icon', () => {
@@ -43,8 +43,9 @@ describe('service/github.provider.js', () => {
                 action = github.getDashboardActions().find(x=> x.description.startsWith('Download'));
             });
 
-            xit('links to the home edit page', () => {
-                expect(action.to).toEqual('/repository');
+            // TODO
+            xit('links to the repo select page', () => {
+                expect(action.to).toEqual('/git/github/repository');
             });
 
             it('uses the cloud download icon', () => {

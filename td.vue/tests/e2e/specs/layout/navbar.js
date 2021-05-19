@@ -3,7 +3,7 @@ describe('navbar', () => {
         cy.get(selector)
             .find('a')
             .should('have.attr', 'href', url)
-            .and('have.attr', 'rel', 'noopener');
+            .and('have.attr', 'rel', 'noopener noreferrer');
     };
 
     before(() => {

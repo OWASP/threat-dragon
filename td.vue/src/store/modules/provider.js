@@ -5,7 +5,7 @@ import {
     PROVIDER_FETCH,
     PROVIDER_SELECTED
 } from '../actions/provider.js';
-import providers from '../../service/providers.js';
+import providers from '../../service/provider/providers.js';
 
 export const clearState = (state) => {
     state.all.length = 0;

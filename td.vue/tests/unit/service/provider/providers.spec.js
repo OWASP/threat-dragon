@@ -1,5 +1,5 @@
-import providers, { getDisplayName } from '@/service/providers.js';
-import sessionProvider from '@/service/session.provider.js';
+import providers, { getDisplayName } from '@/service/provider/providers.js';
+import localProvider from '@/service/provider/local.provider.js';
 
 describe('service/providers.js', () => {
     describe('providerNames', () => {
@@ -35,6 +35,14 @@ describe('service/providers.js', () => {
             expect(providers.allProviders.local.key).toEqual('local');
         });
 
+        it('has a local provider type', () => {
+            expect(providers.allProviders.local.type).toEqual('local');
+        });
+
+        it('has a git provider type', () => {
+            expect(providers.allProviders.github.type).toEqual('git');
+        });
+
         it('prevents mutations', () => {
             expect(() => {
                 providers.allProviders.github = { foo: 'bar' };
@@ -61,7 +69,7 @@ describe('service/providers.js', () => {
         });
 
         it('throws an error when no actions are configured', () => {
-            sessionProvider.getDashboardActions = jest.fn();
+            localProvider.getDashboardActions = jest.fn();
             expect(() => {
                 providers.getDashboardActions(providers.providerNames.local);
             }).toThrowError(`No dashboard actions configured`);

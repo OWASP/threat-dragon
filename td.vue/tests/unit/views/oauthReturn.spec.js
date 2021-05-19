@@ -6,7 +6,7 @@ import loginApi from '@/service/loginApi.js';
 import OAuthReturn from '@/views/OauthReturn.vue';
 import router from '@/router/index.js';
 
-describe('Repository.vue', () => {
+describe('views/OauthReturn.vue', () => {
     const jwt = 'foobar';
     const code = '1234-12345';
     const provider = 'test';

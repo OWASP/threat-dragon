@@ -48,7 +48,7 @@
 <script>
 
 
-import { allProviders } from '@/service/providers.js';
+import { allProviders } from '@/service/provider/providers.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 export default {

@@ -159,7 +159,7 @@ import { mapState } from 'vuex';
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
-    name: 'ThreatmodelEdit',
+    name: 'ThreatModelEdit',
     components: {
         TdFormButton
     },

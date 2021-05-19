@@ -18,6 +18,7 @@
         <b-nav-item
           href="https://docs.threatdragon.org/"
           target="_blank"
+          rel="noopener noreferrer"
           id="nav-docs"
         >
           <font-awesome-icon
@@ -29,6 +30,7 @@
         <b-nav-item
           href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
           target="_blank"
+          rel="noopener noreferrer"
           id="nav-tm-cheat-sheet"
         >
           <font-awesome-icon
@@ -40,6 +42,7 @@
         <b-nav-item
           href="https://owasp.org/www-project-threat-dragon/"
           target="_blank"
+          rel="noopener noreferrer"
           id="nav-owasp-td"
         >
           <b-img src="@/assets/owasp.svg" class="td-fa-nav" />

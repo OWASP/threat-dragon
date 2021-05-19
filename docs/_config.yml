@@ -73,6 +73,8 @@ nav:
           fa_class: fas fa-power-off
         - name: Modeling
           fa_class: fas fa-project-diagram
+        - name: Collaboration
+          fa_class: fas fa-user-ninja
     - name: Development
       groups:
         - name: Environment

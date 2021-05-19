@@ -1,17 +1,17 @@
-import session from '@/service/session.provider.js';
+import local from '@/service/provider/local.provider.js';
 
-describe('service/session.provider.js', () => {
+describe('service/local.provider.js', () => {
     describe('getDashboardActions', () => {
 
         describe('open existing', () => {
             let action;
 
             beforeEach(() => {
-                action = session.getDashboardActions().find(x=> x.description.startsWith('Open'));
+                action = local.getDashboardActions().find(x=> x.description.startsWith('Open'));
             });
 
             it('links to the tm select page', () => {
-                expect(action.to).toEqual('/threatmodel-select');
+                expect(action.to).toEqual('/local/threatmodels');
             });
 
             it('uses the github icon', () => {
@@ -24,10 +24,10 @@ describe('service/session.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = session.getDashboardActions().find(x=> x.description.startsWith('Create'));
+                action = local.getDashboardActions().find(x=> x.description.startsWith('Create'));
             });
 
-            xit('links to the repository page', () => {
+            xit('links to the create page', () => {
                 expect(action.to).toEqual('/repository');
             });
 
@@ -40,9 +40,10 @@ describe('service/session.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = session.getDashboardActions().find(x=> x.description.startsWith('Download'));
+                action = local.getDashboardActions().find(x=> x.description.startsWith('Download'));
             });
 
+            // TODO
             xit('links to the home edit page', () => {
                 expect(action.to).toEqual('/repository');
             });
