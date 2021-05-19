@@ -162,6 +162,55 @@ jobs:
           path: td.vue/tests/e2e/videos
         if: ${{ always() }}
 
+
+  e2e_smokes:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            ${{ env.image_name }}
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-site-
+
+      - name: npm ci
+        run: npm ci
+
+      - name: Run e2e tests
+        run: npm run test:e2e-ci-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
   zap_scan_web:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
