@@ -24,7 +24,15 @@ const routes = [
         component: () => import(/* webpackChunkName: "oauth-return" */ '../views/OauthReturn.vue')
     },
     ...gitRoutes,
-    ...localRoutes
+    ...localRoutes,
+
+
+    // TODO: Delete
+    {
+        path: '/graph',
+        name: 'GraphTest',        
+        component: () => import(/* webpackChunkName: "graph-test" */ '../views/GraphTest.vue')
+    }
 ];
 
 const router = new VueRouter({
