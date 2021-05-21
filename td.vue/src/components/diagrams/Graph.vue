@@ -25,6 +25,7 @@ import { Addon, Graph, Shape } from '@antv/x6';
 
 /*
   TODOS:
+    - "Link from here" - auto-linking of elements
     - Add context menus
     - Export JSON
     - Add buttons for things like copy, paste, save, undo/redo, etc
