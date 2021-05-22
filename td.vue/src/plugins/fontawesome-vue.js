@@ -13,7 +13,12 @@ import {
     faFileAlt,
     faTimes,
     faUndo,
-    faSave
+    faRedo,
+    faSave,
+    faSearchPlus,
+    faSearchMinus,
+    faTrash,
+    faTh
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -31,7 +36,12 @@ library.add(
     faFileAlt,
     faTimes,
     faUndo,
-    faSave
+    faRedo,
+    faSave,
+    faSearchPlus,
+    faSearchMinus,
+    faTrash,
+    faTh
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -5,8 +5,10 @@
         <p>
           Keyboard shortcuts: <b-badge>ctrl+c</b-badge> copy |
           <b-badge>ctrl+v</b-badge> paste | <b-badge>ctrl+z</b-badge> undo |
-          <b-badge>ctrl+y</b-badge> redo | <b-badge>del</b-badge> delete
-          selected
+          <b-badge>ctrl+y</b-badge> redo | <b-badge>del</b-badge> delete |
+          <b-badge>shift+left-click</b-badge> pan(drag) |
+          <b-badge>click/drag</b-badge> on empty space for multi-select selected
+          | <b-badge>ctrl+mousewheel</b-badge> zoom
         </p>
       </b-col>
     </b-row>
@@ -14,12 +16,46 @@
       <b-col md="2">
         <div ref="stencil_container"></div>
       </b-col>
-      <b-col>
-        <div
-          id="graph-container"
-          ref="container"
-          style="min-height: 600px"
-        ></div>
+      <b-col md="8">
+        <b-row>
+          <b-col>
+            <b-btn-group>
+              <td-form-button
+                :isPrimary="true"
+                :onBtnClick="noOp"
+                icon="save"
+                text="Save"
+              />
+              <td-form-button :onBtnClick="noOp" icon="times" text="Cancel" />
+              <td-form-button :onBtnClick="undo" icon="undo" text="" />
+              <td-form-button :onBtnClick="redo" icon="redo" text="" />
+              <td-form-button :onBtnClick="zoomIn" icon="search-plus" text="" />
+              <td-form-button
+                :onBtnClick="zoomOut"
+                icon="search-minus"
+                text=""
+              />
+              <td-form-button
+                :onBtnClick="deleteSelected"
+                icon="trash"
+                text=""
+              />
+              <td-form-button :onBtnClick="togggleGrid" icon="th" text="" />
+            </b-btn-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <div
+              id="graph-container"
+              ref="container"
+              style="min-height: 600px"
+            ></div>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col md="2">
+        <b-card header="Actions"> </b-card>
       </b-col>
     </b-row>
   </div>
@@ -30,96 +66,21 @@ import { Graph } from '@antv/x6';
 
 import shapes from '@/service/x6/shapes/shapes.js';
 import stencil from '@/service/x6/stencil.js';
+import TdFormButton from '@/components/FormButton.vue';
 import { TrustBoundary } from '@/service/x6/shapes/trust-boundary.js';
 /*
   TODOS:
-    - "Link from here" - auto-linking of elements
+    - "Link from here" - auto-linking of elements (needed or not?)
     - Add context menus
     - Export JSON
-    - Add buttons for things like copy, paste, save, undo/redo, etc
     - Export images
     - Fix CSP
-
-    From Jon:
-      - pan and zoom
-      - diagram resizing
-      - arrows not bunched into a single arrow
-      - (done) rectangle boundaries for trust boundaries
-      - block selection (move, copy, delete)
+    - Change color if threat associated
+    - Change to dotted if out of scope
+    - Add ability to change labels and such
+    - Consider changing trust boundary appearance to match in/out of scope and threats
+    - Save / Cancel buttons are currently no-ops
 */
-
-shapes.register();
-
-const ports = {
-    groups: {
-        top: {
-            position: 'top',
-            attrs: {
-                circle: {
-                    r: 6,
-                    magnet: true,
-                    stroke: '#31d0c6',
-                    strokeWidth: 2,
-                    fill: '#fff',
-                },
-            },
-        },
-        bottom: {
-            position: 'bottom',
-            attrs: {
-                circle: {
-                    r: 6,
-                    magnet: true,
-                    stroke: '#31d0c6',
-                    strokeWidth: 2,
-                    fill: '#fff',
-                },
-            },
-        },
-        left: {
-            position: 'left',
-            attrs: {
-                circle: {
-                    r: 6,
-                    magnet: true,
-                    stroke: '#31d0c6',
-                    strokeWidth: 2,
-                    fill: '#fff',
-                },
-            },
-        },
-        right: {
-            position: 'right',
-            attrs: {
-                circle: {
-                    r: 6,
-                    magnet: true,
-                    stroke: '#31d0c6',
-                    strokeWidth: 2,
-                    fill: '#fff',
-                },
-            },
-        },
-    },
-    items: [
-        {
-            id: 'portTop',
-            group: 'top',
-        },
-        {
-            id: 'portBottom',
-            group: 'bottom',
-        },
-        {
-            id: 'portLeft',
-            group: 'left',
-        },
-        {
-            id: 'portRight',
-            group: 'right',
-        },
-    ],
-};
 
 const data = {
     nodes: [
@@ -130,7 +91,11 @@ const data = {
             width: 80,
             height: 40,
             label: 'hello',
-            ports,
+            attrs: {
+                body: {
+                    magnet: true
+                }
+            }
         },
         {
             id: 'node2',
@@ -139,7 +104,11 @@ const data = {
             width: 80,
             height: 40,
             label: 'world',
-            ports,
+            attrs: {
+                body: {
+                    magnet: true
+                }
+            }
         },
         {
             id: 'node3',
@@ -148,26 +117,27 @@ const data = {
             width: 80,
             height: 40,
             label: 'test',
-            ports,
+            attrs: {
+                body: {
+                    magnet: true
+                }
+            }
         },
     ],
     edges: [
         {
             source: 'node1',
             target: 'node2',
-            router: 'manhattan',
             connector: 'rounded',
         },
         {
             source: 'node1',
             target: 'node3',
-            router: 'manhattan',
             connector: 'rounded',
         },
         {
             source: 'node3',
             target: 'node1',
-            router: 'manhattan',
             connector: 'rounded',
         },
     ],
@@ -175,24 +145,68 @@ const data = {
 
 export default {
     name: 'TdGraph',
+    components: {
+        TdFormButton,
+    },
+    data() {
+        return {
+            graph: null,
+            gridShowing: true,
+        };
+    },
     mounted() {
         this.init();
     },
+    loaded() {
+        shapes.register();
+    },
     methods: {
+        noOp() {
+            // TODO: Just for testing
+        },
+        redo() {
+            if (this.graph.canRedo()) {
+                this.graph.redo();
+            }
+        },
+        undo() {
+            if (this.graph.canUndo()) {
+                this.graph.undo();
+            }
+        },
+        zoomOut() {
+            this.graph.zoom(-0.2);
+        },
+        zoomIn() {
+            this.graph.zoom(0.2);
+        },
+        deleteSelected() {
+            this.graph.removeCells(this.graph.getSelectedCells());
+        },
+        togggleGrid() {
+            if (this.gridShowing) {
+                this.graph.hideGrid();
+                this.gridShowing = false;
+            } else {
+                this.graph.showGrid();
+                this.gridShowing = true;
+            }
+        },
         init() {
-            // https://x6.antv.vision/en/docs/tutorial/basic/dnd
+            // TODO: Move to its own declaration
             const graph = new Graph({
                 container: this.$refs.container,
                 // width: "100%",
                 // height: "100%",
                 // height: '600px',
-                allowPanning: true,
+                // allowPanning: true,
+                preventDefaultContextMenu: false,
                 history: {
                     enabled: true,
+                    beforeAddCommand: (event, args) => {
+                        return args.key != 'tools';
+                    },
                 },
-                // scroller: {
-                //   enabled: true,
-                // },
                 grid: {
                     size: 10,
                     visible: true,
@@ -208,8 +222,12 @@ export default {
                     enabled: true,
                     global: true,
                 },
+                rotating: {
+                    enabled: true,
+                },
                 selecting: {
                     enabled: true,
+                    rubberband: true,
                     showNodeSelectionBox: false,
                     showEdgeSelectionBox: true,
                 },
@@ -225,7 +243,21 @@ export default {
                     preserveAspectRatio: false,
                     allowReverse: true,
                 },
+                mousewheel: {
+                    enabled: true,
+                    global: true,
+                    modifiers: ['ctrl', 'meta'],
+                },
+                panning: {
+                    enabled: true,
+                    modifiers: ['shift'],
+                },
+                connecting: {
+                    allowNode: true,
+                    allowBlank: true,
+                }
             });
+            this.graph = graph;
 
             graph.bindKey('ctrl+c', () => {
                 const cells = graph.getSelectedCells();
@@ -278,7 +310,6 @@ export default {
                             name: 'boundary',
                             args: {
                                 attrs: {
-                                    fill: '#7c68fc',
                                     stroke: '#333',
                                     'stroke-width': 1,
                                     'fill-opacity': 0.2,
@@ -295,23 +326,17 @@ export default {
                         },
                     ]);
                 } else {
-                    cell.addTools(['vertices', 'segments']);
+                    cell.addTools(['vertices', 'segments', 'button-remove']);
                 }
             });
 
-
-
-
             stencil.get(graph, this.$refs.stencil_container);
-
-
 
             // We need to add the router and connector data when a new edge is added.
             // https://x6.antv.vision/en/docs/tutorial/intermediate/events
             // If we do not, it is just a straight line with no collision detection
             graph.on('edge:connected', ({ isNew, edge }) => {
                 if (isNew) {
-                    edge.router = 'manhattan';
                     edge.connector = 'rounded';
                 }
             });

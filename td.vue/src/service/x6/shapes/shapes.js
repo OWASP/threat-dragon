@@ -1,4 +1,5 @@
 import { Graph } from '@antv/x6';
+
 import trustBoundary from './trust-boundary.js';
 import processShape from './process.js';
 import store from './store.js';

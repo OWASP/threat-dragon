@@ -11,7 +11,7 @@ const name = 'trust-boundary';
 export const TrustBoundary = Shape.HeaderedRect.define({
     constructorName: 'trust-boundary',
     width: 500,
-    height: 600,
+    height: 400,
     zIndex: -50,
     attrs: {
         body: {
