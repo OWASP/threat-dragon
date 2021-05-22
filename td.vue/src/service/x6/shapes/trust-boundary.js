@@ -17,15 +17,15 @@ export const TrustBoundary = Shape.HeaderedRect.define({
         body: {
             rx: 10,
             ry: 10,
-            strokeWidth: 1,
             strokeDasharray: '5 5',
-            stroke: '#5755a1',
+            stroke: 'green',
+            strokeWidth: 3,
             fill: '#777',
-            fillOpacity: 0.2
+            fillOpacity: 0
         },
         headerText: {
             text: 'Trust Boundary',
-            fill: '#e95420',
+            fill: '#333',
             strokeWidth: 0,
         },
         header: {

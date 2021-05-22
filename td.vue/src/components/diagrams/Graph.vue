@@ -64,6 +64,7 @@
 <script>
 import { Graph } from '@antv/x6';
 
+import { LegacyTrustBoundary } from '@/service/x6/shapes/legacy-trust-boundary.js';
 import shapes from '@/service/x6/shapes/shapes.js';
 import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
@@ -71,15 +72,15 @@ import { TrustBoundary } from '@/service/x6/shapes/trust-boundary.js';
 /*
   TODOS:
     - "Link from here" - auto-linking of elements (needed or not?)
-    - Add context menus
     - Export JSON
     - Export images
     - Fix CSP
     - Change color if threat associated
     - Change to dotted if out of scope
     - Add ability to change labels and such
-    - Consider changing trust boundary appearance to match in/out of scope and threats
     - Save / Cancel buttons are currently no-ops
+    - Migrate graph to its own constructor function
+    - Start writing unit tests once satisfied with the architecture
 */
 
 const data = {
@@ -196,10 +197,6 @@ export default {
             // TODO: Move to its own declaration
             const graph = new Graph({
                 container: this.$refs.container,
-                // width: "100%",
-                // height: "100%",
-                // height: '600px',
-                // allowPanning: true,
                 preventDefaultContextMenu: false,
                 history: {
                     enabled: true,
@@ -255,9 +252,22 @@ export default {
                 connecting: {
                     allowNode: true,
                     allowBlank: true,
+                },
+                interacting: {
+                    edgeMovable: true,
+                    arrowheadMovable: true
                 }
             });
             this.graph = graph;
+
+            const ltb = new LegacyTrustBoundary({
+                x: 20,
+                y: 50,
+                width: 200,
+                height: 20,
+                label: 'foo-the-bar'
+            });
+            graph.addNode(ltb);
 
             graph.bindKey('ctrl+c', () => {
                 const cells = graph.getSelectedCells();
@@ -326,7 +336,7 @@ export default {
                         },
                     ]);
                 } else {
-                    cell.addTools(['vertices', 'segments', 'button-remove']);
+                    cell.addTools(['vertices', 'button-remove', 'boundary']);
                 }
             });
 
@@ -363,6 +373,32 @@ export default {
                 // all of our custom shapes as well.
                 if (cell.constructor.name === 'TrustBoundary') {
                     cell.resize(500, 600);
+                }
+
+                // TODO: The edge implementation is a terrible solution, as x6 is not allowing
+                // the user to easily move the start/end point.
+                // Maybe the solution will be creating an edge from an existing
+                // trust boundary and not allowing new ones to be created of the same time.
+                // All new trust boundaries will have to use the new Trust Boundary?
+                // Just adding a legacy trust boundary will NOT work for v1 models, as the
+                // legacy trust boundary cannot have verticies added to it
+                if (cell.constructor.name === 'LegacyTrustBoundary') {
+                    cell.label = '';
+                    // const position = cell.getProp('position');
+                    // graph.addEdge({
+                    //     source: { x: position.x, y: position.y },
+                    //     target: { x: position.x + 150, y: position.y },
+                    //     attrs: {
+                    //         line: {
+                    //             stroke: 'green',
+                    //             strokeWidth: 2,
+                    //             strokeDasharray: '5 5'
+                    //         }
+                    //     },
+                    //     connector: 'smooth',
+                    //     arrowheadMovable: true
+                    // });
+                    // graph.removeCell(cell);
                 }
             });
 

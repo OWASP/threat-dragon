@@ -1,6 +1,7 @@
 import { Addon } from '@antv/x6';
 
 import { Actor } from './shapes/actor.js';
+import { LegacyTrustBoundary } from './shapes/legacy-trust-boundary.js';
 import { ProcessShape } from './shapes/process.js';
 import { Store } from './shapes/store.js';
 import { TrustBoundary } from './shapes/trust-boundary.js';
@@ -57,7 +58,11 @@ const get = (target, container) => {
     });
     const actor = new Actor();
     const store = new Store();
-    stencil.load([ trustBoundary, processShape, store, actor ]);
+    const ltb = new LegacyTrustBoundary({
+        width: 75,
+        height: 25,
+    });
+    stencil.load([ trustBoundary, processShape, store, actor, ltb ]);
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.
