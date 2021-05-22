@@ -1,8 +1,12 @@
-import { Addon, Shape } from '@antv/x6';
-import { TrustBoundary } from './shapes/trust-boundary';
+import { Addon } from '@antv/x6';
+
+import { Actor } from './shapes/actor.js';
+import { ProcessShape } from './shapes/process.js';
+import { Store } from './shapes/store.js';
+import { TrustBoundary } from './shapes/trust-boundary.js';
 
 const getDefaults = (target) => ({
-    title: 'Diagraming Tools',
+    title: 'Entities',
     target,
     stencilGraphWidth: 400,
     // We can add groups in the future.  For now, there is no need
@@ -28,7 +32,7 @@ const getDefaults = (target) => ({
         resizeToFit: true,
     },
     search: (cell, keyword) => {
-        if (cell.label && typeof cell.label !== "undefined") {
+        if (cell.label && typeof cell.label !== 'undefined') {
             if (
                 cell.label.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
             ) {
@@ -37,35 +41,23 @@ const getDefaults = (target) => ({
         }
         return cell.shape.indexOf(keyword.toLowerCase()) !== -1;
     },
-    placeholder: "Search for components",
+    placeholder: 'Search',
     notFoundText: "We don't have that yet, want to open an issue? :)",
 });
 
 const get = (target, container) => {
     const stencil = new Addon.Stencil(getDefaults(target));
-
-    // TODO: Placeholders
-    const ropts = {
-        width: 70,
-        height: 40,
-    };
-
-    const copts = {
-        width: 50,
-        height: 50,
-    };
-    const r1 = new Shape.Rect(ropts);
-    const c1 = new Shape.Circle(copts);
-    const r2 = new Shape.Rect(ropts);
-    const c2 = new Shape.Circle(copts);
-    const r3 = new Shape.Rect(ropts);
-    const c3 = new Shape.Circle(copts);
-
     const trustBoundary = new TrustBoundary({
         width: 160,
         height: 75
     });
-    stencil.load([trustBoundary, c1, r1, c2, r2, c3, r3]);
+    const processShape = new ProcessShape({
+        width: 100,
+        height: 100
+    });
+    const actor = new Actor();
+    const store = new Store();
+    stencil.load([ trustBoundary, processShape, store, actor ]);
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

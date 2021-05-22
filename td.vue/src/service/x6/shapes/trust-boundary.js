@@ -22,7 +22,7 @@ export const TrustBoundary = Shape.HeaderedRect.define({
             stroke: '#5755a1',
             fill: '#777',
             fillOpacity: 0.2
-          },
+        },
         headerText: {
             text: 'Trust Boundary',
             fill: '#e95420',
