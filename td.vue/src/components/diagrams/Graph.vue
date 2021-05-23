@@ -69,6 +69,7 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 
 import { Actor } from '@/service/x6/shapes/actor.js';
+import diagramService from '@/service/migration/diagram.js';
 import { ProcessShape } from '@/service/x6/shapes/process.js';
 import { Store } from '@/service/x6/shapes/store.js';
 /*
@@ -181,6 +182,12 @@ export default {
             }
         },
         drawDiagramV1() {
+            const { nodes, edges } = diagramService.mapDiagram(this.diagram);
+            nodes.forEach((node) => this.graph.addNode(node), this);
+            edges.forEach((edge) => this.graph.addEdge(edge), this);
+            this.graph.centerContent();
+        },
+        drawDiagramV1_bak() {
             // TODO: This needs all the metadata from v1 as well.
             // Clean up the spaghetti code.
             // This needs to be done on the front-end because of desktop users
