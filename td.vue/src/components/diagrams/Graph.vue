@@ -63,7 +63,6 @@
 
 <script>
 import graphFactory from "@/service/x6/graph/graph.js";
-import shapes from "@/service/x6/shapes/shapes.js";
 import stencil from "@/service/x6/stencil.js";
 import TdFormButton from "@/components/FormButton.vue";
 /*
@@ -93,9 +92,6 @@ export default {
   },
   mounted() {
     this.init();
-  },
-  loaded() {
-    shapes.register();
   },
   methods: {
     noOp() {
