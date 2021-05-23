@@ -43,7 +43,7 @@ describe('service/x6/stencil.js', () => {
     });
 
     it('has a width', () => {
-        expect(cfg.stencilGraphWidth).toEqual(400);
+        expect(cfg.stencilGraphWidth).toEqual(500);
     });
 
     it('provides layout options', () => {

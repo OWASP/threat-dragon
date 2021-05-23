@@ -7,7 +7,7 @@ import trustBoundary from './shapes/trust-boundary.js';
 const getDefaults = (target) => ({
     title: 'Entities',
     target,
-    stencilGraphWidth: 400,
+    stencilGraphWidth: 500,
     // We can add groups in the future.  For now, there is no need
     // stencil.load([r1, c1, c2, r2.clone()], "test1"); // for adding shapes to the group
     // groups: [

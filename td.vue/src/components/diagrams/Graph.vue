@@ -62,9 +62,15 @@
 </template>
 
 <script>
+import api from '@/service/api.js';
+
 import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
+
+import { Actor } from '@/service/x6/shapes/actor.js';
+import { ProcessShape } from '@/service/x6/shapes/process.js';
+import { Store } from '@/service/x6/shapes/store.js';
 /*
   TODOS:
     - "Link from here" - auto-linking of elements (needed or not?)
@@ -88,10 +94,15 @@ export default {
         return {
             graph: null,
             gridShowing: true,
+            diagram: null,
+            cells: {}
         };
     },
-    mounted() {
+    async mounted() {
+        const resp = await api.getAsync('/api/threatmodel/lreading/threat-dragon-model-test/main/asfd/data');
+        this.diagram = resp.data.diagrams[0];
         this.init();
+        this.drawDiagramV1();
     },
     methods: {
         noOp() {
@@ -131,6 +142,103 @@ export default {
             //this.graph.fromJSON(data);
             this.graph.centerContent();
         },
+        drawStoreFromV1(cell) {
+            // TODO:
+            //      Angle?
+            //      Threats and other TD specific data
+            const store = new Store({
+                width: cell.size.width,
+                height: cell.size.height,
+                x: cell.position.x,
+                y: cell.position.y,
+                id: cell.id,
+                zIndex: cell.z,
+                label: cell.attrs.text.text
+            });
+            this.graph.addNode(store);
+        },
+        drawProcessFromV1(cell) {
+            const p = new ProcessShape({
+                width: cell.size.width,
+                height: cell.size.height,
+                x: cell.position.x,
+                y: cell.position.y,
+                id: cell.id,
+                zIndex: cell.z,
+                label: cell.attrs.text.text
+            });
+            this.graph.addNode(p);
+        },
+        getBestCellConstructor(type) {
+            if (type === 'tm.Store') {
+                return Store;
+            }
+            if (type === 'tm.Process') {
+                return ProcessShape;
+            }
+            if (type === 'tm.Actor') {
+                return Actor;
+            }
+        },
+        drawDiagramV1() {
+            // TODO: This needs all the metadata from v1 as well.
+            // Clean up the spaghetti code.
+            // This needs to be done on the front-end because of desktop users
+            // that will not have an instance of the v2 server running in electron
+            for (let i = 0; i < this.diagram.diagramJson.cells.length; i++) {
+                const cell = this.diagram.diagramJson.cells[i];
+                if (cell.type === 'tm.Boundary' || cell.type === 'tm.Flow') {
+                    const edge = {
+                        source: cell.source,
+                        target: cell.target,
+                        vertices: cell.vertices,
+                        connector: 'smooth',
+                        attrs: {}
+                    };
+                    if (cell.labels) {
+                        edge.labels = [];
+                        cell.labels.forEach((label) => {
+                            edge.labels.push({
+                                position: label.position,
+                                attrs: {
+                                    label: {
+                                        text: label.attrs.text.text
+                                    }
+                                }
+                            });
+                        });
+                    }
+                    if (cell.source.id) {
+                        edge.source = this.cells[cell.source.id];
+                    }
+                    if (cell.target.id) {
+                        edge.target = this.cells[cell.target.id];
+                    }
+                    if (cell.type === 'tm.Boundary') {
+                        edge.attrs.line = {
+                            strokeDasharray: '5 5',
+                            stroke: 'green',
+                            strokeWidth: 3
+                        };
+                    }
+                    this.graph.addEdge(edge);
+                } else {
+                    const ctor = this.getBestCellConstructor(cell.type);
+                    const node = new ctor({
+                        width: cell.size.width,
+                        height: cell.size.height,
+                        x: cell.position.x,
+                        y: cell.position.y,
+                        id: cell.id,
+                        zIndex: cell.z,
+                        label: cell.attrs.text.text
+                    });
+                    this.cells[cell.id] = node;
+                    this.graph.addNode(node);
+                }
+            }
+            this.graph.centerContent();
+        }
     },
 };
 </script>
