@@ -9,11 +9,16 @@ const name = 'process';
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
 export const ProcessShape = Shape.Circle.define({
-    height: 120,
-    width: 120,
-    constructorName: 'process',
+    height: 200,
+    width: 200,
+    constructorName: name,
     zIndex: 0,
-    label: 'Process'
+    label: 'Process',
+    attrs: {
+        body: {
+            magnet: true
+        }
+    }
 });
 
 export default {

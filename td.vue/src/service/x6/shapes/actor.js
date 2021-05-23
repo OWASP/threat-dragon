@@ -10,10 +10,15 @@ const name = 'actor';
  */
 export const Actor = Shape.Rect.define({
     height: 80,
-    width: 120,
-    constructorName: 'actor',
+    width: 150,
+    constructorName: name,
     zIndex: 0,
-    label: 'Actor'
+    label: 'Actor',
+    attrs: {
+        body: {
+            magnet: true
+        }
+    }
 });
 
 export default {

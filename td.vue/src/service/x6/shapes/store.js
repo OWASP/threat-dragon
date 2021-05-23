@@ -10,10 +10,15 @@ const name = 'store';
  */
 export const Store = Shape.Cylinder.define({
     height: 120,
-    width: 90,
-    constructorName: 'store',
+    width: 200,
+    constructorName: name,
     zIndex: 0,
-    label: 'Store'
+    label: 'Store',
+    attrs: {
+        body: {
+            magnet: true
+        }
+    }
 });
 
 export default {

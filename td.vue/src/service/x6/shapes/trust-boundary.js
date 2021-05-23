@@ -9,7 +9,7 @@ const name = 'trust-boundary';
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
 export const TrustBoundary = Shape.HeaderedRect.define({
-    constructorName: 'trust-boundary',
+    constructorName: name,
     width: 500,
     height: 400,
     zIndex: -50,
