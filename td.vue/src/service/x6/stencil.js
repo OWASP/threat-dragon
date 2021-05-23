@@ -1,9 +1,8 @@
-import { Addon } from '@antv/x6';
-
-import { Actor } from './shapes/actor.js';
-import { ProcessShape } from './shapes/process.js';
-import { Store } from './shapes/store.js';
-import { TrustBoundary } from './shapes/trust-boundary.js';
+import actor from './shapes/actor.js';
+import factory from './factory.js';
+import processShape from './shapes/process.js';
+import store from './shapes/store.js';
+import trustBoundary from './shapes/trust-boundary.js';
 
 const getDefaults = (target) => ({
     title: 'Entities',
@@ -29,7 +28,7 @@ const getDefaults = (target) => ({
     layoutOptions: {
         columns: 1,
         center: true,
-        resizeToFit: true,
+        resizeToFit: true
     },
     search: (cell, keyword) => {
         if (cell.label && typeof cell.label !== 'undefined') {
@@ -39,25 +38,25 @@ const getDefaults = (target) => ({
                 return true;
             }
         }
-        return cell.shape.indexOf(keyword.toLowerCase()) !== -1;
+        return cell.shape.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
     },
     placeholder: 'Search',
     notFoundText: "We don't have that yet, want to open an issue? :)",
 });
 
 const get = (target, container) => {
-    const stencil = new Addon.Stencil(getDefaults(target));
-    const trustBoundary = new TrustBoundary({
+    const stencil = factory.stencil(getDefaults(target));
+    const tb = new trustBoundary.TrustBoundary({
         width: 160,
         height: 75
     });
-    const processShape = new ProcessShape({
+    const ps = new processShape.ProcessShape({
         width: 100,
         height: 100
     });
-    const actor = new Actor();
-    const store = new Store();
-    stencil.load([ trustBoundary, processShape, store, actor ]);
+    const a = new actor.Actor();
+    const s = new store.Store();
+    stencil.load([ tb, ps, s, a ]);
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

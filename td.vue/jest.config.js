@@ -18,5 +18,8 @@ module.exports = {
         '!src/plugins/*.js' // Boostrap code
     ],
     resetMocks: true,
-    restoreMocks: true
+    restoreMocks: true,
+    transformIgnorePatterns: [
+        '<rootDir>/node_modules/(?!lodash-es)'
+    ]
 };
