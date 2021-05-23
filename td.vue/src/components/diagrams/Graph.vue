@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import graphFactory from "@/service/x6/graph/graph.js";
-import stencil from "@/service/x6/stencil.js";
-import TdFormButton from "@/components/FormButton.vue";
+import graphFactory from '@/service/x6/graph/graph.js';
+import stencil from '@/service/x6/stencil.js';
+import TdFormButton from '@/components/FormButton.vue';
 /*
   TODOS:
     - "Link from here" - auto-linking of elements (needed or not?)
@@ -80,57 +80,57 @@ import TdFormButton from "@/components/FormButton.vue";
 */
 
 export default {
-  name: "TdGraph",
-  components: {
-    TdFormButton,
-  },
-  data() {
-    return {
-      graph: null,
-      gridShowing: true,
-    };
-  },
-  mounted() {
-    this.init();
-  },
-  methods: {
-    noOp() {
-      // TODO: Just for testing
+    name: 'TdGraph',
+    components: {
+        TdFormButton,
     },
-    redo() {
-      if (this.graph.canRedo()) {
-        this.graph.redo();
-      }
+    data() {
+        return {
+            graph: null,
+            gridShowing: true,
+        };
     },
-    undo() {
-      if (this.graph.canUndo()) {
-        this.graph.undo();
-      }
+    mounted() {
+        this.init();
     },
-    zoomOut() {
-      this.graph.zoom(-0.2);
+    methods: {
+        noOp() {
+            // TODO: Just for testing
+        },
+        redo() {
+            if (this.graph.canRedo()) {
+                this.graph.redo();
+            }
+        },
+        undo() {
+            if (this.graph.canUndo()) {
+                this.graph.undo();
+            }
+        },
+        zoomOut() {
+            this.graph.zoom(-0.2);
+        },
+        zoomIn() {
+            this.graph.zoom(0.2);
+        },
+        deleteSelected() {
+            this.graph.removeCells(this.graph.getSelectedCells());
+        },
+        togggleGrid() {
+            if (this.gridShowing) {
+                this.graph.hideGrid();
+                this.gridShowing = false;
+            } else {
+                this.graph.showGrid();
+                this.gridShowing = true;
+            }
+        },
+        init() {
+            this.graph = graphFactory.get(this.$refs.graph_container);
+            stencil.get(this.graph, this.$refs.stencil_container);
+            //this.graph.fromJSON(data);
+            this.graph.centerContent();
+        },
     },
-    zoomIn() {
-      this.graph.zoom(0.2);
-    },
-    deleteSelected() {
-      this.graph.removeCells(this.graph.getSelectedCells());
-    },
-    togggleGrid() {
-      if (this.gridShowing) {
-        this.graph.hideGrid();
-        this.gridShowing = false;
-      } else {
-        this.graph.showGrid();
-        this.gridShowing = true;
-      }
-    },
-    init() {
-      this.graph = graphFactory.get(this.$refs.graph_container);
-      stencil.get(this.graph, this.$refs.stencil_container);
-      //this.graph.fromJSON(data);
-      this.graph.centerContent();
-    },
-  },
 };
 </script>

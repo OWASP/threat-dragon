@@ -5,20 +5,22 @@
 const del = (graph) => () => graph.removeCells(graph.getSelectedCells());
 
 const undo = (graph) => () => {
-    if (graph.canUndo()) {
-        graph.undo();
+    if (!graph.canUndo()) {
+        return false;
     }
+    graph.undo();
 };
 
 const redo = (graph) => () => {
-    if (graph.canRedo()) {
-        graph.redo();
+    if (!graph.canRedo()) {
+        return false;
     }
+    graph.redo();
 };
 
 const copy = (graph) => () => {
     const cells = graph.getSelectedCells();
-    if (cells.length === 0) {
+    if (!cells || cells.length === 0) {
         return false;
     }
     graph.copy(cells);
