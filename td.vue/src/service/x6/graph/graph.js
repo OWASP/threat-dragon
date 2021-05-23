@@ -2,9 +2,8 @@
  * @name graph
  * @description Creates an x6 graph object
  */
-import { Graph } from '@antv/x6';
-
 import events from './events.js';
+import factory from '../factory.js';
 import keys from './keys.js';
 
 const getConfig = (container) => ({
@@ -16,7 +15,7 @@ const getConfig = (container) => ({
             // Showing and hiding the tools on mouseover events
             // gets added to the history stack.  Since that is not 
             // a "user" action, we can ignore those events
-            return args.key != 'tools';
+            return args.key !== 'tools';
         }
     },
     grid: {
@@ -75,7 +74,7 @@ const getConfig = (container) => ({
 });
 
 const get = (container) => {
-    const graph = new Graph(getConfig(container));
+    const graph = factory.graph(getConfig(container));
     events.listen(graph);
     keys.bind(graph);
     return graph;
