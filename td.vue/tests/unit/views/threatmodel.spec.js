@@ -1,9 +1,9 @@
-import { BootstrapVue, BCard } from 'bootstrap-vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { BootstrapVue } from 'bootstrap-vue';
+import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import router from '@/router/index.js';
 import ThreatModel from '@/views/ThreatModel.vue';
+import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 describe('views/Threatmodel.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -15,8 +15,9 @@ describe('views/Threatmodel.vue', () => {
         { title: 'd1', diagramType: 'CIA' },
         { title: 'd2', diagramType: 'STRIDE' }
     ];
+    const path = '/git/github/foo/bar/baz';
 
-    let wrapper, localVue, mockStore;
+    let wrapper, localVue, mockRouter, mockStore;
 
     beforeEach(() => {
         localVue = createLocalVue();
@@ -34,24 +35,34 @@ describe('views/Threatmodel.vue', () => {
                         description
                     }
                 }
+            },
+            actions: {
+                [THREATMODEL_DIAGRAM_SELECTED]: () => { }
             }
         });
-        router.push = jest.fn();
 
-        wrapper = shallowMount(ThreatModel, {
+        mockRouter = {
+            push: jest.fn(),
+            path
+        };
+
+        wrapper = mount(ThreatModel, {
             localVue,
             store: mockStore,
             stubs: {
-                'router-link': { template: '<div />' },
                 'font-awesome-icon': { template: '<div />' }
+            },
+            mocks: {
+                $route: mockRouter,
+                $router: mockRouter
             }
         });
     });
 
     describe('layout', () => {
         it('displays the title', () => {
-            const card = wrapper.find('#title_row').findComponent(BCard);
-            expect(card.attributes('header')).toEqual(title);
+            const header = wrapper.findComponent({ ref: 'header-card'}).find('.card-header');
+            expect(header.text()).toEqual(title);
         });
 
         it('shows the owner', () => {
@@ -84,8 +95,8 @@ describe('views/Threatmodel.vue', () => {
         });
 
         describe('edit', () => {
-            beforeEach(() => {
-                ThreatModel.methods.onEditClick(evt);
+            beforeEach(async () => {
+                await wrapper.find('#tm-edit-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
@@ -93,13 +104,13 @@ describe('views/Threatmodel.vue', () => {
             });
 
             it('navigates to the edit view', () => {
-                expect(router.push).toHaveBeenCalledWith('/threatmodel-edit');
+                expect(mockRouter.push).toHaveBeenCalledWith('/threatmodel-edit');
             });
         });
 
         describe('report', () => {
-            beforeEach(() => {
-                ThreatModel.methods.onReportClick(evt);
+            beforeEach(async () => {
+                await wrapper.find('#tm-report-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
@@ -112,8 +123,8 @@ describe('views/Threatmodel.vue', () => {
         });
 
         describe('delete', () => {
-            beforeEach(() => {
-                ThreatModel.methods.onDeleteClick(evt);
+            beforeEach(async () => {
+                await wrapper.find('#tm-delete-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
@@ -134,6 +145,16 @@ describe('views/Threatmodel.vue', () => {
 
             it('returns the thumbnail for the diagram type', () => {
                 expect(ThreatModel.methods.getThumbnailUrl({ diagramType: 'foo' })).toEqual(`${base}.foo.jpg`);
+            });
+        });
+
+        describe('diagram', () => {
+            beforeEach(async () => {
+                await wrapper.find('a.diagram-edit').trigger('click');
+            });
+
+            it('routes to the diagram edit based on the current route', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith(`${path}/edit/${encodeURIComponent(diagrams[0].title)}`);
             });
         });
     });

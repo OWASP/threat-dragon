@@ -120,6 +120,12 @@ const addMetaData = (entity, cell) => {
 
 const mapDiagram = (diagram) => {
     const resp = { nodes: [], edges: [] };
+    
+    // If the diagram is blank, there is no diagramJson
+    if (!diagram.diagramJson) {
+        return resp;
+    }
+
     diagram.diagramJson.cells.forEach((cell) => {
         const { isNode, mapper } = cellConverter[cell.type];
         const entity = mapper(cell);

@@ -10,3 +10,8 @@
 - Error handling for API requests that might fail (toast service?)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture
+
+
+BUGS:
+    - Console error when viewing a threat model (top level)
+        - Will probably be fixed when the logic to upgrade a TM from v1 -> v2 is migrated to front-end

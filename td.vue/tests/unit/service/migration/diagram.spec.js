@@ -227,4 +227,20 @@ describe('service/migration/diagram.js', () => {
             expect(edges[0].attrs.line.targetMarker).toEqual(null);
         });
     });
+
+    describe('blank diagram', () => {
+        beforeEach(() => {
+            const res = diagram.mapDiagram({});
+            nodes = res.nodes;
+            edges = res.edges;
+        });
+
+        it('has no nodes', () => {
+            expect(nodes.length).toEqual(0);
+        });
+
+        it('has no edges', () => {
+            expect(edges.length).toEqual(0);
+        });
+    });
 });

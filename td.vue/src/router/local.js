@@ -17,5 +17,10 @@ export const localRoutes = [
         path: `/${providerType}/:threatmodel/edit`,
         name: `${providerType}ThreatModelEdit`,
         component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
+    },
+    {
+        path: `/${providerType}/:threatmodel/edit/:diagram`,
+        name: `${providerType}DiagramEdit`,
+        component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/Diagram.vue')
     }
 ];

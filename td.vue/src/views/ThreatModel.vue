@@ -4,7 +4,8 @@
         <b-row class="mb-4" id="title_row">
             <b-col>
                 <b-card
-                    :header="model.title">
+                    :header="model.title"
+                    ref="header-card">
                     <b-row class="tm-card">
                         <b-col md=2>
                             <div>
@@ -60,15 +61,17 @@
                 <b-card>
                     <template #header>
                         <h6 class="diagram-header-text">
-                            <router-link to="/">{{ diagram.title }}</router-link>
+                            <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
+                                {{ diagram.title }}
+                            </a>
                         </h6>
                     </template>
-                    <router-link to="/">
+                    <a href="javascript:void(0)" @click="editDiagram(diagram)">
                         <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
                             :src="require(`../assets/thumbnail${diagram.diagramType ? '.' + diagram.diagramType.toLowerCase() : ''}.jpg`)"
                             :alt="`${diagram.type} Diagram`" />
-                    </router-link>
+                    </a>
                 </b-card>
             </b-col>
         </b-row>
@@ -76,15 +79,18 @@
             <b-col class="text-right">
                 <b-btn-group>
                     <td-form-button
+                        id="tm-edit-btn"
                         :isPrimary="true"
                         :onBtnClick="onEditClick"
                         icon="edit"
                         text="Edit" />
                     <td-form-button
+                        id="tm-report-btn"
                         :onBtnClick="onReportClick"
                         icon="file-alt"
                         text="Report" />
                     <td-form-button
+                        id="tm-delete-btn"
                         :onBtnClick="onDeleteClick"
                         icon="times"
                         text="Delete" />
@@ -111,8 +117,8 @@
 <script>
 import { mapState } from 'vuex';
 
-import router from '@/router/index.js';
 import TdFormButton from '@/components/FormButton.vue';
+import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
@@ -120,13 +126,13 @@ export default {
         TdFormButton
     },
     computed: mapState({
-        model: (state) => state.threatmodel.data,
-        contributors: (state) => state.threatmodel.data.contributors.join(', ')
+        contributors: (state) => state.threatmodel.data.contributors.join(', '),
+        model: (state) => state.threatmodel.data
     }),
     methods: {
         onEditClick(evt) {
             evt.preventDefault();
-            router.push('/threatmodel-edit');
+            this.$router.push('/threatmodel-edit');
         },
         onReportClick(evt) {
             evt.preventDefault();
@@ -141,6 +147,11 @@ export default {
                 return '../assets/thumbnail.jpg';
             }
             return `../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
+        },
+        editDiagram(diagram) {
+            this.$store.dispatch(THREATMODEL_DIAGRAM_SELECTED, diagram);
+            const path = `${this.$route.path}/edit/${encodeURIComponent(diagram.title)}`;
+            this.$router.push(path);
         }
     }
 };

@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import TdGraph from '@/components/diagrams/Graph.vue';
+import TdGraph from '@/components/Graph.vue';
 
 export default {
-    name: 'GraphTest',
+    name: 'Diagram',
     components: {
         TdGraph
     }

@@ -4,6 +4,7 @@ import { getProviderType } from '../../service/provider/providers.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
     THREATMODEL_CLEAR,
+    THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_SELECTED
@@ -14,16 +15,19 @@ export const clearState = (state) => {
     state.all.length = 0;
     state.selected = '';
     state.data = {};
+    state.selectedDiagram = {};
 };
 
 const state = {
     all: [],
+    data: {},
     selected: '',
-    data: {}
+    selectedDiagram: {}
 };
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
+    [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
         if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
@@ -52,6 +56,9 @@ const actions = {
 
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
+    [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
+        state.selectedDiagram = diagram;
+    },
     [THREATMODEL_FETCH]: (state, model) => {
         state.data = model;
     },

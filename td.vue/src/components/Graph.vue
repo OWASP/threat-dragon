@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import api from '@/service/api.js';
+import { mapState } from 'vuex';
+
 import diagramService from '@/service/migration/diagram.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
@@ -77,8 +78,15 @@ import TdFormButton from '@/components/FormButton.vue';
     - Change to dotted if out of scope
     - Add ability to change labels and such
     - Save / Cancel buttons are currently no-ops
-    - Migrate graph to its own constructor function
-    - Start writing unit tests once satisfied with the architecture
+    - Migrate graph to its own constructor function]
+    - Write unit tests
+    - Remove fake API call
+    - Move to a better location
+    - Create component for entity actions
+    - Use store instead of data for diagram
+    - Add help section for keyboard shortcuts and/or actions you can do
+    - Load model from API if not local provider
+    - Add vertical scroll bar by default (if needed?)
 */
 
 export default {
@@ -86,17 +94,17 @@ export default {
     components: {
         TdFormButton,
     },
+    computed: mapState({
+        diagram: (state) => state.threatmodel.selectedDiagram
+    }),
     data() {
         return {
             graph: null,
-            gridShowing: true,
-            diagram: null,
-            cells: {}
+            gridShowing: true
         };
     },
     async mounted() {
-        const resp = await api.getAsync('/api/threatmodel/lreading/threat-dragon-model-test/main/asfd/data');
-        this.diagram = resp.data.diagrams[0];
+        // TODO: Load model from API if not local provider
         this.init();
         this.drawDiagramV1();
     },

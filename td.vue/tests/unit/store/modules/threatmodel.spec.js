@@ -1,4 +1,10 @@
-import { THREATMODEL_CLEAR, THREATMODEL_FETCH, THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED } from '@/store/actions/threatmodel.js';
+import {
+    THREATMODEL_CLEAR,
+    THREATMODEL_DIAGRAM_SELECTED,
+    THREATMODEL_FETCH,
+    THREATMODEL_FETCH_ALL,
+    THREATMODEL_SELECTED
+} from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
 
@@ -48,12 +54,22 @@ describe('store/modules/threatmodel.js', () => {
         it('defines a data object', () => {
             expect(threatmodelModule.state.data).toBeInstanceOf(Object);
         });
+
+        it('defines a selectedDiagram object', () => {
+            expect(threatmodelModule.state.selectedDiagram).toBeInstanceOf(Object);
+        });
     });
 
     describe('actions', () => {
         it('commits the clear action', () => {
             threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+        });
+
+        it('commits the diagram selected action', () => {
+            const diagram = { foo: 'bar' };
+            threatmodelModule.actions[THREATMODEL_DIAGRAM_SELECTED](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SELECTED, diagram);
         });
 
         describe('fetch', () => {
@@ -132,6 +148,7 @@ describe('store/modules/threatmodel.js', () => {
                 threatmodelModule.state.all.push('test2');
                 threatmodelModule.state.selected = 'test5';
                 threatmodelModule.state.data = { foo: 'bar' };
+                threatmodelModule.state.selectedDiagram = { bar: 'baz' };
                 threatmodelModule.mutations[THREATMODEL_CLEAR](threatmodelModule.state);
             });
 
@@ -145,6 +162,22 @@ describe('store/modules/threatmodel.js', () => {
 
             it('resets the data property', () => {
                 expect(threatmodelModule.state.data).toEqual({});
+            });
+
+            it('resets the selectedDiagram property', () => {
+                expect(threatmodelModule.state.selectedDiagram).toEqual({});
+            });
+        });
+
+        describe('diagramSelected', () => {
+            const diagram = { foo: 'bar' };
+
+            beforeEach(() => {
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SELECTED](threatmodelModule.state, diagram);
+            });
+
+            it('sets the selected diagram', () => {
+                expect(threatmodelModule.state.selectedDiagram).toEqual(diagram);
             });
         });
 
