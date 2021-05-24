@@ -74,19 +74,14 @@ import TdFormButton from '@/components/FormButton.vue';
     - Export JSON
     - Export images
     - Fix CSP
-    - Change color if threat associated
-    - Change to dotted if out of scope
-    - Add ability to change labels and such
+    - Add ability to change labels and other metadata
     - Save / Cancel buttons are currently no-ops
-    - Migrate graph to its own constructor function]
     - Write unit tests
-    - Remove fake API call
-    - Move to a better location
     - Create component for entity actions
-    - Use store instead of data for diagram
     - Add help section for keyboard shortcuts and/or actions you can do
     - Load model from API if not local provider
     - Add vertical scroll bar by default (if needed?)
+    - Threat generation engine / suggested threats
 */
 
 export default {
