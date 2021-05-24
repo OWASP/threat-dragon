@@ -7,7 +7,21 @@ import { Actor } from '../x6/shapes/actor.js';
 import { ProcessShape } from '../x6/shapes/process.js';
 import { Store } from '../x6/shapes/store.js';
 
-const isV1Diagram = (diagram) => !!diagram.version;
+const getEdgeLabels = (cell) => {
+    const labels = [];
+    if (!cell.labels) {
+        return labels;
+    }
+
+    cell.labels.forEach((label) => {
+        labels.push({
+            position: label.position,
+            attrs: { label: { text: label.attrs.text.text }}
+        });
+    });
+
+    return labels;
+};
 
 const entityMap = (constructor) => (cell) => {
     return new constructor({
@@ -17,7 +31,7 @@ const entityMap = (constructor) => (cell) => {
         y: cell.position.y,
         id: cell.id,
         zIndex: cell.z,
-        label: cell.attrs.text.text
+        label: cell.attrs && cell.attrs.text && cell.attrs.text.text ? cell.attrs.text.text : ''
     });
 };
 
@@ -28,7 +42,7 @@ const edgeMap = (cell) => {
         vertices: cell.vertices,
         connector: 'smooth',
         attrs: {},
-        labels: getCellLabels(cell)
+        labels: getEdgeLabels(cell)
     };
 
     return edge;
@@ -55,22 +69,6 @@ const cellConverter = {
         isNode: true,
         mapper: entityMap(Store)
     }
-};
-
-const getCellLabels = (cell) => {
-    const labels = [];
-    if (!cell.labels || cell.labels.length === 0) {
-        return labels;
-    }
-
-    cell.labels.forEach((label) => {
-        labels.push({
-            position: label.position,
-            attrs: { label: { text: label.attrs.text.text }}
-        });
-    });
-
-    return labels;
 };
 
 /**
@@ -111,7 +109,7 @@ const addMetaData = (entity, cell) => {
         styleAttrs.targetMarker = null;
     }
 
-    entity.attrs = Object.assign({}, entity.attrs || {}, {
+    entity.attrs = Object.assign({}, entity.attrs, {
         body: styleAttrs,
         top: styleAttrs,
         line: styleAttrs
