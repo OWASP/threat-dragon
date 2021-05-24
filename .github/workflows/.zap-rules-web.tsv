@@ -1,6 +1,7 @@
 10110	OUTOFSCOPE	.*vendor.*\.js
 10110	OUTOFSCOPE	.*graph-test.*\.js
 10099	OUTOFSCOPE	.*vendor.*\.js
-10099	OUTOFSCOPE	.*graph-test.*\.js
+10099	OUTOFSCOPE	.*diagram-edit.*\.js
+10110	OUTOFSCOPE	.*diagram-edit.*\.js
 10055	IGNORE	(CSP: style-src unsafe-inline)
 10063	IGNORE	(Feature Policy Header Not Set)

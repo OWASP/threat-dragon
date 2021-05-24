@@ -82,6 +82,8 @@ import TdFormButton from '@/components/FormButton.vue';
     - Load model from API if not local provider
     - Add vertical scroll bar by default (if needed?)
     - Threat generation engine / suggested threats
+    - Update the UI component for the stores to be the double line
+    - Add a "curved" trust boundary
 */
 
 export default {

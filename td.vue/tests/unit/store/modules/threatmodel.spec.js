@@ -7,6 +7,7 @@ import {
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
+import upgrader from '@/service/migration/upgrader.js';
 
 describe('store/modules/threatmodel.js', () => {
     const getRootState = () => ({
@@ -35,6 +36,7 @@ describe('store/modules/threatmodel.js', () => {
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
         jest.spyOn(mocks, 'dispatch');
+        upgrader.upgrade = jest.fn().mockImplementation((data) => data);
         mocks.rootState = getRootState();
     });
 
@@ -189,6 +191,10 @@ describe('store/modules/threatmodel.js', () => {
 
             it('sets the data property', () => {
                 expect(threatmodelModule.state.data).toEqual(model);
+            });
+
+            it('upgrades the model', () => {
+                expect(upgrader.upgrade).toHaveBeenCalledWith(model);
             });
         });
 

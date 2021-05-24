@@ -10,6 +10,7 @@ import {
     THREATMODEL_SELECTED
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';
+import upgrader from '../../service/migration/upgrader.js';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -60,7 +61,7 @@ const mutations = {
         state.selectedDiagram = diagram;
     },
     [THREATMODEL_FETCH]: (state, model) => {
-        state.data = model;
+        state.data = upgrader.upgrade(model);
     },
     [THREATMODEL_FETCH_ALL]: (state, models) => {
         state.all.length = 0;
