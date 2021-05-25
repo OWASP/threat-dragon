@@ -70,15 +70,15 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
-    - "Link from here" - auto-linking of elements (needed or not?)
     - Add ability to change labels and other metadata
         - Create component for entity actions
         - Edit labels inline, or keep in separate pane, or both?
-    - Save / Cancel buttons are currently no-ops
     - Add help section for keyboard shortcuts and/or actions you can do
-    - Add vertical scroll bar by default (if needed?)
+    - Add vertical scroll bar by default (if needed?)W
+    - "Link from here" - auto-linking of elements (needed or not?)
   
   Functional TODOs:
+    - Save / Cancel buttons are currently no-ops
     - Reconsider architecture for UI indicators (out of scope, hasThreats, etc).  Currently somewhat messy
     - Threat generation engine / suggested threats
     - Export JSON
