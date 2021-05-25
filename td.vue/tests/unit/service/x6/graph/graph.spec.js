@@ -115,13 +115,6 @@ describe('service/x6/graph/graph.js', () => {
         });
     });
 
-    it('enables interacting', () => {
-        expect(cfg.interacting).toEqual({
-            edgeMovable: true,
-            arrowheadMovable: true
-        });
-    });
-
     it('listens to events', () => {
         expect(events.listen).toHaveBeenCalledWith(graph);
     });

@@ -25,6 +25,7 @@ const getEdgeLabels = (cell) => {
 
 const entityMap = (constructor) => (cell) => {
     return new constructor({
+        angle: cell.angle,
         width: cell.size.width,
         height: cell.size.height,
         x: cell.position.x,

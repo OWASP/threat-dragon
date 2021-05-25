@@ -13,6 +13,5 @@
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture
 
-
 BUGS:
     - Console error when viewing a threat model (top level)

@@ -66,10 +66,6 @@ const getConfig = (container) => ({
     connecting: {
         allowNode: true,
         allowBlank: true
-    },
-    interacting: {
-        edgeMovable: true,
-        arrowheadMovable: true
     }
 });
 

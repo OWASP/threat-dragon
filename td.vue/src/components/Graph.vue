@@ -7,7 +7,7 @@
           <b-badge>ctrl+v</b-badge> paste | <b-badge>ctrl+z</b-badge> undo |
           <b-badge>ctrl+y</b-badge> redo | <b-badge>del</b-badge> delete |
           <b-badge>shift+left-click</b-badge> pan(drag) |
-          <b-badge>click/drag</b-badge> on empty space for multi-select selected
+          <b-badge>click/drag</b-badge> on empty space for multi-select
           | <b-badge>ctrl+mousewheel</b-badge> zoom
         </p>
       </b-col>
@@ -69,21 +69,24 @@ import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
-  TODOS:
+  UI TODOs:
+    - Add a "curved" trust boundary
     - "Link from here" - auto-linking of elements (needed or not?)
+    - Add ability to change labels and other metadata
+        - Create component for entity actions
+        - Edit labels inline, or keep in separate pane, or both?
+    - Save / Cancel buttons are currently no-ops
+    - Add help section for keyboard shortcuts and/or actions you can do
+    - Add vertical scroll bar by default (if needed?)
+  
+  Functional TODOs:
+    - Reconsider architecture for UI indicators (out of scope, hasThreats, etc).  Currently somewhat messy
+    - Threat generation engine / suggested threats
     - Export JSON
     - Export images
     - Fix CSP
-    - Add ability to change labels and other metadata
-    - Save / Cancel buttons are currently no-ops
-    - Write unit tests
-    - Create component for entity actions
-    - Add help section for keyboard shortcuts and/or actions you can do
     - Load model from API if not local provider
-    - Add vertical scroll bar by default (if needed?)
-    - Threat generation engine / suggested threats
-    - Update the UI component for the stores to be the double line
-    - Add a "curved" trust boundary
+    - Write unit tests for this component
 */
 
 export default {
@@ -148,6 +151,7 @@ export default {
             const { nodes, edges } = diagramService.mapDiagram(this.diagram);
             nodes.forEach((node) => this.graph.addNode(node), this);
             edges.forEach((edge) => this.graph.addEdge(edge), this);
+
             this.graph.centerContent();
         }
     },

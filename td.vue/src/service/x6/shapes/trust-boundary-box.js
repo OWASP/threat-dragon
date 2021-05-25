@@ -1,6 +1,6 @@
 import { Shape } from '@antv/x6';
 
-const name = 'trust-boundary';
+const name = 'trust-boundary-box';
 
 /**
  * A trust boundary shape (dotted line, gray opaque background)
@@ -8,7 +8,7 @@ const name = 'trust-boundary';
  * Attrs can use standard SVG attributes (in camelCase)
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
-export const TrustBoundary = Shape.HeaderedRect.define({
+export const TrustBoundaryBox = Shape.HeaderedRect.define({
     constructorName: name,
     width: 500,
     height: 400,
@@ -40,5 +40,5 @@ export const TrustBoundary = Shape.HeaderedRect.define({
 
 export default {
     name,
-    TrustBoundary
+    TrustBoundaryBox
 };

@@ -4,7 +4,7 @@ import factory from '@/service/x6/factory.js';
 import processShape from '@/service/x6/shapes/process.js';
 import stencil from '@/service/x6/stencil.js';
 import store from '@/service/x6/shapes/store.js';
-import trustBoundary from '@/service/x6/shapes/trust-boundary.js';
+import trustBoundaryBox from '@/service/x6/shapes/trust-boundary-box.js';
 
 describe('service/x6/stencil.js', () => {
     let container, load, search, target, cfg;
@@ -23,7 +23,7 @@ describe('service/x6/stencil.js', () => {
         actor.Actor = jest.fn();
         processShape.ProcessShape = jest.fn();
         store.Store = jest.fn();
-        trustBoundary.TrustBoundary = jest.fn();
+        trustBoundaryBox.TrustBoundaryBox = jest.fn();
         container = { appendChild: jest.fn(), foo: 'bar' };
         target = { bar: 'baz' };
         
@@ -80,8 +80,8 @@ describe('service/x6/stencil.js', () => {
         expect(cfg.notFoundText).toContain('want to open an issue?');
     });
 
-    it('creates an instance of TrustBoundary', () => {
-        expect(trustBoundary.TrustBoundary).toHaveBeenCalledTimes(1);
+    it('creates an instance of TrustBoundaryBox', () => {
+        expect(trustBoundaryBox.TrustBoundaryBox).toHaveBeenCalledTimes(1);
     });
 
     it('creates an instance of ProcessShape', () => {
@@ -98,7 +98,7 @@ describe('service/x6/stencil.js', () => {
 
     it('loads the shapes', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(trustBoundary.TrustBoundary),
+            expect.any(trustBoundaryBox.TrustBoundaryBox),
             expect.any(processShape.ProcessShape),
             expect.any(store.Store),
             expect.any(actor.Actor)

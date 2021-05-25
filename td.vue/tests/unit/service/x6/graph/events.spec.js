@@ -27,8 +27,8 @@ describe('service/x6/graph/events.js', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:connected', expect.any(Function));
             });
 
-            it('adds the rounded connector to the edge', () => {
-                expect(edge.connector).toEqual('rounded');
+            it('adds the smooth connector to the edge', () => {
+                expect(edge.connector).toEqual('smooth');
             });
         });
 
@@ -111,12 +111,8 @@ describe('service/x6/graph/events.js', () => {
             });
 
             it('adds the expected tools', () => {
-                expect(cell.addTools).toHaveBeenCalledWith(['boundary', 'button-remove', 'vertices']);
+                expect(cell.addTools).toHaveBeenCalledWith(['boundary', 'button-remove', 'vertices', 'source-arrowhead', 'target-arrowhead']);
             });
-        });
-
-        describe('isNode is false', () => {
-
         });
     });
 });

@@ -2,7 +2,7 @@ import actor from './shapes/actor.js';
 import factory from './factory.js';
 import processShape from './shapes/process.js';
 import store from './shapes/store.js';
-import trustBoundary from './shapes/trust-boundary.js';
+import trustBoundaryBox from './shapes/trust-boundary-box.js';
 
 const getDefaults = (target) => ({
     title: 'Entities',
@@ -46,7 +46,7 @@ const getDefaults = (target) => ({
 
 const get = (target, container) => {
     const stencil = factory.stencil(getDefaults(target));
-    const tb = new trustBoundary.TrustBoundary({
+    const tb = new trustBoundaryBox.TrustBoundaryBox({
         width: 160,
         height: 75
     });

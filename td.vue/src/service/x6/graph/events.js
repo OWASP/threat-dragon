@@ -9,7 +9,7 @@
 // This may be what we want in some cases
 const edgeConnected = ({ isNew, edge }) => {
     if (isNew) {
-        edge.connector = 'rounded';
+        edge.connector = 'smooth';
     }
 };
 
@@ -23,6 +23,8 @@ const mouseEnter = ({ cell }) => {
     const tools = [ 'boundary', 'button-remove' ];
     if (!cell.isNode()) {
         tools.push('vertices');
+        tools.push('source-arrowhead');
+        tools.push('target-arrowhead');
     }
     cell.addTools(tools);
 };
