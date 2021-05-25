@@ -1,4 +1,5 @@
 import events from '@/service/x6/graph/events.js';
+import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve.js';
 
 describe('service/x6/graph/events.js', () => {
     let cell, edge, graph;
@@ -11,7 +12,9 @@ describe('service/x6/graph/events.js', () => {
             hasTools: jest.fn(),
             removeTools: jest.fn(),
             isNode: jest.fn(),
-            addTools: jest.fn()
+            addTools: jest.fn(),
+            position: jest.fn(),
+            remove: jest.fn()
         };
         edge = {};
     });
@@ -64,10 +67,6 @@ describe('service/x6/graph/events.js', () => {
                 expect(graph.on).toHaveBeenCalledWith('cell:changed:position', expect.any(Function));
             });
 
-            it('listens to cell:added', () => {
-                expect(graph.on).toHaveBeenCalledWith('cell:added', expect.any(Function));
-            });
-
             it('listens to cell:unselected', () => {
                 expect(graph.on).toHaveBeenCalledWith('cell:unselected', expect.any(Function));
             });
@@ -112,6 +111,52 @@ describe('service/x6/graph/events.js', () => {
 
             it('adds the expected tools', () => {
                 expect(cell.addTools).toHaveBeenCalledWith(['boundary', 'button-remove', 'vertices', 'source-arrowhead', 'target-arrowhead']);
+            });
+        });
+    });
+
+    describe('cell:added', () => {
+        beforeEach(() => {
+            graph.addEdge = jest.fn();
+        });
+
+        describe('not a trust boundary curve', () => {
+            beforeEach(() => {
+                cell.isNode.mockImplementation(() => true);
+                cell.constructor = { name: 'other' };
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('does not add an edge', () => {
+                expect(graph.addEdge).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('trust boundary curve', () => {
+            const cfg = { foo: 'bar' };
+            beforeEach(() => {
+                trustBoundaryCurve.getEdgeConfig = jest.fn().mockImplementation(() => cfg);
+                cell.isNode.mockImplementation(() => true);
+                cell.constructor = { name: 'TrustBoundaryCurve' };
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('gets the cell\'s position', () => {
+                expect(cell.position).toHaveBeenCalledTimes(1);
+            });
+
+            it('gets the edge config', () => {
+                expect(trustBoundaryCurve.getEdgeConfig).toHaveBeenCalledTimes(1);
+            });
+
+            it('adds the edge to the graph', () => {
+                expect(graph.addEdge).toHaveBeenCalledWith(cfg);
+            });
+
+            it('removes the cell', () => {
+                expect(cell.remove).toHaveBeenCalledTimes(1);
             });
         });
     });

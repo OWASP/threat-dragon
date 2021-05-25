@@ -70,7 +70,6 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
-    - Add a "curved" trust boundary
     - "Link from here" - auto-linking of elements (needed or not?)
     - Add ability to change labels and other metadata
         - Create component for entity actions

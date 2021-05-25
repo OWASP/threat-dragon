@@ -19,7 +19,6 @@ const propHooks = (metadata) => {
 export const Store = Shape.Rect.define({
     width: 150,
     height: 75,
-    inherits: 'rect',
     constructorName: name,
     markup: [
         ...Shape.Rect.getMarkup(),

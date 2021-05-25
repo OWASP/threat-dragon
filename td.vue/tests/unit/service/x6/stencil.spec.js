@@ -5,6 +5,7 @@ import processShape from '@/service/x6/shapes/process.js';
 import stencil from '@/service/x6/stencil.js';
 import store from '@/service/x6/shapes/store.js';
 import trustBoundaryBox from '@/service/x6/shapes/trust-boundary-box.js';
+import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve';
 
 describe('service/x6/stencil.js', () => {
     let container, load, search, target, cfg;
@@ -96,13 +97,19 @@ describe('service/x6/stencil.js', () => {
         expect(store.Store).toHaveBeenCalledTimes(1);
     });
 
-    it('loads the shapes', () => {
+    it('loads the entities', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(trustBoundaryBox.TrustBoundaryBox),
             expect.any(processShape.ProcessShape),
             expect.any(store.Store),
             expect.any(actor.Actor)
-        ]);
+        ], 'entities');
+    });
+
+    it('loads the trust boundaries', () => {
+        expect(load).toHaveBeenCalledWith([
+            expect.any(trustBoundaryBox.TrustBoundaryBox),
+            expect.any(trustBoundaryCurve.TrustBoundaryCurve)
+        ], 'trust_boundaries');
     });
 
     it('calls onSearch twice', () => {
