@@ -182,49 +182,24 @@ describe('service/migration/diagram.js', () => {
             expect(nodes[0].data.threats).toEqual(threats);
         });
 
-        it('changes the stroke to red', () => {
-            expect(nodes[0].getAttrs().body.stroke).toEqual('red');
-        });
-
         it('adds the out of scope property', () => {
             expect(nodes[0].data.outOfScope).toEqual(true);
         });
 
-        it('changes the stroke to red', () => {
-            expect(nodes[0].getAttrs().body.strokeDasharray).toEqual('2 2');
-        });
-    });
-
-    describe('legacy trust boundary', () => {
-        beforeEach(() => {
-            const v1 = {
-                diagramJson: {
-                    cells: [{
-                        type: 'tm.Boundary',
-                        source: { id },
-                        target: { id },
-                        vertices
-                    }]
-                }
-            };
-            const res = diagram.mapDiagram(v1);
-            edges = res.edges;
+        it('adds the isEncrypted property', () => {
+            expect(nodes[0].data.isEncrypted).toEqual(false);
         });
 
-        it('is green', () => {
-            expect(edges[0].attrs.line.stroke).toEqual('green');
+        it('adds the isPublicNetwork property', () => {
+            expect(nodes[0].data.isPublicNetwork).toEqual(false);
         });
 
-        it('sets the stroke width', () => {
-            expect(edges[0].attrs.line.strokeWidth).toEqual(3);
+        it('adds the protocol property', () => {
+            expect(nodes[0].data.protocol).toEqual('');
         });
 
-        it('is a dash array', () => {
-            expect(edges[0].attrs.line.strokeDasharray).toEqual('5 5');
-        });
-
-        it('does not have a target marker', () => {
-            expect(edges[0].attrs.line.targetMarker).toEqual(null);
+        it('adds the isTrustBoundary property', () => {
+            expect(nodes[0].data.isTrustBoundary).toEqual(false);
         });
     });
 

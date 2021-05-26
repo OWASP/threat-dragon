@@ -14,7 +14,8 @@ describe('service/x6/graph/events.js', () => {
             isNode: jest.fn(),
             addTools: jest.fn(),
             position: jest.fn(),
-            remove: jest.fn()
+            remove: jest.fn(),
+            getData: jest.fn()
         };
         edge = {};
     });
@@ -63,12 +64,12 @@ describe('service/x6/graph/events.js', () => {
                 expect(graph.on).toHaveBeenCalledWith('cell:mouseleave', expect.any(Function));
             });
 
-            it('listens to cell:changed:position', () => {
-                expect(graph.on).toHaveBeenCalledWith('cell:changed:position', expect.any(Function));
-            });
-
             it('listens to cell:unselected', () => {
                 expect(graph.on).toHaveBeenCalledWith('cell:unselected', expect.any(Function));
+            });
+
+            it('listens to cell:change:data', () => {
+                expect(graph.on).toHaveBeenCalledWith('cell:change:data', expect.any(Function));
             });
         });
 

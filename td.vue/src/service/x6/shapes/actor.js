@@ -21,7 +21,13 @@ export const Actor = Shape.Rect.define({
     }
 });
 
+const updateStyle = (cell, color, dash) => {
+    cell.setAttrByPath('body/stroke', color);
+    cell.setAttrByPath('body/strokeDasharray', dash);
+};
+
 export default {
+    Actor,
     name,
-    Actor
+    updateStyle
 };

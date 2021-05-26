@@ -21,13 +21,13 @@ const getDefaults = (target) => ({
         {
             name: 'trust_boundaries',
             title: 'Trust Boundaries',
-            collapsed: false,
+            collapsed: true,
             collapsable: true
         },
         {
             name: 'metadata',
             title: 'Metadata',
-            collapsed: false,
+            collapsed: true,
             collapsable: true
         }
     ],

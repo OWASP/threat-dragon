@@ -30,24 +30,27 @@ const entityMap = (constructor) => (cell) => {
         height: cell.size.height,
         x: cell.position.x,
         y: cell.position.y,
+        // This id will be overwritten by x6, but is needed to link
+        // process flows to other elements prior to drawing
         id: cell.id,
         zIndex: cell.z,
         label: cell.attrs && cell.attrs.text && cell.attrs.text.text ? cell.attrs.text.text : ''
     });
 };
 
-const edgeMap = (cell) => {
-    const edge = {
-        source: cell.source,
-        target: cell.target,
-        vertices: cell.vertices,
-        connector: 'smooth',
-        attrs: {},
-        labels: getEdgeLabels(cell)
-    };
-
-    return edge;
-};
+const edgeMap = (cell) => ({
+    source: cell.source,
+    target: cell.target,
+    vertices: cell.vertices,
+    connector: 'smooth',
+    attrs: {},
+    labels: getEdgeLabels(cell),
+    data: {
+        isPublicNetwork: cell.isPublicNetwork,
+        isEncrypted: cell.isEncrypted,
+        protocol: cell.protocol
+    }
+});
 
 const cellConverter = {
     'tm.Actor': {
@@ -92,30 +95,14 @@ const relateEdges = (nodes, edges) => {
 
 const addMetaData = (entity, cell) => {
     entity.data = {
-        hasOpenThreats: cell.hasOpenThreats,
-        outOfScope: cell.outOfScope,
-        threats: cell.threats
+        hasOpenThreats: !!cell.hasOpenThreats,
+        threats: cell.threats || [],
+        outOfScope: !!cell.outOfScope,
+        isEncrypted: !!cell.isEncrypted,
+        isPublicNetwork: !!cell.isPublicNetwork,
+        protocol: cell.protocol || '',
+        isTrustBoundary: cell.type === 'tm.Boundary'
     };
-
-    const styleAttrs = {
-        stroke: entity.data.hasOpenThreats ? 'red' : 'black',
-        strokeDasharray: entity.data.outOfScope ? '2 2' : ''
-    };
-
-    // Legacy trust boundaries
-    if (cell.type === 'tm.Boundary') {
-        styleAttrs.stroke = 'green';
-        styleAttrs.strokeWidth =  3;
-        styleAttrs.strokeDasharray = '5 5';
-        styleAttrs.targetMarker = null;
-    }
-
-    entity.attrs = Object.assign({}, entity.attrs, {
-        body: styleAttrs,
-        top: styleAttrs,
-        line: styleAttrs
-    });
-
     return entity;
 };
 

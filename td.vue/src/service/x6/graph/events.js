@@ -2,6 +2,7 @@
  * @name events
  * @description Event listeners for the graph
  */
+import dataChanged from './data-changed.js';
 import trustBoundaryCurve from '../shapes/trust-boundary-curve.js';
 
 // We need to add the router and connector data when a new edge is added.
@@ -36,15 +37,17 @@ const cellAdded = (graph) => ({ cell }) => {
         cell.remove();
     }
     removeCellTools({ cell });
+
+    dataChanged.updateStyleAttrs(cell);
 };
 
 const listen = (graph) => {
     graph.on('edge:connected', edgeConnected);
     graph.on('cell:mouseleave', removeCellTools);
     graph.on('cell:mouseenter', mouseEnter);
-    graph.on('cell:changed:position', removeCellTools);
     graph.on('cell:added', cellAdded(graph));
     graph.on('cell:unselected', removeCellTools);
+    graph.on('cell:change:data', ({ cell }) => dataChanged.updateStyleAttrs(cell));
 };
 
 export default {

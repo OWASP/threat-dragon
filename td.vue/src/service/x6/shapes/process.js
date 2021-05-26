@@ -21,7 +21,13 @@ export const ProcessShape = Shape.Circle.define({
     }
 });
 
+const updateStyle = (cell, color, dash) => {
+    cell.setAttrByPath('body/stroke', color);
+    cell.setAttrByPath('body/strokeDasharray', dash);
+};
+
 export default {
     name,
-    ProcessShape
+    ProcessShape,
+    updateStyle
 };
