@@ -1,3 +1,5 @@
+import { Shape } from '@antv/x6';
+
 import actor from './shapes/actor.js';
 import factory from './factory.js';
 import processShape from './shapes/process.js';
@@ -20,8 +22,13 @@ const getDefaults = (target) => ({
             name: 'trust_boundaries',
             title: 'Trust Boundaries',
             collapsed: false,
-            collapsable: true,
-            graphHeight: '250',
+            collapsable: true
+        },
+        {
+            name: 'metadata',
+            title: 'Metadata',
+            collapsed: false,
+            collapsable: true
         }
     ],
     layoutOptions: {
@@ -54,8 +61,19 @@ const get = (target, container) => {
     });
     const a = new actor.Actor();
     const s = new store.Store();
+    const text = new Shape.TextBlock({
+        wdith: 100,
+        height: 120,
+        text: 'Text Block',
+        attrs: {
+            body: {
+                fill: '#fffddb'
+            }
+        }
+    });
     stencil.load([ ps, s, a ], 'entities');
     stencil.load([ boxBoundary, curveBoundary ], 'trust_boundaries');
+    stencil.load([ text ], 'metadata');
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

@@ -1,3 +1,4 @@
+import { Shape } from '@antv/x6';
 
 import actor from '@/service/x6/shapes/actor.js';
 import factory from '@/service/x6/factory.js';
@@ -110,6 +111,12 @@ describe('service/x6/stencil.js', () => {
             expect.any(trustBoundaryBox.TrustBoundaryBox),
             expect.any(trustBoundaryCurve.TrustBoundaryCurve)
         ], 'trust_boundaries');
+    });
+
+    it('loads the metadata', () => {
+        expect(load).toHaveBeenCalledWith([
+            expect.any(Shape.TextBlock)
+        ], 'metadata');
     });
 
     it('calls onSearch twice', () => {

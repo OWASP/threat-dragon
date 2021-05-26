@@ -86,6 +86,7 @@ import TdFormButton from '@/components/FormButton.vue';
     - Fix CSP
     - Load model from API if not local provider
     - Write unit tests for this component
+    - If v2, load from json
 */
 
 export default {
@@ -142,7 +143,7 @@ export default {
         init() {
             this.graph = graphFactory.get(this.$refs.graph_container);
             stencil.get(this.graph, this.$refs.stencil_container);
-            // if v1, draw from json
+            // if v2, draw from json
             //this.graph.fromJSON(data);
             this.graph.centerContent();
         },
@@ -150,7 +151,6 @@ export default {
             const { nodes, edges } = diagramService.mapDiagram(this.diagram);
             nodes.forEach((node) => this.graph.addNode(node), this);
             edges.forEach((edge) => this.graph.addEdge(edge), this);
-
             this.graph.centerContent();
         }
     },
