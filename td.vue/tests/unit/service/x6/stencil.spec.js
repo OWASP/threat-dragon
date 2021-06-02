@@ -5,6 +5,7 @@ import factory from '@/service/x6/factory.js';
 import processShape from '@/service/x6/shapes/process.js';
 import stencil from '@/service/x6/stencil.js';
 import store from '@/service/x6/shapes/store.js';
+import textBlock from '@/service/x6/shapes/text.js';
 import trustBoundaryBox from '@/service/x6/shapes/trust-boundary-box.js';
 import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve';
 
@@ -115,7 +116,7 @@ describe('service/x6/stencil.js', () => {
 
     it('loads the metadata', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(Shape.TextBlock)
+            expect.any(textBlock.TextBlock)
         ], 'metadata');
     });
 

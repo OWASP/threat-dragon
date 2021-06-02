@@ -4,6 +4,7 @@ import actor from './shapes/actor.js';
 import factory from './factory.js';
 import processShape from './shapes/process.js';
 import store from './shapes/store.js';
+import textBlock from './shapes/text.js';
 import trustBoundaryBox from './shapes/trust-boundary-box.js';
 import trustBoundaryCurve from './shapes/trust-boundary-curve.js';
 
@@ -61,16 +62,7 @@ const get = (target, container) => {
     });
     const a = new actor.Actor();
     const s = new store.Store();
-    const text = new Shape.TextBlock({
-        wdith: 100,
-        height: 120,
-        text: 'Text Block',
-        attrs: {
-            body: {
-                fill: '#fffddb'
-            }
-        }
-    });
+    const text = new textBlock.TextBlock();
     stencil.load([ ps, s, a ], 'entities');
     stencil.load([ boxBoundary, curveBoundary ], 'trust_boundaries');
     stencil.load([ text ], 'metadata');
