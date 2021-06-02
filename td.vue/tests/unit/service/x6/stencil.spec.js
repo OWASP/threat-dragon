@@ -1,5 +1,3 @@
-import { Shape } from '@antv/x6';
-
 import actor from '@/service/x6/shapes/actor.js';
 import factory from '@/service/x6/factory.js';
 import processShape from '@/service/x6/shapes/process.js';
