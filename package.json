@@ -13,7 +13,7 @@
     "test:site": "cd td.site && npm run test",
     "pretest": "npm-run-all pretest:server pretest:site",
     "pretest:server": "cd td.server && npm run pretest",
-    "pretest:site": "cd td.site && npm run pretest",
+    "pretest:site": "cd td.site && npm-run-all templates pretest",
     "build": "npm-run-all build:site build:server",
     "build:site": "cd td.site && npm run build",
     "build:server": "cd td.server && npm run build",
