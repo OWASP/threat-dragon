@@ -1,4 +1,7 @@
 ﻿'use strict';
+
+var angular = require('angular');
+
 window.jQuery = require('jquery');
 require('bootstrap');
 require('angular-route');

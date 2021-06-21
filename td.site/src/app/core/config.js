@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var core = angular.module('tdCore');
+var core = require('angular').module('tdCore');
 var toastr = require('toastr');
 
 // Configure Toastr

@@ -5,6 +5,7 @@ var _ = require('lodash');
 function threatModel($scope, $location, $routeParams, dialogs, common, datacontext, threatmodellocator) {
     // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
     /*jshint validthis: true */
+	var angular = require('angular');
     var vm = this;
     var controllerId = 'threatmodel';
     var getLogFn = common.logger.getLogFn;
