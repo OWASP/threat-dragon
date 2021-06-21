@@ -839,7 +839,7 @@ angular.module('templates', [])
     '                <input type="checkbox" id="cbShowMitigated" ng-model="reportOptions.showMitigated"> Show mitigated threats\n' +
     '            </div>\n' +
     '            <div>\n' +
-    '                <input type="checkbox" id="cbShowDiagrams" ng-model="reportOptions.showDiagrams""> Include threat model diagrams\n' +
+    '                <input type="checkbox" id="cbShowDiagrams" ng-model="reportOptions.showDiagrams"> Include threat model diagrams\n' +
     '            </div>\n' +
     '        </div>\n' +
     '        <div class="btn-group pull-right" role="group">\n' +
