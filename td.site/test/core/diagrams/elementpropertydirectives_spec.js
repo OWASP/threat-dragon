@@ -13,7 +13,7 @@ describe('modal close directive: ', function () {
 
     beforeEach(function () {
 
-        angular.mock.module('owasp-threat-dragon-core');
+        angular.mock.module('tdCore');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -68,7 +68,7 @@ describe('element properties directive: ', function () {
 
     beforeEach(function () {
 
-        angular.mock.module('owasp-threat-dragon-core');
+        angular.mock.module('tdCore');
         angular.mock.inject(function (_$rootScope_, _$compile_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -409,7 +409,7 @@ describe('element threats directive: ', function () {
 
         mockDialogs = {};
 
-        angular.mock.module('owasp-threat-dragon-core');
+        angular.mock.module('tdCore');
         angular.mock.module(function ($provide) {
             $provide.value('dialogs', mockDialogs);
         });

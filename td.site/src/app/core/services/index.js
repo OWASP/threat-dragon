@@ -1,4 +1,4 @@
-var core = angular.module('owasp-threat-dragon-core');
+var core = angular.module('tdCore');
 require('angular-ui-bootstrap');
 core.factory('routemediator', ['$rootScope', '$location', 'config', 'logger', require('./routemediator')]);
 core.factory('threatengine', [require('./threatengine')]);

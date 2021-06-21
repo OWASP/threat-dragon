@@ -1,6 +1,6 @@
 'use strict';
 
-var core = angular.module('owasp-threat-dragon-core');
+var core = angular.module('tdCore');
 var diagramdirectives = require('./diagramdirectives');
 var elementPropertyDirectives = require('./elementpropdirectives');
 var diagram = require('./diagram');

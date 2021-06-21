@@ -39,7 +39,7 @@ describe('threatModel controller', function () {
         };
         mockDatacontext = {};
 
-        angular.mock.module('owasp-threat-dragon-core')
+        angular.mock.module('tdCore')
 
         angular.mock.module(function ($provide) {
             $provide.value('datacontext', mockDatacontext);

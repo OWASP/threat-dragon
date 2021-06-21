@@ -18,7 +18,7 @@ module.exports = {
         path: distPath,
         filename: path.join('app', '[name].min.js')
     },
-    // Because of the way hotkeys is imported in owasp-threat-dragon-core, it was not resolving correctly at runtime
+    // Because of the way hotkeys is imported in tdCore, it was not resolving correctly at runtime
     // this alias ensures that it is loaded correctly when requested
     resolve: {
         alias: {
