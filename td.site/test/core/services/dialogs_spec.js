@@ -24,7 +24,7 @@ describe('dialogs service:', function () {
 
     beforeEach(function () {
 
-        dialogs = require('../../../src/services/dialogs')(mockLocation, mockModal);
+        dialogs = require('/td.site/src/app/core/services/dialogs')(mockLocation, mockModal);
 
     });
 
@@ -139,7 +139,7 @@ describe('dialogs controllers:', function () {
         close: function () { }
     };
 
-    var controllers = require('../../../src/services/dialogControllers');
+    var controllers = require('/td.site/src/app/core/services/dialogControllers');
 
     describe('structured exit', function () {
 

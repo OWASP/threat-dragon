@@ -8,7 +8,7 @@ describe('diagramming service:', function () {
 
     beforeEach(function () {
 
-        diagramming = require('../../../src/services/diagramming')();
+        diagramming = require('/td.site/src/app/core/services/diagramming')();
 
     });
 

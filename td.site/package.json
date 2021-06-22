@@ -14,7 +14,7 @@
     "test:ie": "karma start --single-run --browsers IE",
     "test:local": "npm-run-all pretest test:chrome test:ie test:phantomjs test:firefox",
     "citest": "karma start --single-run false --browsers Firefox",
-    "templates": "node_modules/.bin/nghtml2js -s es2015 -p src/app/core/ -f 'src/app/core/**/*.html' -m templates -o src/app/core/templates.js"
+    "templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
@@ -78,6 +78,7 @@
     "karma-xml-reporter": "0.1.4",
     "mini-css-extract-plugin": "^1.5.0",
     "mockery": "2.1.0",
+    "npm-html2js": "0.1.8",
     "npm-run-all": "^4.1.5",
     "phantomjs-polyfill-find": "0.0.1",
     "phantomjs-prebuilt": "2.1.16",
