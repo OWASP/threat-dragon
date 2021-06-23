@@ -61,9 +61,19 @@ const get = (target, container) => {
     const a = new actor.Actor();
     const s = new store.Store();
     const text = new textBlock.TextBlock();
-    stencil.load([ ps, s, a ], 'entities');
-    stencil.load([ boxBoundary, curveBoundary ], 'trust_boundaries');
-    stencil.load([ text ], 'metadata');
+
+    // const e = new secureEdge.SecureEdge({
+    //     labels: [
+    //         {
+    //             attrs: { text: { text: 'My Secure Edge' } }
+    //         }
+    //     ]
+    // });
+
+
+    stencil.load([ps, s, a], 'entities');
+    stencil.load([boxBoundary, curveBoundary], 'trust_boundaries');
+    stencil.load([text], 'metadata');
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

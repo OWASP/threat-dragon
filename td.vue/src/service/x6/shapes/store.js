@@ -52,10 +52,12 @@ export const Store = Shape.Rect.define({
     propHooks
 });
 
-const updateStyle = (cell, color, dash) => {
+const updateStyle = (cell, color, dash, strokeWidth) => {
     cell.setAttrByPath('topLine/stroke', color);
+    cell.setAttrByPath('topLine/strokeWidth', strokeWidth);
     cell.setAttrByPath('topLine/strokeDasharray', dash);
     cell.setAttrByPath('bottomLine/stroke', color);
+    cell.setAttrByPath('bottomLine/strokeWidth', strokeWidth);
     cell.setAttrByPath('bottomLine/strokeDasharray', dash);
 };
 

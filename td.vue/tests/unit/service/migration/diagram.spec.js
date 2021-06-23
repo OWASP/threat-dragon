@@ -109,6 +109,7 @@ describe('service/migration/diagram.js', () => {
     describe('edges using id ref', () => {
         beforeEach(() => {
             const v1 = getV1Edge();
+            v1.diagramJson.cells[1].protocol = 'HTTPS';
             const res = diagram.mapDiagram(v1);
             edges = res.edges;
         });
@@ -131,6 +132,22 @@ describe('service/migration/diagram.js', () => {
 
         it('uses the smooth connector', () => {
             expect(edges[0].connector).toEqual('smooth');
+        });
+
+        it('maps the labels', () => {
+            expect(edges[0].labels[0].attrs.label.text).toContain('foobar');
+        });
+
+        it('adds the protocol to the edge label', () => {
+            expect(edges[0].labels[0].attrs.label.text).toContain('(HTTPS)');
+        });
+    });
+
+    describe('edge with label without protocol', () => {
+        beforeEach(() => {
+            const v1 = getV1Edge();
+            const res = diagram.mapDiagram(v1);
+            edges = res.edges;
         });
 
         it('maps the labels', () => {
@@ -170,6 +187,8 @@ describe('service/migration/diagram.js', () => {
             v1.diagramJson.cells[0].hasOpenThreats = true;
             v1.diagramJson.cells[0].outOfScope = true;
             v1.diagramJson.cells[0].threats = threats;
+            v1.diagramJson.cells[0].isEncrypted = true;
+            v1.diagramJson.cells[0].protocol = 'HTTPS';
             const res = diagram.mapDiagram(v1);
             nodes = res.nodes;
         });
@@ -186,20 +205,20 @@ describe('service/migration/diagram.js', () => {
             expect(nodes[0].data.outOfScope).toEqual(true);
         });
 
-        it('adds the isEncrypted property', () => {
-            expect(nodes[0].data.isEncrypted).toEqual(false);
-        });
-
         it('adds the isPublicNetwork property', () => {
             expect(nodes[0].data.isPublicNetwork).toEqual(false);
         });
 
-        it('adds the protocol property', () => {
-            expect(nodes[0].data.protocol).toEqual('');
-        });
-
         it('adds the isTrustBoundary property', () => {
             expect(nodes[0].data.isTrustBoundary).toEqual(false);
+        });
+
+        it('adds the isEncrypted property', () => {
+            expect(nodes[0].data.isEncrypted).toEqual(true);
+        });
+
+        it('adds the protocol property', () => {
+            expect(nodes[0].data.protocol).toEqual('HTTPS');
         });
     });
 

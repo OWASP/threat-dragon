@@ -7,6 +7,14 @@ import { Actor } from '../x6/shapes/actor.js';
 import { ProcessShape } from '../x6/shapes/process.js';
 import { Store } from '../x6/shapes/store.js';
 
+const getLabelText = (cell, label) => {
+    let text = label.attrs.text.text;
+    if (cell.protocol) {
+        text = `${text} (${cell.protocol})`;
+    }
+    return text;
+};
+
 const getEdgeLabels = (cell) => {
     const labels = [];
     if (!cell.labels) {
@@ -16,7 +24,7 @@ const getEdgeLabels = (cell) => {
     cell.labels.forEach((label) => {
         labels.push({
             position: label.position,
-            attrs: { label: { text: label.attrs.text.text }}
+            attrs: { label: { text: getLabelText(cell, label) }}
         });
     });
 
