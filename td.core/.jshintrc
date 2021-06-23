@@ -1,7 +1,0 @@
-{
-    "browser": true,
-    "browserify": true,
-    "globals": {
-         "angular": true
-    }
-}
