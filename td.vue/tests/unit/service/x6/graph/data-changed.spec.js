@@ -37,7 +37,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(actor.updateStyle).toHaveBeenCalledWith(cell, 'red', '2 2');
+            expect(actor.updateStyle).toHaveBeenCalledWith(cell, 'red', '2 2', 3.0);
         });
     });
 
@@ -54,7 +54,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(processShape.updateStyle).toHaveBeenCalledWith(cell, '#333333', null);
+            expect(processShape.updateStyle).toHaveBeenCalledWith(cell, '#333333', null, 1.0);
         });
     });
 
@@ -68,7 +68,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(store.updateStyle).toHaveBeenCalledWith(cell, '#333333', null);
+            expect(store.updateStyle).toHaveBeenCalledWith(cell, '#333333', null, 1.0);
         });
     });
 
@@ -138,54 +138,27 @@ describe('service/x6/graph/data-changed.js', () => {
             cell.constructor = { name: 'Edge' };
         });
 
-        describe('encrypted', () => {
-            beforeEach(() => {
-                cell.getData.mockImplementation(() => ({
-                    isTrustBoundary: false,
-                    isEncrypted: true
-                }));
-                dataChanged.updateStyleAttrs(cell);
-            });
-
-            it('sets the stroke', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/stroke', '#333333');
-            });
-
-            it('sets the strokeDasharray', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/strokeDasharray', null);
-            });
-
-            it('sets the target marker to classic', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/targetMarker/name', 'classic');
-            });
+        beforeEach(() => {
+            cell.getData.mockImplementation(() => ({
+                isTrustBoundary: false,
+                isEncrypted: true
+            }));
+            dataChanged.updateStyleAttrs(cell);
         });
 
-        describe('not encrypted', () => {
-            beforeEach(() => {
-                cell.getData.mockImplementation(() => ({
-                    isTrustBoundary: false,
-                    isEncrypted: false
-                }));
-                dataChanged.updateStyleAttrs(cell);
-            });
+        it('sets the stroke', () => {
+            expect(cell.setAttrByPath)
+                .toHaveBeenCalledWith('line/stroke', '#333333');
+        });
 
-            it('sets the target marker path', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/targetMarker/d', expect.stringContaining('M'));
-            });
+        it('sets the strokeDasharray', () => {
+            expect(cell.setAttrByPath)
+                .toHaveBeenCalledWith('line/strokeDasharray', null);
+        });
 
-            it('sets the target marker stroke', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/targetMarker/stroke', 'red');
-            });
-
-            it('sets the target marker tagName', () => {
-                expect(cell.setAttrByPath)
-                    .toHaveBeenCalledWith('line/targetMarker/tagName', 'path');
-            });
+        it('sets the target marker to classic', () => {
+            expect(cell.setAttrByPath)
+                .toHaveBeenCalledWith('line/targetMarker/name', 'classic');
         });
     });
 });

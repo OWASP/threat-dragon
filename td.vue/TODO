@@ -6,6 +6,8 @@
 - Do a POC to use no back-end whatsoever (demo and test only)
 - Gracefully handle an expired refresh token (TODO in httpClient)
 
+- Update or remove the CSP violation reporter
+
 - Add tests for ThreatmodelEdit view
 - Add report feature
 - Add the download from github feature

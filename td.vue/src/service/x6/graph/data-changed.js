@@ -9,7 +9,8 @@ import store from '../shapes/store.js';
 const styles = {
     default: {
         color: '#333333',
-        strokeDasharray: null
+        strokeDasharray: null,
+        strokeWidth: 1.0
     },
     hasOpenThreats: {
         color: 'red'
@@ -28,7 +29,7 @@ const styles = {
     }
 };
 
-const edgeUpdater = (edge, color, dash) => {
+const edgeUpdater = (edge, color, dash, strokeWidth) => {
     const data = edge.getData();
     if (data.isTrustBoundary) {
         edge.setAttrByPath('line/stroke', styles.trustBoundary.color);
@@ -40,17 +41,9 @@ const edgeUpdater = (edge, color, dash) => {
     }
 
     edge.setAttrByPath('line/stroke', color);
+    edge.setAttrByPath('line/strokeWidth', strokeWidth);
     edge.setAttrByPath('line/strokeDasharray', dash);
-
-    if (data.isEncrypted) {
-        edge.setAttrByPath('line/targetMarker/name', 'classic');
-    } else {
-        // TODO: Requires discussion
-        edge.setAttrByPath('line/targetMarker/d', styles.unencrypted.d);
-        edge.setAttrByPath('line/targetMarker/stroke', styles.hasOpenThreats.color);
-        edge.setAttrByPath('line/targetMarker/tagName', 'path');
-    }
-    // TODO: Public Network?
+    edge.setAttrByPath('line/targetMarker/name', 'classic');
 };
 
 const getUpdateMap = () => ({
@@ -73,17 +66,18 @@ const updateStyleAttrs = (cell) => {
         return;
     }
 
-    let { color, strokeDasharray } = styles.default;
+    let { color, strokeDasharray, strokeWidth } = styles.default;
 
     if (cellData.hasOpenThreats) {
         color = styles.hasOpenThreats.color;
+        strokeWidth = 3.0;
     }
 
     if (cellData.outOfScope) {
         strokeDasharray = styles.outOfScope.strokeDasharray;
     }
 
-    updateFn(cell, color, strokeDasharray);
+    updateFn(cell, color, strokeDasharray, strokeWidth);
 };
 
 export default {

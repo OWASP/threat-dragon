@@ -1,9 +1,8 @@
-import { Shape } from '@antv/x6';
-
 import actor from './shapes/actor.js';
 import factory from './factory.js';
 import processShape from './shapes/process.js';
 import store from './shapes/store.js';
+import textBlock from './shapes/text.js';
 import trustBoundaryBox from './shapes/trust-boundary-box.js';
 import trustBoundaryCurve from './shapes/trust-boundary-curve.js';
 
@@ -61,19 +60,20 @@ const get = (target, container) => {
     });
     const a = new actor.Actor();
     const s = new store.Store();
-    const text = new Shape.TextBlock({
-        wdith: 100,
-        height: 120,
-        text: 'Text Block',
-        attrs: {
-            body: {
-                fill: '#fffddb'
-            }
-        }
-    });
-    stencil.load([ ps, s, a ], 'entities');
-    stencil.load([ boxBoundary, curveBoundary ], 'trust_boundaries');
-    stencil.load([ text ], 'metadata');
+    const text = new textBlock.TextBlock();
+
+    // const e = new secureEdge.SecureEdge({
+    //     labels: [
+    //         {
+    //             attrs: { text: { text: 'My Secure Edge' } }
+    //         }
+    //     ]
+    // });
+
+
+    stencil.load([ps, s, a], 'entities');
+    stencil.load([boxBoundary, curveBoundary], 'trust_boundaries');
+    stencil.load([text], 'metadata');
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

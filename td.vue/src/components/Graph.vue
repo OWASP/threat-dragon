@@ -91,6 +91,8 @@ import TdFormButton from '@/components/FormButton.vue';
   
   Functional TODOs:
     - Save / Close buttons are currently no-ops
+        - Close should track a "dirty" state and alert the user when leaving the page that there are unsaved changes
+        - Maybe tap into the window close event as well
     - Threat generation engine / suggested threats
     - Export JSON
     - Export images
