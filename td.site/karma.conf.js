@@ -21,10 +21,6 @@ module.exports = function (config) {
 
         // list of files to exclude
         exclude: [
-            'test/core/common/logger_spec.js',
-            'test/core/diagrams/*',
-            'test/core/services/*',
-            'test/core/threatmodels/*'
         ],
 
         // preprocess matching files before serving them to the browser
@@ -58,13 +54,6 @@ module.exports = function (config) {
             branches: 90,
             functions: 90,
             lines: 90
-        },
-
-        //config for ngHtml2JsPreprocessor
-        ngHtml2JsPreprocessor: {
-            // strip this from the file path
-            stripPrefix: 'td',
-            prependPrefix: '.'
         },
 
         // web server port
