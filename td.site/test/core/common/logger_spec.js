@@ -4,7 +4,7 @@ var logMessage = 'message';
 var logSource = 'source';
 var logData = 'data';
 
-xdescribe('logger service:', function () {
+describe('core logger service:', function () {
 
     var mockLog = {};
     //$log mocks
@@ -16,7 +16,7 @@ xdescribe('logger service:', function () {
         spyOn(mockLog, 'error');
     });
 
-//comment out for now:    var logger = require('../src/app/core/common/logger')(mockLog);
+    var logger = require('../../../src/app/core/common/logger')(mockLog);
 
 
     describe('log tests:', function () {

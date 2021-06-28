@@ -1,10 +1,10 @@
 'use strict';
 
-//comment out for now: require('jasmine-jquery');
-//comment out for now: var $ = require('jquery');
-//comment out for now: var fs = require('fs');
+require('jasmine-jquery');
+var $ = require('jquery');
+var fs = require('fs');
 
-xdescribe('threat model report directive: ', function () {
+describe('core threat model report directive: ', function () {
 
     var $rootScope;
     var $scope;

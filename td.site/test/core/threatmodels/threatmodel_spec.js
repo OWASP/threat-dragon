@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-describe('threatModel controller', function () {
+describe('core threatModel controller', function () {
 
     var $scope;
     var $controller;

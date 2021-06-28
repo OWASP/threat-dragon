@@ -1,12 +1,12 @@
 'use strict'
 
-//comment out for now: var $ = require('jquery');
-//comment out for now: var joint = require('jointjs');
-//comment out for now: require('jasmine-jquery');
-//comment out for now: require('src/app/core/services/joint.shapes.tm');
+var $ = require('jquery');
+var joint = require('jointjs');
+require('jasmine-jquery');
+require('../../../src/app/core/services/joint.shapes.tm');
 
 
-xdescribe('custom shape tests', function () {
+describe('core custom shape tests:', function () {
 
     var graph;
     var diagram;

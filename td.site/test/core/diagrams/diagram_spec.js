@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-//comment out for now: var joint = require('jointjs');
+var joint = require('jointjs');
 
-xdescribe('diagram controller', function () {
+describe('core diagram controller', function () {
     
     var $scope;
     var $controller;

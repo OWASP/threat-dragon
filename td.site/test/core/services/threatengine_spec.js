@@ -1,10 +1,10 @@
 'use strict';
 
-xdescribe('threatengine service:', function () {
+describe('core threatengine service:', function () {
 
-//comment out for now:     var _ = require('lodash');
+     var _ = require('lodash');
 
-//comment out for now:     var threatengine = require('/td.site/src/app/core/services/threatengine')();
+     var threatengine = require('../../../src/app/core/services/threatengine')();
 
     describe('element generation tests:', function () {
 

@@ -1,9 +1,9 @@
 'use strict';
 
-//comment out for now: var $ = require('jquery');
-//comment out for now: require('jasmine-jquery');
+var $ = require('jquery');
+require('jasmine-jquery');
 
-xdescribe('modal close directive: ', function () {
+describe('core modal close directive: ', function () {
 
     var $rootScope;
     var $scope;
@@ -53,7 +53,7 @@ xdescribe('modal close directive: ', function () {
     });
 });
 
-xdescribe('element properties directive: ', function () {
+describe('core element properties directive: ', function () {
 
     var $rootScope;
     var $scope;
@@ -389,7 +389,7 @@ xdescribe('element properties directive: ', function () {
     });
 });
 
-xdescribe('element threats directive: ', function () {
+describe(' core element threats directive: ', function () {
 
     var $rootScope;
     var $scope;

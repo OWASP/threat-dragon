@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('dialogs service:', function () {
+describe('core dialogs service:', function () {
 
     var dialogs;
     var mockLocation;
@@ -24,7 +24,7 @@ xdescribe('dialogs service:', function () {
 
     beforeEach(function () {
 
-//comment out for now:         dialogs = require('src/app/core/services/dialogs')(mockLocation, mockModal);
+         dialogs = require('../../../src/app/core/services/dialogs')(mockLocation, mockModal);
 
     });
 
@@ -128,7 +128,7 @@ xdescribe('dialogs service:', function () {
 
 });
 
-xdescribe('dialogs controllers:', function () {
+describe('core dialogs controllers:', function () {
 
     var mockLocation = {
         path: function () { }
@@ -139,7 +139,7 @@ xdescribe('dialogs controllers:', function () {
         close: function () { }
     };
 
-//comment out for now:     var controllers = require('src/app/core/services/dialogControllers');
+     var controllers = require('../../../src/app/core/services/dialogControllers');
 
     describe('structured exit', function () {
 

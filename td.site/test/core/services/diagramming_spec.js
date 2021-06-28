@@ -1,14 +1,14 @@
 'use strict';
 
 var diagramming;
-//comment out for now: var joint = require('jointjs');
-//comment out for now: var $ = require('jquery');
+var joint = require('jointjs');
+var $ = require('jquery');
 
-xdescribe('diagramming service:', function () {
+describe('core diagramming service:', function () {
 
     beforeEach(function () {
 
-        diagramming = require('/td.site/src/app/core/services/diagramming')();
+        diagramming = require('../../../src/app/core/services/diagramming')();
 
     });
 

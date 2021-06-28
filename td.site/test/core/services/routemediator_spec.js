@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('routemediator service:', function () {
+describe('core routemediator service:', function () {
 
     var mockLogger;
     var mockConfig;
@@ -30,7 +30,7 @@ xdescribe('routemediator service:', function () {
         mockLocation = {};
         mockLocation.path = function () { };
 
-//comment out for now:         routeMediator = require('src/app/core/services/routemediator')(mockRootScope, mockLocation, mockConfig, mockLogger);
+        routeMediator = require('../../../src/app/core/services/routemediator')(mockRootScope, mockLocation, mockConfig, mockLogger);
 
         current = { name: 'testName', title: 'testTitle' };
 
