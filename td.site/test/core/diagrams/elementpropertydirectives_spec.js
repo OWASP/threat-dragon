@@ -401,9 +401,11 @@ describe(' core element threats directive: ', function () {
     var mockDialogs;
     var mockLogger;
     var elem;
-    var threat0 = { id: '0', title: 'title0', type: 'type0', status: 'status0', severity: 'severity0' };
-    var threat1 = { id: '1', title: 'title1', type: 'type1', status: 'status1', severity: 'severity1' };
-    var threat2 = { id: '2', title: 'title2', type: 'type2', status: 'status2', severity: 'severity2' };
+    var threat0 = { id: '0', title: 'title0', status: 'status0', severity: 'severity0', modelType: null };
+    var threat1 = { id: '1', title: 'title1', status: 'status1', severity: 'severity1', modelType: 'CIA' };
+    var threat2 = { id: '2', title: 'title2', status: 'status2', severity: 'severity2', modelType: 'LINDDUN' };
+    var threat3 = { id: '3', title: 'title3', status: 'status3', severity: 'severity3', modelType: 'STRIDE' };
+    var threat4 = { id: '4', title: 'title4', status: 'status4', severity: 'severity4', modelType: 'NA' };
 
     beforeEach(function () {
 
@@ -429,7 +431,7 @@ describe(' core element threats directive: ', function () {
 
         $scope.edit = function () { };
         spyOn($scope, 'edit');
-        $scope.threats = [threat0, threat1, threat2];
+        $scope.threats = [threat0, threat1, threat2, threat3, threat4];
 
         $scope.setDirty = function() {}
         spyOn($scope, 'setDirty');
@@ -462,7 +464,7 @@ describe(' core element threats directive: ', function () {
             $scope.$digest();
             setFixtures(elem);
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html')
             var param = mockDialogs.confirm.calls.argsFor(0)[2];
             expect(param().threat).toEqual(threat1);
             expect($location.search().threat).toEqual('1');
@@ -489,6 +491,20 @@ describe(' core element threats directive: ', function () {
 
         });
 
+        it('should create the first threat', function () {
+
+        	$scope.threats = [];
+            angular.element($('#buttonNewThreat')).triggerHandler('click');
+            var onOK = mockDialogs.confirm.calls.argsFor(0)[1];
+            var param = mockDialogs.confirm.calls.argsFor(0)[2];
+            onOK();
+            expect($scope.threats.length).toEqual(1);
+            expect($scope.edit).toHaveBeenCalled();
+            expect($scope.setDirty).toHaveBeenCalled();
+            expect(param().editing).toBe(true);
+
+        });
+
         it('should add a new threat', function () {
 
             var originalLength = $scope.threats.length;
@@ -503,12 +519,39 @@ describe(' core element threats directive: ', function () {
 
         });
 
-        it('should launch the edit threat dialog', function () {
+        it('should launch the edit threat dialog for backwards compatibility', function () {
+
+            angular.element($('#editThreat0')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect($location.search().threat).toEqual('0');
+
+        });
+
+        it('should launch the edit CIA threat dialog', function () {
 
             angular.element($('#editThreat1')).triggerHandler('click');
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html')
             expect($location.search().threat).toEqual('1');
+
+        });
+
+        it('should launch the edit LINDDUN threat dialog', function () {
+
+            angular.element($('#editThreat2')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/LinddunEditPane.html')
+            expect($location.search().threat).toEqual('2');
+
+        });
+
+        it('should launch the edit STRIDE threat dialog', function () {
+
+            angular.element($('#editThreat3')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect($location.search().threat).toEqual('3');
 
         });
 
@@ -542,7 +585,7 @@ describe(' core element threats directive: ', function () {
             angular.element($('#remove1')).triggerHandler('click');
             expect($scope.edit).toHaveBeenCalled();
             expect($scope.setDirty).toHaveBeenCalled();
-            expect($scope.threats).toEqual([threat0, threat2]);
+            expect($scope.threats).toEqual([threat0, threat2, threat3, threat4]);
 
         });
 

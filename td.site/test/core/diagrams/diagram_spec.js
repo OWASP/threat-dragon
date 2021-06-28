@@ -64,7 +64,7 @@ describe('core diagram controller', function () {
         $controller('diagram as vm', { $scope: $scope });
         $scope.$apply();
     });
-    
+
     describe('controller initialisation tests', function () {
                 
         it('should be defined', function () {
@@ -306,12 +306,12 @@ describe('core diagram controller', function () {
             cell.threats[0].status = 'Open';
             $scope.$apply();
             expect(cell.hasOpenThreats).toBe(true);   
-            
+
         }
-        
+
         //helper for threat watcher unit tests
         function setMitigatedThreats(cell) {
-        
+
             var threat = {threatId: '1', status: 'Open'};
             cell.threats = [threat];
             $scope.vm.graph.getCell = function() { return cell; }
@@ -864,18 +864,89 @@ describe('core diagram controller', function () {
         });
         
         it('should generate threats for the specified element', function() {
-            
-            var threats = ['threat1', 'threat2', 'threat3'];
+            // original models had no methodology, and assumed STRIDE
+            var threats = [{threatId: '1', modelType: null}, {threatId: '2', modelType: null}, {threatId: '3', modelType: null}];
             var currentThreat = threats[0];
+            var methodology = threats[0].modelType;
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
-            
+
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.generateThreats(methodology);
             $scope.$apply();
-            
+
+            expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
+            expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            // STRIDE is the default type
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html');
+            //argument 2 contains the supplied threat
+            expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
+            expect(threats.length).toEqual(2);
+        });
+
+        it('should generate threats for the specified CIA element', function() {
+
+            var threats = [{threatId: '1', modelType: 'CIA'}, {threatId: '2', modelType: 'CIA'}, {threatId: '3', modelType: 'CIA'}];
+            var currentThreat = threats[0];
+            var methodology = 'CIA';
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+
+            $scope.vm.selected = element;
+            $scope.vm.generateThreats(methodology);
+            $scope.$apply();
+
+            expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
+            expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html');
+            //argument 2 contains the supplied threat
+            expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
+            expect(threats.length).toEqual(2);
+        });
+
+        it('should generate threats for the specified LINDDUN element', function() {
+
+            var threats = [{threatId: '1', modelType: 'LINDDUN'}, {threatId: '2', modelType: 'LINDDUN'}, {threatId: '3', modelType: 'LINDDUN'}];
+            var currentThreat = threats[0];
+            var methodology = 'LINDDUN';
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+
+            $scope.vm.selected = element;
+            $scope.vm.generateThreats(methodology);
+            $scope.$apply();
+
+            expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
+            expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/LinddunEditPane.html');
+            //argument 2 contains the supplied threat
+            expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
+            expect(threats.length).toEqual(2);
+        });
+
+        it('should generate threats for the specified STRIDE element', function() {
+
+            var threats = [{threatId: '1', modelType: 'STRIDE'}, {threatId: '2', modelType: 'STRIDE'}, {threatId: '3', modelType: 'STRIDE'}];
+            var currentThreat = threats[0];
+            var methodology = 'STRIDE';
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+
+            $scope.vm.selected = element;
+            $scope.vm.generateThreats(methodology);
+            $scope.$apply();
+
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
             expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
             expect(mockDialogs.confirm).toHaveBeenCalled();
@@ -884,9 +955,33 @@ describe('core diagram controller', function () {
             expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
             expect(threats.length).toEqual(2);
         });
-        
+
+        it('should generate threats for the specified element of unknown type', function() {
+
+            var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
+            var currentThreat = threats[0];
+            var methodology = 'STRIDING';
+            mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
+            mockDialogs.confirm = function() {};
+            spyOn(mockDialogs, 'confirm');
+
+            $scope.vm.selected = element;
+            $scope.vm.generateThreats(methodology);
+            $scope.$apply();
+
+            expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
+            expect(mockThreatEngine.generatePerElement.calls.argsFor(0)).toEqual([element, methodology]);
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            // STRIDE is the default type if the type is not recognised
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html');
+            //argument 2 contains the supplied threat
+            expect(mockDialogs.confirm.calls.argsFor(0)[2]().threat).toEqual(currentThreat);
+            expect(threats.length).toEqual(2);
+        });
+
         it('should generate no threats', function() {
-            
+
             var threats = [];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();

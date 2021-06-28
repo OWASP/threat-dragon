@@ -323,12 +323,16 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
 
         function selectTemplate(type) {
             if (type == null) {
+                // use STRIDE for backward compatibility with models where no type given
                 template = 'diagrams/StrideEditPane.html';
             } else if (type == 'CIA') {
                 template = 'diagrams/CiaEditPane.html';
             } else if (type == 'LINDDUN') {
                 template = 'diagrams/LinddunEditPane.html';
+            } else if (type == 'STRIDE') {
+                template = 'diagrams/StrideEditPane.html';
             } else {
+                // if not recognised then default to STRIDE
                 template = 'diagrams/StrideEditPane.html';
             }
         }
