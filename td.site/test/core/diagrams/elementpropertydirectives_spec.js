@@ -493,7 +493,7 @@ describe(' core element threats directive: ', function () {
 
         it('should create the first threat', function () {
 
-        	$scope.threats = [];
+            $scope.threats = [];
             angular.element($('#buttonNewThreat')).triggerHandler('click');
             var onOK = mockDialogs.confirm.calls.argsFor(0)[1];
             var param = mockDialogs.confirm.calls.argsFor(0)[2];

@@ -8,10 +8,122 @@ describe('core threatengine service:', function () {
 
     describe('element generation tests:', function () {
 
-        it('process should generate STRIDE', function (done) {
+        it('CIA process should generate CIA', function (done) {
 
             var element = { attributes: { type: 'tm.Process' } };
-            threatengine.generatePerElement(element).then(function (threats) {
+            threatengine.generatePerElement(element, 'CIA').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(3);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Confidentiality')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Integrity')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Availability')).toBeGreaterThan(-1);
+                done();
+            });
+        });
+
+        it('CIA flow should generate CIA', function (done) {
+
+            var element = { attributes: { type: 'tm.Flow' } };
+            threatengine.generatePerElement(element, 'CIA').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(3);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Confidentiality')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Integrity')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Availability')).toBeGreaterThan(-1);
+                done();
+            });
+
+        });
+
+        it('CIA actor should generate CIA', function (done) {
+
+            var element = { attributes: { type: 'tm.Actor' } };
+            threatengine.generatePerElement(element, 'CIA').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(3);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Confidentiality')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Integrity')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Availability')).toBeGreaterThan(-1);
+                done();
+            });
+
+        });
+
+        it('LINDDUN process should generate LINDDN by element', function (done) {
+
+            var element = { attributes: { type: 'tm.Process' } };
+            threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(6);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Linkability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Identifiability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-repudiation')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Detectability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Disclosure of information')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-compliance')).toBeGreaterThan(-1);
+                done();
+            });
+        });
+
+        it('LINDDUN flow should generate LINDDN by element', function (done) {
+
+            var element = { attributes: { type: 'tm.Flow' } };
+            threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(6);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Linkability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Identifiability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-repudiation')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Detectability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Disclosure of information')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-compliance')).toBeGreaterThan(-1);
+                done();
+            });
+
+        });
+
+        it('LINDDUN actor should generate LIU by element', function (done) {
+
+            var element = { attributes: { type: 'tm.Actor' } };
+            threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(3);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Linkability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Identifiability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Unawareness')).toBeGreaterThan(-1);
+                done();
+            });
+
+        });
+
+        it('LINDDUN store should generate LINDDN by element', function (done) {
+
+            var element = { attributes: { type: 'tm.Store' } };
+            threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
+                expect(threats).toBeDefined();
+                expect(threats.length).toEqual(6);
+                var threatTypes = _.uniq(_.map(threats, 'type'));
+                expect(threatTypes.indexOf('Linkability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Identifiability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-repudiation')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Detectability')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Disclosure of information')).toBeGreaterThan(-1);
+                expect(threatTypes.indexOf('Non-compliance')).toBeGreaterThan(-1);
+                done();
+            });
+
+        });
+
+        it('STRIDE process should generate STRIDE', function (done) {
+
+            var element = { attributes: { type: 'tm.Process' } };
+            threatengine.generatePerElement(element, 'STRIDE').then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(6);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -25,10 +137,10 @@ describe('core threatengine service:', function () {
             });
         });
 
-        it('flow should generate TID', function (done) {
+        it('STRIDE flow should generate TID by element', function (done) {
 
             var element = { attributes: { type: 'tm.Flow' } };
-            threatengine.generatePerElement(element).then(function (threats) {
+            threatengine.generatePerElement(element, 'STRIDE').then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(3);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -40,10 +152,10 @@ describe('core threatengine service:', function () {
 
         });
 
-        it('actor should generate SR', function (done) {
+        it('STRIDE actor should generate SR by element', function (done) {
 
             var element = { attributes: { type: 'tm.Actor' } };
-            threatengine.generatePerElement(element).then(function (threats) {
+            threatengine.generatePerElement(element, 'STRIDE').then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(2);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -54,10 +166,10 @@ describe('core threatengine service:', function () {
 
         });
 
-        it('store should generate TRID', function (done) {
+        it('STRIDE store should generate TRID by element', function (done) {
 
             var element = { attributes: { type: 'tm.Store' } };
-            threatengine.generatePerElement(element).then(function (threats) {
+            threatengine.generatePerElement(element, 'STRIDE').then(function (threats) {
                 expect(threats).toBeDefined();
                 expect(threats.length).toEqual(4);
                 var threatTypes = _.uniq(_.map(threats, 'type'));
@@ -70,7 +182,6 @@ describe('core threatengine service:', function () {
 
         });
 
-        //give a description for the rule
         it('should suggest using encryption over public networks', function (done) {
 
             //set up the properties of the element
@@ -89,7 +200,6 @@ describe('core threatengine service:', function () {
 
         });
 
-        //give a description for the rule
         it('should suggest using encryption over public networks (undefined encryption)', function (done) {
 
             //set up the properties of the element
@@ -108,7 +218,6 @@ describe('core threatengine service:', function () {
 
         });
 
-        //give a description for the rule
         it('should not suggest using encryption over public networks (not public)', function (done) {
 
             //set up the properties of the element
@@ -127,7 +236,6 @@ describe('core threatengine service:', function () {
 
         });
 
-        //give a description for the rule
         it('should not suggest using encryption over public networks (already encrypted)', function (done) {
 
             //set up the properties of the element

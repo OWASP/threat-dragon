@@ -50,6 +50,7 @@ module.exports = function (config) {
     },
 
     //config for threashhold reporter
+    // Note that we are at 80% on branches, needs work to reach 90% coverage
     thresholdReporter: {
       statements: 90,
       branches: 80,

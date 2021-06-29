@@ -267,8 +267,6 @@ describe('core threatModel controller', function () {
         var mockThreatModel;
         var mockPath;
         var mockModelLocation;
-        var diagramThumbnail;
-        var diagramModel;
 
         beforeEach(function () {
 
@@ -300,8 +298,6 @@ describe('core threatModel controller', function () {
             //location mock
             mockPath = 'mock path';
             $location.path(mockPath);
-            diagramThumbnail = './public/content/images/thumbnail.stride.jpg';
-            diagramModel = 'STRIDE';
 
             //locator mocks
             spyOn(mockThreatModelLocator, 'getModelPath').and.returnValue(mockPath);
@@ -476,17 +472,49 @@ describe('core threatModel controller', function () {
 
         });
 
-        it('should copy a new diagram', function () {
+        it('should copy a new diagram backward compatibly', function () {
+            var thumbnail = './public/content/images/thumbnail.stride.jpg';
+            var type = 'STRIDE';
 
             $scope.vm.threatModel = { detail: { diagrams: [{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }] } };
             $scope.vm.addingDiagram = true;
             $scope.vm.dirty = false;
             $scope.vm.duplicateDiagram(1);
 
-            expect($scope.vm.threatModel.detail.diagrams).toEqual([{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 }, { id: 5 }, { id: 2, title: "Copy of 1", diagramJson: "", size: 0, thumbnail: diagramThumbnail, diagramType: diagramModel }]);
+            expect($scope.vm.threatModel.detail.diagrams).toEqual(
+                    [{ id: 0 }, { id: 1, title: "1", diagramJson: "", size: 0 },
+                     { id: 5 }, { id: 2, title: "Copy of 1", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type }]);
             expect($scope.vm.dirty).toBe(true);
             expect($scope.vm.addingDiagram).toBe(false);
             expect($scope.vm.newDiagram).toEqual($scope.vm.newDiagram);
+
+        });
+
+        it('should copy a new CIA diagram', function () {
+            var thumbnail = './public/content/images/thumbnail.cia.jpg';
+            var type = 'CIA';
+
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 42, title: "42", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type }] } };
+            $scope.vm.addingDiagram = true;
+            $scope.vm.duplicateDiagram(0);
+
+            expect($scope.vm.threatModel.detail.diagrams).toEqual(
+                    [{ id: 42, title: "42", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type },
+                     { id: 0, title: "Copy of 42", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type }]);
+
+        });
+
+        it('should copy a new LINDDUN diagram', function () {
+            var thumbnail = './public/content/images/thumbnail.linddun.jpg';
+            var type = 'LINDDUN';
+
+            $scope.vm.threatModel = { detail: { diagrams: [{ id: 0, title: "0", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type }] } };
+            $scope.vm.addingDiagram = true;
+            $scope.vm.duplicateDiagram(0);
+
+            expect($scope.vm.threatModel.detail.diagrams).toEqual(
+                    [{ id: 0, title: "0", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type },
+                     { id: 1, title: "Copy of 0", diagramJson: "", size: 0, thumbnail: thumbnail, diagramType: type }]);
 
         });
 
