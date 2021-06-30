@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "private": false,
   "scripts": {
-    "build": "npm-run-all clean bundle",
+    "build": "npm-run-all clean templates bundle",
     "bundle": "webpack",
     "clean": "rimraf ../dist",
     "pretest": "jshint --verbose --show-non-errors src",
@@ -13,7 +13,8 @@
     "test:chrome": "karma start --single-run --browsers Chrome",
     "test:ie": "karma start --single-run --browsers IE",
     "test:local": "npm-run-all pretest test:chrome test:ie test:phantomjs test:firefox",
-    "citest": "karma start --single-run false --browsers Firefox"
+    "citest": "karma start --single-run false --browsers Firefox",
+    "templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
@@ -32,15 +33,22 @@
     "angular-route": "1.8.2",
     "angular-ui-bootstrap": "2.5.6",
     "angular-xeditable": "^0.10.0",
+    "bootstrap": "3.4.1",
     "font-awesome": "4.7.0",
+    "hotkeys-js": "^3.7.6",
+    "jointjs": "^2.2.1",
     "jquery": "^3.4.1",
+    "json-rules-engine": "3.1.0",
     "lodash": "^4.17.19",
-    "owasp-threat-dragon-core": "^1.4.0",
     "pug": "^3.0.1",
-    "pug-bootstrap": "0.0.16"
+    "pug-bootstrap": "0.0.16",
+    "rework-npm-cli": "^0.1.3",
+    "toastr": "2.1.4"
   },
   "devDependencies": {
     "angular-mocks": "1.8.0",
+    "angular-template-cache": "^1.3.3",
+    "babel-polyfill": "6.26.0",
     "browserify": "^16.3.0",
     "browserify-css": "^0.15.0",
     "browserify-istanbul": "3.0.1",
@@ -71,6 +79,7 @@
     "karma-xml-reporter": "0.1.4",
     "mini-css-extract-plugin": "^1.5.0",
     "mockery": "2.1.0",
+    "npm-html2js": "0.1.8",
     "npm-run-all": "^4.1.5",
     "phantomjs-polyfill-find": "0.0.1",
     "phantomjs-prebuilt": "2.1.16",

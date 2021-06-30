@@ -1,7 +1,5 @@
 ﻿'use strict';
 
-//require('angular-mocks');
-
 describe('shell controller', function () {
 
     var $scope;
