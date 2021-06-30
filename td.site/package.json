@@ -36,7 +36,7 @@
     "bootstrap": "3.4.1",
     "font-awesome": "4.7.0",
     "hotkeys-js": "^3.7.6",
-    "jointjs": "^2.2.1",
+    "jointjs": "^3.3.0",
     "jquery": "^3.4.1",
     "json-rules-engine": "3.1.0",
     "lodash": "^4.17.19",
