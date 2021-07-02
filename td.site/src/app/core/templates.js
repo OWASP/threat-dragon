@@ -152,17 +152,14 @@ angular.module('templates', [])
     '                    <form name="diagramEditToolBar">\n' +
     '                        <div class="col-md-12">\n' +
     '                            <div class="btn-group pull-left" role="group">\n' +
-    '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
-    '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
-    '                                </button>\n' +
-    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Close Diagram">\n' +
-    '                                    <span class="glyphicon glyphicon-remove"></span>\n' +
-    '                                </a>\n' +
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.clear()" data-placement="top" title="Delete All Elements From This Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.reload()" data-placement="top" title="Discard Changes And Reopen Diagram">\n' +
     '                                    <span class="fa fa-undo" aria-hidden="true"></span>\n' +
+    '                                </button>\n' +
+    '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
+    '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
@@ -170,9 +167,12 @@ angular.module('templates', [])
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save This Diagram">\n' +
+    '                                <button class="btn btn-default" type="button" data-toggle="tooltip" ng-click="vm.save()" data-placement="top" title="Save Diagram">\n' +
     '                                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
+    '                                <a class="btn btn-default" ng-href="#/threatmodel/{{vm.getThreatModelPath()}}" role="button" data-toggle="tooltip" data-placement="top" title="Close and Return">\n' +
+    '                                    <span class="glyphicon glyphicon-arrow-left"></span>\n' +
+    '                                </a>\n' +
     '                            </div>\n' +
     '                        </div>\n' +
     '                    </form>\n' +
