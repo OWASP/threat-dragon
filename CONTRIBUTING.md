@@ -34,9 +34,9 @@ to give any credit for the valuable assistance they provide.
 
 ## Have a Feature Request?
 If you have a suggestion for new functionality then you can raise this request as an issue on 
-[Threat Dragon](https://github.com/OWASP/threat-dragon-core/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=).
+[Threat Dragon](https://github.com/OWASP/threat-dragon/issues/new/choose).
 
-Again it is worth checking to see if its [already been reported](https://github.com/OWASP/threat-dragon/issues), 
+Worth checking to see if its [already been reported](https://github.com/OWASP/threat-dragon/issues),
 and include as much information as you can so that we can fully understand your requirements.
 
 ## Coding
