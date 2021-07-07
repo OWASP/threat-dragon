@@ -1,0 +1,9 @@
+<div data-ng-controller="desktopreport as vm" class="container-fluid">
+    <div ng-if="!vm.error">
+        <tmt-threat-model-report `
+           loaded="vm.onLoaded()" `
+           hide-controls="true" `
+           model="vm.threatModel">
+        </tmt-threat-model-report>
+    </div>
+</div>
