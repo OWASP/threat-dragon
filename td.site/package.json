@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "build": "npm-run-all clean build:fonts build:templates bundle",
-    "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./src/fonts",
+    "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./fonts",
     "build:templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js",
     "bundle": "webpack",
     "clean": "rimraf ../dist",
