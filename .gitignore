@@ -19,3 +19,8 @@ fonts/
 
 dist/
 .nyc_output
+
+# generated css
+td.site/src/content/threatdragon.css
+td.site/src/content/threatdragon.min.css
+td.desktop/content/threatdragon.css
