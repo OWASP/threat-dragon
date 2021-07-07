@@ -1,9 +1,11 @@
 {
   "name": "owasp-threat-dragon-site",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": false,
   "scripts": {
-    "build": "npm-run-all clean templates bundle",
+    "build": "npm-run-all clean build:fonts build:templates bundle",
+    "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./src/fonts",
+    "build:templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js",
     "bundle": "webpack",
     "clean": "rimraf ../dist",
     "pretest": "jshint --verbose --show-non-errors src",
@@ -13,14 +15,10 @@
     "test:chrome": "karma start --single-run --browsers Chrome",
     "test:ie": "karma start --single-run --browsers IE",
     "test:local": "npm-run-all pretest test:chrome test:ie test:phantomjs test:firefox",
-    "citest": "karma start --single-run false --browsers Firefox",
-    "templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js"
+    "citest": "karma start --single-run false --browsers Firefox"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
-  "author": {
-    "name": "mike.goodwin",
-    "email": "mike.goodwin@owasp.org"
-  },
+  "author": "OWASP",
   "license": "Apache-2.0",
   "homepage": "https://threatdragon.github.io/",
   "repository": {
@@ -34,6 +32,7 @@
     "angular-ui-bootstrap": "2.5.6",
     "angular-xeditable": "^0.10.0",
     "bootstrap": "3.4.1",
+    "copyfiles": "^2.4.1",
     "font-awesome": "4.7.0",
     "hotkeys-js": "^3.7.6",
     "jointjs": "^2.2.1",

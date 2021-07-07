@@ -2,6 +2,9 @@ node_modules/
 npm-debug.log
 coverage/
 typings/
+build/
+installers/
+fonts/
 
 # ignore Apple's desktop store files
 **/.DS_Store
