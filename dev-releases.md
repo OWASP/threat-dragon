@@ -4,46 +4,10 @@
 
 This is a collection of recipes used during the release process
 
-### TD Core release
-1. create branch `release-ready` in [core repo](https://github.com/OWASP/threat-dragon-core)
-1. `git clone git@github.com:OWASP/threat-dragon-core.git -b release-ready`
-1. `cd threat-dragon-core`
-1. update `package.json` version declaration to, eg `"version": "1.4.0",`
-1. `npm install`
-1. `npm run pretest`
-1. `npm run build`
-1. `npm test`
-1. `git commit -a -m"<some release message>"`
-1. `git push`
-1. merge branch in [core repo](https://github.com/OWASP/threat-dragon-core) and then checkout master:
-1. `git clone git@github.com:OWASP/threat-dragon-core.git`
-1. `cd threat-dragon-core`
-1. `git tag v1.4.0`
-1. `git push origin v1.4.0`
-1. `npm install`
-1. `npm run pretest`
-1. `npm run build`
-1. `npm test`
-1. login to npm `npm login` using username, password and email address
-1. update package on [npmjs registry](https://www.npmjs.com/) with `npm publish`
-1. check that [owasp-threat-dragon-core](https://www.npmjs.com/package/owasp-threat-dragon-core) is at correct version
-
-It is good to keep Mike Goodwin's area up to date with releases from the OWASP area. For example with version 1.4.0:
-1. Create branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
-1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-core.git -b version-1.4.0
-1. cd owasp-threat-dragon-core/
-1. git remote add upstream https://github.com/owasp/threat-dragon-core.git
-1. git fetch upstream
-1. git rebase upstream/main
-1. git status
-1. git push
-1. create pull request from branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon-core.git
-
-### Web app release
-1. create branch `release-ready` in [webapp repo](https://github.com/OWASP/threat-dragon)
+### Tag the release
+1. create branch `release-ready` in [Threat Dragon repo](https://github.com/OWASP/threat-dragon)
 1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
 1. `cd threat-dragon`
-1. ensure `package.json` specifies the latest version of core package, eg `"owasp-threat-dragon-core": "1.4.0",`
 1. update version declaration eg `"version": "1.4.0",` in `package.json`, `td.site/package.json` and `td.server/package.json`
 1. `npm install`
 1. `npm run pretest`
@@ -65,44 +29,25 @@ It is good to keep Mike Goodwin's area up to date with releases from the OWASP a
 1. `docker push threatdragon/owasp-threat-dragon:v1.4.0`
 1. check using `docker pull threatdragon/owasp-threat-dragon:v1.4.0`
 
-Test the release as in 'Install and run web application' above, ideally on all of Windows, linux and MacOS.
+Test the release using 'Install and run web application' in [dev-notes.md], ideally on all of Windows, linux and MacOS.
 In general if it works on one platform then it will work on the others, so one platform may be sufficient
 
-Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.4.0:
-1. Create branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon.git
-1. git clone git@github.com:mike-goodwin/owasp-threat-dragon.git -b version-1.4.0
-1. cd owasp-threat-dragon/
-1. git remote add upstream https://github.com/owasp/threat-dragon.git
-1. git fetch upstream
-1. git rebase upstream/main
-1. git status
-1. git push
-1. create pull request from branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon.git
+### Desktop release area
+1. ensure the release is tagged, see above
+1. create the windows installer as below
+1. create the linux installers as below
+1. create the MacOS installer as below
+1. draft the release in [Threat Dragon repo](https://github.com/OWASP/threat-dragon/releases) using release tag
+1. add the release notes to this release
+1. attach installer files to this release
+1. list SHA256 for each installer file: `.exe`, `.dmg`, `.deb`, `.rpm`, `.snap` and `.AppImage`
 
-### Tag the desktop release
-1. create branch `release-ready` in [desktop repo](https://github.com/OWASP/threat-dragon-desktop)
-1. `git clone git@github.com:OWASP/threat-dragon-desktop.git -b release-ready`
-1. `cd threat-dragon-desktop`
-1. ensure `package.json` specifies the latest version of core package, eg `"owasp-threat-dragon-core": "1.4.0",`
-1. update `package.json` version declaration to, eg `"version": "1.4.0",`
-1. `npm install`
-1. `npm run pretest`
-1. `npm run build-content`
-1. `npm test`
-1. `git commit -a -m"<some release message>"`
-1. `git push`
-1. merge branch in [desktop repo](https://github.com/OWASP/threat-dragon-desktop) and then checkout master:
-1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
-1. `cd threat-dragon-desktop`
-1. `git tag v1.4.0`
-1. `git push origin v1.4.0`
 
 ### Windows installer for TD desktop
 Create windows .exe and test it on a windows box
-1. `git clone https://github.com/OWASP/threat-dragon-desktop.git`
-1. `cd threat-dragon-desktop`
+1. `git clone https://github.com/OWASP/threat-dragon.git`
+1. `cd threat-dragon/td.desktop`
 1. `npm install`
-1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
 1. `npm run pretest`
 1. `npm test`
 1. `npm run build-win`
@@ -111,10 +56,9 @@ Create windows .exe and test it on a windows box
 
 ### MacOS installer for TD desktop
 Create MacOS .deb installer and test it on a mac
-1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
-1. `cd threat-dragon-desktop`
+1. `git clone git@github.com:OWASP/threat-dragon.git`
+1. `cd threat-dragon/td.desktop`
 1. `npm install`
-1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
 1. `npm run pretest`
 1. `npm test`
 1. `npm run build-osx`
@@ -123,37 +67,14 @@ Create MacOS .deb installer and test it on a mac
 
 ### Linux installers for TD desktop
 Create linux .rpm, .deb .snap, AppImage and test them on a linux box
-1. `git clone git@github.com:OWASP/threat-dragon-desktop.git`
-1. `cd threat-dragon-desktop`
+1. `git clone git@github.com:OWASP/threat-dragon.git`
+1. `cd threat-dragon/td.desktop`
 1. `npm install`
-1. make sure `node-modules/owasp-threat-dragon-core/package.json` is at correct version
 1. `npm run pretest`
 1. `npm test`
 1. `npm run build-lin`
-1. make sure the installers work, navigate to .deb or .rpm package and test
-1. test the Snap .snap and AppImage files
-1. obtain SHA256 of .deb, .rpm, .snap and .AppImage files using `shasum -a256`
-
-### TD desktop release
-1. tag the desktop release, see above
-1. create the windows installer as above
-1. create the linux installers as above
-1. create the MacOS installer as above
-1. create the release in [OWASP desktop repo](https://github.com/OWASP/threat-dragon-desktop) using tag v1.4.0
-1. add the release notes to this release
-1. attach installer files to this release
-1. list SHA256 for each installer file: .exe, .dmg, .deb, .rpm, .snap and .AppImage
-
-Keep Mike Goodwin's area up to date with this release from the OWASP area. For example with version 1.4.0:
-1. Create branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
-1. git clone git@github.com:mike-goodwin/owasp-threat-dragon-desktop.git -b version-1.4.0
-1. cd owasp-threat-dragon-desktop/
-1. git remote add upstream https://github.com/owasp/threat-dragon-desktop.git
-1. git fetch upstream
-1. git rebase upstream/main
-1. git status
-1. git push
-1. create pull request from branch `version-1.4.0` on https://github.com/mike-goodwin/owasp-threat-dragon-desktop.git
+1. make sure the installers work, navigate to `.deb` or `.rpm` package and test
+1. test the Snap and AppImage ( `.snap` and `.AppImage`) files
+1. obtain SHA256 of `.deb`, `.rpm`, `.snap` and `.AppImage` files using `shasum -a256`
 
 _Threat Dragon: making threat models more dragony_
-
