@@ -31,10 +31,6 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
             expect(config.connector).toEqual('smooth');
         });
 
-        it('sets the stroke color to green', () => {
-            expect(config.attrs.line.stroke).toEqual('green');
-        });
-
         it('sets the stroke dash array', () => {
             expect(config.attrs.line.strokeDasharray).toEqual('5 5');
         });

@@ -106,11 +106,6 @@ describe('service/x6/graph/data-changed.js', () => {
             dataChanged.updateStyleAttrs(cell);
         });
 
-        it('sets the stroke', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/stroke', 'green');
-        });
-
         it('sets the strokeDasharray', () => {
             expect(cell.setAttrByPath)
                 .toHaveBeenCalledWith('line/strokeDasharray', '5 5');

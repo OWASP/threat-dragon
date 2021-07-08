@@ -19,7 +19,6 @@ const styles = {
         strokeDasharray: '2 2'
     },
     trustBoundary: {
-        color: 'green',
         strokeDasharray: '5 5',
         strokeWidth: 3
     },
