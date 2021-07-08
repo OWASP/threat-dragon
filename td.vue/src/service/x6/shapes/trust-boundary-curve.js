@@ -26,9 +26,9 @@ export const TrustBoundaryCurve = Shape.Empty.define({
     attrs: {
         boundary: {
             strokeWidth: 3,
+            stroke: '#333333',
             fill: '#ffffff',
             strokeDasharray: '5 5',
-            fillOpacity: 0,
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
