@@ -1,7 +1,5 @@
 ﻿'use strict';
 
-//require('angular-mocks');
-
 describe('welcome controller', function () {
     
     var $scope;

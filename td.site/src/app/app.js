@@ -1,5 +1,4 @@
-﻿
-'use strict';
+﻿'use strict';
 
 var angular = require('angular');
 require('angular-ui-bootstrap');
@@ -7,14 +6,14 @@ require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
 window.jQuery = require('jquery');
-require('owasp-threat-dragon-core');
+require('./core');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
     return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
 };
 
-var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'owasp-threat-dragon-core', 'common']);
+var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'tdCore', 'common']);
 
 //require custom modules, services, controllers and directives
 require('./config.route');

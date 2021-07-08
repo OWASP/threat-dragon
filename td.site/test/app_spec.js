@@ -1,7 +1,5 @@
 'use strict';
 
-//require('angular-mocks');
-
 var $rootScope;
 var $httpBackend;
 var mockLocation;
