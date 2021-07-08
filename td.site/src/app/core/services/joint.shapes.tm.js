@@ -175,7 +175,7 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
         type: 'tm.Boundary',
         size: { width: 10, height: 10 },
         attrs: {
-            '.connection': { stroke: 'green', 'stroke-width': 3, 'stroke-dasharray': '10,5' }
+            '.connection': { stroke: 'black', 'stroke-width': 3, 'stroke-dasharray': '10,5' }
         },
         smooth: true
     }, joint.dia.Link.prototype.defaults)

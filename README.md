@@ -2,7 +2,8 @@ Note that this repository has been migrated from Mike Goodwin's [original](https
 which has the issues and pull requests from October 2015 up to June 2020.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
+  <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg"
+  width="200" alt="Threat Dragon Logo"/>
 </p>
 
 [![Build Status](https://travis-ci.org/owasp/threat-dragon.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon)

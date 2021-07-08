@@ -28,7 +28,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'src/fonts', to: 'fonts' },
+                { from: 'fonts', to: 'fonts' },
                 { from: 'src/views', to: 'views' },
                 { from: 'node_modules/pug-bootstrap/components/navbar.pug', to: 'views' },
                 { from: 'node_modules/pug-bootstrap/components/navs.pug', to: 'views' },
