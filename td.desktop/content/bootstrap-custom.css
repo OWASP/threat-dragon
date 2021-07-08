@@ -1,0 +1,92 @@
+﻿.diagram-container {
+  margin-right: auto;
+  margin-left: auto;
+  min-width: 970px;
+}
+
+.navbar {
+	font-size: 14px
+}
+
+.navbar-form-text {
+	color: white;
+	cursor: default
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*severity icon colors*/
+
+.severity-low {
+	color: green;
+	cursor: pointer;
+}
+
+.severity-medium {
+	color: orange;
+	cursor: pointer;
+}
+
+.severity-high {
+	color: red;
+	cursor: pointer;
+}
+
+textarea {
+	resize: none;
+}
+
+/*icon alignment*/
+.icon-align {
+	vertical-align: middle;
+}
+
+/*modals*/
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+.modal.fade-right .modal-dialog {
+	-webkit-transform: translate(100%, 0);
+	-ms-transform: translate(100%, 0);
+	-o-transform: translate(100%, 0);
+	transform: translate(100%, 0);
+	-webkit-transition: -webkit-transform 0.3s ease;
+	-o-transition: -o-transform 0.3s ease;
+	transition: transform 0.3s ease;
+}
+
+.modal.fade-left .modal-dialog {
+	-webkit-transform: translate(-100%, 0);
+	-ms-transform: translate(-100%, 0);
+	-o-transform: translate(-100%, 0);
+	transform: translate(-100%, 0);
+	-webkit-transition: -webkit-transform 0.3s ease;
+	-o-transition: -o-transform 0.3s ease;
+	transition: transform 0.3s ease;
+}
+
+.modal.fade-down .modal-dialog {
+	-webkit-transform: translate(0, 100%);
+	-ms-transform: translate(0, 100%);
+	-o-transform: translate(0, 100%);
+	transform: translate(0, 100%);
+	-webkit-transition: -webkit-transform 0.3s ease;
+	-o-transition: -o-transform 0.3s ease;
+	transition: transform 0.3s ease;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}

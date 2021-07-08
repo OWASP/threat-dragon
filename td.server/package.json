@@ -1,6 +1,6 @@
 {
-  "name": "owasp-threat-dragon-server",
-  "version": "1.4.0",
+  "name": "threat-dragon-server",
+  "version": "1.4.1",
   "private": false,
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
@@ -13,15 +13,15 @@
     "build": "npm-run-all clean transpile"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
-  "author": {
-    "name": "mike.goodwin",
-    "email": "mike.goodwin@owasp.org"
-  },
+  "author": "OWASP",
   "license": "Apache-2.0",
   "homepage": "https://threatdragon.github.io/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/owasp/threat-dragon.git"
+    "url": "git://github.com/OWASP/threat-dragon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
