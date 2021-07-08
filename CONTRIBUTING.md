@@ -40,6 +40,5 @@ Worth checking to see if its [already been reported](https://github.com/OWASP/th
 and include as much information as you can so that we can fully understand your requirements.
 
 ## Coding
-There is always lots of coding to be done! Threat Dragon has two repos, both of which need contributions:
+There is always lots of coding to be done! Threat Dragon welcomes contributions and issues:
 * [TD webapp repo](https://github.com/OWASP/threat-dragon/issues)
-* [TD desktop app repo](https://github.com/OWASP/threat-dragon-desktop/issues)

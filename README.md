@@ -2,7 +2,7 @@ Note that this repository has been migrated from Mike Goodwin's [original](https
 which has the issues and pull requests from October 2015 up to June 2020.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/owasp/threat-dragon-desktop/main/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
+  <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg" width="200" alt="Threat Dragon Logo"/>
 </p>
 
 [![Build Status](https://travis-ci.org/owasp/threat-dragon.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon)
@@ -24,18 +24,12 @@ The application comes in two variants:
 For the web application, models files are stored in GitHub (other storage will become available).
 We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
 
-2. [**A desktop application**](https://github.com/owasp/threat-dragon-desktop):
+2. [**A desktop application**](https://github.com/OWASP/threat-dragon/tree/main/td.desktop):
 This is based on [Electron](https://electron.atom.io/).
 There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux.
 Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
 [End user help](https://docs.threatdragon.org) is available for both variants.
-
-This repository contains the files for the web application variant.
-
-Core files that are shared between both the desktop and web variants are stored in
-a [separate repo](https://github.com/owasp/threat-dragon-core) and are
-installed as an [npm package](https://www.npmjs.com/package/owasp-threat-dragon-core).
 
 ## Installing
 Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server.
@@ -109,7 +103,7 @@ At least it's free :o/
 
 # Contributing #
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
-[contributors](https://github.com/OWASP/threat-dragon-core/blob/main/CONTRIBUTING.md). 
+[contributors](https://github.com/OWASP/threat-dragon/blob/main/CONTRIBUTING.md). 
 
 We are trying to keep the test coverage relatively high,
 so please try to update tests in any PRs and make PRs on the development branch.

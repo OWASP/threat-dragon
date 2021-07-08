@@ -7,13 +7,8 @@ but some of the commands (eg `cd ../..`) need to be modified if running on a Win
 
 Threat Dragon is a [node.js](https://nodejs.org)
 [single page application](https://en.wikipedia.org/wiki/Single-page_application)
-built on [Angular](https://angular.io/) framework. It comes in two variants, a web application and a desktop application.
-
-The desktop application repo is at
-[github.com/OWASP/threat-dragon-desktop](https://github.com/OWASP/threat-dragon-desktop)
-
-The web application repo is at
-[github.com/OWASP/threat-dragon](https://github.com/OWASP/threat-dragon)
+built on [Angular](https://angular.io/) framework. It comes in two variants, a web application and a desktop application,
+both of which are in the [Threat Dragon repo](https://github.com/OWASP/threat-dragon) .
 
 ## Demo and dev websites
 The public sites are updated from Mike Goodwin's original repo at
@@ -57,17 +52,17 @@ If there is an error such as 'Cannot GET /' then make sure the
 
 #### Install and run desktop application
 
-```
-~> git clone git@github.com:OWASP/threat-dragon-desktop.git
-~> cd threat-dragon-desktop
-~/threat-dragon-desktop> npm install
-~/threat-dragon-desktop> npm run pretest
-~/threat-dragon-desktop> npm run build-content
-~/threat-dragon-desktop> npm test
-~/threat-dragon-desktop> npm start
-```
+Launch the electron-based desktop application using:
 
-The electron-based desktop application should then launch
+```
+~> git clone git@github.com:OWASP/threat-dragon.git
+~> cd threat-dragon/td.desktop
+npm install
+npm run pretest
+npm run build
+npm test
+npm start
+```
 
 ### Run webapp in docker container
 A Dockerfile is provided that can be used to create a docker image:
@@ -102,27 +97,27 @@ As above, if there is an error such as 'Cannot GET /' then ensure the
 Install:
 
 ```
-git clone git@github.com:OWASP/threat-dragon-desktop.git -b your-dev-branch-name
-cd threat-dragon-desktop
+git clone git@github.com:OWASP/threat-dragon.git -b your-dev-branch-name
+cd threat-dragon/td.desktop
 npm install
 npm run pretest
-npm run build-content
+npm run build
 npm test
 ln -sf node_modules/electron/cli.js electron
 ```
 
-Make changes to code, and depending on the changes (eg .html or .css), `npm run build-content`
+Make changes to code, and depending on the changes (eg .html or .css), `npm run build`
 
 Run modified app with either `./electron . run -vv` or `npm run start`
 
 ### Keep branches in sync
-Say your fork or branch is out of sync with the main OWASP repo, usually some commits behind.
-This example is for `threat-dragon-desktop` repo, but the same applies to `threat-dragon` repo:
+Say your fork or branch is out of sync with the main OWASP repo, usually some commits behind,
+keep it in sync with these commands for example:
 
 ```
-git clone https://github.com/<YOUR-USER-NAME>/threat-dragon-desktop.git
-cd threat-dragon-desktop
-git remote add original https://github.com/OWASP/threat-dragon-desktop
+git clone https://github.com/<YOUR-USER-NAME>/threat-dragon.git
+cd threat-dragon
+git remote add original https://github.com/OWASP/threat-dragon
 git fetch original
 ```
 
