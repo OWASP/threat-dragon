@@ -25,7 +25,6 @@ export const TrustBoundaryCurve = Shape.Empty.define({
     ],
     attrs: {
         boundary: {
-            stroke: 'green',
             strokeWidth: 3,
             fill: '#ffffff',
             strokeDasharray: '5 5',
@@ -52,7 +51,6 @@ const getEdgeConfig = (position) => ({
     connector: 'smooth',
     attrs: {
         line: {
-            stroke: 'green',
             strokeWidth: 3,
             strokeDasharray: '5 5',
             sourceMarker: null,
