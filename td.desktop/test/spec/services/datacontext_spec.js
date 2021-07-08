@@ -25,9 +25,10 @@ describe('datacontext service:', function () {
                 save: function() {}
             },
             log: {
-                error: function() {},
                 debug: function() {},
+                error: function() {},
                 info: function() {},
+                silly: function() {},
                 warn: function() {}
             },
             logLevel: 'debug'
@@ -37,7 +38,6 @@ describe('datacontext service:', function () {
 
         angular.mock.module(function ($provide) {
             $provide.value('electron', mockElectron);
-            $provide.value('datacontextdemo', mockDataContextDemo);
         });
 
         angular.mock.inject(function (_$rootScope_, _$q_, _datacontext_) {
@@ -51,17 +51,6 @@ describe('datacontext service:', function () {
 
     it('should instantiate the service', function () {
         expect(datacontext).toBeDefined();
-    });
-
-    it('should load from the demo context', function() {
-
-        spyOn(mockDataContextDemo, 'load').and.callThrough();
-        var location = 'demo';
-
-        var forceQuery = true;
-        datacontext.load(location, forceQuery);
-        expect(mockDataContextDemo.load).toHaveBeenCalled();
-        expect(mockDataContextDemo.load.calls.argsFor(0)).toEqual([forceQuery]);
     });
 
     it('should not load without forceQuery', function() {

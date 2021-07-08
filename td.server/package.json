@@ -1,5 +1,5 @@
 {
-  "name": "owasp-threat-dragon-server",
+  "name": "threat-dragon-server",
   "version": "1.4.1",
   "private": false,
   "scripts": {
@@ -18,7 +18,10 @@
   "homepage": "https://threatdragon.github.io/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/owasp/threat-dragon.git"
+    "url": "git://github.com/OWASP/threat-dragon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",

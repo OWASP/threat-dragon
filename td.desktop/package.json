@@ -1,7 +1,7 @@
 {
-  "name": "threatdragon",
+  "name": "threat-dragon-desktop",
   "productName": "OWASP-Threat-Dragon",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "OWASP Threat Dragon desktop version",
   "main": "main.js",
   "scripts": {
@@ -18,6 +18,8 @@
     "installer-lin": "node -e 'require(\"./installer-lin\").all()'",
     "package-lin": "./node_modules/.bin/electron-packager . --asar --overwrite  --out=./build --ignore=\"installers|tests|.vscode|coverage\" --platform=linux --arch=x64 --prune=true --icon=public/content/icons/png/256x256.png --executableName=threatdragon",
     "codecov": "./node_modules/.bin/codecov",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps",
     "help": "./node_modules/.bin/electron . help",
     "pdf": "./node_modules/.bin/electron . pdf",
     "edit": "./node_modules/.bin/electron . edit",
@@ -29,7 +31,10 @@
   "homepage": "https://threatdragon.github.io/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/owasp/threat-dragon.git"
+    "url": "git://github.com/OWASP/threat-dragon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "dependencies": {
     "angular": "1.8.2",

@@ -181,25 +181,12 @@ describe('shell controller', function () {
         expect(mockDatacontext.threatModelLocation).toEqual(testLocation);
     });
 
-    it('File menu third item should open the demo model', function() {
+    it('File menu third item should save the model (datacontext)', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[2].label).toEqual('Open Demo Model');
-        expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+D');
+        expect(subMenu.submenu[2].label).toEqual('Save');
+        expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+S');
         var click = subMenu.submenu[2].click;
-
-        spyOn($scope, '$apply').and.callThrough();
-        click();
-        expect($location.path()).toEqual('/threatmodel/demo');
-        expect($scope.$apply).toHaveBeenCalled();
-    });
-
-    it('File menu fourth item should save the model (datacontext)', function() {
-        var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
-        var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[3].label).toEqual('Save');
-        expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+S');
-        var click = subMenu.submenu[3].click;
         spyOn(mockDatacontext, 'update');
         click();
         expect(mockDatacontext.update).toHaveBeenCalled();
@@ -222,12 +209,12 @@ describe('shell controller', function () {
 
         });
         
-        it('File menu fourth item should save the model (view model)', function() {
+        it('File menu third item should save the model (view model)', function() {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'File');
-            expect(subMenu.submenu[3].label).toEqual('Save');
-            expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+S');
-            var click = subMenu.submenu[3].click;
+            expect(subMenu.submenu[2].label).toEqual('Save');
+            expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+S');
+            var click = subMenu.submenu[2].click;
             spyOn(mockDatacontext, 'update');
             spyOn($location, 'path').and.returnValue('/threatmodel/modelname/diagram/diagramid');
             click();
@@ -235,12 +222,12 @@ describe('shell controller', function () {
             expect($scope.vm.saveDiagram).toHaveBeenCalled();
         });
 
-        it('File menu fourth item should save the model (datacontext - not a diagram path)', function() {
+        it('File menu third item should save the model (datacontext - not a diagram path)', function() {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'File');
-            expect(subMenu.submenu[3].label).toEqual('Save');
-            expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+S');
-            var click = subMenu.submenu[3].click;
+            expect(subMenu.submenu[2].label).toEqual('Save');
+            expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+S');
+            var click = subMenu.submenu[2].click;
             spyOn(mockDatacontext, 'update');
             spyOn($location, 'path').and.returnValue('/threatmodel/modelname/notdiag/diagramid');
             click();
@@ -248,12 +235,12 @@ describe('shell controller', function () {
             expect($scope.vm.saveDiagram).not.toHaveBeenCalled();
         });
 
-        it('File menu fourth item should save the model (datacontext - not a threatmodel path)', function() {
+        it('File menu third item should save the model (datacontext - not a threatmodel path)', function() {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'File');
-            expect(subMenu.submenu[3].label).toEqual('Save');
-            expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+S');
-            var click = subMenu.submenu[3].click;
+            expect(subMenu.submenu[2].label).toEqual('Save');
+            expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+S');
+            var click = subMenu.submenu[2].click;
             spyOn(mockDatacontext, 'update');
             spyOn($location, 'path').and.returnValue('/notmodel/modelname/diagram/diagramid');
             click();
@@ -261,12 +248,12 @@ describe('shell controller', function () {
             expect($scope.vm.saveDiagram).not.toHaveBeenCalled();
         });
 
-        it('File menu fourth item should save the model (datacontext - no vm method available)', function() {
+        it('File menu third item should save the model (datacontext - no vm method available)', function() {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'File');
-            expect(subMenu.submenu[3].label).toEqual('Save');
-            expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+S');
-            var click = subMenu.submenu[3].click;
+            expect(subMenu.submenu[2].label).toEqual('Save');
+            expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+S');
+            var click = subMenu.submenu[2].click;
             spyOn(mockDatacontext, 'update');
             delete $scope.vm.saveDiagram;
             spyOn($location, 'path').and.returnValue('/threatmodel/modelname/diagram/diagramid');
@@ -275,26 +262,26 @@ describe('shell controller', function () {
         });
     });
 
-    it('File menu fifth item should be save as', function() {
+    it('File menu fourth item should be save as', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[4].label).toEqual('Save As');
-        var click = subMenu.submenu[4].click;
+        expect(subMenu.submenu[3].label).toEqual('Save As');
+        var click = subMenu.submenu[3].click;
         spyOn(mockDatacontext, 'saveAs').and.returnValue($q.when(null));
         click();
         expect(mockDatacontext.saveAs).toHaveBeenCalled();
     });
 
-    it('File menu sixth item should be close model', function() {
+    it('File menu fifth item should be close model', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[5].label).toEqual('Close Model');
+        expect(subMenu.submenu[4].label).toEqual('Close Model');
         if (process.platform === 'darwin') {
-            expect(subMenu.submenu[5].accelerator).toEqual('CmdOrCtrl+W');
+            expect(subMenu.submenu[4].accelerator).toEqual('CmdOrCtrl+W');
         } else {
-            expect(subMenu.submenu[5].accelerator).toEqual('CmdOrCtrl+F4');
+            expect(subMenu.submenu[4].accelerator).toEqual('CmdOrCtrl+F4');
         }
-        var click = subMenu.submenu[5].click;
+        var click = subMenu.submenu[4].click;
 
         spyOn($scope, '$apply').and.callThrough();
         spyOn(mockDatacontext, 'close');
@@ -304,13 +291,13 @@ describe('shell controller', function () {
         expect(mockDatacontext.close).toHaveBeenCalled();
     });
 
-    it('File menu seventh item should toggle developer tools', function() {
+    it('File menu sixth item should toggle developer tools', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[6].label).toEqual('Toggle Developer Tools');
-        expect(subMenu.submenu[6].accelerator).toEqual('Ctrl+Shift+I');
+        expect(subMenu.submenu[5].label).toEqual('Toggle Developer Tools');
+        expect(subMenu.submenu[5].accelerator).toEqual('Ctrl+Shift+I');
 
-        var click = subMenu.submenu[6].click;
+        var click = subMenu.submenu[5].click;
         var mockWindow = {
             webContents: {
                 toggleDevTools: function() {}
@@ -328,23 +315,23 @@ describe('shell controller', function () {
 
     });
 
-    it('File menu eighth item should be a separator', function() {
+    it('File menu seventh item should be a separator', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[7].type).toEqual('separator');
+        expect(subMenu.submenu[6].type).toEqual('separator');
     });
 
-    it('File menu ninth item should be exit', function() {
+    it('File menu eighth item should be exit', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
         if (process.platform === 'darwin') {
-            expect(subMenu.submenu[8].label).toEqual('Quit');
-            expect(subMenu.submenu[8].accelerator).toEqual('CmdOrCtrl+Q');
+            expect(subMenu.submenu[7].label).toEqual('Quit');
+            expect(subMenu.submenu[7].accelerator).toEqual('CmdOrCtrl+Q');
         } else {
-            expect(subMenu.submenu[8].label).toEqual('Exit');
-            expect(subMenu.submenu[8].accelerator).toEqual('CmdOrCtrl+W');
+            expect(subMenu.submenu[7].label).toEqual('Exit');
+            expect(subMenu.submenu[7].accelerator).toEqual('CmdOrCtrl+W');
         }
-        expect(subMenu.submenu[8].role).toEqual('close');
+        expect(subMenu.submenu[7].role).toEqual('close');
     });
 
     //Edit:

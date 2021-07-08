@@ -25,10 +25,11 @@ require('./app/threatmodels');
 
 const globals = require('electron').remote.getGlobal('params');
 const log = globals.logger;
-log.info('App loaded with logging verbosity level:', log.transports.console.level);
-log.debug('App global model file:', globals.modelFile);
-log.debug('App global command:', globals.command);
-log.debug('App global url:', globals.url);
+const logID = 'Application: ';
+log.info(logID + 'logging verbosity level:', log.transports.console.level);
+log.debug(logID + 'global model file:', globals.modelFile);
+log.debug(logID + 'global command:', globals.command);
+log.debug(logID + 'global url:', globals.url);
 
 app.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -41,10 +42,9 @@ app.run(['$q',
 
 app.run(['$rootScope', '$location',
     function ($rootScope, $location) {
-        log.debug('App.run with location.url', $location.url());
+        log.debug(logID + 'original location url', $location.url());
         $location.url(globals.url);
-        log.debug('App.run with changed location.url', $location.url());
-        log.silly('App.run with location', $location);
+        log.debug(logID + 'changed location url', $location.url());
         $rootScope.location = $location;
     }]);
 

@@ -3,7 +3,7 @@
 function shell($rootScope, $scope, $location, $route, common, datacontext, electron, threatmodellocator, VERSION) {
 
     const log = electron.log;
-    log.debug('Shell loaded with verbosity level', electron.logLevel);
+    log.debug('Shell Controller: loaded with verbosity level', electron.logLevel);
 
     var controllerId = 'shell';
     var logSuccess = common.logger.getLogFn(controllerId, 'success');
@@ -12,7 +12,7 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
     menuConfigurator();
 
     $scope.$on('$viewContentLoaded', function () {
-        log.debug('Shell -> appLoaded at location.url', $location.url());
+        log.debug('Shell Controller: view content loaded');
         $rootScope.appLoaded = true;
     });
 
@@ -20,13 +20,13 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
 
     function activate() {
         logSuccess('Threat Dragon loaded!', null, true);
-        log.info('Threat Dragon loaded');
-        log.debug('Shell -> activate at location.url', $location.url());
+        log.info('Shell Controller: Threat Dragon loaded');
+        log.debug('Shell Controller: activate at location url', $location.url());
         common.activateController([], controllerId);
     }
 
     function menuConfigurator() {
-        log.debug('Shell -> menuConfigurator');
+        log.debug('Shell Controller: menuConfigurator');
         var template = [
             {
                 label: 'File',
@@ -60,14 +60,6 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                                 $scope.$apply();
                             },
                                 function () { });
-                        }
-                    },
-                    {
-                        label: 'Open Demo Model',
-                        accelerator: 'CmdOrCtrl+D',
-                        click: function() {
-                            $location.path('/threatmodel/demo');
-                            $scope.$apply();
                         }
                     },
                     {

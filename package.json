@@ -1,5 +1,5 @@
 {
-  "name": "owasp-threat-dragon",
+  "name": "threat-dragon",
   "version": "1.4.1",
   "private": false,
   "scripts": {
@@ -25,7 +25,10 @@
   "homepage": "https://threatdragon.github.io/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/owasp/threat-dragon.git"
+    "url": "git://github.com/OWASP/threat-dragon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"

@@ -10,8 +10,7 @@ app.config(['$qProvider', function ($qProvider) {
 
 //services
 app.factory('threatmodellocator', [require('../../app/services/threatmodellocator')]);
-app.factory('datacontextdemo', ['$q', '$http', require('../../app/services/datacontextdemo')]);
-app.factory('datacontext', ['$q', 'datacontextdemo', 'electron', require('../../app/services/datacontext')]);
+app.factory('datacontext', ['$q', 'electron', require('../../app/services/datacontext')]);
 // todo: tests for electron service
 // app.factory('electron', ['common', require('../../app/services/electron')]);
 

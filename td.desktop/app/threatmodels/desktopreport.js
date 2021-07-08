@@ -137,7 +137,7 @@ function desktopreport($q, $routeParams, $location, common, datacontext, threatm
             },
             function() {
                 logInfo('Cancelled save threat model');
-                log.info('Cancelled save threat model');
+                log.info('Desktop Report: cancelled save threat model');
                 done();
             });
 

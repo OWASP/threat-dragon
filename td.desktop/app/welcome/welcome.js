@@ -3,15 +3,15 @@
 function welcome($scope, $location, $route, common, electron, threatmodellocator) {
 
     const log = electron.log;
-    log.debug('Welcome loaded with verbosity level', electron.logLevel);
+    const logID = 'Welcome Controller: ';
+    log.debug(logID + 'loaded with verbosity level:', electron.logLevel);
 
     /*jshint validthis: true */
     var fs = require('fs');
     var controllerId = 'welcome';
-    var logError = common.logger.getLogFn(controllerId, 'error');
     var vm = this;
-    var getLogFn = common.logger.getLogFn;
-    var logInfo = getLogFn(controllerId);
+    var logInfo = common.logger.getLogFn(controllerId);
+    var logError = common.logger.getLogFn(controllerId, 'error');
 
     // Bindable properties and functions are placed on vm
     vm.title = 'Welcome';
@@ -21,48 +21,52 @@ function welcome($scope, $location, $route, common, electron, threatmodellocator
     activate();
 
     function activate() {
-        log.debug('Welcome -> activate at location.url', $location.url());
+        log.debug(logID + 'activate at location:', $location.url());
         common.activateController([], controllerId).then(function () { 
                  logInfo('Activated Welcome View');
-                 log.info('Activated Welcome View');
+                 log.info(logID, 'activated');
              });
     }
 
     function openModel() {
         electron.dialog.open(function (fileNames) {
-            log.debug('Welcome -> openModel file name', fileNames[0]);
+            log.debug(logID + 'openModel file name:', fileNames[0]);
             var path = threatmodellocator.getModelPath(fileNames[0]);
             if ($location.path() == '/threatmodel/' + path) {
                 $route.reload();
             } else {
                 $location.path('/threatmodel/' + path);
             }
-            log.debug('Welcome -> openModel -> location.url', $location.url());
+            log.debug(logID + 'open existing model location:', $location.url());
             $scope.$apply();
         },
-        function() {});
+        function() {
+             log.silly(logID + 'open cancelled');
+        });
     }
 
-    function openNewModel() {
-        log.debug('Welcome -> openNewModel');
-        var model = { summary: { title: "New Threat Model" }, detail: { contributors: [], diagrams: [] } };
+    function openNewModel(templateFile) {
+        log.debug(logID + 'open new model:', templateFile);
+        var model = require(templateFile);
         var success = true;
         electron.dialog.save(function (fileName) {
             fs.writeFileSync( fileName, JSON.stringify(model), 'utf8', function (err) {
                 if (err) {
                     logError(err);
                     success = false;
-                    log.error(err);
+                    log.error(logID + 'error:', err);
                 }
             });
             if (success) {
                 var path = threatmodellocator.getModelPath( fileName );
                 $location.path('/threatmodel/' + path);
-                log.debug('Welcome -> openNewModel -> location.url', $location.url());
+                log.debug(logID + 'save to location:', $location.url());
                 $scope.$apply();
             }
         },
-        function() {});
+        function() {
+            log.silly(logID + 'save cancelled');
+        });
     }
 }
 
