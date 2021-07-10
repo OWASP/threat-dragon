@@ -48,10 +48,14 @@
     "electron-log": "^4.2.4",
     "electron-squirrel-startup": "1.0.0",
     "font-awesome": "4.7.0",
+    "hotkeys-js": "^3.8.7",
+    "jointjs": "^2.2.1",
     "jquery": "3.5.1",
+    "json-rules-engine": "^6.1.2",
     "lodash": "4.17.21",
-    "owasp-threat-dragon-core": "1.4.0",
     "promise-fs": "2.1.1",
+    "pug-bootstrap": "^0.0.16",
+    "toastr": "^2.1.4",
     "yargs": "16.0.0"
   },
   "devDependencies": {
