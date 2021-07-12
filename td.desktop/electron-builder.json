@@ -36,6 +36,7 @@
     ]
   },
   "snap": {
+    "name": "threat-dragon",
     "grade": "stable"
   }
 }
