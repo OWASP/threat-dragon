@@ -39,14 +39,14 @@
     "bootstrap": "3.4.1",
     "copyfiles": "^2.4.1",
     "font-awesome": "4.7.0",
-    "hotkeys-js": "^3.7.6",
+    "hotkeys-js": "^3.8.7",
     "jointjs": "^2.2.1",
     "jquery": "^3.4.1",
     "json-rules-engine": "3.1.0",
     "lodash": "^4.17.19",
     "pug": "^3.0.1",
-    "pug-bootstrap": "0.0.16",
-    "toastr": "2.1.4"
+    "pug-bootstrap": "^0.0.16",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "angular-mocks": "1.8.0",
