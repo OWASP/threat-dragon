@@ -107,14 +107,21 @@ def get_sum(_root):
     return _sum
 
 # get the contributors as a list
+# contributors': [{'name': 'contrib'}]
 def get_contribs(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
         for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
             contribs = _contribs.text
     contributors = contribs.split(',')
-    return contributors
+    contrib_list = []
+    c_dict = dict.fromkeys(['name'])
+    for p in contributors:
+        c_dict['name'] = p
+        contrib_list.append(c_dict)
+    return contrib_list
 
 # get the contributors as a list
+# should work like contributors but doesn't
 def get_reviewers(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
         for _reviewrs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
@@ -144,9 +151,11 @@ def main():
     os.rename(file_path, base + '.json')
 
     model = dict.fromkeys(['summary','details'])
-    sum = get_sum(root)
-    model['summary'] = sum
-    # add Contributors & Reviewers
+    summary = get_sum(root)
+    model['summary'] = summary
+    model['details'] = dict.fromkeys(['contributors','diagrams','reviewer'])
+    model['details']['contributors'] = get_contribs()
+    model['details']['reviewer'] = get_reviewers()
 
     # add diagrams
     with open(file_path, 'w') as outfile:
