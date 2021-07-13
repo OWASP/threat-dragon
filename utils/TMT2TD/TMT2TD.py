@@ -1,4 +1,5 @@
 ## the script converts MS TMT models to Threat Dragon models
+## goal: parse TMT XML model into a dict that can be dumped into TD's json format
 ## Work in progress
 
 import xml.etree.ElementTree as ET
@@ -90,7 +91,7 @@ def get_notes(_root):
         return msgs
 
 # get the summary info for the model
-# missing: Contributors, Reviewer, ExternalDependencies, 
+# missing: Assumptions, ExternalDependencies, 
 def get_sum(_root):
     _sum = dict.fromkeys(['title','owner','description'])
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
@@ -104,6 +105,22 @@ def get_sum(_root):
     _sum['owner'] = owner
     _sum['description'] = desc
     return _sum
+
+# get the contributors as a list
+def get_contribs(_root):
+    for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
+        for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
+            contribs = _contribs.text
+    contributors = contribs.split(',')
+    return contributors
+
+# get the contributors as a list
+def get_reviewers(_root):
+    for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
+        for _reviewrs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
+            revs = _reviewrs.text
+    reviewers = revs.split(',')
+    return reviewers
 
 def main():
     root = tk.Tk()
@@ -129,7 +146,9 @@ def main():
     model = dict.fromkeys(['summary','details'])
     sum = get_sum(root)
     model['summary'] = sum
+    # add Contributors & Reviewers
 
+    # add diagrams
     with open(file_path, 'w') as outfile:
         # get elements, borders, and notes
         for child in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceList'):
