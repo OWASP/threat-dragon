@@ -110,12 +110,12 @@ def get_sum(_root):
 # contributors': [{'name': 'contrib'}]
 def get_contribs(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
-        for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
-            contribs = _contribs.text
-    contributors = contribs.split(',')
+        for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Contributors'):
+            contribs = _contribs.text.split(',')
+    print(contribs)
     contrib_list = []
     c_dict = dict.fromkeys(['name'])
-    for p in contributors:
+    for p in contribs:
         c_dict['name'] = p
         contrib_list.append(c_dict)
     return contrib_list
@@ -124,9 +124,8 @@ def get_contribs(_root):
 # should work like contributors but doesn't
 def get_reviewers(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
-        for _reviewrs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatModelName'):
-            revs = _reviewrs.text
-    reviewers = revs.split(',')
+        for _reviewrs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Reviewer'):
+            reviewers = _reviewrs.text
     return reviewers
 
 def main():
@@ -148,14 +147,17 @@ def main():
 
     # remame extension
     base = os.path.splitext(file_path)[0]
-    os.rename(file_path, base + '.json')
+    file_path = base + '.json'
 
     model = dict.fromkeys(['summary','details'])
     summary = get_sum(root)
     model['summary'] = summary
     model['details'] = dict.fromkeys(['contributors','diagrams','reviewer'])
-    model['details']['contributors'] = get_contribs()
-    model['details']['reviewer'] = get_reviewers()
+    model['details']['contributors'] = get_contribs(root)
+    model['details']['reviewer'] = get_reviewers(root)
+
+    # find all note elements
+    notes = get_notes(root)
 
     # add diagrams
     with open(file_path, 'w') as outfile:
@@ -165,12 +167,12 @@ def main():
                 for borders in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     #writer.writerow(['GenericTypeId','GUID','Name', '', '', 'Element Properties'])
                     stencils = get_element(borders)
-                for lines in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
+                for line in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # Flows. Unlike stencils, flows have a source and target guids
                     # writer.writerow(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'Element Properties'])
-                    lines = get_element(lines)
-        # find all note elements
-        notes = get_notes()
+                    lines = get_element(line)
+        # Serializing json
+        json.dump(model, outfile, indent=4, sort_keys=False)
 
 
 if __name__ == '__main__':
