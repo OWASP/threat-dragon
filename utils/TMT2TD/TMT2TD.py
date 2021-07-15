@@ -166,7 +166,7 @@ def main():
             diagram_num = 0
             model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
-            model['details']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys('cells')
+            model['details']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['details']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
@@ -182,6 +182,7 @@ def main():
                     lines = get_element(line)
                 # diagram id
                 model['details']['diagrams'][diagram_num]['id'] = diagram_num
+                model['details']['diagrams'][diagram_num]['diagramJson']['cells'].clear()
                 diagram_num = diagram_num + 1
         # Serializing json
         json.dump(model, outfile, indent=4, sort_keys=False)
