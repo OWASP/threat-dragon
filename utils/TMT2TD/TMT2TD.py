@@ -107,12 +107,10 @@ def get_sum(_root):
     return _sum
 
 # get the contributors as a list
-# contributors': [{'name': 'contrib'}]
 def get_contribs(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
         for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Contributors'):
             contribs = _contribs.text.split(',')
-    print(contribs)
     contrib_list = []
     c_dict = dict.fromkeys(['name'])
     for p in contribs:
@@ -159,11 +157,18 @@ def main():
     # find all note elements
     notes = get_notes(root)
 
+    diagrams = list()
+    model['details']['diagrams'] = diagrams
     # add diagrams
     with open(file_path, 'w') as outfile:
         # get elements, borders, and notes
         for child in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceList'):
+            diagram_num = 0
+            model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
+                for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
+                    diagram = header.text
+                    model['details']['diagrams'][diagram_num]['title'] = diagram
                 for borders in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     #writer.writerow(['GenericTypeId','GUID','Name', '', '', 'Element Properties'])
                     stencils = get_element(borders)
@@ -171,6 +176,9 @@ def main():
                     # Flows. Unlike stencils, flows have a source and target guids
                     # writer.writerow(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'Element Properties'])
                     lines = get_element(line)
+                # diagram id
+                model['details']['diagrams'][diagram_num]['id'] = diagram_num
+                diagram_num = diagram_num + 1
         # Serializing json
         json.dump(model, outfile, indent=4, sort_keys=False)
 
