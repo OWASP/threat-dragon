@@ -14,7 +14,7 @@ any_namespace = {'a': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays
 
 def get_element(ele2):
      # set up dictionaries
-    # single element dict
+    # TODO: change to return the "cells" dict format
     element = dict.fromkeys(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'properties'])
     elements = []
     # create a custom element properties dict
@@ -165,6 +165,9 @@ def main():
         for child in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceList'):
             diagram_num = 0
             model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
+            # cells contain all stencils and flows
+            model['details']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys('cells')
+            model['details']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
                     diagram = header.text
@@ -172,6 +175,7 @@ def main():
                 for borders in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     #writer.writerow(['GenericTypeId','GUID','Name', '', '', 'Element Properties'])
                     stencils = get_element(borders)
+                    #model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append()
                 for line in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # Flows. Unlike stencils, flows have a source and target guids
                     # writer.writerow(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'Element Properties'])
