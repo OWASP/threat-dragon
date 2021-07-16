@@ -23,6 +23,7 @@ def find_ele_type(tmt_type):
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
         cell['size'] = dict.fromkeys(['width','height'])
         cell['pos'] = dict.fromkeys(['x','y'])
+        cell['angle'] = 0
         if tmt_type == "StencilRectangle":
             ele_type = "tm.Actor"
         elif tmt_type == "StencilEllipse":
