@@ -15,22 +15,30 @@ any_namespace = {'a': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays
 
 def find_ele_type(tmt_type):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
-    if tmt_type == "Connector":
-        ele_type = "tm.Flow"
+    if tmt_type == "Connector" or tmt_type == "BorderBoundary":
         # flows have source and target, so choose different dict format
         cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'labels', 'z','hasOpenThreats','threats','attrs'])
+        if tmt_type == "Connector":
+            ele_type = "tm.Flow"
+            cell['attrs'] = dict.fromkeys(['.marker-target', '.connection'])
+            cell['attrs']['.marker-target'] = 'marker-target hasNoOpenThreats isInScope'
+            cell['attrs']['.connection'] = 'connection hasNoOpenThreats isInScope'
+        else:
+            ele_type = "tm.Boundary"
+            cell['attrs'] = dict()
         cell['smooth'] = True
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
         cell['size'] = dict.fromkeys(['width','height'])
         cell['pos'] = dict.fromkeys(['x','y'])
         cell['angle'] = int(0)
+        cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
+        cell['attrs']['.element-shape'] = "element-shape hasNoOpenThreats isInScope"
+        cell['attrs']['.element-text'] = "element-text hasNoOpenThreats isInScope"
         if tmt_type == "StencilRectangle":
             ele_type = "tm.Actor"
         elif tmt_type == "StencilEllipse":
             ele_type = "tm.Process"
-        elif tmt_type == "BorderBoundary":
-            ele_type = "tm.Boundary"
         elif tmt_type == "StencilParallelLines":
             ele_type = "tm.Store"
         else:
@@ -49,10 +57,6 @@ def get_element(ele, _z):
         cell = find_ele_type(ele4.attrib)
 
         cell['z'] = _z
-        cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
-        # TODO: change this
-        cell['attrs']['.element-shape'] = "element-shape hasNoOpenThreats isInScope"
-        cell['attrs']['.element-text'] = "element-text hasNoOpenThreats isInScope"
         # create a custom element properties dict
         ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
         ele_props = []
@@ -68,6 +72,8 @@ def get_element(ele, _z):
             cell['source'] = source.text
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
             cell['target'] = target.text
+        # TODO: find size of the diagram from max dims in a seprate function
+        # TODO: boundaries need to be converted from box to lines. Could present problems.
         for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
             cell['pos']['y'] = int(y.text)
         for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
@@ -113,7 +119,7 @@ def get_element(ele, _z):
                 ele_props.append(ele_prop.copy())
                 ele_prop.clear()
         # save prop list to element dict
-        # TODO: how do we transfer element properties to model?
+        # TODO: how do we transfer element properties to model? otherwise they will be left
         #element['properties'] = ele_props
         # print(element['properties'])
     return cell
@@ -208,7 +214,7 @@ def main():
             # what is diagramType?
             model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
-            model['detail']['diagrams'][diagram_num]['thumbnail'] = "./public/content/images/thumbnail.jpg"
+            model['detail']['diagrams'][diagram_num]['thumbnail'] = None
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
