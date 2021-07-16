@@ -1,6 +1,7 @@
 ## the script converts MS TMT models to Threat Dragon models
-## goal: parse TMT XML model into a dict that can be dumped into TD's json format
+## goal: parse TMT XML model into a dict that can be dumped into THreat Dragon's json format
 ## Work in progress
+## https://github.com/jgadsden/owasp-threat-dragon-models/tree/master/ThreatDragonModels
 
 import xml.etree.ElementTree as ET
 import os
@@ -12,31 +13,50 @@ from tkinter import filedialog
 ele_namespace = {'b': 'http://schemas.datacontract.org/2004/07/ThreatModeling.KnowledgeBase'}
 any_namespace = {'a': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'}
 
+def find_ele_type(tmt_type):
+    tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
+    if tmt_type == "Connector":
+        ele_type = "tm.Flow"
+        # flows have source and target, so choose different dict format
+        cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'labels', 'z','hasOpenThreats','threats','attrs'])
+    else:
+        cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
+        if tmt_type == "StencilRectangle":
+            ele_type = "tm.Actor"
+        elif tmt_type == "StencilEllipse":
+            ele_type = "tm.Process"
+        elif tmt_type == "BorderBoundary":
+            ele_type = "tm.Boundary"
+        elif tmt_type == "StencilParallelLines":
+            ele_type = "tm.Store"
+        else:
+            return None
+    cell['type'] = ele_type
+    return cell
+
 def get_element(ele):
-     # set up dictionaries
-    # TODO: change to return the "cells" dict format
-    cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
-
-    element = dict.fromkeys(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'properties'])
-    # create a custom element properties dict
-    ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
-    ele_props = []
-    # temp list of property values
-    _values = []
-
-    # GUID also at this level
+        # GUID also at this level
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
-        tmt_type = ele4.text
-        print(tmt_type)
+        # find element type and get cell dict format
+        cell = find_ele_type(ele4.attrib)
+
+        cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
+        # create a custom element properties dict
+        ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
+        ele_props = []
+        # temp list of property values
+        _values = []
+
+        # TODO: do we need to change dict format based on type?
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
-        for gen_type in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}GenericTypeId'):
-            element['GenericTypeId'] = gen_type.text
+        # for gen_type in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}GenericTypeId'):
+        #     element['GenericTypeId'] = gen_type.text
         for source in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}SourceGuid'):
-            element['SourceGuid'] = source.text
+            cell['source'] = source.text
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
-            element['TargetGuid'] = target.text
+            cell['target'] = target.text
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
             # get all child elements of anyType element, all properties located here
@@ -59,7 +79,7 @@ def get_element(ele):
                         _values.append(value.text)
                     # set custom element name 
                     if ele_prop['PropName'] == 'Name':
-                        element['Name'] = value.text
+                        cell['attrs']['text'] = value.text
                         ele_prop['PropValues'] = _values.copy()
                 else:
                     # get prop selection
@@ -73,9 +93,10 @@ def get_element(ele):
                 ele_props.append(ele_prop.copy())
                 ele_prop.clear()
         # save prop list to element dict
-        element['properties'] = ele_props
+        # TODO: how do we transfer element properties to model?
+        #element['properties'] = ele_props
         # print(element['properties'])
-    return element
+    return cell
 
 def get_notes(_root):
         msgs = []
@@ -162,6 +183,7 @@ def main():
         # get elements, borders, and notes
         for child in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceList'):
             diagram_num = 0
+            # what is diagramType?
             model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
             model['details']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
@@ -173,15 +195,14 @@ def main():
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     # this level enumerates a model's elements
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
-                        #writer.writerow(['GenericTypeId','GUID','Name', '', '', 'Element Properties'])
                         stencil = get_element(borders)
                         model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # this level enumerates a model's elements
                     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                     # Flows. Unlike stencils, flows have a source and target guids
-                    # writer.writerow(['GenericTypeId','GUID','Name','SourceGuid','TargetGuid', 'Element Properties'])
                         line = get_element(lines)
+                        model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
                 # diagram id
                 model['details']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
