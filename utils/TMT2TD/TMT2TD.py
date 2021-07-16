@@ -19,6 +19,7 @@ def find_ele_type(tmt_type):
         ele_type = "tm.Flow"
         # flows have source and target, so choose different dict format
         cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'labels', 'z','hasOpenThreats','threats','attrs'])
+        cell['smooth'] = True
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
         cell['size'] = dict.fromkeys(['width','height'])
@@ -34,6 +35,10 @@ def find_ele_type(tmt_type):
             ele_type = "tm.Store"
         else:
             return None
+    # TODO: change this
+    cell['hasOpenThreats'] = False
+    cell['threats'] = list()
+
     cell['type'] = ele_type
     return cell
 
@@ -45,6 +50,9 @@ def get_element(ele, _z):
 
         cell['z'] = _z
         cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
+        # TODO: change this
+        cell['attrs']['.element-shape'] = "element-shape hasNoOpenThreats isInScope"
+        cell['attrs']['.element-text'] = "element-text hasNoOpenThreats isInScope"
         # create a custom element properties dict
         ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
         ele_props = []
@@ -200,6 +208,7 @@ def main():
             # what is diagramType?
             model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
+            model['detail']['diagrams'][diagram_num]['thumbnail'] = "./public/content/images/thumbnail.jpg"
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
