@@ -23,7 +23,7 @@ def find_ele_type(tmt_type):
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
         cell['size'] = dict.fromkeys(['width','height'])
         cell['pos'] = dict.fromkeys(['x','y'])
-        cell['angle'] = 0
+        cell['angle'] = int(0)
         if tmt_type == "StencilRectangle":
             ele_type = "tm.Actor"
         elif tmt_type == "StencilEllipse":
@@ -49,6 +49,7 @@ def get_element(ele, _z):
         ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
         ele_props = []
         # temp list of property values
+        
         _values = []
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
@@ -60,13 +61,13 @@ def get_element(ele, _z):
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
             cell['target'] = target.text
         for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
-            cell['pos']['y'] = y.text
+            cell['pos']['y'] = int(y.text)
         for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
-            cell['pos']['x'] = x.text
+            cell['pos']['x'] = int(x.text)
         for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
-            cell['size']['height'] = top.text
+            cell['size']['height'] = int(top.text)
         for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
-            cell['size']['width'] = width.text
+            cell['size']['width'] = int(width.text)
 
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
@@ -177,18 +178,18 @@ def main():
     base_name = os.path.splitext(file_path)[0]
     file_path = base_name + '.json'
 
-    model = dict.fromkeys(['summary','details'])
+    model = dict.fromkeys(['summary','detail'])
     summary = get_sum(root)
     model['summary'] = summary
-    model['details'] = dict.fromkeys(['contributors','diagrams','reviewer'])
-    model['details']['contributors'] = get_contribs(root)
-    model['details']['reviewer'] = get_reviewers(root)
+    model['detail'] = dict.fromkeys(['contributors','diagrams','reviewer'])
+    model['detail']['contributors'] = get_contribs(root)
+    model['detail']['reviewer'] = get_reviewers(root)
 
     # find all note elements
     notes = get_notes(root)
 
     diagrams = list()
-    model['details']['diagrams'] = diagrams
+    model['detail']['diagrams'] = diagrams
     # add diagrams
     with open(file_path, 'w') as outfile:
         # get elements, borders, and notes
@@ -197,29 +198,29 @@ def main():
             # indexing/numbering for TD elements
             z = 1
             # what is diagramType?
-            model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
+            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
-            model['details']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
-            model['details']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
+            model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
+            model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
                     diagram = header.text
-                    model['details']['diagrams'][diagram_num]['title'] = diagram
+                    model['detail']['diagrams'][diagram_num]['title'] = diagram
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     # this level enumerates a model's elements
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                         stencil = get_element(borders, z)
-                        model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
+                        model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
                         z=z+1
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # this level enumerates a model's elements
                     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                     # Flows. Unlike stencils, flows have a source and target guids
                         line = get_element(lines, z)
-                        model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
+                        model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
                         z=z+1
                 # diagram id
-                model['details']['diagrams'][diagram_num]['id'] = diagram_num
+                model['detail']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
         # Serializing json
         json.dump(model, outfile, indent=4, sort_keys=False)
