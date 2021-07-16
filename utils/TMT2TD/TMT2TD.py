@@ -74,14 +74,18 @@ def get_element(ele, _z):
             cell['target'] = target.text
         # TODO: find size of the diagram from max dims in a seprate function
         # TODO: boundaries need to be converted from box to lines. Could present problems.
-        for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
-            cell['pos']['y'] = int(y.text)
-        for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
-            cell['pos']['x'] = int(x.text)
-        for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
-            cell['size']['height'] = int(top.text)
-        for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
-            cell['size']['width'] = int(width.text)
+        if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
+            for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+                cell['pos']['y'] = int(y.text)
+            for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+                cell['pos']['x'] = int(x.text)
+            for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+                cell['size']['height'] = int(top.text)
+            for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+                cell['size']['width'] = int(width.text)
+        # TODO: support lines and boundaries
+        # TODO: verticy of boundary should be calulated halfway between source and target x,y
+        #else:
 
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
