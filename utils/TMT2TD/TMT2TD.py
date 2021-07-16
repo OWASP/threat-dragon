@@ -21,6 +21,8 @@ def find_ele_type(tmt_type):
         cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'labels', 'z','hasOpenThreats','threats','attrs'])
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
+        cell['size'] = dict.fromkeys(['width','height'])
+        cell['pos'] = dict.fromkeys(['x','y'])
         if tmt_type == "StencilRectangle":
             ele_type = "tm.Actor"
         elif tmt_type == "StencilEllipse":
@@ -34,20 +36,19 @@ def find_ele_type(tmt_type):
     cell['type'] = ele_type
     return cell
 
-def get_element(ele):
+def get_element(ele, _z):
         # GUID also at this level
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
         # find element type and get cell dict format
         cell = find_ele_type(ele4.attrib)
 
+        cell['z'] = _z
         cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
         # create a custom element properties dict
         ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
         ele_props = []
         # temp list of property values
         _values = []
-
-        # TODO: do we need to change dict format based on type?
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
@@ -57,6 +58,15 @@ def get_element(ele):
             cell['source'] = source.text
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
             cell['target'] = target.text
+        for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+            cell['pos']['y'] = y.text
+        for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+            cell['pos']['x'] = x.text
+        for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+            cell['size']['height'] = top.text
+        for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+            cell['size']['width'] = width.text
+
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
             # get all child elements of anyType element, all properties located here
@@ -183,6 +193,8 @@ def main():
         # get elements, borders, and notes
         for child in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceList'):
             diagram_num = 0
+            # indexing/numbering for TD elements
+            z = 1
             # what is diagramType?
             model['details']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
             # cells contain all stencils and flows
@@ -195,14 +207,16 @@ def main():
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     # this level enumerates a model's elements
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
-                        stencil = get_element(borders)
+                        stencil = get_element(borders, z)
                         model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
+                        z=z+1
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # this level enumerates a model's elements
                     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                     # Flows. Unlike stencils, flows have a source and target guids
-                        line = get_element(lines)
+                        line = get_element(lines, z)
                         model['details']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
+                        z=z+1
                 # diagram id
                 model['details']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
