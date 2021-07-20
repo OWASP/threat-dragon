@@ -78,6 +78,47 @@ def get_ele_size(cell, ele):
         cell['size']['width'] = int(width.text)
     return cell
 
+def get_ele_name_prop(ele):
+    # create a custom element properties dict
+    ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
+    ele_props = []
+    # temp list of property values
+    _values = []
+    # element properties are at this level
+    for props in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
+        for types in props.findall('.//a:anyType', any_namespace):
+        # get all child elements of anyType element, all properties located here
+            for dis_name in types.findall('.//b:DisplayName', ele_namespace):   
+                ele_prop['PropName'] = dis_name.text
+            for prop_guid in types.findall('.//b:Name', ele_namespace):   
+                if prop_guid.text:
+                    ele_prop['PropGUID'] = prop_guid.text
+                else:
+                    ele_prop['PropGUID'] = ''
+            selection = types.find('.//b:SelectedIndex', ele_namespace)   
+            if selection is None:
+                ele_prop['SelectedIndex'] = ''
+                # get all prop values
+                value = types.find('.//b:Value', ele_namespace)
+                # set values
+                if value.text is None:
+                    _values.append('')
+                else:
+                    _values.append(value.text)
+                # set custom element name 
+                if ele_prop['PropName'] == 'Name':
+                    return value.text
+                    #ele_prop['PropValues'] = _values.copy()
+                # add prop to prop list
+            _values.clear()
+            ele_props.append(ele_prop.copy())
+            ele_prop.clear()
+        return None
+    # save prop list to element dict
+    # TODO: how do we transfer element properties to TD model? Do we need to? otherwise they will be left
+    #element['properties'] = ele_props
+    # print(element['properties'])
+
 # find type, source, target, and vertices
 def find_ele_type(tmt_type, ele):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
@@ -122,7 +163,8 @@ def find_ele_type(tmt_type, ele):
             ele_type = "tm.Store"
         else:
             return None
-        cell = get_ele_size(cell, tmt_type)
+        cell = get_ele_size(cell, ele)
+        cell['attrs']['text'] = get_ele_name_prop(ele)
     # default for now
     cell['hasOpenThreats'] = False
 
@@ -145,51 +187,7 @@ def get_element(ele, _z):
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
-        # create a custom element properties dict
-        ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
-        ele_props = []
-        # temp list of property values
-        _values = []
-        # element properties are at this level
-        for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
-            for types in props.findall('.//a:anyType', any_namespace):
-            # get all child elements of anyType element, all properties located here
-                for dis_name in types.findall('.//b:DisplayName', ele_namespace):   
-                    ele_prop['PropName'] = dis_name.text
-                for prop_guid in types.findall('.//b:Name', ele_namespace):   
-                    if prop_guid.text:
-                        ele_prop['PropGUID'] = prop_guid.text
-                    else:
-                        ele_prop['PropGUID'] = ''
-                selection = types.find('.//b:SelectedIndex', ele_namespace)   
-                if selection is None:
-                    ele_prop['SelectedIndex'] = ''
-                    # get all prop values
-                    value = types.find('.//b:Value', ele_namespace)
-                    # set values
-                    if value.text is None:
-                        _values.append('')
-                    else:
-                        _values.append(value.text)
-                    # set custom element name 
-                    if ele_prop['PropName'] == 'Name':
-                        cell['attrs']['text'] = value.text
-                        ele_prop['PropValues'] = _values.copy()
-                else:
-                    # get prop selection
-                    ele_prop['SelectedIndex'] = selection.text
-                    # get value list for selection
-                    for values in types.findall('.//b:Value/*', ele_namespace):
-                        _values.append(values.text)
-                    ele_prop['PropValues'] = _values.copy()
-                    # add prop to prop list
-                _values.clear()
-                ele_props.append(ele_prop.copy())
-                ele_prop.clear()
-        # save prop list to element dict
-        # TODO: how do we transfer element properties to TD model? Do we need to? otherwise they will be left
-        #element['properties'] = ele_props
-        # print(element['properties'])
+        
     return cell
 
 # given all the elements, calulate and save the max dimentions for x and y
