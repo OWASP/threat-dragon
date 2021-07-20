@@ -17,7 +17,7 @@ def find_ele_type(tmt_type):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
     if tmt_type == "Connector" or tmt_type == "BorderBoundary":
         # flows have source and target, so choose different dict format
-        cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'labels', 'z','hasOpenThreats','threats','attrs'])
+        cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'z','hasOpenThreats','threats','attrs'])
         if tmt_type == "Connector":
             ele_type = "tm.Flow"
             cell['attrs'] = dict.fromkeys(['.marker-target', '.connection'])
@@ -26,6 +26,9 @@ def find_ele_type(tmt_type):
         else:
             ele_type = "tm.Boundary"
             cell['attrs'] = dict()
+        cell['source'] = dict.fromkeys(['x', 'y'])
+        cell['target'] = dict.fromkeys(['x', 'y'])
+        cell['vertices'] = list()
         cell['smooth'] = True
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
@@ -77,7 +80,6 @@ def get_element(ele, _z):
             cell['source'] = source.text
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
             cell['target'] = target.text
-        # TODO: boundaries need to be converted from box to lines. Could present problems.
         if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
             for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
                 cell['pos']['y'] = int(y.text)
@@ -87,8 +89,26 @@ def get_element(ele, _z):
                 cell['size']['height'] = int(top.text)
             for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
                 cell['size']['width'] = int(width.text)
+        # Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import as lines
+        if cell['type'] == 'tm.Boundary':
+            cell['vertices'].append(dict.fromkeys(['x','y']))
+            for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+                _h = int(y.text)
+            for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+                _x = int(x.text)
+                cell['source']['x'] = _x
+                cell['target']['x'] = _x
+                cell['vertices'][0]['x'] = _x
+            for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+                _y = int(top.text)
+                cell['source']['y'] = _y + _h
+                cell['target']['y'] = _y
+                # verticy of boundary should be calulated halfway between source and target x,y
+                cell['vertices'][0]['y'] = (_h - _y) /2
+
+            # for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+            #     cell['size']['width'] = int(width.text)
         # TODO: support lines and boundaries
-        # TODO: verticy of boundary should be calulated halfway between source and target x,y
         #else:
 
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
@@ -127,7 +147,7 @@ def get_element(ele, _z):
                 ele_props.append(ele_prop.copy())
                 ele_prop.clear()
         # save prop list to element dict
-        # TODO: how do we transfer element properties to model? Do we need to? otherwise they will be left
+        # TODO: how do we transfer element properties to TD model? Do we need to? otherwise they will be left
         #element['properties'] = ele_props
         # print(element['properties'])
     return cell
@@ -278,13 +298,14 @@ def main():
                         stencil = get_element(borders, z)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
                         z=z+1
-                for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
-                    # this level enumerates a model's elements
-                    for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
-                    # Flows. Unlike stencils, flows have a source and target guids
-                        line = get_element(lines, z)
-                        model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
-                        z=z+1
+                # TODO: add lines back in        
+                # for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
+                #     # this level enumerates a model's elements
+                #     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
+                #     # Flows. Unlike stencils, flows have a source and target guids
+                #         line = get_element(lines, z)
+                #         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
+                #         z=z+1
                 # diagram id
                 model['detail']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
