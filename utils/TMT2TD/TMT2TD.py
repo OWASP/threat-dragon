@@ -13,13 +13,37 @@ from tkinter import filedialog
 ele_namespace = {'b': 'http://schemas.datacontract.org/2004/07/ThreatModeling.KnowledgeBase'}
 any_namespace = {'a': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'}
 
+# get points for Flows and Boundary (BoundaryLines in MS TMT)
+def get_flow_points(_cell,ele):
+    for src_x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}SourceX'):
+        _src_x = int(src_x.text)
+    for src_y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}SourceY'):
+        _src_y = int(src_y.text)
+    for tar_x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetX'):
+        _tar_x = int(tar_x.text)
+    for tar_y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetY'):
+        _tar_y = int(tar_y.text)
+    # single verticy in MS TMT lines
+    for vert_x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}HandleX'):
+        _vert_x = int(vert_x.text)
+    for vert_y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}HandleY'):
+        _vert_y = int(vert_y.text)
+    _cell['source']['x'] = _src_x
+    _cell['source']['y'] = _src_y
+    _cell['target']['x'] = _tar_x
+    _cell['target']['y'] = _tar_y
+    _cell['vertices'].append(dict.fromkeys(['x','y']))
+    _cell['vertices'][0]['x'] = _vert_x
+    _cell['vertices'][0]['y'] = _vert_y
+    return
+
+# Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import
+# creates a box from 5 points: source and target are same point and vertices make up the 3
+# other points of the rectangle 
+# always 3 for boxes
 def calc_boundary_box(cell, ele):
-    # Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import
-    # creates a box from 5 points: source and target are same point and vertices make up the 3
-    # other points of the rectangle 
-    cell['source'] = dict.fromkeys(['x', 'y'])
-    cell['target'] = dict.fromkeys(['x', 'y'])
-    cell['vertices'] = list()
+    cell['vertices'].append(dict.fromkeys(['x','y']))
+    cell['vertices'].append(dict.fromkeys(['x','y']))
     cell['vertices'].append(dict.fromkeys(['x','y']))
     for y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
         _height = int(y.text)
@@ -29,26 +53,59 @@ def calc_boundary_box(cell, ele):
         _left = int(x.text)
     for top in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
          _top = int(top.text)
+    # source and target are same
+    cell['source']['x'] = _left
+    cell['source']['y'] = _top
+    cell['target']['x'] = _left
+    cell['target']['y'] = _top
+    # vertices make up the 3 other points of the rectangle
+    cell['vertices'][0]['x'] = _left + _width
+    cell['vertices'][0]['y'] = _top
+    cell['vertices'][1]['x'] = _left + _width
+    cell['vertices'][1]['y'] = _top + _height
+    cell['vertices'][2]['x'] = _left
+    cell['vertices'][2]['y'] = _top + _height
+    return cell
 
+def get_ele_size(cell, ele):
+    if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
+        for y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+            cell['pos']['y'] = int(y.text)
+        for x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+            cell['pos']['x'] = int(x.text)
+        for top in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+            cell['size']['height'] = int(top.text)
+        for width in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+            cell['size']['width'] = int(width.text)
+    return cell
 
-
+# find type, source, target, and vertices
 def find_ele_type(tmt_type):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
     if tmt_type == "Connector" or tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
         # flows have source and target, so choose different dict format
-        cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'z','hasOpenThreats','threats','attrs'])
-        if tmt_type == "Connector" or tmt_type == "LineBoundary":
+        cell = dict.fromkeys(['type', 'size', 'smooth','source','target','vertices','id', 'z','hasOpenThreats','threats','attrs'])
+        cell['source'] = dict.fromkeys(['x', 'y'])
+        cell['target'] = dict.fromkeys(['x', 'y'])
+        cell['vertices'] = list()
+        if tmt_type == "Connector":
             ele_type = "tm.Flow"
-            cell['attrs'] = dict.fromkeys(['.marker-target', '.connection'])
-            cell['attrs']['.marker-target'] = 'marker-target hasNoOpenThreats isInScope'
-            cell['attrs']['.connection'] = 'connection hasNoOpenThreats isInScope'
-            # TODO: get cords for TMT "lines"
-            #get_flow_points(cell,tmt_type)
-        else:
+        elif tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
             ele_type = "tm.Boundary"
-            calc_boundary_box(cell, tmt_type)
+            if tmt_type == "BorderBoundary":
+                cell = calc_boundary_box(cell, tmt_type)
             cell['attrs'] = dict()
+        else:
+            return None
+        #  get cords from MS TMT "lines" since boxes and lines are different in MS TMT
+        if tmt_type == "LineBoundary" or tmt_type == "Connector":
+            get_flow_points(cell,tmt_type)
         cell['smooth'] = True
+        cell['size'] = dict.fromkeys(['width','height'])
+        # defaults size for boundary or flows
+        cell['size']['width'] = int(10)
+        cell['size']['height'] = int(10)
+
     # must be a process, datastore, or EI
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
@@ -66,7 +123,8 @@ def find_ele_type(tmt_type):
             ele_type = "tm.Store"
         else:
             return None
-    # default
+        cell = get_ele_size(cell, tmt_type)
+    # default for now
     cell['hasOpenThreats'] = False
 
     # TODO: get_ele_threats
@@ -94,27 +152,7 @@ def get_element(ele, _z):
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
-        # for gen_type in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}GenericTypeId'):
-        #     element['GenericTypeId'] = gen_type.text
-        for source in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}SourceGuid'):
-            cell['source'] = source.text
-        for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
-            cell['target'] = target.text
-        if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
-            for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
-                cell['pos']['y'] = int(y.text)
-            for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
-                cell['pos']['x'] = int(x.text)
-            for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
-                cell['size']['height'] = int(top.text)
-            for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
-                cell['size']['width'] = int(width.text)
-
-            # for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
-            #     cell['size']['width'] = int(width.text)
-        # TODO: support lines and boundaries
-        #else:
-
+        # element properties are at this level
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
             # get all child elements of anyType element, all properties located here
@@ -156,6 +194,8 @@ def get_element(ele, _z):
         # print(element['properties'])
     return cell
 
+# given all the elements, calulate and save the max dimentions for x and y
+# used to determine screen size
 def cal_max_size(ele):
     x = 0
     y = 0
@@ -285,15 +325,14 @@ def main():
             diagram_num = 0
             # indexing/numbering for TD elements
             z = 1
-            # TODO: address what is diagramType? Should we determine this?
             model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'size','diagramType']))
-            # cells contain all stencils and flows
             # default to STRIDE for MS TMT, although you can use different methodology/category in an MS template, it's not
             # common (TODO: although in future we should hanlde any non-STRIDE threats). "STRIDE per element" is MS TMT defualt methodology
             # note that with the way MS TMT uses "STRIDE per element", all MS threats origionate in FLOWS only (generated threats are sorted by "interactor")  
             # even if they deal with the target element
             model['detail']['diagrams'][diagram_num]['diagramType'] = "STRIDE"
             model['detail']['diagrams'][diagram_num]['thumbnail'] = "./public/content/images/thumbnail.stride.jpg"
+            # cells contain all stencils and flows
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
