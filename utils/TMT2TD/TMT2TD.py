@@ -68,19 +68,18 @@ def calc_boundary_box(cell, ele):
     return cell
 
 def get_ele_size(cell, ele):
-    if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
-        for y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
-            cell['pos']['y'] = int(y.text)
-        for x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
-            cell['pos']['x'] = int(x.text)
-        for top in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
-            cell['size']['height'] = int(top.text)
-        for width in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
-            cell['size']['width'] = int(width.text)
+    for y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+        cell['pos']['y'] = int(y.text)
+    for x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+        cell['pos']['x'] = int(x.text)
+    for top in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+        cell['size']['height'] = int(top.text)
+    for width in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+        cell['size']['width'] = int(width.text)
     return cell
 
 # find type, source, target, and vertices
-def find_ele_type(tmt_type):
+def find_ele_type(tmt_type, ele):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
     if tmt_type == "Connector" or tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
         # flows have source and target, so choose different dict format
@@ -93,13 +92,13 @@ def find_ele_type(tmt_type):
         elif tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
             ele_type = "tm.Boundary"
             if tmt_type == "BorderBoundary":
-                cell = calc_boundary_box(cell, tmt_type)
+                cell = calc_boundary_box(cell, ele)
             cell['attrs'] = dict()
         else:
             return None
         #  get cords from MS TMT "lines" since boxes and lines are different in MS TMT
         if tmt_type == "LineBoundary" or tmt_type == "Connector":
-            get_flow_points(cell,tmt_type)
+            get_flow_points(cell, ele)
         cell['smooth'] = True
         cell['size'] = dict.fromkeys(['width','height'])
         # defaults size for boundary or flows
@@ -140,18 +139,17 @@ def get_element(ele, _z):
         # GUID also at this level
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
         # find element type and get cell dict format
-        cell = find_ele_type(ele4.attrib)
+        cell = find_ele_type(ele4.attrib, ele4)
 
         cell['z'] = _z
+        # get GUID
+        for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
+            cell['id'] = guid.text
         # create a custom element properties dict
         ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
         ele_props = []
         # temp list of property values
-        
         _values = []
-        # get GUID
-        for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
-            cell['id'] = guid.text
         # element properties are at this level
         for props in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
             for types in props.findall('.//a:anyType', any_namespace):
@@ -214,7 +212,6 @@ def cal_max_size(ele):
     y = temp_h + y
     return x,y
 
-
 # find size of the diagram from the maximum calulated dims
 def get_diagram_size(_root):
     max_x = 0
@@ -234,8 +231,9 @@ def get_diagram_size(_root):
             if y > max_y:
                 max_y = y
     dims = dict.fromkeys(['height','width'])
-    dims['height'] = max_y + 5
-    dims['width'] = max_x + 5
+    # some things had trouble showing. Increase window by 10% to fit things
+    dims['height'] = max_y * 1.10
+    dims['width'] = max_x * 1.10
     return dims
 
 def get_notes(_root):
@@ -269,6 +267,8 @@ def get_sum(_root):
 def get_contribs(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
         for _contribs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Contributors'):
+            if _contribs.text is None:
+                return None
             contribs = _contribs.text.split(',')
     contrib_list = []
     c_dict = dict.fromkeys(['name'])
@@ -345,15 +345,14 @@ def main():
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                         stencil = get_element(borders, z)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
+                        z=z+1       
+                for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
+                    # this level enumerates a model's elements
+                    for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
+                    # Flows. Unlike stencils, flows have a source and target guids
+                        line = get_element(lines, z)
+                        model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
                         z=z+1
-                # TODO: add lines back in when cords are fixes        
-                # for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
-                #     # this level enumerates a model's elements
-                #     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
-                #     # Flows. Unlike stencils, flows have a source and target guids
-                #         line = get_element(lines, z)
-                #         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
-                #         z=z+1
                 # diagram id
                 model['detail']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
