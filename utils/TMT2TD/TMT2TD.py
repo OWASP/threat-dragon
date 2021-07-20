@@ -43,9 +43,14 @@ def find_ele_type(tmt_type):
             ele_type = "tm.Store"
         else:
             return None
-    # TODO: change this
+    # default
     cell['hasOpenThreats'] = False
-    cell['threats'] = list()
+
+    # TODO: get_ele_threats
+    # cell['threats'] = get_ele_threats(cell)
+
+    if cell['hasOpenThreats'] == False:
+        del cell['threats']
 
     cell['type'] = ele_type
     return cell
@@ -72,7 +77,6 @@ def get_element(ele, _z):
             cell['source'] = source.text
         for target in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}TargetGuid'):
             cell['target'] = target.text
-        # TODO: find size of the diagram from max dims in a seprate function
         # TODO: boundaries need to be converted from box to lines. Could present problems.
         if cell['type'] == 'tm.Actor' or cell['type'] == 'tm.Process' or cell['type'] == 'tm.Store':
             for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
@@ -123,10 +127,52 @@ def get_element(ele, _z):
                 ele_props.append(ele_prop.copy())
                 ele_prop.clear()
         # save prop list to element dict
-        # TODO: how do we transfer element properties to model? otherwise they will be left
+        # TODO: how do we transfer element properties to model? Do we need to? otherwise they will be left
         #element['properties'] = ele_props
         # print(element['properties'])
     return cell
+
+def cal_max_size(ele):
+    x = 0
+    y = 0
+    temp_w = 0
+    temp_h = 0
+    for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
+        for ele_y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+            y = int(ele_y.text)
+        for ele_x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+            x = int(ele_x.text)
+        for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+            temp_h = int(top.text)
+        for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+            temp_w = int(width.text)
+    x = temp_w + x
+    y = temp_h + y
+    return x,y
+
+
+# find size of the diagram from the maximum calulated dims
+def get_diagram_size(_root):
+    max_x = 0
+    max_y = 0
+    for ele2 in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
+        for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
+            x,y = cal_max_size(borders)
+            if x > max_x:
+                max_x = x
+            if y > max_y:
+                max_y = y
+    for ele2 in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
+        for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
+            x,y = cal_max_size(lines)
+            if x > max_x:
+                max_x = x
+            if y > max_y:
+                max_y = y
+    dims = dict.fromkeys(['height','width'])
+    dims['height'] = max_y + 5
+    dims['width'] = max_x + 5
+    return dims
 
 def get_notes(_root):
         msgs = []
@@ -215,13 +261,14 @@ def main():
             diagram_num = 0
             # indexing/numbering for TD elements
             z = 1
-            # what is diagramType?
-            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'diagramType']))
+            # TODO: address what is diagramType? Should we determine this?
+            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'size']))
             # cells contain all stencils and flows
             model['detail']['diagrams'][diagram_num]['thumbnail'] = None
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
+                model['detail']['diagrams'][diagram_num]['size'] = get_diagram_size(ele)
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
                     diagram = header.text
                     model['detail']['diagrams'][diagram_num]['title'] = diagram
