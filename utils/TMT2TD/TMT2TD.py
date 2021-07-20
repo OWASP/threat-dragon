@@ -13,23 +13,43 @@ from tkinter import filedialog
 ele_namespace = {'b': 'http://schemas.datacontract.org/2004/07/ThreatModeling.KnowledgeBase'}
 any_namespace = {'a': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'}
 
+def calc_boundary_box(cell, ele):
+    # Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import
+    # creates a box from 5 points: source and target are same point and vertices make up the 3
+    # other points of the rectangle 
+    cell['source'] = dict.fromkeys(['x', 'y'])
+    cell['target'] = dict.fromkeys(['x', 'y'])
+    cell['vertices'] = list()
+    cell['vertices'].append(dict.fromkeys(['x','y']))
+    for y in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
+        _height = int(y.text)
+    for w in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
+        _width = int(w.text)
+    for x in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
+        _left = int(x.text)
+    for top in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
+         _top = int(top.text)
+
+
+
 def find_ele_type(tmt_type):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
-    if tmt_type == "Connector" or tmt_type == "BorderBoundary":
+    if tmt_type == "Connector" or tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
         # flows have source and target, so choose different dict format
         cell = dict.fromkeys(['type', 'smooth','source','target','vertices','id', 'z','hasOpenThreats','threats','attrs'])
-        if tmt_type == "Connector":
+        if tmt_type == "Connector" or tmt_type == "LineBoundary":
             ele_type = "tm.Flow"
             cell['attrs'] = dict.fromkeys(['.marker-target', '.connection'])
             cell['attrs']['.marker-target'] = 'marker-target hasNoOpenThreats isInScope'
             cell['attrs']['.connection'] = 'connection hasNoOpenThreats isInScope'
+            # TODO: get cords for TMT "lines"
+            #get_flow_points(cell,tmt_type)
         else:
             ele_type = "tm.Boundary"
+            calc_boundary_box(cell, tmt_type)
             cell['attrs'] = dict()
-        cell['source'] = dict.fromkeys(['x', 'y'])
-        cell['target'] = dict.fromkeys(['x', 'y'])
-        cell['vertices'] = list()
         cell['smooth'] = True
+    # must be a process, datastore, or EI
     else:
         cell = dict.fromkeys(['type','size','pos','angle','id', 'z','hasOpenThreats','threats','attrs'])
         cell['size'] = dict.fromkeys(['width','height'])
@@ -89,22 +109,6 @@ def get_element(ele, _z):
                 cell['size']['height'] = int(top.text)
             for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
                 cell['size']['width'] = int(width.text)
-        # Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import as lines
-        if cell['type'] == 'tm.Boundary':
-            cell['vertices'].append(dict.fromkeys(['x','y']))
-            for y in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Height'):
-                _h = int(y.text)
-            for x in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Left'):
-                _x = int(x.text)
-                cell['source']['x'] = _x
-                cell['target']['x'] = _x
-                cell['vertices'][0]['x'] = _x
-            for top in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Top'):
-                _y = int(top.text)
-                cell['source']['y'] = _y + _h
-                cell['target']['y'] = _y
-                # verticy of boundary should be calulated halfway between source and target x,y
-                cell['vertices'][0]['y'] = (_h - _y) /2
 
             # for width in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Width'):
             #     cell['size']['width'] = int(width.text)
@@ -282,9 +286,14 @@ def main():
             # indexing/numbering for TD elements
             z = 1
             # TODO: address what is diagramType? Should we determine this?
-            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'size']))
+            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'size','diagramType']))
             # cells contain all stencils and flows
-            model['detail']['diagrams'][diagram_num]['thumbnail'] = None
+            # default to STRIDE for MS TMT, although you can use different methodology/category in an MS template, it's not
+            # common (TODO: although in future we should hanlde any non-STRIDE threats). "STRIDE per element" is MS TMT defualt methodology
+            # note that with the way MS TMT uses "STRIDE per element", all MS threats origionate in FLOWS only (generated threats are sorted by "interactor")  
+            # even if they deal with the target element
+            model['detail']['diagrams'][diagram_num]['diagramType'] = "STRIDE"
+            model['detail']['diagrams'][diagram_num]['thumbnail'] = "./public/content/images/thumbnail.stride.jpg"
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
@@ -298,7 +307,7 @@ def main():
                         stencil = get_element(borders, z)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
                         z=z+1
-                # TODO: add lines back in        
+                # TODO: add lines back in when cords are fixes        
                 # for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                 #     # this level enumerates a model's elements
                 #     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
