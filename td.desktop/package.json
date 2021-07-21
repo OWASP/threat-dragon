@@ -49,7 +49,7 @@
     "electron-squirrel-startup": "1.0.0",
     "font-awesome": "4.7.0",
     "hotkeys-js": "^3.8.7",
-    "jointjs": "^2.2.1",
+    "jointjs": "^3.3.0",
     "jquery": "3.5.1",
     "json-rules-engine": "^6.1.2",
     "lodash": "4.17.21",
