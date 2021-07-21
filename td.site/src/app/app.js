@@ -22,26 +22,24 @@ require('./layout');
 require('./welcome');
 require('./threatmodels');
 
-app.config(['$qProvider', function ($qProvider) {
+app.config(['$qProvider', function($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
-app.run(['$rootScope', '$location',
-    function ($rootScope, $location) {
-        $rootScope.location = $location;
-    }]);
+app.run(['$rootScope', '$location', function($rootScope, $location) {
+    $rootScope.location = $location;
+}]);
 
-app.config(['$locationProvider', function ($locationProvider) {
+app.config(['$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('');
 }]);
 
 // Handle routing errors and success events
-app.run(['$route', '$rootScope', 'routemediator',
-    function ($route, $rootScope, routemediator) {
-        routemediator.setRoutingHandlers();
-    }]);
+app.run(['$route', '$rootScope', 'routemediator', function ($route, $rootScope, routemediator) {
+    routemediator.setRoutingHandlers();
+}]);
 
 //config for angular-xeditable
-app.run(['editableOptions', function (editableOptions) {
+app.run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs3';
 }]);
