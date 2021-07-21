@@ -6,14 +6,14 @@ require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
 window.jQuery = require('jquery');
-require('owasp-threat-dragon-core');
+require('../td.site/src/app/core');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
     return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
 };
 
-var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'common', 'owasp-threat-dragon-core']);
+var app = angular.module('app', ['ui.bootstrap', 'ngRoute', 'xeditable', 'ngAnimate', 'templates', 'common', 'tdCore']);
 app.constant('VERSION', require('./package.json').version);
 
 //require custom modules, services, controllers and directives
