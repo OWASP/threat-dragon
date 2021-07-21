@@ -61,7 +61,6 @@ def get_boundary_points(_cell,ele):
 # Threat Dragon does not support boundary boxes; only lines. Hack to make boxes import
 # creates a box from 5 points: source and target are same point and vertices make up the 3
 # other points of the rectangle 
-# always 3 for boxes
 def calc_boundary_box(cell, ele):
     cell['vertices'].append(dict.fromkeys(['x','y']))
     cell['vertices'].append(dict.fromkeys(['x','y']))
@@ -151,12 +150,20 @@ def find_ele_type(tmt_type, ele):
         cell = dict.fromkeys(['type', 'size', 'smooth','source','target','vertices','id', 'z','hasOpenThreats','threats','attrs'])
         cell['vertices'] = list()
         if tmt_type == "Connector":
+            cell['labels'] = list()
+            cell['labels'].append(dict.fromkeys(['position','attrs']))
+            cell['labels'][0]['position'] = 0.5
+            cell['labels'][0]['attrs'] = dict.fromkeys(['text'])
+            cell['labels'][0]['attrs']['text'] = dict.fromkeys(['text', 'font-weight','font-size'])
+            cell['labels'][0]['attrs']['text']['text'] = get_ele_name_prop(ele)
+            cell['labels'][0]['attrs']['text']['font-weight'] = str(400)
+            cell['labels'][0]['attrs']['text']['font-size'] = 'small'
             ele_type = "tm.Flow"
             cell['attrs'] = dict.fromkeys(['.marker-target','.connection'])
             cell['attrs']['.marker-target'] = dict.fromkeys(['class'])
+            # TODO: check and set both hasNoOpenThreats isInScope vars based on MS TMT
             cell['attrs']['.marker-target']['class'] = "marker-target hasNoOpenThreats isInScope"
             cell['attrs']['.connection'] = dict.fromkeys(['class'])
-            # TODO: check and set both hasNoOpenThreats isInScope vars based on MS TMT
             cell['attrs']['.connection']['class'] = "connection hasNoOpenThreats isInScope"
         elif tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
             ele_type = "tm.Boundary"
