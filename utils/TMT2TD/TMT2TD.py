@@ -100,49 +100,53 @@ def get_ele_size(cell, ele):
         cell['position']['y'] = int(top.text)
     return cell
 
-def get_ele_name_prop(ele):
-    # create a custom element properties dict
-    ele_prop = dict.fromkeys(['PropName', 'PropGUID', 'PropValues', 'SelectedIndex'])
-    ele_props = []
-    # temp list of property values
-    _values = []
+# this function finded values from prop name
+def get_ele_prop(ele, prop_name):
     # element properties are at this level
     for props in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Properties'):
         for types in props.findall('.//a:anyType', any_namespace):
         # get all child elements of anyType element, all properties located here
             for dis_name in types.findall('.//b:DisplayName', ele_namespace):   
-                ele_prop['PropName'] = dis_name.text
-            for prop_guid in types.findall('.//b:Name', ele_namespace):   
-                if prop_guid.text:
-                    ele_prop['PropGUID'] = prop_guid.text
-                else:
-                    ele_prop['PropGUID'] = ''
-            selection = types.find('.//b:SelectedIndex', ele_namespace)   
-            if selection is None:
-                ele_prop['SelectedIndex'] = ''
-                # get all prop values
-                value = types.find('.//b:Value', ele_namespace)
-                # set values
-                if value.text is None:
-                    _values.append('')
-                else:
-                    _values.append(value.text)
-                # set custom element name 
-                if ele_prop['PropName'] == 'Name':
-                    return value.text
-                    #ele_prop['PropValues'] = _values.copy()
-                # add prop to prop list
-            _values.clear()
-            ele_props.append(ele_prop.copy())
-            ele_prop.clear()
-        return None
-    # save prop list to element dict
-    # TODO: how do we transfer element properties to TD model? Do we need to? otherwise they will be left
-    #element['properties'] = ele_props
-    # print(element['properties'])
+                temp_prop = dis_name.text
+                # TODO: handle getting values from SelectedIndex if index avilable
+                 #selection = types.find('.//b:SelectedIndex', ele_namespace)   
+                if temp_prop == prop_name:
+                    for val in types.findall('.//b:Value', ele_namespace): 
+                        value = val.text
+                    return value
+    return None
+
+def find_td_attribs(cell, _ele):
+    scope = ""
+    threats = ""
+    if (cell['hasOpenThreats']):
+        threats = str('hasNoOpenThreats')
+    else:
+        threats = str('hasNoOpenThreats')
+    if (cell['outOfScope']):
+        scope = str('isOutOfScope')
+    else:
+        scope = str('isInScope')
+    if cell['type'] == "tm.Flow":
+        cell['attrs'] = dict.fromkeys(['.marker-target','.connection'])
+        #check and set both hasNoOpenThreats isInScope vars based on MS TMT
+        cell['attrs']['.marker-target'] = dict.fromkeys(['class'])
+        #build sentance
+        cell['attrs']['.marker-target']['class'] = "marker-target " + threats + " isInScope"
+        cell['attrs']['.connection'] = dict.fromkeys(['class'])
+        cell['attrs']['.connection']['class'] = "connection " + threats+ " " + scope
+    #everything that's not a flow
+    else:
+        cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
+        cell['attrs']['.element-shape'] = dict.fromkeys(['class'])
+        cell['attrs']['.element-shape']['class'] = "element-shape " + threats+ " " + scope
+        cell['attrs']['.element-text'] = dict.fromkeys(['class'])
+        cell['attrs']['.element-text']['class']= "element-text " + threats + " isInScope"
+        cell['attrs']['text'] = dict.fromkeys(['text'])
+        cell['attrs']['text']['text'] = get_ele_prop(_ele, 'Name')
+    return cell
 
 # find type, source, target, and vertices
-# TODO: offload find_attribs to seprate function
 def find_ele_type(tmt_type, ele):
     tmt_type = tmt_type['{http://www.w3.org/2001/XMLSchema-instance}type']
     if tmt_type == "Connector" or tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
@@ -155,16 +159,10 @@ def find_ele_type(tmt_type, ele):
             cell['labels'][0]['position'] = 0.5
             cell['labels'][0]['attrs'] = dict.fromkeys(['text'])
             cell['labels'][0]['attrs']['text'] = dict.fromkeys(['text', 'font-weight','font-size'])
-            cell['labels'][0]['attrs']['text']['text'] = get_ele_name_prop(ele)
+            cell['labels'][0]['attrs']['text']['text'] = get_ele_prop(ele,'Name')
             cell['labels'][0]['attrs']['text']['font-weight'] = str(400)
             cell['labels'][0]['attrs']['text']['font-size'] = 'small'
             ele_type = "tm.Flow"
-            cell['attrs'] = dict.fromkeys(['.marker-target','.connection'])
-            cell['attrs']['.marker-target'] = dict.fromkeys(['class'])
-            # TODO: check and set both hasNoOpenThreats isInScope vars based on MS TMT
-            cell['attrs']['.marker-target']['class'] = "marker-target hasNoOpenThreats isInScope"
-            cell['attrs']['.connection'] = dict.fromkeys(['class'])
-            cell['attrs']['.connection']['class'] = "connection hasNoOpenThreats isInScope"
         elif tmt_type == "LineBoundary" or tmt_type == "BorderBoundary":
             ele_type = "tm.Boundary"
             if tmt_type == "BorderBoundary":
@@ -189,12 +187,6 @@ def find_ele_type(tmt_type, ele):
         cell['size'] = dict.fromkeys(['width','height'])
         cell['position'] = dict.fromkeys(['x','y'])
         cell['angle'] = int(0)
-        cell['attrs'] = dict.fromkeys(['.element-shape','text','.element-text'])
-        cell['attrs']['.element-shape'] = dict.fromkeys(['class'])
-        cell['attrs']['.element-shape']['class'] = "element-shape hasNoOpenThreats isInScope"
-        cell['attrs']['.element-text'] = dict.fromkeys(['class'])
-        cell['attrs']['.element-text']['class']= "element-text hasNoOpenThreats isInScope"
-        cell['attrs']['text'] = dict.fromkeys(['text'])
         if tmt_type == "StencilRectangle":
             ele_type = "tm.Actor"
         elif tmt_type == "StencilEllipse":
@@ -204,15 +196,8 @@ def find_ele_type(tmt_type, ele):
         else:
             return None
         cell = get_ele_size(cell, ele)
-        cell['attrs']['text']['text'] = get_ele_name_prop(ele)
     # default for now
     cell['hasOpenThreats'] = False
-
-    # TODO: get_ele_threats
-    # cell['threats'] = get_ele_threats(cell)
-
-    if cell['hasOpenThreats'] == False:
-        del cell['threats']
 
     cell['type'] = ele_type
     return cell
@@ -222,7 +207,16 @@ def get_element(ele, _z):
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
         # find element type and get cell dict format
         cell = find_ele_type(ele4.attrib, ele4)
+        
+        if(get_ele_prop(ele4, 'Out Of Scope') == 'true'):
+            cell['outOfScope'] = True
+            cell['reasonOutOfScope'] = get_ele_prop(ele4, 'Reason For Out Of Scope')
+         # TODO: get_ele_threats
+        # cell['threats'] = get_ele_threats(cell)
+        if cell['hasOpenThreats'] == False:
+            del cell['threats']
 
+        cell = find_td_attribs(cell, ele4)
         cell['z'] = _z
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
