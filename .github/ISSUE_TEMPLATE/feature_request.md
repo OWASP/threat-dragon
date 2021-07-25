@@ -8,16 +8,10 @@ assignees: ''
 ---
 
 **Describe what problem your feature request solves**
-<!--
-Describe what the problem is
--->
+<!-- Describe below what the problem is -->
 
 **Describe the solution you'd like**
-<!--
-Describe what you want to happen
--->
+<!-- Describe below what you want to happen -->
 
 **Additional context**
-<!--
-Add any other context or screenshots about the feature request
--->
+<!-- Add below any other context or screenshots about the feature request -->

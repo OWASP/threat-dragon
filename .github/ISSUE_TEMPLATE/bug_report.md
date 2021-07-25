@@ -8,27 +8,19 @@ assignees: ''
 ---
 
 **Describe the bug**
-<!--
-Describe what the problem is
--->
+<!-- Describe below what the problem is -->
 
-**Expected behavior**
-<!--
-Describe what you expected to happen
--->
+**Expected behaviour**
+<!-- Describe below what you expected to happen -->
 
 **Environment**
- - Version: [e.g. 1.3.1]
- - Platform: Web App
- - OS: [MacOS / Windows / Linux]
- - Browser: [e.g. chrome, safari]
+ - Version: (e.g. 1.3.1)
+ - Platform: (Web App / Desktop App)
+ - OS: (MacOS / Windows / Linux)
+ - Browser: (e.g. chrome, firefox, safari)
 
 **To Reproduce**
-<!--
-Steps to reproduce the behavior
--->
+<!-- List below the steps to reproduce the behaviour -->
 
 **Any additional context, screenshots, etc**
-<!--
-Add any other context or screenshots about this bug
--->
+<!-- Add below any other context or screenshots about this bug -->
