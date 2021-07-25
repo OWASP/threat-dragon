@@ -116,13 +116,14 @@ def get_ele_prop(ele, prop_name):
                     return value
     return None
 
-def find_td_attribs(cell, _ele):
+def find_cell_attribs(cell, _ele):
     scope = ""
     threats = ""
     if (cell['hasOpenThreats']):
         threats = str('hasNoOpenThreats')
     else:
         threats = str('hasNoOpenThreats')
+
     if (cell['outOfScope']):
         scope = str('isOutOfScope')
     else:
@@ -170,7 +171,7 @@ def find_ele_type(tmt_type, ele):
             cell['attrs'] = dict()
         else:
             return None
-        #  get cords from MS TMT "lines" since boxes and lines are different in MS TMT
+        #  get cords from MS TMT "lines" since boundaries and lines are different in MS TMT
         if tmt_type == "LineBoundary":
             get_boundary_points(cell, ele)
         elif tmt_type == "Connector":
@@ -202,6 +203,7 @@ def find_ele_type(tmt_type, ele):
     cell['type'] = ele_type
     return cell
 
+# get and element (or cell)
 def get_element(ele, _z):
         # GUID also at this level
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
@@ -211,17 +213,17 @@ def get_element(ele, _z):
         if(get_ele_prop(ele4, 'Out Of Scope') == 'true'):
             cell['outOfScope'] = True
             cell['reasonOutOfScope'] = get_ele_prop(ele4, 'Reason For Out Of Scope')
-         # TODO: get_ele_threats
-        # cell['threats'] = get_ele_threats(cell)
+        else:
+            cell['outOfScope'] = False
+
         if cell['hasOpenThreats'] == False:
             del cell['threats']
 
-        cell = find_td_attribs(cell, ele4)
+        cell = find_cell_attribs(cell, ele4)
         cell['z'] = _z
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
-        
     return cell
 
 # given all the elements, calulate and save the max dimentions for x and y
@@ -263,7 +265,9 @@ def get_diagram_size(_root):
             if y > max_y:
                 max_y = y
     dims = dict.fromkeys(['height','width'])
-    # some things had trouble showing. Increase window by 10% to fit things
+    # some boundaries had trouble showing. Increase window by 10% to fit things
+    # TODO: this offset only happens on +x,-y; will need to also shift all elements position 10% on -x,+y
+    #       to make everything look really pretty
     dims['height'] = round(max_y * 1.1)
     dims['width'] = round(max_x * 1.1)
     return dims
@@ -309,8 +313,7 @@ def get_contribs(_root):
         contrib_list.append(c_dict)
     return contrib_list
 
-# get the contributors as a list
-# should work like contributors but doesn't
+# get the reviewers as a list
 def get_reviewers(_root):
     for sum in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}MetaInformation'):
         for _reviewrs in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Reviewer'):
@@ -357,11 +360,11 @@ def main():
             diagram_num = 0
             # indexing/numbering for TD elements
             z = 1
-            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail','id', 'diagramJson', 'size','diagramType']))
+            model['detail']['diagrams'].append(dict.fromkeys(['title','thumbnail', 'guid','id', 'diagramJson', 'size','diagramType']))
             # default to STRIDE for MS TMT, although you can use different methodology/category in an MS template, it's not
-            # common (TODO: although in future we should hanlde any non-STRIDE threats). "STRIDE per element" is MS TMT defualt methodology
-            # note that with the way MS TMT uses "STRIDE per element", all MS threats origionate in FLOWS only (generated threats are sorted by "interactor")  
-            # even if they deal with the target element
+            # common. "STRIDE per element" is MS TMT's defualt methodology note that with the way MS TMT uses "STRIDE per element",
+            #  all MS threats origionate in FLOWS only (generated threats are sorted by "interactor") even if they deal with the target element
+            #TODO: we should hanlde any non-STRIDE threats. Check ThreatModel -> KnowledgeBase -> ThreatCategories before choosing stride
             model['detail']['diagrams'][diagram_num]['diagramType'] = "STRIDE"
             model['detail']['diagrams'][diagram_num]['thumbnail'] = "./public/content/images/thumbnail.stride.jpg"
             # cells contain all stencils and flows
@@ -369,9 +372,10 @@ def main():
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
                 model['detail']['diagrams'][diagram_num]['size'] = get_diagram_size(ele)
+                for d_guid in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
+                    model['detail']['diagrams'][diagram_num]['guid'] = d_guid.text
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
-                    diagram = header.text
-                    model['detail']['diagrams'][diagram_num]['title'] = diagram
+                    model['detail']['diagrams'][diagram_num]['title'] = header.text
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     # this level enumerates a model's elements
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
@@ -385,9 +389,18 @@ def main():
                         line = get_element(lines, z)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
                         z=z+1
-                # diagram id
                 model['detail']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
+        # get threats here. Threats are only in "interactors" or flows in MS TMT
+        for ele in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatInstances'):
+            for threat in ele.findall('.//a:*', any_namespace):
+                for t_vals in threat.findall('.//a:Value', any_namespace):
+                    for flow_guid in t_vals.findall('.//b:FlowGuid', ele_namespace):
+                        # TODO: make sure threat goes into correct diagram (use DrawingSurfaceGuid)
+                        # TODO: loop through cells to find flow guid in cell['id']
+                        # TODO: add threat to cell
+                        print(flow_guid.text)
+
         # Serializing json
         json.dump(model, outfile, indent=2, sort_keys=False)
 
