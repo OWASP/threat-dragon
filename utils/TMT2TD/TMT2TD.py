@@ -116,7 +116,7 @@ def get_ele_prop(ele, prop_name):
                     return value
     return None
 
-def set_cell_attribs(cell):
+def set_cell_attribs(cell, _name):
     scope = ""
     threats = ""
     if len(cell['threats']) == 0:
@@ -147,8 +147,7 @@ def set_cell_attribs(cell):
         cell['attrs']['.element-text'] = dict.fromkeys(['class'])
         cell['attrs']['.element-text']['class']= "element-text " + threats + " isInScope"
         cell['attrs']['text'] = dict.fromkeys(['text'])
-        cell['attrs']['text']['text'] = cell['name']
-    del cell['name']
+        cell['attrs']['text']['text'] = _name
     return cell
 
 # find type, source, target, and vertices
@@ -206,24 +205,26 @@ def find_ele_type(tmt_type, ele, _name):
     return cell
 
 # get and element (or cell)
-def get_element(ele, _z):
+def get_element(ele, _z, _root, _m_guid):
         # GUID also at this level
     for ele4 in ele.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}Value'):
         # find element type and get cell dict format
-        cell['name'] = get_ele_prop(ele4,'Name')
-        cell = find_ele_type(ele4.attrib, ele4, cell['name'])
+        name = get_ele_prop(ele4,'Name')
+        cell = find_ele_type(ele4.attrib, ele4, name)
         
         if(get_ele_prop(ele4, 'Out Of Scope') == 'true'):
             cell['outOfScope'] = True
             cell['reasonOutOfScope'] = get_ele_prop(ele4, 'Reason For Out Of Scope')
         else:
             cell['outOfScope'] = False
-        # TODO: refactor to after adding threat
-        cell = set_cell_attribs(cell)
-        cell['z'] = _z
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
+        # add threats in for flows
+        if _root and _m_guid:
+            cell = get_threats(_root, cell, _m_guid)
+        cell = set_cell_attribs(cell, name)
+        cell['z'] = _z
     return cell
 
 # given all the elements, calulate and save the max dimentions for x and y
@@ -320,6 +321,57 @@ def get_reviewers(_root):
             reviewers = _reviewrs.text
     return reviewers
 
+# get threats here. Threats are only in "interactors" (or flows) in MS TMT
+# check diagram guid and cell guid before adding
+def get_threats(_root, _cell, d_guid):
+    for ele in _root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatInstances'):
+        for threat in ele.findall('.//a:*', any_namespace):
+            flo_guid = ""
+            for t_vals in threat.findall('.//a:Value', any_namespace):
+                for f_guid in t_vals.findall('.//b:FlowGuid', ele_namespace):
+                    flo_guid= f_guid.text
+                for dia_guid in t_vals.findall('.//b:DrawingSurfaceGuid', ele_namespace):
+                    # compare guids
+                    if dia_guid.text == d_guid and flo_guid == _cell['id']:
+                        # get threat info and add to cell here
+                        threat_dict = dict.fromkeys(['status','severity','modelType','type','title','description','mitigation'])
+                        m_type = "STRIDE"
+                        for state in t_vals.findall('.//b:State', ele_namespace):
+                            # convert to TD's status
+                            # TD does not support "not applicable" and "needs investigation" threat statuses, default to Open
+                            t_status = "Open"
+                            if state.text == "Mitigated":
+                                t_status = "Mitigated"
+                        for priority in t_vals.findall('.//b:Priority', ele_namespace):
+                            t_severity = priority.text
+                        for props in t_vals.findall('.//b:Properties', ele_namespace):
+                            for prop2 in props.findall('.//a:*', any_namespace):
+                                for _key in prop2.findall('.//a:Key', any_namespace):
+                                    if _key.text == 'Title':
+                                        for _val in prop2.findall('.//a:Value', any_namespace):
+                                            threat_title = _val.text
+                                    elif _key.text == 'UserThreatDescription':
+                                        for _val in prop2.findall('.//a:Value', any_namespace):
+                                            threat_desc = _val.text
+                                    elif _key.text == 'UserThreatCategory':
+                                        for _val in prop2.findall('.//a:Value', any_namespace):
+                                            threat_cat = _val.text
+                                    # "Mitigations" is not a default threat propery in MS TMT like it is in TD
+                                    # Therefore we are searching for a custom prop that could be called different things
+                                    elif "itigations" in _key.text:
+                                        for _val in prop2.findall('.//a:Value', any_namespace):
+                                            threat_mits = _val.text
+                        # build thraet dict and add
+                        threat_dict['status'] = t_status
+                        threat_dict['severity'] = t_severity
+                        threat_dict['modelType'] = m_type
+                        threat_dict['type'] = threat_cat
+                        threat_dict['title'] = threat_title
+                        threat_dict['description'] = threat_desc
+                        threat_dict['mitigation'] = threat_mits
+                        _cell['threats'].append(threat_dict)
+    return _cell
+
 def main():
     root = tk.Tk()
     root.withdraw()
@@ -373,79 +425,25 @@ def main():
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
                 model['detail']['diagrams'][diagram_num]['size'] = get_diagram_size(ele)
                 for d_guid in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
-                    model['detail']['diagrams'][diagram_num]['guid'] = d_guid.text
+                    m_guid = d_guid.text
+                    model['detail']['diagrams'][diagram_num]['guid'] = m_guid
                 for header in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Header'):
                     model['detail']['diagrams'][diagram_num]['title'] = header.text
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Borders'):
                     # this level enumerates a model's elements
                     for borders in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
-                        stencil = get_element(borders, z)
+                        stencil = get_element(borders, z, None, None)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(stencil)
                         z=z+1       
                 for ele2 in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}Lines'):
                     # this level enumerates a model's elements
                     for lines in ele2.findall('{http://schemas.microsoft.com/2003/10/Serialization/Arrays}KeyValueOfguidanyType'):
                     # Flows. Unlike stencils, flows have a source and target guids
-                        line = get_element(lines, z)
+                        line = get_element(lines, z, root, m_guid)
                         model['detail']['diagrams'][diagram_num]['diagramJson']['cells'].append(line)
                         z=z+1
                 model['detail']['diagrams'][diagram_num]['id'] = diagram_num
                 diagram_num = diagram_num + 1
-
-        # get threats here. Threats are only in "interactors" (or flows) in MS TMT
-        # check diagram guid and cell guid before adding
-        for ele in root.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}ThreatInstances'):
-            for threat in ele.findall('.//a:*', any_namespace):
-                flo_guid = ""
-                for t_vals in threat.findall('.//a:Value', any_namespace):
-                    for f_guid in t_vals.findall('.//b:FlowGuid', ele_namespace):
-                        flo_guid= f_guid.text
-                    for dia_guid in t_vals.findall('.//b:DrawingSurfaceGuid', ele_namespace):
-                        for dia in range(diagram_num):
-                            # loop diagrams and compare guids
-                            if dia_guid.text == model['detail']['diagrams'][dia]['guid']:
-                                # loop TD cells and compare guids
-                                for c in range(len(model['detail']['diagrams'][dia]['diagramJson']['cells'])):
-                                    if flo_guid == model['detail']['diagrams'][dia]['diagramJson']['cells'][c]['id']:
-                                        # TODO:abstract
-                                        # get threat info and add to cell here
-                                        threat_dict = dict.fromkeys(['status','severity','modelType','type','title','description','mitigation'])
-                                        m_type = "STRIDE"
-                                        for state in t_vals.findall('.//b:State', ele_namespace):
-                                            # convert to TD's status
-                                            # TD does not support "not applicable" and "needs investigation" threat statuses, default to Open
-                                            t_status = "Open"
-                                            if state.text == "Mitigated":
-                                                t_status = "Mitigated"
-                                        for priority in t_vals.findall('.//b:Priority', ele_namespace):
-                                            t_severity = priority.text
-                                        # TODO: abstract get threat props to function
-                                        for props in t_vals.findall('.//b:Properties', ele_namespace):
-                                            for prop2 in props.findall('.//a:*', any_namespace):
-                                                for _key in prop2.findall('.//a:Key', any_namespace):
-                                                    if _key.text == 'Title':
-                                                        for _val in prop2.findall('.//a:Value', any_namespace):
-                                                            threat_title = _val.text
-                                                    elif _key.text == 'UserThreatDescription':
-                                                        for _val in prop2.findall('.//a:Value', any_namespace):
-                                                            threat_desc = _val.text
-                                                    elif _key.text == 'UserThreatCategory':
-                                                        for _val in prop2.findall('.//a:Value', any_namespace):
-                                                            threat_cat = _val.text
-                                                    # "Mitigations" is not a default threat propery in MS TMT like it is in TD
-                                                    # Therefore we are searching for a custom prop that could be called different things
-                                                    elif "itigations" in _key.text:
-                                                        for _val in prop2.findall('.//a:Value', any_namespace):
-                                                            threat_mits = _val.text
-                                        # build thraet dict and add
-                                        threat_dict['status'] = t_status
-                                        threat_dict['severity'] = t_severity
-                                        threat_dict['modelType'] = m_type
-                                        threat_dict['type'] = threat_cat
-                                        threat_dict['title'] = threat_title
-                                        threat_dict['description'] = threat_desc
-                                        threat_dict['mitigation'] = threat_mits
-                                        model['detail']['diagrams'][dia]['diagramJson']['cells'][c]['threats'].append(threat_dict)
 
         # Serializing json
         json.dump(model, outfile, indent=2, sort_keys=False)
