@@ -1,6 +1,5 @@
 ## the script converts MS TMT models to Threat Dragon models
 ## goal: parse TMT XML model into a dict that can be dumped into THreat Dragon's json format
-## Work in progress
 ## https://github.com/jgadsden/owasp-threat-dragon-models/tree/master/ThreatDragonModels
 
 import xml.etree.ElementTree as ET
@@ -220,7 +219,7 @@ def get_element(ele, _z, _root, _m_guid):
         # get GUID
         for guid in ele4.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
             cell['id'] = guid.text
-        # add threats in for flows
+        # add threats in for flows only
         if _root and _m_guid:
             cell = get_threats(_root, cell, _m_guid)
         cell = set_cell_attribs(cell, name)
@@ -334,6 +333,7 @@ def get_threats(_root, _cell, d_guid):
                     # compare guids
                     if dia_guid.text == d_guid and flo_guid == _cell['id']:
                         # get threat info and add to cell here
+                        threat_mits = ""
                         threat_dict = dict.fromkeys(['status','severity','modelType','type','title','description','mitigation'])
                         m_type = "STRIDE"
                         for state in t_vals.findall('.//b:State', ele_namespace):
@@ -368,7 +368,8 @@ def get_threats(_root, _cell, d_guid):
                         threat_dict['type'] = threat_cat
                         threat_dict['title'] = threat_title
                         threat_dict['description'] = threat_desc
-                        threat_dict['mitigation'] = threat_mits
+                        if threat_mits != None:
+                            threat_dict['mitigation'] = threat_mits
                         _cell['threats'].append(threat_dict)
     return _cell
 
