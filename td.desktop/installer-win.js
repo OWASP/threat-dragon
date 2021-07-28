@@ -13,7 +13,7 @@ var options = {
   iconUrl: 'https://raw.githubusercontent.com/owasp/threat-dragon/main/td.desktop/public/content/icons/win/td.ico',
   setupIcon: path.join(rootPath, 'content', 'icons', 'win', 'td.ico'),
   description: 'An open source threat modelling tool from OWASP',
-  remoteReleases: "https://github.com/owasp/threat-dragon-desktop"
+  remoteReleases: "https://github.com/OWASP/threat-dragon"
 };
 
 var rl = readline.createInterface({

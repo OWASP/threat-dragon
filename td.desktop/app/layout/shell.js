@@ -221,19 +221,19 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                     {
                         label: 'Visit us on GitHub',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/owasp/threat-dragon-desktop/');
+                            electron.shell.openExternal('https://github.com/owasp/threat-dragon/');
                         }
                     },
                     {
                         label: 'Submit an Issue',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/owasp/threat-dragon-desktop/issues/new/choose/');
+                            electron.shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
                         }
                     },
                     {
                         label: 'Check for updates ...',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/OWASP/threat-dragon-desktop/releases/');
+                            electron.shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
                         }
                     },
                     {

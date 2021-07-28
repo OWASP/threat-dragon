@@ -508,7 +508,7 @@ describe('shell controller', function () {
         expect(subMenu.submenu[4].label).toEqual('Visit us on GitHub');
         spyOn(mockElectron.shell, 'openExternal');
         subMenu.submenu[4].click();
-        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/owasp/threat-dragon-desktop/']); 
+        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/owasp/threat-dragon/']); 
     });
 
     it('Help menu item should browse to the GitHub issues page', function() {
@@ -517,7 +517,7 @@ describe('shell controller', function () {
         expect(subMenu.submenu[5].label).toEqual('Submit an Issue');
         spyOn(mockElectron.shell, 'openExternal');
         subMenu.submenu[5].click();
-        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/owasp/threat-dragon-desktop/issues/new/choose/']); 
+        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/owasp/threat-dragon/issues/new/choose/']); 
     });
 
     it('Help menu item should browse to check for updates', function() {
@@ -526,7 +526,7 @@ describe('shell controller', function () {
         expect(subMenu.submenu[6].label).toEqual('Check for updates ...');
         spyOn(mockElectron.shell, 'openExternal');
         subMenu.submenu[6].click();
-        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/OWASP/threat-dragon-desktop/releases/']); 
+        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://github.com/OWASP/threat-dragon/releases/']); 
     });
 
     it('Help menu seventh item should be a separator', function() {

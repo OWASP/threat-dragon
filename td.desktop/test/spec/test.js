@@ -1,7 +1,8 @@
 //set up
 var angular = require('angular');
-require('owasp-threat-dragon-core');
-var app = angular.module('app', ['common', 'owasp-threat-dragon-core']);
+require('../../../td.site/src/app/core');
+
+var app = angular.module('app', ['common', 'tdCore']);
 
 //required for demodatacontext tests when simulating failed requests
 app.config(['$qProvider', function ($qProvider) {
