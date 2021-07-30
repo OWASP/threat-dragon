@@ -246,7 +246,7 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                                 type: 'info',
                                 buttons: ['OK'],
                                 title: 'About OWASP Threat Dragon',
-                                message: 'OWASP Threat Dragon is a free, open-source, cross-platform threat modeling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an OWASP Incubator Project. (Version ' + VERSION + ')'
+                                message: 'OWASP Threat Dragon: an open-source threat modeling application. (Version ' + VERSION + ')'
                             });
                         }
                     }
