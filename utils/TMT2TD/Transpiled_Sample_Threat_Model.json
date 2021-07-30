@@ -1,8 +1,8 @@
 {
   "summary": {
-    "title": null,
+    "title": "TMT import",
     "owner": null,
-    "description": null
+    "description": "Imported from Microsoft Threat Modeling Tool .tm7 file"
   },
   "detail": {
     "contributors": null,

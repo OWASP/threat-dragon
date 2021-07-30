@@ -294,6 +294,10 @@ def get_sum(_root):
             owner = _owner.text
         for _desc in sum.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}HighLevelSystemDescription'):
             desc = _desc.text
+    if not title:
+        title = "TMT import"
+    if not desc:
+        desc = "Imported from Microsoft Threat Modeling Tool .tm7 file"
     _sum['title'] = title
     _sum['owner'] = owner
     _sum['description'] = desc
