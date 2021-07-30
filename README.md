@@ -49,7 +49,7 @@ To install, run: `npm install` from the root of the project.  A `postinstall` sc
 
 Running `npm run start` from the root directory of the repository will start the front-end and the server.
 
-### Docker
+## Docker
 To run Threat Dragon in a docker container, configure your environment using dotenv
 as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
 - `docker build -t owasp-threat-dragon:dev .`
@@ -95,22 +95,22 @@ For the back-end (from the `td.server` directory):
 * `pretest`: runs jshint without the unit tests
 * `test`: runs the server side tests
 
-**Note:** If you are on Windows and are having problems installing Karma,
-the simplest way to resolve this seems to be to install
-Python v2.7.x (not v3+) and then install Visual Studio Express as per the SO answer suggested in
-[this link](http://codedmi.com/questions/298619/npm-install-g-karma-error-msb4019-the-imported-project-c-microsoft-cpp-defau).
-This sounds mad, but the alternative is a world of pain installing various patches and components one by one.
-At least it's free :o/
+## Utilities
 
-# Contributing #
+Threat Dragon has a growing collection of [utilities and scripts](https://github.com/OWASP/threat-dragon/tree/main/utils)
+which can be used to convert file formats, interface to bug tracking, and so on.
+If you would like to contribute scripts to the Threat Dragon
+community then this would be most welcome, see the [contributing guide](CONTRIBUTING.md).
+
+## Contributing
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
-[contributors](https://github.com/OWASP/threat-dragon/blob/main/CONTRIBUTING.md). 
+[contributors](CONTRIBUTING.md). 
 
 We are trying to keep the test coverage relatively high,
 so please try to update tests in any PRs and make PRs on the development branch.
 There are some [developer notes](dev-notes.md) to help get started with this project.
 
-# Vulnerability disclosure #
+## Vulnerability disclosure
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
 For secure disclosure, please see the [security policy](SECURITY.md).
 
