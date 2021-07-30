@@ -21,9 +21,10 @@
     "pack": "electron-builder --dir",
     "postinstall": "electron-builder install-app-deps",
     "help": "./node_modules/.bin/electron . help",
-    "pdf": "./node_modules/.bin/electron . pdf",
+    "debug": "./node_modules/.bin/electron . run -vvv",
     "edit": "./node_modules/.bin/electron . edit",
     "open": "./node_modules/.bin/electron . open",
+    "pdf": "./node_modules/.bin/electron . pdf",
     "print": "./node_modules/.bin/electron . print"
   },
   "author": "OWASP",
