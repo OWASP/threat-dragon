@@ -41,6 +41,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -334,6 +335,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -426,6 +428,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
