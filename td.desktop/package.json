@@ -30,7 +30,7 @@
   },
   "author": "OWASP",
   "license": "Apache-2.0",
-  "homepage": "https://threatdragon.github.io/",
+  "homepage": "https://docs.threatdragon.org/",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

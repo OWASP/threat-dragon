@@ -36,7 +36,6 @@
     ]
   },
   "snap": {
-    "title": "OWASP Threat Dragon",
     "summary": "OWASP Threat Dragon, desktop version",
     "grade": "stable"
   }
