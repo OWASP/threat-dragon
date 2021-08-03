@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "private": false,
   "scripts": {
     "start": "npm-run-all build start:server",
