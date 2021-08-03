@@ -19,10 +19,17 @@
     "build:server": "cd td.server && npm run build",
     "codecov": "./node_modules/.bin/codecov"
   },
+  "keywords": [
+    "threat dragon",
+    "OWASP",
+    "threat modeling",
+    "STRIDE",
+    "LINDDUN"
+  ],
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
   "license": "Apache-2.0",
-  "homepage": "https://threatdragon.github.io/",
+  "homepage": "https://docs.threatdragon.org/",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
