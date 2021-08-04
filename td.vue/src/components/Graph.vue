@@ -1,18 +1,6 @@
 <template>
   <div>
     <b-row>
-      <b-col>
-        <p>
-          Keyboard shortcuts: <b-badge>ctrl+c</b-badge> copy |
-          <b-badge>ctrl+v</b-badge> paste | <b-badge>ctrl+z</b-badge> undo |
-          <b-badge>ctrl+y</b-badge> redo | <b-badge>del</b-badge> delete |
-          <b-badge>shift+left-click</b-badge> pan(drag) |
-          <b-badge>click/drag</b-badge> on empty space for multi-select
-          | <b-badge>ctrl+mousewheel</b-badge> zoom
-        </p>
-      </b-col>
-    </b-row>
-    <b-row>
       <b-col md="2">
         <div ref="stencil_container"></div>
       </b-col>
@@ -27,6 +15,7 @@
                 text="Save"
               />
               <td-form-button :onBtnClick="noOp" icon="times" text="Close" />
+              <td-form-button :onBtnClick="noOp" v-b-modal.shortcuts  icon="keyboard" text="" />
               <td-form-button :onBtnClick="undo" icon="undo" text="" />
               <td-form-button :onBtnClick="redo" icon="redo" text="" />
               <td-form-button :onBtnClick="zoomIn" icon="search-plus" text="" />
@@ -55,11 +44,17 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <b-card header="Actions">
-            <b-button variant="primary" @click="testClick">Test Data Changed</b-button>
+        <b-card header="Properties">
+            TODO
         </b-card>
       </b-col>
     </b-row>
+
+    <div>
+        <b-modal id="shortcuts" size="lg" ok-variant="primary" ok-only title="Shortcuts">
+            <b-table :items="shortcuts"></b-table>
+        </b-modal>
+    </div>
   </div>
 </template>
 
@@ -81,7 +76,6 @@ import TdFormButton from '@/components/FormButton.vue';
         - Create component for entity actions
         - Edit labels inline, or keep in separate pane, or both?
         - Edit multiple threats at once
-    - Add help section for keyboard shortcuts and/or actions you can do
     - Add vertical scroll bar by default (if needed?)
     - "Link from here" - auto-linking of elements (needed or not?)
     - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
@@ -111,7 +105,17 @@ export default {
     data() {
         return {
             graph: null,
-            gridShowing: true
+            gridShowing: true,
+            shortcuts: [
+                { shortcut: 'ctrl + c', action: 'Copy' },
+                { shortcut: 'ctrl + v', action: 'Paste' },
+                { shortcut: 'ctrl + z', action: 'Undo' },
+                { shortcut: 'ctrl + y', action: 'Redo' },
+                { shortcut: 'del', action: 'Delete' },
+                { shortcut: 'shift + left-click (hold/drag)', action: 'Pan' },
+                { shortcut: 'left-click on empty space and drag', action: 'Multi-select' },
+                { shortcut: 'ctrl + mousewheel', action: 'Zoom' }
+            ]
         };
     },
     async mounted() {
@@ -167,25 +171,6 @@ export default {
             this.graph.stopBatch(batchName);
 
             this.graph.centerContent();
-        },
-        testClick() {
-            // This same event works for edges as well
-            // The constructor name is going to be "edge",
-            // so instead of using that, we will likely need to
-            // add to add a data prop for trust boundary during
-            // initialization
-            const cells = this.graph.getSelectedCells();
-            if (!cells || cells.length === 0) {
-                console.log('No cells selected');
-                return;
-            }
-            cells.forEach((cell) => {
-                // Consider options:silent to prevent canvas redraw,
-                // Manaually trigger that after we are done updating the data
-                // Alternatively, do it in a batch:
-                // https://x6.antv.vision/en/docs/api/graph/graph#batchupdate
-                cell.replaceData({ hasOpenThreats: false });
-            });
         }
     },
 };
