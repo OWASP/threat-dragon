@@ -12,7 +12,7 @@ describe('home', () => {
     });
 
     it('shows the threat dragon logo', () => {
-        cy.get('#home-td-logo').should('be', 'visible');
+        cy.get('#home-td-logo').should('be.visible');
     });
 
     it('displays the login options', () => {
