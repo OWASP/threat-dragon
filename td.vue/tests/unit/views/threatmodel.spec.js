@@ -27,12 +27,16 @@ describe('views/Threatmodel.vue', () => {
             state: {
                 threatmodel: {
                     data: {
-                        contributors,
-                        reviewer,
-                        diagrams,
-                        owner,
-                        title,
-                        description
+                        summary: {
+                            title,
+                            owner,
+                            description
+                        },
+                        detail: {
+                            contributors: contributors.map(x =>  ({ name: x })),
+                            diagrams,
+                            reviewer
+                        }
                     }
                 }
             },
