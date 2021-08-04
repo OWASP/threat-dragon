@@ -82,9 +82,9 @@ import TdFormButton from '@/components/FormButton.vue';
         - Edit labels inline, or keep in separate pane, or both?
         - Edit multiple threats at once
     - Add help section for keyboard shortcuts and/or actions you can do
-    - Add vertical scroll bar by default (if needed?)W
+    - Add vertical scroll bar by default (if needed?)
     - "Link from here" - auto-linking of elements (needed or not?)
-    - UI component for encryption (WIP, needs feedback)
+    - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
     - Tooltips for graph buttons
     - Enable / Disable buttons based on state
     - Add threat suggestion button
@@ -97,9 +97,7 @@ import TdFormButton from '@/components/FormButton.vue';
     - Export JSON
     - Export images
     - Fix CSP
-    - Load model from API if not local provider
     - Write unit tests for this component
-    - If v2, load from json
 */
 
 export default {
@@ -117,7 +115,6 @@ export default {
         };
     },
     async mounted() {
-        // TODO: Load model from API if not local provider
         this.init();
         this.drawDiagramV1();
     },
