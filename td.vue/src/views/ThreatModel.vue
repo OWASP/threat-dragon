@@ -4,7 +4,7 @@
         <b-row class="mb-4" id="title_row">
             <b-col>
                 <b-card
-                    :header="model.title"
+                    :header="model.summary.title"
                     ref="header-card">
                     <b-row class="tm-card">
                         <b-col md=2>
@@ -12,7 +12,7 @@
                                 <strong>Owner:</strong>
                             </div>
                             <div id="tm_owner">
-                                {{ model.owner }}
+                                {{ model.summary.owner }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -20,7 +20,7 @@
                                 <strong>Reviewer:</strong>
                             </div>
                             <div id="tm_reviewer">
-                                {{ model.reviewer }}
+                                {{ model.detail.reviewer }}
                             </div>
                         </b-col>
                         <b-col md=2>
@@ -43,7 +43,7 @@
                     header="High level system description">
                     <b-row class="tm-card">
                         <b-col>
-                            <p id="tm_description">{{ model.description }}</p>
+                            <p id="tm_description">{{ model.summary.description }}</p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -55,7 +55,7 @@
             <b-col
                 class="tm_diagram"
                 lg="3"
-                v-for="(diagram, idx) in model.diagrams"
+                v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
             >
                 <b-card>
@@ -66,11 +66,12 @@
                             </a>
                         </h6>
                     </template>
+                    <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->
                     <a href="javascript:void(0)" @click="editDiagram(diagram)">
                         <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
-                            :src="require(`../assets/thumbnail${diagram.diagramType ? '.' + diagram.diagramType.toLowerCase() : ''}.jpg`)"
-                            :alt="`${diagram.type} Diagram`" />
+                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
+                            :alt="diagram.title" />
                     </a>
                 </b-card>
             </b-col>
@@ -126,7 +127,7 @@ export default {
         TdFormButton
     },
     computed: mapState({
-        contributors: (state) => state.threatmodel.data.contributors.join(', '),
+        contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', '),
         model: (state) => state.threatmodel.data
     }),
     methods: {
