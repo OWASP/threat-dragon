@@ -7,6 +7,5 @@ dist/
 .env
 *.log
 */.nyc_output
-docs/
 td.desktop/
 .github
