@@ -11,7 +11,10 @@
   "mac": {
     "category": "public.app-category.developer-tools",
     "icon": "./build/icons/icon.icns",
-    "target": "dmg"
+    "target": [
+      "dmg",
+      "zip"
+    ]
   },
   "win": {
     "icon": "./build/icons/icon.ico",
@@ -36,6 +39,7 @@
     ]
   },
   "snap": {
+    "summary": "OWASP Threat Dragon, desktop version",
     "grade": "stable"
   }
 }

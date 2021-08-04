@@ -3,8 +3,10 @@ coverage
 */coverage
 dist/
 */dist
-node_modules
 */node_modules
 .env
 *.log
 */.nyc_output
+docs/
+td.desktop/
+.github

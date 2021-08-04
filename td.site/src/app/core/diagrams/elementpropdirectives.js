@@ -1,4 +1,5 @@
 ﻿'use strict';
+const uuidv4 = require('uuid/v4');
 
 var angular = require('angular');
 var $ = require('jquery');
@@ -112,6 +113,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
                 scope.threats = [];
             }
 
+            newThreat.threatId = uuidv4();
             scope.threats.push(newThreat);
             scope.save({ threat: newThreat });
             scope.setdirty();

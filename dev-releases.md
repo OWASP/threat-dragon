@@ -5,10 +5,10 @@
 This is a collection of recipes used during the release process
 
 ### Tag the release
-1. create branch `release-ready` in [Threat Dragon repo](https://github.com/OWASP/threat-dragon)
-1. `git clone git@github.com:OWASP/threat-dragon.git -b release-ready`
+1. create branch `release-v1.5` in [Threat Dragon repo](https://github.com/OWASP/threat-dragon)
+1. `git clone git@github.com:OWASP/threat-dragon.git -b release-v1.5`
 1. `cd threat-dragon`
-1. update version declaration eg `"version": "1.4.0",` in `package.json`, `td.site/package.json` and `td.server/package.json`
+1. update version declaration eg `"version": "1.5.0",` in `package.json`, `td.site/package.json` and `td.server/package.json`
 1. `npm install`
 1. `npm run pretest`
 1. `npm run build`
@@ -18,16 +18,16 @@ This is a collection of recipes used during the release process
 1. merge branch in [webapp repo](https://github.com/OWASP/threat-dragon) and then checkout master:
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 1. `cd threat-dragon`
-1. `git tag v1.4.0`
-1. `git push origin v1.4.0`
+1. `git tag v1.5.0`
+1. `git push origin v1.5.0`
 
 ### Publish docker image
-1. `docker build -t owasp-threat-dragon:v1.4.0 .`
-1. `docker tag owasp-threat-dragon:v1.4.0 threatdragon/owasp-threat-dragon:v1.4.0`
+1. `docker build -t owasp-threat-dragon:v1.5.0 .`
+1. `docker tag owasp-threat-dragon:v1.5.0 threatdragon/owasp-threat-dragon:v1.5.0`
 1. `docker images`
 1. `docker login` using docker credentials
-1. `docker push threatdragon/owasp-threat-dragon:v1.4.0`
-1. check using `docker pull threatdragon/owasp-threat-dragon:v1.4.0`
+1. `docker push threatdragon/owasp-threat-dragon:v1.5.0`
+1. check using `docker pull threatdragon/owasp-threat-dragon:v1.5.0`
 
 Test the release using 'Install and run web application' in [dev-notes.md], ideally on all of Windows, linux and MacOS.
 In general if it works on one platform then it will work on the others, so one platform may be sufficient

@@ -1,4 +1,5 @@
 ﻿'use strict';
+const uuidv4 = require('uuid/v4');
 
 var _ = require('lodash');
 var ipc;
@@ -302,11 +303,13 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
                 vm.selected.threats = [];
             }
 
+            currentThreat.threatId = uuidv4();
             vm.selected.threats.push(currentThreat);
 
             if (applyToAll) {
                 threatList.forEach(function (threat) {
 
+                    threat.threatId = uuidv4();
                     vm.selected.threats.push(threat);
                 });
             }

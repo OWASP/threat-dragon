@@ -200,7 +200,7 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                     {
                         label: 'Documentation',
                         click: function() {
-                            electron.shell.openExternal('https://threatdragon.github.io/');
+                            electron.shell.openExternal('https://docs.threatdragon.org/');
                         }
                     },
                     {
@@ -221,19 +221,19 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                     {
                         label: 'Visit us on GitHub',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/owasp/threat-dragon-desktop/');
+                            electron.shell.openExternal('https://github.com/owasp/threat-dragon/');
                         }
                     },
                     {
                         label: 'Submit an Issue',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/owasp/threat-dragon-desktop/issues/new/choose/');
+                            electron.shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
                         }
                     },
                     {
                         label: 'Check for updates ...',
                         click: function() {
-                            electron.shell.openExternal('https://github.com/OWASP/threat-dragon-desktop/releases/');
+                            electron.shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
                         }
                     },
                     {
@@ -246,7 +246,7 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                                 type: 'info',
                                 buttons: ['OK'],
                                 title: 'About OWASP Threat Dragon',
-                                message: 'OWASP Threat Dragon is a free, open-source, cross-platform threat modeling application including system diagramming and a rule engine to auto-generate threats/mitigations. It is an OWASP Incubator Project. (Version ' + VERSION + ')'
+                                message: 'OWASP Threat Dragon: an open-source threat modeling application. (Version ' + VERSION + ')'
                             });
                         }
                     }

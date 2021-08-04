@@ -1,0 +1,718 @@
+{
+  "summary": {
+    "title": "TMT import",
+    "owner": null,
+    "description": "Imported from Microsoft Threat Modeling Tool .tm7 file"
+  },
+  "detail": {
+    "contributors": null,
+    "diagrams": [
+      {
+        "title": "Diagram 1",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "guid": "d8c8aab1-5108-49c5-92a1-b214ba353477",
+        "id": 0,
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 675,
+                "y": 157
+              },
+              "angle": 0,
+              "id": "41cb799f-434b-4b35-bd8e-8970bb985ec9",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Generic External Interactor"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              },
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 263,
+                "y": 119
+              },
+              "angle": 0,
+              "id": "7d402f21-b92a-4eeb-9b9d-362903405551",
+              "z": 2,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "OS Process"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              },
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 454,
+                "y": 124
+              },
+              "angle": 0,
+              "id": "627d2636-7f62-481c-a46f-7af41e24c937",
+              "z": 3,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "OS Process"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              },
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 11,
+                "y": 131
+              },
+              "angle": 0,
+              "id": "f5e8c8a7-e181-4fb3-a183-3428f69f8bab",
+              "z": 4,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Generic Data Store"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              },
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 182,
+                "y": 25
+              },
+              "target": {
+                "x": 182,
+                "y": 25
+              },
+              "vertices": [
+                {
+                  "x": 611,
+                  "y": 25
+                },
+                {
+                  "x": 611,
+                  "y": 338
+                },
+                {
+                  "x": 182,
+                  "y": 338
+                }
+              ],
+              "id": "2630a387-0a98-4028-9cdd-6f514b6a4b5d",
+              "z": 5,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Generic Trust Border Boundary"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              },
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "f5e8c8a7-e181-4fb3-a183-3428f69f8bab"
+              },
+              "target": {
+                "id": "7d402f21-b92a-4eeb-9b9d-362903405551"
+              },
+              "vertices": [
+                {
+                  "x": 180,
+                  "y": 128
+                }
+              ],
+              "id": "f367ac70-74ff-4ba1-abc4-0ac96e350448",
+              "z": 6,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing the OS Process Process",
+                  "description": "OS Process may be spoofed by an attacker and this may lead to information disclosure by Generic Data Store. Consider using a standard authentication mechanism to identify the destination process.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing of Source Data Store Generic Data Store",
+                  "description": "Generic Data Store may be spoofed by an attacker and this may lead to incorrect data delivered to OS Process. Consider using a standard authentication mechanism to identify the source data store.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Repudiation",
+                  "title": "Potential Data Repudiation by OS Process",
+                  "description": "OS Process claims that it did not receive data from a source outside the trust boundary. Consider using logging or auditing to record the source, time, and summary of the received data.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Information Disclosure",
+                  "title": "Weak Access Control for a Resource",
+                  "description": "Improper data protection of Generic Data Store can allow an attacker to read information not intended for disclosure. Review authorization settings.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Potential Process Crash or Stop for OS Process",
+                  "description": "OS Process crashes, halts, stops or runs slowly; in all cases violating an availability metric.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Flow Generic Data Flow Is Potentially Interrupted",
+                  "description": "An external agent interrupts data flowing across a trust boundary in either direction.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Store Inaccessible",
+                  "description": "An external agent prevents access to a data store on the other side of the trust boundary.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "OS Process May be Subject to Elevation of Privilege Using Remote Code Execution",
+                  "description": "Generic Data Store may be able to remotely execute code for OS Process.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "Elevation by Changing the Execution Flow in OS Process",
+                  "description": "An attacker may pass data into OS Process in order to change the flow of program execution within OS Process to the attacker's choosing.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Generic Data Flow",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "7d402f21-b92a-4eeb-9b9d-362903405551"
+              },
+              "target": {
+                "id": "f5e8c8a7-e181-4fb3-a183-3428f69f8bab"
+              },
+              "vertices": [
+                {
+                  "x": 185,
+                  "y": 219
+                }
+              ],
+              "id": "89ae2a26-c3f6-417a-a217-eef7ce936719",
+              "z": 7,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing the OS Process Process",
+                  "description": "OS Process may be spoofed by an attacker and this may lead to unauthorized access to Generic Data Store. Consider using a standard authentication mechanism to identify the source process.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing of Destination Data Store Generic Data Store",
+                  "description": "Generic Data Store may be spoofed by an attacker and this may lead to data being written to the attacker's target instead of Generic Data Store. Consider using a standard authentication mechanism to identify the destination data store.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Tampering",
+                  "title": "The Generic Data Store Data Store Could Be Corrupted",
+                  "description": "Data flowing across Generic Data Flow may be tampered with by an attacker. This may lead to corruption of Generic Data Store. Ensure the integrity of the data flow to the data store.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Repudiation",
+                  "title": "Data Store Denies Generic Data Store Potentially Writing Data",
+                  "description": "Generic Data Store claims that it did not write data received from an entity on the other side of the trust boundary. Consider using logging or auditing to record the source, time, and summary of the received data.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Information Disclosure",
+                  "title": "Data Flow Sniffing",
+                  "description": "Data flowing across Generic Data Flow may be sniffed by an attacker. Depending on what type of data an attacker can read, it may be used to attack other parts of the system or simply be a disclosure of information leading to compliance violations. Consider encrypting the data flow.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Potential Excessive Resource Consumption for OS Process or Generic Data Store",
+                  "description": "Does OS Process or Generic Data Store take explicit steps to control resource consumption? Resource consumption attacks can be hard to deal with, and there are times that it makes sense to let the OS do the job. Be careful that your resource requests don't deadlock, and that they do timeout.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Flow Generic Data Flow Is Potentially Interrupted",
+                  "description": "An external agent interrupts data flowing across a trust boundary in either direction.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Store Inaccessible",
+                  "description": "An external agent prevents access to a data store on the other side of the trust boundary.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Generic Data Flow",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "627d2636-7f62-481c-a46f-7af41e24c937"
+              },
+              "target": {
+                "id": "7d402f21-b92a-4eeb-9b9d-362903405551"
+              },
+              "vertices": [
+                {
+                  "x": 415,
+                  "y": 124
+                }
+              ],
+              "id": "97499ed7-bcbd-45c4-867b-ffc85da6f2b2",
+              "z": 8,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "Elevation Using Impersonation",
+                  "description": "OS Process may be able to impersonate the context of OS Process in order to gain additional privilege.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Generic Data Flow",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "7d402f21-b92a-4eeb-9b9d-362903405551"
+              },
+              "target": {
+                "id": "627d2636-7f62-481c-a46f-7af41e24c937"
+              },
+              "vertices": [
+                {
+                  "x": 410,
+                  "y": 207
+                }
+              ],
+              "id": "060c42a9-68a9-4216-8b96-5443e65a4d56",
+              "z": 9,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "Elevation Using Impersonation",
+                  "description": "OS Process may be able to impersonate the context of OS Process in order to gain additional privilege.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Generic Data Flow",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "41cb799f-434b-4b35-bd8e-8970bb985ec9"
+              },
+              "target": {
+                "id": "627d2636-7f62-481c-a46f-7af41e24c937"
+              },
+              "vertices": [
+                {
+                  "x": 628,
+                  "y": 149
+                }
+              ],
+              "id": "59332388-df08-4b98-b15a-14112782984b",
+              "z": 10,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing the Generic External Interactor External Entity",
+                  "description": "Generic External Interactor may be spoofed by an attacker and this may lead to unauthorized access to OS Process. Consider using a standard authentication mechanism to identify the external entity.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Repudiation",
+                  "title": "Potential Data Repudiation by OS Process",
+                  "description": "OS Process claims that it did not receive data from a source outside the trust boundary. Consider using logging or auditing to record the source, time, and summary of the received data.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Potential Process Crash or Stop for OS Process",
+                  "description": "OS Process crashes, halts, stops or runs slowly; in all cases violating an availability metric.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Flow HTTPS Is Potentially Interrupted",
+                  "description": "An external agent interrupts data flowing across a trust boundary in either direction.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "Elevation Using Impersonation",
+                  "description": "OS Process may be able to impersonate the context of Generic External Interactor in order to gain additional privilege.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "OS Process May be Subject to Elevation of Privilege Using Remote Code Execution",
+                  "description": "Generic External Interactor may be able to remotely execute code for OS Process.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation Of Privilege",
+                  "title": "Elevation by Changing the Execution Flow in OS Process",
+                  "description": "An attacker may pass data into OS Process in order to change the flow of program execution within OS Process to the attacker's choosing.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "HTTPS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "627d2636-7f62-481c-a46f-7af41e24c937"
+              },
+              "target": {
+                "id": "41cb799f-434b-4b35-bd8e-8970bb985ec9"
+              },
+              "vertices": [
+                {
+                  "x": 628,
+                  "y": 245
+                }
+              ],
+              "id": "08e0b8f7-07c4-47f0-a456-4090ceac2719",
+              "z": 11,
+              "hasOpenThreats": null,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Spoofing",
+                  "title": "Spoofing of the Generic External Interactor External Destination Entity",
+                  "description": "Generic External Interactor may be spoofed by an attacker and this may lead to data being sent to the attacker's target instead of Generic External Interactor. Consider using a standard authentication mechanism to identify the external entity.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Repudiation",
+                  "title": "External Entity Generic External Interactor Potentially Denies Receiving Data",
+                  "description": "Generic External Interactor claims that it did not receive data from a process on the other side of the trust boundary. Consider using logging or auditing to record the source, time, and summary of the received data.",
+                  "mitigation": ""
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Denial Of Service",
+                  "title": "Data Flow HTTPS Is Potentially Interrupted",
+                  "description": "An external agent interrupts data flowing across a trust boundary in either direction.",
+                  "mitigation": ""
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "HTTPS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false
+            }
+          ]
+        },
+        "size": {
+          "height": 382,
+          "width": 876
+        },
+        "diagramType": "STRIDE"
+      }
+    ],
+    "reviewer": null
+  }
+}

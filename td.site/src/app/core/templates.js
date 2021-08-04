@@ -41,6 +41,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -334,6 +335,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -426,6 +428,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -850,7 +853,7 @@ angular.module('templates', [])
     '                <span class="glyphicon glyphicon-print"></span> Print\n' +
     '            </button>\n' +
     '            <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
-    '                <span class="glyphicon glyphicon-remove"></span> Return\n' +
+    '                <span class="glyphicon glyphicon-arrow-left"></span> Return\n' +
     '            </button>\n' +
     '        </div>\n' +
     '    </div>\n' +
@@ -974,7 +977,7 @@ angular.module('templates', [])
     '                    <span class="glyphicon glyphicon-print"></span> Print\n' +
     '                </button>\n' +
     '                <button class="btn btn-primary" id="cancelButton" role="button" ng-click="cancel()" data-toggle="tooltip" data-placement="top" title="Return To Detail View">\n' +
-    '                    <span class="glyphicon glyphicon-remove"></span> Return\n' +
+    '                    <span class="glyphicon glyphicon-arrow-left"></span> Return\n' +
     '                </button>\n' +
     '            </div>\n' +
     '        </div>\n' +

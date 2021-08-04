@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "private": false,
   "scripts": {
     "start": "npm-run-all build start:server",
@@ -14,16 +14,23 @@
     "test:site": "cd td.site && npm run test",
     "pretest": "npm-run-all pretest:server pretest:site",
     "pretest:server": "cd td.server && npm run pretest",
-    "pretest:site": "cd td.site && npm-run-all templates pretest",
+    "pretest:site": "cd td.site && npm-run-all build:templates pretest",
     "build": "npm-run-all build:site build:server",
     "build:site": "cd td.site && npm run build",
     "build:server": "cd td.server && npm run build",
     "codecov": "./node_modules/.bin/codecov"
   },
+  "keywords": [
+    "threat dragon",
+    "OWASP",
+    "threat modeling",
+    "STRIDE",
+    "LINDDUN"
+  ],
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
   "license": "Apache-2.0",
-  "homepage": "https://threatdragon.github.io/",
+  "homepage": "https://docs.threatdragon.org/",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

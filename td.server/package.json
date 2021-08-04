@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "private": false,
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
@@ -17,7 +17,7 @@
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
   "license": "Apache-2.0",
-  "homepage": "https://threatdragon.github.io/",
+  "homepage": "https://docs.threatdragon.org/",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
