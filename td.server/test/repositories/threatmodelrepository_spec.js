@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import github from 'octonode';
 import sinon from 'sinon';
 
+import env from '../../src/env/Env.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
 describe('threatmodel repository tests', () => {
@@ -45,6 +46,65 @@ describe('threatmodel repository tests', () => {
 
     afterEach(() => {
         sinon.restore();
+    });
+
+    describe('with enterprise hostname', () => {
+        const enterpriseHostname = 'fakehost';
+
+        beforeEach(async () => {
+            sinon.stub(env, 'get').returns({ config: { GITHUB_ENTERPRISE_HOSTNAME: enterpriseHostname }});
+            sinon.stub(mockClient, 'me').returns(mockClient);
+            await threatModelRepository.reposAsync(info.page, accessToken);
+        });
+
+        it('creates the github client with the enterprise hostname', () => {
+            expect(github.client).to.have.been.calledWith(accessToken, { hostname: enterpriseHostname });
+        });
+    });
+
+    describe('with enterprise hostname and port', () => {
+        const enterpriseHostname = 'fakehost';
+        const enterprisePort = '8443';
+
+        beforeEach(async () => {
+            sinon.stub(env, 'get').returns({ config: {
+                GITHUB_ENTERPRISE_HOSTNAME: enterpriseHostname,
+                GITHUB_ENTERPRISE_PORT: enterprisePort
+            }});
+            sinon.stub(mockClient, 'me').returns(mockClient);
+            await threatModelRepository.reposAsync(info.page, accessToken);
+        });
+
+        it('creates the github client with the enterprise hostname and port', () => {
+            expect(github.client).to.have.been.calledWith(accessToken, {
+                hostname: enterpriseHostname,
+                port: 8443
+            });
+        });
+    });
+
+    describe('with enterprise hostname, port, and protocol', () => {
+        const enterpriseHostname = 'fakehost';
+        const enterprisePort = '8443';
+        const enterpriseProtocol = 'https';
+
+        beforeEach(async () => {
+            sinon.stub(env, 'get').returns({ config: {
+                GITHUB_ENTERPRISE_HOSTNAME: enterpriseHostname,
+                GITHUB_ENTERPRISE_PORT: enterprisePort,
+                GITHUB_ENTERPRISE_PROTOCOL: enterpriseProtocol
+            }});
+            sinon.stub(mockClient, 'me').returns(mockClient);
+            await threatModelRepository.reposAsync(info.page, accessToken);
+        });
+
+        it('creates the github client with the enterprise hostname, port and protocol', () => {
+            expect(github.client).to.have.been.calledWith(accessToken, {
+                hostname: enterpriseHostname,
+                port: 8443,
+                protocol: enterpriseProtocol
+            });
+        });
     });
 
     describe('reposAsync', () => {

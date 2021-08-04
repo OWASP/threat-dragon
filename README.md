@@ -61,6 +61,8 @@ Threat Dragon uses GitHub to store threat models, so you need to go to your GitH
 Once you have done that you need to set the Client ID and Client Secret as environment variables
 (`GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`).
 
+Github Enterprise is supported by [configuring the enterprise hostname variable(s)](example.env).  Only the hostname is required, but you can add the port and protocol if it is non-standard.  See [octonode's](https://github.com/pksunkara/octonode) documentation for more information.  
+
 You also need to set a session signing key environment variable (`SESSION_SIGNING_KEY`).
 Setting up these environment variables has caused some confusion in the past,
 so there is a [step-by-step guide](setup-env.md) to this. 

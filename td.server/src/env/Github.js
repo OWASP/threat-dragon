@@ -13,7 +13,10 @@ class GithubEnv extends Env {
         return [
             { key: 'CLIENT_ID', required: true },
             { key: 'CLIENT_SECRET', required: true },
-            { key: 'SCOPE', required: false }
+            { key: 'SCOPE', required: false },
+            { key: 'ENTERPRISE_HOSTNAME', required: false },
+            { key: 'ENTERPRISE_PROTOCOL', required: false },
+            { key: 'ENTERPRISE_PORT', required: false },
         ];
     }
 }
