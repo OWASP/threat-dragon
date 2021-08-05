@@ -14,7 +14,7 @@
     "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./fonts",
     "build:win": "electron-builder build --win",
     "build:osx": "electron-builder build --macos",
-    "build:lin": "npm run-script package-lin && npm run-script installer-lin && electron-builder build --linux",
+    "build:lin": "npm run package-lin && npm run installer-lin && electron-builder build --linux",
     "build:templates": "node_modules/.bin/npm-html2js -b ../td.site/src/app/core -i ../td.site/'src/app/core/**/*.html' --module templates -o ../td.site/src/app/core/templates.js",
     "installer-lin": "node -e 'require(\"./installer-lin\").all()'",
     "package-lin": "./node_modules/.bin/electron-packager . --asar --overwrite  --out=./build --ignore=\"installers|tests|.vscode|coverage\" --platform=linux --arch=x64 --prune=true --icon=public/content/icons/png/256x256.png --executableName=threatdragon",
@@ -73,7 +73,6 @@
     "electron-builder": "^22.11.7",
     "electron-debug": "^3.2.0",
     "electron-packager": "^15.3.0",
-    "electron-winstaller": "^5.0.0",
     "eslint": "^5.4.0",
     "istanbul": "0.4.5",
     "jasmine": "2.8.0",
@@ -99,8 +98,6 @@
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.1.0",
-    "electron-installer-dmg": "^3.0.0",
-    "electron-installer-redhat": "^3.3.0",
-    "electron-installer-snap": "^5.1.0"
+    "electron-installer-redhat": "^3.3.0"
   }
 }
