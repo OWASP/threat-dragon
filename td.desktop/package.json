@@ -15,7 +15,7 @@
     "build:win": "electron-builder build --win",
     "build:osx": "electron-builder build --macos",
     "build:lin": "npm run package-lin && npm run installer-lin && electron-builder build --linux",
-    "build:templates": "node_modules/.bin/npm-html2js -b ../td.site/src/app/core -i ../td.site/'src/app/core/**/*.html' --module templates -o ../td.site/src/app/core/templates.js",
+    "build:templates": "node_modules/.bin/npm-html2js -b ./core -i './core/**/*.html' --module templates -o ./core/templates.js",
     "installer-lin": "node -e 'require(\"./installer-lin\").all()'",
     "package-lin": "./node_modules/.bin/electron-packager . --asar --overwrite  --out=./build --ignore=\"installers|tests|.vscode|coverage\" --platform=linux --arch=x64 --prune=true --icon=public/content/icons/png/256x256.png --executableName=threatdragon",
     "codecov": "./node_modules/.bin/codecov",

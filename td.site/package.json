@@ -3,11 +3,10 @@
   "version": "1.5.0",
   "private": false,
   "scripts": {
-    "build": "npm-run-all clean build:css build:min build:fonts build:templates bundle",
+    "build": "npm-run-all clean build:css build:min build:fonts bundle",
     "build:css": "./node_modules/.bin/rework-npm ./src/content/app.css -o ./src/content/threatdragon.css",
     "build:min": "./node_modules/.bin/uglifycss ./src/content/threatdragon.css > ./src/content/threatdragon.min.css",
     "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./fonts",
-    "build:templates": "node_modules/.bin/npm-html2js -b src/app/core -i 'src/app/core/**/*.html' --module templates -o src/app/core/templates.js",
     "bundle": "webpack",
     "clean": "rimraf ../dist",
     "pretest": "jshint --verbose --show-non-errors src",

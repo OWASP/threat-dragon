@@ -1,6 +1,6 @@
 //set up
 var angular = require('angular');
-require('../../../td.site/src/app/core');
+require('../../core');
 
 var app = angular.module('app', ['common', 'tdCore']);
 
