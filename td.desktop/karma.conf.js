@@ -10,8 +10,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'test/spec/**/*.js',
-        'test/spec/**/*.json'
+        'test/**/*.js',
+        'test/**/*.json'
     ],
 
     // list of files to exclude
@@ -22,8 +22,8 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         'app/**/*.html': ['ng-html2js'],
-        'test/spec/**/*.js': ['browserify'],
-        'test/spec/**/*.json': ['browserify']
+        'test/**/*.js': ['browserify'],
+        'test/**/*.json': ['browserify']
     },
 
     browserify: {
