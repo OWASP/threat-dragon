@@ -6,7 +6,7 @@ require('angular-route');
 require('angular-xeditable');
 require('angular-animate');
 window.jQuery = require('jquery');
-require('./core');
+require('../../../td.desktop/core');
 
 //temporary fix for Chrome/Jointjs problem
 SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {

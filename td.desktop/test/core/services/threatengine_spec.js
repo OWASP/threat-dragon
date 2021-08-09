@@ -4,7 +4,7 @@ describe('core threatengine service:', function () {
 
      var _ = require('lodash');
 
-     var threatengine = require('../../../src/app/core/services/threatengine')();
+     var threatengine = require('../../../core/services/threatengine')();
 
     describe('element generation tests:', function () {
 
