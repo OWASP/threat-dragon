@@ -16,6 +16,7 @@ module.exports = function (config) {
     files: [
       { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false},
       'src/app/app.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'test/**/*.js',
       'src/app/**/*.html'
     ],
@@ -35,7 +36,9 @@ module.exports = function (config) {
 
     browserify: {
       transform: [
-        require("browserify-istanbul")
+        require("browserify-istanbul")({
+          ignore: '**/core/**'
+        })
       ],
       debug: true
     },
