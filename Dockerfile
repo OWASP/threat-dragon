@@ -14,6 +14,7 @@ FROM node:14 as build-frontend
 WORKDIR /app/td.site
 COPY ./td.site/package* ./
 RUN npm ci
+COPY ../td.desktop/core ../td.desktop/core
 COPY ./td.site/src ./src
 COPY ./td.site/webpack.config.js ./
 RUN npm run build
