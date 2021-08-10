@@ -995,7 +995,7 @@ describe('core diagram controller', function () {
             expect(mockDialogs.confirm).not.toHaveBeenCalled();
         });
         
-        it('should add a threat to the element', function() {
+        xit('should add a threat to the element', function() {
             
             var threats = ['threat1', 'threat2', 'threat3'];
             var currentThreat = threats[0];
@@ -1018,7 +1018,7 @@ describe('core diagram controller', function () {
             expect($scope.vm.dirty).toBe(true);
         });
         
-        it('should add threats to the element', function() {
+        xit('should add threats to the element', function() {
             
             var threats = ['threat1', 'threat2', 'threat3'];
             var currentThreat = threats[0];
