@@ -38,8 +38,10 @@
     "icon": "public/content/icons/png/256x256.png",
     "synopsis": "OWASP Threat Dragon",
     "target": [
-        "AppImage",
-        "snap"
+       "AppImage",
+       "snap",
+       "deb",
+       "rpm"
     ]
   },
   "snap": {

@@ -15,11 +15,9 @@
     "build:models": "./node_modules/.bin/copyfiles --error --up 2 '../ThreatDragonModels/**/*' ./ThreatDragonModels/",
     "build:win": "electron-builder build --win",
     "build:osx": "electron-builder build --macos",
-    "build:lin": "npm run package-lin && npm run installer-lin && electron-builder build --linux",
+    "build:lin": "electron-builder build --linux",
     "build:templates": "node_modules/.bin/npm-html2js -b ./core -i './core/**/*.html' --module templates -o ./core/templates.js",
     "clean": "rimraf installers",
-    "installer-lin": "node -e 'require(\"./installer-lin\").all()'",
-    "package-lin": "./node_modules/.bin/electron-packager . --asar --overwrite  --out=./build --ignore=\"installers|tests|.vscode|coverage\" --platform=linux --arch=x64 --prune=true --icon=public/content/icons/png/256x256.png --executableName=threatdragon",
     "codecov": "./node_modules/.bin/codecov",
     "pack": "electron-builder --dir",
     "postinstall": "electron-builder install-app-deps",
@@ -30,7 +28,10 @@
     "pdf": "./node_modules/.bin/electron . pdf",
     "print": "./node_modules/.bin/electron . print"
   },
-  "author": "OWASP",
+  "author": {
+    "name": "OWASP",
+    "email": "jon.gadsden@owasp.org"
+  },
   "license": "Apache-2.0",
   "homepage": "https://docs.threatdragon.org/",
   "repository": {
@@ -77,7 +78,7 @@
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "electron": "^9.4.0",
-    "electron-builder": "^22.11.7",
+    "electron-builder": "22.10.5",
     "electron-debug": "^3.2.0",
     "electron-packager": "^15.3.0",
     "eslint": "^5.4.0",
@@ -110,9 +111,5 @@
     "watchify": "3.9.0",
     "webpack": "^5.36.0",
     "webpack-cli": "^4.6.0"
-  },
-  "optionalDependencies": {
-    "electron-installer-debian": "^3.1.0",
-    "electron-installer-redhat": "^3.3.0"
   }
 }
