@@ -7,8 +7,8 @@
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors app",
-    "test": "DEBUG=json-rules-engine ./node_modules/.bin/karma start --single-run --browsers Electron",
-    "citest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors app",
+    "test": "./node_modules/.bin/karma start --single-run --browsers Electron",
+    "citest": "npm-run-all pretest test",
     "build": "npm-run-all pretest build:fonts build:css build:models build:templates",
     "build:css": "./node_modules/.bin/rework-npm ./content/app.css -o ./content/threatdragon.css",
     "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./fonts",
