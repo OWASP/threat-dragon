@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var Engine = require('json-rules-engine').Engine;
+var jsonRulesEngine = require('json-rules-engine');
 
 function threatengine() {
 
@@ -21,7 +21,7 @@ function threatengine() {
   function generatePerElement(element, type) {
     //implements one of {STRIDE per Element, LINDDUN per element, CIA}
     diagramType = type;
-    var engine = new Engine();
+    var engine = new jsonRulesEngine.Engine();
     initialiseRules(engine);
     engine.addFact('el', new Element(element));
     engine.addFact('diagramType', getModel);

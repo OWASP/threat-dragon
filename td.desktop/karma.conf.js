@@ -10,6 +10,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false},
+        'node_modules/angular/angular.js',
+        'node_modules/angular-mocks/angular-mocks.js',
         'test/**/*.js',
         'test/**/*.json'
     ],
@@ -28,7 +31,17 @@ module.exports = function(config) {
 
     browserify: {
       transform: [
-        require("browserify-istanbul")
+        require("browserify-istanbul")({
+          ignore: '**/core/**',
+          debug: true
+        }),
+        [
+          'babelify', {
+            presets: ['@babel/preset-env'],
+            global: true,
+            ignore: [/\/node_modules\/(?!jsonpath-plus\/)/]
+          }
+        ]
       ],
       debug: true
     },
@@ -44,10 +57,10 @@ module.exports = function(config) {
 
     //config for threshhold reporter
     thresholdReporter: {
-      statements: 30,
-      branches: 15,
-      functions: 20,
-      lines: 30
+      statements: 80,
+      branches: 70,
+      functions: 75,
+      lines: 80
     },
 
     //config for ngHtml2JsPreprocessor
