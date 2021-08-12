@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: 14.x
       
-      - run: sudo apt install rpm -y
+      - run: sudo snap install snapcraft --classic
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
