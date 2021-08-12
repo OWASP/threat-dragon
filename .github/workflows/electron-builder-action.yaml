@@ -57,11 +57,7 @@ jobs:
       # electron will get stuck and error out with ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
       # because of the phantom process
       # This is a hack to try to fix that
-      - run: npm uninstall electron-builder
-        shell: bash
-        working-directory: td.desktop
-
-      - run: npm install
+      - run: rm -rf node_modules
         shell: bash
         working-directory: td.desktop
 
