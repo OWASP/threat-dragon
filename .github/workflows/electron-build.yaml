@@ -1,0 +1,82 @@
+# Needs a windows, linux and macos runner
+# Get a SHA256 of the installer (different extension per platform, shasum -a256)
+# Eventually publish the images?
+# Add as artifacts?
+# Tag the release?
+# Do we only run on tags?
+name: Build Desktop
+on:
+  push:
+    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.desktop
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+
+    - run: npm ci
+    - run: npm run build
+    - run: npm run pretest
+    - run: |
+        export DISPLAY=':99.0'
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        npm run test
+    
+  build-linux:
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.desktop
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - run: npm ci
+      - run: npm run build
+      - shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run build:lin
+
+      # TODO: Upload artifacts so we can download them later to use with something like https://github.com/marvinpinto/action-automatic-releases
+  
+  build-windows:
+    runs-on: windows-latest
+    needs: [unit-tests]
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.desktop
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - run: npm ci
+      - run: npm run build
+      - shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run build:win
