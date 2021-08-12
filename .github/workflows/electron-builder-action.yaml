@@ -42,7 +42,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [unbutu-latest]
 
     steps:
       - name: Check out Git repository
@@ -52,14 +53,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-
-      # If a process is improperly terminated (by one of the jobs failing) then 
-      # electron will get stuck and error out with ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
-      # because of the phantom process
-      # This is a hack to try to fix that
-      - run: rm -rf node_modules
-        shell: bash
-        working-directory: td.desktop
+      
+      - run: sudo apt install snapcraft --classic -y
+      - run: sudo apt install rpm -y
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
