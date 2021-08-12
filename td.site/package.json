@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-site",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": false,
   "scripts": {
     "build": "npm-run-all clean build:css build:min build:fonts build:core bundle",
@@ -18,7 +18,7 @@
     "test:ie": "karma start --single-run --browsers IE",
     "test:local": "npm-run-all pretest test:chrome test:ie test:phantomjs test:firefox",
     "citest": "npm-run-all test"
-     },
+  },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
   "license": "Apache-2.0",

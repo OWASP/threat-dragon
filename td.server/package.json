@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": false,
   "scripts": {
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
