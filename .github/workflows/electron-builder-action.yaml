@@ -4,6 +4,38 @@ on:
   push:
     branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags only, or do we always want a pre-release?
 jobs:
+  test:
+    # TODO: We could run this on all platforms just to be safe, but feels like overkill
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.desktop
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+
+    - name: Cache NPM dir
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-server-
+
+    - run: npm ci
+    - run: npm run build
+    - run: npm run pretest
+    - run: |
+        export DISPLAY=':99.0'
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        npm run test
+
   release:
     runs-on: ${{ matrix.os }}
 
@@ -29,6 +61,9 @@ jobs:
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          # release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+          # TODO: Just testing
+          release: true
 
           package_root: td.desktop
