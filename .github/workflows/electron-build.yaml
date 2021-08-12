@@ -6,7 +6,7 @@
 name: Build Desktop
 on:
   push:
-    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+    branches: [ skip-for-now-feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
