@@ -117,3 +117,41 @@ jobs:
         with:
           name: windows
           path: td.desktop/installers/*.exe
+
+  build-macos:
+    runs-on: macos-latest
+    needs: [unit-tests]
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.desktop
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
+      - run: npm ci
+      - run: npm run build
+      - shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run build:osx
+
+      - name: Upload installers
+        uses: actions/upload-artifact@v2
+        with:
+          name: macos
+          path: td.desktop/installers/*.dmg
