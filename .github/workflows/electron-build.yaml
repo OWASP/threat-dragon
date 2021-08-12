@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux.zip
-          path: installers
+          path: td.desktop/installers
   
   build-windows:
     runs-on: windows-latest
@@ -112,4 +112,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows.zip
-          path: installers
+          path: td.desktop/installers
