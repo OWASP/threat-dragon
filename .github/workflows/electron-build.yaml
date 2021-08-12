@@ -1,9 +1,8 @@
-# Needs a windows, linux and macos runner
+# Add MacOS Runner
 # Get a SHA256 of the installer (different extension per platform, shasum -a256)
 # Eventually publish the images?
-# Add as artifacts?
-# Tag the release?
-# Do we only run on tags?
+# Add artifacts for release step
+# Only run on tags
 name: Build Desktop
 on:
   push:
@@ -23,6 +22,14 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 14.x
+
+    - name: Cache NPM dir
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-server-
 
     - run: npm ci
     - run: npm run build
@@ -48,6 +55,14 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
       - run: npm ci
       - run: npm run build
       - shell: bash
@@ -55,7 +70,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build:lin
 
-      # TODO: Upload artifacts so we can download them later to use with something like https://github.com/marvinpinto/action-automatic-releases
+      - name: Upload installers
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux.zip
+          path: installers
   
   build-windows:
     runs-on: windows-latest
@@ -74,9 +93,23 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
       - run: npm ci
       - run: npm run build
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build:win
+
+      - name: Upload installers
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows.zip
+          path: installers
