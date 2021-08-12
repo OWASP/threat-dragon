@@ -74,7 +74,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux.zip
-          path: td.desktop/installers
+          path: |
+            td.desktop/installers/*.AppImage
+            td.desktop/installers/*.rpm
+            td.desktop/installers/*.deb
+            td.desktop/installers/*.snap
   
   build-windows:
     runs-on: windows-latest
@@ -112,4 +116,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows.zip
-          path: td.desktop/installers
+          path: td.desktop/installers/OWASP-Threat-Dragon.Setup*.exe
