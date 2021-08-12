@@ -53,6 +53,14 @@ jobs:
         with:
           node-version: 14.x
 
+      # If a process is improperly terminated (by one of the jobs failing) then 
+      # electron will get stuck and error out with ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
+      # because of the phantom process
+      # This is a hack to try to fix that
+      - run: npm uninstall electron-builder
+        shell: bash
+        working-directory: td.desktop
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
@@ -68,3 +76,7 @@ jobs:
           release: true
 
           package_root: td.desktop
+
+
+# TODO: Can we add a table with shasums to the release description?
+# Is it worth automating that portion?
