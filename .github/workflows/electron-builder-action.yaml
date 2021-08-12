@@ -38,6 +38,7 @@ jobs:
 
   release:
     runs-on: ${{ matrix.os }}
+    needs: [test]
 
     strategy:
       matrix:

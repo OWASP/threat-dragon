@@ -10,11 +10,7 @@
     "public/**/*"
   ],
   "publish": {
-    "provider": {
-        "github": {
-            "releaseType": "draft"
-        }
-    }
+    "provider": "github"
   },
   "mac": {
     "category": "public.app-category.developer-tools",
