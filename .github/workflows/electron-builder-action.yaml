@@ -61,6 +61,10 @@ jobs:
         shell: bash
         working-directory: td.desktop
 
+      - run: npm install
+        shell: bash
+        working-directory: td.desktop
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
