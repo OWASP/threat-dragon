@@ -38,7 +38,8 @@ jobs:
 
   release:
     runs-on: ${{ matrix.os }}
-    needs: [test]
+    # TODO
+    #needs: [test]
 
     strategy:
       matrix:
@@ -54,7 +55,6 @@ jobs:
         with:
           node-version: 14.x
       
-      - run: sudo apt install snapcraft --classic -y
       - run: sudo apt install rpm -y
 
       - name: Build/release Electron app
