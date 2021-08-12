@@ -73,7 +73,7 @@ jobs:
       - name: Upload installers
         uses: actions/upload-artifact@v2
         with:
-          name: linux.zip
+          name: linux
           path: |
             td.desktop/installers/*.AppImage
             td.desktop/installers/*.rpm
@@ -115,5 +115,5 @@ jobs:
       - name: Upload installers
         uses: actions/upload-artifact@v2
         with:
-          name: windows.zip
-          path: td.desktop/installers/OWASP-Threat-Dragon.Setup*.exe
+          name: windows
+          path: td.desktop/installers/*.exe
