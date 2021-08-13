@@ -42,7 +42,8 @@ jobs:
   
   release:
     runs-on: ${{ matrix.config.os }}
-    needs: [test]
+    # TODO: Just speeding it up
+    # needs: [test]
     strategy:
       matrix:
         config:
@@ -71,10 +72,11 @@ jobs:
           snapcraft_token: ${{ secrets.snapcraft_token }}
 
       - run: npm ci
+      - run: npm run build
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:${{ matrix.config.os_short }}
+        run: npm run build:${{ matrix.config.os_short }} -- --publish always
       
 
 
