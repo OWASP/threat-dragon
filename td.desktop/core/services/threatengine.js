@@ -10,20 +10,16 @@ function threatengine() {
     generateForGraph: generateForGraph
   };
 
-  var Element = function (element) {
-    this.element = element;
-  };
-
   var diagramType = 'STRIDE';
 
   return service;
 
   function generatePerElement(element, type) {
-    //implements one of {STRIDE per Element, LINDDUN per element, CIA}
+    //implements one of {STRIDE per element, LINDDUN per element, CIA}
     diagramType = type;
     var engine = new jsonRulesEngine.Engine();
     initialiseRules(engine);
-    engine.addFact('el', new Element(element));
+    engine.addFact('elementType', element.attributes.type);
     engine.addFact('diagramType', getModel);
 
     return engine.run().then(onCompleted);
@@ -31,7 +27,7 @@ function threatengine() {
     function onCompleted(results) {
       //output is like {type: ..., params: { param1: ..., param2: ...}}
       //use params to represent the threat to preserve backward compatibility
-      return results.map(function(result) {
+      return results.events.map(function(result) {
         return result.params;
       });
     }
@@ -59,7 +55,7 @@ function threatengine() {
 
   function initialiseRules(engine) {
 
-    /* STRIDE per Element
+    /* STRIDE per element
               S | T | R | I | D | E
     ACTOR   | X |   | X |   |   |
     STORE   |   | X | X | X | X |
@@ -73,21 +69,14 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Actor'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Store'
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Flow'
           }
         ]
       },
@@ -112,26 +101,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -156,26 +129,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Actor'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Flow'
           }
         ]
       },
@@ -200,26 +157,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -244,26 +185,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'STRIDE'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -290,8 +215,7 @@ function threatengine() {
             value: 'STRIDE'
           },
           {
-            fact: 'el',
-            path: '.element.attributes.type',
+            fact: 'elementType',
             operator: 'equal',
             value: 'tm.Process'
           }
@@ -321,24 +245,23 @@ function threatengine() {
             value: 'STRIDE'
           },
           {
-            fact: 'el',
-            path: '.element.attributes.type',
+            fact: 'elementType',
             operator: 'equal',
             value: 'tm.Flow'
           } , {
-            fact: 'el',
+            fact: 'elementType',
             path: '.element.isPublicNetwork',
             operator: 'equal',
             value: true
           } , {
             any: [
               {
-                fact: 'el',
+                fact: 'elementType',
                 path: '.element.isEncrypted',
                 operator: 'equal',
                 value: false
               }, {
-                fact: 'el',
+                fact: 'elementType',
                 path: '.element.isEncrypted',
                 operator: 'equal',
                 value: undefined
@@ -362,7 +285,7 @@ function threatengine() {
       }
     });
 
-    /* CIA per Element is all three for all elements except boundary */
+    /* CIA per element is all three for all elements except boundary */
     engine.addRule({
       conditions: {
         all: [
@@ -386,6 +309,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -409,6 +333,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -432,7 +357,9 @@ function threatengine() {
         }
       }
     });
-    /*        L | I | N | D | D | U | N
+
+    /* LINDDUN per element
+              L | I | N | D | D | U | N
     ACTOR   | X | X |   |   |   | X |
     STORE   | X | X | X | X | X |   | X
     FLOW    | X | X | X | X | X |   | X
@@ -461,6 +388,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -484,6 +412,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -491,26 +420,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'LINDDUN'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -527,6 +440,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -534,26 +448,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'LINDDUN'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -570,6 +468,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -577,26 +476,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'LINDDUN'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
@@ -613,6 +496,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -622,8 +506,7 @@ function threatengine() {
             value: 'LINDDUN'
           },
           {
-            fact: 'el',
-            path: '.element.attributes.type',
+            fact: 'elementType',
             operator: 'equal',
             value: 'tm.Actor'
           }
@@ -642,6 +525,7 @@ function threatengine() {
         }
       }
     });
+
     engine.addRule({
       conditions: {
         all: [
@@ -649,26 +533,10 @@ function threatengine() {
             fact: 'diagramType',
             operator: 'equal',
             value: 'LINDDUN'
-          },
-          {
-            any: [
-              {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Store'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Flow'
-              }, {
-                fact: 'el',
-                path: '.element.attributes.type',
-                operator: 'equal',
-                value: 'tm.Process'
-              }
-            ]
+          }, {
+            fact: 'elementType',
+            operator: 'notEqual',
+            value: 'tm.Actor'
           }
         ]
       },
