@@ -1,9 +1,9 @@
 name: Build/Release Desktop
 on:
-  # push:
+  push:
   #   branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
-  tags:
-    - v*
+    tags:
+      - v*
 jobs:
   test:
     runs-on: ubuntu-latest
