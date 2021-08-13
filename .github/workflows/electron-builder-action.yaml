@@ -2,7 +2,7 @@ name: Build/release desktop
 
 on:
   push:
-    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags only, or do we always want a pre-release?
+    branches: [ skip-please-feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags only, or do we always want a pre-release?
 jobs:
   test:
     # TODO: We could run this on all platforms just to be safe, but feels like overkill

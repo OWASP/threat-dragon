@@ -3,12 +3,13 @@
 # Eventually publish the images?
 # Add artifacts for release step
 # Only run on tags
-name: Build Desktop
+
+name: Build/Release Desktop
 on:
   push:
-    branches: [ skip-for-now-feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
 jobs:
-  unit-tests:
+  test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -38,120 +39,159 @@ jobs:
         export DISPLAY=':99.0'
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
         npm run test
-    
-  build-linux:
-    runs-on: ubuntu-latest
-    needs: [unit-tests]
-    defaults:
-      run:
-        shell: bash
-        working-directory: td.desktop
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-
-      - name: Cache NPM dir
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
-
-      - run: npm ci
-      - run: npm run build
-      - shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:lin
-
-      - name: Upload installers
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux
-          path: |
-            td.desktop/installers/*.AppImage
-            td.desktop/installers/*.rpm
-            td.desktop/installers/*.deb
-            td.desktop/installers/*.snap
   
-  build-windows:
-    runs-on: windows-latest
-    needs: [unit-tests]
+  release:
+    runs-on: ${{ matrix.config.os }}
+    needs: [test]
+    strategy:
+      matrix:
+        config:
+          - { os: macos-latest, os_short: osx }
+          - { os: ubuntu-latest, os_short: lin }
+          - { os: windows-latest, os_short: win }
     defaults:
       run:
-        shell: bash
         working-directory: td.desktop
-      
+
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Install NodeJS
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-
-      - name: Cache NPM dir
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
-
-      - run: npm ci
-      - run: npm run build
-      - shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:win
-
-      - name: Upload installers
-        uses: actions/upload-artifact@v2
-        with:
-          name: windows
-          path: td.desktop/installers/*.exe
-
-  build-macos:
-    runs-on: macos-latest
-    needs: [unit-tests]
-    defaults:
-      run:
-        shell: bash
-        working-directory: td.desktop
       
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        # Only install Snapcraft on Ubuntu
+        if: startsWith(matrix.config.os, 'ubuntu')
         with:
-          node-version: 14.x
-
-      - name: Cache NPM dir
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+          # Log in to Snap Store
+          snapcraft_token: ${{ secrets.snapcraft_token }}
 
       - run: npm ci
-      - run: npm run build
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:osx
+        run: npm run build:${{ matrix.config.os_short }}
+      
 
-      - name: Upload installers
-        uses: actions/upload-artifact@v2
-        with:
-          name: macos
-          path: td.desktop/installers/*.dmg
+
+
+  # build-linux:
+  #   runs-on: ubuntu-latest
+  #   needs: [unit-tests]
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: td.desktop
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Use Node.js 14.x
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 14.x
+
+  #     - name: Cache NPM dir
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-npm-cache-server-
+
+  #     - run: npm ci
+  #     - run: npm run build
+  #     - shell: bash
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  #       run: npm run build:lin
+
+  #     - name: Upload installers
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: linux
+  #         path: |
+  #           td.desktop/installers/*.AppImage
+  #           td.desktop/installers/*.rpm
+  #           td.desktop/installers/*.deb
+  #           td.desktop/installers/*.snap
+  
+  # build-windows:
+  #   runs-on: windows-latest
+  #   needs: [unit-tests]
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: td.desktop
+      
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Use Node.js 14.x
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 14.x
+
+  #     - name: Cache NPM dir
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-npm-cache-server-
+
+  #     - run: npm ci
+  #     - run: npm run build
+  #     - shell: bash
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  #       run: npm run build:win
+
+  #     - name: Upload installers
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: windows
+  #         path: td.desktop/installers/*.exe
+
+  # build-macos:
+  #   runs-on: macos-latest
+  #   needs: [unit-tests]
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: td.desktop
+      
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Use Node.js 14.x
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 14.x
+
+  #     - name: Cache NPM dir
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-npm-cache-server-
+
+  #     - run: npm ci
+  #     - run: npm run build
+  #     - shell: bash
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  #       run: npm run build:osx
+
+  #     - name: Upload installers
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: macos
+  #         path: td.desktop/installers/*.dmg
