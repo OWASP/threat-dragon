@@ -1,4 +1,4 @@
-name: threat-dragon
+name: owasp-threat-dragon
 grade: stable
 version: 1.5.0
 summary: OWASP Threat Dragon
