@@ -34,7 +34,7 @@
   },
   "linux": {
     "category": "Development",
-    "executableName": "owasp-threat-dragon",
+    "executableName": "threat-dragon",
     "icon": "public/content/icons/png/256x256.png",
     "synopsis": "OWASP Threat Dragon",
     "target": [

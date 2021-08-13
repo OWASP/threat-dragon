@@ -1,9 +1,9 @@
 name: Build/Release Desktop
 on:
   push:
-    # branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
-    tags:
-      - v*
+    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+    # tags:
+      # - v*
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -73,7 +73,8 @@ jobs:
       # Win and OSX will just publish to the GH Release Draft (and create it if needed based on version)
       # Snap publishing fails using this plugin, so special care is needed for linux
       - name: Build/release Electron app
-        if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
+        # if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
+        if: false
         uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
@@ -113,6 +114,7 @@ jobs:
       # Build all linux images EXCEPT for the snap, with publish always
       # Snaps will not publish, even with snapcraft installed
       - shell: bash
+        if: false
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run electron-builder -- --linux AppImage deb rpm --publish always
@@ -134,6 +136,6 @@ jobs:
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # TODO: Uncomment when ready to start deploying again
-      # - shell: bash
-      #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
-      #   if: startsWith(matrix.config.os, 'ubuntu')
+      - shell: bash
+        run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
+        if: startsWith(matrix.config.os, 'ubuntu')
