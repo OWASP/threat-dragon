@@ -1,13 +1,9 @@
-# Add MacOS Runner
-# Get a SHA256 of the installer (different extension per platform, shasum -a256)
-# Eventually publish the images?
-# Add artifacts for release step
-# Only run on tags
-
 name: Build/Release Desktop
 on:
-  push:
-    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+  # push:
+  #   branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+  tags:
+    - v*
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -42,8 +38,7 @@ jobs:
   
   release:
     runs-on: ${{ matrix.config.os }}
-    # TODO: Just speeding it up
-    # needs: [test]
+    needs: [test]
     strategy:
       matrix:
         config:
