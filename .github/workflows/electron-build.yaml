@@ -62,138 +62,40 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-        # Only install Snapcraft on Ubuntu
-        if: startsWith(matrix.config.os, 'ubuntu')
-        with:
-          # Log in to Snap Store
-          snapcraft_token: ${{ secrets.snapcraft_token }}
 
       - run: npm ci
       - run: npm run build
+
+      # Win and OSX will just publish to the GH Release Draft (and create it if needed based on version)
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build:${{ matrix.config.os_short }} -- --publish always
-      
+        if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
 
+      # Build all linux images EXCEPT for the snap, with publish always
+      # Snaps will not publish, even with snapcraft installed
+      - shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run electron-builder -- --linux AppImage deb rpm --publish always
+        if: startsWith(matrix.config.os, 'ubuntu')
 
+      # Build the snap, but do not publish
+      - shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run electron-builder -- --linux snap
+        if: startsWith(matrix.config.os, 'ubuntu')
 
-  # build-linux:
-  #   runs-on: ubuntu-latest
-  #   needs: [unit-tests]
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: td.desktop
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        # Only install Snapcraft on Ubuntu
+        with:
+          # Log in to Snap Store
+          snapcraft_token: ${{ secrets.snapcraft_token }}
+        if: startsWith(matrix.config.os, 'ubuntu')
 
-  #     - name: Use Node.js 14.x
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14.x
-
-  #     - name: Cache NPM dir
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-npm-cache-server-
-
-  #     - run: npm ci
-  #     - run: npm run build
-  #     - shell: bash
-  #       env:
-  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  #       run: npm run build:lin
-
-  #     - name: Upload installers
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: linux
-  #         path: |
-  #           td.desktop/installers/*.AppImage
-  #           td.desktop/installers/*.rpm
-  #           td.desktop/installers/*.deb
-  #           td.desktop/installers/*.snap
-  
-  # build-windows:
-  #   runs-on: windows-latest
-  #   needs: [unit-tests]
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: td.desktop
-      
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Use Node.js 14.x
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14.x
-
-  #     - name: Cache NPM dir
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-npm-cache-server-
-
-  #     - run: npm ci
-  #     - run: npm run build
-  #     - shell: bash
-  #       env:
-  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  #       run: npm run build:win
-
-  #     - name: Upload installers
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: windows
-  #         path: td.desktop/installers/*.exe
-
-  # build-macos:
-  #   runs-on: macos-latest
-  #   needs: [unit-tests]
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: td.desktop
-      
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-
-  #     - name: Use Node.js 14.x
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14.x
-
-  #     - name: Cache NPM dir
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-npm-cache-server-
-
-  #     - run: npm ci
-  #     - run: npm run build
-  #     - shell: bash
-  #       env:
-  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  #       run: npm run build:osx
-
-  #     - name: Upload installers
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: macos
-  #         path: td.desktop/installers/*.dmg
+      - shell: bash
+        run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
+        if: startsWith(matrix.config.os, 'ubuntu')

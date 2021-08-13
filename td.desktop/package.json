@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon-desktop",
   "productName": "OWASP-Threat-Dragon",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "OWASP Threat Dragon desktop version",
   "main": "main.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "build:osx": "electron-builder build --macos",
     "build:lin": "electron-builder build --linux",
     "build:templates": "node_modules/.bin/npm-html2js -b ./core -i './core/**/*.html' --module templates -o ./core/templates.js",
+    "electron-builder": "electron-builder",
     "clean": "rimraf installers",
     "codecov": "./node_modules/.bin/codecov",
     "pack": "electron-builder --dir",
