@@ -114,11 +114,11 @@ jobs:
       # Build all linux images EXCEPT for the snap, with publish always
       # Snaps will not publish, even with snapcraft installed
       - shell: bash
-        if: false
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run electron-builder -- --linux AppImage deb rpm --publish always
-        if: startsWith(matrix.config.os, 'ubuntu')
+        if: false
+        # if: startsWith(matrix.config.os, 'ubuntu')
 
       # Build the snap, but do not publish
       - shell: bash
