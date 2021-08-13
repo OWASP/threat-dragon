@@ -1,7 +1,7 @@
 name: Build/Release Desktop
 on:
   push:
-    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
+    # branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
     tags:
       - v*
 jobs:
@@ -63,7 +63,7 @@ jobs:
 
       # TODO
       # - name: Prepare for app notarization
-      #   if: startsWith(matrix.os, 'macos')
+      #   if: startsWith(matrix.config.os, 'macos')
       #   # Import Apple API key for app notarization on macOS
       #   run: |
       #     mkdir -p ~/private_keys/
