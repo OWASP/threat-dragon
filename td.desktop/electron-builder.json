@@ -34,7 +34,7 @@
   },
   "linux": {
     "category": "Development",
-    "executableName": "threatdragon",
+    "executableName": "owasp-threat-dragon",
     "icon": "public/content/icons/png/256x256.png",
     "synopsis": "OWASP Threat Dragon",
     "target": [
@@ -45,13 +45,9 @@
     ]
   },
   "snap": {
-    "name": "owasp-threat-dragon",
     "grade": "stable",
-    "version": "1.5.0",
     "summary": "OWASP Threat Dragon, desktop version",
     "description": "OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a threat rule engine to auto-generate threats/mitigations.  The roadmap for the project is a simple UX, a powerful rule engine and integration with other development lifecycle tools.",
-    "license": "Apache-2.0",
-    "image": "public/content/icons/png/256x256.png",
     "title": "OWASP Threat Dragon"
   }
 }
