@@ -43,8 +43,7 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -55,7 +54,13 @@ jobs:
         with:
           node-version: 14.x
       
-      - run: sudo snap install snapcraft --classic
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        # Only install Snapcraft on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          # Log in to Snap Store
+          snapcraft_token: ${{ secrets.snapcraft_token }}
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
