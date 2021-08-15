@@ -38,7 +38,7 @@ describe('core threatengine service:', function () {
                 sinon.stub(stubEngine, 'run').resolves(ciaResp);
             });
 
-            it('CIA process should generate CIA', function (done) {
+            xit('CIA process should generate CIA', function (done) {
                 var element = { attributes: { type: 'tm.Process' } };
                 threatengine.generatePerElement(element, 'CIA').then(function (threats) {
                     expect(threats).toBeDefined();
@@ -51,7 +51,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('CIA flow should generate CIA', function (done) {
+            xit('CIA flow should generate CIA', function (done) {
                 var element = { attributes: { type: 'tm.Flow' } };
                 threatengine.generatePerElement(element, 'CIA').then(function (threats) {
                     expect(threats).toBeDefined();
@@ -64,8 +64,21 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('CIA actor should generate CIA', function (done) {
+            xit('CIA actor should generate CIA', function (done) {
                 var element = { attributes: { type: 'tm.Actor' } };
+                threatengine.generatePerElement(element, 'CIA').then(function (threats) {
+                    expect(threats).toBeDefined();
+                    expect(threats.length).toEqual(3);
+                    var threatTypes = _.uniq(_.map(threats, 'type'));
+                    expect(threatTypes.indexOf('Confidentiality')).toBeGreaterThan(-1);
+                    expect(threatTypes.indexOf('Integrity')).toBeGreaterThan(-1);
+                    expect(threatTypes.indexOf('Availability')).toBeGreaterThan(-1);
+                    done();
+                });
+            });
+
+            xit('CIA store should generate CIA', function (done) {
+                var element = { attributes: { type: 'tm.Store' } };
                 threatengine.generatePerElement(element, 'CIA').then(function (threats) {
                     expect(threats).toBeDefined();
                     expect(threats.length).toEqual(3);
@@ -92,7 +105,7 @@ describe('core threatengine service:', function () {
                 sinon.stub(stubEngine, 'run').resolves(linddnResp);
             });
 
-            it('LINDDUN process should generate LINDDN by element', function (done) {
+            xit('LINDDUN process should generate LINDDN by element', function (done) {
                 var element = { attributes: { type: 'tm.Process' } };
                 threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
                     expect(threats).toBeDefined();
@@ -108,7 +121,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('LINDDUN flow should generate LINDDN by element', function (done) {
+            xit('LINDDUN flow should generate LINDDN by element', function (done) {
                 var element = { attributes: { type: 'tm.Flow' } };
                 threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
                     expect(threats).toBeDefined();
@@ -124,7 +137,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('LINDDUN store should generate LINDDN by element', function (done) {
+            xit('LINDDUN store should generate LINDDN by element', function (done) {
                 var element = { attributes: { type: 'tm.Store' } };
                 threatengine.generatePerElement(element, 'LINDDUN').then(function (threats) {
                     expect(threats).toBeDefined();
@@ -142,7 +155,7 @@ describe('core threatengine service:', function () {
         });
 
 
-        it('LINDDUN actor should generate LIU by element', function (done) {
+        xit('LINDDUN actor should generate LIU by element', function (done) {
             var linddnResp = [
                 { params: { type: 'Linkability' } },
                 { params: { type: 'Identifiability' } },
@@ -162,7 +175,7 @@ describe('core threatengine service:', function () {
         });
 
         describe('STRIDE', function () {
-            it('STRIDE process should generate STRIDE', function (done) {
+            xit('STRIDE process should generate STRIDE', function (done) {
                 var strideResp = [
                     { params: { type: 'Spoofing' } },
                     { params: { type: 'Tampering' } },
@@ -187,7 +200,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('STRIDE flow should generate TID by element', function (done) {
+            xit('STRIDE flow should generate TID by element', function (done) {
                 var strideResp = [
                     { params: { type: 'Tampering' } },
                     { params: { type: 'Information disclosure' } },
@@ -206,7 +219,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('STRIDE actor should generate SR by element', function (done) {
+            xit('STRIDE actor should generate SR by element', function (done) {
                 var strideResp = [
                     { params: { type: 'Spoofing' } },
                     { params: { type: 'Repudiation' } }
@@ -223,7 +236,7 @@ describe('core threatengine service:', function () {
                 });
             });
 
-            it('STRIDE store should generate TRID by element', function (done) {
+            xit('STRIDE store should generate TRID by element', function (done) {
                 var strideResp = [
                     { params: { type: 'Tampering' } },
                     { params: { type: 'Repudiation' } },
@@ -253,7 +266,7 @@ describe('core threatengine service:', function () {
                 sinon.stub(stubEngine, 'run').resolves(runResp);
             });
 
-            it('should suggest using encryption over public networks', function (done) {
+            xit('should suggest using encryption over public networks', function (done) {
     
                 //set up the properties of the element
                 var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: false };
@@ -271,7 +284,7 @@ describe('core threatengine service:', function () {
     
             });
     
-            it('should suggest using encryption over public networks (undefined encryption)', function (done) {
+            xit('should suggest using encryption over public networks (undefined encryption)', function (done) {
     
                 //set up the properties of the element
                 var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true };
@@ -290,7 +303,7 @@ describe('core threatengine service:', function () {
             });
         });
     
-        it('should not suggest using encryption over public networks (not public)', function (done) {
+        xit('should not suggest using encryption over public networks (not public)', function (done) {
 
             //set up the properties of the element
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: false, isEncrypted: true };
@@ -309,7 +322,7 @@ describe('core threatengine service:', function () {
 
         });
 
-        it('should not suggest using encryption over public networks (already encrypted)', function (done) {
+        xit('should not suggest using encryption over public networks (already encrypted)', function (done) {
 
             //set up the properties of the element
             var subject = { attributes: { type: 'tm.Flow' }, isPublicNetwork: true, isEncrypted: true };
