@@ -12,7 +12,9 @@
   "publish": {
     "provider": "github"
   },
+  "afterSign": "electron-builder-notarize",
   "mac": {
+    "afterSign": "electron-builder-notarize",
     "category": "public.app-category.developer-tools",
     "icon": "public/content/icons/icon.icns",
     "entitlements": "config/entitlements.mac.plist",
