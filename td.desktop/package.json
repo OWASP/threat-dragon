@@ -29,12 +29,6 @@
     "pdf": "./node_modules/.bin/electron . pdf",
     "print": "./node_modules/.bin/electron . print"
   },
-  "build:": {
-      "afterSign": "electron-builder-notarize",
-      "mac": {
-          "hardenedRuntime": true
-      }
-  },
   "author": {
     "name": "OWASP",
     "email": "jon.gadsden@owasp.org"
