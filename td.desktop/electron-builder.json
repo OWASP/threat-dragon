@@ -15,6 +15,9 @@
   "mac": {
     "category": "public.app-category.developer-tools",
     "icon": "public/content/icons/icon.icns",
+    "entitlements": "config/entitlements.mac.plist",
+    "entitlementsInherit": "config/entitlements.mac.plist",
+    "hardenedRuntime": true,
     "target": [
       "dmg",
       "zip"
