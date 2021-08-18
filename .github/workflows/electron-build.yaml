@@ -88,9 +88,12 @@ jobs:
           # TODO: Just testing
           release: true
 
-          # TODO:
-          # mac_certs: ${{ secrets.mac_certs }}
-          # mac_certs_password: ${{ secrets.mac_certs_password }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
+
+          api_key: ${{ secrets.api_key }}
+          api_key_issuer_id: ${{ secrets.api_key_issuer_id }}
+
           # windows_certs: ${{ secrets.windows_certs }}
           # windows_certs_password: ${{ secrets.windows_certs_password }}
 
@@ -113,29 +116,29 @@ jobs:
 
       # Build all linux images EXCEPT for the snap, with publish always
       # Snaps will not publish, even with snapcraft installed
-      - shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run electron-builder -- --linux AppImage deb rpm --publish always
-        if: false
-        # if: startsWith(matrix.config.os, 'ubuntu')
+      # - shell: bash
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: npm run electron-builder -- --linux AppImage deb rpm --publish always
+      #   if: false
+      #   # if: startsWith(matrix.config.os, 'ubuntu')
 
-      # Build the snap, but do not publish
-      - shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run electron-builder -- --linux snap
-        if: startsWith(matrix.config.os, 'ubuntu')
+      # # Build the snap, but do not publish
+      # - shell: bash
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: npm run electron-builder -- --linux snap
+      #   if: startsWith(matrix.config.os, 'ubuntu')
 
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-        # Only install Snapcraft on Ubuntu
-        with:
-          # Log in to Snap Store
-          snapcraft_token: ${{ secrets.snapcraft_token }}
-        if: startsWith(matrix.config.os, 'ubuntu')
+      # - name: Install Snapcraft
+      #   uses: samuelmeuli/action-snapcraft@v1
+      #   # Only install Snapcraft on Ubuntu
+      #   with:
+      #     # Log in to Snap Store
+      #     snapcraft_token: ${{ secrets.snapcraft_token }}
+      #   if: startsWith(matrix.config.os, 'ubuntu')
 
-      # TODO: Uncomment when ready to start deploying again
-      - shell: bash
-        run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
-        if: startsWith(matrix.config.os, 'ubuntu')
+      # # TODO: Uncomment when ready to start deploying again
+      # - shell: bash
+      #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
+      #   if: startsWith(matrix.config.os, 'ubuntu')
