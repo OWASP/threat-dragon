@@ -74,7 +74,6 @@ jobs:
       # Snap publishing fails using this plugin, so special care is needed for linux
       - name: Build/release Electron app
         # if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
-        if: false
         uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
