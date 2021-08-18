@@ -90,18 +90,14 @@ jobs:
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
 
-          api_key: ${{ secrets.api_key }}
-          api_key_issuer_id: ${{ secrets.api_key_issuer_id }}
-
           # windows_certs: ${{ secrets.windows_certs }}
           # windows_certs_password: ${{ secrets.windows_certs_password }}
 
           package_root: td.desktop
-        # TODO
-        # env:
-        #   # macOS notarization API key
-        #   API_KEY_ID: ${{ secrets.api_key_id }}
-        #   API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+        env:
+          # macOS notarization API key
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
 
       
 
