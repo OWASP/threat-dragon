@@ -14,11 +14,9 @@
   },
   "afterSign": "electron-builder-notarize",
   "mac": {
-    "afterSign": "electron-builder-notarize",
     "category": "public.app-category.developer-tools",
     "icon": "public/content/icons/icon.icns",
-    "entitlements": "config/entitlements.mac.plist",
-    "entitlementsInherit": "config/entitlements.mac.plist",
+    "entitlements": "node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
     "hardenedRuntime": true,
     "target": [
       "dmg",
