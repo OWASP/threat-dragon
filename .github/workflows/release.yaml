@@ -227,6 +227,8 @@ jobs:
           # TODO: Get username and token from Jon
           # push: true
           push: false
-          tags:  ${{ env.image_name }}:${{ env.TAG}}
+          # TODO: Use the tag, will require some testing
+          tags: ${{ env.image_name }}:${{ github.sha }}
+          # tags:  ${{ env.image_name }}:${{ env.TAG}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
