@@ -4,8 +4,62 @@ on:
     branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
     # tags:
       # - v*
+env:
+  image_name: "threatdragon/owasp-threat-dragon"
 jobs:
-  test:
+  test-server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.server
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+
+    - name: Cache NPM dir
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-server-
+
+    - run: npm ci
+    - run: npm run test
+
+  test-site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: td.site
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+
+    - name: Cache NPM dir
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-server-
+
+    - run: npm ci
+    - run: npm run test
+
+  test-desktop:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -36,9 +90,9 @@ jobs:
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
         npm run test
   
-  release:
+  release-desktop:
     runs-on: ${{ matrix.config.os }}
-    needs: [test]
+    needs: [test-desktop, test-server, test-site]
     strategy:
       matrix:
         config:
@@ -57,6 +111,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
+
+    - name: Cache NPM dir
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-server-
 
       - run: npm ci
       - run: npm run build
@@ -122,3 +184,46 @@ jobs:
       # - shell: bash
       #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
       #   if: startsWith(matrix.config.os, 'ubuntu')
+
+  release-docker:
+    runs-on: ubuntu-latest
+    needs: [test-desktop, test-server, test-site]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Setup dockerx cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+     - name: Get the tag name
+        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+      
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          # TODO: Get username and token from Jon
+          # push: true
+          push: false
+          tags:  ${{ env.image_name }}:${{ env.TAG}}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
