@@ -112,13 +112,13 @@ jobs:
         with:
           node-version: 14.x
 
-    - name: Cache NPM dir
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-npm-cache-server-
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
 
       - run: npm ci
       - run: npm run build
