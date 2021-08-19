@@ -57,7 +57,10 @@ jobs:
           ${{ runner.OS }}-npm-cache-server-
 
     - run: npm ci
-    - run: npm run test
+    - run: |
+        export DISPLAY=':99.0'
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        npm run test
 
   test-desktop:
     runs-on: ubuntu-latest
