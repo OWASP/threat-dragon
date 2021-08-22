@@ -59,12 +59,11 @@ const cellAdded = (graph) => ({ cell }) => {
 };
 
 const cellSelected = ({ cell }) => {
-    // TODO: Change label to name for data
     if (cell.isNode()) {
-        cell.data.label = cell.getLabel();
+        cell.data.name = cell.getLabel();
     } else {
         const labels = cell.getLabels().filter(x => x && x.attrs && x.attrs.label && x.attrs.label.text);
-        cell.data.label = labels.length ? labels[0].attrs.label.text : '';
+        cell.data.name = labels.length ? labels[0].attrs.label.text : '';
     }
 
     store.get().dispatch(CELL_SELECTED, cell.getData());
