@@ -5,7 +5,7 @@ on:
       - 'v2-development'
       - 'v2/*'
 env:
-  image_name: "imoshtokill/threat-dragon:${{ github.sha }}"
+  image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
 jobs:
   server_unit_tests:
     runs-on: ubuntu-latest
