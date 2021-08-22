@@ -12,5 +12,8 @@ $font-family-base: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-se
     color: $white !important;
 }
 
+.modal-backdrop {
+    opacity: .5;
+}
 
 @import '~bootstrap/scss/bootstrap';
