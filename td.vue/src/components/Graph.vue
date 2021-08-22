@@ -107,14 +107,14 @@ export default {
             graph: null,
             gridShowing: true,
             shortcuts: [
-                { shortcut: 'ctrl + c', action: 'Copy' },
-                { shortcut: 'ctrl + v', action: 'Paste' },
-                { shortcut: 'ctrl + z', action: 'Undo' },
-                { shortcut: 'ctrl + y', action: 'Redo' },
+                { shortcut: '(ctrl/cmd) + c', action: 'Copy' },
+                { shortcut: '(ctrl/cmd) + v', action: 'Paste' },
+                { shortcut: '(ctrl/cmd) + z', action: 'Undo' },
+                { shortcut: '(ctrl/cmd) + y', action: 'Redo' },
                 { shortcut: 'del', action: 'Delete' },
                 { shortcut: 'shift + left-click (hold/drag)', action: 'Pan' },
                 { shortcut: 'left-click on empty space and drag', action: 'Multi-select' },
-                { shortcut: 'ctrl + mousewheel', action: 'Zoom' }
+                { shortcut: '(ctrl/cmd) + mousewheel', action: 'Zoom' }
             ]
         };
     },
