@@ -30,7 +30,7 @@ jobs:
             ${{ runner.OS }}-npm-cache-server-
 
       - name: npm ci
-        run: npm ci
+        run: npm ci --no-optional
 
       - name: lint
         run: npm run lint
