@@ -6,7 +6,7 @@ on:
       - 'v2-development'
 env:
   # TODO: Update after we get an "official" home
-  image_name: imoshtokill/threat-dragon:v2
+  image_name: threatdragon/owasp-threat-dragon
   heroku_app: threatdragon-v2
 jobs:
   publish_docker:
