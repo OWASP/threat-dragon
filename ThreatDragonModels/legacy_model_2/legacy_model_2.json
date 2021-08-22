@@ -14,7 +14,7 @@
     "diagrams": [
       {
         "title": "Main Request Flow",
-        "thumbnail": "../public/content/images/thumbnail.jpg",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
         "id": 0,
         "diagramJson": {
           "cells": [

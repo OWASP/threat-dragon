@@ -21,7 +21,7 @@
     "clean": "rimraf installers",
     "codecov": "./node_modules/.bin/codecov",
     "pack": "electron-builder --dir",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "npm run build && electron-builder install-app-deps",
     "help": "./node_modules/.bin/electron . help",
     "debug": "./node_modules/.bin/electron . run -vvv",
     "edit": "./node_modules/.bin/electron . edit",
