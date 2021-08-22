@@ -1,9 +1,8 @@
 name: Build/Release Desktop
 on:
   push:
-    branches: [ feature/112-automate-release-process ] # TODO: Change to main, maybe not on push but on tags?
-    # tags:
-      # - v*
+    tags:
+      - v*
 env:
   image_name: "threatdragon/owasp-threat-dragon"
 jobs:
@@ -143,9 +142,7 @@ jobs:
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          # release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          # TODO: Just testing
-          release: true
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
@@ -183,10 +180,9 @@ jobs:
           snapcraft_token: ${{ secrets.snapcraft_token }}
         if: startsWith(matrix.config.os, 'ubuntu')
 
-      # TODO: Uncomment when ready to start deploying again
-      # - shell: bash
-      #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
-      #   if: startsWith(matrix.config.os, 'ubuntu')
+      - shell: bash
+        run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
+        if: startsWith(matrix.config.os, 'ubuntu')
 
   release-docker:
     runs-on: ubuntu-latest
@@ -213,9 +209,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Get the tag name
-        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
       - name: Build and push
         id: docker_build
@@ -224,11 +217,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          # TODO: Get username and token from Jon
-          # push: true
-          push: false
-          # TODO: Use the tag, will require some testing
-          tags: ${{ env.image_name }}:${{ github.sha }}
-          # tags:  ${{ env.image_name }}:${{ env.TAG}}
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          tags: ${{ env.image_name }}:${{ github.ref }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
