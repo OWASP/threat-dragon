@@ -3,7 +3,7 @@
 var $ = require('jquery');
 var joint = require('jointjs');
 require('jasmine-jquery');
-require('../../../src/app/core/services/joint.shapes.tm');
+require('../../../core/services/joint.shapes.tm');
 
 
 describe('core custom shape tests:', function () {

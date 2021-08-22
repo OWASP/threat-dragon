@@ -7,7 +7,12 @@
     "start:dev": "nodemon dev.js --exec babel-node",
     "pretest": "npm run lint",
     "test": "nyc mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
+<<<<<<< HEAD
     "test:unit": "nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
+=======
+    "citest": "nyc mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
+    "test:unit": "nyc mocha --require @babel/register --all true --timeout=3000 test/*spec.js test/**/*spec.js",
+>>>>>>> f789ce4f54cca4af98c499069207304362d49a44
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
     "lint": "eslint src --fix",

@@ -5,19 +5,23 @@
     "buildResources": "public/content/icons",
     "output": "installers"
   },
+  "files": [
+    "**/*",
+    "public/**/*"
+  ],
   "publish": {
     "provider": "github"
   },
   "mac": {
     "category": "public.app-category.developer-tools",
-    "icon": "./build/icons/icon.icns",
+    "icon": "public/content/icons/icon.icns",
     "target": [
       "dmg",
       "zip"
     ]
   },
   "win": {
-    "icon": "./build/icons/icon.ico",
+    "icon": "public/content/icons/icon.ico",
     "target": [
       {
         "target": "nsis",
@@ -31,11 +35,13 @@
   "linux": {
     "category": "Development",
     "executableName": "threatdragon",
-    "icon": "./build/icons/png/256x256.png",
+    "icon": "public/content/icons/png/256x256.png",
     "synopsis": "OWASP Threat Dragon",
     "target": [
-        "AppImage",
-        "snap"
+       "AppImage",
+       "snap",
+       "deb",
+       "rpm"
     ]
   },
   "snap": {
