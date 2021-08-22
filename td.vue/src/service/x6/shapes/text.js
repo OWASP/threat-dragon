@@ -17,6 +17,8 @@ export const TextBlock = Shape.Rect.define({
     }
 });
 
+TextBlock.prototype.type = 'tm.Text';
+
 export default {
     name,
     TextBlock

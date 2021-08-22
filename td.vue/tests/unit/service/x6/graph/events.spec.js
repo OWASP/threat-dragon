@@ -15,7 +15,11 @@ describe('service/x6/graph/events.js', () => {
             addTools: jest.fn(),
             position: jest.fn(),
             remove: jest.fn(),
-            getData: jest.fn()
+            getData: jest.fn(),
+            setData: jest.fn(),
+            getLabel: jest.fn(),
+            getLabels: jest.fn().mockReturnValue([]),
+            data: {}
         };
         edge = {};
     });

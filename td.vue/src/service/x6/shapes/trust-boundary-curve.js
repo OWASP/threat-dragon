@@ -56,8 +56,13 @@ const getEdgeConfig = (position) => ({
             sourceMarker: null,
             targetMarker: null
         }
+    },
+    data: {
+        type: 'tm.Boundary'
     }
 });
+
+TrustBoundaryCurve.prototype.type = 'tm.Boundary';
 
 export default {
     getEdgeConfig,

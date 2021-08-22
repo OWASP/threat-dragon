@@ -27,6 +27,8 @@ const updateStyle = (cell, color, dash, strokeWidth) => {
     cell.setAttrByPath('body/strokeDasharray', dash);
 };
 
+ProcessShape.prototype.type = 'tm.Process';
+
 export default {
     name,
     ProcessShape,

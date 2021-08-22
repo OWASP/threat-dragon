@@ -52,6 +52,8 @@ export const Store = Shape.Rect.define({
     propHooks
 });
 
+Store.prototype.type = 'tm.Store';
+
 const updateStyle = (cell, color, dash, strokeWidth) => {
     cell.setAttrByPath('topLine/stroke', color);
     cell.setAttrByPath('topLine/strokeWidth', strokeWidth);

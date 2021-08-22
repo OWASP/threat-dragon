@@ -36,4 +36,8 @@ describe('store.get()/index.js', () => {
     it('defines the threatmodel module', () => {
         expect(store.state.threatmodel).toBeInstanceOf(Object);
     });
+
+    it('defines the cell module', () => {
+        expect(store.state.cell).toBeInstanceOf(Object);
+    });
 });

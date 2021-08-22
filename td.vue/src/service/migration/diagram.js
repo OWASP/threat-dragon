@@ -21,7 +21,7 @@ const getEdgeLabels = (cell) => {
         return labels;
     }
 
-    cell.labels.forEach((label) => {
+    cell.labels.forEach((label) => {        
         labels.push({
             position: label.position,
             attrs: { label: { text: getLabelText(cell, label) }}
@@ -52,12 +52,7 @@ const edgeMap = (cell) => ({
     vertices: cell.vertices,
     connector: 'smooth',
     attrs: {},
-    labels: getEdgeLabels(cell),
-    data: {
-        isPublicNetwork: cell.isPublicNetwork,
-        isEncrypted: cell.isEncrypted,
-        protocol: cell.protocol
-    }
+    labels: getEdgeLabels(cell)
 });
 
 const cellConverter = {
@@ -109,7 +104,8 @@ const addMetaData = (entity, cell) => {
         isEncrypted: !!cell.isEncrypted,
         isPublicNetwork: !!cell.isPublicNetwork,
         protocol: cell.protocol || '',
-        isTrustBoundary: cell.type === 'tm.Boundary'
+        isTrustBoundary: cell.type === 'tm.Boundary',
+        type: cell.type
     };
     return entity;
 };

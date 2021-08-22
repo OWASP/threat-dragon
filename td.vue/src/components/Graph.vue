@@ -45,7 +45,7 @@
       </b-col>
       <b-col md="2">
         <b-card header="Properties">
-            TODO
+            <td-graph-properties />
         </b-card>
       </b-col>
     </b-row>
@@ -60,6 +60,8 @@
 
 <script>
 import { mapState } from 'vuex';
+
+import TdGraphProperties from '@/components/GraphProperties.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import graphFactory from '@/service/x6/graph/graph.js';
@@ -98,6 +100,7 @@ export default {
     name: 'TdGraph',
     components: {
         TdFormButton,
+        TdGraphProperties
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram
@@ -115,7 +118,11 @@ export default {
                 { shortcut: 'shift + left-click (hold/drag)', action: 'Pan' },
                 { shortcut: 'left-click on empty space and drag', action: 'Multi-select' },
                 { shortcut: '(ctrl/cmd) + mousewheel', action: 'Zoom' }
-            ]
+            ],
+            selectedElement: {
+                type: null,
+                data: null
+            }
         };
     },
     async mounted() {

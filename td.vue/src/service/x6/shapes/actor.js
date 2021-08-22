@@ -27,6 +27,8 @@ const updateStyle = (cell, color, dash, strokeWidth) => {
     cell.setAttrByPath('body/strokeDasharray', dash);
 };
 
+Actor.prototype.type = 'tm.Actor';
+
 export default {
     Actor,
     name,
