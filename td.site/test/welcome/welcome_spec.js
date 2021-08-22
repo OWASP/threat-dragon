@@ -38,8 +38,7 @@ describe('welcome controller', function () {
     describe('viewmodel tests', function () {
 
         it('should set the location', function () {
-            
-            var location = 'threatmodel/mike-goodwin/owasp-threat-dragon-demo/master/Demo Threat Model';
+            var location = 'threatmodel/owasp/threat-dragon/main/demo-threat-model';
             spyOn($location, 'path');
             $scope.vm.loadDemoModel();
 

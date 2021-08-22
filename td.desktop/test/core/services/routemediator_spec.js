@@ -30,7 +30,7 @@ describe('core routemediator service:', function () {
         mockLocation = {};
         mockLocation.path = function () { };
 
-        routeMediator = require('../../../src/app/core/services/routemediator')(mockRootScope, mockLocation, mockConfig, mockLogger);
+        routeMediator = require('../../../core/services/routemediator')(mockRootScope, mockLocation, mockConfig, mockLogger);
 
         current = { name: 'testName', title: 'testTitle' };
 
