@@ -58,7 +58,14 @@ const getEdgeConfig = (position) => ({
         }
     },
     data: {
-        type: 'tm.Boundary'
+        type: 'tm.Boundary',
+        hasOpenThreats: false,
+        threats: [],
+        outOfScope: false,
+        isEncrypted: false,
+        isPublicNetwork: false,
+        protocol: '',
+        isTrustBoundary: true
     }
 });
 

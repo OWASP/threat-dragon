@@ -41,24 +41,25 @@ const cellAdded = (graph) => ({ cell }) => {
     removeCellTools({ cell });
 
     dataChanged.updateStyleAttrs(cell);
-    // TODO: Set default data here
-    // Type
-    // Any other metadata that's needed for the different types
     if (!cell.data) {
         cell.setData({
+            // TODO: This is duplicated in trust-boundary-curve, maybe elsewhere.
+            // Document the models used for different entity types in the docs
+            // Create one function to add default data based on the type
             hasOpenThreats: false,
             threats: [],
             outOfScope: false,
             isEncrypted: false,
             isPublicNetwork: false,
             protocol: '',
-            isTrustBoundary: false, // TODO
-            type: cell.type || 'unknown?' // TODO?
+            isTrustBoundary: cell.type === 'tm.Boundary' || cell.type === 'tm.BoundaryBox',
+            type: cell.type
         });
     }
 };
 
 const cellSelected = ({ cell }) => {
+    // TODO: Change label to name for data
     if (cell.isNode()) {
         cell.data.label = cell.getLabel();
     } else {
