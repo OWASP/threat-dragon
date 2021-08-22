@@ -252,6 +252,7 @@ jobs:
         with:
           repo_name: owasp/threat-dragon
           repo_token: ${{ secrets.GH_TOKEN }}
+          file_glob: true
           file: ThreatDragon*.*
           # TODO: Use tag
           tag: 1.5.1
