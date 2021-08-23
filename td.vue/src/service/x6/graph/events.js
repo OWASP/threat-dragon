@@ -4,6 +4,7 @@
  */
 import { CELL_SELECTED, CELL_UNSELECTED } from '../../../store/actions/cell.js';
 import dataChanged from './data-changed.js';
+import defaultProperties from '../../entity/default-properties.js';
 import store from '../../../store/index.js';
 import trustBoundaryCurve from '../shapes/trust-boundary-curve.js';
 
@@ -42,19 +43,7 @@ const cellAdded = (graph) => ({ cell }) => {
 
     dataChanged.updateStyleAttrs(cell);
     if (!cell.data) {
-        cell.setData({
-            // TODO: This is duplicated in trust-boundary-curve, maybe elsewhere.
-            // Document the models used for different entity types in the docs
-            // Create one function to add default data based on the type
-            hasOpenThreats: false,
-            threats: [],
-            outOfScope: false,
-            isEncrypted: false,
-            isPublicNetwork: false,
-            protocol: '',
-            isTrustBoundary: cell.type === 'tm.Boundary' || cell.type === 'tm.BoundaryBox',
-            type: cell.type
-        });
+        cell.setData(defaultProperties.getByType(cell.type));
     }
 };
 

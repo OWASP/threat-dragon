@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import defaultProperties from '../../entity/default-properties.js';
+
 const name = 'trust-boundary-curve';
 
 /**
@@ -57,16 +59,7 @@ const getEdgeConfig = (position) => ({
             targetMarker: null
         }
     },
-    data: {
-        type: 'tm.Boundary',
-        hasOpenThreats: false,
-        threats: [],
-        outOfScope: false,
-        isEncrypted: false,
-        isPublicNetwork: false,
-        protocol: '',
-        isTrustBoundary: true
-    }
+    data: defaultProperties.boundary
 });
 
 TrustBoundaryCurve.prototype.type = 'tm.Boundary';
