@@ -2,15 +2,9 @@ import { Shape } from '@antv/x6';
 
 import defaultProperties from '../../entity/default-properties.js';
 
-const name = 'trust-boundary-curve';
+const name = 'flow';
 
-/**
- * A trust boundary shape (dotted line, gray opaque background)
- * https://x6.antv.vision/en/docs/tutorial/intermediate/custom-node
- * Attrs can use standard SVG attributes (in camelCase)
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
- */
-export const TrustBoundaryCurve = Shape.Empty.define({
+export const Flow = Shape.Empty.define({
     constructorName: name,
     width: 200,
     height: 100,
@@ -27,21 +21,20 @@ export const TrustBoundaryCurve = Shape.Empty.define({
     ],
     attrs: {
         boundary: {
-            strokeWidth: 3,
+            strokeWidth: 1,
             stroke: '#333333',
             fill: '#ffffff',
-            strokeDasharray: '5 5',
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
-            text: 'Trust Boundary',
+            text: 'Data Flow',
             fill: '#333',
             textVerticalAnchor: 'middle'
         }
     }
 });
 
-TrustBoundaryCurve.prototype.getEdgeConfig = (position) => ({
+Flow.prototype.getEdgeConfig = (position) => ({
     source: {
         x: position.x,
         y: position.y
@@ -54,23 +47,22 @@ TrustBoundaryCurve.prototype.getEdgeConfig = (position) => ({
     attrs: {
         line: {
             strokeWidth: 3,
-            strokeDasharray: '5 5',
             sourceMarker: null,
             targetMarker: null
         }
     },
-    data: defaultProperties.boundary
+    data: defaultProperties.flow
 });
 
-TrustBoundaryCurve.prototype.type = 'tm.Boundary';
+Flow.prototype.type = 'tm.Flow';
 
-TrustBoundaryCurve.prototype.setName = function (name) {
+Flow.prototype.updateStyle = function () {};
+
+Flow.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);
 };
 
-TrustBoundaryCurve.prototype.updateStyle = function () {};
-
 export default {
-    name,
-    TrustBoundaryCurve
+    Flow,
+    name
 };

@@ -11,14 +11,16 @@ const actor = {
 
 const boundary = {
     type: 'tm.Boundary',
-    name: '',
-    description: ''
+    name: 'Trust Boundary',
+    description: '',
+    isTrustBoundary: true
 };
 
 const boundaryBox = {
     type: 'tm.BoundaryBox',
     name: 'Trust Boundary',
-    description: ''
+    description: '',
+    isTrustBoundary: true
 };
 
 const flow = {

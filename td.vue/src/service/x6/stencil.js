@@ -1,10 +1,5 @@
-import actor from './shapes/actor.js';
 import factory from './factory.js';
-import processShape from './shapes/process.js';
-import store from './shapes/store.js';
-import textBlock from './shapes/text.js';
-import trustBoundaryBox from './shapes/trust-boundary-box.js';
-import trustBoundaryCurve from './shapes/trust-boundary-curve.js';
+import shapes from './shapes/index.js';
 
 const getDefaults = (target) => ({
     title: 'Entities',
@@ -18,8 +13,8 @@ const getDefaults = (target) => ({
             collapsable: true,
         },
         {
-            name: 'trust_boundaries',
-            title: 'Trust Boundaries',
+            name: 'boundaries',
+            title: 'Boundaries',
             collapsed: true,
             collapsable: true
         },
@@ -49,31 +44,25 @@ const getDefaults = (target) => ({
 
 const get = (target, container) => {
     const stencil = factory.stencil(getDefaults(target));
-    const boxBoundary = new trustBoundaryBox.TrustBoundaryBox({
-        width: 160,
-        height: 75
-    });
-    const curveBoundary = new trustBoundaryCurve.TrustBoundaryCurve();
-    const ps = new processShape.ProcessShape({
-        width: 100,
-        height: 100
-    });
-    const a = new actor.Actor();
-    const s = new store.Store();
-    const text = new textBlock.TextBlock();
 
-    // const e = new secureEdge.SecureEdge({
-    //     labels: [
-    //         {
-    //             attrs: { text: { text: 'My Secure Edge' } }
-    //         }
-    //     ]
-    // });
+    stencil.load([
+        new shapes.ProcessShape(),
+        new shapes.Store(),
+        new shapes.Actor(),
+        new shapes.Flow()
+    ], 'entities');
 
+    stencil.load([
+        new shapes.TrustBoundaryBox({
+            width: 160,
+            height: 75
+        }),
+        new shapes.TrustBoundaryCurve()
+    ], 'boundaries');
 
-    stencil.load([ps, s, a], 'entities');
-    stencil.load([boxBoundary, curveBoundary], 'trust_boundaries');
-    stencil.load([text], 'metadata');
+    stencil.load([
+        new shapes.TextBlock()
+    ], 'metadata');
 
     // Searching forces a redraw of the stencil, which will ensure that all items in
     // the group are shown.  The boundaries are automatically calculated.

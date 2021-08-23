@@ -5,8 +5,8 @@
 import { CELL_SELECTED, CELL_UNSELECTED } from '../../../store/actions/cell.js';
 import dataChanged from './data-changed.js';
 import defaultProperties from '../../entity/default-properties.js';
+import shapes from '../shapes/index.js';
 import store from '../../../store/index.js';
-import trustBoundaryCurve from '../shapes/trust-boundary-curve.js';
 
 // We need to add the router and connector data when a new edge is added.
 // https://x6.antv.vision/en/docs/tutorial/intermediate/events
@@ -35,14 +35,24 @@ const mouseEnter = ({ cell }) => {
 };
 
 const cellAdded = (graph) => ({ cell }) => {
+    // Do not use cell.type here.  TrustBoundaryCurve is technically an arbitrary shape, not an edge
     if (cell.constructor.name === 'TrustBoundaryCurve') {
-        graph.addEdge(trustBoundaryCurve.getEdgeConfig(cell.position()));
+        graph.addEdge(shapes.TrustBoundaryCurve.prototype.getEdgeConfig(cell.position()));
         cell.remove();
     }
+
+    if (cell.type === shapes.Flow.prototype.type) {
+        graph.addEdge(shapes.Flow.prototype.getEdgeConfig(cell.position()));
+        cell.remove();
+    }
+
     removeCellTools({ cell });
 
     dataChanged.updateStyleAttrs(cell);
     if (!cell.data) {
+        if (cell.isEdge()) {
+            cell.type = defaultProperties.flow.type;
+        }
         cell.setData(defaultProperties.getByType(cell.type));
     }
 };

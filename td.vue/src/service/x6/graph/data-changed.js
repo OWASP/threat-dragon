@@ -2,9 +2,6 @@
  * @name data-changed
  * @description Handles the change:data event to update the UI styles
  */
-import actor from '../shapes/actor.js';
-import processShape from '../shapes/process.js';
-import store from '../shapes/store.js';
 
 const styles = {
     default: {
@@ -45,23 +42,11 @@ const edgeUpdater = (edge, color, dash, strokeWidth) => {
     edge.setAttrByPath('line/targetMarker/name', 'classic');
 };
 
-const getUpdateMap = () => ({
-    [actor.Actor.name]: actor.updateStyle,
-    [processShape.ProcessShape.name]: processShape.updateStyle,
-    [store.Store.name]: store.updateStyle,
-    Edge: edgeUpdater
-});
-
 const updateStyleAttrs = (cell) => {
     const cellData = cell.getData();
     
     // New UI elements will not have any cell data
     if (!cellData) {
-        return;
-    }
-
-    const updateFn = getUpdateMap()[cell.constructor.name];
-    if (!updateFn) {
         return;
     }
 
@@ -76,7 +61,13 @@ const updateStyleAttrs = (cell) => {
         strokeDasharray = styles.outOfScope.strokeDasharray;
     }
 
-    updateFn(cell, color, strokeDasharray, strokeWidth);
+    if (cell.updateStyle) {
+        cell.updateStyle(color, strokeDasharray, strokeWidth);
+    }
+
+    if (cell.isEdge()) {
+        edgeUpdater(cell, color, strokeDasharray, strokeWidth);
+    }
 };
 
 export default {

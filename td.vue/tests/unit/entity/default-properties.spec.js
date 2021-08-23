@@ -41,11 +41,15 @@ describe('service/entity/default-properties.js', () => {
         });
 
         it('has a blank name', () => {
-            expect(defaultProperties.boundary.name).toEqual('');
+            expect(defaultProperties.boundary.name).toEqual('Trust Boundary');
         });
 
         it('has a blank description', () => {
             expect(defaultProperties.boundary.description).toEqual('');
+        });
+
+        it('is a trust boundary', () => {
+            expect(defaultProperties.boundary.isTrustBoundary).toEqual(true);
         });
     });
 
@@ -60,6 +64,10 @@ describe('service/entity/default-properties.js', () => {
 
         it('has a blank description', () => {
             expect(defaultProperties.boundaryBox.description).toEqual('');
+        });
+
+        it('is a trust boundary', () => {
+            expect(defaultProperties.boundaryBox.isTrustBoundary).toEqual(true);
         });
     });
 
