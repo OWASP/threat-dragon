@@ -24,6 +24,7 @@
     ]
   },
   "win": {
+    "publisherName": "Jon Gadsden",
     "icon": "public/content/icons/icon.ico",
     "target": [
       {
