@@ -24,7 +24,6 @@
     ]
   },
   "win": {
-    "publisherName": "Open Source Developer, Antony Gadsden",
     "icon": "public/content/icons/icon.ico",
     "target": [
       {
