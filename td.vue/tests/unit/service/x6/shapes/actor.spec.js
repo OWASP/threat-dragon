@@ -1,10 +1,10 @@
-import actor from '@/service/x6/shapes/actor.js';
+import { Actor } from '@/service/x6/shapes/actor.js';
 
 describe('service/x6/shapes/actor.js', () => {
     let victim;
 
     beforeEach(() => {
-        victim = new actor.Actor();
+        victim = new Actor();
     });
 
     it('can create the object', () => {
@@ -14,22 +14,24 @@ describe('service/x6/shapes/actor.js', () => {
     describe('updateStyle', () => {
         const color = 'foo';
         const dash = '3 3';
-        let cell;
+        const stroke = 1;
 
         beforeEach(() => {
-            cell = {
-                setAttrByPath: jest.fn()
-            };
-            actor.updateStyle(cell, color, dash);
+            victim.setAttrByPath = jest.fn();
+            victim.updateStyle(color, dash, stroke);
         });
 
         it('sets the body/stroke attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith('body/stroke', color);
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('body/stroke', color);
         });
 
         it('sets the body/strokeDasharray attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith(
+            expect(victim.setAttrByPath).toHaveBeenCalledWith(
                 'body/strokeDasharray', dash);
+        });
+
+        it('sets the body/strokeWidth attribute', () => {
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('body/strokeWidth', stroke);
         });
     });
 });

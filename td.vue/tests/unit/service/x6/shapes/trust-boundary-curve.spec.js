@@ -1,10 +1,10 @@
-import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve.js';
+import { TrustBoundaryCurve } from '@/service/x6/shapes/trust-boundary-curve.js';
 
 describe('service/x6/shapes/trust-boundary-curve.js', () => {
     let victim;
 
     beforeEach(() => {
-        victim = new trustBoundaryCurve.TrustBoundaryCurve();
+        victim = new TrustBoundaryCurve();
     });
 
     it('can create the object', () => {
@@ -16,7 +16,7 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
         const position = { x: 100, y: 500 };
 
         beforeEach(() => {
-            config = trustBoundaryCurve.getEdgeConfig(position);
+            config = victim.getEdgeConfig(position);
         });
 
         it('sets the source position', () => {

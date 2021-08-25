@@ -1,5 +1,5 @@
 import events from '@/service/x6/graph/events.js';
-import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve.js';
+import { TrustBoundaryCurve } from '@/service/x6/shapes/trust-boundary-curve.js';
 
 describe('service/x6/graph/events.js', () => {
     let cell, edge, graph;
@@ -19,7 +19,8 @@ describe('service/x6/graph/events.js', () => {
             setData: jest.fn(),
             getLabel: jest.fn(),
             getLabels: jest.fn().mockReturnValue([]),
-            data: {}
+            data: {},
+            position: jest.fn().mockReturnValue({ x: 1, y: 2 })
         };
         edge = {};
     });
@@ -141,7 +142,7 @@ describe('service/x6/graph/events.js', () => {
         describe('trust boundary curve', () => {
             const cfg = { foo: 'bar' };
             beforeEach(() => {
-                trustBoundaryCurve.getEdgeConfig = jest.fn().mockImplementation(() => cfg);
+                TrustBoundaryCurve.prototype.getEdgeConfig = jest.fn().mockImplementation(() => cfg);
                 cell.isNode.mockImplementation(() => true);
                 cell.constructor = { name: 'TrustBoundaryCurve' };
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
@@ -153,7 +154,7 @@ describe('service/x6/graph/events.js', () => {
             });
 
             it('gets the edge config', () => {
-                expect(trustBoundaryCurve.getEdgeConfig).toHaveBeenCalledTimes(1);
+                expect(TrustBoundaryCurve.prototype.getEdgeConfig).toHaveBeenCalledTimes(1);
             });
 
             it('adds the edge to the graph', () => {

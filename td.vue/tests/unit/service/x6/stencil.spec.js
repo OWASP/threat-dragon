@@ -1,11 +1,8 @@
 import actor from '@/service/x6/shapes/actor.js';
 import factory from '@/service/x6/factory.js';
-import processShape from '@/service/x6/shapes/process.js';
+import shapes from '@/service/x6/shapes/index.js';
 import stencil from '@/service/x6/stencil.js';
 import store from '@/service/x6/shapes/store.js';
-import textBlock from '@/service/x6/shapes/text.js';
-import trustBoundaryBox from '@/service/x6/shapes/trust-boundary-box.js';
-import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve';
 
 describe('service/x6/stencil.js', () => {
     let container, load, search, target, cfg;
@@ -21,10 +18,12 @@ describe('service/x6/stencil.js', () => {
                 onSearch: search
             };
         });
-        actor.Actor = jest.fn();
-        processShape.ProcessShape = jest.fn();
-        store.Store = jest.fn();
-        trustBoundaryBox.TrustBoundaryBox = jest.fn();
+        shapes.Actor = jest.fn();
+        shapes.ProcessShape = jest.fn();
+        shapes.Store = jest.fn();
+        shapes.Flow = jest.fn();
+        shapes.TrustBoundaryBox = jest.fn();
+        shapes.TrustBoundaryCurve = jest.fn();
         container = { appendChild: jest.fn(), foo: 'bar' };
         target = { bar: 'baz' };
         
@@ -82,39 +81,40 @@ describe('service/x6/stencil.js', () => {
     });
 
     it('creates an instance of TrustBoundaryBox', () => {
-        expect(trustBoundaryBox.TrustBoundaryBox).toHaveBeenCalledTimes(1);
+        expect(shapes.TrustBoundaryBox).toHaveBeenCalledTimes(1);
     });
 
     it('creates an instance of ProcessShape', () => {
-        expect(processShape.ProcessShape).toHaveBeenCalledTimes(1);
+        expect(shapes.ProcessShape).toHaveBeenCalledTimes(1);
     });
 
     it('creates an instance of Actor', () => {
-        expect(actor.Actor).toHaveBeenCalledTimes(1);
+        expect(shapes.Actor).toHaveBeenCalledTimes(1);
     });
 
     it('creates an instance of ProcessShape', () => {
-        expect(store.Store).toHaveBeenCalledTimes(1);
+        expect(shapes.Store).toHaveBeenCalledTimes(1);
     });
 
     it('loads the entities', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(processShape.ProcessShape),
-            expect.any(store.Store),
-            expect.any(actor.Actor)
+            expect.any(shapes.ProcessShape),
+            expect.any(shapes.Store),
+            expect.any(shapes.Actor),
+            expect.any(shapes.Flow)
         ], 'entities');
     });
 
     it('loads the trust boundaries', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(trustBoundaryBox.TrustBoundaryBox),
-            expect.any(trustBoundaryCurve.TrustBoundaryCurve)
-        ], 'trust_boundaries');
+            expect.any(shapes.TrustBoundaryBox),
+            expect.any(shapes.TrustBoundaryCurve)
+        ], 'boundaries');
     });
 
     it('loads the metadata', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(textBlock.TextBlock)
+            expect.any(shapes.TextBlock)
         ], 'metadata');
     });
 

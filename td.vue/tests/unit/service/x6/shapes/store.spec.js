@@ -39,31 +39,37 @@ describe('service/x6/shapes/store.js', () => {
     describe('updateStyle', () => {
         const color = 'foo';
         const dash = '3 3';
-        let cell;
+        const stroke = 1;
 
         beforeEach(() => {
-            cell = {
-                setAttrByPath: jest.fn()
-            };
-            store.updateStyle(cell, color, dash);
+            victim.setAttrByPath = jest.fn();
+            victim.updateStyle(color, dash, stroke);
         });
 
         it('sets the topLine/stroke attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith('topLine/stroke', color);
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('topLine/stroke', color);
         });
 
         it('sets the topLine/strokeDasharray attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith(
+            expect(victim.setAttrByPath).toHaveBeenCalledWith(
                 'topLine/strokeDasharray', dash);
         });
 
+        it('sets the topLine/strokeWidth attribute', () => {
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('topLine/strokeWidth', stroke);
+        });
+
         it('sets the bottomLine/stroke attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith('bottomLine/stroke', color);
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('bottomLine/stroke', color);
         });
 
         it('sets the bottomLine/strokeDasharray attribute', () => {
-            expect(cell.setAttrByPath).toHaveBeenCalledWith(
+            expect(victim.setAttrByPath).toHaveBeenCalledWith(
                 'bottomLine/strokeDasharray', dash);
+        });
+
+        it('sets the bottomLine/strokeWidth attribute', () => {
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('bottomLine/strokeWidth', stroke);
         });
     });
 });

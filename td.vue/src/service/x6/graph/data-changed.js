@@ -61,13 +61,15 @@ const updateStyleAttrs = (cell) => {
         strokeDasharray = styles.outOfScope.strokeDasharray;
     }
 
+    if (cell.isEdge()) {
+        edgeUpdater(cell, color, strokeDasharray, strokeWidth);
+        return;
+    }
+
     if (cell.updateStyle) {
         cell.updateStyle(color, strokeDasharray, strokeWidth);
     }
 
-    if (cell.isEdge()) {
-        edgeUpdater(cell, color, strokeDasharray, strokeWidth);
-    }
 };
 
 export default {
