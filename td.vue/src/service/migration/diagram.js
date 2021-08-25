@@ -3,9 +3,7 @@
  * @description Reads an existing v1 diagram to create components for the v2 UI
  * This is not for persistence, and is done on a diagram by diagram basis
  */
-import { Actor } from '../x6/shapes/actor.js';
-import { ProcessShape } from '../x6/shapes/process.js';
-import { Store } from '../x6/shapes/store.js';
+import shapes from '../x6/shapes/index.js';
 
 const getLabelText = (cell, label) => {
     let text = label.attrs.text.text;
@@ -46,35 +44,37 @@ const entityMap = (constructor) => (cell) => {
     });
 };
 
-const edgeMap = (cell) => ({
-    source: cell.source,
-    target: cell.target,
-    vertices: cell.vertices,
-    connector: 'smooth',
-    attrs: {},
-    labels: getEdgeLabels(cell)
-});
+const edgeMap = (constructor) => (cell) => {
+    return new constructor({
+        source: cell.source,
+        target: cell.target,
+        vertices: cell.vertices,
+        connector: 'smooth',
+        attrs: {},
+        labels: getEdgeLabels(cell)
+    });
+};
 
 const cellConverter = {
     'tm.Actor': {
         isNode: true,
-        mapper: entityMap(Actor)
+        mapper: entityMap(shapes.Actor)
     },
     'tm.Boundary': {
         isNode: false,
-        mapper: edgeMap
+        mapper: edgeMap(shapes.TrustBoundaryCurve)
     },
     'tm.Flow': {
         isNode: false,
-        mapper: edgeMap
+        mapper: edgeMap(shapes.Flow)
     },
     'tm.Process': {
         isNode: true,
-        mapper: entityMap(ProcessShape)
+        mapper: entityMap(shapes.ProcessShape)
     },
     'tm.Store': {
         isNode: true,
-        mapper: entityMap(Store)
+        mapper: entityMap(shapes.Store)
     }
 };
 
@@ -118,6 +118,7 @@ const mapDiagram = (diagram) => {
         return resp;
     }
 
+    // TODO: Merge defaults with existing data
     diagram.diagramJson.cells.forEach((cell) => {
         const { isNode, mapper } = cellConverter[cell.type];
         const entity = mapper(cell);
@@ -125,6 +126,8 @@ const mapDiagram = (diagram) => {
         arr.push(addMetaData(entity, cell));
     });
 
+    // TODO: merge defaults with existing data
+    // TODO: Add label to data as name
     relateEdges(resp.nodes, resp.edges);
     return resp;
 };

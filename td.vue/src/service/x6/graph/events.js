@@ -70,6 +70,7 @@ const cellAdded = (graph) => ({ cell }) => {
 };
 
 const cellSelected = ({ cell }) => {
+    // TODO: We should be updating this somewhere else, not here.
     if (cell.isNode()) {
         cell.data.name = cell.getLabel();
     } else {
@@ -77,13 +78,7 @@ const cellSelected = ({ cell }) => {
             console.log('Setting name from label');
             const labels = cell.getLabels();
             if (labels.length) {
-                console.log(labels);
-                // TODO: labels[0].attrs.text is undefined (from old models)
-                // Probably should update them to follow the newest paradigm, and also have the name
-                // as part of the data...
-                // labels[0].attrs.label.text
-                // cell.data.name = labels[0].attrs.text.text;
-                // console.log(cell.data.name);
+                cell.data.name = labels[0].attrs.label.text;
             }
         }
     }

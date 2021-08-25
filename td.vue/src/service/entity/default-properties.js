@@ -11,7 +11,7 @@ const actor = {
 
 const boundary = {
     type: 'tm.Boundary',
-    name: 'Trust Boundary',
+    name: '',
     description: '',
     isTrustBoundary: true
 };
@@ -25,7 +25,7 @@ const boundaryBox = {
 
 const flow = {
     type: 'tm.Flow',
-    name: 'Data Flow',
+    name: '',
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',

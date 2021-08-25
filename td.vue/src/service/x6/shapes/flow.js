@@ -2,7 +2,6 @@ import { Shape } from '@antv/x6';
 import defaultProperties from '../../entity/default-properties';
 
 const name = 'flow';
-const defaultText = 'Data Flow';
 
 export const Flow = Shape.Edge.define({
     constructorName: name,
@@ -17,16 +16,6 @@ export const Flow = Shape.Edge.define({
         }
     },
     connector: 'smooth',
-    data: {
-        name: defaultText
-    },
-    labels: [{
-        attrs: {
-            text: {
-                text: defaultText
-            }
-        }
-    }],
     data: defaultProperties.flow
 });
 
