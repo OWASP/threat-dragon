@@ -13,7 +13,6 @@ describe('service/x6/graph/events.js', () => {
             removeTools: jest.fn(),
             isNode: jest.fn(),
             addTools: jest.fn(),
-            position: jest.fn(),
             remove: jest.fn(),
             getData: jest.fn(),
             setData: jest.fn(),

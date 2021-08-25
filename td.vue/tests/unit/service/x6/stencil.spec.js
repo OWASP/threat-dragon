@@ -1,8 +1,6 @@
-import actor from '@/service/x6/shapes/actor.js';
 import factory from '@/service/x6/factory.js';
 import shapes from '@/service/x6/shapes/index.js';
 import stencil from '@/service/x6/stencil.js';
-import store from '@/service/x6/shapes/store.js';
 
 describe('service/x6/stencil.js', () => {
     let container, load, search, target, cfg;
