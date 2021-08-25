@@ -1,10 +1,13 @@
 import events from '@/service/x6/graph/events.js';
+import store from '@/store/index.js';
 import { TrustBoundaryCurve } from '@/service/x6/shapes/trust-boundary-curve.js';
 
 describe('service/x6/graph/events.js', () => {
-    let cell, edge, graph;
+    let cell, edge, graph, mockStore;
 
     beforeEach(() => {
+        mockStore = { dispatch: jest.fn() };
+        store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
             on: jest.fn()
         };
@@ -19,6 +22,7 @@ describe('service/x6/graph/events.js', () => {
             getLabel: jest.fn(),
             getLabels: jest.fn().mockReturnValue([]),
             data: {},
+            id: 'foobar',
             position: jest.fn().mockReturnValue({ x: 1, y: 2 })
         };
         edge = {};

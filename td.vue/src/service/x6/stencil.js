@@ -49,7 +49,7 @@ const get = (target, container) => {
         new shapes.ProcessShape(),
         new shapes.Store(),
         new shapes.Actor(),
-        new shapes.Flow()
+        new shapes.FlowStencil()
     ], 'entities');
 
     stencil.load([
@@ -57,7 +57,7 @@ const get = (target, container) => {
             width: 160,
             height: 75
         }),
-        new shapes.TrustBoundaryCurve()
+        new shapes.TrustBoundaryCurveStencil()
     ], 'boundaries');
 
     stencil.load([

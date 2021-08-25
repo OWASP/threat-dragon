@@ -29,7 +29,7 @@ ProcessShape.prototype.updateStyle = function (color, dash, strokeWidth) {
 
 ProcessShape.prototype.type = 'tm.Process';
 
-ProcessShape.setName = function (name) {
+ProcessShape.prototype.setName = function (name) {
     this.label = name;
 };
 

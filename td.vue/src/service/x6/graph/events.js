@@ -7,6 +7,8 @@ import dataChanged from './data-changed.js';
 import defaultProperties from '../../entity/default-properties.js';
 import shapes from '../shapes/index.js';
 import store from '../../../store/index.js';
+import { FlowStencil } from '../shapes/flow-stencil.js';
+import { TrustBoundaryCurveStencil } from '../shapes/trust-boundary-curve-stencil.js';
 
 // We need to add the router and connector data when a new edge is added.
 // https://x6.antv.vision/en/docs/tutorial/intermediate/events
@@ -35,14 +37,24 @@ const mouseEnter = ({ cell }) => {
 };
 
 const cellAdded = (graph) => ({ cell }) => {
-    // Do not use cell.type here.  TrustBoundaryCurve is technically an arbitrary shape, not an edge
-    if (cell.constructor.name === 'TrustBoundaryCurve') {
-        graph.addEdge(shapes.TrustBoundaryCurve.prototype.getEdgeConfig(cell.position()));
-        cell.remove();
-    }
+    if (cell.convertToEdge) {
+        const position = cell.position();
+        const config = {
+            source: position,
+            target: {
+                x: position.x + 100,
+                y: position.y + 100
+            },
+            data: cell.getData()
+        };
 
-    if (cell.type === shapes.Flow.prototype.type) {
-        graph.addEdge(shapes.Flow.prototype.getEdgeConfig(cell.position()));
+        if (cell.type === FlowStencil.prototype.type) {
+            graph.addEdge(new shapes.Flow(config));
+        }
+        if (cell.type === TrustBoundaryCurveStencil.prototype.type) {
+            graph.addEdge(new shapes.TrustBoundaryCurve(config));
+        }
+
         cell.remove();
     }
 
@@ -61,15 +73,33 @@ const cellSelected = ({ cell }) => {
     if (cell.isNode()) {
         cell.data.name = cell.getLabel();
     } else {
-        const labels = cell.getLabels().filter(x => x && x.attrs && x.attrs.label && x.attrs.label.text);
-        cell.data.name = labels.length ? labels[0].attrs.label.text : '';
+        if (!cell.data.name && cell.getLabels) {
+            console.log('Setting name from label');
+            const labels = cell.getLabels();
+            if (labels.length) {
+                console.log(labels);
+                // TODO: labels[0].attrs.text is undefined (from old models)
+                // Probably should update them to follow the newest paradigm, and also have the name
+                // as part of the data...
+                // labels[0].attrs.label.text
+                // cell.data.name = labels[0].attrs.text.text;
+                // console.log(cell.data.name);
+            }
+        }
     }
 
-    store.get().dispatch(CELL_SELECTED, cell.getData());
+    store.get().dispatch(CELL_SELECTED, { data: cell.getData(), id: cell.id, ref: cell });
 };
 
 const cellUnselected = ({ cell }) => {
     removeCellTools({ cell });
+
+    if (cell.setName && cell.getData && typeof cell.getData().name !== 'undefined') {
+        cell.setName(cell.getData().name);
+    } else {
+        console.log('Cannot set name');
+    }
+    
     store.get().dispatch(CELL_UNSELECTED);
 };
 

@@ -4,12 +4,17 @@ import {
 } from '../actions/cell.js';
 
 export const clearState = (state) => {
-    state.type = null;
     state.data = {};
+    state.id = null;
+    state.ref = null;
 };
 
+// TODO: We can probably remove this entire thing and tap into the graph store
+// If we add "selectedCell" and use the entire cell reference, we can bind the data directly
 const state = {
-    data: {}
+    data: {},
+    id: null,
+    ref: null
 };
 
 const actions = {
@@ -18,8 +23,10 @@ const actions = {
 };
 
 const mutations = {
-    [CELL_SELECTED]: (state, cellData) => {
-        state.data = cellData;
+    [CELL_SELECTED]: (state, { data, id, ref }) => {
+        state.data = data;
+        state.id = id;
+        state.ref = ref;
     },
     [CELL_UNSELECTED]: (state) => clearState(state)
 };

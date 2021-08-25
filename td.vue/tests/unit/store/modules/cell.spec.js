@@ -36,7 +36,7 @@ describe('store/modules/cell.js', () => {
     });
 
     describe('mutations', () => {
-        const params = { bar: 'bar', baz: 'baz' };
+        const params = { data: { bar: 'bar', baz: 'baz' }, id: 'foo' };
 
         describe('selected', () => {    
             beforeEach(() => {
@@ -44,8 +44,12 @@ describe('store/modules/cell.js', () => {
             });
 
             it('sets the data', () => {
-                expect(cellModule.state.data).toEqual(params);
+                expect(cellModule.state.data).toEqual(params.data);
             });
+
+            it('sets the id', () => {
+                expect(cellModule.state.id).toEqual(params.id);
+            })
         });
 
         describe('unselected', () => {

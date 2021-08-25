@@ -25,7 +25,7 @@ const boundaryBox = {
 
 const flow = {
     type: 'tm.Flow',
-    name: '',
+    name: 'Data Flow',
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',
@@ -71,6 +71,7 @@ const propsByType = {
     'tm.Boundary': boundary,
     'tm.BoundaryBox': boundaryBox,
     'tm.Flow': flow,
+    'tm.FlowStencil': flow,
     'tm.Process': tmProcess,
     'tm.Store': store,
     'tm.Text': text
