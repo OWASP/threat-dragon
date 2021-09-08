@@ -75,7 +75,6 @@ const cellSelected = ({ cell }) => {
         cell.data.name = cell.getLabel();
     } else {
         if (!cell.data.name && cell.getLabels) {
-            console.log('Setting name from label');
             const labels = cell.getLabels();
             if (labels.length) {
                 cell.data.name = labels[0].attrs.label.text;

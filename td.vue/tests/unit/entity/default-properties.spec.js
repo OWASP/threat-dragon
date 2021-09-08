@@ -41,7 +41,7 @@ describe('service/entity/default-properties.js', () => {
         });
 
         it('has a blank name', () => {
-            expect(defaultProperties.boundary.name).toEqual('Trust Boundary');
+            expect(defaultProperties.boundary.name).toEqual('');
         });
 
         it('has a blank description', () => {

@@ -1,6 +1,6 @@
 import events from '@/service/x6/graph/events.js';
 import store from '@/store/index.js';
-import { TrustBoundaryCurve } from '@/service/x6/shapes/trust-boundary-curve.js';
+import { TrustBoundaryCurveStencil } from '../../../../../src/service/x6/shapes/trust-boundary-curve-stencil';
 
 describe('service/x6/graph/events.js', () => {
     let cell, edge, graph, mockStore;
@@ -143,11 +143,11 @@ describe('service/x6/graph/events.js', () => {
         });
 
         describe('trust boundary curve', () => {
-            const cfg = { foo: 'bar' };
             beforeEach(() => {
-                TrustBoundaryCurve.prototype.getEdgeConfig = jest.fn().mockImplementation(() => cfg);
+                cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
-                cell.constructor = { name: 'TrustBoundaryCurve' };
+                cell.constructor = { name: 'TrustBoundaryCurveStencil' };
+                cell.type = TrustBoundaryCurveStencil.prototype.type;
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
                 events.listen(graph);
             });
@@ -156,12 +156,8 @@ describe('service/x6/graph/events.js', () => {
                 expect(cell.position).toHaveBeenCalledTimes(1);
             });
 
-            it('gets the edge config', () => {
-                expect(TrustBoundaryCurve.prototype.getEdgeConfig).toHaveBeenCalledTimes(1);
-            });
-
             it('adds the edge to the graph', () => {
-                expect(graph.addEdge).toHaveBeenCalledWith(cfg);
+                expect(graph.addEdge).toHaveBeenCalled();
             });
 
             it('removes the cell', () => {

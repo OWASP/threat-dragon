@@ -1,6 +1,5 @@
 
 import diagram from '@/service/migration/diagram.js';
-import { Actor } from '../../../../src/service/x6/shapes/actor';
 
 describe('service/migration/diagram.js', () => {
     const size = { width: 100, height: 200 };
@@ -119,11 +118,11 @@ describe('service/migration/diagram.js', () => {
         });
 
         it('maps the source', () => {
-            expect(edges[0].source).toBeInstanceOf(Actor);
+            expect(edges[0].source).toEqual({ cell: id });
         });
 
         it('maps the target', () => {
-            expect(edges[0].target).toBeInstanceOf(Actor);
+            expect(edges[0].target).toEqual({ cell: id });
         });
 
         it('maps the vertices', () => {

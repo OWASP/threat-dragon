@@ -49,7 +49,7 @@ describe('store/modules/cell.js', () => {
 
             it('sets the id', () => {
                 expect(cellModule.state.id).toEqual(params.id);
-            })
+            });
         });
 
         describe('unselected', () => {

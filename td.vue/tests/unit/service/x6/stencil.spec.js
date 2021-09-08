@@ -99,14 +99,14 @@ describe('service/x6/stencil.js', () => {
             expect.any(shapes.ProcessShape),
             expect.any(shapes.Store),
             expect.any(shapes.Actor),
-            expect.any(shapes.Flow)
+            expect.any(shapes.FlowStencil)
         ], 'entities');
     });
 
     it('loads the trust boundaries', () => {
         expect(load).toHaveBeenCalledWith([
             expect.any(shapes.TrustBoundaryBox),
-            expect.any(shapes.TrustBoundaryCurve)
+            expect.any(shapes.TrustBoundaryCurveStencil)
         ], 'boundaries');
     });
 

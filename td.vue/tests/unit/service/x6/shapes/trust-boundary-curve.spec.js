@@ -11,36 +11,21 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
         expect(victim.constructor.name).toEqual('TrustBoundaryCurve');
     });
 
-    describe('get edge config', () => {
-        let config;
-        const position = { x: 100, y: 500 };
-
-        beforeEach(() => {
-            config = victim.getEdgeConfig(position);
-        });
-
-        it('sets the source position', () => {
-            expect(config.source).toEqual(position);
-        });
-
-        it('sets the target position', () => {
-            expect(config.target).toEqual({ x: position.x + 100, y: position.y + 100 });
-        });
-
+    describe('get edge victim', () => {
         it('uses the smooth connector', () => {
-            expect(config.connector).toEqual('smooth');
+            expect(victim.connector).toEqual('smooth');
         });
 
         it('sets the stroke dash array', () => {
-            expect(config.attrs.line.strokeDasharray).toEqual('5 5');
+            expect(victim.attrs.line.strokeDasharray).toEqual('5 5');
         });
 
         it('does not have a source marker', () => {
-            expect(config.attrs.line.sourceMarker).toEqual(null);
+            expect(victim.attrs.line.sourceMarker).toEqual(null);
         });
 
         it('does not have a target marker', () => {
-            expect(config.attrs.line.targetMarker).toEqual(null);
+            expect(victim.attrs.line.targetMarker).toEqual(null);
         });
     });
 });
