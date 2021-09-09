@@ -77,7 +77,7 @@ const cellSelected = ({ cell }) => {
         if (!cell.data.name && cell.getLabels) {
             const labels = cell.getLabels();
             if (labels.length) {
-                cell.data.name = labels[0].attrs.label.text;
+                cell.data.name = cell.data.isTrustBoundary ? labels[0].attrs.text.text : labels[0].attrs.label.text;
             }
         }
     }

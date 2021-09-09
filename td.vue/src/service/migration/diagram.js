@@ -97,16 +97,43 @@ const relateEdges = (nodes, edges) => {
 };
 
 const addMetaData = (entity, cell) => {
-    entity.data = {
-        hasOpenThreats: !!cell.hasOpenThreats,
-        threats: cell.threats || [],
-        outOfScope: !!cell.outOfScope,
-        isEncrypted: !!cell.isEncrypted,
-        isPublicNetwork: !!cell.isPublicNetwork,
-        protocol: cell.protocol || '',
-        isTrustBoundary: cell.type === 'tm.Boundary',
-        type: cell.type
+    const data = {
+        name: cell.name || '',
+        description: cell.description || '',
+        type: cell.type,
+        isTrustBoundary: cell.type === 'tm.Boundary'
     };
+
+    if (!data.isTrustBoundary) {
+        data.outOfScope = !!cell.outOfScope;
+        data.reasonOutOfScope = cell.reasonOutOfScope || '';
+        data.threats = cell.threats || [];
+        data.hasOpenThreats = data.threats.length > 0;
+    }
+
+    if (data.type === 'tm.Process') {
+        data.privilegeLevel = cell.privilegeLevel || '';
+    }
+
+    if (data.type === 'tm.Store') {
+        data.isALog = !!cell.isALog;
+        data.storesCredentials = !!cell.storesCredentials;
+        data.isEncrypted = !!cell.isEncrypted;
+        data.isSigned = !!cell.isSigned;
+    }
+
+    if (data.type === 'tm.Actor') {
+        data.providesAuthentication = !!cell.providesAuthentication;
+    }
+
+    if (data.type === 'tm.Flow') {
+        data.protocol = cell.protocol || '';
+        data.isEncrypted = !!cell.isEncrypted;
+        data.isPublicNetwork = !!cell.isPublicNetwork;
+    }
+
+    entity.data = data;
+    
     return entity;
 };
 

@@ -182,42 +182,42 @@ describe('service/migration/diagram.js', () => {
     describe('metadata', () => {
         const threats = [ 't1' ];
         beforeEach(() => {
-            const v1 = getV1Cell();
+            const v1 = getV1Edge();
             v1.diagramJson.cells[0].hasOpenThreats = true;
             v1.diagramJson.cells[0].outOfScope = true;
             v1.diagramJson.cells[0].threats = threats;
             v1.diagramJson.cells[0].isEncrypted = true;
             v1.diagramJson.cells[0].protocol = 'HTTPS';
             const res = diagram.mapDiagram(v1);
-            nodes = res.nodes;
+            edges = res.edges;
         });
 
         it('adds the open threats property', () => {
-            expect(nodes[0].data.hasOpenThreats).toEqual(true);
+            expect(edges[0].data.hasOpenThreats).toEqual(true);
         });
 
         it('adds the threats', () => {
-            expect(nodes[0].data.threats).toEqual(threats);
+            expect(edges[0].data.threats).toEqual(threats);
         });
 
         it('adds the out of scope property', () => {
-            expect(nodes[0].data.outOfScope).toEqual(true);
+            expect(edges[0].data.outOfScope).toEqual(true);
         });
 
         it('adds the isPublicNetwork property', () => {
-            expect(nodes[0].data.isPublicNetwork).toEqual(false);
+            expect(edges[0].data.isPublicNetwork).toEqual(false);
         });
 
         it('adds the isTrustBoundary property', () => {
-            expect(nodes[0].data.isTrustBoundary).toEqual(false);
+            expect(edges[0].data.isTrustBoundary).toEqual(false);
         });
 
         it('adds the isEncrypted property', () => {
-            expect(nodes[0].data.isEncrypted).toEqual(true);
+            expect(edges[0].data.isEncrypted).toEqual(true);
         });
 
         it('adds the protocol property', () => {
-            expect(nodes[0].data.protocol).toEqual('HTTPS');
+            expect(edges[0].data.protocol).toEqual('HTTPS');
         });
     });
 
