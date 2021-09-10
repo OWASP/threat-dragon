@@ -21,6 +21,8 @@ function threatengine() {
     initialiseRules(engine);
     engine.addFact('elementType', element.attributes.type);
     engine.addFact('diagramType', getModel);
+    engine.addFact('elementIsPublicNetwork', element.isPublicNetwork);
+    engine.addFact('elementIsEncrypted', element.isEncrypted);
 
     return engine.run().then(onCompleted);
 
@@ -249,20 +251,17 @@ function threatengine() {
             operator: 'equal',
             value: 'tm.Flow'
           } , {
-            fact: 'elementType',
-            path: '.element.isPublicNetwork',
+            fact: 'elementIsPublicNetwork',
             operator: 'equal',
             value: true
           } , {
             any: [
               {
-                fact: 'elementType',
-                path: '.element.isEncrypted',
+                fact: 'elementIsEncrypted',
                 operator: 'equal',
                 value: false
               }, {
-                fact: 'elementType',
-                path: '.element.isEncrypted',
+                fact: 'elementIsEncrypted',
                 operator: 'equal',
                 value: undefined
               }
@@ -279,8 +278,7 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'High',
-          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker.',
-          mitigation: 'Data sent over a public network should be encrypted either at the message or transport level.'
+          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
         }
       }
     });
@@ -354,6 +352,52 @@ function threatengine() {
           status: 'Open',
           severity: 'Medium',
           description: 'A generic threat to availability'
+        }
+      }
+    });
+
+    /* CIA using context */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'CIA'
+          },
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Flow'
+          } , {
+            fact: 'elementIsPublicNetwork',
+            operator: 'equal',
+            value: true
+          } , {
+            any: [
+              {
+                fact: 'elementIsEncrypted',
+                operator: 'equal',
+                value: false
+              }, {
+                fact: 'elementIsEncrypted',
+                operator: 'equal',
+                value: undefined
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '38c51fb4-2370-4ac1-a24a-4ba171078ef1',
+        params: {
+          ruleId: '38c51fb4-2370-4ac1-a24a-4ba171078ef1',
+          title: 'Use encryption',
+          type: 'Confidentiality',
+          modelType: 'CIA',
+          status: 'Open',
+          severity: 'High',
+          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
         }
       }
     });
@@ -553,6 +597,53 @@ function threatengine() {
         }
       }
     });
+
+    /* LINDDUN using context */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'diagramType',
+            operator: 'equal',
+            value: 'LINDDUN'
+          },
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Flow'
+          } , {
+            fact: 'elementIsPublicNetwork',
+            operator: 'equal',
+            value: true
+          } , {
+            any: [
+              {
+                fact: 'elementIsEncrypted',
+                operator: 'equal',
+                value: false
+              }, {
+                fact: 'elementIsEncrypted',
+                operator: 'equal',
+                value: undefined
+              }
+            ]
+          }
+        ]
+      },
+      event: {
+        type: '021ab22d-8d51-4501-9bb8-6dabf9c27f0d',
+        params: {
+          ruleId: '021ab22d-8d51-4501-9bb8-6dabf9c27f0d',
+          title: 'Use encryption',
+          type: 'Disclosure of information',
+          modelType: 'LINDDUN',
+          status: 'Open',
+          severity: 'High',
+          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
+        }
+      }
+    });
+
   }
 }
 
