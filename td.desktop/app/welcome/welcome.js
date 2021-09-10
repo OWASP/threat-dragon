@@ -2,6 +2,7 @@
 
 function welcome($scope, $location, $route, common, electron, threatmodellocator) {
 
+    const path = require('path');
     const log = electron.log;
     const logID = 'Welcome Controller: ';
     log.debug(logID + 'loaded with verbosity level:', electron.logLevel);
@@ -47,7 +48,9 @@ function welcome($scope, $location, $route, common, electron, threatmodellocator
 
     function openNewModel(template) {
         log.debug(logID + 'open new model:', template);
-        var model = require('../../ThreatDragonModels/' + template + '/' + template + '.json');
+        var modelPath = path.join('..', '..', 'ThreatDragonModels', template, template + '.json');
+        var model = require(modelPath);
+        log.silly(logID + 'open new model path:', modelPath);
         var success = true;
         electron.dialog.save(function (fileName) {
             fs.writeFileSync( fileName, JSON.stringify(model), 'utf8', function (err) {
