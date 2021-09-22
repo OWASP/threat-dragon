@@ -63,7 +63,7 @@ describe('welcome controller', function () {
     
     describe('new model tests', function () {
 
-        it('should create a new model file', function() {
+        xit('should create a new model file', function() {
             var testModel = 'new-model';
             var testFileName = 'test file name';
             var testFilenames = [testFileName];
