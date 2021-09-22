@@ -41,7 +41,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
-    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'NotApplicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -335,7 +335,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
-    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'NotApplicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -428,7 +428,7 @@ angular.module('templates', [])
     '                <label>Threat status</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" name="statusInput">\n' +
-    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'Not Applicable\'">NA</label>\n' +
+    '                        <label class="btn btn-primary" name="statusInputNotApplicable" ng-model="parameter.threat.status" uib-btn-radio="\'NotApplicable\'">NA</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputOpen" ng-model="parameter.threat.status" uib-btn-radio="\'Open\'">Open</label>\n' +
     '                        <label class="btn btn-primary" name="statusInputMitigated" ng-model="parameter.threat.status" uib-btn-radio="\'Mitigated\'">Mitigated</label>\n' +
     '                    </div>\n' +
@@ -479,7 +479,7 @@ angular.module('templates', [])
     '            <small>{{threat.type}}</small>\n' +
     '        </div>\n' +
     '        <div>\n' +
-    '            <span ng-class="{Open:\'severity-high fa fa-exclamation-triangle\', Mitigated:\'severity-low fa fa-check\'}[threat.status]" data-toggle="tooltip" data-placement="top" title="{{threat.status}}"></span>\n' +
+    '            <span ng-class="{NotApplicable:\'severity-low fa fa-check\', Open:\'severity-high fa fa-exclamation-triangle\', Mitigated:\'severity-low fa fa-check\'}[threat.status]" data-toggle="tooltip" data-placement="top" title="{{threat.status}}"></span>\n' +
     '            <span ng-class="{Low:\'fa fa-circle severity-low\', Medium:\'fa fa-circle severity-medium\', High:\'fa fa-circle severity-high\'}[threat.severity]" data-toggle="tooltip" data-placement="top" title="{{threat.severity}}"></span>\n' +
     '            <span id="remove{{$index}}" class="pull-right glyphicon glyphicon-remove severity-high" ng-click="removeThreat($index)" data-toggle="tooltip" data-placement="top" title="Remove this threat"></span>\n' +
     '        </div>\n' +

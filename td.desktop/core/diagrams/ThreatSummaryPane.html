@@ -7,7 +7,7 @@
             <small>{{threat.type}}</small>
         </div>
         <div>
-            <span ng-class="{Open:'severity-high fa fa-exclamation-triangle', Mitigated:'severity-low fa fa-check'}[threat.status]" data-toggle="tooltip" data-placement="top" title="{{threat.status}}"></span>
+            <span ng-class="{NotApplicable:'severity-low fa fa-check', Open:'severity-high fa fa-exclamation-triangle', Mitigated:'severity-low fa fa-check'}[threat.status]" data-toggle="tooltip" data-placement="top" title="{{threat.status}}"></span>
             <span ng-class="{Low:'fa fa-circle severity-low', Medium:'fa fa-circle severity-medium', High:'fa fa-circle severity-high'}[threat.severity]" data-toggle="tooltip" data-placement="top" title="{{threat.severity}}"></span>
             <span id="remove{{$index}}" class="pull-right glyphicon glyphicon-remove severity-high" ng-click="removeThreat($index)" data-toggle="tooltip" data-placement="top" title="Remove this threat"></span>
         </div>
