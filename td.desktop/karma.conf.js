@@ -13,8 +13,7 @@ module.exports = function(config) {
       { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false},
         'node_modules/angular/angular.js',
         'node_modules/angular-mocks/angular-mocks.js',
-        'test/**/*.js',
-        'test/**/*.json'
+        'test/**/*.js'
     ],
 
     // list of files to exclude
@@ -25,6 +24,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         'app/**/*.html': ['ng-html2js'],
+        'app/**/*.json': ['browserify'],
         'test/**/*.js': ['browserify'],
         'test/**/*.json': ['browserify']
     },
@@ -65,9 +65,6 @@ module.exports = function(config) {
 
     //config for ngHtml2JsPreprocessor
     ngHtml2JsPreprocessor: {
-        // strip this from the file path
-        stripPrefix: 'td',
-        prependPrefix: '.'
     },
 
     // web server port
