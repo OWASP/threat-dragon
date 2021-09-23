@@ -995,9 +995,9 @@ describe('core diagram controller', function () {
             expect(mockDialogs.confirm).not.toHaveBeenCalled();
         });
         
-        xit('should add a threat to the element', function() {
+        it('should add a threat to the element', function() {
             
-            var threats = ['threat1', 'threat2', 'threat3'];
+            var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
             var currentThreat = threats[0];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
@@ -1018,9 +1018,9 @@ describe('core diagram controller', function () {
             expect($scope.vm.dirty).toBe(true);
         });
         
-        xit('should add threats to the element', function() {
+        it('should add threats to the element', function() {
             
-            var threats = ['threat1', 'threat2', 'threat3'];
+            var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
             var currentThreat = threats[0];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
@@ -1044,7 +1044,7 @@ describe('core diagram controller', function () {
         
         it('should not add a threat to the element', function() {
             
-            var threats = ['threat1', 'threat2', 'threat3'];
+            var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
@@ -1066,7 +1066,7 @@ describe('core diagram controller', function () {
         
         it('should not add a threat to the element', function() {
             
-            var threats = ['threat1', 'threat2', 'threat3'];
+            var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};

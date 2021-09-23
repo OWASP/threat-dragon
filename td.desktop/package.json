@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon-desktop",
   "productName": "OWASP-Threat-Dragon",
-  "version": "1.5.4",
+  "version": "1.5.6",
   "description": "OWASP Threat Dragon desktop version",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "build": "npm-run-all pretest build:fonts build:css build:models build:templates",
     "build:css": "./node_modules/.bin/rework-npm ./content/app.css -o ./content/threatdragon.css",
     "build:fonts": "./node_modules/.bin/copyfiles -f ./node_modules/font-awesome/fonts/*.* ./node_modules/bootstrap/dist/fonts/*.* ./fonts",
-    "build:models": "./node_modules/.bin/copyfiles --error --up 2 '../ThreatDragonModels/**/*' ./ThreatDragonModels/",
+    "build:models": "./node_modules/.bin/copyfiles --error --up 2 ../ThreatDragonModels/new-model/*.* ../ThreatDragonModels/demo-threat-model/*.* ./ThreatDragonModels/",
     "build:win": "electron-builder build --win",
     "build:osx": "electron-builder build --macos",
     "build:lin": "electron-builder build --linux",

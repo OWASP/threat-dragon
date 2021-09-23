@@ -100,15 +100,6 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                         }
                     },
                     {
-                        label: 'Toggle Developer Tools',
-                        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-                        click: function(item, focusedWindow) {
-                            if (focusedWindow) {
-                                focusedWindow.webContents.toggleDevTools();
-                            }
-                        }
-                    },
-                    {
                         type: 'separator'
                     },
                     {
@@ -164,6 +155,15 @@ function shell($rootScope, $scope, $location, $route, common, datacontext, elect
                         accelerator: 'CmdOrCtrl+R',
                         click: function(item, focusedWindow) {
                             if (focusedWindow) focusedWindow.reload();
+                        }
+                    },
+                    {
+                        label: 'Toggle Developer Tools',
+                        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+                        click: function(item, focusedWindow) {
+                            if (focusedWindow) {
+                                focusedWindow.webContents.toggleDevTools();
+                            }
                         }
                     },
                     {

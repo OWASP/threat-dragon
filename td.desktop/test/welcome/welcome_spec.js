@@ -64,7 +64,7 @@ describe('welcome controller', function () {
     describe('new model tests', function () {
 
         xit('should create a new model file', function() {
-            var testModel = 'welcome/test-model.json';
+            var testModel = 'new-model';
             var testFileName = 'test file name';
             var testFilenames = [testFileName];
             mockElectron.dialog.save = function(onSave) {
@@ -84,7 +84,7 @@ describe('welcome controller', function () {
         });
 
         xit('should not create a new model file - cancel', function() {
-            var testModel = 'welcome/test-model.json';
+            var testModel = 'new-model';
             mockElectron.dialog.save = function(onSave, onNoSave) {
                 onNoSave();
             }
@@ -101,7 +101,7 @@ describe('welcome controller', function () {
         });
 
         xit('should handle a create file error', function() {
-            var testModel = 'welcome/test-model.json';
+            var testModel = 'new-model';
             var testFileName = 'test file name';
             var testFilenames = [testFileName];
             var testError = 'test error';
@@ -123,7 +123,7 @@ describe('welcome controller', function () {
         });
     });
     
-    describe('view model tests', function () {
+    describe('open model tests', function () {
 
         it('should open a model file', function() {
             var testFileName = 'test file name';
