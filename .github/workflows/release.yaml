@@ -1,6 +1,7 @@
 name: Build/Release Desktop
 on:
   push:
+    branches: [ main ]
     tags:
       - v*
 env:
@@ -147,9 +148,8 @@ jobs:
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
 
-          # TODO:
-          # windows_certs: ${{ secrets.windows_certs }}
-          # windows_certs_password: ${{ secrets.windows_certs_password }}
+          windows_certs: ${{ secrets.windows_certs }}
+          windows_certs_password: ${{ secrets.windows_certs_password }}
 
           package_root: td.desktop
         env:
