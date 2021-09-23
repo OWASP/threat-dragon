@@ -34,4 +34,12 @@ describe('service/x6/shapes/actor.js', () => {
             expect(victim.setAttrByPath).toHaveBeenCalledWith('body/strokeWidth', stroke);
         });
     });
+
+    describe('setName', () => {
+        it('sets the name', () => {
+            const name = 'test';
+            victim.setName(name);
+            expect(victim.label).toEqual(name);
+        });
+    });
 });

@@ -1,14 +1,14 @@
-import text from '@/service/x6/shapes/text.js';
+import { FlowStencil } from '@/service/x6/shapes/flow-stencil.js';
 
-describe('service/x6/shapes/text.js', () => {
+describe('service/x6/shapes/flow-stencil.js', () => {
     let victim;
 
     beforeEach(() => {
-        victim = new text.TextBlock();
+        victim = new FlowStencil();
     });
 
     it('can create the object', () => {
-        expect(victim.constructor.name).toEqual('Text');
+        expect(victim.constructor.name).toEqual('FlowStencil');
     });
 
     describe('updateStyle', () => {
@@ -22,10 +22,15 @@ describe('service/x6/shapes/text.js', () => {
     });
 
     describe('setName', () => {
-        it('sets the name', () => {
-            const name = 'tName';
+        const name = 'foo';
+
+        beforeEach(() => {
+            victim.setAttrByPath = jest.fn();
             victim.setName(name);
-            expect(victim.label).toEqual(name);
+        });
+
+        it('sets the name', () => {
+            expect(victim.setAttrByPath).toHaveBeenCalledWith('label/text', name);
         });
     });
 });

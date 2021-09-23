@@ -34,4 +34,12 @@ describe('service/x6/shapes/process.js', () => {
             expect(victim.setAttrByPath).toHaveBeenCalledWith('body/strokeWidth', stroke);
         });
     });
+
+    describe('setName', () => {
+        it('sets the name', () => {
+            const name = 'pName';
+            victim.setName(name);
+            expect(victim.label).toEqual(name);
+        });
+    });
 });

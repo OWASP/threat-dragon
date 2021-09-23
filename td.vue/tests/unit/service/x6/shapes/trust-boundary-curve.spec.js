@@ -5,6 +5,7 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
 
     beforeEach(() => {
         victim = new TrustBoundaryCurve();
+        victim.setLabels = jest.fn();
     });
 
     it('can create the object', () => {
@@ -26,6 +27,24 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
 
         it('does not have a target marker', () => {
             expect(victim.attrs.line.targetMarker).toEqual(null);
+        });
+    });
+
+    describe('setName', () => {
+        it('sets the name', () => {
+            const name = 'tbcName';
+            victim.setName(name);
+            expect(victim.setLabels).toHaveBeenCalledWith([ name ]);
+        });
+    });
+
+    describe('updateStyle', () => {
+        it('is a function', () => {
+            expect(typeof victim.updateStyle).toEqual('function');
+        });
+
+        it('does not throw an error', () => {
+            expect(() => victim.updateStyle()).not.toThrow();
         });
     });
 });

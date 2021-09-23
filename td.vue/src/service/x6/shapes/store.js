@@ -1,14 +1,6 @@
-import { ObjectExt, Shape } from '@antv/x6';
+import { Shape } from '@antv/x6';
 
 const name = 'store';
-
-const propHooks = (metadata) => {
-    const { label, ...others } = metadata;
-    if (label) {
-        ObjectExt.setByPath(others, 'attrs/label/text', label);
-    }
-    return others;
-};
 
 /**
  * A graphical representation of a store (cylinder, white background)
@@ -48,8 +40,7 @@ export const Store = Shape.Rect.define({
             magnet: true
         }
     },
-    label: 'Store',
-    propHooks
+    label: 'Store'
 });
 
 Store.prototype.type = 'tm.Store';
@@ -69,6 +60,5 @@ Store.prototype.updateStyle = function (color, dash, strokeWidth) {
 
 export default {
     name,
-    propHooks,
     Store
 };

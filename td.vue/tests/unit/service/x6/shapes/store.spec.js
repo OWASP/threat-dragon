@@ -1,5 +1,3 @@
-import { ObjectExt } from '@antv/x6';
-
 import store from '@/service/x6/shapes/store.js';
 
 describe('service/x6/shapes/store.js', () => {
@@ -7,34 +5,11 @@ describe('service/x6/shapes/store.js', () => {
 
     beforeEach(() => {
         victim = new store.Store();
-        ObjectExt.setByPath = jest.fn();
     });
 
     it('can create the object', () => {
         expect(victim.constructor.name).toEqual('Store');
     });
-
-    describe('propHooks', () => {
-        const label = 'test';
-        let res;
-
-        beforeEach(() => {
-            res = store.propHooks({ label, foo: 'bar' });
-        });
-
-        it('sets the label from the metadata', () => {
-            expect(ObjectExt.setByPath).toHaveBeenCalledWith(
-                { foo: 'bar' },
-                'attrs/label/text',
-                label
-            );
-        });
-
-        it('returns the other data', () => {
-            expect(res).toEqual({ foo: 'bar' });
-        });
-    });
-
 
     describe('updateStyle', () => {
         const color = 'foo';
@@ -70,6 +45,14 @@ describe('service/x6/shapes/store.js', () => {
 
         it('sets the bottomLine/strokeWidth attribute', () => {
             expect(victim.setAttrByPath).toHaveBeenCalledWith('bottomLine/strokeWidth', stroke);
+        });
+    });
+
+    describe('setName', () => {
+        it('sets the name', () => {
+            const name = 'sName';
+            victim.setName(name);
+            expect(victim.label).toEqual(name);
         });
     });
 });
