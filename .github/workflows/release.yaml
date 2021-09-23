@@ -1,9 +1,9 @@
 name: Build/Release Desktop
 on:
   push:
-    branches: [ feature/windows-signing ]
-    # tags:
-    #   - v*
+    branches: [ main ]
+    tags:
+      - v*
 env:
   image_name: "threatdragon/owasp-threat-dragon"
 jobs:
@@ -95,12 +95,12 @@ jobs:
   
   release-desktop:
     runs-on: ${{ matrix.config.os }}
-    # needs: [test-desktop, test-server, test-site]
+    needs: [test-desktop, test-server, test-site]
     strategy:
       matrix:
         config:
-          # - { os: macos-latest, os_short: osx }
-          # - { os: ubuntu-latest, os_short: lin }
+          - { os: macos-latest, os_short: osx }
+          - { os: ubuntu-latest, os_short: lin }
           - { os: windows-latest, os_short: win }
     defaults:
       run:
@@ -184,44 +184,44 @@ jobs:
         run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
-  # release-docker:
-  #   runs-on: ubuntu-latest
-  #   needs: [test-desktop, test-server, test-site]
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  release-docker:
+    runs-on: ubuntu-latest
+    needs: [test-desktop, test-server, test-site]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Set up Docker Buildx
-  #       id: buildx
-  #       uses: docker/setup-buildx-action@v1
-  #       with:
-  #         install: true
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
 
-  #     - name: Setup dockerx cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: /tmp/.buildx-cache
-  #         key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-buildx-
+      - name: Setup dockerx cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-  #     - name: Get Release Version
-  #       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Get Release Version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-  #     - name: Build and push
-  #       id: docker_build
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ./
-  #         file: ./Dockerfile
-  #         builder: ${{ steps.buildx.outputs.name }}
-  #         push: ${{ startsWith(github.ref, 'refs/tags/v') }}
-  #         tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }}
-  #         cache-from: type=local,src=/tmp/.buildx-cache
-  #         cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
