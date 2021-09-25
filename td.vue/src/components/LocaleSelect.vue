@@ -5,7 +5,7 @@
         v-for="locale in $i18n.availableLocales"
         :key="`locale-${locale}`"
         :value="locale"
-        @click="updateLocale(locale)">{{ locale }}</b-dropdown-item>
+        @click.native="updateLocale(locale)">{{ locale }}</b-dropdown-item>
     </b-dropdown>
   </div>
 </template>

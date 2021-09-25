@@ -84,7 +84,7 @@ import { mapGetters } from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
 import router from '@/router/index.js';
-import TdLocaleSelect from './LocalSelect.vue';
+import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
     name: 'TdNavbar',
