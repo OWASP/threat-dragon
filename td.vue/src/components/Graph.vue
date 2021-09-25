@@ -111,9 +111,10 @@ export default {
     watch: {
         locale(newLocale, oldLocale) {
             if (newLocale !== oldLocale) {
-                console.log('Detected locale change on graph, need to redraw');
                 this.init();
                 this.drawDiagramV1();
+                this.shortcuts.length = 0;
+                this.getKeyboardShortcuts().forEach(s => this.shortcuts.push(s));
             }
         }
     },
@@ -121,7 +122,20 @@ export default {
         return {
             graph: null,
             gridShowing: true,
-            shortcuts: [
+            shortcuts: this.getKeyboardShortcuts(),
+            selectedElement: {
+                type: null,
+                data: null
+            }
+        };
+    },
+    async mounted() {
+        this.init();
+        this.drawDiagramV1();
+    },
+    methods: {
+        getKeyboardShortcuts() {
+            return [
                 {
                     shortcut: this.$t('threatmodel.shortcuts.copy.shortcut'),
                     action: this.$t('threatmodel.shortcuts.copy.action')
@@ -154,18 +168,8 @@ export default {
                     shortcut: this.$t('threatmodel.shortcuts.zoom.shortcut'),
                     action: this.$t('threatmodel.shortcuts.zoom.action')
                 }
-            ],
-            selectedElement: {
-                type: null,
-                data: null
-            }
-        };
-    },
-    async mounted() {
-        this.init();
-        this.drawDiagramV1();
-    },
-    methods: {
+            ];
+        },
         noOp() {
             // TODO: Just for testing
         },
