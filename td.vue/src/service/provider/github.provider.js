@@ -5,18 +5,18 @@ const providerType = providerTypes.git;
 const getDashboardActions = () => ([
     {
         to: `/${providerType}/github/repository`,
-        description: 'Open an existing threat model',
+        key: 'openExisting',
         icon: 'github',
         iconPreface: 'fab'
     },
     {
         to: `/${providerType}/github/repository`,
-        description: 'Create a completely new, empty threat model',
+        key: 'createNew',
         icon: 'plus'
     },
     {
         to: '/',
-        description: 'Download and explore a sample threat model',
+        key: 'download',
         icon: 'cloud-download-alt'
     }
 ]);

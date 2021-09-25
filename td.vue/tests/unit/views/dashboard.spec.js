@@ -28,6 +28,9 @@ describe('Dashboard.vue', () => {
                 'font-awesome-icon': { template },
                 'router-link': { template }
             },
+            mocks: {
+                $t: key => key
+            },
             store: mockStore
         });
     });
@@ -37,7 +40,7 @@ describe('Dashboard.vue', () => {
     });
 
     it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toContain('Welcome!');
+        expect(wrapper.findComponent(BJumbotron).text()).toContain('dashboard.welcome.title');
     });
 
     it('has multiple actions', () => {

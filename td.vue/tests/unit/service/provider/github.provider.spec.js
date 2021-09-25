@@ -7,7 +7,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.description.startsWith('Open'));
+                action = github.getDashboardActions().find(x=> x.key === 'openExisting');
             });
 
             it('links to the repository page', () => {
@@ -24,7 +24,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.description.startsWith('Create'));
+                action = github.getDashboardActions().find(x=> x.key === 'createNew');
             });
 
             it('links to the repository page', () => {
@@ -40,7 +40,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.description.startsWith('Download'));
+                action = github.getDashboardActions().find(x=> x.key === 'download');
             });
 
             // TODO

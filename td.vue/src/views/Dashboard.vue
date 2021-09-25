@@ -2,11 +2,9 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron header="Welcome!">
+                <b-jumbotron :header="$t('dashboard.welcome.title')">
                     <p>
-                        You're ready to start making your application designs more secure.
-                        You can open an existing threat model or create a new one by choosing
-                        one of the options below.
+                        {{ $t('dashboard.welcome.description') }}
                     </p>
                 </b-jumbotron>
             </b-col>
@@ -18,7 +16,7 @@
                 :to="action.to"
                 :icon="action.icon"
                 :iconPreface="action.iconPreface"
-                :description="action.description"
+                :description="action.key"
             ></td-dashboard-action>
         </b-row>
     </div>

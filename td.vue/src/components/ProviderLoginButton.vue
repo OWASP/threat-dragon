@@ -13,7 +13,7 @@
             ></font-awesome-icon>
         </span>
         <span>
-            Login with {{ provider.displayName }}
+            {{ $t('home.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
         </span>
     </b-btn>
 </template>
