@@ -32,7 +32,7 @@
 
         <b-row v-show="!cellRef">
             <b-col>
-                <p>Select an element on the graph to modify the properties</p>
+                <p>{{ $t('threatmodel.properties.emptyState') }}</p>
             </b-col>
         </b-row>
 
@@ -41,7 +41,7 @@
                 <b-col>
                     <b-form-group
                         id="name-group"
-                        :label="cellRef.data.type === 'tm.Text' ? 'Text' : 'Name'"
+                        :label="cellRef.data.type === 'tm.Text' ? $t('threatmodel.properties.text') : $t('threatmodel.properties.name')"
                         label-for="name">
                         <b-form-textarea
                             id="name"
@@ -56,7 +56,7 @@
                 <b-col>
                     <b-form-group
                         id="description-group"
-                        label="Description"
+                        :label="$t('threatmodel.properties.description')"
                         label-for="description">
                         <b-form-textarea
                             id="description"
@@ -74,7 +74,7 @@
                             <b-form-checkbox
                                 id="outofscope"
                                 v-model="cellRef.data.outOfScope"
-                            >Out of Scope</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.outOfScope') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -83,7 +83,7 @@
                     <b-col>
                         <b-form-group
                             id="reasonoutofscope-group"
-                            label="Reason for out of scope"
+                            :label="$t('threatmodel.properties.reasonOutOfScope')"
                             label-for="reasonoutofscope">
                             <b-form-textarea
                                 id="reasonoutofscope"
@@ -99,7 +99,7 @@
                     <b-col>
                         <b-form-group
                             id="privilegelevel-group"
-                            label="Privilege Level"
+                            :label="$t('threatmodel.properties.privilegeLevel')"
                             label-for="privilegelevel">
                             <b-form-input
                                 id="privilegelevel"
@@ -119,7 +119,7 @@
                             <b-form-checkbox
                                 id="isalog"
                                 v-model="cellRef.data.isALog"
-                            >Is a Log</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.isALog') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -131,7 +131,7 @@
                             <b-form-checkbox
                                 id="storesCredentials"
                                 v-model="cellRef.data.storesCredentials"
-                            >Stores Credentials</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.storesCredentials') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -143,7 +143,7 @@
                             <b-form-checkbox
                                 id="isEncrypted"
                                 v-model="cellRef.data.isEncrypted"
-                            >Encrypted</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -155,7 +155,7 @@
                             <b-form-checkbox
                                 id="isSigned"
                                 v-model="cellRef.data.isSigned"
-                            >Signed</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.isSigned') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -169,7 +169,7 @@
                             <b-form-checkbox
                                 id="providesAuthentication"
                                 v-model="cellRef.data.providesAuthentication"
-                            >Provides Authentication</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.providesAuthentication') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -180,7 +180,7 @@
                     <b-col>
                         <b-form-group
                             id="protocol-group"
-                            label="Protocol"
+                            :label="$t('threatmodel.properties.protocol')"
                             label-for="protocol">
                             <b-form-input
                                 id="protocol"
@@ -198,7 +198,7 @@
                             <b-form-checkbox
                                 id="isEncrypted"
                                 v-model="cellRef.data.isEncrypted"
-                            >Encrypted</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -210,7 +210,7 @@
                             <b-form-checkbox
                                 id="isPublicNetwork"
                                 v-model="cellRef.data.isPublicNetwork"
-                            >Public Network</b-form-checkbox>
+                            >{{ $t('threatmodel.properties.publicNetwork') }}</b-form-checkbox>
                         </b-form-group>
                     </b-col>
                 </b-form-row>

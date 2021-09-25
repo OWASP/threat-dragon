@@ -6,13 +6,22 @@ import test from './test.js';
 
 Vue.use(VueI18n);
 
-const get = () => new VueI18n({
-    locale: 'en',
-    messages: {
-        en,
-        test
+let i18n = null;
+
+const get = () => {
+    if (i18n === null) {
+        i18n = new VueI18n({
+            locale: 'en',
+            messages: {
+                en,
+                test
+            }
+        });
     }
-});
+    return i18n;
+};
+
+export const tc = (key) => get().tc(key);
 
 export default {
     get

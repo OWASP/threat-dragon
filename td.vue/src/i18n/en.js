@@ -53,7 +53,74 @@ const en = {
         editing: 'Editing',
         title: 'Title',
         diagrams: 'Diagrams',
-        addNewDiagram: 'Add a new diagram...'
+        addNewDiagram: 'Add a new diagram...',
+        properties: {
+            title: 'Properties',
+            emptyState: 'Select an element on the graph to modify the properties',
+            name: 'Name',
+            text: 'Text',
+            description: 'Description',
+            outOfScope: 'Out of Scope',
+            reasonOutOfScope: 'Reason for out of scope',
+            privilegeLevel: 'Privilege Level',
+            isALog: 'Is a Log',
+            storesCredentials: 'Stores Credentials',
+            isEncrypted: 'Encrypted',
+            isSigned: 'Signed',
+            providesAuthentication: 'Provides Authentication',
+            protocol: 'Protocol',
+            publicNetwork: 'Public Network'
+        },
+        shortcuts: {
+            title: 'Shortcuts',
+            copy: {
+                shortcut: '(ctrl/cmd) + c',
+                action: 'Copy'
+            },
+            paste: {
+                shortcut: '(ctrl/cmd) + v',
+                action: 'Paste'
+            },
+            undo: {
+                shortcut: '(ctrl/cmd) + z',
+                action: 'Undo'
+            },
+            redo: {
+                shortcut: '(ctrl/cmd) + y',
+                action: 'Redo'
+            },
+            delete: {
+                shortcut: 'del',
+                action: 'Delete'
+            },
+            pan: {
+                shortcut: 'shift + left-click (hold/drag)',
+                action: 'Pan'
+            },
+            multiSelect: {
+                shortcut: 'left-click on empty space and drag',
+                action: 'Multi-select'
+            },
+            zoom: {
+                shortcut: '(ctrl/cmd) + mousewheel',
+                action: 'Zoom'
+            }
+        },
+        stencil: {
+            entities: 'Entities',
+            boundaries: 'Boundaries',
+            metadata: 'Metadata',
+            search: 'Search',
+            notFound: 'We don\'t have that yet, want to open an issue? :)'
+        },
+        shapes: {
+            actor: 'Actor',
+            flowStencil: 'Data Flow',
+            process: 'Process',
+            store: 'Store',
+            text: 'Arbitrary Text',
+            trustBoundary: 'Trust Boundary'
+        }
     },
     forms: {
         edit: 'Edit',
@@ -62,7 +129,8 @@ const en = {
         remove: 'Remove',
         save: 'Save',
         reload: 'Reload',
-        cancel: 'Cancel'
+        cancel: 'Cancel',
+        close: 'Close'
     }
 };
 

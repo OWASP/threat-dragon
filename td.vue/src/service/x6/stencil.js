@@ -1,26 +1,27 @@
 import factory from './factory.js';
 import shapes from './shapes/index.js';
+import { tc } from '@/i18n/index.js';
 
 const getDefaults = (target) => ({
-    title: 'Entities',
+    title: tc('threatmodel.stencil.entities'),
     target,
     stencilGraphWidth: 500,
     groups: [
         {
             name: 'entities',
-            title: 'Entities',
+            title: tc('threatmodel.stencil.entities'),
             collapsed: false,
             collapsable: true,
         },
         {
             name: 'boundaries',
-            title: 'Boundaries',
+            title: tc('threatmodel.stencil.boundaries'),
             collapsed: false,
             collapsable: true
         },
         {
             name: 'metadata',
-            title: 'Metadata',
+            title: tc('threatmodel.stencil.metadata'),
             collapsed: false,
             collapsable: true
         }
@@ -38,8 +39,8 @@ const getDefaults = (target) => ({
         return cell.shape.toLowerCase().indexOf(search) !== -1 ||
             cell.constructor.name.toLowerCase().indexOf(search) !== -1;
     },
-    placeholder: 'Search',
-    notFoundText: "We don't have that yet, want to open an issue? :)"
+    placeholder: tc('threatmodel.stencil.search'),
+    notFoundText: tc('threatmodel.stencil.notFound')
 });
 
 const get = (target, container) => {

@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
+
 const name = 'trust-boundary-box';
 
 /**
@@ -22,7 +24,7 @@ export const TrustBoundaryBox = Shape.HeaderedRect.define({
             fillOpacity: 0
         },
         headerText: {
-            text: 'Trust Boundary',
+            text: tc('threatmodel.shapes.trustBoundary'),
             fill: '#333',
             strokeWidth: 0,
         },
