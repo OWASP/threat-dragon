@@ -3,9 +3,7 @@
  * @description Reads an existing v1 diagram to create components for the v2 UI
  * This is not for persistence, and is done on a diagram by diagram basis
  */
-import { Actor } from '../x6/shapes/actor.js';
-import { ProcessShape } from '../x6/shapes/process.js';
-import { Store } from '../x6/shapes/store.js';
+import shapes from '../x6/shapes/index.js';
 
 const getLabelText = (cell, label) => {
     let text = label.attrs.text.text;
@@ -21,7 +19,7 @@ const getEdgeLabels = (cell) => {
         return labels;
     }
 
-    cell.labels.forEach((label) => {
+    cell.labels.forEach((label) => {        
         labels.push({
             position: label.position,
             attrs: { label: { text: getLabelText(cell, label) }}
@@ -46,40 +44,37 @@ const entityMap = (constructor) => (cell) => {
     });
 };
 
-const edgeMap = (cell) => ({
-    source: cell.source,
-    target: cell.target,
-    vertices: cell.vertices,
-    connector: 'smooth',
-    attrs: {},
-    labels: getEdgeLabels(cell),
-    data: {
-        isPublicNetwork: cell.isPublicNetwork,
-        isEncrypted: cell.isEncrypted,
-        protocol: cell.protocol
-    }
-});
+const edgeMap = (constructor) => (cell) => {
+    return new constructor({
+        source: cell.source,
+        target: cell.target,
+        vertices: cell.vertices,
+        connector: 'smooth',
+        attrs: {},
+        labels: getEdgeLabels(cell)
+    });
+};
 
 const cellConverter = {
     'tm.Actor': {
         isNode: true,
-        mapper: entityMap(Actor)
+        mapper: entityMap(shapes.Actor)
     },
     'tm.Boundary': {
         isNode: false,
-        mapper: edgeMap
+        mapper: edgeMap(shapes.TrustBoundaryCurve)
     },
     'tm.Flow': {
         isNode: false,
-        mapper: edgeMap
+        mapper: edgeMap(shapes.Flow)
     },
     'tm.Process': {
         isNode: true,
-        mapper: entityMap(ProcessShape)
+        mapper: entityMap(shapes.ProcessShape)
     },
     'tm.Store': {
         isNode: true,
-        mapper: entityMap(Store)
+        mapper: entityMap(shapes.Store)
     }
 };
 
@@ -102,15 +97,43 @@ const relateEdges = (nodes, edges) => {
 };
 
 const addMetaData = (entity, cell) => {
-    entity.data = {
-        hasOpenThreats: !!cell.hasOpenThreats,
-        threats: cell.threats || [],
-        outOfScope: !!cell.outOfScope,
-        isEncrypted: !!cell.isEncrypted,
-        isPublicNetwork: !!cell.isPublicNetwork,
-        protocol: cell.protocol || '',
+    const data = {
+        name: cell.name || '',
+        description: cell.description || '',
+        type: cell.type,
         isTrustBoundary: cell.type === 'tm.Boundary'
     };
+
+    if (!data.isTrustBoundary) {
+        data.outOfScope = !!cell.outOfScope;
+        data.reasonOutOfScope = cell.reasonOutOfScope || '';
+        data.threats = cell.threats || [];
+        data.hasOpenThreats = data.threats.length > 0;
+    }
+
+    if (data.type === 'tm.Process') {
+        data.privilegeLevel = cell.privilegeLevel || '';
+    }
+
+    if (data.type === 'tm.Store') {
+        data.isALog = !!cell.isALog;
+        data.storesCredentials = !!cell.storesCredentials;
+        data.isEncrypted = !!cell.isEncrypted;
+        data.isSigned = !!cell.isSigned;
+    }
+
+    if (data.type === 'tm.Actor') {
+        data.providesAuthentication = !!cell.providesAuthentication;
+    }
+
+    if (data.type === 'tm.Flow') {
+        data.protocol = cell.protocol || '';
+        data.isEncrypted = !!cell.isEncrypted;
+        data.isPublicNetwork = !!cell.isPublicNetwork;
+    }
+
+    entity.data = data;
+    
     return entity;
 };
 
@@ -122,6 +145,7 @@ const mapDiagram = (diagram) => {
         return resp;
     }
 
+    // TODO: Merge defaults with existing data
     diagram.diagramJson.cells.forEach((cell) => {
         const { isNode, mapper } = cellConverter[cell.type];
         const entity = mapper(cell);
@@ -129,6 +153,8 @@ const mapDiagram = (diagram) => {
         arr.push(addMetaData(entity, cell));
     });
 
+    // TODO: merge defaults with existing data
+    // TODO: Add label to data as name
     relateEdges(resp.nodes, resp.edges);
     return resp;
 };

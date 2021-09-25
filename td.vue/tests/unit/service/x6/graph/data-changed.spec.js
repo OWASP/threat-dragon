@@ -1,12 +1,10 @@
-import actor from '@/service/x6/shapes/actor.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
-import processShape from '@/service/x6/shapes/process.js';
-import store from '@/service/x6/shapes/store.js';
 
 describe('service/x6/graph/data-changed.js', () => {
     const getCell = () => ({
         getData: jest.fn(),
-        setAttrByPath: jest.fn()
+        setAttrByPath: jest.fn(),
+        isEdge: jest.fn()
     });
     let cell;
 
@@ -27,34 +25,36 @@ describe('service/x6/graph/data-changed.js', () => {
     describe('actor', () => {
         beforeEach(() => {
             cell = getCell();
+            cell.isEdge.mockReturnValue(false);
             cell.constructor = { name: 'Actor' };
             cell.getData.mockImplementation(() => ({
                 hasOpenThreats: true,
                 outOfScope: true
             }));
-            actor.updateStyle = jest.fn();
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
         it('calls updateStyle', () => {
-            expect(actor.updateStyle).toHaveBeenCalledWith(cell, 'red', '2 2', 3.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('red', '2 2', 3.0);
         });
     });
 
     describe('processShape', () => {
         beforeEach(() => {
             cell = getCell();
+            cell.isEdge.mockReturnValue(false);
             cell.constructor = { name: 'Process' };
             cell.getData.mockImplementation(() => ({
                 hasOpenThreats: false,
                 outOfScope: false
             }));
-            processShape.updateStyle = jest.fn();
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
         it('calls updateStyle', () => {
-            expect(processShape.updateStyle).toHaveBeenCalledWith(cell, '#333333', null, 1.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.0);
         });
     });
 
@@ -62,13 +62,14 @@ describe('service/x6/graph/data-changed.js', () => {
         beforeEach(() => {
             cell = getCell();
             cell.constructor = { name: 'Store' };
+            cell.isEdge.mockReturnValue(false);
             cell.getData.mockImplementation(() => ({}));
-            store.updateStyle = jest.fn();
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
         it('calls updateStyle', () => {
-            expect(store.updateStyle).toHaveBeenCalledWith(cell, '#333333', null, 1.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.0);
         });
     });
 
@@ -76,23 +77,13 @@ describe('service/x6/graph/data-changed.js', () => {
         beforeEach(() => {
             cell = getCell();
             cell.constructor = { name: 'FakeThingy' };
+            cell.isEdge.mockReturnValue(false);
             cell.getData.mockImplementation(() => ({}));
-            processShape.updateStyle = jest.fn();
-            store.updateStyle = jest.fn();
-            actor.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
-        it('does not call updateStyle for actor', () => {
-            expect(actor.updateStyle).not.toHaveBeenCalled();
-        });
-
-        it('does not call updateStyle for processShape', () => {
-            expect(processShape.updateStyle).not.toHaveBeenCalled();
-        });
-
-        it('does not call updateStyle for store', () => {
-            expect(store.updateStyle).not.toHaveBeenCalled();
+        it('does not call updateStyle for the unknown shape', () => {
+            expect(cell.updateStyle).not.toBeDefined();
         });
     });
 
@@ -100,15 +91,11 @@ describe('service/x6/graph/data-changed.js', () => {
         beforeEach(() => {
             cell = getCell();
             cell.constructor = { name: 'Edge' };
+            cell.isEdge.mockReturnValue(true);
             cell.getData.mockImplementation(() => ({
                 isTrustBoundary: true
             }));
             dataChanged.updateStyleAttrs(cell);
-        });
-
-        it('sets the strokeDasharray', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/strokeDasharray', '5 5');
         });
 
         it('sets the strokeWidth', () => {
@@ -130,17 +117,15 @@ describe('service/x6/graph/data-changed.js', () => {
     describe('data flow', () => {
         beforeEach(() => {
             cell = getCell();
+            cell.isEdge.mockReturnValue(true);
             cell.constructor = { name: 'Edge' };
-        });
-
-        beforeEach(() => {
             cell.getData.mockImplementation(() => ({
                 isTrustBoundary: false,
                 isEncrypted: true
             }));
             dataChanged.updateStyleAttrs(cell);
         });
-
+        
         it('sets the stroke', () => {
             expect(cell.setAttrByPath)
                 .toHaveBeenCalledWith('line/stroke', '#333333');

@@ -1,6 +1,5 @@
 
 import diagram from '@/service/migration/diagram.js';
-import { Actor } from '../../../../src/service/x6/shapes/actor';
 
 describe('service/migration/diagram.js', () => {
     const size = { width: 100, height: 200 };
@@ -119,11 +118,11 @@ describe('service/migration/diagram.js', () => {
         });
 
         it('maps the source', () => {
-            expect(edges[0].source).toBeInstanceOf(Actor);
+            expect(edges[0].source).toEqual({ cell: id });
         });
 
         it('maps the target', () => {
-            expect(edges[0].target).toBeInstanceOf(Actor);
+            expect(edges[0].target).toEqual({ cell: id });
         });
 
         it('maps the vertices', () => {
@@ -180,48 +179,6 @@ describe('service/migration/diagram.js', () => {
         });
     });
 
-    describe('metadata', () => {
-        const threats = [ 't1' ];
-        beforeEach(() => {
-            const v1 = getV1Cell();
-            v1.diagramJson.cells[0].hasOpenThreats = true;
-            v1.diagramJson.cells[0].outOfScope = true;
-            v1.diagramJson.cells[0].threats = threats;
-            v1.diagramJson.cells[0].isEncrypted = true;
-            v1.diagramJson.cells[0].protocol = 'HTTPS';
-            const res = diagram.mapDiagram(v1);
-            nodes = res.nodes;
-        });
-
-        it('adds the open threats property', () => {
-            expect(nodes[0].data.hasOpenThreats).toEqual(true);
-        });
-
-        it('adds the threats', () => {
-            expect(nodes[0].data.threats).toEqual(threats);
-        });
-
-        it('adds the out of scope property', () => {
-            expect(nodes[0].data.outOfScope).toEqual(true);
-        });
-
-        it('adds the isPublicNetwork property', () => {
-            expect(nodes[0].data.isPublicNetwork).toEqual(false);
-        });
-
-        it('adds the isTrustBoundary property', () => {
-            expect(nodes[0].data.isTrustBoundary).toEqual(false);
-        });
-
-        it('adds the isEncrypted property', () => {
-            expect(nodes[0].data.isEncrypted).toEqual(true);
-        });
-
-        it('adds the protocol property', () => {
-            expect(nodes[0].data.protocol).toEqual('HTTPS');
-        });
-    });
-
     describe('blank diagram', () => {
         beforeEach(() => {
             const res = diagram.mapDiagram({});
@@ -235,6 +192,113 @@ describe('service/migration/diagram.js', () => {
 
         it('has no edges', () => {
             expect(edges.length).toEqual(0);
+        });
+    });
+
+    describe('process metaData', () => {
+        describe('with privilegeLevel defined', () => {
+            beforeEach(() => {
+                const v1 = getV1Cell();
+                v1.diagramJson.cells.push({
+                    type: 'tm.Process',
+                    privilegeLevel: 'foobar',
+                    position: { x: 1, y: 0 },
+                    size: { width: 20, height: 20 }
+                });
+                const res = diagram.mapDiagram(v1);
+                nodes = res.nodes;
+            });
+
+            it('it has the privilegeLevel in the data', () => {
+                const tdProcess = nodes.find(x => x.type === 'tm.Process');
+                expect(tdProcess.data.privilegeLevel).toEqual('foobar');
+            });
+        });
+
+        describe('with privilegeLevel undefined', () => {
+            beforeEach(() => {
+                const v1 = getV1Cell();
+                v1.diagramJson.cells.push({
+                    type: 'tm.Process',
+                    position: { x: 1, y: 0 },
+                    size: { width: 20, height: 20 }
+                });
+                const res = diagram.mapDiagram(v1);
+                nodes = res.nodes;
+            });
+
+            it('it has an empty privilegeLevel', () => {
+                const tdProcess = nodes.find(x => x.type === 'tm.Process');
+                expect(tdProcess.data.privilegeLevel).toEqual('');
+            });
+        });
+    });
+
+    describe('store metadata', () => {
+        describe('with the data defined', () => {
+            let tdStore;
+
+            beforeEach(() => {
+                const v1 = getV1Cell();
+                v1.diagramJson.cells.push({
+                    type: 'tm.Store',
+                    position: { x: 1, y: 0 },
+                    size: { width: 20, height: 20 },
+                    isALog: true,
+                    storesCredentials: true,
+                    isEncrypted: true,
+                    isSigned: true
+                });
+                const res = diagram.mapDiagram(v1);
+                tdStore = res.nodes.find(x => x.type === 'tm.Store');
+            });
+
+            it('it is a log', () => {
+                expect(tdStore.data.isALog).toEqual(true);
+            });
+
+            it('stores credentials', () => {
+                expect(tdStore.data.storesCredentials).toEqual(true);
+            });
+
+            it('it is encrypted', () => {
+                expect(tdStore.data.isEncrypted).toEqual(true);
+            });
+
+            it('it is signed', () => {
+                expect(tdStore.data.isSigned).toEqual(true);
+            });
+        });
+
+        describe('with defaults only', () => {
+            let tdStore;
+
+            beforeEach(() => {
+                const v1 = getV1Cell();
+                v1.diagramJson.cells.push({
+                    type: 'tm.Store',
+                    position: { x: 1, y: 0 },
+                    size: { width: 20, height: 20 }
+                });
+                const res = diagram.mapDiagram(v1);
+                tdStore = res.nodes.find(x => x.type === 'tm.Store');
+            });
+
+            it('it is not a log', () => {
+                expect(tdStore.data.isALog).toEqual(false);
+            });
+
+            it('does not store credentials', () => {
+                expect(tdStore.data.storesCredentials).toEqual(false);
+            });
+
+            it('it is not encrypted', () => {
+                expect(tdStore.data.isEncrypted).toEqual(false);
+            });
+
+            it('it is not signed', () => {
+                expect(tdStore.data.isSigned).toEqual(false);
+            });
         });
     });
 });

@@ -20,15 +20,20 @@ export const Actor = Shape.Rect.define({
         }
     }
 });
+Actor.prototype.type = 'tm.Actor';
 
-const updateStyle = (cell, color, dash, strokeWidth) => {
-    cell.setAttrByPath('body/stroke', color);
-    cell.setAttrByPath('body/strokeWidth', strokeWidth);
-    cell.setAttrByPath('body/strokeDasharray', dash);
+Actor.prototype.updateStyle = function(color, dash, strokeWidth) {
+    this.setAttrByPath('body/stroke', color);
+    this.setAttrByPath('body/strokeWidth', strokeWidth);
+    this.setAttrByPath('body/strokeDasharray', dash);
+};
+
+
+Actor.prototype.setName = function (name) {
+    this.label = name;
 };
 
 export default {
     Actor,
-    name,
-    updateStyle
+    name
 };

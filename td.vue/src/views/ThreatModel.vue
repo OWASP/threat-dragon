@@ -118,6 +118,7 @@
 <script>
 import { mapState } from 'vuex';
 
+import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
@@ -127,13 +128,17 @@ export default {
         TdFormButton
     },
     computed: mapState({
+        branch: state => state.branch.selected,
         contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', '),
-        model: (state) => state.threatmodel.data
+        model: (state) => state.threatmodel.data,
+        provider: state => state.provider.selected,
+        providerType: state => getProviderType(state.provider.selected),
+        repoName: state => state.repo.selected
     }),
     methods: {
         onEditClick(evt) {
             evt.preventDefault();
-            this.$router.push('/threatmodel-edit');
+            this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params: this.$route.params });
         },
         onReportClick(evt) {
             evt.preventDefault();

@@ -21,14 +21,19 @@ export const ProcessShape = Shape.Circle.define({
     }
 });
 
-const updateStyle = (cell, color, dash, strokeWidth) => {
-    cell.setAttrByPath('body/stroke', color);
-    cell.setAttrByPath('body/strokeWidth', strokeWidth);
-    cell.setAttrByPath('body/strokeDasharray', dash);
+ProcessShape.prototype.updateStyle = function (color, dash, strokeWidth) {
+    this.setAttrByPath('body/stroke', color);
+    this.setAttrByPath('body/strokeWidth', strokeWidth);
+    this.setAttrByPath('body/strokeDasharray', dash);
+};
+
+ProcessShape.prototype.type = 'tm.Process';
+
+ProcessShape.prototype.setName = function (name) {
+    this.label = name;
 };
 
 export default {
     name,
-    ProcessShape,
-    updateStyle
+    ProcessShape
 };

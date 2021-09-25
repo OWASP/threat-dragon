@@ -32,8 +32,24 @@ export const TrustBoundaryBox = Shape.HeaderedRect.define({
             strokeWidth: 0,
             fillOpacity: 0
         }
-    }
+    },
 });
+
+TrustBoundaryBox.prototype.setLabel = function (label) {
+    this.setAttrByPath('headerText/text', label);
+};
+
+TrustBoundaryBox.prototype.getLabel = function () {
+    return this.getAttrByPath('headerText/text');
+};
+
+TrustBoundaryBox.prototype.setName = function (name) {
+    this.setAttrByPath('headerText/text', name);
+};
+
+TrustBoundaryBox.prototype.updateStyle = function () {};
+
+TrustBoundaryBox.prototype.type = 'tm.BoundaryBox';
 
 export default {
     name,

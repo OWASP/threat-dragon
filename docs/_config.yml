@@ -81,6 +81,8 @@ nav:
           fa_class: fas fa-cog
         - name: CLI
           fa_class: fas fa-layer-group
+        - name: Schema
+          fa_class: fas fa-database
         - name: API
           fa_class: fas fa-server
         - name: Testing

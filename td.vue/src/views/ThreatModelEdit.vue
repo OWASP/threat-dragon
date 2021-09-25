@@ -1,7 +1,7 @@
 <template>
     <b-row>
         <b-col>
-            <b-card :header="`Editing: ${model.title}`">
+            <b-card :header="`Editing: ${model.summary.title}`">
                 <b-form @submit="onSubmit">
 
                     <b-form-row>
@@ -12,7 +12,7 @@
                                 label-for="title">
                                 <b-form-input
                                     id="title"
-                                    v-model="model.title"
+                                    v-model="model.summary.title"
                                     type="text"
                                     required
                                 ></b-form-input>
@@ -28,7 +28,7 @@
                                 label-for="owner">
                                 <b-form-input
                                     id="owner"
-                                    v-model="model.owner"
+                                    v-model="model.summary.owner"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -41,7 +41,7 @@
                                 label-for="reviewer">
                                 <b-form-input
                                     id="reviewer"
-                                    v-model="model.reviewer"
+                                    v-model="model.detail.reviewer"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -56,7 +56,7 @@
                                 label-for="description">
                                 <b-form-textarea
                                     id="description"
-                                    v-model="model.description"
+                                    v-model="model.detail.description"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -72,7 +72,7 @@
                                 <b-form-tags
                                     id="contributors"
                                     placeholder="Add a new contributor"
-                                    v-model="model.contributors"
+                                    v-model="contributors"
                                     variant="primary"
                                 ></b-form-tags>
                             </b-form-group>
@@ -87,7 +87,7 @@
 
                     <b-form-row>
                         <b-col md=6
-                            v-for="(diagram, idx) in model.diagrams"
+                            v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
                         >
                             <b-input-group
@@ -96,10 +96,11 @@
                                 class="mb-3"
                             >
                                 <b-form-input
-                                    v-model="model.diagrams[idx].title"
+                                    v-model="model.detail.diagrams[idx].title"
                                     type="text"
                                 ></b-form-input>
                                 <b-input-group-append>
+                                    <!-- TODO: Implement -->
                                     <b-button variant="secondary">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         Remove
@@ -156,6 +157,7 @@
 <script>
 import { mapState } from 'vuex';
 
+import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -164,7 +166,9 @@ export default {
         TdFormButton
     },
     computed: mapState({
-        model: (state) => state.threatmodel.data
+        contributors: (state) => (state.threatmodel.data.detail.contributors || []).map(x => x.name),
+        model: (state) => state.threatmodel.data,
+        providerType: state => getProviderType(state.provider.selected),
     }),
     data() {
         return {
@@ -185,11 +189,12 @@ export default {
         },
         onCancelClick(evt) {
             evt.preventDefault();
+            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             console.log('Cancel - TODO');
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.diagrams.push({ name: '' });
+            this.model.detail.diagrams.push({ name: '' });
         }
     }
 };

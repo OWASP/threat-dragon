@@ -1,14 +1,6 @@
-import { ObjectExt, Shape } from '@antv/x6';
+import { Shape } from '@antv/x6';
 
 const name = 'store';
-
-const propHooks = (metadata) => {
-    const { label, ...others } = metadata;
-    if (label) {
-        ObjectExt.setByPath(others, 'attrs/label/text', label);
-    }
-    return others;
-};
 
 /**
  * A graphical representation of a store (cylinder, white background)
@@ -48,22 +40,25 @@ export const Store = Shape.Rect.define({
             magnet: true
         }
     },
-    label: 'Store',
-    propHooks
+    label: 'Store'
 });
 
-const updateStyle = (cell, color, dash, strokeWidth) => {
-    cell.setAttrByPath('topLine/stroke', color);
-    cell.setAttrByPath('topLine/strokeWidth', strokeWidth);
-    cell.setAttrByPath('topLine/strokeDasharray', dash);
-    cell.setAttrByPath('bottomLine/stroke', color);
-    cell.setAttrByPath('bottomLine/strokeWidth', strokeWidth);
-    cell.setAttrByPath('bottomLine/strokeDasharray', dash);
+Store.prototype.type = 'tm.Store';
+
+Store.prototype.setName = function (name) {
+    this.label = name;
+};
+
+Store.prototype.updateStyle = function (color, dash, strokeWidth) {
+    this.setAttrByPath('topLine/stroke', color);
+    this.setAttrByPath('topLine/strokeWidth', strokeWidth);
+    this.setAttrByPath('topLine/strokeDasharray', dash);
+    this.setAttrByPath('bottomLine/stroke', color);
+    this.setAttrByPath('bottomLine/strokeWidth', strokeWidth);
+    this.setAttrByPath('bottomLine/strokeDasharray', dash);
 };
 
 export default {
     name,
-    propHooks,
-    Store,
-    updateStyle
+    Store
 };

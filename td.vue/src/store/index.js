@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import auth from './modules/auth.js';
 import branch from './modules/branch.js';
+import cell from './modules/cell.js';
 import loader from './modules/loader.js';
 import provider from './modules/provider.js';
 import repo from './modules/repository.js';
@@ -19,6 +20,7 @@ const get = () => {
             modules: {
                 auth,
                 branch,
+                cell,
                 loader,
                 provider,
                 repo,

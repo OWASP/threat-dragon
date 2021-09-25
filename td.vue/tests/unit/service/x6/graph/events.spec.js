@@ -1,10 +1,13 @@
 import events from '@/service/x6/graph/events.js';
-import trustBoundaryCurve from '@/service/x6/shapes/trust-boundary-curve.js';
+import shapes from '@/service/x6/shapes/index.js';
+import store from '@/store/index.js';
 
 describe('service/x6/graph/events.js', () => {
-    let cell, edge, graph;
+    let cell, edge, graph, mockStore;
 
     beforeEach(() => {
+        mockStore = { dispatch: jest.fn() };
+        store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
             on: jest.fn()
         };
@@ -12,10 +15,16 @@ describe('service/x6/graph/events.js', () => {
             hasTools: jest.fn(),
             removeTools: jest.fn(),
             isNode: jest.fn(),
+            isEdge: jest.fn(),
             addTools: jest.fn(),
-            position: jest.fn(),
             remove: jest.fn(),
-            getData: jest.fn()
+            getData: jest.fn(),
+            setData: jest.fn(),
+            getLabel: jest.fn(),
+            getLabels: jest.fn().mockReturnValue([]),
+            data: {},
+            id: 'foobar',
+            position: jest.fn().mockReturnValue({ x: 1, y: 2 })
         };
         edge = {};
     });
@@ -134,12 +143,29 @@ describe('service/x6/graph/events.js', () => {
             });
         });
 
-        describe('trust boundary curve', () => {
-            const cfg = { foo: 'bar' };
+        describe('a node without data', () => {
             beforeEach(() => {
-                trustBoundaryCurve.getEdgeConfig = jest.fn().mockImplementation(() => cfg);
+                cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
-                cell.constructor = { name: 'TrustBoundaryCurve' };
+                cell.constructor = { name: 'Store' };
+                cell.type = shapes.Store.prototype.type;
+                if (cell.data) { delete cell.data; }
+                cell.setData.mockImplementation((data) => cell.data = data);
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('does not add an edge', () => {
+                expect(graph.addEdge).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('trust boundary curve', () => {
+            beforeEach(() => {
+                cell.convertToEdge = true;
+                cell.isNode.mockImplementation(() => true);
+                cell.constructor = { name: 'TrustBoundaryCurveStencil' };
+                cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
                 events.listen(graph);
             });
@@ -148,12 +174,57 @@ describe('service/x6/graph/events.js', () => {
                 expect(cell.position).toHaveBeenCalledTimes(1);
             });
 
-            it('gets the edge config', () => {
-                expect(trustBoundaryCurve.getEdgeConfig).toHaveBeenCalledTimes(1);
+            it('adds the edge to the graph', () => {
+                expect(graph.addEdge).toHaveBeenCalled();
+            });
+
+            it('removes the cell', () => {
+                expect(cell.remove).toHaveBeenCalledTimes(1);
+            });
+        });
+
+        describe('flow stencil', () => {
+            beforeEach(() => {
+                cell.convertToEdge = true;
+                cell.isNode.mockImplementation(() => true);
+                cell.constructor = { name: 'FlowStencil' };
+                cell.type = shapes.FlowStencil.prototype.type;
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('gets the cell\'s position', () => {
+                expect(cell.position).toHaveBeenCalledTimes(1);
             });
 
             it('adds the edge to the graph', () => {
-                expect(graph.addEdge).toHaveBeenCalledWith(cfg);
+                expect(graph.addEdge).toHaveBeenCalled();
+            });
+
+            it('removes the cell', () => {
+                expect(cell.remove).toHaveBeenCalledTimes(1);
+            });
+        });
+
+        describe('flow stencil without data', () => {
+            beforeEach(() => {
+                cell.convertToEdge = true;
+                cell.isNode.mockImplementation(() => false);
+                cell.isEdge.mockImplementation(() => true);
+                cell.constructor = { name: 'FlowStencil' };
+                cell.type = shapes.FlowStencil.prototype.type;
+                if (cell.data) { delete cell.data; }
+                cell.setData.mockImplementation((data) => cell.data = data);
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('gets the cell\'s position', () => {
+                expect(cell.position).toHaveBeenCalledTimes(1);
+            });
+
+            it('adds the edge to the graph', () => {
+                expect(graph.addEdge).toHaveBeenCalled();
             });
 
             it('removes the cell', () => {

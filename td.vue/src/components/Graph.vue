@@ -44,8 +44,8 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <b-card header="Properties">
-            TODO
+        <b-card header="Properties" class="props-header">
+            <td-graph-properties />
         </b-card>
       </b-col>
     </b-row>
@@ -58,8 +58,19 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+.props-header {
+    .card-header {
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+</style>
+
 <script>
 import { mapState } from 'vuex';
+
+import TdGraphProperties from '@/components/GraphProperties.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import graphFactory from '@/service/x6/graph/graph.js';
@@ -67,14 +78,7 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
-    - Data flows should be selectable
-        - v1 had a custom tool option for this
-        - We will probably need to do the same because of the verticies tool
-        - https://x6.antv.vision/en/examples/node/tool#button
-    - Traditional data flow component in Stencil
     - Add ability to change labels and other metadata
-        - Create component for entity actions
-        - Edit labels inline, or keep in separate pane, or both?
         - Edit multiple threats at once
     - Add vertical scroll bar by default (if needed?)
     - "Link from here" - auto-linking of elements (needed or not?)
@@ -98,6 +102,7 @@ export default {
     name: 'TdGraph',
     components: {
         TdFormButton,
+        TdGraphProperties
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram
@@ -115,7 +120,11 @@ export default {
                 { shortcut: 'shift + left-click (hold/drag)', action: 'Pan' },
                 { shortcut: 'left-click on empty space and drag', action: 'Multi-select' },
                 { shortcut: '(ctrl/cmd) + mousewheel', action: 'Zoom' }
-            ]
+            ],
+            selectedElement: {
+                type: null,
+                data: null
+            }
         };
     },
     async mounted() {

@@ -14,9 +14,8 @@
 - Error handling for API requests that might fail (toast service?)
 - Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture
-- Undo changes to schema, schema needs to only have additions, no breaking changes
 - Update docs link to reference new docs location (built in)
 - Legend for diagram
 
 BUGS:
-    - Console error when viewing a threat model (top level)
+    - Ocassional bug decoding json on login using github
