@@ -82,7 +82,7 @@ const cellSelected = ({ cell }) => {
         }
     }
 
-    store.get().dispatch(CELL_SELECTED, { data: cell.getData(), id: cell.id, ref: cell });
+    store.get().dispatch(CELL_SELECTED, cell);
 };
 
 const cellUnselected = ({ cell }) => {

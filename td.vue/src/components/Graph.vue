@@ -44,7 +44,7 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <b-card header="Properties">
+        <b-card header="Properties" class="props-header">
             <td-graph-properties />
         </b-card>
       </b-col>
@@ -58,6 +58,15 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+.props-header {
+    .card-header {
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+</style>
+
 <script>
 import { mapState } from 'vuex';
 
@@ -69,14 +78,7 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
-    - Data flows should be selectable
-        - v1 had a custom tool option for this
-        - We will probably need to do the same because of the verticies tool
-        - https://x6.antv.vision/en/examples/node/tool#button
-    - Traditional data flow component in Stencil
     - Add ability to change labels and other metadata
-        - Create component for entity actions
-        - Edit labels inline, or keep in separate pane, or both?
         - Edit multiple threats at once
     - Add vertical scroll bar by default (if needed?)
     - "Link from here" - auto-linking of elements (needed or not?)

@@ -18,4 +18,4 @@
 - Legend for diagram
 
 BUGS:
-    - Console error when viewing a threat model (top level)
+    - Ocassional bug decoding json on login using github

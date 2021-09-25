@@ -17,8 +17,8 @@ describe('store/modules/cell.js', () => {
     });
 
     describe('state', () => {
-        it('defines a data object', () => {
-            expect(cellModule.state.data).toBeInstanceOf(Object);
+        it('defines a state object', () => {
+            expect(cellModule.state).toBeInstanceOf(Object);
         });
     });
 
@@ -29,37 +29,33 @@ describe('store/modules/cell.js', () => {
         });
 
         it('commits the selected cell', () => {
-            const params = { bar: 'bar', baz: 'baz' };
-            cellModule.actions[CELL_SELECTED](mocks, params);
-            expect(mocks.commit).toHaveBeenCalledWith(CELL_SELECTED, params);
+            const cell = { bar: 'bar', baz: 'baz' };
+            cellModule.actions[CELL_SELECTED](mocks, cell);
+            expect(mocks.commit).toHaveBeenCalledWith(CELL_SELECTED, cell);
         });
     });
 
     describe('mutations', () => {
-        const params = { data: { bar: 'bar', baz: 'baz' }, id: 'foo' };
+        const cell = { data: { bar: 'bar', baz: 'baz' }, id: 'foo' };
 
         describe('selected', () => {    
             beforeEach(() => {
-                cellModule.mutations[CELL_SELECTED](cellModule.state, params);
+                cellModule.mutations[CELL_SELECTED](cellModule.state, cell);
             });
 
-            it('sets the data', () => {
-                expect(cellModule.state.data).toEqual(params.data);
-            });
-
-            it('sets the id', () => {
-                expect(cellModule.state.id).toEqual(params.id);
+            it('sets the ref', () => {
+                expect(cellModule.state.ref).toEqual(cell);
             });
         });
 
         describe('unselected', () => {
             beforeEach(() => {
-                cellModule.state = params;
+                cellModule.state = { ref: cell };
                 cellModule.mutations[CELL_UNSELECTED](cellModule.state);
             });
 
             it('clears the state', () => {
-                expect(cellModule.state.data).toEqual({});
+                expect(cellModule.state.ref).toEqual(null);
             });
         });
     });

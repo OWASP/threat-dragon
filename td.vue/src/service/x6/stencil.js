@@ -15,13 +15,13 @@ const getDefaults = (target) => ({
         {
             name: 'boundaries',
             title: 'Boundaries',
-            collapsed: true,
+            collapsed: false,
             collapsable: true
         },
         {
             name: 'metadata',
             title: 'Metadata',
-            collapsed: true,
+            collapsed: false,
             collapsable: true
         }
     ],
