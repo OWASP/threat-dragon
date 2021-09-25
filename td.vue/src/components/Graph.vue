@@ -105,8 +105,18 @@ export default {
         TdGraphProperties
     },
     computed: mapState({
-        diagram: (state) => state.threatmodel.selectedDiagram
+        diagram: (state) => state.threatmodel.selectedDiagram,
+        locale: (state) => state.locale.locale
     }),
+    watch: {
+        locale(newLocale, oldLocale) {
+            if (newLocale !== oldLocale) {
+                console.log('Detected locale change on graph, need to redraw');
+                this.init();
+                this.drawDiagramV1();
+            }
+        }
+    },
     data() {
         return {
             graph: null,
