@@ -25,8 +25,11 @@ const en = {
         actions: {
             openExisting: 'Open an existing threat model',
             createNew: 'Create a completely new, empty threat model',
-            download: 'Download and explore a sample threat model'
+            demo: 'Explore a sample threat model'
         }
+    },
+    demo: {
+        select: 'Select a demo threat model from the list below'
     },
     repository: {
         select: 'Select a',

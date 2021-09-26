@@ -78,10 +78,8 @@ import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
-    - Add ability to change labels and other metadata
-        - Edit multiple threats at once
+    - Edit multiple threats at once (nice to have)
     - Add vertical scroll bar by default (if needed?)
-    - "Link from here" - auto-linking of elements (needed or not?)
     - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
     - Tooltips for graph buttons
     - Enable / Disable buttons based on state

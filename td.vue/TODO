@@ -18,4 +18,4 @@
 - Legend for diagram
 
 BUGS:
-    - Ocassional bug decoding json on login using github
+    - Ocassional bug decoding json on login using github: DOMException: String contains an invalid character

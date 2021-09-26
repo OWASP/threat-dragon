@@ -1,5 +1,5 @@
 <template>
-    <div v-if="model">
+    <div v-if="!!model && model.summary">
         <!-- metadata -->
         <b-row class="mb-4" id="title_row">
             <b-col>
@@ -132,8 +132,7 @@ export default {
         contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', '),
         model: (state) => state.threatmodel.data,
         provider: state => state.provider.selected,
-        providerType: state => getProviderType(state.provider.selected),
-        repoName: state => state.repo.selected
+        providerType: state => getProviderType(state.provider.selected)
     }),
     methods: {
         onEditClick(evt) {
