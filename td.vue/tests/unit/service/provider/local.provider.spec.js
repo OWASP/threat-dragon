@@ -36,16 +36,15 @@ describe('service/local.provider.js', () => {
             });
         });
 
-        describe('download', () => {
+        describe('demo', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.key === 'download');
+                action = local.getDashboardActions().find(x=> x.key === 'demo');
             });
 
-            // TODO
-            xit('links to the home edit page', () => {
-                expect(action.to).toEqual('/repository');
+            it('links to the demo select page', () => {
+                expect(action.to).toEqual('/demo/select');
             });
 
             it('uses the cloud download icon', () => {

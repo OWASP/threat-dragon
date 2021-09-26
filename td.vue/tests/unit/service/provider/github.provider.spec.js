@@ -36,16 +36,15 @@ describe('service/github.provider.js', () => {
             });
         });
 
-        describe('download', () => {
+        describe('demo', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.key === 'download');
+                action = github.getDashboardActions().find(x=> x.key === 'demo');
             });
 
-            // TODO
-            xit('links to the repo select page', () => {
-                expect(action.to).toEqual('/git/github/repository');
+            it('links to the demo select page', () => {
+                expect(action.to).toEqual('/demo/select');
             });
 
             it('uses the cloud download icon', () => {

@@ -127,16 +127,34 @@ describe('store/modules/threatmodel.js', () => {
 
         describe('selected', () => {
             const tm = 'test';
+
             beforeEach(async () => {
                 await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
             });
+            
+            describe('local provider', () => {
+                beforeEach(async () => {                    
+                    mocks.rootState.provider.selected = 'local';
+                    await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
+                });
 
-            it('commits the selected threatmodel', () => {
-                expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
+                it('commits the selected threatmodel', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
+                });
             });
 
-            it('dispatches the fetch event', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
+            describe('back-end provider', () => {
+                beforeEach(async () => {
+                    await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
+                });
+
+                it('commits the selected threatmodel', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
+                });
+
+                it('dispatches the fetch event', () => {
+                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
+                });
             });
         });
     });

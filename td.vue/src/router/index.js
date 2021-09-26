@@ -23,6 +23,11 @@ const routes = [
         name: 'OAuthReturn',
         component: () => import(/* webpackChunkName: "oauth-return" */ '../views/OauthReturn.vue')
     },
+    {
+        path: '/demo/select',
+        name: 'DemoSelect',
+        component: () => import(/* webpackChunkName: "demo-select" */ '../views/demo/SelectDemoModel.vue')
+    },
     ...gitRoutes,
     ...localRoutes
 ];

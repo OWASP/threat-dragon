@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+import demo from '@/service/demo/index.js';
 import { getProviderType } from '../../service/provider/providers.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
@@ -37,20 +38,28 @@ const actions = {
                 threatModel
             );
             commit(THREATMODEL_FETCH, resp.data);
+        } else {
+            commit(THREATMODEL_FETCH, threatModel);
         }
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
-        if (rootState.provider.selected !== 'local') {
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
             const resp = await threatmodelApi.modelsAsync(
                 rootState.repo.selected,
                 rootState.branch.selected
             );
             commit(THREATMODEL_FETCH_ALL, resp.data);
+        } else {
+            commit(THREATMODEL_FETCH_ALL, demo.models);
         }
     },
-    [THREATMODEL_SELECTED]: ({ commit, dispatch }, threatModel) => {
-        commit(THREATMODEL_SELECTED, threatModel);
-        dispatch(THREATMODEL_FETCH, threatModel);
+    [THREATMODEL_SELECTED]: ({ commit, dispatch, rootState }, threatModel) => {
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+            commit(THREATMODEL_SELECTED, threatModel);
+            dispatch(THREATMODEL_FETCH, threatModel);
+        } else {
+            commit(THREATMODEL_FETCH, threatModel);
+        }
     }
 };
 

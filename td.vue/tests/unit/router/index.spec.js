@@ -73,4 +73,29 @@ describe('router', () => {
             });
         });
     });
+
+    describe('demo-select', () => {
+        let demoSelectRoute;
+
+        beforeEach(() => {
+            demoSelectRoute = router.getRoutes()
+                .find(x => x.name === 'DemoSelect');
+        });
+
+        it('uses the /dashboard path', () => {
+            expect(demoSelectRoute.path).toEqual('/demo/select');
+        });
+
+        describe('lazily loaded component', () => {
+            let demoSelectComponent;
+
+            beforeEach(async () => {
+                demoSelectComponent = await demoSelectRoute.components.default();
+            });
+
+            it('uses the dashboard view', () => {
+                expect(demoSelectComponent.default.name).toEqual('SelectDemoModel');
+            });
+        });
+    });
 });
