@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
+
 import defaultProperties from '../../entity/default-properties.js';
 
 const name = 'trust-boundary-curve-stencil';
@@ -34,7 +36,7 @@ export const TrustBoundaryCurveStencil = Shape.Empty.define({
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
-            text: 'Trust Boundary',
+            text: tc('threatmodel.shapes.trustBoundary'),
             fill: '#333',
             textVerticalAnchor: 'middle'
         }

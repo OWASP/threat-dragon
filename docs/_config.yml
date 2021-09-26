@@ -89,6 +89,8 @@ nav:
           fa_class: fas fa-heartbeat
         - name: Actions
           fa_class: fab fa-github-alt
+        - name: Internationalization
+          fa_class: fas fa-globe-africa
 
 
 

@@ -5,6 +5,7 @@ import auth from './modules/auth.js';
 import branch from './modules/branch.js';
 import cell from './modules/cell.js';
 import loader from './modules/loader.js';
+import locale from './modules/locale.js';
 import provider from './modules/provider.js';
 import repo from './modules/repository.js';
 import threatmodel from './modules/threatmodel.js';
@@ -22,6 +23,7 @@ const get = () => {
                 branch,
                 cell,
                 loader,
+                locale,
                 provider,
                 repo,
                 threatmodel

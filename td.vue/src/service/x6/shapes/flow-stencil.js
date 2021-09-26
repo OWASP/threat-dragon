@@ -1,6 +1,7 @@
 import { Shape } from '@antv/x6';
 
 import defaultProperties from '../../entity/default-properties.js';
+import { tc } from '@/i18n/index.js';
 
 const name = 'flow-stencil';
 
@@ -27,7 +28,7 @@ export const FlowStencil = Shape.Empty.define({
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
-            text: 'Data Flow',
+            text: tc('threatmodel.shapes.flowStencil'),
             fill: '#333',
             textVerticalAnchor: 'middle'
         }

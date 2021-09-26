@@ -9,7 +9,7 @@
                 ></font-awesome-icon>
             </router-link>
             <br />
-            {{ description }}
+            {{ $t(`dashboard.actions.${description}`) }}
         </b-jumbotron>
     </b-col>
 </template>

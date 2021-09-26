@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
+
 const name = 'process';
 
 /**
@@ -13,7 +15,7 @@ export const ProcessShape = Shape.Circle.define({
     width: 200,
     constructorName: name,
     zIndex: 0,
-    label: 'Process',
+    label: tc('threatmodel.shapes.process'),
     attrs: {
         body: {
             magnet: true

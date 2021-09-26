@@ -4,16 +4,16 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        Select a Threat Model from
+                        {{ $t('threatmodelSelect.select') }}
                         <a
                             :href="`https://www.github.com/${repoName}`"
                             target="_blank"
                             rel="noopener noreferrer"
                         >{{ `${repoName}/${branch}` }}</a>
-                        from the list below, or choose another
-                        <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">branch</a>
-                        or
-                        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">repo</a>
+                        {{ $t('threatmodelSelect.from') }}
+                        <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">{{ $t('threatmodelSelect.branch') }}</a>
+                        {{ $t('threatmodelSelect.or') }}
+                        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">{{ $t('threatmodelSelect.repo') }}</a>
                     </h4>
                 </b-jumbotron>
             </b-col>

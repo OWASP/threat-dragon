@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
+
 const name = 'store';
 
 /**
@@ -40,7 +42,7 @@ export const Store = Shape.Rect.define({
             magnet: true
         }
     },
-    label: 'Store'
+    label: tc('threatmodel.shapes.store')
 });
 
 Store.prototype.type = 'tm.Store';

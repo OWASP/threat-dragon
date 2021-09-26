@@ -9,7 +9,7 @@
                     <b-row class="tm-card">
                         <b-col md=2>
                             <div>
-                                <strong>Owner:</strong>
+                                <strong>{{ $t('threatmodel.owner') }}:</strong>
                             </div>
                             <div id="tm_owner">
                                 {{ model.summary.owner }}
@@ -17,7 +17,7 @@
                         </b-col>
                         <b-col md=2>
                             <div>
-                                <strong>Reviewer:</strong>
+                                <strong>{{ $t('threatmodel.reviewer') }}:</strong>
                             </div>
                             <div id="tm_reviewer">
                                 {{ model.detail.reviewer }}
@@ -25,7 +25,7 @@
                         </b-col>
                         <b-col md=2>
                             <div>
-                                <strong>Contributors:</strong>
+                                <strong>{{ $t('threatmodel.contributors') }}:</strong>
                             </div>
                             <div id="tm_contributors">
                                 {{ contributors }}
@@ -40,7 +40,7 @@
         <b-row class="mb-4">
             <b-col>
                 <b-card
-                    header="High level system description">
+                    :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
                             <p id="tm_description">{{ model.summary.description }}</p>
@@ -84,17 +84,17 @@
                         :isPrimary="true"
                         :onBtnClick="onEditClick"
                         icon="edit"
-                        text="Edit" />
+                        :text="$t('forms.edit')" />
                     <td-form-button
                         id="tm-report-btn"
                         :onBtnClick="onReportClick"
                         icon="file-alt"
-                        text="Report" />
+                        :text="$t('forms.report')" />
                     <td-form-button
                         id="tm-delete-btn"
                         :onBtnClick="onDeleteClick"
                         icon="times"
-                        text="Delete" />
+                        :text="$t('forms.delete')" />
                 </b-btn-group>
             </b-col>
         </b-row>

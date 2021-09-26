@@ -1,14 +1,14 @@
 <template>
     <b-row>
         <b-col>
-            <b-card :header="`Editing: ${model.summary.title}`">
+            <b-card :header="`${$t('threatmodel.editing')}: ${model.summary.title}`">
                 <b-form @submit="onSubmit">
 
                     <b-form-row>
                         <b-col>
                             <b-form-group
                                 id="title-group"
-                                label="Title"
+                                :label="$t('threatmodel.title')"
                                 label-for="title">
                                 <b-form-input
                                     id="title"
@@ -24,7 +24,7 @@
                         <b-col md=6>
                             <b-form-group
                                 id="owner-group"
-                                label="Owner"
+                                :label="$t('threatmodel.owner')"
                                 label-for="owner">
                                 <b-form-input
                                     id="owner"
@@ -37,7 +37,7 @@
                         <b-col md=6>
                             <b-form-group
                                 id="reviewer-group"
-                                label="Reviewer"
+                                :label="$t('threatmodel.reviewer')"
                                 label-for="reviewer">
                                 <b-form-input
                                     id="reviewer"
@@ -52,7 +52,7 @@
                         <b-col>
                             <b-form-group
                                 id="description-group"
-                                label="High level system description"
+                                :label="$t('threatmodel.description')"
                                 label-for="description">
                                 <b-form-textarea
                                     id="description"
@@ -67,11 +67,11 @@
                         <b-col>
                             <b-form-group
                                 id="contributors-group"
-                                label="Contributors"
+                                :label="$t('threatmodel.contributors')"
                                 label-for="contributors">
                                 <b-form-tags
                                     id="contributors"
-                                    placeholder="Add a new contributor"
+                                    :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
                                     variant="primary"
                                 ></b-form-tags>
@@ -81,7 +81,7 @@
 
                     <b-form-row>
                         <b-col>
-                            <h5>Diagrams</h5>
+                            <h5>{{ $t('threatmodel.diagrams') }}</h5>
                         </b-col>
                     </b-form-row>
 
@@ -103,7 +103,7 @@
                                     <!-- TODO: Implement -->
                                     <b-button variant="secondary">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
-                                        Remove
+                                        {{ $t('forms.remove') }}
                                     </b-button>
                                 </b-input-group-append>
                             </b-input-group>
@@ -112,7 +112,7 @@
                         <b-col md=6>
                             <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
-                                Add a new diagram...
+                                {{ $t('threatmodel.addNewDiagram') }}
                             </a>
                         </b-col>
                     </b-form-row>
@@ -124,15 +124,15 @@
                                     :isPrimary="true"
                                     :onBtnClick="onSaveClick"
                                     icon="save"
-                                    text="Save" />
+                                    :text="$t('forms.save')" />
                                 <td-form-button
                                     :onBtnClick="onReloadClick"
                                     icon="undo"
-                                    text="Reload" />
+                                    :text="$t('forms.reload')" />
                                 <td-form-button
                                     :onBtnClick="onCancelClick"
                                     icon="times"
-                                    text="Cancel" />
+                                    :text="$t('forms.cancel')" />
                             </b-btn-group>
                         </b-col>
                     </b-form-row>

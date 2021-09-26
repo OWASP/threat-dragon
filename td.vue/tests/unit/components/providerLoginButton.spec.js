@@ -38,6 +38,9 @@ describe('components/ProviderLoginButton.vue', () => {
             propsData: {
                 provider
             },
+            mocks: {
+                $t: key => key
+            },
             store: mockStore
         });
     };

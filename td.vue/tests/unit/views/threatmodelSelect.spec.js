@@ -39,6 +39,7 @@ describe('ThreatmodelSelect.vue', () => {
                 localVue,
                 store: mockStore,
                 mocks: {
+                    $t: key => key,
                     $route: {
                         params: {
                             branch: 'fakeBranch',
@@ -88,6 +89,7 @@ describe('ThreatmodelSelect.vue', () => {
                 localVue,
                 store: mockStore,
                 mocks: {
+                    $t: key => key,
                     $route: {
                         params: {
                             branch,
@@ -114,7 +116,7 @@ describe('ThreatmodelSelect.vue', () => {
             });
 
             it('has a jumbotron with instructions', () => {
-                expect(wrapper.findComponent(BJumbotron).text()).toContain('from the list below');
+                expect(wrapper.findComponent(BJumbotron).text()).toContain('threatmodelSelect.from');
             });
 
             it('uses a b-list-group', () => {

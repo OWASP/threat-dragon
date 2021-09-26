@@ -6,8 +6,14 @@
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item>
+            <td-locale-select />
+        </b-nav-item>
+      </b-navbar-nav>
+      
       <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="username" class="logged-in-as">Logged in as {{ username }}</b-nav-text>
+        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
@@ -78,9 +84,13 @@ import { mapGetters } from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
 import router from '@/router/index.js';
+import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
     name: 'TdNavbar',
+    components: {
+        TdLocaleSelect
+    },
     computed: {
         ...mapGetters([
             'username'

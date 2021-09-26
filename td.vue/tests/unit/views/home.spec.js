@@ -38,7 +38,9 @@ describe('Home.vue', () => {
         wrapper = shallowMount(Home, {
             localVue,
             store: mockStore,
-            // router
+            mocks: {
+                $t: key => key
+            }
         });
     });
 
@@ -57,7 +59,7 @@ describe('Home.vue', () => {
         });
     
         it('displays the title', () => {
-            expect(wrapper.find('h1.display-3').text()).toContain('OWASP');
+            expect(wrapper.find('h1.display-3').text()).toContain('home.title');
         });
     
         it('displays the threat dragon log', () => {

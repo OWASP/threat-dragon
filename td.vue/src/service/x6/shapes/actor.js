@@ -1,5 +1,7 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
+
 const name = 'actor';
 
 /**
@@ -13,7 +15,7 @@ export const Actor = Shape.Rect.define({
     width: 150,
     constructorName: name,
     zIndex: 0,
-    label: 'Actor',
+    label: tc('threatmodel.shapes.actor'),
     attrs: {
         body: {
             magnet: true

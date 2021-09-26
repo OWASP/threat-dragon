@@ -4,7 +4,6 @@ import {
     BImg,
     BCollapse,
     BNavbarNav,
-    BNavText,
     BNavItem
 } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -31,7 +30,10 @@ describe('components/Navbar.vue', () => {
         });
         wrapper = shallowMount(Navbar, {
             localVue,
-            store: mockStore
+            store: mockStore,
+            mocks: {
+                $t: key => key
+            }
         });
     });
 
@@ -86,10 +88,6 @@ describe('components/Navbar.vue', () => {
 
         it('renders the nav', () => {
             expect(nav.exists()).toBe(true);
-        });
-
-        it('has the logged in text', () => {
-            expect(nav.findComponent(BNavText).text()).toContain('Logged in as');
         });
 
         describe('sign out', () => {

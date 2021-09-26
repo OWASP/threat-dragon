@@ -12,9 +12,9 @@
                 :isPrimary="true"
                 :onBtnClick="noOp"
                 icon="save"
-                text="Save"
+                :text="$t('forms.save')"
               />
-              <td-form-button :onBtnClick="noOp" icon="times" text="Close" />
+              <td-form-button :onBtnClick="noOp" icon="times" :text="$t('forms.close')" />
               <td-form-button :onBtnClick="noOp" v-b-modal.shortcuts  icon="keyboard" text="" />
               <td-form-button :onBtnClick="undo" icon="undo" text="" />
               <td-form-button :onBtnClick="redo" icon="redo" text="" />
@@ -44,14 +44,14 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <b-card header="Properties" class="props-header">
+        <b-card :header="$t('threatmodel.properties.title')" class="props-header">
             <td-graph-properties />
         </b-card>
       </b-col>
     </b-row>
 
     <div>
-        <b-modal id="shortcuts" size="lg" ok-variant="primary" ok-only title="Shortcuts">
+        <b-modal id="shortcuts" size="lg" ok-variant="primary" ok-only :title="$t('threatmodel.shortcuts.title')">
             <b-table :items="shortcuts"></b-table>
         </b-modal>
     </div>
@@ -105,22 +105,24 @@ export default {
         TdGraphProperties
     },
     computed: mapState({
-        diagram: (state) => state.threatmodel.selectedDiagram
+        diagram: (state) => state.threatmodel.selectedDiagram,
+        locale: (state) => state.locale.locale
     }),
+    watch: {
+        locale(newLocale, oldLocale) {
+            if (newLocale !== oldLocale) {
+                this.init();
+                this.drawDiagramV1();
+                this.shortcuts.length = 0;
+                this.getKeyboardShortcuts().forEach(s => this.shortcuts.push(s));
+            }
+        }
+    },
     data() {
         return {
             graph: null,
             gridShowing: true,
-            shortcuts: [
-                { shortcut: '(ctrl/cmd) + c', action: 'Copy' },
-                { shortcut: '(ctrl/cmd) + v', action: 'Paste' },
-                { shortcut: '(ctrl/cmd) + z', action: 'Undo' },
-                { shortcut: '(ctrl/cmd) + y', action: 'Redo' },
-                { shortcut: 'del', action: 'Delete' },
-                { shortcut: 'shift + left-click (hold/drag)', action: 'Pan' },
-                { shortcut: 'left-click on empty space and drag', action: 'Multi-select' },
-                { shortcut: '(ctrl/cmd) + mousewheel', action: 'Zoom' }
-            ],
+            shortcuts: this.getKeyboardShortcuts(),
             selectedElement: {
                 type: null,
                 data: null
@@ -132,6 +134,42 @@ export default {
         this.drawDiagramV1();
     },
     methods: {
+        getKeyboardShortcuts() {
+            return [
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.copy.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.copy.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.paste.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.paste.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.undo.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.undo.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.redo.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.redo.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.delete.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.delete.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.pan.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.pan.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.multiSelect.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.multiSelect.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.zoom.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.zoom.action')
+                }
+            ];
+        },
         noOp() {
             // TODO: Just for testing
         },

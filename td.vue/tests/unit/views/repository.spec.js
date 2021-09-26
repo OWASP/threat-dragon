@@ -34,6 +34,7 @@ describe('Repository.vue', () => {
                 localVue,
                 store: mockStore,
                 mocks: {
+                    $t: key => key,
                     $route: {
                         params: {
                             provider: 'fakeProvider'
@@ -74,6 +75,7 @@ describe('Repository.vue', () => {
                 localVue,
                 store: mockStore,
                 mocks: {
+                    $t: key => key,
                     $route: {
                         params: {
                             provider: mockStore.state.provider.selected
@@ -98,7 +100,7 @@ describe('Repository.vue', () => {
             });
 
             it('has a jumbotron with instructions', () => {
-                expect(wrapper.findComponent(BJumbotron).text()).toContain('from the list below');
+                expect(wrapper.findComponent(BJumbotron).text()).toContain('repository.from');
             });
 
             it('uses a b-list-group', () => {

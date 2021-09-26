@@ -7,7 +7,7 @@ describe('service/local.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.description.startsWith('Open'));
+                action = local.getDashboardActions().find(x=> x.key === 'openExisting');
             });
 
             it('links to the tm select page', () => {
@@ -24,7 +24,7 @@ describe('service/local.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.description.startsWith('Create'));
+                action = local.getDashboardActions().find(x=> x.key === 'createNew');
             });
 
             xit('links to the create page', () => {
@@ -40,7 +40,7 @@ describe('service/local.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.description.startsWith('Download'));
+                action = local.getDashboardActions().find(x=> x.key === 'download');
             });
 
             // TODO

@@ -1,11 +1,15 @@
 import { BootstrapVue, BContainer, BJumbotron, BListGroup, BListGroupItem } from 'bootstrap-vue';
-import { mount, createLocalVue } from '@vue/test-utils';
+import { mount, createLocalVue, config } from '@vue/test-utils';
+import VueI18n from 'vue-i18n';
 import Vuex from 'vuex';
 
 import Branch from '@/views/git/Branch.vue';
 import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
+import i18nFactory from '@/i18n/index.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
+
+config.mocks.$t = key => key;
 
 describe('views/Branch.vue', () => {
     const repo = 'someRepo';
@@ -16,6 +20,7 @@ describe('views/Branch.vue', () => {
             localVue = createLocalVue();
             localVue.use(BootstrapVue);
             localVue.use(Vuex);
+            localVue.use(VueI18n);
             mockStore = new Vuex.Store({
                 state: {
                     repo: {
@@ -40,6 +45,7 @@ describe('views/Branch.vue', () => {
             jest.spyOn(mockStore, 'dispatch');
             wrapper = mount(Branch, {
                 localVue,
+                i18n: i18nFactory.get(),
                 store: mockStore,
                 mocks: {
                     $route: {
@@ -70,6 +76,7 @@ describe('views/Branch.vue', () => {
             localVue = createLocalVue();
             localVue.use(BootstrapVue);
             localVue.use(Vuex);
+            localVue.use(VueI18n);
             mockStore = new Vuex.Store({
                 state: {
                     repo: {
@@ -97,6 +104,7 @@ describe('views/Branch.vue', () => {
             };
             wrapper = mount(Branch, {
                 localVue,
+                i18n: i18nFactory.get(),
                 store: mockStore,
                 mocks: {
                     $route: {
@@ -124,7 +132,7 @@ describe('views/Branch.vue', () => {
             });
 
             it('has a jumbotron with instructions', () => {
-                expect(wrapper.findComponent(BJumbotron).text()).toContain('from the list below');
+                expect(wrapper.findComponent(BJumbotron).text()).toContain('branch.from');
             });
 
             describe('repo link', () => {

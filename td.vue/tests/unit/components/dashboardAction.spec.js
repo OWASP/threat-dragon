@@ -25,6 +25,9 @@ describe('components/DashboardAction.vue', () => {
             },
             stubs: {
                 'router-link': RouterLinkStub
+            },
+            mocks: {
+                $t: key => key
             }
         });
     });

@@ -3,7 +3,9 @@
         <b-row>
             <b-col>
                 <b-jumbotron class="text-center">
-                    <h4>Select a {{ providerDisplayName }} repository from the list below</h4>
+                    <h4>
+                        {{ $t('repository.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('repository.from') }}
+                    </h4>
                 </b-jumbotron>
             </b-col>
         </b-row>
@@ -25,7 +27,6 @@
 <script>
 import { mapState } from 'vuex';
 
-import { getDisplayName } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 
@@ -33,7 +34,6 @@ export default {
     name: 'Repository',
     computed: mapState({
         provider: state => state.provider.selected,
-        providerDisplayName: state => getDisplayName(state.provider.selected),
         repositories: state => state.repo.all
     }),
     mounted() {

@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import ThreatModel from '@/views/ThreatModel.vue';
 import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
-xdescribe('views/Threatmodel.vue', () => {
+describe('views/Threatmodel.vue', () => {
     const contributors = ['foo', 'bar' ];
     const owner = 'owner';
     const reviewer = 'reviewer';
@@ -25,6 +25,9 @@ xdescribe('views/Threatmodel.vue', () => {
         localVue.use(Vuex);
         mockStore = new Vuex.Store({
             state: {
+                branch: { selected: 'test' },
+                provider: { selected: 'github' },
+                repo: { selected: 'testRepo' },
                 threatmodel: {
                     data: {
                         summary: {
@@ -57,6 +60,7 @@ xdescribe('views/Threatmodel.vue', () => {
                 'font-awesome-icon': { template: '<div />' }
             },
             mocks: {
+                $t: key => key,
                 $route: mockRouter,
                 $router: mockRouter
             }

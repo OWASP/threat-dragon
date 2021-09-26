@@ -4,15 +4,17 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        Select a branch from
+                        {{ $t('branch.select') }}
                         <a
                             id="repo_link"
                             :href="`https://www.github.com/${repoName}`"
                             target="_blank"
                             rel="noopener noreferrer"
                         >{{ repoName }}</a>
-                        from the list below or
-                        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">choose another repo</a>
+                        {{ $t('branch.from') }}
+                        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">
+                            {{ $t('branch.chooseRepo') }}
+                        </a>
                     </h4>
                 </b-jumbotron>
             </b-col>
