@@ -14,11 +14,11 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false},
-      'src/app/app.js',
-      'node_modules/angular-mocks/angular-mocks.js',
-      'test/**/*.js',
-      'src/app/**/*.html'
+        'node_modules/angular/angular.min.js',
+        'node_modules/angular-mocks/angular-mocks.js',
+        '../dist/app/threatdragon.min.js',
+        'test/**/*.js',
+        'src/app/**/*.html'
     ],
 
     // list of files to exclude

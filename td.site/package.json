@@ -11,7 +11,7 @@
     "bundle": "webpack",
     "clean": "rimraf fonts",
     "pretest": "jshint --verbose --show-non-errors src",
-    "test": "npm-run-all build pretest",
+    "test": "npm-run-all build pretest test:firefoxheadless",
     "test:phantomjs": "karma start --single-run --browsers PhantomJS",
     "test:firefox": "karma start --single-run --browsers Firefox",
     "test:firefoxheadless": "karma start --single-run --browsers FirefoxHeadless",
