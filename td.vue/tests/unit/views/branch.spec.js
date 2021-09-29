@@ -1,4 +1,3 @@
-import { BootstrapVue } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -15,7 +14,6 @@ describe('views/Branch.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         localVue.use(Vuex);
         mockStore = getMockStore();
     });
