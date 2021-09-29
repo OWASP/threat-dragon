@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
-import { THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED, THREATMODEL_CLEAR, THREATMODEL_CREATE } from '@/store/actions/threatmodel.js';
 import ThreatmodelSelect from '@/views/ThreatModelSelect.vue';
 
 describe('ThreatmodelSelect.vue', () => {
@@ -80,7 +80,9 @@ describe('ThreatmodelSelect.vue', () => {
                     [BRANCH_CLEAR]: () => { },
                     [REPOSITORY_CLEAR]: () => { },
                     [THREATMODEL_FETCH_ALL]: () => { },
-                    [THREATMODEL_SELECTED]: () => { }
+                    [THREATMODEL_SELECTED]: () => { },
+                    [THREATMODEL_CLEAR]: () => {},
+                    [THREATMODEL_CREATE]: () => {}
                 }
             });
             jest.spyOn(mockStore, 'dispatch');
@@ -164,12 +166,12 @@ describe('ThreatmodelSelect.vue', () => {
 
         describe('selecting a threat model', () => {
             it('dispatches the threatmodel_selected event', async () => {
-                await wrapper.findComponent(BListGroupItem).trigger('click');
+                await wrapper.findAllComponents(BListGroupItem).at(1).trigger('click');
                 expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_SELECTED, 'tm1');
             });
 
             it('navigates to the threatmodel view', async () => {
-                await wrapper.findComponent(BListGroupItem).trigger('click');
+                await wrapper.findAllComponents(BListGroupItem).at(1).trigger('click');
                 expect(router.push).toHaveBeenCalledWith({
                     name: 'gitThreatModel',
                     params: {
@@ -179,6 +181,31 @@ describe('ThreatmodelSelect.vue', () => {
                         threatmodel: threatModels[0]
                     }
                 });
+            });
+        });
+        
+        describe('creating a new threat model', () => {
+            beforeEach(async () => {
+                await wrapper.findComponent(BListGroupItem).trigger('click');
+            });
+
+            it('dispatches the threatmodel clear event', () => {
+                expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+            });
+
+            it('creates a new threat model', () => {
+                expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything());
+            });
+
+            it('navigates to the edit page', () => {
+                expect(router.push).toHaveBeenCalledWith({
+                    name: 'gitThreatModelEdit',
+                    params: {
+                        branch,
+                        provider,
+                        repository: repo,
+                        threatmodel: 'New Threat Model'
+                    }});
             });
         });
     });

@@ -1,5 +1,6 @@
 import {
     THREATMODEL_CLEAR,
+    THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
@@ -25,5 +26,9 @@ describe('store/actions/threatmodel.js', () => {
 
     it('defines a diagram selected action', () => {
         expect(THREATMODEL_DIAGRAM_SELECTED).not.toBeUndefined();
+    });
+
+    it('defines a create action', () => {
+        expect(THREATMODEL_CREATE).not.toBeUndefined();
     });
 });

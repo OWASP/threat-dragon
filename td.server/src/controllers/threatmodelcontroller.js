@@ -39,7 +39,16 @@ const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
         repo: req.params.repo,
         branch: req.params.branch
     };
-    const modelsResp = await repository.modelsAsync(branchInfo, req.provider.access_token);
+    let modelsResp;
+    try {
+        modelsResp = await repository.modelsAsync(branchInfo, req.provider.access_token);
+    } catch (e) {
+        if (e.statusCode === 404) {
+            return [];
+        }
+        
+        throw e;
+    }
     return modelsResp[0].map((x) => x.name);
 }, req, res);
 

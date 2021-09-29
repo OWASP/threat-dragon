@@ -1,5 +1,6 @@
 import {
     THREATMODEL_CLEAR,
+    THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
@@ -70,6 +71,12 @@ describe('store/modules/threatmodel.js', () => {
             const diagram = { foo: 'bar' };
             threatmodelModule.actions[THREATMODEL_DIAGRAM_SELECTED](mocks, diagram);
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SELECTED, diagram);
+        });
+
+        it('commits the create action with the data', () => {
+            const diagram = { foo: 'bar' };
+            threatmodelModule.actions[THREATMODEL_CREATE](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CREATE, diagram);
         });
 
         describe('fetch', () => {
@@ -184,6 +191,14 @@ describe('store/modules/threatmodel.js', () => {
 
             it('resets the selectedDiagram property', () => {
                 expect(threatmodelModule.state.selectedDiagram).toEqual({});
+            });
+        });
+
+        describe('create', () => {
+            it('sets the threat model', () => {
+                const tm = { foo: 'bar' };
+                threatmodelModule.mutations[THREATMODEL_CREATE](threatmodelModule.state, tm);
+                expect(threatmodelModule.state.data).toEqual(tm);
             });
         });
 
