@@ -25,8 +25,6 @@ import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
-// TODO: Maybe include a query param with action=create or something similar?  If it is there, then skip this page and go right to the edit
-
 export default {
     name: 'Branch',
     components: {
@@ -52,7 +50,7 @@ export default {
     methods: {
         selectRepoClick() {
             this.$store.dispatch(repoActions.clear);
-            this.$router.push({ name: 'gitRepository' });
+            this.$router.push({ name: `${this.providerType}Repository` });
         },
         onBranchClick(branch) {
             this.$store.dispatch(branchActions.selected, branch);
