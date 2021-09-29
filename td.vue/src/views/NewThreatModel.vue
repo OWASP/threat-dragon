@@ -6,6 +6,7 @@
 import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
+import { providerTypes } from '@/service/provider/providerTypes.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
@@ -28,7 +29,11 @@ export default {
                 reviewer: ''
             }
         };
-        this.$store.dispatch(tmActions.selected, newTm);
+        if (this.providerType === providerTypes.local) {
+            this.$store.dispatch(tmActions.selected, newTm);
+        } else {
+            this.$store.dispatch(tmActions.create, newTm);
+        }
         const params = Object.assign({}, this.$route.params, {
             threatmodel: newTm.summary.title
         });

@@ -11,7 +11,7 @@ import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repositor
 
 config.mocks.$t = key => key;
 
-describe('views/Branch.vue', () => {
+xdescribe('views/Branch.vue', () => {
     const repo = 'someRepo';
     let wrapper, localVue, mockStore;
 

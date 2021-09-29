@@ -21,4 +21,4 @@ BUGS:
     - Ocassional bug decoding json on login using github: DOMException: String contains an invalid character
     - No setter for contributor
     - 500 error returned from server if no threat models found
-    
+    - 404 if branch has a "/" in it, need to urlencode things before sending and ensure server understands

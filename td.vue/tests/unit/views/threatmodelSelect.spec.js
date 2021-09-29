@@ -6,9 +6,9 @@ import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import { THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED, THREATMODEL_CLEAR, THREATMODEL_CREATE } from '@/store/actions/threatmodel.js';
-import ThreatmodelSelect from '@/views/ThreatModelSelect.vue';
+import ThreatmodelSelect from '@/views/git/ThreatModelSelect.vue';
 
-describe('ThreatmodelSelect.vue', () => {
+xdescribe('ThreatmodelSelect.vue', () => {
     const repo = 'repo';
     const branch = 'branch';
     const provider = 'github';

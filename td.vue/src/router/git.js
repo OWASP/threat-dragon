@@ -17,12 +17,17 @@ export const gitRoutes = [
     {
         path: `/${providerType}/:provider/:repository/:branch/threatmodels`,
         name: `${providerType}ThreatModelSelect`,
-        component: () => import(/* webpackChunkName: "threatmodel-select" */ '../views/ThreatModelSelect.vue')
+        component: () => import(/* webpackChunkName: "threatmodel-select" */ '../views/git/ThreatModelSelect.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel`,
         name: `${providerType}ThreatModel`,
         component: () => import(/* webpackChunkName: "threatmodel" */ '../views/ThreatModel.vue')
+    },
+    {
+        path: `/${providerType}/:provider/:repository/:branch/new`,
+        name: `${providerType}NewThreatModel`,
+        component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/edit`,
