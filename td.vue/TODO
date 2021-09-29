@@ -19,3 +19,6 @@
 
 BUGS:
     - Ocassional bug decoding json on login using github: DOMException: String contains an invalid character
+    - No setter for contributor
+    - 500 error returned from server if no threat models found
+    

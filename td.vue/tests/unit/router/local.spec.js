@@ -72,4 +72,23 @@ describe('routes/local.js', () => {
             expect(cmp.default.name).toEqual('Diagram');
         });
     });
+
+
+    describe('NewThreatModel', () => {
+        let route;
+
+        beforeEach(() => {
+            route = localRoutes
+                .find(x => x.name === 'localNewThreatModel');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/local/threatmodel/new');
+        });
+
+        it('uses the NewThreatModel view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('NewThreatModel');
+        });
+    });
 });

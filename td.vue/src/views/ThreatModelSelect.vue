@@ -22,6 +22,10 @@
         <b-row>
             <b-col md=6 offset=3>
                 <b-list-group>
+                    <b-list-group-item @click="newThreatModel" 
+                        href="javascript:void(0)">
+                        {{ $t('threatmodelSelect.newThreatModel') }}
+                    </b-list-group-item>
                     <b-list-group-item
                         v-for="(threatModel, idx) in threatModels"
                         :key="idx"
@@ -80,6 +84,27 @@ export default {
             this.$store.dispatch(threatmodelActions.selected, threatmodel);
             const params = Object.assign({}, this.$route.params, { threatmodel });
             this.$router.push({ name: `${this.providerType}ThreatModel` , params });
+        },
+        newThreatModel() {
+            this.$store.dispatch(threatmodelActions.clear);
+            const newTm = {
+                summary: {
+                    title: 'New Threat Model',
+                    owner: '',
+                    description: '',
+                    id: 0
+                },
+                detail: {
+                    contributors: [],
+                    diagrams: [],
+                    reviewer: ''
+                }
+            };
+            this.$store.dispatch(threatmodelActions.create, newTm);
+            const params = Object.assign({}, this.$route.params, {
+                threatmodel: newTm.summary.title
+            });
+            this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params });
         }
     }
 };

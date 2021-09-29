@@ -45,7 +45,8 @@ const en = {
         from: 'from the list below, or choose another',
         branch: 'branch',
         or: 'or',
-        repo: 'repo'
+        repo: 'repo',
+        newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
         owner: 'Owner',

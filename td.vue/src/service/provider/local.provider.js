@@ -10,8 +10,7 @@ const getDashboardActions = () => ([
         iconPreface: 'fab'
     },
     {
-        // TODO: Create page
-        to: `/${providerType}/:threatmodel/edit`,
+        to: `/${providerType}/threatmodel/new`,
         key: 'createNew',
         icon: 'plus'
     },

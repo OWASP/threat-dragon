@@ -18,8 +18,12 @@ export default {
     }),
     async mounted() {
         try {
+            console.log('Provider: ', this.provider);
+            console.log('Code: ', this.$route.query.code);
             const resp = await loginApi.completeLoginAsync(this.provider, this.$route.query.code);
+            console.log('After login api call');
             this.$store.dispatch(AUTH_SET_JWT, resp.data);
+            console.log('After dispatching');
             router.push('/dashboard');
         } catch (ex) {
             console.error('Error getting token');
