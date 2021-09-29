@@ -16,6 +16,7 @@
 - Document architecture
 - Update docs link to reference new docs location (built in)
 - Legend for diagram
+- Update logging for server, very hard to read currently (consider Winston)
 
 BUGS:
     - Ocassional bug decoding json on login using github: DOMException: String contains an invalid character
