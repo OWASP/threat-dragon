@@ -56,7 +56,7 @@
                                 label-for="description">
                                 <b-form-textarea
                                     id="description"
-                                    v-model="model.detail.description"
+                                    v-model="model.summary.description"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -101,7 +101,7 @@
                                 ></b-form-input>
                                 <b-input-group-append>
                                     <!-- TODO: Implement -->
-                                    <b-button variant="secondary">
+                                    <b-button variant="secondary" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
                                     </b-button>
@@ -121,15 +121,18 @@
                         <b-col class="text-right mt-5">
                             <b-btn-group>
                                 <td-form-button
+                                    id="td-save-btn"
                                     :isPrimary="true"
                                     :onBtnClick="onSaveClick"
                                     icon="save"
                                     :text="$t('forms.save')" />
                                 <td-form-button
+                                    id="td-reload-btn"
                                     :onBtnClick="onReloadClick"
                                     icon="undo"
                                     :text="$t('forms.reload')" />
                                 <td-form-button
+                                    id="td-cancel-btn"
                                     :onBtnClick="onCancelClick"
                                     icon="times"
                                     :text="$t('forms.cancel')" />
@@ -195,6 +198,9 @@ export default {
         onAddDiagramClick(evt) {
             evt.preventDefault();
             this.model.detail.diagrams.push({ name: '' });
+        },
+        onRemoveDiagramClick(idx) {
+            this.model.detail.diagrams.splice(idx, 1);
         }
     }
 };
