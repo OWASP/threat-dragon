@@ -10,7 +10,7 @@ const getDashboardActions = () => ([
         iconPreface: 'fab'
     },
     {
-        to: `/${providerType}/github/repository`,
+        to: `/${providerType}/github/repository?action=create`,
         key: 'createNew',
         icon: 'plus'
     },

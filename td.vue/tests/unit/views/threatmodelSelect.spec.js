@@ -1,211 +1,235 @@
-import { BootstrapVue, BContainer, BJumbotron, BListGroup, BListGroupItem } from 'bootstrap-vue';
-import { mount, createLocalVue } from '@vue/test-utils';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
-import { THREATMODEL_FETCH_ALL, THREATMODEL_SELECTED, THREATMODEL_CLEAR, THREATMODEL_CREATE } from '@/store/actions/threatmodel.js';
-import ThreatmodelSelect from '@/views/ThreatModelSelect.vue';
+import { THREATMODEL_FETCH_ALL } from '@/store/actions/threatmodel.js';
+import TdSelectionPage from '@/components/SelectionPage.vue';
+import ThreatModelSelect from '@/views/git/ThreatModelSelect.vue';
+import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_SELECTED } from '../../../src/store/actions/threatmodel';
 
-describe('ThreatmodelSelect.vue', () => {
-    const repo = 'repo';
-    const branch = 'branch';
-    const provider = 'github';
-    const threatModels = ['tm1', 'tm2'];
-    let wrapper, localVue, mockStore, router;
 
-    describe('without matching route params', () => {
-        beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            mockStore = new Vuex.Store({
-                state: {
-                    branch: { selected: branch },
-                    provider: { selected: provider },
-                    repo: { selected: repo },
-                    threatmodel: { all: threatModels }
-                },
-                actions: {
-                    [BRANCH_SELECTED]: () => { },
-                    [PROVIDER_SELECTED]: () => { },
-                    [REPOSITORY_SELECTED]: () => { },
-                    [THREATMODEL_FETCH_ALL]: () => { }
+describe('views/ThreatModelSelect.vue', () => {
+    const branch = 'aBranch', repo = 'someRepo';
+    let wrapper, localVue, mockStore, mockRouter;
+
+    beforeEach(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+        mockStore = getMockStore();
+    });
+
+    const getLocalVue = (mockRoute) => {
+        mockRouter = { push: jest.fn() };
+        jest.spyOn(mockStore, 'dispatch');
+        wrapper = shallowMount(ThreatModelSelect, {
+            localVue,
+            store: mockStore,
+            mocks: {
+                $route: mockRoute,
+                $router: mockRouter,
+                $t: key => key
+            }
+        });
+    };
+
+    const getMockStore = () => new Vuex.Store({
+        state: {
+            repo: {
+                selected: repo
+            },
+            branch: {
+                selected: branch,
+                all: ['b1', 'b2', 'b3']
+            },
+            provider: {
+                selected: 'github'
+            },
+            threatmodel: {
+                all: []
+            }
+        },
+        actions: {
+            [BRANCH_CLEAR]: () => { },
+            [BRANCH_SELECTED]: () => { },
+            [PROVIDER_SELECTED]: () => { },
+            [REPOSITORY_CLEAR]: () => { },
+            [REPOSITORY_SELECTED]: () => { },
+            [THREATMODEL_CLEAR]: () => { },
+            [THREATMODEL_CREATE]: () => { },
+            [THREATMODEL_FETCH_ALL]: () => { },
+            [THREATMODEL_SELECTED]: () => { }
+        }
+    });
+
+    describe('mounted', () => {
+        it('sets the provider from the route', () => {
+            getLocalVue({
+                params: {
+                    branch,
+                    provider: 'local',
+                    repository: mockStore.state.repo.selected
                 }
             });
-            jest.spyOn(mockStore, 'dispatch');
-            wrapper = mount(ThreatmodelSelect, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key,
-                    $route: {
-                        params: {
-                            branch: 'fakeBranch',
-                            provider: 'fakeProvider',
-                            repository: 'fakeRepo'
-                        }
-                    }
+            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
+        });
+
+        it('sets the repo name from the route', () => {
+            getLocalVue({
+                params: {
+                    branch,
+                    provider: mockStore.state.provider.selected,
+                    repository: 'fakeRepoBad'
                 }
             });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
         });
 
-        it('sets the branch', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, 'fakeBranch');
+        it('sets the branch from the route', () => {
+            getLocalVue({
+                params: {
+                    branch: 'notTheRightOne',
+                    provider: mockStore.state.provider.selected,
+                    repository: 'fakeRepoBad'
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, 'notTheRightOne');
         });
-
-        it('sets the provider', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'fakeProvider');
-        });
-
-        it('sets the repo name', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepo');
+        
+        it('fetches the threat models', () => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH_ALL);
         });
     });
 
-    describe('with matching route params', () => {
+    describe('threat models', () => {
         beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            mockStore = new Vuex.Store({
-                state: {
-                    branch: { selected: branch },
-                    provider: { selected: provider },
-                    repo: { selected: repo },
-                    threatmodel: { all: threatModels }
-                },
-                actions: {
-                    [BRANCH_CLEAR]: () => { },
-                    [REPOSITORY_CLEAR]: () => { },
-                    [THREATMODEL_FETCH_ALL]: () => { },
-                    [THREATMODEL_SELECTED]: () => { },
-                    [THREATMODEL_CLEAR]: () => {},
-                    [THREATMODEL_CREATE]: () => {}
-                }
-            });
-            jest.spyOn(mockStore, 'dispatch');
-            router = { push: jest.fn() };
-            wrapper = mount(ThreatmodelSelect, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key,
-                    $route: {
-                        params: {
-                            branch,
-                            provider,
-                            repository: repo
-                        }
-                    },
-                    $router: router
+            getLocalVue({
+                params: {
+                    branch,
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
                 }
             });
         });
 
-        it('loads the threatmodels', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH_ALL);
+        it('displays the threat models', () => {
+            expect(wrapper.findComponent(TdSelectionPage).exists()).toEqual(true);
         });
 
-        describe('layout', () => {
-            it('renders the branch view', () => {
-                expect(wrapper.exists()).toBe(true);
-            });
+        it('displays the translated text', () => {
+            expect(wrapper.findComponent(TdSelectionPage).text()).toContain('threatmodelSelect.select');
+        });
+    });
 
-            it('has a b-container', () => {
-                expect(wrapper.findComponent(BContainer).exists()).toBe(true);
+    describe('selectRepoClick', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
             });
-
-            it('has a jumbotron with instructions', () => {
-                expect(wrapper.findComponent(BJumbotron).text()).toContain('threatmodelSelect.from');
-            });
-
-            it('uses a b-list-group', () => {
-                expect(wrapper.findComponent(BListGroup).exists()).toBe(true);
-            });
-
-            it('lists the branches', () => {
-                expect(wrapper.findAllComponents(BListGroupItem).length).toBeGreaterThan(1);
-            });
+            wrapper.vm.selectRepoClick();
         });
 
-        describe('going back to repo page', () => {
-            it('dispatches the repository_clear event', async () => {
-                await wrapper.find('#return-to-repo').trigger('click');
-                expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
-            });
-
-            it('navigates to the repository view', async () => {
-                await wrapper.find('#return-to-repo').trigger('click');
-                expect(router.push).toHaveBeenCalledWith({
-                    name: 'gitRepository',
-                    params: { provider }
-                });
-            });
+        it('clears the selected repo', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
         });
 
-        describe('going back to branch page', () => {
-            it('dispatches the branch_clear event', async () => {
-                await wrapper.find('#return-to-branch').trigger('click');
-                expect(mockStore.dispatch).toHaveBeenCalled();
-            });
+        it('navigates to the repo select page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitRepository', params: { provider: 'github' } });
+        });
+    });
 
-            it('navigates to the branch view', async () => {
-                jest.spyOn(router, 'push');
-                await wrapper.find('#return-to-branch').trigger('click');
-                expect(router.push).toHaveBeenCalledWith({
-                    name: 'gitBranch',
-                    params: {
-                        provider,
-                        repository: repo
-                    }
-                });
+    describe('selectBranchClick', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
             });
+            wrapper.vm.selectBranchClick();
         });
 
-        describe('selecting a threat model', () => {
-            it('dispatches the threatmodel_selected event', async () => {
-                await wrapper.findAllComponents(BListGroupItem).at(1).trigger('click');
-                expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_SELECTED, 'tm1');
-            });
+        it('clears the selected branch', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+        });
 
-            it('navigates to the threatmodel view', async () => {
-                await wrapper.findAllComponents(BListGroupItem).at(1).trigger('click');
-                expect(router.push).toHaveBeenCalledWith({
-                    name: 'gitThreatModel',
-                    params: {
-                        branch,
-                        provider,
-                        repository: repo,
-                        threatmodel: threatModels[0]
-                    }
-                });
+        it('navigates to the branch select page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'gitBranch',
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
             });
         });
-        
-        describe('creating a new threat model', () => {
-            beforeEach(async () => {
-                await wrapper.findComponent(BListGroupItem).trigger('click');
-            });
+    });
 
-            it('dispatches the threatmodel clear event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
-            });
+    describe('onThreatModelClick', () => {
+        const tm = 'foobar';
 
-            it('creates a new threat model', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything());
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
             });
+            wrapper.vm.onThreatmodelClick(tm);
+        });
 
-            it('navigates to the edit page', () => {
-                expect(router.push).toHaveBeenCalledWith({
-                    name: 'gitThreatModelEdit',
-                    params: {
-                        branch,
-                        provider,
-                        repository: repo,
-                        threatmodel: 'New Threat Model'
-                    }});
+        it('sets the selected threat model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
+        });
+
+        it('navigates to the threat model page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'gitThreatModel',
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected,
+                    threatmodel: tm
+                }
+            });
+        });
+    });
+
+    describe('new threat model', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            wrapper.vm.newThreatModel();
+        });
+
+        it('clears the threat model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+        });
+
+        it('creates the threat model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything()); 
+        });
+
+        it('navigates to the edit page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'gitThreatModelEdit',
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected,
+                    threatmodel: 'New Threat Model'
+                }
             });
         });
     });

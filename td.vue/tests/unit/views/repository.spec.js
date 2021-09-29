@@ -1,134 +1,113 @@
-import { BootstrapVue, BContainer, BJumbotron, BListGroup, BListGroupItem } from 'bootstrap-vue';
-import { mount, createLocalVue } from '@vue/test-utils';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { REPOSITORY_CLEAR, REPOSITORY_SELECTED, REPOSITORY_FETCH } from '@/store/actions/repository.js';
 import Repository from '@/views/git/Repository.vue';
-import { REPOSITORY_FETCH, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
+import TdSelectionPage from '@/components/SelectionPage.vue';
 
-describe('Repository.vue', () => {
-    let wrapper, localVue, mockStore, router;
 
-    describe('without matching route params', () => {
-        beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            mockStore = new Vuex.Store({
-                state: {
-                    provider: {
-                        selected: 'github'
-                    },
-                    repo: {
-                        all: ['repo1', 'repo2']
-                    }
-                },
-                actions: {
-                    [PROVIDER_SELECTED]: () => { },
-                    [REPOSITORY_FETCH]: () => { },
-                    [REPOSITORY_SELECTED]: () => { }
-                }
-            });
-            jest.spyOn(mockStore, 'dispatch');
-            wrapper = mount(Repository, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key,
-                    $route: {
-                        params: {
-                            provider: 'fakeProvider'
-                        }
-                    }
-                }
-            });
+describe('views/Repository.vue', () => {
+    let wrapper, localVue, mockStore, mockRouter;
+
+    beforeEach(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+        mockStore = getMockStore();
+    });
+
+    const getLocalVue = (mockRoute) => {
+        mockRouter = { push: jest.fn() };
+        jest.spyOn(mockStore, 'dispatch');
+        wrapper = shallowMount(Repository, {
+            localVue,
+            store: mockStore,
+            mocks: {
+                $route: mockRoute,
+                $router: mockRouter,
+                $t: key => key
+            }
         });
+    };
 
-        it('sets the provider based on the url param', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'fakeProvider');
+    const getMockStore = () => new Vuex.Store({
+        state: {
+            provider: {
+                selected: 'github'
+            },
+            repo: {
+                all: [],
+                selected: ''
+            }
+        },
+        actions: {
+            [PROVIDER_SELECTED]: () => { },
+            [REPOSITORY_CLEAR]: () => { },
+            [REPOSITORY_FETCH]: () => { },
+            [REPOSITORY_SELECTED]: () => { }
+        }
+    });
+
+    describe('mounted', () => {
+        it('sets the provider from the route', () => {
+            getLocalVue({
+                params: {
+                    provider: 'local'
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
+        });
+        
+        it('fetches the repos', () => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH);
         });
     });
 
-    describe('with matching route params', () => {
+    describe('repos', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected
+                }
+            });
+        });
+
+        it('displays the repositories', () => {
+            expect(wrapper.findComponent(TdSelectionPage).exists()).toEqual(true);
+        });
+
+        it('displays the translated text', () => {
+            expect(wrapper.findComponent(TdSelectionPage).text()).toContain('repository.select');
+        });
+    });
+
+    describe('onRepoClick', () => {
+        const repoName = 'fakeRepo';
+        let mockRoute;
 
         beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            mockStore = new Vuex.Store({
-                state: {
-                    provider: {
-                        selected: 'github'
-                    },
-                    repo: {
-                        all: ['repo1', 'repo2']
-                    }
-                },
-                actions: {
-                    [REPOSITORY_FETCH]: () => { },
-                    [REPOSITORY_SELECTED]: () => { }
-                }
+            mockRoute = {
+                provider: mockStore.state.provider.selected
+            };
+
+            getLocalVue({
+                params: mockRoute
             });
-            jest.spyOn(mockStore, 'dispatch');
-            router = { push: jest.fn() };
-            wrapper = mount(Repository, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key,
-                    $route: {
-                        params: {
-                            provider: mockStore.state.provider.selected
-                        }
-                    },
-                    $router: router
-                }
-            });
+            wrapper.vm.onRepoClick(repoName);
         });
 
-        it('fetches the repos', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH);
+        it('sets the selected repo', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, repoName);
         });
 
-        describe('layout', () => {
-            it('renders the repository view', () => {
-                expect(wrapper.exists()).toBe(true);
-            });
-
-            it('has a b-container', () => {
-                expect(wrapper.findComponent(BContainer).exists()).toBe(true);
-            });
-
-            it('has a jumbotron with instructions', () => {
-                expect(wrapper.findComponent(BJumbotron).text()).toContain('repository.from');
-            });
-
-            it('uses a b-list-group', () => {
-                expect(wrapper.findComponent(BListGroup).exists()).toBe(true);
-            });
-
-            it('lists the repositories', () => {
-                expect(wrapper.findAllComponents(BListGroupItem).length).toBeGreaterThan(1);
-            });
-        });
-
-        describe('selecting a repo', () => {
-            it('dispatches the repository_selected event', async () => {
-                await wrapper.findComponent(BListGroupItem).trigger('click');
-                expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, expect.anything());
-            });
-
-            it('navigates to the branch view', async () => {
-                jest.spyOn(router, 'push');
-                await wrapper.findComponent(BListGroupItem).trigger('click');
-                expect(router.push).toHaveBeenCalledWith({
-                    name: 'gitBranch',
-                    params: {
-                        provider: mockStore.state.provider.selected,
-                        repository: mockStore.state.repo.all[0]
-                    }
-                });
-            });
+        it('navigates to the branch select page', () => {
+            mockRoute.repository = repoName;
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitBranch', params: mockRoute });
         });
     });
 });

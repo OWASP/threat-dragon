@@ -28,7 +28,7 @@ describe('service/github.provider.js', () => {
             });
 
             it('links to the repository page', () => {
-                expect(action.to).toEqual('/git/github/repository');
+                expect(action.to).toEqual('/git/github/repository?action=create');
             });
 
             it('uses the plus icon', () => {

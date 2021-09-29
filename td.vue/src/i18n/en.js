@@ -11,7 +11,7 @@ const en = {
     },
     providers: {
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
         },
         local: {
             displayName: 'Local Session'
@@ -33,7 +33,8 @@ const en = {
     },
     repository: {
         select: 'Select a',
-        from: 'repository from the list below'
+        from: 'repository from the list below',
+        noneFound: 'No repositories found.  To get started, create a new repository on'
     },
     branch: {
         select: 'Select a branch from',
@@ -134,7 +135,8 @@ const en = {
         save: 'Save',
         reload: 'Reload',
         cancel: 'Cancel',
-        close: 'Close'
+        close: 'Close',
+        search: 'Search'
     }
 };
 

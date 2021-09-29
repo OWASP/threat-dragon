@@ -1,39 +1,28 @@
 <template>
-    <b-container fluid>
-        <b-row>
-            <b-col>
-                <b-jumbotron class="text-center">
-                    <h4>
-                        {{ $t('repository.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('repository.from') }}
-                    </h4>
-                </b-jumbotron>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col md=6 offset=3>
-                <b-list-group>
-                    <b-list-group-item
-                        v-for="(repo, idx) in repositories"
-                        :key="idx"
-                        href="javascript:void(0)"
-                        @click="onRepoClick(repo)"
-                    >{{ repo }}</b-list-group-item>
-                </b-list-group>
-            </b-col>
-        </b-row>
-    </b-container>
+    <td-selection-page
+        :items="repositories"
+        :onItemClick="onRepoClick"
+        :emptyStateText="`${$t('repository.noneFound')} ${$t('providers.' + provider + '.displayName')}`">
+        {{ $t('repository.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('repository.from') }}
+    </td-selection-page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 
+import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
+import TdSelectionPage from '@/components/SelectionPage.vue';
 
 export default {
     name: 'Repository',
+    components: {
+        TdSelectionPage
+    },
     computed: mapState({
         provider: state => state.provider.selected,
+        providerType: state => getProviderType(state.provider.selected),
         repositories: state => state.repo.all
     }),
     mounted() {
@@ -46,7 +35,10 @@ export default {
     methods: {
         onRepoClick(repoName) {
             this.$store.dispatch(repoActions.selected, repoName);
-            this.$router.push({ name: 'gitBranch', params: { provider: this.provider, repository: repoName } });
+            const params = Object.assign({}, this.$route.params, {
+                repository: repoName
+            });
+            this.$router.push({ name: `${this.providerType}Branch`, params, query: this.$route.query });
         },
     }
 };

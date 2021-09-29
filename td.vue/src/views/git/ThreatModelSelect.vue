@@ -1,41 +1,22 @@
 <template>
-    <b-container fluid>
-        <b-row>
-            <b-col>
-                <b-jumbotron class="text-center">
-                    <h4>
-                        {{ $t('threatmodelSelect.select') }}
-                        <a
-                            :href="`https://www.github.com/${repoName}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >{{ `${repoName}/${branch}` }}</a>
-                        {{ $t('threatmodelSelect.from') }}
-                        <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">{{ $t('threatmodelSelect.branch') }}</a>
-                        {{ $t('threatmodelSelect.or') }}
-                        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">{{ $t('threatmodelSelect.repo') }}</a>
-                    </h4>
-                </b-jumbotron>
-            </b-col>
-        </b-row>
-        <!-- TODO: Handle no threat models -->
-        <b-row>
-            <b-col md=6 offset=3>
-                <b-list-group>
-                    <b-list-group-item @click="newThreatModel" 
-                        href="javascript:void(0)">
-                        {{ $t('threatmodelSelect.newThreatModel') }}
-                    </b-list-group-item>
-                    <b-list-group-item
-                        v-for="(threatModel, idx) in threatModels"
-                        :key="idx"
-                        href="javascript:void(0)"
-                        @click="onThreatmodelClick(threatModel)"
-                    >{{ threatModel }}</b-list-group-item>
-                </b-list-group>
-            </b-col>
-        </b-row>
-    </b-container>
+    <td-selection-page
+        :items="threatModels"
+        :onItemClick="onThreatmodelClick"
+        :emptyStateText="$t('threatmodelSelect.newThreatModel')"
+        :onEmptyStateClick="newThreatModel">
+            {{ $t('threatmodelSelect.select') }}
+            <a
+                :href="`https://www.github.com/${repoName}`"
+                target="_blank"
+                rel="noopener noreferrer"
+            >{{ `${repoName}/${branch}` }}</a>
+            {{ $t('threatmodelSelect.from') }}
+            <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">{{ $t('threatmodelSelect.branch') }}</a>
+            {{ $t('threatmodelSelect.or') }}
+            <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">{{ $t('threatmodelSelect.repo') }}</a>
+            {{ $t('threatmodelSelect.or') }}
+            <a href="javascript:void(0)" id="new-threat-model" @click="newThreatModel">{{ $t('threatmodelSelect.newThreatModel') }}</a>
+    </td-selection-page>
 </template>
 
 <script>
@@ -45,10 +26,14 @@ import branchActions from '@/store/actions/branch.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
+import TdSelectionPage from '@/components/SelectionPage.vue';
 import threatmodelActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelSelect',
+    components: {
+        TdSelectionPage
+    },
     computed: mapState({
         branch: state => state.branch.selected,
         provider: state => state.provider.selected,

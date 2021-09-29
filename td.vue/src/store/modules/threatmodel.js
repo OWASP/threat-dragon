@@ -27,6 +27,11 @@ const state = {
     selectedDiagram: {}
 };
 
+// TODO: Fetch and selected are doing different things based on the provider
+// This would be a lot cleaner if we only called the appropriate action based
+// on the known state in the view, as opposed to having different "meanings"
+// for the same actions
+
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CREATE]: ({ commit }, threatModel) => commit(THREATMODEL_CREATE, threatModel),
