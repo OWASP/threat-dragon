@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon-desktop",
   "productName": "OWASP-Threat-Dragon",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "description": "OWASP Threat Dragon desktop version",
   "main": "main.js",
   "scripts": {
