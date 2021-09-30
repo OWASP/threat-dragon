@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import NewThreatModel from '@/views/NewThreatModel.vue';
@@ -16,12 +16,13 @@ describe('NewThreatModel.vue', () => {
                 },
                 actions: {
                     'THREATMODEL_CLEAR': () => {},
+                    'THREATMODEL_CREATE': () => {},
                     'THREATMODEL_SELECTED': () => {}
                 }
             });
             jest.spyOn(mockStore, 'dispatch');
             router = { push: jest.fn() };
-            mount(NewThreatModel, {
+            shallowMount(NewThreatModel, {
                 localVue,
                 store: mockStore,
                 mocks: {
@@ -62,12 +63,13 @@ describe('NewThreatModel.vue', () => {
                 },
                 actions: {
                     'THREATMODEL_CLEAR': () => {},
+                    'THREATMODEL_CREATE': () => {},
                     'THREATMODEL_SELECTED': () => {}
                 }
             });
             jest.spyOn(mockStore, 'dispatch');
             router = { push: jest.fn() };
-            mount(NewThreatModel, {
+            shallowMount(NewThreatModel, {
                 localVue,
                 store: mockStore,
                 mocks: {

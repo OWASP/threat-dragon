@@ -1,18 +1,9 @@
-- Empty state on list views
--- List views should probably be a separate component to handle empty state
--- Handle pagination
--- Consider alternative UI for list views, maybe something more concise?
-
-- Do a POC to use no back-end whatsoever (demo and test only)
 - Gracefully handle an expired refresh token (TODO in httpClient)
-
 - Update or remove the CSP violation reporter
 
 - Add tests for ThreatmodelEdit view
 - Add report feature
-- Add the download from github feature
 - Error handling for API requests that might fail (toast service?)
-- Add more e2e tests after the no backend work is done (hard to test since we would need loads of configuration)
 - Document architecture
 - Update docs link to reference new docs location (built in)
 - Legend for diagram
