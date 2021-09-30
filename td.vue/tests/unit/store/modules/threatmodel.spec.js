@@ -28,9 +28,7 @@ describe('store/modules/threatmodel.js', () => {
         commit: () => {},
         dispatch: () => {},
         rootState: getRootState(),
-        state: {
-            selected: 'test tm'
-        }
+        state: {}
     };
 
     beforeEach(() => {
@@ -46,10 +44,6 @@ describe('store/modules/threatmodel.js', () => {
     describe('state', () => {
         it('defines an all array', () => {
             expect(threatmodelModule.state.all).toBeInstanceOf(Array);
-        });
-
-        it('defines a selected string', () => {
-            expect(threatmodelModule.state.selected).toEqual('');
         });
 
         it('defines a data object', () => {
@@ -82,36 +76,20 @@ describe('store/modules/threatmodel.js', () => {
         describe('fetch', () => {
             const data = 'foobar';
 
-            beforeEach(() => {
+            beforeEach(async () => {
                 jest.spyOn(threatmodelApi, 'modelAsync').mockResolvedValue({ data });
-            });
-            
-            describe('local provider', () => {
-                beforeEach(async () => {                    
-                    mocks.rootState.provider.selected = 'local';
-                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks);
-                });
-
-                it('does not do a fetch if using a local provider', () => {
-                    expect(threatmodelApi.modelAsync).not.toHaveBeenCalled();
-                });
+                await threatmodelModule.actions[THREATMODEL_FETCH](mocks, 'tm');
             });
 
-            describe('back-end provider', () => {
-                beforeEach(async () => {
-                    await threatmodelModule.actions[THREATMODEL_FETCH](mocks, 'tm');
-                });
-
-                it('dispatches the clear event', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
-                });
-            
-                it('commits the fetch action', () => {
-                    expect(mocks.commit).toHaveBeenCalledWith(
-                        THREATMODEL_FETCH,
-                        data
-                    );
-                });
+            it('dispatches the clear event', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+            });
+        
+            it('commits the fetch action', () => {
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    THREATMODEL_FETCH,
+                    data
+                );
             });
         });
         
@@ -132,37 +110,13 @@ describe('store/modules/threatmodel.js', () => {
             expect(threatmodelApi.modelsAsync).not.toHaveBeenCalled();
         });
 
-        describe('selected', () => {
-            const tm = 'test';
-
-            beforeEach(async () => {
-                await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
-            });
-            
-            describe('local provider', () => {
-                beforeEach(async () => {                    
-                    mocks.rootState.provider.selected = 'local';
-                    await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
-                });
-
-                it('commits the selected threatmodel', () => {
-                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
-                });
-            });
-
-            describe('back-end provider', () => {
-                beforeEach(async () => {
-                    await threatmodelModule.actions[THREATMODEL_SELECTED](mocks, tm);
-                });
-
-                it('commits the selected threatmodel', () => {
-                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
-                });
-
-                it('dispatches the fetch event', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
-                });
-            });
+        it('commits the selected action', () => {
+            const data = 'foobar';
+            threatmodelModule.actions[THREATMODEL_SELECTED](mocks, data);
+            expect(mocks.commit).toHaveBeenCalledWith(
+                THREATMODEL_SELECTED,
+                data
+            );
         });
     });
 
@@ -171,7 +125,6 @@ describe('store/modules/threatmodel.js', () => {
             beforeEach(() => {
                 threatmodelModule.state.all.push('test1');
                 threatmodelModule.state.all.push('test2');
-                threatmodelModule.state.selected = 'test5';
                 threatmodelModule.state.data = { foo: 'bar' };
                 threatmodelModule.state.selectedDiagram = { bar: 'baz' };
                 threatmodelModule.mutations[THREATMODEL_CLEAR](threatmodelModule.state);
@@ -179,10 +132,6 @@ describe('store/modules/threatmodel.js', () => {
 
             it('empties the all array', () => {
                 expect(threatmodelModule.state.all.length).toEqual(0);
-            });
-
-            it('resets the selected property', () => {
-                expect(threatmodelModule.state.selected).toEqual('');
             });
 
             it('resets the data property', () => {
@@ -245,7 +194,7 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('sets the model prop', () => {
-                expect(threatmodelModule.state.selected).toEqual(model);
+                expect(threatmodelModule.state.data).toEqual(model);
             });
         });
     });

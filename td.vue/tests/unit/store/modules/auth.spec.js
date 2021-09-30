@@ -205,24 +205,34 @@ describe('store/modules/auth.js', () => {
         });
 
         describe('set jwt', () => {
-            beforeEach(() => {
-                authModule.mutations[AUTH_SET_JWT](authModule.state, apiResp);
+            describe('happy path', () => {
+                beforeEach(() => {
+                    authModule.mutations[AUTH_SET_JWT](authModule.state, apiResp);
+                });
+    
+                it('sets the jwt', () => {
+                    expect(authModule.state.jwt).toEqual(apiResp.accessToken);
+                });
+    
+                it('sets the refreshToken', () => {
+                    expect(authModule.state.refreshToken).toEqual(apiResp.refreshToken);
+                });
+    
+                it('sets the user', () => {
+                    expect(authModule.state.user).toEqual(jwtBody.user);
+                });
+    
+                it('sets the jwtBody', () => {
+                    expect(authModule.state.jwtBody).toEqual(jwtBody);
+                });
             });
 
-            it('sets the jwt', () => {
-                expect(authModule.state.jwt).toEqual(apiResp.accessToken);
-            });
-
-            it('sets the refreshToken', () => {
-                expect(authModule.state.refreshToken).toEqual(apiResp.refreshToken);
-            });
-
-            it('sets the user', () => {
-                expect(authModule.state.user).toEqual(jwtBody.user);
-            });
-
-            it('sets the jwtBody', () => {
-                expect(authModule.state.jwtBody).toEqual(jwtBody);
+            describe('with error', () => {
+                it('re-throws the error', () => {
+                    expect(() => {
+                        authModule.mutations[AUTH_SET_JWT](authModule.state, 'someBadData');
+                    }).toThrow();
+                });
             });
         });
 

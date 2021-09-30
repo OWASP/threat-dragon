@@ -27,8 +27,8 @@ describe('service/local.provider.js', () => {
                 action = local.getDashboardActions().find(x=> x.key === 'createNew');
             });
 
-            xit('links to the create page', () => {
-                expect(action.to).toEqual('/repository');
+            it('links to the create page', () => {
+                expect(action.to).toEqual('/local/threatmodel/new');
             });
 
             it('uses the plus icon', () => {
