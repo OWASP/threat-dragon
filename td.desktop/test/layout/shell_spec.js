@@ -291,47 +291,23 @@ describe('shell controller', function () {
         expect(mockDatacontext.close).toHaveBeenCalled();
     });
 
-    it('File menu sixth item should toggle developer tools', function() {
+    it('File menu sixth item should be a separator', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[5].label).toEqual('Toggle Developer Tools');
-        expect(subMenu.submenu[5].accelerator).toEqual('Ctrl+Shift+I');
-
-        var click = subMenu.submenu[5].click;
-        var mockWindow = {
-            webContents: {
-                toggleDevTools: function() {}
-            }
-        };
-
-        var toggleSpy = spyOn(mockWindow.webContents, 'toggleDevTools');
-        click(null, mockWindow);
-        expect(toggleSpy).toHaveBeenCalled();
-        //fairly pointless test since the window will never be null in normal cases
-        //but gets the branch coverage up
-        toggleSpy.calls.reset();
-        click(null, null);
-        expect(toggleSpy).not.toHaveBeenCalled();
-
+        expect(subMenu.submenu[5].type).toEqual('separator');
     });
 
-    it('File menu seventh item should be a separator', function() {
-        var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
-        var subMenu = getSubMenu(template, 'File');
-        expect(subMenu.submenu[6].type).toEqual('separator');
-    });
-
-    it('File menu eighth item should be exit', function() {
+    it('File menu seventh item should be exit/quit', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'File');
         if (process.platform === 'darwin') {
-            expect(subMenu.submenu[7].label).toEqual('Quit');
-            expect(subMenu.submenu[7].accelerator).toEqual('CmdOrCtrl+Q');
+            expect(subMenu.submenu[6].label).toEqual('Quit');
+            expect(subMenu.submenu[6].accelerator).toEqual('CmdOrCtrl+Q');
         } else {
-            expect(subMenu.submenu[7].label).toEqual('Exit');
-            expect(subMenu.submenu[7].accelerator).toEqual('CmdOrCtrl+W');
+            expect(subMenu.submenu[6].label).toEqual('Exit');
+            expect(subMenu.submenu[6].accelerator).toEqual('CmdOrCtrl+W');
         }
-        expect(subMenu.submenu[7].role).toEqual('close');
+        expect(subMenu.submenu[6].role).toEqual('close');
     });
 
     //Edit:
@@ -411,47 +387,71 @@ describe('shell controller', function () {
 
     });
 
-    it('View menu second item should be a separator', function() {
+    it('File menu second item should toggle developer tools', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'View');
-        expect(subMenu.submenu[1].type).toEqual('separator');
+        expect(subMenu.submenu[1].label).toEqual('Toggle Developer Tools');
+        expect(subMenu.submenu[1].accelerator).toEqual('Ctrl+Shift+I');
+
+        var click = subMenu.submenu[1].click;
+        var mockWindow = {
+            webContents: {
+                toggleDevTools: function() {}
+            }
+        };
+
+        var toggleSpy = spyOn(mockWindow.webContents, 'toggleDevTools');
+        click(null, mockWindow);
+        expect(toggleSpy).toHaveBeenCalled();
+        //fairly pointless test since the window will never be null in normal cases
+        //but gets the branch coverage up
+        toggleSpy.calls.reset();
+        click(null, null);
+        expect(toggleSpy).not.toHaveBeenCalled();
+
     });
 
-    it('View menu third item should be reset zoom', function() {
+    it('View menu third item should be a separator', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'View');
-        expect(subMenu.submenu[2].role).toEqual('resetzoom');
-        expect(subMenu.submenu[2].accelerator).toEqual('CmdOrCtrl+0');
+        expect(subMenu.submenu[2].type).toEqual('separator');
     });
 
-    it('View menu fourth item should be zoomin', function() {
+    it('View menu fourth item should be reset zoom', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'View');
-        expect(subMenu.submenu[3].role).toEqual('zoomin');
-        expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+=');
+        expect(subMenu.submenu[3].role).toEqual('resetzoom');
+        expect(subMenu.submenu[3].accelerator).toEqual('CmdOrCtrl+0');
     });
 
-    it('View menu fifth item should be zoomout', function() {
+    it('View menu fifth item should be zoomin', function() {
         var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
         var subMenu = getSubMenu(template, 'View');
-        expect(subMenu.submenu[4].role).toEqual('zoomout');
-        expect(subMenu.submenu[4].accelerator).toEqual('CmdOrCtrl+-');
+        expect(subMenu.submenu[4].role).toEqual('zoomin');
+        expect(subMenu.submenu[4].accelerator).toEqual('CmdOrCtrl+=');
     });
 
-    it('View menu sixth item should be a separator', function() {
+    it('View menu sixth item should be zoomout', function() {
+        var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
+        var subMenu = getSubMenu(template, 'View');
+        expect(subMenu.submenu[5].role).toEqual('zoomout');
+        expect(subMenu.submenu[5].accelerator).toEqual('CmdOrCtrl+-');
+    });
+
+    it('Windows View menu seventh item should be a separator', function() {
         if (process.platform === 'win32') {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'View');
-            expect(subMenu.submenu[5].type).toEqual('separator');
+            expect(subMenu.submenu[6].type).toEqual('separator');
         }
     });
 
-    it('View menu seventh item should toggle full screen', function() {
+    it('Windows View menu eighth item should toggle full screen', function() {
         if (process.platform === 'win32') {
             var template = mockElectron.Menu.buildFromTemplate.calls.argsFor(0)[0];
             var subMenu = getSubMenu(template, 'View');
-            expect(subMenu.submenu[6].role).toEqual('togglefullscreen');
-            expect(subMenu.submenu[6].accelerator).toEqual('CmdOrCtrl+F11');
+            expect(subMenu.submenu[7].role).toEqual('togglefullscreen');
+            expect(subMenu.submenu[7].accelerator).toEqual('CmdOrCtrl+F11');
         }
     });
 
