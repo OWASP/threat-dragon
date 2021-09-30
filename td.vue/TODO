@@ -1,17 +1,15 @@
-- Gracefully handle an expired refresh token (TODO in httpClient)
 - Update or remove the CSP violation reporter
-
+- Add threats to diagram ui
+- Add threat engine/suggested threats
 - Add tests for ThreatmodelEdit view
 - Add report feature
-- Error handling for API requests that might fail (toast service?)
 - Document architecture
 - Update docs link to reference new docs location (built in)
 - Legend for diagram
 - Update logging for server, very hard to read currently (consider Winston)
 
 BUGS:
-    - Ocassional bug decoding json on login using github: DOMException: String contains an invalid character
-        - Seems to be in the AUTH_SET_JWT mutation
     - No setter for contributor
     - 500 error returned from server if no threat models found
     - 404 if branch has a "/" in it, need to urlencode things before sending and ensure server understands
+

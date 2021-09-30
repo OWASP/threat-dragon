@@ -1,7 +1,10 @@
 import axios from 'axios';
+import Vue from 'vue';
 
 import { AUTH_SET_JWT } from '../store/actions/auth.js';
+import i18n from '../i18n/index.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '../store/actions/loader.js';
+import router from '../router/index.js';
 import storeFactory from '../store/index.js';
 
 let cachedClient = null;
@@ -70,12 +73,10 @@ const createClient = () => {
             store.dispatch(LOADER_FINISHED);
             return retryResp;
         } catch (retryError) {
-            // TODO: Check if retry error is still a 401, maybe we have an outdated refresh token
-            // If that's the case, perform a full logout
-            // Tell the user that they've been logged out
-            // Bring them back to the home page
-            console.error('Error retrying after refresh token update');
-            console.error(retryError);
+            console.warn('Error retrying after refresh token update');
+            console.warn(retryError);
+            Vue.$toast.info(i18n.get().t('auth.sessionExpired'));
+            router.push({ name: 'Home' });
             return await logAndExit();
         }
     });

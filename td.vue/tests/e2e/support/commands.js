@@ -23,3 +23,16 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// https://github.com/cypress-io/cypress/issues/1123#issuecomment-620074238
+Cypress.Commands.add('paste', {
+    prevSubject: true,
+    element: true
+}, ($element, text) => {
+    const subString = text.substr(0, text.length - 1).replace(/\n/g, '');
+    const lastChar = text.slice(-1);
+  
+    $element.text(subString);
+    $element.val(subString);
+    cy.get($element.selector).type(lastChar);
+});

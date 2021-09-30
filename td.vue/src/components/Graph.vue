@@ -14,7 +14,7 @@
                 icon="save"
                 :text="$t('forms.save')"
               />
-              <td-form-button :onBtnClick="noOp" icon="times" :text="$t('forms.close')" />
+              <td-form-button :onBtnClick="closeDiagram" icon="times" :text="$t('forms.close')" />
               <td-form-button :onBtnClick="noOp" v-b-modal.shortcuts  icon="keyboard" text="" />
               <td-form-button :onBtnClick="undo" icon="undo" text="" />
               <td-form-button :onBtnClick="redo" icon="redo" text="" />
@@ -73,6 +73,7 @@ import { mapState } from 'vuex';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 
 import diagramService from '@/service/migration/diagram.js';
+import { getProviderType } from '@/service/provider/providers.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
 import TdFormButton from '@/components/FormButton.vue';
@@ -104,7 +105,8 @@ export default {
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
-        locale: (state) => state.locale.locale
+        locale: (state) => state.locale.locale,
+        providerType: state => getProviderType(state.provider.selected)
     }),
     watch: {
         locale(newLocale, oldLocale) {
@@ -169,12 +171,16 @@ export default {
             ];
         },
         noOp() {
-            // TODO: Just for testing
+            this.$toast.info('Not implemented yet. Hang in there, we\'re working on it! :) ');
         },
         redo() {
             if (this.graph.canRedo()) {
                 this.graph.redo();
             }
+        },
+        closeDiagram() {
+            // TODO: This does nothing to revert any changes... Not sure if we want to change that or not?
+            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         undo() {
             if (this.graph.canUndo()) {

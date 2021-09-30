@@ -19,7 +19,8 @@ import {
     faSearchMinus,
     faTrash,
     faTh,
-    faKeyboard
+    faKeyboard,
+    faFileImport
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -43,7 +44,8 @@ library.add(
     faSearchMinus,
     faTrash,
     faTh,
-    faKeyboard
+    faKeyboard,
+    faFileImport
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
