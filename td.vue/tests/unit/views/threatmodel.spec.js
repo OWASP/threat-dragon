@@ -111,9 +111,8 @@ describe('views/Threatmodel.vue', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            xit('navigates to the edit view', () => {
-                expect(mockRouter.push).toHaveBeenCalledTimes(1);
-                // expect(mockRouter.push).toHaveBeenCalledWith('ThreatModelEdit', expect.anything());
+            it('navigates to the edit view', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith(expect.objectContaining({ name: 'gitThreatModelEdit' }));
             });
         });
 

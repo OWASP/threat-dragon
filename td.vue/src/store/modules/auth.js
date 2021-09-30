@@ -43,14 +43,21 @@ const actions = {
 const mutations = {
     [AUTH_CLEAR]: (state) => clearState(state),
     [AUTH_SET_JWT]: (state, tokens) => {
-        const { accessToken, refreshToken } = tokens;
-        const tokenBody = accessToken.split('.')[1];
-        const decodedBody = atob(tokenBody);
-        const jwtBody = JSON.parse(decodedBody);
-        state.jwt = accessToken;
-        state.jwtBody = jwtBody;
-        state.user = jwtBody.user;
-        state.refreshToken = refreshToken;
+        try {
+            const { accessToken, refreshToken } = tokens;
+            const tokenBody = accessToken.split('.')[1];
+            const decodedBody = window.atob(tokenBody);
+            const jwtBody = JSON.parse(decodedBody);
+            state.jwt = accessToken;
+            state.jwtBody = jwtBody;
+            state.user = jwtBody.user;
+            state.refreshToken = refreshToken;
+        } catch (e) {
+            console.error('Error decoding JWT', e);
+            console.error('Tokens:');
+            console.log(tokens);
+            throw e;
+        }
     },
     [AUTH_SET_LOCAL]: (state) => {
         state.user = {

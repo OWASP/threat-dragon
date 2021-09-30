@@ -28,6 +28,7 @@ export default {
         } catch (ex) {
             console.error('Error getting token');
             console.error(ex);
+            throw ex;
         }
     }
 };

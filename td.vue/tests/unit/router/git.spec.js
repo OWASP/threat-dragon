@@ -55,6 +55,24 @@ describe('routes/git.js', () => {
         });
     });
 
+    describe('NewThreatModel', () => {
+        let route;
+
+        beforeEach(() => {
+            route = gitRoutes
+                .find(x => x.name === 'gitNewThreatModel');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/git/:provider/:repository/:branch/new');
+        });
+
+        it('uses the NewThreatModel view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('NewThreatModel');
+        });
+    });
+
     describe('ThreatModel', () => {
         let route;
 

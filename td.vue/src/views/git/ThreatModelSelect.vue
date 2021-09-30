@@ -66,7 +66,7 @@ export default {
             this.$router.push({ name: 'gitRepository', params: { provider: this.provider }});
         },
         onThreatmodelClick(threatmodel) {
-            this.$store.dispatch(threatmodelActions.selected, threatmodel);
+            this.$store.dispatch(threatmodelActions.fetch, threatmodel);
             const params = Object.assign({}, this.$route.params, { threatmodel });
             this.$router.push({ name: `${this.providerType}ThreatModel` , params });
         },

@@ -7,7 +7,7 @@ import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repositor
 import { THREATMODEL_FETCH_ALL } from '@/store/actions/threatmodel.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import ThreatModelSelect from '@/views/git/ThreatModelSelect.vue';
-import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_SELECTED } from '../../../src/store/actions/threatmodel';
+import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_FETCH, THREATMODEL_SELECTED } from '../../../src/store/actions/threatmodel';
 
 
 describe('views/ThreatModelSelect.vue', () => {
@@ -58,6 +58,7 @@ describe('views/ThreatModelSelect.vue', () => {
             [REPOSITORY_SELECTED]: () => { },
             [THREATMODEL_CLEAR]: () => { },
             [THREATMODEL_CREATE]: () => { },
+            [THREATMODEL_FETCH]: () => { },
             [THREATMODEL_FETCH_ALL]: () => { },
             [THREATMODEL_SELECTED]: () => { }
         }
@@ -188,7 +189,7 @@ describe('views/ThreatModelSelect.vue', () => {
         });
 
         it('sets the selected threat model', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_SELECTED, tm);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
         });
 
         it('navigates to the threat model page', () => {

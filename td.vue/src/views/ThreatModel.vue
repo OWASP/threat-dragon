@@ -128,10 +128,8 @@ export default {
         TdFormButton
     },
     computed: mapState({
-        branch: state => state.branch.selected,
         contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', '),
         model: (state) => state.threatmodel.data,
-        provider: state => state.provider.selected,
         providerType: state => getProviderType(state.provider.selected)
     }),
     methods: {
