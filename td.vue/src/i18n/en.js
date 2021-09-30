@@ -1,4 +1,7 @@
 const en = {
+    auth: {
+        sessionExpired: 'Your session has expired.  Please log in again to continue.'
+    },
     nav: {
         v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development.  Do not use this to edit existing models, as this version could break them!',
         loggedInAs: 'Logged in as'
@@ -24,8 +27,9 @@ const en = {
         },
         actions: {
             openExisting: 'Open an existing threat model',
-            createNew: 'Create a completely new, empty threat model',
-            demo: 'Explore a sample threat model'
+            createNew: 'Create a new, empty threat model',
+            demo: 'Explore a sample threat model',
+            import: 'Import a threat model via JSON'
         }
     },
     demo: {
@@ -50,6 +54,8 @@ const en = {
         newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
+        jsonPaste: 'Paste the JSON of your threat model here:',
+        invalidJson: 'Invalid JSON.  Please check your model and try again.',
         owner: 'Owner',
         reviewer: 'Reviewer',
         contributors: 'Contributors',
@@ -136,7 +142,8 @@ const en = {
         reload: 'Reload',
         cancel: 'Cancel',
         close: 'Close',
-        search: 'Search'
+        search: 'Search',
+        import: 'Import'
     }
 };
 

@@ -39,7 +39,7 @@ describe('helpers/jwt.helper.js', () => {
         it('uses the provider and user for the JWT', () => {
             const jwtObj = {
                 provider: {
-                    [providerName]: encodeURIComponent(JSON.stringify(cipherText))
+                    [providerName]: Buffer.from(JSON.stringify(cipherText)).toString('base64')
                 },
                 user
             };
@@ -78,7 +78,7 @@ describe('helpers/jwt.helper.js', () => {
     });
 
     describe('verifyToken', () => {
-        const token = { foo: 'bar', provider: { foo: '%7B%22foo%22%3A%22bar%22%7D' } };
+        const token = { foo: 'bar', provider: { foo: 'eyJmb28iOiJiYXIifQo=' } };
         beforeEach(() => {
             sinon.stub(jsonwebtoken, 'verify').returns(token);
             sinon.stub(encryptionHelper, 'decrypt').returns('{}');
@@ -97,7 +97,7 @@ describe('helpers/jwt.helper.js', () => {
     });
 
     describe('verifyRefresh', () => {
-        const token = { foo: 'bar', provider: { foo: '%7B%22foo%22%3A%22bar%22%7D' } };
+        const token = { foo: 'bar', provider: { foo: 'eyJmb28iOiJiYXIifQo=' } };
         beforeEach(() => {
             sinon.stub(jsonwebtoken, 'verify').returns(token);
             sinon.stub(encryptionHelper, 'decrypt').returns('{}');

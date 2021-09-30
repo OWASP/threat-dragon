@@ -1,8 +1,11 @@
 import axios from 'axios';
+import Vue from 'vue';
 
 import { AUTH_SET_JWT } from '@/store/actions/auth.js';
 import httpClient from '@/service/httpClient.js';
+import i18n from '@/i18n/index.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader';
+import router from '@/router/index.js';
 import storeFactory from '@/store/index.js';
 
 describe('service/httpClient.js', () => {
@@ -36,6 +39,9 @@ describe('service/httpClient.js', () => {
         jest.spyOn(clientMock.interceptors.request, 'use');
         jest.spyOn(clientMock.interceptors.response, 'use');
         jest.spyOn(storeFactory, 'get').mockReturnValue(mockStore);
+        router.push = jest.fn();
+        i18n.get = jest.fn().mockReturnValue({ t: jest.fn() });
+        Vue.$toast = { info: jest.fn() };
     });
 
     describe('defaults', () => {
@@ -217,6 +223,7 @@ describe('service/httpClient.js', () => {
             beforeEach(() => {
                 mockStore.state.auth.refreshToken = tokens.refreshToken;
                 clientMock.interceptors.response.use = errorIntercept(error);
+                console.warn = jest.fn();
                 axios.post = jest.fn().mockRejectedValue('whoops!');
                 httpClient.createClient();
             });
@@ -226,7 +233,19 @@ describe('service/httpClient.js', () => {
             });
 
             it('logs the error', () => {
-                expect(console.error).toHaveBeenCalled();
+                expect(console.warn).toHaveBeenCalled();
+            });
+
+            it('navigates to the home page', () => {
+                expect(router.push).toHaveBeenCalledWith({ name: 'Home' });
+            });
+
+            it('creates a toast message', () => {
+                expect(Vue.$toast.info).toHaveBeenCalledTimes(1);
+            });
+
+            it('uses the translation service for the toast message', () => {
+                expect(i18n.get().t).toHaveBeenCalledWith('auth.sessionExpired');
             });
         });
     });

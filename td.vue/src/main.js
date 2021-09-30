@@ -3,11 +3,12 @@ import Vue from 'vue';
 
 import App from './App.vue';
 import i18nFactory from './i18n/index.js';
-import router from './router';
-import storeFactory from './store';
+import router from './router/index.js';
+import storeFactory from './store/index.js';
 
-import './plugins/bootstrap-vue';
-import './plugins/fontawesome-vue';
+import './plugins/bootstrap-vue.js';
+import './plugins/fontawesome-vue.js';
+import './plugins/toastification.js';
 
 Vue.config.productionTip = false;
 

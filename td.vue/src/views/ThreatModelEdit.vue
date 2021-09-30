@@ -100,7 +100,6 @@
                                     type="text"
                                 ></b-form-input>
                                 <b-input-group-append>
-                                    <!-- TODO: Implement -->
                                     <b-button variant="secondary" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}

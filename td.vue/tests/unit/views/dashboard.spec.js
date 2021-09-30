@@ -1,6 +1,6 @@
 import { BootstrapVue, BJumbotron } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { mount, createLocalVue } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Dashboard from '@/views/Dashboard.vue';
@@ -22,7 +22,7 @@ describe('Dashboard.vue', () => {
                 }
             }
         });
-        wrapper = mount(Dashboard, {
+        wrapper = shallowMount(Dashboard, {
             localVue,
             stubs: {
                 'font-awesome-icon': { template },
@@ -40,7 +40,7 @@ describe('Dashboard.vue', () => {
     });
 
     it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toContain('dashboard.welcome.title');
+        expect(wrapper.findComponent(BJumbotron).text()).toContain('dashboard.welcome.description');
     });
 
     it('has multiple actions', () => {

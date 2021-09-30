@@ -18,6 +18,11 @@ const getDashboardActions = () => ([
         to: '/demo/select',
         key: 'demo',
         icon: 'cloud-download-alt'
+    },
+    {
+        to: `/${providerType}/threatmodel/import`,
+        key: 'import',
+        icon: 'file-import'
     }
 ]);
 
