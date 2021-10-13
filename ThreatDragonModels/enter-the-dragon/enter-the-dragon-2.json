@@ -1,0 +1,374 @@
+{
+  "summary": {
+    "title": "Example threat model",
+    "owner": "Threat Dragon workshop team",
+    "description": "This is an example model used for the PDX OWASP Training Day 2021\nIt is a threat model of Threat Dragon itself"
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Workshop attendee #1",
+        "$$hashKey": "object:101"
+      },
+      {
+        "name": "Workshop attendee #1",
+        "$$hashKey": "object:728"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Example",
+        "thumbnail": "./public/content/images/thumbnail.linddun.jpg",
+        "diagramType": "LINDDUN",
+        "id": 0,
+        "$$hashKey": "object:103",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 356,
+                "y": 228
+              },
+              "angle": 0,
+              "id": "27169c9a-5640-4d5b-90ce-527185ab4f3b",
+              "z": 1,
+              "hasOpenThreats": false,
+              "description": "The server providing the single-page web application",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Web server"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 50,
+                "y": 50
+              },
+              "angle": 0,
+              "id": "675a179e-1bfe-462c-990d-7dd5399d1e05",
+              "z": 2,
+              "hasOpenThreats": false,
+              "description": "The client browser running the single-page web application",
+              "outOfScope": true,
+              "reasonOutOfScope": "We can not predict what browser / client is being used",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isOutOfScope"
+                },
+                "text": {
+                  "text": "Client"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 526,
+                "y": 50
+              },
+              "target": {
+                "x": 285,
+                "y": 380
+              },
+              "vertices": [
+                {
+                  "x": 331,
+                  "y": 199
+                }
+              ],
+              "id": "3d6ac52f-617c-4b90-ae77-a6072903ba61",
+              "z": 3,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "675a179e-1bfe-462c-990d-7dd5399d1e05"
+              },
+              "target": {
+                "id": "27169c9a-5640-4d5b-90ce-527185ab4f3b"
+              },
+              "vertices": [
+                {
+                  "x": 215,
+                  "y": 206
+                }
+              ],
+              "id": "d559bbd8-04ef-4c7e-915c-f9ff120a24a4",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Request",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 4,
+              "hasOpenThreats": false,
+              "description": "The client makes a request to the server",
+              "protocol": "HTTP",
+              "isPublicNetwork": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "27169c9a-5640-4d5b-90ce-527185ab4f3b"
+              },
+              "target": {
+                "id": "675a179e-1bfe-462c-990d-7dd5399d1e05"
+              },
+              "vertices": [
+                {
+                  "x": 379,
+                  "y": 90
+                }
+              ],
+              "id": "d001ec93-b041-4c1c-b211-2a2e61c6ced4",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Response",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 5,
+              "hasOpenThreats": false,
+              "description": "The server provides the web application",
+              "protocol": "HTTP",
+              "isPublicNetwork": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 664,
+                "y": 234
+              },
+              "angle": 0,
+              "id": "e7546a7b-284c-4334-b184-00445b0b3950",
+              "z": 6,
+              "hasOpenThreats": false,
+              "description": "The github  repository for the threat model files",
+              "outOfScope": true,
+              "reasonOutOfScope": "Github has its own threat model, so out of scope for Threat Dragon",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isOutOfScope"
+                },
+                "text": {
+                  "text": "Github repo"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 479,
+                "y": 404
+              },
+              "target": {
+                "x": 791,
+                "y": 77
+              },
+              "vertices": [
+                {
+                  "x": 524,
+                  "y": 288
+                },
+                {
+                  "x": 564,
+                  "y": 142
+                }
+              ],
+              "id": "3bd821f2-9abf-41d1-9bbc-1633d4fb4f36",
+              "z": 7,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "e7546a7b-284c-4334-b184-00445b0b3950"
+              },
+              "target": {
+                "id": "27169c9a-5640-4d5b-90ce-527185ab4f3b"
+              },
+              "vertices": [
+                {
+                  "x": 596,
+                  "y": 334
+                }
+              ],
+              "id": "8a913d11-250c-432c-9c17-1a14ff4b3a93",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "read",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 8,
+              "hasOpenThreats": false,
+              "description": "Open a threat model by reading from github repo",
+              "outOfScope": true,
+              "reasonOutOfScope": "No control over this data traffic",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isOutOfScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "27169c9a-5640-4d5b-90ce-527185ab4f3b"
+              },
+              "target": {
+                "id": "e7546a7b-284c-4334-b184-00445b0b3950"
+              },
+              "vertices": [
+                {
+                  "x": 602,
+                  "y": 243
+                }
+              ],
+              "id": "b688305f-654d-4eea-a34f-01ab49884ab7",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "write",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 9,
+              "hasOpenThreats": false,
+              "description": "Write modified threat  model files to github",
+              "outOfScope": true,
+              "reasonOutOfScope": "No control over this data traffic",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isOutOfScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 904
+        }
+      },
+      {
+        "title": "Copy of Example",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 1,
+        "diagramJson": {
+          "cells": []
+        },
+        "size": {
+          "height": "590",
+          "width": "790"
+        },
+        "$$hashKey": "object:348"
+      }
+    ],
+    "reviewer": "Threat Dragon workshop attendees"
+  }
+}
