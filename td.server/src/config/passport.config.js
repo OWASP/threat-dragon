@@ -54,6 +54,17 @@ const config = (app) => {
         scope: [ githubScope ]
     };
 
+    const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
+    if (enterpriseHostname) {
+        const port = env.get().config.GITHUB_ENTERPRISE_PORT || '';
+        const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL || 'https';
+        const enterpriseUrl = `${protocol}://${enterpriseHostname}${port ? ':' + port : ''}`;
+
+        githubConfig.authorizationURL = `${enterpriseUrl}/login/oauth/authorize`;
+        githubConfig.tokenURL = `${enterpriseUrl}/login/oauth/access_token`;
+        githubConfig.userProfileURL = `${enterpriseUrl}/api/v3/useer`;
+    }
+
     passport.use(new Strategy(githubConfig, strategyCallback));
     passport.serializeUser(passportHelper.serializeUser);
     passport.deserializeUser(passportHelper.deserializeUser);

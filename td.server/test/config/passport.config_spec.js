@@ -91,4 +91,69 @@ describe('passport configuration tests', () => {
             expect(passport.use).to.have.been.calledWith(expected);
         });
     });
+
+    describe('with enterprise configuration hostname only', () => {
+        const enterpriseHost = 'foobar.threatdragon.com';
+        const mockEnv = {
+            config: {
+                IS_TEST: 'true',
+                GITHUB_CLIENT_ID: clientId,
+                GITHUB_CLIENT_SECRET: clientSecret,
+                GITHUB_ENTERPRISE_HOSTNAME: enterpriseHost
+            }
+        };
+
+        beforeEach(() => {
+            sinon.stub(env, 'get').returns(mockEnv);
+            passportConfig.config(mockApp);
+        });
+
+        it('uses the enterprise configuration', () => {
+            const expected = new passportConfig.TestingStrategy({
+                clientID: clientId,
+                clientSecret: clientSecret,
+                failureRedirect: 'login/github',
+                scope: [ 'public_repo' ],
+                authorizationURL: `https://${enterpriseHost}/login/oauth/authorize`,
+                tokenURL: `https://${enterpriseHost}/login/oauth/access_token`,
+                userProfileURL: `https://${enterpriseHost}/api/v3/useer`
+            });
+            expect(passport.use).to.have.been.calledWith(expected);
+        });
+    });
+
+    describe('with enterprise configuration custom port and protocol', () => {
+        const enterpriseHost = 'foobar.threatdragon.com';
+        const port = 5443;
+        const protocol = 'http';
+        const enterpriseUrl = 'http://foobar.threatdragon.com:5443';
+        const mockEnv = {
+            config: {
+                IS_TEST: 'true',
+                GITHUB_CLIENT_ID: clientId,
+                GITHUB_CLIENT_SECRET: clientSecret,
+                GITHUB_ENTERPRISE_HOSTNAME: enterpriseHost,
+                GITHUB_ENTERPRISE_PORT: port,
+                GITHUB_ENTERPRISE_PROTOCOL: protocol
+            }
+        };
+
+        beforeEach(() => {
+            sinon.stub(env, 'get').returns(mockEnv);
+            passportConfig.config(mockApp);
+        });
+
+        it('uses the enterprise configuration', () => {
+            const expected = new passportConfig.TestingStrategy({
+                clientID: clientId,
+                clientSecret: clientSecret,
+                failureRedirect: 'login/github',
+                scope: [ 'public_repo' ],
+                authorizationURL: `${enterpriseUrl}/login/oauth/authorize`,
+                tokenURL: `${enterpriseUrl}/login/oauth/access_token`,
+                userProfileURL: `${enterpriseUrl}/api/v3/useer`
+            });
+            expect(passport.use).to.have.been.calledWith(expected);
+        });
+    });
 });
