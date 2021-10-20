@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import errors from '../../src/controllers/errors.js';
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import responseWrapper from '../../src/controllers/responseWrapper.js';
 
 describe('controllers/responseWrapper.js', () => {
@@ -17,10 +17,6 @@ describe('controllers/responseWrapper.js', () => {
             error: () => {}
         }
         sinon.stub(errors, 'serverError');
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('sendResponse', () => {

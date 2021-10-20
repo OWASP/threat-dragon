@@ -25,7 +25,7 @@ const create = () => {
 
         // environment configuration
         envConfig.tryLoadDotEnv();
-        logger = loggerHelper.get('app.js')
+        logger = loggerHelper.get('app.js');
 
         //security headers
         securityHeaders.config(app);

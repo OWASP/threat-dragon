@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import bearer from '../../src/config/bearer.config.js';
 import errors from '../../src/controllers/errors.js';
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import jwt from '../../src/helpers/jwt.helper.js';
 
 describe('config/bearer.config.js', () => {
@@ -16,10 +16,6 @@ describe('config/bearer.config.js', () => {
         next = sinon.spy();
         sinon.stub(errors, 'unauthorized');
         sinon.stub(errors, 'badRequest');
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('with a valid JWT', () => {

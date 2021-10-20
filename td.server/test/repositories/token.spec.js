@@ -9,7 +9,6 @@ describe('repositories/token.js', () => {
 
     afterEach(() => {
         tokenRepo.remove(token);
-        sinon.restore();
     });
 
     describe('add', () => {

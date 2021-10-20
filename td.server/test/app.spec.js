@@ -6,7 +6,7 @@ import appFactory from '../src/app.js';
 import envConfig from '../src/config/env.config.js';
 import expressHelper from '../src/helpers/express.helper.js';
 import https from '../src/config/https.config.js';
-import { getMockApp } from './express.mocks.js';
+import { getMockApp } from './mocks/express.mocks.js';
 import parsersConfig from '../src/config/parsers.config.js';
 import routesConfig from '../src/config/routes.config.js';
 import securityHeaders from '../src/config/securityheaders.config.js';
@@ -27,10 +27,6 @@ describe('app tests', () => {
         sinon.stub(parsersConfig, 'config');
         sinon.stub(routesConfig, 'config');
         sinon.stub(https, 'middleware');
-    });
-    
-    afterEach(function() {
-        sinon.restore();
     });
 
     describe('without errors', () => {

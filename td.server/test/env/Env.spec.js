@@ -8,10 +8,6 @@ import { Env } from '../../src/env/Env.js';
 describe('env/Env.js', () => {
     let env;
 
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('ctor', () => {
         beforeEach(() => {
             env = new Env();

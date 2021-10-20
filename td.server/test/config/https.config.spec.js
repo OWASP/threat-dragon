@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import httpsConfig from '../../src/config/https.config.js';
 
 describe('config/https.config.js', () => {
@@ -12,10 +12,6 @@ describe('config/https.config.js', () => {
         req = getMockRequest();
         res = getMockResponse();
         next = sinon.spy();
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('simulated production', () => {

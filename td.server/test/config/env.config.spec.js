@@ -19,10 +19,6 @@ describe('environment configuration tests', () => {
         sinon.spy(mockEnv, 'hydrate');
         envConfig.tryLoadDotEnv();
     });
-    
-    afterEach(function() {
-        sinon.restore();
-    });
 
     describe('tryLoadDotEnv', () => {
         it('adds a github provider', () => {

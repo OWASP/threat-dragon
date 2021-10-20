@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import responseWrapper from '../../src/controllers/responseWrapper.js';
 import threatModelController from '../../src/controllers/threatmodelcontroller.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
@@ -29,10 +29,6 @@ describe('threat model controller tests', () => {
             body: 'test body'
         });
         mockResponse = getMockResponse();
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('GET repos', () => {

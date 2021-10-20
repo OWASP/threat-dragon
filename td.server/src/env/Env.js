@@ -5,6 +5,7 @@ import path from 'path';
 import { upDir } from '../helpers/path.helper.js';
 
 export class Env {
+    /* eslint no-console: 0 */
 
     /**
      * Creates a new instance of the Env class
@@ -23,7 +24,7 @@ export class Env {
      * @returns {Object}
      */
     get config() {
-        return Object.freeze(Object.assign({}, this._config));
+        return Object.freeze({ ...this._config});
     }
 
     /**

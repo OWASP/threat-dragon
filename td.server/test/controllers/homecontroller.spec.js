@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 
 describe('homecontroller tests', () => {
     let mockRequest, mockResponse;
@@ -11,10 +11,6 @@ describe('homecontroller tests', () => {
     beforeEach(() => {
         mockRequest = getMockRequest();
         mockResponse = getMockResponse();
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('index', () => {

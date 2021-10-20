@@ -5,10 +5,6 @@ import sinon from 'sinon';
 import cryptoPromise from '../../src/helpers/crypto.promise.js';
 
 describe('helpers/crypto.promise.js', () => {
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('randomBytes', () => {
         const rand = 'asdfasdfasdf';
         const reject = (num, cb) => { cb('some error'); };

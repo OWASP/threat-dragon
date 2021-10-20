@@ -6,7 +6,7 @@ import auth from '../../src/controllers/auth.js';
 import bearer from '../../src/config/bearer.config.js';
 import healthcheck from '../../src/controllers/healthcheck.js';
 import homeController from '../../src/controllers/homecontroller.js';
-import { getMockApp } from '../express.mocks.js';
+import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 
@@ -29,10 +29,6 @@ describe('route config tests', () => {
         sinon.spy(mockRouter, 'delete');
         sinon.spy(mockRouter, 'use');
         routeConfig.config(mockApp);
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     it('tells the app to use the router', () => {

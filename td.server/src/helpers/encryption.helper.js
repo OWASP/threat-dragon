@@ -21,7 +21,7 @@ const getPrimaryKey = () => {
 
     if (!primaryKey) {
         const message = 'missing primary encryption key';
-        logger.fatal(message);
+        logger.error(message);
         throw new Error(message);
     }
     

@@ -39,10 +39,6 @@ describe('encryption helper tests', () => {
         sinon.stub(crypto, 'createCipheriv').returns(mockCreateCipheriv);
         sinon.stub(cryptoPromise, 'randomBytes').resolves(randomIv);
     });
-        
-    afterEach(() => {
-        sinon.restore();
-    });
 
     describe('with invalid keys', () => {
         beforeEach(() => {

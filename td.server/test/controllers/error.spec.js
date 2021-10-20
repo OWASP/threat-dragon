@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import error from '../../src/controllers/errors.js';
-import { getMockResponse } from '../express.mocks.js';
+import { getMockResponse } from '../mocks/express.mocks.js';
 
 describe('controllers/error.js', () => {
     const errorMsg = 'Whoopsies';
@@ -11,10 +11,6 @@ describe('controllers/error.js', () => {
     beforeEach(() => {
         mockResponse = getMockResponse();
         logger = { debug: () => {} };
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('internal server error', () => {

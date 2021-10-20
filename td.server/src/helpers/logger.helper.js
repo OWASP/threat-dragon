@@ -1,135 +1,92 @@
 /**
- * @name logger
- * @description Custom logger
+ * @name logger.js
+ * @description Default logging implementation
  */
-import { addColors, createLogger, format, transports } from 'winston';
+import winston, { format, transports } from 'winston';
+
 import env from '../env/Env.js';
 
-const { combine, colorize, timestamp, label, printf, errors } = format;
-
-
-
-// TODO: This is creating a new app.log for each file that needs a logger... not good.
-
 /**
- * The levels available to our logger
+ * The available log levels
  * @type {object}
  */
-const levels = {
+const logLevels = {
     audit: 0,
-    fatal: 1,
-    error: 2,
-    warn: 3,
-    info: 4,
-    debug: 5,
-    silly: 6
+    error: 1,
+    warn: 2,
+    info: 3,
+    debug: 4,
+    silly: 5
 };
 
-/**
- * Colors for the logging levels.
- * This is really only to help during development.
- * @type {object}
- */
-const colors = {
-    fatal: 'bold underline red',
-    error: 'red',
-    warn: 'yellow',
-    audit: 'bold cyan',
-    info: 'blue',
-    debug: 'green',
-    silly: 'magenta'
-};
+const _logger = winston.createLogger({
+    levels: logLevels,
+    level: env.get().config.LOG_LEVEL || 'info',
+    format: format.combine(
+        format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        format.errors({ stack: true }),
+        format.splat(),
+        format.json()
+    ),
+    defaultMeta: { service: 'threat-drgaon' },
+    transports: [
+        new transports.File({
+            filename: 'audit.log',
+            level: 'audit',
+            silent: process.env.NODE_ENV === 'test'
+        }),
+        new transports.File({
+            filename: 'app.log',
+            level: env.get().config.LOG_LEVEL || 'info',
+            silent: process.env.NODE_ENV === 'test'
+        }),
+        new transports.Console({
+            format: format.combine(format.colorize(), format.simple()),
+            level: env.get().config.LOG_LEVEL || 'info',
+            silent: process.env.NODE_ENV === 'test'
+        })
+    ],
+    silent: process.env.NODE_ENV === 'test'
+});
 
-/**
- * The logging format that we will be using for all loggers
- * @param {object} info
- * @returns {string}
- */
-const defaultFormat = printf((info) => {
-    const { label, level, stack, timestamp } = info;
-    let { code, message } = info;
-    code = code ? `${code} ` : '';
-    message = stack || message;
-
-    // Attempt to log objects as well
-    if (typeof message !== 'string') {
-        try {
-            message = JSON.stringify(message);
-        } catch (ignore) {
-            message = '[Object object]';
-        }
+class Logger {
+    constructor(service, logger) {
+        this.service = service;
+        this.logger = logger || _logger;
     }
 
-    return `${timestamp} [${label}] ${level}: ${code}${message}`;
-});
+    #formatMessage(service, message, level) {
+        if (typeof message === 'string') {
+            return `${service}: ${message}`;
+        }
+        this.logger.log(level, `${service}: `);
+        this.logger.log(level, message);
+    }
 
-const getFileFormats = (fileName) => combine(
-    timestamp(),
-    label({ label: fileName }),
-    defaultFormat
-);
+    log(level, message) { this.logger.log(level, this.#formatMessage(this.service, message)); }
 
-/**
- * The file transport for recording audit events
- * @param {string} fileName
- * @type {transports.File}
- */
-const auditLogTransport = (fileName) => new transports.File({
-    filename: 'audit.log',
-    level: 'audit',
-    format: getFileFormats(fileName),
-    silent: env.get().config.NODE_ENV === 'test',
-    maxsize: env.get().config.LOG_MAX_FILE_SIZE || 24
-});
+    silly(message) { this.logger.silly(this.#formatMessage(this.service, message, 'silly')); }
 
-/**
- * The file transport for logging of all the things
- * @param {string} fileName
- * @type {transports.File}
- */
-const appLogTransport = (fileName) => new transports.File({
-    filename: 'app.log',
-    level: env.get().config.LOG_LEVEL || 'info',
-    format: getFileFormats(fileName),
-    silent: env.get().config.NODE_ENV === 'test',
-    maxsize: env.get().config.LOG_MAX_FILE_SIZE || 24
-});
+    debug(message) { this.logger.debug(this.#formatMessage(this.service, message, 'debug')); }
+
+    info(message) { this.logger.info(this.#formatMessage(this.service, message, 'info')); }
+
+    warn(message) { this.logger.warn(this.#formatMessage(this.service, message, 'warn')); }
+
+    error(message) { this.logger.error(this.#formatMessage(this.service, message, 'error')); }
+
+    audit(message) { this.logger.error(this.#formatMessage(this.service, message, 'audit')); }
+}
 
 /**
- * The console transport for logging of all the things
- * @param {string} fileName
- * @type {transports.Console}
- */
-const consoleLogTransport = (fileName) => new transports.Console({
-    level: env.get().config.LOG_LEVEL || 'info',
-    silent: env.get().config.NODE_ENV === 'test',
-    format: combine(
-        colorize(),
-        timestamp(),
-        label({ label: fileName }),
-        defaultFormat
-    )
-});
-
-// Make winston aware of the custom colors we wish to use
-addColors(colors);
-
-/**
- * Gets a logger
- * @param {string} fileName
+ * Gets a new instance of a logger for a given service
+ * @param {string} service
+ * @param {Logger} logger
  * @returns {Logger}
  */
-const get = (fileName) => createLogger({
-        format: errors({ stack: true }),
-        level: env.get().config.LOG_LEVEL || 'info',
-        levels: levels,
-        transports: [
-            auditLogTransport(fileName),
-            appLogTransport(fileName),
-            consoleLogTransport(fileName)
-        ]
-    });
+const get = (service, logger) => new Logger(service, logger);
 
 export default {
-    get
+    get,
+    Logger
 };

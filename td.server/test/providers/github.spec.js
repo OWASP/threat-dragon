@@ -7,10 +7,6 @@ import githubProvider from '../../src/providers/github.js';
 import repo from '../../src/repositories/threatmodelrepository.js';
 
 describe('providers/github.js', () => {
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('isConfigured', () => {
         it('returns true if GITHUB_CLIENT_ID is set', () => {
             const config = { GITHUB_CLIENT_ID: '1234567' };
