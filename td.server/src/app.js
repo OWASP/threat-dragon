@@ -1,12 +1,11 @@
-﻿import bunyan from 'bunyan';
-import express from 'express';
+﻿import express from 'express';
 import path from 'path';
 
 import env from './env/Env.js';
 import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
 import https from './config/https.config.js';
-import loggers from './config/loggers.config.js';
+import loggerHelper from './helpers/logger.helper.js';
 import parsers from './config/parsers.config.js';
 import routes from './config/routes.config.js';
 import securityHeaders from './config/securityheaders.config.js';
@@ -16,6 +15,8 @@ const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 const docsDir = path.join(__dirname, upDir, upDir, 'docs');
 
 const create = () => {
+    let logger;
+
     try {
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
@@ -24,9 +25,7 @@ const create = () => {
 
         // environment configuration
         envConfig.tryLoadDotEnv();
-
-        //logging
-        loggers.configLoggers(app);
+        logger = loggerHelper.get('app.js')
 
         //security headers
         securityHeaders.config(app);
@@ -44,16 +43,16 @@ const create = () => {
         //routes
         routes.config(app);
 
-        bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
+        logger.info('OWASP Threat Dragon application started');
 
         app.set('port', env.get().config.PORT || 3000);
 
         return app;
     }
     catch (e) {
-        const errorLogger = bunyan.createLogger({ name: 'threatdragon' });
-        errorLogger.error('owasp threat dragon failed to start up');
-        errorLogger.error(e.message);
+        if (!logger) { logger = console; }
+        logger.error('OWASP Threat Dragon failed to start');
+        logger.error(e.message);
         throw e;
     }
 };

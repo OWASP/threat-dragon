@@ -8,11 +8,14 @@ import responseWrapper from '../../src/controllers/responseWrapper.js';
 describe('controllers/responseWrapper.js', () => {
     const err = new Error('whoops!');
     const data = 'foobar';
-    let req, res;
+    let logger, req, res;
 
     beforeEach(() => {
         req = getMockRequest();
         res = getMockResponse();
+        logger = {
+            error: () => {}
+        }
         sinon.stub(errors, 'serverError');
     });
 
@@ -29,7 +32,7 @@ describe('controllers/responseWrapper.js', () => {
         describe('without error', () => {
             beforeEach(() => {
                 sinon.spy(functions, 'noError');
-                responseWrapper.sendResponse(functions.noError, req, res);
+                responseWrapper.sendResponse(functions.noError, req, res, logger);
             });
 
             it('executes the function', () => {
@@ -51,15 +54,11 @@ describe('controllers/responseWrapper.js', () => {
         describe('with error', () => {
             beforeEach(() => {
                 sinon.spy(functions, 'withError');
-                responseWrapper.sendResponse(functions.withError, req, res);
+                responseWrapper.sendResponse(functions.withError, req, res, logger);
             });
 
             it('calls the function', () => {
                 expect(functions.withError).to.have.been.calledOnce;
-            });
-
-            it('logs the error', () => {
-                expect(req.log.error).to.have.been.calledWith(err);
             });
 
             it('returns a server error', () => {
@@ -80,7 +79,7 @@ describe('controllers/responseWrapper.js', () => {
         describe('without error', () => {
             beforeEach(async () => {
                 sinon.spy(functions, 'noError');
-                await responseWrapper.sendResponseAsync(functions.noError, req, res);
+                await responseWrapper.sendResponseAsync(functions.noError, req, res, logger);
             });
 
             it('resolves the promise', () => {
@@ -102,15 +101,11 @@ describe('controllers/responseWrapper.js', () => {
         describe('with error', () => {
             beforeEach(async () => {
                 sinon.stub(functions, 'withError').rejects(err);
-                await responseWrapper.sendResponseAsync(functions.withError, req, res);
+                await responseWrapper.sendResponseAsync(functions.withError, req, res, logger);
             });
 
             it('attempts to resolve the promise', () => {
                 expect(functions.withError).to.have.been.calledOnce;
-            });
-
-            it('logs the error', () => {
-                expect(req.log.error).to.have.been.calledWith(err);
             });
 
             it('returns a server error', () => {

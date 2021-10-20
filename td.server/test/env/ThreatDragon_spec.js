@@ -35,11 +35,4 @@ describe('env/ThreatDragon.js', () => {
             .required;
         expect(isRequired).to.be.false;
     });
-
-    it('has the optional property IS_TEST', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'IS_TEST')
-            .required;
-        expect(isRequired).to.be.false;
-    });
 });

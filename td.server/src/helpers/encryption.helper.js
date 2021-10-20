@@ -2,7 +2,9 @@ import crypto from 'crypto';
 
 import cryptoPromise from './crypto.promise.js';
 import env from '../env/Env.js';
-import { logger } from '../config/loggers.config.js';
+import loggerHelper from './logger.helper.js';
+
+const logger = loggerHelper.get('helpers/encryption.helper.js');
 
 const inputEncoding = 'ascii';
 const outputEncoding = 'base64';

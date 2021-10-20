@@ -79,28 +79,6 @@ describe('controllers/auth.js', () => {
                 expect(tokenRepo.remove).to.have.been.calledWith(refresh);
             });
         });
-
-        describe('without a refresh token', () => {
-            beforeEach(() => {
-                auth.logout(mockRequest, mockResponse);
-            });
-
-            it('logs a warning', () => {
-                expect(mockRequest.log.warn).to.have.been.calledOnce;
-            });
-        });
-
-        describe('with an error removing the token', () => {
-            beforeEach(() => {
-                sinon.stub(tokenRepo, 'remove').throws('whoops!');
-                mockRequest.body.refreshToken = refresh;
-                auth.logout(mockRequest, mockResponse);
-            });
-
-            it('logs an error', () => {
-                expect(mockRequest.log.error).to.have.been.calledOnce;
-            });
-        });
     });
 
     describe('oauthReturn', () => {

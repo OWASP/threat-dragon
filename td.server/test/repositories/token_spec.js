@@ -2,15 +2,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import jwtHelper from '../../src/helpers/jwt.helper.js';
-import { logger } from '../../src/config/loggers.config.js';
 import tokenRepo from '../../src/repositories/token.js';
 
 describe('repositories/token.js', () => {
     const token = 'foo';
-
-    beforeEach(() => {
-        sinon.stub(logger, 'info');
-    });
 
     afterEach(() => {
         tokenRepo.remove(token);

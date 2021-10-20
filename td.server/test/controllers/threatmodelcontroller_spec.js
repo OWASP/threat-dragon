@@ -197,13 +197,6 @@ describe('threat model controller tests', () => {
                     details: 'Error creating model'
                 });
             });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
         });
     });
 
@@ -255,13 +248,6 @@ describe('threat model controller tests', () => {
                     details: 'Error updating model'
                 });
             });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
         });
     });
 
@@ -312,13 +298,6 @@ describe('threat model controller tests', () => {
                     message: 'Internal Server Error',
                     details: 'Error deleting model'
                 });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
             });
         });
     });
