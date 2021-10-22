@@ -1,12 +1,8 @@
-- Update or remove the CSP violation reporter
 - Add threats to diagram ui
 - Add threat engine/suggested threats
 - Add tests for ThreatmodelEdit view
 - Add report feature
-- Document architecture
 - Legend for diagram
 - Update bootstrap dev dep to 4.6.1 or 4.7.0 when they're available (remove sass division warnings that cannot be suppressed)
+- Update or remove the CSP violation reporter
 
-BUGS:
-    - 500 error returned from server if no threat models found
-    - 404 if branch has a "/" in it, need to urlencode things before sending and ensure server understands

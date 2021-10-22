@@ -20,7 +20,6 @@ const config = (app, forceSecure) => {
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],
-            reportUri: 'https://owaspthreatdragon.report-uri.com/r/d/csp/enforce',
             frameAncestors: ["'none'"],
             prefetchSrc: ["'self'"]
         }
