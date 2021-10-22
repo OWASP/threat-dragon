@@ -20,7 +20,9 @@ import {
     faTrash,
     faTh,
     faKeyboard,
-    faFileImport
+    faFileImport,
+    faChevronDown,
+    faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -45,7 +47,9 @@ library.add(
     faTrash,
     faTh,
     faKeyboard,
-    faFileImport
+    faFileImport,
+    faChevronDown,
+    faChevronRight
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
