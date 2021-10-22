@@ -44,10 +44,6 @@ describe('threatmodel repository tests', () => {
         sinon.stub(mockRepo, 'contentsAsync').resolves(content);
     });
 
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('userAsync', () => {
         beforeEach(async () => {
             sinon.stub(mockClient, 'me').returns(mockClient);

@@ -3,14 +3,10 @@ import { expect } from 'chai';
 import fs from 'fs';
 import sinon from 'sinon';
 
-import environment, { Env } from '../../src/env/Env.js';
+import { Env } from '../../src/env/Env.js';
 
 describe('env/Env.js', () => {
     let env;
-
-    afterEach(() => {
-        sinon.restore();
-    });
 
     describe('ctor', () => {
         beforeEach(() => {
@@ -19,10 +15,6 @@ describe('env/Env.js', () => {
 
         it('has a _providers array', () => {
             expect(env._providers).to.be.a('array');
-        });
-
-        it('creates its own logger instance', () => {
-            expect(env._logger).to.be.a('Object');
         });
 
         it('has a default .env file path', () => {
@@ -58,7 +50,6 @@ describe('env/Env.js', () => {
     describe('properties getter', () => {
         beforeEach(() => {
             env = new Env();
-            sinon.stub(env._logger, 'fatal');
         });
 
         it('throws an error when called on the parent class', () => {
@@ -66,28 +57,17 @@ describe('env/Env.js', () => {
                 env.properties
             }).to.throw('override the getter for properties');
         });
-
-        it('logs the error', () => {
-            try { env.properties; } catch (e) {}
-            expect(env._logger.fatal).to.have.been.calledOnce;
-        });
     });
 
     describe('prefix getter', () => {
         beforeEach(() => {
             env = new Env();
-            sinon.stub(env._logger, 'fatal');
         });
 
         it('throws an error when called on the parent class', () => {
             expect(() => {
                 env.prefix
             }).to.throw('override the getter for prefix');
-        });
-
-        it('logs the error', () => {
-            try { env.properties; } catch (e) {}
-            expect(env._logger.fatal).to.have.been.calledOnce;
         });
     });
 
@@ -163,18 +143,12 @@ describe('env/Env.js', () => {
             describe('with a non-existent file', () => {
                 beforeEach(() => {
                     sinon.stub(fs, 'existsSync').returns(false);
-                    sinon.stub(env._logger, 'error');
                 });
 
                 it('throws an error', () => {
                     expect(() => {
                         env.tryReadFromFile(basePropertyName);
                     }).to.throw('does not exist');
-                });
-
-                it('logs the error', () => {
-                    try { env.tryReadFromFile(basePropertyName); } catch (e) {}
-                    expect(env._logger.error).to.have.been.calledOnce;
                 });
             });
         });
@@ -183,7 +157,6 @@ describe('env/Env.js', () => {
     describe('_tryLoadDotEnv', () => {
         beforeEach(() => {
             env = new Env();
-            sinon.stub(env._logger, 'info');
         });
 
         describe('without a .env file', () => {
@@ -200,10 +173,6 @@ describe('env/Env.js', () => {
             it('uses the ENV_FILE environment variable', () => {
                 expect(fs.existsSync).to.have.been.calledWith('foo');
             });
-
-            it('logs an info message', () => {
-                expect(env._logger.info).to.have.been.calledOnce;
-            });
         });
 
         describe('with a .env file', () => {
@@ -215,10 +184,6 @@ describe('env/Env.js', () => {
     
             it('uses the default env file path', () => {
                 expect(fs.existsSync).to.have.been.calledWith(env._defaultEnvFilePath);
-            });
-
-            it('logs an info message', () => {
-                expect(env._logger.info).to.have.been.calledOnce;
             });
 
             it('configures dotenv', () => {
@@ -247,7 +212,6 @@ describe('env/Env.js', () => {
                 env = new TestEnv();
 
                 sinon.stub(env, 'tryReadFromFile');
-                sinon.stub(env._logger, 'fatal');
             });
 
             afterEach(() => {
@@ -257,11 +221,6 @@ describe('env/Env.js', () => {
             it('attempts to read a file based property', () => {
                 try { env._loadConfig(); } catch (e) { }
                 expect(env.tryReadFromFile).to.have.been.calledWith('TEST_TEST1');
-            });
-
-            it('logs an error', () => {
-                try { env._loadConfig(); } catch (e) { }
-                expect(env._logger.fatal).to.have.been.calledOnce;
             });
 
             it('throws an error', () => {
@@ -279,17 +238,12 @@ describe('env/Env.js', () => {
                 process.env.TEST_TEST2 = 'bar';
                 env = new TestEnv();
 
-                sinon.stub(env._logger, 'debug');
                 config = env._loadConfig();
             });
 
             afterEach(() => {
                 delete process.env.TEST_TEST1;
                 delete process.env.TEST_TEST2;
-            });
-
-            it('logs a debug message', () => {
-                expect(env._logger.debug).to.have.been.calledOnce;
             });
 
             it('names the env', () => {

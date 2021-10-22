@@ -2,27 +2,22 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import error from '../../src/controllers/errors.js';
-import { getMockResponse } from '../express.mocks.js';
-import { logger } from '../../src/config/loggers.config.js';
+import { getMockResponse } from '../mocks/express.mocks.js';
 
 describe('controllers/error.js', () => {
     const errorMsg = 'Whoopsies';
-    let mockResponse;
+    let logger, mockResponse;
 
     beforeEach(() => {
         mockResponse = getMockResponse();
-        sinon.stub(logger, 'debug');
-    });
-
-    afterEach(() => {
-        sinon.restore();
+        logger = { debug: () => {} };
     });
 
     describe('internal server error', () => {
         let res;
 
         beforeEach(() => {
-            res = error.serverError(errorMsg, mockResponse);
+            res = error.serverError(errorMsg, mockResponse, logger);
         });
 
         it('defines a serverError function', () => {
@@ -45,17 +40,13 @@ describe('controllers/error.js', () => {
         it('returns the res object', () => {
             expect(res).to.deep.equal(mockResponse);
         });
-
-        it('logs the error to the debug log', () => {
-            expect(logger.debug).to.have.been.calledOnce;
-        });
     });
 
     describe('not found', () => {
         let res;
 
         beforeEach(() => {
-            res = error.notFound(errorMsg, mockResponse);
+            res = error.notFound(errorMsg, mockResponse, logger);
         });
 
         it('defines a notFound function', () => {
@@ -78,17 +69,13 @@ describe('controllers/error.js', () => {
         it('returns the res object', () => {
             expect(res).to.deep.equal(mockResponse);
         });
-
-        it('logs the error to the debug log', () => {
-            expect(logger.debug).to.have.been.calledOnce;
-        });
     });
 
     describe('bad request', () => {
         let res;
 
         beforeEach(() => {
-            res = error.badRequest(errorMsg, mockResponse);
+            res = error.badRequest(errorMsg, mockResponse, logger);
         });
 
         it('defines a badRequest function', () => {
@@ -111,17 +98,13 @@ describe('controllers/error.js', () => {
         it('returns the res object', () => {
             expect(res).to.deep.equal(mockResponse);
         });
-
-        it('logs the error to the debug log', () => {
-            expect(logger.debug).to.have.been.calledOnce;
-        });
     });
 
     describe('Forbidden', () => {
         let res;
 
         beforeEach(() => {
-            res = error.forbidden(mockResponse);
+            res = error.forbidden(mockResponse, logger);
         });
 
         it('defines a forbidden function', () => {
@@ -144,17 +127,13 @@ describe('controllers/error.js', () => {
         it('returns the res object', () => {
             expect(res).to.deep.equal(mockResponse);
         });
-
-        it('logs the error to the debug log', () => {
-            expect(logger.debug).to.have.been.calledOnce;
-        });
     });
 
     describe('Unauthorized', () => {
         let res;
 
         beforeEach(() => {
-            res = error.unauthorized(mockResponse);
+            res = error.unauthorized(mockResponse, logger);
         });
 
         it('defines an unauthorized function', () => {
@@ -176,10 +155,6 @@ describe('controllers/error.js', () => {
 
         it('returns the res object', () => {
             expect(res).to.deep.equal(mockResponse);
-        });
-
-        it('logs the error to the debug log', () => {
-            expect(logger.debug).to.have.been.calledOnce;
         });
     });
 

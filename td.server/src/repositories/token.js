@@ -1,5 +1,7 @@
 import jwtHelper from '../helpers/jwt.helper.js';
-import { logger } from '../config/loggers.config.js';
+import loggerHelper from '../helpers/logger.helper.js';
+
+const logger = loggerHelper.get('repositories/token.js');
 
 /**
  * The refresh tokens
@@ -46,8 +48,8 @@ const verify = (token) => {
         // Ensure that it is a valid (signed) token, and that it is not expired
         return jwtHelper.verifyRefresh(token);
     } catch (err) {
-        logger.info({ security: true }, 'Error verifying refresh token');
-        logger.info({ security: true }, err);
+        logger.audit('Error verifying refresh token');
+        logger.info(err);
 
         // Since the token is invalid and was found in the array, we should remove it
         remove(token);

@@ -1,6 +1,9 @@
+import loggerHelper from '../helpers/logger.helper.js';
 import repository from '../repositories/threatmodelrepository.js';
 import responseWrapper from './responseWrapper.js';
 import { serverError } from './errors.js';
+
+const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;
@@ -12,7 +15,7 @@ const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
         repos: repos.map((x) => x.full_name),
         pagination: getPagination(headers, page)
     };
-}, req, res);
+}, req, res, logger);
 
 
 const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
@@ -31,7 +34,7 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
         branches: branchNames,
         pagination: getPagination(headers, repoInfo.page)
     };
-}, req, res);
+}, req, res, logger);
 
 const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const branchInfo = {
@@ -50,7 +53,7 @@ const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
         throw e;
     }
     return modelsResp[0].map((x) => x.name);
-}, req, res);
+}, req, res, logger);
 
 const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const modelInfo = {
@@ -61,7 +64,7 @@ const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
     };
     const modelResp = await repository.modelAsync(modelInfo, req.provider.access_token);
     return JSON.parse(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
-}, req, res);
+}, req, res, logger);
 
 const create = async (req, res) => {
     const modelInfo = {
@@ -76,8 +79,8 @@ const create = async (req, res) => {
         const modelResp = await repository.createAsync(modelInfo, req.user.accessToken);
         return res.status(201).send(modelResp);
     } catch (err) {
-        req.log.error({ security: false, userName: req.user.profile.username }, err);
-        return serverError('Error creating model', res);
+        logger.error(err);
+        return serverError('Error creating model', res, logger);
     }
 };
 
@@ -94,8 +97,8 @@ const update = async (req, res) => {
         const modelResp = await repository.updateAsync(modelInfo, req.user.accessToken);
         return res.send(modelResp);
     } catch (err) {
-        req.log.error({ security: false, userName: req.user.profile.username }, err);
-        return serverError('Error updating model', res);
+        logger.error(err);
+        return serverError('Error updating model', res, logger);
     }
 };
 
@@ -111,8 +114,8 @@ const deleteModel = async (req, res) => {
         const delResp = await repository.deleteAsync(modelInfo, req.user.accessToken);
         return res.send(delResp);
     } catch (err) {
-        req.log.error({ security: false, userName: req.user.profile.username }, err);
-        return serverError('Error deleting model', res);
+        logger.error(err);
+        return serverError('Error deleting model', res, logger);
     }
 };
 

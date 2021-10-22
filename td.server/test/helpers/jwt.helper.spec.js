@@ -19,10 +19,6 @@ describe('helpers/jwt.helper.js', () => {
         sinon.stub(encryptionHelper, 'encryptPromise').resolves(cipherText)
     });
 
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('createAsync', () => {
         const providerName = 'my provider';
         const providerOpts = { foo: 'bar' };

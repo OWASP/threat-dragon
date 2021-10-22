@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import helmet from 'helmet';
 import sinon from 'sinon';
 
-import { getMockApp } from '../express.mocks.js';
+import { getMockApp } from '../mocks/express.mocks.js';
 import securityHeaders from '../../src/config/securityheaders.config.js';
 
 describe('config/securityHeaders.config.js', () => {
@@ -18,10 +18,6 @@ describe('config/securityHeaders.config.js', () => {
         sinon.stub(helmet, 'referrerPolicy');
         sinon.stub(helmet, 'contentSecurityPolicy');
         securityHeaders.config(mockApp, true);
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     it('removes the x-powered-by header', () => {

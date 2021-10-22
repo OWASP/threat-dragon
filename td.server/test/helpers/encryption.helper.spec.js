@@ -5,7 +5,6 @@ import sinon from 'sinon';
 import cryptoPromise from '../../src/helpers/crypto.promise.js';
 import encryptionHelper from '../../src/helpers/encryption.helper.js';
 import env from '../../src/env/Env.js';
-import { logger } from '../../src/config/loggers.config.js';
 
 describe('encryption helper tests', () => {
     const plainText = 'test plain text';
@@ -40,10 +39,6 @@ describe('encryption helper tests', () => {
         sinon.stub(crypto, 'createCipheriv').returns(mockCreateCipheriv);
         sinon.stub(cryptoPromise, 'randomBytes').resolves(randomIv);
     });
-        
-    afterEach(() => {
-        sinon.restore();
-    });
 
     describe('with invalid keys', () => {
         beforeEach(() => {
@@ -62,10 +57,8 @@ describe('encryption helper tests', () => {
             sinon.stub(env, 'get').returns(mockEnv);
         });
     
-        it('should log an invalid primary key error and throw', () => {
-            sinon.spy(logger, 'fatal');
+        it('should detect an invalid primary key error and throw', () => {
             expect(() => encryptionHelper.encryptPromise('test plain text')).to.throw();
-            expect(logger.fatal).to.have.been.called;
         });
     });
 
@@ -79,15 +72,13 @@ describe('encryption helper tests', () => {
             sinon.stub(env, 'get').returns(mockEnv);
         });
 
-        it('should log an invalid key error and throw', () => {
+        it('should detect an invalid key error and throw', () => {
             const encryptedData = {
                 keyId: 2,
                 iv: 'test iv',
                 data: 'test cipher text'
             };
-            sinon.spy(logger, 'error');
             expect(() => encryptionHelper.decrypt(encryptedData)).to.throw();
-            expect(logger.error).to.have.been.called;
         });
         
         it('should decrypt with the specified key and iv', () => {

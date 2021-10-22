@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import auth from '../../src/controllers/auth.js';
 import env from '../../src/env/Env.js';
 import errors from '../../src/controllers/errors.js';
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import jwtHelper from '../../src/helpers/jwt.helper.js';
 import providers from '../../src/providers/index.js';
 import responseWrapper from '../../src/controllers/responseWrapper.js';
@@ -25,10 +25,6 @@ describe('controllers/auth.js', () => {
         sinon.stub(responseWrapper, 'sendResponse').callsFake((fn) => fn());
         sinon.stub(responseWrapper, 'sendResponseAsync').callsFake(async (p) => { await p(); });
         sinon.stub(tokenRepo, 'add');
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('login', () => {
@@ -77,28 +73,6 @@ describe('controllers/auth.js', () => {
 
             it('removes the refresh token', () => {
                 expect(tokenRepo.remove).to.have.been.calledWith(refresh);
-            });
-        });
-
-        describe('without a refresh token', () => {
-            beforeEach(() => {
-                auth.logout(mockRequest, mockResponse);
-            });
-
-            it('logs a warning', () => {
-                expect(mockRequest.log.warn).to.have.been.calledOnce;
-            });
-        });
-
-        describe('with an error removing the token', () => {
-            beforeEach(() => {
-                sinon.stub(tokenRepo, 'remove').throws('whoops!');
-                mockRequest.body.refreshToken = refresh;
-                auth.logout(mockRequest, mockResponse);
-            });
-
-            it('logs an error', () => {
-                expect(mockRequest.log.error).to.have.been.calledOnce;
             });
         });
     });

@@ -1,4 +1,3 @@
-import bunyan from 'bunyan';
 import { expect } from 'chai';
 import express from 'express';
 import sinon from 'sinon';
@@ -7,8 +6,7 @@ import appFactory from '../src/app.js';
 import envConfig from '../src/config/env.config.js';
 import expressHelper from '../src/helpers/express.helper.js';
 import https from '../src/config/https.config.js';
-import { getMockApp } from './express.mocks.js';
-import loggersConfig from '../src/config/loggers.config.js';
+import { getMockApp } from './mocks/express.mocks.js';
 import parsersConfig from '../src/config/parsers.config.js';
 import routesConfig from '../src/config/routes.config.js';
 import securityHeaders from '../src/config/securityheaders.config.js';
@@ -24,19 +22,11 @@ describe('app tests', () => {
         mockApp = getMockApp();
         sinon.stub(expressHelper, 'getInstance').returns(mockApp);
         sinon.stub(express, 'static');
-        sinon.stub(bunyan, 'createLogger').returns(mockLogger);
-        sinon.spy(mockLogger, 'info');
-        sinon.spy(mockLogger, 'error');
 
         sinon.stub(securityHeaders, 'config');
-        sinon.stub(loggersConfig, 'configLoggers');
         sinon.stub(parsersConfig, 'config');
         sinon.stub(routesConfig, 'config');
         sinon.stub(https, 'middleware');
-    });
-    
-    afterEach(function() {
-        sinon.restore();
     });
 
     describe('without errors', () => {
@@ -74,20 +64,12 @@ describe('app tests', () => {
             expect(securityHeaders.config).to.have.been.calledOnce;
         });
 
-        it('uses the loggers config', () => {
-            expect(loggersConfig.configLoggers).to.have.been.calledOnce;
-        });
-
         it('uses the parsers config', () => {
             expect(parsersConfig.config).to.have.been.calledOnce;
         });
 
         it('uses the routes config', () => {
             expect(routesConfig.config).to.have.been.calledOnce;
-        });
-
-        it('should log a startup message', () => {
-            expect(mockLogger.info).to.have.been.calledWith('owasp threat dragon application started up');
         });
     });
 
@@ -103,11 +85,6 @@ describe('app tests', () => {
             expect(() => {
                 appFactory.create();
             }).to.throw('whoops!');
-        });
-
-        it('logs an error on startup', () => {
-            try { appFactory.create() } catch (ex) {}
-            expect(mockLogger.error).to.have.been.calledTwice;
         });
     });
 });

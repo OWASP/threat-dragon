@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { getMockRequest, getMockResponse } from '../express.mocks.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 import responseWrapper from '../../src/controllers/responseWrapper.js';
 import threatModelController from '../../src/controllers/threatmodelcontroller.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
@@ -29,10 +29,6 @@ describe('threat model controller tests', () => {
             body: 'test body'
         });
         mockResponse = getMockResponse();
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     describe('GET repos', () => {
@@ -197,13 +193,6 @@ describe('threat model controller tests', () => {
                     details: 'Error creating model'
                 });
             });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
         });
     });
 
@@ -255,13 +244,6 @@ describe('threat model controller tests', () => {
                     details: 'Error updating model'
                 });
             });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
-            });
         });
     });
 
@@ -312,13 +294,6 @@ describe('threat model controller tests', () => {
                     message: 'Internal Server Error',
                     details: 'Error deleting model'
                 });
-            });
-
-            it('should log the error', () => {
-                expect(mockRequest.log.error).to.have.been.calledWith({
-                    security: false,
-                    userName: mockRequest.user.profile.username
-                }, err);
             });
         });
     });

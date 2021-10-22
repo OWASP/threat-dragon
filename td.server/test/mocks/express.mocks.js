@@ -37,21 +37,9 @@ export const getMockRequest = () => {
         session: {
             destroy: (cb) => { if(cb) { cb(); }}
         },
-        csrfToken: () => 'some_token',
-        log: {
-            error: () => {},
-            debug: () => {},
-            fatal: () => {},
-            info: () => {},
-            warn: () => {}
-        }
+        csrfToken: () => 'some_token'
     };
 
-    sinon.spy(mockRequest.log, 'error');
-    sinon.spy(mockRequest.log, 'debug');
-    sinon.spy(mockRequest.log, 'fatal');
-    sinon.spy(mockRequest.log, 'info');
-    sinon.spy(mockRequest.log, 'warn');
     sinon.spy(mockRequest.session, 'destroy');
     sinon.stub(mockRequest, 'get');
 

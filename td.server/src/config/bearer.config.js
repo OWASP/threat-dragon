@@ -1,5 +1,8 @@
 import errors from '../controllers/errors.js';
 import jwt from '../helpers/jwt.helper.js';
+import loggerHelper from '../helpers/logger.helper.js';
+
+const logger = loggerHelper.get('config/bearer.config.js');
 
 /**
  * Extracts the bearer token from the auth header
@@ -18,8 +21,8 @@ const getBearerToken = (authHeader) => {
 const middleware = (req, res, next) => {
     const token = getBearerToken(req.headers.authorization);
     if (!token) {
-        req.log.info({ security: true }, 'No bearer token found for a resource that requires authentication');
-        return errors.unauthorized(res);
+        logger.info('No bearer token found for a resource that requires authentication');
+        return errors.unauthorized(res, logger);
     }
 
     try {
@@ -29,13 +32,13 @@ const middleware = (req, res, next) => {
         return next();
     } catch (e) {
         if (e.name === 'TokenExpiredError') {
-            req.log.debug({ security: true }, 'Expired JWT');
-            return errors.unauthorized(res);
+            logger.audit('Expired JWT encountered');
+            return errors.unauthorized(res, logger);
         }
         
-        req.log.error({ security: true }, 'Error decoding JWT');
-        req.log.error({ security: true }, e);
-        return errors.badRequest('Invalid JWT', res);
+        logger.audit('Error decoding JWT');
+        logger.error(e);
+        return errors.badRequest('Invalid JWT', res, logger);
     }
 };
 

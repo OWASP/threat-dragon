@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { getMockResponse } from '../express.mocks.js';
+import { getMockResponse } from '../mocks/express.mocks.js';
 import healthcheck from '../../src/controllers/healthcheck.js';
 
 describe('controllers/healthcheck.js', () => {
@@ -10,10 +10,6 @@ describe('controllers/healthcheck.js', () => {
     beforeEach(() => {
         mockResponse = getMockResponse();
         healthcheck.healthz({}, mockResponse);
-    });
-
-    afterEach(() => {
-        sinon.restore();
     });
 
     it('sends a true response', () => {

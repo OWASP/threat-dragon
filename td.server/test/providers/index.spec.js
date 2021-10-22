@@ -5,11 +5,6 @@ import github from '../../src/providers/github.js';
 import providers from '../../src/providers/index.js';
 
 describe('providers/index.js', () => {
-    
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('all', () => {
         it('is an immutable object', () => {
             expect(() => { providers.all.foo = 'bar'; }).to.throw();

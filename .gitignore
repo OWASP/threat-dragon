@@ -30,3 +30,7 @@ td.site/core/
 
 # copy of threat models
 td.desktop/ThreatDragonModels/
+
+# Ignore logs from server
+td.server/*.log
+

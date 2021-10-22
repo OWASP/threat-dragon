@@ -1,16 +1,19 @@
 import env from '../env/Env.js';
 import errors from './errors.js';
 import jwtHelper from '../helpers/jwt.helper.js';
+import loggerHelper from '../helpers/logger.helper.js';
 import providers from '../providers/index.js';
 import responseWrapper from './responseWrapper.js';
 import tokenRepo from '../repositories/token.js';
 
+const logger = loggerHelper.get('controllers/auth.js');
+
 const login = (req, res) => {
     try {
         const provider = providers.get(req.params.provider);
-        return responseWrapper.sendResponse(() => provider.getOauthRedirectUrl(), req, res);
+        return responseWrapper.sendResponse(() => provider.getOauthRedirectUrl(), req, res, logger);
     } catch (err) {
-        return errors.badRequest(err.message, res);
+        return errors.badRequest(err.message, res, logger);
     }
 };
 
@@ -35,9 +38,9 @@ const completeLogin = (req, res) => {
                 accessToken,
                 refreshToken
             };
-        }, req, res);
+        }, req, res, logger);
     } catch (err) {
-        return errors.badRequest(err.message, res);
+        return errors.badRequest(err.message, res, logger);
     }
 };
 
@@ -45,7 +48,7 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
     try {
         const refreshToken = req.body.refreshToken;
         if (!refreshToken) {
-            req.log.warn({ security: true }, 'Attempting to log out without a refresh token');
+            logger.audit('Attempting to log out without a refresh token');
             // Return OK even though it's not really ok
             // If this happens, it could be a client error, or it could be
             // something more nefarious. 
@@ -55,15 +58,15 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
         tokenRepo.remove(refreshToken);
         return '';
     } catch (e) {
-        req.log.error({ security: true }, e);
+        logger.error(e);
         return '';
     }
-}, req, res);
+}, req, res, logger);
 
 const refresh = (req, res) => {
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
     if (!tokenBody) {
-        return errors.unauthorized(res);
+        return errors.unauthorized(res, logger);
     }
     return responseWrapper.sendResponseAsync(async () => {
         const { provider, user } = tokenBody;
@@ -71,7 +74,7 @@ const refresh = (req, res) => {
         
         // Limit the time refresh tokens live, so do not provide a new one.
         return { accessToken, refreshToken: req.body.refreshToken };
-    }, req, res);
+    }, req, res, logger);
 };
 
 export default {
