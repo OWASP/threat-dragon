@@ -170,7 +170,6 @@ export default {
     },
     computed: {
         ...mapState({
-            contributorsOld: (state) => (state.threatmodel.data.detail.contributors || []).map(x => x.name),
             model: (state) => state.threatmodel.data,
             providerType: state => getProviderType(state.provider.selected),
         }),
