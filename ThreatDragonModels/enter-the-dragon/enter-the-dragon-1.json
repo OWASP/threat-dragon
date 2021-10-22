@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "title": "Example threat model",
+    "owner": "Threat Dragon workshop team",
+    "description": "This is an example model used for the PDX OWASP Training Day 2021\nIt is a threat model of Threat Dragon itself"
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Workshop attendee #1",
+        "$$hashKey": "object:101"
+      },
+      {
+        "name": "Workshop attendee #2",
+        "$$hashKey": "object:20"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Example",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "$$hashKey": "object:103"
+      },
+      {
+        "title": "Copy of Example",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 1,
+        "$$hashKey": "object:401"
+      }
+    ],
+    "reviewer": "Threat Dragon workshop attendees"
+  }
+}
