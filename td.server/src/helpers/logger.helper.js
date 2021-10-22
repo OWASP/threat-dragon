@@ -55,7 +55,7 @@ class Logger {
         this.logger = logger || _logger;
     }
 
-    #formatMessage(service, message, level) {
+    _formatMessage(service, message, level) {
         if (typeof message === 'string') {
             return `${service}: ${message}`;
         }
@@ -63,19 +63,19 @@ class Logger {
         this.logger.log(level, message);
     }
 
-    log(level, message) { this.logger.log(level, this.#formatMessage(this.service, message)); }
+    log(level, message) { this.logger.log(level, this._formatMessage(this.service, message)); }
 
-    silly(message) { this.logger.silly(this.#formatMessage(this.service, message, 'silly')); }
+    silly(message) { this.logger.silly(this._formatMessage(this.service, message, 'silly')); }
 
-    debug(message) { this.logger.debug(this.#formatMessage(this.service, message, 'debug')); }
+    debug(message) { this.logger.debug(this._formatMessage(this.service, message, 'debug')); }
 
-    info(message) { this.logger.info(this.#formatMessage(this.service, message, 'info')); }
+    info(message) { this.logger.info(this._formatMessage(this.service, message, 'info')); }
 
-    warn(message) { this.logger.warn(this.#formatMessage(this.service, message, 'warn')); }
+    warn(message) { this.logger.warn(this._formatMessage(this.service, message, 'warn')); }
 
-    error(message) { this.logger.error(this.#formatMessage(this.service, message, 'error')); }
+    error(message) { this.logger.error(this._formatMessage(this.service, message, 'error')); }
 
-    audit(message) { this.logger.error(this.#formatMessage(this.service, message, 'audit')); }
+    audit(message) { this.logger.error(this._formatMessage(this.service, message, 'audit')); }
 }
 
 /**
