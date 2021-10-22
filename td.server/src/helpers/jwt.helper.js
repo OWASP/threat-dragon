@@ -15,7 +15,7 @@ const createAsync = async (providerName, providerOptions, user) => {
     });
 
     const refreshToken = jsonwebtoken.sign({ provider, user }, env.get().config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY, {
-        expiresIn: '6h'
+        expiresIn: '24h'
     });
 
     return { accessToken, refreshToken };

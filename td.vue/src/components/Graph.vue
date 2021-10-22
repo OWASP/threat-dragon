@@ -73,6 +73,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1 props-header" role="tab">
+                <!-- TODO: Make this its own component (DRY) -->
                 <a href="javascript:void(0)" block v-b-toggle.threats>
                     Threats (translate me)
                     <font-awesome-icon
@@ -87,7 +88,8 @@
             </b-card-header>
             <b-collapse id="threats" accordion="actions-accordion" role="tabpanel">
                 <b-card-body>
-                <b-card-text>TODO: Make the threats pane</b-card-text>
+                    <!-- TODO: Make this its own component -->
+                    <b-card-text>TODO: Make the threats pane</b-card-text>
                 </b-card-body>
             </b-collapse>
             </b-card>
