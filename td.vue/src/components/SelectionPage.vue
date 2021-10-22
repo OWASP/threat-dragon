@@ -30,8 +30,11 @@
         <b-row>
             <b-col md=6 offset=3>
                 <b-list-group>
-                    <b-list-group-item v-if="items.length === 0 && !!emptyStateText" @click="onEmptyStateClick">
-                        {{ emptyStateText }}
+                    <b-list-group-item
+                        v-if="items.length === 0 && !!emptyStateText"
+                        @click="onEmptyStateClick"
+                        href="javascript:void(0)">
+                            {{ emptyStateText }}
                     </b-list-group-item>
 
                     <b-list-group-item

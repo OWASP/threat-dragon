@@ -5,6 +5,7 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_SELECTED,
+    THREATMODEL_CONTRIBUTORS_UPDATED
 } from '@/store/actions/threatmodel.js';
 
 describe('store/actions/threatmodel.js', () => {
@@ -30,5 +31,9 @@ describe('store/actions/threatmodel.js', () => {
 
     it('defines a create action', () => {
         expect(THREATMODEL_CREATE).not.toBeUndefined();
+    });
+
+    it('defines a contributors updated action', () => {
+        expect(THREATMODEL_CONTRIBUTORS_UPDATED).not.toBeUndefined();
     });
 });

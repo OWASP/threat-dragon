@@ -22,7 +22,7 @@
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
-          href="https://docs.threatdragon.org/"
+          href="https://www.threatdragon.com/docs"
           target="_blank"
           rel="noopener noreferrer"
           id="nav-docs"

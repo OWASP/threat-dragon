@@ -30,14 +30,14 @@ describe('service/threatmodelApi.js', () => {
 
     describe('modelsAsync', () => {
         const repo = 'owasp/threat-dragon';
-        const branch = 'main';
+        const branch = 'feature/some-feature';
 
         beforeEach(async () => {
             await threatmodelApi.modelsAsync(repo, branch);
         });
 
         it('calls the models endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/main/models');
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/feature%2Fsome-feature/models');
         });
     });
 

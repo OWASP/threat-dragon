@@ -10,7 +10,7 @@
             <b-btn-group>
               <td-form-button
                 :isPrimary="true"
-                :onBtnClick="noOp"
+                :onBtnClick="notImplemented"
                 icon="save"
                 :text="$t('forms.save')"
               />
@@ -170,8 +170,11 @@ export default {
                 }
             ];
         },
-        noOp() {
+        notImplemented() {
             this.$toast.info('Not implemented yet. Hang in there, we\'re working on it! :) ');
+        },
+        noOp() {
+            return;
         },
         redo() {
             if (this.graph.canRedo()) {

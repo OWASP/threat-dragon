@@ -161,21 +161,26 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
+import { THREATMODEL_CONTRIBUTORS_UPDATED } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
     components: {
         TdFormButton
     },
-    computed: mapState({
-        contributors: (state) => (state.threatmodel.data.detail.contributors || []).map(x => x.name),
-        model: (state) => state.threatmodel.data,
-        providerType: state => getProviderType(state.provider.selected),
-    }),
-    data() {
-        return {
-            diagramNames: []
-        };
+    computed: {
+        ...mapState({
+            model: (state) => state.threatmodel.data,
+            providerType: state => getProviderType(state.provider.selected),
+        }),
+        contributors: {
+            get() {
+                return this.$store.getters.contributors;
+            },
+            set(contributors) {
+                this.$store.dispatch(THREATMODEL_CONTRIBUTORS_UPDATED, contributors);
+            }
+        }
     },
     methods: {
         onSubmit() {

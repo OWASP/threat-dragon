@@ -32,7 +32,7 @@ const branchesAsync = (fullRepoName) => {
  */
 const modelsAsync = (fullRepoName, branch) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/models`);
+    return api.getAsync(`${resource}/${org}/${repo}/${encodeURIComponent(branch)}/models`);
 };
 
 /**
