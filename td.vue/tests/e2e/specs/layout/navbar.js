@@ -15,7 +15,7 @@ describe('navbar', () => {
     });
     
     it('links to the threat dragon docs', () => {
-        verifyExternalUrl('#nav-docs', 'https://threatdragon.com/docs');
+        verifyExternalUrl('#nav-docs', 'https://www.threatdragon.com/docs');
     });
 
     it('links to the OWASP Threat Modeling Cheat Sheet', () => {

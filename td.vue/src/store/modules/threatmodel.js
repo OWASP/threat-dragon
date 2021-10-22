@@ -5,6 +5,7 @@ import { getProviderType } from '../../service/provider/providers.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
     THREATMODEL_CLEAR,
+    THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
@@ -49,7 +50,8 @@ const actions = {
             commit(THREATMODEL_FETCH_ALL, demo.models);
         }
     },
-    [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel)
+    [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors)
 };
 
 const mutations = {
@@ -69,10 +71,22 @@ const mutations = {
     },
     [THREATMODEL_SELECTED]: (state, threatModel) => {
         state.data = threatModel;
+    },
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
+        state.data.detail.contributors.length = 0;
+        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     }
 };
 
-const getters = {};
+const getters = {
+    contributors: (state) => {
+        let contribs = [];
+        if (state.data && state.data.detail && state.data.detail.contributors) {
+            contribs = state.data.detail.contributors;
+        }
+        return contribs.map(x => x.name);
+    }
+};
 
 export default {
     state,

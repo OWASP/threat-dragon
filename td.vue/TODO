@@ -8,7 +8,5 @@
 - Update bootstrap dev dep to 4.6.1 or 4.7.0 when they're available (remove sass division warnings that cannot be suppressed)
 
 BUGS:
-    - No setter for contributor
     - 500 error returned from server if no threat models found
     - 404 if branch has a "/" in it, need to urlencode things before sending and ensure server understands
-    - Keyboard shortcuts shows not implemented yet text

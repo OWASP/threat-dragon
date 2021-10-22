@@ -8,6 +8,7 @@ import {
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED } from '../../../../src/store/actions/threatmodel';
 
 describe('store/modules/threatmodel.js', () => {
     const getRootState = () => ({
@@ -118,6 +119,15 @@ describe('store/modules/threatmodel.js', () => {
                 data
             );
         });
+
+        it('commits the contributors updated action', () => {
+            const contribs = [ 'test1' ];
+            threatmodelModule.actions[THREATMODEL_CONTRIBUTORS_UPDATED](mocks, contribs);
+            expect(mocks.commit).toHaveBeenCalledWith(
+                THREATMODEL_CONTRIBUTORS_UPDATED,
+                contribs
+            );
+        });
     });
 
     describe('mutations', () => {
@@ -197,9 +207,58 @@ describe('store/modules/threatmodel.js', () => {
                 expect(threatmodelModule.state.data).toEqual(model);
             });
         });
+
+        describe('contributors updated', () => {
+            const contribs = [ 'test1', 'test2' ];
+            beforeEach(() => {
+                threatmodelModule.state.data = {
+                    detail: {
+                        contributors: []
+                    }
+                };
+                threatmodelModule.mutations[THREATMODEL_CONTRIBUTORS_UPDATED](threatmodelModule.state, contribs);
+            });
+
+            it('sets the contributors', () => {
+                expect(threatmodelModule.state.data.detail.contributors).toEqual(contribs.map(x => ({ name: x })));
+            });
+        });
     });
 
-    it('defines a getters object', () => {
-        expect(threatmodelModule.getters).toBeInstanceOf(Object);
+    describe('getters', () => {
+        let res;
+
+        describe('with data', () => {
+            beforeEach(() => {
+                threatmodelModule.state.data = {
+                    detail: {
+                        contributors: [
+                            { name: 'contrib 1' },
+                            { name: 'contrib 2' }
+                        ]
+                    }
+                };
+                res = threatmodelModule.getters.contributors(threatmodelModule.state);
+            });
+
+            it('defines a getters object', () => {
+                expect(threatmodelModule.getters).toBeInstanceOf(Object);
+            });
+
+            it('gets the contributors', () => {
+                expect(res).toHaveLength(2);
+            });
+        });
+
+        describe('without data', () => {
+            beforeEach(() => {
+                threatmodelModule.state.data = {};
+            });
+
+            it('returns an empty array', () => {
+                expect(threatmodelModule.getters.contributors(threatmodelModule.state))
+                    .toEqual([]);
+            });
+        });
     });
 });
