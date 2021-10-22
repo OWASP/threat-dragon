@@ -182,11 +182,6 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            diagramNames: []
-        };
-    },
     methods: {
         onSubmit() {
             console.log('Form sumbitting...');
