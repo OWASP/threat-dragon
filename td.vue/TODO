@@ -6,3 +6,8 @@
 - Update bootstrap dev dep to 4.6.1 or 4.7.0 when they're available (remove sass division warnings that cannot be suppressed)
 - Update or remove the CSP violation reporter
 
+
+
+- Write tests for @/components/GraphMeta.vue
+- Create modal for threat edit
+- Implement adding and removing threats
