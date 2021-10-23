@@ -98,6 +98,9 @@ function elementThreats($routeParams, $location, common, dialogs) {
             editIndex = index;
             originalThreat = angular.copy(scope.threats[index]);
             $location.search('threat', originalThreat.id);
+            if (!threat.threatId) {
+                threat.threatId = uuidv4();
+            }
             dialogs.confirm(getTemplate(threat.modelType), scope.editThreat, function () { return { heading: 'Edit Threat', threat: threat, editing: true }; }, scope.cancelEdit);
         };
 
