@@ -135,13 +135,13 @@ function elementThreats($routeParams, $location, common, dialogs) {
             reset(scope.type);
         };
 
-        var threatId = $routeParams.threat;
+        var threatIndex = $routeParams.threat;
 
-        if (angular.isDefined(threatId)) {
+        if (angular.isDefined(threatIndex)) {
             var matchingIndex = -1;
 
             scope.threats.forEach(function (threat, index) {
-                if (threat.id == threatId) {
+                if (threat.id == threatIndex) {
                     matchingIndex = index;
                 }
             });
