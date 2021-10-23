@@ -65,9 +65,10 @@ const en = {
         title: 'Title',
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
+        threats: 'Threats',
         properties: {
             title: 'Properties',
-            emptyState: 'Select an element on the graph to modify the properties',
+            emptyState: 'Select an element on the graph to edit',
             name: 'Name',
             text: 'Text',
             description: 'Description',

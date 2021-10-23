@@ -22,7 +22,10 @@ import {
     faKeyboard,
     faFileImport,
     faChevronDown,
-    faChevronRight
+    faChevronRight,
+    faCheck,
+    faExclamationTriangle,
+    faCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -49,7 +52,10 @@ library.add(
     faKeyboard,
     faFileImport,
     faChevronDown,
-    faChevronRight
+    faChevronRight,
+    faCheck,
+    faExclamationTriangle,
+    faCircle
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

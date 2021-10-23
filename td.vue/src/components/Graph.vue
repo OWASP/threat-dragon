@@ -44,59 +44,7 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <!-- <b-card :header="$t('threatmodel.properties.title')" class="props-header">
-            <td-graph-properties />
-        </b-card> -->
-
-
-        <div class="accordion" role="tablist">
-            <b-card no-body class="mb-1">
-            <b-card-header header-tag="header" class="p-1 props-header" role="tab">
-                <a href="javascript:void(0)" v-b-toggle.properties>
-                    {{ $t('threatmodel.properties.title') }}
-                    <font-awesome-icon
-                        icon="chevron-right"
-                        class="down-icon when-closed"
-                    ></font-awesome-icon>
-                    <font-awesome-icon
-                        icon="chevron-down"
-                        class="down-icon when-open"
-                    ></font-awesome-icon>
-                </a>
-            </b-card-header>
-            <b-collapse id="properties" visible accordion="actions-accordion" role="tabpanel">
-                <b-card-body>
-                    <td-graph-properties />
-                </b-card-body>
-            </b-collapse>
-            </b-card>
-
-            <b-card no-body class="mb-1">
-            <b-card-header header-tag="header" class="p-1 props-header" role="tab">
-                <!-- TODO: Make this its own component (DRY) -->
-                <a href="javascript:void(0)" block v-b-toggle.threats>
-                    Threats (translate me)
-                    <font-awesome-icon
-                        icon="chevron-right"
-                        class="down-icon when-closed"
-                    ></font-awesome-icon>
-                    <font-awesome-icon
-                        icon="chevron-down"
-                        class="down-icon when-open"
-                    ></font-awesome-icon>
-                </a>
-            </b-card-header>
-            <b-collapse id="threats" accordion="actions-accordion" role="tabpanel">
-                <b-card-body>
-                    <!-- TODO: Make this its own component -->
-                    <b-card-text>TODO: Make the threats pane</b-card-text>
-                </b-card-body>
-            </b-collapse>
-            </b-card>
-        </div>
-
-
-
+          <td-graph-meta />
       </b-col>
     </b-row>
 
@@ -108,28 +56,10 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.props-header {
-    a {
-        font-size: 12px;
-        font-weight: bolder;
-        text-decoration: none;
-        margin-left: 5px;
-    }
-}
-.down-icon {
-    margin-left: 5px;
-}
-.collapsed > .when-open,
-.not-collapsed > .when-closed {
-  display: none;
-}
-</style>
-
 <script>
 import { mapState } from 'vuex';
 
-import TdGraphProperties from '@/components/GraphProperties.vue';
+import TdGraphMeta from '@/components/GraphMeta.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import { getProviderType } from '@/service/provider/providers.js';
@@ -160,7 +90,7 @@ export default {
     name: 'TdGraph',
     components: {
         TdFormButton,
-        TdGraphProperties
+        TdGraphMeta
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
