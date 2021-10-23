@@ -48,7 +48,7 @@ angular.module('templates', [])
     '                </div>\n' +
     '            </div>\n' +
     '            <div class="form-group pull-right">\n' +
-    '                <label>Severity</label>\n' +
+    '                <label>Priority</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" required>\n' +
     '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
@@ -342,7 +342,7 @@ angular.module('templates', [])
     '                </div>\n' +
     '            </div>\n' +
     '            <div class="form-group pull-right">\n' +
-    '                <label>Severity</label>\n' +
+    '                <label>Priority</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" required>\n' +
     '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
@@ -435,7 +435,7 @@ angular.module('templates', [])
     '                </div>\n' +
     '            </div>\n' +
     '            <div class="form-group pull-right">\n' +
-    '                <label>Severity</label>\n' +
+    '                <label>Priority</label>\n' +
     '                <div>\n' +
     '                    <div class="btn-group" required>\n' +
     '                        <label class="btn btn-default" ng-model="parameter.threat.severity" uib-btn-radio="\'High\'">High</label>\n' +
@@ -921,7 +921,7 @@ angular.module('templates', [])
     '                                            <em class="small">\n' +
     '                                                {{threat.type}},\n' +
     '                                                <span ng-class="{Mitigated:\'text-success\', Open:\'text-danger\'}[threat.status]">{{threat.status}}</span>,\n' +
-    '                                                <span ng-class="{Low:\'text-success\', Medium:\'text-warning\', High:\'text-danger\'}[threat.severity]">{{threat.severity}} Severity</span>\n' +
+    '                                                <span ng-class="{Low:\'text-success\', Medium:\'text-warning\', High:\'text-danger\'}[threat.severity]">{{threat.severity}} Priority</span>\n' +
     '                                            </em>\n' +
     '                                        </div>\n' +
     '                                        <div class="panel-body">\n' +
