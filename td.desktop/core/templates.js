@@ -486,10 +486,13 @@ angular.module('templates', [])
     '    </li>\n' +
     '</ul> \n' +
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Add a new threat\n' +
     '</button>\n' +
     '<button id="buttonNewThreatPerElement" class="btn btn-link" ng-click="onSuggestThreats()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element...\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element\n' +
+    '</button>\n' +
+    '<button id="buttonNewOAT" class="btn btn-link" ng-click="onOATs()">\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Suggest OATs\n' +
     '</button>\n' +
     '')
   $templateCache.put('layout/pager.html',

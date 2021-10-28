@@ -84,13 +84,18 @@ function elementThreats($routeParams, $location, common, dialogs) {
     function link(scope, element, attrs) {
         scope.applyToAll = false;
 
+        scope.onNewThreat = function () {
+            newThreat = initialiseThreat(scope.type);
+            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+        };
+
         scope.onSuggestThreats = function () {
             scope.suggest(scope.type);
         };
 
-        scope.onNewThreat = function () {
+        scope.onOATs = function () {
             newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Automated Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
         };
 
         scope.onEditThreat = function (index) {
