@@ -337,7 +337,7 @@ describe('core threatengine service:', function () {
         it('should return an empty array', function () {
 
             var element = {};
-            var threats = threatengine.generateByProperty(element);
+            var threats = threatengine.generateByContext(element);
             expect(threats.length).toEqual(0);
         });
     });

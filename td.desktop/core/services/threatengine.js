@@ -6,7 +6,7 @@ function threatengine() {
 
   var service = {
     generatePerElement: generatePerElement,
-    generateByProperty: generateByProperty
+    generateByContext: generateByContext
   };
 
   var diagramType = 'STRIDE';
@@ -26,18 +26,18 @@ function threatengine() {
     return engine.run().then(onCompleted);
   }
 
-  function generateByProperty() {
+  function generateByContext() {
     //todo
     return [];
   }
 
   function onCompleted(results) {
-      //output is like {type: ..., params: { param1: ..., param2: ...}}
-      //use params to represent the threat to preserve backward compatibility
-      return results.events.map(function(result) {
-        return result.params;
-      });
-    }
+    //output is like {type: ..., params: { param1: ..., param2: ...}}
+    //use params to represent the threat to preserve backward compatibility
+    return results.events.map(function(result) {
+      return result.params;
+    });
+  }
 
   function getModel() {
     //diagram.diagramType in 'STRIDE', 'LINDDUN', 'CIA'

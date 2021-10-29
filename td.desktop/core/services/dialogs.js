@@ -4,7 +4,8 @@ function dialogs($location, $modal) {
 
     var service = {
         confirm: confirm,
-        structuredExit: structuredExit
+        structuredExit: structuredExit,
+        template: template
     };
 
     function structuredExit(event, cancelNavigation, continueNavigation) {
@@ -51,6 +52,24 @@ function dialogs($location, $modal) {
         return modal.result;
     }
     
+    function template(type) {
+        var template;
+        if (type == null) {
+            // use STRIDE for backward compatibility with models where no type given
+            template = 'diagrams/StrideEditPane.html';
+        } else if (type == 'CIA') {
+            template = 'diagrams/CiaEditPane.html';
+        } else if (type == 'LINDDUN') {
+            template = 'diagrams/LinddunEditPane.html';
+        } else if (type == 'STRIDE') {
+            template = 'diagrams/StrideEditPane.html';
+        } else {
+            // if not recognised then default to STRIDE
+            template = 'diagrams/StrideEditPane.html';
+        }
+        return template;
+    }
+
     return service;
 }
 

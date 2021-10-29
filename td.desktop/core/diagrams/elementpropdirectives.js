@@ -86,16 +86,16 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
         scope.onNewThreat = function () {
             newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+            dialogs.confirm(dialogs.template(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
         };
 
         scope.onThreatsPerElement = function () {
             scope.suggest(scope.type);
         };
 
-        scope.onThreatsByProperty = function () {
+        scope.onThreatsByContext = function () {
             newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Automated Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+            dialogs.confirm(dialogs.template(newThreat.modelType), scope.addThreat, function () { return { heading: 'Add this threat?', threat: newThreat, editing: false, threatIndex: 1, threatTotal: 1 }; }, scope.cancelAdd);
         };
 
         scope.onEditThreat = function (index) {
@@ -175,24 +175,6 @@ function elementThreats($routeParams, $location, common, dialogs) {
             return { status: 'Open', severity: 'Medium', modelType: 'UNDEFINED' };
         }
         return { status: 'Open', severity: 'Medium', modelType: modelType };
-    }
-
-    function getTemplate(type) {
-        var template;
-        if (type == null) {
-            // use STRIDE for backward compatibility with models where no type given
-            template = 'diagrams/StrideEditPane.html';
-        } else if (type == 'CIA') {
-            template = 'diagrams/CiaEditPane.html';
-        } else if (type == 'LINDDUN') {
-            template = 'diagrams/LinddunEditPane.html';
-        } else if (type == 'STRIDE') {
-            template = 'diagrams/StrideEditPane.html';
-        } else {
-            // if not recognised then default to STRIDE
-            template = 'diagrams/StrideEditPane.html';
-        }
-        return template;
     }
 
 }
