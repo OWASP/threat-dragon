@@ -6,8 +6,7 @@ function threatengine() {
 
   var service = {
     generatePerElement: generatePerElement,
-    generateForElementInContext: generateForElementInContext,
-    generateForGraph: generateForGraph
+    generateByProperty: generateByProperty
   };
 
   var diagramType = 'STRIDE';
@@ -27,6 +26,11 @@ function threatengine() {
     return engine.run().then(onCompleted);
   }
 
+  function generateByProperty() {
+    //todo
+    return [];
+  }
+
   function onCompleted(results) {
       //output is like {type: ..., params: { param1: ..., param2: ...}}
       //use params to represent the threat to preserve backward compatibility
@@ -43,16 +47,6 @@ function threatengine() {
       //if unrecognised then return default of STRIDE
       return 'STRIDE';
     }
-  }
-
-  function generateForElementInContext() {
-    //todo
-    return [];
-  }
-
-  function generateForGraph() {
-    //todo
-    return [];
   }
 
   function initialiseRulesPerElement(engine) {

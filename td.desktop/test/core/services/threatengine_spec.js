@@ -337,18 +337,9 @@ describe('core threatengine service:', function () {
         it('should return an empty array', function () {
 
             var element = {};
-            var threats = threatengine.generateForElementInContext(element);
+            var threats = threatengine.generateByProperty(element);
             expect(threats.length).toEqual(0);
         });
     });
 
-    describe('graph generation tests', function () {
-
-        //placeholder for not implemented feature
-        it('should return an empty array', function () {
-            var graph = {};
-            var threats = threatengine.generateForGraph(graph);
-            expect(threats.length).toEqual(0);
-        });
-    });
 });
