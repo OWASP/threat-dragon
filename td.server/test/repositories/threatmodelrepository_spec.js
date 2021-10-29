@@ -58,7 +58,7 @@ describe('threatmodel repository tests', () => {
         });
 
         it('creates the github client with the enterprise hostname', () => {
-            expect(github.client).to.have.been.calledWith(accessToken, { hostname: enterpriseHostname });
+            expect(github.client).to.have.been.calledWith(accessToken, { hostname: `${enterpriseHostname}/api/v3` });
         });
     });
 
@@ -77,7 +77,7 @@ describe('threatmodel repository tests', () => {
 
         it('creates the github client with the enterprise hostname and port', () => {
             expect(github.client).to.have.been.calledWith(accessToken, {
-                hostname: enterpriseHostname,
+                hostname: `${enterpriseHostname}/api/v3`,
                 port: 8443
             });
         });
@@ -100,7 +100,7 @@ describe('threatmodel repository tests', () => {
 
         it('creates the github client with the enterprise hostname, port and protocol', () => {
             expect(github.client).to.have.been.calledWith(accessToken, {
-                hostname: enterpriseHostname,
+                hostname: `${enterpriseHostname}/api/v3`,
                 port: 8443,
                 protocol: enterpriseProtocol
             });

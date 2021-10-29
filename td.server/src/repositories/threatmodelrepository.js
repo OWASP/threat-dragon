@@ -7,7 +7,7 @@ const getClient = (accessToken) => {
     if (enterpriseHostname) {
         const port = env.get().config.GITHUB_ENTERPRISE_PORT;
         const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL;
-        const enterpriseOpts = { hostname: enterpriseHostname };
+        const enterpriseOpts = { hostname: `${enterpriseHostname}/api/v3` };
         if (port) { enterpriseOpts.port = parseInt(port, 10); }
         if (protocol) { enterpriseOpts.protocol = protocol; }
         

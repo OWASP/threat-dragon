@@ -116,7 +116,7 @@ describe('passport configuration tests', () => {
                 scope: [ 'public_repo' ],
                 authorizationURL: `https://${enterpriseHost}/login/oauth/authorize`,
                 tokenURL: `https://${enterpriseHost}/login/oauth/access_token`,
-                userProfileURL: `https://${enterpriseHost}/api/v3/useer`
+                userProfileURL: `https://${enterpriseHost}/api/v3/user`
             });
             expect(passport.use).to.have.been.calledWith(expected);
         });
@@ -151,7 +151,7 @@ describe('passport configuration tests', () => {
                 scope: [ 'public_repo' ],
                 authorizationURL: `${enterpriseUrl}/login/oauth/authorize`,
                 tokenURL: `${enterpriseUrl}/login/oauth/access_token`,
-                userProfileURL: `${enterpriseUrl}/api/v3/useer`
+                userProfileURL: `${enterpriseUrl}/api/v3/user`
             });
             expect(passport.use).to.have.been.calledWith(expected);
         });

@@ -62,7 +62,7 @@ const config = (app) => {
 
         githubConfig.authorizationURL = `${enterpriseUrl}/login/oauth/authorize`;
         githubConfig.tokenURL = `${enterpriseUrl}/login/oauth/access_token`;
-        githubConfig.userProfileURL = `${enterpriseUrl}/api/v3/useer`;
+        githubConfig.userProfileURL = `${enterpriseUrl}/api/v3/user`;
     }
 
     passport.use(new Strategy(githubConfig, strategyCallback));
