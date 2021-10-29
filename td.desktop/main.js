@@ -180,7 +180,7 @@ function createMainWindow(show = true, displayWidth = -1, displayHeight = -1) {
 
   var win = new electron.BrowserWindow({
     title: "OWASP Threat Dragon",
-    icon: path.join(__dirname, './public/content/icons/png/64x64.png'),
+    icon: path.join(__dirname, 'public/content/icons/png/64x64.png'),
     show: show,
     width: displayWidth,
     height: displayHeight,

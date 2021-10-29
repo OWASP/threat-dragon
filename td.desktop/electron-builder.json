@@ -5,19 +5,26 @@
     "buildResources": "public/content/icons",
     "output": "installers"
   },
+  "files": [
+    "**/*",
+    "public/**/*"
+  ],
   "publish": {
     "provider": "github"
   },
+  "afterSign": "electron-builder-notarize",
   "mac": {
     "category": "public.app-category.developer-tools",
-    "icon": "./build/icons/icon.icns",
+    "icon": "public/content/icons/icon.icns",
+    "entitlements": "node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
+    "hardenedRuntime": true,
     "target": [
       "dmg",
       "zip"
     ]
   },
   "win": {
-    "icon": "./build/icons/icon.ico",
+    "icon": "public/content/icons/icon.ico",
     "target": [
       {
         "target": "nsis",
@@ -30,16 +37,20 @@
   },
   "linux": {
     "category": "Development",
-    "executableName": "threatdragon",
-    "icon": "./build/icons/png/256x256.png",
+    "executableName": "threat-dragon",
+    "icon": "public/content/icons/png/256x256.png",
     "synopsis": "OWASP Threat Dragon",
     "target": [
-        "AppImage",
-        "snap"
+       "AppImage",
+       "snap",
+       "deb",
+       "rpm"
     ]
   },
   "snap": {
+    "grade": "stable",
     "summary": "OWASP Threat Dragon, desktop version",
-    "grade": "stable"
+    "description": "OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming and a threat rule engine to auto-generate threats/mitigations.  The roadmap for the project is a simple UX, a powerful rule engine and integration with other development lifecycle tools.",
+    "title": "OWASP Threat Dragon"
   }
 }

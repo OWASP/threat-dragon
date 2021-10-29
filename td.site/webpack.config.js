@@ -39,8 +39,7 @@ module.exports = {
                 { from: 'src/content/images', to: 'content/images' },
                 { from: 'src/app/layout/*.html', to: 'app/layout/[name][ext]' },
                 { from: 'src/app/threatmodels/*.html', to: 'app/threatmodels/[name][ext]' },
-                { from: 'src/app/welcome/*.html', to: 'app/welcome/[name][ext]' },
-                { from: 'node_modules/curriable/dist/curriable.js.map', to: 'app/[name][ext]' }
+                { from: 'src/app/welcome/*.html', to: 'app/welcome/[name][ext]' }
             ],
             options: {
                 concurrency: 100

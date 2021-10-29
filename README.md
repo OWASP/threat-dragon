@@ -14,7 +14,7 @@ which has the issues and pull requests from October 2015 up to June 2020.
 # [OWASP](https://www.owasp.org) Threat Dragon #
 Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming
 and a threat rule engine to auto-generate threats/mitigations.
-It is an [OWASP Incubator Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
+It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 The roadmap for the project is a simple UX, a powerful rule engine
 and integration with other development lifecycle tools.
@@ -23,7 +23,7 @@ The application comes in two variants:
 
 1. [**A web application (this repo)**](https://github.com/owasp/threat-dragon):
 For the web application, models files are stored in GitHub (other storage will become available).
-We are currently maintaining [a working protoype](https://threatdragon.org) in synch with the master code branch.
+We are currently maintaining [a working protoype](https://threatdragon.org) in sync with the main code branch.
 
 2. [**A desktop application**](https://github.com/OWASP/threat-dragon/tree/main/td.desktop):
 This is based on [Electron](https://electron.atom.io/).
@@ -39,11 +39,10 @@ To build and run locally follow these steps:
 Install git and node.js - which includes the node package manager npm.
 To get the code, navigate to where you want your code to be located and do
 
-- `git init`
 - `git clone --recursive https://github.com/owasp/threat-dragon.git`
 
-This installs code in two sub-folders.
-One for the back-end application (`td.server`) and one for the front-end (`td.site`).
+This downloads the code into a directory called `threat-dragon` and contains the application code in two sub-folders,
+one for the back-end application (`td.server`) and one for the front-end (`td.site`).
 
 To install, run: `npm install` from the root of the project.  A `postinstall` script is run that will install dependencies in both the `server` and `site` directories as well.
 

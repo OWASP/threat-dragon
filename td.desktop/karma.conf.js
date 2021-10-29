@@ -10,28 +10,38 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'test/spec/**/*.js',
-        'test/spec/**/*.json',
-        'app/**/*.json'
+      { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false},
+        'node_modules/angular/angular.js',
+        'node_modules/angular-mocks/angular-mocks.js',
+        'test/**/*.js'
     ],
 
     // list of files to exclude
     exclude: [
-        '**/core/**/*.js'
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
         'app/**/*.html': ['ng-html2js'],
-        'test/spec/**/*.js': ['browserify'],
-        'test/spec/**/*.json': ['browserify'],
-        'app/**/*.json': ['browserify']
+        'app/**/*.json': ['browserify'],
+        'test/**/*.js': ['browserify'],
+        'test/**/*.json': ['browserify']
     },
 
     browserify: {
       transform: [
-        require("browserify-istanbul")
+        require("browserify-istanbul")({
+          ignore: '**/core/**',
+          debug: true
+        }),
+        [
+          'babelify', {
+            presets: ['@babel/preset-env'],
+            global: true,
+            ignore: [/\/node_modules\/(?!jsonpath-plus\/)/]
+          }
+        ]
       ],
       debug: true
     },
@@ -47,17 +57,14 @@ module.exports = function(config) {
 
     //config for threshhold reporter
     thresholdReporter: {
-      statements: 30,
-      branches: 15,
-      functions: 20,
-      lines: 30
+      statements: 80,
+      branches: 70,
+      functions: 75,
+      lines: 80
     },
 
     //config for ngHtml2JsPreprocessor
     ngHtml2JsPreprocessor: {
-        // strip this from the file path
-        stripPrefix: 'td',
-        prependPrefix: '.'
     },
 
     // web server port

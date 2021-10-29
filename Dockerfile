@@ -8,12 +8,21 @@ COPY ./td.server/.babelrc ./
 COPY ./td.server/src ./src
 RUN npm run build
 
+# Builds td.core, part of the desktop build
+FROM node:14 as build-core
+WORKDIR /app/td.desktop
+COPY ./td.desktop/package* ./
+RUN npm ci
+COPY /td.desktop/ ./
+RUN npm run build
+
 # Builds td.site.  This step requires dev dependencies 
 # that do not need to be included in the final image
 FROM node:14 as build-frontend
 WORKDIR /app/td.site
 COPY ./td.site/package* ./
 RUN npm ci
+COPY --from=build-core /app/td.desktop/core /app/td.desktop/core
 COPY ./td.site/src ./src
 COPY ./td.site/webpack.config.js ./
 RUN npm run build
