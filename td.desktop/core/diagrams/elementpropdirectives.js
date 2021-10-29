@@ -89,11 +89,11 @@ function elementThreats($routeParams, $location, common, dialogs) {
             dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
         };
 
-        scope.onSuggestThreats = function () {
+        scope.onThreatsPerElement = function () {
             scope.suggest(scope.type);
         };
 
-        scope.onOATs = function () {
+        scope.onThreatsByProperty = function () {
             newThreat = initialiseThreat(scope.type);
             dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Automated Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
         };

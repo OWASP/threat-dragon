@@ -18,22 +18,22 @@ function threatengine() {
     //implements one of {STRIDE per element, LINDDUN per element, CIA}
     diagramType = type;
     var engine = new jsonRulesEngine.Engine();
-    initialiseRules(engine);
+    initialiseRulesPerElement(engine);
     engine.addFact('elementType', element.attributes.type);
     engine.addFact('diagramType', getModel);
     engine.addFact('elementIsPublicNetwork', element.isPublicNetwork);
     engine.addFact('elementIsEncrypted', element.isEncrypted);
 
     return engine.run().then(onCompleted);
+  }
 
-    function onCompleted(results) {
+  function onCompleted(results) {
       //output is like {type: ..., params: { param1: ..., param2: ...}}
       //use params to represent the threat to preserve backward compatibility
       return results.events.map(function(result) {
         return result.params;
       });
     }
-  }
 
   function getModel() {
     //diagram.diagramType in 'STRIDE', 'LINDDUN', 'CIA'
@@ -55,7 +55,7 @@ function threatengine() {
     return [];
   }
 
-  function initialiseRules(engine) {
+  function initialiseRulesPerElement(engine) {
 
     /* STRIDE per element
               S | T | R | I | D | E

@@ -230,12 +230,6 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         return threatmodellocator.getModelPathFromRouteParams($routeParams);
     }
 
-    function generateThreats(type) {
-        if (vm.selected) {
-            threatengine.generatePerElement(vm.selected, type).then(onGenerateThreats);
-        }
-    }
-
     function duplicateElement() {
         if (vm.selected) {
             var newElement = vm.cloneElement(vm.selected);
@@ -268,7 +262,13 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         }
     }
 
-    function onGenerateThreats(threats) {
+    function generateThreats(type) {
+        if (vm.selected) {
+            threatengine.generatePerElement(vm.selected, type).then(onAcceptIgnoreThreats);
+        }
+    }
+
+    function onAcceptIgnoreThreats(threats) {
         var threatTotal = threats.length;
         var threatList = threats;
         var currentThreat;
