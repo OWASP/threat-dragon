@@ -79,16 +79,17 @@ describe('service/migration/diagram.js', () => {
         });
     });
 
-    describe('cell with empty labels', () => {
+    describe('trust boundary', () => {
         beforeEach(() => {
-            const v1 = getV1Cell();
-            delete v1.diagramJson.cells[0].attrs;
+            const v1 = getV1Edge();
+            v1.diagramJson.cells[1].type = 'tm.Boundary';
+            v1.diagramJson.cells[1].labels[0].attrs.text.text = '';
             const res = diagram.mapDiagram(v1);
-            nodes = res.nodes;
+            edges = res.edges;
         });
 
-        it('uses the default text', () => {
-            expect(nodes[0].getAttrs().text.text).toEqual('Actor');
+        it('does not add default text', () => {
+            expect(edges[0].labels[0].attrs.label.text).toEqual('');
         });
     });
 
@@ -247,7 +248,8 @@ describe('service/migration/diagram.js', () => {
                     isALog: true,
                     storesCredentials: true,
                     isEncrypted: true,
-                    isSigned: true
+                    isSigned: true,
+                    threats: [{ type: 'Information disclosure' }]
                 });
                 const res = diagram.mapDiagram(v1);
                 tdStore = res.nodes.find(x => x.type === 'tm.Store');
@@ -267,6 +269,10 @@ describe('service/migration/diagram.js', () => {
 
             it('it is signed', () => {
                 expect(tdStore.data.isSigned).toEqual(true);
+            });
+
+            it('migrates the threat', () => {
+                expect(tdStore.data.threats[0].modelType).toEqual('STRIDE');
             });
         });
 

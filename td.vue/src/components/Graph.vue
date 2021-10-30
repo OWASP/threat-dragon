@@ -44,33 +44,30 @@
         </b-row>
       </b-col>
       <b-col md="2">
-        <b-card :header="$t('threatmodel.properties.title')" class="props-header">
-            <td-graph-properties />
-        </b-card>
+          <td-graph-meta />
       </b-col>
     </b-row>
 
     <div>
-        <b-modal id="shortcuts" size="lg" ok-variant="primary" ok-only :title="$t('threatmodel.shortcuts.title')">
+        <b-modal
+            id="shortcuts"
+            size="lg"
+            ok-variant="primary"
+            header-bg-variant="primary"
+            header-text-variant="light"
+            ok-only
+            :title="$t('threatmodel.shortcuts.title')"
+        >
             <b-table :items="shortcuts"></b-table>
         </b-modal>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.props-header {
-    .card-header {
-        font-size: 12px;
-        font-weight: bolder;
-    }
-}
-</style>
-
 <script>
 import { mapState } from 'vuex';
 
-import TdGraphProperties from '@/components/GraphProperties.vue';
+import TdGraphMeta from '@/components/GraphMeta.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import { getProviderType } from '@/service/provider/providers.js';
@@ -101,7 +98,7 @@ export default {
     name: 'TdGraph',
     components: {
         TdFormButton,
-        TdGraphProperties
+        TdGraphMeta
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,

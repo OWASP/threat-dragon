@@ -20,7 +20,12 @@ import {
     faTrash,
     faTh,
     faKeyboard,
-    faFileImport
+    faFileImport,
+    faChevronDown,
+    faChevronRight,
+    faCheck,
+    faExclamationTriangle,
+    faCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -45,7 +50,12 @@ library.add(
     faTrash,
     faTh,
     faKeyboard,
-    faFileImport
+    faFileImport,
+    faChevronDown,
+    faChevronRight,
+    faCheck,
+    faExclamationTriangle,
+    faCircle
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

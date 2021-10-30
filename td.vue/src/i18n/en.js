@@ -65,9 +65,10 @@ const en = {
         title: 'Title',
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
+        threats: 'Threats',
         properties: {
             title: 'Properties',
-            emptyState: 'Select an element on the graph to modify the properties',
+            emptyState: 'Select an element on the graph to edit',
             name: 'Name',
             text: 'Text',
             description: 'Description',
@@ -144,6 +145,26 @@ const en = {
         close: 'Close',
         search: 'Search',
         import: 'Import'
+    },
+    threats: {
+        models: {
+            confidentiality: 'Confidentiality',
+            integrity: 'Integrity',
+            availability: 'Availability',
+            linkability: 'Linkability',
+            identifiability: 'Identifiability',
+            nonRepudiation: 'Non-Repudiation',
+            detectability: 'Detectability',
+            disclosureOfInformation: 'Disclosure Of Information',
+            unawareness: 'Unawareness',
+            nonCompliance: 'Non-Compliance',
+            spoofing: 'Spoofing',
+            tampering: 'Tampering',
+            repudiation: 'Repudiation',
+            informationDisclosure: 'Information Disclosure',
+            denialOfService: 'Denial Of Service',
+            elevationOfPrivilege: 'Elevation Of Privilege'
+        }
     }
 };
 

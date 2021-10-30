@@ -2,7 +2,6 @@ import { Shape } from '@antv/x6';
 import defaultProperties from '../../entity/default-properties';
 
 const name = 'trust-boundary-curve';
-const defaultText = 'Trust Boundary';
 
 export const TrustBoundaryCurve = Shape.Edge.define({
     constructorName: name,
@@ -21,7 +20,7 @@ export const TrustBoundaryCurve = Shape.Edge.define({
     labels: [{
         attrs: {
             text: {
-                text: defaultText
+                text: ''
             }
         }
     }],

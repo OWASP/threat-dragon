@@ -4,6 +4,12 @@
  * This is not for persistence, and is done on a diagram by diagram basis
  */
 import shapes from '../x6/shapes/index.js';
+import threats from '../threats/index.js';
+
+const upgradeThreat = (threat) => {
+    threat.type = threats.convertToTranslationString(threat.type);
+    threat.modelType = threats.getModelByTranslation(threat.type);
+};
 
 const getLabelText = (cell, label) => {
     let text = label.attrs.text.text;
@@ -133,6 +139,10 @@ const addMetaData = (entity, cell) => {
     }
 
     entity.data = data;
+
+    if (entity.data.threats) {
+        entity.data.threats.forEach(upgradeThreat);
+    }
     
     return entity;
 };

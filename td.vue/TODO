@@ -1,8 +1,14 @@
-- Add threats to diagram ui
 - Add threat engine/suggested threats
 - Add tests for ThreatmodelEdit view
 - Add report feature
 - Legend for diagram
 - Update bootstrap dev dep to 4.6.1 or 4.7.0 when they're available (remove sass division warnings that cannot be suppressed)
 - Update or remove the CSP violation reporter
+
+
+
+- Create modal for threat edit
+- Implement adding and removing threats
+- Check that updating threats works as expected
+- Severity should be named "priority" (do not change json/schema, only UI)
 
