@@ -49,7 +49,15 @@
     </b-row>
 
     <div>
-        <b-modal id="shortcuts" size="lg" ok-variant="primary" ok-only :title="$t('threatmodel.shortcuts.title')">
+        <b-modal
+            id="shortcuts"
+            size="lg"
+            ok-variant="primary"
+            header-bg-variant="primary"
+            header-text-variant="light"
+            ok-only
+            :title="$t('threatmodel.shortcuts.title')"
+        >
             <b-table :items="shortcuts"></b-table>
         </b-modal>
     </div>

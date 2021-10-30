@@ -1,4 +1,4 @@
-import { BCard, BootstrapVue } from 'bootstrap-vue';
+import { BBadge, BCard, BootstrapVue } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuex from 'vuex';
@@ -14,7 +14,8 @@ describe('components/ThreatCard.vue', () => {
         description: 'Some description',
         title: 'My terrifying threat',
         type: 'Information Disclosure',
-        mitigation: 'we will mitigate it eventually'
+        mitigation: 'we will mitigate it eventually',
+        modelType: 'CIA'
     });
 
     beforeEach(() => {
@@ -26,6 +27,9 @@ describe('components/ThreatCard.vue', () => {
 
     const getWrapper = (propsData) => shallowMount(TdThreatCard, {
         localVue,
+        mocks: {
+            $t: key => key
+        },
         propsData
     });
 
@@ -52,6 +56,10 @@ describe('components/ThreatCard.vue', () => {
 
         it('has the mitigation prop', () => {
             expect(TdThreatCard.props.mitigation).toBeDefined();
+        });
+
+        it('has the model type', () => {
+            expect(TdThreatCard.props.modelType).toBeDefined();
         });
     });
 
@@ -135,6 +143,10 @@ describe('components/ThreatCard.vue', () => {
 
         it('displays the type', () => {
             expect(wrapper.findComponent(BCard).text()).toContain(propsData.type);
+        });
+
+        it('displays the model type', () => {
+            expect(wrapper.findComponent(BBadge).text()).toEqual('CIA');
         });
     });
 });

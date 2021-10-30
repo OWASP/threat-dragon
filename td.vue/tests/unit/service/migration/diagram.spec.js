@@ -247,7 +247,8 @@ describe('service/migration/diagram.js', () => {
                     isALog: true,
                     storesCredentials: true,
                     isEncrypted: true,
-                    isSigned: true
+                    isSigned: true,
+                    threats: [{ type: 'Information disclosure' }]
                 });
                 const res = diagram.mapDiagram(v1);
                 tdStore = res.nodes.find(x => x.type === 'tm.Store');
@@ -267,6 +268,10 @@ describe('service/migration/diagram.js', () => {
 
             it('it is signed', () => {
                 expect(tdStore.data.isSigned).toEqual(true);
+            });
+
+            it('migrates the threat', () => {
+                expect(tdStore.data.threats[0].modelType).toEqual('STRIDE');
             });
         });
 

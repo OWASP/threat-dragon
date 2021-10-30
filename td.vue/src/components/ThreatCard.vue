@@ -1,39 +1,48 @@
 <template>
 <b-card class="threat-card">
         <b-card-text>
-            <div class="mb-2">
-                <a href="javascript:void(0)">{{ title }}</a>
-            </div>
-            <div>
-                {{ type }}
-            </div>
-            <div>
-                <font-awesome-icon 
-                    icon="check"
-                    class="threat-icon green-icon"
-                    :title="status"
-                    v-if="status !== 'Open'" />
-                <font-awesome-icon 
-                    icon="exclamation-triangle"
-                    class="threat-icon red-icon"
-                    :title="status"
-                    v-if="status === 'Open'" />
-                <font-awesome-icon 
-                    icon="circle"
-                    class="threat-icon red-icon"
-                    :title="severity"
-                    v-if="severity === 'High'" />
-                <font-awesome-icon 
-                    icon="circle"
-                    class="threat-icon yellow-icon"
-                    :title="severity"
-                    v-if="severity === 'Medium'" />
-                <font-awesome-icon 
-                    icon="circle"
-                    class="threat-icon green-icon"
-                    :title="severity"
-                    v-if="severity === 'Low'" />
-            </div>
+            <b-row>
+                <b-col>
+                    <a href="javascript:void(0)">{{ title }}</a>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    {{ $t(type) }}
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <font-awesome-icon 
+                        icon="check"
+                        class="threat-icon green-icon"
+                        :title="status"
+                        v-if="status !== 'Open'" />
+                    <font-awesome-icon 
+                        icon="exclamation-triangle"
+                        class="threat-icon red-icon"
+                        :title="status"
+                        v-if="status === 'Open'" />
+                    <font-awesome-icon 
+                        icon="circle"
+                        class="threat-icon red-icon"
+                        :title="severity"
+                        v-if="severity === 'High'" />
+                    <font-awesome-icon 
+                        icon="circle"
+                        class="threat-icon yellow-icon"
+                        :title="severity"
+                        v-if="severity === 'Medium'" />
+                    <font-awesome-icon 
+                        icon="circle"
+                        class="threat-icon green-icon"
+                        :title="severity"
+                        v-if="severity === 'Low'" />
+                </b-col>
+                <b-col align-h="end">
+                    <b-badge :v-if="!!modelType">{{ modelType }}</b-badge>
+                </b-col>
+            </b-row>
         </b-card-text>
     </b-card>
 </template>
@@ -74,7 +83,8 @@ export default {
         description: { type: String },
         title: { type: String },
         type: { type: String },
-        mitigation: { type: String }
+        mitigation: { type: String },
+        modelType: { type: String }
     }
 };
 

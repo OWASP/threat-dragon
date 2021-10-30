@@ -145,6 +145,26 @@ const en = {
         close: 'Close',
         search: 'Search',
         import: 'Import'
+    },
+    threats: {
+        models: {
+            confidentiality: 'Confidentiality',
+            integrity: 'Integrity',
+            availability: 'Availability',
+            linkability: 'Linkability',
+            identifiability: 'Identifiability',
+            nonRepudiation: 'Non-Repudiation',
+            detectability: 'Detectability',
+            disclosureOfInformation: 'Disclosure Of Information',
+            unawareness: 'Unawareness',
+            nonCompliance: 'Non-Compliance',
+            spoofing: 'Spoofing',
+            tampering: 'Tampering',
+            repudiation: 'Repudiation',
+            informationDisclosure: 'Information Disclosure',
+            denialOfService: 'Denial Of Service',
+            elevationOfPrivilege: 'Elevation Of Privilege'
+        }
     }
 };
 

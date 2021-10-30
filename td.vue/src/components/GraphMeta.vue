@@ -46,7 +46,8 @@
                         :description="threat.description"
                         :title="threat.title"
                         :type="threat.type"
-                        :mitigation="threat.mitigation" />
+                        :mitigation="threat.mitigation"
+                        :modelType="threat.modelType" />
                 </b-card-text>
                 <b-card-text
                     v-if="!cellRef || !cellRef.data || cellRef.data.threats.length === 0">
