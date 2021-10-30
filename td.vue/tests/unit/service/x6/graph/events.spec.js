@@ -9,8 +9,10 @@ describe('service/x6/graph/events.js', () => {
         mockStore = { dispatch: jest.fn() };
         store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
-            on: jest.fn()
+            evts: {},
+            on: function(evt, cb) { this.evts[evt] = cb; }
         };
+        jest.spyOn(graph, 'on');
         cell = {
             hasTools: jest.fn(),
             removeTools: jest.fn(),
@@ -229,6 +231,66 @@ describe('service/x6/graph/events.js', () => {
 
             it('removes the cell', () => {
                 expect(cell.remove).toHaveBeenCalledTimes(1);
+            });
+        });
+
+        describe('cell:unselected', () => {
+            beforeEach(() => {
+                cell.hasTools.mockImplementation(() => true);
+                cell.setName = jest.fn();
+                cell.getData.mockImplementation(() => ({ name: 'test' }));
+                events.listen(graph);
+                graph.evts['cell:unselected']({ cell });
+            });
+
+            it('sets the name', () => {
+                expect(cell.setName).toHaveBeenCalledWith('test');
+            });
+        });
+
+        describe('cell:selected', () => {
+            beforeEach(() => {
+                cell.hasTools.mockImplementation(() => true);
+                cell.isNode.mockImplementation(() => false);
+                events.listen(graph);
+            });
+
+            describe('trust boundary', () => {
+                beforeEach(() => {
+                    cell.data.isTrustBoundary = true;
+                    cell.getLabels.mockImplementation(() => ([
+                        { attrs: { text: { text: 'test' }}}
+                    ]));
+                    events.listen(graph);
+                    graph.evts['cell:selected']({ cell });
+                });
+
+                it('sets the name', () => {
+                    expect(cell.data.name).toEqual('test');
+                });
+            });
+
+            describe('edge', () => {
+                beforeEach(() => {
+                    cell.getLabels.mockImplementation(() => ([
+                        { attrs: { label: { text: 'test' }}}
+                    ]));
+                    events.listen(graph);
+                    graph.evts['cell:selected']({ cell });
+                });
+
+                it('sets the name', () => {
+                    expect(cell.data.name).toEqual('test');
+                });
+            });
+
+            describe('without getLabels', () => {
+                it('does not set the name', () => {
+                    delete cell.getLabels;
+                    events.listen(graph);
+                    graph.evts['cell:selected']({ cell });
+                    expect(cell.data.name).toBeUndefined();
+                });
             });
         });
     });

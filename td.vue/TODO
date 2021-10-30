@@ -12,3 +12,7 @@
 - Create modal for threat edit
 - Implement adding and removing threats
 - Severity should be named "priority" (do not change json/schema, only UI)
+
+
+BUGS:
+    - Trust Boundaries are given labels even if none existed prior

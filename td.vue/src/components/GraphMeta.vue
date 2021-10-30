@@ -48,7 +48,10 @@
                         :type="threat.type"
                         :mitigation="threat.mitigation" />
                 </b-card-text>
-                <b-card-text v-if="!cellRef">{{ $t('threatmodel.properties.emptyState') }}</b-card-text>
+                <b-card-text
+                    v-if="!cellRef || !cellRef.data || cellRef.data.threats.length === 0">
+                    {{ $t('threatmodel.properties.emptyState') }}
+                </b-card-text>
             </b-card-body>
         </b-collapse>
         </b-card>
