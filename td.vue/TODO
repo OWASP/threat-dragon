@@ -12,7 +12,3 @@
 - Check that updating threats works as expected
 - Severity should be named "priority" (do not change json/schema, only UI)
 
-
-BUGS:
-    - Trust Boundaries are given labels even if none existed prior
-    - Local should not have load, put import where load is

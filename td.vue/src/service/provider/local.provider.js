@@ -4,10 +4,9 @@ const providerType = providerTypes.local;
 
 const getDashboardActions = () => ([
     {
-        to: `/${providerType}/threatmodels`,
-        key: 'openExisting',
-        icon: 'vuejs',
-        iconPreface: 'fab'
+        to: `/${providerType}/threatmodel/import`,
+        key: 'import',
+        icon: 'file-import'
     },
     {
         to: `/${providerType}/threatmodel/new`,
@@ -18,11 +17,6 @@ const getDashboardActions = () => ([
         to: '/demo/select',
         key: 'demo',
         icon: 'cloud-download-alt'
-    },
-    {
-        to: `/${providerType}/threatmodel/import`,
-        key: 'import',
-        icon: 'file-import'
     }
 ]);
 

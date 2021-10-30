@@ -3,20 +3,19 @@ import local from '@/service/provider/local.provider.js';
 describe('service/local.provider.js', () => {
     describe('getDashboardActions', () => {
 
-        describe('open existing', () => {
+        describe('import', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.key === 'openExisting');
+                action = local.getDashboardActions().find(x=> x.key === 'import');
             });
 
-            it('links to the tm select page', () => {
-                expect(action.to).toEqual('/local/threatmodels');
+            it('links to the import page', () => {
+                expect(action.to).toEqual('/local/threatmodel/import');
             });
 
-            it('uses the github icon', () => {
-                expect(action.iconPreface).toEqual('fab');
-                expect(action.icon).toEqual('vuejs');
+            it('uses the file-import icon', () => {
+                expect(action.icon).toEqual('file-import');
             });
         });
 
