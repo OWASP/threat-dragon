@@ -61,7 +61,8 @@ describe('components/GraphMeta.vue', () => {
                     cell: {
                         ref: {
                             data: entityData
-                        }
+                        },
+                        threats: entityData.threats
                     }
                 }
             });
@@ -76,6 +77,51 @@ describe('components/GraphMeta.vue', () => {
 
         it('displays the threat card', () => {
             expect(wrapper.findComponent(TdThreatCard).exists()).toEqual(true);
+        });
+    });
+
+    describe('threatSelected', () => {
+        let emitter, entityData;
+
+        beforeEach(() => {
+            entityData = {
+                threats: [{
+                    status: 'Open',
+                    severity: 'Medium',
+                    description: 'describing the thing',
+                    title: 'Some Threat',
+                    type: 'Spoofing',
+                    mitigation: 'Unmitigated'
+                }]
+            };
+            const localVue = createLocalVue();
+            localVue.use(Vuex);
+            localVue.use(BootstrapVue);
+            localVue.component('font-awesome-icon', FontAwesomeIcon);
+            localVue.use(Vuex);
+            const mockStore = new Vuex.Store({
+                state: {
+                    cell: {
+                        ref: {
+                            data: entityData
+                        },
+                        threats: entityData.threats
+                    }
+                }
+            });
+            wrapper = shallowMount(TdGraphMeta, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $emit: emitter = jest.fn()
+                }
+            });
+        });
+
+        it('emits the threatSelected event with the threat id', () => {
+            wrapper.vm.threatSelected('id1');
+            expect(emitter).toHaveBeenCalledWith('threatSelected', 'id1');
         });
     });
 

@@ -6,7 +6,7 @@ import Vuex from 'vuex';
 import TdThreatCard from '@/components/ThreatCard.vue';
 
 describe('components/ThreatCard.vue', () => {
-    let localVue, wrapper;
+    let emitter, localVue, wrapper;
 
     const getDefaultPropsData = () => ({
         status: 'Open',
@@ -15,7 +15,8 @@ describe('components/ThreatCard.vue', () => {
         title: 'My terrifying threat',
         type: 'Information Disclosure',
         mitigation: 'we will mitigate it eventually',
-        modelType: 'CIA'
+        modelType: 'CIA',
+        id: 'asdf-asdf-asdf-asdf'
     });
 
     beforeEach(() => {
@@ -28,7 +29,8 @@ describe('components/ThreatCard.vue', () => {
     const getWrapper = (propsData) => shallowMount(TdThreatCard, {
         localVue,
         mocks: {
-            $t: key => key
+            $t: key => key,
+            $emit: emitter = jest.fn()
         },
         propsData
     });
@@ -147,6 +149,19 @@ describe('components/ThreatCard.vue', () => {
 
         it('displays the model type', () => {
             expect(wrapper.findComponent(BBadge).text()).toEqual('CIA');
+        });
+    });
+
+    describe('threat selected', () => {
+        let propsData;
+        beforeEach(async () => {
+            propsData = getDefaultPropsData();
+            wrapper = getWrapper(propsData);
+            await wrapper.find('a').trigger('click');
+        });
+
+        it('emits the threatSelected event with the threat id', () => {
+            expect(emitter).toHaveBeenCalledWith('threatSelected', propsData.id);
         });
     });
 });

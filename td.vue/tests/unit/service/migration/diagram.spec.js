@@ -249,7 +249,7 @@ describe('service/migration/diagram.js', () => {
                     storesCredentials: true,
                     isEncrypted: true,
                     isSigned: true,
-                    threats: [{ type: 'Information disclosure' }]
+                    threats: [{ type: 'Information disclosure', id: 'asdf' }]
                 });
                 const res = diagram.mapDiagram(v1);
                 tdStore = res.nodes.find(x => x.type === 'tm.Store');
@@ -284,7 +284,8 @@ describe('service/migration/diagram.js', () => {
                 v1.diagramJson.cells.push({
                     type: 'tm.Store',
                     position: { x: 1, y: 0 },
-                    size: { width: 20, height: 20 }
+                    size: { width: 20, height: 20 },
+                    threats: [{ type: 'Information disclosure' }]
                 });
                 const res = diagram.mapDiagram(v1);
                 tdStore = res.nodes.find(x => x.type === 'tm.Store');

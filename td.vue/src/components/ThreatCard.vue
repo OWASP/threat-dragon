@@ -3,7 +3,7 @@
         <b-card-text>
             <b-row>
                 <b-col>
-                    <a href="javascript:void(0)">{{ title }}</a>
+                    <a href="javascript:void(0)" @click="threatSelected()">{{ title }}</a>
                 </b-col>
             </b-row>
             <b-row>
@@ -78,6 +78,7 @@
 export default {
     name: 'TdThreatCard',
     props: {
+        id: { type: String },
         status: { type: String },
         severity: { type: String },
         description: { type: String },
@@ -85,6 +86,11 @@ export default {
         type: { type: String },
         mitigation: { type: String },
         modelType: { type: String }
+    },
+    methods: {
+        threatSelected() {
+            this.$emit('threatSelected', this.id);
+        }
     }
 };
 

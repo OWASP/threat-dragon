@@ -164,7 +164,10 @@ const en = {
             informationDisclosure: 'Information Disclosure',
             denialOfService: 'Denial Of Service',
             elevationOfPrivilege: 'Elevation Of Privilege'
-        }
+        },
+        edit: 'Edit Threat',
+        confirmDeleteTitle: 'Confirm Delete',
+        confirmDeleteMessage: 'Are you sure you really want to delete this threat?'
     }
 };
 

@@ -39,16 +39,19 @@
             <b-card-body>
                 <b-card-text v-if="!!cellRef">
                     <td-threat-card
-                        v-for="(threat, idx) in cellRef.data.threats || []"
+                        v-for="(threat, idx) in threats || []"
                         :key="idx"
+                        :id="threat.id"
                         :status="threat.status"
                         :severity="threat.severity"
                         :description="threat.description"
                         :title="threat.title"
                         :type="threat.type"
                         :mitigation="threat.mitigation"
-                        :modelType="threat.modelType" />
+                        :modelType="threat.modelType"
+                        @threatSelected="threatSelected" />
                 </b-card-text>
+                <!-- TODO: Add new state for no threats, or just add the button as part of the the above if !!cellRef -->
                 <b-card-text
                     v-if="!cellRef || !cellRef.data || cellRef.data.threats.length === 0">
                     {{ $t('threatmodel.properties.emptyState') }}
@@ -86,11 +89,17 @@ import TdThreatCard from '@/components/ThreatCard.vue';
 export default {
     name: 'TdGraphMeta',
     computed: mapState({
-        cellRef: (state) => state.cell.ref
+        cellRef: (state) => state.cell.ref,
+        threats: (state) => state.cell.threats,
     }),
     components: {
         TdGraphProperties,
         TdThreatCard
+    },
+    methods: {
+        threatSelected(threatId) {
+            this.$emit('threatSelected', threatId);
+        }
     }
 };
 
