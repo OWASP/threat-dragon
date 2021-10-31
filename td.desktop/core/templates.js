@@ -123,7 +123,7 @@ angular.module('templates', [])
     '                    </div>\n' +
     '                    <div ng-if="vm.selected && vm.selected.attributes.type != \'tm.Boundary\'">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
+    '                            <tmt-element-threats suggest="vm.addThreatsPerElement" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +
@@ -162,7 +162,7 @@ angular.module('templates', [])
     '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
     '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.addThreatsPerElement(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +

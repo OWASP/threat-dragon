@@ -18,6 +18,8 @@ function threatengine() {
     diagramType = type;
     var engine = new jsonRulesEngine.Engine();
     initialiseRulesPerElement(engine);
+    console.log("type :", type);
+    console.log("element :", element);
     engine.addFact('elementType', element.attributes.type);
     engine.addFact('diagramType', getModel);
     engine.addFact('elementIsPublicNetwork', element.isPublicNetwork);

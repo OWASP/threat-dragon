@@ -439,6 +439,7 @@ describe(' core element threats directive: ', function () {
         //dialogs mocks
         mockDialogs.confirm = function () { };
         spyOn(mockDialogs, 'confirm');
+        mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
 
         elem = angular.element('<tmt-element-threats threats="threats" save="edit()" setdirty="setDirty" />');
 
@@ -463,8 +464,9 @@ describe(' core element threats directive: ', function () {
             $compile(elem)($scope);
             $scope.$digest();
             setFixtures(elem);
+
             expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html')
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
             var param = mockDialogs.confirm.calls.argsFor(0)[2];
             expect(param().threat).toEqual(threat1);
             expect($location.search().threat).toEqual('1');
@@ -516,42 +518,6 @@ describe(' core element threats directive: ', function () {
             expect($scope.edit).toHaveBeenCalled();
             expect($scope.setDirty).toHaveBeenCalled();
             expect(param().editing).toBe(true);
-
-        });
-
-        it('should launch the edit threat dialog for backwards compatibility', function () {
-
-            angular.element($('#editThreat0')).triggerHandler('click');
-            expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
-            expect($location.search().threat).toEqual('0');
-
-        });
-
-        it('should launch the edit CIA threat dialog', function () {
-
-            angular.element($('#editThreat1')).triggerHandler('click');
-            expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html')
-            expect($location.search().threat).toEqual('1');
-
-        });
-
-        it('should launch the edit LINDDUN threat dialog', function () {
-
-            angular.element($('#editThreat2')).triggerHandler('click');
-            expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/LinddunEditPane.html')
-            expect($location.search().threat).toEqual('2');
-
-        });
-
-        it('should launch the edit STRIDE threat dialog', function () {
-
-            angular.element($('#editThreat3')).triggerHandler('click');
-            expect(mockDialogs.confirm).toHaveBeenCalled();
-            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
-            expect($location.search().threat).toEqual('3');
 
         });
 

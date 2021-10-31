@@ -5,7 +5,7 @@ function dialogs($location, $modal) {
     var service = {
         confirm: confirm,
         structuredExit: structuredExit,
-        template: template
+        dialogTemplate: template
     };
 
     function structuredExit(event, cancelNavigation, continueNavigation) {

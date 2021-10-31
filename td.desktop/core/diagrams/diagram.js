@@ -42,7 +42,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.getThreatModelPath = getThreatModelPath;
     vm.select = select;
     vm.edit = edit;
-    vm.generateThreats = generateThreats;
+    vm.addThreatsPerElement = addThreatsPerElement;
     vm.duplicateElement = duplicateElement;
     vm.setGrid = setGrid;
     vm.showGrid = false;
@@ -262,7 +262,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         }
     }
 
-    function generateThreats(type) {
+    function addThreatsPerElement(type) {
         if (vm.selected) {
             threatengine.generatePerElement(vm.selected, type).then(onAcceptIgnoreThreats);
         }
@@ -279,9 +279,10 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                template = dialogs.template(currentThreat.modelType);
-                dialogs.confirm(template,
-                    addThreat,
+                template = dialogs.dialogTemplate(currentThreat.modelType);
+                dialogs.confirm(
+                    template,
+                    addSuggestedThreat,
                     function () {
                         return {
                             heading: 'Add this threat?',
@@ -291,13 +292,13 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
                             threatTotal: threatTotal
                         };
                     },
-                    ignoreThreat,
+                    ignoreSuggestedThreat,
                     'fade-right'
                 );
             }
         }
 
-        function addThreat(applyToAll) {
+        function addSuggestedThreat(applyToAll) {
             vm.setDirty();
 
             if (_.isUndefined(vm.selected.threats)) {
@@ -319,7 +320,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
             }
         }
 
-        function ignoreThreat(applyToAll) {
+        function ignoreSuggestedThreat(applyToAll) {
             if (!applyToAll) {
                 $timeout(suggestThreat, 500);
             }

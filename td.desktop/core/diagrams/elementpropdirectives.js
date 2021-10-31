@@ -56,7 +56,7 @@ function elementProperties(common) {
 
 }
 
-function elementThreats($routeParams, $location, common, dialogs) {
+function elementThreats($routeParams, $location, common, dialogs, threatengine) {
 
     var directive =
         {
@@ -86,7 +86,18 @@ function elementThreats($routeParams, $location, common, dialogs) {
 
         scope.onNewThreat = function () {
             newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(dialogs.template(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+            dialogs.confirm(
+                dialogs.dialogTemplate(newThreat.modelType),
+                scope.addNewThreat,
+                function () {
+                    return {
+                        heading: 'New Threat',
+                        threat: newThreat,
+                        editing: true
+                    };
+                },
+                scope.cancelNewThreat
+            );
         };
 
         scope.onThreatsPerElement = function () {
@@ -94,8 +105,9 @@ function elementThreats($routeParams, $location, common, dialogs) {
         };
 
         scope.onThreatsByContext = function () {
+            threatengine.generatePerElement(scope.element, scope.type);
             newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(dialogs.template(newThreat.modelType), scope.addThreat, function () { return { heading: 'Add this threat?', threat: newThreat, editing: false, threatIndex: 1, threatTotal: 1 }; }, scope.cancelAdd);
+            dialogs.confirm(dialogs.dialogTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'Add this threat?', threat: newThreat, editing: false, threatIndex: 1, threatTotal: 1 }; }, scope.cancelAdd);
         };
 
         scope.onEditThreat = function (index) {
@@ -106,7 +118,18 @@ function elementThreats($routeParams, $location, common, dialogs) {
             if (!threat.threatId) {
                 threat.threatId = uuidv4();
             }
-            dialogs.confirm(getTemplate(threat.modelType), scope.editThreat, function () { return { heading: 'Edit Threat', threat: threat, editing: true }; }, scope.cancelEdit);
+            dialogs.confirm(
+                dialogs.dialogTemplate(threat.modelType),
+                scope.editThreat,
+                function () {
+                    return {
+                        heading: 'Edit Threat',
+                        threat: threat,
+                        editing: true
+                    };
+                },
+                scope.cancelEdit
+            );
         };
 
         scope.removeThreat = function (index) {
@@ -115,7 +138,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             scope.setdirty();
         };
 
-        scope.addThreat = function () {
+        scope.addNewThreat = function () {
 
             if (!scope.threats) {
                 scope.threats = [];
@@ -128,7 +151,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             reset(scope.type);
         };
 
-        scope.cancelAdd = function () {
+        scope.cancelNewThreat = function () {
             reset(scope.type);
         };
 

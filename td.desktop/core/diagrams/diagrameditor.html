@@ -23,7 +23,7 @@
                     </div>
                     <div ng-if="vm.selected && vm.selected.attributes.type != 'tm.Boundary'">
                         <div ng-if="!vm.selected.outOfScope">
-                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />
+                            <tmt-element-threats suggest="vm.addThreatsPerElement" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />
                         </div>
                         <div ng-if="vm.selected.outOfScope">
                             <em>The selected element is out of scope</em>
@@ -62,7 +62,7 @@
                                 <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">
                                         <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
                                 </button>
-                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == 'tm.Boundary'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">
+                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == 'tm.Boundary'" type="button" data-toggle="tooltip" ng-click="vm.addThreatsPerElement(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">
                                     <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
                                 </button>
                                 <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">

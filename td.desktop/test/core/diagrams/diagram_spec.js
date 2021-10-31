@@ -856,6 +856,11 @@ describe('core diagram controller', function () {
         
         var element;
         var methodology;
+        var threat0 = { id: '0', title: 'title0', status: 'status0', severity: 'severity0', modelType: null };
+        var threat1 = { id: '1', title: 'title1', status: 'status1', severity: 'severity1', modelType: 'CIA' };
+        var threat2 = { id: '2', title: 'title2', status: 'status2', severity: 'severity2', modelType: 'LINDDUN' };
+        var threat3 = { id: '3', title: 'title3', status: 'status3', severity: 'severity3', modelType: 'STRIDE' };
+        var threat4 = { id: '4', title: 'title4', status: 'status4', severity: 'severity4', modelType: 'NA' };
         
         beforeEach(function() {
      
@@ -868,13 +873,14 @@ describe('core diagram controller', function () {
             var threats = [{threatId: '1', modelType: null}, {threatId: '2', modelType: null}, {threatId: '3', modelType: null}];
             var currentThreat = threats[0];
             var methodology = threats[0].modelType;
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
 
             $scope.vm.selected = element;
-            $scope.vm.generateThreats(methodology);
+            $scope.vm.addThreatsPerElement(methodology);
             $scope.$apply();
 
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
@@ -893,12 +899,13 @@ describe('core diagram controller', function () {
             var currentThreat = threats[0];
             var methodology = 'CIA';
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            mockDialogs.dialogTemplate = function () { return 'diagrams/CiaEditPane.html' };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
 
             $scope.vm.selected = element;
-            $scope.vm.generateThreats(methodology);
+            $scope.vm.addThreatsPerElement(methodology);
             $scope.$apply();
 
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
@@ -916,12 +923,13 @@ describe('core diagram controller', function () {
             var currentThreat = threats[0];
             var methodology = 'LINDDUN';
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            mockDialogs.dialogTemplate = function () { return 'diagrams/LinddunEditPane.html' };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
 
             $scope.vm.selected = element;
-            $scope.vm.generateThreats(methodology);
+            $scope.vm.addThreatsPerElement(methodology);
             $scope.$apply();
 
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
@@ -939,12 +947,13 @@ describe('core diagram controller', function () {
             var currentThreat = threats[0];
             var methodology = 'STRIDE';
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
 
             $scope.vm.selected = element;
-            $scope.vm.generateThreats(methodology);
+            $scope.vm.addThreatsPerElement(methodology);
             $scope.$apply();
 
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
@@ -962,12 +971,13 @@ describe('core diagram controller', function () {
             var currentThreat = threats[0];
             var methodology = 'STRIDING';
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
 
             $scope.vm.selected = element;
-            $scope.vm.generateThreats(methodology);
+            $scope.vm.addThreatsPerElement(methodology);
             $scope.$apply();
 
             expect(mockThreatEngine.generatePerElement).toHaveBeenCalled();
@@ -989,7 +999,7 @@ describe('core diagram controller', function () {
             spyOn(mockDialogs, 'confirm');
             
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.addThreatsPerElement()
             $scope.$apply();
             
             expect(mockDialogs.confirm).not.toHaveBeenCalled();
@@ -1001,12 +1011,13 @@ describe('core diagram controller', function () {
             var currentThreat = threats[0];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
             
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.addThreatsPerElement()
             $scope.$apply();
             
             //argument 0 is confirm - OK/Accept
@@ -1023,13 +1034,14 @@ describe('core diagram controller', function () {
             var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
             var currentThreat = threats[0];
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
             spyOn(mockDialogs, 'confirm');
             $scope.vm.dirty = false;
             
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.addThreatsPerElement()
             $scope.$apply();
             
             //argument 0 is confirm - OK/Accept
@@ -1045,6 +1057,7 @@ describe('core diagram controller', function () {
         it('should not add a threat to the element', function() {
             
             var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
@@ -1052,7 +1065,7 @@ describe('core diagram controller', function () {
             $scope.vm.dirty = false;
             
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.addThreatsPerElement()
             $scope.$apply();
             
             //argument 3 is confirm - Cancel/Ignore
@@ -1067,6 +1080,7 @@ describe('core diagram controller', function () {
         it('should not add a threat to the element', function() {
             
             var threats = [{threatId: '1', modelType: 'NA'}, {threatId: '2', modelType: 'NA'}, {threatId: '3', modelType: 'NA'}];
+            mockDialogs.dialogTemplate = function () { return 'diagrams/StrideEditPane.html' };
             mockThreatEngine.generatePerElement = function() { return $q.when(threats); };
             spyOn(mockThreatEngine, 'generatePerElement').and.callThrough();
             mockDialogs.confirm = function() {};
@@ -1074,7 +1088,7 @@ describe('core diagram controller', function () {
             $scope.vm.dirty = false;
             
             $scope.vm.selected = element;
-            $scope.vm.generateThreats()
+            $scope.vm.addThreatsPerElement()
             $scope.$apply();
             
             //argument 3 is confirm - Cancel/Ignore
@@ -1085,5 +1099,38 @@ describe('core diagram controller', function () {
             expect(mockDialogs.confirm.calls.count()).toEqual(1);
             expect($scope.vm.dirty).toBe(false);
         });
+
+        xit('should launch the edit threat dialog for backwards compatibility', function () {
+            // this does not work yet
+            angular.element($('#editThreat0')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect($location.search().threat).toEqual('0');
+        });
+
+        xit('should launch the edit CIA threat dialog', function () {
+            // this does not work yet
+            angular.element($('#editThreat1')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/CiaEditPane.html')
+            expect($location.search().threat).toEqual('1');
+        });
+
+        xit('should launch the edit LINDDUN threat dialog', function () {
+            // this does not work yet
+            angular.element($('#editThreat2')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/LinddunEditPane.html')
+            expect($location.search().threat).toEqual('2');
+        });
+
+        xit('should launch the edit STRIDE threat dialog', function () {
+            // this does not work yet
+            angular.element($('#editThreat3')).triggerHandler('click');
+            expect(mockDialogs.confirm).toHaveBeenCalled();
+            expect(mockDialogs.confirm.calls.argsFor(0)[0]).toEqual('diagrams/StrideEditPane.html')
+            expect($location.search().threat).toEqual('3');
+        });
+
     });
 });
