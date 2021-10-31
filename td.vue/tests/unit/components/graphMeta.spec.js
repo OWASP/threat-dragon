@@ -126,7 +126,7 @@ describe('components/GraphMeta.vue', () => {
     });
 
     describe('newThreat', () => {
-        let emitter, entityData;
+        let entityData;
 
         beforeEach(() => {
             entityData = {
@@ -160,8 +160,7 @@ describe('components/GraphMeta.vue', () => {
                 localVue,
                 store: mockStore,
                 mocks: {
-                    $t: key => key,
-                    $emit: emitter = jest.fn()
+                    $t: key => key
                 }
             });
             wrapper.vm.threatSelected = jest.fn();
