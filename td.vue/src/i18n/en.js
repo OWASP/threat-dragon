@@ -83,6 +83,14 @@ const en = {
             protocol: 'Protocol',
             publicNetwork: 'Public Network'
         },
+        buttons: {
+            shortcuts: 'Keyboard Shortcuts',
+            undo: 'Undo',
+            redo: 'Redo',
+            zoomIn: 'Zoom In',
+            zoomOut: 'Zoom Out',
+            toggleGrid: 'Toggle Grid'
+        },
         shortcuts: {
             title: 'Shortcuts',
             copy: {

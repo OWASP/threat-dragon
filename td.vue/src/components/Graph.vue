@@ -48,7 +48,6 @@ import stencil from '@/service/x6/stencil.js';
     - Edit multiple threats at once (nice to have)
     - Add vertical scroll bar by default (if needed?)
     - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
-    - Tooltips for graph buttons
     - Enable / Disable buttons based on state
     - Add threat suggestion button
   
@@ -99,6 +98,7 @@ export default {
             this.graph = graphFactory.get(this.$refs.graph_container);
             stencil.get(this.graph, this.$refs.stencil_container);
             // if v2, draw from json
+            // TODO:
             //this.graph.fromJSON(data);
             this.graph.centerContent();
         },

@@ -15,36 +15,43 @@
             :onBtnClick="noOp"
             v-b-modal.shortcuts
             icon="keyboard"
+            :title="$t('threatmodel.buttons.shortcuts')"
             text="" />
 
         <td-form-button
             :onBtnClick="undo"
             icon="undo"
+            :title="$t('threatmodel.buttons.undo')"
             text="" />
 
         <td-form-button
             :onBtnClick="redo"
             icon="redo"
+            :title="$t('threatmodel.buttons.redo')"
             text="" />
 
         <td-form-button
             :onBtnClick="zoomIn"
             icon="search-plus"
+            :title="$t('threatmodel.buttons.zoomIn')"
             text="" />
 
         <td-form-button
             :onBtnClick="zoomOut"
             icon="search-minus"
+            :title="$t('threatmodel.buttons.zoomOut')"
             text="" />
 
         <td-form-button
             :onBtnClick="deleteSelected"
             icon="trash"
+            :title="$t('forms.delete')"
             text="" />
 
         <td-form-button
             :onBtnClick="toggleGrid"
             icon="th"
+            :title="$t('threatmodel.buttons.toggleGrid')"
             text="" />
     </b-btn-group>
 </template>
