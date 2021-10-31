@@ -12,6 +12,7 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: [
         'src/**/*.{js,vue}',
+        '!src/service/demo/**',
         '!**/node_modules/**',
         '!**/coverage/**',
         '!src/main.js', // Bootstrap code

@@ -7,30 +7,7 @@
       <b-col md="8">
         <b-row>
           <b-col>
-            <b-btn-group>
-              <td-form-button
-                :isPrimary="true"
-                :onBtnClick="notImplemented"
-                icon="save"
-                :text="$t('forms.save')"
-              />
-              <td-form-button :onBtnClick="closeDiagram" icon="times" :text="$t('forms.close')" />
-              <td-form-button :onBtnClick="noOp" v-b-modal.shortcuts  icon="keyboard" text="" />
-              <td-form-button :onBtnClick="undo" icon="undo" text="" />
-              <td-form-button :onBtnClick="redo" icon="redo" text="" />
-              <td-form-button :onBtnClick="zoomIn" icon="search-plus" text="" />
-              <td-form-button
-                :onBtnClick="zoomOut"
-                icon="search-minus"
-                text=""
-              />
-              <td-form-button
-                :onBtnClick="deleteSelected"
-                icon="trash"
-                text=""
-              />
-              <td-form-button :onBtnClick="togggleGrid" icon="th" text="" />
-            </b-btn-group>
+                <td-graph-buttons :graph="graph" />
           </b-col>
         </b-row>
         <b-row>
@@ -49,17 +26,7 @@
     </b-row>
 
     <div>
-        <b-modal
-            id="shortcuts"
-            size="lg"
-            ok-variant="primary"
-            header-bg-variant="primary"
-            header-text-variant="light"
-            ok-only
-            :title="$t('threatmodel.shortcuts.title')"
-        >
-            <b-table :items="shortcuts"></b-table>
-        </b-modal>
+        <td-keyboard-shortcuts />
         <td-threat-edit-modal ref="threatEditModal" />
     </div>
   </div>
@@ -68,12 +35,12 @@
 <script>
 import { mapState } from 'vuex';
 
-import TdFormButton from '@/components/FormButton.vue';
+import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
+import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditModal from '@/components/ThreatEditModal.vue';
 
 import diagramService from '@/service/migration/diagram.js';
-import { getProviderType } from '@/service/provider/providers.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
 /*
@@ -81,7 +48,6 @@ import stencil from '@/service/x6/stencil.js';
     - Edit multiple threats at once (nice to have)
     - Add vertical scroll bar by default (if needed?)
     - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
-    - Tooltips for graph buttons
     - Enable / Disable buttons based on state
     - Add threat suggestion button
   
@@ -99,14 +65,14 @@ import stencil from '@/service/x6/stencil.js';
 export default {
     name: 'TdGraph',
     components: {
-        TdFormButton,
+        TdGraphButtons,
         TdGraphMeta,
+        TdKeyboardShortcuts,
         TdThreatEditModal
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
-        locale: (state) => state.locale.locale,
-        providerType: state => getProviderType(state.provider.selected)
+        locale: (state) => state.locale.locale
     }),
     watch: {
         locale(newLocale, oldLocale) {
@@ -120,14 +86,7 @@ export default {
     },
     data() {
         return {
-            graph: null,
-            gridShowing: true,
-            shortcuts: this.getKeyboardShortcuts(),
-            selectedElement: {
-                type: null,
-                data: null
-            },
-            showThreatEdit: false
+            graph: null
         };
     },
     async mounted() {
@@ -135,84 +94,11 @@ export default {
         this.drawDiagramV1();
     },
     methods: {
-        getKeyboardShortcuts() {
-            return [
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.copy.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.copy.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.paste.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.paste.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.undo.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.undo.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.redo.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.redo.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.delete.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.delete.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.pan.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.pan.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.multiSelect.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.multiSelect.action')
-                },
-                {
-                    shortcut: this.$t('threatmodel.shortcuts.zoom.shortcut'),
-                    action: this.$t('threatmodel.shortcuts.zoom.action')
-                }
-            ];
-        },
-        notImplemented() {
-            this.$toast.info('Not implemented yet. Hang in there, we\'re working on it! :) ');
-        },
-        noOp() {
-            return;
-        },
-        redo() {
-            if (this.graph.canRedo()) {
-                this.graph.redo();
-            }
-        },
-        closeDiagram() {
-            // TODO: This does nothing to revert any changes... Not sure if we want to change that or not?
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
-        },
-        undo() {
-            if (this.graph.canUndo()) {
-                this.graph.undo();
-            }
-        },
-        zoomOut() {
-            this.graph.zoom(-0.2);
-        },
-        zoomIn() {
-            this.graph.zoom(0.2);
-        },
-        deleteSelected() {
-            this.graph.removeCells(this.graph.getSelectedCells());
-        },
-        togggleGrid() {
-            if (this.gridShowing) {
-                this.graph.hideGrid();
-                this.gridShowing = false;
-            } else {
-                this.graph.showGrid();
-                this.gridShowing = true;
-            }
-        },
         init() {
             this.graph = graphFactory.get(this.$refs.graph_container);
             stencil.get(this.graph, this.$refs.stencil_container);
             // if v2, draw from json
+            // TODO:
             //this.graph.fromJSON(data);
             this.graph.centerContent();
         },

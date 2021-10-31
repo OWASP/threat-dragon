@@ -125,4 +125,52 @@ describe('components/GraphMeta.vue', () => {
         });
     });
 
+    describe('newThreat', () => {
+        let entityData;
+
+        beforeEach(() => {
+            entityData = {
+                threats: [{
+                    status: 'Open',
+                    severity: 'Medium',
+                    description: 'describing the thing',
+                    title: 'Some Threat',
+                    type: 'Spoofing',
+                    mitigation: 'Unmitigated'
+                }],
+                hasOpenThreats: true
+            };
+            const localVue = createLocalVue();
+            localVue.use(Vuex);
+            localVue.use(BootstrapVue);
+            localVue.component('font-awesome-icon', FontAwesomeIcon);
+            localVue.use(Vuex);
+            const mockStore = new Vuex.Store({
+                state: {
+                    cell: {
+                        ref: {
+                            data: entityData,
+                            getData: jest.fn()
+                        },
+                        threats: entityData.threats
+                    }
+                }
+            });
+            wrapper = shallowMount(TdGraphMeta, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key
+                }
+            });
+            wrapper.vm.threatSelected = jest.fn();
+            mockStore.dispatch = jest.fn();
+            wrapper.vm.newThreat();
+        });
+
+        it('adds a threat to the cell data', () => {
+            expect(wrapper.vm.threatSelected).toHaveBeenCalledWith(expect.anything());
+        });
+    });
+
 });

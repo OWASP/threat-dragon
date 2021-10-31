@@ -38,6 +38,10 @@
         <b-collapse id="threats" accordion="actions-accordion" role="tabpanel">
             <b-card-body>
                 <b-card-text v-if="!!cellRef">
+                    <b-btn
+                        @click="newThreat()"
+                        variant="primary"
+                        class="mb-2 add-btn">{{ $t('threats.newThreat') }}</b-btn>
                     <td-threat-card
                         v-for="(threat, idx) in threats || []"
                         :key="idx"
@@ -51,9 +55,8 @@
                         :modelType="threat.modelType"
                         @threatSelected="threatSelected" />
                 </b-card-text>
-                <!-- TODO: Add new state for no threats, or just add the button as part of the the above if !!cellRef -->
                 <b-card-text
-                    v-if="!cellRef || !cellRef.data || cellRef.data.threats.length === 0">
+                    v-if="!cellRef || !cellRef.data">
                     {{ $t('threatmodel.properties.emptyState') }}
                 </b-card-text>
             </b-card-body>
@@ -78,11 +81,17 @@
 .not-collapsed > .when-closed {
   display: none;
 }
+.add-btn {
+    width: 100%;
+}
 </style>
 
 <script>
 import { mapState } from 'vuex';
+import { v4 } from 'uuid';
 
+import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdThreatCard from '@/components/ThreatCard.vue';
 
@@ -99,8 +108,16 @@ export default {
     methods: {
         threatSelected(threatId) {
             this.$emit('threatSelected', threatId);
+        },
+        newThreat() {
+            const id = v4();
+            this.cellRef.data.threats.push({ id });
+            this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
+            this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
+            dataChanged.updateStyleAttrs(this.cellRef);
+            this.threatSelected(id);
         }
-    }
+    },
 };
 
 </script>

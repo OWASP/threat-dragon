@@ -83,6 +83,14 @@ const en = {
             protocol: 'Protocol',
             publicNetwork: 'Public Network'
         },
+        buttons: {
+            shortcuts: 'Keyboard Shortcuts',
+            undo: 'Undo',
+            redo: 'Redo',
+            zoomIn: 'Zoom In',
+            zoomOut: 'Zoom Out',
+            toggleGrid: 'Toggle Grid'
+        },
         shortcuts: {
             title: 'Shortcuts',
             copy: {
@@ -167,7 +175,8 @@ const en = {
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?'
+        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
+        newThreat: 'New Threat'
     }
 };
 
