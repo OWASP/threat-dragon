@@ -3,6 +3,8 @@
  * @description Reads an existing v1 diagram to create components for the v2 UI
  * This is not for persistence, and is done on a diagram by diagram basis
  */
+import { v4 } from 'uuid';
+
 import shapes from '../x6/shapes/index.js';
 import threats from '../threats/index.js';
 
@@ -114,6 +116,13 @@ const addMetaData = (entity, cell) => {
         data.outOfScope = !!cell.outOfScope;
         data.reasonOutOfScope = cell.reasonOutOfScope || '';
         data.threats = cell.threats || [];
+        if (data.threats.length) {
+            data.threats.forEach((threat) => {
+                if (!threat.id) {
+                    threat.id = v4();
+                }
+            });
+        }
         data.hasOpenThreats = data.threats.length > 0;
     }
 

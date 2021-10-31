@@ -44,7 +44,7 @@
         </b-row>
       </b-col>
       <b-col md="2">
-          <td-graph-meta />
+          <td-graph-meta @threatSelected="threatSelected" />
       </b-col>
     </b-row>
 
@@ -60,6 +60,7 @@
         >
             <b-table :items="shortcuts"></b-table>
         </b-modal>
+        <td-threat-edit-modal ref="threatEditModal" />
     </div>
   </div>
 </template>
@@ -67,13 +68,14 @@
 <script>
 import { mapState } from 'vuex';
 
+import TdFormButton from '@/components/FormButton.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
+import TdThreatEditModal from '@/components/ThreatEditModal.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
-import TdFormButton from '@/components/FormButton.vue';
 /*
   UI TODOs:
     - Edit multiple threats at once (nice to have)
@@ -98,7 +100,8 @@ export default {
     name: 'TdGraph',
     components: {
         TdFormButton,
-        TdGraphMeta
+        TdGraphMeta,
+        TdThreatEditModal
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
@@ -123,7 +126,8 @@ export default {
             selectedElement: {
                 type: null,
                 data: null
-            }
+            },
+            showThreatEdit: false
         };
     },
     async mounted() {
@@ -222,6 +226,9 @@ export default {
             this.graph.stopBatch(batchName);
 
             this.graph.centerContent();
+        },
+        threatSelected(threatId) {
+            this.$refs.threatEditModal.show(threatId);
         }
     },
 };
