@@ -1,4 +1,3 @@
-- Add threat engine/suggested threats
 - Add tests for ThreatmodelEdit view
 - Add report feature
 - Legend for diagram
@@ -7,8 +6,7 @@
 
 
 
-- Create modal for threat edit
-- Implement adding and removing threats
-- Check that updating threats works as expected
+- Create threat edit form
+- Add threat engine/suggested threats
 - Severity should be named "priority" (do not change json/schema, only UI)
 
