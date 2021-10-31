@@ -48,8 +48,7 @@ export default {
     }),
     data() {
         return {
-            threat: {},
-            threatIndex: -1
+            threat: {}
         };
     },
     methods: {
