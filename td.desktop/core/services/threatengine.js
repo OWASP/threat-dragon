@@ -39,6 +39,7 @@ function threatengine() {
     engine.addFact('diagramType', getModel(type));
     engine.addFact('elementIsPublicNetwork', element.isPublicNetwork);
     engine.addFact('elementIsEncrypted', element.isEncrypted);
+    engine.addFact('providesAuthentication', element.providesAuthentication);
   }
 
   function getModel(type) {
@@ -505,107 +506,132 @@ function threatengine() {
   }
 
   function initialiseRulesByContext(engine) {
-    /* STRIDE using context */
+    /* No context threat suggestion */
     engine.addRule({
       conditions: {
-        all: [
+        any: [
           {
-            fact: 'diagramType',
-            operator: 'equal',
-            value: 'STRIDE'
-          },
-          {
-            fact: 'elementType',
-            operator: 'equal',
-            value: 'tm.Flow'
-          } , {
-            fact: 'elementIsPublicNetwork',
-            operator: 'equal',
-            value: true
-          } , {
-            any: [
+            all: [
               {
-                fact: 'elementIsEncrypted',
+                fact: 'elementType',
                 operator: 'equal',
-                value: false
-              }, {
-                fact: 'elementIsEncrypted',
+                value: 'tm.Actor'
+              } , {
+                any: [
+                  {
+                    fact: 'providesAuthentication',
+                    operator: 'equal',
+                    value: false
+                  }, {
+                    fact: 'providesAuthentication',
+                    operator: 'equal',
+                    value: undefined
+                 }
+               ]
+              }
+            ]
+          }, {
+            all: [
+              {
+                fact: 'elementType',
                 operator: 'equal',
-                value: undefined
+                value: 'tm.Flow'
+              } , {
+                any: [
+                  {
+                    fact: 'elementIsPublicNetwork',
+                    operator: 'equal',
+                    value: false
+                  }, {
+                    fact: 'elementIsPublicNetwork',
+                    operator: 'equal',
+                    value: undefined
+                 }
+               ]
               }
             ]
           }
         ]
       },
       event: {
-        type: 'c1cae982-3e92-4bb2-b50b-ea51137fc3a7',
+        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
         params: {
-          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51137fc3a7',
-          title: 'Use encryption',
-          type: 'Information disclosure',
-          modelType: 'STRIDE',
+          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          title: 'No context threat suggestion',
+          type: 'TBD',
+          modelType: 'TBD',
           status: 'Open',
-          severity: 'High',
-          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
+          severity: 'TBD',
+          description: 'No context specific threat determined, add one manually if appropriate',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
-    /* CIA using context */
+    /* CAPTCHA defeat */
     engine.addRule({
       conditions: {
         all: [
           {
-            fact: 'diagramType',
-            operator: 'equal',
-            value: 'CIA'
-          },
-          {
             fact: 'elementType',
             operator: 'equal',
-            value: 'tm.Flow'
+            value: 'tm.Actor'
           } , {
-            fact: 'elementIsPublicNetwork',
+            fact: 'providesAuthentication',
             operator: 'equal',
             value: true
-          } , {
-            any: [
-              {
-                fact: 'elementIsEncrypted',
-                operator: 'equal',
-                value: false
-              }, {
-                fact: 'elementIsEncrypted',
-                operator: 'equal',
-                value: undefined
-              }
-            ]
           }
         ]
       },
       event: {
-        type: '38c51fb4-2370-4ac1-a24a-4ba171078ef1',
+        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
         params: {
-          ruleId: '38c51fb4-2370-4ac1-a24a-4ba171078ef1',
-          title: 'Use encryption',
-          type: 'Confidentiality',
-          modelType: 'CIA',
+          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          title: 'CAPTCHA defeat',
+          type: 'TBD',
+          modelType: 'TBD',
           status: 'Open',
-          severity: 'High',
-          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
+          severity: 'TBD',
+          description: '',
+          mitigation: ''
         }
       }
     });
 
-    /* LINDDUN using context */
+    /* Credential stuffing */
     engine.addRule({
       conditions: {
         all: [
           {
-            fact: 'diagramType',
+            fact: 'elementType',
             operator: 'equal',
-            value: 'LINDDUN'
-          },
+            value: 'tm.Actor'
+          } , {
+            fact: 'providesAuthentication',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '38c51fb4-2370-4ac1-a24a-4ba1deadbeef',
+        params: {
+          ruleId: '38c51fb4-2370-4ac1-a24a-4ba1deadbeef',
+          title: 'Credential stuffing',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'TBD',
+          description: 'Lists of authentication credentials stolen from elsewhere are tested against the application’s authentication mechanisms to identify whether users have re-used the same login credentials',
+          mitigation: 'Defenses against Credential Stuffing are described in the Credential Stuffing Prevention Cheat Sheet, Multi-Factor Authentication being a primary counter-measure'
+        }
+      }
+    });
+
+    /* Use encryption over public networks */
+    engine.addRule({
+      conditions: {
+        all: [
           {
             fact: 'elementType',
             operator: 'equal',
@@ -634,11 +660,42 @@ function threatengine() {
         params: {
           ruleId: '021ab22d-8d51-4501-9bb8-6dabf9c27f0d',
           title: 'Use encryption',
-          type: 'Disclosure of information',
-          modelType: 'LINDDUN',
+          type: 'TBD',
+          modelType: 'TBD',
           status: 'Open',
           severity: 'High',
-          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker, and should be encrypted either at the message or transport level.'
+          description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker',
+          mitigation: 'Data should be encrypted either at the message or transport level'
+        }
+      }
+    });
+
+    /* Fingerprinting */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Flow'
+          } , {
+            fact: 'elementIsPublicNetwork',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+        params: {
+          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          title: 'Fingerprinting',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'TBD',
+          description: 'Specific requests are sent to the application eliciting information in order to profile the application',
+          mitigation: ''
         }
       }
     });

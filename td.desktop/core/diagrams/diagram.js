@@ -30,8 +30,8 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.errored = false;
     vm.title = 'ThreatModelDiagram';
     vm.initialise = initialise,
-        /*jshint -W030 */
-        vm.dirty = false;
+    /*jshint -W030 */
+    vm.dirty = false;
     vm.graph = diagramming.newGraph();
     vm.newProcess = newProcess;
     vm.newStore = newStore;
