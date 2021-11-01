@@ -1,5 +1,6 @@
-import models from './models/index.js';
+import { v4 } from 'uuid';
 
+import models from './models/index.js';
 
 const valuesToTranslations = {
     'Confidentiality': 'threats.models.confidentiality',
@@ -21,6 +22,17 @@ const valuesToTranslations = {
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
+
+export const createNewThreat = () => ({
+    id: v4(),
+    status: '',
+    severity: '',
+    title: '',
+    type: '',
+    description: '',
+    mitigation: '',
+    modelType: ''
+});
 
 export default {
     convertToTranslationString,

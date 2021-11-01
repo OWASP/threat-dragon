@@ -6,6 +6,7 @@ describe('service/x6/graph/events.js', () => {
     let cell, edge, graph, mockStore;
 
     beforeEach(() => {
+        console.log = jest.fn();
         mockStore = { dispatch: jest.fn() };
         store.get = jest.fn().mockReturnValue(mockStore);
         graph = {

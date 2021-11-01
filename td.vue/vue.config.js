@@ -28,5 +28,8 @@ module.exports = {
                 options['b-img-lazy'] = ['src', 'blank-src'];
                 return options;
             });
+    },
+    configureWebpack: {
+        devtool: 'source-map'
     }
 };

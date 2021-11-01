@@ -24,11 +24,13 @@ const actions = {
 const mutations = {
     [CELL_SELECTED]: (state, ref) => {
         state.ref = ref;
-        state.threats = state.ref && state.ref.data && state.ref.data.threats ? state.ref.data.threats : [];
+        if (state.ref && state.ref.data && state.ref.data.threats) {
+            state.ref.data.threats.forEach((threat, idx) => Vue.set(state.threats, idx, threat));
+        }
     },
     [CELL_UNSELECTED]: (state) => clearState(state),
     [CELL_DATA_UPDATED]: (state, data) => {
-        if (!state.ref) {
+        if (!state.ref || !state.ref.setData) {
             return;
         }
 

@@ -12,6 +12,7 @@ describe('App.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
+        console.log = jest.fn();
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);

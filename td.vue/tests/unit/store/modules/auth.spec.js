@@ -20,6 +20,7 @@ describe('store/modules/auth.js', () => {
     let mocks;
 
     beforeEach(() => {
+        console.log = jest.fn();
         mocks = getMocks();
         loginApi.logoutAsync = jest.fn();
         jest.spyOn(mocks, 'commit');
