@@ -65,6 +65,7 @@ function elementThreats($routeParams, $location, common, dialogs, threatengine) 
             restrict: 'E',
             scope:
             {
+                context: '=',
                 suggest: '=',
                 threats: '=',
                 type: '=',
@@ -105,9 +106,7 @@ function elementThreats($routeParams, $location, common, dialogs, threatengine) 
         };
 
         scope.onThreatsByContext = function () {
-            threatengine.generatePerElement(scope.element, scope.type);
-            newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(dialogs.dialogTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'Add this threat?', threat: newThreat, editing: false, threatIndex: 1, threatTotal: 1 }; }, scope.cancelAdd);
+            scope.context(scope.type);
         };
 
         scope.onEditThreat = function (index) {

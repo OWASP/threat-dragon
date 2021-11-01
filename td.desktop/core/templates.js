@@ -123,7 +123,7 @@ angular.module('templates', [])
     '                    </div>\n' +
     '                    <div ng-if="vm.selected && vm.selected.attributes.type != \'tm.Boundary\'">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats suggest="vm.addThreatsPerElement" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
+    '                            <tmt-element-threats suggest="vm.addThreatsPerElement" context="vm.addThreatsByContext" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +

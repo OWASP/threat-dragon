@@ -23,7 +23,7 @@
                     </div>
                     <div ng-if="vm.selected && vm.selected.attributes.type != 'tm.Boundary'">
                         <div ng-if="!vm.selected.outOfScope">
-                            <tmt-element-threats suggest="vm.addThreatsPerElement" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />
+                            <tmt-element-threats suggest="vm.addThreatsPerElement" context="vm.addThreatsByContext" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />
                         </div>
                         <div ng-if="vm.selected.outOfScope">
                             <em>The selected element is out of scope</em>

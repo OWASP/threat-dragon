@@ -43,6 +43,7 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.select = select;
     vm.edit = edit;
     vm.addThreatsPerElement = addThreatsPerElement;
+    vm.addThreatsByContext = addThreatsByContext;
     vm.duplicateElement = duplicateElement;
     vm.setGrid = setGrid;
     vm.showGrid = false;
@@ -265,6 +266,12 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     function addThreatsPerElement(type) {
         if (vm.selected) {
             threatengine.generatePerElement(vm.selected, type).then(onAcceptIgnoreThreats);
+        }
+    }
+
+    function addThreatsByContext(type) {
+        if (vm.selected) {
+            threatengine.generateByContext(vm.selected, type).then(onAcceptIgnoreThreats);
         }
     }
 
