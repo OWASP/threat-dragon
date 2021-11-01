@@ -9,8 +9,7 @@ import shapes from '../x6/shapes/index.js';
 import threats from '../threats/index.js';
 
 const upgradeThreat = (threat) => {
-    threat.type = threats.convertToTranslationString(threat.type);
-    threat.modelType = threats.getModelByTranslation(threat.type);
+    threat.modelType = threats.getModelByTranslation(threats.convertToTranslationString(threat.type));
 };
 
 const getLabelText = (cell, label) => {

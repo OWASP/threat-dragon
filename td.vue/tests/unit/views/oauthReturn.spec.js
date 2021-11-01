@@ -12,6 +12,10 @@ describe('views/OauthReturn.vue', () => {
     const provider = 'test';
     let localVue, mockStore;
 
+    beforeEach(() => {
+        console.error = jest.fn();
+    });
+
     describe('expected path', () => {
         beforeEach(() => {
             localVue = createLocalVue();

@@ -18,9 +18,24 @@ const getByTranslationValue = (translation) => {
     return '';
 };
 
+const threatTypesByModel = {
+    cia,
+    linddun,
+    stride
+};
+
+const getThreatTypes = (modelType) => {
+    const threatTypes = threatTypesByModel[modelType.toLowerCase()];
+    if (!threatTypes) {
+        console.error('Unkown model type: ', modelType);
+    }
+    return threatTypes || {};
+};
+
 export default {
     cia,
     getByTranslationValue,
+    getThreatTypes,
     linddun,
     stride
 };

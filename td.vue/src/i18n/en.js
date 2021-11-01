@@ -176,7 +176,26 @@ const en = {
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
         confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        newThreat: 'New Threat'
+        newThreat: 'New Threat',
+        properties: {
+            title: 'Title',
+            status: 'Status',
+            priority: 'Priority',
+            type: 'Type',
+            description: 'Description',
+            mitigation: 'Mitigations',
+            modelType: 'Model Type'
+        },
+        status: {
+            notApplicable: 'Not Applicable',
+            open: 'Open',
+            mitigated: 'Mitigated'
+        },
+        priority: {
+            low: 'Low',
+            medium: 'Medium',
+            high: 'High'
+        }
     }
 };
 

@@ -5,8 +5,5 @@
 - Update or remove the CSP violation reporter
 
 
-
-- Create threat edit form
 - Add threat engine/suggested threats
-- Severity should be named "priority" (do not change json/schema, only UI)
-
+- Update UI when outOfScope value changed (or any other value that should change styles)
