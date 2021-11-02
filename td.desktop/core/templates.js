@@ -242,6 +242,21 @@ angular.module('templates', [])
     '            <label>Privilege level</label>\n' +
     '            <input name="privilegeLevelInput" ng-disabled="selected.outOfScope" class="form-control" type="text" ng-model="selected.privilegeLevel" ng-change="edit()" placeholder="Privilege level" />\n' +
     '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxHandlesCardPayment" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesCardPayment" ng-change="edit()" /> Handles card payment\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxIsWebApplication" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isWebApplication" ng-change="edit()" /> Is web application\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxHandlesGoodsOrServices" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesGoodsOrServices" ng-change="edit()" /> Handles goods or services\n' +
+    '            </label>\n' +
+    '        </div>\n' +
     '    </div>\n' +
     '    <div ng-show="elementType === \'tm.Actor\'">\n' +
     '        <div class="checkbox">\n' +
@@ -259,6 +274,11 @@ angular.module('templates', [])
     '        <div class="checkbox">\n' +
     '            <label>\n' +
     '                <input name="checkboxStoresCredentials" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesCredentials" ng-change="edit()" /> Stores credentials\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxStoresInventory" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesInventory" ng-change="edit()" /> Stores inventory\n' +
     '            </label>\n' +
     '        </div>\n' +
     '        <div class="checkbox">\n' +
@@ -492,7 +512,7 @@ angular.module('templates', [])
     '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element\n' +
     '</button>\n' +
     '<button id="buttonNewThreatByContext" class="btn btn-link" ng-click="onThreatsByContext()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> Threats by context\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Threats by context<br>(Experimental)\n' +
     '</button>\n' +
     '')
   $templateCache.put('layout/pager.html',

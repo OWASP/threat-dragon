@@ -37,9 +37,17 @@ function threatengine() {
   function addFacts(element, type, engine) {
     engine.addFact('elementType', element.attributes.type);
     engine.addFact('diagramType', getModel(type));
-    engine.addFact('elementIsPublicNetwork', element.isPublicNetwork);
-    engine.addFact('elementIsEncrypted', element.isEncrypted);
+    engine.addFact('isPublicNetwork', element.isPublicNetwork);
+    engine.addFact('isEncrypted', element.isEncrypted);
     engine.addFact('providesAuthentication', element.providesAuthentication);
+    engine.addFact('isALog', element.isALog);
+    engine.addFact('storesCredentials', element.storesCredentials);
+    engine.addFact('storesInventory', element.storesInventory);
+    engine.addFact('isEncrypted', element.isEncrypted);
+    engine.addFact('isSigned', element.isSigned);
+    engine.addFact('handlesCardPayment', element.handlesCardPayment);
+    engine.addFact('isWebApplication', element.isWebApplication);
+    engine.addFact('handlesGoodsOrServices', element.handlesGoodsOrServices);
   }
 
   function getModel(type) {
@@ -61,6 +69,8 @@ function threatengine() {
     PROCESS | X | X | X | X | X | X
     FLOW    |   | X |   | X | X |
     */
+
+    /* STRIDE Spoofing */
     engine.addRule({
       conditions: {
         all: [
@@ -88,11 +98,13 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic spoofing threat'
+          description: 'A generic spoofing threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* STRIDE Tampering */
     engine.addRule({
       conditions: {
         all: [
@@ -116,11 +128,13 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic tampering threat'
+          description: 'A generic tampering threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* STRIDE Repudiation */
     engine.addRule({
       conditions: {
         all: [
@@ -144,11 +158,13 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic repudiation threat'
+          description: 'A generic repudiation threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* STRIDE Information disclosure */
     engine.addRule({
       conditions: {
         all: [
@@ -172,11 +188,13 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic information disclosure threat'
+          description: 'A generic information disclosure threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* STRIDE DoS */
     engine.addRule({
       conditions: {
         all: [
@@ -200,11 +218,13 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic DoS threat'
+          description: 'A generic DoS threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* STRIDE Elevation of privileges */
     engine.addRule({
       conditions: {
         all: [
@@ -229,12 +249,14 @@ function threatengine() {
           modelType: 'STRIDE',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic elevation threat'
+          description: 'A generic elevation of privileges threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
     /* CIA per element is all three for all elements except boundary */
+    /* CIA Confidentiality */
     engine.addRule({
       conditions: {
         all: [
@@ -254,11 +276,13 @@ function threatengine() {
           modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to confidentiality'
+          description: 'A generic threat to confidentiality',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* CIA Integrity */
     engine.addRule({
       conditions: {
         all: [
@@ -278,11 +302,13 @@ function threatengine() {
           modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to integrity'
+          description: 'A generic threat to integrity',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* CIA Availability */
     engine.addRule({
       conditions: {
         all: [
@@ -302,7 +328,8 @@ function threatengine() {
           modelType: 'CIA',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to availability'
+          description: 'A generic threat to availability',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
@@ -314,6 +341,7 @@ function threatengine() {
     FLOW    | X | X | X | X | X |   | X
     PROCESS | X | X | X | X | X |   | X
     */
+    /* LINDDUN Linkability */
     engine.addRule({
       conditions: {
         all: [
@@ -333,11 +361,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to linkability'
+          description: 'A generic linkability threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Identifiability */
     engine.addRule({
       conditions: {
         all: [
@@ -357,11 +387,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to identifiability'
+          description: 'A generic identifiability threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Non-repudiation */
     engine.addRule({
       conditions: {
         all: [
@@ -385,11 +417,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to non-repudiation'
+          description: 'A generic non-repudiation threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Detectability */
     engine.addRule({
       conditions: {
         all: [
@@ -413,11 +447,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to detectability'
+          description: 'A generic detectability threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Disclosure of information */
     engine.addRule({
       conditions: {
         all: [
@@ -441,11 +477,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to disclosure of information'
+          description: 'A generic disclosure of information threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Unawareness */
     engine.addRule({
       conditions: {
         all: [
@@ -470,11 +508,13 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to unawareness'
+          description: 'A generic unawareness threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
 
+    /* LINDDUN Non-compliance */
     engine.addRule({
       conditions: {
         all: [
@@ -498,7 +538,8 @@ function threatengine() {
           modelType: 'LINDDUN',
           status: 'Open',
           severity: 'Medium',
-          description: 'A generic threat to non-compliance'
+          description: 'A generic non-compliance threat',
+          mitigation: 'Mitigation or prevention for the threat'
         }
       }
     });
@@ -506,7 +547,7 @@ function threatengine() {
   }
 
   function initialiseRulesByContext(engine) {
-    /* No context threat suggestion */
+    /* If no context threat suggestion respond with empty threat */
     engine.addRule({
       conditions: {
         any: [
@@ -539,29 +580,41 @@ function threatengine() {
               } , {
                 any: [
                   {
-                    fact: 'elementIsPublicNetwork',
+                    fact: 'isPublicNetwork',
                     operator: 'equal',
                     value: false
                   }, {
-                    fact: 'elementIsPublicNetwork',
+                    fact: 'isPublicNetwork',
                     operator: 'equal',
                     value: undefined
-                 }
-               ]
+                  }
+                ]
+              } , {
+                any: [
+                  {
+                    fact: 'isEncrypted',
+                    operator: 'equal',
+                    value: false
+                  }, {
+                    fact: 'isEncrypted',
+                    operator: 'equal',
+                    value: undefined
+                  }
+                ]
               }
             ]
           }
         ]
       },
       event: {
-        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+        type: 'eeb8d742-5213-44b2-bfc3-c454e4e03fbf',
         params: {
-          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          ruleId: 'eeb8d742-5213-44b2-bfc3-c454e4e03fbf',
           title: 'No context threat suggestion',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
-          severity: 'TBD',
+          severity: 'Medium',
           description: 'No context specific threat determined, add one manually if appropriate',
           mitigation: 'Mitigation or prevention for the threat'
         }
@@ -584,16 +637,16 @@ function threatengine() {
         ]
       },
       event: {
-        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+        type: '5b0d4c4e-8245-4bea-a2ad-cf0be0a441f5',
         params: {
-          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          ruleId: '5b0d4c4e-8245-4bea-a2ad-cf0be0a441f5',
           title: 'CAPTCHA defeat',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
-          severity: 'TBD',
-          description: '',
-          mitigation: ''
+          severity: 'Medium',
+          description: 'Automation is used in an attempt to analyse and determination the answers to CAPTCHA tests and related puzzles',
+          mitigation: 'Defences include guarding against automation, unguessable CAPTCHA and proper enforcement of behavioral workflow'
         }
       }
     });
@@ -614,16 +667,16 @@ function threatengine() {
         ]
       },
       event: {
-        type: '38c51fb4-2370-4ac1-a24a-4ba1deadbeef',
+        type: 'da483c51-1891-46ac-8453-6b1706b2a3d6',
         params: {
-          ruleId: '38c51fb4-2370-4ac1-a24a-4ba1deadbeef',
+          ruleId: 'da483c51-1891-46ac-8453-6b1706b2a3d6',
           title: 'Credential stuffing',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
-          severity: 'TBD',
+          severity: 'Medium',
           description: 'Lists of authentication credentials stolen from elsewhere are tested against the application’s authentication mechanisms to identify whether users have re-used the same login credentials',
-          mitigation: 'Defenses against Credential Stuffing are described in the Credential Stuffing Prevention Cheat Sheet, Multi-Factor Authentication being a primary counter-measure'
+          mitigation: 'Defences against Credential Stuffing are described in the Credential Stuffing Prevention Cheat Sheet, Multi-Factor Authentication being a primary counter-measure'
         }
       }
     });
@@ -637,17 +690,17 @@ function threatengine() {
             operator: 'equal',
             value: 'tm.Flow'
           } , {
-            fact: 'elementIsPublicNetwork',
+            fact: 'isPublicNetwork',
             operator: 'equal',
             value: true
           } , {
             any: [
               {
-                fact: 'elementIsEncrypted',
+                fact: 'isEncrypted',
                 operator: 'equal',
                 value: false
               }, {
-                fact: 'elementIsEncrypted',
+                fact: 'isEncrypted',
                 operator: 'equal',
                 value: undefined
               }
@@ -663,9 +716,39 @@ function threatengine() {
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
-          severity: 'High',
+          severity: 'Medium',
           description: 'Unencrypted data sent over a public network may be intercepted and read by an attacker',
           mitigation: 'Data should be encrypted either at the message or transport level'
+        }
+      }
+    });
+
+    /* Vulnerable cryptography */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Flow'
+          } , {
+            fact: 'isEncrypted',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'ff2fca4d-dedf-46f2-b9ac-aed70055bb4d',
+        params: {
+          ruleId: 'ff2fca4d-dedf-46f2-b9ac-aed70055bb4d',
+          title: 'Vulnerable cryptography',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
+          mitigation: 'Use up to date cryptography and transport protocols'
         }
       }
     });
@@ -679,26 +762,633 @@ function threatengine() {
             operator: 'equal',
             value: 'tm.Flow'
           } , {
-            fact: 'elementIsPublicNetwork',
+            fact: 'isPublicNetwork',
             operator: 'equal',
             value: true
           }
         ]
       },
       event: {
-        type: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+        type: 'f5f817d5-a067-4415-a40a-b500cb2ab9ad',
         params: {
-          ruleId: 'c1cae982-3e92-4bb2-b50b-ea51deadbeef',
+          ruleId: 'f5f817d5-a067-4415-a40a-b500cb2ab9ad',
           title: 'Fingerprinting',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
-          severity: 'TBD',
+          severity: 'Medium',
           description: 'Specific requests are sent to the application eliciting information in order to profile the application',
-          mitigation: ''
+          mitigation: 'Defences include restricting what information is broadcast for example version numbers and package details'
         }
       }
     });
+
+    /* Expediting */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          }
+        ]
+      },
+      event: {
+        type: 'ea1adb4d-097d-45a8-8e48-b728a996f487',
+        params: {
+          ruleId: 'ea1adb4d-097d-45a8-8e48-b728a996f487',
+          title: 'Expediting',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Using speed to violate explicit or implicit assumptions about the application’s normal use to achieve unfair individual gain, often associated with deceit and loss to some other party.',
+          mitigation: 'Defences include providing  enforcement of behavioral workflow and anti-automation'
+        }
+      }
+    });
+
+    /* Vulnerability scanning */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          }
+        ]
+      },
+      event: {
+        type: 'd97bcb80-f96d-44af-869a-d0441761be05',
+        params: {
+          ruleId: 'd97bcb80-f96d-44af-869a-d0441761be05',
+          title: 'Vulnerability scanning',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Systematic enumeration and examination in order to find weaknesses and points where a security vulnerability might exist',
+          mitigation: 'Defences include providing Anti-Automation'
+        }
+      }
+    });
+
+    /* Denial of Service */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          }
+        ]
+      },
+      event: {
+        type: 'ce2fe37e-0742-4278-8915-40dc2226150e',
+        params: {
+          ruleId: 'ce2fe37e-0742-4278-8915-40dc2226150e',
+          title: 'Denial of Service',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Usage may resemble legitimate application usage but leads to exhaustion of resources',
+          mitigation: 'Mitigation or prevention such as providing backoff, avoiding forced deadlock, resource management'
+        }
+      }
+    });
+
+    /* Carding */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesCardPayment',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '6cc27f83-ae03-4589-8e9b-24d4c2d4d8cd',
+        params: {
+          ruleId: '6cc27f83-ae03-4589-8e9b-24d4c2d4d8cd',
+          title: 'Carding',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Lists of full credit/debit card data are tested against a merchant payment processes to identify valid card details',
+          mitigation: 'Defences include control of interaction frequency, enforcement of a single unique a action and preventing abuse of functionality'
+        }
+      }
+    });
+
+    /* Card cracking */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesCardPayment',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '505afd31-7b3f-4733-b91c-71abb488d2eb',
+        params: {
+          ruleId: '505afd31-7b3f-4733-b91c-71abb488d2eb',
+          title: 'Card cracking',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Brute force attack against application payment card process to identify the missing values for start date, expiry date and card security code ',
+          mitigation: 'Defences include control of interaction frequency, preventing brute force attacks and anti-automation'
+        }
+      }
+    });
+
+    /* Cashing out */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesCardPayment',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'c7b098d3-34df-432a-ad52-8f10c4ef6b07',
+        params: {
+          ruleId: 'c7b098d3-34df-432a-ad52-8f10c4ef6b07',
+          title: 'Cashing out',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Obtaining currency or higher-value merchandise via the application using stolen previously validated payment cards or account login credentials',
+          mitigation: 'Defences include control of interaction frequency, enforcement of a single unique action, anti-automation and preventing abuse of functionality'
+        }
+      }
+    });
+
+    /* Footprinting */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'isWebApplication',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '20527bee-aae7-4593-acac-7a07169ccc4f',
+        params: {
+          ruleId: '20527bee-aae7-4593-acac-7a07169ccc4f',
+          title: 'Footprinting',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Information gathering with the objective of learning as much as possible about the composition, configuration and security mechanisms of the application',
+          mitigation: 'Defences include shutting down unnecessary services/ports and excluding information that could identify and compromise security of the organisation'
+        }
+      }
+    });
+
+    /* Scalping */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesGoodsOrServices',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '97915248-fc96-4fe1-9122-7bbd00fe71de',
+        params: {
+          ruleId: '97915248-fc96-4fe1-9122-7bbd00fe71de',
+          title: 'Scalping',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Mass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
+          mitigation: 'Defences against this automated threat include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
+        }
+      }
+    });
+
+    /* Sniping */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesGoodsOrServices',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'd6d15882-15d5-4da1-88a5-dc3eae0b4a64',
+        params: {
+          ruleId: 'd6d15882-15d5-4da1-88a5-dc3eae0b4a64',
+          title: 'Sniping',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Automated exploitation of system latencies in the form of timing attacks',
+          mitigation: 'Defences include anti-automation and prevention of abuse of functionality'
+        }
+      }
+    });
+
+    /* Denial of inventory */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          } , {
+            fact: 'handlesGoodsOrServices',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '7403fdb4-9d89-4fb7-be5c-c37ce142af5e',
+        params: {
+          ruleId: '7403fdb4-9d89-4fb7-be5c-c37ce142af5e',
+          title: 'Denial of inventory ',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Selection and deliberate holding of items from a limited inventory or stock such that other users are unable to buy/pay/confirm the items',
+          mitigation: 'Defences include control of interaction frequency and anti-automation'
+        }
+      }
+    });
+
+    /* Scraping */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          }
+        ]
+      },
+      event: {
+        type: '80f32309-4f8a-4676-993b-7a37cbf62df1',
+        params: {
+          ruleId: '80f32309-4f8a-4676-993b-7a37cbf62df1',
+          title: 'Scraping',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Collecting accessible data and/or processed output from the application',
+          mitigation: 'Detect fake or compromised accounts, ensure information is accessible only with authentication and authorisation'
+        }
+      }
+    });
+
+    /* Skewing */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          }
+        ]
+      },
+      event: {
+        type: '40aee5ad-37ff-4c70-91d4-9ab6d91d1463',
+        params: {
+          ruleId: '40aee5ad-37ff-4c70-91d4-9ab6d91d1463',
+          title: 'Skewing',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Automated repeated clicking or requesting or submitting content, affecting application based metrics such as counts, and measures of frequency and/or rate',
+          mitigation: 'Defences include control of interaction frequency or proper enforcement of a single unique action'
+        }
+      }
+    });
+
+    /* Spamming */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          }
+        ]
+      },
+      event: {
+        type: 'fe90a897-3ff2-47a5-94db-2a4d6f17bb57',
+        params: {
+          ruleId: 'fe90a897-3ff2-47a5-94db-2a4d6f17bb57',
+          title: 'Spamming',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Storing malicious such as malware, Iframe distribution, photographs & videos, advertisements, referrer spam and tracking/surveillance code',
+          mitigation: 'Defences include detecting embedded malicious code, controling interaction frequency and enforcement of a single unique action'
+        }
+      }
+    });
+
+    /* Credential cracking */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'storesCredentials',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'dc09cecf-cb06-455d-9e77-b9372bf6c8eb',
+        params: {
+          ruleId: 'dc09cecf-cb06-455d-9e77-b9372bf6c8eb',
+          title: 'Credential cracking',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Brute force, dictionary and guessing attacks used against authentication processes of the application to identify valid account credentials',
+          mitigation: 'Defences include restriction of excessive authentication attempts, control of interaction frequency and enforcement of a single unique action'
+        }
+      }
+    });
+
+    /* Account creation */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'storesCredentials',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'd960d589-80da-41dc-a7c2-33136bdda7e0',
+        params: {
+          ruleId: 'd960d589-80da-41dc-a7c2-33136bdda7e0',
+          title: 'Account creation',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Bulk account creation, and sometimes profile population, by using the application’s account signup processes',
+          mitigation: 'Defences include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
+        }
+      }
+    });
+
+    /* Account aggregation */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'storesCredentials',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '7b1c36b3-104a-4d82-97bb-a64c12284641',
+        params: {
+          ruleId: '7b1c36b3-104a-4d82-97bb-a64c12284641',
+          title: 'Account aggregation',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Compilation of credentials and information from multiple application accounts into another system',
+          mitigation: 'Defences include control of interaction frequency and prevention of abuse of functionality'
+        }
+      }
+    });
+
+    /* Coupon cracking */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'storesInventory',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '3853aaed-f262-4310-98df-484c5ef6609a',
+        params: {
+          ruleId: '3853aaed-f262-4310-98df-484c5ef6609a',
+          title: 'Coupon cracking',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Mass enumeration (for example coupon numbers, voucher codes, discount tokens) providing some form of user benefit within the application',
+          mitigation: 'Defences include providing anti-automation, guarding against brute force, and preventing abuse of functionality'
+        }
+      }
+    });
+
+    /* Scalping */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'storesInventory',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: 'c50e8d53-5e0a-45e7-8c69-be92492ad7dc',
+        params: {
+          ruleId: 'c50e8d53-5e0a-45e7-8c69-be92492ad7dc',
+          title: 'Scalping',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Mass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
+          mitigation: 'Defences against this automated threat include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
+        }
+      }
+    });
+
+    /* Vulnerable cryptography */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'isEncrypted',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '4fb623f6-2896-4209-8689-ff1b8a932105',
+        params: {
+          ruleId: '4fb623f6-2896-4209-8689-ff1b8a932105',
+          title: 'Vulnerable cryptography',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
+          mitigation: 'Use up to date cryptography for checksums, signatures and encryption'
+        }
+      }
+    });
+
+    /* Vulnerable cryptography */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'isSigned',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '034095d9-9012-4cb5-a7a8-1e19ab72bba3',
+        params: {
+          ruleId: '034095d9-9012-4cb5-a7a8-1e19ab72bba3',
+          title: 'Vulnerable cryptography',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
+          mitigation: 'Use up to date cryptographic methods for signatures and certificates'
+        }
+      }
+    });
+
+    /* Logs contain sensitive data */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Store'
+          } , {
+            fact: 'isALog',
+            operator: 'equal',
+            value: true
+          }
+        ]
+      },
+      event: {
+        type: '7942656e-51dd-4b15-a38d-deab704878e1',
+        params: {
+          ruleId: '7942656e-51dd-4b15-a38d-deab704878e1',
+          title: 'Logs contain sensitive data ',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'Logs may be read by aunauthorised users or made public, sensitive data may then be disclosed',
+          mitigation: 'Minimise any sensitive data contained in logs, consider encryption techniques'
+        }
+      }
+    });
+
   }
 }
 

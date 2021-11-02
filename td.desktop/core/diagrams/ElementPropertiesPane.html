@@ -25,6 +25,21 @@
             <label>Privilege level</label>
             <input name="privilegeLevelInput" ng-disabled="selected.outOfScope" class="form-control" type="text" ng-model="selected.privilegeLevel" ng-change="edit()" placeholder="Privilege level" />
         </div>
+        <div class="checkbox">
+            <label>
+                <input name="checkboxHandlesCardPayment" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesCardPayment" ng-change="edit()" /> Handles card payment
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input name="checkboxIsWebApplication" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isWebApplication" ng-change="edit()" /> Is web application
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input name="checkboxHandlesGoodsOrServices" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesGoodsOrServices" ng-change="edit()" /> Handles goods or services
+            </label>
+        </div>
     </div>
     <div ng-show="elementType === 'tm.Actor'">
         <div class="checkbox">
@@ -42,6 +57,11 @@
         <div class="checkbox">
             <label>
                 <input name="checkboxStoresCredentials" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesCredentials" ng-change="edit()" /> Stores credentials
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input name="checkboxStoresInventory" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesInventory" ng-change="edit()" /> Stores inventory
             </label>
         </div>
         <div class="checkbox">
