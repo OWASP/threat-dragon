@@ -48,6 +48,7 @@ function threatengine() {
     engine.addFact('handlesCardPayment', element.handlesCardPayment);
     engine.addFact('isWebApplication', element.isWebApplication);
     engine.addFact('handlesGoodsOrServices', element.handlesGoodsOrServices);
+    engine.addFact('privilegeLevel', element.privilegeLevel);
   }
 
   function getModel(type) {
@@ -779,6 +780,32 @@ function threatengine() {
           severity: 'Medium',
           description: 'Specific requests are sent to the application eliciting information in order to profile the application',
           mitigation: 'Defences include restricting what information is broadcast for example version numbers and package details'
+        }
+      }
+    });
+
+    /* Elevation of privilege */
+    engine.addRule({
+      conditions: {
+        all: [
+          {
+            fact: 'elementType',
+            operator: 'equal',
+            value: 'tm.Process'
+          }
+        ]
+      },
+      event: {
+        type: '6463e063-e7c5-4305-9d8d-0c8e978ab86b',
+        params: {
+          ruleId: '6463e063-e7c5-4305-9d8d-0c8e978ab86b',
+          title: 'Elevation of privilege',
+          type: 'TBD',
+          modelType: 'TBD',
+          status: 'Open',
+          severity: 'Medium',
+          description: 'If a process is comprimised and under control of a malicious actor, horizontal/lateral elevation of privilege can comprimise other processes',
+          mitigation: 'Processes should run with the least privilege practical, to minimise the impact of horizontal elevation of privilege'
         }
       }
     });
