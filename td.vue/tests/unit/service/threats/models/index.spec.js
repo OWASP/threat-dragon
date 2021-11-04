@@ -21,6 +21,11 @@ describe('service/threats/models/index.js', () => {
             expect(models.getByTranslationValue('threats.models.fake'))
                 .toEqual('');
         });
+
+        it('returns an empty string for an undefined type', () => {
+            expect(models.getByTranslationValue())
+                .toEqual('');
+        });
     });
 
     describe('getThreatTypes', () => {
