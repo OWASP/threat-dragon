@@ -3,6 +3,10 @@ import linddun from './linddun.js';
 import stride from './stride.js';
 
 const getByTranslationValue = (translation) => {
+    if (!translation) {
+        return '';
+    }
+    
     if (Object.values(cia).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'CIA';
     }

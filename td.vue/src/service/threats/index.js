@@ -4,7 +4,7 @@ import models from './models/index.js';
 
 const valuesToTranslations = {
     'Confidentiality': 'threats.models.confidentiality',
-    'Iintegrity': 'threats.models.integrity',
+    'Integrity': 'threats.models.integrity',
     'Availability': 'threats.models.availability',
     'Linkability': 'threats.models.linkability',
     'Identifiability': 'threats.models.identifiability',
