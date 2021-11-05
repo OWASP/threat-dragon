@@ -48,11 +48,22 @@ To install, run: `npm install` from the root of the project.  A `postinstall` sc
 
 Running `npm run start` from the root directory of the repository will start the front-end and the server.
 
-## Docker
+## Docker (local build)
 To run Threat Dragon in a docker container, configure your environment using dotenv
 as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+
+## Docker (from dockerhub)
+Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.5.8`
+
+### <ins>Do not use the latest tag (which is the default), as it could be a development release</ins>
+
+Alternatively, you can use the `stable` tag, which will always be the latest official release.
+
+- `docker pull threatdragon/owasp-threat-dragon:v1.5.8`
+- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v1.5.8`
+
 
 ## Environment variables
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
