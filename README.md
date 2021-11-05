@@ -62,7 +62,7 @@ Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as 
 Alternatively, you can use the `stable` tag, which will always be the latest official release.
 
 - `docker pull threatdragon/owasp-threat-dragon:v1.5.8`
-- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env`
+- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v1.5.8`
 
 
 ## Environment variables
