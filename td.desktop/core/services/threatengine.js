@@ -568,8 +568,8 @@ function threatengine() {
                     fact: 'providesAuthentication',
                     operator: 'equal',
                     value: undefined
-                 }
-               ]
+                  }
+                ]
               }
             ]
           }, {
@@ -784,7 +784,7 @@ function threatengine() {
       }
     });
 
-    /* Elevation of privilege */
+    /* Least privilege */
     engine.addRule({
       conditions: {
         all: [
@@ -792,6 +792,14 @@ function threatengine() {
             fact: 'elementType',
             operator: 'equal',
             value: 'tm.Process'
+          }, {
+            fact: 'privilegeLevel',
+            operator: 'notEqual',
+            value: ''
+          }, {
+            fact: 'privilegeLevel',
+            operator: 'notEqual',
+            value: undefined
           }
         ]
       },
@@ -799,13 +807,13 @@ function threatengine() {
         type: '6463e063-e7c5-4305-9d8d-0c8e978ab86b',
         params: {
           ruleId: '6463e063-e7c5-4305-9d8d-0c8e978ab86b',
-          title: 'Elevation of privilege',
+          title: 'Least privilege',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'If a process is comprimised and under control of a malicious actor, horizontal/lateral elevation of privilege can comprimise other processes',
-          mitigation: 'Processes should run with the least privilege practical, to minimise the impact of horizontal elevation of privilege'
+          description: 'If a process is comprimised and under control of a malicious actor, horizontal/lateral elevation of privilege can be used to comprimise other processes',
+          mitigation: 'Processes should run with least privilege that is practical, to minimise the impact of horizontal elevation of privilege'
         }
       }
     });
@@ -831,7 +839,7 @@ function threatengine() {
           status: 'Open',
           severity: 'Medium',
           description: 'Using speed to violate explicit or implicit assumptions about the application’s normal use to achieve unfair individual gain, often associated with deceit and loss to some other party.',
-          mitigation: 'Defences include providing  enforcement of behavioral workflow and anti-automation'
+          mitigation: 'Defences include providing enforcement of behavioral workflow and anti-automation'
         }
       }
     });
@@ -857,7 +865,7 @@ function threatengine() {
           status: 'Open',
           severity: 'Medium',
           description: 'Systematic enumeration and examination in order to find weaknesses and points where a security vulnerability might exist',
-          mitigation: 'Defences include providing Anti-Automation'
+          mitigation: 'Defences include providing anti-automation'
         }
       }
     });
