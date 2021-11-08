@@ -646,7 +646,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Automation is used in an attempt to analyse and determination the answers to CAPTCHA tests and related puzzles',
+          description: 'See OWASP Automated Threat #9:\nAutomation is used in an attempt to analyse and determination the answers to CAPTCHA tests and related puzzles',
           mitigation: 'Defences include guarding against automation, unguessable CAPTCHA and proper enforcement of behavioral workflow'
         }
       }
@@ -676,8 +676,8 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Lists of authentication credentials stolen from elsewhere are tested against the application’s authentication mechanisms to identify whether users have re-used the same login credentials',
-          mitigation: 'Defences against Credential Stuffing are described in the Credential Stuffing Prevention Cheat Sheet, Multi-Factor Authentication being a primary counter-measure'
+          description: 'See OWASP Automated Threat #8:\nLists of stolen authentication credentials are tested against the application’s authentication mechanisms to identify whether users have re-used the same login credentials',
+          mitigation: 'Defences against Credential Stuffing are described in the OWASP Credential Stuffing Prevention Cheat Sheet, Multi-Factor Authentication being a primary counter-measure'
         }
       }
     });
@@ -778,8 +778,8 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Specific requests are sent to the application eliciting information in order to profile the application',
-          mitigation: 'Defences include restricting what information is broadcast for example version numbers and package details'
+          description: 'See OWASP Automated Threat #4:\nSpecific requests are sent to the application eliciting information in order to profile the application',
+          mitigation: 'Defence includes restricting what information is provided, for example version numbers and package details'
         }
       }
     });
@@ -838,7 +838,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Using speed to violate explicit or implicit assumptions about the application’s normal use to achieve unfair individual gain, often associated with deceit and loss to some other party.',
+          description: 'See OWASP Automated Threat #6:\nUsing speed to violate explicit or implicit assumptions about the application’s normal use to achieve unfair individual gain',
           mitigation: 'Defences include providing enforcement of behavioral workflow and anti-automation'
         }
       }
@@ -864,8 +864,8 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Systematic enumeration and examination in order to find weaknesses and points where a security vulnerability might exist',
-          mitigation: 'Defences include providing anti-automation'
+          description: 'See OWASP Automated Threat #14:\nSystematic enumeration and examination in order to find weaknesses and points where a security vulnerability might exist',
+          mitigation: 'Defence includes providing anti-automation'
         }
       }
     });
@@ -890,8 +890,8 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Usage may resemble legitimate application usage but leads to exhaustion of resources',
-          mitigation: 'Mitigation or prevention such as providing backoff, avoiding forced deadlock, resource management'
+          description: 'See OWASP Automated Threat #15:\nUsage may resemble legitimate application usage but leads to exhaustion of resources',
+          mitigation: 'Mitigation or prevention such as providing backoff, resource management and avoiding forced deadlock'
         }
       }
     });
@@ -920,7 +920,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Lists of full credit/debit card data are tested against a merchant payment processes to identify valid card details',
+          description: 'See OWASP Automated Threat #1:\nLists of full credit/debit card data are tested against a merchant`s payment processes to identify valid card details',
           mitigation: 'Defences include control of interaction frequency, enforcement of a single unique a action and preventing abuse of functionality'
         }
       }
@@ -950,7 +950,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Brute force attack against application payment card process to identify the missing values for start date, expiry date and card security code ',
+          description: 'See OWASP Automated Threat #10:\nBrute force attack against application payment card process to identify the missing values for start date, expiry date and card security code',
           mitigation: 'Defences include control of interaction frequency, preventing brute force attacks and anti-automation'
         }
       }
@@ -980,7 +980,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Obtaining currency or higher-value merchandise via the application using stolen previously validated payment cards or account login credentials',
+          description: 'See OWASP Automated Threat #12:\nObtaining currency or higher-value merchandise via the application using stolen previously validated payment cards or account login credentials',
           mitigation: 'Defences include control of interaction frequency, enforcement of a single unique action, anti-automation and preventing abuse of functionality'
         }
       }
@@ -1010,7 +1010,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Information gathering with the objective of learning as much as possible about the composition, configuration and security mechanisms of the application',
+          description: 'See OWASP Automated Threat #18:\nInformation gathering with the objective of learning as much as possible about the composition, configuration and security mechanisms of the application',
           mitigation: 'Defences include shutting down unnecessary services/ports and excluding information that could identify and compromise security of the organisation'
         }
       }
@@ -1040,7 +1040,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Mass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
+          description: 'See OWASP Automated Threat #5:\nMass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
           mitigation: 'Defences against this automated threat include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
         }
       }
@@ -1070,7 +1070,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Automated exploitation of system latencies in the form of timing attacks',
+          description: 'See OWASP Automated Threat #13:\nAutomated exploitation of system latencies in the form of timing attacks',
           mitigation: 'Defences include anti-automation and prevention of abuse of functionality'
         }
       }
@@ -1100,7 +1100,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Selection and deliberate holding of items from a limited inventory or stock such that other users are unable to buy/pay/confirm the items',
+          description: 'See OWASP Automated Threat #21:\nSelection and deliberate holding of items from a limited inventory or stock such that other users are unable to buy/pay/confirm the items',
           mitigation: 'Defences include control of interaction frequency and anti-automation'
         }
       }
@@ -1126,7 +1126,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Collecting accessible data and/or processed output from the application',
+          description: 'See OWASP Automated Threat #11:\nCollecting accessible data and/or processed output from the application',
           mitigation: 'Detect fake or compromised accounts, ensure information is accessible only with authentication and authorisation'
         }
       }
@@ -1152,7 +1152,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Automated repeated clicking or requesting or submitting content, affecting application based metrics such as counts, and measures of frequency and/or rate',
+          description: 'See OWASP Automated Threat #16:\nAutomated repeated clicking or requesting or submitting content, affecting application based metrics such as counts, and measures of frequency and/or rate',
           mitigation: 'Defences include control of interaction frequency or proper enforcement of a single unique action'
         }
       }
@@ -1178,7 +1178,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Storing malicious such as malware, Iframe distribution, photographs & videos, advertisements, referrer spam and tracking/surveillance code',
+          description: 'See OWASP Automated Threat #17:\nStoring malicious such as malware, Iframe distribution, photographs & videos, advertisements, referrer spam and tracking/surveillance code',
           mitigation: 'Defences include detecting embedded malicious code, controling interaction frequency and enforcement of a single unique action'
         }
       }
@@ -1208,7 +1208,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Brute force, dictionary and guessing attacks used against authentication processes of the application to identify valid account credentials',
+          description: 'See OWASP Automated Threat #7:\nBrute force, dictionary and guessing attacks used against authentication processes of the application to identify valid account credentials',
           mitigation: 'Defences include restriction of excessive authentication attempts, control of interaction frequency and enforcement of a single unique action'
         }
       }
@@ -1238,7 +1238,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Bulk account creation, and sometimes profile population, by using the application’s account signup processes',
+          description: 'See OWASP Automated Threat #19:\nBulk account creation, and sometimes profile population, by using the application’s account signup processes',
           mitigation: 'Defences include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
         }
       }
@@ -1268,7 +1268,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Compilation of credentials and information from multiple application accounts into another system',
+          description: 'See OWASP Automated Threat #20:\nCompilation of credentials and information from multiple application accounts into another system',
           mitigation: 'Defences include control of interaction frequency and prevention of abuse of functionality'
         }
       }
@@ -1298,7 +1298,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Mass enumeration (for example coupon numbers, voucher codes, discount tokens) providing some form of user benefit within the application',
+          description: 'See OWASP Automated Threat #2:\nMass enumeration (for example coupon numbers, voucher codes, discount tokens) providing some form of user benefit within the application',
           mitigation: 'Defences include providing anti-automation, guarding against brute force, and preventing abuse of functionality'
         }
       }
@@ -1328,7 +1328,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Mass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
+          description: 'See OWASP Automated Threat #5:\nMass acquisition of goods or services using the application in a manner that a normal user would be unable to undertake manually',
           mitigation: 'Defences against this automated threat include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
         }
       }
