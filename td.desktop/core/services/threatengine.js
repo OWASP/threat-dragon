@@ -617,12 +617,12 @@ function threatengine() {
           status: 'Open',
           severity: 'Medium',
           description: 'No context specific threat determined, add one manually if appropriate',
-          mitigation: 'Mitigation or prevention for the threat'
+          mitigation: 'Describe mitigation or prevention for this threat'
         }
       }
     });
 
-    /* CAPTCHA defeat */
+    /* OATs CAPTCHA defeat */
     engine.addRule({
       conditions: {
         all: [
@@ -652,7 +652,7 @@ function threatengine() {
       }
     });
 
-    /* Credential stuffing */
+    /* OATs Credential stuffing */
     engine.addRule({
       conditions: {
         all: [
@@ -724,7 +724,7 @@ function threatengine() {
       }
     });
 
-    /* Vulnerable cryptography */
+    /* Vulnerable transport protocol */
     engine.addRule({
       conditions: {
         all: [
@@ -743,18 +743,18 @@ function threatengine() {
         type: 'ff2fca4d-dedf-46f2-b9ac-aed70055bb4d',
         params: {
           ruleId: 'ff2fca4d-dedf-46f2-b9ac-aed70055bb4d',
-          title: 'Vulnerable cryptography',
+          title: 'Vulnerable transport protocol',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
+          description: 'Older transport protocols are vulnerable and have known vulnerabilities',
           mitigation: 'Use up to date cryptography and transport protocols'
         }
       }
     });
 
-    /* Fingerprinting */
+    /* OATs Fingerprinting */
     engine.addRule({
       conditions: {
         all: [
@@ -810,7 +810,7 @@ function threatengine() {
       }
     });
 
-    /* Expediting */
+    /* OATs Expediting */
     engine.addRule({
       conditions: {
         all: [
@@ -836,7 +836,7 @@ function threatengine() {
       }
     });
 
-    /* Vulnerability scanning */
+    /* OATs Vulnerability scanning */
     engine.addRule({
       conditions: {
         all: [
@@ -862,7 +862,7 @@ function threatengine() {
       }
     });
 
-    /* Denial of Service */
+    /* OATs Denial of Service */
     engine.addRule({
       conditions: {
         all: [
@@ -888,7 +888,7 @@ function threatengine() {
       }
     });
 
-    /* Carding */
+    /* OATs Carding */
     engine.addRule({
       conditions: {
         all: [
@@ -918,7 +918,7 @@ function threatengine() {
       }
     });
 
-    /* Card cracking */
+    /* OATs Card cracking */
     engine.addRule({
       conditions: {
         all: [
@@ -948,7 +948,7 @@ function threatengine() {
       }
     });
 
-    /* Cashing out */
+    /* OATs Cashing out */
     engine.addRule({
       conditions: {
         all: [
@@ -978,7 +978,7 @@ function threatengine() {
       }
     });
 
-    /* Footprinting */
+    /* OATs Footprinting */
     engine.addRule({
       conditions: {
         all: [
@@ -1008,7 +1008,7 @@ function threatengine() {
       }
     });
 
-    /* Scalping */
+    /* OATs Scalping */
     engine.addRule({
       conditions: {
         all: [
@@ -1038,7 +1038,7 @@ function threatengine() {
       }
     });
 
-    /* Sniping */
+    /* OATs Sniping */
     engine.addRule({
       conditions: {
         all: [
@@ -1068,7 +1068,7 @@ function threatengine() {
       }
     });
 
-    /* Denial of inventory */
+    /* OATs Denial of inventory */
     engine.addRule({
       conditions: {
         all: [
@@ -1098,7 +1098,7 @@ function threatengine() {
       }
     });
 
-    /* Scraping */
+    /* OATs Scraping */
     engine.addRule({
       conditions: {
         all: [
@@ -1124,7 +1124,7 @@ function threatengine() {
       }
     });
 
-    /* Skewing */
+    /* OATs Skewing */
     engine.addRule({
       conditions: {
         all: [
@@ -1150,7 +1150,7 @@ function threatengine() {
       }
     });
 
-    /* Spamming */
+    /* OATs Spamming */
     engine.addRule({
       conditions: {
         all: [
@@ -1176,7 +1176,7 @@ function threatengine() {
       }
     });
 
-    /* Credential cracking */
+    /* OATs Credential cracking */
     engine.addRule({
       conditions: {
         all: [
@@ -1206,7 +1206,7 @@ function threatengine() {
       }
     });
 
-    /* Account creation */
+    /* OATs Account creation */
     engine.addRule({
       conditions: {
         all: [
@@ -1236,7 +1236,7 @@ function threatengine() {
       }
     });
 
-    /* Account aggregation */
+    /* OATs Account aggregation */
     engine.addRule({
       conditions: {
         all: [
@@ -1266,7 +1266,7 @@ function threatengine() {
       }
     });
 
-    /* Coupon cracking */
+    /* OATs Coupon cracking */
     engine.addRule({
       conditions: {
         all: [
@@ -1296,7 +1296,7 @@ function threatengine() {
       }
     });
 
-    /* Scalping */
+    /* OATs Scalping */
     engine.addRule({
       conditions: {
         all: [
@@ -1326,7 +1326,7 @@ function threatengine() {
       }
     });
 
-    /* Vulnerable cryptography */
+    /* Vulnerable encryption algorithms */
     engine.addRule({
       conditions: {
         all: [
@@ -1345,13 +1345,13 @@ function threatengine() {
         type: '4fb623f6-2896-4209-8689-ff1b8a932105',
         params: {
           ruleId: '4fb623f6-2896-4209-8689-ff1b8a932105',
-          title: 'Vulnerable cryptography',
+          title: 'Vulnerable encryption algorithms',
           type: 'TBD',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
-          mitigation: 'Use up to date cryptography for checksums, signatures and encryption'
+          description: 'Out of date encryption algorithms are vulnerable and have known vulnerabilities',
+          mitigation: 'Use up to date cryptography for all signatures and encryption'
         }
       }
     });
@@ -1380,8 +1380,8 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Older cryptographic techniques can be vulnerable and may have known vulnerabilities',
-          mitigation: 'Use up to date cryptographic methods for signatures and certificates'
+          description: 'Out of date cryptographic techniques are vulnerable and have known vulnerabilities',
+          mitigation: 'Use up to date cryptographic methods for checksums, signatures and certificates'
         }
       }
     });
@@ -1410,7 +1410,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'Logs may be read by aunauthorised users or made public, sensitive data may then be disclosed',
+          description: 'Logs are read by unauthorised users or made public, sensitive data is then disclosed',
           mitigation: 'Minimise any sensitive data contained in logs, consider encryption techniques'
         }
       }
