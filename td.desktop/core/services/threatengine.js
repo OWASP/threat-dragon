@@ -4,6 +4,8 @@ var jsonRulesEngine = require('json-rules-engine');
 
 function threatengine() {
 
+  var modelType = 'STRIDE';
+
   var service = {
     generatePerElement: generatePerElement,
     generateByContext: generateByContext
@@ -12,24 +14,36 @@ function threatengine() {
   return service;
 
   function generatePerElement(element, type) {
-    //implements one of {STRIDE per element, LINDDUN per element, CIA}
+    /* implements one of {STRIDE per element, LINDDUN per element, CIA} */
     var engine = new jsonRulesEngine.Engine();
+    modelType = getModel(type);
     initialiseRulesPerElement(engine);
     addFacts(element, type, engine);
     return engine.run().then(onCompleted);
   }
 
   function generateByContext(element, type) {
+    /* implements threats according to the element properties */
     var engine = new jsonRulesEngine.Engine();
+    modelType = getModel(type);
     initialiseRulesByContext(engine);
     addFacts(element, type, engine);
-    return engine.run().then(onCompleted);
+    return engine.run().then(fixupByContext);
   }
 
   function onCompleted(results) {
-    //output is like {type: ..., params: { param1: ..., param2: ...}}
-    //use params to represent the threat to preserve backward compatibility
+    /* output is like {type: ..., params: { param1: ..., param2: ...}} */
     return results.events.map(function(result) {
+      /* to preserve backward compatibility use params for the threats */
+      return result.params;
+    });
+  }
+
+  function fixupByContext(results) {
+    console.log('results', results);
+    return results.events.map(function(result) {
+      /* fix up for STRIDE / CIA / LINDDUN */
+      result.params.modelType = modelType;
       return result.params;
     });
   }
@@ -52,11 +66,11 @@ function threatengine() {
   }
 
   function getModel(type) {
-    //diagram.diagramType in 'STRIDE', 'LINDDUN', 'CIA'
+    /* diagram.diagramType in 'STRIDE', 'LINDDUN', 'CIA'm*/
     if (type == 'STRIDE' || type ==  'LINDDUN' || type == 'CIA') {
       return type;
     } else {
-      //if unrecognised then return default of STRIDE
+      /* default is STRIDE if it is unrecognised */
       return 'STRIDE';
     }
   }
@@ -642,7 +656,7 @@ function threatengine() {
         params: {
           ruleId: '5b0d4c4e-8245-4bea-a2ad-cf0be0a441f5',
           title: 'CAPTCHA defeat',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -672,7 +686,7 @@ function threatengine() {
         params: {
           ruleId: 'da483c51-1891-46ac-8453-6b1706b2a3d6',
           title: 'Credential stuffing',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -714,7 +728,7 @@ function threatengine() {
         params: {
           ruleId: '021ab22d-8d51-4501-9bb8-6dabf9c27f0d',
           title: 'Use encryption',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -744,7 +758,7 @@ function threatengine() {
         params: {
           ruleId: 'ff2fca4d-dedf-46f2-b9ac-aed70055bb4d',
           title: 'Vulnerable transport protocol',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -774,7 +788,7 @@ function threatengine() {
         params: {
           ruleId: 'f5f817d5-a067-4415-a40a-b500cb2ab9ad',
           title: 'Fingerprinting',
-          type: 'TBD',
+          type: 'Linkability',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -808,7 +822,7 @@ function threatengine() {
         params: {
           ruleId: '6463e063-e7c5-4305-9d8d-0c8e978ab86b',
           title: 'Least privilege',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -834,7 +848,7 @@ function threatengine() {
         params: {
           ruleId: 'ea1adb4d-097d-45a8-8e48-b728a996f487',
           title: 'Expediting',
-          type: 'TBD',
+          type: 'Tampering',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -860,7 +874,7 @@ function threatengine() {
         params: {
           ruleId: 'd97bcb80-f96d-44af-869a-d0441761be05',
           title: 'Vulnerability scanning',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -886,7 +900,7 @@ function threatengine() {
         params: {
           ruleId: 'ce2fe37e-0742-4278-8915-40dc2226150e',
           title: 'Denial of Service',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -916,7 +930,7 @@ function threatengine() {
         params: {
           ruleId: '6cc27f83-ae03-4589-8e9b-24d4c2d4d8cd',
           title: 'Carding',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -946,7 +960,7 @@ function threatengine() {
         params: {
           ruleId: '505afd31-7b3f-4733-b91c-71abb488d2eb',
           title: 'Card cracking',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -976,7 +990,7 @@ function threatengine() {
         params: {
           ruleId: 'c7b098d3-34df-432a-ad52-8f10c4ef6b07',
           title: 'Cashing out',
-          type: 'TBD',
+          type: 'Repudiation',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1006,7 +1020,7 @@ function threatengine() {
         params: {
           ruleId: '20527bee-aae7-4593-acac-7a07169ccc4f',
           title: 'Footprinting',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1036,7 +1050,7 @@ function threatengine() {
         params: {
           ruleId: '97915248-fc96-4fe1-9122-7bbd00fe71de',
           title: 'Scalping',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1066,7 +1080,7 @@ function threatengine() {
         params: {
           ruleId: 'd6d15882-15d5-4da1-88a5-dc3eae0b4a64',
           title: 'Sniping',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1096,7 +1110,7 @@ function threatengine() {
         params: {
           ruleId: '7403fdb4-9d89-4fb7-be5c-c37ce142af5e',
           title: 'Denial of inventory ',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1122,7 +1136,7 @@ function threatengine() {
         params: {
           ruleId: '80f32309-4f8a-4676-993b-7a37cbf62df1',
           title: 'Scraping',
-          type: 'TBD',
+          type: 'Linkability',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1148,7 +1162,7 @@ function threatengine() {
         params: {
           ruleId: '40aee5ad-37ff-4c70-91d4-9ab6d91d1463',
           title: 'Skewing',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1174,7 +1188,7 @@ function threatengine() {
         params: {
           ruleId: 'fe90a897-3ff2-47a5-94db-2a4d6f17bb57',
           title: 'Spamming',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1204,7 +1218,7 @@ function threatengine() {
         params: {
           ruleId: 'dc09cecf-cb06-455d-9e77-b9372bf6c8eb',
           title: 'Credential cracking',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1234,7 +1248,7 @@ function threatengine() {
         params: {
           ruleId: 'd960d589-80da-41dc-a7c2-33136bdda7e0',
           title: 'Account creation',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1264,7 +1278,7 @@ function threatengine() {
         params: {
           ruleId: '7b1c36b3-104a-4d82-97bb-a64c12284641',
           title: 'Account aggregation',
-          type: 'TBD',
+          type: 'Identifiability',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1294,7 +1308,7 @@ function threatengine() {
         params: {
           ruleId: '3853aaed-f262-4310-98df-484c5ef6609a',
           title: 'Coupon cracking',
-          type: 'TBD',
+          type: 'Tampering',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1324,7 +1338,7 @@ function threatengine() {
         params: {
           ruleId: 'c50e8d53-5e0a-45e7-8c69-be92492ad7dc',
           title: 'Scalping',
-          type: 'TBD',
+          type: 'Unawareness',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1354,7 +1368,7 @@ function threatengine() {
         params: {
           ruleId: '4fb623f6-2896-4209-8689-ff1b8a932105',
           title: 'Vulnerable encryption algorithms',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1384,7 +1398,7 @@ function threatengine() {
         params: {
           ruleId: '034095d9-9012-4cb5-a7a8-1e19ab72bba3',
           title: 'Vulnerable cryptography',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
@@ -1414,7 +1428,7 @@ function threatengine() {
         params: {
           ruleId: '7942656e-51dd-4b15-a38d-deab704878e1',
           title: 'Logs contain sensitive data ',
-          type: 'TBD',
+          type: 'Disclosure',
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
