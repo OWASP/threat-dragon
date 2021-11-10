@@ -44,6 +44,59 @@ function threatengine() {
     return results.events.map(function(result) {
       /* fix up for STRIDE / CIA / LINDDUN */
       result.params.modelType = modelType;
+      switch (result.params.type) {
+        case 'Linkability':
+          if (modelType == 'STRIDE') {
+            result.params.type = 'Information disclosure';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Confidentiality';
+          }
+          break;
+        case 'Identifiability':
+          if (modelType == 'STRIDE') {
+            result.params.type = 'Spoofing';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Confidentiality';
+          }
+          break;
+        case 'Repudiation':
+          if (modelType == 'LINDDUN') {
+              result.params.type = 'Non-repudiation';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Integrity';
+          }
+          break;
+        case 'Detectability':
+          if (modelType == 'STRIDE') {
+            result.params.type = 'Information disclosure';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Confidentiality';
+          }
+          break;
+        case 'Disclosure':
+          if (modelType == 'LINDDUN') {
+              result.params.type = 'Disclosure of information';
+          } else if (modelType == 'STRIDE') {
+              result.params.type = 'Information disclosure';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Confidentiality';
+          }
+          break;
+        case 'Unawareness':
+          if (modelType == 'STRIDE') {
+            result.params.type = 'Elevation of privilege';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Integrity';
+          }
+          break;
+        case 'Tampering':
+          if (modelType == 'LINDDUN') {
+            result.params.type = 'Non-compliance';
+          } else if (modelType == 'CIA') {
+            result.params.type = 'Integrity';
+          }
+          break;
+      }
       return result.params;
     });
   }
