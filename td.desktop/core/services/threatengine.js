@@ -683,7 +683,7 @@ function threatengine() {
           modelType: 'TBD',
           status: 'Open',
           severity: 'Medium',
-          description: 'No context specific threat determined, add one manually if appropriate',
+          description: 'No context specific threat identified, if appropriate add one manually',
           mitigation: 'Describe mitigation or prevention for this threat'
         }
       }

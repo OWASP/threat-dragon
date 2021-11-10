@@ -512,7 +512,7 @@ angular.module('templates', [])
     '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element\n' +
     '</button>\n' +
     '<button id="buttonNewThreatByContext" class="btn btn-link" ng-click="onThreatsByContext()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> Threats by context<br>(Experimental)\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Threats within context\n' +
     '</button>\n' +
     '')
   $templateCache.put('layout/pager.html',
