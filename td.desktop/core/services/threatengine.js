@@ -20,6 +20,19 @@ function threatengine() {
     initialiseRulesPerElement(engine);
     addFacts(element, type, engine);
     return engine.run().then(onCompleted);
+
+    function onCompleted(results) {
+        /* output is like {type: ..., params: { param1: ..., param2: ...}} */
+        return results.events.map(function(result) {
+          /* to preserve backward compatibility use params for the threats */
+          return result.params;
+        });
+      }
+
+    function addFacts(element, type, engine) {
+        engine.addFact('elementType', element.attributes.type);
+        engine.addFact('diagramType', getModel(type));
+      }
   }
 
   function generateByContext(element, type) {
@@ -29,93 +42,84 @@ function threatengine() {
     initialiseRulesByContext(engine);
     addFacts(element, type, engine);
     return engine.run().then(fixupByContext);
-  }
 
-  function onCompleted(results) {
-    /* output is like {type: ..., params: { param1: ..., param2: ...}} */
-    return results.events.map(function(result) {
-      /* to preserve backward compatibility use params for the threats */
-      return result.params;
-    });
-  }
-
-  function fixupByContext(results) {
-    console.log('results', results);
-    return results.events.map(function(result) {
-      /* fix up for STRIDE / CIA / LINDDUN */
-      result.params.modelType = modelType;
-      switch (result.params.type) {
-        case 'Linkability':
-          if (modelType == 'STRIDE') {
-            result.params.type = 'Information disclosure';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Confidentiality';
-          }
-          break;
-        case 'Identifiability':
-          if (modelType == 'STRIDE') {
-            result.params.type = 'Spoofing';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Confidentiality';
-          }
-          break;
-        case 'Repudiation':
-          if (modelType == 'LINDDUN') {
-              result.params.type = 'Non-repudiation';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Integrity';
-          }
-          break;
-        case 'Detectability':
-          if (modelType == 'STRIDE') {
-            result.params.type = 'Information disclosure';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Confidentiality';
-          }
-          break;
-        case 'Disclosure':
-          if (modelType == 'LINDDUN') {
-              result.params.type = 'Disclosure of information';
-          } else if (modelType == 'STRIDE') {
+    function fixupByContext(results) {
+      return results.events.map(function(result) {
+        /* fix up for STRIDE / CIA / LINDDUN */
+        result.params.modelType = modelType;
+        switch (result.params.type) {
+          case 'Linkability':
+            if (modelType == 'STRIDE') {
               result.params.type = 'Information disclosure';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Confidentiality';
-          }
-          break;
-        case 'Unawareness':
-          if (modelType == 'STRIDE') {
-            result.params.type = 'Elevation of privilege';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Integrity';
-          }
-          break;
-        case 'Tampering':
-          if (modelType == 'LINDDUN') {
-            result.params.type = 'Non-compliance';
-          } else if (modelType == 'CIA') {
-            result.params.type = 'Integrity';
-          }
-          break;
-      }
-      return result.params;
-    });
-  }
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Confidentiality';
+            }
+            break;
+          case 'Identifiability':
+            if (modelType == 'STRIDE') {
+              result.params.type = 'Spoofing';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Confidentiality';
+            }
+            break;
+          case 'Repudiation':
+            if (modelType == 'LINDDUN') {
+                result.params.type = 'Non-repudiation';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Integrity';
+            }
+            break;
+          case 'Detectability':
+            if (modelType == 'STRIDE') {
+              result.params.type = 'Information disclosure';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Confidentiality';
+            }
+            break;
+          case 'Disclosure':
+            if (modelType == 'LINDDUN') {
+                result.params.type = 'Disclosure of information';
+            } else if (modelType == 'STRIDE') {
+                result.params.type = 'Information disclosure';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Confidentiality';
+            }
+            break;
+          case 'Unawareness':
+            if (modelType == 'STRIDE') {
+              result.params.type = 'Elevation of privilege';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Integrity';
+            }
+            break;
+          case 'Tampering':
+            if (modelType == 'LINDDUN') {
+              result.params.type = 'Non-compliance';
+            } else if (modelType == 'CIA') {
+              result.params.type = 'Integrity';
+            }
+            break;
+        }
+        return result.params;
+      });
+    }
 
-  function addFacts(element, type, engine) {
-    engine.addFact('elementType', element.attributes.type);
-    engine.addFact('diagramType', getModel(type));
-    engine.addFact('isPublicNetwork', element.isPublicNetwork);
-    engine.addFact('isEncrypted', element.isEncrypted);
-    engine.addFact('providesAuthentication', element.providesAuthentication);
-    engine.addFact('isALog', element.isALog);
-    engine.addFact('storesCredentials', element.storesCredentials);
-    engine.addFact('storesInventory', element.storesInventory);
-    engine.addFact('isEncrypted', element.isEncrypted);
-    engine.addFact('isSigned', element.isSigned);
-    engine.addFact('handlesCardPayment', element.handlesCardPayment);
-    engine.addFact('isWebApplication', element.isWebApplication);
-    engine.addFact('handlesGoodsOrServices', element.handlesGoodsOrServices);
-    engine.addFact('privilegeLevel', element.privilegeLevel);
+    function addFacts(element, type, engine) {
+      engine.addFact('elementType', element.attributes.type);
+      engine.addFact('diagramType', getModel(type));
+      engine.addFact('isPublicNetwork', element.isPublicNetwork);
+      engine.addFact('isEncrypted', element.isEncrypted);
+      engine.addFact('providesAuthentication', element.providesAuthentication);
+      engine.addFact('isALog', element.isALog);
+      engine.addFact('storesCredentials', element.storesCredentials);
+      engine.addFact('storesInventory', element.storesInventory);
+      engine.addFact('isEncrypted', element.isEncrypted);
+      engine.addFact('isSigned', element.isSigned);
+      engine.addFact('handlesCardPayment', element.handlesCardPayment);
+      engine.addFact('isWebApplication', element.isWebApplication);
+      engine.addFact('handlesGoodsOrServices', element.handlesGoodsOrServices);
+      engine.addFact('privilegeLevel', element.privilegeLevel);
+    }
   }
 
   function getModel(type) {
