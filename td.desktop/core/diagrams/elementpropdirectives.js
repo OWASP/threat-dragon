@@ -56,7 +56,7 @@ function elementProperties(common) {
 
 }
 
-function elementThreats($routeParams, $location, common, dialogs) {
+function elementThreats($routeParams, $location, common, dialogs, threatengine) {
 
     var directive =
         {
@@ -65,6 +65,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             restrict: 'E',
             scope:
             {
+                context: '=',
                 suggest: '=',
                 threats: '=',
                 type: '=',
@@ -84,13 +85,28 @@ function elementThreats($routeParams, $location, common, dialogs) {
     function link(scope, element, attrs) {
         scope.applyToAll = false;
 
-        scope.onSuggestThreats = function () {
+        scope.onNewThreat = function () {
+            newThreat = initialiseThreat(scope.type);
+            dialogs.confirm(
+                dialogs.dialogTemplate(newThreat.modelType),
+                scope.addNewThreat,
+                function () {
+                    return {
+                        heading: 'New Threat',
+                        threat: newThreat,
+                        editing: true
+                    };
+                },
+                scope.cancelNewThreat
+            );
+        };
+
+        scope.onThreatsPerElement = function () {
             scope.suggest(scope.type);
         };
 
-        scope.onNewThreat = function () {
-            newThreat = initialiseThreat(scope.type);
-            dialogs.confirm(getTemplate(newThreat.modelType), scope.addThreat, function () { return { heading: 'New Threat', threat: newThreat, editing: true }; }, scope.cancelAdd);
+        scope.onThreatsByContext = function () {
+            scope.context(scope.type);
         };
 
         scope.onEditThreat = function (index) {
@@ -101,7 +117,18 @@ function elementThreats($routeParams, $location, common, dialogs) {
             if (!threat.threatId) {
                 threat.threatId = uuidv4();
             }
-            dialogs.confirm(getTemplate(threat.modelType), scope.editThreat, function () { return { heading: 'Edit Threat', threat: threat, editing: true }; }, scope.cancelEdit);
+            dialogs.confirm(
+                dialogs.dialogTemplate(threat.modelType),
+                scope.editThreat,
+                function () {
+                    return {
+                        heading: 'Edit Threat',
+                        threat: threat,
+                        editing: true
+                    };
+                },
+                scope.cancelEdit
+            );
         };
 
         scope.removeThreat = function (index) {
@@ -110,7 +137,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             scope.setdirty();
         };
 
-        scope.addThreat = function () {
+        scope.addNewThreat = function () {
 
             if (!scope.threats) {
                 scope.threats = [];
@@ -123,7 +150,7 @@ function elementThreats($routeParams, $location, common, dialogs) {
             reset(scope.type);
         };
 
-        scope.cancelAdd = function () {
+        scope.cancelNewThreat = function () {
             reset(scope.type);
         };
 
@@ -170,24 +197,6 @@ function elementThreats($routeParams, $location, common, dialogs) {
             return { status: 'Open', severity: 'Medium', modelType: 'UNDEFINED' };
         }
         return { status: 'Open', severity: 'Medium', modelType: modelType };
-    }
-
-    function getTemplate(type) {
-        var template;
-        if (type == null) {
-            // use STRIDE for backward compatibility with models where no type given
-            template = 'diagrams/StrideEditPane.html';
-        } else if (type == 'CIA') {
-            template = 'diagrams/CiaEditPane.html';
-        } else if (type == 'LINDDUN') {
-            template = 'diagrams/LinddunEditPane.html';
-        } else if (type == 'STRIDE') {
-            template = 'diagrams/StrideEditPane.html';
-        } else {
-            // if not recognised then default to STRIDE
-            template = 'diagrams/StrideEditPane.html';
-        }
-        return template;
     }
 
 }

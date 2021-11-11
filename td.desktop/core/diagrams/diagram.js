@@ -30,8 +30,8 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.errored = false;
     vm.title = 'ThreatModelDiagram';
     vm.initialise = initialise,
-        /*jshint -W030 */
-        vm.dirty = false;
+    /*jshint -W030 */
+    vm.dirty = false;
     vm.graph = diagramming.newGraph();
     vm.newProcess = newProcess;
     vm.newStore = newStore;
@@ -42,7 +42,8 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
     vm.getThreatModelPath = getThreatModelPath;
     vm.select = select;
     vm.edit = edit;
-    vm.generateThreats = generateThreats;
+    vm.addThreatsPerElement = addThreatsPerElement;
+    vm.addThreatsByContext = addThreatsByContext;
     vm.duplicateElement = duplicateElement;
     vm.setGrid = setGrid;
     vm.showGrid = false;
@@ -230,12 +231,6 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         return threatmodellocator.getModelPathFromRouteParams($routeParams);
     }
 
-    function generateThreats(type) {
-        if (vm.selected) {
-            threatengine.generatePerElement(vm.selected, type).then(onGenerateThreats);
-        }
-    }
-
     function duplicateElement() {
         if (vm.selected) {
             var newElement = vm.cloneElement(vm.selected);
@@ -268,19 +263,33 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
         }
     }
 
-    function onGenerateThreats(threats) {
+    function addThreatsPerElement(type) {
+        if (vm.selected) {
+            threatengine.generatePerElement(vm.selected, type).then(onAcceptIgnoreThreats);
+        }
+    }
+
+    function addThreatsByContext(type) {
+        if (vm.selected) {
+            threatengine.generateByContext(vm.selected, type).then(onAcceptIgnoreThreats);
+        }
+    }
+
+    function onAcceptIgnoreThreats(threats) {
         var threatTotal = threats.length;
         var threatList = threats;
         var currentThreat;
         var template;
+
         suggestThreat();
 
         function suggestThreat() {
             if (threatList.length > 0) {
                 currentThreat = threatList.shift();
-                selectTemplate(currentThreat.modelType);
-                dialogs.confirm(template,
-                    addThreat,
+                template = dialogs.dialogTemplate(currentThreat.modelType);
+                dialogs.confirm(
+                    template,
+                    addSuggestedThreat,
                     function () {
                         return {
                             heading: 'Add this threat?',
@@ -290,13 +299,13 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
                             threatTotal: threatTotal
                         };
                     },
-                    ignoreThreat,
+                    ignoreSuggestedThreat,
                     'fade-right'
                 );
             }
         }
 
-        function addThreat(applyToAll) {
+        function addSuggestedThreat(applyToAll) {
             vm.setDirty();
 
             if (_.isUndefined(vm.selected.threats)) {
@@ -318,27 +327,12 @@ function diagram($scope, $document, $location, $routeParams, $timeout, dialogs, 
             }
         }
 
-        function ignoreThreat(applyToAll) {
+        function ignoreSuggestedThreat(applyToAll) {
             if (!applyToAll) {
                 $timeout(suggestThreat, 500);
             }
         }
 
-        function selectTemplate(type) {
-            if (type == null) {
-                // use STRIDE for backward compatibility with models where no type given
-                template = 'diagrams/StrideEditPane.html';
-            } else if (type == 'CIA') {
-                template = 'diagrams/CiaEditPane.html';
-            } else if (type == 'LINDDUN') {
-                template = 'diagrams/LinddunEditPane.html';
-            } else if (type == 'STRIDE') {
-                template = 'diagrams/StrideEditPane.html';
-            } else {
-                // if not recognised then default to STRIDE
-                template = 'diagrams/StrideEditPane.html';
-            }
-        }
     }
 
     function onSelectElement() {

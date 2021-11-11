@@ -258,7 +258,7 @@ joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
 
 //define process element properties
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Process.prototype, ['privilegeLevel']);
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Process.prototype, ['privilegeLevel', 'handlesCardPayment', 'isWebApplication', 'handlesGoodsOrServices']);
 
 //data store element shape
 
@@ -280,7 +280,7 @@ joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
 
 //data store properties
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, ['isALog', 'storesCredentials', 'isEncrypted', 'isSigned']);
+joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, ['isALog', 'storesCredentials', 'storesInventory', 'isEncrypted', 'isSigned']);
 
 //actor element shape
 

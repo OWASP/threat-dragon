@@ -123,7 +123,7 @@ angular.module('templates', [])
     '                    </div>\n' +
     '                    <div ng-if="vm.selected && vm.selected.attributes.type != \'tm.Boundary\'">\n' +
     '                        <div ng-if="!vm.selected.outOfScope">\n' +
-    '                            <tmt-element-threats suggest="vm.generateThreats" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
+    '                            <tmt-element-threats suggest="vm.addThreatsPerElement" context="vm.addThreatsByContext" threats="vm.selected.threats" type="vm.diagram.diagramType" save="vm.edit" setdirty="vm.setDirty" />\n' +
     '                        </div>\n' +
     '                        <div ng-if="vm.selected.outOfScope">\n' +
     '                            <em>The selected element is out of scope</em>\n' +
@@ -162,7 +162,7 @@ angular.module('templates', [])
     '                                <button type="button" class="btn btn-default" ng-model="vm.showGrid" uib-btn-checkbox ng-click="vm.setGrid()" data-toggle="tooltip" data-placement="top" title="Toggle Gridlines">\n' +
     '                                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
-    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.generateThreats(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
+    '                                <button class="btn btn-default" ng-disabled="vm.selected == null || vm.selected.outOfScope || vm.selected.attributes.type == \'tm.Boundary\'" type="button" data-toggle="tooltip" ng-click="vm.addThreatsPerElement(vm.diagram.diagramType)" data-placement="top" title="Suggest threats for the selected element">\n' +
     '                                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>\n' +
     '                                </button>\n' +
     '                                <button class="btn btn-default" ng-disabled="vm.selected == null" type="button" data-toggle="tooltip" ng-click="vm.duplicateElement()" data-placement="top" title="Duplicate the selected element">\n' +
@@ -242,6 +242,21 @@ angular.module('templates', [])
     '            <label>Privilege level</label>\n' +
     '            <input name="privilegeLevelInput" ng-disabled="selected.outOfScope" class="form-control" type="text" ng-model="selected.privilegeLevel" ng-change="edit()" placeholder="Privilege level" />\n' +
     '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxHandlesCardPayment" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesCardPayment" ng-change="edit()" /> Handles card payment\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxIsWebApplication" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.isWebApplication" ng-change="edit()" /> Is web application\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxHandlesGoodsOrServices" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.handlesGoodsOrServices" ng-change="edit()" /> Handles goods or services\n' +
+    '            </label>\n' +
+    '        </div>\n' +
     '    </div>\n' +
     '    <div ng-show="elementType === \'tm.Actor\'">\n' +
     '        <div class="checkbox">\n' +
@@ -259,6 +274,11 @@ angular.module('templates', [])
     '        <div class="checkbox">\n' +
     '            <label>\n' +
     '                <input name="checkboxStoresCredentials" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesCredentials" ng-change="edit()" /> Stores credentials\n' +
+    '            </label>\n' +
+    '        </div>\n' +
+    '        <div class="checkbox">\n' +
+    '            <label>\n' +
+    '                <input name="checkboxStoresInventory" ng-disabled="selected.outOfScope" type="checkbox" ng-model="selected.storesInventory" ng-change="edit()" /> Stores inventory\n' +
     '            </label>\n' +
     '        </div>\n' +
     '        <div class="checkbox">\n' +
@@ -486,10 +506,13 @@ angular.module('templates', [])
     '    </li>\n' +
     '</ul> \n' +
     '<button id="buttonNewThreat" class="btn btn-link" ng-click="onNewThreat()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> Add a new threat...\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Add a new threat\n' +
     '</button>\n' +
-    '<button id="buttonNewThreatPerElement" class="btn btn-link" ng-click="onSuggestThreats()">\n' +
-    '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element...\n' +
+    '<button id="buttonNewThreatPerElement" class="btn btn-link" ng-click="onThreatsPerElement()">\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> {{type}} per element\n' +
+    '</button>\n' +
+    '<button id="buttonNewThreatByContext" class="btn btn-link" ng-click="onThreatsByContext()">\n' +
+    '    <span class="glyphicon glyphicon-plus"></span> Threats within context\n' +
     '</button>\n' +
     '')
   $templateCache.put('layout/pager.html',
