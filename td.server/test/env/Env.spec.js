@@ -187,7 +187,7 @@ describe('env/Env.js', () => {
             });
 
             it('configures dotenv', () => {
-                expect(dotenv.config).to.have.been.calledWith(env._defaultEnvFilePath);
+                expect(dotenv.config).to.have.been.calledWith({ path: env._defaultEnvFilePath });
             });
         });
     });

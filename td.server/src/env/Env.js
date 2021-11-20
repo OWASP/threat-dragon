@@ -119,8 +119,10 @@ export class Env {
     _tryLoadDotEnv() {
         const envFilePath = process.env.ENV_FILE || this._defaultEnvFilePath;
         if (fs.existsSync(envFilePath)) {
-            console.log(`Reading dotenv file from ${envFilePath}`);
-            dotenv.config(envFilePath);
+            dotenv.config({
+                path: envFilePath
+            });
+            console.log(process.env);
         } else {
             console.log(`Unable to find .env file, falling back to environment variables`);
         }
