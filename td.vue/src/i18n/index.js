@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 
 import en from './en.js';
+import es from './es.js';
 import fr from './fr.js';
 import pt from './pt.js';
 
@@ -15,6 +16,7 @@ const get = () => {
             locale: 'en',
             messages: {
                 en,
+                es,
                 fr,
                 pt
             }
