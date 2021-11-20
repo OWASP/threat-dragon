@@ -21,7 +21,7 @@ const getBearerToken = (authHeader) => {
 const middleware = (req, res, next) => {
     const token = getBearerToken(req.headers.authorization);
     if (!token) {
-        logger.info('No bearer token found for a resource that requires authentication');
+        logger.info(`No bearer token found for a resource that requires authentication: ${req.url}`);
         return errors.unauthorized(res, logger);
     }
 
