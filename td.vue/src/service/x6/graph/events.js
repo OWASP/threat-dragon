@@ -95,6 +95,7 @@ const cellUnselected = ({ cell }) => {
     }
     
     store.get().dispatch(CELL_UNSELECTED);
+    dataChanged.updateStyleAttrs(cell);
 };
 
 const listen = (graph) => {
