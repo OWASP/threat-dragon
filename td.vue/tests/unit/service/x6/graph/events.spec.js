@@ -1,6 +1,7 @@
 import events from '@/service/x6/graph/events.js';
 import shapes from '@/service/x6/shapes/index.js';
 import store from '@/store/index.js';
+import dataChanged from '../../../../../src/service/x6/graph/data-changed';
 
 describe('service/x6/graph/events.js', () => {
     let cell, edge, graph, mockStore;
@@ -239,6 +240,7 @@ describe('service/x6/graph/events.js', () => {
             beforeEach(() => {
                 cell.hasTools.mockImplementation(() => true);
                 cell.setName = jest.fn();
+                dataChanged.updateStyleAttrs = jest.fn();
                 cell.getData.mockImplementation(() => ({ name: 'test' }));
                 events.listen(graph);
                 graph.evts['cell:unselected']({ cell });
@@ -246,6 +248,10 @@ describe('service/x6/graph/events.js', () => {
 
             it('sets the name', () => {
                 expect(cell.setName).toHaveBeenCalledWith('test');
+            });
+
+            it('updates the style attributes', () => {
+                expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(1);
             });
         });
 
