@@ -122,7 +122,6 @@ export class Env {
             dotenv.config({
                 path: envFilePath
             });
-            console.log(process.env);
         } else {
             console.log(`Unable to find .env file, falling back to environment variables`);
         }
