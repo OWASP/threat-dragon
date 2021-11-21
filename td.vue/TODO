@@ -6,4 +6,3 @@
 
 
 - Add threat engine/suggested threats
-- Update UI when outOfScope value changed (or any other value that should change styles)
