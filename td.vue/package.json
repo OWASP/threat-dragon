@@ -43,7 +43,7 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^4.6.1",
     "browserstack-cypress-cli": "^1.8.1",
     "chromedriver": "^90.0.0",
     "codecov": "^3.8.2",
