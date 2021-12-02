@@ -93,11 +93,7 @@ Finally ensure Threat Dragon tweets the release on Twitter, and announces it on 
 ## Legacy demo and dev websites
 These public sites are updated from Mike Goodwin's original repo at
 [github.com/mike-goodwin/owasp-threat-dragon](https://github.com/mike-goodwin/owasp-threat-dragon),
-so long as all After making changes to code it is usually worth a `npm run build` before `npm run start`
-
-You can debug the changes using `npm run debug` which prints debug messages to the console
-
-the pull request checks pass.
+so long as all the pull request checks pass.
 
 * merges to `master` [branch](https://github.com/mike-goodwin/owasp-threat-dragon)
 will update the [online demo](https://threatdragon.org/)
