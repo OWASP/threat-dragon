@@ -55,7 +55,7 @@ as described in [setup-env.md](setup-env.md) and run the following from the root
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ## Docker (from dockerhub)
-Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.5.8`
+Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
 
 ### <ins>Do not use the latest tag (which is the default), as it could be a development release</ins>
 
