@@ -134,7 +134,7 @@ const el = {
             notFound: 'Δεν το έχουμε ακόμα αυτό, θέλετε να ανοίξετε ένα issue; :)'
         },
         shapes: {
-            actor: 'Actor',
+            actor: 'Παράγοντας',
             flowStencil: 'Ροή Δεδομένων',
             process: 'Διαδικασία',
             store: 'Αποθετήριο Δεδομένων',
