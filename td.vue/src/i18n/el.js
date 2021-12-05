@@ -1,6 +1,6 @@
 const el = {
     auth: {
-        sessionExpired: 'Your session has expired.  Please log in again to continue.'
+        sessionExpired: 'Η συνεδρία σας έχει λήξει.  Παρακαλούμε συνδεθείτε εκ νέου για να συνεχίσετε.'
     },
     nav: {
         v2Warning: 'Αυτή είναι η έκδοση 2.0 του OWASP Threat Dragon και είναι ακόμα υπό ανάπτυξη. Μην την χρησιμοποιείτε για να τροποποιήσετε υπάρχοντα μοντέλα, καθώς αυτή η έκδοση μπορεί να τα χαλάσει!',
@@ -27,7 +27,7 @@ const el = {
         },
         actions: {
             openExisting: 'Άνοιγμα ενός υφιστάμενου μοντέλου απειλών',
-            createNew: 'Create a new, empty threat model',
+            createNew: 'Δημιουργήστε ένα νέο, κενό μοντέλο απειλών',
             demo: 'Εξερευνήστε ένα δείγμα μοντέλου απειλών',
             import: 'Εισάγετε ένα μοντέλο απειλών σε μορφή JSON'
         }
@@ -72,10 +72,10 @@ const el = {
             name: 'Όνομα',
             text: 'Κείμενο',
             description: 'Περιγραφή',
-            outOfScope: 'Out of Scope',
-            reasonOutOfScope: 'Reason for out of scope',
-            privilegeLevel: 'Επίπεδο δικαιώματοςPrivilege Level',
-            isALog: 'Is a Log',
+            outOfScope: 'Εκτός πεδίου εφαρμογής',
+            reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
+            privilegeLevel: 'Επίπεδο δικαιώματος',
+            isALog: 'Είναι αρχείο καταγραφής',
             storesCredentials: 'Αποθηκεύει στοιχεία πρόσβασης',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
@@ -85,118 +85,118 @@ const el = {
         },
         buttons: {
             shortcuts: 'Συντομεύσεις Πληκτρολογίου',
-            undo: 'Undo',
-            redo: 'Redo',
-            zoomIn: 'Zoom In',
-            zoomOut: 'Zoom Out',
-            toggleGrid: 'Toggle Grid'
+            undo: 'Αναίρεση',
+            redo: 'Επανάληψη',
+            zoomIn: 'Μεγένθυνση',
+            zoomOut: 'Σμίκρυνση',
+            toggleGrid: 'Εναλλαγή Πλέγματος'
         },
         shortcuts: {
-            title: 'Shortcuts',
+            title: 'Συντομεύσεις',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copy'
+                action: 'Αντιγραφή'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Paste'
+                action: 'Επικόλληση'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Undo'
+                action: 'Αναίρεση'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Redo'
+                action: 'Επανάληψη'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Delete'
+                action: 'Διαγραφή'
             },
             pan: {
-                shortcut: 'shift + left-click (hold/drag)',
-                action: 'Pan'
+                shortcut: 'shift + αριστερό κλικ (κράτημα/σύρσιμο)',
+                action: 'οριζόντια/κάθετη μετακίνηση'
             },
             multiSelect: {
-                shortcut: 'left-click on empty space and drag',
-                action: 'Multi-select'
+                shortcut: 'κάντε αριστερό κλικ σε ένα άδειο σημείο και σύρετε',
+                action: 'Πολλαπλή Επιλογή'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + mousewheel',
-                action: 'Zoom'
+                shortcut: '(ctrl/cmd) + τροχός κύλισης',
+                action: 'Εστίαση'
             }
         },
         stencil: {
-            entities: 'Entities',
-            boundaries: 'Boundaries',
-            metadata: 'Metadata',
-            search: 'Search',
-            notFound: 'We don\'t have that yet, want to open an issue? :)'
+            entities: 'Οντότητες',
+            boundaries: 'Όρια',
+            metadata: 'Μεταδεδομένα',
+            search: 'Αναζήτηση',
+            notFound: 'Δεν το έχουμε ακόμα αυτό, θέλετε να ανοίξετε ένα issue; :)'
         },
         shapes: {
             actor: 'Actor',
-            flowStencil: 'Data Flow',
-            process: 'Process',
+            flowStencil: 'Ροή Δεδομένων',
+            process: 'Διαδικασία',
             store: 'Store',
             text: 'Arbitrary Text',
-            trustBoundary: 'Trust Boundary'
+            trustBoundary: 'Όριο Εμπιστοσύνης'
         }
     },
     forms: {
-        edit: 'Edit',
-        report: 'Report',
-        delete: 'Delete',
-        remove: 'Remove',
-        save: 'Save',
-        reload: 'Reload',
-        cancel: 'Cancel',
-        close: 'Close',
-        search: 'Search',
-        import: 'Import'
+        edit: 'Επεξεργασία',
+        report: 'Αναφορά',
+        delete: 'Διαγραφή',
+        remove: 'Αφαίρεση',
+        save: 'Αποθήκευση',
+        reload: 'Φόρτωση εκ νέου',
+        cancel: 'Ακύρωση',
+        close: 'Κλείσιμο',
+        search: 'Αναζήτηση',
+        import: 'Εισαγωγή'
     },
     threats: {
         models: {
-            confidentiality: 'Confidentiality',
-            integrity: 'Integrity',
-            availability: 'Availability',
-            linkability: 'Linkability',
-            identifiability: 'Identifiability',
-            nonRepudiation: 'Non-repudiation',
-            detectability: 'Detectability',
-            disclosureOfInformation: 'Disclosure of information',
+            confidentiality: 'Εμπιστευτικότητα',
+            integrity: 'Ακεραιότητα',
+            availability: 'Διαθεσιμότητα',
+            linkability: 'Συνδεσιμότητα',
+            identifiability: 'Αναγνωρισιμότητα',
+            nonRepudiation: 'Μη αποποίηση',
+            detectability: 'Ανιχνευσιμότητα',
+            disclosureOfInformation: 'Αποκάλυψη Πληροφοριών',
             unawareness: 'Unawareness',
-            nonCompliance: 'Non-compliance',
+            nonCompliance: 'Μη συμμόρφωση',
             spoofing: 'Spoofing',
             tampering: 'Tampering',
-            repudiation: 'Repudiation',
-            informationDisclosure: 'Information disclosure',
-            denialOfService: 'Denial of service',
+            repudiation: 'Αποποίηση',
+            informationDisclosure: 'Αποκάλυψη Πληροφοριών',
+            denialOfService: 'Άρνηση εκτέλεσης υπηρεσίας (Denial of service)',
             elevationOfPrivilege: 'Elevation of privilege'
         },
-        edit: 'Edit Threat',
-        confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        newThreat: 'New Threat',
+        edit: 'Επεξεργασία Απειλής',
+        confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',
+        confirmDeleteMessage: 'Είστε σίγουροι ότι θέλετε να δαιγράψετε αυτή την απειλή;',
+        newThreat: 'Νέα Απειλή',
         properties: {
-            title: 'Title',
-            status: 'Status',
-            priority: 'Priority',
-            type: 'Type',
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type'
+            title: 'Τίτλος',
+            status: 'Κατάσταση',
+            priority: 'Προτεραιότητα',
+            type: 'Τύπος',
+            description: 'Περιγραφή',
+            mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
+            modelType: 'Τύπος Μοντέλου'
         },
         status: {
-            notApplicable: 'Not Applicable',
-            open: 'Open',
+            notApplicable: 'Μη εφαρμοστέο',
+            open: 'Ανοιχτό',
             mitigated: 'Mitigated'
         },
         priority: {
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High'
+            low: 'Χαμηλή',
+            medium: 'Μεσαία',
+            high: 'Υψηλή'
         }
     }
 };
 
-export default en;
+export default el;
