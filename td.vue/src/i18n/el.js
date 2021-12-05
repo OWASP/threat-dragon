@@ -137,8 +137,8 @@ const el = {
             actor: 'Actor',
             flowStencil: 'Ροή Δεδομένων',
             process: 'Διαδικασία',
-            store: 'Store',
-            text: 'Arbitrary Text',
+            store: 'Αποθετήριο Δεδομένων',
+            text: 'Κείμενο',
             trustBoundary: 'Όριο Εμπιστοσύνης'
         }
     },
