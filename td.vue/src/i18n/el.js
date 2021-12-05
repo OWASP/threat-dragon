@@ -163,15 +163,15 @@ const el = {
             identifiability: 'Αναγνωρισιμότητα',
             nonRepudiation: 'Μη αποποίηση',
             detectability: 'Ανιχνευσιμότητα',
-            disclosureOfInformation: 'Αποκάλυψη Πληροφοριών',
-            unawareness: 'Unawareness',
+            disclosureOfInformation: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
+            unawareness: 'Έλλειψη επίγνωσης (Unawareness)',
             nonCompliance: 'Μη συμμόρφωση',
-            spoofing: 'Spoofing',
-            tampering: 'Tampering',
-            repudiation: 'Αποποίηση',
-            informationDisclosure: 'Αποκάλυψη Πληροφοριών',
+            spoofing: 'Παραπλάνηση (spoofing)',
+            tampering: 'Παραποίηση (Tampering)',
+            repudiation: 'Αποποίηση (Repudiation)',
+            informationDisclosure: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
             denialOfService: 'Άρνηση εκτέλεσης υπηρεσίας (Denial of service)',
-            elevationOfPrivilege: 'Elevation of privilege'
+            elevationOfPrivilege: 'Αναβάθμιση προνομίων (Elevation of Priviledge)'
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',
@@ -187,9 +187,9 @@ const el = {
             modelType: 'Τύπος Μοντέλου'
         },
         status: {
-            notApplicable: 'Μη εφαρμοστέο',
-            open: 'Ανοιχτό',
-            mitigated: 'Mitigated'
+            notApplicable: 'Δεν έχει εφαρμογή',
+            open: 'Ανοιχτή',
+            mitigated: 'Καλύφθηκε'
         },
         priority: {
             low: 'Χαμηλή',
