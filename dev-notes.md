@@ -88,12 +88,18 @@ and `td.server/package.json`
 1. once tagged the workflow pushes the docker image to docker hub 
 1. check using `docker pull threatdragon/owasp-threat-dragon:v1.6.0`
 
-Test the releases as above; ideally on all of Windows, linux and MacOS
+### Test the release
+Test the release images as above; ideally on all of Windows, linux and MacOS
 
-All going well then update the release notes for the draft in the
-[Threat Dragon release area](https://github.com/OWASP/threat-dragon/releases) and make public
+Ensure the Snap image is available via [official snapcraft distribution](https://snapcraft.io/threat-dragon)
 
-Finally ensure Threat Dragon tweets the release on Twitter, and announces it on the OWASP slack channels
+### Go public
+All tests going well then update the release notes for the draft release in the
+[Threat Dragon release area](https://github.com/OWASP/threat-dragon/releases)
+and then mark the release as public
+
+Finally ensure Threat Dragon tweets the release on Twitter,
+and announces it on the OWASP slack channels
 
 ## Legacy demo and dev websites
 These public sites are updated from Mike Goodwin's original repo at
