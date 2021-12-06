@@ -98,6 +98,9 @@ All tests going well then update the release notes for the draft release in the
 [Threat Dragon release area](https://github.com/OWASP/threat-dragon/releases)
 and then mark the release as public
 
+Update the release notification on the OWASP
+[releases page](https://github.com/OWASP/www-project-threat-dragon/blob/master/tab_releases.md)
+
 Finally ensure Threat Dragon tweets the release on Twitter,
 and announces it on the OWASP slack channels
 
