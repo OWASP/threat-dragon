@@ -14,6 +14,9 @@ and [docs.threatdragon.org](https://docs.threatdragon.org/) websites.
 
 ### Install and run web application
 
+Note that  some [environment variables](setup-env.md) need to be set up for the webapp to run.
+Once these are in place then use `npm start` to run the threat dragon server. Example commands:
+
 ```
 git clone --recursive git@github.com:OWASP/threat-dragon.git
 cd threat-dragon
@@ -21,15 +24,14 @@ npm install
 npm test
 export GITHUB_CLIENT_ID=<the client id>
 export GITHUB_CLIENT_SECRET=<the client secret>
+export GITHUB_SCOPE=public_repo
 export NODE_ENV=development
 export SESSION_STORE=local
-export SESSION_SIGNING_KEY=<32 char key>
-export SESSION_ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "<32 char key>"}]'
+export ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "<32 char key>"}]'
+export ENCRYPTION_JWT_SIGNING_KEY=<12 char key>
+export ENCRYPTION_JWT_REFRESH_SIGNING_KEY=<12 char key>
 npm start
 ```
-
-Note that  some [environment variables](setup-env.md) need to be set up for the webapp to run.
-Once these are in place then use `npm start` to run the threat dragon server.
 
 Navigate in a browser to http://localhost:3000/ to test the app.
 If there is an error such as 'Cannot GET /' then make sure the 
