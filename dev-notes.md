@@ -6,19 +6,15 @@ The recipes are for both Windows and Linux/MacOS; in general the `npm` and `git`
 but some of the commands (eg `cd ../..`) need to be modified if running on a Windows platform.
 
 ## Documentation
-The [documentation repo](https://github.com/threatdragon/threatdragon.github.io) will update documentation
-at both [threatdragon.github.io](https://threatdragon.github.io)
-and [docs.threatdragon.org](https://docs.threatdragon.org/) websites.
-
-## Install and Run
 
 ### Install and run web application
 
 Note that  some [environment variables](setup-env.md) need to be set up for the webapp to run.
-Once these are in place then use `npm start` to run the threat dragon server. Example commands:
+Once these are in place then use `npm start` to run threat dragon server and application.
+Example commands:
 
 ```
-git clone --recursive git@github.com:OWASP/threat-dragon.git
+git clone git@github.com:OWASP/threat-dragon.git
 cd threat-dragon
 npm install
 npm test
@@ -33,26 +29,23 @@ export ENCRYPTION_JWT_REFRESH_SIGNING_KEY=<12 char key>
 npm start
 ```
 
-Navigate in a browser to http://localhost:3000/ to test the app.
+Navigate in a browser to http://localhost:8080/ to test the app.
 If there is an error such as 'Cannot GET /' then make sure the 
 [environment variables](https://github.com/OWASP/threat-dragon/blob/main/setup-env.md) are set up correctly.
 
+###  Monitor and stop web application
+From the top directory, using `npm stop` will stop both the back-end server and the front-end application 
+
+Server logs can be accesed at:
+
+```
+app.log audit.log
+td.server/app.log td.server/audit.log
+```
+
 ### Install and run desktop application
 
-Launch the electron-based desktop application using:
-
-```
-git clone git@github.com:OWASP/threat-dragon.git
-cd threat-dragon/td.desktop
-npm install
-npm run build
-npm test
-npm start
-```
-
-After making changes to code it is usually worth a `npm run build` before `npm run start`
-
-You can debug the changes using `npm run debug` which prints debug messages to the console
+Launch the electron-based desktop application using: _not yet defined_
 
 ### Run webapp in docker container
 A Dockerfile is provided that can be used to create a docker image:
@@ -61,8 +54,8 @@ A Dockerfile is provided that can be used to create a docker image:
 * wait for the docker image to build
 * create a `.env` environment variable file using the example `example.env` as a template
 * run a docker container using
-`docker run -it -p 3000:3000 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
-* navigate in a browser to http://localhost:3000/
+`docker run -it -p 8080:8080 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
+* navigate in a browser to http://localhost:8080/
 * if there is an error in the browser such as 'Cannot GET /' then make sure `.env` file is correct
 
 ## Release process

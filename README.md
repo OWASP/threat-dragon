@@ -44,14 +44,7 @@ To get the code navigate to a target directory and use command
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-To install from the top directory of the project:
-
-```
-cd td.server
-npm install
-cd -
-
-```
+To install from the top directory of the project: `npm install`
 
 ### Environment variables
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
@@ -62,28 +55,21 @@ You will also have to provide other environment variables, again following
 [the documentation](https://www.threatdragon.com/docs/development/env.html) on this
 
 ### Run the application
-To start the back-end server from the top directory:
+Start both the back-end server and the front-end application from the top directory: `npm start`
 
-```
-cd td.server
-npm run start:dev
-```
-
-To run the front-end application from the top directory:
-
-```
-cd td.vue
-npm run serve
-```
+To stop the application and the back-end server, from the top directory: `npm run stop`
 
 With both front and back end running, access with a browser at http://localhost:8080/ 
+
+### Stop the application
+Stop both the back-end server and the front-end application from the top directory: `npm stop`
 
 ### Docker
 To run Threat Dragon in a docker container,
 first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
 and run from the top directory of the project:
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- `docker run -it --rm -p 8080:8080 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ### Contributing
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for

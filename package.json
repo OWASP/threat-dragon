@@ -3,9 +3,12 @@
   "version": "2.0.0",
   "private": false,
   "scripts": {
-    "start": "npm-run-all build start:site",
-    "start:server": "node td.server/index.js",
-    "start:site": "cd td.vue && npm run serve",
+    "start": "npm-run-all build start:server start:site",
+    "start:server": "pm2 --name td.server start td.server/index.js",
+    "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
+    "stop": "npm-run-all stop:site stop:server",
+    "stop:server": "pm2 delete td.server",
+    "stop:site": "pm2 delete td.vue",
     "postinstall": "npm-run-all install:server install:site",
     "install:server": "cd td.server && npm install",
     "install:site": "cd td.vue && npm install",
@@ -43,6 +46,7 @@
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "devDependencies": {
+    "pm2": "^5.1.2",
     "npm-run-all": "^4.1.5"
   }
 }
