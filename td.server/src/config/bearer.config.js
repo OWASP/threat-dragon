@@ -11,7 +11,13 @@ const logger = loggerHelper.get('config/bearer.config.js');
  * @returns {String|null}
  */
 const getBearerToken = (authHeader) => {
-    if (!authHeader || authHeader.indexOf('Bearer ') === -1) {
+    if (!authHeader) {
+        logger.info(`Bearer token not found, auth header is empty`);
+        return null;
+    }
+
+    if (authHeader.indexOf('Bearer ') === -1) {
+        logger.info(`Bearer token key word not found in auth header: ${authHeader}`);
         return null;
     }
 
@@ -21,7 +27,7 @@ const getBearerToken = (authHeader) => {
 const middleware = (req, res, next) => {
     const token = getBearerToken(req.headers.authorization);
     if (!token) {
-        logger.info(`No bearer token found for a resource that requires authentication: ${req.url}`);
+        logger.info(`Bearer token not found for resource that requires authentication: ${req.url}`);
         return errors.unauthorized(res, logger);
     }
 
