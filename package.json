@@ -12,7 +12,7 @@
     "postinstall": "npm-run-all install:server install:site",
     "install:server": "cd td.server && npm install",
     "install:site": "cd td.vue && npm install",
-    "citest": "npm-run-all citest:server start:server citest:site",
+    "citest": "npm-run-all citest:server citest:site",
     "citest:server": "cd td.server && npm run test",
     "citest:site": "cd td.vue && npm run test:unit",
     "clean": "npm-run-all clean:server",
