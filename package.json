@@ -1,34 +1,31 @@
 {
   "name": "threat-dragon",
-  "version": "1.5.8",
+  "version": "2.0.0",
   "private": false,
   "scripts": {
-    "start": "npm-run-all build start:server",
-    "start:server": "node td.server/index.js",
-    "postinstall": "npm-run-all install:server install:site install:desktop",
-    "install:desktop": "cd td.desktop && npm install",
+    "start": "npm-run-all build start:server start:site",
+    "start:server": "pm2 --name td.server start td.server/index.js",
+    "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
+    "stop": "npm-run-all stop:site stop:server",
+    "stop:server": "pm2 delete td.server",
+    "stop:site": "pm2 delete td.vue",
+    "postinstall": "npm-run-all install:server install:site",
     "install:server": "cd td.server && npm install",
-    "install:site": "cd td.site && npm install",
-    "citest": "npm-run-all citest:site citest:server citest:desktop",
-    "citest:desktop": "cd td.desktop && npm run citest",
-    "citest:server": "cd td.server && npm run citest",
-    "citest:site": "cd td.site && npm run citest",
-    "clean": "npm-run-all clean:site clean:server clean:desktop",
-    "clean:desktop": "cd td.desktop && npm run clean",
+    "install:site": "cd td.vue && npm install",
+    "citest": "npm-run-all citest:server citest:site",
+    "citest:server": "cd td.server && npm run test",
+    "citest:site": "cd td.vue && npm run test:unit",
+    "clean": "npm-run-all clean:server",
     "clean:server": "cd td.server && npm run clean",
-    "clean:site": "cd td.site && npm run clean",
     "test": "npm-run-all build pretest test:site test:server",
-    "test:desktop": "cd td.desktop && npm test",
     "test:server": "cd td.server && npm test",
-    "test:site": "cd td.site && npm test",
+    "test:site": "cd td.vue && npm run test:unit",
     "pretest": "npm-run-all pretest:server pretest:site",
-    "pretest:desktop": "cd td.desktop && npm run pretest",
     "pretest:server": "cd td.server && npm run pretest",
-    "pretest:site": "cd td.site && npm run pretest",
+    "pretest:site": "cd td.vue && npm run lint",
     "build": "npm-run-all build:site build:server",
-    "build:desktop": "cd td.desktop && npm run build",
     "build:server": "cd td.server && npm run build",
-    "build:site": "cd td.site && npm run build",
+    "build:site": "cd td.vue && npm run build",
     "codecov": "./node_modules/.bin/codecov"
   },
   "keywords": [
@@ -50,6 +47,7 @@
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "devDependencies": {
+    "pm2": "^5.1.2",
     "npm-run-all": "^4.1.5"
   }
 }

@@ -33,4 +33,6 @@ td.desktop/ThreatDragonModels/
 
 # Ignore logs from server
 td.server/*.log
+app.log
+audit.log
 
