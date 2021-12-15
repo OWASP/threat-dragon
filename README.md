@@ -31,7 +31,7 @@ Over time other storage methods will become available.
 
 There is also a desktop version of Threat Dragon
 which stores the threat model files on the local filesystem rather than in a repository.
-Each release provides installers for both Windows, Mac OSX and Linux, as well as rpm and debian packages.
+Each release provides installers for Windows, Mac OSX and Linux.
 
 [End user help](https://docs.threatdragon.org) is available for both variants.
 

@@ -32,7 +32,7 @@ Unit testing for the vue application is done using [jest](https://jestjs.io/), a
 If you'd prefer to work in a more TDD fashion, you can have the tests run continuously by running `npm run test:unit -- --watch`.
 
 ### Mocha (td.server)
-Unit testing for the server application is done using [Mocha](https://mochajs.org/), with a little help from our friends (sinon)[https://sinonjs.org/] and (chai)[https://www.chaijs.com/].  To run the tests locally, navigate to the `td.server` directory and run:
+Unit testing for the server application is done using [Mocha](https://mochajs.org/), with a little help from our friends [sinon](https://sinonjs.org/) and [chai](https://www.chaijs.com/).  To run the tests locally, navigate to the `td.server` directory and run:
 - `npm install`
 - `npm run test:unit`
 
