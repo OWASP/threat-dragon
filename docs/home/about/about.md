@@ -25,14 +25,16 @@ from OWASP, and this expands on what the Threat Dragon project aims for:
 
 The application comes in two variants:
 
-1. [**A desktop application**](https://github.com/owasp/threat-dragon/releases): This is based on
-[Electron](https://electron.atom.io/), with model files stored on the local filesystem.
+1. [**A desktop application**](https://github.com/owasp/threat-dragon/releases): This uses
+[Electron](https://electron.atom.io/) to run the application, with model files stored on the local filesystem.
 There are installers available for Windows, Mac OSX and Linux.
 
 1. [**A web application**](https://github.com/owasp/threat-dragon/releases): For the web application model files
 are stored in GitHub, with other storage methods to follow.
 
 ____
+<p>
 <sup><a name="footnote1">1</a>: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege</sup><br>
 <sup><a name="footnote2">2</a>: Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance</sup><br>
 <sup><a name="footnote3">3</a>: Confidentiality, Integrity, Availability</sup><br>
+</p>

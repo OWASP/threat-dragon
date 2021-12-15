@@ -9,8 +9,7 @@ group: Installation
 
 ## [OWASP](https://www.owasp.org) Threat Dragon
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) comes in two variants, 
-desktop application and web application.
+[Threat Dragon](http://owasp.org/www-project-threat-dragon) comes in two variants, a desktop application and a web application.
 
 ## Web application install instructions
 The web application can be run locally or from a server.
@@ -36,7 +35,8 @@ Threat Dragon uses GitHub to store threat models, so you need to go to your GitH
 Once you have done that you need to set the Client ID and Client Secret as environment variables (`GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`).
 
 You also need to set a session signing key environment variable (`SESSION_SIGNING_KEY`).
-Setting up these environment variables has caused some confusion in the past, so there is a [step-by-step guide]({{ '/development/env' | relative_url }}) to this. 
+Setting up these environment variables has caused some confusion in the past,
+so there is a [step-by-step guide]({{ '/development/env.html' | relative_url }}) to this. 
 
 Once a user is signed in, their session information contains an OAuth access token with write access to their GitHub repos.
 For security, this is encrypted before storage in the session. The session encryption supports multiple keys so that they can be expired
@@ -54,10 +54,8 @@ it starts if the in memory session store is used.
 For production use, Threat Dragon currently supports Azure Table Storage for the session store via
 [connect-azuretables](https://www.npmjs.com/package/connect-azuretables). To make this store work you need to specify an Azure Storage Account
 and key as environment variables `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY`.
-See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options.
-
-If you want to use an [alternative session store](https://github.com/expressjs/session#compatible-session-stores) in production,
-install it and edit the [session.config.js](https://github.com/owasp/threat-dragon/blob/master/td/config/session.config.js) file.
+See the [connect-azuretables](https://www.npmjs.com/package/connect-azuretables) documentation for more options
+and information on how to set up a `session.config.js` file.
 
 Lastly, by default, Threat Dragon will set the `secure` flag on cookies. To override this for development purposes,
 set the `NODE_ENV` environment variable to `development`. 
