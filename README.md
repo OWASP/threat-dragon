@@ -16,8 +16,15 @@ Threat Dragon is a free, open-source, cross-platform threat modelling applicatio
 and a threat rule engine to auto-generate threats/mitigations.
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
-The roadmap for the project is a simple UX, a powerful rule engine
-and integration with other development lifecycle tools.
+
+A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
+
+There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
+from OWASP, and this expands on what the Threat Dragon project aims for:
+* ease of use and accessible
+* designing a data flow diagram
+* suggesting threats
+* entering mitigations and counter measures
 
 The application comes in two variants:
 
