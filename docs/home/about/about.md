@@ -15,6 +15,9 @@ Threat Dragon supports STRIDE<sup>[1](#footnote1)</sup>, LINDDUN<sup>[2](#footno
 
 It is an [OWASP Lab Project](https://owasp.org/projects/)
 and follows the values and principles of the threat modeling [manifesto](https://www.threatmodelingmanifesto.org/).
+An [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by
+the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series,
+and a different take on Threat Dragon is provided by [Threat Modeling Gamification](https://www.youtube.com/watch?v=u2tmLrwv-nc).
 
 There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for: 
