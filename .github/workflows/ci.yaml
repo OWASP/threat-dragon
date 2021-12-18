@@ -16,10 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
@@ -50,10 +50,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
@@ -136,10 +136,10 @@ jobs:
             -e NODE_ENV='development' \
             ${{ env.image_name }}
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
@@ -185,10 +185,10 @@ jobs:
             -e NODE_ENV='development' \
             ${{ env.image_name }}
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
