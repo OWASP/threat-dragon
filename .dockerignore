@@ -5,7 +5,11 @@ dist/
 */dist
 */node_modules
 .env
+*.env
 *.log
+log/
+utils/
 */.nyc_output
 td.desktop/
 .github
+td.angular/
