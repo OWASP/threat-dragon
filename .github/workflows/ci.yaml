@@ -140,6 +140,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Use Node.js 16.x
@@ -192,6 +193,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Use Node.js 16.x
@@ -237,6 +239,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Checkout
@@ -283,6 +286,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Checkout
@@ -319,6 +323,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
