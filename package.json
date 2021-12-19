@@ -1,67 +1,68 @@
 {
-  "name": "threat-dragon",
-  "version": "2.0.0",
-  "private": false,
-  "scripts": {
-    "dev:vue": "cd td.vue && npm run dev",
-    "dev:server": "cd td.server && npm run dev",
-    "start": "npm-run-all build start:server start:site",
-    "start:server": "pm2 --name td.server start td.server/index.js",
-    "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
-    "stop": "npm-run-all stop:site stop:server",
-    "stop:server": "pm2 delete td.server",
-    "stop:site": "pm2 delete td.vue",
-    "preinstall": "npx only-allow pnpm",
-    "clean": "npm-run-all clean:server",
-    "clean:server": "cd td.server && npm run clean",
-    "test": "npm-run-all build pretest test:site test:server",
-    "test:server": "cd td.server && npm test",
-    "test:site": "cd td.vue && npm run test:unit",
-    "pretest": "npm-run-all pretest:server pretest:site",
-    "pretest:server": "cd td.server && npm run pretest",
-    "pretest:site": "cd td.vue && npm run lint",
-    "build": "npm-run-all build:vue build:server",
-    "build:server": "cd td.server && npm run build",
-    "build:vue": "cd td.vue && npm run build",
-    "codecov": "./node_modules/.bin/codecov"
-  },
-  "keywords": [
-    "threat dragon",
-    "OWASP",
-    "threat modeling",
-    "STRIDE",
-    "LINDDUN"
-  ],
-  "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
-  "author": "OWASP",
-  "license": "Apache-2.0",
-  "homepage": "https://docs.threatdragon.org/",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/OWASP/threat-dragon.git"
-  },
-  "bugs": {
-    "url": "https://github.com/OWASP/threat-dragon/issues"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "pm2": "^5.1.2",
-    "rimraf": "^3.0.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "nth-check@<2.0.1": ">=2.0.1",
-      "tar@>=6.0.0 <6.1.9": ">=6.1.9",
-      "tar@>=6.0.0 <6.1.7": ">=6.1.7",
-      "tar@>=6.0.0 <6.1.1": ">=6.1.1",
-      "tar@>=6.0.0 <6.1.2": ">=6.1.2",
-      "glob-parent@<5.1.2": ">=5.1.2",
-      "lodash@<4.17.21": ">=4.17.21",
-      "node-notifier@<8.0.1": ">=8.0.1",
-      "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2",
-      "lodash@<4.17.19": ">=4.17.19",
-      "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
-      "minimist@<0.2.1": ">=0.2.1"
+    "name": "threat-dragon",
+    "version": "2.0.0",
+    "private": false,
+    "scripts": {
+        "dev:vue": "cd td.vue && npm run dev",
+        "dev:server": "cd td.server && npm run dev",
+        "start": "npm-run-all build start:server start:site",
+        "start:server": "pm2 --name td.server start td.server/index.js",
+        "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
+        "stop": "npm-run-all stop:site stop:server",
+        "stop:server": "pm2 delete td.server",
+        "stop:site": "pm2 delete td.vue",
+        "preinstall": "npx only-allow pnpm",
+        "clean": "npm-run-all clean:server",
+        "clean:server": "cd td.server && npm run clean",
+        "test": "npm-run-all build pretest test:site test:server",
+        "test:server": "cd td.server && npm test",
+        "test:site": "cd td.vue && npm run test:unit",
+        "pretest": "npm-run-all pretest:server pretest:site",
+        "pretest:server": "cd td.server && npm run pretest",
+        "pretest:site": "cd td.vue && npm run lint",
+        "build": "npm-run-all build:vue build:server",
+        "build:server": "cd td.server && npm run build",
+        "build:vue": "cd td.vue && npm run build",
+        "codecov": "./node_modules/.bin/codecov"
+    },
+    "keywords": [
+        "threat dragon",
+        "OWASP",
+        "threat modeling",
+        "STRIDE",
+        "LINDDUN"
+    ],
+    "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
+    "author": "OWASP",
+    "license": "Apache-2.0",
+    "homepage": "https://docs.threatdragon.org/",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/OWASP/threat-dragon.git"
+    },
+    "bugs": {
+        "url": "https://github.com/OWASP/threat-dragon/issues"
+    },
+    "devDependencies": {
+        "npm-run-all": "^4.1.5",
+        "pm2": "^5.1.2",
+        "rimraf": "^3.0.2"
+    },
+    "pnpm": {
+        "overrides": {
+            "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
+            "nth-check@<2.0.1": ">=2.0.1",
+            "tar@>=6.0.0 <6.1.9": ">=6.1.9",
+            "tar@>=6.0.0 <6.1.7": ">=6.1.7",
+            "tar@>=6.0.0 <6.1.1": ">=6.1.1",
+            "tar@>=6.0.0 <6.1.2": ">=6.1.2",
+            "glob-parent@<5.1.2": ">=5.1.2",
+            "lodash@<4.17.21": ">=4.17.21",
+            "node-notifier@<8.0.1": ">=8.0.1",
+            "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2",
+            "lodash@<4.17.19": ">=4.17.19",
+            "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
+            "minimist@<0.2.1": ">=0.2.1"
+        }
     }
-  }
 }
