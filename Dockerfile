@@ -4,7 +4,7 @@ ARG         NODE_VERSION=16
 FROM        node:$NODE_VERSION-alpine as base-node
 RUN         apk -U upgrade
 WORKDIR     /app
-RUN         npm i -g npm@latest
+RUN         npm i -g npm@latest pnpm
 RUN         mkdir -p td.server td.vue
 RUN         chown -R node:node /app
 USER        node
@@ -15,18 +15,19 @@ USER        node
 FROM        base-node as build
 RUN         mkdir boms
 
-COPY        ./td.server/package*.json ./td.server/
-RUN         cd td.server && npm ci
-COPY        ./td.server/.babelrc ./td.server
-COPY        ./td.server/src/ ./td.server/src/
-RUN         cd td.server && npm run build
+COPY        pnpm_workspace.yaml pnpm-lock.yaml package.json /app/
+COPY        ./td.server/pnpm-lock.yaml ./td.server/package.json ./td.server/
+COPY        ./td.vue/pnpm-lock.yaml ./td.vue/package.json ./td.vue/
 
-COPY        ./td.vue/package* ./td.vue/
-RUN         cd td.vue && npm ci
+COPY        ./td.server/.babelrc ./td.server/
+COPY        ./td.server/src/ ./td.server/src/
 COPY        ./td.vue/src/ ./td.vue/src/
 COPY        ./td.vue/public/ ./td.vue/public/
 COPY        ./td.vue/*.config.js ./td.vue/
-RUN         cd td.vue && npm run build
+
+RUN         pnpm install -r --frozen-lockfile
+RUN         npm run build
+
 # Build Software BOMs
 RUN         npx cyclonedx-bom -o boms/server_xml_bom.xml ./td.server
 RUN         npx cyclonedx-bom -o boms/site_xml_bom.xml ./td.vue
@@ -63,14 +64,14 @@ COPY        --from=build-canonical-bom boms/* downloads/
 RUN         bundle exec jekyll build -b docs/
 
 
-# Build the final, production image.  If running this locally, consider switching NODE_ENV from production to development
+# Build the final, production image. 
+# TODO: App no longer being served, docs are working as expected though
 FROM        base-node
-ENV         NODE_ENV=production
 COPY        --from=build-docs /td.docs/_site /app/docs
-COPY        ./td.server/package*.json ./td.server/
-RUN         cd td.server && npm ci --production
+COPY        ./td.server/package*.json ./td.server/pnpm-lock.yaml ./td.server/
+RUN         cd td.server && pnpm install --prod --frozen-lockfile --ignore-scripts
 COPY        --from=build /app/td.server/dist ./td.server/dist
-COPY        --from=build /app/td.vue/dist /app/dist
+COPY        --from=build /app/td.vue/dist ./dist
 COPY        ./td.server/index.js ./td.server/index.js
 
 HEALTHCHECK --interval=10s --timeout=2s --start-period=2s CMD ["/nodejs/bin/node", "./td.server/dist/healthcheck.js"]

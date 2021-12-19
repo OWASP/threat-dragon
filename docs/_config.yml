@@ -91,6 +91,10 @@ nav:
           fa_class: fab fa-github-alt
         - name: Internationalization
           fa_class: fas fa-globe-africa
+        - name: Local
+          fa_class: fas fa-code
+        - name: Release-Process
+          fa_class: fas fa-rocket
 
 
 

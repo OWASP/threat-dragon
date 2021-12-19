@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    // TODO: Does this work on dev too?
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
     productionSourceMap: false,
     devServer: {

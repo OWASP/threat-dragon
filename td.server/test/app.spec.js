@@ -39,16 +39,8 @@ describe('app tests', () => {
             expect(mockApp.set).to.have.been.calledWith('trust proxy', true);
         });
 
-        it('uses views', () => {
-            expect(mockApp.set).to.have.been.calledWith('views', sinon.match('views'));
-        });
-
         it('adds the https middleware', () => {
             expect(mockApp.use).to.have.been.calledWith(https.middleware);
-        });
-
-        it('uses the pug view engine', () => {
-            expect(mockApp.set).to.have.been.calledWith('view engine', 'pug');
         });
 
         it('uses dotenv config', () => {

@@ -33,18 +33,19 @@ There is also a desktop version of Threat Dragon
 which stores the threat model files on the local filesystem rather than in a repository.
 Each release provides installers for Windows, Mac OSX and Linux.
 
-[End user help](https://docs.threatdragon.org) is available for both variants.
+[End user help](https://www.threatdragon.com/docs) is available for both variants.
 
 ### Installing
-Install git and node.js - which includes the node package manager npm.
+Install git and node.js (version 16) - which includes the node package manager npm.
+[Install pnpm](https://pnpm.io/installation)
 To get the code navigate to a target directory and use command
 
-`git clone --recursive https://github.com/owasp/threat-dragon.git`
+`git clone https://github.com/owasp/threat-dragon.git`
 
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-To install from the top directory of the project: `npm install`
+To install from the top directory of the project: `pnpm install`
 
 ### Environment variables
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
@@ -55,21 +56,22 @@ You will also have to provide other environment variables, again following
 [the documentation](https://www.threatdragon.com/docs/development/env.html) on this
 
 ### Run the application
-Start both the back-end server and the front-end application from the top directory: `npm start`
+Start both the back-end server and the front-end application from the top directory: `npm start`.
+Alternatively, the front-end and back-end can be started separately, in "watch" mode using `npm run dev:server` and `npm run dev:vue`.
 
 To stop the application and the back-end server, from the top directory: `npm run stop`
 
-With both front and back end running, access with a browser at http://localhost:8080/ 
+With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
-Stop both the back-end server and the front-end application from the top directory: `npm stop`
+If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`
 
 ### Docker
 To run Threat Dragon in a docker container,
 first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
 and run from the top directory of the project:
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it --rm -p 8080:8080 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ### Contributing
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
@@ -77,7 +79,7 @@ Pull requests, feature requests, bug reports and feedback of any kind are very w
 
 We are trying to keep the test coverage relatively high,
 so please try to update tests in any PRs and make PRs on the development branch.
-There are some [developer notes](dev-notes.md) to help get started with this project.
+There are some [developer notes](https://www.threatdragon.com/docs/development/local.html)) to help get started with this project.
 
 ### Vulnerability disclosure
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
