@@ -66,7 +66,7 @@ nav:
         - name: About
           fa_class: fas fa-info-circle
         - name: Trust
-          fa_class: fas fa-lock
+          fa_class: fas fa-shield-alt
     - name: Usage
       groups:
         - name: Installation
