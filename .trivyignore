@@ -1,0 +1,6 @@
+# Client-side only vulnerability according to redhat: 
+#    https://access.redhat.com/security/cve/cve-2021-3807
+# This is also baked into the node:16-alpine image at this time (inside of nodejs itself)
+# We will need to wait for node to update
+# As a temporary mitigating factor, I've added a custom resolution for all projects
+CVE-2021-3807

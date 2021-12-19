@@ -53,3 +53,13 @@ td.server/app.log td.server/audit.log
 
 Launch the electron-based desktop application using: _not yet defined_
 
+## Docker
+A Dockerfile is provided that can be used to create a docker image:
+* checkout the threat dragon source repo
+* from the root directory build the docker image using `docker build -t owasp-threat-dragon:dev .`
+* wait for the docker image to build
+* create a `.env` environment variable file using the example `example.env` as a template
+* run a docker container using
+`docker run -it -p 8080:8080 -v $(pwd)/.env:/app/td.server/.env owasp-threat-dragon:dev`
+* navigate in a browser to http://localhost:8080/
+* if there is an error in the browser such as 'Cannot GET /' then make sure `.env` file is correct

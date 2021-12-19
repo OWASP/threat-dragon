@@ -323,6 +323,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     steps:
+      # Need .trivyignore
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
