@@ -72,5 +72,19 @@
     "vue-cli-plugin-style-resources-loader": "~0.1.5",
     "vue-template-compiler": "^2.6.11",
     "vuex-persist": "^3.1.3"
+  },
+  "pnpm": {
+      "overrides": {
+          "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
+          "nth-check@<2.0.1": ">=2.0.1",
+          "tar@>=6.0.0 <6.1.9": ">=6.1.9",
+          "glob-parent@<5.1.2": ">=5.1.2",
+          "lodash@<4.17.21": ">=4.17.21",
+          "node-notifier@<8.0.1": ">=8.0.1",
+          "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2",
+          "lodash@<4.17.19": ">=4.17.19",
+          "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
+          "minimist@<0.2.1": ">=0.2.1"
+      }
   }
 }

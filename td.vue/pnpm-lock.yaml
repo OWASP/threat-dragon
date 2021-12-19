@@ -1,7 +1,16 @@
 lockfileVersion: 5.3
 
 overrides:
-  ansi-regex: ^5.0.1
+  ansi-regex@>2.1.1 <5.0.1: '>=5.0.1'
+  nth-check@<2.0.1: '>=2.0.1'
+  tar@>=6.0.0 <6.1.9: '>=6.1.9'
+  glob-parent@<5.1.2: '>=5.1.2'
+  lodash@<4.17.21: '>=4.17.21'
+  node-notifier@<8.0.1: '>=8.0.1'
+  yargs-parser@>=6.0.0 <13.1.2: '>=13.1.2'
+  lodash@<4.17.19: '>=4.17.19'
+  minimist@>=1.0.0 <1.2.3: '>=1.2.3'
+  minimist@<0.2.1: '>=0.2.1'
 
 specifiers:
   '@antv/x6': ^1.21.7
@@ -1505,7 +1514,7 @@ packages:
       jest-runtime: 24.9.0
       jest-util: 24.9.0
       jest-worker: 24.9.0
-      node-notifier: 5.4.5
+      node-notifier: 10.0.0
       slash: 2.0.0
       source-map: 0.6.1
       string-length: 2.0.0
@@ -2666,6 +2675,11 @@ packages:
     hasBin: true
     dev: true
 
+  /ansi-regex/2.1.1:
+    resolution: {integrity: sha1-w7M6te42DYbg5ijwRorn7yfWVN8=}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
   /ansi-regex/5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
@@ -3647,11 +3661,6 @@ packages:
       upper-case: 1.1.3
     dev: true
 
-  /camelcase/4.1.0:
-    resolution: {integrity: sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=}
-    engines: {node: '>=4'}
-    dev: true
-
   /camelcase/5.3.1:
     resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==}
     engines: {node: '>=6'}
@@ -3757,7 +3766,7 @@ packages:
       anymatch: 2.0.0
       async-each: 1.0.3
       braces: 2.3.2
-      glob-parent: 3.1.0
+      glob-parent: 5.1.2
       inherits: 2.0.4
       is-binary-path: 1.0.1
       is-glob: 4.0.3
@@ -4227,7 +4236,7 @@ packages:
     dependencies:
       cacache: 12.0.4
       find-cache-dir: 2.1.0
-      glob-parent: 3.1.0
+      glob-parent: 5.1.2
       globby: 7.1.1
       is-glob: 4.0.3
       loader-utils: 1.4.0
@@ -4416,7 +4425,7 @@ packages:
       boolbase: 1.0.0
       css-what: 3.4.2
       domutils: 1.7.0
-      nth-check: 1.0.2
+      nth-check: 2.0.1
     dev: true
 
   /css-select/4.1.3:
@@ -4606,9 +4615,9 @@ packages:
       is-installed-globally: 0.1.0
       lazy-ass: 1.6.0
       listr: 0.12.0
-      lodash: 4.17.15
+      lodash: 4.17.21
       log-symbols: 2.2.0
-      minimist: 1.2.0
+      minimist: 1.2.5
       moment: 2.24.0
       ramda: 0.24.1
       request: 2.88.0
@@ -5816,7 +5825,7 @@ packages:
     dependencies:
       '@mrmlnc/readdir-enhanced': 2.2.1
       '@nodelib/fs.stat': 1.1.3
-      glob-parent: 3.1.0
+      glob-parent: 5.1.2
       is-glob: 4.0.3
       merge2: 1.4.1
       micromatch: 3.1.10
@@ -6211,7 +6220,7 @@ packages:
       bluebird: 3.7.2
       got: 5.6.0
       https-proxy-agent: 5.0.0
-      tar: 6.0.2
+      tar: 6.1.11
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6283,13 +6292,6 @@ packages:
     resolution: {integrity: sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=}
     dependencies:
       assert-plus: 1.0.0
-    dev: true
-
-  /glob-parent/3.1.0:
-    resolution: {integrity: sha1-nmr2KZ2NO9K9QEMIMr0RPfkGxa4=}
-    dependencies:
-      is-glob: 3.1.0
-      path-dirname: 1.0.2
     dev: true
 
   /glob-parent/5.1.2:
@@ -6471,7 +6473,7 @@ packages:
     resolution: {integrity: sha1-NPUEnOHs3ysGSa8+8k5F7TVBbZE=}
     engines: {node: '>=0.10.0'}
     dependencies:
-      ansi-regex: 5.0.1
+      ansi-regex: 2.1.1
     dev: true
 
   /has-bigints/1.0.1:
@@ -7209,13 +7211,6 @@ packages:
   /is-generator-fn/2.1.0:
     resolution: {integrity: sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==}
     engines: {node: '>=6'}
-    dev: true
-
-  /is-glob/3.1.0:
-    resolution: {integrity: sha1-e6WuJCF4BKxwcHuWkiVnSGzD6Eo=}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      is-extglob: 2.1.1
     dev: true
 
   /is-glob/4.0.3:
@@ -8415,10 +8410,6 @@ packages:
     resolution: {integrity: sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=}
     dev: true
 
-  /lodash/4.17.15:
-    resolution: {integrity: sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==}
-    dev: true
-
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
@@ -8697,14 +8688,6 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimist/0.0.8:
-    resolution: {integrity: sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=}
-    dev: true
-
-  /minimist/1.2.0:
-    resolution: {integrity: sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=}
-    dev: true
-
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
@@ -8753,7 +8736,7 @@ packages:
     deprecated: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
     hasBin: true
     dependencies:
-      minimist: 0.0.8
+      minimist: 1.2.5
     dev: true
 
   /mkdirp/0.5.5:
@@ -8938,14 +8921,15 @@ packages:
       vm-browserify: 1.1.2
     dev: true
 
-  /node-notifier/5.4.5:
-    resolution: {integrity: sha512-tVbHs7DyTLtzOiN78izLA85zRqB9NvEXkAf014Vx3jtSvn/xBl6bR8ZYifj+dFcFrKI21huSQgJZ6ZtL3B4HfQ==}
+  /node-notifier/10.0.0:
+    resolution: {integrity: sha512-ZTqP90y1eyb2xAZTa7j4AlAayTwh6cL8mn0nlJhLDq8itXGnJUmQGYOnpaMUvqZVfGo0vhU7KZ3HtDW6CT2SiQ==}
     dependencies:
       growly: 1.3.0
-      is-wsl: 1.1.0
-      semver: 5.7.1
+      is-wsl: 2.2.0
+      semver: 7.3.5
       shellwords: 0.1.1
-      which: 1.3.1
+      uuid: 8.3.2
+      which: 2.0.2
     dev: true
 
   /node-releases/2.0.1:
@@ -9168,12 +9152,6 @@ packages:
       - which
       - worker-farm
       - write-file-atomic
-
-  /nth-check/1.0.2:
-    resolution: {integrity: sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==}
-    dependencies:
-      boolbase: 1.0.0
-    dev: true
 
   /nth-check/2.0.1:
     resolution: {integrity: sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w==}
@@ -9590,10 +9568,6 @@ packages:
 
   /path-browserify/0.0.1:
     resolution: {integrity: sha512-BapA40NHICOS+USX9SN4tyhq+A2RrN/Ws5F0Z5aMHDp98Fl86lX8Oti8B7uN93L4Ifv4fHOEA+pQw87gmMO/lQ==}
-    dev: true
-
-  /path-dirname/1.0.2:
-    resolution: {integrity: sha1-zDPSTVJeCZpTiMAzbG4yuRYGCeA=}
     dev: true
 
   /path-exists/2.1.0:
@@ -11518,7 +11492,7 @@ packages:
     resolution: {integrity: sha1-ajhfuIU9lS1f8F0Oiq+UJ43GPc8=}
     engines: {node: '>=0.10.0'}
     dependencies:
-      ansi-regex: 5.0.1
+      ansi-regex: 2.1.1
     dev: true
 
   /strip-ansi/4.0.0:
@@ -11687,8 +11661,8 @@ packages:
       readable-stream: 3.6.0
     dev: true
 
-  /tar/6.0.2:
-    resolution: {integrity: sha512-Glo3jkRtPcvpDlAs/0+hozav78yoXKFr+c4wgw62NNMO3oo4AaJdCo21Uu7lcwr55h39W2XD1LMERc64wtbItg==}
+  /tar/6.1.11:
+    resolution: {integrity: sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==}
     engines: {node: '>= 10'}
     dependencies:
       chownr: 2.0.0
@@ -11971,7 +11945,7 @@ packages:
       mkdirp: 0.5.5
       resolve: 1.20.0
       semver: 5.7.1
-      yargs-parser: 10.1.0
+      yargs-parser: 20.2.9
     dev: true
 
   /ts-pnp/1.2.0:
@@ -12979,12 +12953,6 @@ packages:
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-    dev: true
-
-  /yargs-parser/10.1.0:
-    resolution: {integrity: sha512-VCIyR1wJoEBZUqk5PA+oOBF6ypbwh5aNB3I50guxAL/quggdfs4TtNHQrSazFA3fYZ+tEqfs0zIGlv0c/rgjbQ==}
-    dependencies:
-      camelcase: 4.1.0
     dev: true
 
   /yargs-parser/13.1.2:
