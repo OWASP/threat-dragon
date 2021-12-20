@@ -89,9 +89,23 @@ and `td.server/package.json`
 1. check using `docker pull threatdragon/owasp-threat-dragon:v1.6.0`
 
 ### Test the release
-Test the release images as above; ideally on all of Windows, linux and MacOS
+Install the release images as above; ideally on all of Windows, linux and MacOS.
+Test the release by running the application and exercising some or all:
+1. Open a model locally and remote
+2. Open a new model, and the demo model
+3. Make some changes to the project, make some changes to the diagram
+4. Add some threats, add some threats per element, add some threats by context
+5. Save locally and remote
+6. Check the reporting function
 
 Ensure the Snap image is available via [official snapcraft distribution](https://snapcraft.io/threat-dragon)
+
+Observe the docker image on docker hub, at the right version, etc
+
+All going well then update the release notes for the draft in the
+[Threat Dragon release area](https://github.com/OWASP/threat-dragon/releases) and make public
+
+Finally ensure Threat Dragon tweets the release on Twitter, and announces it on the OWASP slack channels
 
 ### Go public
 All tests going well then update the release notes for the draft release in the
@@ -105,14 +119,13 @@ Finally ensure Threat Dragon tweets the release on Twitter,
 and announces it on the OWASP slack channels
 
 ## Legacy demo and dev websites
-These public sites are updated from Mike Goodwin's original repo at
-[github.com/mike-goodwin/owasp-threat-dragon](https://github.com/mike-goodwin/owasp-threat-dragon),
-so long as all the pull request checks pass.
+These OWASP public sites are updated from Mike Goodwin's original repo at
+[github.com/mike-goodwin/owasp-threat-dragon](https://github.com/mike-goodwin/owasp-threat-dragon).
+If the all pull request checks pass then the updates are applied automatically.
 
 * merges to `master` [branch](https://github.com/mike-goodwin/owasp-threat-dragon)
 will update the [online demo](https://threatdragon.org/)
 * merges to `development` [branch](https://github.com/mike-goodwin/owasp-threat-dragon/tree/development)
 will update the [snapshot demo](https://threatdragondev.azurewebsites.net/)
 
-_Threat Dragon: making threat models less threatening_
-
+_Threat Dragon: making threat modeling less threatening_

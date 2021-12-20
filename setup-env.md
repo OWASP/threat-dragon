@@ -200,4 +200,4 @@ Example screenshot of registering a new OAuth application:
 
 ![Register new OAuth application](td.site/src/content/images/register-new-OAuth-application.png)
 
-_Threat Dragon: making threat models less threatening_
+_Threat Dragon: making threat modeling less threatening_
