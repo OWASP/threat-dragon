@@ -183,6 +183,8 @@ ___
 | --- | ----------- | ------- |
 | NODE_ENV | The node environment.  Typically either `production` or `development`.  The `secure` flag is only set on cookies if running in `production` mode. | |
 | PORT | The port which the Threat Dragon server will listen on. | `3000`
+| PROXY | Causes `Strategy` to trust all broker Settings. 
+Solve the login callback failure caused by network reasons. | |
 | IS_TEST | Used for testing only | |
 | SESSION_STORE | The session store provider used. `local` should be used for testing only and not in a production environment. Currently, only Azure Table Storage is configured for a production-ready solution.  Set the `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY` values to enable. | |
 | SIGNING_KEY | A 32 bit hexadecimal string used by `express-session` | |

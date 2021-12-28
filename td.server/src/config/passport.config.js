@@ -51,7 +51,8 @@ const config = (app) => {
         clientID: env.get().config.GITHUB_CLIENT_ID,
         clientSecret: env.get().config.GITHUB_CLIENT_SECRET,
         failureRedirect: 'login/github',
-        scope: [ githubScope ]
+        scope: [ githubScope ],
+        proxy: env.get().config.PROXY
     };
 
     passport.use(new Strategy(githubConfig, strategyCallback));
