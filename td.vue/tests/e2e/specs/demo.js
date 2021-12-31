@@ -1,6 +1,7 @@
 describe('demo', () => {
     before(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
     });

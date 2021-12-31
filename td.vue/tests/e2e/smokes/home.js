@@ -20,6 +20,7 @@ describe('home', () => {
     });
 
     it('has a v2 warning toast', () => {
-        cy.get('.Vue-Toastification__toast--error bottom-left').should('be.visible');
+        cy.get('.Vue-Toastification__toast--error').should('be.visible');
+        cy.get('.Vue-Toastification__close-button').click();
     });
 });
