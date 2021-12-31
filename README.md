@@ -36,8 +36,8 @@ Each release provides installers for Windows, Mac OSX and Linux.
 [End user help](https://www.threatdragon.com/docs) is available for both variants.
 
 ### Installing
-Install git and node.js (version 16) - which includes the node package manager npm.
-[Install pnpm](https://pnpm.io/installation)
+Install git and node.js (version 16) - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
+
 To get the code navigate to a target directory and use command
 
 `git clone https://github.com/owasp/threat-dragon.git`
