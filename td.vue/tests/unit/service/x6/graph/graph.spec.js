@@ -108,6 +108,12 @@ describe('service/x6/graph/graph.js', () => {
         });
     });
 
+    it('enables scrolling', () => {
+        expect(cfg.scroller).toEqual({
+            enabled: true
+        });
+    });
+
     it('enables connecting', () => {
         expect(cfg.connecting).toEqual({
             allowNode: true,

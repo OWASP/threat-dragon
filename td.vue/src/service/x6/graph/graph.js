@@ -66,6 +66,9 @@ const getConfig = (container) => ({
     connecting: {
         allowNode: true,
         allowBlank: true
+    },
+    scroller: {
+        enabled: true,
     }
 });
 
