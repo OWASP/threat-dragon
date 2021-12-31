@@ -21,8 +21,8 @@
     "ansi-regex": "^5.0.1"
   },
   "dependencies": {
-    "@antv/x6": "^1.21.7",
-    "@antv/x6-vue-shape": "^1.2.4",
+    "@antv/x6": "^1.28.1",
+    "@antv/x6-vue-shape": "^1.2.10",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",

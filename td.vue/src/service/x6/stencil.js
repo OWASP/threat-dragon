@@ -5,6 +5,7 @@ import { tc } from '@/i18n/index.js';
 const getDefaults = (target) => ({
     title: tc('threatmodel.stencil.entities'),
     target,
+    collapsable: true,
     stencilGraphWidth: 500,
     groups: [
         {

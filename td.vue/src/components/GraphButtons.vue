@@ -1,17 +1,6 @@
 <template>
     <b-btn-group>
         <td-form-button
-            :isPrimary="true"
-            :onBtnClick="notImplemented"
-            icon="save"
-            :text="$t('forms.save')" />
-
-        <td-form-button
-            :onBtnClick="closeDiagram"
-            icon="times"
-            :text="$t('forms.close')" />
-
-        <td-form-button
             :onBtnClick="noOp"
             v-b-modal.shortcuts
             icon="keyboard"
@@ -53,6 +42,18 @@
             icon="th"
             :title="$t('threatmodel.buttons.toggleGrid')"
             text="" />
+
+        <td-form-button
+            :onBtnClick="closeDiagram"
+            icon="times"
+            :text="$t('forms.close')" />
+            
+        <td-form-button
+            :isPrimary="true"
+            :onBtnClick="notImplemented"
+            icon="save"
+            :text="$t('forms.save')" />
+
     </b-btn-group>
 </template>
 

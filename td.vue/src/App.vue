@@ -2,9 +2,6 @@
   <div>
     <td-navbar />
     <b-container fluid id="app">
-    <b-alert show variant="danger">
-        {{ $t("nav.v2Warning") }}
-    </b-alert>
       <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
         <router-view />
       </b-overlay>
@@ -18,7 +15,7 @@
 #app {
   font-size: 20px;
   line-height: 1.42857143;
-  margin-top: 10vh;
+  margin-top: ($header-height + 15px);
 }
 </style>
 

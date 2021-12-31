@@ -1,68 +1,57 @@
 <template>
-    <div class="accordion" role="tablist">
-        <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 props-header" role="tab">
-            <a href="javascript:void(0)" v-b-toggle.properties>
-                {{ $t('threatmodel.properties.title') }}
-                <font-awesome-icon
-                    icon="chevron-right"
-                    class="down-icon when-closed"
-                ></font-awesome-icon>
-                <font-awesome-icon
-                    icon="chevron-down"
-                    class="down-icon when-open"
-                ></font-awesome-icon>
-            </a>
-        </b-card-header>
-        <b-collapse id="properties" visible accordion="actions-accordion" role="tabpanel">
-            <b-card-body>
-                <td-graph-properties />
-            </b-card-body>
-        </b-collapse>
-        </b-card>
+    <b-row>
+        <b-col md="6">
+            <b-card :header="`${$t('threatmodel.properties.title')}`">
+                <b-card-body>
+                    <td-graph-properties />
+                </b-card-body>
+            </b-card>
+        </b-col>
+        <b-col md="6">
+            <b-card header-tag="header">
+                <template #header class="mt-2">
+                    {{ $t('threatmodel.threats') }}
 
-        <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1 props-header" role="tab">
-            <a href="javascript:void(0)" block v-b-toggle.threats>
-                {{ $t('threatmodel.threats') }}
-                <font-awesome-icon
-                    icon="chevron-right"
-                    class="down-icon when-closed"
-                ></font-awesome-icon>
-                <font-awesome-icon
-                    icon="chevron-down"
-                    class="down-icon when-open"
-                ></font-awesome-icon>
-            </a>
-        </b-card-header>
-        <b-collapse id="threats" accordion="actions-accordion" role="tabpanel">
-            <b-card-body>
-                <b-card-text v-if="!!cellRef">
                     <b-btn
                         @click="newThreat()"
+                        v-if="!!cellRef"
                         variant="primary"
-                        class="mb-2 add-btn">{{ $t('threats.newThreat') }}</b-btn>
-                    <td-threat-card
-                        v-for="(threat, idx) in threats || []"
-                        :key="idx"
-                        :id="threat.id"
-                        :status="threat.status"
-                        :severity="threat.severity"
-                        :description="threat.description"
-                        :title="threat.title"
-                        :type="threat.type"
-                        :mitigation="threat.mitigation"
-                        :modelType="threat.modelType"
-                        @threatSelected="threatSelected" />
-                </b-card-text>
-                <b-card-text
-                    v-if="!cellRef || !cellRef.data">
-                    {{ $t('threatmodel.properties.emptyState') }}
-                </b-card-text>
-            </b-card-body>
-        </b-collapse>
-        </b-card>
-    </div>
+                        size="sm"
+                        class="float-right"
+                    >
+                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>    
+                        {{ $t('threats.newThreat') }}
+                    </b-btn>
+                </template>
+                <b-card-body>
+                    <b-card-text v-if="!!cellRef">
+                        <b-row>
+                            <b-col
+                                md="4"
+                                v-for="(threat, idx) in threats || []"
+                                :key="idx"
+                            >
+                                <td-threat-card
+                                    :id="threat.id"
+                                    :status="threat.status"
+                                    :severity="threat.severity"
+                                    :description="threat.description"
+                                    :title="threat.title"
+                                    :type="threat.type"
+                                    :mitigation="threat.mitigation"
+                                    :modelType="threat.modelType"
+                                    @threatSelected="threatSelected" />
+                            </b-col>
+                        </b-row>
+                    </b-card-text>
+                    <b-card-text
+                        v-if="!cellRef || !cellRef.data">
+                        {{ $t('threatmodel.properties.emptyState') }}
+                    </b-card-text>
+                </b-card-body>
+            </b-card>
+        </b-col>
+    </b-row>
 </template>
 
 <style lang="scss" scoped>
@@ -80,9 +69,6 @@
 .collapsed > .when-open,
 .not-collapsed > .when-closed {
   display: none;
-}
-.add-btn {
-    width: 100%;
 }
 </style>
 
