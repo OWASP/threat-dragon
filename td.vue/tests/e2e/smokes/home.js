@@ -19,7 +19,7 @@ describe('home', () => {
         cy.get('#local-login-btn').should('be.visible');
     });
 
-    it('has a v2 warning alert', () => {
-        cy.get('.alert-danger').should('be.visible');
+    it('has a v2 warning toast', () => {
+        cy.get('.Vue-Toastification__toast--error bottom-left').should('be.visible');
     });
 });
