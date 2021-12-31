@@ -110,7 +110,7 @@ jobs:
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Run cross-browser smoke tests
-        run: npm run test:e2e-smokes
+        run: pnpm run test:e2e-smokes
 
   rollback:
     runs-on: ubuntu-latest
