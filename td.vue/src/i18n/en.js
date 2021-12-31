@@ -152,7 +152,10 @@ const en = {
         cancel: 'Cancel',
         close: 'Close',
         search: 'Search',
-        import: 'Import'
+        import: 'Import',
+        ok: 'OK',
+        discardTitle: 'Discard Changes?',
+        discardMessage: 'Are you sure you want to discard your changes?'
     },
     threats: {
         models: {
