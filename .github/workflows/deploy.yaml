@@ -84,21 +84,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
+            ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: npm ci
-        run: npm ci
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: BrowserStack Env Setup
         uses: browserstack/github-actions/setup-env@master
