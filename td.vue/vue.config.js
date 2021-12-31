@@ -4,7 +4,13 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
     productionSourceMap: false,
     devServer: {
-        proxy: 'http://localhost:3000'
+        proxy: {
+            '^/api': {
+                target: 'http://localhost:3000',
+                ws: true,
+                changeOrigin: true
+            }
+        }
     },
     lintOnSave: false,
     pluginOptions: {

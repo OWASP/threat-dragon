@@ -6,7 +6,7 @@
         "dev:vue": "cd td.vue && npm run dev",
         "dev:server": "cd td.server && npm run dev",
         "start": "npm-run-all build start:server start:site",
-        "start:server": "pm2 --name td.server start td.server/index.js",
+        "start:server": "pm2 --name td.server start 'cd td.server && npm run dev'",
         "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
         "stop": "npm-run-all stop:site stop:server",
         "stop:server": "pm2 delete td.server",
@@ -23,7 +23,8 @@
         "build": "npm-run-all build:vue build:server",
         "build:server": "cd td.server && npm run build",
         "build:vue": "cd td.vue && npm run build",
-        "codecov": "./node_modules/.bin/codecov"
+        "codecov": "./node_modules/.bin/codecov",
+        "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install"
     },
     "keywords": [
         "threat dragon",
@@ -48,6 +49,10 @@
         "pm2": "^5.1.2",
         "rimraf": "^3.0.2"
     },
+    "workspaces": [
+        "td.vue",
+        "td.server"
+    ],
     "pnpm": {
         "overrides": {
             "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
