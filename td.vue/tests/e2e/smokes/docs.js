@@ -4,6 +4,7 @@ describe('docs', () => {
     });
 
     it('navigates to the SBOM page', () => {
+        cy.get('.fa-shield-alt').click();
         cy.get('.list-group-item-action[href="/docs/home/trust/sbom.html"]').click();
     });
 

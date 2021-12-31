@@ -1,13 +1,15 @@
 module.exports = {
     preset: '@vue/cli-plugin-unit-jest',
-    'transform': {
+    verbose: true,
+    transform: {
         // process `*.js` files with `babel-jest`
         '.*\\.(js)$': 'babel-jest'
     },
 
     // support the same @ -> src alias mapping in source code
     moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1'
+        '^@/(.*)$': '<rootDir>/src/$1',
+        '^lodash-es$': 'lodash'
     },
     collectCoverage: true,
     collectCoverageFrom: [

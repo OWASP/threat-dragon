@@ -20,8 +20,6 @@ const create = () => {
     try {
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
-        app.set('views', path.join(siteDir, 'views'));
-        app.set('view engine', 'pug');
 
         // environment configuration
         envConfig.tryLoadDotEnv();

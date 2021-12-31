@@ -16,21 +16,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+            ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: npm ci
-        run: npm ci --no-optional
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -50,21 +53,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
+            ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: npm ci
-        run: npm ci
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -134,23 +140,27 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
+            ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: npm ci
-        run: npm ci
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
@@ -183,23 +193,27 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Cache NPM dir
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-npm-cache-site-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-site-
+            ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: npm ci
-        run: npm ci
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run e2e tests
         run: npm run test:e2e-ci-smokes
@@ -225,6 +239,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Checkout
@@ -271,6 +286,7 @@ jobs:
             -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
             -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
             ${{ env.image_name }}
 
       - name: Checkout
@@ -301,3 +317,19 @@ jobs:
           name: zap_report_docs.zip
           path: zap/report_docs.html
         if: ${{ always() }}
+
+
+  scan_image_with_trivy:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    steps:
+      # Need .trivyignore
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.image_name }}'
+          format: 'table'
+          exit-code: 1

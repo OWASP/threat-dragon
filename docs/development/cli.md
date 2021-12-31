@@ -1,7 +1,7 @@
 ---
 layout: page
 title: CLI
-nav_order: 1
+nav_order: 5
 path: /cli
 group: CLI
 ---

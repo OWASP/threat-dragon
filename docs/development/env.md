@@ -107,7 +107,8 @@ services:
       NODE_ENV_FILE: /run/secrets/node_env
       ENCRYPTION_KEYS_FILE: /run/secrets/encryption_keys
       ENCRYPTION_JWT_SIGNING_KEY_FILE: /run/secrets/jwt_signing_key
-      ENCRYPTION_JWT_REFRESH_SIGNING_KEY_FILE: /run/secrets/ENCRYPTION_jwt_refresh_signing_key
+      ENCRYPTION_JWT_REFRESH_SIGNING_KEY_FILE: /run/secrets/jwt_refresh_signing_key
+      PROTOCOL_FILE: /run/secrets/protocol
     secrets:
       - github_client_id
       - github_client_secret
@@ -115,6 +116,7 @@ services:
       - encryption_keys
       - jwt_signing_key
       - jwt_refresh_signing_key
+      - protocol
 
 secrets:
   github_client_id:
@@ -128,6 +130,8 @@ secrets:
   jwt_signing_key:
     external: true
   jwt_refresh_signing_key:
+    external: true
+  protocol:
     external: true
 ```
 ___
@@ -159,8 +163,8 @@ ___
 | ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
 | ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens.  Ideally, this should be different from the JWT signing key as they are different tokens.  A JWT is used as a refresh token because it is tamper resistent and provides user context. | |
-| PORT | The port which the Threat Dragon server will listen on. | `3000`
-| IS_TEST | Used for testing only | |
+| PORT | The port which the Threat Dragon server will listen on. | `3000`|
+| PROTOCOL | The protocol to use (http vs https). | `https` |
 
 
 ___
