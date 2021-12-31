@@ -1,7 +1,8 @@
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
-    <b-navbar-brand :to="username ? '/dashboard' : '/'">
-      <b-img src="@/assets/threatdragon_logo.svg" alt="Threat Dragon Logo" />
+    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
+      <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+      Threat Dragon
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -18,7 +19,6 @@
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
-            size="2x"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -30,7 +30,6 @@
           <font-awesome-icon
             icon="question-circle"
             class="td-fa-nav"
-            size="2x"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -42,7 +41,6 @@
           <font-awesome-icon
             icon="gift"
             class="td-fa-nav"
-            size="2x"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -51,7 +49,7 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav" />
+          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -59,14 +57,18 @@
 </template>
 
 <style lang="scss" scoped>
+$icon-height: 1.2rem;
+
 .navbar {
   background-color: $orange;
   border-color: $orange-alt;
+  height: $header-height;
+  font-size: 15px;
 }
 
 .nav-link,
 .logged-in-as {
-  color: #ffffff !important;
+  color: $white !important;
 }
 
 .logged-in-as {
@@ -74,8 +76,16 @@
 }
 
 .td-fa-nav {
-  font-size: 1.5rem;
+  font-size: $icon-height;
+  max-height: $icon-height;
   margin: 0 5px 0 5px;
+}
+
+.td-brand {
+  color: $white !important;
+  .td-brand-img {
+    max-height: ($header-height - 10);
+  }
 }
 </style>
 

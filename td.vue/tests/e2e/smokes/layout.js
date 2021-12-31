@@ -8,6 +8,7 @@ describe('layout', () => {
 
     before(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
     });
 
     it('has a link to the home page', () => {

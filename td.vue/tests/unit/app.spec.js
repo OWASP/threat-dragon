@@ -9,10 +9,13 @@ import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import Navbar from '@/components/Navbar.vue';
 
 describe('App.vue', () => {
-    let wrapper, localVue, mockStore;
+    let wrapper, localVue, mockStore, mockToast;
 
     beforeEach(() => {
         console.log = jest.fn();
+        mockToast = {
+            error: jest.fn()
+        };
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);
@@ -31,7 +34,11 @@ describe('App.vue', () => {
             localVue,
             i18n: i18nFactory.get(),
             stubs: ['router-view'],
-            store: mockStore
+            store: mockStore,
+            mocks: {
+                $t: key => key,
+                $toast: mockToast
+            }
         });
     });
 
@@ -45,5 +52,9 @@ describe('App.vue', () => {
 
     it('has a b-container', () => {
         expect(wrapper.findComponent(BContainer).exists()).toBe(true);
+    });
+
+    it('shows a warning toast for v2', () => {
+        expect(mockToast.error).toHaveBeenCalled();
     });
 });

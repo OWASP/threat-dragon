@@ -1,6 +1,7 @@
 describe('logout', () => {
     beforeEach(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
         cy.get('#local-login-btn').click();
         cy.contains('Logged in as Guest');
         cy.get('#nav-sign-out').click();

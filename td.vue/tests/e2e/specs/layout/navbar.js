@@ -8,10 +8,11 @@ describe('navbar', () => {
 
     before(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
     });
 
     it('has a link to the home page', () => {
-        cy.get('.navbar-brand').should('have.attr', 'href', '#/');
+        cy.get('.navbar-brand').should('have.attr', 'href').and('contain', '#/');
     });
     
     it('links to the threat dragon docs', () => {

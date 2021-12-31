@@ -4,9 +4,12 @@
       <b-col md="2">
         <div ref="stencil_container"></div>
       </b-col>
-      <b-col md="8">
+      <b-col md="10">
         <b-row>
           <b-col>
+            <h3 class="td-graph-title">{{ diagram.title }}</h3>
+          </b-col>
+          <b-col align="right">
                 <td-graph-buttons :graph="graph" />
           </b-col>
         </b-row>
@@ -15,15 +18,13 @@
             <div
               id="graph-container"
               ref="graph_container"
-              style="min-height: 600px"
+              style="height: 65vh"
             ></div>
           </b-col>
         </b-row>
       </b-col>
-      <b-col md="2">
-          <td-graph-meta @threatSelected="threatSelected" />
-      </b-col>
     </b-row>
+    <td-graph-meta @threatSelected="threatSelected" />
 
     <div>
         <td-keyboard-shortcuts />
@@ -31,6 +32,12 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.td-graph-title {
+  margin-right: 15px;
+}
+</style>
 
 <script>
 import { mapState } from 'vuex';
@@ -100,7 +107,6 @@ export default {
             // if v2, draw from json
             // TODO:
             //this.graph.fromJSON(data);
-            this.graph.centerContent();
         },
         drawDiagramV1() {
             const { nodes, edges } = diagramService.mapDiagram(this.diagram);
@@ -110,8 +116,6 @@ export default {
             nodes.forEach((node) => this.graph.addNode(node), this);
             edges.forEach((edge) => this.graph.addEdge(edge), this);
             this.graph.stopBatch(batchName);
-
-            this.graph.centerContent();
         },
         threatSelected(threatId) {
             this.$refs.threatEditModal.show(threatId);

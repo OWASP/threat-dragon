@@ -1,6 +1,7 @@
 describe('login', () => {
     beforeEach(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
     });
 
     describe('local login', () => {

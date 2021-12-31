@@ -9,10 +9,11 @@
     "build": "vue-cli-service build --no-unsafe-inline",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e:local": "vue-cli-service test:e2e -C cypress.local.json --url http://localhost:8080/",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
     "test:e2e-ci-smokes": "vue-cli-service test:e2e -C cypress.smokes.ci.json --headless --url http://localhost:3000/",
     "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
-    "test:e2e-smokes:local": "vue-cli-service test:e2e -C cypress.smokes.json --url http://localhost:8080/",
+    "test:e2e-smokes:local": "vue-cli-service test:e2e -C cypress.smokes.local.json --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
@@ -21,8 +22,8 @@
     "ansi-regex": "^5.0.1"
   },
   "dependencies": {
-    "@antv/x6": "^1.21.7",
-    "@antv/x6-vue-shape": "^1.2.4",
+    "@antv/x6": "^1.28.1",
+    "@antv/x6-vue-shape": "^1.2.10",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",

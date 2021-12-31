@@ -18,6 +18,7 @@ const getConfig = (container) => ({
             return args.key !== 'tools';
         }
     },
+    autoResize: true,
     grid: {
         size: 10,
         visible: true
@@ -38,7 +39,6 @@ const getConfig = (container) => ({
     },
     selecting: {
         enabled: true,
-        rubberband: true,
         showNodeSelectionBox: false,
         showEdgeSelectionBox: true
     },
@@ -69,6 +69,10 @@ const getConfig = (container) => ({
     },
     scroller: {
         enabled: true,
+        autoResize: true,
+        pannable: true,
+        pageVisible: true,
+        pageBreak: true
     }
 });
 

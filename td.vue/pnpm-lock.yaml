@@ -13,8 +13,8 @@ overrides:
   minimist@<0.2.1: '>=0.2.1'
 
 specifiers:
-  '@antv/x6': ^1.21.7
-  '@antv/x6-vue-shape': ^1.2.4
+  '@antv/x6': ^1.28.1
+  '@antv/x6-vue-shape': ^1.2.10
   '@babel/polyfill': ^7.11.5
   '@fortawesome/fontawesome-svg-core': ^1.2.35
   '@fortawesome/free-brands-svg-icons': ^5.15.3

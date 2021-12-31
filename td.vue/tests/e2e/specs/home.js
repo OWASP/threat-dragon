@@ -1,6 +1,7 @@
 describe('home', () => {
     before(() => {
         cy.visit('/');
+        cy.get('.Vue-Toastification__close-button').click();
     });
 
     it('has a welcome message', () => {

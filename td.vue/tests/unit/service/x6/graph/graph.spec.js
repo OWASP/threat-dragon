@@ -72,7 +72,6 @@ describe('service/x6/graph/graph.js', () => {
     it('enables selecting with options', () => {
         expect(cfg.selecting).toEqual({
             enabled: true,
-            rubberband: true, // used for click + drag to multi-select
             showNodeSelectionBox: false,
             showEdgeSelectionBox: true
         });
@@ -110,7 +109,11 @@ describe('service/x6/graph/graph.js', () => {
 
     it('enables scrolling', () => {
         expect(cfg.scroller).toEqual({
-            enabled: true
+            autoResize: true,
+            enabled: true,
+            pageBreak: true,
+            pageVisible: true,
+            pannable: true
         });
     });
 
