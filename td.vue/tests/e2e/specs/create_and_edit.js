@@ -46,9 +46,4 @@ describe('create and edit', () => {
         cy.get('#td-reload-btn').should('be.visible');
         cy.get('#td-cancel-btn').should('be.visible');
     });
-
-    it('cancels the edit', () => {
-        cy.get('#td-cancel-btn').click();
-        cy.url().should('not.contain', 'edit');
-    });
 });
