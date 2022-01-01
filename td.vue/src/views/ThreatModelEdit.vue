@@ -1,7 +1,10 @@
 <template>
     <b-row>
         <b-col v-if="model && model.summary">
-            <b-card :header="`${$t('threatmodel.editing')}: ${model.summary.title}`">
+            <b-card
+                :header="`${$t('threatmodel.editing')}: ${model.summary.title}`"
+                id="parent-card"
+            >
                 <b-form @submit="onSubmit">
 
                     <b-form-row>
@@ -98,9 +101,10 @@
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
                                     type="text"
+                                    class="td-diagram"
                                 ></b-form-input>
                                 <b-input-group-append>
-                                    <b-button variant="secondary" @click="onRemoveDiagramClick(idx)">
+                                    <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
                                     </b-button>
