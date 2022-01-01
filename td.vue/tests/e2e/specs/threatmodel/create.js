@@ -1,4 +1,4 @@
-describe('create and edit', () => {
+describe('create a new threat model', () => {
     before(() => {
         cy.visit('/');
         cy.get('.Vue-Toastification__close-button').click();
