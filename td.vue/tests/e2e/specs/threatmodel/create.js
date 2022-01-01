@@ -1,4 +1,4 @@
-describe('create and edit', () => {
+describe('create a new threat model', () => {
     before(() => {
         cy.visit('/');
         cy.get('.Vue-Toastification__close-button').click();
@@ -45,10 +45,5 @@ describe('create and edit', () => {
         cy.get('#td-save-btn').should('be.visible');
         cy.get('#td-reload-btn').should('be.visible');
         cy.get('#td-cancel-btn').should('be.visible');
-    });
-
-    it('cancels the edit', () => {
-        cy.get('#td-cancel-btn').click();
-        cy.url().should('not.contain', 'edit');
     });
 });

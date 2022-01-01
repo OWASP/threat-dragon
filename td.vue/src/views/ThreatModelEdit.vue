@@ -1,7 +1,10 @@
 <template>
     <b-row>
-        <b-col>
-            <b-card :header="`${$t('threatmodel.editing')}: ${model.summary.title}`">
+        <b-col v-if="model && model.summary">
+            <b-card
+                :header="`${$t('threatmodel.editing')}: ${model.summary.title}`"
+                id="parent-card"
+            >
                 <b-form @submit="onSubmit">
 
                     <b-form-row>
@@ -98,9 +101,10 @@
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
                                     type="text"
+                                    class="td-diagram"
                                 ></b-form-input>
                                 <b-input-group-append>
-                                    <b-button variant="secondary" @click="onRemoveDiagramClick(idx)">
+                                    <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
                                     </b-button>
@@ -161,7 +165,7 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -171,7 +175,7 @@ export default {
     computed: {
         ...mapState({
             model: (state) => state.threatmodel.data,
-            providerType: state => getProviderType(state.provider.selected),
+            providerType: state => getProviderType(state.provider.selected)
         }),
         contributors: {
             get() {
@@ -184,20 +188,22 @@ export default {
     },
     methods: {
         onSubmit() {
-            console.log('Form sumbitting...');
+            // noop
         },
         onSaveClick(evt) {
             evt.preventDefault();
             console.log('Save - TODO');
-        },
-        onReloadClick(evt) {
-            evt.preventDefault();
-            console.log('Reload - TODO');
-        },
-        onCancelClick(evt) {
-            evt.preventDefault();
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
-            console.log('Cancel - TODO');
+        },
+        async onReloadClick(evt) {
+            evt.preventDefault();
+            await this.restoreAsync();
+        },
+        async onCancelClick(evt) {
+            evt.preventDefault();
+            if (await this.restoreAsync()) {
+                this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+            }
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
@@ -205,6 +211,23 @@ export default {
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
+        },
+        async restoreAsync() {
+            if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
+                this.$store.dispatch(THREATMODEL_RESTORE);
+                return true;
+            }
+            return false;
+        },
+        getConfirmModal() {
+            return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {
+                title: this.$t('forms.discardTitle'),
+                okVariant: 'danger',
+                okTitle: this.$t('forms.ok'),
+                cancelTitle: this.$t('forms.cancel'),
+                hideHeaderClose: true,
+                centered: true
+            });
         }
     }
 };

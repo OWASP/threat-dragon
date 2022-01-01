@@ -10,6 +10,7 @@ import {
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
+    THREATMODEL_RESTORE,
     THREATMODEL_SELECTED
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';
@@ -17,13 +18,20 @@ import threatmodelApi from '../../service/threatmodelApi.js';
 export const clearState = (state) => {
     state.all.length = 0;
     state.data = {};
+    state.immutableCopy = '';
     state.selectedDiagram = {};
 };
 
 const state = {
     all: [],
     data: {},
+    immutableCopy: {},
     selectedDiagram: {}
+};
+
+const setThreatModel = (theState, threatModel) => {
+    theState.data = threatModel;
+    theState.immutableCopy = JSON.stringify(threatModel);
 };
 
 const actions = {
@@ -51,31 +59,39 @@ const actions = {
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
-    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors)
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
+    [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
+        let originalModel = JSON.parse(state.immutableCopy);
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+            const originalTitle = (JSON.parse(state.immutableCopy)).summary.title;
+            const resp = await threatmodelApi.modelAsync(
+                rootState.repo.selected,
+                rootState.branch.selected,
+                originalTitle
+            );
+            originalModel = resp.data;
+        }
+        commit(THREATMODEL_RESTORE, originalModel);
+    }
 };
 
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
-    [THREATMODEL_CREATE]: (state, threatModel) => {
-        state.data = threatModel;
-    },
+    [THREATMODEL_CREATE]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         state.selectedDiagram = diagram;
     },
-    [THREATMODEL_FETCH]: (state, threatModel) => {
-        state.data = threatModel;
-    },
+    [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
-    [THREATMODEL_SELECTED]: (state, threatModel) => {
-        state.data = threatModel;
-    },
+    [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
-    }
+    },
+    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel)
 };
 
 const getters = {
@@ -85,7 +101,8 @@ const getters = {
             contribs = state.data.detail.contributors;
         }
         return contribs.map(x => x.name);
-    }
+    },
+    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy
 };
 
 export default {
