@@ -8,7 +8,7 @@ import {
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
-import { THREATMODEL_CONTRIBUTORS_UPDATED } from '../../../../src/store/actions/threatmodel';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '../../../../src/store/actions/threatmodel';
 
 describe('store/modules/threatmodel.js', () => {
     const getRootState = () => ({
@@ -53,6 +53,10 @@ describe('store/modules/threatmodel.js', () => {
 
         it('defines a selectedDiagram object', () => {
             expect(threatmodelModule.state.selectedDiagram).toBeInstanceOf(Object);
+        });
+
+        it('defines an immutableCopy string', () => {
+            expect(threatmodelModule.state.immutableCopy).toEqual('');
         });
     });
 
@@ -127,6 +131,49 @@ describe('store/modules/threatmodel.js', () => {
                 THREATMODEL_CONTRIBUTORS_UPDATED,
                 contribs
             );
+        });
+
+        describe('threatmodel restore', () => {
+            const originalModel = { summary: { title: 'test' }};
+
+            beforeEach(() => {
+                threatmodelApi.modelAsync = jest.fn().mockReturnValue({ data: originalModel });
+                mocks.state.immutableCopy = JSON.stringify(originalModel);
+                mocks.state.data = { summary: { title: 'edited test', foo: 'bar' } };
+            });
+
+            describe('local provider', () => {
+                beforeEach(async () => {
+                    mocks.rootState.provider.selected = 'local';
+                    await threatmodelModule.actions[THREATMODEL_RESTORE](mocks);
+                });
+
+                it('does not call the api', () => {
+                    expect(threatmodelApi.modelAsync).not.toHaveBeenCalled();
+                });
+
+                it('commits the restore action with the original model', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_RESTORE, originalModel);
+                });
+            });
+
+            describe('git provider', () => {
+                beforeEach(async () => {
+                    await threatmodelModule.actions[THREATMODEL_RESTORE](mocks);
+                });
+
+                it('calls the api to get the threat model based on the original title', () => {
+                    expect(threatmodelApi.modelAsync).toHaveBeenCalledWith(
+                        mocks.rootState.repo.selected,
+                        mocks.rootState.branch.selected,
+                        originalModel.summary.title
+                    );
+                });
+
+                it('commits the restore action with the original model', () => {
+                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_RESTORE, originalModel);
+                });
+            });
         });
     });
 
@@ -223,41 +270,73 @@ describe('store/modules/threatmodel.js', () => {
                 expect(threatmodelModule.state.data.detail.contributors).toEqual(contribs.map(x => ({ name: x })));
             });
         });
+
+        describe('restore', () => {
+            const orig = { foo: 'bar' };
+            let state;
+
+            beforeEach(() => {
+                state = { data: { bar: 'foo' }, immutableCopy: 'test' };
+                threatmodelModule.mutations[THREATMODEL_RESTORE](state, orig);
+            });
+
+            it('sets the data to the original model', () => {
+                expect(state.data).toEqual(orig);
+            });
+
+            it('sets the immutable copy', () => {
+                expect(state.immutableCopy).toEqual(JSON.stringify(orig));
+            });
+        });
     });
 
     describe('getters', () => {
-        let res;
 
-        describe('with data', () => {
-            beforeEach(() => {
-                threatmodelModule.state.data = {
-                    detail: {
-                        contributors: [
-                            { name: 'contrib 1' },
-                            { name: 'contrib 2' }
-                        ]
-                    }
-                };
-                res = threatmodelModule.getters.contributors(threatmodelModule.state);
+        describe('contributors', () => {
+            let res;
+            describe('with data', () => {
+                beforeEach(() => {
+                    threatmodelModule.state.data = {
+                        detail: {
+                            contributors: [
+                                { name: 'contrib 1' },
+                                { name: 'contrib 2' }
+                            ]
+                        }
+                    };
+                    res = threatmodelModule.getters.contributors(threatmodelModule.state);
+                });
+
+                it('defines a getters object', () => {
+                    expect(threatmodelModule.getters).toBeInstanceOf(Object);
+                });
+
+                it('gets the contributors', () => {
+                    expect(res).toHaveLength(2);
+                });
             });
 
-            it('defines a getters object', () => {
-                expect(threatmodelModule.getters).toBeInstanceOf(Object);
-            });
+            describe('without data', () => {
+                beforeEach(() => {
+                    threatmodelModule.state.data = {};
+                });
 
-            it('gets the contributors', () => {
-                expect(res).toHaveLength(2);
+                it('returns an empty array', () => {
+                    expect(threatmodelModule.getters.contributors(threatmodelModule.state))
+                        .toEqual([]);
+                });
             });
         });
 
-        describe('without data', () => {
-            beforeEach(() => {
-                threatmodelModule.state.data = {};
+        describe('modelChanged', () => {
+            it('returns true when the model has changed', () => {
+                const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ something: 'else' })};
+                expect(threatmodelModule.getters.modelChanged(state)).toEqual(true);
             });
 
-            it('returns an empty array', () => {
-                expect(threatmodelModule.getters.contributors(threatmodelModule.state))
-                    .toEqual([]);
+            it('returns false when the model has not changed', () => {
+                const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ foo: 'bar' })};
+                expect(threatmodelModule.getters.modelChanged(state)).toEqual(false);
             });
         });
     });
