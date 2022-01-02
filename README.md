@@ -59,8 +59,6 @@ You will also have to provide other environment variables, again following
 Start both the back-end server and the front-end application from the top directory: `npm start`.
 Alternatively, the front-end and back-end can be started separately, in "watch" mode using `npm run dev:server` and `npm run dev:vue`.
 
-To stop the application and the back-end server, from the top directory: `npm run stop`
-
 With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
@@ -77,9 +75,9 @@ and run from the top directory of the project:
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
 [contributors](CONTRIBUTING.md). 
 
-We are trying to keep the test coverage relatively high,
-so please try to update tests in any PRs and make PRs on the development branch.
-There are some [developer notes](https://www.threatdragon.com/docs/development/local.html)) to help get started with this project.
+There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
+We are trying to keep the test coverage relatively high, so please try to update tests in any pull requests
+and create these pull requests off the [V2 development branch](https://github.com/OWASP/threat-dragon/tree/v2-development).
 
 ### Vulnerability disclosure
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
