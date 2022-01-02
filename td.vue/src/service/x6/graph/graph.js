@@ -6,9 +6,16 @@ import events from './events.js';
 import factory from '../factory.js';
 import keys from './keys.js';
 
-const getConfig = (container) => ({
+const getReadOnlyConfig = (container) => ({
     container,
     preventDefaultContextMenu: false,
+    history: {
+        enabled: false
+    },
+    autoResize: container
+});
+
+const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container), {
     history: {
         enabled: true,
         beforeAddCommand: (event, args) => {
@@ -18,7 +25,6 @@ const getConfig = (container) => ({
             return args.key !== 'tools';
         }
     },
-    autoResize: true,
     grid: {
         size: 10,
         visible: true
@@ -76,13 +82,16 @@ const getConfig = (container) => ({
     }
 });
 
-const get = (container) => {
-    const graph = factory.graph(getConfig(container));
+const getEditGraph = (container) => {
+    const graph = factory.graph(getEditConfig(container));
     events.listen(graph);
     keys.bind(graph);
     return graph;
 };
 
+const getReadonlyGraph = (container) => factory.graph(getReadOnlyConfig(container));
+
 export default {
-    get
+    getEditGraph,
+    getReadonlyGraph
 };

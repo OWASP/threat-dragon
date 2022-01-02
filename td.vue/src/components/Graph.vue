@@ -98,15 +98,26 @@ export default {
     },
     async mounted() {
         this.init();
-        this.drawDiagramV1();
+        // this.drawDiagramV1();
     },
     methods: {
         init() {
-            this.graph = graphFactory.get(this.$refs.graph_container);
+            this.graph = graphFactory.getEditGraph(this.$refs.graph_container);
             stencil.get(this.graph, this.$refs.stencil_container);
             // if v2, draw from json
             // TODO:
-            //this.graph.fromJSON(data);
+            if (this.diagram.version) {
+                this.graph.fromJSON(this.diagram);
+            } else {
+                this.drawDiagramV1();
+            }
+
+            // TODO: Remove this, this probably doesn't belong here.
+            // Maybe add a toast if it is V1 to warn the user??
+            const newJson = this.graph.toJSON();
+            newJson.version = '2.0';
+            newJson.title = this.diagram.title;
+            this.$store.dispatch('THREATMODEL_DIAGRAM_SELECTED', newJson);
         },
         drawDiagramV1() {
             const { nodes, edges } = diagramService.mapDiagram(this.diagram);

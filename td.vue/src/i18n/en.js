@@ -136,6 +136,7 @@ const en = {
         shapes: {
             actor: 'Actor',
             flowStencil: 'Data Flow',
+            flow: 'Data Flow',
             process: 'Process',
             store: 'Store',
             text: 'Arbitrary Text',
@@ -155,7 +156,10 @@ const en = {
         import: 'Import',
         ok: 'OK',
         discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?'
+        discardMessage: 'Are you sure you want to discard your changes?',
+        print: 'Print',
+        printerFriendly: 'Printer Friendly',
+        savePdf: 'Save PDF'
     },
     threats: {
         models: {
@@ -198,6 +202,27 @@ const en = {
             low: 'Low',
             medium: 'Medium',
             high: 'High'
+        }
+    },
+    report: {
+        options: {
+            showOutOfScope: 'Show out of scope elements',
+            showMitigatedThreats: 'Show mitigated threats',
+            showModelDiagrams: 'Show model diagrams'
+        },
+        title: 'Threat model report for',
+        dateGenerated: 'Date Generated',
+        executiveSummary: 'Executive Summary',
+        notProvided: 'Not provided',
+        summary: 'Summary',
+        threatStats: {
+            total: 'Total Threats',
+            mitigated: 'Total Mitigated',
+            notMitigated: 'Not Mitigated',
+            openHigh: 'Open / High Priority',
+            openMedium: 'Open / Medium Priority',
+            openLow: 'Open / Low Priority',
+            openUnkown: 'Open / Unkown Priority',
         }
     }
 };

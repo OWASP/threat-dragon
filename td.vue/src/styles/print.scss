@@ -1,0 +1,32 @@
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    .Vue-Toastification__container {
+        display: none;
+    }
+
+    .page {
+        page-break-after: always;
+    }
+
+    .page-title {
+        font-size: 48px;
+        margin-bottom: 50px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .page-subtitle {
+        font-size: 36px;
+        margin-bottom: 15px;
+        margin-top: 25px;
+    }
+}
+
+@media screen {
+    .print-only {
+        display: none;
+    }
+}

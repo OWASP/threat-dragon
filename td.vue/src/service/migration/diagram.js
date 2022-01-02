@@ -103,9 +103,17 @@ const relateEdges = (nodes, edges) => {
     });
 };
 
+const getName = (cell) => {
+    if (cell.name) return cell.name;
+    if (cell.attrs.text && cell.attrs.text.text) return cell.attrs.text.text;
+    if (cell.labels && cell.labels[0].attrs && cell.labels[0].attrs.text && cell.labels[0].attrs.text.text) return cell.labels[0].attrs.text.text;
+    return '';
+};
+
 const addMetaData = (entity, cell) => {
     const data = {
-        name: cell.name || '',
+        // name: cell.name || '',
+        name: getName(cell),
         description: cell.description || '',
         type: cell.type,
         isTrustBoundary: cell.type === 'tm.Boundary'

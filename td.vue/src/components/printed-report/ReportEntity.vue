@@ -1,0 +1,72 @@
+<template>
+    <div class="report-box">
+        <div class="entity-title">
+            {{ `${entity.data.name} (${dataType})` || `Unkown ${entity.data.type.replace('tm.', '')}` }}
+        </div>
+        <p class="entity-description">{{ entity.data.description }}</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ $t('threats.properties.title' )}}</th>
+                    <th>{{ $t('threats.properties.priority' )}}</th>
+                    <th>{{ $t('threats.properties.status' )}}</th>
+                    <th>{{ $t('threats.properties.description' )}}</th>
+                    <th>{{ $t('threats.properties.mitigation' )}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="(threat, idx) in entity.data.threats"
+                    :key="idx"
+                >
+                    <td>{{ threat.title }}</td>
+                    <!-- TODO: This is broken, why do we not have priority? -->
+                    <td>{{ threat.priority }}</td>
+                    <td>{{ threat.status }}</td>
+                    <td>{{ threat.description }}</td>
+                    <td>{{ threat.mitigation }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+.report-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.entity-title {
+    font-size: 24px;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.entity-description {
+    padding: 15px;
+}
+</style>
+
+<script>
+export default {
+    name: 'TdReportEntity',
+    props: {
+        entity: Object
+    },
+    computed: {
+        dataType: function () {
+            const entityType = this.entity.data.type.replace('tm.', '');
+            return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
+        }
+    },
+    methods: {
+        toCamelCase(str) {
+            // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
+            return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
+        }
+    }
+};
+
+</script>

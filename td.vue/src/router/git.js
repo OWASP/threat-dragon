@@ -38,5 +38,15 @@ export const gitRoutes = [
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/edit/:diagram`,
         name: `${providerType}DiagramEdit`,
         component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/Diagram.vue')
+    },
+    {
+        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/report`,
+        name: `${providerType}Report`,
+        component: () => import(/* webpackChunkName: "report" */ '../views/Report.vue')
+    },
+    {
+        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/printer-report`,
+        name: `${providerType}PrinterReport`,
+        component: () => import(/* webpackChunkName: "printer-report" */ '../views/PrinterReport.vue')
     }
 ];
