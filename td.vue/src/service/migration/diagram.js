@@ -5,10 +5,10 @@
  */
 
 import cells from './cells.js';
-import tmActions from '../../store/actions/threatmodel.js';
 import dataChanged from '../x6/graph/data-changed.js';
 import graphFactory from '../x6/graph/graph.js';
 import store from '../../store/index.js';
+import tmActions from '../../store/actions/threatmodel.js';
 
 const drawV1 = (diagram, graph) => {
     const { nodes, edges } = cells.map(diagram);
@@ -35,13 +35,13 @@ const upgradeAndDraw = (diagram, graph) => {
     store.get().dispatch(tmActions.diagramUpdated, updated);
 };
 
-const drawGraph = (graph, diagram) => {
+const drawGraph = (diagram, graph) => {
     upgradeAndDraw(diagram, graph);
     return graph;
 };
 
-const draw = (container, diagram) => drawGraph(graphFactory.getReadonlyGraph(container), diagram);
-const edit = (container, diagram) => drawGraph(graphFactory.getEditGraph(container), diagram);
+const draw = (container, diagram) => drawGraph(diagram, graphFactory.getReadonlyGraph(container));
+const edit = (container, diagram) => drawGraph(diagram, graphFactory.getEditGraph(container));
 
 export default {
     draw,

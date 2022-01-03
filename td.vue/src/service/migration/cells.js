@@ -3,7 +3,7 @@ import data from './data.js';
 import nodes from './nodes.js';
 import shapes from '../x6/shapes/index.js';
 
-const cellConverter = {
+const getCellConverter = () => ({
     'tm.Actor': {
         isNode: true,
         mapper: nodes.map(shapes.Actor)
@@ -24,7 +24,7 @@ const cellConverter = {
         isNode: true,
         mapper: nodes.map(shapes.Store)
     }
-};
+});
 
 /**
  * Relates edges to the nodes
@@ -53,7 +53,7 @@ const map = (diagram) => {
     }
 
     diagram.diagramJson.cells.forEach((cell) => {
-        const { isNode, mapper } = cellConverter[cell.type];
+        const { isNode, mapper } = getCellConverter()[cell.type];
         const entity = mapper(cell);
         const arr = isNode ? resp.nodes : resp.edges;
         arr.push(data.map(entity, cell));

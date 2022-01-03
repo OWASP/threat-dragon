@@ -5,7 +5,7 @@ import threats from '../threats/index.js';
 
 const getName = (cell) => {
     if (cell.name) return cell.name;
-    if (cell.attrs.text && cell.attrs.text.text) return cell.attrs.text.text;
+    if (cell.attrs && cell.attrs.text && cell.attrs.text.text) return cell.attrs.text.text;
     if (cell.labels && cell.labels[0].attrs && cell.labels[0].attrs.text && cell.labels[0].attrs.text.text) return cell.labels[0].attrs.text.text;
     return '';
 };
@@ -24,6 +24,9 @@ const applyThreatData = (cell, data) => {
         data.threats = cell.threats || [];
         if (data.threats.length) {
             data.threats.forEach((threat) => {
+                threat.modelType = threats.getModelByTranslation(
+                    threats.convertToTranslationString(threat.type)
+                );
                 if (!threat.id) {
                     threat.id = v4();
                 }
@@ -55,14 +58,7 @@ const map = (entity, cell) => {
     applyStoreData(cell, data);
     applyActorData(cell, data);
 
-    entity.data = data;
-
-    if (entity.data.threats) {
-        entity.data.threats.forEach((threat) => {
-            threat.modelType = threats.getModelByTranslation(threats.convertToTranslationString(threat.type));
-        });
-    }
-    
+    entity.data = data;    
     return entity;
 };
 
