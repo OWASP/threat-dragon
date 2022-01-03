@@ -38,35 +38,30 @@ describe('components/GraphButtons.vue', () => {
     describe('save', () => {
         beforeEach(() => {
             btn = getButtonByIcon('save');
+            wrapper.vm.save();
         });
 
         it('has the save translation text', () => {
             expect(btn.attributes('text')).toEqual('forms.save');
         });
 
-        it('is not implemented yet', () => {
-            wrapper.vm.$toast = { info: jest.fn() };
-            wrapper.vm.notImplemented();
-            expect(wrapper.vm.$toast.info).toHaveBeenCalledTimes(1);
+        it('emits the saved event', () => {
+            expect(wrapper.emitted().saved);
         });
     });
 
     describe('close', () => {
         beforeEach(() => {
             btn = getButtonByIcon('times');
-            wrapper.vm.$router = { push: jest.fn() };
-            wrapper.vm.$route = { params: {} };
+            wrapper.vm.closeDiagram();
         });
 
         it('has the save translation text', () => {
             expect(btn.attributes('text')).toEqual('forms.close');
         });
 
-        it('closes the diagram', () => {
-            wrapper.vm.closeDiagram();
-            expect(wrapper.vm.$router.push).toHaveBeenCalledWith(
-                { name: 'gitThreatModel', params: {} }
-            );
+        it('emits the closed event', () => {
+            expect(wrapper.emitted().closed);
         });
     });
 

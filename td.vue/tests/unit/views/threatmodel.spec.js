@@ -3,6 +3,7 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import ThreatModel from '@/views/ThreatModel.vue';
+import ThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 describe('views/Threatmodel.vue', () => {
@@ -68,32 +69,8 @@ describe('views/Threatmodel.vue', () => {
         });
     });
 
-    describe('layout', () => {
-        it('displays the title', () => {
-            const header = wrapper.findComponent({ ref: 'header-card'}).find('.card-header');
-            expect(header.text()).toEqual(title);
-        });
-
-        it('shows the owner', () => {
-            expect(wrapper.find('#tm_owner').text()).toEqual(owner);
-        });
-
-        it('shows the reviewer', () => {
-            expect(wrapper.find('#tm_reviewer').text()).toEqual(reviewer);
-        });
-
-        it('shows the contributors', () => {
-            const expected = contributors.join(', ');
-            expect(wrapper.find('#tm_contributors').text()).toEqual(expected);
-        });
-
-        it('shows the description', () => {
-            expect(wrapper.find('#tm_description').text()).toEqual(description);
-        });
-
-        it('displays all diagrams', () => {
-            expect(wrapper.findAll('.tm_diagram').length).toEqual(diagrams.length);
-        });
+    it('shows the threat model summary', () => {
+        expect(wrapper.findComponent(ThreatModelSummaryCard).exists()).toEqual(true);
     });
 
     describe('form actions', () => {
@@ -126,8 +103,8 @@ describe('views/Threatmodel.vue', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('logs to the console and needs to be removed...', () => {
-                expect(console.log).toHaveBeenCalled();
+            it('routes to the report view', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitReport', params: mockRouter.params});
             });
         });
 

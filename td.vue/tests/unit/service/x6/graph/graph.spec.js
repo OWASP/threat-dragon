@@ -1,134 +1,179 @@
 import events from '@/service/x6/graph/events.js';
 import factory from '@/service/x6/factory.js';
-import graphService from '@/service/x6/graph/graph.js';
+import graph from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
 
 describe('service/x6/graph/graph.js', () => {
-    let cfg, container, graph;
-
+    let container;
     beforeEach(() => {
-        const graphMock = { foo: 'bar' };
-        container = { bar: 55 };
-        events.listen = jest.fn();
-        keys.bind = jest.fn();
-        factory.graph = jest.fn().mockImplementation((config) => {
-            cfg = config;
-            return graphMock;
+        factory.graph = jest.fn().mockImplementation(c => c);
+    });
+
+    describe('getReadonlyGraph', () => {
+        beforeEach(() => {
+            container = { foo: 'bar' };
+            graph.getReadonlyGraph(container);
         });
-        graph = graphService.get(container);
-    });
 
-    it('sets the container', () => {
-        expect(cfg.container).toEqual(container);
-    });
+        it('sets the container', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ container })
+            );
+        });
 
-    it('does not prevent the default context menu', () => {
-        expect(cfg.preventDefaultContextMenu).toEqual(false);
-    });
+        it('does not pprevent default context menus', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ preventDefaultContextMenu: false })
+            );
+        });
 
-    it('enables the history', () => {
-        expect(cfg.history.enabled).toEqual(true);
-    });
+        it('disables history', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ history: { enabled: false }})
+            );
+        });
 
-    it('does not add tools updates to the history stack', () => {
-        const res = cfg.history.beforeAddCommand('foo', { key: 'tools' });
-        expect(res).toEqual(false);
-    });
-
-    it('adds other updates to the history stack', () => {
-        const res = cfg.history.beforeAddCommand('foo', { key: 'anything' });
-        expect(res).toEqual(true);
-    });
-
-    it('enables the grid by default', () => {
-        expect(cfg.grid).toEqual({
-            size: 10,
-            visible: true
+        it('auto resizes', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ autoResize: container })
+            );
         });
     });
 
-    it('enables a sharp snapline by default', () => {
-        expect(cfg.snapline).toEqual({
-            enabled: true,
-            sharp: true
+    describe('getEditGraph', () => {
+        let graphRes;
+
+        beforeEach(() => {
+            container = { foo: 'bar' };
+            events.listen = jest.fn();
+            keys.bind = jest.fn();
+            graphRes = graph.getEditGraph(container);
         });
-    });
 
-    it('enables the clipboard', () => {
-        expect(cfg.clipboard.enabled).toEqual(true);
-    });
-
-    it('enables keyboard shortcuts', () => {
-        expect(cfg.keyboard).toEqual({
-            enabled: true,
-            global: true
+        it('sets the container', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ container })
+            );
         });
-    });
 
-    it('enables object rotation', () => {
-        expect(cfg.rotating.enabled).toEqual(true);
-    });
-
-    it('enables selecting with options', () => {
-        expect(cfg.selecting).toEqual({
-            enabled: true,
-            showNodeSelectionBox: false,
-            showEdgeSelectionBox: true
+        it('does not pprevent default context menus', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ preventDefaultContextMenu: false })
+            );
         });
-    });
 
-    it('enables resizing with options', () => {
-        expect(cfg.resizing).toEqual({
-            enabled: true,
-            minWidth: 0,
-            minHeight: 0,
-            maxWidth: Number.MAX_SAFE_INTEGER,
-            maxHeight: Number.MAX_SAFE_INTEGER,
-            orthogonal: true,
-            restricted: false,
-            autoScroll: true,
-            preserveAspectRatio: false,
-            allowReverse: true
+        it('auto resizes', () => {
+            expect(factory.graph).toHaveBeenCalledWith(
+                expect.objectContaining({ autoResize: container })
+            );
         });
-    });
 
-    it('enables mousewheel zooming', () => {
-        expect(cfg.mousewheel).toEqual({
-            enabled: true,
-            global: true,
-            modifiers: ['ctrl', 'meta']
+        it('does not save history for tool actions', () => {
+            expect(graphRes.history.beforeAddCommand({}, { key: 'tools' })).toEqual(false);
         });
-    });
 
-    it('enables panning', () => {
-        expect(cfg.panning).toEqual({
-            enabled: true,
-            modifiers: ['shift']
+        it('saves history if not a tool', () => {
+            expect(graphRes.history.beforeAddCommand({}, { key: 'other' })).toEqual(true);
         });
-    });
 
-    it('enables scrolling', () => {
-        expect(cfg.scroller).toEqual({
-            autoResize: true,
-            enabled: true,
-            pageBreak: true,
-            pageVisible: true,
-            pannable: true
+        it('enables history', () => {
+            expect(graphRes.history.enabled).toEqual(true);
         });
-    });
 
-    it('enables connecting', () => {
-        expect(cfg.connecting).toEqual({
-            allowNode: true,
-            allowBlank: true // needed for v1 diagrams, maybe edge cases too
+        it('sets the grid', () => {
+            expect(graphRes.grid).toEqual({
+                size: 10,
+                visible: true
+            });
         });
-    });
 
-    it('listens to events', () => {
-        expect(events.listen).toHaveBeenCalledWith(graph);
-    });
+        it('sets the snapline', () => {
+            expect(graphRes.snapline).toEqual({
+                enabled: true,
+                sharp: true
+            });
+        });
 
-    it('adds the key bindings', () => {
-        expect(keys.bind).toHaveBeenCalledWith(graph);
+        it('enables the clipboard', () => {
+            expect(graphRes.clipboard).toEqual({
+                enabled: true
+            });
+        });
+
+        it('enables the keyboard globally', () => {
+            expect(graphRes.keyboard).toEqual({
+                enabled: true,
+                global: true
+            });
+        });
+
+        it('enables rotation', () => {
+            expect(graphRes.rotating).toEqual({
+                enabled: true
+            });
+        });
+
+        it('enables selecting', () => {
+            expect(graphRes.selecting).toEqual({
+                enabled: true,
+                showNodeSelectionBox: false,
+                showEdgeSelectionBox: true
+            });
+        });
+
+        it('enables resizing', () => {
+            expect(graphRes.resizing).toEqual({
+                enabled: true,
+                minWidth: 0,
+                minHeight: 0,
+                maxWidth: Number.MAX_SAFE_INTEGER,
+                maxHeight: Number.MAX_SAFE_INTEGER,
+                orthogonal: true,
+                restricted: false,
+                autoScroll: true,
+                preserveAspectRatio: false,
+                allowReverse: true
+            });
+        });
+
+        it('enables the mouse wheel', () => {
+            expect(graphRes.mousewheel).toEqual({
+                enabled: true,
+                global: true,
+                modifiers: ['ctrl', 'meta']
+            });
+        });
+
+        it('enables panning', () => {
+            expect(graphRes.panning).toEqual({
+                enabled: true,
+                modifiers: ['shift']
+            });
+        });
+
+        it('enables connecting', () => {
+            expect(graphRes.connecting).toEqual({
+                allowNode: true,
+                allowBlank: true
+            });
+        });
+
+        it('enables the scroller', () => {
+            expect(graphRes.scroller).toEqual({
+                enabled: true,
+                autoResize: true,
+                pannable: true,
+                pageVisible: true,
+                pageBreak: true
+            });
+        });
+
+        it('adds the event listeners', () => {
+            expect(events.listen).toHaveBeenCalledTimes(1);
+        });
+
+        it('adds the key bindings', () => {
+            expect(keys.bind).toHaveBeenCalledTimes(1);
+        });
     });
 });

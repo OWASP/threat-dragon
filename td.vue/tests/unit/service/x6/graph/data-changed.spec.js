@@ -1,7 +1,9 @@
 import dataChanged from '@/service/x6/graph/data-changed.js';
+import threats from '@/service/threats/index.js';
 
 describe('service/x6/graph/data-changed.js', () => {
     const getCell = () => ({
+        data: {},
         getData: jest.fn(),
         setAttrByPath: jest.fn(),
         isEdge: jest.fn()
@@ -9,6 +11,7 @@ describe('service/x6/graph/data-changed.js', () => {
     let cell;
 
     beforeEach(() => {
+        threats.hasOpenThreats = jest.fn();
         cell = getCell();
     });
 
