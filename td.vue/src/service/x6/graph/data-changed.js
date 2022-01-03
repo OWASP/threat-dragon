@@ -42,6 +42,9 @@ const edgeUpdater = (edge, color, dash, strokeWidth) => {
     edge.setAttrByPath('line/targetMarker/name', 'classic');
 };
 
+const cellHasOpenThreats = (cellData) =>  cellData && cellData.threats &&
+    cellData.threats.filter(x => x.status.toLowerCase() !== 'mitigated').length > 0;
+
 const updateStyleAttrs = (cell) => {
     const cellData = cell.getData();
     
@@ -49,6 +52,8 @@ const updateStyleAttrs = (cell) => {
     if (!cellData) {
         return;
     }
+    
+    cell.data.hasOpenThreats = cellHasOpenThreats(cell.data);
 
     let { color, strokeDasharray, strokeWidth } = styles.default;
 

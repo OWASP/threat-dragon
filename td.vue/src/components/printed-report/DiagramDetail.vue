@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="page">
+        <div class="page" v-if="showDiagram">
             <div class="page-title">
                 {{ diagram.title }}
             </div>
@@ -8,16 +8,19 @@
                 <td-read-only-diagram :diagram="diagram" />
             </div>
         </div>
-        <div>
+        <div class="page">
             <div class="page-title">
                 {{ diagram.title }}
             </div>
             <div
-                v-for="(entity, idx) in nonBoundaryEntities"
+                v-for="(entity, idx) in entitiesWithThreats"
                 :key="idx"
             >
-                <!-- TODO: Temporary changes are in place for v2 models, no sense in developing against the old ones -->
-                <td-report-entity :entity="entity" />
+                <td-report-entity
+                    :entity="entity"
+                    :outOfScope="entity.data.outOfScope"
+                    v-if="showOutOfScope || !entity.data.outOfScope"
+                ></td-report-entity>
             </div>
         </div>
     </div>
@@ -43,15 +46,36 @@ import TdReportEntity from '@/components/printed-report/ReportEntity.vue';
 export default {
     name: 'TdDiagramDetail',
     props: {
-        diagram: Object
+        diagram: Object,
+        showOutOfScope: {
+            type: Boolean,
+            default: true
+        },
+        showMitigated: {
+            type: Boolean,
+            default: true
+        },
+        showDiagram: {
+            type: Boolean,
+            default: true
+        }
     },
     components: {
         TdReadOnlyDiagram,
         TdReportEntity
     },
     computed: {
-        nonBoundaryEntities: function () {
-            return this.diagram.cells.filter(x => !x.data.isTrustBoundary);
+        entitiesWithThreats: function () {
+            return this.diagram.cells
+                // Remove mitigated threats if selected
+                .map(x => {
+                    if (!this.showMitigated && x.data.threats) {
+                        x.data.threats = x.data.threats.filter(y => y.status.toLowerCase() !== 'mitigated');
+                    }
+                    return x;
+                })
+                // Only show entities with threats
+                .filter(x => x.data.threats && x.data.threats.length)
         }
     }
 };

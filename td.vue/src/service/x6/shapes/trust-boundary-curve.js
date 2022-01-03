@@ -31,6 +31,12 @@ TrustBoundaryCurve.prototype.type = 'tm.Boundary';
 
 TrustBoundaryCurve.prototype.updateStyle = function () {};
 
+// TrustBoundaryCurve.prototype.updateStyle = function (color, dash, strokeWidth) {
+//     // this.setAttrByPath('line/stroke', color);
+//     this.setAttrByPath('line/strokeWidth', 3);
+//     this.setAttrByPath('line/strokeDasharray', '5 5');
+// };
+
 TrustBoundaryCurve.prototype.setName = function (name) {
     this.setLabels([ name ]);
 };

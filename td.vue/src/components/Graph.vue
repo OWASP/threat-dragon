@@ -10,7 +10,7 @@
             <h3 class="td-graph-title">{{ diagram.title }}</h3>
           </b-col>
           <b-col align="right">
-                <td-graph-buttons :graph="graph" />
+                <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" />
           </b-col>
         </b-row>
         <b-row>
@@ -47,27 +47,10 @@ import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditModal from '@/components/ThreatEditModal.vue';
 
+import { getProviderType } from '@/service/provider/providers.js';
 import diagramService from '@/service/migration/diagram.js';
-import graphFactory from '@/service/x6/graph/graph.js';
 import stencil from '@/service/x6/stencil.js';
-/*
-  UI TODOs:
-    - Edit multiple threats at once (nice to have)
-    - Add vertical scroll bar by default (if needed?)
-    - UI component for encryption (WIP, needs feedback https://github.com/OWASP/threat-dragon/issues/150)
-    - Enable / Disable buttons based on state
-    - Add threat suggestion button
-  
-  Functional TODOs:
-    - Save / Close buttons are currently no-ops
-        - Close should track a "dirty" state and alert the user when leaving the page that there are unsaved changes
-        - Maybe tap into the window close event as well
-    - Threat generation engine / suggested threats
-    - Export JSON
-    - Export images
-    - Fix CSP
-    - Write unit tests for this component
-*/
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'TdGraph',
@@ -79,7 +62,8 @@ export default {
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
-        locale: (state) => state.locale.locale
+        locale: (state) => state.locale.locale,
+        providerType: state => getProviderType(state.provider.selected)
     }),
     watch: {
         locale(newLocale, oldLocale) {
@@ -98,38 +82,36 @@ export default {
     },
     async mounted() {
         this.init();
-        // this.drawDiagramV1();
     },
     methods: {
         init() {
-            this.graph = graphFactory.getEditGraph(this.$refs.graph_container);
+            this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
-            // if v2, draw from json
-            // TODO:
-            if (this.diagram.version) {
-                this.graph.fromJSON(this.diagram);
-            } else {
-                this.drawDiagramV1();
-            }
-
-            // TODO: Remove this, this probably doesn't belong here.
-            // Maybe add a toast if it is V1 to warn the user??
-            const newJson = this.graph.toJSON();
-            newJson.version = '2.0';
-            newJson.title = this.diagram.title;
-            this.$store.dispatch('THREATMODEL_DIAGRAM_SELECTED', newJson);
-        },
-        drawDiagramV1() {
-            const { nodes, edges } = diagramService.mapDiagram(this.diagram);
-            
-            const batchName = 'td-init';
-            this.graph.startBatch(batchName);
-            nodes.forEach((node) => this.graph.addNode(node), this);
-            edges.forEach((edge) => this.graph.addEdge(edge), this);
-            this.graph.stopBatch(batchName);
         },
         threatSelected(threatId) {
             this.$refs.threatEditModal.show(threatId);
+        },
+        saved() {
+            const updated = Object.assign({}, this.diagram);
+            updated.cells = this.graph.toJSON().cells;
+            this.$store.dispatch(tmActions.diagramUpdated, updated);
+            this.$toast.info('Only saving in-memory, data not persisted to back-end');
+        },
+        async closed() {
+          const dataChanged = JSON.stringify(this.graph.toJSON().cells) !== JSON.stringify(this.diagram.cells);
+          if (!dataChanged || await this.getConfirmModal()) {
+            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+          }
+        },
+        getConfirmModal() {
+            return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {
+                title: this.$t('forms.discardTitle'),
+                okVariant: 'danger',
+                okTitle: this.$t('forms.ok'),
+                cancelTitle: this.$t('forms.cancel'),
+                hideHeaderClose: true,
+                centered: true
+            });
         }
     },
 };

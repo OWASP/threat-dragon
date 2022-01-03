@@ -8,9 +8,11 @@ import {
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_SELECTED,
+    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
+    THREATMODEL_SAVE_DIAGRAM,
     THREATMODEL_SELECTED
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';
@@ -38,6 +40,7 @@ const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CREATE]: ({ commit }, threatModel) => commit(THREATMODEL_CREATE, threatModel),
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
+    [THREATMODEL_DIAGRAM_UPDATED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_UPDATED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
         const resp = await threatmodelApi.modelAsync(
@@ -80,6 +83,12 @@ const mutations = {
     [THREATMODEL_CREATE]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         state.selectedDiagram = diagram;
+    },
+    [THREATMODEL_DIAGRAM_UPDATED]: (state, diagram) => {
+        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+        Vue.set(state, 'selectedDiagram', diagram);
+        Vue.set(state.data.detail.diagrams, idx, diagram);
+        setThreatModel(state, state.data);
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {

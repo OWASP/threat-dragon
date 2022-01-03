@@ -1,8 +1,8 @@
 <template>
     <div>
-        <b-row class="no-print">
+        <b-row class="no-print td-report-options fixed">
             <b-col>
-                <b-form class="td-report-options">
+                <b-form class="">
                     <b-form-row>
                         <b-col>
                             <b-form-group
@@ -21,7 +21,7 @@
                                 id="mitigated-group">
                                 <b-form-checkbox
                                     id="show_mitigated"
-                                    v-model="display.outOfScope"
+                                    v-model="display.mitigated"
                                 >{{ $t('report.options.showMitigatedThreats') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
@@ -32,15 +32,26 @@
                                 id="model-group">
                                 <b-form-checkbox
                                     id="show_models"
-                                    v-model="display.outOfScope"
+                                    v-model="display.diagrams"
                                 >{{ $t('report.options.showModelDiagrams') }}</b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col>
+                            <b-form-group
+                                label-cols="auto"
+                                id="branding-group">
+                                <b-form-checkbox
+                                    id="show_branding"
+                                    v-model="display.branding"
+                                >{{ $t('report.options.showBranding') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
                 </b-form>
             </b-col>
 
-            <b-col class="text-right">
+            <b-col class="text-right right">
                 <b-btn-group>
                     <td-form-button
                         id="td-save-pdf-btn"
@@ -70,19 +81,19 @@
                 :owner="model.summary.owner"
                 :reviewer="model.detail.reviewer"
                 :contributors="contributors"
+                :branding="display.branding"
             ></td-coversheet>
             <td-executive-summary
                 :summary="model.summary.description"
                 :threats="threats"
             ></td-executive-summary>
-            <!-- <td-diagram-detail
+            <td-diagram-detail
                 v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
                 :diagram="diagram"
-            ></td-diagram-detail> -->
-            <!-- TODO: uncomment above and remove below, testing -->
-            <td-diagram-detail
-                :diagram="selectedDiagram"
+                :showOutOfScope="display.outOfScope"
+                :showMitigated="display.mitigated"
+                :showDiagram="display.diagrams"
             ></td-diagram-detail>
         </div>
     </div>
@@ -92,6 +103,20 @@
 .td-report-options label {
     padding-top: 4px;
     font-size: 12px !important;
+    width: 100%;
+}
+
+.fixed {
+    position: fixed;
+    top: 45px;
+    width: 100%;
+    background-color: $white;
+    padding-top: 15px;
+    z-index: 9999;
+}
+
+.right {
+    right: 0;
 }
 </style>
 
@@ -121,7 +146,7 @@ export default {
             threats: (state) => {
                 let threats = [];
                 state.threatmodel.data.detail.diagrams.forEach(diagram => {
-                    diagram.diagramJson.cells.forEach(cell => {
+                    diagram.cells.forEach(cell => {
                         threats = threats.concat(cell.threats);
                     });
                 });
@@ -136,8 +161,9 @@ export default {
         return {
             display: {
                 outOfScope: true,
-                mitigatedThreats: true,
-                diagrams: true
+                mitigated: true,
+                diagrams: true,
+                branding: true
             },
             isElectron: env.isElectron()
         };
@@ -151,7 +177,6 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
-            // TODO: Handle desktop/electron differently if needed?
             if (!this.isElectron) {
                 window.print();
             }

@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                     <th>{{ $t('threats.properties.title' )}}</th>
+                    <th>{{ $t('threatmodel.properties.outOfScope' )}}</th>
                     <th>{{ $t('threats.properties.priority' )}}</th>
                     <th>{{ $t('threats.properties.status' )}}</th>
                     <th>{{ $t('threats.properties.description' )}}</th>
@@ -20,8 +21,8 @@
                     :key="idx"
                 >
                     <td>{{ threat.title }}</td>
-                    <!-- TODO: This is broken, why do we not have priority? -->
-                    <td>{{ threat.priority }}</td>
+                    <td>{{ outOfScope ? $t('threatmodel.properties.outOfScope') : '' }}</td>
+                    <td>{{ threat.severity }}</td>
                     <td>{{ threat.status }}</td>
                     <td>{{ threat.description }}</td>
                     <td>{{ threat.mitigation }}</td>
@@ -53,13 +54,17 @@
 export default {
     name: 'TdReportEntity',
     props: {
-        entity: Object
+        entity: Object,
+        outOfScope: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         dataType: function () {
             const entityType = this.entity.data.type.replace('tm.', '');
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
-        }
+        },
     },
     methods: {
         toCamelCase(str) {

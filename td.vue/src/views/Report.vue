@@ -208,9 +208,7 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
-            // TODO: Handle desktop/electron differently if needed?
             if (!this.isElectron) {
-                // window.print();
                 this.$router.push({ name: `${this.providerType}PrinterReport`, params: this.$route.params });
             }
         }

@@ -88,7 +88,7 @@ const cellSelected = ({ cell }) => {
 const cellUnselected = ({ cell }) => {
     removeCellTools({ cell });
 
-    if (cell.setName && cell.getData && typeof cell.getData().name !== 'undefined') {
+    if (cell.setName && cell.getData) {
         cell.setName(cell.getData().name);
     } else {
         console.log('Cannot set name');

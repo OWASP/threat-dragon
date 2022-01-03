@@ -12,10 +12,11 @@
             </ul>
         </div>
         <img
+            v-if="branding"
             src="@/assets/threatdragon_logo_image.svg"
             alt="Threat Dragon Logo"
             class="td-brand-logo" />
-        <em class="td-brand-text">OWASP Threat Dragon</em>
+        <em v-if="branding" class="td-brand-text">OWASP Threat Dragon</em>
     </div>
 </template>
 
@@ -75,6 +76,10 @@ export default {
         contributors: {
             type: Array,
             required: false
+        },
+        branding: {
+            type: Boolean,
+            default: true
         }
     }
 };

@@ -5,7 +5,11 @@
  */
 import { v4 } from 'uuid';
 
+import tmActions from '../../store/actions/threatmodel.js';
+import dataChanged from '../x6/graph/data-changed.js';
+import graphFactory from '../x6/graph/graph.js';
 import shapes from '../x6/shapes/index.js';
+import store from '../../store/index.js';
 import threats from '../threats/index.js';
 
 const upgradeThreat = (threat) => {
@@ -112,7 +116,6 @@ const getName = (cell) => {
 
 const addMetaData = (entity, cell) => {
     const data = {
-        // name: cell.name || '',
         name: getName(cell),
         description: cell.description || '',
         type: cell.type,
@@ -130,7 +133,7 @@ const addMetaData = (entity, cell) => {
                 }
             });
         }
-        data.hasOpenThreats = data.threats.length > 0;
+        data.hasOpenThreats = data.threats && data.threats.filter(x => x.status.toLowerCase() !== 'mitigated').length > 0;
     }
 
     if (data.type === 'tm.Process') {
@@ -171,7 +174,6 @@ const mapDiagram = (diagram) => {
         return resp;
     }
 
-    // TODO: Merge defaults with existing data
     diagram.diagramJson.cells.forEach((cell) => {
         const { isNode, mapper } = cellConverter[cell.type];
         const entity = mapper(cell);
@@ -179,12 +181,44 @@ const mapDiagram = (diagram) => {
         arr.push(addMetaData(entity, cell));
     });
 
-    // TODO: merge defaults with existing data
-    // TODO: Add label to data as name
     relateEdges(resp.nodes, resp.edges);
     return resp;
 };
 
+const drawV1 = (diagram, graph) => {
+    const { nodes, edges } = mapDiagram(diagram);
+    const batchName = 'td-init';
+    graph.startBatch(batchName);
+    nodes.forEach((node) => graph.addNode(node));
+    edges.forEach((edge) => graph.addEdge(edge));
+    graph.stopBatch(batchName);
+};
+
+const upgradeAndDraw = (diagram, graph) => {
+    if (diagram.version === '2.0') {
+        graph.fromJSON(diagram);
+        return;
+    }
+
+    drawV1(diagram, graph);
+    const updated = graph.toJSON();
+    updated.version = '2.0';
+    updated.title = diagram.title;
+    updated.thumbnail = diagram.thumbnail;
+    updated.id = diagram.id;
+    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
+    store.get().dispatch(tmActions.diagramUpdated, updated);
+}
+
+const drawGraph = (graph, diagram) => {
+    upgradeAndDraw(diagram, graph);
+    return graph;
+};
+
+const draw = (container, diagram) => drawGraph(graphFactory.getReadonlyGraph(container), diagram);
+const edit = (container, diagram) => drawGraph(graphFactory.getEditGraph(container), diagram);
+
 export default {
-    mapDiagram
+    draw,
+    edit
 };
