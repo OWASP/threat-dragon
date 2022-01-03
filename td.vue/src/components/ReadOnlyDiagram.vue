@@ -36,14 +36,12 @@ export default {
             this.graph = diagramService.draw(this.$refs.diagram_container, this.diagram);
             this.resizeGraph();
         },
-        resizeGraph(height) {
+        resizeGraph() {
             // Magic number warning... Needs more testing, this seems to work fine for firefox/chrome on linx,
             // but may be OS dependent and/or printer dependent
-
-            if (isNaN(height)) {
-                height = 700;
-            }
+            const height = 700;
             const maxWidth = 1000;
+            
             const width = this.$parent.$el.clientWidth;
             this.graph.unfreeze();
             this.graph.resize(Math.min(width, maxWidth) - 50, height - 50);

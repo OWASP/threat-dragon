@@ -5,10 +5,10 @@
         </div>
         <div class="td-report-meta">
             <ul>
-                <li><strong>{{ $t('threatmodel.owner') }}</strong>: {{ owner }}</li>
-                <li><strong>{{ $t('threatmodel.reviewer') }}</strong>: {{ reviewer }}</li>
-                <li><strong>{{ $t('threatmodel.contributors') }}</strong>: {{ (contributors || []).join(', ') }}</li>
-                <li><strong>{{ $t('report.dateGenerated') }}</strong>: {{ new Date().toDateString() }}</li>
+                <li class="td-owner"><strong>{{ $t('threatmodel.owner') }}</strong>: {{ owner }}</li>
+                <li class="td-reviewer"><strong>{{ $t('threatmodel.reviewer') }}</strong>: {{ reviewer }}</li>
+                <li class="td-contributors"><strong>{{ $t('threatmodel.contributors') }}</strong>: {{ (contributors || []).join(', ') }}</li>
+                <li class="td-date-generated"><strong>{{ $t('report.dateGenerated') }}</strong>: {{ new Date().toDateString() }}</li>
             </ul>
         </div>
         <img
