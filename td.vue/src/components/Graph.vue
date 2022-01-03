@@ -98,10 +98,10 @@ export default {
             this.$toast.info('Only saving in-memory, data not persisted to back-end');
         },
         async closed() {
-          const dataChanged = JSON.stringify(this.graph.toJSON().cells) !== JSON.stringify(this.diagram.cells);
-          if (!dataChanged || await this.getConfirmModal()) {
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
-          }
+            const dataChanged = JSON.stringify(this.graph.toJSON().cells) !== JSON.stringify(this.diagram.cells);
+            if (!dataChanged || await this.getConfirmModal()) {
+                this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+            }
         },
         getConfirmModal() {
             return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {

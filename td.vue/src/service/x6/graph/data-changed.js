@@ -3,6 +3,8 @@
  * @description Handles the change:data event to update the UI styles
  */
 
+import threats from '../../threats/index.js';
+
 const styles = {
     default: {
         color: '#333333',
@@ -42,9 +44,6 @@ const edgeUpdater = (edge, color, dash, strokeWidth) => {
     edge.setAttrByPath('line/targetMarker/name', 'classic');
 };
 
-const cellHasOpenThreats = (cellData) =>  cellData && cellData.threats &&
-    cellData.threats.filter(x => x.status.toLowerCase() !== 'mitigated').length > 0;
-
 const updateStyleAttrs = (cell) => {
     const cellData = cell.getData();
     
@@ -53,7 +52,7 @@ const updateStyleAttrs = (cell) => {
         return;
     }
     
-    cell.data.hasOpenThreats = cellHasOpenThreats(cell.data);
+    cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
 
     let { color, strokeDasharray, strokeWidth } = styles.default;
 

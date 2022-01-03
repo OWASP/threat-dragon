@@ -1,5 +1,6 @@
 
 import diagram from '@/service/migration/diagram.js';
+import graphFactory from '@/service/x6/graph/graph.js';
 
 describe('service/migration/diagram.js', () => {
     const size = { width: 100, height: 200 };
@@ -45,6 +46,11 @@ describe('service/migration/diagram.js', () => {
     };
 
     let edges, nodes;
+
+    beforeEach(() => {
+        graphFactory.getReadOnlyGraph = jest.fn();
+        graphFactory.getEditGraph = jest.fn();
+    });
 
     describe('cell with complete data', () => {
         beforeEach(() => {

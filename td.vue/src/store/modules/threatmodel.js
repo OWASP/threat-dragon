@@ -12,7 +12,6 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
-    THREATMODEL_SAVE_DIAGRAM,
     THREATMODEL_SELECTED
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';

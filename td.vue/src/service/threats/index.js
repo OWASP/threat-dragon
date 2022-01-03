@@ -34,7 +34,12 @@ export const createNewThreat = () => ({
     modelType: ''
 });
 
+const hasOpenThreats = (data) => data && data.threats &&
+    data.threats.filter(x => x.status.toLowerCase() === 'open').length > 0;
+
+
 export default {
     convertToTranslationString,
-    getModelByTranslation: models.getByTranslationValue
+    getModelByTranslation: models.getByTranslationValue,
+    hasOpenThreats
 };

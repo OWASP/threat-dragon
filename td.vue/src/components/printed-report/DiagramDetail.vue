@@ -75,7 +75,7 @@ export default {
                     return x;
                 })
                 // Only show entities with threats
-                .filter(x => x.data.threats && x.data.threats.length)
+                .filter(x => x.data.threats && x.data.threats.length);
         }
     }
 };
