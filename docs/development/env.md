@@ -164,7 +164,7 @@ ___
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
 | ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens.  Ideally, this should be different from the JWT signing key as they are different tokens.  A JWT is used as a refresh token because it is tamper resistent and provides user context. | |
 | PORT | The port which the Threat Dragon server will listen on. | `3000`|
-| PROTOCOL | The protocol to use (http vs https). | `https` |
+| PROTOCOL | The protocol to use (http vs https). | `http` |
 
 
 ___
