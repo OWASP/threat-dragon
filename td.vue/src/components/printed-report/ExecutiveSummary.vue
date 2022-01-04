@@ -3,44 +3,44 @@
         <div class="page-title">
             {{ $t('report.executiveSummary') }}
         </div>
-        <div class="page-subtitle">
+        <div class="page-subtitle td-description">
             {{ $t('threatmodel.description') }}
         </div>
-        <div class="mt-2">
+        <div class="mt-2 td-summary">
             {{ summary || $t('report.notProvided') }}
         </div>
-        <div class="page-subtitle">
+        <div class="page-subtitle td-report-summary">
             {{ $t('report.summary') }}
         </div>
         <div class="mt-2">
             <table class="table td-summary-table">
                 <tr>
                     <th>{{ $t('report.threatStats.total') }}</th>
-                    <td>{{ total }}</td>
+                    <td class="td-summary-total">{{ total }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.mitigated') }}</th>
-                    <td>{{ mitigated }}</td>
+                    <td class="td-summary-mitigated">{{ mitigated }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.notMitigated') }}</th>
-                    <td>{{ notMitigated }}</td>
+                    <td class="td-summary-not-mitigated">{{ notMitigated }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openHigh') }}</th>
-                    <td>{{ openHigh }}</td>
+                    <td class="td-summary-open-high">{{ openHigh }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openMedium') }}</th>
-                    <td>{{ openMedium }}</td>
+                    <td class="td-summary-open-medium">{{ openMedium }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openLow') }}</th>
-                    <td>{{ openLow }}</td>
+                    <td class="td-summary-open-low">{{ openLow }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openUnkown') }}</th>
-                    <td>{{ openUnkown }}</td>
+                    <td class="td-summary-open-unknown">{{ openUnkown }}</td>
                 </tr>
             </table>
         </div>

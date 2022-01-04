@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="page" v-if="showDiagram">
-            <div class="page-title">
+            <div class="page-title diagram-page-title">
                 {{ diagram.title }}
             </div>
             <div class="page diagram-drawing">
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="page">
-            <div class="page-title">
+            <div class="page-title td-threats-title">
                 {{ diagram.title }}
             </div>
             <div
@@ -77,7 +77,7 @@ export default {
                 // Only show entities with threats
                 .filter(x => x.data.threats && x.data.threats.length);
         }
-    }
+    },
 };
 
 </script>

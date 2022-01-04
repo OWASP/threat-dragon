@@ -1,7 +1,7 @@
 <template>
     <div class="report-box">
         <div class="entity-title">
-            {{ `${entity.data.name} (${dataType})` || `Unkown ${entity.data.type.replace('tm.', '')}` }}
+            {{ `${entity.data.name} (${dataType})` }}
         </div>
         <p class="entity-description">{{ entity.data.description }}</p>
         <table class="table">
@@ -62,7 +62,7 @@ export default {
     },
     computed: {
         dataType: function () {
-            const entityType = this.entity.data.type.replace('tm.', '');
+            const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
         },
     },
