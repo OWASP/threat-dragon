@@ -6,7 +6,6 @@ import Vuex from 'vuex';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import router from '@/router/index.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 describe('components/ProviderLoginButton.vue', () => {
@@ -29,6 +28,7 @@ describe('components/ProviderLoginButton.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
         
+        routerMock = { push: jest.fn() };
         mockStore = new Vuex.Store(getMockStore());
 
         jest.spyOn(mockStore, 'dispatch');
@@ -39,17 +39,14 @@ describe('components/ProviderLoginButton.vue', () => {
                 provider
             },
             mocks: {
+                $router: routerMock,
                 $t: key => key
             },
             store: mockStore
         });
     };
 
-    let wrapper, localVue, mockStore, provider;
-
-    beforeEach(() => {
-        router.push = jest.fn();
-    });
+    let wrapper, localVue, mockStore, provider, routerMock;
 
     describe('components', () => {
         describe('local session', () => {
@@ -81,7 +78,7 @@ describe('components/ProviderLoginButton.vue', () => {
             });
 
             it('navigates to the dashboard', () => {
-                expect(router.push).toHaveBeenCalledWith('/dashboard');
+                expect(routerMock.push).toHaveBeenCalledWith('/dashboard');
             });
         });
 

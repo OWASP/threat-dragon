@@ -5,8 +5,6 @@ import { gitRoutes } from './git.js';
 import Home from '../views/Home.vue';
 import { localRoutes } from './local.js';
 
-Vue.use(VueRouter);
-
 const routes = [
     {
         path: '/',
@@ -32,8 +30,13 @@ const routes = [
     ...localRoutes
 ];
 
-const router = new VueRouter({
-    routes
-});
+const get = () => {
+    Vue.use(VueRouter);
+    return new VueRouter({
+        routes
+    });
+};
 
-export default router;
+export default {
+    get
+};

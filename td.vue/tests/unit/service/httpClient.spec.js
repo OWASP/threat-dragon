@@ -9,6 +9,8 @@ import router from '@/router/index.js';
 import storeFactory from '@/store/index.js';
 
 describe('service/httpClient.js', () => {
+    let routerMock;
+
     const mockStore = {
         dispatch: () => {},
         state: {
@@ -39,7 +41,8 @@ describe('service/httpClient.js', () => {
         jest.spyOn(clientMock.interceptors.request, 'use');
         jest.spyOn(clientMock.interceptors.response, 'use');
         jest.spyOn(storeFactory, 'get').mockReturnValue(mockStore);
-        router.push = jest.fn();
+        routerMock = { push: jest.fn() };
+        router.get = jest.fn().mockReturnValue(routerMock);
         i18n.get = jest.fn().mockReturnValue({ t: jest.fn() });
         Vue.$toast = { info: jest.fn() };
     });
@@ -237,7 +240,7 @@ describe('service/httpClient.js', () => {
             });
 
             it('navigates to the home page', () => {
-                expect(router.push).toHaveBeenCalledWith({ name: 'Home' });
+                expect(routerMock.push).toHaveBeenCalledWith({ name: 'Home' });
             });
 
             it('creates a toast message', () => {

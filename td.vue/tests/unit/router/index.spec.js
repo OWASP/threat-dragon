@@ -4,14 +4,14 @@ import router from '@/router/index.js';
 
 describe('router', () => {
     it('creates a vue router', () => {
-        expect(router).toBeInstanceOf(VueRouter);
+        expect(router.get()).toBeInstanceOf(VueRouter);
     });
 
     describe('home', () => {
         let homeRoute;
 
         beforeEach(() => {
-            homeRoute = router.getRoutes()
+            homeRoute = router.get().getRoutes()
                 .find(x => x.name === 'Home');
         });
 
@@ -28,7 +28,7 @@ describe('router', () => {
         let dashboardRoute;
 
         beforeEach(() => {
-            dashboardRoute = router.getRoutes()
+            dashboardRoute = router.get().getRoutes()
                 .find(x => x.name === 'Dashboard');
         });
 
@@ -53,7 +53,7 @@ describe('router', () => {
         let oauthReturnRoute;
 
         beforeEach(() => {
-            oauthReturnRoute = router.getRoutes()
+            oauthReturnRoute = router.get().getRoutes()
                 .find(x => x.name === 'OAuthReturn');
         });
 
@@ -78,7 +78,7 @@ describe('router', () => {
         let demoSelectRoute;
 
         beforeEach(() => {
-            demoSelectRoute = router.getRoutes()
+            demoSelectRoute = router.get().getRoutes()
                 .find(x => x.name === 'DemoSelect');
         });
 

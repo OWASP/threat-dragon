@@ -12,16 +12,16 @@ import Vuex from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
 import Navbar from '@/components/Navbar.vue';
-import router from '@/router/index.js';
 
 describe('components/Navbar.vue', () => {
-    let wrapper, localVue, mockStore;
+    let wrapper, localVue, mockStore, routerMock;
 
     beforeEach(() => {
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
+        routerMock = { push: jest.fn() };
         mockStore = new Vuex.Store({
             getters: {
                 username: () => 'foobar'
@@ -32,13 +32,10 @@ describe('components/Navbar.vue', () => {
             localVue,
             store: mockStore,
             mocks: {
+                $router: routerMock,
                 $t: key => key
             }
         });
-    });
-
-    it('renders the navbar', () => {
-        expect(wrapper.exists()).toBe(true);
     });
 
     describe('brand', () => {
@@ -97,7 +94,6 @@ describe('components/Navbar.vue', () => {
                 signOut = navItems
                     .filter(x => x.attributes('id') === 'nav-sign-out')
                     .at(0);
-                router.push = jest.fn();
                 mockStore.dispatch = jest.fn();
             });
 
@@ -117,7 +113,7 @@ describe('components/Navbar.vue', () => {
 
             it('navigates to the home page', async () => {
                 await signOut.trigger('click');
-                expect(router.push).toHaveBeenCalledWith('/');
+                expect(routerMock.push).toHaveBeenCalledWith('/');
             });
         });
 

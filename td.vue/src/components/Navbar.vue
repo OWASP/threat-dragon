@@ -93,7 +93,6 @@ $icon-height: 1.2rem;
 import { mapGetters } from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
-import router from '@/router/index.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
@@ -110,7 +109,7 @@ export default {
         onLogOut(evt) {
             evt.preventDefault();
             this.$store.dispatch(LOGOUT);
-            router.push('/');
+            this.$router.push('/');
         }
     }
 };

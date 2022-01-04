@@ -62,19 +62,8 @@ export default {
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
-        locale: (state) => state.locale.locale,
         providerType: state => getProviderType(state.provider.selected)
     }),
-    watch: {
-        locale(newLocale, oldLocale) {
-            if (newLocale !== oldLocale) {
-                this.init();
-                this.drawDiagramV1();
-                this.shortcuts.length = 0;
-                this.getKeyboardShortcuts().forEach(s => this.shortcuts.push(s));
-            }
-        }
-    },
     data() {
         return {
             graph: null
