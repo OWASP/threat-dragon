@@ -181,13 +181,13 @@ ___
 ## All Variables
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| NODE_ENV | The node environment.  Typically either `production` or `development`.  The `secure` flag is only set on cookies if running in `production` mode. | |
-| PORT | The port which the Threat Dragon server will listen on. | `3000`
-| PROXY | Causes `Strategy` to trust all broker Settings. Solve the login callback failure caused by network reasons. | |
+| NODE_ENV | The node environment.  Typically either `production` or `development`.  The `secure` flag is only set on cookies if running in `production` mode. | `development` |
+| PORT | The port which the Threat Dragon server will listen on. | `3000` |
+| PROXY_PRESENT | Causes `Strategy` to trust all broker Settings. Solves the login callback failure caused by network proxies. | `false` |
 | IS_TEST | Used for testing only | |
 | SESSION_STORE | The session store provider used. `local` should be used for testing only and not in a production environment. Currently, only Azure Table Storage is configured for a production-ready solution.  Set the `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_ACCESS_KEY` values to enable. | |
-| SIGNING_KEY | A 32 bit hexadecimal string used by `express-session` | |
-| ENCRYPTION_KEYS | The encryption keys used by `express-session`.  The value of the primary key should be the same as the `SIGNING_KEY` | |
+| SESSION_SIGNING_KEY | A 32 bit hexadecimal string used by `express-session` | |
+| SESSION_ENCRYPTION_KEYS | The encryption keys used by `express-session`.  The value of the primary key should be the same as the `SIGNING_KEY` | |
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | `repo` for access to private repos as well as public, or `public_repo` for access to public repos only | `public_repo` |
