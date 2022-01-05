@@ -195,7 +195,7 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
-            if (!this.isElectron) {
+            if (!env.isElectron()) {
                 this.$router.push({ name: `${this.providerType}PrinterReport`, params: this.$route.params });
             }
         }
