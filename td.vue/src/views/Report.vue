@@ -74,40 +74,31 @@
             </b-col>
         </b-row>
 
-        <b-row class="td-report-section" id="summary">
-            <b-col>
-                <td-coversheet :branding="display.branding" />
-            </b-col>
-        </b-row>
+        <div v-if="!!model">
+            <b-row class="td-report-section" id="summary">
+                <b-col>
+                    <td-coversheet :branding="display.branding" />
+                </b-col>
+            </b-row>
 
-        <b-row class="td-report-section">
-            <b-col>
-                <td-executive-summary
-                    :summary="model.summary.description"
-                    :threats="threats"
-                ></td-executive-summary>
-            </b-col>
-        </b-row>
-        
-        <td-diagram-detail
-            v-for="(diagram, idx) in model.detail.diagrams"
-            :key="idx"
-            :diagram="diagram"
-            :showOutOfScope="display.outOfScope"
-            :showMitigated="display.mitigated"
-            :showDiagram="display.diagrams"
-        ></td-diagram-detail>
-
-        <!-- <b-row
-            class="td-report-section"
-            v-for="(diagram, idx) in model.detail.diagrams"
-            :key="idx">
-            <b-col md="12">
-                <b-card :header="diagram.title" class="td-report-diagram">
-                    <td-read-only-diagram :diagram="diagram" />
-                </b-card>
-            </b-col>
-        </b-row> -->
+            <b-row class="td-report-section">
+                <b-col>
+                    <td-executive-summary
+                        :summary="model.summary.description"
+                        :threats="allThreats"
+                    ></td-executive-summary>
+                </b-col>
+            </b-row>
+            
+            <td-diagram-detail
+                v-for="(diagram, idx) in model.detail.diagrams"
+                :key="idx"
+                :diagram="diagram"
+                :showOutOfScope="display.outOfScope"
+                :showMitigated="display.mitigated"
+                :showDiagram="display.diagrams"
+            ></td-diagram-detail>
+        </div>
     </div>
 </template>
 
@@ -159,6 +150,7 @@ import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import threatService from '@/service/threats/index.js';
 
 export default {
     name: 'Report',
@@ -167,24 +159,6 @@ export default {
         TdDiagramDetail,
         TdExecutiveSummary,
         TdFormButton
-    },
-    computed: {
-        ...mapState({
-            model: (state) => state.threatmodel.data,
-            providerType: (state) => getProviderType(state.provider.selected),
-            threats: (state) => {
-                let threats = [];
-                state.threatmodel.data.detail.diagrams.forEach(diagram => {
-                    diagram.cells.forEach(cell => {
-                        threats = threats.concat(cell.data.threats);
-                    });
-                });
-                return threats.filter(x => !!x);
-            }
-        }),
-        ...mapGetters({
-            contributors: 'contributors'
-        })
     },
     data() {
         return {
@@ -196,6 +170,21 @@ export default {
             },
             isElectron: env.isElectron()
         };
+    },
+    computed: {
+        ...mapState({
+            model: (state) => state.threatmodel.data,
+            providerType: (state) => getProviderType(state.provider.selected),
+            allThreats: function (state) {
+                return threatService.filter(state.threatmodel.data.detail.diagrams, {
+                    showOutOfScope: true,
+                    showMitigated: true
+                });
+            }
+        }),
+        ...mapGetters({
+            contributors: 'contributors'
+        })
     },
     methods: {
         noOp() {

@@ -1,10 +1,10 @@
 <template>
     <div>
         <b-card :header="$t('report.executiveSummary')">
-            <h3>{{ $t('threatmodel.description') }}</h3>
-            <p>{{ summary || $t('report.notProvided') }}</p>
+            <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
+            <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
 
-            <h3>{{ $t('report.summary') }}</h3>
+            <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
             <b-table :fields="null" :items="tableRows" striped />
         </b-card>
     </div>

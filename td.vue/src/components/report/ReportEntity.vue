@@ -2,12 +2,12 @@
     <div class="td-threat-data">
         <b-row>
             <b-col>
-                <h3>{{ `${entity.data.name} (${dataType})` }}</h3>
+                <h3 class="entity-title">{{ `${entity.data.name} (${dataType})` }}</h3>
             </b-col>
         </b-row>
         <b-row>
             <b-col>
-                <p>{{ entity.data.description }}</p>
+                <p class="entity-description">{{ entity.data.description }}</p>
             </b-col>
         </b-row>
         <b-row>
@@ -29,6 +29,8 @@
 </style>
 
 <script>
+import threatService from '@/service/threats/index.js';
+
 export default {
     name: 'TdReportEntity',
     props: {
@@ -36,6 +38,14 @@ export default {
         outOfScope: {
             type: Boolean,
             default: false
+        },
+        showOutOfScope: {
+            type: Boolean,
+            default: true
+        },
+        showMitigated: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -44,7 +54,10 @@ export default {
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
         },
         tableData: function () {
-            return this.entity.data.threats.map((threat) => {
+            return threatService.filterForDiagram(this.entity.data, {
+                showOutOfScope: this.showOutOfScope,
+                showMitigated: this.showMitigated
+            }).map((threat) => {
                 return {
                     [this.$t('threats.properties.title')]: threat.title,
                     [this.$t('threatmodel.properties.outOfScope')]: this.outOfScope ? this.$t('threatmodel.properties.outOfScope') : '',
