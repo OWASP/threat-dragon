@@ -51,7 +51,8 @@ describe('passport configuration tests', () => {
                 clientID: clientId,
                 clientSecret: clientSecret,
                 failureRedirect: 'login/github',
-                scope: [ 'public_repo' ]
+                scope: [ 'public_repo' ],
+                proxy: undefined
             });
             expect(passport.use).to.have.been.calledWith(expected);
         });
@@ -86,7 +87,8 @@ describe('passport configuration tests', () => {
                 clientID: clientId,
                 clientSecret: clientSecret,
                 failureRedirect: 'login/github',
-                scope: [scope]
+                scope: [scope],
+                proxy: undefined
             });
             expect(passport.use).to.have.been.calledWith(expected);
         });
