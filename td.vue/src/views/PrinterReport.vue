@@ -60,7 +60,7 @@
                         icon="file-pdf"
                         :text="$t('forms.savePdf')" />
                     <td-form-button
-                        id="tm-print-btn"
+                        id="td-print-btn"
                         :onBtnClick="print"
                         icon="print"
                         :text="$t('forms.print')" />
@@ -142,7 +142,6 @@ export default {
         ...mapState({
             model: (state) => state.threatmodel.data,
             providerType: (state) => getProviderType(state.provider.selected),
-            selectedDiagram: (state) => state.threatmodel.selectedDiagram,
             threats: (state) => {
                 let threats = [];
                 state.threatmodel.data.detail.diagrams.forEach(diagram => {
@@ -164,8 +163,7 @@ export default {
                 mitigated: true,
                 diagrams: true,
                 branding: true
-            },
-            isElectron: env.isElectron()
+            }
         };
     },
     methods: {
@@ -177,7 +175,7 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
-            if (!this.isElectron) {
+            if (!env.isElectron()) {
                 window.print();
             }
         }
