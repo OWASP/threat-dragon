@@ -1,6 +1,7 @@
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
+    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
@@ -76,6 +77,12 @@ describe('store/modules/threatmodel.js', () => {
             const diagram = { foo: 'bar' };
             threatmodelModule.actions[THREATMODEL_CREATE](mocks, diagram);
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CREATE, diagram);
+        });
+
+        it('commits the diagram updated action', () => {
+            const diagram = { foo: 'bar' };
+            threatmodelModule.actions[THREATMODEL_DIAGRAM_UPDATED](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_UPDATED, diagram);
         });
 
         describe('fetch', () => {
@@ -205,6 +212,29 @@ describe('store/modules/threatmodel.js', () => {
                 const tm = { foo: 'bar' };
                 threatmodelModule.mutations[THREATMODEL_CREATE](threatmodelModule.state, tm);
                 expect(threatmodelModule.state.data).toEqual(tm);
+            });
+        });
+
+        describe('diagramUpdated', () => {
+            let diagram;
+            beforeEach(() => {
+                threatmodelModule.state.data.detail = {
+                    diagrams: [
+                        { id: 1 },
+                        { id: 2}
+                    ]
+                };
+                threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
+                diagram = { id: 2, foo: 'baz' };
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_UPDATED](threatmodelModule.state, diagram);
+            });
+
+            it('updates the selectedDiagram', () => {
+                expect(threatmodelModule.state.selectedDiagram).toEqual(diagram);
+            });
+
+            it('updates the diagrams array', () => {
+                expect(threatmodelModule.state.data.detail.diagrams[1]).toEqual(diagram);
             });
         });
 
