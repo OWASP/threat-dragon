@@ -1,0 +1,80 @@
+<template>
+    <div>
+        <b-card :header="$t('report.executiveSummary')">
+            <h3>{{ $t('threatmodel.description') }}</h3>
+            <p>{{ summary || $t('report.notProvided') }}</p>
+
+            <h3>{{ $t('report.summary') }}</h3>
+            <b-table :fields="null" :items="tableRows" striped />
+        </b-card>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'TdExecutiveSummary',
+    props: {
+        summary: {
+            type: String,
+            required: false
+        },
+        threats: {
+            type: Array,
+            required: true
+        }
+    },
+    computed: {
+        tableRows: function () {
+            return [
+                { name: this.$t('report.threatStats.total'), value: this.total },
+                { name: this.$t('report.threatStats.mitigated'), value: this.mitigated },
+                { name: this.$t('report.threatStats.notMitigated'), value: this.notMitigated },
+                { name: this.$t('report.threatStats.openHigh'), value: this.openHigh },
+                { name: this.$t('report.threatStats.openMedium'), value: this.openMedium },
+                { name: this.$t('report.threatStats.openLow'), value: this.openLow },
+                { name: this.$t('report.threatStats.openUnknown'), value: this.openUnkown }
+            ];
+        },
+        total: function () {
+            return this.threats.length;
+        },
+        mitigated: function () {
+            return this.threats
+                .filter(threat => threat.status.toLowerCase() === 'mitigated')
+                .length;
+        },
+        notMitigated: function () {
+            return this.threats
+                .filter(threat => threat.status.toLowerCase() !== 'mitigated')
+                .length;
+        },
+        openHigh: function () {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity.toLowerCase() === 'high')
+                .length;
+        },
+        openMedium: function() {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity.toLowerCase() === 'medium')
+                .length;
+        },
+        openLow: function() {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity.toLowerCase() === 'low')
+                .length;
+        },
+        openUnkown: function() {
+            return this.getOpenThreats()
+                .filter(threat => !threat.severity)
+                .length;
+        }
+    },
+    methods: {
+        getOpenThreats() {
+            return this.threats
+                .filter(threat => threat.status && threat.status.toLowerCase() === 'open');
+        }
+    }
+};
+
+</script>

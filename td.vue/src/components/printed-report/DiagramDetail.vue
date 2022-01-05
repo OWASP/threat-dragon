@@ -19,7 +19,8 @@
                 <td-report-entity
                     :entity="entity"
                     :outOfScope="entity.data.outOfScope"
-                    v-if="showOutOfScope || !entity.data.outOfScope"
+                    :showOutOfScope="showOutOfScope"
+                    :showMitigated="showMitigated"
                 ></td-report-entity>
             </div>
         </div>
@@ -67,15 +68,9 @@ export default {
     computed: {
         entitiesWithThreats: function () {
             return this.diagram.cells
-                // Remove mitigated threats if selected
-                .map(x => {
-                    if (!this.showMitigated && x.data.threats) {
-                        x.data.threats = x.data.threats.filter(y => y.status.toLowerCase() !== 'mitigated');
-                    }
-                    return x;
-                })
-                // Only show entities with threats
-                .filter(x => x.data.threats && x.data.threats.length);
+                .filter(x => !!x.data && !!x.data.threats)
+                .filter(x => this.showOutOfScope || !x.data.outOfScope)
+                .filter(x => x.data.threats.some(y => this.showMitigated || y.status.toLowerCase() !== 'mitigated'));
         }
     },
 };

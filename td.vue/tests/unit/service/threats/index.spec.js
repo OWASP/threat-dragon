@@ -49,7 +49,7 @@ describe('service/threats/index.js', () => {
 
         it('returns false if there are no threats', () => {
             expect(threats.hasOpenThreats({}))
-            .toEqual(false);
+                .toEqual(false);
         });
 
         it('returns false if there are not open threats', () => {
@@ -149,6 +149,61 @@ describe('service/threats/index.js', () => {
         it('converts Elevation of privilege to the translation string', () => {
             expect(threats.convertToTranslationString('Elevation of privilege'))
                 .toEqual('threats.models.elevationOfPrivilege');
+        });
+    });
+
+    describe('filterForDiagram', () => {
+        it('returns an emtpy array if out of scope', () => {
+            const res = threats.filterForDiagram({ outOfScope: true }, { showOutOfScope: false });
+            expect(res).toEqual([]);
+        });
+
+        it('returns an emtpy array if there are no threats', () => {
+            const res = threats.filterForDiagram({}, {});
+            expect(res).toEqual([]);
+        });
+
+        it('does not filter any threats if showMitigated is selected', () => {
+            const data = {
+                threats: [
+                    { status: 'Open' },
+                    { status: 'Mitigated' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: true });
+            expect(res.length).toEqual(data.threats.length);
+        });
+
+        it('filters mitigated threats', () => {
+            const data = {
+                threats: [
+                    { status: 'Open' },
+                    { status: 'Mitigated' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: false });
+            expect(res.length).toEqual(1);
+        });
+    });
+
+    describe('filter', () => {
+        it('returns an empty array if there are no cells with data', () => {
+            const diagrams = [{ cells: [{}]}];
+            const res = threats.filter(diagrams, {});
+            expect(res).toEqual([]);
+        });
+
+        it('returns an empty array if there are no cells with threats', () => {
+            const diagrams = [{ cells: [{ data: {} }] }];
+            const res = threats.filter(diagrams, {});
+            expect(res).toEqual([]);
+        });
+
+        it('returns all threats if no filters are provided', () => {
+
+            const diagrams = [{ cells: [{ data: { threats: [{ status: 'mitigated' }]} }] }];
+            const res = threats.filter(diagrams, {});
+            expect(res.length).toEqual(1);
         });
     });
 });

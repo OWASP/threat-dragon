@@ -85,7 +85,7 @@
             ></td-coversheet>
             <td-executive-summary
                 :summary="model.summary.description"
-                :threats="threats"
+                :threats="allThreats"
             ></td-executive-summary>
             <td-diagram-detail
                 v-for="(diagram, idx) in model.detail.diagrams"
@@ -129,6 +129,7 @@ import TdCoversheet from '@/components/printed-report/Coversheet.vue';
 import TdDiagramDetail from '@/components/printed-report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/printed-report/ExecutiveSummary.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import threatService from '@/service/threats/index.js';
 
 export default {
     name: 'PrinterReport',
@@ -138,24 +139,6 @@ export default {
         TdExecutiveSummary,
         TdFormButton
     },
-    computed: {
-        ...mapState({
-            model: (state) => state.threatmodel.data,
-            providerType: (state) => getProviderType(state.provider.selected),
-            threats: (state) => {
-                let threats = [];
-                state.threatmodel.data.detail.diagrams.forEach(diagram => {
-                    diagram.cells.forEach(cell => {
-                        threats = threats.concat(cell.threats);
-                    });
-                });
-                return threats.filter(x => !!x);
-            }
-        }),
-        ...mapGetters({
-            contributors: 'contributors'
-        })
-    },
     data() {
         return {
             display: {
@@ -163,8 +146,24 @@ export default {
                 mitigated: true,
                 diagrams: true,
                 branding: true
-            }
+            },
+            isElectron: env.isElectron()
         };
+    },
+    computed: {
+        ...mapState({
+            model: (state) => state.threatmodel.data,
+            providerType: (state) => getProviderType(state.provider.selected),
+            allThreats: function (state) {
+                return threatService.filter(state.threatmodel.data.detail.diagrams, {
+                    showOutOfScope: true,
+                    showMitigated: true
+                });
+            }
+        }),
+        ...mapGetters({
+            contributors: 'contributors'
+        })
     },
     methods: {
         noOp() {

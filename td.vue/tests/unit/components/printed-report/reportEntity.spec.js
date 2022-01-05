@@ -55,7 +55,7 @@ describe('components/printed-report/ReportEntity.vue', () => {
         return wrapper.findAll('td')
             .filter(x => x.text().toLowerCase() === expectedText.toLowerCase())
             .exists();
-    }
+    };
 
     it('converts things to camel case', () => {
         expect(wrapper.vm.toCamelCase('FooBar')).toEqual('fooBar');

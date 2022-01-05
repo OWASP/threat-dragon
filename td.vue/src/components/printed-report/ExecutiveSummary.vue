@@ -39,7 +39,7 @@
                     <td class="td-summary-open-low">{{ openLow }}</td>
                 </tr>
                 <tr>
-                    <th>{{ $t('report.threatStats.openUnkown') }}</th>
+                    <th>{{ $t('report.threatStats.openUnknown') }}</th>
                     <td class="td-summary-open-unknown">{{ openUnkown }}</td>
                 </tr>
             </table>

@@ -7,17 +7,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>{{ $t('threats.properties.title' )}}</th>
-                    <th>{{ $t('threatmodel.properties.outOfScope' )}}</th>
-                    <th>{{ $t('threats.properties.priority' )}}</th>
-                    <th>{{ $t('threats.properties.status' )}}</th>
-                    <th>{{ $t('threats.properties.description' )}}</th>
-                    <th>{{ $t('threats.properties.mitigation' )}}</th>
+                    <th>{{ $t('threats.properties.title') }}</th>
+                    <th>{{ $t('threatmodel.properties.outOfScope') }}</th>
+                    <th>{{ $t('threats.properties.priority') }}</th>
+                    <th>{{ $t('threats.properties.status') }}</th>
+                    <th>{{ $t('threats.properties.description') }}</th>
+                    <th>{{ $t('threats.properties.mitigation') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr
-                    v-for="(threat, idx) in entity.data.threats"
+                    v-for="(threat, idx) in threats"
                     :key="idx"
                 >
                     <td>{{ threat.title }}</td>
@@ -51,6 +51,8 @@
 </style>
 
 <script>
+import threatService from '@/service/threats/index.js';
+
 export default {
     name: 'TdReportEntity',
     props: {
@@ -58,12 +60,26 @@ export default {
         outOfScope: {
             type: Boolean,
             default: false
+        },
+        showOutOfScope: {
+            type: Boolean,
+            default: true
+        },
+        showMitigated: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
         dataType: function () {
             const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
+        },
+        threats: function () {
+            return threatService.filterForDiagram(this.entity.data, {
+                showOutOfScope: this.showOutOfScope,
+                showMitigated: this.showMitigated
+            });
         },
     },
     methods: {

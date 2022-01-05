@@ -37,9 +37,32 @@ export const createNewThreat = () => ({
 const hasOpenThreats = (data) => !!data && !!data.threats &&
     data.threats.filter(x => x.status.toLowerCase() === 'open').length > 0;
 
+const filter = (diagrams, filters) => {
+    return diagrams
+        .flatMap(x => x.cells)
+        .filter(x => !!x.data && !!x.data.threats)
+        .flatMap(x => x.data.threats)
+        .filter(x => filterForDiagram(x, filters))
+        .filter(x => !!x);
+};
+
+const filterForDiagram = (data, filters) => {
+    if (!filters.showOutOfScope && data.outOfScope) {
+        return [];
+    }
+
+    if (!data.threats) {
+        return [];
+    }
+
+    return data.threats.filter(x => filters.showMitigated || x.status.toLowerCase() !== 'mitigated');
+};
+
 
 export default {
     convertToTranslationString,
+    filter,
+    filterForDiagram,
     getModelByTranslation: models.getByTranslationValue,
     hasOpenThreats
 };
