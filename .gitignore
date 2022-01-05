@@ -4,7 +4,6 @@ coverage/
 typings/
 build/
 installers/
-fonts/
 
 # ignore Apple's desktop store files
 **/.DS_Store
