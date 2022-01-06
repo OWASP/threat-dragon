@@ -12,7 +12,8 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
-    THREATMODEL_SELECTED
+    THREATMODEL_SELECTED,
+    THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';
 
@@ -74,7 +75,8 @@ const actions = {
             originalModel = resp.data;
         }
         commit(THREATMODEL_RESTORE, originalModel);
-    }
+    },
+    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY)
 };
 
 const mutations = {
@@ -88,6 +90,10 @@ const mutations = {
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
         setThreatModel(state, state.data);
+
+        // TODO: This does NOT belong here, but is a placeholder until update/save are implemented
+        // https://github.com/OWASP/threat-dragon/issues/340
+        Vue.set(state.data, 'version', '2.0');
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
@@ -99,7 +105,10 @@ const mutations = {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
-    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel)
+    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
+    [THREATMODEL_SET_IMMUTABLE_COPY]: (state) => {
+        Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
+    }
 };
 
 const getters = {
@@ -110,7 +119,8 @@ const getters = {
         }
         return contribs.map(x => x.name);
     },
-    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy
+    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy,
+    isV1Model: (state) => Object.keys(state.data).length > 0 && state.data.version !== '2.0'
 };
 
 export default {

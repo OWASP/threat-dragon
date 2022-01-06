@@ -103,5 +103,8 @@ export default {
             });
         }
     },
+    destroyed() {
+        diagramService.dispose(this.graph);
+    }
 };
 </script>

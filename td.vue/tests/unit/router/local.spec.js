@@ -127,4 +127,22 @@ describe('routes/local.js', () => {
             expect(cmp.default.name).toEqual('PrinterReport');
         });
     });
+
+    describe('Upgrade', () => {
+        let route;
+
+        beforeEach(() => {
+            route = localRoutes
+                .find(x => x.name === 'localUpgrade');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/local/:threatmodel/upgrade');
+        });
+
+        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('Upgrade');
+        });
+    });
 });

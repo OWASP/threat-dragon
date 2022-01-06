@@ -25,6 +25,11 @@ export const gitRoutes = [
         component: () => import(/* webpackChunkName: "threatmodel" */ '../views/ThreatModel.vue')
     },
     {
+        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/upgrade`,
+        name: `${providerType}Upgrade`,
+        component: () => import(/* webpackChunkName: "upgrade" */ '../views/Upgrade.vue')
+    },
+    {
         path: `/${providerType}/:provider/:repository/:branch/new`,
         name: `${providerType}NewThreatModel`,
         component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')

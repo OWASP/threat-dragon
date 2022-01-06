@@ -225,6 +225,16 @@ const en = {
             openLow: 'Open / Low Priority',
             openUnknown: 'Open / Unkown Priority',
         }
+    },
+    upgrade: {
+        modal: {
+            header: 'Threatmodel Update',
+            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
+            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
+            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust.  This is a one-time upgrade, and you should not see this message again after saving this model.'
+        },
+        instructions: 'Great! Let\'s get you to your model.',
+        continue: 'Continue to Threat Model'
     }
 };
 

@@ -12,6 +12,7 @@ describe('service/x6/graph/graph.js', () => {
     describe('getReadonlyGraph', () => {
         beforeEach(() => {
             container = { foo: 'bar' };
+            events.listen = jest.fn();
             graph.getReadonlyGraph(container);
         });
 
@@ -37,6 +38,10 @@ describe('service/x6/graph/graph.js', () => {
             expect(factory.graph).toHaveBeenCalledWith(
                 expect.objectContaining({ autoResize: container })
             );
+        });
+
+        it('adds the event listeners', () => {
+            expect(events.listen).toHaveBeenCalledTimes(1);
         });
     });
 

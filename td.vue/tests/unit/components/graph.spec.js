@@ -26,6 +26,7 @@ describe('components/GraphButtons.vue', () => {
         };
         routerMock = { push: jest.fn(), params: {} };
         diagramService.edit = jest.fn().mockReturnValue(graphMock);
+        diagramService.dispose = jest.fn();
         stencilService.get = jest.fn();
         providerService.getProviderType = jest.fn();
         threatEditStub = {
@@ -141,5 +142,10 @@ describe('components/GraphButtons.vue', () => {
         wrapper.setData({ diagram: { cells: [ 1, 2 ]}});
         wrapper.vm.closed();
         expect(routerMock.push).not.toHaveBeenCalled();
+    });
+
+    it('disposes the graph', () => {
+        wrapper.destroy();
+        expect(diagramService.dispose).toHaveBeenCalled();
     });
 });

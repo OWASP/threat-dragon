@@ -1,5 +1,6 @@
 import cells from '@/service/migration/cells.js';
 import diagram from '@/service/migration/diagram.js';
+import events from '@/service/x6/graph/events.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import store from '@/store/index.js';
@@ -24,7 +25,8 @@ describe('service/migration/diagram.js', () => {
             addEdge: jest.fn(),
             getCells: jest.fn().mockReturnValue(cellsMock),
             startBatch: jest.fn(),
-            stopBatch: jest.fn()
+            stopBatch: jest.fn(),
+            dispose: jest.fn()
         };
         storeMock = { dispatch: jest.fn() };
         graphFactory.getReadonlyGraph = jest.fn().mockReturnValue(graphMock);
@@ -98,6 +100,21 @@ describe('service/migration/diagram.js', () => {
 
         it('gets the edit graph', () => {
             expect(graphFactory.getEditGraph).toHaveBeenCalledWith(null);
+        });
+    });
+
+    describe('dispose', () => {
+        beforeEach(() => {
+            events.removeListeners = jest.fn();
+            diagram.dispose(graphMock);
+        });
+
+        it('removes event listeners', () => {
+            expect(events.removeListeners).toHaveBeenCalled();
+        });
+
+        it('disposes the graph', () => {
+            expect(graphMock.dispose).toHaveBeenCalled();
         });
     });
 });

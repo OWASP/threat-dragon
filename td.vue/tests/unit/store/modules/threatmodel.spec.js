@@ -5,7 +5,8 @@ import {
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
-    THREATMODEL_SELECTED
+    THREATMODEL_SELECTED,
+    THREATMODEL_SET_IMMUTABLE_COPY
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
@@ -181,6 +182,13 @@ describe('store/modules/threatmodel.js', () => {
                     expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_RESTORE, originalModel);
                 });
             });
+
+            it('commits the set immutable copy action', () => {
+                threatmodelModule.actions[THREATMODEL_SET_IMMUTABLE_COPY](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    THREATMODEL_SET_IMMUTABLE_COPY
+                );
+            });
         });
     });
 
@@ -318,6 +326,13 @@ describe('store/modules/threatmodel.js', () => {
                 expect(state.immutableCopy).toEqual(JSON.stringify(orig));
             });
         });
+
+        it('sets the immutable copy from the data', () => {
+            threatmodelModule.state.data = { foo: 'bar' };
+            threatmodelModule.mutations[THREATMODEL_SET_IMMUTABLE_COPY](threatmodelModule.state);
+            expect(threatmodelModule.state.immutableCopy)
+                .toEqual(JSON.stringify(threatmodelModule.state.data));
+        });
     });
 
     describe('getters', () => {
@@ -367,6 +382,23 @@ describe('store/modules/threatmodel.js', () => {
             it('returns false when the model has not changed', () => {
                 const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ foo: 'bar' })};
                 expect(threatmodelModule.getters.modelChanged(state)).toEqual(false);
+            });
+        });
+
+        describe('isVV1Model', () => {
+            it('returns false when data is not set', () => {
+                const state = { data: {} };
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
+            });
+
+            it('returns false when the version is set to 2.0', () => {
+                const state = { data: { version: '2.0' }};
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
+            });
+
+            it('returns true when the version is not set', () => {
+                const state = { data: { foo: '2.0' }};
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(true);
             });
         });
     });

@@ -39,7 +39,8 @@ export default {
         provider: state => state.provider.selected,
         providerType: state => getProviderType(state.provider.selected),
         repoName: state => state.repo.selected,
-        threatModels: state => state.threatmodel.all
+        threatModels: state => state.threatmodel.all,
+        selectedModel: state => state.threatmodel.data
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
@@ -65,10 +66,11 @@ export default {
             this.$store.dispatch(repoActions.clear);
             this.$router.push({ name: 'gitRepository', params: { provider: this.provider }});
         },
-        onThreatmodelClick(threatmodel) {
-            this.$store.dispatch(threatmodelActions.fetch, threatmodel);
+        async onThreatmodelClick(threatmodel) {
+            await this.$store.dispatch(threatmodelActions.fetch, threatmodel);
             const params = Object.assign({}, this.$route.params, { threatmodel });
-            this.$router.push({ name: `${this.providerType}ThreatModel` , params });
+            this.$store.dispatch(threatmodelActions.selected, this.selectedModel);
+            this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
         newThreatModel() {
             this.$store.dispatch(threatmodelActions.clear);

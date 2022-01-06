@@ -9,6 +9,7 @@ describe('components/ReadOnlyDiagram.vue', () => {
     beforeEach(() => {
         addEventListenerSpy = jest.spyOn(window, 'addEventListener');
         removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+        diagramService.dispose = jest.fn();
         graphMock = {
             unfreeze: jest.fn(),
             resize: jest.fn(),
@@ -54,8 +55,13 @@ describe('components/ReadOnlyDiagram.vue', () => {
         expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.anything());
     });
     
-    it('removes the event listener', () => {
+    it('removes the window event listener', () => {
         wrapper.destroy();
         expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.anything());
+    });
+    
+    it('disposes the graph', () => {
+        wrapper.destroy();
+        expect(diagramService.dispose).toHaveBeenCalled();
     });
 });

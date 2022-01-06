@@ -89,7 +89,11 @@ const getEditGraph = (container) => {
     return graph;
 };
 
-const getReadonlyGraph = (container) => factory.graph(getReadOnlyConfig(container));
+const getReadonlyGraph = (container) => {
+    const graph = factory.graph(getReadOnlyConfig(container));
+    events.listen(graph);
+    return graph;
+};
 
 export default {
     getEditGraph,

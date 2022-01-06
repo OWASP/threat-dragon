@@ -59,6 +59,7 @@ export default {
     },
     destroyed() {
         window.removeEventListener('resize', this.resizeGraph);
+        diagramService.dispose(this.graph);
     }
 };
 
