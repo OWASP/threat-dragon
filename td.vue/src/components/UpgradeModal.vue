@@ -10,7 +10,7 @@
         <p class="td-p2">{{ $t('upgrade.modal.p2') }}</p>
 
         <template #modal-footer="{ ok }">
-            <b-button variant="primary" @click="ok()">
+            <b-button variant="primary" @click="ok()" class="td-upgrade-modal-ok">
                 {{ $t('forms.ok') }}
             </b-button>
         </template>

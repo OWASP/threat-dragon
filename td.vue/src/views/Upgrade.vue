@@ -10,6 +10,7 @@
                             variant="success"
                             size="lg"
                             @click="continueToModel"
+                            class="td-upgrade-continue"
                         >
                             <font-awesome-icon
                                 icon="project-diagram"
