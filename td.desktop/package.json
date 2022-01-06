@@ -9,7 +9,7 @@
     "pretest": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors app",
     "test": "./node_modules/.bin/karma start --single-run --browsers Electron",
     "citest": "npm-run-all pretest test",
-    "build": "npm-run-all pretest build:fonts build:css build:models build:templates",
+    "build": "npm-run-all pretest build:css build:models build:templates",
     "build:css": "./node_modules/.bin/rework-npm ./content/app.css -o ./content/threatdragon.css",
     "build:models": "./node_modules/.bin/copyfiles --error --up 2 ../ThreatDragonModels/new-model/*.* ../ThreatDragonModels/demo-threat-model/*.* ./ThreatDragonModels/",
     "build:win": "electron-builder build --win",
