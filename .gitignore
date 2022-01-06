@@ -24,8 +24,5 @@ td.site/src/content/threatdragon.css
 td.site/src/content/threatdragon.min.css
 td.desktop/content/threatdragon.css
 
-# copy of core files
-td.site/core/
-
 # copy of threat models
 td.desktop/ThreatDragonModels/
