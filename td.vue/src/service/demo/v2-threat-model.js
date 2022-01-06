@@ -165,7 +165,7 @@ export default {
                             'description': '',
                             'type': 'tm.Store',
                             'isTrustBoundary': false,
-                            'outOfScope': false,
+                            'outOfScope': true,
                             'reasonOutOfScope': '',
                             'threats': [
                                 {

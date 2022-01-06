@@ -1,11 +1,17 @@
 <template>
-    <div>
+    <div class="td-executive-summary">
         <b-card :header="$t('report.executiveSummary')">
             <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
             <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
 
             <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
-            <b-table :fields="null" :items="tableRows" striped />
+            <b-table
+                class="td-executive-summary-data"
+                :fields="null"
+                :items="tableRows"
+                :tbody-tr-attr="getDataTestId"
+                striped
+            ></b-table>
         </b-card>
     </div>
 </template>
@@ -73,6 +79,11 @@ export default {
         getOpenThreats() {
             return this.threats
                 .filter(threat => threat.status && threat.status.toLowerCase() === 'open');
+        },
+        getDataTestId(item) {
+            return {
+                'data-test-id': item.name
+            };
         }
     }
 };

@@ -223,7 +223,7 @@ const en = {
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',
             openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unkown Priority',
+            openUnknown: 'Open / Unknown Priority',
         }
     },
     upgrade: {

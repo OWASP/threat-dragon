@@ -77,4 +77,10 @@ describe('components/report/ExecutiveSummary.vue', () => {
         expect(TdExecutiveSummary.computed.notMitigated.call(propsData))
             .toEqual(5);
     });
+
+    it('gets the data test id from the row item', () => {
+        const item = { name: 'foo' };
+        const res = wrapper.vm.getDataTestId(item);
+        expect(res['data-test-id']).toEqual(item.name);
+    });
 });

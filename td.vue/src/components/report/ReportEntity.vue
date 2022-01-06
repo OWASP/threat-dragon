@@ -13,6 +13,7 @@
         <b-row>
             <b-col md="12">
                 <b-table
+                    :data-test-id="entity.data.name.replace(' ', '_')"
                     :items="tableData"
                     striped
                     responsive>
