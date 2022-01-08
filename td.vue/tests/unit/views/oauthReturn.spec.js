@@ -4,13 +4,12 @@ import Vuex from 'vuex';
 import { AUTH_SET_JWT } from '@/store/actions/auth.js';
 import loginApi from '@/service/loginApi.js';
 import OAuthReturn from '@/views/OauthReturn.vue';
-import router from '@/router/index.js';
 
 describe('views/OauthReturn.vue', () => {
     const jwt = 'foobar';
     const code = '1234-12345';
     const provider = 'test';
-    let localVue, mockStore;
+    let localVue, mockStore, routerMock;
 
     beforeEach(() => {
         console.error = jest.fn();
@@ -20,6 +19,10 @@ describe('views/OauthReturn.vue', () => {
         beforeEach(() => {
             localVue = createLocalVue();
             localVue.use(Vuex);
+            routerMock = {
+                push: jest.fn(),
+                query: { code: code }
+            };
             mockStore = new Vuex.Store({
                 state: {
                     provider: {
@@ -30,14 +33,15 @@ describe('views/OauthReturn.vue', () => {
                     [AUTH_SET_JWT]: () => {}
                 }
             });
-            router.push = jest.fn();
-            router.query = { code: code };
             jest.spyOn(mockStore, 'dispatch');
             jest.spyOn(loginApi, 'completeLoginAsync').mockResolvedValue({ data: jwt });
             shallowMount(OAuthReturn, {
                 localVue,
                 store: mockStore,
-                router
+                mocks: {
+                    $route: routerMock,
+                    $router: routerMock
+                }
             });
         });
 
@@ -50,7 +54,7 @@ describe('views/OauthReturn.vue', () => {
         });
 
         it('navigates to the dashboard', () => {
-            expect(router.push).toHaveBeenCalledWith('/dashboard');
+            expect(routerMock.push).toHaveBeenCalledWith('/dashboard');
         });
     });
 
@@ -64,6 +68,10 @@ describe('views/OauthReturn.vue', () => {
                 }
             });
             localVue.use(Vuex);
+            routerMock = {
+                push: jest.fn(),
+                query: { code: code }
+            };
             mockStore = new Vuex.Store({
                 state: {
                     provider: {
@@ -74,13 +82,13 @@ describe('views/OauthReturn.vue', () => {
                     [AUTH_SET_JWT]: () => {}
                 }
             });
-            router.push = jest.fn();
-            router.query = { code: code };
             jest.spyOn(loginApi, 'completeLoginAsync').mockRejectedValue('whoops');
             shallowMount(OAuthReturn, {
                 localVue,
                 store: mockStore,
-                router
+                mocks: {
+                    $router: routerMock
+                }
             });
         });
 

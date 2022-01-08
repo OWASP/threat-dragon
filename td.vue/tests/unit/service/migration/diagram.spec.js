@@ -1,311 +1,120 @@
-
+import cells from '@/service/migration/cells.js';
 import diagram from '@/service/migration/diagram.js';
+import events from '@/service/x6/graph/events.js';
+import dataChanged from '@/service/x6/graph/data-changed.js';
+import graphFactory from '@/service/x6/graph/graph.js';
+import store from '@/store/index.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 describe('service/migration/diagram.js', () => {
-    const size = { width: 100, height: 200 };
-    const position = { x: 0, y: 5 };
-    const id = 'myid';
-    const zIndex = 2;
-    const vertices = [{x:1, y:1}];
+    let diagramMock, graphMock, storeMock;
+    const nodesMock = ['one', 'two'];
+    const edgesMock = ['three'];
+    const cellsMock = [ 'cell1' ];
 
-    const getV1Cell = () => ({
-        diagramJson: {
-            cells: [
-                {
-                    type: 'tm.Actor',
-                    size,
-                    position,
-                    id,
-                    z: zIndex,
-                    attrs: {
-                        text: {
-                            text: 'foobar'
-                        }
-                    }
-                }
-            ]
-        }
+    beforeEach(() => {
+        diagramMock = {
+            title: 'Test',
+            thumbnail: 'foo.png',
+            id: '12345'
+        };
+        graphMock = {
+            fromJSON: jest.fn(),
+            toJSON: jest.fn().mockReturnValue(diagramMock),
+            addNode: jest.fn(),
+            addEdge: jest.fn(),
+            getCells: jest.fn().mockReturnValue(cellsMock),
+            startBatch: jest.fn(),
+            stopBatch: jest.fn(),
+            dispose: jest.fn()
+        };
+        storeMock = { dispatch: jest.fn() };
+        graphFactory.getReadonlyGraph = jest.fn().mockReturnValue(graphMock);
+        graphFactory.getEditGraph = jest.fn().mockReturnValue(graphMock);
+        dataChanged.updateStyleAttrs = jest.fn();
+        cells.map = jest.fn().mockReturnValue({ nodes: nodesMock, edges: edgesMock });
+        store.get = jest.fn().mockReturnValue(storeMock);
     });
 
-    const getV1Edge = () => {
-        const v1 = getV1Cell();
-        v1.diagramJson.cells.push({
-            type: 'tm.Flow',
-            source: { id },
-            target: { id },
-            vertices,
-            labels: [
-                {
-                    position,
-                    attrs: { text: { text: 'foobar' }}
-                }
-            ]
-        });
-        return v1;
-    };
-
-    let edges, nodes;
-
-    describe('cell with complete data', () => {
-        beforeEach(() => {
-            const res = diagram.mapDiagram(getV1Cell());
-            edges = res.edges;
-            nodes = res.nodes;
-        });
-
-        it('is a node', () => {
-            expect(nodes.length).toEqual(1);
-            expect(edges.length).toEqual(0);
-        });
-
-        it('maps the text attribute', () => {
-            expect(nodes[0].getAttrs().text.text).toEqual('foobar');
-        });
-
-        it('maps the width and height', () => {
-            expect(nodes[0].size()).toEqual(size);
-        });
-
-        it('maps the position', () => {
-            expect(nodes[0].position()).toEqual(position);
-        });
-
-        it('sets the id', () => {
-            expect(nodes[0].id).toEqual(id);
-        });
-        
-        it('sets the z-index', () => {
-            expect(nodes[0].zIndex).toEqual(zIndex);
-        });
-    });
-
-    describe('trust boundary', () => {
-        beforeEach(() => {
-            const v1 = getV1Edge();
-            v1.diagramJson.cells[1].type = 'tm.Boundary';
-            v1.diagramJson.cells[1].labels[0].attrs.text.text = '';
-            const res = diagram.mapDiagram(v1);
-            edges = res.edges;
-        });
-
-        it('does not add default text', () => {
-            expect(edges[0].labels[0].attrs.label.text).toEqual('');
-        });
-    });
-
-    describe('cell missing attributes', () => {
-        beforeEach(() => {
-            const v1 = getV1Cell();
-            delete v1.diagramJson.cells[0].attrs;
-            const res = diagram.mapDiagram(v1);
-            nodes = res.nodes;
-        });
-
-        it('uses the default text', () => {
-            expect(nodes[0].getAttrs().text.text).toEqual('Actor');
-        });
-    });
-
-    describe('edges using id ref', () => {
-        beforeEach(() => {
-            const v1 = getV1Edge();
-            v1.diagramJson.cells[1].protocol = 'HTTPS';
-            const res = diagram.mapDiagram(v1);
-            edges = res.edges;
-        });
-
-        it('creates the edge', () => {
-            expect(edges.length).toEqual(1);
-        });
-
-        it('maps the source', () => {
-            expect(edges[0].source).toEqual({ cell: id });
-        });
-
-        it('maps the target', () => {
-            expect(edges[0].target).toEqual({ cell: id });
-        });
-
-        it('maps the vertices', () => {
-            expect(edges[0].vertices).toEqual(vertices);
-        });
-
-        it('uses the smooth connector', () => {
-            expect(edges[0].connector).toEqual('smooth');
-        });
-
-        it('maps the labels', () => {
-            expect(edges[0].labels[0].attrs.label.text).toContain('foobar');
-        });
-
-        it('adds the protocol to the edge label', () => {
-            expect(edges[0].labels[0].attrs.label.text).toContain('(HTTPS)');
-        });
-    });
-
-    describe('edge with label without protocol', () => {
-        beforeEach(() => {
-            const v1 = getV1Edge();
-            const res = diagram.mapDiagram(v1);
-            edges = res.edges;
-        });
-
-        it('maps the labels', () => {
-            expect(edges[0].labels[0].attrs.label.text).toEqual('foobar');
-        });
-    });
-
-    describe('edge without labels, with absolute source/target', () => {
-        const target = { x: 555, y: 333 };
-
-        beforeEach(() => {
-            const v1 = getV1Edge();
-            delete v1.diagramJson.cells[1].labels;
-            v1.diagramJson.cells[1].source = position;
-            v1.diagramJson.cells[1].target = target;
-            const res = diagram.mapDiagram(v1);
-            edges = res.edges;
-        });
-
-        it('does not have a label', () => {
-            expect(edges[0].labels.length).toEqual(0);
-        });
-
-        it('uses absolute position for source', () => {
-            expect(edges[0].source).toEqual(position);
-        });
-
-        it('uses absolute position for source', () => {
-            expect(edges[0].target).toEqual(target);
-        });
-    });
-
-    describe('blank diagram', () => {
-        beforeEach(() => {
-            const res = diagram.mapDiagram({});
-            nodes = res.nodes;
-            edges = res.edges;
-        });
-
-        it('has no nodes', () => {
-            expect(nodes.length).toEqual(0);
-        });
-
-        it('has no edges', () => {
-            expect(edges.length).toEqual(0);
-        });
-    });
-
-    describe('process metaData', () => {
-        describe('with privilegeLevel defined', () => {
+    describe('draw', () => {
+        describe('v1', () => {
             beforeEach(() => {
-                const v1 = getV1Cell();
-                v1.diagramJson.cells.push({
-                    type: 'tm.Process',
-                    privilegeLevel: 'foobar',
-                    position: { x: 1, y: 0 },
-                    size: { width: 20, height: 20 }
-                });
-                const res = diagram.mapDiagram(v1);
-                nodes = res.nodes;
+                diagram.draw(null, diagramMock);
             });
 
-            it('it has the privilegeLevel in the data', () => {
-                const tdProcess = nodes.find(x => x.type === 'tm.Process');
-                expect(tdProcess.data.privilegeLevel).toEqual('foobar');
+            it('gets the readonly graph', () => {
+                expect(graphFactory.getReadonlyGraph).toHaveBeenCalledWith(null);
+            });
+
+            it('maps the cells', () => {
+                expect(cells.map).toHaveBeenCalledWith(diagramMock);
+            });
+
+            it('draws using a batch', () => {
+                expect(graphMock.startBatch).toHaveBeenCalledWith('td-init');
+            });
+
+            it('adds the nodes', () => {
+                expect(graphMock.addNode).toHaveBeenCalledTimes(nodesMock.length);
+            });
+
+            it('adds the edges', () => {
+                expect(graphMock.addEdge).toHaveBeenCalledTimes(edgesMock.length);
+            });
+
+            it('stops the batch', () => {
+                expect(graphMock.stopBatch).toHaveBeenCalled();
+            });
+
+            it('exports the json', () => {
+                expect(graphMock.toJSON).toHaveBeenCalled();
+            });
+
+            it('updates the styles for the cells', () => {
+                expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(cellsMock.length);
+            });
+
+            it('dispatches the diagramUpdated event to the store', () => {
+                expect(storeMock.dispatch)
+                    .toHaveBeenCalledWith(tmActions.diagramUpdated, diagramMock);
             });
         });
 
-        describe('with privilegeLevel undefined', () => {
+        describe('v2', () => {
             beforeEach(() => {
-                const v1 = getV1Cell();
-                v1.diagramJson.cells.push({
-                    type: 'tm.Process',
-                    position: { x: 1, y: 0 },
-                    size: { width: 20, height: 20 }
-                });
-                const res = diagram.mapDiagram(v1);
-                nodes = res.nodes;
+                diagramMock.version = '2.0';
+                diagram.draw(null, diagramMock);
             });
 
-            it('it has an empty privilegeLevel', () => {
-                const tdProcess = nodes.find(x => x.type === 'tm.Process');
-                expect(tdProcess.data.privilegeLevel).toEqual('');
+            it('gets the graph json', () => {
+                expect(graphMock.fromJSON).toHaveBeenCalledTimes(1);
             });
         });
     });
 
-    describe('store metadata', () => {
-        describe('with the data defined', () => {
-            let tdStore;
-
-            beforeEach(() => {
-                const v1 = getV1Cell();
-                v1.diagramJson.cells.push({
-                    type: 'tm.Store',
-                    position: { x: 1, y: 0 },
-                    size: { width: 20, height: 20 },
-                    isALog: true,
-                    storesCredentials: true,
-                    isEncrypted: true,
-                    isSigned: true,
-                    threats: [{ type: 'Information disclosure', id: 'asdf' }]
-                });
-                const res = diagram.mapDiagram(v1);
-                tdStore = res.nodes.find(x => x.type === 'tm.Store');
-            });
-
-            it('it is a log', () => {
-                expect(tdStore.data.isALog).toEqual(true);
-            });
-
-            it('stores credentials', () => {
-                expect(tdStore.data.storesCredentials).toEqual(true);
-            });
-
-            it('it is encrypted', () => {
-                expect(tdStore.data.isEncrypted).toEqual(true);
-            });
-
-            it('it is signed', () => {
-                expect(tdStore.data.isSigned).toEqual(true);
-            });
-
-            it('migrates the threat', () => {
-                expect(tdStore.data.threats[0].modelType).toEqual('STRIDE');
-            });
+    describe('edit', () => {
+        beforeEach(() => {
+            diagramMock.version = '2.0';
+            diagram.edit(null, diagramMock);
         });
 
-        describe('with defaults only', () => {
-            let tdStore;
+        it('gets the edit graph', () => {
+            expect(graphFactory.getEditGraph).toHaveBeenCalledWith(null);
+        });
+    });
 
-            beforeEach(() => {
-                const v1 = getV1Cell();
-                v1.diagramJson.cells.push({
-                    type: 'tm.Store',
-                    position: { x: 1, y: 0 },
-                    size: { width: 20, height: 20 },
-                    threats: [{ type: 'Information disclosure' }]
-                });
-                const res = diagram.mapDiagram(v1);
-                tdStore = res.nodes.find(x => x.type === 'tm.Store');
-            });
+    describe('dispose', () => {
+        beforeEach(() => {
+            events.removeListeners = jest.fn();
+            diagram.dispose(graphMock);
+        });
 
-            it('it is not a log', () => {
-                expect(tdStore.data.isALog).toEqual(false);
-            });
+        it('removes event listeners', () => {
+            expect(events.removeListeners).toHaveBeenCalled();
+        });
 
-            it('does not store credentials', () => {
-                expect(tdStore.data.storesCredentials).toEqual(false);
-            });
-
-            it('it is not encrypted', () => {
-                expect(tdStore.data.isEncrypted).toEqual(false);
-            });
-
-            it('it is not signed', () => {
-                expect(tdStore.data.isSigned).toEqual(false);
-            });
+        it('disposes the graph', () => {
+            expect(graphMock.dispose).toHaveBeenCalled();
         });
     });
 });

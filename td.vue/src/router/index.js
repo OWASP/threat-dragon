@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import { getProviderType } from '@/service/provider/providers.js';
 import { gitRoutes } from './git.js';
 import Home from '../views/Home.vue';
 import { localRoutes } from './local.js';
+import storeFactory from '../store/index.js';
 
-Vue.use(VueRouter);
+
 
 const routes = [
     {
@@ -32,8 +34,35 @@ const routes = [
     ...localRoutes
 ];
 
-const router = new VueRouter({
-    routes
+const upgradeGuard = ((to, from, next) => {
+    const ignoreMatchers = [
+        'OAuthReturn',
+        'Upgrade'
+    ];
+
+    if (ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
+        return next();
+    }
+
+    const store = storeFactory.get();
+    if (store.getters.isV1Model) {
+        return next({ name: `${getProviderType(store.state.provider.selected)}Upgrade`, params: to.params });
+    }
+
+
+    return next();
 });
 
-export default router;
+const get = () => {
+    Vue.use(VueRouter);
+    const router = new VueRouter({
+        routes
+    });
+    router.beforeEach(upgradeGuard);
+    return router;
+};
+
+export default {
+    get,
+    upgradeGuard
+};

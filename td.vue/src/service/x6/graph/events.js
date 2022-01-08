@@ -88,7 +88,7 @@ const cellSelected = ({ cell }) => {
 const cellUnselected = ({ cell }) => {
     removeCellTools({ cell });
 
-    if (cell.setName && cell.getData && typeof cell.getData().name !== 'undefined') {
+    if (cell.setName && cell.getData) {
         cell.setName(cell.getData().name);
     } else {
         console.log('Cannot set name');
@@ -98,16 +98,31 @@ const cellUnselected = ({ cell }) => {
     dataChanged.updateStyleAttrs(cell);
 };
 
+const cellDataChanged = ({ cell }) => {
+    dataChanged.updateStyleAttrs(cell);
+};
+
 const listen = (graph) => {
     graph.on('edge:connected', edgeConnected);
     graph.on('cell:mouseleave', removeCellTools);
     graph.on('cell:mouseenter', mouseEnter);
     graph.on('cell:added', cellAdded(graph));
     graph.on('cell:unselected', cellUnselected);
-    graph.on('cell:change:data', ({ cell }) => dataChanged.updateStyleAttrs(cell));
+    graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
 };
 
+const removeListeners = (graph) => {
+    graph.off('edge:connected', edgeConnected);
+    graph.off('cell:mouseleave', removeCellTools);
+    graph.off('cell:mouseenter', mouseEnter);
+    graph.off('cell:added', cellAdded(graph));
+    graph.off('cell:unselected', cellUnselected);
+    graph.off('cell:change:data', cellDataChanged);
+    graph.off('cell:selected', cellSelected);
+};
+
 export default {
-    listen
+    listen,
+    removeListeners
 };

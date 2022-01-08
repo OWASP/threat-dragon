@@ -13,7 +13,7 @@ import './plugins/toastification.js';
 Vue.config.productionTip = false;
 
 new Vue({
-    router,
+    router: router.get(),
     store: storeFactory.get(),
     render: h => h(App),
     i18n: i18nFactory.get()

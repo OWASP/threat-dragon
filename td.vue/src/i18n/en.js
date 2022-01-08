@@ -136,6 +136,7 @@ const en = {
         shapes: {
             actor: 'Actor',
             flowStencil: 'Data Flow',
+            flow: 'Data Flow',
             process: 'Process',
             store: 'Store',
             text: 'Arbitrary Text',
@@ -155,7 +156,9 @@ const en = {
         import: 'Import',
         ok: 'OK',
         discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?'
+        discardMessage: 'Are you sure you want to discard your changes?',
+        print: 'Print',
+        savePdf: 'Save PDF'
     },
     threats: {
         models: {
@@ -199,6 +202,38 @@ const en = {
             medium: 'Medium',
             high: 'High'
         }
+    },
+    report: {
+        options: {
+            showOutOfScope: 'Show out of scope elements',
+            showMitigatedThreats: 'Show mitigated threats',
+            showModelDiagrams: 'Show model diagrams',
+            showBranding: 'Show Threat Dragon Branding'
+        },
+        title: 'Threat model report for',
+        dateGenerated: 'Date Generated',
+        executiveSummary: 'Executive Summary',
+        notProvided: 'Not provided',
+        summary: 'Summary',
+        threatStats: {
+            total: 'Total Threats',
+            mitigated: 'Total Mitigated',
+            notMitigated: 'Not Mitigated',
+            openHigh: 'Open / High Priority',
+            openMedium: 'Open / Medium Priority',
+            openLow: 'Open / Low Priority',
+            openUnknown: 'Open / Unknown Priority',
+        }
+    },
+    upgrade: {
+        modal: {
+            header: 'Threatmodel Update',
+            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
+            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
+            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust.  This is a one-time upgrade, and you should not see this message again after saving this model.'
+        },
+        instructions: 'Great! Let\'s get you to your model.',
+        continue: 'Continue to Threat Model'
     }
 };
 

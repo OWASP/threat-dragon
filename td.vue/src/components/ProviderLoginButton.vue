@@ -29,7 +29,6 @@ import { providerNames } from '@/service/provider/providers.js';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import router from '@/router/index.js';
 
 export default {
     name: 'TdProviderLoginButton',
@@ -42,7 +41,7 @@ export default {
 
             if (this.provider.key === providerNames.local) {
                 this.$store.dispatch(AUTH_SET_LOCAL);
-                return router.push('/dashboard');
+                return this.$router.push('/dashboard');
             }
           
             const resp = await loginApi.loginAsync(this.provider.key);

@@ -3,6 +3,8 @@
  * @description Handles the change:data event to update the UI styles
  */
 
+import threats from '../../threats/index.js';
+
 const styles = {
     default: {
         color: '#333333',
@@ -49,6 +51,8 @@ const updateStyleAttrs = (cell) => {
     if (!cellData) {
         return;
     }
+    
+    cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
 
     let { color, strokeDasharray, strokeWidth } = styles.default;
 

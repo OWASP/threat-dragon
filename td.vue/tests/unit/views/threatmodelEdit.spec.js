@@ -66,7 +66,8 @@ describe('views/Threatmodel.vue', () => {
             mocks: {
                 $t: key => key,
                 $route: mockRouter,
-                $router: mockRouter
+                $router: mockRouter,
+                $toast: { info: jest.fn() }
             }
         });
     });

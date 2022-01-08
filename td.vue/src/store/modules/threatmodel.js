@@ -8,10 +8,12 @@ import {
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_SELECTED,
+    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
-    THREATMODEL_SELECTED
+    THREATMODEL_SELECTED,
+    THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
 import threatmodelApi from '../../service/threatmodelApi.js';
 
@@ -38,6 +40,7 @@ const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CREATE]: ({ commit }, threatModel) => commit(THREATMODEL_CREATE, threatModel),
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
+    [THREATMODEL_DIAGRAM_UPDATED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_UPDATED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
         const resp = await threatmodelApi.modelAsync(
@@ -72,7 +75,8 @@ const actions = {
             originalModel = resp.data;
         }
         commit(THREATMODEL_RESTORE, originalModel);
-    }
+    },
+    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY)
 };
 
 const mutations = {
@@ -80,6 +84,16 @@ const mutations = {
     [THREATMODEL_CREATE]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         state.selectedDiagram = diagram;
+    },
+    [THREATMODEL_DIAGRAM_UPDATED]: (state, diagram) => {
+        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+        Vue.set(state, 'selectedDiagram', diagram);
+        Vue.set(state.data.detail.diagrams, idx, diagram);
+        setThreatModel(state, state.data);
+
+        // TODO: This does NOT belong here, but is a placeholder until update/save are implemented
+        // https://github.com/OWASP/threat-dragon/issues/340
+        Vue.set(state.data, 'version', '2.0');
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
@@ -91,7 +105,10 @@ const mutations = {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
-    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel)
+    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
+    [THREATMODEL_SET_IMMUTABLE_COPY]: (state) => {
+        Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
+    }
 };
 
 const getters = {
@@ -102,7 +119,8 @@ const getters = {
         }
         return contribs.map(x => x.name);
     },
-    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy
+    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy,
+    isV1Model: (state) => Object.keys(state.data).length > 0 && state.data.version !== '2.0'
 };
 
 export default {

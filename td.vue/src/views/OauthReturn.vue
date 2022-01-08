@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- Add loading indicator -->
     </div>
 </template>
 

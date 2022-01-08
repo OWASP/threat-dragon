@@ -74,7 +74,6 @@ describe('routes/local.js', () => {
         });
     });
 
-
     describe('ThreatModelImport', () => {
         let route;
 
@@ -90,6 +89,42 @@ describe('routes/local.js', () => {
         it('uses the Import view as a lazily loaded component', async () => {
             const cmp = await route.component();
             expect(cmp.default.name).toEqual('Import');
+        });
+    });
+
+    describe('Report', () => {
+        let route;
+
+        beforeEach(() => {
+            route = localRoutes
+                .find(x => x.name === 'localReport');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/local/:threatmodel/report');
+        });
+
+        it('uses the Import view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('Report');
+        });
+    });
+    
+    describe('Upgrade', () => {
+        let route;
+
+        beforeEach(() => {
+            route = localRoutes
+                .find(x => x.name === 'localUpgrade');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/local/:threatmodel/upgrade');
+        });
+
+        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('Upgrade');
         });
     });
 });

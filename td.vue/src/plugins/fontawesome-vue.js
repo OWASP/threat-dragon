@@ -25,7 +25,10 @@ import {
     faChevronRight,
     faCheck,
     faExclamationTriangle,
-    faCircle
+    faCircle,
+    faFilePdf,
+    faPrint,
+    faProjectDiagram
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -55,7 +58,10 @@ library.add(
     faChevronRight,
     faCheck,
     faExclamationTriangle,
-    faCircle
+    faCircle,
+    faFilePdf,
+    faPrint,
+    faProjectDiagram
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -1,10 +1,12 @@
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
+    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
-    THREATMODEL_SELECTED
+    THREATMODEL_SELECTED,
+    THREATMODEL_SET_IMMUTABLE_COPY
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/threatmodelApi.js';
@@ -76,6 +78,12 @@ describe('store/modules/threatmodel.js', () => {
             const diagram = { foo: 'bar' };
             threatmodelModule.actions[THREATMODEL_CREATE](mocks, diagram);
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CREATE, diagram);
+        });
+
+        it('commits the diagram updated action', () => {
+            const diagram = { foo: 'bar' };
+            threatmodelModule.actions[THREATMODEL_DIAGRAM_UPDATED](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_UPDATED, diagram);
         });
 
         describe('fetch', () => {
@@ -174,6 +182,13 @@ describe('store/modules/threatmodel.js', () => {
                     expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_RESTORE, originalModel);
                 });
             });
+
+            it('commits the set immutable copy action', () => {
+                threatmodelModule.actions[THREATMODEL_SET_IMMUTABLE_COPY](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(
+                    THREATMODEL_SET_IMMUTABLE_COPY
+                );
+            });
         });
     });
 
@@ -205,6 +220,29 @@ describe('store/modules/threatmodel.js', () => {
                 const tm = { foo: 'bar' };
                 threatmodelModule.mutations[THREATMODEL_CREATE](threatmodelModule.state, tm);
                 expect(threatmodelModule.state.data).toEqual(tm);
+            });
+        });
+
+        describe('diagramUpdated', () => {
+            let diagram;
+            beforeEach(() => {
+                threatmodelModule.state.data.detail = {
+                    diagrams: [
+                        { id: 1 },
+                        { id: 2}
+                    ]
+                };
+                threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
+                diagram = { id: 2, foo: 'baz' };
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_UPDATED](threatmodelModule.state, diagram);
+            });
+
+            it('updates the selectedDiagram', () => {
+                expect(threatmodelModule.state.selectedDiagram).toEqual(diagram);
+            });
+
+            it('updates the diagrams array', () => {
+                expect(threatmodelModule.state.data.detail.diagrams[1]).toEqual(diagram);
             });
         });
 
@@ -288,6 +326,13 @@ describe('store/modules/threatmodel.js', () => {
                 expect(state.immutableCopy).toEqual(JSON.stringify(orig));
             });
         });
+
+        it('sets the immutable copy from the data', () => {
+            threatmodelModule.state.data = { foo: 'bar' };
+            threatmodelModule.mutations[THREATMODEL_SET_IMMUTABLE_COPY](threatmodelModule.state);
+            expect(threatmodelModule.state.immutableCopy)
+                .toEqual(JSON.stringify(threatmodelModule.state.data));
+        });
     });
 
     describe('getters', () => {
@@ -337,6 +382,23 @@ describe('store/modules/threatmodel.js', () => {
             it('returns false when the model has not changed', () => {
                 const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ foo: 'bar' })};
                 expect(threatmodelModule.getters.modelChanged(state)).toEqual(false);
+            });
+        });
+
+        describe('isVV1Model', () => {
+            it('returns false when data is not set', () => {
+                const state = { data: {} };
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
+            });
+
+            it('returns false when the version is set to 2.0', () => {
+                const state = { data: { version: '2.0' }};
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
+            });
+
+            it('returns true when the version is not set', () => {
+                const state = { data: { foo: '2.0' }};
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(true);
             });
         });
     });

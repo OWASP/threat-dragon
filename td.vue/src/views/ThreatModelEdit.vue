@@ -193,6 +193,7 @@ export default {
         onSaveClick(evt) {
             evt.preventDefault();
             console.log('Save - TODO');
+            this.$toast.info('Only saving in-memory, data not persisted to back-end');
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {

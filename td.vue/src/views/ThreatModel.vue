@@ -1,38 +1,8 @@
 <template>
     <div v-if="!!model && model.summary">
-        <!-- metadata -->
         <b-row class="mb-4" id="title_row">
             <b-col>
-                <b-card
-                    :header="model.summary.title"
-                    ref="header-card">
-                    <b-row class="tm-card">
-                        <b-col md=2>
-                            <div>
-                                <strong>{{ $t('threatmodel.owner') }}:</strong>
-                            </div>
-                            <div id="tm_owner">
-                                {{ model.summary.owner }}
-                            </div>
-                        </b-col>
-                        <b-col md=2>
-                            <div>
-                                <strong>{{ $t('threatmodel.reviewer') }}:</strong>
-                            </div>
-                            <div id="tm_reviewer">
-                                {{ model.detail.reviewer }}
-                            </div>
-                        </b-col>
-                        <b-col md=2>
-                            <div>
-                                <strong>{{ $t('threatmodel.contributors') }}:</strong>
-                            </div>
-                            <div id="tm_contributors">
-                                {{ contributors }}
-                            </div>
-                        </b-col>
-                    </b-row>
-                </b-card>
+                <td-threat-model-summary-card />
             </b-col>
         </b-row>
 
@@ -120,15 +90,16 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
+import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
     components: {
-        TdFormButton
+        TdFormButton,
+        TdThreatModelSummaryCard
     },
     computed: mapState({
-        contributors: (state) => state.threatmodel.data.detail.contributors.map(x => x.name).join(', '),
         model: (state) => state.threatmodel.data,
         providerType: state => getProviderType(state.provider.selected)
     }),
@@ -139,7 +110,7 @@ export default {
         },
         onReportClick(evt) {
             evt.preventDefault();
-            console.log('Report clicked!');
+            this.$router.push({ name: `${this.providerType}Report`, params: this.$route.params });
         },
         onDeleteClick(evt) {
             evt.preventDefault();

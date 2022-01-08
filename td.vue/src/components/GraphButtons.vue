@@ -50,7 +50,7 @@
             
         <td-form-button
             :isPrimary="true"
-            :onBtnClick="notImplemented"
+            :onBtnClick="save"
             icon="save"
             :text="$t('forms.save')" />
 
@@ -58,9 +58,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
-import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -68,9 +65,6 @@ export default {
     components: {
         TdFormButton
     },
-    computed: mapState({
-        providerType: state => getProviderType(state.provider.selected)
-    }),
     data() {
         return {
             gridShowing: true
@@ -82,12 +76,11 @@ export default {
         }
     },
     methods: {
-        notImplemented() {
-            this.$toast.info('Not implemented yet. Hang in there, we\'re working on it! :) ');
+        save() {
+            this.$emit('saved');
         },
-        closeDiagram() {
-            // TODO: This does nothing to revert any changes... Not sure if we want to change that or not?
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+        async closeDiagram() {
+            this.$emit('closed');
         },
         noOp() {
             return;

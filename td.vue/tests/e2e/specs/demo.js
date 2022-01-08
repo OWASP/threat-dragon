@@ -22,14 +22,14 @@ describe('demo', () => {
         cy.contains('Legacy Model');
     });
 
-    it('opens the demo threat model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
-        cy.url().should('contain', '/local/Demo%20Threat%20Model');
+    it('opens the v2 demo threat model', () => {
+        cy.get('a').contains('Version 2 Demo Model').click();
+        cy.url().should('contain', '/local/Version%202%20Demo%20Model');
     });
 
     it('can edit the model', () => {
         cy.get('#tm-edit-btn').click();
-        cy.url().should('contain', '/local/Demo%20Threat%20Model/edit');
+        cy.url().should('contain', '/edit');
         cy.get('#description').should('be', 'visible');
         cy.get('button').contains('Cancel').click();
     });

@@ -12,7 +12,8 @@ describe('service/x6/graph/events.js', () => {
         store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
             evts: {},
-            on: function(evt, cb) { this.evts[evt] = cb; }
+            on: function(evt, cb) { this.evts[evt] = cb; },
+            off: jest.fn()
         };
         jest.spyOn(graph, 'on');
         cell = {
@@ -299,6 +300,44 @@ describe('service/x6/graph/events.js', () => {
                     expect(cell.data.name).toBeUndefined();
                 });
             });
+        });
+    });
+
+    describe('removeListeners', () => {
+        beforeEach(() => {
+            events.removeListeners(graph);
+        });
+
+        it('removes the edge:connected listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
+        });
+
+        it('removes the cell:mouseleavve listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:mouseleave', expect.anything());
+        });
+
+        it('removes the cell:mouseenter listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:mouseenter', expect.anything());
+        });
+
+        it('removes the cell:added listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:added', expect.anything());
+        });
+
+        it('removes the cell:unselected listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
+        });
+
+        it('removes the cell:unselected listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
+        });
+
+        it('removes the cell:change:data listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
+        });
+
+        it('removes the cell:added listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:added', expect.anything());
         });
     });
 });

@@ -126,4 +126,40 @@ describe('routes/git.js', () => {
             expect(cmp.default.name).toEqual('Diagram');
         });
     });
+
+    describe('Report', () => {
+        let route;
+
+        beforeEach(() => {
+            route = gitRoutes
+                .find(x => x.name === 'gitReport');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/report');
+        });
+
+        it('uses the Diagram view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('Report');
+        });
+    });
+
+    describe('Upgrade', () => {
+        let route;
+
+        beforeEach(() => {
+            route = gitRoutes
+                .find(x => x.name === 'gitUpgrade');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/upgrade');
+        });
+
+        it('uses the Diagram view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('Upgrade');
+        });
+    });
 });
