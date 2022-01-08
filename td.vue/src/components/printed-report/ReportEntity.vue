@@ -1,14 +1,14 @@
 <template>
-    <div class="report-box">
+    <div class="report-box print-only">
         <div class="entity-title">
             {{ `${entity.data.name} (${dataType})` }}
+            <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
         </div>
         <p class="entity-description">{{ entity.data.description }}</p>
         <table class="table">
             <thead>
                 <tr>
                     <th>{{ $t('threats.properties.title') }}</th>
-                    <th>{{ $t('threatmodel.properties.outOfScope') }}</th>
                     <th>{{ $t('threats.properties.priority') }}</th>
                     <th>{{ $t('threats.properties.status') }}</th>
                     <th>{{ $t('threats.properties.description') }}</th>
@@ -21,7 +21,6 @@
                     :key="idx"
                 >
                     <td>{{ threat.title }}</td>
-                    <td>{{ outOfScope ? $t('threatmodel.properties.outOfScope') : '' }}</td>
                     <td>{{ threat.severity }}</td>
                     <td>{{ threat.status }}</td>
                     <td>{{ threat.description }}</td>
@@ -54,7 +53,7 @@
 import threatService from '@/service/threats/index.js';
 
 export default {
-    name: 'TdReportEntity',
+    name: 'TdPrintReportEntity',
     props: {
         entity: Object,
         outOfScope: {

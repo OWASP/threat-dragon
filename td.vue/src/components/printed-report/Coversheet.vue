@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page print-only">
         <div class="td-title">
             <h1 class="td-report-title">{{ title }}</h1>
         </div>
@@ -62,7 +62,7 @@
 
 <script>
 export default {
-    name: 'TdCoversheet',
+    name: 'TdPrintCoversheet',
     props: {
         title: String,
         owner: {

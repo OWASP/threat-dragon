@@ -1,5 +1,5 @@
 <template>
-    <div class="td-report no-print">
+    <div class="td-report">
         <b-row class="no-print td-report-options fixed">
             <b-col>
                 <b-form class="">
@@ -63,7 +63,7 @@
                         id="td-print-btn"
                         :onBtnClick="print"
                         icon="print"
-                        :text="$t('forms.printerFriendly')" />
+                        :text="$t('forms.print')" />
                     <td-form-button
                         id="td-return-btn"
                         :isPrimary="true"
@@ -74,22 +74,29 @@
             </b-col>
         </b-row>
 
-        <div v-if="!!model">
-            <b-row class="td-report-section" id="summary">
-                <b-col>
-                    <td-coversheet :branding="display.branding" />
-                </b-col>
-            </b-row>
+        <div v-if="!!model" class="td-report-container">
+            <div class="td-report-section">
+                <td-coversheet :branding="display.branding" />
+                <td-print-coversheet
+                    :title="model.summary.title"
+                    :owner="model.summary.owner"
+                    :reviewer="model.detail.reviewer"
+                    :contributors="contributors"
+                    :branding="display.branding"
+                ></td-print-coversheet>
+            </div>
 
-            <b-row class="td-report-section">
-                <b-col>
-                    <td-executive-summary
-                        :summary="model.summary.description"
-                        :threats="allThreats"
-                    ></td-executive-summary>
-                </b-col>
-            </b-row>
-            
+            <div class="td-report-section">
+                <td-executive-summary
+                    :summary="model.summary.description"
+                    :threats="allThreats"
+                ></td-executive-summary>
+                <td-print-executive-summary
+                    :summary="model.summary.description"
+                    :threats="allThreats"
+                ></td-print-executive-summary>
+            </div>
+
             <td-diagram-detail
                 v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
@@ -127,6 +134,10 @@
     margin-top: 15px;
 }
 
+.td-report-container {
+    margin-top: 85px;
+}
+
 .fixed {
     position: fixed;
     top: 45px;
@@ -150,6 +161,8 @@ import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import TdPrintCoversheet from '@/components/printed-report/Coversheet.vue';
+import TdPrintExecutiveSummary from '@/components/printed-report/ExecutiveSummary.vue';
 import threatService from '@/service/threats/index.js';
 
 export default {
@@ -158,7 +171,9 @@ export default {
         TdCoversheet,
         TdDiagramDetail,
         TdExecutiveSummary,
-        TdFormButton
+        TdFormButton,
+        TdPrintCoversheet,
+        TdPrintExecutiveSummary
     },
     data() {
         return {
@@ -195,9 +210,7 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
-            if (!env.isElectron()) {
-                this.$router.push({ name: `${this.providerType}PrinterReport`, params: this.$route.params });
-            }
+            window.print();
         }
     }
 };

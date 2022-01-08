@@ -1,8 +1,11 @@
 <template>
-    <div class="td-threat-data">
+    <div class="td-threat-data no-print">
         <b-row>
             <b-col>
-                <h3 class="entity-title">{{ `${entity.data.name} (${dataType})` }}</h3>
+                <h3 class="entity-title">
+                    {{ `${entity.data.name} (${dataType})` }}
+                    <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
+                </h3>
             </b-col>
         </b-row>
         <b-row>
@@ -61,7 +64,6 @@ export default {
             }).map((threat) => {
                 return {
                     [this.$t('threats.properties.title')]: threat.title,
-                    [this.$t('threatmodel.properties.outOfScope')]: this.outOfScope ? this.$t('threatmodel.properties.outOfScope') : '',
                     [this.$t('threats.properties.priority')]: threat.severity,
                     [this.$t('threats.properties.status')]: threat.status,
                     [this.$t('threats.properties.description')]: threat.description,

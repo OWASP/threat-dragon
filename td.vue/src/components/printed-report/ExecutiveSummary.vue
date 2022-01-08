@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page print-only">
         <div class="page-title">
             {{ $t('report.executiveSummary') }}
         </div>
@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name: 'TdExecutiveSummary',
+    name: 'TdPrintExecutiveSummary',
     props: {
         summary: {
             type: String,

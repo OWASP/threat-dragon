@@ -109,25 +109,7 @@ describe('routes/local.js', () => {
             expect(cmp.default.name).toEqual('Report');
         });
     });
-
-    describe('PrinterReport', () => {
-        let route;
-
-        beforeEach(() => {
-            route = localRoutes
-                .find(x => x.name === 'localPrinterReport');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/local/:threatmodel/printer-report');
-        });
-
-        it('uses the Import view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('PrinterReport');
-        });
-    });
-
+    
     describe('Upgrade', () => {
         let route;
 

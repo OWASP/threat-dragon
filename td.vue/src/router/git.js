@@ -48,10 +48,5 @@ export const gitRoutes = [
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/report`,
         name: `${providerType}Report`,
         component: () => import(/* webpackChunkName: "report" */ '../views/Report.vue')
-    },
-    {
-        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/printer-report`,
-        name: `${providerType}PrinterReport`,
-        component: () => import(/* webpackChunkName: "printer-report" */ '../views/PrinterReport.vue')
     }
 ];

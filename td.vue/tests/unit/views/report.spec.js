@@ -2,7 +2,6 @@ import BootstrapVue from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import env from '@/service/env.js';
 import Report from '@/views/Report.vue';
 import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
@@ -120,18 +119,10 @@ describe('views/PrinterReport.vue', () => {
         });
     });
 
-    it('opens the printer report', () => {
-        env.isElectron = jest.fn().mockReturnValue(false);
+    it('opens the print dialogue', () => {
+        jest.spyOn(window, 'print');
+        window.print.mockImplementation(() => {});
         wrapper.vm.print();
-        expect(routerMock.push).toHaveBeenCalledWith({
-            name: 'localPrinterReport',
-            params: routerMock.params
-        });
-    });
-
-    it('will not open the printer report if electron', () => {
-        env.isElectron = jest.fn().mockReturnValue(true);
-        wrapper.vm.print();
-        expect(routerMock.push).not.toHaveBeenCalled();
+        expect(window.print).toHaveBeenCalledTimes(1);
     });
 });

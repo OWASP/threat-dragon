@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="no-print">
         <b-row class="mb-2 td-branding">
             <b-col>
                 <em v-if="branding" class="td-brand-text">

@@ -145,24 +145,6 @@ describe('routes/git.js', () => {
         });
     });
 
-    describe('DiagramEdit', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitPrinterReport');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/printer-report');
-        });
-
-        it('uses the Diagram view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('PrinterReport');
-        });
-    });
-
     describe('Upgrade', () => {
         let route;
 

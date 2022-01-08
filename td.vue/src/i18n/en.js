@@ -158,7 +158,6 @@ const en = {
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
         print: 'Print',
-        printerFriendly: 'Printer Friendly',
         savePdf: 'Save PDF'
     },
     threats: {
