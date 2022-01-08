@@ -4,6 +4,7 @@ import VueI18n from 'vue-i18n';
 import el from './el.js';
 import en from './en.js';
 import es from './es.js';
+import cn from './cn.js';
 import fr from './fr.js';
 import pt from './pt.js';
 
@@ -19,6 +20,7 @@ const get = () => {
                 el,
                 en,
                 es,
+                cn,
                 fr,
                 pt
             }
