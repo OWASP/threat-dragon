@@ -6,11 +6,11 @@
         "dev:vue": "cd td.vue && npm run dev",
         "dev:server": "cd td.server && npm run dev",
         "start": "npm-run-all build start:server start:site",
-        "start:server": "pm2 --name td.server start 'cd td.server && npm run dev'",
-        "start:site": "pm2 --name td.vue start 'cd td.vue && npm run serve'",
+        "start:server": "cd td.server && npm run start:dev",
+        "start:site": "cd td.vue && npm run start:dev",
         "stop": "npm-run-all stop:site stop:server",
-        "stop:server": "pm2 delete td.server",
-        "stop:site": "pm2 delete td.vue",
+        "stop:server": "cd td.server && npm run stop:dev",
+        "stop:site": "cd td.vue && npm run stop:dev",
         "preinstall": "npx only-allow pnpm",
         "clean": "npm-run-all clean:server",
         "clean:server": "cd td.server && npm run clean",
@@ -46,7 +46,6 @@
     },
     "devDependencies": {
         "npm-run-all": "^4.1.5",
-        "pm2": "^5.1.2",
         "rimraf": "^3.0.2"
     },
     "workspaces": [
