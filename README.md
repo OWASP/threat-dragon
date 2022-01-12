@@ -45,7 +45,7 @@ To get the code navigate to a target directory and use command
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-To install from the top directory of the project: `pnpm install`
+PNPM (rather than NPM) is used to install from the top directory of the project : `pnpm install`
 
 ### Environment variables
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
@@ -56,13 +56,16 @@ You will also have to provide other environment variables, again following
 [the documentation](https://www.threatdragon.com/docs/development/env.html) on this
 
 ### Run the application
-Start both the back-end server and the front-end application from the top directory: `npm start`.
-Alternatively, the front-end and back-end can be started separately, in "watch" mode using `npm run dev:server` and `npm run dev:vue`.
+When running on Windows, and during development, the front-end and back-end
+can be started separately in "watch" mode using commands : `npm run dev:server` and `npm run dev:vue`.
+Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
+from the top directory using : `npm start`.
 
 With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
-If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`
+If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
+Otherwise break out of the server and vue front-end.
 
 ### Docker
 To run Threat Dragon in a docker container,
