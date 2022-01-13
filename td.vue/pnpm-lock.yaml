@@ -4,6 +4,7 @@ overrides:
   ansi-regex@>2.1.1 <5.0.1: '>=5.0.1'
   nth-check@<2.0.1: '>=2.0.1'
   tar@>=6.0.0 <6.1.9: '>=6.1.9'
+  follow-redirects: '>=1.14.7'
   glob-parent@<5.1.2: '>=5.1.2'
   lodash@<4.17.21: '>=4.17.21'
   node-notifier@<8.0.1: '>=8.0.1'
@@ -3216,14 +3217,14 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.6
+      follow-redirects: 1.14.7
     transitivePeerDependencies:
       - debug
 
   /axios/0.21.4_debug@4.3.3:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.6_debug@4.3.3
+      follow-redirects: 1.14.7_debug@4.3.3
     transitivePeerDependencies:
       - debug
     dev: true
@@ -6447,8 +6448,8 @@ packages:
       readable-stream: 2.3.7
     dev: true
 
-  /follow-redirects/1.14.6:
-    resolution: {integrity: sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==}
+  /follow-redirects/1.14.7:
+    resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -6456,8 +6457,8 @@ packages:
       debug:
         optional: true
 
-  /follow-redirects/1.14.6_debug@4.3.3:
-    resolution: {integrity: sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==}
+  /follow-redirects/1.14.7_debug@4.3.3:
+    resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -7178,7 +7179,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.6_debug@4.3.3
+      follow-redirects: 1.14.7_debug@4.3.3
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug

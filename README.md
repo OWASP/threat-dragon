@@ -65,7 +65,7 @@ With both front and back end running, access with a browser at http://localhost:
 
 ### Stop the application
 If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
-Otherwise break out of the server and vue front-end.
+Otherwise break out of both the server and vue front-end.
 
 ### Docker
 To run Threat Dragon in a docker container,

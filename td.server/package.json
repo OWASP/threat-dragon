@@ -63,5 +63,10 @@
     "sinon": "^10.0.0",
     "sinon-chai": "^3.6.0",
     "supertest": "^4.0.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "follow-redirects": ">=1.14.7"
+    }
   }
 }
