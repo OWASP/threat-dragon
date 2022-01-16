@@ -24,9 +24,10 @@ Install git and node.js - which includes the node package manager npm. To get th
 
 `git clone https://github.com/owasp/threat-dragon.git`
 
-This installs code in two sub-folders. One for the main application (`td.site`) and one for the server (`td.server`). To install, do:
+This installs code in two sub-folders. One for the main application (`td.site`) and one for the server (`td.server`).
+To install use pnpm (rather than npm):
 
-`npm install`
+`pnpm install`
 
 ### Environment variables
 
@@ -34,9 +35,10 @@ See the (environment)[development/env] page for details on configuring your envi
 
 ### Running the application
 
-Once your environment variables are set up, start the node web server:
+Once your environment variables are set up, if running on Linux or MacOS start the node web server with :
 
 `npm start`
 
-If you then browse to `http://localhost:8080` you should see the running application.
+When running on Windows the front-end and back-end are started separately using commands: `npm run dev:server` and `npm run dev:vue`.
 
+If you then browse to `http://localhost:8080` you should see the running application.

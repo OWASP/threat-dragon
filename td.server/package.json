@@ -5,6 +5,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
+    "start:dev": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
+    "stop:dev": "pm2 delete td.server",
     "dev": "nodemon dev.js --exec babel-node",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=3000 test/*.spec.js test/**/*.spec.js",
@@ -56,9 +58,15 @@
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "passport-local": "1.0.0",
+    "pm2": "^5.1.2",
     "rimraf": "^3.0.2",
     "sinon": "^10.0.0",
     "sinon-chai": "^3.6.0",
     "supertest": "^4.0.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "follow-redirects": ">=1.14.7"
+    }
   }
 }
