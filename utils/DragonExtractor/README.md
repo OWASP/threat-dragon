@@ -15,7 +15,7 @@ Benficial side effects:
 Workflow:
 
 -Create Threat model with developers, testers, and product team
--Carefully think about diagram; model names (increases artifact subject lenth)
+-Carefully think about diagram; model names (increases artifact subject length)
 -Think about what Labels (Jira) or Tags (DevOps) can help you track testing
 -Export similar ToDos from Jira/ADO to CSV to understand necessary columns
 -Incorporate organization and project specific columns into CLI arguments
@@ -23,8 +23,8 @@ Workflow:
 
 An example CLI for our team:
 
- node ExtractThreats.js data/pj8-7-2020-extract.json "Work Item Type=Todo" 
- "State=Draft" "Story Points=2" "Value Area= " "Tags=SecurityDesignReview;"
+ node DragonThreatExtractor.js data/pj8-7-2020-extract.json 
+ "Work Item Type=Todo" "State=Draft" "Story Points=2" "Value Area= " "Tags=SecurityDesignReview;"
  "Iteration Path=kpmgjp-kit-its\Sprint 10" > import.csv
 
 Notes:
