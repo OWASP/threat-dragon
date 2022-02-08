@@ -19,6 +19,9 @@ module.exports = {
             patterns: [
                 path.resolve(__dirname, 'src', 'styles', '*.scss')
             ]
+        },
+        electronBuilder:{
+          mainProcessFile: './src/td.desktop.js',
         }
     },
     chainWebpack: config => {

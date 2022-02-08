@@ -27,3 +27,5 @@ tests/e2e/reports/
 tests/e2e/videos
 log/
 results/
+#Electron-builder output
+/dist_electron
