@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "1.5.8",
+  "version": "1.6.0",
   "private": false,
   "scripts": {
     "preinstall": "npx only-allow pnpm",

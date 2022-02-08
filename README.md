@@ -1,5 +1,3 @@
-<h1> NOTE: branch 'v2-development' will be merged into the main branch on Wednesday 9th February 2022</h1>
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg"
   width="200" alt="Threat Dragon Logo"/>
@@ -20,6 +18,15 @@ It is used to draw threat modeling diagrams and to list threats for elements in 
 Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
+
+A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
+
+There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
+from OWASP, and this expands on what the Threat Dragon project aims for:
+* ease of use and accessible
+* designing a data flow diagram
+* suggesting threats
+* entering mitigations and counter measures
 
 [Mike Goodwin](https://github.com/mike-goodwin) is the founder and creator of this project,
 and this repository has been migrated from
@@ -69,12 +76,22 @@ With both front and back end running, access with a browser at http://localhost:
 If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
 Otherwise break out of both the server and vue front-end.
 
-### Docker
+### Docker (local build)
 To run Threat Dragon in a docker container,
 first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
 and run from the top directory of the project:
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+
+## Docker (from dockerhub)
+Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
+
+### <ins>Do not use the latest tag (which is the default), as it could be a development release</ins>
+
+Alternatively, you can use the `stable` tag, which will always be the latest official release.
+
+- `docker pull threatdragon/owasp-threat-dragon:stable`
+- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
 
 ### Contributing
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for

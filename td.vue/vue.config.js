@@ -21,7 +21,7 @@ module.exports = {
             ]
         },
         electronBuilder:{
-          mainProcessFile: './src/td.desktop.js',
+            mainProcessFile: './src/td.desktop.js',
         }
     },
     chainWebpack: config => {

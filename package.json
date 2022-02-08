@@ -3,28 +3,28 @@
     "version": "2.0.0",
     "private": false,
     "scripts": {
+        "build": "npm-run-all build:vue build:server",
+        "build:server": "cd td.server && npm run build",
+        "build:vue": "cd td.vue && npm run build",
+        "clean": "npm-run-all clean:server",
+        "clean:server": "cd td.server && npm run clean",
+        "codecov": "./node_modules/.bin/codecov",
         "dev:vue": "cd td.vue && npm run dev",
         "dev:server": "cd td.server && npm run dev",
+        "preinstall": "npx only-allow pnpm",
+        "pretest": "npm-run-all pretest:server pretest:site",
+        "pretest:server": "cd td.server && npm run pretest",
+        "pretest:site": "cd td.vue && npm run lint",
+        "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
         "start": "npm-run-all build start:server start:site",
         "start:server": "cd td.server && npm run start:dev",
         "start:site": "cd td.vue && npm run start:dev",
         "stop": "npm-run-all stop:site stop:server",
         "stop:server": "cd td.server && npm run stop:dev",
         "stop:site": "cd td.vue && npm run stop:dev",
-        "preinstall": "npx only-allow pnpm",
-        "clean": "npm-run-all clean:server",
-        "clean:server": "cd td.server && npm run clean",
         "test": "npm-run-all build pretest test:site test:server",
         "test:server": "cd td.server && npm test",
-        "test:site": "cd td.vue && npm run test:unit",
-        "pretest": "npm-run-all pretest:server pretest:site",
-        "pretest:server": "cd td.server && npm run pretest",
-        "pretest:site": "cd td.vue && npm run lint",
-        "build": "npm-run-all build:vue build:server",
-        "build:server": "cd td.server && npm run build",
-        "build:vue": "cd td.vue && npm run build",
-        "codecov": "./node_modules/.bin/codecov",
-        "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install"
+        "test:site": "cd td.vue && npm run test:unit"
     },
     "keywords": [
         "threat dragon",
@@ -67,3 +67,4 @@
         }
     }
 }
+
