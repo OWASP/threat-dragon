@@ -19,6 +19,7 @@ specifiers:
   dotenv: ^8.2.0
   eslint: ^7.25.0
   express: ^4.17.1
+  express-rate-limit: ^6.2.0
   helmet: ^3.18.0
   jsonwebtoken: ^8.5.1
   mocha: ^9.1.3
@@ -41,6 +42,7 @@ dependencies:
   axios: 0.21.4
   dotenv: 8.6.0
   express: 4.17.1
+  express-rate-limit: 6.2.0_express@4.17.1
   helmet: 3.23.3
   jsonwebtoken: 8.5.1
   octonode: 0.10.2
@@ -2647,6 +2649,15 @@ packages:
   /eventemitter2/6.4.5:
     resolution: {integrity: sha512-bXE7Dyc1i6oQElDG0jMRZJrRAn9QR2xyyFGmBdZleNmyQX0FqGYmhZIrIrpPfm/w//LTo4tVQGOGQcGCb5q9uw==}
     dev: true
+
+  /express-rate-limit/6.2.0_express@4.17.1:
+    resolution: {integrity: sha512-q9xfttbPX79HiBsHA4LT3PZEeJR96CJ5/2jloAKSEECMx8XlOOOpjxx6iK/kBw3hFJ8uhx6Q9lCfSGp70yV0tQ==}
+    engines: {node: '>= 14.5.0'}
+    peerDependencies:
+      express: ^4
+    dependencies:
+      express: 4.17.1
+    dev: false
 
   /express/4.17.1:
     resolution: {integrity: sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==}

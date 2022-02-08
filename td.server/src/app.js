@@ -1,5 +1,6 @@
 ﻿import express from 'express';
 import path from 'path';
+import rateLimit from 'express-rate-limit';
 
 import env from './env/Env.js';
 import envConfig from './config/env.config';
@@ -13,6 +14,14 @@ import { upDir } from './helpers/path.helper.js';
 
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 const docsDir = path.join(__dirname, upDir, upDir, 'docs');
+
+// set up rate limiter: maximum of 100 requests per 15 minutes
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const create = () => {
     let logger;
@@ -40,6 +49,9 @@ const create = () => {
 
         //routes
         routes.config(app);
+
+        // rate limiting for the routes
+        app.use(limiter);
 
         logger.info('OWASP Threat Dragon application started');
 
