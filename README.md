@@ -1,3 +1,5 @@
+<h1> NOTE: branch 'v2-development' will be merged into the main branch on 8th February 2022</h1>
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg"
   width="200" alt="Threat Dragon Logo"/>
