@@ -1,6 +1,6 @@
 {
   "name": "td.vue",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -23,6 +23,17 @@
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
+  },
+  "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
+  "author": "OWASP",
+  "license": "Apache-2.0",
+  "homepage": "https://docs.threatdragon.org/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/OWASP/threat-dragon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "dependencies": {
     "@antv/x6": "^1.28.1",
@@ -61,6 +72,7 @@
     "codecov": "^3.8.2",
     "electron": "^17.0.0",
     "electron-builder": "^22.14.13",
+    "electron-builder-notarize": "^1.4.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
@@ -102,9 +114,7 @@
       "minimist@<0.2.1": ">=0.2.1"
     }
   },
-  "description": "OWASP Threat Dragon desktop version - a free, open source threat modeling tool",
   "main": "background.js",
-  "author": "OWASP",
   "resolutions": {
     "ansi-regex": "^5.0.1"
   }

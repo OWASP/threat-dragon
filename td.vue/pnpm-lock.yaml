@@ -41,6 +41,7 @@ specifiers:
   core-js: ^3.6.5
   electron: ^17.0.0
   electron-builder: ^22.14.13
+  electron-builder-notarize: ^1.4.0
   electron-devtools-installer: ^3.2.0
   eslint: ^6.7.2
   eslint-plugin-import: ^2.20.2
@@ -111,6 +112,7 @@ devDependencies:
   codecov: 3.8.3
   electron: 17.0.0
   electron-builder: 22.14.13
+  electron-builder-notarize: 1.4.0_electron-builder@22.14.13
   electron-devtools-installer: 3.2.0
   eslint: 6.8.0
   eslint-plugin-import: 2.25.3_eslint@6.8.0
@@ -6039,6 +6041,20 @@ packages:
       jake: 10.8.2
     dev: true
 
+  /electron-builder-notarize/1.4.0_electron-builder@22.14.13:
+    resolution: {integrity: sha512-5CPVlzkG+SofK3VU3E6HKmdXW6Uu6q5WWvzXX6diLAlAy9qJsR0n99aNztVKKsPl6yjEbvT+MUl4ci0YCwOBRA==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      electron-builder: '>= 20.44.4'
+    dependencies:
+      electron-builder: 22.14.13
+      electron-notarize: 1.1.1
+      js-yaml: 3.14.1
+      read-pkg-up: 7.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /electron-builder/22.14.13:
     resolution: {integrity: sha512-3fgLxqF2TXVKiUPeg74O4V3l0l3j7ERLazo8sUbRkApw0+4iVAf2BJkHsHMaXiigsgCoEzK/F4/rB5rne/VAnw==}
     engines: {node: '>=14.0.0'}
@@ -6079,6 +6095,16 @@ packages:
       semver: 7.3.5
       tslib: 2.3.1
       unzip-crx-3: 0.2.0
+    dev: true
+
+  /electron-notarize/1.1.1:
+    resolution: {integrity: sha512-kufsnqh86CTX89AYNG3NCPoboqnku/+32RxeJ2+7A4Rbm4bbOx0Nc7XTy3/gAlBfpj9xPAxHfhZLOHgfi6cJVw==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      debug: 4.3.3
+      fs-extra: 9.1.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /electron-osx-sign/0.5.0:
@@ -12183,6 +12209,15 @@ packages:
     dependencies:
       find-up: 3.0.0
       read-pkg: 3.0.0
+    dev: true
+
+  /read-pkg-up/7.0.1:
+    resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}
+    engines: {node: '>=8'}
+    dependencies:
+      find-up: 4.1.0
+      read-pkg: 5.2.0
+      type-fest: 0.8.1
     dev: true
 
   /read-pkg/3.0.0:

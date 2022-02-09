@@ -17,7 +17,7 @@
         "pretest:server": "cd td.server && npm run pretest",
         "pretest:site": "cd td.vue && npm run lint",
         "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
-        "start": "npm-run-all build start:server start:site",
+        "start": "npm-run-all build:vue build:server start:server start:site",
         "start:desktop": "cd td.vue && npm run electron:serve",
         "start:server": "cd td.server && npm run start:dev",
         "start:site": "cd td.vue && npm run start:dev",
