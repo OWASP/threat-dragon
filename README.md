@@ -1,19 +1,21 @@
-Note that this repository has been migrated from Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon) ,
-which has the issues and pull requests from October 2015 up to June 2020.
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg"
   width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build Status](https://travis-ci.org/owasp/threat-dragon.svg?branch=main)](https://travis-ci.org/owasp/threat-dragon)
+[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml) 
 [![codecov.io](http://codecov.io/github/owasp/threat-dragon/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon?branch=main)
+[![BrowserStack Status](https://automate.browserstack.com/badge.svg?badge_key=SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)](https://automate.browserstack.com/public-build/SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)
+[![Deploy](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/OWASP/threat-dragon.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OWASP/threat-dragon/context:javascript)
+[![Trivy Scan](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml)
 
-# [OWASP](https://www.owasp.org) Threat Dragon #
-Threat Dragon is a free, open-source, cross-platform threat modelling application including system diagramming
-and a threat rule engine to auto-generate threats/mitigations.
+# OWASP Threat Dragon
+[OWASP](https://www.owasp.org) Threat Dragon is a free, open-source, cross-platform threat modeling application.
+It is used to draw threat modeling diagrams and to list threats for elements in the diagram.
+
+Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
@@ -26,38 +28,58 @@ from OWASP, and this expands on what the Threat Dragon project aims for:
 * suggesting threats
 * entering mitigations and counter measures
 
-The application comes in two variants:
+[Mike Goodwin](https://github.com/mike-goodwin) is the founder and creator of this project,
+and this repository has been migrated from
+Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
+which has the issues and pull requests from October 2015 up to June 2020.
+Since then the project team has continued development, culminating with release version 1.6.0.
+The project is now going through a substantial changes which will see version 2.0 released early 2022.
 
-1. [**A web application (this repo)**](https://github.com/owasp/threat-dragon):
-For the web application, models files are stored in GitHub (other storage will become available).
-We are currently maintaining [a working protoype](https://threatdragon.org) in sync with the main code branch.
+Threat Dragon is primarily a web application, with threat model files stored in GitHub.
+Over time other storage methods will become available.
 
-2. [**A desktop application**](https://github.com/OWASP/threat-dragon/tree/main/td.desktop):
-This is based on [Electron](https://electron.atom.io/).
-There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux.
-Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
+There is also a desktop version of Threat Dragon
+which stores the threat model files on the local filesystem rather than in a repository.
+Each release provides installers for Windows, Mac OSX and Linux.
 
-[End user help](https://docs.threatdragon.org) is available for both variants.
+[End user help](https://www.threatdragon.com/docs) is available for both variants.
 
-## Installing
-Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server.
-To build and run locally follow these steps:
+### Installing
+Install git and node.js (version 16) - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
 
-Install git and node.js - which includes the node package manager npm.
-To get the code, navigate to where you want your code to be located and do
+To get the code navigate to a target directory and use command
 
-- `git clone --recursive https://github.com/owasp/threat-dragon.git`
+`git clone https://github.com/owasp/threat-dragon.git`
 
-This downloads the code into a directory called `threat-dragon` and contains the application code in two sub-folders,
-one for the back-end application (`td.server`) and one for the front-end (`td.site`).
+This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
+one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-To install, run: `npm install` from the root of the project.  A `postinstall` script is run that will install dependencies in both the `server` and `site` directories as well.
+PNPM (rather than NPM) is used to install from the top directory of the project : `pnpm install`
 
-Running `npm run start` from the root directory of the repository will start the front-end and the server.
+### Environment variables
+Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
+register it as a GitHub application. There is a 
+[step by step guide](https://www.threatdragon.com/docs/development/env.html) on how to do this.
 
-## Docker (local build)
-To run Threat Dragon in a docker container, configure your environment using dotenv
-as described in [setup-env.md](setup-env.md) and run the following from the root of the project:
+You will also have to provide other environment variables, again following
+[the documentation](https://www.threatdragon.com/docs/development/env.html) on this
+
+### Run the application
+When running on Windows, and during development, the front-end and back-end
+can be started separately in "watch" mode using commands : `npm run dev:server` and `npm run dev:vue`.
+Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
+from the top directory using : `npm start`.
+
+With both front and back end running, access with a browser at http://localhost:8080/
+
+### Stop the application
+If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
+Otherwise break out of both the server and vue front-end.
+
+### Docker (local build)
+To run Threat Dragon in a docker container,
+first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
+and run from the top directory of the project:
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
@@ -71,63 +93,15 @@ Alternatively, you can use the `stable` tag, which will always be the latest off
 - `docker pull threatdragon/owasp-threat-dragon:stable`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
 
-
-## Environment variables
-Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
-[register it as a GitHub application](https://github.com/settings/applications/new).
-Once you have done that you need to set the Client ID and Client Secret as environment variables
-(`GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`).
-
-You also need to set a session signing key environment variable (`SESSION_SIGNING_KEY`).
-Setting up these environment variables has caused some confusion in the past,
-so there is a [step-by-step guide](setup-env.md) to this. 
-
-## Running the application
-Once your environment variables are set up, start the node web server:
-
-`npm start`
-
-If you then browse to `http://localhost:3000` you should see the running application.
-
-## Building
-The basic build script is:
-
-`npm run build`
-
-See `package.json` for other build tasks.
-
-## Running the unit tests
-The unit tests are written using Mocha and Karma, coverage is provided by Istanbul via `nyc`.
-A few different npm tasks are available, and these are split between the front-end and back-end directories.
-
-For front-end (root of the project):
-* `pretest`: runs jshint without the unit tests
-* `test-client-phantomjs`, `test-client-firefox`, `test-client-chrome`, `test-client-ie`:
-runs client side tests using the specified browser
-* `test`: runs jshint, client side tests on Firefox and PhantomJS (this is what runs on Travis CI)
-* `test-local`: runs jshint, client side tests on all browsers (useful as a pre-push git hook)
-* `citest`: continously runs client side tests in PhantomJS with `--single-run false` (useful while coding)
-
-For the back-end (from the `td.server` directory):
-* `pretest`: runs jshint without the unit tests
-* `test`: runs the server side tests
-
-## Utilities
-
-Threat Dragon has a growing collection of [utilities and scripts](https://github.com/OWASP/threat-dragon/tree/main/utils)
-which can be used to convert file formats, interface to bug tracking, and so on.
-If you would like to contribute scripts to the Threat Dragon
-community then this would be most welcome, see the [contributing guide](CONTRIBUTING.md).
-
-## Contributing
+### Contributing
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
 [contributors](CONTRIBUTING.md). 
 
-We are trying to keep the test coverage relatively high,
-so please try to update tests in any PRs and make PRs on the development branch.
-There are some [developer notes](dev-notes.md) to help get started with this project.
+There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
+We are trying to keep the test coverage relatively high, so please try to update tests in any pull requests
+and create these pull requests off the [V2 development branch](https://github.com/OWASP/threat-dragon/tree/v2-development).
 
-## Vulnerability disclosure
+### Vulnerability disclosure
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
 For secure disclosure, please see the [security policy](SECURITY.md).
 

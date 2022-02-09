@@ -1,0 +1,335 @@
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - 'v2-development'
+      - 'v2/*'
+env:
+  image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
+jobs:
+  server_unit_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: td.server
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: lint
+        run: npm run lint
+
+      - name: Unit Test
+        run: npm run test:unit
+
+      - name: Upload codecov report
+        run: npm run codecov
+
+  site_unit_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: lint
+        run: npm run lint
+
+      - name: Unit Test
+        run: npm run test:unit
+
+      - name: Upload codecov report
+        run: npm run codecov
+
+  build_docker_image:
+    runs-on: ubuntu-latest
+    needs: [site_unit_tests, server_unit_tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Setup dockerx cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags:  ${{ env.image_name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+  e2e_tests:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
+            ${{ env.image_name }}
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Run e2e tests
+        run: npm run test:e2e-ci
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
+
+  e2e_smokes:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
+            ${{ env.image_name }}
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Run e2e tests
+        run: npm run test:e2e-ci-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
+  zap_scan_web:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    steps:
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
+            ${{ env.image_name }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # There's probably a better way of doing this.
+      # Not a great idea to chmod 777, even if it's only
+      # in a CI runner
+      - name: Make report dir
+        run: sudo mkdir zap && sudo chmod 0777 zap
+        
+      - name: ZAP Scan
+        run: |
+          docker run -v $(pwd):/zap/wrk/:rw \
+            -t \
+            --network=host \
+            owasp/zap2docker-stable \
+            zap-baseline.py \
+            -t http://localhost:3000 \
+            -r zap/report_web.html \
+            -a \
+            -c .github/workflows/.zap-rules-web.tsv \
+            -j
+
+      - name: Upload scan report
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap_report_web.zip
+          path: zap/report_web.html
+        if: ${{ always() }}
+
+
+  zap_scan_docs:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    steps:
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e PROTOCOL='http' \
+            ${{ env.image_name }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # There's probably a better way of doing this.
+      # Not a great idea to chmod 777, even if it's only
+      # in a CI runner
+      - name: Make report dir
+        run: sudo mkdir zap && sudo chmod 0777 zap
+        
+      - name: ZAP Scan
+        run: |
+          docker run -v $(pwd):/zap/wrk/:rw \
+            -t \
+            --network=host \
+            owasp/zap2docker-stable \
+            zap-baseline.py \
+            -t http://localhost:3000/docs \
+            -r zap/report_docs.html \
+            -a \
+            -c .github/workflows/.zap-rules-web.tsv \
+            -j
+
+      - name: Upload scan report
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap_report_docs.zip
+          path: zap/report_docs.html
+        if: ${{ always() }}
+
+
+  scan_image_with_trivy:
+    runs-on: ubuntu-latest
+    needs: [build_docker_image]
+    steps:
+      # Need .trivyignore
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.image_name }}'
+          format: 'table'
+          exit-code: 1

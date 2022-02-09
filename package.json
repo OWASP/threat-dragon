@@ -1,54 +1,72 @@
 {
-  "name": "threat-dragon",
-  "version": "1.6.0",
-  "private": false,
-  "scripts": {
-    "start": "npm-run-all build start:server",
-    "start:server": "node td.server/index.js",
-    "postinstall": "npm-run-all install:server install:site install:desktop",
-    "install:desktop": "cd td.desktop && npm install",
-    "install:server": "cd td.server && npm install",
-    "install:site": "cd td.site && npm install",
-    "citest": "npm-run-all citest:site citest:server citest:desktop",
-    "citest:desktop": "cd td.desktop && npm run citest",
-    "citest:server": "cd td.server && npm run citest",
-    "citest:site": "cd td.site && npm run citest",
-    "clean": "npm-run-all clean:server clean:desktop",
-    "clean:desktop": "cd td.desktop && npm run clean",
-    "clean:server": "cd td.server && npm run clean",
-    "test": "npm-run-all build pretest test:site test:server",
-    "test:desktop": "cd td.desktop && npm test",
-    "test:server": "cd td.server && npm test",
-    "test:site": "cd td.site && npm test",
-    "pretest": "npm-run-all pretest:server pretest:site",
-    "pretest:desktop": "cd td.desktop && npm run pretest",
-    "pretest:server": "cd td.server && npm run pretest",
-    "pretest:site": "cd td.site && npm run pretest",
-    "build": "npm-run-all build:site build:server",
-    "build:desktop": "cd td.desktop && npm run build",
-    "build:server": "cd td.server && npm run build",
-    "build:site": "cd td.site && npm run build",
-    "codecov": "./node_modules/.bin/codecov"
-  },
-  "keywords": [
-    "threat dragon",
-    "OWASP",
-    "threat modeling",
-    "STRIDE",
-    "LINDDUN"
-  ],
-  "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
-  "author": "OWASP",
-  "license": "Apache-2.0",
-  "homepage": "https://docs.threatdragon.org/",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/OWASP/threat-dragon.git"
-  },
-  "bugs": {
-    "url": "https://github.com/OWASP/threat-dragon/issues"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+    "name": "threat-dragon",
+    "version": "2.0.0",
+    "private": false,
+    "scripts": {
+        "build": "npm-run-all build:vue build:server",
+        "build:desktop": "cd td.vue && npm run electron:build",
+        "build:server": "cd td.server && npm run build",
+        "build:vue": "cd td.vue && npm run build",
+        "clean": "npm-run-all clean:server",
+        "clean:server": "cd td.server && npm run clean",
+        "codecov": "./node_modules/.bin/codecov",
+        "dev:vue": "cd td.vue && npm run dev",
+        "dev:server": "cd td.server && npm run dev",
+        "preinstall": "npx only-allow pnpm",
+        "pretest": "npm-run-all pretest:server pretest:site",
+        "pretest:server": "cd td.server && npm run pretest",
+        "pretest:site": "cd td.vue && npm run lint",
+        "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
+        "start": "npm-run-all build:vue build:server start:server start:site",
+        "start:desktop": "cd td.vue && npm run electron:serve",
+        "start:server": "cd td.server && npm run start:dev",
+        "start:site": "cd td.vue && npm run start:dev",
+        "stop": "npm-run-all stop:site stop:server",
+        "stop:server": "cd td.server && npm run stop:dev",
+        "stop:site": "cd td.vue && npm run stop:dev",
+        "test": "npm-run-all build pretest test:site test:server",
+        "test:server": "cd td.server && npm test",
+        "test:site": "cd td.vue && npm run test:unit"
+    },
+    "keywords": [
+        "threat dragon",
+        "OWASP",
+        "threat modeling",
+        "STRIDE",
+        "LINDDUN"
+    ],
+    "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
+    "author": "OWASP",
+    "license": "Apache-2.0",
+    "homepage": "https://docs.threatdragon.org/",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/OWASP/threat-dragon.git"
+    },
+    "bugs": {
+        "url": "https://github.com/OWASP/threat-dragon/issues"
+    },
+    "devDependencies": {
+        "npm-run-all": "^4.1.5",
+        "rimraf": "^3.0.2"
+    },
+    "workspaces": [
+        "td.vue",
+        "td.server"
+    ],
+    "pnpm": {
+        "overrides": {
+            "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
+            "nth-check@<2.0.1": ">=2.0.1",
+            "tar@>=6.0.0 <6.1.9": ">=6.1.9",
+            "glob-parent@<5.1.2": ">=5.1.2",
+            "lodash@<4.17.21": ">=4.17.21",
+            "node-notifier@<8.0.1": ">=8.0.1",
+            "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2",
+            "lodash@<4.17.19": ">=4.17.19",
+            "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
+            "minimist@<0.2.1": ">=0.2.1"
+        }
+    }
 }
+

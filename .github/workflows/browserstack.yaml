@@ -1,0 +1,38 @@
+name: Browserstack End to End Tests
+concurrency: browserstack_e2e
+on:
+  schedule:
+    - cron: '0 23 * * *'
+jobs:
+  browserstack_e2e:
+    runs-on: ubuntu-latest
+    needs: [docker_build_and_publish]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: 'v2-development' # TODO: Remove after merge to main
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: npm ci
+        run: npm ci
+
+      - name: BrowserStack Env Setup
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Run e2e tests
+        run: npm run test:e2e-nightly
+        env:
+          BROWSERSTACK_LOCAL: true
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

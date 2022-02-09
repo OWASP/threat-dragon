@@ -1,9 +1,10 @@
 module.exports = {
     "env": {
-        "es2015": true,
+        "es2021": true,
         "node": true
     },
     "extends": "eslint:recommended",
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaVersion": 12,
         "sourceType": "module"
@@ -39,7 +40,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "consistent-return": "error",
+        "consistent-return": "off",
         "consistent-this": "error",
         "curly": "error",
         "default-case": "error",
@@ -71,7 +72,7 @@ module.exports = {
         "id-match": "error",
         "implicit-arrow-linebreak": "error",
         "indent": "off",
-        "init-declarations": "error",
+        "init-declarations": "off",
         "jsx-quotes": "error",
         "key-spacing": "off",
         "keyword-spacing": "off",

@@ -1,0 +1,175 @@
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+import Vuex from 'vuex';
+
+import Branch from '@/views/git/Branch.vue';
+import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
+import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
+import TdSelectionPage from '@/components/SelectionPage.vue';
+
+
+describe('views/Branch.vue', () => {
+    const repo = 'someRepo';
+    let wrapper, localVue, mockStore, mockRouter;
+
+    beforeEach(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+        mockStore = getMockStore();
+    });
+
+    const getLocalVue = (mockRoute) => {
+        mockRouter = { push: jest.fn() };
+        jest.spyOn(mockStore, 'dispatch');
+        wrapper = shallowMount(Branch, {
+            localVue,
+            store: mockStore,
+            mocks: {
+                $route: mockRoute,
+                $router: mockRouter,
+                $t: key => key
+            }
+        });
+    };
+
+    const getMockStore = () => new Vuex.Store({
+        state: {
+            repo: {
+                selected: repo
+            },
+            branch: {
+                selected: 'someBranch',
+                all: ['b1', 'b2', 'b3']
+            },
+            provider: {
+                selected: 'github'
+            }
+        },
+        actions: {
+            [BRANCH_FETCH]: () => { },
+            [BRANCH_SELECTED]: () => { },
+            [PROVIDER_SELECTED]: () => { },
+            [REPOSITORY_CLEAR]: () => { },
+            [REPOSITORY_SELECTED]: () => { }
+        }
+    });
+
+    describe('mounted', () => {
+        it('sets the provider from the route', () => {
+            getLocalVue({
+                params: {
+                    provider: 'local',
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
+        });
+
+        it('sets the repo name from the route', () => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: 'fakeRepoBad'
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
+        });
+        
+        it('fetches the branches', () => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_FETCH);
+        });
+    });
+
+    describe('branches', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+        });
+
+        it('displays the branches', () => {
+            expect(wrapper.findComponent(TdSelectionPage).exists()).toEqual(true);
+        });
+
+        it('displays the translated text', () => {
+            expect(wrapper.findComponent(TdSelectionPage).text()).toContain('branch.chooseRepo');
+        });
+    });
+
+    describe('selectRepoClick', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            wrapper.vm.selectRepoClick();
+        });
+
+        it('clears the selected repo', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+        });
+
+        it('navigates to the repo select page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitRepository' });
+        });
+    });
+
+    describe('onBranchClick - select', () => {
+        const testBranch = 'testBranch';
+        let routeParams;
+        beforeEach(() => {
+            routeParams = {
+                provider: mockStore.state.provider.selected,
+                repository: mockStore.state.repo.selected
+            };
+            getLocalVue({
+                params: routeParams,
+                query: {}
+            });
+            wrapper.vm.onBranchClick(testBranch);
+        });
+
+        it('sets the selected branch', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, testBranch);
+        });
+
+        it('navigates to the edit page', () => {
+            routeParams.branch = testBranch;
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitThreatModelSelect', params: routeParams });
+        });
+    });
+
+    describe('onBranchClick - new', () => {
+        const testBranch = 'testBranch';
+        let routeParams;
+        beforeEach(() => {
+            routeParams = {
+                provider: mockStore.state.provider.selected,
+                repository: mockStore.state.repo.selected
+            };
+            getLocalVue({
+                params: routeParams,
+                query: {
+                    action: 'create'
+                }
+            });
+            wrapper.vm.onBranchClick(testBranch);
+        });
+
+        it('navigates to the new page', () => {
+            routeParams.branch = testBranch;
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitNewThreatModel', params: routeParams });
+        });
+    });
+});

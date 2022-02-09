@@ -2,7 +2,9 @@ import crypto from 'crypto';
 
 import cryptoPromise from './crypto.promise.js';
 import env from '../env/Env.js';
-import { logger } from '../config/loggers.config.js';
+import loggerHelper from './logger.helper.js';
+
+const logger = loggerHelper.get('helpers/encryption.helper.js');
 
 const inputEncoding = 'ascii';
 const outputEncoding = 'base64';
@@ -14,12 +16,12 @@ const algorithm = 'aes256';
  * @returns {Object}
  */
 const getPrimaryKey = () => {
-    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const keys = JSON.parse(env.get().config.ENCRYPTION_KEYS);
     const primaryKey = keys.find((key) => key.isPrimary);
 
     if (!primaryKey) {
-        const message = 'missing primary session encryption key';
-        logger.fatal(message);
+        const message = 'missing primary encryption key';
+        logger.error(message);
         throw new Error(message);
     }
     
@@ -36,11 +38,11 @@ const getPrimaryKey = () => {
  * @returns {Object}
  */
 const getKeyById = (id) => {
-    const keys = JSON.parse(env.get().config.SESSION_ENCRYPTION_KEYS);
+    const keys = JSON.parse(env.get().config.ENCRYPTION_KEYS);
     const key = keys.find((key) => key.id === id);
 
     if (!key) {
-        const message = `Missing session encryption key id: ${id}`;
+        const message = `Missing encryption key id: ${id}`;
         logger.error(message);
         throw new Error(message);
     }

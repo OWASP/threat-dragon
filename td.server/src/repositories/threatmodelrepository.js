@@ -3,6 +3,12 @@ import github from 'octonode';
 const reposAsync = (page, accessToken) => github.client(accessToken).me().
 reposAsync(page);
 
+const userAsync = async (accessToken) => {
+    const resp = await github.client(accessToken).me().
+infoAsync();
+    return resp[0];
+};
+
 const branchesAsync = (repoInfo, accessToken) => {
     const client = github.client(accessToken);
     return client.repo(getRepoFullName(repoInfo)).branchesAsync(repoInfo.page);
@@ -61,5 +67,6 @@ export default {
     modelAsync,
     modelsAsync,
     reposAsync,
-    updateAsync
+    updateAsync,
+    userAsync
 };

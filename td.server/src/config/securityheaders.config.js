@@ -14,13 +14,14 @@ const config = (app, forceSecure) => {
     app.use(helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'none'"],
-            scriptSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-eval'"],
             connectSrc: ["'self'"],
             styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],
-            reportUri: 'https://owaspthreatdragon.report-uri.com/r/d/csp/enforce'
+            frameAncestors: ["'none'"],
+            prefetchSrc: ["'self'"]
         }
     }));
 };

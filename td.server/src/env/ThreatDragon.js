@@ -13,7 +13,9 @@ class ThreatDragonEnv extends Env {
         return [
             { key: 'NODE_ENV', required: false },
             { key: 'PORT', required: false },
-            { key: 'IS_TEST', required: false}
+            { key: 'LOG_MAX_FILE_SIZE', required: false, defaultValue: 24 },
+            { key: 'LOG_LEVEL', required: true, defaultValue: 'info' },
+            { key: 'PROTOCOL', required: false, defaultValue: 'https' }
         ];
     }
 }

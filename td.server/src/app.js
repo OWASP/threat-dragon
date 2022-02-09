@@ -1,47 +1,48 @@
-﻿import bunyan from 'bunyan';
-import express from 'express';
+﻿import express from 'express';
 import path from 'path';
+import rateLimit from 'express-rate-limit';
 
 import env from './env/Env.js';
 import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
-import loggers from './config/loggers.config.js';
+import https from './config/https.config.js';
+import loggerHelper from './helpers/logger.helper.js';
 import parsers from './config/parsers.config.js';
-import passport from './config/passport.config.js';
 import routes from './config/routes.config.js';
 import securityHeaders from './config/securityheaders.config.js';
-import session from './config/session.config.js';
 import { upDir } from './helpers/path.helper.js';
 
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
+const docsDir = path.join(__dirname, upDir, upDir, 'docs');
+
+// set up rate limiter: maximum of 100 requests per 15 minutes
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const create = () => {
+    let logger;
+
     try {
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
-        app.set('views', path.join(siteDir, 'views'));
-        app.set('view engine', 'pug');
 
         // environment configuration
         envConfig.tryLoadDotEnv();
-
-        //static content
-        app.use('/public', express.static(siteDir));
+        logger = loggerHelper.get('app.js');
 
         //security headers
         securityHeaders.config(app);
 
-        //sessions
-        session.config(app);
+        // Force HTTPS in production
+        app.use(https.middleware);
 
-        //passport
-        passport.config(app);
-
-        //favicon
-        app.use(expressHelper.getFaviconMiddleware(path.join(siteDir, 'favicon.ico')));
-
-        //logging
-        loggers.configLoggers(app);
+        //static content
+        app.use('/public', express.static(siteDir));
+        app.use('/docs', express.static(docsDir));
 
         //parsers
         parsers.config(app);
@@ -49,16 +50,19 @@ const create = () => {
         //routes
         routes.config(app);
 
-        bunyan.createLogger({ name: 'threatdragon', level: 'info' }).info('owasp threat dragon application started up');
+        // rate limiting for the routes
+        app.use(limiter);
+
+        logger.info('OWASP Threat Dragon application started');
 
         app.set('port', env.get().config.PORT || 3000);
 
         return app;
     }
     catch (e) {
-        const errorLogger = bunyan.createLogger({ name: 'threatdragon' });
-        errorLogger.error('owasp threat dragon failed to start up');
-        errorLogger.error(e.message);
+        if (!logger) { logger = console; }
+        logger.error('OWASP Threat Dragon failed to start');
+        logger.error(e.message);
         throw e;
     }
 };

@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-import logger from '../config/loggers.config.js';
 import { upDir } from '../helpers/path.helper.js';
 
 export class Env {
+    /* eslint no-console: 0 */
 
     /**
      * Creates a new instance of the Env class
@@ -14,7 +14,6 @@ export class Env {
      */
     constructor(name) {
         this._providers = [];
-        this._logger = logger.logger;
         this._defaultEnvFilePath = path.join(__dirname, upDir, upDir, upDir, '.env');
         this._config = {};
         this.name = name;
@@ -25,7 +24,7 @@ export class Env {
      * @returns {Object}
      */
     get config() {
-        return Object.freeze(this._config);
+        return Object.freeze({ ...this._config});
     }
 
     /**
@@ -36,7 +35,7 @@ export class Env {
      */
     get properties() {
         const errorMessage = 'When creating a new Env configuration class, you must override the getter for properties.  See GithubEnv for an example.';
-        this._logger.fatal({ security: false }, errorMessage);
+        console.error(errorMessage);
         throw new Error(errorMessage);
     }
 
@@ -47,7 +46,7 @@ export class Env {
      */
     get prefix() {
         const errorMessage = 'When creating a new Env configuration class, you must override the getter for prefix.  See GithubEnv for an example.';
-        this._logger.fatal({ security: false }, errorMessage);
+        console.error(errorMessage);
         throw new Error(errorMessage);
     }
 
@@ -75,7 +74,7 @@ export class Env {
             const filePath = process.env[propertyName];
             if (!fs.existsSync(filePath)) {
                 const errorMessage = `${propertyName} was set, but file ${filePath} does not exist.`;
-                this._logger.error({ security: false }, errorMessage);
+                console.error(errorMessage);
                 throw new Error(errorMessage);
             }
 
@@ -92,13 +91,13 @@ export class Env {
      */
     _loadConfig() {
         const config = {};
-        this._logger.debug({ security: false }, `Initializing env config for ${this.name}`);
-        this.properties.forEach(({ key, required }) => {
+        console.log(`Initializing env config for ${this.name}`);
+        this.properties.forEach(({ key, required, defaultValue }) => {
             const prop = `${this.prefix}${key}`;
-            const value = process.env[prop] || this.tryReadFromFile(prop);
+            const value = process.env[prop] || this.tryReadFromFile(prop) || defaultValue;
             if (!value && required) {
                 const errMsg = `${prop} is a required property.  Threat Dragon server cannot start without it.  Please see setup-env.md for more information`;
-                this._logger.fatal(errMsg);
+                console.error(errMsg);
                 throw new Error(errMsg);
             }
             config[prop] = value;
@@ -120,10 +119,11 @@ export class Env {
     _tryLoadDotEnv() {
         const envFilePath = process.env.ENV_FILE || this._defaultEnvFilePath;
         if (fs.existsSync(envFilePath)) {
-            this._logger.info({ security: false }, `Reading dotenv file from ${envFilePath}`);
-            dotenv.config(envFilePath);
+            dotenv.config({
+                path: envFilePath
+            });
         } else {
-            this._logger.info({ security: false}, `Unable to find .env file, falling back to environment variables`);
+            console.log(`Unable to find .env file, falling back to environment variables`);
         }
     }
 }
