@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.site/src/content/images/threatdragon_logo_image.svg"
+  <img src="https://raw.githubusercontent.com/owasp/threat-dragon/main/td.vue/src/assets/threatdragon_logo_image.svg"
   width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml) 
+[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml)
 [![codecov.io](http://codecov.io/github/owasp/threat-dragon/coverage.svg?branch=main)](http://codecov.io/github/owasp/threat-dragon?branch=main)
 [![BrowserStack Status](https://automate.browserstack.com/badge.svg?badge_key=SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)](https://automate.browserstack.com/public-build/SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)
 [![Deploy](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml)
@@ -12,6 +12,7 @@
 [![Trivy Scan](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml)
 
 # OWASP Threat Dragon
+
 [OWASP](https://www.owasp.org) Threat Dragon is a free, open-source, cross-platform threat modeling application.
 It is used to draw threat modeling diagrams and to list threats for elements in the diagram.
 
@@ -23,10 +24,11 @@ A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dra
 
 There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
-* ease of use and accessible
-* designing a data flow diagram
-* suggesting threats
-* entering mitigations and counter measures
+
+- ease of use and accessible
+- designing a data flow diagram
+- suggesting threats
+- entering mitigations and counter measures
 
 [Mike Goodwin](https://github.com/mike-goodwin) is the founder and creator of this project,
 and this repository has been migrated from
@@ -45,6 +47,7 @@ Each release provides installers for Windows, Mac OSX and Linux.
 [End user help](https://www.threatdragon.com/docs) is available for both variants.
 
 ### Installing
+
 Install git and node.js (version 16) - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
 
 To get the code navigate to a target directory and use command
@@ -57,14 +60,16 @@ one for the back-end application (`td.server`) and one for the front-end (`td.vu
 PNPM (rather than NPM) is used to install from the top directory of the project : `pnpm install`
 
 ### Environment variables
+
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
-register it as a GitHub application. There is a 
+register it as a GitHub application. There is a
 [step by step guide](https://www.threatdragon.com/docs/development/env.html) on how to do this.
 
 You will also have to provide other environment variables, again following
 [the documentation](https://www.threatdragon.com/docs/development/env.html) on this
 
 ### Run the application
+
 When running on Windows, and during development, the front-end and back-end
 can be started separately in "watch" mode using commands : `npm run dev:server` and `npm run dev:vue`.
 Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
@@ -73,18 +78,22 @@ from the top directory using : `npm start`.
 With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
+
 If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
 Otherwise break out of both the server and vue front-end.
 
 ### Docker (local build)
+
 To run Threat Dragon in a docker container,
 first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
 and run from the top directory of the project:
+
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
 ## Docker (from dockerhub)
-Threat Dragon maintains a docker image on Dockerhub.  Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
+
+Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
 
 ### <ins>Do not use the latest tag (which is the default), as it could be a development release</ins>
 
@@ -94,18 +103,21 @@ Alternatively, you can use the `stable` tag, which will always be the latest off
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
 
 ### Contributing
+
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
-[contributors](CONTRIBUTING.md). 
+[contributors](CONTRIBUTING.md).
 
 There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
 We are trying to keep the test coverage relatively high, so please try to update tests in any pull requests
 and create these pull requests off the [V2 development branch](https://github.com/OWASP/threat-dragon/tree/v2-development).
 
 ### Vulnerability disclosure
+
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
 For secure disclosure, please see the [security policy](SECURITY.md).
 
 ### Project leaders
-* Mike Goodwin (mike.goodwin@owasp.org)
-* Jon Gadsden (jon.gadsden@owasp.org)
-* Leo Reading (leo.reading@owasp.org)
+
+- Mike Goodwin (mike.goodwin@owasp.org)
+- Jon Gadsden (jon.gadsden@owasp.org)
+- Leo Reading (leo.reading@owasp.org)
