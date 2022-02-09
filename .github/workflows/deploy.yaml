@@ -3,7 +3,7 @@ concurrency: deploy
 on:
   push:
     branches:
-      - 'v2-development'
+      - 'main'
 env:
   # TODO: Update after we get an "official" home
   image_name: threatdragon/owasp-threat-dragon

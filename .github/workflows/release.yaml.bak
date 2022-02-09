@@ -1,0 +1,230 @@
+# # TODO - This will need to be re-written for v2
+
+
+# name: Build/Release Desktop
+# on:
+#   push:
+#     branches: [ main ]
+#     tags:
+#       - v*
+# env:
+#   image_name: "threatdragon/owasp-threat-dragon"
+# jobs:
+#   test-server:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+#         working-directory: td.server
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Use Node.js 14.x
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: 14.x
+
+#     - name: Cache NPM dir
+#       uses: actions/cache@v2
+#       with:
+#         path: ~/.npm
+#         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.OS }}-npm-cache-server-
+
+#     - run: npm ci
+#     - run: npm run test
+
+#   test-site:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+#         working-directory: td.site
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Use Node.js 14.x
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: 14.x
+
+#     - name: Cache NPM dir
+#       uses: actions/cache@v2
+#       with:
+#         path: ~/.npm
+#         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.OS }}-npm-cache-server-
+
+#     - run: npm ci
+#     - run: |
+#         export DISPLAY=':99.0'
+#         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+#         npm run test
+
+#   test-desktop:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+#         working-directory: td.desktop
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Use Node.js 14.x
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: 14.x
+
+#     - name: Cache NPM dir
+#       uses: actions/cache@v2
+#       with:
+#         path: ~/.npm
+#         key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.OS }}-npm-cache-server-
+
+#     - run: npm ci
+#     - run: npm run build
+#     - run: npm run pretest
+#     - run: |
+#         export DISPLAY=':99.0'
+#         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+#         npm run test
+  
+#   release-desktop:
+#     runs-on: ${{ matrix.config.os }}
+#     needs: [test-desktop, test-server, test-site]
+#     strategy:
+#       matrix:
+#         config:
+#           - { os: macos-latest, os_short: osx }
+#           - { os: ubuntu-latest, os_short: lin }
+#           - { os: windows-latest, os_short: win }
+#     defaults:
+#       run:
+#         working-directory: td.desktop
+
+#     steps:
+#       - name: Check out
+#         uses: actions/checkout@v2
+
+#       - name: Install NodeJS
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 14.x
+
+#       - name: Cache NPM dir
+#         uses: actions/cache@v2
+#         with:
+#           path: ~/.npm
+#           key: ${{ runner.OS }}-npm-cache-server-${{ hashFiles('package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.OS }}-npm-cache-server-
+
+#       - run: npm ci
+#       - run: npm run build
+
+#       - name: Prepare for app notarization
+#         if: startsWith(matrix.config.os, 'macos')
+#         # Import Apple API key for app notarization on macOS
+#         run: |
+#           mkdir -p ~/private_keys/
+#           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+
+#       # Win and OSX will just publish to the GH Release Draft (and create it if needed based on version)
+#       # Snap publishing fails using this plugin, so special care is needed for linux
+#       - name: Build/release Electron app
+#         if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
+#         uses: samuelmeuli/action-electron-builder@v1
+#         with:
+#           github_token: ${{ secrets.github_token }}
+
+#           # If the commit is tagged with a version (e.g. "v1.0.0"),
+#           # release the app after building
+#           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+#           mac_certs: ${{ secrets.mac_certs }}
+#           mac_certs_password: ${{ secrets.mac_certs_password }}
+
+#           windows_certs: ${{ secrets.windows_certs }}
+#           windows_certs_password: ${{ secrets.windows_certs_password }}
+
+#           package_root: td.desktop
+#         env:
+#           # macOS notarization API key
+#           API_KEY_ID: ${{ secrets.api_key_id }}
+#           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+
+#       # Build all linux images EXCEPT for the snap, with publish always
+#       # Snaps will not publish, even with snapcraft installed
+#       - shell: bash
+#         env:
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#         run: npm run electron-builder -- --linux AppImage deb rpm --publish always
+#         if: startsWith(matrix.config.os, 'ubuntu')
+
+#       # Build the snap, but do not publish
+#       - shell: bash
+#         env:
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#         run: npm run electron-builder -- --linux snap
+#         if: startsWith(matrix.config.os, 'ubuntu')
+
+#       - name: Install Snapcraft
+#         uses: samuelmeuli/action-snapcraft@v1
+#         # Only install Snapcraft on Ubuntu
+#         with:
+#           # Log in to Snap Store
+#           snapcraft_token: ${{ secrets.snapcraft_token }}
+#         if: startsWith(matrix.config.os, 'ubuntu')
+
+#       - shell: bash
+#         run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
+#         if: startsWith(matrix.config.os, 'ubuntu')
+
+#   release-docker:
+#     runs-on: ubuntu-latest
+#     needs: [test-desktop, test-server, test-site]
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       - name: Set up Docker Buildx
+#         id: buildx
+#         uses: docker/setup-buildx-action@v1
+#         with:
+#           install: true
+
+#       - name: Setup dockerx cache
+#         uses: actions/cache@v2
+#         with:
+#           path: /tmp/.buildx-cache
+#           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+#           restore-keys: |
+#             ${{ runner.os }}-buildx-
+
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+#       - name: Get Release Version
+#         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+#       - name: Build and push
+#         id: docker_build
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./
+#           file: ./Dockerfile
+#           builder: ${{ steps.buildx.outputs.name }}
+#           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+#           tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }},stable
+#           cache-from: type=local,src=/tmp/.buildx-cache
+#           cache-to: type=local,dest=/tmp/.buildx-cache

@@ -2,8 +2,7 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - 'v2-development'
-      - 'v2/*'
+      - '*'
 env:
   image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
 jobs:

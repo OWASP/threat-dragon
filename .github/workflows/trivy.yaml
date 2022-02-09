@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: v2-development
+          ref: main
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master

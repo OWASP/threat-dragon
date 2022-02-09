@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: 'v2-development' # TODO: Remove after merge to main
+          ref: 'main'
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
