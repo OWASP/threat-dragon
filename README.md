@@ -46,6 +46,11 @@ Each release provides installers for Windows, Mac OSX and Linux.
 
 [End user help](https://www.threatdragon.com/docs) is available for both variants.
 
+
+### Version 1.x End Of Life
+Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.  All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.  The main branch is now for version 2.x+, which is currently unreleased.  For more information on building/running version 1.x, please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
+
+
 ### Installing
 
 Install git and node.js (version 16) - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
