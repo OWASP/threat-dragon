@@ -3,7 +3,7 @@
     "version": "2.0.0",
     "private": false,
     "scripts": {
-        "build": "npm-run-all build:vue build:server build:desktop",
+        "build": "npm-run-all build:vue build:server",
         "build:desktop": "cd td.vue && npm run electron:build",
         "build:server": "cd td.server && npm run build",
         "build:vue": "cd td.vue && npm run build",
