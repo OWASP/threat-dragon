@@ -24,7 +24,6 @@
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
   },
-  "main": "background.js",
   "dependencies": {
     "@antv/x6": "^1.28.1",
     "@antv/x6-vue-shape": "^1.2.10",
@@ -103,6 +102,9 @@
       "minimist@<0.2.1": ">=0.2.1"
     }
   },
+  "description": "OWASP Threat Dragon desktop version - a free, open source threat modeling tool",
+  "main": "background.js",
+  "author": "OWASP",
   "resolutions": {
     "ansi-regex": "^5.0.1"
   }

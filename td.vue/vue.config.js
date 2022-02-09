@@ -22,6 +22,10 @@ module.exports = {
         },
         electronBuilder:{
             mainProcessFile: './src/td.desktop.js',
+            "mac": {
+                "category": "public.app-category.developer-tools",
+                "icon": "public/content/icons/icon.icns"
+            }
         }
     },
     chainWebpack: config => {
