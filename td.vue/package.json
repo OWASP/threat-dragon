@@ -23,7 +23,8 @@
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "lint": "vue-cli-service lint",
     "codecov": "codecov"
-   },
+  },
+  "main": "background.js",
   "dependencies": {
     "@antv/x6": "^1.28.1",
     "@antv/x6-vue-shape": "^1.2.10",
