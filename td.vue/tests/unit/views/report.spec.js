@@ -105,12 +105,6 @@ describe('views/PrinterReport.vue', () => {
             .toEqual(true);
     });
 
-    it('does nothing with a noop', () => {
-        console.log = jest.fn();
-        wrapper.vm.noOp();
-        expect(console.log).toHaveBeenCalledWith('TODO');
-    });
-
     it('closes the report', () => {
         wrapper.vm.onCloseClick();
         expect(routerMock.push).toHaveBeenCalledWith({
