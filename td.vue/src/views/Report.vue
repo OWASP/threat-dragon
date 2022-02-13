@@ -54,12 +54,6 @@
             <b-col class="text-right right">
                 <b-btn-group>
                     <td-form-button
-                        id="td-save-pdf-btn"
-                        :onBtnClick="noOp"
-                        v-if="isElectron"
-                        icon="file-pdf"
-                        :text="$t('forms.savePdf')" />
-                    <td-form-button
                         id="td-print-btn"
                         :onBtnClick="print"
                         icon="print"
@@ -155,7 +149,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import env from '@/service/env.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
@@ -182,8 +175,7 @@ export default {
                 mitigated: true,
                 diagrams: true,
                 branding: true
-            },
-            isElectron: env.isElectron()
+            }
         };
     },
     computed: {
@@ -202,10 +194,6 @@ export default {
         })
     },
     methods: {
-        noOp() {
-            console.log('TODO');
-            return;
-        },
         onCloseClick() {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
