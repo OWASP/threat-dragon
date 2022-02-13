@@ -17,6 +17,7 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
+import save from '../../service/save.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
@@ -84,12 +85,17 @@ const actions = {
             // TODO: This ONLY works if the backend provider is GitHub
             // We need a separate code flow for localSession
             // localSession needs to handle both a "download" type feature as well as saving to disk in electron
-            await threatmodelApi.updateAsync(
-                rootState.repo.selected,
-                rootState.branch.selected,
-                state.data.summary.title,
-                state.data
-            );
+
+            if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+                await threatmodelApi.updateAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    state.data.summary.title,
+                    state.data
+                );
+            } else {
+                save.local(state.data, `${state.data.summary.title}.json`);
+            }
             Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {

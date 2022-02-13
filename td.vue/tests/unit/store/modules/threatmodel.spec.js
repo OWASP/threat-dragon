@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+import save from '@/service/save.js';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
@@ -205,38 +206,52 @@ describe('store/modules/threatmodel.js', () => {
                 };
             });
 
-            describe('without error', () => {
+            describe('local provider', () => {
                 beforeEach(async () => {
-                    jest.spyOn(threatmodelApi, 'updateAsync').mockResolvedValue({ data });
+                    save.local = jest.fn();
+                    mocks.rootState.provider.selected = 'local';
                     await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
                 });
 
-                it('dispatches the set immutable copy event', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_IMMUTABLE_COPY);
-                });
-
-                it('calls the updateAsync api', () => {
-                    expect(threatmodelApi.updateAsync).toHaveBeenCalledTimes(1);
-                });
-
-                it('shows a toast success message', () => {
-                    expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
+                it('saves the file locally', () => {
+                    expect(save.local).toHaveBeenCalledTimes(1);
                 });
             });
 
-            describe('with API error', () => {
-                beforeEach(async () => {
-                    jest.spyOn(threatmodelApi, 'updateAsync').mockRejectedValue({ data });
-                    console.error = jest.fn();
-                    await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
+            describe('git provider', () => {
+                describe('without error', () => {
+                    beforeEach(async () => {
+                        jest.spyOn(threatmodelApi, 'updateAsync').mockResolvedValue({ data });
+                        await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
+                    });
+    
+                    it('dispatches the set immutable copy event', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_IMMUTABLE_COPY);
+                    });
+    
+                    it('calls the updateAsync api', () => {
+                        expect(threatmodelApi.updateAsync).toHaveBeenCalledTimes(1);
+                    });
+    
+                    it('shows a toast success message', () => {
+                        expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
+                    });
                 });
-
-                it('logs the error', () => {
-                    expect(console.error).toHaveBeenCalledTimes(2);
-                });
-
-                it('shows a toast error message', () => {
-                    expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
+    
+                describe('with API error', () => {
+                    beforeEach(async () => {
+                        jest.spyOn(threatmodelApi, 'updateAsync').mockRejectedValue({ data });
+                        console.error = jest.fn();
+                        await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
+                    });
+    
+                    it('logs the error', () => {
+                        expect(console.error).toHaveBeenCalledTimes(2);
+                    });
+    
+                    it('shows a toast error message', () => {
+                        expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
+                    });
                 });
             });
         });
