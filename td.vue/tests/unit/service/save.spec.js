@@ -1,18 +1,17 @@
-import env from '@/service/env.js';
 import save from '@/service/save.js';
 
 describe('service/save.js', () => {
     const data = { foo: 'bar' };
     const name = 'test.json';
+    
+    describe('local', () => {
 
-    describe('browser', () => {
         let mockAnchor;
         beforeEach(() => {
             mockAnchor = {
                 click: jest.fn(),
                 remove: jest.fn()
             };
-            env.isElectron = jest.fn().mockReturnValue(false);
             window.URL = {
                 createObjectURL: jest.fn()
             };
@@ -31,13 +30,5 @@ describe('service/save.js', () => {
         it('removes the anchor', () => {
             expect(mockAnchor.remove).toHaveBeenCalledTimes(1);
         });
-    });
-
-    describe('electron', () => {
-        beforeEach(() => {
-            env.isElectron = jest.fn().mockReturnValue(true);
-        });
-
-        // TODO
     });
 });
