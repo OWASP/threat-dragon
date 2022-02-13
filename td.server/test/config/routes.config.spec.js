@@ -109,23 +109,23 @@ describe('route config tests', () => {
             );
         });
         
-        it('routes DELETE /threatmodel/:organisation/:repo/:branch/:model', () => {
+        it('routes DELETE /api/threatmodel/:organisation/:repo/:branch/:model', () => {
             expect(mockRouter.delete).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/:branch/:model',
+                '/api/threatmodel/:organisation/:repo/:branch/:model',
                 threatmodelController.deleteModel
             );
         });
         
-        it('routes PUT /threatmodel/:organisation/:repo/:branch/:model/create', () => {
+        it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
             expect(mockRouter.put).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/:branch/:model/create',
+                '/api/threatmodel/:organisation/:repo/:branch/:model/create',
                 threatmodelController.create
             );
         });
         
-        it('routes PUT /threatmodel/:organisation/:repo/:branch/:model/update', () => {
+        it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
-                '/threatmodel/:organisation/:repo/:branch/:model/update',
+                '/api/threatmodel/:organisation/:repo/:branch/:model/update',
                 threatmodelController.update
             );
         });

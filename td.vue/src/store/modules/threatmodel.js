@@ -12,6 +12,7 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
+    THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
@@ -76,7 +77,23 @@ const actions = {
         }
         commit(THREATMODEL_RESTORE, originalModel);
     },
-    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY)
+    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
+    [THREATMODEL_SAVE]: async ({ commit, rootState, state }) => {
+        try {
+            threatmodelApi.updateAsync(
+                rootState.repo.selected,
+                rootState.branch.selected,
+                state.data.summary.title,
+                state.data
+            );
+        } catch (ex) {
+            console.error('Failed to update threat model!');
+            console.error(ex);
+            // TODO: Add Toast notification here
+        }
+        // TODO: Do we need to commit anything?
+        // Maybe we want to dispatch the THREATMODEL_SET_IMMUTABLE_COPY action?
+    } 
 };
 
 const mutations = {

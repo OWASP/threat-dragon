@@ -84,6 +84,7 @@ export default {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
             this.$store.dispatch(tmActions.diagramUpdated, updated);
+            this.$store.dispatch(tmActions.save);
             this.$toast.info('Only saving in-memory, data not persisted to back-end');
         },
         async closed() {

@@ -76,7 +76,7 @@ const create = async (req, res) => {
     };
 
     try {
-        const modelResp = await repository.createAsync(modelInfo, req.user.accessToken);
+        const modelResp = await repository.createAsync(modelInfo, req.provider.access_token);
         return res.status(201).send(modelResp);
     } catch (err) {
         logger.error(err);
@@ -94,7 +94,7 @@ const update = async (req, res) => {
     };
 
     try {
-        const modelResp = await repository.updateAsync(modelInfo, req.user.accessToken);
+        const modelResp = await repository.updateAsync(modelInfo, req.provider.access_token);
         return res.send(modelResp);
     } catch (err) {
         logger.error(err);
@@ -111,7 +111,7 @@ const deleteModel = async (req, res) => {
     };
 
     try {
-        const delResp = await repository.deleteAsync(modelInfo, req.user.accessToken);
+        const delResp = await repository.deleteAsync(modelInfo, req.provider.access_token);
         return res.send(delResp);
     } catch (err) {
         logger.error(err);
