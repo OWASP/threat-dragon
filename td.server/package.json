@@ -67,7 +67,7 @@
   },
   "pnpm": {
     "overrides": {
-      "follow-redirects": ">=1.14.7"
+      "follow-redirects": ">=1.14.8"
     }
   }
 }
