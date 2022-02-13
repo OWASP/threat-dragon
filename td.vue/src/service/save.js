@@ -1,10 +1,10 @@
 /**
  * Saves the file locally
- * This automatically opens the save prompt in electron
  * @param {Object} data
  * @param {string} fileName
  */
 const local = (data, fileName) => {
+    // TODO: Split into local browser and electron-specific saving
     const contentType = 'application/json';
     const jsonData = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonData], { type: contentType });
