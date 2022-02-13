@@ -81,6 +81,9 @@ const actions = {
     [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
     [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
         try {
+            // TODO: This ONLY works if the backend provider is GitHub
+            // We need a separate code flow for localSession
+            // localSession needs to handle both a "download" type feature as well as saving to disk in electron
             await threatmodelApi.updateAsync(
                 rootState.repo.selected,
                 rootState.branch.selected,
