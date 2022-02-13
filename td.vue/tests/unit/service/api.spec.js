@@ -1,4 +1,4 @@
-import api from '@/service/api.js';
+import api from '@/service/api/api.js';
 import httpClient from '@/service/httpClient.js';
 
 describe('service/api.js', () => {

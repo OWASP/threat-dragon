@@ -1,5 +1,5 @@
-import api from '@/service/api.js';
-import threatmodelApi from '@/service/threatmodelApi.js';
+import api from '@/service/api/api.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 describe('service/threatmodelApi.js', () => {
     beforeEach(() => {

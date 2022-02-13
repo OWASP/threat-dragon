@@ -42,8 +42,6 @@
 </style>
 
 <script>
-
-
 import { allProviders } from '@/service/provider/providers.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 

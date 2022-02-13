@@ -5,7 +5,7 @@ import {
     BRANCH_FETCH,
     BRANCH_SELECTED
 } from '../actions/branch.js';
-import threatmodelApi from '../../service/threatmodelApi.js';
+import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     state.all.length = 0;

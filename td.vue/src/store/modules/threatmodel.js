@@ -15,7 +15,7 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
-import threatmodelApi from '../../service/threatmodelApi.js';
+import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     state.all.length = 0;

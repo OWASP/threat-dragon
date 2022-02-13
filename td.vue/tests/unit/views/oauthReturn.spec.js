@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { AUTH_SET_JWT } from '@/store/actions/auth.js';
-import loginApi from '@/service/loginApi.js';
+import loginApi from '@/service/api/loginApi.js';
 import OAuthReturn from '@/views/OauthReturn.vue';
 
 describe('views/OauthReturn.vue', () => {

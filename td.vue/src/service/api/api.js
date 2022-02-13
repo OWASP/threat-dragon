@@ -1,4 +1,4 @@
-import clientFactory from './httpClient.js';
+import clientFactory from '../httpClient.js';
 
 /**
  * Does a GET request to the given resource

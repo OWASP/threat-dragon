@@ -1,6 +1,6 @@
 import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import branchModule, { clearState } from '@/store/modules/branch.js';
-import threatmodelApi from '@/service/threatmodelApi.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 describe('store/modules/branch.js', () => {
     const mocks = {

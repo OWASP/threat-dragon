@@ -5,7 +5,7 @@ import {
     REPOSITORY_FETCH,
     REPOSITORY_SELECTED
 } from '../actions/repository.js';
-import threatmodelApi from '../../service/threatmodelApi.js';
+import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     state.all.length = 0;

@@ -9,7 +9,7 @@ import {
     THREATMODEL_SET_IMMUTABLE_COPY
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
-import threatmodelApi from '@/service/threatmodelApi.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '../../../../src/store/actions/threatmodel';
 
 describe('store/modules/threatmodel.js', () => {
