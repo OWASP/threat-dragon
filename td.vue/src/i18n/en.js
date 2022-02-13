@@ -66,6 +66,10 @@ const en = {
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
         threats: 'Threats',
+        errors: {
+            save: 'Error saving Threat Model.  Please check the developer console for more information'
+        },
+        saved: 'Threat model successfully saved!',
         properties: {
             title: 'Properties',
             emptyState: 'Select an element on the graph to edit',

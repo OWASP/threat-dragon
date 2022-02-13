@@ -165,7 +165,7 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -190,10 +190,9 @@ export default {
         onSubmit() {
             // noop
         },
-        onSaveClick(evt) {
+        async onSaveClick(evt) {
             evt.preventDefault();
-            console.log('Save - TODO');
-            this.$toast.info('Only saving in-memory, data not persisted to back-end');
+            await this.$store.dispatch(THREATMODEL_SAVE);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {

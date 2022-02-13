@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
 import { getProviderType } from '../../service/provider/providers.js';
+import i18n from '../../i18n/index.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
     THREATMODEL_CLEAR,
@@ -78,21 +79,21 @@ const actions = {
         commit(THREATMODEL_RESTORE, originalModel);
     },
     [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
-    [THREATMODEL_SAVE]: async ({ commit, rootState, state }) => {
+    [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
         try {
-            threatmodelApi.updateAsync(
+            await threatmodelApi.updateAsync(
                 rootState.repo.selected,
                 rootState.branch.selected,
                 state.data.summary.title,
                 state.data
             );
+            Vue.$toast.success(i18n.get().t('threatmodel.saved'));
+            dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
             console.error('Failed to update threat model!');
             console.error(ex);
-            // TODO: Add Toast notification here
+            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
-        // TODO: Do we need to commit anything?
-        // Maybe we want to dispatch the THREATMODEL_SET_IMMUTABLE_COPY action?
     } 
 };
 
