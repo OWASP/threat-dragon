@@ -1,9 +1,9 @@
 const en = {
     auth: {
-        sessionExpired: 'Your session has expired.  Please log in again to continue.'
+        sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development.  Do not use this to edit existing models, as this version could break them!',
+        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development. Do not use this to edit existing models, as this version could break them!',
         loggedInAs: 'Logged in as'
     },
     home: {
@@ -38,7 +38,7 @@ const en = {
     repository: {
         select: 'Select a',
         from: 'repository from the list below',
-        noneFound: 'No repositories found.  To get started, create a new repository on'
+        noneFound: 'No repositories found. To get started, create a new repository on'
     },
     branch: {
         select: 'Select a branch from',
@@ -55,7 +55,7 @@ const en = {
     },
     threatmodel: {
         jsonPaste: 'Paste the JSON of your threat model here:',
-        invalidJson: 'Invalid JSON.  Please check your model and try again.',
+        invalidJson: 'Invalid JSON. Please check your model and try again.',
         owner: 'Owner',
         reviewer: 'Reviewer',
         contributors: 'Contributors',
@@ -66,6 +66,10 @@ const en = {
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
         threats: 'Threats',
+        errors: {
+            save: 'Error saving Threat Model. Please check the developer console for more information'
+        },
+        saved: 'Threat model successfully saved!',
         properties: {
             title: 'Properties',
             emptyState: 'Select an element on the graph to edit',
@@ -230,7 +234,7 @@ const en = {
             header: 'Threatmodel Update',
             welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
             p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust.  This is a one-time upgrade, and you should not see this message again after saving this model.'
+            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
         },
         instructions: 'Great! Let\'s get you to your model.',
         continue: 'Continue to Threat Model'

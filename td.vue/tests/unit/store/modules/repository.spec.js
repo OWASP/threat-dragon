@@ -1,6 +1,6 @@
 import { REPOSITORY_CLEAR, REPOSITORY_FETCH, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import repoModule, { clearState } from '@/store/modules/repository.js';
-import threatmodelApi from '@/service/threatmodelApi.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 describe('store/modules/repository.js', () => {
     const mocks = {

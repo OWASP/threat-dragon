@@ -1,4 +1,4 @@
-import api from '@/service/api.js';
+import api from '@/service/api/api.js';
 import httpClient from '@/service/httpClient.js';
 
 describe('service/api.js', () => {
@@ -6,7 +6,8 @@ describe('service/api.js', () => {
     const mockResp = { data: 'foo' };
     const mockClient = {
         get: () => mockResp,
-        post: () => mockResp
+        post: () => mockResp,
+        put: () => mockResp
     };
 
     let res;
@@ -15,6 +16,7 @@ describe('service/api.js', () => {
         jest.spyOn(httpClient, 'get').mockReturnValue(mockClient);
         jest.spyOn(mockClient, 'get');
         jest.spyOn(mockClient, 'post');
+        jest.spyOn(mockClient, 'put');
     });
 
     describe('getAsync', () => {
@@ -45,6 +47,19 @@ describe('service/api.js', () => {
 
         it('returns the data', async () => {
             res = await api.postAsync(url);
+            expect(res).toEqual(mockResp.data);
+        });
+    });
+
+    describe('putAsync', () => {
+        it('passes the body', async () => {
+            const body = { foo: 'bar' };
+            await api.putAsync(url, body);
+            expect(mockClient.put).toHaveBeenCalledWith(expect.anything(), body);
+        });
+
+        it('returns the data', async () => {
+            res = await api.putAsync(url);
             expect(res).toEqual(mockResp.data);
         });
     });

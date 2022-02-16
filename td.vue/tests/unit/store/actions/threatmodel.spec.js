@@ -7,7 +7,8 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_RESTORE,
-    THREATMODEL_SET_IMMUTABLE_COPY
+    THREATMODEL_SET_IMMUTABLE_COPY,
+    THREATMODEL_SAVE
 } from '@/store/actions/threatmodel.js';
 
 describe('store/actions/threatmodel.js', () => {
@@ -45,5 +46,9 @@ describe('store/actions/threatmodel.js', () => {
 
     it('defines a set immutable copy action', () => {
         expect(THREATMODEL_SET_IMMUTABLE_COPY).not.toBeUndefined();
+    });
+
+    it('defines a save action', () => {
+        expect(THREATMODEL_SAVE).not.toBeUndefined();
     });
 });

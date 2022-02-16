@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
 import { getProviderType } from '../../service/provider/providers.js';
+import i18n from '../../i18n/index.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
 import {
     THREATMODEL_CLEAR,
@@ -12,10 +13,12 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_RESTORE,
+    THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_SET_IMMUTABLE_COPY
 } from '../actions/threatmodel.js';
-import threatmodelApi from '../../service/threatmodelApi.js';
+import save from '../../service/save.js';
+import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -76,7 +79,31 @@ const actions = {
         }
         commit(THREATMODEL_RESTORE, originalModel);
     },
-    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY)
+    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
+    [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
+        try {
+            // TODO: This ONLY works if the backend provider is GitHub
+            // We need a separate code flow for localSession
+            // localSession needs to handle both a "download" type feature as well as saving to disk in electron
+
+            if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+                await threatmodelApi.updateAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    state.data.summary.title,
+                    state.data
+                );
+            } else {
+                save.local(state.data, `${state.data.summary.title}.json`);
+            }
+            Vue.$toast.success(i18n.get().t('threatmodel.saved'));
+            dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
+        } catch (ex) {
+            console.error('Failed to update threat model!');
+            console.error(ex);
+            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+        }
+    } 
 };
 
 const mutations = {

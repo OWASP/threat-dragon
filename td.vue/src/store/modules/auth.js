@@ -1,6 +1,6 @@
 import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '../actions/auth.js';
 import { BRANCH_CLEAR } from '../actions/branch.js';
-import loginApi from '../../service/loginApi.js';
+import loginApi from '../../service/api/loginApi.js';
 import { PROVIDER_CLEAR } from '../actions/provider.js';
 import providers from '../../service/provider/providers.js';
 import { REPOSITORY_CLEAR } from '../actions/repository.js';

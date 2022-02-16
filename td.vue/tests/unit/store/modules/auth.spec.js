@@ -1,7 +1,7 @@
 import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
 import authModule, { clearState } from '@/store/modules/auth.js';
 import { BRANCH_CLEAR } from '@/store/actions/branch.js';
-import loginApi from '@/service/loginApi.js';
+import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_CLEAR } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR } from '@/store/actions/repository.js';
 import { THREATMODEL_CLEAR } from '@/store/actions/threatmodel.js';

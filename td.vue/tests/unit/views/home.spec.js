@@ -6,7 +6,7 @@ import Vuex from 'vuex';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import env from '@/service/env.js';
 import Home from '@/views/Home.vue';
-import loginApi from '@/service/loginApi.js';
+import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import router from '@/router/index.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';

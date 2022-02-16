@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel.js';
 
-describe('views/Threatmodel.vue', () => {
+describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];
     const owner = 'owner';
     const reviewer = 'reviewer';
@@ -108,6 +108,8 @@ describe('views/Threatmodel.vue', () => {
 
         describe('save', () => {
             beforeEach(async () => {
+                mockRouter.push = jest.fn();
+                mockStore.dispatch = jest.fn();
                 await wrapper.find('#td-save-btn').trigger('click', evt);
             });
 
@@ -115,8 +117,15 @@ describe('views/Threatmodel.vue', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('logs a todo in the console', () => {
-                expect(console.log).toHaveBeenCalledTimes(1);
+            it('dispatches the save event', () => {
+                expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SAVE');
+            });
+
+            it('routes back to the threat model page', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith({
+                    name: 'localThreatModel',
+                    params: undefined
+                });
             });
         });
 

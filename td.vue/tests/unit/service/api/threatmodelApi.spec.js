@@ -1,9 +1,10 @@
-import api from '@/service/api.js';
-import threatmodelApi from '@/service/threatmodelApi.js';
+import api from '@/service/api/api.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 describe('service/threatmodelApi.js', () => {
     beforeEach(() => {
         jest.spyOn(api, 'getAsync').mockImplementation(() => {});
+        jest.spyOn(api, 'putAsync').mockImplementation(() => {});
     });
 
     describe('reposAsync', () => {
@@ -52,6 +53,24 @@ describe('service/threatmodelApi.js', () => {
 
         it('calls the model endpoint', () => {
             expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/main/test/data');
+        });
+    });
+
+    describe('updateAsync', () => {
+        const repo = 'owasp/threat-dragon';
+        const branch = 'main';
+        const modelName = 'test';
+        const body = { foo: 'bar' };
+
+        beforeEach(async () => {
+            await threatmodelApi.updateAsync(repo, branch, modelName, body);
+        });
+
+        it('calls the update endpoint', () => {
+            expect(api.putAsync).toHaveBeenCalledWith(
+                '/api/threatmodel/owasp/threat-dragon/main/test/update',
+                body
+            );
         });
     });
 });

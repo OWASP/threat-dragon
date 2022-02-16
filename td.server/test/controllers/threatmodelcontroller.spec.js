@@ -167,7 +167,7 @@ describe('threat model controller tests', () => {
             it('should create the specified model', () => {
                 expect(threatModelRepository.createAsync).to.have.been.calledWith(
                     modelInfo,
-                    mockRequest.user.accessToken,
+                    mockRequest.provider.access_token,
                 );
             });
 
@@ -218,7 +218,7 @@ describe('threat model controller tests', () => {
             it('should update the specified model', () => {
                 expect(threatModelRepository.updateAsync).to.have.been.calledWith(
                     modelInfo,
-                    mockRequest.user.accessToken
+                    mockRequest.provider.access_token
                 );
             });
 
@@ -268,7 +268,7 @@ describe('threat model controller tests', () => {
             it('should delete the specified model', () => {
                 expect(threatModelRepository.deleteAsync).to.have.been.calledWith(
                     modelInfo,
-                    mockRequest.user.accessToken
+                    mockRequest.provider.access_token
                 );
             });
 

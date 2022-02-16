@@ -32,14 +32,18 @@ const createAsync = (modelInfo, accessToken) => github.client(accessToken).
         );
 
 const updateAsync = async (modelInfo, accessToken) => {
-    const content = await modelAsync(modelInfo, accessToken);
+    const original = await modelAsync(modelInfo, accessToken);
+    const repo = getRepoFullName(modelInfo);
+    const path = getModelPath(modelInfo);
+    const modelContent = getModelContent(modelInfo);
+
     return github.client(accessToken).
-        repo(getRepoFullName(modelInfo)).
+        repo(repo).
         updateContentsAsync(
-            getModelPath(modelInfo),
+            path,
             'Updated by OWASP Threat Dragon',
-            getModelContent(modelInfo),
-            content[0].sha,
+            modelContent,
+            original[0].sha,
             modelInfo.branch
         );
 };

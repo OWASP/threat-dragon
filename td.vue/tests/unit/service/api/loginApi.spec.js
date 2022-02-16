@@ -1,5 +1,5 @@
-import api from '@/service/api.js';
-import loginApi from '@/service/loginApi.js';
+import api from '@/service/api/api.js';
+import loginApi from '@/service/api/loginApi.js';
 
 describe('service/loginApi.js', () => {
     const provider = 'github';

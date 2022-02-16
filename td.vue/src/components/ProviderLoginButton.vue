@@ -27,7 +27,7 @@
 <script>
 import { providerNames } from '@/service/provider/providers.js';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
-import loginApi from '@/service/loginApi.js';
+import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 
 export default {

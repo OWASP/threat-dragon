@@ -1,4 +1,4 @@
-import clientFactory from './httpClient.js';
+import clientFactory from '../httpClient.js';
 
 /**
  * Does a GET request to the given resource
@@ -23,7 +23,20 @@ const postAsync = async (url, body) => {
     return res.data;
 };
 
+/**
+ * Does a PUT request to the given resource
+ * Will add the body provided
+ * Will apply the current bearer token as an auth header
+ * @param {String} url
+ * @param {Object} body
+ */
+const putAsync = async (url, body) => {
+    const res = await clientFactory.get().put(url, body);
+    return res.data;
+};
+
 export default {
     getAsync,
-    postAsync
+    postAsync,
+    putAsync
 };
