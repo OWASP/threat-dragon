@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-site",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": false,
   "scripts": {
     "build": "npm-run-all build:css build:min bundle",
