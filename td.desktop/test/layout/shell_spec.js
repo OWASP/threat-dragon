@@ -475,7 +475,7 @@ describe('shell controller', function () {
         expect(subMenu.submenu[0].label).toEqual('Documentation');
         spyOn(mockElectron.shell, 'openExternal');
         subMenu.submenu[0].click();
-        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://docs.threatdragon.org/']);
+        expect(mockElectron.shell.openExternal.calls.argsFor(0)).toEqual(['https://threatdragon.github.io']);
     });
 
     it('Help menu item should browse to the OWASP project page', function() {

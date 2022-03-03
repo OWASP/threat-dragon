@@ -30,14 +30,13 @@ The application comes in two variants:
 
 1. [**A web application (this repo)**](https://github.com/owasp/threat-dragon):
 For the web application, models files are stored in GitHub (other storage will become available).
-We are currently maintaining [a working protoype](https://threatdragon.org) in sync with the main code branch.
 
 2. [**A desktop application**](https://github.com/OWASP/threat-dragon/tree/main/td.desktop):
 This is based on [Electron](https://electron.atom.io/).
-There are installers available for both Windows and Mac OSX, as well as rpm and debian packages for Linux.
+There are installers available for both Windows and MacOS, as well as rpm and debian packages for Linux.
 Note that for the desktop variant the models are stored on the local filesystem rather than a remote repository.
 
-[End user help](https://docs.threatdragon.org) is available for both variants.
+[End user help](https://threatdragon.github.io) is available for both variants.
 
 ## Installing
 Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server.

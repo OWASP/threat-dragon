@@ -7,8 +7,7 @@ but some of the commands (eg `cd ../..`) need to be modified if running on a Win
 
 ## Documentation
 The [documentation repo](https://github.com/threatdragon/threatdragon.github.io) will update documentation
-at both [threatdragon.github.io](https://threatdragon.github.io)
-and [docs.threatdragon.org](https://docs.threatdragon.org/) websites.
+on the [threatdragon.github.io](https://threatdragon.github.io) website.
 
 ## Install and Run
 
@@ -117,15 +116,5 @@ Update the release notification on the OWASP
 
 Finally ensure Threat Dragon tweets the release on Twitter,
 and announces it on the OWASP slack channels
-
-## Legacy demo and dev websites
-These OWASP public sites are updated from Mike Goodwin's original repo at
-[github.com/mike-goodwin/owasp-threat-dragon](https://github.com/mike-goodwin/owasp-threat-dragon).
-If the all pull request checks pass then the updates are applied automatically.
-
-* merges to `master` [branch](https://github.com/mike-goodwin/owasp-threat-dragon)
-will update the [online demo](https://threatdragon.org/)
-* merges to `development` [branch](https://github.com/mike-goodwin/owasp-threat-dragon/tree/development)
-will update the [snapshot demo](https://threatdragondev.azurewebsites.net/)
 
 _Threat Dragon: making threat modeling less threatening_
