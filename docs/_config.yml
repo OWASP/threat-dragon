@@ -19,7 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Threat Dragon Docs
-email: jon.gadsen@owasp.org
+email: jon.gadsden@owasp.org
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
@@ -32,12 +32,12 @@ logo_src: assets/images/threatdragon_logo_image.svg
 header_links:
   - text: Try the web app
     fa_class: fa fa-flask
-    url: https://threatdragon.org
+    url: https://www.threatdragon.com/docs/
 
   - text: Download the desktop app
     fa_class: fa fa-cloud-download-alt
     target: _blank
-    url: https://github.com/OWASP/threat-dragon-desktop/releases
+    url: https://github.com/OWASP/threat-dragon/releases
 
   - text: Visit us on GitHub
     fa_class: fab fa-github

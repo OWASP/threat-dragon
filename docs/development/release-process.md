@@ -32,14 +32,11 @@ All going well then update the release notes for the draft in the
 
 Finally ensure Threat Dragon tweets the release on Twitter, and announces it on the OWASP slack channels
 
-## Legacy demo and dev websites
-These public sites are updated from Mike Goodwin's original repo at
+## Legacy demo/development website
+The Azure public site is updated from Mike Goodwin's original repo at
 [github.com/mike-goodwin/owasp-threat-dragon](https://github.com/mike-goodwin/owasp-threat-dragon).
 
 So long as all the pull request checks pass on the original repo then:
-
-* merges to `master` [branch](https://github.com/mike-goodwin/owasp-threat-dragon)
-will update the [online demo](https://threatdragon.org/)
 * merges to `development` [branch](https://github.com/mike-goodwin/owasp-threat-dragon/tree/development)
 will update the [snapshot demo](https://threatdragondev.azurewebsites.net/)
 
