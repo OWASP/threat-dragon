@@ -154,23 +154,39 @@ Export all of the your variables from the terminal where you will start Threat d
 
 ___
 
-## All Variables
+## Environment variable reference
 
 {:.table .table-striped}
-| Key | Description | Default |
+| Threat Dragon variables | Description | Default |
 | --- | ----------- | ------- |
-| GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
-| GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
-| GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
-| NODE_ENV | The node environment, typically either `production` or `development`.  The cookie `secure` flag is set only if running in `production` mode. | |
-| ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
-| ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
-| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale. | |
+| NODE_ENV | The node environment, typically either `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode. | |
 | PORT | The port on which Threat Dragon's server listens on. | `3000`|
 | PROTOCOL | The protocol used between Threat Dragon's server and frontend (http vs https). | `http` |
 
-Note: the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
+{:.table .table-striped}
+| Back-end specific variables | Description | Default |
+| --- | ----------- | ------- |
+| ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
+| ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
+| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale. | |
+| ENV_FILE | The location of the dotenv file, if dotenv used. Can not be defined in the dotenv file itself | `.env` |
+| GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
+| GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
+| GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
+| LOG_LEVEL | The server logging level: `audit` / `error` / `warn` / `info` / `debug` / `silly` | `info` |
+
+**Note:** the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as a refresh token because it is tamper resistant and provides user context.
+
+
+{:.table .table-striped}
+| Desktop specific variables | Description | Default |
+| --- | ----------- | ------- |
+| ELECTRON_NODE_INTEGRATION | Electron nodeIntegration is disabled by default, but can be enabled during development | |
+| IS_TEST | Enabled during testing, required for Spectron | |
+| WEBPACK_DEV_SERVER_URL | Load the url of the development server if in development mode | |
+
+**Note:** generally no need to change the desktop environment variables except maybe during development / test
 
 ___
 ## Github OAuth App Screenshot
