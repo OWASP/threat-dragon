@@ -161,14 +161,16 @@ ___
 | --- | ----------- | ------- |
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
-| GITHUB_SCOPE | `repo` for access to private repos as well as public, or `public_repo` for access to public repos only | `public_repo` |
-| NODE_ENV | The node environment.  Typically either `production` or `development`.  The `secure` flag is only set on cookies if running in `production` mode. | |
+| GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
+| NODE_ENV | The node environment, typically either `production` or `development`.  The cookie `secure` flag is set only if running in `production` mode. | |
 | ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
-| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens.  Ideally, this should be different from the JWT signing key as they are different tokens.  A JWT is used as a refresh token because it is tamper resistent and provides user context. | |
-| PORT | The port which the Threat Dragon server will listen on. | `3000`|
-| PROTOCOL | The protocol to use (http vs https). | `http` |
+| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale. | |
+| PORT | The port on which Threat Dragon's server listens on. | `3000`|
+| PROTOCOL | The protocol used between Threat Dragon's server and frontend (http vs https). | `http` |
 
+Note: the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
+A JWT is used as a refresh token because it is tamper resistant and provides user context.
 
 ___
 ## Github OAuth App Screenshot
