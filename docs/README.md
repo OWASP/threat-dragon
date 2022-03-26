@@ -6,4 +6,8 @@ The theme provides the header bar for the documentation site (such as flask, clo
 
 
 ### Running Locally
-From a terminal, run `bundle exec jekyll serve`
+* From a terminal navigate to this `docs` directory
+* Install/update bundle: `pnpm add -g bundle`
+* Install jekyll, webrick etc: `bundle update`
+* Run the docs server: `bundle exec jekyll serve`
+* Navigate in a browser to server address: http://127.0.0.1:4000/

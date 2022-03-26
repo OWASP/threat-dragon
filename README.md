@@ -20,7 +20,8 @@ Threat Dragon is designed to be accessible for various types of teams, with an e
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
-A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
+A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by
+the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
 There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
@@ -46,14 +47,23 @@ Each release provides installers for Windows, Mac OSX and Linux.
 
 [End user help](https://www.threatdragon.com/docs) is available for both variants.
 
+### Version 2.0 Development
+After many years using AngularJS and JointJS, Threat Dragon is migrating development to Vue
+and antv/g6 drawing library. This version will be ready later in 2022,
+until then use the [latest version of Threat Dragon 1.x](https://github.com/OWASP/threat-dragon/releases/tag/v1.6.1).
 
-### Version 1.x End Of Life
-Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.  All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.  The main branch is now for version 2.x+, which is currently unreleased.  For more information on building/running version 1.x, please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
+### Version 1.x Maintenance mode
+Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
+All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.
+The main branch is now for version 2.x+, which is currently unreleased. 
+For more information on building/running version 1.x,
+please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
 
 
-### Installing
+### Installing version 2.x
 
-Install git and node.js (version 16) - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
+Install git and node.js (version 16)
+- which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
 
 To get the code navigate to a target directory and use command
 
@@ -100,7 +110,7 @@ and run from the top directory of the project:
 
 Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
 
-### <ins>Do not use the latest tag (which is the default), as it could be a development release</ins>
+**Do _not use the latest tag_ (which is the default), as it could be a development release**
 
 Alternatively, you can use the `stable` tag, which will always be the latest official release.
 
@@ -114,7 +124,7 @@ Pull requests, feature requests, bug reports and feedback of any kind are very w
 
 There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
 We are trying to keep the test coverage relatively high, so please try to update tests in any pull requests
-and create these pull requests off the [V2 development branch](https://github.com/OWASP/threat-dragon/tree/v2-development).
+and create these pull requests off the [V2 development main branch](https://github.com/OWASP/threat-dragon).
 
 ### Vulnerability disclosure
 
