@@ -5,7 +5,6 @@ dist/
 .env
 example.env
 .git*
-IISNode.yml
 docs/.jekyll-cache
 log/
 */node_modules
