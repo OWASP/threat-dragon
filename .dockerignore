@@ -18,5 +18,4 @@ ThreatDragonModels/
 utils/
 .vscode/
 */.vscode/
-web.config
 */dist_electron/
