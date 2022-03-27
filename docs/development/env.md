@@ -43,7 +43,7 @@ To create a GitHub OAuth Application:
   - Threat Dragon's server defaults to port 3000, but this is configurable.  If you plan to run it on another port, be sure to use that port for the auth callback url instead!
 - **Application description**: A description for your OAuth app.  This is not critical, we suggest something like 'Threat Dragon for local development'
 - **Authorization callback URL**: `http://localhost:3000/api/oauth/return`
-  - Again, if you plan to run Threat Dragon on another port, use that port instead!
+  - Again, if you plan to run the Threat Dragon server on another port, use that port instead!
 3. Register the application, an [example screenshot](#github-oauth-app-screenshot) is at the bottom of this document
 4. Create a client_secret
 5. Note the values for Client ID and Client Secret. **Save these somewhere safe**
@@ -66,7 +66,10 @@ A similar method could be used to generate JWT signing keys.
 ___
 
 ## Config Via DotEnv
-Environment variables are configured via [dotenv](https://github.com/motdotla/dotenv#readme).  By default, Threat Dragon attempts to read key/value pairs from a `.env` file at the root of this repository.  This can be configured by exporting a file path in your terminal.  For example, on MacOS/Linux: `export ENV_FILE=/home/myawesomeuser/mydir/somefile.env`
+Environment variables are configured via [dotenv](https://github.com/motdotla/dotenv#readme).
+By default, Threat Dragon attempts to read key/value pairs from a `.env` file at the root of this repository.
+This can be configured by exporting a file path in your terminal.
+For example, on MacOS/Linux: `export ENV_FILE=/home/myawesomeuser/mydir/somefile.env`
 
 To get started, copy `example.env` to `.env` at the root of the project and update the variables as appropriate. 
 
@@ -107,7 +110,7 @@ services:
     environment:
       GITHUB_CLIENT_ID_FILE: /run/secrets/github_client_id
       GITHUB_CLIENT_SECRET_FILE: /run/secrets/github_client_secret
-      NODE_ENV_FILE: /run/secrets/node_env
+      ENV_FILE: /run/secrets/node_env
       ENCRYPTION_KEYS_FILE: /run/secrets/encryption_keys
       ENCRYPTION_JWT_SIGNING_KEY_FILE: /run/secrets/jwt_signing_key
       ENCRYPTION_JWT_REFRESH_SIGNING_KEY_FILE: /run/secrets/jwt_refresh_signing_key
@@ -159,6 +162,7 @@ ___
 {:.table .table-striped}
 | Threat Dragon general variables | Description | Default |
 | --- | ----------- | ------- |
+| ENV_FILE | The location of a dotenv file, if dotenv is used. Exported as it needs to be accessed before the dotenv file is read | `.env` |
 | NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
 | SERVER_API_PORT | Defines the listening port for Threat Dragon's server | `3000`|
 | SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, http or https | `http` |
@@ -169,7 +173,6 @@ ___
 | ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data | |
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
 | ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale | |
-| ENV_FILE | The location of the dotenv file, if dotenv used. Can not be defined in the dotenv file itself | `.env` |
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
