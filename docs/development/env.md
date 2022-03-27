@@ -114,7 +114,7 @@ services:
       ENCRYPTION_KEYS_FILE: /run/secrets/encryption_keys
       ENCRYPTION_JWT_SIGNING_KEY_FILE: /run/secrets/jwt_signing_key
       ENCRYPTION_JWT_REFRESH_SIGNING_KEY_FILE: /run/secrets/jwt_refresh_signing_key
-      PROTOCOL_FILE: /run/secrets/protocol
+      SERVER_API_PROTOCOL_FILE: /run/secrets/protocol
     secrets:
       - github_client_id
       - github_client_secret
