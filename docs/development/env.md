@@ -160,8 +160,8 @@ ___
 | Threat Dragon general variables | Description | Default |
 | --- | ----------- | ------- |
 | NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
-| PORT | Defines the listening port for Threat Dragon's server | `3000`|
-| PROTOCOL | The protocol used between Threat Dragon's server and frontend, http or https | `http` |
+| SERVER_API_PORT | Defines the listening port for Threat Dragon's server | `3000`|
+| SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, http or https | `http` |
 
 {:.table .table-striped}
 | Back-end specific variables | Description | Default |

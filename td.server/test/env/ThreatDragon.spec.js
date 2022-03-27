@@ -29,9 +29,30 @@ describe('env/ThreatDragon.js', () => {
         expect(isRequired).to.be.false;
     });
 
-    it('has the optional property PORT', () => {
+    it('has the optional property SERVER_API_PORT', () => {
         const isRequired = tdEnv.properties
-            .find(x => x.key === 'PORT')
+            .find(x => x.key === 'SERVER_API_PORT')
+            .required;
+        expect(isRequired).to.be.false;
+    });
+
+    it('has the optional property LOG_MAX_FILE_SIZE', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'LOG_MAX_FILE_SIZE')
+            .required;
+        expect(isRequired).to.be.false;
+    });
+
+    it('has the required property LOG_LEVEL', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'LOG_LEVEL')
+            .required;
+        expect(isRequired).to.be.true;
+    });
+
+    it('has the optional property SERVER_API_PROTOCOL', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'SERVER_API_PROTOCOL')
             .required;
         expect(isRequired).to.be.false;
     });

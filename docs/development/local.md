@@ -30,7 +30,7 @@ you can easily manage your node environment (version) commands from [pnpm](https
 There are multiple ways of installing and managing versions of node, including [nvm](https://github.com/nvm-sh/nvm) and some others, the choice is yours!
 
 ## Running Locally
-The local environment is split into different parts: `td.server` and `td.vue`.  These can technically be ran and tested independently of one another.
+The local environment is split into different parts: `td.server` and `td.vue`.  These can run and be tested independently of one another.
 The server is configured to use port 3000 by default, and the Vue project is configured to proxy all requests beginning with `/api`
 to the locally running server on port 3000.  This is configured in `td.vue/vue.config.js`
 
