@@ -55,6 +55,7 @@ const create = () => {
 
         logger.info('OWASP Threat Dragon application started');
 
+        // if this default is changed then ensure docs are updated and CI pipeline ci.yaml still works
         app.set('port', env.get().config.PORT || 3000);
 
         return app;

@@ -40,7 +40,7 @@ To create a GitHub OAuth Application:
 2. Fill out the form with the following:
 - **Application name**: A unique identifier for the application.  This is not critical, we suggest something like 'Threat Dragon'
 - **Homepage URL**: For local development, use `http://localhost:8080`
-  - Threat Dragon's server defaults to port 3000, but is configurable.  If you plan to run it on another port, be sure to use that port for the auth callback url instead!
+  - Threat Dragon's server defaults to port 3000, but this is configurable.  If you plan to run it on another port, be sure to use that port for the auth callback url instead!
 - **Application description**: A description for your OAuth app.  This is not critical, we suggest something like 'Threat Dragon for local development'
 - **Authorization callback URL**: `http://localhost:3000/api/oauth/return`
   - Again, if you plan to run Threat Dragon on another port, use that port instead!
@@ -157,27 +157,27 @@ ___
 ## Environment variable reference
 
 {:.table .table-striped}
-| Threat Dragon variables | Description | Default |
+| Threat Dragon general variables | Description | Default |
 | --- | ----------- | ------- |
-| NODE_ENV | The node environment, typically either `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode. | |
-| PORT | The port on which Threat Dragon's server listens on. | `3000`|
-| PROTOCOL | The protocol used between Threat Dragon's server and frontend (http vs https). | `http` |
+| NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
+| PORT | Defines the listening port for Threat Dragon's server | `3000`|
+| PROTOCOL | The protocol used between Threat Dragon's server and frontend, http or https | `http` |
 
 {:.table .table-striped}
 | Back-end specific variables | Description | Default |
 | --- | ----------- | ------- |
-| ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
+| ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data | |
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
-| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale. | |
+| ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale | |
 | ENV_FILE | The location of the dotenv file, if dotenv used. Can not be defined in the dotenv file itself | `.env` |
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
 | LOG_LEVEL | The server logging level: `audit` / `error` / `warn` / `info` / `debug` / `silly` | `info` |
+| LOG_MAX_FILE_SIZE | Maximum size of the back-end express server log file, in MB | `24` |
 
 **Note:** the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as a refresh token because it is tamper resistant and provides user context.
-
 
 {:.table .table-striped}
 | Desktop specific variables | Description | Default |
