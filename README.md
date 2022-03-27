@@ -81,7 +81,11 @@ register it as a GitHub application. There is a
 [step by step guide](https://www.threatdragon.com/docs/development/env.html) on how to do this.
 
 You will also have to provide other environment variables, again following
-[the documentation](https://www.threatdragon.com/docs/development/env.html) on this
+[the documentation](https://www.threatdragon.com/docs/development/env.html) on this.
+
+If running Threat Dragon locally then the front-end to server communication will
+probably need to be HTTP rather than HTTPS.
+Specify this using environment variable `SERVER_API_PROTOCOL=http` in the dotenv file or the command line.
 
 ### Run the application
 
@@ -106,6 +110,8 @@ and run from the top directory of the project:
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
+Assuming that you are using the default value of 3000 for the SERVER_API_PORT environment variable.
+
 ## Docker (from dockerhub)
 
 Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
@@ -116,6 +122,8 @@ Alternatively, you can use the `stable` tag, which will always be the latest off
 
 - `docker pull threatdragon/owasp-threat-dragon:stable`
 - `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
+
+Again assuming that you are using the default value of 3000 for the SERVER_API_PORT environment variable.
 
 ### Contributing
 
