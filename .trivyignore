@@ -4,3 +4,7 @@
 # We will need to wait for node to update
 # As a temporary mitigating factor, I've added a custom resolution for all projects
 CVE-2021-3807
+
+# ignoring this vulnerability in zlib, because there is no fix and unlikely to be fixed
+CVE-2018-25032
+
