@@ -20,6 +20,11 @@ Threat Dragon is designed to be accessible for various types of teams, with an e
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
+## Try it out
+Try the Threat Dragon version 2.0 snapshot on [our website](https://www.threatdragon.com/#/)
+
+## About Threat Dragon
+
 A good [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by
 the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
