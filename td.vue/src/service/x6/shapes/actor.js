@@ -22,7 +22,6 @@ export const Actor = Shape.Rect.define({
         }
     }
 });
-Actor.prototype.type = 'tm.Actor';
 
 Actor.prototype.updateStyle = function(color, dash, strokeWidth) {
     this.setAttrByPath('body/stroke', color);
@@ -30,6 +29,7 @@ Actor.prototype.updateStyle = function(color, dash, strokeWidth) {
     this.setAttrByPath('body/strokeDasharray', dash);
 };
 
+Actor.prototype.type = 'tm.Actor';
 
 Actor.prototype.setName = function (name) {
     this.label = name;

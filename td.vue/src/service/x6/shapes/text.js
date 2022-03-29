@@ -19,13 +19,13 @@ export const TextBlock = Shape.Rect.define({
     }
 });
 
+TextBlock.prototype.updateStyle = function () {};
+
 TextBlock.prototype.type = 'tm.Text';
 
 TextBlock.prototype.setName = function (name) {
     this.label = name;
 };
-
-TextBlock.prototype.updateStyle = function () {};
 
 export default {
     name,

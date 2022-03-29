@@ -45,12 +45,6 @@ export const Store = Shape.Rect.define({
     label: tc('threatmodel.shapes.store')
 });
 
-Store.prototype.type = 'tm.Store';
-
-Store.prototype.setName = function (name) {
-    this.label = name;
-};
-
 Store.prototype.updateStyle = function (color, dash, strokeWidth) {
     this.setAttrByPath('topLine/stroke', color);
     this.setAttrByPath('topLine/strokeWidth', strokeWidth);
@@ -58,6 +52,12 @@ Store.prototype.updateStyle = function (color, dash, strokeWidth) {
     this.setAttrByPath('bottomLine/stroke', color);
     this.setAttrByPath('bottomLine/strokeWidth', strokeWidth);
     this.setAttrByPath('bottomLine/strokeDasharray', dash);
+};
+
+Store.prototype.type = 'tm.Store';
+
+Store.prototype.setName = function (name) {
+    this.label = name;
 };
 
 export default {
