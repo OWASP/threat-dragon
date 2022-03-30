@@ -15,8 +15,8 @@ overrides:
   minimist@<0.2.1: '>=0.2.1'
 
 specifiers:
-  '@antv/x6': ^1.28.1
-  '@antv/x6-vue-shape': ^1.2.10
+  '@antv/x6': ^1.31.0
+  '@antv/x6-vue-shape': ^1.3.1
   '@babel/polyfill': ^7.11.5
   '@fortawesome/fontawesome-svg-core': ^1.2.35
   '@fortawesome/free-brands-svg-icons': ^5.15.3
@@ -78,8 +78,8 @@ specifiers:
   webpack: ^5.65.0
 
 dependencies:
-  '@antv/x6': 1.28.1
-  '@antv/x6-vue-shape': 1.2.10_@antv+x6@1.28.1+vue@2.6.14
+  '@antv/x6': 1.31.0
+  '@antv/x6-vue-shape': 1.3.1_@antv+x6@1.31.0+vue@2.6.14
   '@fortawesome/fontawesome-svg-core': 1.2.36
   '@fortawesome/free-brands-svg-icons': 5.15.4
   '@fortawesome/free-solid-svg-icons': 5.15.4
@@ -148,8 +148,8 @@ packages:
     resolution: {integrity: sha512-sAP4LldeWNz0lNzmTird3uWfFDWWTeg6V/MsmyyLR9X1idwKBWIgt/ZvinqQldJm3LecKEs1emkbquO6PCiLVQ==}
     dev: true
 
-  /@antv/x6-vue-shape/1.2.10_@antv+x6@1.28.1+vue@2.6.14:
-    resolution: {integrity: sha512-NKMHYJJ0mbQtFPK9jCnep6RwF1BuAuGUOwyXMWc/FBDIRgSDikiFdlD2ZxEiQLfNC+AUNCIsQuO+Rx0Ni4SxUg==}
+  /@antv/x6-vue-shape/1.3.1_@antv+x6@1.31.0+vue@2.6.14:
+    resolution: {integrity: sha512-GD5GWRVN2i6RuI6DLPjaTPU1IPxhI9BTUzSwCWY8RgB44VMJhBB6WoEZC3aVUYbPBnuz2ECVrvV3kAhV+eKIyg==}
     peerDependencies:
       '@antv/x6': '>=1.0.0'
       '@vue/composition-api': ^1.0.0-rc.6
@@ -158,13 +158,13 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      '@antv/x6': 1.28.1
+      '@antv/x6': 1.31.0
       vue: 2.6.14
       vue-demi: 0.7.5_vue@2.6.14
     dev: false
 
-  /@antv/x6/1.28.1:
-    resolution: {integrity: sha512-KqCSmvPFIdYXwfoD4spSFPEeJPATtts+sbdaty4D0oETie4DdQMjX9aU1ss9yU5PxdBziZu5wFqTewIb4MunMw==}
+  /@antv/x6/1.31.0:
+    resolution: {integrity: sha512-gKIQEZTTpV8CVbbu+EY8bEwECwlYBR/Bxkq58b2tXtrUI/n1C3M3afeK24usVbLci0BUSKUl4fdUtFWE1IBYGw==}
     dependencies:
       csstype: 3.0.10
       jquery: 3.6.0
