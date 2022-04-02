@@ -34,7 +34,7 @@ describe('service/migration/cells.js', () => {
         });
 
         it('calls the nodes mapper', () => {
-            expect(nodes.map).toHaveBeenCalledWith(shapes.Actor);
+            expect(nodes.map).toHaveBeenCalledWith(shapes.ActorShape);
         });
 
         it('adds the data', () => {
@@ -81,7 +81,7 @@ describe('service/migration/cells.js', () => {
         });
 
         it('calls the nodes mapper', () => {
-            expect(nodes.map).toHaveBeenCalledWith(shapes.Actor);
+            expect(nodes.map).toHaveBeenCalledWith(shapes.ActorShape);
         });
 
         it('adds the data', () => {
@@ -96,7 +96,7 @@ describe('service/migration/cells.js', () => {
         });
 
         it('calls the nodes mapper', () => {
-            expect(nodes.map).toHaveBeenCalledWith(shapes.Actor);
+            expect(nodes.map).toHaveBeenCalledWith(shapes.ActorShape);
         });
 
         it('adds the data', () => {

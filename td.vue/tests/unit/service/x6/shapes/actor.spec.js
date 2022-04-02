@@ -1,10 +1,10 @@
-import { Actor } from '@/service/x6/shapes/actor.js';
+import { ActorShape } from '@/service/x6/shapes/actor.js';
 
 describe('service/x6/shapes/actor.js', () => {
     let victim;
 
     beforeEach(() => {
-        victim = new Actor();
+        victim = new ActorShape();
     });
 
     it('can create the object', () => {

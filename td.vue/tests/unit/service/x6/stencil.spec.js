@@ -16,9 +16,9 @@ describe('service/x6/stencil.js', () => {
                 onSearch: search
             };
         });
-        shapes.Actor = jest.fn();
+        shapes.ActorShape = jest.fn();
         shapes.ProcessShape = jest.fn();
-        shapes.Store = jest.fn();
+        shapes.StoreShape = jest.fn();
         shapes.Flow = jest.fn();
         shapes.TrustBoundaryBox = jest.fn();
         shapes.TrustBoundaryCurve = jest.fn();
@@ -86,19 +86,19 @@ describe('service/x6/stencil.js', () => {
         expect(shapes.ProcessShape).toHaveBeenCalledTimes(1);
     });
 
-    it('creates an instance of Actor', () => {
-        expect(shapes.Actor).toHaveBeenCalledTimes(1);
+    it('creates an instance of ActorShape', () => {
+        expect(shapes.ActorShape).toHaveBeenCalledTimes(1);
     });
 
-    it('creates an instance of ProcessShape', () => {
-        expect(shapes.Store).toHaveBeenCalledTimes(1);
+    it('creates an instance of StoreShape', () => {
+        expect(shapes.StoreShape).toHaveBeenCalledTimes(1);
     });
 
     it('loads the entities', () => {
         expect(load).toHaveBeenCalledWith([
             expect.any(shapes.ProcessShape),
-            expect.any(shapes.Store),
-            expect.any(shapes.Actor),
+            expect.any(shapes.StoreShape),
+            expect.any(shapes.ActorShape),
             expect.any(shapes.FlowStencil)
         ], 'entities');
     });
