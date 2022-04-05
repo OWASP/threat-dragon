@@ -18,7 +18,7 @@ export const ProcessShape = Shape.Circle.define({
     label: tc('threatmodel.shapes.process'),
     attrs: {
         body: {
-            magnet: true
+            magnet: false      //needs to be disabled to grab whole shape
         }
     }
 });

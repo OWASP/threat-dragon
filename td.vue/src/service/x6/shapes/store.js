@@ -39,7 +39,7 @@ export const StoreShape = Shape.Rect.define({
         },
         body: {
             opacity: 0,
-            magnet: true
+            magnet: false      //needs to be disabled to grab whole shape
         }
     },
     label: tc('threatmodel.shapes.store')

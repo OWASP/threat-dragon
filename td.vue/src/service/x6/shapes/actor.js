@@ -18,7 +18,7 @@ export const ActorShape = Shape.Rect.define({
     label: tc('threatmodel.shapes.actor'),
     attrs: {
         body: {
-            magnet: true
+            magnet: false      //needs to be disabled to grab whole shape
         }
     }
 });
