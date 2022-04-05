@@ -50,14 +50,14 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
     },
     resizing: {
         enabled: true,
-        minWidth: 0,
-        minHeight: 0,
+        minWidth: 50,
+        minHeight: 50,
         maxWidth: Number.MAX_SAFE_INTEGER,
         maxHeight: Number.MAX_SAFE_INTEGER,
         orthogonal: true,
         restricted: false,
         autoScroll: true,
-        preserveAspectRatio: false,
+        preserveAspectRatio: true,
         allowReverse: true
     },
     mousewheel: {
