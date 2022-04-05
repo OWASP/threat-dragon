@@ -129,14 +129,14 @@ describe('service/x6/graph/graph.js', () => {
         it('enables resizing', () => {
             expect(graphRes.resizing).toEqual({
                 enabled: true,
-                minWidth: 0,
-                minHeight: 0,
+                minWidth: 50,
+                minHeight: 50,
                 maxWidth: Number.MAX_SAFE_INTEGER,
                 maxHeight: Number.MAX_SAFE_INTEGER,
                 orthogonal: true,
                 restricted: false,
                 autoScroll: true,
-                preserveAspectRatio: false,
+                preserveAspectRatio: true,
                 allowReverse: true
             });
         });
