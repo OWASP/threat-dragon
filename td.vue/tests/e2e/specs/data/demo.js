@@ -851,7 +851,7 @@ export default `
                 "targetMarker": {
                   "name": "classic"
                 },
-                "strokeDasharray": "2 2"
+                "strokeDasharray": "5 2"
               }
             },
             "width": 200,
@@ -904,7 +904,7 @@ export default `
                 "targetMarker": {
                   "name": "classic"
                 },
-                "strokeDasharray": "2 2"
+                "strokeDasharray": "5 2"
               }
             },
             "width": 200,

@@ -13,7 +13,7 @@ describe('service/x6/shapes/store.js', () => {
 
     describe('updateStyle', () => {
         const color = 'foo';
-        const dash = '3 3';
+        const dash = '5 2';
         const stroke = 1;
 
         beforeEach(() => {

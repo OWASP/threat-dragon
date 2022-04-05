@@ -39,7 +39,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('red', '2 2', 3.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('red', '5 2', 3.0);
         });
     });
 

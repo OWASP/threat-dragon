@@ -15,7 +15,7 @@ const styles = {
         color: 'red'
     },
     outOfScope: {
-        strokeDasharray: '2 2'
+        strokeDasharray: '5 2'
     },
     trustBoundary: {
         strokeDasharray: '5 5',
