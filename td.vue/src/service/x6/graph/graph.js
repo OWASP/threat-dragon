@@ -45,8 +45,21 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
     },
     selecting: {
         enabled: true,
+        pointerEvents: 'auto',
+        rubberband: true,
+        rubberNode: true,
+        rubberEdge: true,
+        multiple: true,
+        movable: true,
+        strict: true, // need strict select otherwise data flows select other elements
+        useCellGeometry: false, // disabled, otherwise multi-select does weird stuff
         showNodeSelectionBox: false,
-        showEdgeSelectionBox: true
+        showEdgeSelectionBox: false,
+        selectNodeOnMoved: false,
+        selectEdgeOnMoved: false,
+        selectCellOnMoved: false,
+        content: null,
+        handles: null
     },
     resizing: {
         enabled: true,
@@ -66,7 +79,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         modifiers: ['ctrl', 'meta']
     },
     panning: {
-        enabled: true,
+        enabled: true, // provides panning, disable scroller.pannable below
         modifiers: ['shift']
     },
     connecting: {
@@ -76,7 +89,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
     scroller: {
         enabled: true,
         autoResize: true,
-        pannable: true,
+        pannable: false, // disable because it interferes with rubberbanding, see panning above
         pageVisible: true,
         pageBreak: true
     }
