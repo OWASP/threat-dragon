@@ -121,8 +121,21 @@ describe('service/x6/graph/graph.js', () => {
         it('enables selecting', () => {
             expect(graphRes.selecting).toEqual({
                 enabled: true,
+                pointerEvents: 'auto',
+                rubberband: true,
+                rubberNode: true,
+                rubberEdge: true,
+                multiple: true,
+                movable: true,
+                strict: true,
+                useCellGeometry: false,
                 showNodeSelectionBox: false,
-                showEdgeSelectionBox: true
+                showEdgeSelectionBox: false,
+                selectNodeOnMoved: false,
+                selectEdgeOnMoved: false,
+                selectCellOnMoved: false,
+                content: null,
+                handles: null
             });
         });
 
@@ -167,7 +180,7 @@ describe('service/x6/graph/graph.js', () => {
             expect(graphRes.scroller).toEqual({
                 enabled: true,
                 autoResize: true,
-                pannable: true,
+                pannable: false,
                 pageVisible: true,
                 pageBreak: true
             });
