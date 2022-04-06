@@ -1,4 +1,3 @@
 {
-    "pluginsFile": "tests/e2e/plugins/smokes.local.js"
-  }
-  
+  "pluginsFile": "tests/e2e/plugins/smokes.local.js"
+}
