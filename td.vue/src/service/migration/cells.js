@@ -6,7 +6,7 @@ import shapes from '../x6/shapes/index.js';
 const getCellConverter = () => ({
     'tm.Actor': {
         isNode: true,
-        mapper: nodes.map(shapes.Actor)
+        mapper: nodes.map(shapes.ActorShape)
     },
     'tm.Boundary': {
         isNode: false,
@@ -22,7 +22,7 @@ const getCellConverter = () => ({
     },
     'tm.Store': {
         isNode: true,
-        mapper: nodes.map(shapes.Store)
+        mapper: nodes.map(shapes.StoreShape)
     }
 });
 

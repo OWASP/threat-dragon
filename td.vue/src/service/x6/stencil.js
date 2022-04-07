@@ -49,8 +49,8 @@ const get = (target, container) => {
 
     stencil.load([
         new shapes.ProcessShape(),
-        new shapes.Store(),
-        new shapes.Actor(),
+        new shapes.StoreShape(),
+        new shapes.ActorShape(),
         new shapes.FlowStencil()
     ], 'entities');
 

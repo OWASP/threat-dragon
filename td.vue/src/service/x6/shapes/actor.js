@@ -10,7 +10,7 @@ const name = 'actor';
  * Attrs can use standard SVG attributes (in camelCase)
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
-export const Actor = Shape.Rect.define({
+export const ActorShape = Shape.Rect.define({
     height: 80,
     width: 150,
     constructorName: name,
@@ -18,24 +18,24 @@ export const Actor = Shape.Rect.define({
     label: tc('threatmodel.shapes.actor'),
     attrs: {
         body: {
-            magnet: true
+            magnet: false      //needs to be disabled to grab whole shape
         }
     }
 });
 
-Actor.prototype.updateStyle = function(color, dash, strokeWidth) {
+ActorShape.prototype.updateStyle = function(color, dash, strokeWidth) {
     this.setAttrByPath('body/stroke', color);
     this.setAttrByPath('body/strokeWidth', strokeWidth);
     this.setAttrByPath('body/strokeDasharray', dash);
 };
 
-Actor.prototype.type = 'tm.Actor';
+ActorShape.prototype.type = 'tm.Actor';
 
-Actor.prototype.setName = function (name) {
+ActorShape.prototype.setName = function (name) {
     this.label = name;
 };
 
 export default {
-    Actor,
-    name
+    name,
+    ActorShape
 };
