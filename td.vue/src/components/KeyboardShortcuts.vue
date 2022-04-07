@@ -39,6 +39,10 @@ export default {
                     action: this.$t('threatmodel.shortcuts.delete.action')
                 },
                 {
+                    shortcut: this.$t('threatmodel.shortcuts.pan.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.pan.action')
+                },
+                {
                     shortcut: this.$t('threatmodel.shortcuts.multiSelect.shortcut'),
                     action: this.$t('threatmodel.shortcuts.multiSelect.action')
                 },
