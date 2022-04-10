@@ -42,7 +42,7 @@ specifiers:
   core-js: ^3.6.5
   dotenv: ^8.2.0
   electron: ^17.0.0
-  electron-builder: ^22.14.13
+  electron-builder: ^23.0.03
   electron-builder-notarize: ^1.4.0
   electron-devtools-installer: ^3.2.0
   eslint: ^6.7.2
@@ -114,8 +114,8 @@ devDependencies:
   chromedriver: 90.0.1
   codecov: 3.8.3
   electron: 17.0.0
-  electron-builder: 22.14.13
-  electron-builder-notarize: 1.4.0_electron-builder@22.14.13
+  electron-builder: 23.0.3
+  electron-builder-notarize: 1.4.0_electron-builder@23.0.3
   electron-devtools-installer: 3.2.0
   eslint: 6.8.0
   eslint-plugin-import: 2.25.3_eslint@6.8.0
@@ -284,7 +284,7 @@ packages:
       '@babel/helper-module-imports': 7.16.0
       '@babel/helper-plugin-utils': 7.14.5
       '@babel/traverse': 7.16.3
-      debug: 4.3.3
+      debug: 4.3.4
       lodash.debounce: 4.0.8
       resolve: 1.20.0
       semver: 6.3.0
@@ -1412,9 +1412,24 @@ packages:
     dependencies:
       '@malept/cross-spawn-promise': 1.1.1
       asar: 3.1.0
-      debug: 4.3.3
+      debug: 4.3.4
       dir-compare: 2.4.0
       fs-extra: 9.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@electron/universal/1.2.0:
+    resolution: {integrity: sha512-eu20BwNsrMPKoe2bZ3/l9c78LclDvxg3PlVXrQf3L50NaUuW5M59gbPytI+V4z7/QMrohUHetQaU0ou+p1UG9Q==}
+    engines: {node: '>=8.6'}
+    dependencies:
+      '@malept/cross-spawn-promise': 1.1.1
+      asar: 3.1.0
+      debug: 4.3.4
+      dir-compare: 2.4.0
+      fs-extra: 9.1.0
+      minimatch: 3.0.4
+      plist: 3.0.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1675,7 +1690,7 @@ packages:
     resolution: {integrity: sha512-9QOtNffcOF/c1seMCDnjckb3R9WHcG34tky+FHpNKKCW0wc/scYLwMtO+ptyGUfMW0/b/n4qRiALlaFHc9Oj7Q==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
       fs-extra: 9.1.0
       lodash: 4.17.21
       tmp-promise: 3.0.3
@@ -1833,7 +1848,7 @@ packages:
   /@pm2/pm2-version-check/1.0.4:
     resolution: {integrity: sha512-SXsM27SGH3yTWKc2fKR4SYNxsmnvuBQ9dd6QHtEWmiZ/VqaOYPAIlS8+vMcn27YLtAEBGvNRSh3TPNvtjZgfqA==}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2263,7 +2278,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 4.33.0
       '@typescript-eslint/visitor-keys': 4.33.0
-      debug: 4.3.3
+      debug: 4.3.4
       globby: 11.0.4
       is-glob: 4.0.3
       semver: 7.3.5
@@ -2654,7 +2669,7 @@ packages:
       source-map: 0.6.1
       vue-template-es2015-compiler: 1.9.1
     optionalDependencies:
-      prettier: 2.5.1
+      prettier: 2.6.2
     dev: true
 
   /@vue/eslint-config-standard/5.1.2_2737e747d73859ae58b478a9e573b246:
@@ -3095,7 +3110,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3237,6 +3252,10 @@ packages:
     resolution: {integrity: sha512-ql93vEUq6WsstGXD+SBLSIQw6SNnhbDEM0swzgugytMxLp3rT24Ag/jcC80ZHxiPRTdew1niuR7P3/FCrDqIjw==}
     dev: true
 
+  /app-builder-bin/4.0.0:
+    resolution: {integrity: sha512-xwdG0FJPQMe0M0UA4Tz0zEB8rBJTRA5a476ZawAqiBkMv16GRK5xpXThOjMaEOFnZ6zabejjG4J3da0SXG63KA==}
+    dev: true
+
   /app-builder-lib/22.14.13:
     resolution: {integrity: sha512-SufmrtxU+D0Tn948fjEwAOlCN9757UXLkzzTWXMwZKR/5hisvgqeeBepWfphMIE6OkDGz0fbzEhL1P2Pty4XMg==}
     engines: {node: '>=14.0.0'}
@@ -3250,10 +3269,43 @@ packages:
       builder-util: 22.14.13
       builder-util-runtime: 8.9.2
       chromium-pickle-js: 0.2.0
-      debug: 4.3.3
+      debug: 4.3.4
       ejs: 3.1.6
       electron-osx-sign: 0.5.0
       electron-publish: 22.14.13
+      form-data: 4.0.0
+      fs-extra: 10.0.0
+      hosted-git-info: 4.1.0
+      is-ci: 3.0.1
+      isbinaryfile: 4.0.8
+      js-yaml: 4.1.0
+      lazy-val: 1.0.5
+      minimatch: 3.0.4
+      read-config-file: 6.2.0
+      sanitize-filename: 1.6.3
+      semver: 7.3.5
+      temp-file: 3.4.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /app-builder-lib/23.0.3:
+    resolution: {integrity: sha512-1qrtXYHXJfXhzJnMtVGjIva3067F1qYQubl2oBjI61gCBoCHvhghdYJ57XxXTQQ0VxnUhg1/Iaez87uXp8mD8w==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@develar/schema-utils': 2.6.5
+      '@electron/universal': 1.2.0
+      '@malept/flatpak-bundler': 0.4.0
+      7zip-bin: 5.1.1
+      async-exit-hook: 2.0.1
+      bluebird-lst: 1.0.9
+      builder-util: 23.0.2
+      builder-util-runtime: 9.0.0
+      chromium-pickle-js: 0.2.0
+      debug: 4.3.4
+      ejs: 3.1.6
+      electron-osx-sign: 0.6.0
+      electron-publish: 23.0.2
       form-data: 4.0.0
       fs-extra: 10.0.0
       hosted-git-info: 4.1.0
@@ -4196,7 +4248,17 @@ packages:
     resolution: {integrity: sha512-rhuKm5vh7E0aAmT6i8aoSfEjxzdYEFX7zDApK+eNgOhjofnWb74d9SRJv0H/8nsgOkos0TZ4zxW0P8J4N7xQ2A==}
     engines: {node: '>=12.0.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
+      sax: 1.2.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /builder-util-runtime/9.0.0:
+    resolution: {integrity: sha512-SkpEtSmTkREDHRJnxKEv43aAYp8sYWY8fxYBhGLBLOBIRXeaIp6Kv3lBgSD7uR8jQtC7CA659sqJrpSV6zNvSA==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      debug: 4.3.4
       sax: 1.2.4
     transitivePeerDependencies:
       - supports-color
@@ -4213,7 +4275,31 @@ packages:
       builder-util-runtime: 8.9.2
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.3
+      debug: 4.3.4
+      fs-extra: 10.0.0
+      http-proxy-agent: 5.0.0
+      https-proxy-agent: 5.0.0
+      is-ci: 3.0.1
+      js-yaml: 4.1.0
+      source-map-support: 0.5.21
+      stat-mode: 1.0.0
+      temp-file: 3.4.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /builder-util/23.0.2:
+    resolution: {integrity: sha512-HaNHL3axNW/Ms8O1mDx3I07G+ZnZ/TKSWWvorOAPau128cdt9S+lNx5ocbx8deSaHHX4WFXSZVHh3mxlaKJNgg==}
+    dependencies:
+      '@types/debug': 4.1.7
+      '@types/fs-extra': 9.0.13
+      7zip-bin: 5.1.1
+      app-builder-bin: 4.0.0
+      bluebird-lst: 1.0.9
+      builder-util-runtime: 9.0.0
+      chalk: 4.1.2
+      cross-spawn: 7.0.3
+      debug: 4.3.4
       fs-extra: 10.0.0
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.0
@@ -5566,6 +5652,31 @@ packages:
       supports-color: 6.1.0
     dev: true
 
+  /debug/4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+    dev: true
+
+  /debug/4.3.4_supports-color@6.1.0:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+      supports-color: 6.1.0
+    dev: true
+
   /decamelize/1.2.0:
     resolution: {integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=}
     engines: {node: '>=0.10.0'}
@@ -5829,13 +5940,28 @@ packages:
       iconv-lite: 0.6.3
       js-yaml: 4.1.0
     optionalDependencies:
-      dmg-license: 1.0.10
+      dmg-license: 1.0.11
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /dmg-license/1.0.10:
-    resolution: {integrity: sha512-SVeeyiOeinV5JCPHXMdKOgK1YVbak/4+8WL2rBnfqRYpA5FaeFaQnQWb25x628am1w70CbipGDv9S51biph63A==}
+  /dmg-builder/23.0.3:
+    resolution: {integrity: sha512-mBYrHHnSM5PC656TDE+xTGmXIuWHAGmmRfyM+dV0kP+AxtwPof4pAXNQ8COd0/exZQ4dqf72FiPS3B9G9aB5IA==}
+    dependencies:
+      app-builder-lib: 23.0.3
+      builder-util: 23.0.2
+      builder-util-runtime: 9.0.0
+      fs-extra: 10.0.0
+      iconv-lite: 0.6.3
+      js-yaml: 4.1.0
+    optionalDependencies:
+      dmg-license: 1.0.11
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /dmg-license/1.0.11:
+    resolution: {integrity: sha512-ZdzmqwKmECOWJpqefloC5OJy1+WZBBse5+MR88z9g9Zn4VY+WYUkAyojmhzJckH5YbbZGcYIuGAkY5/Ys5OM2Q==}
     engines: {node: '>=8'}
     os: [darwin]
     deprecated: 'Disk image license agreements are deprecated by Apple and will probably be removed in a future macOS release. Discussion at: https://github.com/argv-minus-one/dmg-license/issues/11'
@@ -6049,13 +6175,13 @@ packages:
       jake: 10.8.2
     dev: true
 
-  /electron-builder-notarize/1.4.0_electron-builder@22.14.13:
+  /electron-builder-notarize/1.4.0_electron-builder@23.0.3:
     resolution: {integrity: sha512-5CPVlzkG+SofK3VU3E6HKmdXW6Uu6q5WWvzXX6diLAlAy9qJsR0n99aNztVKKsPl6yjEbvT+MUl4ci0YCwOBRA==}
     engines: {node: '>=8'}
     peerDependencies:
       electron-builder: '>= 20.44.4'
     dependencies:
-      electron-builder: 22.14.13
+      electron-builder: 23.0.3
       electron-notarize: 1.1.1
       js-yaml: 3.14.1
       read-pkg-up: 7.0.1
@@ -6074,6 +6200,27 @@ packages:
       builder-util-runtime: 8.9.2
       chalk: 4.1.2
       dmg-builder: 22.14.13
+      fs-extra: 10.0.0
+      is-ci: 3.0.1
+      lazy-val: 1.0.5
+      read-config-file: 6.2.0
+      update-notifier: 5.1.0
+      yargs: 17.3.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /electron-builder/23.0.3:
+    resolution: {integrity: sha512-0lnTsljAgcOMuIiOjPcoFf+WxOOe/O04hZPgIvvUBXIbz3kolbNu0Xdch1f5WuQ40NdeZI7oqs8Eo395PcuGHQ==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    dependencies:
+      '@types/yargs': 17.0.8
+      app-builder-lib: 23.0.3
+      builder-util: 23.0.2
+      builder-util-runtime: 9.0.0
+      chalk: 4.1.2
+      dmg-builder: 23.0.3
       fs-extra: 10.0.0
       is-ci: 3.0.1
       lazy-val: 1.0.5
@@ -6128,12 +6275,39 @@ packages:
       plist: 3.0.4
     dev: true
 
+  /electron-osx-sign/0.6.0:
+    resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
+    engines: {node: '>=4.0.0'}
+    hasBin: true
+    dependencies:
+      bluebird: 3.7.2
+      compare-version: 0.1.2
+      debug: 2.6.9
+      isbinaryfile: 3.0.3
+      minimist: 1.2.5
+      plist: 3.0.4
+    dev: true
+
   /electron-publish/22.14.13:
     resolution: {integrity: sha512-0oP3QiNj3e8ewOaEpEJV/o6Zrmy2VarVvZ/bH7kyO/S/aJf9x8vQsKVWpsdmSiZ5DJEHgarFIXrnO0ZQf0P9iQ==}
     dependencies:
       '@types/fs-extra': 9.0.13
       builder-util: 22.14.13
       builder-util-runtime: 8.9.2
+      chalk: 4.1.2
+      fs-extra: 10.0.0
+      lazy-val: 1.0.5
+      mime: 2.6.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /electron-publish/23.0.2:
+    resolution: {integrity: sha512-8gMYgWqv96lc83FCm85wd+tEyxNTJQK7WKyPkNkO8GxModZqt1GO8S+/vAnFGxilS/7vsrVRXFfqiCDUCSuxEg==}
+    dependencies:
+      '@types/fs-extra': 9.0.13
+      builder-util: 23.0.2
+      builder-util-runtime: 9.0.0
       chalk: 4.1.2
       fs-extra: 10.0.0
       lazy-val: 1.0.5
@@ -6968,7 +7142,6 @@ packages:
     engines: {'0': node >=0.6.0}
     requiresBuild: true
     dev: true
-    optional: true
 
   /eyes/0.1.8:
     resolution: {integrity: sha1-Ys8SAjTGg3hdkCNIqADvPgzCC8A=}
@@ -7516,7 +7689,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       data-uri-to-buffer: 3.0.1
-      debug: 4.3.3
+      debug: 4.3.4
       file-uri-to-path: 2.0.0
       fs-extra: 8.1.0
       ftp: 0.3.10
@@ -8050,7 +8223,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8061,7 +8234,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8128,7 +8301,7 @@ packages:
     engines: {node: '>= 6.0.0'}
     dependencies:
       agent-base: 5.1.1
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8883,7 +9056,7 @@ packages:
     resolution: {integrity: sha512-R47KzMtDJH6X4/YW9XTx+jrLnZnscW4VpNN+1PViSYTejLVPWv7oov+Duf8YQSPyVRUvueQqz1TcsC6mooZTXw==}
     engines: {node: '>=6'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
       istanbul-lib-coverage: 2.0.5
       make-dir: 2.1.0
       rimraf: 2.7.1
@@ -11110,7 +11283,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
       get-uri: 3.0.2
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.0
@@ -11881,8 +12054,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /prettier/2.5.1:
-    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
+  /prettier/2.6.2:
+    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     requiresBuild: true
@@ -11970,7 +12143,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.0
       lru-cache: 5.1.1
@@ -12533,7 +12706,7 @@ packages:
   /require-in-the-middle/5.1.0:
     resolution: {integrity: sha512-M2rLKVupQfJ5lf9OvqFGIT+9iVLnTmjgbOmpil12hiSQNn5zJTKGPoIisETNjfK+09vP3rpm1zJajmErpr2sEQ==}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
       module-details-from-path: 1.0.3
       resolve: 1.20.0
     transitivePeerDependencies:
@@ -13180,7 +13353,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
       socks: 2.6.1
     transitivePeerDependencies:
       - supports-color
@@ -13278,7 +13451,7 @@ packages:
   /spdy-transport/3.0.0_supports-color@6.1.0:
     resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
     dependencies:
-      debug: 4.3.3_supports-color@6.1.0
+      debug: 4.3.4_supports-color@6.1.0
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -13292,7 +13465,7 @@ packages:
     resolution: {integrity: sha512-r46gZQZQV+Kl9oItvl1JZZqJKGr+oEkB08A6BzkiR7593/7IbtuncXHd2YoYeTsG4157ZssMu9KYvUHLcjcDoA==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      debug: 4.3.3_supports-color@6.1.0
+      debug: 4.3.4_supports-color@6.1.0
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -13643,7 +13816,7 @@ packages:
     resolution: {integrity: sha512-MvjXzkz/BOfyVDkG0oFOtBxHX2u3gKbMHIF/dXblZsgD3BWOFLmHovIpZY7BykJdAjcqRCBi1WYBNdEC9yI7vg==}
     engines: {node: '>= 8.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -14626,7 +14799,7 @@ packages:
     dependencies:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
-      extsprintf: 1.3.0
+      extsprintf: 1.4.1
     dev: true
 
   /verror/1.10.1:
