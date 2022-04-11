@@ -6,7 +6,6 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
-const isWindows = process.platform === 'win32';
 const { shell } = require('electron');
 
 // Scheme must be registered before the app is ready
@@ -19,8 +18,7 @@ const menuTemplate = [
     {
         label: 'File',
         submenu: [
-            { role: 'close' },
-            isMacOS ? { } : { role: 'quit' }
+            { role: 'close' }
         ]
     },
     { role: 'editMenu' },
