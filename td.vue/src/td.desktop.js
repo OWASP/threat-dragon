@@ -1,14 +1,76 @@
 'use strict';
 
-import { app, protocol, BrowserWindow } from 'electron';
+import { app, protocol, BrowserWindow, Menu } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const isMacOS = process.platform === 'darwin';
+const isWindows = process.platform === 'win32';
+const { shell } = require('electron');
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
+
+const menuTemplate = [
+    ...(isMacOS ? [{ role: 'appMenu' }] : []),
+    {
+        label: 'File',
+        submenu: [
+            { role: 'close' },
+            isMacOS ? { } : { role: 'quit' }
+        ]
+    },
+    { role: 'editMenu' },
+    { role: 'viewMenu' },
+    { role: 'windowMenu' },
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'Documentation',
+                click: async () => {
+                    await shell.openExternal('https://www.threatdragon.com/docs/');
+                }
+            },
+            {
+                label: 'Visit us at OWASP',
+                click: async () => {
+                    await shell.openExternal('https://owasp.org/www-project-threat-dragon/');
+                }
+            },
+            {
+                label: 'OWASP Cheat Sheets',
+                click: async () => {
+                    await shell.openExternal('https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html');
+                }
+            },
+            { type: 'separator' },
+            {
+                label: 'Visit us on GitHub',
+                click: async () => {
+                    await shell.openExternal('https://github.com/owasp/threat-dragon/');
+                }
+            },
+            {
+                label: 'Submit an Issue',
+                click: async () => {
+                    await shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
+                }
+            },
+            {
+                label: 'Check for updates ...',
+                click: async () => {
+                    await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
+                }
+            },
+            { type: 'separator' },
+            { role: 'about' }
+        ]
+    }
+];
 
 async function createWindow() {
     // Create the browser window.
@@ -55,6 +117,8 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
+
     if (isDevelopment && !process.env.IS_TEST) {
         // Install Vue Devtools
         try {
