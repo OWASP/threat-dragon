@@ -115,7 +115,7 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 
     if (isDevelopment && !process.env.IS_TEST) {
         // Install Vue Devtools

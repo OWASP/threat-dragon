@@ -11,8 +11,6 @@ log/
 node_modules/
 nyc_output/
 */nyc_output/
-td.angular/
-td.desktop/
 ThreatDragonModels/
 utils/
 .vscode/
