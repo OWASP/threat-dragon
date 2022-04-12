@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Menu, dialog } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
@@ -18,6 +18,31 @@ const menuTemplate = [
     {
         label: 'File',
         submenu: [
+            {
+                label: 'Open (TBD)',
+                click: async () => {
+                    dialog.showErrorBox( 'Not yet implemented', 'Open file system dialog TBD' )
+                }
+            },
+            {
+                label: 'Save (TBD)',
+                click: async () => {
+                    dialog.showErrorBox( 'Not yet implemented', 'Save file system dialog TBD' )
+                }
+            },
+            {
+                label: 'Save As (TBD)',
+                click: async () => {
+                    dialog.showErrorBox( 'Not yet implemented', 'Save As file system dialog TBD' )
+                }
+            },
+            {
+                label: 'Close Model (TBD)',
+                click: async () => {
+                    dialog.showErrorBox( 'Not yet implemented', 'Close Model file system dialog TBD' )
+                }
+            },
+            { type: 'separator' },
             { role: 'close' }
         ]
     },
