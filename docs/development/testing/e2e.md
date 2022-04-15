@@ -50,12 +50,12 @@ This suite of tests uses cypress plugin file `cypress.local.json` which calls `t
 
 ### Run test:e2e-ci
 This suite of tests is similar to `test:e2e` but is run in headless mode, so that it can be used for the CI pipeline.
-It uses the same cypress plugin file `cypress.json` which calls `td.vue/tests/e2e/plugins/index.js`.
+It uses the same cypress plugin file as `test:e2e`, `cypress.json`, which calls `td.vue/tests/e2e/plugins/index.js`.
 
-It is run against an existing application on `http://localhost:3000/`, so port 3000 rather than 8080.
-The suite of tests from is loaded from `tests/e2e/specs`.
+It is run against an existing application on `http://localhost:3000/`, using port 3000 rather than 8080.
+The suite of tests is loaded from `tests/e2e/specs`.
 
-For local testing of this script, an instance of the docker file can be used to map ports 3000:
+For local testing of this script, an instance of the docker file can be used to map port 3000:
 - map external port 3000 from directory `td.vue` using `docker run -it -p 3000:3000 -v $(pwd)/../.env:/app/.env owasp-threat-dragon:dev`
 - from directory `td.vue` invoke `npm run test:e2e-ci`
 
@@ -83,9 +83,9 @@ The browserstack configuration file is `browserstack.smokes.json`, and the suite
 This suite of tests is similar to `test:e2e-smokes` but does not use browserstack for various browser tests - just chrome.
 The target is an existing application running at `http://localhost:8080/`.
 
-To run these tests there first has to be a running web application, similar to `test:e2e:local` above:
-- from directory `td.vue` invoke `npm run dev`
-- wait for the web app to be accessible on `http://localhost:8080/`
+To run these tests there first has to be a web application on `http://localhost:8080/`:
+- from top directory run `docker run -it -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- check the web app is accessible on `http://localhost:8080/` and docs on `http://localhost:8080/docs/`
 
 From a separate terminal in directory `td.vue` invoke:
 - `npm run test:e2e-smokes:local`
@@ -101,7 +101,8 @@ It is run against an existing application on `http://localhost:3000/`, using por
 The suite of tests from is loaded from `tests/e2e/smokes`.
 
 For local testing of this script, an instance of the docker file can be used to map ports 3000:
-- map external port 3000 from directory `td.vue` using `docker run -it -p 3000:3000 -v $(pwd)/../.env:/app/.env owasp-threat-dragon:dev`
+- from top directory run `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- check the web app is accessible on `http://localhost:3000/` and docs on `http://localhost:3000/docs/`
 - from directory `td.vue` invoke `npm run test:e2e-ci-smokes`
 
 ## Cross Browser Testing
