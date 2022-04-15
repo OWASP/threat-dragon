@@ -7,10 +7,14 @@ group: Actions
 ---
 # Deploy
 
-The deploy action is run on any "push" to the main branch (this includes merged pull requests), and serves as Threat Dragon's continuous delivery pipeline.  
+The deploy action is run on any "push" to the main branch (this includes merged pull requests),
+and serves as Threat Dragon's continuous delivery pipeline.
 
 ## Build
-This workflow builds and pushes the Docker image with the `latest` tag.  The `latest` tag is not consider stable, and may be broken at times.  While we do our best to maintain a fully functioning main branch, mistakes will happen.  Additionally, the full end to end test suite is only run once per day, so errors may not be immediately available.
+This workflow builds and pushes the Docker image with the `latest` tag.
+The `latest` tag is not consider stable, and may be broken at times.
+While we do our best to maintain a fully functioning main branch, mistakes will happen.
+Additionally, the full end to end test suite is only run once per day, so errors may not be immediately available.
 
 ## Deploy
 The latest image is deployed to [https://www.threatdragon.com/](https://www.threatdragon.com/).

@@ -31,7 +31,9 @@ ___
 ___
 
 ## Create A GitHub OAuth Application
-This web application uses GitHub OAuth applications as the authentication mechanism.  There is [work](https://github.com/OWASP/threat-dragon/issues/1) [planned](https://github.com/OWASP/threat-dragon/issues/9) to add [additional](https://github.com/OWASP/threat-dragon/issues/61) authentication providers in the future.
+This web application uses GitHub OAuth applications as the authentication mechanism.
+There is [work](https://github.com/OWASP/threat-dragon/issues/1) [planned](https://github.com/OWASP/threat-dragon/issues/9)
+to add [additional](https://github.com/OWASP/threat-dragon/issues/61) authentication providers in the future.
 
 There is an [open issue](https://github.com/OWASP/threat-dragon/issues/14) with regards to GitHub and OAuth permissions.
 

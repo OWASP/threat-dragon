@@ -6,9 +6,13 @@ path: /actions/ci
 group: Actions
 ---
 # CI Action
-The CI Action is Threat Dragon's continuous integration pipeline.  This pipeline is run on all branches and serves as a sanity check.  When a pull request is opened, each step of this pipeline is added as a check to the pull request.  This gives the author and reviewers an opportunity to understand the state of the code.
+The CI Action is Threat Dragon's continuous integration pipeline.
+This pipeline is run on all branches and serves as a sanity check.
+When a pull request is opened, each step of this pipeline is added as a check to the pull request.
+This gives the author and reviewers an opportunity to understand the state of the code.
 
-Because this action uses a docker image that is pushed to a remote repository for testing, there is a concurrency group that prevents concurrent runs of the same action.
+Because this action uses a docker image that is pushed to a remote repository for testing,
+there is a concurrency group that prevents concurrent runs of the same action.
 
 ## Steps
 
