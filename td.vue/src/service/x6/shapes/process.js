@@ -11,12 +11,27 @@ const name = 'process';
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
 export const ProcessShape = Shape.Circle.define({
-    height: 200,
-    width: 200,
+    width: 100,
+    height: 100,
     constructorName: name,
     zIndex: 0,
     label: tc('threatmodel.shapes.process'),
+    markup: [
+        ...Shape.Circle.getMarkup(),
+        // Prevent the remove button from disappearing when the cursor
+        // leaves the circle by having an invisible rectangle slightly larger
+        // than the main circle
+        {
+            tagName: 'rect',
+            selector: 'customBoundary'
+        }
+    ],
     attrs: {
+        customBoundary: {
+            opacity: 0,
+            refWidth: '110%',   // intentionally over-sized for usability
+            refHeight: '110%'
+        },
         body: {
             magnet: false      //needs to be disabled to grab whole shape
         }
