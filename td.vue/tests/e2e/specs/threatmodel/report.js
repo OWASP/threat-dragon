@@ -19,7 +19,7 @@ describe('report', () => {
     
             cy.get('.entity-title')
                 .contains('Web Application Config (Store)')
-                .should('not.be.visible');
+                .should('not.be','visible');
     
             cy.get('#show_outofscope').click({ force: true });
         });
@@ -33,7 +33,7 @@ describe('report', () => {
     
             cy.get('[data-test-id="Database"]')
                 .contains('Unauthorised access')
-                .should('not.be.visible');
+                .should('not.be','visible');
     
             cy.get('#show_mitigated').click({ force: true });
         });
@@ -45,7 +45,7 @@ describe('report', () => {
             cy.get('#show_models').click({ force: true });
     
             cy.get('.td-readonly-diagram')
-                .should('not.be.visible');
+                .should('not.be','visible');
     
             cy.get('#show_models').click({ force: true });
         });
@@ -58,7 +58,7 @@ describe('report', () => {
             cy.get('#show_branding').click({ force: true });
     
             cy.get('.td-brand-text')
-                .should('not.be.visible');
+                .should('not.be','visible');
     
             cy.get('#show_branding').click({ force: true });
         });

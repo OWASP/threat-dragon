@@ -2,7 +2,6 @@
   "name": "threat-dragon-frontend",
   "productName": "Threat Dragon",
   "version": "2.0.0",
-  "build": " (development)",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -59,7 +58,7 @@
   "devDependencies": {
     "@babel/polyfill": "^7.11.5",
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-e2e-cypress": "^4.5.13",
+    "@vue/cli-plugin-e2e-cypress": "^5.0.4",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
@@ -73,6 +72,7 @@
     "browserstack-cypress-cli": "^1.8.1",
     "chromedriver": "^90.0.0",
     "codecov": "^3.8.2",
+    "cypress": "^9.5.4",
     "electron": "^17.0.0",
     "electron-builder": "^23.0.03",
     "electron-builder-notarize": "^1.4.0",

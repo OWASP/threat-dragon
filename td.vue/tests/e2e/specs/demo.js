@@ -30,7 +30,7 @@ describe('demo', () => {
     it('can edit the model', () => {
         cy.get('#tm-edit-btn').click();
         cy.url().should('contain', '/edit');
-        cy.get('#description').should('be', 'visible');
+        cy.get('#description').should('be.visible');
         cy.get('button').contains('Cancel').click();
     });
 

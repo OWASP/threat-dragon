@@ -8,7 +8,7 @@ describe('logout', () => {
     });
 
     it('does not show the logged in text', () => {
-        cy.get('.logged-in-as').should('not.be.visible');
+        cy.get('.logged-in-as').should('not.be','visible');
     });
 
     it('should redirect to the home page', () => {
