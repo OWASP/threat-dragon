@@ -56,7 +56,7 @@ It is run against an existing application on `http://localhost:3000/`, using por
 The suite of tests is loaded from `tests/e2e/specs`.
 
 For local testing of this script, an instance of the docker file can be used to map port 3000:
-- map external port 3000 from directory `td.vue` using `docker run -it -p 3000:3000 -v $(pwd)/../.env:/app/.env owasp-threat-dragon:dev`
+- from top directory run `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - from directory `td.vue` invoke `npm run test:e2e-ci`
 
 ### Run test:e2e-nightly

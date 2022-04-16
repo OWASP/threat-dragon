@@ -24,3 +24,6 @@ td.server/*.log
 app.log
 audit.log
 
+# Cypress introduction files
+td.vue/cypress
+
