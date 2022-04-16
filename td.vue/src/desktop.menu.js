@@ -17,6 +17,12 @@ export const menuTemplate = [
                 }
             },
             {
+                role: 'recentdocuments',
+                submenu: [
+                    { role: 'clearrecentdocuments' }
+                ]
+            },
+            {
                 label: 'Save (TBD)',
                 click() {
                     dialog.showErrorBox( 'Not yet implemented', 'Save file system dialog TBD' );
