@@ -2,6 +2,7 @@
   "name": "threat-dragon-frontend",
   "productName": "Threat Dragon",
   "version": "2.0.0",
+  "build": " (development)",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
