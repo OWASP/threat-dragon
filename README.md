@@ -110,9 +110,9 @@ first configure your [environment using dotenv](https://www.threatdragon.com/doc
 and run from the top directory of the project:
 
 - `docker build -t owasp-threat-dragon:dev .`
-- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 
-Assuming that you are using the default value of 3000 for the SERVER_API_PORT environment variable.
+Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ## Docker (from dockerhub)
 
@@ -123,9 +123,9 @@ Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `
 Alternatively, you can use the `stable` tag, which will always be the latest official release.
 
 - `docker pull threatdragon/owasp-threat-dragon:stable`
-- `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
+- `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
 
-Again assuming that you are using the default value of 3000 for the SERVER_API_PORT environment variable.
+Assuming that you are using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ### Contributing
 

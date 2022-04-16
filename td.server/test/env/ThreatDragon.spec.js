@@ -29,9 +29,9 @@ describe('env/ThreatDragon.js', () => {
         expect(isRequired).to.be.false;
     });
 
-    it('has the optional property SERVER_API_PORT', () => {
+    it('has the optional property PORT', () => {
         const isRequired = tdEnv.properties
-            .find(x => x.key === 'SERVER_API_PORT')
+            .find(x => x.key === 'PORT')
             .required;
         expect(isRequired).to.be.false;
     });

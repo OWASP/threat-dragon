@@ -2,7 +2,7 @@ const path = require('path');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
-const serverApiPort = process.env.SERVER_API_PORT || '3000';
+const serverApiPort = process.env.PORT || '3000';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
 module.exports = {

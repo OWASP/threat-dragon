@@ -56,7 +56,7 @@ It is run against an existing application on `http://localhost:3000/`, using por
 The suite of tests is loaded from `tests/e2e/specs`.
 
 For local testing of this script, an instance of the docker file can be used to map port 3000:
-- from top directory run `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - from directory `td.vue` invoke `npm run test:e2e-ci`
 
 ### Run test:e2e-nightly
@@ -84,7 +84,7 @@ This suite of tests is similar to `test:e2e-smokes` but does not use browserstac
 The target is an existing application running at `http://localhost:8080/`.
 
 To run these tests there first has to be a web application on `http://localhost:8080/`:
-- from top directory run `docker run -it -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- from top directory run `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - check the web app is accessible on `http://localhost:8080/` and docs on `http://localhost:8080/docs/`
 
 From a separate terminal in directory `td.vue` invoke:
@@ -101,7 +101,7 @@ It is run against an existing application on `http://localhost:3000/`, using por
 The suite of tests from is loaded from `tests/e2e/smokes`.
 
 For local testing of this script, an instance of the docker file can be used to map ports 3000:
-- from top directory run `docker run -it -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - check the web app is accessible on `http://localhost:3000/` and docs on `http://localhost:3000/docs/`
 - from directory `td.vue` invoke `npm run test:e2e-ci-smokes`
 

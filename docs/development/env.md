@@ -166,8 +166,8 @@ ___
 | --- | ----------- | ------- |
 | ENV_FILE | The location of a dotenv file, if dotenv is used. Exported as it needs to be accessed before the dotenv file is read | `.env` |
 | NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
-| SERVER_API_PORT | Defines the listening port for Threat Dragon's server | `3000`|
-| SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, http or https | `http` |
+| PORT | Defines the listening port for Threat Dragon's server, used by Heroku | `3000`|
+| SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, used by Heroku (http/https) | `http` |
 
 {:.table .table-striped}
 | Back-end specific variables | Description | Default |
