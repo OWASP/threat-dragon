@@ -2,7 +2,7 @@ name: Browserstack End to End Tests
 concurrency: browserstack_e2e
 on:
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 8 40 * *'
 jobs:
   browserstack_e2e:
     runs-on: ubuntu-latest
