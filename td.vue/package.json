@@ -29,6 +29,7 @@
   "author": "OWASP",
   "license": "Apache-2.0",
   "homepage": "https://www.threatdragon.com/docs/",
+  "build": "-demo",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
