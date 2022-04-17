@@ -48,7 +48,7 @@
         "parallels": "5",
         "npm_dependencies": {
             "@vue/cli-plugin-babel": "~4.5.0",
-            "cypress": "^7.3.0"
+            "cypress": "^9.5.4"
         },
         "package_config_options": {},
         "headless": true
