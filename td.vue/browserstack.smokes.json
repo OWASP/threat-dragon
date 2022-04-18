@@ -23,6 +23,20 @@
         },
         {
             "browser": "chrome",
+            "os": "Windows 11",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "Windows 11",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "chrome",
             "os": "OS X Big Sur",
             "versions": [
                 "latest"
@@ -30,6 +44,13 @@
         },
         {
             "browser": "firefox",
+            "os": "OS X Big Sur",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "safari",
             "os": "OS X Big Sur",
             "versions": [
                 "latest"

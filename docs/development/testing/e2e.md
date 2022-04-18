@@ -113,16 +113,15 @@ We are currently testing Chrome, Firefox and Edge on Windows 10, as well as Chro
 The versions tested are the latest stable version as well as the previous.
 
 {:.table .table-striped}
-| |Windows 10|MacOS Big Sur|
-|---|---|---|
-|Chrome Latest| yes | yes |
-|Chrome Previous| yes | yes |
-|Firefox Latest| yes | yes |
-|Firefox Previous| yes | yes |
-|Edge Latest| yes | <strong class="text-danger">no</strong> |
-|Edge Previous| yes | <strong class="text-danger">no</strong> |
-|Safari| <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
-|Electron|(manual only)|(manual only)|
+| |Windows 10|Windows 11|MacOS Big Sur|
+|---|---|---|---|
+|Chrome Latest| yes | yes | yes |
+|Chrome Previous| yes | yes | yes |
+|Firefox Latest| yes | yes | yes |
+|Firefox Previous| yes | yes | yes |
+|Edge Latest| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
+|Edge Previous| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
+|Safari Latest| <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | yes |
 
 ## Writing E2E Tests
 
