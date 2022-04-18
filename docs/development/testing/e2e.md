@@ -107,21 +107,23 @@ For local testing of this script, an instance of the docker file can be used to 
 
 ## Cross Browser Testing
 
-At the time of writing, Cypress has some limitations as far as browser support.
-That is currently being worked on in their repository.
-We are currently testing Chrome, Firefox and Edge on Windows 10, as well as Chrome and Firefox on MacOS Big Sur.
+At the time of writing Cypress has some limitations as far as browser support,
+which is currently being worked on in their repository.
+We are currently testing Chrome and Firefox on Windows 10, Windows 11, and on MacOS both Big Sur and Monterey.
+The Edge browser is tested only on Windows 10.
 The versions tested are the latest stable version as well as the previous.
 
 {:.table .table-striped}
-| |Windows 10|Windows 11|MacOS Big Sur|
-|---|---|---|---|
-|Chrome Latest| yes | yes | yes |
-|Chrome Previous| yes | yes | yes |
-|Firefox Latest| yes | yes | yes |
-|Firefox Previous| yes | yes | yes |
-|Edge Latest| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
-|Edge Previous| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
-|Safari Latest| <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | yes |
+| |Windows 10|Windows 11|MacOS Big Sur|MacOS Monterey|
+|---|---|---|---|---|
+|Chrome Latest| yes | yes | yes | yes |
+|Chrome Previous| yes | yes | yes | yes |
+|Firefox Latest| yes | yes | yes | yes |
+|Firefox Previous| yes | yes | yes | yes |
+|Edge Latest| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
+|Edge Previous| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
+
+Note that Cypress does not yet support testing on Safari browser.
 
 ## Writing E2E Tests
 

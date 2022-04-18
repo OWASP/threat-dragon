@@ -50,8 +50,15 @@
             ]
         },
         {
-            "browser": "safari",
-            "os": "OS X Big Sur",
+            "browser": "chrome",
+            "os": "OS X Monterey",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "OS X Monterey",
             "versions": [
                 "latest"
             ]
