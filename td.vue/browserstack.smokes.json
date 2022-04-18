@@ -4,40 +4,35 @@
             "browser": "chrome",
             "os": "Windows 10",
             "versions": [
-                "latest",
-                "latest-1"
+                "latest"
             ]
         },
         {
             "browser": "firefox",
             "os": "Windows 10",
             "versions": [
-                "latest",
-                "latest-1"
+                "latest"
             ]
         },
         {
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
-                "latest",
-                "latest-1"
+                "latest"
             ]
         },
         {
             "browser": "chrome",
             "os": "OS X Big Sur",
             "versions": [
-                "latest",
-                "latest-1"
+                "latest"
             ]
         },
         {
             "browser": "firefox",
             "os": "OS X Big Sur",
             "versions": [
-                "latest",
-                "latest-1"
+                "latest"
             ]
         }
     ],
