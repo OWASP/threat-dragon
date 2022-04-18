@@ -31,7 +31,7 @@ To install use pnpm (rather than npm):
 
 ### Environment variables
 
-See the (environment)[development/env] page for details on configuring your environment variables.
+See the [environment](development/env) page for details on configuring your environment variables.
 
 ### Running the application
 
