@@ -77,7 +77,7 @@
         "cypress_config_file": "cypress.nightly.json",
         "project_name": "threat-dragon",
         "exclude": [],
-        "parallels": "5",
+        "parallels": "1",
         "npm_dependencies": {
             "@vue/cli-plugin-babel": "~4.5.0",
             "cypress": "^9.5.4"

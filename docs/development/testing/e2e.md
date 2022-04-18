@@ -109,6 +109,8 @@ For local testing of this script, an instance of the docker file can be used to 
 
 At the time of writing Cypress has some limitations as far as browser support,
 which is currently being worked on in their repository.
+For example Cypress does not yet support testing on Safari browser.
+
 We are currently testing Chrome and Firefox on Windows 10, Windows 11, and on MacOS both Big Sur and Monterey.
 The Edge browser is tested only on Windows 10.
 The versions tested are the latest stable version as well as the previous.
@@ -123,8 +125,6 @@ The versions tested are the latest stable version as well as the previous.
 |Edge Latest| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
 |Edge Previous| yes | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> | <strong class="text-danger">no</strong> |
 
-Note that Cypress does not yet support testing on Safari browser.
-
 ## Writing E2E Tests
 
 If you are new to cypress, we strongly suggest reading through the
@@ -135,5 +135,6 @@ The introduction document is a bit lengthy, but does a wonderful job of preparin
 A full test suite lives in `td.vue/tests/e2e/specs`.  This is where most of the functional e2e tests should live.
 
 A smaller subset of tests, called "smoke tests", live in `td.vue/tests/e2e/smokes`.
-Smoke tests are run against a deployment as a sanity check to ensure that the deployment succeeded and there are no glaring issues in the deployment.
+Smoke tests are run against a deployment as a sanity check to ensure that the deployment succeeded
+and there are no glaring issues in the deployment.
 Smoke tests should be quick and only check the bare basics.
