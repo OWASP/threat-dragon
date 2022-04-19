@@ -32,6 +32,7 @@ logo_src: assets/images/threatdragon_logo_image.svg
 header_links:
   - text: Try the web app
     fa_class: fa fa-flask
+    target: _blank
     url: https://www.threatdragon.com/#/
 
   - text: Download the desktop app
