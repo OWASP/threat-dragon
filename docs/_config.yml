@@ -32,7 +32,7 @@ logo_src: assets/images/threatdragon_logo_image.svg
 header_links:
   - text: Try the web app
     fa_class: fa fa-flask
-    url: https://www.threatdragon.com/docs/
+    url: https://www.threatdragon.com/#/
 
   - text: Download the desktop app
     fa_class: fa fa-cloud-download-alt
