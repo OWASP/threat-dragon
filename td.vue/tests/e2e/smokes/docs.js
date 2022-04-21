@@ -1,5 +1,6 @@
 describe('docs', () => {
     before(() => {
+        cy.setupTest();
         cy.visit('/docs');
     });
 

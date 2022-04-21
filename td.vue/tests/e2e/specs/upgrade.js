@@ -1,7 +1,6 @@
 describe('upgrade', () => {
     before(() => {
-        cy.visit('/');
-        cy.get('.Vue-Toastification__close-button').click();
+        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
     });
