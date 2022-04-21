@@ -5,7 +5,6 @@ module.exports = (on, config) => {
         screenshotsFolder: 'tests/e2e/screenshots',
         videosFolder: 'tests/e2e/videos',
         supportFile: 'tests/e2e/support/index.js',
-        // baseUrl: 'https://www.threatdragon.com/'
-        baseUrl: 'https://limitless-bastion-07726.herokuapp.com/'
+        baseUrl: 'https://www.threatdragon.com/'
     });
 };

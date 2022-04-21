@@ -138,3 +138,24 @@ A smaller subset of tests, called "smoke tests", live in `td.vue/tests/e2e/smoke
 Smoke tests are run against a deployment as a sanity check to ensure that the deployment succeeded
 and there are no glaring issues in the deployment.
 Smoke tests should be quick and only check the bare basics.
+
+### Test Setup
+Each test should call the custom method named `setupTest()` in the `before` section, eg:
+
+```javascript
+describe('someFeature', () => {
+  before(() => {
+    // This will clear the session storage and navigate to the home page
+    // In the context of local authentication, clearing session storage
+    // is the same as logging out
+    // For consistency, this should be called in the before method of every test suite
+    cy.setupTest(); 
+
+    // Other test-specific setup can go here
+  });
+
+  it('does some stuff', () => {
+    // do the things
+  });
+});
+```
