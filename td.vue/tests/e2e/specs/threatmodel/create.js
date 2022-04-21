@@ -1,7 +1,6 @@
 describe('create a new threat model', () => {
     before(() => {
-        cy.visit('/');
-        cy.get('.Vue-Toastification__close-button').click();
+        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/new"]').click();
         cy.url().should('contain', '/local/New%20Threat%20Model/edit');

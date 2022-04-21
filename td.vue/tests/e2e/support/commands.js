@@ -36,3 +36,10 @@ Cypress.Commands.add('paste', {
     $element.val(subString);
     cy.get($element.selector).type(lastChar);
 });
+
+Cypress.Commands.add('setupTest', () => {
+    cy.visit('/', {
+        onBeforeLoad: (win) => win.sessionStorage.clear()
+    });
+    cy.get('.Vue-Toastification__close-button').click();
+});

@@ -2,8 +2,7 @@ import demoJson from './data/demo.js';
 
 describe('import', () => {
     const setup = () => {
-        cy.visit('/');
-        cy.get('.Vue-Toastification__close-button').click();
+        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/import"]').click();
         cy.url().should('contain', '/local/threatmodel/import');

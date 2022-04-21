@@ -17,6 +17,7 @@
                         :key="idx"
                         href="javascript:void(0)"
                         @click="onModelClick(model)"
+                        :data-model-name="model.name"
                     >{{ model.name }}</b-list-group-item>
                 </b-list-group>
             </b-col>

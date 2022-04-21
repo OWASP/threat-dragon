@@ -1,12 +1,11 @@
 describe('report', () => {
     before(() => {
-        cy.visit('/');
-        cy.get('.Vue-Toastification__close-button').click();
+        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
-        cy.get('a').contains('Version 2 Demo Model').click();
+        cy.get('a[data-model-name="Version 2 Demo Model"').click();
         cy.url().should('contain', '/local/Version%202%20Demo%20Model');
-        cy.get('#tm-report-btn').click();
+        cy.get('#tm-report-btn').trigger('click');
     });
 
     describe('report options', () => {
