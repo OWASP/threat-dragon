@@ -2,11 +2,10 @@ describe('report', () => {
     before(() => {
         cy.setupTest();
         cy.get('#local-login-btn').click();
-        // cy.get('a[href="#/demo/select"]').click();
-        // cy.get('a').contains('Version 2 Demo').click();
-        // cy.url().should('contain', '/local/Version%202%20Demo%20Model');
-        cy.visit('/#/local/Version 2 Demo Model');
-        cy.get('#tm-report-btn').click();
+        cy.get('a[href="#/demo/select"]').click();
+        cy.get('a').contains('Version 2 Demo').click();
+        cy.url().should('contain', '/local/Version%202%20Demo%20Model');
+        cy.get('#tm-report-btn').trigger('click');
     });
 
     describe('report options', () => {

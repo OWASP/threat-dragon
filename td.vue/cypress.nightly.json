@@ -1,3 +1,5 @@
 {
-  "pluginsFile": "tests/e2e/plugins/nightly.js"
+  "pluginsFile": "tests/e2e/plugins/nightly.js",
+  "viewportWidth": 1000,
+  "viewportHeight": 800
 }

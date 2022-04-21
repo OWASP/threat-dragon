@@ -40,7 +40,7 @@ const upgradeGuard = ((to, from, next) => {
         'Upgrade'
     ];
 
-    if (ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
+    if (!to.name || ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
         return next();
     }
 
