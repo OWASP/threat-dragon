@@ -1,0 +1,4 @@
+index.js
+*.log
+node_modules
+dist
