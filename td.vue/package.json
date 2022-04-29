@@ -73,7 +73,7 @@
     "browserstack-cypress-cli": "^1.8.1",
     "chromedriver": "^90.0.0",
     "codecov": "^3.8.2",
-    "cypress": "^9.5.4",
+    "cypress": "^9.6.0",
     "electron": "^17.0.0",
     "electron-builder": "^23.0.03",
     "electron-builder-notarize": "^1.4.0",

@@ -1,3 +1,7 @@
 {
-  "pluginsFile": "tests/e2e/plugins/smokes.ci.js"
+  "pluginsFile": "tests/e2e/plugins/smokes.ci.js",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
 }
