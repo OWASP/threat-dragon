@@ -28,7 +28,7 @@ const _logger = winston.createLogger({
         format.splat(),
         format.json()
     ),
-    defaultMeta: { service: 'threat-drgaon' },
+    defaultMeta: { service: 'threat-dragon' },
     transports: [
         new transports.File({
             filename: 'audit.log',
