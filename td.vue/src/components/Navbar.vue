@@ -62,7 +62,7 @@ $icon-height: 1.2rem;
 .navbar {
   background-color: $orange;
   border-color: $orange-alt;
-  height: $header-height;
+  height: $header-height+10;
   font-size: 15px;
 }
 
