@@ -12,16 +12,16 @@ import threatmodel from './modules/threatmodel.js';
 import vuexPersist from '../plugins/vuex-persist.js';
 
 let store = null;
-const version = require('../../package.json').version;
-const build = require('../../package.json').build;
+const buildVersion = require('../../package.json').version;
+const buildState = require('../../package.json').buildState;
 
 const get = () => {
     if (store === null) {
         Vue.use(Vuex);
         store = new Vuex.Store({
             state: {
-                packageVersion: version,
-                packageBuild: build
+                packageBuildVersion: buildVersion,
+                packageBuildState: buildState
             },
             modules: {
                 auth,

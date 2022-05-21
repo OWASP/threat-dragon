@@ -29,7 +29,7 @@
   "author": "OWASP",
   "license": "Apache-2.0",
   "homepage": "https://www.threatdragon.com/docs/",
-  "build": "-demo",
+  "buildState": "-demo",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
@@ -74,8 +74,8 @@
     "chromedriver": "^90.0.0",
     "codecov": "^3.8.2",
     "cypress": "^9.6.0",
-    "electron": "^17.0.0",
-    "electron-builder": "^23.0.03",
+    "electron": "^18.2.4",
+    "electron-builder": "^23.0.3",
     "electron-builder-notarize": "^1.4.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^6.7.2",
