@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 overrides:
   follow-redirects: '>=1.14.8'
@@ -52,7 +52,7 @@ dependencies:
 devDependencies:
   '@babel/cli': 7.16.0_@babel+core@7.16.0
   '@babel/core': 7.16.0
-  '@babel/eslint-parser': 7.16.3_@babel+core@7.16.0+eslint@7.32.0
+  '@babel/eslint-parser': 7.16.3_q3hdp35agahhlc67sgxrhsgj5a
   '@babel/node': 7.16.0_@babel+core@7.16.0
   '@babel/plugin-transform-runtime': 7.16.4_@babel+core@7.16.0
   '@babel/preset-env': 7.16.4_@babel+core@7.16.0
@@ -136,7 +136,7 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/eslint-parser/7.16.3_@babel+core@7.16.0+eslint@7.32.0:
+  /@babel/eslint-parser/7.16.3_q3hdp35agahhlc67sgxrhsgj5a:
     resolution: {integrity: sha512-iB4ElZT0jAt7PKVaeVulOECdGe6UnmA/O0P9jlF5g5GBOwDVbna8AXhHRu4s27xQf6OkveyA8iTDv1jHdDejgQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
@@ -411,6 +411,8 @@ packages:
     resolution: {integrity: sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.16.0
     dev: true
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.16.2_@babel+core@7.16.0:
@@ -1470,6 +1472,22 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
+  /@types/keyv/3.1.4:
+    resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+    dependencies:
+      '@types/node': 17.0.35
+    dev: true
+
+  /@types/node/17.0.35:
+    resolution: {integrity: sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==}
+    dev: true
+
+  /@types/responselike/1.0.0:
+    resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
+    dependencies:
+      '@types/node': 17.0.35
+    dev: true
+
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
     dev: true
@@ -1773,6 +1791,8 @@ packages:
       qs: 6.7.0
       raw-body: 2.4.0
       type-is: 1.6.18
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /bowser/2.9.0:
@@ -2230,14 +2250,36 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: false
 
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.1.3
+    dev: true
+
+  /debug/3.2.7_supports-color@5.5.0:
+    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.3
+      supports-color: 5.5.0
     dev: true
 
   /debug/4.3.2_supports-color@8.1.1:
@@ -2693,6 +2735,8 @@ packages:
       type-is: 1.6.18
       utils-merge: 1.0.1
       vary: 1.1.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /extend/3.0.2:
@@ -2766,6 +2810,8 @@ packages:
       parseurl: 1.3.3
       statuses: 1.5.0
       unpipe: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /find-cache-dir/2.1.0:
@@ -3001,8 +3047,15 @@ packages:
       assert-plus: 1.0.0
     dev: false
 
-  /git-node-fs/1.0.0:
+  /git-node-fs/1.0.0_js-git@0.7.8:
     resolution: {integrity: sha1-SbIV4kLr5Dqkx1Ybu6SZUhdSCA8=}
+    peerDependencies:
+      js-git: ^0.7.8
+    peerDependenciesMeta:
+      js-git:
+        optional: true
+    dependencies:
+      js-git: 0.7.8
     dev: true
 
   /git-sha1/0.1.2:
@@ -3063,6 +3116,8 @@ packages:
     dependencies:
       '@sindresorhus/is': 0.14.0
       '@szmarczak/http-timer': 1.1.2
+      '@types/keyv': 3.1.4
+      '@types/responselike': 1.0.0
       cacheable-request: 6.1.0
       decompress-response: 3.3.0
       duplexer3: 0.1.4
@@ -4056,6 +4111,8 @@ packages:
       debug: 3.2.7
       iconv-lite: 0.4.24
       sax: 1.2.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /negotiator/0.6.2:
@@ -4119,7 +4176,7 @@ packages:
     requiresBuild: true
     dependencies:
       chokidar: 3.5.2
-      debug: 3.2.7
+      debug: 3.2.7_supports-color@5.5.0
       ignore-by-default: 1.0.1
       minimatch: 3.0.4
       pstree.remy: 1.1.8
@@ -5075,6 +5132,8 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.5.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /serialize-javascript/6.0.0:
@@ -5102,6 +5161,8 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.17.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /set-blocking/2.0.0:
@@ -5409,6 +5470,8 @@ packages:
       mime: 1.6.0
       qs: 6.7.0
       readable-stream: 2.3.7
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /supertest/4.0.2:
@@ -5417,6 +5480,8 @@ packages:
     dependencies:
       methods: 1.1.2
       superagent: 3.8.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /supports-color/5.5.0:
@@ -5751,7 +5816,7 @@ packages:
     engines: {node: '>=4.0'}
     dependencies:
       async: 2.6.3
-      git-node-fs: 1.0.0
+      git-node-fs: 1.0.0_js-git@0.7.8
       ini: 1.3.8
       js-git: 0.7.8
     dev: true
@@ -5813,6 +5878,7 @@ packages:
     resolution: {integrity: sha512-Lc7/p3GtqtqPBYYtS6KCN3c77/2QCev51DvcJKbkFPQNoj1sinkGwLGFDxkXY9J6p9+EPnYs+D90uwbnaiURTw==}
     engines: {node: '>= 6.4.0'}
     dependencies:
+      logform: 2.3.0
       readable-stream: 2.3.7
       triple-beam: 1.3.0
     dev: false
