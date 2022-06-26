@@ -428,6 +428,8 @@ def main():
             model['detail']['diagrams'][diagram_num]['diagramJson'] = dict.fromkeys(['cells'])
             model['detail']['diagrams'][diagram_num]['diagramJson']['cells'] = list()
             for ele in child.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model}DrawingSurfaceModel'):
+                #Setting diagram_num to zero here is necessary to prevent index out of bounds error on some models
+                diagram_num = 0
                 model['detail']['diagrams'][diagram_num]['size'] = get_diagram_size(ele)
                 for d_guid in ele.findall('{http://schemas.datacontract.org/2004/07/ThreatModeling.Model.Abstracts}Guid'):
                     m_guid = d_guid.text
