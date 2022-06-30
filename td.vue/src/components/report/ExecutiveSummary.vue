@@ -42,7 +42,7 @@ export default {
                 { name: this.$t('report.threatStats.openHigh'), value: this.openHigh },
                 { name: this.$t('report.threatStats.openMedium'), value: this.openMedium },
                 { name: this.$t('report.threatStats.openLow'), value: this.openLow },
-                { name: this.$t('report.threatStats.openUnknown'), value: this.openUnkown }
+                { name: this.$t('report.threatStats.openUnknown'), value: this.openUnknown }
             ];
         },
         total: function () {
@@ -73,7 +73,7 @@ export default {
                 .filter(threat => threat.severity.toLowerCase() === 'low')
                 .length;
         },
-        openUnkown: function() {
+        openUnknown: function() {
             return this.getOpenThreats()
                 .filter(threat => !threat.severity)
                 .length;

@@ -3,7 +3,7 @@
         <b-card-text>
             <b-row>
                 <b-col>
-                    <a href="javascript:void(0)" @click="threatSelected()">{{ title || 'Unkown Threat' }}</a>
+                    <a href="javascript:void(0)" @click="threatSelected()">{{ title || 'Unknown Threat' }}</a>
                 </b-col>
             </b-row>
             <b-row>

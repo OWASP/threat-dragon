@@ -46,7 +46,7 @@
                     </b-card-text>
                     <b-card-text
                         v-if="!cellRef || !cellRef.data">
-                        {{ $t('threatmodel.properties.emptyState') }}
+                        {{ $t('threats.emptyThreat') }}
                     </b-card-text>
                 </b-card-body>
             </b-card>

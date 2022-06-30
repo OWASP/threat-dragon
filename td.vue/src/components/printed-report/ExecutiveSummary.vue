@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openUnknown') }}</th>
-                    <td class="td-summary-open-unknown">{{ openUnkown }}</td>
+                    <td class="td-summary-open-unknown">{{ openUnknown }}</td>
                 </tr>
             </table>
         </div>
@@ -96,7 +96,7 @@ export default {
                 .filter(threat => threat.severity.toLowerCase() === 'low')
                 .length;
         },
-        openUnkown: function() {
+        openUnknown: function() {
             return this.getOpenThreats()
                 .filter(threat => !threat.severity)
                 .length;
