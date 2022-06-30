@@ -192,7 +192,10 @@ const en = {
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
         confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
+        emptyThreat: 'Select an element on the graph to add a threat',
         newThreat: 'New Threat',
+        newThreatByType: 'New Threat by Type',
+        newThreatByContext: 'New Threat by Context',
         properties: {
             title: 'Title',
             status: 'Status',

@@ -31,7 +31,7 @@ const threatTypesByModel = {
 const getThreatTypes = (modelType) => {
     const threatTypes = threatTypesByModel[modelType.toLowerCase()];
     if (!threatTypes) {
-        console.error('Unkown model type: ', modelType);
+        console.error('Unknown model type: ', modelType);
     }
     return threatTypes || {};
 };

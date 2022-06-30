@@ -140,7 +140,7 @@ and there are no glaring issues in the deployment.
 Smoke tests should be quick and only check the bare basics.
 
 ### Test Setup
-Each test should call the custom method named `setupTest()` in the `before` section, eg:
+Each test should call the custom method named `setupTest()` in the `before` section, for example:
 
 ```javascript
 describe('someFeature', () => {
