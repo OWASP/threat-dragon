@@ -8,29 +8,29 @@ describe('router', () => {
         expect(router.get()).toBeInstanceOf(VueRouter);
     });
 
-    describe('home', () => {
+    describe('Home page', () => {
         let homeRoute;
 
         beforeEach(() => {
             homeRoute = router.get().getRoutes()
-                .find(x => x.name === 'Home');
+                .find(x => x.name === 'HomePage');
         });
 
         it('is the default path', () => {
             expect(homeRoute.path).toEqual('');
         });
 
-        it('uses the home view', () => {
-            expect(homeRoute.components.default.name).toEqual('Home');
+        it('uses the HomePage view', () => {
+            expect(homeRoute.components.default.name).toEqual('HomePage');
         });
     });
 
-    describe('dashboard', () => {
+    describe('Main dashboard', () => {
         let dashboardRoute;
 
         beforeEach(() => {
             dashboardRoute = router.get().getRoutes()
-                .find(x => x.name === 'Dashboard');
+                .find(x => x.name === 'MainDashboard');
         });
 
         it('uses the /dashboard path', () => {
@@ -44,8 +44,8 @@ describe('router', () => {
                 dashboardComponent = await dashboardRoute.components.default();
             });
 
-            it('uses the dashboard view', () => {
-                expect(dashboardComponent.default.name).toEqual('Dashboard');
+            it('uses the MainDashboard view', () => {
+                expect(dashboardComponent.default.name).toEqual('MainDashboard');
             });
         });
     });

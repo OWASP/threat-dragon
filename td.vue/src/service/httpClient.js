@@ -76,7 +76,7 @@ const createClient = () => {
             console.warn('Error retrying after refresh token update');
             console.warn(retryError);
             Vue.$toast.info(i18n.get().t('auth.sessionExpired'));
-            router.get().push({ name: 'Home' });
+            router.get().push({ name: 'HomePage' });
             return await logAndExit();
         }
     });

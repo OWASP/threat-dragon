@@ -3,11 +3,11 @@ import Vuex from 'vuex';
 
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED, REPOSITORY_FETCH } from '@/store/actions/repository.js';
-import Repository from '@/views/git/Repository.vue';
+import RepositoryAccess from '@/views/git/RepositoryAccess.vue';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
 
-describe('views/Repository.vue', () => {
+describe('views/RepositoryAccess.vue', () => {
     let wrapper, localVue, mockStore, mockRouter;
 
     beforeEach(() => {
@@ -19,7 +19,7 @@ describe('views/Repository.vue', () => {
     const getLocalVue = (mockRoute) => {
         mockRouter = { push: jest.fn() };
         jest.spyOn(mockStore, 'dispatch');
-        wrapper = shallowMount(Repository, {
+        wrapper = shallowMount(RepositoryAccess, {
             localVue,
             store: mockStore,
             mocks: {

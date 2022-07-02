@@ -36,7 +36,7 @@ import TdDashboardAction from '@/components/DashboardAction.vue';
 import { getDashboardActions } from '@/service/provider/providers.js';
 
 export default {
-    name: 'Dashboard',
+    name: 'MainDashboard',
     components: {
         TdDashboardAction
     },

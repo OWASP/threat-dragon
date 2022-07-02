@@ -775,7 +775,7 @@ export default {
                 },
                 'size': {
                     'height': 590,
-                    'width': 851.3660278320312
+                    'width': 851
                 }
             }
         ],

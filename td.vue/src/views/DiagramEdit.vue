@@ -12,7 +12,7 @@
 import TdGraph from '@/components/Graph.vue';
 
 export default {
-    name: 'Diagram',
+    name: 'DiagramEdit',
     components: {
         TdGraph
     }

@@ -7,12 +7,12 @@ export const gitRoutes = [
     {
         path: `/${providerType}/:provider/repository`,
         name: `${providerType}Repository`,
-        component: () => import(/* webpackChunkName: "repository" */ '../views/git/Repository.vue')
+        component: () => import(/* webpackChunkName: "repository-access" */ '../views/git/RepositoryAccess.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/branch`,
         name: `${providerType}Branch`,
-        component: () => import(/* webpackChunkName: "branch" */ '../views/git/Branch.vue')
+        component: () => import(/* webpackChunkName: "branch-access" */ '../views/git/BranchAccess.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/threatmodels`,
@@ -27,7 +27,7 @@ export const gitRoutes = [
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/upgrade`,
         name: `${providerType}Upgrade`,
-        component: () => import(/* webpackChunkName: "upgrade" */ '../views/Upgrade.vue')
+        component: () => import(/* webpackChunkName: "upgrade-diagram" */ '../views/UpgradeDiagram.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/new`,
@@ -42,11 +42,11 @@ export const gitRoutes = [
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/edit/:diagram`,
         name: `${providerType}DiagramEdit`,
-        component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/Diagram.vue')
+        component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/DiagramEdit.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/report`,
         name: `${providerType}Report`,
-        component: () => import(/* webpackChunkName: "report" */ '../views/Report.vue')
+        component: () => import(/* webpackChunkName: "report-model" */ '../views/ReportModel.vue')
     }
 ];

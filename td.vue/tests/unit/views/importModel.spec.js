@@ -2,10 +2,10 @@ import { BootstrapVue, BJumbotron, BFormTextarea } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import Import from '@/views/Import.vue';
+import ImportModel from '@/views/ImportModel.vue';
 import TdFormButton from '@/components/FormButton.vue';
 
-describe('Import.vue', () => {
+describe('ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
 
     beforeEach(() => {
@@ -22,7 +22,7 @@ describe('Import.vue', () => {
         });
         mockStore.dispatch = jest.fn();
         mockRouter = { push: jest.fn() };
-        wrapper = shallowMount(Import, {
+        wrapper = shallowMount(ImportModel, {
             localVue,
             store: mockStore,
             mocks: {

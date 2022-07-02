@@ -240,7 +240,7 @@ describe('service/httpClient.js', () => {
             });
 
             it('navigates to the home page', () => {
-                expect(routerMock.push).toHaveBeenCalledWith({ name: 'Home' });
+                expect(routerMock.push).toHaveBeenCalledWith({ name: 'HomePage' });
             });
 
             it('creates a toast message', () => {

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import { gitRoutes } from './git.js';
-import Home from '../views/Home.vue';
+import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
 import storeFactory from '../store/index.js';
 
@@ -12,13 +12,13 @@ import storeFactory from '../store/index.js';
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        name: 'HomePage',
+        component: HomePage
     },
     {
         path: '/dashboard',
-        name: 'Dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')   
+        name: 'MainDashboard',
+        component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue')
     },
     {
         path: '/oauth-return',
@@ -37,7 +37,7 @@ const routes = [
 const upgradeGuard = ((to, from, next) => {
     const ignoreMatchers = [
         'OAuthReturn',
-        'Upgrade'
+        'UpgradeDiagram'
     ];
 
     if (!to.name || ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
@@ -48,7 +48,6 @@ const upgradeGuard = ((to, from, next) => {
     if (store.getters.isV1Model) {
         return next({ name: `${getProviderType(store.state.provider.selected)}Upgrade`, params: to.params });
     }
-
 
     return next();
 });

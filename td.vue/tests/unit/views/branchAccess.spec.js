@@ -1,14 +1,14 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import Branch from '@/views/git/Branch.vue';
+import BranchAccess from '@/views/git/BranchAccess.vue';
 import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
 
-describe('views/Branch.vue', () => {
+describe('views/BranchAccess.vue', () => {
     const repo = 'someRepo';
     let wrapper, localVue, mockStore, mockRouter;
 
@@ -21,7 +21,7 @@ describe('views/Branch.vue', () => {
     const getLocalVue = (mockRoute) => {
         mockRouter = { push: jest.fn() };
         jest.spyOn(mockStore, 'dispatch');
-        wrapper = shallowMount(Branch, {
+        wrapper = shallowMount(BranchAccess, {
             localVue,
             store: mockStore,
             mocks: {
