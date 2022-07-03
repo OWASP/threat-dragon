@@ -24,6 +24,15 @@ and follows the values and principles of the [threat modeling manifesto](https:/
 Try the Threat Dragon version 2.0 snapshot on [our website](https://www.threatdragon.com/#/), or watch the video
 provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
+### Version 1.x Maintenance mode
+Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
+All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.
+The main branch is now for version 2.x+, which is currently unreleased. 
+For more information on building/running version 1.x,
+please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
+
+The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downlaods and this will migrate to version 2.x during 2022. 
+
 ## About Threat Dragon
 There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
@@ -47,20 +56,12 @@ There is also a desktop version of Threat Dragon
 which stores the threat model files on the local filesystem rather than in a repository.
 Each release provides installers for Windows, Mac OSX and Linux.
 
-[End user help](https://www.threatdragon.com/docs) is available for both variants.
+End user help is available for both the existing [version 1.x](https://threatdragon.github.io) and upcoming [version 2.x](https://www.threatdragon.com/docs).
 
 ### Version 2.0 Development
 After many years using AngularJS and JointJS, Threat Dragon is migrating development to Vue
 and antv/g6 drawing library. This version will be ready later in 2022,
 until then use the [latest version of Threat Dragon 1.x](https://github.com/OWASP/threat-dragon/releases/tag/v1.6.1).
-
-### Version 1.x Maintenance mode
-Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
-All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.
-The main branch is now for version 2.x+, which is currently unreleased. 
-For more information on building/running version 1.x,
-please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
-
 
 ### Installing version 2.x
 
