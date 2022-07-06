@@ -37,7 +37,7 @@ const routes = [
 const upgradeGuard = ((to, from, next) => {
     const ignoreMatchers = [
         'OAuthReturn',
-        'UpgradeDiagram'
+        'Upgrade'
     ];
 
     if (!to.name || ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
