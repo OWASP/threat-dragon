@@ -25,54 +25,54 @@ module.exports = {
                 path.resolve(__dirname, 'src', 'styles', '*.scss')
             ]
         },
-        electronBuilder:{
+        electronBuilder: {
             mainProcessFile: './src/desktop.js',
             builderOptions: {
-                'appId': 'org.owasp.threatdragon',
-                'productName': 'OWASP-Threat-Dragon',
-                'publish': {
-                    'provider': 'github'
+                appId: 'org.owasp.threatdragon',
+                productName: 'OWASP-Threat-Dragon',
+                publish: {
+                    provider: 'github'
                 },
-                'afterSign': 'electron-builder-notarize',
-                'mac': {
-                    'category': 'public.app-category.developer-tools',
-                    'icon': './src/icons/icon.icns',
-                    'entitlements': './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
-                    'hardenedRuntime': true,
-                    'target': [
+                afterSign: 'electron-builder-notarize',
+                mac: {
+                    category: 'public.app-category.developer-tools',
+                    icon: './src/icons/icon.icns',
+                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
+                    hardenedRuntime: true,
+                    target: [
                         'dmg',
                         'zip'
                     ]
                 },
-                'win': {
-                    'icon': './src/icons/icon.ico',
-                    'target': [
+                win: {
+                    icon: './src/icons/icon.ico',
+                    target: [
                         {
-                            'target': 'nsis',
-                            'arch': [
+                            target: 'nsis',
+                            arch: [
                                 'ia32',
                                 'x64'
                             ]
                         }
                     ]
                 },
-                'linux': {
-                    'category': 'Development',
-                    'executableName': 'threat-dragon',
-                    'icon': './src/icons/td-256.png',
-                    'synopsis': 'OWASP Threat Dragon',
-                    'target': [
+                linux: {
+                    category: 'Development',
+                    executableName: 'threat-dragon',
+                    icon: './src/icons/td-256.png',
+                    synopsis: 'OWASP Threat Dragon',
+                    target: [
                         'AppImage',
                         'snap',
                         'deb',
                         'rpm'
                     ]
                 },
-                'snap': {
-                    'grade': 'stable',
-                    'summary': 'OWASP Threat Dragon, desktop version',
-                    'description': 'OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application',
-                    'title': 'OWASP Threat Dragon'
+                snap: {
+                    grade: 'stable',
+                    summary: 'OWASP Threat Dragon, desktop version',
+                    description: 'OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application',
+                    title: 'OWASP Threat Dragon'
                 }
             }
         }
