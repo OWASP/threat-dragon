@@ -312,7 +312,7 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
         });
 
-        it('removes the cell:mouseleavve listener', () => {
+        it('removes the cell:mouseleave listener', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:mouseleave', expect.anything());
         });
 
@@ -328,7 +328,7 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
         });
 
-        it('removes the cell:unselected listener', () => {
+        it('removes the cell:unselected listener again', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
         });
 
@@ -336,7 +336,7 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
         });
 
-        it('removes the cell:added listener', () => {
+        it('removes the cell:added listener again', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:added', expect.anything());
         });
     });

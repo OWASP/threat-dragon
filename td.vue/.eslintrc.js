@@ -21,21 +21,16 @@ module.exports = {
         indent: ['error', 4],
         'no-mixed-spaces-and-tabs': ['error', 'smart-tabs']
     },
-    //    'ignorePatterns': [
-    //        '**/__tests__/*.{j,t}s',
-    //        '**/tests/unit/**/*.spec.{j,t}s',
-    //        '**/tests/unit/**/*.spec.js'
-    //    ]
     overrides: [
         {
-            files: ['**/__tests__/*.js', '**/tests/unit/**/*.spec.js'],
+            // over-ride for both .js and .ts files (and OK, any .Xs file)
+            files: ['**/__tests__/*.?s', '**/tests/unit/**/*.spec.?s'],
             env: { jest: true },
             plugins: ['jest'],
+            'extends': ['plugin:jest/recommended'],
             rules: {
-                'jest/no-disabled-tests': 'off',
-                'jest/no-focused-tests': 'error',
-                'jest/no-identical-title': 'error',
                 'jest/prefer-to-have-length': 'warn',
+                'jest/no-done-callback': 'warn',
                 'jest/valid-expect': 'warn'
             }
         }

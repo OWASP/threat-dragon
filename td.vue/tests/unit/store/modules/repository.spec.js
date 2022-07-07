@@ -75,7 +75,7 @@ describe('store/modules/repository.js', () => {
             });
 
             it('empties the all array', () => {
-                expect(repoModule.state.all.length).toEqual(0);
+                expect(repoModule.state.all).toHaveLength(0);
             });
 
             it('resets the selected property', () => {

@@ -171,7 +171,7 @@ describe('service/threats/index.js', () => {
                 ]
             };
             const res = threats.filterForDiagram(data, { showMitigated: true });
-            expect(res.length).toEqual(data.threats.length);
+            expect(res).toHaveLength(data.threats.length);
         });
 
         it('filters mitigated threats', () => {
@@ -182,7 +182,7 @@ describe('service/threats/index.js', () => {
                 ]
             };
             const res = threats.filterForDiagram(data, { showMitigated: false });
-            expect(res.length).toEqual(1);
+            expect(res).toHaveLength(1);
         });
     });
 
@@ -203,7 +203,7 @@ describe('service/threats/index.js', () => {
 
             const diagrams = [{ cells: [{ data: { threats: [{ status: 'mitigated' }]} }] }];
             const res = threats.filter(diagrams, {});
-            expect(res.length).toEqual(1);
+            expect(res).toHaveLength(1);
         });
     });
 });

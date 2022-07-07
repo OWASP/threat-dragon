@@ -76,7 +76,7 @@ describe('store/modules/provider.js', () => {
             });
 
             it('empties the all array', () => {
-                expect(providerModule.state.all.length).toEqual(0);
+                expect(providerModule.state.all).toHaveLength(0);
             });
 
             it('resets the selected property', () => {

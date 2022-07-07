@@ -268,7 +268,7 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('empties the all array', () => {
-                expect(threatmodelModule.state.all.length).toEqual(0);
+                expect(threatmodelModule.state.all).toHaveLength(0);
             });
 
             it('resets the data property', () => {

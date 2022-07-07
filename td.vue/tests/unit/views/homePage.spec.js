@@ -112,7 +112,7 @@ describe('HomePage.vue', () => {
 
         describe('layout', () => {
             it('has only the local session button', () => {
-                expect(wrapper.findAllComponents(TdProviderLoginButton).length).toEqual(1);
+                expect(wrapper.findAllComponents(TdProviderLoginButton)).toHaveLength(1);
             });
         });
     });
