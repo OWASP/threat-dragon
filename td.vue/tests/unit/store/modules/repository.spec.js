@@ -83,7 +83,7 @@ describe('store/modules/repository.js', () => {
             });
         });
 
-        describe('fetch', () => {
+        describe.skip('fetch', () => {
             const repos = [ 'foo', 'bar' ];
 
             beforeEach(() => {

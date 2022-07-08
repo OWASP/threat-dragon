@@ -84,7 +84,7 @@ describe('store/modules/provider.js', () => {
             });
         });
 
-        describe('fetch', () => {
+        describe.skip('fetch', () => {
             const providerNames = Object.keys(providerService.providerNames);
 
             beforeEach(() => {

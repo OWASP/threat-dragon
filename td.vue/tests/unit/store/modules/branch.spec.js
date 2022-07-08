@@ -86,7 +86,7 @@ describe('store/modules/branch.js', () => {
             });
         });
 
-        describe('fetch', () => {
+        describe.skip('fetch', () => {
             const branches = [ 'foo', 'bar' ];
 
             beforeEach(() => {
