@@ -30,15 +30,15 @@ describe('service/threats/models/index.js', () => {
 
     describe('getThreatTypes', () => {
         it('gets the CIA threat types', () => {
-            expect(Object.keys(models.getThreatTypes('CIA')).length).toEqual(3);
+            expect(Object.keys(models.getThreatTypes('CIA'))).toHaveLength(3);
         });
 
         it('gets the LINDDUN threat types', () => {
-            expect(Object.keys(models.getThreatTypes('linddun')).length).toEqual(7);
+            expect(Object.keys(models.getThreatTypes('linddun'))).toHaveLength(7);
         });
 
         it('gets the STRIDE threat types', () => {
-            expect(Object.keys(models.getThreatTypes('Stride')).length).toEqual(6);
+            expect(Object.keys(models.getThreatTypes('Stride'))).toHaveLength(6);
         });
 
         it('returns an empty object if no threat types are found', () => {

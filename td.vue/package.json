@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "codecov": "echo 'Disabled for now: codecov'",
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --no-unsafe-inline",
@@ -22,8 +23,7 @@
     "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C cypress.smokes.local.json --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
-    "lint": "vue-cli-service lint",
-    "codecov": "codecov"
+    "lint": "vue-cli-service lint"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
@@ -57,35 +57,40 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@babel/polyfill": "^7.11.5",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-e2e-cypress": "^5.0.4",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/cli-plugin-babel": "~5.0.7",
+    "@vue/cli-plugin-e2e-cypress": "~5.0.7",
+    "@vue/cli-plugin-eslint": "~5.0.7",
+    "@vue/cli-plugin-router": "~5.0.7",
+    "@vue/cli-plugin-unit-jest": "~5.0.8",
+    "@vue/cli-plugin-vuex": "~5.0.7",
+    "@vue/cli-service": "~5.0.7",
+    "@vue/eslint-config-standard": "^7.0.0",
     "@vue/test-utils": "^1.0.3",
+    "@vue/vue2-jest": "^27.0.0",
     "ansi-regex": "5.0.1",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.5.1",
     "bootstrap": "^4.6.1",
     "browserstack-cypress-cli": "^1.8.1",
     "chromedriver": "^90.0.0",
-    "codecov": "^3.8.2",
     "cypress": "^9.6.0",
     "electron": "^18.2.4",
     "electron-builder": "^23.0.3",
     "electron-builder-notarize": "^1.4.0",
     "electron-devtools-installer": "^3.2.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue": "^8.7.1",
     "geckodriver": "^1.20.0",
+    "jest": "^27.5.1",
     "mutationobserver-shim": "^0.3.7",
     "npm-force-resolutions": "^0.0.10",
     "pm2": "^5.1.2",
@@ -105,7 +110,6 @@
   },
   "pnpm": {
     "overrides": {
-      "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
       "nth-check@<2.0.1": ">=2.0.1",
       "tar@>=6.0.0 <6.1.9": ">=6.1.9",
       "follow-redirects": ">=1.14.8",
@@ -121,6 +125,6 @@
   },
   "main": "background.js",
   "resolutions": {
-    "ansi-regex": "^5.0.1"
+    "ansi-regex": "^6.0.1"
   }
 }

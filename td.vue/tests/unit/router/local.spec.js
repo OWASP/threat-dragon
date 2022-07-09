@@ -1,7 +1,7 @@
 import { localRoutes } from '@/router/local.js';
 
 describe('routes/local.js', () => {
-    describe('ThreatModel', () => {
+    describe('Threat model', () => {
         let route;
 
         beforeEach(() => {
@@ -19,7 +19,7 @@ describe('routes/local.js', () => {
         });
     });
 
-    describe('ThreatModel Edit', () => {
+    describe('Threat model edit', () => {
         let route;
 
         beforeEach(() => {
@@ -37,7 +37,7 @@ describe('routes/local.js', () => {
         });
     });
 
-    describe('Diagram Edit', () => {
+    describe('Diagram edit', () => {
         let route;
 
         beforeEach(() => {
@@ -49,14 +49,14 @@ describe('routes/local.js', () => {
             expect(route.path).toEqual('/local/:threatmodel/edit/:diagram');
         });
 
-        it('uses the Diagram view as a lazily loaded component', async () => {
+        it('uses the DiagramEdit view as a lazily loaded component', async () => {
             const cmp = await route.component();
-            expect(cmp.default.name).toEqual('Diagram');
+            expect(cmp.default.name).toEqual('DiagramEdit');
         });
     });
 
 
-    describe('NewThreatModel', () => {
+    describe('New threat model', () => {
         let route;
 
         beforeEach(() => {
@@ -74,7 +74,7 @@ describe('routes/local.js', () => {
         });
     });
 
-    describe('ThreatModelImport', () => {
+    describe('Threat model import', () => {
         let route;
 
         beforeEach(() => {
@@ -86,13 +86,13 @@ describe('routes/local.js', () => {
             expect(route.path).toEqual('/local/threatmodel/import');
         });
 
-        it('uses the Import view as a lazily loaded component', async () => {
+        it('uses the ImportModel view as a lazily loaded component', async () => {
             const cmp = await route.component();
-            expect(cmp.default.name).toEqual('Import');
+            expect(cmp.default.name).toEqual('ImportModel');
         });
     });
 
-    describe('Report', () => {
+    describe('Report model', () => {
         let route;
 
         beforeEach(() => {
@@ -104,13 +104,13 @@ describe('routes/local.js', () => {
             expect(route.path).toEqual('/local/:threatmodel/report');
         });
 
-        it('uses the Import view as a lazily loaded component', async () => {
+        it('uses the ReportModel view as a lazily loaded component', async () => {
             const cmp = await route.component();
-            expect(cmp.default.name).toEqual('Report');
+            expect(cmp.default.name).toEqual('ReportModel');
         });
     });
     
-    describe('Upgrade', () => {
+    describe('Upgrade diagram', () => {
         let route;
 
         beforeEach(() => {
@@ -122,9 +122,9 @@ describe('routes/local.js', () => {
             expect(route.path).toEqual('/local/:threatmodel/upgrade');
         });
 
-        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+        it('uses the UpgradeDiagram view as a lazily loaded component', async () => {
             const cmp = await route.component();
-            expect(cmp.default.name).toEqual('Upgrade');
+            expect(cmp.default.name).toEqual('UpgradeDiagram');
         });
     });
 });

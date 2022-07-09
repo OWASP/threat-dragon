@@ -2,12 +2,12 @@ import BootstrapVue from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import Report from '@/views/Report.vue';
+import ReportModel from '@/views/ReportModel.vue';
 import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
 
-describe('views/PrinterReport.vue', () => {
+describe('views/ReportModel.vue', () => {
     let routerMock, storeMock, wrapper;
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe('views/PrinterReport.vue', () => {
                 contributors: () => []
             }
         });
-        wrapper = shallowMount(Report, {
+        wrapper = shallowMount(ReportModel, {
             localVue,
             store: storeMock,
             mocks: {

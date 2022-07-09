@@ -53,7 +53,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
-    name: 'Import',
+    name: 'ImportModel',
     components: {
         TdFormButton
     },

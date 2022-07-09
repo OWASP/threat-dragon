@@ -54,7 +54,7 @@ describe('store/modules/cell.js', () => {
             });
         });
 
-        describe('selected with threats', () => {
+        describe.skip('selected with threats', () => {
 
             beforeEach(() => {
                 cell.data.threats = [{ one: 'two' }];
@@ -77,7 +77,7 @@ describe('store/modules/cell.js', () => {
             });
         });
 
-        describe('data updated with threats', () => {
+        describe.skip('data updated with threats', () => {
             const newThreats = [{ name: 'one' }, { name: 'two' }];
             
             beforeEach(() => {

@@ -99,7 +99,7 @@ describe('views/ThreatmodelEdit.vue', () => {
         });
 
         it('displays all diagrams', () => {
-            expect(wrapper.findAll('.td-diagram').length).toEqual(diagrams.length);
+            expect(wrapper.findAll('.td-diagram')).toHaveLength(diagrams.length);
         });
     });
 
@@ -231,7 +231,7 @@ describe('views/ThreatmodelEdit.vue', () => {
             });
 
             it('adds a new diagram', () => {
-                expect(mockStore.state.threatmodel.data.detail.diagrams.length).toEqual(diagramCount  + 1);
+                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount  + 1);
             });
         });
 
@@ -245,7 +245,7 @@ describe('views/ThreatmodelEdit.vue', () => {
             });
 
             it('removes the diagram', () => {
-                expect(mockStore.state.threatmodel.data.detail.diagrams.length).toEqual(diagramCount  - 1);
+                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount  - 1);
             });
         });
     });

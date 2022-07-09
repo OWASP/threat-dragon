@@ -11,7 +11,7 @@ export const localRoutes = [
     {
         path: `/${providerType}/:threatmodel/upgrade`,
         name: `${providerType}Upgrade`,
-        component: () => import(/* webpackChunkName: "upgrade" */ '../views/Upgrade.vue')
+        component: () => import(/* webpackChunkName: "upgrade-diagram" */ '../views/UpgradeDiagram.vue')
     },
     {
         path: `/${providerType}/:threatmodel/edit`,
@@ -21,7 +21,7 @@ export const localRoutes = [
     {
         path: `/${providerType}/:threatmodel/edit/:diagram`,
         name: `${providerType}DiagramEdit`,
-        component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/Diagram.vue')
+        component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/DiagramEdit.vue')
     },
     {
         path: `/${providerType}/threatmodel/new`,
@@ -31,11 +31,11 @@ export const localRoutes = [
     {
         path: `/${providerType}/threatmodel/import`,
         name: `${providerType}ThreatModelImport`,
-        component: () => import(/* webpackChunkName: "threatmodel-import" */ '../views/Import.vue')
+        component: () => import(/* webpackChunkName: "threatmodel-import" */ '../views/ImportModel.vue')
     },
     {
         path: `/${providerType}/:threatmodel/report`,
         name: `${providerType}Report`,
-        component: () => import(/* webpackChunkName: "report" */ '../views/Report.vue')
+        component: () => import(/* webpackChunkName: "report-model" */ '../views/ReportModel.vue')
     }
 ];

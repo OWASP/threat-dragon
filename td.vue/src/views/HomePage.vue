@@ -52,7 +52,7 @@ import env from '@/service/env.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 export default {
-    name: 'Home',
+    name: 'HomePage',
     computed: {
         providers: () => {
             if (env.isElectron()) {

@@ -159,7 +159,7 @@ import TdPrintExecutiveSummary from '@/components/printed-report/ExecutiveSummar
 import threatService from '@/service/threats/index.js';
 
 export default {
-    name: 'Report',
+    name: 'ReportModel',
     components: {
         TdCoversheet,
         TdDiagramDetail,

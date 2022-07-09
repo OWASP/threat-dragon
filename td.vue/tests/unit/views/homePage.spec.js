@@ -5,13 +5,13 @@ import Vuex from 'vuex';
 
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import env from '@/service/env.js';
-import Home from '@/views/Home.vue';
+import HomePage from '@/views/HomePage.vue';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import router from '@/router/index.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
-describe('Home.vue', () => {
+describe('HomePage.vue', () => {
     const redirectUrl = 'https://threatdragon.org';
 
     let wrapper, localVue, mockStore;
@@ -37,7 +37,7 @@ describe('Home.vue', () => {
             window.location = { replace: jest.fn() };
             router.push = jest.fn();
 
-            wrapper = shallowMount(Home, {
+            wrapper = shallowMount(HomePage, {
                 localVue,
                 store: mockStore,
                 mocks: {
@@ -101,7 +101,7 @@ describe('Home.vue', () => {
             window.location = { replace: jest.fn() };
             router.push = jest.fn();
 
-            wrapper = shallowMount(Home, {
+            wrapper = shallowMount(HomePage, {
                 localVue,
                 store: mockStore,
                 mocks: {
@@ -112,7 +112,7 @@ describe('Home.vue', () => {
 
         describe('layout', () => {
             it('has only the local session button', () => {
-                expect(wrapper.findAllComponents(TdProviderLoginButton).length).toEqual(1);
+                expect(wrapper.findAllComponents(TdProviderLoginButton)).toHaveLength(1);
             });
         });
     });

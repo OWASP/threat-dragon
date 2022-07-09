@@ -77,7 +77,7 @@ describe('components/report/DiagramDetail.vue', () => {
             propsData = getData();
             propsData.diagram.cells = cells;
             setup(propsData);
-            expect(wrapper.findAllComponents(TdReportEntity).length).toEqual(1);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(1);
         });
 
         it('shows mitigated threats', () => {

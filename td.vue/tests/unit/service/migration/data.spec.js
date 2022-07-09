@@ -90,7 +90,7 @@ describe('service/migration/data.js', () => {
         cell.threats = [{ modelType: 'foo' }];
         res = data.map({}, cell);
         
-        expect(res.data.threats.length).toEqual(1);
+        expect(res.data.threats).toHaveLength(1);
     });
 
     it('does not modify the threat id', () => {

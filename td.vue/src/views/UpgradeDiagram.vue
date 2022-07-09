@@ -70,7 +70,7 @@ import TdUpgradeModal from '@/components/UpgradeModal.vue';
 import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 export default {
-    name: 'Upgrade',
+    name: 'UpgradeDiagram',
     components: {
         TdReadOnlyDiagram,
         TdUpgradeModal

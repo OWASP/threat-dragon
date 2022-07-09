@@ -9,7 +9,7 @@
         </b-col>
         <b-col md="6">
             <b-card header-tag="header">
-                <template #header class="mt-2">
+                <template #header>
                     {{ $t('threatmodel.threats') }}
 
                     <b-btn

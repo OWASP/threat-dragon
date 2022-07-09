@@ -6,9 +6,9 @@ import Vuex from 'vuex';
 import TdReadOnlyDiagram from '@/components/ReadOnlyDiagram.vue';
 import TdUpgradeModal from '@/components/UpgradeModal.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import Upgrade from '@/views/Upgrade.vue';
+import UpgradeDiagram from '@/views/UpgradeDiagram.vue';
 
-describe('views/Upgrade.vue', () => {
+describe('views/UpgradeDiagram.vue', () => {
     let storeMock, modalStub, routerMock, wrapper;
 
     beforeEach(() => {
@@ -49,7 +49,7 @@ describe('views/Upgrade.vue', () => {
             }
         });
 
-        wrapper = shallowMount(Upgrade, {
+        wrapper = shallowMount(UpgradeDiagram, {
             localVue,
             mocks: {
                 $t: t => t,

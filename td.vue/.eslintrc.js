@@ -1,15 +1,18 @@
 module.exports = {
-    root: true,
     env: {
-        node: true
+        'node': true
     },
-    extends: [
+    'extends': [
         'plugin:vue/essential',
         'eslint:recommended'
     ],
     parserOptions: {
-        parser: 'babel-eslint'
+        'ecmaVersion': 'latest',
+        'sourceType': 'module'
     },
+    plugins: [
+        'vue'
+    ],
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -20,15 +23,16 @@ module.exports = {
     },
     overrides: [
         {
-            files: [
-                '**/__tests__/*.{j,t}s?(x)',
-                '**/tests/unit/**/*.spec.{j,t}s?(x)'
-            ],
-            env: {
-                jest: true,
-                'jest/globals': true
-            },
-            plugins: ['jest']
+            // over-ride for both .js and .ts files (and OK, any .Xs file)
+            files: ['**/__tests__/*.?s', '**/tests/unit/**/*.spec.?s'],
+            env: { jest: true },
+            plugins: ['jest'],
+            'extends': ['plugin:jest/recommended'],
+            rules: {
+                'jest/prefer-to-have-length': 'warn',
+                'jest/no-done-callback': 'warn',
+                'jest/valid-expect': 'warn'
+            }
         }
-    ]
+    ],
 };

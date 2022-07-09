@@ -59,8 +59,7 @@ describe('components/report/ExecutiveSummary.vue', () => {
     });
 
     it('gets only the open threats', () => {
-        expect(wrapper.vm.getOpenThreats().length)
-            .toEqual(4);
+        expect(wrapper.vm.getOpenThreats()).toHaveLength(4);
     });
 
     it('counts the total threats', () => {

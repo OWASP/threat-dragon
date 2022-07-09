@@ -26,7 +26,7 @@ import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
 export default {
-    name: 'Branch',
+    name: 'BranchAccess',
     components: {
         TdSelectionPage
     },
