@@ -15,6 +15,8 @@
 
 [OWASP](https://www.owasp.org) Threat Dragon is a free, open-source, cross-platform threat modeling application.
 It is used to draw threat modeling diagrams and to list threats for elements in the diagram.
+[Mike Goodwin](https://github.com/mike-goodwin) created Threat Dragon as an open source community project
+that provides an intuitive and accessible way to model threats.
 
 Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
@@ -46,17 +48,18 @@ from OWASP, and this expands on what the Threat Dragon project aims for:
 and this repository has been migrated from
 Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
-Since then the project team has continued development, culminating with release version 1.6.0.
-The project is now going through a substantial changes which will see version 2.0 released early 2022.
+Since then the project team has continued development, culminating with release version 1.6.1.
+The project is now going through a substantial changes which will see version 2.0 released in 2022.
 
-Threat Dragon is primarily a web application, with threat model files stored in GitHub.
-Over time other storage methods will become available.
+Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases),
+with threat model files stored in GitHub. Over time other storage methods will become available.
 
-There is also a desktop version of Threat Dragon
+There is also a [desktop version](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
 which stores the threat model files on the local filesystem rather than in a repository.
-Each release provides installers for Windows, Mac OSX and Linux.
+The releases provide installers for Windows, Mac OSX and Linux.
 
-End user help is available for both the existing [version 1.x](https://threatdragon.github.io) and upcoming [version 2.x](https://www.threatdragon.com/docs).
+End user help is available for both the existing [version 1.x](https://threatdragon.github.io)
+and upcoming [version 2.x](https://www.threatdragon.com/docs).
 
 ### Version 2.0 Development
 After many years using AngularJS and JointJS, Threat Dragon is migrating development to Vue
