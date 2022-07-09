@@ -54,8 +54,10 @@ const en = {
         newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
-        jsonPaste: 'Paste the JSON of your threat model here:',
+        jsonPaste: 'Drop a threat model JSON file or paste its content here:',
         invalidJson: 'Invalid JSON.  Please check your model and try again.',
+        dropSingleFileOnly: 'Drag and drop requires a single file.',
+        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: 'Owner',
         reviewer: 'Reviewer',
         contributors: 'Contributors',
