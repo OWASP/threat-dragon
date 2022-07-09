@@ -9,7 +9,7 @@
         "build:vue": "cd td.vue && npm run build",
         "clean": "npm-run-all clean:server",
         "clean:server": "cd td.server && npm run clean",
-        "codecov": "./node_modules/.bin/codecov",
+        "codecov": "echo 'Disabled for now: codecov'",
         "dev:vue": "cd td.vue && npm run dev",
         "dev:server": "cd td.server && npm run dev",
         "preinstall": "npx only-allow pnpm",
