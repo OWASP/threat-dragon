@@ -68,7 +68,7 @@ until then use the [latest version of Threat Dragon 1.x](https://github.com/OWAS
 
 ### Installing version 2.x
 
-Install git and node.js (version 16)
+Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/)
 - which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
 
 To get the code navigate to a target directory and use command
@@ -78,7 +78,7 @@ To get the code navigate to a target directory and use command
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-PNPM (rather than NPM) is used to install from the top directory of the project : `pnpm install`
+Pnpm (rather than npm) is used to install from the top directory of the project : `pnpm install`
 
 ### Environment variables
 

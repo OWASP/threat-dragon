@@ -18,11 +18,14 @@ The web application can be run locally or from a server.
 
 Threat Dragon is a Single Page Application (SPA) using Angular on the client and node.js on the server. To build and run locally follow these steps:
 
-Install git and node.js - which includes the node package manager npm. To get the code, navigate to where you want your code to be located and do
+Install [node.js](https://nodejs.org/en/download/), which includes the node package manager `npm`,
+and also install [git](https://git-scm.com/downloads).
+To get the code, navigate to where you want your code to be located and run
 
-`git init`
-
-`git clone https://github.com/owasp/threat-dragon.git`
+```
+git init
+git clone https://github.com/owasp/threat-dragon.git
+```
 
 This installs code in two sub-folders. One for the main application (`td.site`) and one for the server (`td.server`).
 To install use pnpm (rather than npm):
