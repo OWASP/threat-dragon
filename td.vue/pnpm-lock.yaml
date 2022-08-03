@@ -61,7 +61,7 @@ specifiers:
   jquery: ^3.6.0
   mutationobserver-shim: ^0.3.7
   npm-force-resolutions: ^0.0.10
-  pm2: ^5.1.2
+  pm2: ^5.2.0
   popper.js: ^1.16.1
   portal-vue: ^2.1.7
   sass: ^1.32.12
@@ -4412,7 +4412,7 @@ packages:
     dev: true
 
   /blessed/0.1.81:
-    resolution: {integrity: sha1-+WLWh+wsNpVwrnGvhDJW5tDKESk=}
+    resolution: {integrity: sha512-LoF5gae+hlmfORcG1M5+5XZi4LBmvlXTzwJWzUlPryN/SJdSflZvROM2TwkT0GMpq7oqT48NRd4GS7BiVBc5OQ==}
     engines: {node: '>= 0.8.0'}
     hasBin: true
     dev: true
@@ -11203,7 +11203,7 @@ packages:
     dev: true
 
   /nssocket/0.6.0:
-    resolution: {integrity: sha1-Wflvb/MhVm8zxw99vu7N/cBxVPo=}
+    resolution: {integrity: sha512-a9GSOIql5IqgWJR3F/JXG4KpJTA3Z53Cj0MeMvGpglytB1nxE4PdFNC0jINe27CS7cGivoynwc054EzCcT3M3w==}
     engines: {node: '>= 0.10.x'}
     dependencies:
       eventemitter2: 0.4.14
@@ -15578,7 +15578,7 @@ packages:
     dev: true
 
   /xregexp/2.0.0:
-    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
     dev: true
 
   /xtend/4.0.2:
