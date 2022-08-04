@@ -1,6 +1,7 @@
 /**
  * @name logger.js
  * @description Default logging implementation
+ * logging level either provided by dotenv LOG_LEVEL or defaults to 'info'
  */
 import winston, { format, transports } from 'winston';
 
@@ -49,6 +50,7 @@ const _logger = winston.createLogger({
     silent: process.env.NODE_ENV === 'test'
 });
 
+
 class Logger {
     constructor(service, logger) {
         this.service = service;
@@ -77,6 +79,7 @@ class Logger {
 
     audit(message) { this.logger.error(this._formatMessage(this.service, message, 'audit')); }
 }
+
 
 /**
  * Gets a new instance of a logger for a given service
