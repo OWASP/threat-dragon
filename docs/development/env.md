@@ -42,10 +42,10 @@ To create a GitHub OAuth Application:
 2. Fill out the form with the following:
 - **Application name**: A unique identifier for the application.  This is not critical, we suggest something like 'Threat Dragon'
 - **Homepage URL**: For local development, use `http://localhost:8080`
-  - Threat Dragon's server defaults to port 3000, but this is configurable.  If you plan to run it on another port, be sure to use that port for the auth callback url instead!
+  - If you configure Threat Dragon to listen on another port, use that port here instead of 8080
 - **Application description**: A description for your OAuth app.  This is not critical, we suggest something like 'Threat Dragon for local development'
 - **Authorization callback URL**: `http://localhost:3000/api/oauth/return`
-  - Again, if you plan to run the Threat Dragon server on another port, use that port instead!
+  - If you configure Threat Dragon's server away from the default port 3000, be sure to use that port for the auth callback url
 3. Register the application, an [example screenshot](#github-oauth-app-screenshot) is at the bottom of this document
 4. Create a client_secret
 5. Note the values for Client ID and Client Secret. **Save these somewhere safe**
@@ -75,7 +75,8 @@ For example, on MacOS/Linux: `export ENV_FILE=/home/myawesomeuser/mydir/somefile
 
 To get started, copy `example.env` to `.env` at the root of the project and update the variables as appropriate. 
 
-**Note**: Do not use the `export` or `set` keywork inside your env file, as this will not work from a docker context.  The `dotenv` package will automatically export the variables for you.
+**Note**: Do not use the `export` or `set` keywords inside your `.env` file, as this will not work from within a docker context.
+The `dotenv` package will automatically export the variables for you.
 
 Alternatively, you can also set your environment variables via [command line](#command-line) if you'd prefer.
 
