@@ -3,7 +3,6 @@ import path from 'path';
 import rateLimit from 'express-rate-limit';
 
 import env from './env/Env.js';
-import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
 import https from './config/https.config.js';
 import loggerHelper from './helpers/logger.helper.js';
@@ -27,13 +26,12 @@ const create = () => {
     let logger;
 
     try {
-        const app = expressHelper.getInstance();
-        app.set('trust proxy', true);
-
-        // environment configuration
-        envConfig.tryLoadDotEnv();
+        // logging environment
         logger = loggerHelper.get('app.js');
         console.log('Configured logging level: ' + logger.level());
+
+        const app = expressHelper.getInstance();
+        app.set('trust proxy', true);
 
         //security headers
         securityHeaders.config(app);
