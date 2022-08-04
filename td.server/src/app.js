@@ -33,6 +33,7 @@ const create = () => {
         // environment configuration
         envConfig.tryLoadDotEnv();
         logger = loggerHelper.get('app.js');
+        console.log('Configured logging level: ' + logger.level());
 
         //security headers
         securityHeaders.config(app);
@@ -53,12 +54,11 @@ const create = () => {
         // rate limiting for the routes
         app.use(limiter);
 
-        logger.info('OWASP Threat Dragon application started');
-
         // if this default is changed then ensure docs are updated and CI pipeline ci.yaml still works
         app.set('port', env.get().config.PORT || 3000);
         logger.info('Express server listening on ' + app.get('port'));
 
+        logger.info('OWASP Threat Dragon application started');
         return app;
     }
     catch (e) {

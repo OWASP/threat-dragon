@@ -9,6 +9,8 @@ import tokenRepo from '../repositories/token.js';
 const logger = loggerHelper.get('controllers/auth.js');
 
 const login = (req, res) => {
+    logger.debug('API login request:', req);
+
     try {
         const provider = providers.get(req.params.provider);
         return responseWrapper.sendResponse(() => provider.getOauthRedirectUrl(), req, res, logger);
@@ -17,7 +19,10 @@ const login = (req, res) => {
     }
 };
 
+
 const oauthReturn = (req, res) => {
+    logger.debug('API oauthReturn request:', req);
+
     let returnUrl = `/#/oauth-return?code=${req.query.code}`;
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
@@ -25,7 +30,10 @@ const oauthReturn = (req, res) => {
     return res.redirect(returnUrl);
 };
 
+
 const completeLogin = (req, res) => {
+    logger.debug('API completeLogin request:', req);
+
     try {
         const provider = providers.get(req.params.provider);
 
@@ -44,7 +52,10 @@ const completeLogin = (req, res) => {
     }
 };
 
+
 const logout = (req, res) => responseWrapper.sendResponse(() => {
+    logger.debug('API logout request:', req);
+
     try {
         const refreshToken = req.body.refreshToken;
         if (!refreshToken) {
@@ -63,7 +74,10 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
     }
 }, req, res, logger);
 
+
 const refresh = (req, res) => {
+    logger.debug('API refresh request:', req);
+
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
     if (!tokenBody) {
         return errors.unauthorized(res, logger);
@@ -76,6 +90,7 @@ const refresh = (req, res) => {
         return { accessToken, refreshToken: req.body.refreshToken };
     }, req, res, logger);
 };
+
 
 export default {
     completeLogin,

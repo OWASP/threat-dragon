@@ -6,6 +6,7 @@
 import winston, { format, transports } from 'winston';
 
 import env from '../env/Env.js';
+import envConfig from '../config/env.config';
 
 /**
  * The available log levels
@@ -20,9 +21,12 @@ const logLevels = {
     silly: 5
 };
 
+envConfig.tryLoadDotEnv();
+const logLevel = env.get().config.LOG_LEVEL || 'info';
+
 const _logger = winston.createLogger({
     levels: logLevels,
-    level: env.get().config.LOG_LEVEL || 'info',
+    level: logLevel,
     format: format.combine(
         format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
         format.errors({ stack: true }),
@@ -38,12 +42,12 @@ const _logger = winston.createLogger({
         }),
         new transports.File({
             filename: 'app.log',
-            level: env.get().config.LOG_LEVEL || 'info',
+            level: logLevel,
             silent: process.env.NODE_ENV === 'test'
         }),
         new transports.Console({
             format: format.combine(format.colorize(), format.simple()),
-            level: env.get().config.LOG_LEVEL || 'info',
+            level: logLevel,
             silent: process.env.NODE_ENV === 'test'
         })
     ],
@@ -78,6 +82,8 @@ class Logger {
     error(message) { this.logger.error(this._formatMessage(this.service, message, 'error')); }
 
     audit(message) { this.logger.error(this._formatMessage(this.service, message, 'audit')); }
+
+    level() { return logLevel; }
 }
 
 
@@ -88,6 +94,7 @@ class Logger {
  * @returns {Logger}
  */
 const get = (service, logger) => new Logger(service, logger);
+
 
 export default {
     get,

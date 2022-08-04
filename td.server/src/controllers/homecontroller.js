@@ -1,4 +1,7 @@
+import loggerHelper from '../helpers/logger.helper.js';
 import path from 'path';
+
+const logger = loggerHelper.get('controllers/homecontroller.js');
 
 import { upDir } from '../helpers/path.helper.js';
 
@@ -15,8 +18,10 @@ const indexHtmlPath = path.join(__dirname, upDir, upDir, upDir, 'dist', 'index.h
  * @returns {Object}
  */
 const index = (req, res) => {
+    logger.debug('API index request:', req);
     res.sendFile(indexHtmlPath);
 };
+
 
 export default {
     index
