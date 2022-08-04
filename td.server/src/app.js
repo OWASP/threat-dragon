@@ -57,6 +57,7 @@ const create = () => {
 
         // if this default is changed then ensure docs are updated and CI pipeline ci.yaml still works
         app.set('port', env.get().config.PORT || 3000);
+        logger.info('Express server listening at ' + app.get('address') + ' on ' + app.get('port'));
 
         return app;
     }

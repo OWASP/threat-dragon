@@ -7,10 +7,12 @@ import sinon from 'sinon';
 
 export const getMockApp = () => {
     const mockApp = {
+        get: () => {},
         set: () => {},
         use: () => {}
     };
 
+    sinon.spy(mockApp, 'get');
     sinon.spy(mockApp, 'set');
     sinon.spy(mockApp, 'use');
 
