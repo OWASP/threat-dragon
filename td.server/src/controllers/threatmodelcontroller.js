@@ -4,6 +4,7 @@ import responseWrapper from './responseWrapper.js';
 import { serverError } from './errors.js';
 
 const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
+logger.silly('ThreatModel controller imported');
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;

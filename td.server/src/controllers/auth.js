@@ -7,6 +7,7 @@ import responseWrapper from './responseWrapper.js';
 import tokenRepo from '../repositories/token.js';
 
 const logger = loggerHelper.get('controllers/auth.js');
+logger.silly('Auth controller imported');
 
 const login = (req, res) => {
     logger.debug('API login request:', req);

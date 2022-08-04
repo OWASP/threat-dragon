@@ -2,6 +2,7 @@ import loggerHelper from '../helpers/logger.helper.js';
 import path from 'path';
 
 const logger = loggerHelper.get('controllers/homecontroller.js');
+logger.silly('Home controller imported');
 
 import { upDir } from '../helpers/path.helper.js';
 

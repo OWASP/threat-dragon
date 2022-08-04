@@ -3,6 +3,7 @@ import jwt from '../helpers/jwt.helper.js';
 import loggerHelper from '../helpers/logger.helper.js';
 
 const logger = loggerHelper.get('config/bearer.config.js');
+logger.silly('Bearer config imported');
 
 /**
  * Extracts the bearer token from the auth header
