@@ -3,6 +3,7 @@ import path from 'path';
 import rateLimit from 'express-rate-limit';
 
 import env from './env/Env.js';
+import envConfig from './config/env.config';
 import expressHelper from './helpers/express.helper.js';
 import https from './config/https.config.js';
 import loggerHelper from './helpers/logger.helper.js';
@@ -23,10 +24,12 @@ const limiter = rateLimit({
 });
 
 const create = () => {
+    /* eslint no-console: 0 */
     let logger;
 
     try {
         // logging environment
+        envConfig.tryLoadDotEnv();
         logger = loggerHelper.get('app.js');
         console.log('Configured logging level: ' + logger.level());
 
