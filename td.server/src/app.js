@@ -24,17 +24,17 @@ const limiter = rateLimit({
 });
 
 const create = () => {
-    /* eslint no-console: 0 */
     let logger;
 
     try {
         // logging environment
         envConfig.tryLoadDotEnv();
+        loggerHelper.level(env.get().config.LOG_LEVEL || 'info');
         logger = loggerHelper.get('app.js');
-        console.log('Configured logging level: ' + logger.level());
 
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
+        app.use(limiter);
 
         //security headers
         securityHeaders.config(app);
@@ -51,9 +51,6 @@ const create = () => {
 
         //routes
         routes.config(app);
-
-        // rate limiting for the routes
-        app.use(limiter);
 
         // if this default is changed then ensure docs are updated and CI pipeline ci.yaml still works
         app.set('port', env.get().config.PORT || 3000);

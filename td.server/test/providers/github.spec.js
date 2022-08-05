@@ -14,7 +14,7 @@ describe('providers/github.js', () => {
             expect(githubProvider.isConfigured()).to.be.true;
         });
 
-        xit('returns false if GITHUB_CLIENT_ID is not set', () => {
+        it('returns false if GITHUB_CLIENT_ID is not set', () => {
             expect(githubProvider.isConfigured()).to.be.false;
         });
     });
