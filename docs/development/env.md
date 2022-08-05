@@ -166,8 +166,10 @@ ___
 | Threat Dragon general variables | Description | Default |
 | --- | ----------- | ------- |
 | ENV_FILE | The location of a dotenv file, if dotenv is used. Exported as it needs to be accessed before the dotenv file is read | `.env` |
+| LOG_LEVEL | The server logging level: `audit` / `error` / `warn` / `info` / `debug` / `silly` | `info` |
+| LOG_MAX_FILE_SIZE | Maximum size of the back-end express server log file, in MB | `24` |
 | NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
-| PORT | Defines the listening port for Threat Dragon's server, used by Heroku | `3000`|
+| PORT | Defines the listening port for Threat Dragon's server, and used by Heroku | `3000`|
 | SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, used by Heroku (http/https) | `http` |
 
 {:.table .table-striped}
@@ -179,8 +181,6 @@ ___
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
-| LOG_LEVEL | The server logging level: `audit` / `error` / `warn` / `info` / `debug` / `silly` | `info` |
-| LOG_MAX_FILE_SIZE | Maximum size of the back-end express server log file, in MB | `24` |
 
 **Note:** the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as a refresh token because it is tamper resistant and provides user context.

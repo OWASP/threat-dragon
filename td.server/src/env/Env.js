@@ -91,12 +91,11 @@ export class Env {
      */
     _loadConfig() {
         const config = {};
-        console.log(`Initializing env config for ${this.name}`);
         this.properties.forEach(({ key, required, defaultValue }) => {
             const prop = `${this.prefix}${key}`;
             const value = process.env[prop] || this.tryReadFromFile(prop) || defaultValue;
             if (!value && required) {
-                const errMsg = `${prop} is a required property.  Threat Dragon server cannot start without it.  Please see setup-env.md for more information`;
+                const errMsg = `${prop} is a required property, Threat Dragon server cannot start without it. Please see docs env.md for more information`;
                 console.error(errMsg);
                 throw new Error(errMsg);
             }
@@ -122,6 +121,7 @@ export class Env {
             dotenv.config({
                 path: envFilePath
             });
+            console.log(`Using config file: ${envFilePath}`);
         } else {
             console.log(`Unable to find .env file, falling back to environment variables`);
         }

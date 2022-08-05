@@ -2,6 +2,7 @@ import jwtHelper from '../helpers/jwt.helper.js';
 import loggerHelper from '../helpers/logger.helper.js';
 
 const logger = loggerHelper.get('repositories/token.js');
+logger.silly('Token repository imported');
 
 /**
  * The refresh tokens

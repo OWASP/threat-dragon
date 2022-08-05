@@ -5,6 +5,7 @@ import env from '../env/Env.js';
 import loggerHelper from './logger.helper.js';
 
 const logger = loggerHelper.get('helpers/encryption.helper.js');
+logger.silly('Encryption helper imported');
 
 const inputEncoding = 'ascii';
 const outputEncoding = 'base64';

@@ -27,12 +27,14 @@ const create = () => {
     let logger;
 
     try {
+        // logging environment
+        envConfig.tryLoadDotEnv();
+        loggerHelper.level(env.get().config.LOG_LEVEL || 'info');
+        logger = loggerHelper.get('app.js');
+
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
-
-        // environment configuration
-        envConfig.tryLoadDotEnv();
-        logger = loggerHelper.get('app.js');
+        app.use(limiter);
 
         //security headers
         securityHeaders.config(app);
@@ -50,14 +52,11 @@ const create = () => {
         //routes
         routes.config(app);
 
-        // rate limiting for the routes
-        app.use(limiter);
-
-        logger.info('OWASP Threat Dragon application started');
-
         // if this default is changed then ensure docs are updated and CI pipeline ci.yaml still works
         app.set('port', env.get().config.PORT || 3000);
+        logger.info('Express server listening on ' + app.get('port'));
 
+        logger.info('OWASP Threat Dragon application started');
         return app;
     }
     catch (e) {
