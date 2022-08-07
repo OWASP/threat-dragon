@@ -1,11 +1,14 @@
+import env from 'env/Env.js';
 import loggerHelper from 'helpers/logger.helper.js';
 
 const logger = loggerHelper.get('healthcheck.js');
-
 const http = require('http');
 
-http.get('http://localhost:3000/healthz', (res) => {
+const req = (env.get().config.SERVER_API_PROTOCOL || 'https') + '://localhost:' + (env.get().config.PORT || '3000') + '/healthz';
+
+http.get(req, (res) => {
     const { statusCode } = res;
+    logger.debug('Health check request: ' + req);
     
     if (statusCode !== 200) {
         logger.error(`Healthcheck failure: invalid status code: ${statusCode}`);
