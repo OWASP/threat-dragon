@@ -7,10 +7,9 @@ import responseWrapper from './responseWrapper.js';
 import tokenRepo from '../repositories/token.js';
 
 const logger = loggerHelper.get('controllers/auth.js');
-logger.silly('Auth controller imported');
 
 const login = (req, res) => {
-    logger.debug('API login request:', req);
+    logger.debug('API login request: ' + req);
 
     try {
         const provider = providers.get(req.params.provider);
@@ -22,7 +21,7 @@ const login = (req, res) => {
 
 
 const oauthReturn = (req, res) => {
-    logger.debug('API oauthReturn request:', req);
+    logger.debug('API oauthReturn request: ' + req);
 
     let returnUrl = `/#/oauth-return?code=${req.query.code}`;
     if (env.get().config.NODE_ENV === 'development') {
@@ -33,7 +32,7 @@ const oauthReturn = (req, res) => {
 
 
 const completeLogin = (req, res) => {
-    logger.debug('API completeLogin request:', req);
+    logger.debug('API completeLogin request: ' + req);
 
     try {
         const provider = providers.get(req.params.provider);
@@ -55,7 +54,7 @@ const completeLogin = (req, res) => {
 
 
 const logout = (req, res) => responseWrapper.sendResponse(() => {
-    logger.debug('API logout request:', req);
+    logger.debug('API logout request: ' + req);
 
     try {
         const refreshToken = req.body.refreshToken;
@@ -65,9 +64,9 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
             // If this happens, it could be a client error, or it could be
             // something more nefarious. 
             return '';
+        } else {
+            tokenRepo.remove(refreshToken);
         }
-
-        tokenRepo.remove(refreshToken);
         return '';
     } catch (e) {
         logger.error(e);
@@ -77,7 +76,7 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
 
 
 const refresh = (req, res) => {
-    logger.debug('API refresh request:', req);
+    logger.debug('API refresh request: ' + req);
 
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
     if (!tokenBody) {
