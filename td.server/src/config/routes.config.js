@@ -2,7 +2,7 @@
 
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
-import healthcheck from '../controllers/healthcheck.js';
+import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 

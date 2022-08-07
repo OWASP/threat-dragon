@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { getMockResponse } from '../mocks/express.mocks.js';
-import healthcheck from '../../src/controllers/healthcheck.js';
+import healthcheck from '../../src/controllers/healthz.js';
 
-describe('controllers/healthcheck.js', () => {
+describe('controllers/healthz.js', () => {
     let mockResponse;
 
     beforeEach(() => {
@@ -13,6 +13,6 @@ describe('controllers/healthcheck.js', () => {
     });
 
     it('sends a true response', () => {
-        expect(mockResponse.send).to.have.been.calledWith(true);
+        expect(mockResponse.status).to.have.been.calledWith(200);
     });
 });
