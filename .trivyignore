@@ -5,6 +5,8 @@
 # As a temporary mitigating factor, I've added a custom resolution for all projects
 CVE-2021-3807
 
-# ignoring this vulnerability in zlib, because there is no fix and unlikely to be fixed
+# ignoring these vulnerabilities in zlib,
+# because there are no updates to zlib and so are unlikely to be fixed
 CVE-2018-25032
+CVE-2022-37434
 
