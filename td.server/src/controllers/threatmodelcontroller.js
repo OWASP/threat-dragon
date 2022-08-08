@@ -4,14 +4,13 @@ import responseWrapper from './responseWrapper.js';
 import { serverError } from './errors.js';
 
 const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
-logger.silly('ThreatModel controller imported');
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;
     const reposResp = await repository.reposAsync(page, req.provider.access_token);
     const repos = reposResp[0];
     const headers = reposResp[1];
-    logger.debug('API repos request:', req);
+    logger.debug('API repos request: ' + req);
 
     return {
         repos: repos.map((x) => x.full_name),
@@ -26,7 +25,7 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
         repo: req.params.repo,
         page: req.query.page || 1
     };
-    logger.debug('API branches request:', req);
+    logger.debug('API branches request: ' + req);
 
     const branchesResp = await repository.branchesAsync(repoInfo, req.provider.access_token);
     const branches = branchesResp[0],
@@ -46,7 +45,7 @@ const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
         repo: req.params.repo,
         branch: req.params.branch
     };
-    logger.debug('API models request:', req);
+    logger.debug('API models request: ' + req);
 
     let modelsResp;
     try {
@@ -69,7 +68,7 @@ const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
         branch: req.params.branch,
         model: req.params.model
     };
-    logger.debug('API model request:', req);
+    logger.debug('API model request: ' + req);
 
     const modelResp = await repository.modelAsync(modelInfo, req.provider.access_token);
     return JSON.parse(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
@@ -84,7 +83,7 @@ const create = async (req, res) => {
         model: req.params.model,
         body: req.body        
     };
-    logger.debug('API create request:', req);
+    logger.debug('API create request: ' + req);
 
     try {
         const createResp = await repository.createAsync(modelBody, req.provider.access_token);
@@ -104,7 +103,7 @@ const update = async (req, res) => {
         model: req.params.model,
         body: req.body        
     };
-    logger.debug('API update request:', req);
+    logger.debug('API update request: ' + req);
 
     try {
         const updateResp = await repository.updateAsync(modelBody, req.provider.access_token);
@@ -123,7 +122,7 @@ const deleteModel = async (req, res) => {
         branch: req.params.branch,
         model: req.params.model,      
     };
-    logger.debug('API deleteModel request:', req);
+    logger.debug('API deleteModel request: ' + req);
 
     try {
         const deleteResp = await repository.deleteAsync(modelInfo, req.provider.access_token);
