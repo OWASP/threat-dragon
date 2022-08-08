@@ -20,6 +20,12 @@
     </div>
 </template>
 
+<style lang="scss" scoped>
+.td-summary {
+    white-space: pre-wrap;
+}
+</style>
+
 <script>
 export default {
     name: 'TdExecutiveSummary',
