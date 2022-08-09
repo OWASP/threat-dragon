@@ -170,7 +170,7 @@ ___
 | LOG_MAX_FILE_SIZE | Maximum size of the back-end express server log file, in MB | `24` |
 | NODE_ENV | The node environment, typically `test`, `production` or `development`.  The 'secure' cookie flag is set only if running in `production` mode | |
 | PORT | Defines the listening port for Threat Dragon's server, and used by Heroku | `3000`|
-| SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, used by Heroku (http/https) | `http` |
+| SERVER_API_PROTOCOL | The protocol used between Threat Dragon's server and frontend, used by Heroku: `http` / `https` | `https` |
 
 {:.table .table-striped}
 | Back-end specific variables | Description | Default |

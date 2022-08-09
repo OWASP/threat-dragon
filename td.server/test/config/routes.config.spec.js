@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import auth from '../../src/controllers/auth.js';
 import bearer from '../../src/config/bearer.config.js';
-import healthcheck from '../../src/controllers/healthcheck.js';
+import healthcheck from '../../src/controllers/healthz.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
