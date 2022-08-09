@@ -29,6 +29,7 @@
 <style lang="scss" scoped>
 .td-threat-data {
     width: 99%;
+    white-space: pre-wrap;
 }
 </style>
 
