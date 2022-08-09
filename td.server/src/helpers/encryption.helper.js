@@ -5,7 +5,6 @@ import env from '../env/Env.js';
 import loggerHelper from './logger.helper.js';
 
 const logger = loggerHelper.get('helpers/encryption.helper.js');
-logger.silly('Encryption helper imported');
 
 const inputEncoding = 'ascii';
 const outputEncoding = 'base64';
@@ -94,6 +93,8 @@ const decryptData = (cipherText, key, iv) => {
  */
 const encryptPromise = (plainText) => {
     const key = getPrimaryKey();
+    logger.debug('Encrypting plaintext');
+
     return cryptoPromise.randomBytes(16).
         then((iv) => encryptData(plainText, key, iv));
 };
@@ -107,6 +108,8 @@ const encryptPromise = (plainText) => {
 const decrypt = (encryptedData) => {
     const iv = Buffer.from(encryptedData.iv, keyEncoding);
     const key = getKeyById(encryptedData.keyId);
+    logger.debug('Decrypting ciphertext');
+
     return decryptData(encryptedData.data, key, iv);  
 };
 

@@ -3,7 +3,6 @@ import jwt from '../helpers/jwt.helper.js';
 import loggerHelper from '../helpers/logger.helper.js';
 
 const logger = loggerHelper.get('config/bearer.config.js');
-logger.silly('Bearer config imported');
 
 /**
  * Extracts the bearer token from the auth header
@@ -18,7 +17,7 @@ const getBearerToken = (authHeader) => {
     }
 
     if (authHeader.indexOf('Bearer ') === -1) {
-        logger.info(`Bearer token key word not found in auth header: ${authHeader}`);
+        logger.warn(`Bearer token key word not found in auth header: ${authHeader}`);
         return null;
     }
 
@@ -27,8 +26,9 @@ const getBearerToken = (authHeader) => {
 
 const middleware = (req, res, next) => {
     const token = getBearerToken(req.headers.authorization);
+
     if (!token) {
-        logger.info(`Bearer token not found for resource that requires authentication: ${req.url}`);
+        logger.warn(`Bearer token not found for resource that requires authentication: ${req.url}`);
         return errors.unauthorized(res, logger);
     }
 
