@@ -19,14 +19,15 @@
         "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
         "start": "npm-run-all build:vue build:server start:server start:site",
         "start:desktop": "cd td.vue && npm run electron:serve",
-        "start:server": "cd td.server && npm run start:dev",
-        "start:site": "cd td.vue && npm run start:dev",
+        "start:server": "cd td.server && npm run start:serve",
+        "start:site": "cd td.vue && npm run start:serve",
         "stop": "npm-run-all stop:site stop:server",
-        "stop:server": "cd td.server && npm run stop:dev",
-        "stop:site": "cd td.vue && npm run stop:dev",
+        "stop:server": "cd td.server && npm run stop:serve",
+        "stop:site": "cd td.vue && npm run stop:serve",
         "test": "npm-run-all build pretest test:site test:server",
-        "test:server": "cd td.server && npm test",
-        "test:site": "cd td.vue && npm run test:unit"
+        "test:server": "cd td.server && npm run test:unit",
+        "test:site": "cd td.vue && npm run test:unit",
+        "test:vue": "cd td.vue && npm run test:vue"
     },
     "keywords": [
         "threat dragon",
