@@ -35,10 +35,10 @@ const create = () => {
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
         // rate limiting only for production environemnts, otherwise automated e2e tests fail
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV !== ‘test’) {
             app.use(limiter);
         } else {
-            logger.warn('Rate limiting only when running in production environments');
+            logger.warn('Rate limiting disabled for test environments');
         }
 
         //security headers
