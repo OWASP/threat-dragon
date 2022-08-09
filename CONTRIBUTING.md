@@ -9,7 +9,7 @@ The [roadmap for version 2.0](https://owasp.org/www-project-threat-dragon/#div-r
 sets out what is needed to get to the new version of Threat Dragon, and we are looking for help and contributions.
 
 When contributing:
-* see if there is [already an issue](https://github.com/OWASP/threat-dragon/issues) for wehat you want to do
+* see if there is [already an issue](https://github.com/OWASP/threat-dragon/issues) for what you want to do
 * follow our [Code of Conduct](CODE_OF_CONDUCT.md)
 * get started by following the [developer notes](https://www.threatdragon.com/docs/development/local.html)
 

@@ -64,9 +64,9 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
             // If this happens, it could be a client error, or it could be
             // something more nefarious. 
             return '';
-        } else {
-            tokenRepo.remove(refreshToken);
         }
+
+        tokenRepo.remove(refreshToken);
         return '';
     } catch (e) {
         logger.error(e);

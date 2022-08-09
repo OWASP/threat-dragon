@@ -25,7 +25,10 @@ group: Testing
 </div>
 
 ## Running E2E Tests
-End to end testing is done using [cypress](https://www.cypress.io/), and lives in the `td.vue/tests/e2e` directory.
+End to end testing is done using [cypress](https://www.cypress.io/),
+and the tests are defined in the `td.vue/tests/e2e` directory.
+
+A quick test can be done from the root directory, or the `td.vue` directory, using command `npm run test:vue` . 
 
 ### Run test:e2e
 To run the e2e tests locally, navigate to the `td.vue` directory and run:
