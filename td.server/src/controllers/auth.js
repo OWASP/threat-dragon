@@ -59,13 +59,12 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
     try {
         const refreshToken = req.body.refreshToken;
         if (!refreshToken) {
-            logger.audit('Attempting to log out without a refresh token');
-            // Return OK even though it's not really ok
-            // If this happens, it could be a client error, or it could be
-            // something more nefarious. 
+            logger.audit('Log out without a refresh token');
+            // Return OK, it could be a client error or an expired token 
             return '';
         }
 
+        logger.debug('Remove refresh token');
         tokenRepo.remove(refreshToken);
         return '';
     } catch (e) {
