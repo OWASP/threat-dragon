@@ -24,8 +24,8 @@ describe('homecontroller tests', () => {
             homeController.index(mockRequest, mockResponse);
         });
 
-        it('should send the home page', () => {
-            expect(mockResponse.send).to.have.been.calledOnce;
+        it('should send the home page file', () => {
+            expect(mockResponse.sendFile).to.have.been.calledWith(sinon.match(/index\.html$/));
         });
     });
 });
