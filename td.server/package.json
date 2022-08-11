@@ -14,8 +14,8 @@
     "pretest": "npm run lint",
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint src --fix",
-    "test": "NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=3000 test/*.spec.js test/**/*.spec.js",
-    "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=3000 test/*.spec.js test/**/*.spec.js"
+    "test": "NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": "OWASP",
