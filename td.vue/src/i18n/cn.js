@@ -134,12 +134,12 @@ const cn = {
             notFound: '当前没有，要打开一个问题吗？ :)'
         },
         shapes: {
-            actor: 'Actor',
-            flowStencil: 'Data Flow',
-            process: 'Process',
-            store: 'Store',
+            actor: '外部实体',
+            flowStencil: '数据流',
+            process: '进程',
+            store: '数据存储',
             text: '任意文本',
-            trustBoundary: 'Trust Boundary'
+            trustBoundary: '信任边界'
         }
     },
     forms: {
@@ -179,6 +179,7 @@ const cn = {
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',
         confirmDeleteMessage: '您确定要删除此威胁吗？',
+        emptyThreat: '在图表上选择一个元素来添加威胁',
         newThreat: '新增威胁',
         properties: {
             title: '标题',
