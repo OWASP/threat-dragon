@@ -7,7 +7,7 @@
     "clean": "rimraf dist",
     "codecov": "echo 'Disabled for now: codecov'",
     "dev": "nodemon dev.js --exec babel-node",
-    "start": "echo 'Please run the start command from the root of this repository' && exit 1",
+    "start": "npm run dev",
     "start:serve": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
     "stop:serve": "pm2 delete td.server",
     "transpile": "babel ./src --out-dir dist",

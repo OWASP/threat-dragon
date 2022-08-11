@@ -33,7 +33,7 @@ The main branch is now for version 2.x+, which is currently unreleased.
 For more information on building/running version 1.x,
 please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
 
-The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downlaods and this will migrate to version 2.x during 2022. 
+The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downloads and this will migrate to version 2.x during 2022. 
 
 ## About Threat Dragon
 There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)

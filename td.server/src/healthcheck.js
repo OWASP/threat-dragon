@@ -1,3 +1,5 @@
+// healthcheck is called periodically from within the docker container
+
 import env from 'env/Env.js';
 import loggerHelper from 'helpers/logger.helper.js';
 
