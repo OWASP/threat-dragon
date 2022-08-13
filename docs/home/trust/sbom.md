@@ -8,7 +8,9 @@ group: Trust
 
 # SBOMs
 
-[CyclyoneDX](https://cyclonedx.org/) Software Bill of Materials are generated for the front-end, back-end and combined Threat Dragon projects.  These SBOMs are generated during the build of the docker image, and should always be an up-to-date version for the current snapshot / tag that is running.
+[CyclyoneDX](https://cyclonedx.org/) Software Bill of Materials are generated for the front-end, back-end and combined Threat Dragon projects.
+These SBOMs are generated during the build of the docker image,
+and should always be an up-to-date version for the current snapshot / tag that is running.
 
 Downloads:
 

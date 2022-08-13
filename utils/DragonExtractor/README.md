@@ -8,7 +8,7 @@ The tool will:
 -Merge key=value pairs from command line as constants in "key" column
 -Import into Azure DevOps or Jira as trackable testing artifacts for your team
 
-Benficial side effects:
+Beneficial side effects:
 -Encourages threat model updates as it drives testing
 -Avoids hours of work transcribing into documents and test artifacts
 

@@ -21,7 +21,7 @@ group: Local
 
 ### Pnpm
 Threat Dragon uses pnpm as a package manager.  You can install it by running `npm install -g pnpm`,
-or by following any of the [alternative installation methods](https://pnpm.io/installation) on their website.
+or by following any of the [alternative installation methods](https://pnpm.io/installation).
 
 ### NodeJs
 Threat Dragon uses nodejs and is developed against version 16.
@@ -37,26 +37,27 @@ These can run and be tested independently of one another.
 The server is configured to use port 3000 by default, and the Vue project is configured to proxy all requests beginning with `/api`
 to the locally running server on port 3000.  This is configured in `td.vue/vue.config.js`
 
+### HTTP vs HTTPS
+The default protocol for accessing the Threat Dragon back-end is HTTPS, and this is highly recommended for any production environment.
+This causes problems in local development environments,
+so the protocol may need to be set to HTTP using `SERVER_API_PROTOCOL=http` in the `.env` file
+or as a shell environment variable.
+
 The following run scripts have been standardized across all sub-projects.
-From the top level, each command should have a corresponding project-sepecific command
+From the top level, each command should have a corresponding project-specific command
 in the format `<command>:<vue|server|desktop>`.
 
 {:.table .table-striped}
 | Command | Description | Can run from top-level |
-| --- | ----------- | ------- |
+| ---- | ---- | ---- |
 | `npm run dev` | Starts the development version of the project and watches for changes. *This requires using two different terminals.* | Now, run `npm run dev:vue` and in another terminal, `npm run dev:server`. |
-| `npm run start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. | Yes |
-| `npm run citest` | Runs the unit tests for the project(s) in a headless mode if available. | Yes |
-| `npm run test` | Runs the unit tests for the project(s). | Yes |
-| `npm run build` | Builds the project | Yes |
+| `npm start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. | Yes |
+| _`npm run citest`_ | _Runs the unit tests for the project(s) in a headless mode if available._ | _TBD_ |
+| `npm test` | Runs the unit tests for the project(s). | Yes |
+| `npm run build` | Builds the web-based project(s) | Yes |
 
 ## Logs
-Server logs can be accessed at:
-
-```
-app.log audit.log
-td.server/app.log td.server/audit.log
-```
+Server logs `app.log` and  `audit.log` can be accessed from directory `td.server`.
 
 ## Desktop
 Threat Dragon uses electron to build install images for the desktop application, supporting Linux, MacOS and Windows.
