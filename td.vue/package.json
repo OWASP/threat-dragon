@@ -125,7 +125,6 @@
       "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
     }
   },
-  "main": "background.js",
   "resolutions": {
     "ansi-regex": "^6.0.1"
   }
