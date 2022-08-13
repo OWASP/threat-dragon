@@ -5,13 +5,12 @@ overrides:
   tar@>=6.0.0 <6.1.9: '>=6.1.9'
   follow-redirects: '>=1.14.8'
   glob-parent@<5.1.2: '>=5.1.2'
-  lodash@<4.17.21: '>=4.17.21'
-  node-fetch: '>=2.6.7'
-  node-notifier@<8.0.1: '>=8.0.1'
-  yargs-parser@>=6.0.0 <13.1.2: '>=13.1.2'
   lodash@<4.17.19: '>=4.17.19'
   minimist@>=1.0.0 <1.2.3: '>=1.2.3'
   minimist@<0.2.1: '>=0.2.1'
+  node-fetch: '>=2.6.7'
+  node-notifier@<8.0.1: '>=8.0.1'
+  yargs-parser@>=6.0.0 <13.1.2: '>=13.1.2'
 
 specifiers:
   '@antv/x6': ^1.31.0
@@ -39,7 +38,7 @@ specifiers:
   bootstrap: ^4.6.1
   bootstrap-vue: ^2.21.2
   browserstack-cypress-cli: ^1.8.1
-  chromedriver: ^90.0.0
+  chromedriver: ^104.0.0
   core-js: ^3.6.5
   cypress: ^9.6.0
   dotenv: ^8.2.0
@@ -119,7 +118,7 @@ devDependencies:
   babel-jest: 27.5.1_@babel+core@7.18.6
   bootstrap: 4.6.1_ust5qh2lr2fzmnolzeaudcvg5m
   browserstack-cypress-cli: 1.16.0
-  chromedriver: 90.0.1
+  chromedriver: 104.0.0
   cypress: 9.7.0
   electron: 18.3.5
   electron-builder: 23.1.0
@@ -4181,11 +4180,21 @@ packages:
       follow-redirects: 1.15.1
     transitivePeerDependencies:
       - debug
+    dev: false
 
   /axios/0.21.4_debug@4.3.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
       follow-redirects: 1.15.1_debug@4.3.4
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+    dependencies:
+      follow-redirects: 1.15.1
+      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: true
@@ -5094,14 +5103,14 @@ packages:
     engines: {node: '>=6.0'}
     dev: true
 
-  /chromedriver/90.0.1:
-    resolution: {integrity: sha512-jvyhin0I/Bacxfet7eg29B1j+5mKR35XwWGbgcCOUALeE3mqcCKJY8xUW9cVrqVqTK9/iUOq8/kar7qrTVshPA==}
+  /chromedriver/104.0.0:
+    resolution: {integrity: sha512-zbHZutN2ATo19xA6nXwwLn+KueD/5w8ap5m4b6bCb8MIaRFnyDwMbFoy7oFAjlSMpCFL3KSaZRiWUwjj//N3yQ==}
     engines: {node: '>=10'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@testim/chrome-version': 1.1.2
-      axios: 0.21.4
+      axios: 0.27.2
       del: 6.1.1
       extract-zip: 2.0.1
       https-proxy-agent: 5.0.1
@@ -8748,7 +8757,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.1_debug@4.3.4
+      follow-redirects: 1.15.1
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
