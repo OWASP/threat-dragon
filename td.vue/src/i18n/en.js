@@ -189,6 +189,12 @@ const en = {
             denialOfService: 'Denial of service',
             elevationOfPrivilege: 'Elevation of privilege'
         },
+        generic: {
+            default: 'Generic threat',
+            cia: 'Generic CIA threat',
+            linddun: 'Generic LINDDUN threat',
+            stride: 'Generic STRIDE threat'
+        },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
         confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
