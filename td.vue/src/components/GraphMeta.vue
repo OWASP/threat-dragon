@@ -80,7 +80,6 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdThreatCard from '@/components/ThreatCard.vue';
-import { tc } from '../i18n/index.js';
 
 export default {
     name: 'TdGraphMeta',
@@ -98,7 +97,6 @@ export default {
         },
         newThreat() {
             const threat = createNewThreat();
-            threat.title=tc('threats.generic.default');
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);

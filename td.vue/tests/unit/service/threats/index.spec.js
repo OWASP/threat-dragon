@@ -12,16 +12,16 @@ describe('service/threats/index.js', () => {
             expect(threat.id).not.toBeUndefined();
         });
 
+        it('has a deafualt title', () => {
+            expect(threat.title).toEqual('Generic threat');
+        });
+
         it('has an empty status', () => {
             expect(threat.status).toEqual('');
         });
 
         it('has an empty severity', () => {
             expect(threat.severity).toEqual('');
-        });
-
-        it('has an empty title', () => {
-            expect(threat.title).toEqual('');
         });
 
         it('has an empty type', () => {
@@ -78,77 +78,82 @@ describe('service/threats/index.js', () => {
     describe('convertToTranslationString', () => {
         it('converts confidentiality to the translation string', () => {
             expect(threats.convertToTranslationString('Confidentiality'))
-                .toEqual('threats.models.confidentiality');
+                .toEqual('threats.model.cia.confidentiality');
         });
 
         it('converts Integrity to the translation string', () => {
             expect(threats.convertToTranslationString('Integrity'))
-                .toEqual('threats.models.integrity');
+                .toEqual('threats.model.cia.integrity');
         });
 
         it('converts Availability to the translation string', () => {
             expect(threats.convertToTranslationString('Availability'))
-                .toEqual('threats.models.availability');
+                .toEqual('threats.model.cia.availability');
         });
 
         it('converts Linkability to the translation string', () => {
             expect(threats.convertToTranslationString('Linkability'))
-                .toEqual('threats.models.linkability');
+                .toEqual('threats.model.linddun.linkability');
+        });
+
+        it('converts Identifiability to the translation string', () => {
+            expect(threats.convertToTranslationString('Identifiability'))
+                .toEqual('threats.model.linddun.identifiability');
         });
 
         it('converts Non-repudiation to the translation string', () => {
             expect(threats.convertToTranslationString('Non-repudiation'))
-                .toEqual('threats.models.nonRepudiation');
+                .toEqual('threats.model.linddun.nonRepudiation');
         });
 
         it('converts Detectability to the translation string', () => {
             expect(threats.convertToTranslationString('Detectability'))
-                .toEqual('threats.models.detectability');
+                .toEqual('threats.model.linddun.detectability');
         });
 
         it('converts Disclosure of information to the translation string', () => {
             expect(threats.convertToTranslationString('Disclosure of information'))
-                .toEqual('threats.models.disclosureOfInformation');
+                .toEqual('threats.model.linddun.disclosureOfInformation');
         });
 
         it('converts Unawareness to the translation string', () => {
             expect(threats.convertToTranslationString('Unawareness'))
-                .toEqual('threats.models.unawareness');
+                .toEqual('threats.model.linddun.unawareness');
         });
 
         it('converts Non-compliance to the translation string', () => {
             expect(threats.convertToTranslationString('Non-compliance'))
-                .toEqual('threats.models.nonCompliance');
+                .toEqual('threats.model.linddun.nonCompliance');
         });
 
         it('converts Spoofing to the translation string', () => {
             expect(threats.convertToTranslationString('Spoofing'))
-                .toEqual('threats.models.spoofing');
+                .toEqual('threats.model.stride.spoofing');
         });
 
         it('converts Tampering to the translation string', () => {
             expect(threats.convertToTranslationString('Tampering'))
-                .toEqual('threats.models.tampering');
+                .toEqual('threats.model.stride.tampering');
         });
 
         it('converts Repudiation to the translation string', () => {
             expect(threats.convertToTranslationString('Repudiation'))
-                .toEqual('threats.models.repudiation');
+                .toEqual('threats.model.stride.repudiation');
         });
 
         it('converts Information disclosure to the translation string', () => {
             expect(threats.convertToTranslationString('Information disclosure'))
-                .toEqual('threats.models.informationDisclosure');
+                .toEqual('threats.model.stride.informationDisclosure');
         });
 
         it('converts Denial of service to the translation string', () => {
             expect(threats.convertToTranslationString('Denial of service'))
-                .toEqual('threats.models.denialOfService');
+                .toEqual('threats.model.stride.denialOfService');
         });
 
         it('converts Elevation of privilege to the translation string', () => {
             expect(threats.convertToTranslationString('Elevation of privilege'))
-                .toEqual('threats.models.elevationOfPrivilege');
+                .toEqual('threats.model.stride.elevationOfPrivilege');
         });
     });
 

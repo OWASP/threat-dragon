@@ -1,5 +1,5 @@
 export default {
-    confidentiality: 'threats.models.confidentiality',
-    integrity: 'threats.models.integrity',
-    availability: 'threats.models.availability'
+    confidentiality: 'threats.model.cia.confidentiality',
+    integrity: 'threats.model.cia.integrity',
+    availability: 'threats.model.cia.availability'
 };

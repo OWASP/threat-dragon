@@ -171,23 +171,29 @@ const en = {
         savePdf: 'Save PDF'
     },
     threats: {
-        models: {
-            confidentiality: 'Confidentiality',
-            integrity: 'Integrity',
-            availability: 'Availability',
-            linkability: 'Linkability',
-            identifiability: 'Identifiability',
-            nonRepudiation: 'Non-repudiation',
-            detectability: 'Detectability',
-            disclosureOfInformation: 'Disclosure of information',
-            unawareness: 'Unawareness',
-            nonCompliance: 'Non-compliance',
-            spoofing: 'Spoofing',
-            tampering: 'Tampering',
-            repudiation: 'Repudiation',
-            informationDisclosure: 'Information disclosure',
-            denialOfService: 'Denial of service',
-            elevationOfPrivilege: 'Elevation of privilege'
+        model: {
+            cia: {
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability'
+            },
+            linddun: {
+                linkability: 'Linkability',
+                identifiability: 'Identifiability',
+                nonRepudiation: 'Non-repudiation',
+                detectability: 'Detectability',
+                disclosureOfInformation: 'Disclosure of information',
+                unawareness: 'Unawareness',
+                nonCompliance: 'Non-compliance'
+            },
+            stride: {
+                spoofing: 'Spoofing',
+                tampering: 'Tampering',
+                repudiation: 'Repudiation',
+                informationDisclosure: 'Information disclosure',
+                denialOfService: 'Denial of service',
+                elevationOfPrivilege: 'Elevation of privilege'
+            }
         },
         generic: {
             default: 'Generic threat',

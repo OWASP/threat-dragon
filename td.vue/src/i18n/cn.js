@@ -158,23 +158,29 @@ const cn = {
         discardMessage: '您确定要放弃您的更改吗？'
     },
     threats: {
-        models: {
-            confidentiality: '保密',
-            integrity: 'Integrity',
-            availability: '可用性',
-            linkability: '链接能力',
-            identifiability: '可识别性',
-            nonRepudiation: '不可否认性',
-            detectability: '可检测性',
-            disclosureOfInformation: '信息披露',
-            unawareness: '无意识',
-            nonCompliance: '不合规',
-            spoofing: '身份盗窃',
-            tampering: '伪造',
-            repudiation: '否认',
-            informationDisclosure: '信息披露',
-            denialOfService: '拒绝服务',
-            elevationOfPrivilege: '权限提升'
+        model: {
+            cia: {
+                confidentiality: '保密',
+                integrity: 'Integrity',
+                availability: '可用性'
+            },
+            linddun: {
+                linkability: '链接能力',
+                identifiability: '可识别性',
+                nonRepudiation: '不可否认性',
+                detectability: '可检测性',
+                disclosureOfInformation: '信息披露',
+                unawareness: '无意识',
+                nonCompliance: '不合规'
+            },
+            stride: {
+                spoofing: '身份盗窃',
+                tampering: '伪造',
+                repudiation: '否认',
+                informationDisclosure: '信息披露',
+                denialOfService: '拒绝服务',
+                elevationOfPrivilege: '权限提升'
+            }
         },
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',

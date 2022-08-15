@@ -154,23 +154,29 @@ const fr = {
         import: 'Importer'
     },
     threats: {
-        models: {
-            confidentiality: 'Confidentialité',
-            integrity: 'Intégrité',
-            availability: 'Disponibilité',
-            linkability: 'Capacité de liaison',
-            identifiability: 'Identifiabilité',
-            nonRepudiation: 'Non-répudiation',
-            detectability: 'Détectabilité',
-            disclosureOfInformation: 'Divulgation d\'information',
-            unawareness: 'Inconscience',
-            nonCompliance: 'Non-conformité',
-            spoofing: 'Usurpation d\'identité',
-            tampering: 'Falsification',
-            repudiation: 'Répudiation',
-            informationDisclosure: 'Divulgation d\'information',
-            denialOfService: 'Déni de service',
-            elevationOfPrivilege: 'Élévation de privilège'
+        model: {
+            cia: {
+                confidentiality: 'Confidentialité',
+                integrity: 'Intégrité',
+                availability: 'Disponibilité'
+            },
+            linddun: {
+                linkability: 'Capacité de liaison',
+                identifiability: 'Identifiabilité',
+                nonRepudiation: 'Non-répudiation',
+                detectability: 'Détectabilité',
+                disclosureOfInformation: 'Divulgation d\'information',
+                unawareness: 'Inconscience',
+                nonCompliance: 'Non-conformité'
+            },
+            stride: {
+                spoofing: 'Usurpation d\'identité',
+                tampering: 'Falsification',
+                repudiation: 'Répudiation',
+                informationDisclosure: 'Divulgation d\'information',
+                denialOfService: 'Déni de service',
+                elevationOfPrivilege: 'Élévation de privilège'
+            }
         },
         edit: 'Modifier la menace',
         confirmDeleteTitle: 'Confirmer Supprimer',
