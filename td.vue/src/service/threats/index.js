@@ -24,11 +24,11 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewThreat = () => ({
+export const createNewGenericThreat = () => ({
     id: v4(),
+    title: tc('threats.generic.default'),
     status: '',
     severity: '',
-    title: tc('threats.generic.default'),
     type: '',
     description: '',
     mitigation: '',

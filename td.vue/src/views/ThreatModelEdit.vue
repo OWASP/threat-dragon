@@ -166,6 +166,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
+import { tc } from '../i18n/index.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -207,7 +208,8 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '' });
+            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.genericDiagramTitle') });
+//            this.model.detail.diagrams.push({ title: 'threatmodel.genericDiagramTitle' });
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);

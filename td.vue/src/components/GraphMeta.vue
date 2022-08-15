@@ -75,7 +75,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import { createNewThreat } from '@/service/threats/index.js';
+import { createNewGenericThreat } from '@/service/threats/index.js';
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
@@ -96,7 +96,7 @@ export default {
             this.$emit('threatSelected', threatId);
         },
         newThreat() {
-            const threat = createNewThreat();
+            const threat = createNewGenericThreat();
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);

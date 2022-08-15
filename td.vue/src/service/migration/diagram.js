@@ -32,6 +32,8 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.title = diagram.title;
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
+    updated.diagramType = diagram.diagramType;
+    updated.$$hashKey = diagram.$$hashKey;
     graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
     store.get().dispatch(tmActions.diagramUpdated, updated);
     store.get().dispatch(tmActions.setImmutableCopy);

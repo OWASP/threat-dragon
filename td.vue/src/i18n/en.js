@@ -65,6 +65,7 @@ const en = {
         title: 'Title',
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
+        genericDiagramTitle: 'New generic diagram',
         threats: 'Threats',
         errors: {
             save: 'Error saving Threat Model. Please check the developer console for more information'

@@ -1,11 +1,11 @@
-import threats, { createNewThreat } from '@/service/threats/index.js';
+import threats, { createNewGenericThreat } from '@/service/threats/index.js';
 
 describe('service/threats/index.js', () => {
-    describe('createNewThreat', () => {
+    describe('createNewGenericThreat', () => {
         let threat;
 
         beforeEach(() => {
-            threat = createNewThreat();
+            threat = createNewGenericThreat();
         });
 
         it('has an id', () => {
