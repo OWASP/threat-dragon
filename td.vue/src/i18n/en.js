@@ -92,6 +92,10 @@ const en = {
             shortcuts: 'Keyboard Shortcuts',
             undo: 'Undo',
             redo: 'Redo',
+            selectGeneric: `Generic`,
+            selectSTRIDE: `STRIDE`,
+            selectLINDDUN: `LINDDUN`,
+            selectCIA: `CIA`,
             zoomIn: 'Zoom In',
             zoomOut: 'Zoom Out',
             toggleGrid: 'Toggle Grid'
