@@ -100,7 +100,7 @@ describe('service/x6/stencil.js', () => {
             expect.any(shapes.StoreShape),
             expect.any(shapes.ActorShape),
             expect.any(shapes.FlowStencil)
-        ], 'entities');
+        ], 'components');
     });
 
     it('loads the trust boundaries', () => {

@@ -9,8 +9,8 @@ const getDefaults = (target) => ({
     stencilGraphWidth: 500,
     groups: [
         {
-            name: 'entities',
-            title: tc('threatmodel.stencil.entities'),
+            name: 'components',
+            title: tc('threatmodel.stencil.components'),
             collapsed: false,
             collapsable: true,
         },
@@ -52,7 +52,7 @@ const get = (target, container) => {
         new shapes.StoreShape(),
         new shapes.ActorShape(),
         new shapes.FlowStencil()
-    ], 'entities');
+    ], 'components');
 
     stencil.load([
         new shapes.TrustBoundaryBox({

@@ -132,6 +132,7 @@ const en = {
             }
         },
         stencil: {
+            components: 'Components',
             entities: 'Entities',
             boundaries: 'Boundaries',
             metadata: 'Metadata',

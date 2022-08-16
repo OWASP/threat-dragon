@@ -209,7 +209,6 @@ export default {
         onAddDiagramClick(evt) {
             evt.preventDefault();
             this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.genericDiagramTitle') });
-//            this.model.detail.diagrams.push({ title: 'threatmodel.genericDiagramTitle' });
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
