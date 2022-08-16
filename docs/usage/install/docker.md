@@ -25,12 +25,23 @@ This is also shown in the docker-compose section of the env documentation.
 Once your environment variables are set up, you can either build the image yourself or pull from Dockerhub.
 
 #### Building
-`docker build -t owasp-threat-dragon:dev .`
+You can build a local docker image from the top directory of the project, which contains the `Dockerfile`.
+Use a command such as:
+`docker build -t owasp-threat-dragon:local .`
+Note that here we have used a tag `local`, but it could be almost anything such as `dev`.
 
-#### Pulling
-`docker pull threatdragon/owasp-threat-dragon:v2` (TODO - Tag does not exist yet)
+#### Pulling/Downloading
+The released docker images are stored in [Docker Hub](https://hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon)
+and can be accessed using docker `pull`. For example to download the `latest` development build from Docker hub use command :
+`docker pull threatdragon/owasp-threat-dragon:latest`.
+Note that `latest` is the very latest docker image from the main branch on the repository, so it may contain transitory bugs etc.
 
 ### Running
-If running a locally built image, substitute the name in the command below:
+Running a locally built image or a downloaded image are very similar, just substitute the correct name in the command:
 
-`docker run -d -p 3000:3000 threatdragon/owasp-threat-dragon:v2`
+`docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:local`
+
+Note that the container will need access to various environment variables, this can be done using the 
+`-v $(pwd)/.env:/app/.env` part of the command - assuming that the `.env` file is on the directory from where you run the command.
+
+Here we have mapped the container to port 8080, so Threat Dragon is accessible from http://localhost:8080 .
