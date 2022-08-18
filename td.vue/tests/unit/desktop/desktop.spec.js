@@ -1,9 +1,11 @@
+// Jest tests MUST run in the node environment, add this to the top of each electron test:
 /**
  * @jest-environment node
  */
+
 import spectron from 'spectron';
 import { testWithSpectron } from 'vue-cli-plugin-electron-builder';
-jest.setTimeout(50000);
+jest.setTimeout(15000);
 
 test.skip('Window Loads Properly', async () => {
     // Wait for dev server to start
@@ -21,6 +23,7 @@ test.skip('Window Loads Properly', async () => {
     const { width, height } = await win.getBounds();
     expect(width).toBeGreaterThan(0);
     expect(height).toBeGreaterThan(0);
+
     // App is loaded properly
     expect(
         /Welcome to Your Vue\.js (\+ TypeScript )?App/.test(

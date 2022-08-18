@@ -5,13 +5,12 @@ overrides:
   tar@>=6.0.0 <6.1.9: '>=6.1.9'
   follow-redirects: '>=1.14.8'
   glob-parent@<5.1.2: '>=5.1.2'
-  lodash@<4.17.21: '>=4.17.21'
-  node-fetch: '>=2.6.7'
-  node-notifier@<8.0.1: '>=8.0.1'
-  yargs-parser@>=6.0.0 <13.1.2: '>=13.1.2'
   lodash@<4.17.19: '>=4.17.19'
   minimist@>=1.0.0 <1.2.3: '>=1.2.3'
   minimist@<0.2.1: '>=0.2.1'
+  node-fetch: '>=2.6.7'
+  node-notifier@<8.0.1: '>=8.0.1'
+  yargs-parser@>=6.0.0 <13.1.2: '>=13.1.2'
 
 specifiers:
   '@antv/x6': ^1.31.0
@@ -39,12 +38,12 @@ specifiers:
   bootstrap: ^4.6.1
   bootstrap-vue: ^2.21.2
   browserstack-cypress-cli: ^1.8.1
-  chromedriver: ^90.0.0
+  chromedriver: ^104.0.0
   core-js: ^3.6.5
   cypress: ^9.6.0
   dotenv: ^8.2.0
   electron: ^18.2.4
-  electron-builder: ^23.0.3
+  electron-builder: ^23.3.0
   electron-builder-notarize: ^1.4.0
   electron-devtools-installer: ^3.2.0
   eslint: ^8.21.0
@@ -119,11 +118,11 @@ devDependencies:
   babel-jest: 27.5.1_@babel+core@7.18.6
   bootstrap: 4.6.1_ust5qh2lr2fzmnolzeaudcvg5m
   browserstack-cypress-cli: 1.16.0
-  chromedriver: 90.0.1
+  chromedriver: 104.0.0
   cypress: 9.7.0
   electron: 18.3.5
-  electron-builder: 23.1.0
-  electron-builder-notarize: 1.5.0_electron-builder@23.1.0
+  electron-builder: 23.3.3
+  electron-builder-notarize: 1.5.0_electron-builder@23.3.3
   electron-devtools-installer: 3.2.0
   eslint: 8.21.0
   eslint-config-standard: 17.0.0_dfwa53o44x4e5xhsfv5mvfhk5a
@@ -3881,8 +3880,8 @@ packages:
       - supports-color
     dev: true
 
-  /app-builder-lib/23.1.0:
-    resolution: {integrity: sha512-aZpKjBBLzyxtr4Cmbyi3dl8uRO8SI2PG2MYEKYRZL6pl7IsKP2hJkCYzlD6NjLJlRIAZcFPFjFbJliO74DFf7w==}
+  /app-builder-lib/23.3.3:
+    resolution: {integrity: sha512-m0+M53+HYMzqKxwNQZT143K7WwXEGUy9LY31l8dJphXx2P/FQod615mVbxHyqbDCG4J5bHdWm21qZ0e2DVY6CQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@develar/schema-utils': 2.6.5
@@ -3891,13 +3890,13 @@ packages:
       7zip-bin: 5.1.1
       async-exit-hook: 2.0.1
       bluebird-lst: 1.0.9
-      builder-util: 23.0.9
-      builder-util-runtime: 9.0.2
+      builder-util: 23.3.3
+      builder-util-runtime: 9.0.3
       chromium-pickle-js: 0.2.0
       debug: 4.3.4
       ejs: 3.1.8
       electron-osx-sign: 0.6.0
-      electron-publish: 23.0.9
+      electron-publish: 23.3.3
       form-data: 4.0.0
       fs-extra: 10.1.0
       hosted-git-info: 4.1.0
@@ -4181,11 +4180,21 @@ packages:
       follow-redirects: 1.15.1
     transitivePeerDependencies:
       - debug
+    dev: false
 
   /axios/0.21.4_debug@4.3.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
       follow-redirects: 1.15.1_debug@4.3.4
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+    dependencies:
+      follow-redirects: 1.15.1
+      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: true
@@ -4693,7 +4702,7 @@ packages:
     dev: true
 
   /buffer-equal/1.0.0:
-    resolution: {integrity: sha1-WWFrSYME1Var1GaWayLu2j7KX74=}
+    resolution: {integrity: sha512-tcBWO2Dl4e7Asr9hTGcpVrCe+F7DubpmqWCTbj4FHLmjqO2hIaC383acQubWtRJhdceqs5uBHs6Es+Sk//RKiQ==}
     engines: {node: '>=0.4.0'}
     dev: true
 
@@ -4744,8 +4753,8 @@ packages:
       - supports-color
     dev: true
 
-  /builder-util-runtime/9.0.2:
-    resolution: {integrity: sha512-xF55W/8mgfT6+sMbX0TeiJkTusA5GMOzckM4rajN4KirFcUIuLTH8oEaTYmM86YwVCZaTwa/7GyFhauXaEICwA==}
+  /builder-util-runtime/9.0.3:
+    resolution: {integrity: sha512-SfG2wnyjpUbbdtpnqDpWwklujofC6GarGpvdWrEkg9p5AD/xJmTF2buTNaqs3qtsNBEVQDDjZz9xc2GGpVyMfA==}
     engines: {node: '>=12.0.0'}
     dependencies:
       debug: 4.3.4
@@ -4778,15 +4787,15 @@ packages:
       - supports-color
     dev: true
 
-  /builder-util/23.0.9:
-    resolution: {integrity: sha512-ccPFwI1Sex4yLt8R3LI+H07p2jHICKwEWtxkFkb6jiU/g/VJnF1wazW7I1oMcCFcPTEl30GhqoRv9rfDD9VAiQ==}
+  /builder-util/23.3.3:
+    resolution: {integrity: sha512-MJZlUiq2PY5hjYv9+XNaoYdsITqvLgRDoHSFg/4nzpInbNxNjLQOolL04Zsyp+hgfcbFvMC4h0KkR1CMPHLWbA==}
     dependencies:
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
       7zip-bin: 5.1.1
       app-builder-bin: 4.0.0
       bluebird-lst: 1.0.9
-      builder-util-runtime: 9.0.2
+      builder-util-runtime: 9.0.3
       chalk: 4.1.2
       cross-spawn: 7.0.3
       debug: 4.3.4
@@ -5094,14 +5103,14 @@ packages:
     engines: {node: '>=6.0'}
     dev: true
 
-  /chromedriver/90.0.1:
-    resolution: {integrity: sha512-jvyhin0I/Bacxfet7eg29B1j+5mKR35XwWGbgcCOUALeE3mqcCKJY8xUW9cVrqVqTK9/iUOq8/kar7qrTVshPA==}
+  /chromedriver/104.0.0:
+    resolution: {integrity: sha512-zbHZutN2ATo19xA6nXwwLn+KueD/5w8ap5m4b6bCb8MIaRFnyDwMbFoy7oFAjlSMpCFL3KSaZRiWUwjj//N3yQ==}
     engines: {node: '>=10'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@testim/chrome-version': 1.1.2
-      axios: 0.21.4
+      axios: 0.27.2
       del: 6.1.1
       extract-zip: 2.0.1
       https-proxy-agent: 5.0.1
@@ -6464,12 +6473,12 @@ packages:
       - supports-color
     dev: true
 
-  /dmg-builder/23.1.0:
-    resolution: {integrity: sha512-CzhPk/k12nJ2KqTbePkIwHOLiaWneQu2cgXCT9Hb5FhwI1vxTPalLsg8OZ57wKCrkL8AEftqqSff8gB5yWY/xw==}
+  /dmg-builder/23.3.3:
+    resolution: {integrity: sha512-ECwAjt+ZWyOvddrkDx1xRD6IVUCZb5SV6vSMHZd+Va3G2sUXHrnglR1cGDKRF4oYRQm8SYVrpLZKbi8npyDcAQ==}
     dependencies:
-      app-builder-lib: 23.1.0
-      builder-util: 23.0.9
-      builder-util-runtime: 9.0.2
+      app-builder-lib: 23.3.3
+      builder-util: 23.3.3
+      builder-util-runtime: 9.0.3
       fs-extra: 10.1.0
       iconv-lite: 0.6.3
       js-yaml: 4.1.0
@@ -6676,14 +6685,14 @@ packages:
       jake: 10.8.5
     dev: true
 
-  /electron-builder-notarize/1.5.0_electron-builder@23.1.0:
+  /electron-builder-notarize/1.5.0_electron-builder@23.3.3:
     resolution: {integrity: sha512-kbVCnZX3pCKTXiPhyoMjCZYSQnwS04QmlTM2NB2D/2LCsab5UJA0Me9ZqDT3W35ENPglf1WYDKT+tx9i+xuaPA==}
     engines: {node: '>=8'}
     peerDependencies:
       electron-builder: '>= 20.44.4'
     dependencies:
       dotenv: 8.6.0
-      electron-builder: 23.1.0
+      electron-builder: 23.3.3
       electron-notarize: 1.2.1
       js-yaml: 3.14.1
       read-pkg-up: 7.0.1
@@ -6712,17 +6721,17 @@ packages:
       - supports-color
     dev: true
 
-  /electron-builder/23.1.0:
-    resolution: {integrity: sha512-UEblaQY8N9m8/HriOwl7jgFJ4olpWDXwdDBqwUkQiRHVNRnCfrA0u8LV03li5ZYhma6zFWzfIZbHd+uk8y//lQ==}
+  /electron-builder/23.3.3:
+    resolution: {integrity: sha512-mFYYdhoFPKevP6y5uaaF3dusmB2OtQ/HnwwpyOePeU7QDS0SEIAUokQsHUanAiJAZcBqtY7iyLBgX18QybdFFw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       '@types/yargs': 17.0.10
-      app-builder-lib: 23.1.0
-      builder-util: 23.0.9
-      builder-util-runtime: 9.0.2
+      app-builder-lib: 23.3.3
+      builder-util: 23.3.3
+      builder-util-runtime: 9.0.3
       chalk: 4.1.2
-      dmg-builder: 23.1.0
+      dmg-builder: 23.3.3
       fs-extra: 10.1.0
       is-ci: 3.0.1
       lazy-val: 1.0.5
@@ -6808,12 +6817,12 @@ packages:
       - supports-color
     dev: true
 
-  /electron-publish/23.0.9:
-    resolution: {integrity: sha512-afr2z6L07/elgDX+6I/G/0vzXOP6xYUd/aXx9tnTPSVZ/3AuvCegHrKiuh8sKYHmzoAcNGXe3ikISYIu961IfA==}
+  /electron-publish/23.3.3:
+    resolution: {integrity: sha512-1dX17eE5xVXedTxjC+gjsP74oC0+sIHgqysp0ryTlF9+yfQUyXjBk6kcK+zhtBA2SsHMSglDtM+JPxDD/WpPTQ==}
     dependencies:
       '@types/fs-extra': 9.0.13
-      builder-util: 23.0.9
-      builder-util-runtime: 9.0.2
+      builder-util: 23.3.3
+      builder-util-runtime: 9.0.3
       chalk: 4.1.2
       fs-extra: 10.1.0
       lazy-val: 1.0.5
@@ -7719,7 +7728,6 @@ packages:
     resolution: {integrity: sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==}
     engines: {'0': node >=0.6.0}
     dev: true
-    optional: true
 
   /eyes/0.1.8:
     resolution: {integrity: sha512-GipyPsXO1anza0AOZdy69Im7hGFCNB7Y/NGjDlZGJ3GJJLtwNSb2vrzYrTYJRrRloVx7pl+bhUaTB8yiccPvFQ==}
@@ -8748,7 +8756,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.1_debug@4.3.4
+      follow-redirects: 1.15.1
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -14655,7 +14663,7 @@ packages:
     dependencies:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
-      extsprintf: 1.3.0
+      extsprintf: 1.4.1
     dev: true
 
   /verror/1.10.1:
