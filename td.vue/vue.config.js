@@ -26,7 +26,7 @@ module.exports = {
             ]
         },
         electronBuilder: {
-            mainProcessFile: './desktop/desktop.js',
+            mainProcessFile: './src/desktop/desktop.js',
             builderOptions: {
                 appId: 'org.owasp.threatdragon',
                 productName: 'OWASP-Threat-Dragon',

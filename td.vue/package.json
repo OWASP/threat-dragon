@@ -17,7 +17,8 @@
     "start:serve": "pm2 --name td.vue start 'vue-cli-service serve'",
     "stop:serve": "pm2 delete td.vue",
     "test": "vue-cli-service test:unit",
-    "test:unit": "vue-cli-service test:unit",
+    "test:help": "vue-cli-service help test:unit",
+    "test:desktop": "vue-cli-service test:unit --testMatch '**/desktop/**/*.spec.js' --collectCoverageFrom='src/desktop/**/*.spec.js'",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e:local": "vue-cli-service test:e2e -C cypress.local.json --url http://localhost:8080/",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
@@ -25,6 +26,7 @@
     "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C cypress.smokes.local.json --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
+    "test:unit": "vue-cli-service test:unit",
     "test:vue": "vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint"
   },
@@ -80,7 +82,7 @@
     "chromedriver": "^104.0.0",
     "cypress": "^9.6.0",
     "electron": "^18.2.4",
-    "electron-builder": "^23.0.3",
+    "electron-builder": "^23.3.0",
     "electron-builder-notarize": "^1.4.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^8.21.0",
@@ -125,6 +127,7 @@
       "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
     }
   },
+  "main": "background.js",
   "resolutions": {
     "ansi-regex": "^6.0.1"
   }
