@@ -46,6 +46,7 @@ specifiers:
   electron-builder: ^23.3.0
   electron-builder-notarize: ^1.4.0
   electron-devtools-installer: ^3.2.0
+  electron-log: ^4.4.8
   eslint: ^8.21.0
   eslint-config-standard: ^17.0.0
   eslint-plugin-import: ^2.25.2
@@ -68,6 +69,7 @@ specifiers:
   spectron: ^19.0.0
   style-resources-loader: ^1.4.1
   typescript: ^4.5.4
+  update-electron-app: ^2.0.1
   uuid: ^8.3.2
   vue: ^2.6.11
   vue-cli-plugin-bootstrap-vue: ~0.7.0
@@ -124,6 +126,7 @@ devDependencies:
   electron-builder: 23.3.3
   electron-builder-notarize: 1.5.0_electron-builder@23.3.3
   electron-devtools-installer: 3.2.0
+  electron-log: 4.4.8
   eslint: 8.21.0
   eslint-config-standard: 17.0.0_dfwa53o44x4e5xhsfv5mvfhk5a
   eslint-plugin-import: 2.26.0_eslint@8.21.0
@@ -145,6 +148,7 @@ devDependencies:
   spectron: 19.0.0_electron@18.3.5
   style-resources-loader: 1.5.0_webpack@5.73.0
   typescript: 4.7.4
+  update-electron-app: 2.0.1_electron@18.3.5
   vue-cli-plugin-bootstrap-vue: 0.7.0
   vue-cli-plugin-electron-builder: 2.1.1
   vue-cli-plugin-style-resources-loader: 0.1.5
@@ -6763,6 +6767,14 @@ packages:
       unzip-crx-3: 0.2.0
     dev: true
 
+  /electron-is-dev/0.3.0:
+    resolution: {integrity: sha512-jLttuuq8QK67n3mXmIe9pkrO7IH3LGIk12xJkhTmc852U2sCJaRAOpRGPSh+1Xnzck5v9escd9YXzuze9nGejg==}
+    dev: true
+
+  /electron-log/4.4.8:
+    resolution: {integrity: sha512-QQ4GvrXO+HkgqqEOYbi+DHL7hj5JM+nHi/j+qrN9zeeXVKy8ZABgbu4CnG+BBqDZ2+tbeq9tUC4DZfIWFU5AZA==}
+    dev: true
+
   /electron-notarize/1.2.1:
     resolution: {integrity: sha512-u/ECWhIrhkSQpZM4cJzVZ5TsmkaqrRo5LDC/KMbGF0sPkm53Ng59+M0zp8QVaql0obfJy9vlVT+4iOkAi2UDlA==}
     engines: {node: '>= 10.0.0'}
@@ -8293,6 +8305,12 @@ packages:
 
   /git-sha1/0.1.2:
     resolution: {integrity: sha512-2e/nZezdVlyCopOCYHeW0onkbZg7xP1Ad6pndPy1rCygeRykefUS6r7oA5cJRGEFvseiaz5a/qUHFVX1dd6Isg==}
+    dev: true
+
+  /github-url-to-object/4.0.6:
+    resolution: {integrity: sha512-NaqbYHMUAlPcmWFdrAB7bcxrNIiiJWJe8s/2+iOc9vlcHlwHqSGrPk+Yi3nu6ebTwgsZEa7igz+NH2vEq3gYwQ==}
+    dependencies:
+      is-url: 1.2.4
     dev: true
 
   /glob-parent/5.1.2:
@@ -14536,6 +14554,18 @@ packages:
       browserslist: 4.21.1
       escalade: 3.1.1
       picocolors: 1.0.0
+    dev: true
+
+  /update-electron-app/2.0.1_electron@18.3.5:
+    resolution: {integrity: sha512-e4xEner89UZZaBGYJbYlMdL1uUrC0VjOsTAL2N4opPjzFtn+j7mdsJJsnyXZzUVeLY+8tuCX4XEsUM98oBHmZg==}
+    peerDependencies:
+      electron: '>= 6.0.0'
+    dependencies:
+      electron: 18.3.5
+      electron-is-dev: 0.3.0
+      github-url-to-object: 4.0.6
+      is-url: 1.2.4
+      ms: 2.1.3
     dev: true
 
   /update-notifier/5.1.0:

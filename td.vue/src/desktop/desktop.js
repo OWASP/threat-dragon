@@ -5,6 +5,14 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { menuTemplate } from './desktop.menu.js';
 
+require('update-electron-app')({
+    updateInterval: '1 hour',
+    logger: require('electron-log')
+});
+
+const log = require('electron-log');
+// use electron-log instead of default console
+console.log = log.log;
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Scheme must be registered before the app is ready
@@ -26,8 +34,13 @@ async function createWindow() {
         },
     });
 
+    // set up electron-specific logging
+    const logLevel = process.env.LOG_LEVEL || 'info';
+    log.debug('Log level is set to: ' + logLevel);
+    log.transports.file.level = logLevel;
+
     if (process.env.WEBPACK_DEV_SERVER_URL) {
-        console.log('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
+        log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
         // Load the url of the dev server if in development mode
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
         if (!process.env.IS_TEST) win.webContents.openDevTools();
@@ -64,7 +77,7 @@ app.on('ready', async () => {
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {
-            console.error('Vue Devtools failed to install:', e.toString());
+            log.error('Vue Devtools failed to install:', e.toString());
         }
     }
     createWindow();
