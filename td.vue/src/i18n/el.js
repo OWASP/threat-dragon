@@ -63,8 +63,10 @@ const el = {
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
         editing: 'Υπό επεξεργασία',
         title: 'Τίτλος',
-        diagrams: 'Διαγράμματα',
-        addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
+        diagram: {
+            diagrams: 'Διαγράμματα',
+            addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...'
+        },
         threats: 'Απειλές',
         properties: {
             title: 'Ιδιότητες',

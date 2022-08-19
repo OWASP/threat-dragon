@@ -63,9 +63,26 @@ const en = {
         description: 'High level system description',
         editing: 'Editing',
         title: 'Title',
-        diagrams: 'Diagrams',
-        addNewDiagram: 'Add a new diagram...',
-        genericDiagramTitle: 'New generic diagram',
+        diagram: {
+            diagrams: 'Diagrams',
+            addNewDiagram: 'Add a new diagram...',
+            generic: {
+                diagramTitle: 'New generic diagram',
+	            select: `Generic`
+	        },
+	        stride: {
+                diagramTitle: 'New STRIDE diagram',
+                select: `STRIDE`
+            },
+            linddun: {
+                diagramTitle: 'New LINDDUN diagram',
+                select: `LINDDUN`
+            },
+            cia: {
+                diagramTitle: 'New CIA diagram',
+                select: `CIA`,
+            }
+        },
         threats: 'Threats',
         errors: {
             save: 'Error saving Threat Model. Please check the developer console for more information'
@@ -92,10 +109,6 @@ const en = {
             shortcuts: 'Keyboard Shortcuts',
             undo: 'Undo',
             redo: 'Redo',
-            selectGeneric: `Generic`,
-            selectSTRIDE: `STRIDE`,
-            selectLINDDUN: `LINDDUN`,
-            selectCIA: `CIA`,
             zoomIn: 'Zoom In',
             zoomOut: 'Zoom Out',
             toggleGrid: 'Toggle Grid'
@@ -149,7 +162,7 @@ const en = {
             flow: 'Data Flow',
             process: 'Process',
             store: 'Store',
-            text: 'Arbitrary Text',
+            text: 'Descriptive text',
             trustBoundary: 'Trust Boundary'
         }
     },

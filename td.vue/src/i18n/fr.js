@@ -62,8 +62,10 @@ const fr = {
         description: 'Description de haut niveau du système',
         editing: 'Modification',
         title: 'Titre',
-        diagrams: 'Diagrammes',
-        addNewDiagram: 'Ajouter un nouveau diagramme...',
+        diagram: {
+            diagrams: 'Diagrammes',
+            addNewDiagram: 'Ajouter un nouveau diagramme...'
+        },
         threats: 'Menaces',
         properties: {
             title: 'Propriétés',

@@ -84,7 +84,7 @@
 
                     <b-form-row>
                         <b-col>
-                            <h5>{{ $t('threatmodel.diagrams') }}</h5>
+                            <h5>{{ $t('threatmodel.diagram.diagrams') }}</h5>
                         </b-col>
                     </b-form-row>
 
@@ -98,6 +98,13 @@
                                 :label-for="`diagram-${idx}`"
                                 class="mb-3"
                             >
+                                <b-input-group-prepend>
+								    <b-dropdown size="sm" split :text="$t('threatmodel.diagram.generic.select')" variant="secondary" class="td-diagram-type">
+								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
+								    </b-dropdown>
+                                </b-input-group-prepend>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
                                     type="text"
@@ -115,7 +122,7 @@
                         <b-col md=6>
                             <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
-                                {{ $t('threatmodel.addNewDiagram') }}
+                                {{ $t('threatmodel.diagram.addNewDiagram') }}
                             </a>
                         </b-col>
                     </b-form-row>
@@ -208,7 +215,7 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.genericDiagramTitle') });
+            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle') });
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);

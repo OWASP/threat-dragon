@@ -2,7 +2,7 @@ import factory from './factory.js';
 import shapes from './shapes/index.js';
 import { tc } from '@/i18n/index.js';
 
-const getDefaults = (target) => ({
+const getStencil = (target) => ({
     title: tc('threatmodel.stencil.entities'),
     target,
     collapsable: true,
@@ -44,8 +44,9 @@ const getDefaults = (target) => ({
     notFoundText: tc('threatmodel.stencil.notFound')
 });
 
+// the target is the graph or diagram
 const get = (target, container) => {
-    const stencil = factory.stencil(getDefaults(target));
+    const stencil = factory.stencil(getStencil(target));
 
     stencil.load([
         new shapes.ProcessShape(),

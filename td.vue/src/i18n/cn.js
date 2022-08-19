@@ -63,8 +63,10 @@ const cn = {
         description: '高级系统描述',
         editing: '编辑',
         title: '标题',
-        diagrams: '图表',
-        addNewDiagram: '添加新图表...',
+        diagram: {
+            diagrams: '图表',
+            addNewDiagram: '添加新图表...'
+        },
         threats: '威胁',
         properties: {
             title: '特性',

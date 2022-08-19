@@ -52,8 +52,10 @@ const pt = {
         description: 'Descrição de alto nível do sistema (high level system)',
         editing: 'Edição',
         title: 'Título',
-        diagrams: 'Diagramas',
-        addNewDiagram: 'Adicionar um novo diagrama...',
+        diagram: {
+            diagrams: 'Diagramas',
+            addNewDiagram: 'Adicionar um novo diagrama...'
+        },
         properties: {
             title: 'Propriedades',
             emptyState: 'Selecione um elemento do diagrama para modificar suas propriedades',
