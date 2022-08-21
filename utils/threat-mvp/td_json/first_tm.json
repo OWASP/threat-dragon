@@ -18,7 +18,8 @@
     "diagrams": [
       {
         "title": "Diagram ITMJ",
-        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
         "id": 0,
         "$$hashKey": "object:150",
         "diagramJson": {
@@ -515,7 +516,8 @@
       },
       {
         "title": "Diagram Test 2",
-        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
         "id": 1,
         "$$hashKey": "object:162",
         "diagramJson": {

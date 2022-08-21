@@ -99,11 +99,12 @@
                                 class="mb-3"
                             >
                                 <b-input-group-prepend>
-								    <b-dropdown size="sm" split :text="$t('threatmodel.diagram.generic.select')" variant="secondary" class="td-diagram-type">
-								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
-								      <b-dropdown-item-button>{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-								    </b-dropdown>
+                                    <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'CIA'">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'LINDDUN'">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'STRIDE'">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = $t('threatmodel.diagram.generic.select')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
+                                    </b-dropdown>
                                 </b-input-group-prepend>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
@@ -165,6 +166,10 @@
 .remove-diagram-btn {
     font-size: 14px;
 }
+
+select-diagram-type {
+    font-size: 14px;
+}
 </style>
 
 <script>
@@ -173,7 +178,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
-import { tc } from '../i18n/index.js';
+import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -215,7 +220,7 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle') });
+            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle'), diagramType: 'STRIDE' });
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
