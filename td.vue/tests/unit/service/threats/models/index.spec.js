@@ -3,17 +3,17 @@ import models from '@/service/threats/models/index.js';
 describe('service/threats/models/index.js', () => {
     describe('getByTranslationValue', () => {
         it('identifies a CIA threat', () => {
-            expect(models.getByTranslationValue('threats.models.confidentiality'))
+            expect(models.getByTranslationValue('threats.model.cia.confidentiality'))
                 .toEqual('CIA');
         });
 
         it('identifies a LINDUN threat', () => {
-            expect(models.getByTranslationValue('threats.models.linkability'))
+            expect(models.getByTranslationValue('threats.model.linddun.linkability'))
                 .toEqual('LINDDUN');
         });
 
         it('identifies a STRIDE threat', () => {
-            expect(models.getByTranslationValue('threats.models.tampering'))
+            expect(models.getByTranslationValue('threats.model.stride.tampering'))
                 .toEqual('STRIDE');
         });
 

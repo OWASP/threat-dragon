@@ -25,8 +25,8 @@ ___
 1. [Generate Keys](#generating-keys) for encryption and JWT signing
 1. Copy `example.env` to `.env`
 1. Update the values in `.env`
-1. `npm install`
-1. `npm run serve`
+1. `pnpm install`
+1. `pnpm run serve`
 
 ___
 
@@ -106,7 +106,7 @@ services:
   threatdragon:
     # Always use a specific version tag, as "latest" may be a development build
     # Alternatively, you can use the "stable" tag, as that will always
-    # be the latest released version
+    # be the most recently released version
     image: threatdragon/owasp-threat-dragon:v1.6.0
     ports:
       - 3000:3000

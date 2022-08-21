@@ -16,6 +16,7 @@ export default {
             {
                 'title': 'Main Request Flow',
                 'thumbnail': './public/content/images/thumbnail.jpg',
+                'diagramType': 'Generic',
                 'id': 0,
                 '$$hashKey': 'object:160',
                 'diagramJson': {

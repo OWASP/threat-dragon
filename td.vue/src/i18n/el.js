@@ -63,8 +63,10 @@ const el = {
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
         editing: 'Υπό επεξεργασία',
         title: 'Τίτλος',
-        diagrams: 'Διαγράμματα',
-        addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
+        diagram: {
+            diagrams: 'Διαγράμματα',
+            addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...'
+        },
         threats: 'Απειλές',
         properties: {
             title: 'Ιδιότητες',
@@ -155,23 +157,29 @@ const el = {
         import: 'Εισαγωγή'
     },
     threats: {
-        models: {
-            confidentiality: 'Εμπιστευτικότητα',
-            integrity: 'Ακεραιότητα',
-            availability: 'Διαθεσιμότητα',
-            linkability: 'Συνδεσιμότητα',
-            identifiability: 'Αναγνωρισιμότητα',
-            nonRepudiation: 'Μη αποποίηση',
-            detectability: 'Ανιχνευσιμότητα',
-            disclosureOfInformation: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
-            unawareness: 'Έλλειψη επίγνωσης (Unawareness)',
-            nonCompliance: 'Μη συμμόρφωση (Non-compliance)',
-            spoofing: 'Παραπλάνηση (Spoofing)',
-            tampering: 'Παραποίηση (Tampering)',
-            repudiation: 'Αποποίηση (Repudiation)',
-            informationDisclosure: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
-            denialOfService: 'Άρνηση εκτέλεσης υπηρεσίας (Denial of service)',
-            elevationOfPrivilege: 'Αναβάθμιση προνομίων (Elevation of Priviledge)'
+        model: {
+            cia: {
+                confidentiality: 'Εμπιστευτικότητα',
+                integrity: 'Ακεραιότητα',
+                availability: 'Διαθεσιμότητα'
+            },
+            linddun: {
+                linkability: 'Συνδεσιμότητα',
+                identifiability: 'Αναγνωρισιμότητα',
+                nonRepudiation: 'Μη αποποίηση',
+                detectability: 'Ανιχνευσιμότητα',
+                disclosureOfInformation: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
+                unawareness: 'Έλλειψη επίγνωσης (Unawareness)',
+                nonCompliance: 'Μη συμμόρφωση (Non-compliance)'
+            },
+            stride: {
+                spoofing: 'Παραπλάνηση (Spoofing)',
+                tampering: 'Παραποίηση (Tampering)',
+                repudiation: 'Αποποίηση (Repudiation)',
+                informationDisclosure: 'Αποκάλυψη Πληροφοριών (Information Disclosure)',
+                denialOfService: 'Άρνηση εκτέλεσης υπηρεσίας (Denial of service)',
+                elevationOfPrivilege: 'Αναβάθμιση προνομίων (Elevation of Priviledge)'
+            }
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',

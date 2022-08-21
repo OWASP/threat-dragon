@@ -63,8 +63,26 @@ const en = {
         description: 'High level system description',
         editing: 'Editing',
         title: 'Title',
-        diagrams: 'Diagrams',
-        addNewDiagram: 'Add a new diagram...',
+        diagram: {
+            diagrams: 'Diagrams',
+            addNewDiagram: 'Add a new diagram...',
+            generic: {
+                diagramTitle: 'New generic diagram',
+	            select: `Generic`
+	        },
+	        stride: {
+                diagramTitle: 'New STRIDE diagram',
+                select: `STRIDE`
+            },
+            linddun: {
+                diagramTitle: 'New LINDDUN diagram',
+                select: `LINDDUN`
+            },
+            cia: {
+                diagramTitle: 'New CIA diagram',
+                select: `CIA`,
+            }
+        },
         threats: 'Threats',
         errors: {
             save: 'Error saving Threat Model. Please check the developer console for more information'
@@ -131,6 +149,7 @@ const en = {
             }
         },
         stencil: {
+            components: 'Components',
             entities: 'Entities',
             boundaries: 'Boundaries',
             metadata: 'Metadata',
@@ -143,7 +162,7 @@ const en = {
             flow: 'Data Flow',
             process: 'Process',
             store: 'Store',
-            text: 'Arbitrary Text',
+            text: 'Descriptive text',
             trustBoundary: 'Trust Boundary'
         }
     },
@@ -171,23 +190,35 @@ const en = {
         savePdf: 'Save PDF'
     },
     threats: {
-        models: {
-            confidentiality: 'Confidentiality',
-            integrity: 'Integrity',
-            availability: 'Availability',
-            linkability: 'Linkability',
-            identifiability: 'Identifiability',
-            nonRepudiation: 'Non-repudiation',
-            detectability: 'Detectability',
-            disclosureOfInformation: 'Disclosure of information',
-            unawareness: 'Unawareness',
-            nonCompliance: 'Non-compliance',
-            spoofing: 'Spoofing',
-            tampering: 'Tampering',
-            repudiation: 'Repudiation',
-            informationDisclosure: 'Information disclosure',
-            denialOfService: 'Denial of service',
-            elevationOfPrivilege: 'Elevation of privilege'
+        model: {
+            cia: {
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability'
+            },
+            linddun: {
+                linkability: 'Linkability',
+                identifiability: 'Identifiability',
+                nonRepudiation: 'Non-repudiation',
+                detectability: 'Detectability',
+                disclosureOfInformation: 'Disclosure of information',
+                unawareness: 'Unawareness',
+                nonCompliance: 'Non-compliance'
+            },
+            stride: {
+                spoofing: 'Spoofing',
+                tampering: 'Tampering',
+                repudiation: 'Repudiation',
+                informationDisclosure: 'Information disclosure',
+                denialOfService: 'Denial of service',
+                elevationOfPrivilege: 'Elevation of privilege'
+            }
+        },
+        generic: {
+            default: 'Generic threat',
+            cia: 'Generic CIA threat',
+            linddun: 'Generic LINDDUN threat',
+            stride: 'Generic STRIDE threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',

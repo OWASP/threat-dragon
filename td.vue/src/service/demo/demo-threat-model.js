@@ -17,8 +17,9 @@ export default {
         'diagrams': [
             {
                 'title': 'Main Request Data Flow',
-                'thumbnail': './public/content/images/thumbnail.jpg',
+                'thumbnail': './public/content/images/thumbnail.stride.jpg',
                 'id': 0,
+                'diagramType': 'STRIDE',
                 'diagramJson': {
                     'cells': [
                         {

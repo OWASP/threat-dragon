@@ -42,8 +42,8 @@ APIs with no authorisation:
 
 Support for CI/CD pipelines is being worked on, and this API may include:
 * project status
-* pdf output
-* diagram provider
+* pdf report output
+* threat diagram provider (for embedding in other reports)
 * unmitigated threat list
 * mitigated threat list
 * statistics

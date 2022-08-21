@@ -28,12 +28,12 @@ group: Testing
 End to end testing is done using [cypress](https://www.cypress.io/),
 and the tests are defined in the `td.vue/tests/e2e` directory.
 
-A quick test can be done from the root directory, or the `td.vue` directory, using command `npm run test:vue` . 
+A quick test can be done from the root directory, or the `td.vue` directory, using command `pnpm run test:vue` . 
 
 ### Run test:e2e
 To run the e2e tests locally, navigate to the `td.vue` directory and run:
 - `pnpm install`
-- `npm run test:e2e`
+- `pnpm run test:e2e`
 
 This will open the cypress runner application and load the suite of tests from `tests/e2e/specs`.
 From the cypress window you can select individual tests to run, or run all tests at once.
@@ -42,11 +42,11 @@ This suite of tests uses cypress plugin file `cypress.json` which calls `td.vue/
 ### Run test:e2e:local
 This suite of tests is identical to `test:e2e` but the target is an application already running at `http://localhost:8080/`.
 To run these tests there first has to be a running web application, for example:
-- from directory `td.vue` invoke `npm run dev`
+- from directory `td.vue` invoke `pnpm run dev`
 - wait for the web app to be accessible on `http://localhost:8080/`
 
 From a separate terminal in directory `td.vue` invoke:
-- `npm run test:e2e:local`
+- `pnpm run test:e2e:local`
 
 A cypress runner application is opened as above, loading the suite of tests from `tests/e2e/specs`..
 This suite of tests uses cypress plugin file `cypress.local.json` which calls `td.vue/tests/e2e/plugins/local.js`
@@ -60,14 +60,14 @@ The suite of tests is loaded from `tests/e2e/specs`.
 
 For local testing of this script, an instance of the docker file can be used to map port 3000:
 - from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
-- from directory `td.vue` invoke `npm run test:e2e-ci`
+- from directory `td.vue` invoke `pnpm run test:e2e-ci`
 
 ### Run test:e2e-nightly
 The e2e nightly relies on the demo server to be running at `https://www.threatdragon.com/`,
 and uses browserstack to test against various browsers (see below).
 
 Ensure the demo server is running and then invoke:
-- `npm run test:e2e-nightly`
+- `pnpm run test:e2e-nightly`
 
 The browserstack suite of tests uses cypress plugin file `cypress.nightly.json` which calls `td.vue/tests/e2e/plugins/nightly.js`.
 The browserstack configuration file is `browserstack.nightly.json`, and the suite of tests from is loaded from `tests/e2e/specs`.
@@ -77,7 +77,7 @@ The e2e smoke tests rely on the demo server to be running at `https://www.threat
 and uses browserstack to test against various browsers.
 
 Ensure the demo server is running and then invoke:
-- `npm run test:e2e-smokes`
+- `pnpm run test:e2e-smokes`
 
 The browserstack suite of tests uses cypress plugin file `cypress.smokes.json` which calls `td.vue/tests/e2e/plugins/smokes.js`.
 The browserstack configuration file is `browserstack.smokes.json`, and the suite of tests from is loaded from `tests/e2e/smokes`.
@@ -91,7 +91,7 @@ To run these tests there first has to be a web application on `http://localhost:
 - check the web app is accessible on `http://localhost:8080/` and docs on `http://localhost:8080/docs/`
 
 From a separate terminal in directory `td.vue` invoke:
-- `npm run test:e2e-smokes:local`
+- `pnpm run test:e2e-smokes:local`
 
 This will open the cypress runner application, with the suite of tests from loaded from `tests/e2e/smokes`.
 This suite of tests uses cypress plugin file `cypress.smokes.local.json` which calls `td.vue/tests/e2e/plugins/smokes.local.js`
@@ -106,7 +106,7 @@ The suite of tests from is loaded from `tests/e2e/smokes`.
 For local testing of this script, an instance of the docker file can be used to map ports 3000:
 - from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - check the web app is accessible on `http://localhost:3000/` and docs on `http://localhost:3000/docs/`
-- from directory `td.vue` invoke `npm run test:e2e-ci-smokes`
+- from directory `td.vue` invoke `pnpm run test:e2e-ci-smokes`
 
 ## Cross Browser Testing
 

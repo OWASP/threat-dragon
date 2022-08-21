@@ -84,7 +84,7 @@
 
                     <b-form-row>
                         <b-col>
-                            <h5>{{ $t('threatmodel.diagrams') }}</h5>
+                            <h5>{{ $t('threatmodel.diagram.diagrams') }}</h5>
                         </b-col>
                     </b-form-row>
 
@@ -98,6 +98,14 @@
                                 :label-for="`diagram-${idx}`"
                                 class="mb-3"
                             >
+                                <b-input-group-prepend>
+                                    <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'CIA'">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'LINDDUN'">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'STRIDE'">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = $t('threatmodel.diagram.generic.select')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
+                                    </b-dropdown>
+                                </b-input-group-prepend>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
                                     type="text"
@@ -115,7 +123,7 @@
                         <b-col md=6>
                             <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
-                                {{ $t('threatmodel.addNewDiagram') }}
+                                {{ $t('threatmodel.diagram.addNewDiagram') }}
                             </a>
                         </b-col>
                     </b-form-row>
@@ -158,6 +166,10 @@
 .remove-diagram-btn {
     font-size: 14px;
 }
+
+select-diagram-type {
+    font-size: 14px;
+}
 </style>
 
 <script>
@@ -166,6 +178,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
+import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -207,7 +220,7 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '' });
+            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle'), diagramType: 'STRIDE' });
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);

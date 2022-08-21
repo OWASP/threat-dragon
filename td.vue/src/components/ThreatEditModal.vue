@@ -143,7 +143,7 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import { createNewThreat } from '@/service/threats/index.js';
+import { createNewGenericThreat } from '@/service/threats/index.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
@@ -196,7 +196,7 @@ export default {
         show(threatId) {
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
-                this.threat = createNewThreat();
+                this.threat = createNewGenericThreat();
             }
             this.$refs.editModal.show();
         },

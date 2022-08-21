@@ -13,8 +13,8 @@ group: Local
 1. [Install pnpm](https://pnpm.io/installation) and use node 16
 1. Run `pnpm install`
 1. Configure your [environment](./env)
-1. Run `npm run dev:server`
-1. In another terminal, run `npm run dev:vue`
+1. Run `pnpm run dev:server`
+1. In another terminal, run `pnpm run dev:vue`
 1. Visit [http://localhost:8080](http://localhost:8080/)
 
 ## Dependencies
@@ -50,20 +50,20 @@ in the format `<command>:<vue|server|desktop>`.
 {:.table .table-striped}
 | Command | Description | Can run from top-level |
 | ---- | ---- | ---- |
-| `npm run dev` | Starts the development version of the project and watches for changes. *This requires using two different terminals.* | Now, run `npm run dev:vue` and in another terminal, `npm run dev:server`. |
-| `npm start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. | Yes |
-| _`npm run citest`_ | _Runs the unit tests for the project(s) in a headless mode if available._ | _TBD_ |
-| `npm test` | Runs the unit tests for the project(s). | Yes |
-| `npm run build` | Builds the web-based project(s) | Yes |
+| `pnpm run dev` | Starts the development version of the project and watches for changes. *This requires using two different terminals.* | Now, run `npm run dev:vue` and in another terminal, `npm run dev:server`. |
+| `pnpm start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. | Yes |
+| _`pnpm run citest`_ | _Runs the unit tests for the project(s) in a headless mode if available._ | _TBD_ |
+| `nppm test` | Runs the unit tests for the project(s). | Yes |
+| `pnpm run build` | Builds the web-based project(s) | Yes |
 
 ## Logs
 Server logs `app.log` and  `audit.log` can be accessed from directory `td.server`.
 
 ## Desktop
 Threat Dragon uses electron to build install images for the desktop application, supporting Linux, MacOS and Windows.
-Build these using `npm run build:desktop` from the top directory.
+Build these using `pnpm run build:desktop` from the top directory.
 
-During development launch the electron-based desktop application from the top directory: `npm run start:desktop`.
+During development launch the electron-based desktop application from the top directory: `pnpm run start:desktop`.
 This runs the desktop application in development mode that will relaunch the application as changes are made.
 
 ## Docker

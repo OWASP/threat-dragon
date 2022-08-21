@@ -15,7 +15,8 @@
     "diagrams": [
       {
         "title": "Main Request Flow",
-        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
         "id": 0,
         "$$hashKey": "object:160",
         "diagramJson": {
