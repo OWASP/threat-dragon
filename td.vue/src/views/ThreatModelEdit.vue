@@ -220,7 +220,6 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-//            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.stride.diagramTitle'), diagramType: 'STRIDE' });
             let newDiagram = {
                 name: '',
                 title: tc('threatmodel.diagram.stride.diagramTitle'),
@@ -230,21 +229,33 @@ export default {
             this.model.detail.diagrams.push(newDiagram);
         },
         onDiagramTypeClick(idx, type) {
-            this.model.detail.diagrams[idx].diagramType = type;
-            console.log('Diagram[' + idx + '] type set to : ' + type);
+            let title;
             switch (type) {
-                case 'CIA':
-                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
-                    break;
-                case 'LINDDUN':
-                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
-                    break;
-                case 'STRIDE':
-                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
-                    break;
-                default:
-                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.generic.jpg';
-                    break;
+            case 'CIA':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
+                title = tc('threatmodel.diagram.cia.diagramTitle');
+                break;
+            case 'LINDDUN':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
+                title = tc('threatmodel.diagram.linddun.diagramTitle');
+                break;
+            case 'STRIDE':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
+                title = tc('threatmodel.diagram.stride.diagramTitle');
+                break;
+            default:
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.jpg';
+                title = tc('threatmodel.diagram.generic.diagramTitle');
+                type = tc('threatmodel.diagram.generic.select');
+                break;
+            }
+            this.model.detail.diagrams[idx].diagramType = type;
+            if (this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.cia.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.linddun.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.stride.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.generic.diagramTitle')
+            ) {
+                this.model.detail.diagrams[idx].title = title;
             }
         },
         onRemoveDiagramClick(idx) {
