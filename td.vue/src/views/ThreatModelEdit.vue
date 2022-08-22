@@ -100,10 +100,10 @@
                             >
                                 <b-input-group-prepend>
                                     <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'CIA'">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'LINDDUN'">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'STRIDE'">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = $t('threatmodel.diagram.generic.select')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
                                 </b-input-group-prepend>
                                 <b-form-input
@@ -164,11 +164,11 @@
 }
 
 .remove-diagram-btn {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 select-diagram-type {
-    font-size: 14px;
+    font-size: 12px;
 }
 </style>
 
@@ -220,7 +220,32 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle'), diagramType: 'STRIDE' });
+//            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.stride.diagramTitle'), diagramType: 'STRIDE' });
+            let newDiagram = {
+                name: '',
+                title: tc('threatmodel.diagram.stride.diagramTitle'),
+                diagramType: 'STRIDE',
+                thumbnail: './public/content/images/thumbnail.stride.jpg'
+            };
+            this.model.detail.diagrams.push(newDiagram);
+        },
+        onDiagramTypeClick(idx, type) {
+            this.model.detail.diagrams[idx].diagramType = type;
+            console.log('Diagram[' + idx + '] type set to : ' + type);
+            switch (type) {
+                case 'CIA':
+                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
+                    break;
+                case 'LINDDUN':
+                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
+                    break;
+                case 'STRIDE':
+                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
+                    break;
+                default:
+                    this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.generic.jpg';
+                    break;
+            }
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);

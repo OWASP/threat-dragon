@@ -115,7 +115,7 @@ export default {
         },
         onDeleteClick(evt) {
             evt.preventDefault();
-            console.log('Delete clicked!');
+            console.log('Delete clicked! Action TBA');
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {
