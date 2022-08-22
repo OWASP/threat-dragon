@@ -109,7 +109,7 @@
                     class="float-right"
                     @click="hideModal()"
                 >
-                    {{ $t('forms.close') }}
+                    {{ $t('forms.apply') }}
                 </b-button>
                 <b-button
                     variant="danger"

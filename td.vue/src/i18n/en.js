@@ -167,27 +167,28 @@ const en = {
         }
     },
     forms: {
-        edit: 'Edit',
-        report: 'Report',
+        apply: 'Apply',
+        cancel: 'Cancel',
+        close: 'Close',
+        closeModel: 'Close Model',
         delete: 'Delete',
+        discardTitle: 'Discard Changes?',
+        discardMessage: 'Are you sure you want to discard your changes?',
+        edit: 'Edit',
+        import: 'Import',
+        ok: 'OK',
         open: 'Open',
         openModel: 'Open Model',
+        print: 'Print',
+        reload: 'Reload',
         remove: 'Remove',
+        report: 'Report',
         save: 'Save',
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        reload: 'Reload',
-        cancel: 'Cancel',
-        close: 'Close',
-        closeModel: 'Close Model',
-        search: 'Search',
-        import: 'Import',
-        ok: 'OK',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
-        print: 'Print',
-        savePdf: 'Save PDF'
+        savePdf: 'Save PDF',
+        search: 'Search'
     },
     threats: {
         model: {
@@ -215,10 +216,10 @@ const en = {
             }
         },
         generic: {
-            default: 'Generic threat',
-            cia: 'Generic CIA threat',
-            linddun: 'Generic LINDDUN threat',
-            stride: 'Generic STRIDE threat'
+            default: 'New generic threat',
+            cia: 'New CIA threat',
+            linddun: 'New LINDDUN threat',
+            stride: 'New STRIDE threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',

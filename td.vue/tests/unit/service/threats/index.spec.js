@@ -13,7 +13,7 @@ describe('service/threats/index.js', () => {
         });
 
         it('has a default title', () => {
-            expect(threat.title).toEqual('Generic STRIDE threat');
+            expect(threat.title).toEqual('New STRIDE threat');
         });
 
         it('has an open status', () => {
@@ -49,7 +49,7 @@ describe('service/threats/index.js', () => {
         });
 
         it('has a typed title', () => {
-            expect(threat.title).toEqual('Generic LINDDUN threat');
+            expect(threat.title).toEqual('New LINDDUN threat');
         });
 
         it('has Linkability type', () => {
