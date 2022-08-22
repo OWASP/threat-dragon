@@ -135,8 +135,9 @@ describe('components/GraphMeta.vue', () => {
                     severity: 'Medium',
                     description: 'describing the thing',
                     title: 'Some Threat',
-                    type: 'Spoofing',
-                    mitigation: 'Unmitigated'
+                    type: 'Linkability',
+                    mitigation: 'Unmitigated',
+                    modelType: 'LINDDUN'
                 }],
                 hasOpenThreats: true
             };
@@ -153,6 +154,11 @@ describe('components/GraphMeta.vue', () => {
                             getData: jest.fn()
                         },
                         threats: entityData.threats
+                    },
+                    threatmodel: {
+                        selectedDiagram: {
+                            diagramType: 'LINDDUN'
+                        }
                     }
                 }
             });

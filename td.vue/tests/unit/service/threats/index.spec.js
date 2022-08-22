@@ -1,43 +1,63 @@
-import threats, { createNewGenericThreat } from '@/service/threats/index.js';
+import threats, { createNewTypedThreat } from '@/service/threats/index.js';
 
 describe('service/threats/index.js', () => {
-    describe('createNewGenericThreat', () => {
+    describe('create new default typed threat', () => {
         let threat;
 
         beforeEach(() => {
-            threat = createNewGenericThreat();
+            threat = createNewTypedThreat();
         });
 
         it('has an id', () => {
             expect(threat.id).not.toBeUndefined();
         });
 
-        it('has a deafualt title', () => {
-            expect(threat.title).toEqual('Generic threat');
+        it('has a default title', () => {
+            expect(threat.title).toEqual('New STRIDE threat');
         });
 
-        it('has an empty status', () => {
-            expect(threat.status).toEqual('');
+        it('has an open status', () => {
+            expect(threat.status).toEqual('Open');
         });
 
-        it('has an empty severity', () => {
-            expect(threat.severity).toEqual('');
+        it('has a medium severity', () => {
+            expect(threat.severity).toEqual('Medium');
         });
 
-        it('has an empty type', () => {
-            expect(threat.type).toEqual('');
+        it('has a defined type', () => {
+            expect(threat.type).not.toEqual('');
         });
 
-        it('has an empty description', () => {
-            expect(threat.description).toEqual('');
+        it('has a reasonable description', () => {
+            expect(threat.description.length).toBeGreaterThan(10);
         });
 
-        it('has an empty mitigation', () => {
-            expect(threat.mitigation).toEqual('');
+        it('has a reasonable mitigation', () => {
+            expect(threat.mitigation.length).toBeGreaterThan(10);
         });
 
-        it('has an empty modelType', () => {
-            expect(threat.modelType).toEqual('');
+        it('has a defined modelType', () => {
+            expect(threat.modelType).not.toEqual('');
+        });
+    });
+
+    describe('create new LINDDUN threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('LINDDUN');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('New LINDDUN threat');
+        });
+
+        it('has Linkability type', () => {
+            expect(threat.type).toEqual('Linkability');
+        });
+
+        it('has a LINDDUN modelType', () => {
+            expect(threat.modelType).toEqual('LINDDUN');
         });
     });
 

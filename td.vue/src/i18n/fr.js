@@ -64,7 +64,23 @@ const fr = {
         title: 'Titre',
         diagram: {
             diagrams: 'Diagrammes',
-            addNewDiagram: 'Ajouter un nouveau diagramme...'
+            addNewDiagram: 'Ajouter un nouveau diagramme...',
+            generic: {
+                diagramTitle: 'Nouveau diagramme générique',
+	            select: `Générique`
+	        },
+	        stride: {
+                diagramTitle: 'Nouveau diagramme STRIDE',
+                select: `STRIDE`
+            },
+            linddun: {
+                diagramTitle: 'Nouveau diagramme LINDDUN',
+                select: `LINDDUN`
+            },
+            cia: {
+                diagramTitle: 'Nouveau diagramme CIA',
+                select: `CIA`,
+            }
         },
         threats: 'Menaces',
         properties: {

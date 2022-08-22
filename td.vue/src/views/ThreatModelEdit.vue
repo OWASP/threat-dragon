@@ -100,10 +100,10 @@
                             >
                                 <b-input-group-prepend>
                                     <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'CIA'">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'LINDDUN'">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = 'STRIDE'">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="model.detail.diagrams[idx].diagramType = $t('threatmodel.diagram.generic.select')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
                                 </b-input-group-prepend>
                                 <b-form-input
@@ -164,11 +164,11 @@
 }
 
 .remove-diagram-btn {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 select-diagram-type {
-    font-size: 14px;
+    font-size: 12px;
 }
 </style>
 
@@ -220,7 +220,43 @@ export default {
         },
         onAddDiagramClick(evt) {
             evt.preventDefault();
-            this.model.detail.diagrams.push({ name: '', title: tc('threatmodel.diagram.generic.diagramTitle'), diagramType: 'STRIDE' });
+            let newDiagram = {
+                name: '',
+                title: tc('threatmodel.diagram.stride.diagramTitle'),
+                diagramType: 'STRIDE',
+                thumbnail: './public/content/images/thumbnail.stride.jpg'
+            };
+            this.model.detail.diagrams.push(newDiagram);
+        },
+        onDiagramTypeClick(idx, type) {
+            let title;
+            switch (type) {
+            case 'CIA':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
+                title = tc('threatmodel.diagram.cia.diagramTitle');
+                break;
+            case 'LINDDUN':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
+                title = tc('threatmodel.diagram.linddun.diagramTitle');
+                break;
+            case 'STRIDE':
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
+                title = tc('threatmodel.diagram.stride.diagramTitle');
+                break;
+            default:
+                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.jpg';
+                title = tc('threatmodel.diagram.generic.diagramTitle');
+                type = tc('threatmodel.diagram.generic.select');
+                break;
+            }
+            this.model.detail.diagrams[idx].diagramType = type;
+            if (this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.cia.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.linddun.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.stride.diagramTitle')
+                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.generic.diagramTitle')
+            ) {
+                this.model.detail.diagrams[idx].title = title;
+            }
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
