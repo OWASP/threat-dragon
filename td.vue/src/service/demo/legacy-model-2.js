@@ -8,8 +8,7 @@ export default {
     'detail': {
         'contributors': [
             {
-                'name': 'Tom Brown',
-                '$$hashKey': 'object:154'
+                'name': 'Tom Brown'
             }
         ],
         'diagrams': [
@@ -18,7 +17,6 @@ export default {
                 'thumbnail': './public/content/images/thumbnail.jpg',
                 'diagramType': 'Generic',
                 'id': 0,
-                '$$hashKey': 'object:160',
                 'diagramJson': {
                     'cells': [
                         {
@@ -41,8 +39,7 @@ export default {
                                     'mitigation': 'Encrypt the DB credentials in the configuration file.\n\nExpire and replace the DB credentials regularly.',
                                     'description': 'The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.',
                                     'title': 'Accessing DB credentials',
-                                    'type': 'Information disclosure',
-                                    '$$hashKey': 'object:276'
+                                    'type': 'Information disclosure'
                                 }
                             ],
                             'storesCredentials': true,
@@ -83,8 +80,7 @@ export default {
                                     'description': 'An attacker could make an query call on the DB,',
                                     'title': 'Unauthorised access',
                                     'type': 'Information disclosure',
-                                    'mitigation': 'Require all queries to be authenticated.',
-                                    '$$hashKey': 'object:215'
+                                    'mitigation': 'Require all queries to be authenticated.'
                                 },
                                 {
                                     'status': 'Open',
@@ -92,8 +88,7 @@ export default {
                                     'description': 'An attacker could obtain the DB credentials ans use them to make unauthorised queries.',
                                     'title': 'Credential theft',
                                     'type': 'Information disclosure',
-                                    'mitigation': 'Use a firewall to restrict access to the DB to only the Background Worker IP address.',
-                                    '$$hashKey': 'object:233'
+                                    'mitigation': 'Use a firewall to restrict access to the DB to only the Background Worker IP address.'
                                 }
                             ],
                             'outOfScope': false,
@@ -136,8 +131,7 @@ export default {
                                     'title': 'Credentials should be encrypted',
                                     'type': 'Information disclosure',
                                     'description': 'The Web Application Config stores credentials used  by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.',
-                                    'mitigation': 'The Message Queue credentials should be encrypted.',
-                                    '$$hashKey': 'object:203'
+                                    'mitigation': 'The Message Queue credentials should be encrypted.'
                                 }
                             ],
                             'storesCredentials': true,
@@ -177,7 +171,6 @@ export default {
                                     'severity': 'Low',
                                     'title': 'Message secrecy',
                                     'type': 'Information disclosure',
-                                    '$$hashKey': 'object:55',
                                     'description': 'The data flow between the Web Application and the Background Worker is not point-to-point and therefore end-to-end secrecy cannot be provided at the transport layer. Messages could be read by an attacker at rest in the Message Queue.',
                                     'mitigation': 'Use message level encryption for high sensitivity data (e.g. security tokens) in messages.'
                                 },
@@ -186,7 +179,6 @@ export default {
                                     'severity': 'Medium',
                                     'title': 'Message tampering',
                                     'type': 'Tampering',
-                                    '$$hashKey': 'object:68',
                                     'description': 'Messages on the queue could be tampered with, causing incorrect processing by the Background Worker.',
                                     'mitigation': 'Sign all queue messages at the Web Server. Validate the message signature at the Background Worker and reject any message with a missing or invalid signature. Log any failed messages.'
                                 },
@@ -196,8 +188,7 @@ export default {
                                     'title': 'Fake messages could be placed on the queue',
                                     'type': 'Spoofing',
                                     'description': 'An attacker could put a fake message on queue, causing the Background Worker to do incorrect processing.',
-                                    'mitigation': 'Restrict access to the queue to the IP addresses of the Web Server and Background Worker.\n\nImplement authentication on the queue endpoint.',
-                                    '$$hashKey': 'object:150'
+                                    'mitigation': 'Restrict access to the queue to the IP addresses of the Web Server and Background Worker.\n\nImplement authentication on the queue endpoint.'
                                 }
                             ],
                             'outOfScope': false,
@@ -240,8 +231,7 @@ export default {
                                     'title': 'Poison messages 1',
                                     'type': 'Denial of service',
                                     'description': 'An attacker could generate a malicious message that the Background Worker cannot process.',
-                                    'mitigation': 'Implement a poison message queue where messages are placed after a fixed number of retries.',
-                                    '$$hashKey': 'object:245'
+                                    'mitigation': 'Implement a poison message queue where messages are placed after a fixed number of retries.'
                                 },
                                 {
                                     'status': 'Open',
@@ -249,8 +239,7 @@ export default {
                                     'mitigation': 'Validate the content of all messages, before processing. Reject any message that have invalid content and log the rejection. Do not log the malicious content - instead log a description of the error.',
                                     'type': 'Denial of service',
                                     'title': 'Poison messages 2',
-                                    'description': 'An attacker could generate a malicious message that the Background Worker cannot process.',
-                                    '$$hashKey': 'object:260'
+                                    'description': 'An attacker could generate a malicious message that the Background Worker cannot process.'
                                 }
                             ],
                             'privilegeLevel': 'executionContext =Limited',
@@ -423,8 +412,7 @@ export default {
                                     'title': 'Data flow should use HTTP/S',
                                     'type': 'Information disclosure',
                                     'description': 'These requests are made over the public internet and could be intercepted by an attacker.',
-                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
-                                    '$$hashKey': 'object:372'
+                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.'
                                 }
                             ],
                             'isPublicNetwork': true,
@@ -477,8 +465,7 @@ export default {
                                     'description': 'These requests are made over the public internet and could be intercepted by an attacker.',
                                     'title': 'Data flow should use HTTP/S',
                                     'type': 'Information disclosure',
-                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
-                                    '$$hashKey': 'object:182'
+                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.'
                                 }
                             ],
                             'outOfScope': false,
@@ -528,8 +515,7 @@ export default {
                                     'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
                                     'type': 'Information disclosure',
                                     'title': 'Data flow should use HTTP/S',
-                                    'description': 'These requests are made over the public internet and could be intercepted by an attacker.',
-                                    '$$hashKey': 'object:198'
+                                    'description': 'These requests are made over the public internet and could be intercepted by an attacker.'
                                 }
                             ],
                             'outOfScope': false,
@@ -600,8 +586,7 @@ export default {
                                     'title': 'Man in the middle attack',
                                     'type': 'Information disclosure',
                                     'mitigation': 'Enforce an encrypted connection at the DB server',
-                                    'description': 'An attacker could intercept the DB queries in transit and obtain sensitive information, such as DB credentials, query parameters or query results (is unlikely since the data flow is over a private network).',
-                                    '$$hashKey': 'object:291'
+                                    'description': 'An attacker could intercept the DB queries in transit and obtain sensitive information, such as DB credentials, query parameters or query results (is unlikely since the data flow is over a private network).'
                                 }
                             ],
                             'outOfScope': false,
@@ -675,8 +660,7 @@ export default {
                                     'title': 'Data flow should use HTTP/S',
                                     'type': 'Information disclosure',
                                     'description': 'These responses are over the public internet and could be intercepted by an attacker.',
-                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
-                                    '$$hashKey': 'object:104'
+                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.'
                                 }
                             ],
                             'outOfScope': false,
