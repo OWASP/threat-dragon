@@ -16,28 +16,28 @@ describe('service/threats/index.js', () => {
             expect(threat.title).toEqual('Generic threat');
         });
 
-        it('has an empty status', () => {
-            expect(threat.status).toEqual('');
+        it('has an open status', () => {
+            expect(threat.status).toEqual('Open');
         });
 
-        it('has an empty severity', () => {
-            expect(threat.severity).toEqual('');
+        it('has a medium severity', () => {
+            expect(threat.severity).toEqual('Medium');
         });
 
-        it('has an empty type', () => {
-            expect(threat.type).toEqual('');
+        it('has a defined type', () => {
+            expect(threat.type).not.toEqual('');
         });
 
-        it('has an empty description', () => {
-            expect(threat.description).toEqual('');
+        it('has a reasonable description', () => {
+            expect(threat.description.length).toBeGreaterThan(10);
         });
 
-        it('has an empty mitigation', () => {
-            expect(threat.mitigation).toEqual('');
+        it('has a reasonable mitigation', () => {
+            expect(threat.mitigation.length).toBeGreaterThan(10);
         });
 
-        it('has an empty modelType', () => {
-            expect(threat.modelType).toEqual('');
+        it('has a defined modelType', () => {
+            expect(threat.modelType).not.toEqual('');
         });
     });
 

@@ -167,7 +167,6 @@ export default {
         },
         statuses() {
             return [
-                { value: '', text: '' },
                 { value: 'NotApplicable', text: this.$t('threats.status.notApplicable') },
                 { value: 'Open', text: this.$t('threats.status.open') },
                 { value: 'Mitigated', text: this.$t('threats.status.mitigated') }
@@ -175,7 +174,6 @@ export default {
         },
         priorities() {
             return [
-                { value: '', text: '' },
                 { value: 'Low', text: this.$t('threats.priority.low') },
                 { value: 'Medium', text: this.$t('threats.priority.medium') },
                 { value: 'High', text: this.$t('threats.priority.high') }

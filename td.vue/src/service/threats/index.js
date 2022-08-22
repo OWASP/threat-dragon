@@ -27,12 +27,12 @@ const convertToTranslationString = (val) => valuesToTranslations[val];
 export const createNewGenericThreat = () => ({
     id: v4(),
     title: tc('threats.generic.default'),
-    status: '',
-    severity: '',
-    type: '',
-    description: '',
-    mitigation: '',
-    modelType: ''
+    status: 'Open',
+    severity: 'Medium',
+    type: tc('threats.model.stride.spoofing'),
+    description: tc('threats.description'),
+    mitigation: tc('threats.mitigation'),
+    modelType: 'STRIDE'
 });
 
 const hasOpenThreats = (data) => !!data && !!data.threats &&
