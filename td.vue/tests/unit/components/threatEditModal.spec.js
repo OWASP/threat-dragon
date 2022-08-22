@@ -75,14 +75,6 @@ describe('components/ThreatEditModal.vue', () => {
             expect(input.exists()).toEqual(true);
         });
 
-        it('has a model type input', () => {
-            const input = wrapper.findAllComponents(BFormSelect)
-                .filter(x => x.attributes('id') === 'model-type')
-                .at(0);
-
-            expect(input.exists()).toEqual(true);
-        });
-
         it('has a threat type input', () => {
             const input = wrapper.findAllComponents(BFormSelect)
                 .filter(x => x.attributes('id') === 'threat-type')

@@ -1,19 +1,19 @@
-import threats, { createNewGenericThreat } from '@/service/threats/index.js';
+import threats, { createNewTypedThreat } from '@/service/threats/index.js';
 
 describe('service/threats/index.js', () => {
-    describe('createNewGenericThreat', () => {
+    describe('create new default typed threat', () => {
         let threat;
 
         beforeEach(() => {
-            threat = createNewGenericThreat();
+            threat = createNewTypedThreat();
         });
 
         it('has an id', () => {
             expect(threat.id).not.toBeUndefined();
         });
 
-        it('has a deafualt title', () => {
-            expect(threat.title).toEqual('Generic threat');
+        it('has a default title', () => {
+            expect(threat.title).toEqual('Generic STRIDE threat');
         });
 
         it('has an open status', () => {
@@ -38,6 +38,26 @@ describe('service/threats/index.js', () => {
 
         it('has a defined modelType', () => {
             expect(threat.modelType).not.toEqual('');
+        });
+    });
+
+    describe('create new LINDDUN threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('LINDDUN');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('Generic LINDDUN threat');
+        });
+
+        it('has Linkability type', () => {
+            expect(threat.type).toEqual('Linkability');
+        });
+
+        it('has a LINDDUN modelType', () => {
+            expect(threat.modelType).toEqual('LINDDUN');
         });
     });
 

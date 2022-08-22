@@ -31,21 +31,6 @@
                 <b-form-row>
                     <b-col>
                         <b-form-group
-                            id="model-type-group"
-                            :label="$t('threats.properties.modelType')"
-                            label-for="model-type">
-                            <b-form-select
-                                id="model-type"
-                                v-model="threat.modelType"
-                                :options="modelTypes">
-                            </b-form-select>
-                        </b-form-group>
-                    </b-col>
-                </b-form-row>
-
-                <b-form-row>
-                    <b-col>
-                        <b-form-group
                             id="threat-type-group"
                             :label="$t('threats.properties.type')"
                             label-for="threat-type">
@@ -143,7 +128,7 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import { createNewGenericThreat } from '@/service/threats/index.js';
+import { createNewTypedThreat } from '@/service/threats/index.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
@@ -194,7 +179,8 @@ export default {
         show(threatId) {
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
-                this.threat = createNewGenericThreat();
+                // this should never happen with a valid threatId
+                this.threat = createNewTypedThreat();
             }
             this.$refs.editModal.show();
         },

@@ -24,16 +24,42 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewGenericThreat = () => ({
-    id: v4(),
-    title: tc('threats.generic.default'),
-    status: 'Open',
-    severity: 'Medium',
-    type: tc('threats.model.stride.spoofing'),
-    description: tc('threats.description'),
-    mitigation: tc('threats.mitigation'),
-    modelType: 'STRIDE'
-});
+export const createNewTypedThreat = function(modelType) {
+    if (!modelType) {
+        modelType = 'STRIDE';
+    }
+    let title, type;
+
+    switch (modelType) {
+    case 'CIA':
+        title = tc('threats.generic.cia');
+        type = tc('threats.model.cia.confidentiality');
+        break;
+    case 'LINDDUN':
+        title = tc('threats.generic.linddun');
+        type = tc('threats.model.linddun.linkability');
+        break;
+    case 'STRIDE':
+        title = tc('threats.generic.stride');
+        type = tc('threats.model.stride.spoofing');
+        break;
+    default:
+        title = tc('threats.generic.default');
+        type = tc('threats.model.stride.spoofing');
+        break;
+    }
+
+    return {
+        id: v4(),
+        title: title,
+        status: 'Open',
+        severity: 'Medium',
+        type: type,
+        description: tc('threats.description'),
+        mitigation: tc('threats.mitigation'),
+        modelType: modelType
+    };
+};
 
 const hasOpenThreats = (data) => !!data && !!data.threats &&
     data.threats.filter(x => x.status.toLowerCase() === 'open').length > 0;
