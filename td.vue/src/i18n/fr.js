@@ -34,6 +34,24 @@ const fr = {
     demo: {
         select: 'Sélectionnez une démo de modèle de menace dans la liste ci-dessous'
     },
+    desktop: {
+        file: {
+            heading: 'File',
+            close: 'Fermer Projet',
+            open: 'Ouvrir',
+            save: 'Sauvegarder',
+            saveAs: 'Save As',
+        },
+        help: {
+            heading: 'Help',
+            docs: 'Documentation',
+            visit: 'Visit us at OWASP',
+            sheets: 'OWASP Cheat Sheets',
+            github: 'Visit us on GitHub',
+            submit: 'Submit an Issue',
+            check: 'Check for updates ...'
+        }
+    },
     repository: {
         select: 'Sélectionnez un',
         from: 'projet de la liste ci-dessous',
