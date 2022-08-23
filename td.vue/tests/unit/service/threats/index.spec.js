@@ -25,7 +25,7 @@ describe('service/threats/index.js', () => {
         });
 
         it('has a defined type', () => {
-            expect(threat.type).not.toEqual('');
+            expect(threat.type).toEqual('Spoofing');
         });
 
         it('has a reasonable description', () => {
@@ -37,7 +37,7 @@ describe('service/threats/index.js', () => {
         });
 
         it('has a defined modelType', () => {
-            expect(threat.modelType).not.toEqual('');
+            expect(threat.modelType).toEqual('STRIDE');
         });
     });
 
@@ -58,6 +58,26 @@ describe('service/threats/index.js', () => {
 
         it('has a LINDDUN modelType', () => {
             expect(threat.modelType).toEqual('LINDDUN');
+        });
+    });
+
+    describe('create new CIA threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('CIA');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('New CIA threat');
+        });
+
+        it('has Linkability type', () => {
+            expect(threat.type).toEqual('Confidentiality');
+        });
+
+        it('has a LINDDUN modelType', () => {
+            expect(threat.modelType).toEqual('CIA');
         });
     });
 
