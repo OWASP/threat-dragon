@@ -1,7 +1,13 @@
 import cia from './cia.js';
-import generic from './generic.js';
 import linddun from './linddun.js';
 import stride from './stride.js';
+
+// do it this way to 'persuade' generic to be in the right order
+const generic = Object.assign(
+    Object.assign({ strideHeader:  'threats.model.stride.header' }, stride),
+    Object.assign({ ciaHeader:  'threats.model.cia.header' }, cia),
+    Object.assign({ linddunHeader:  'threats.model.linddun.header' }, linddun)
+);
 
 const getByTranslationValue = (translation) => {
     if (!translation) {
