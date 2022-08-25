@@ -41,9 +41,9 @@ describe('service/threats/models/index.js', () => {
             expect(Object.keys(models.getThreatTypes('Stride'))).toHaveLength(6);
         });
 
-        it('returns an empty object if no threat types are found', () => {
+        it('returns generic threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(models.getThreatTypes('fake')).toEqual({});
+            expect(Object.keys(models.getThreatTypes('fake'))).toHaveLength(19);
         });
     });
 });

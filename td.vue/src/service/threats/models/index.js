@@ -1,4 +1,5 @@
 import cia from './cia.js';
+import generic from './generic.js';
 import linddun from './linddun.js';
 import stride from './stride.js';
 
@@ -24,20 +25,19 @@ const getByTranslationValue = (translation) => {
 
 const threatTypesByModel = {
     cia,
+    generic,
     linddun,
     stride
 };
 
 const getThreatTypes = (modelType) => {
     const threatTypes = threatTypesByModel[modelType.toLowerCase()];
-    if (!threatTypes) {
-        console.error('Unknown model type: ', modelType);
-    }
-    return threatTypes || {};
+    return threatTypes || generic;
 };
 
 export default {
     cia,
+    generic,
     getByTranslationValue,
     getThreatTypes,
     linddun,

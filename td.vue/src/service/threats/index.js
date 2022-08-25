@@ -41,11 +41,11 @@ export const createNewTypedThreat = function(modelType) {
         break;
     case 'STRIDE':
         title = tc('threats.generic.stride');
-        type = tc('threats.model.stride.spoofing');
+        type = tc('threats.model.stride.tampering');
         break;
     default:
         title = tc('threats.generic.default');
-        type = tc('threats.model.stride.spoofing');
+        type = tc('threats.model.stride.tampering');
         break;
     }
 

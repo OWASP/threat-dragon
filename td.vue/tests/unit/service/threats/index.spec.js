@@ -25,7 +25,7 @@ describe('service/threats/index.js', () => {
         });
 
         it('has a defined type', () => {
-            expect(threat.type).toEqual('Spoofing');
+            expect(threat.type).toEqual('Tampering');
         });
 
         it('has a reasonable description', () => {
