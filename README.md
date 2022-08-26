@@ -23,8 +23,9 @@ It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
 ## Check it out
-Try the Threat Dragon version 2.0 snapshot on [our website](https://www.threatdragon.com/#/), or watch the video
-provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
+The production release area, conforming to [semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
+Threat Dragon version 2.0 is still in development, but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
+Also well worth watching the video provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
 ### Version 1.x Maintenance mode
 Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
