@@ -17,7 +17,7 @@ const getBearerToken = (authHeader) => {
     }
 
     if (authHeader.indexOf('Bearer ') === -1) {
-        logger.warn(`Bearer token key word not found in auth header: ${authHeader}`);
+        logger.warn(`Bearer token key word not found in auth header`);
         return null;
     }
 
