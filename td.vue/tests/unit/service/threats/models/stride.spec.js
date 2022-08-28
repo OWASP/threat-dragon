@@ -2,26 +2,26 @@ import stride from '@/service/threats/models/stride.js';
 
 describe('service/threats/models/stride.js', () => {
     it('has a translation for spoofing', () => {
-        expect(stride.spoofing.length).toBeGreaterThan(0);
+        expect(stride.actor.spoofing.length).toBeGreaterThan(0);
     });
 
     it('has a translation for tampering', () => {
-        expect(stride.tampering.length).toBeGreaterThan(0);
+        expect(stride.store.tampering.length).toBeGreaterThan(0);
     });
 
     it('has a translation for repudiation', () => {
-        expect(stride.repudiation.length).toBeGreaterThan(0);
+        expect(stride.process.repudiation.length).toBeGreaterThan(0);
     });
 
     it('has a translation for information disclosure', () => {
-        expect(stride.informationDisclosure.length).toBeGreaterThan(0);
+        expect(stride.flow.informationDisclosure.length).toBeGreaterThan(0);
     });
 
     it('has a translation for denial of service', () => {
-        expect(stride.denialOfService.length).toBeGreaterThan(0);
+        expect(stride.all.denialOfService.length).toBeGreaterThan(0);
     });
 
     it('has a translation for elevation of privilege', () => {
-        expect(stride.elevationOfPrivilege.length).toBeGreaterThan(0);
+        expect(stride.all.elevationOfPrivilege.length).toBeGreaterThan(0);
     });
 });

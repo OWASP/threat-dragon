@@ -4,9 +4,9 @@ import stride from './stride.js';
 
 // do it this way to 'persuade' generic to be in the right order
 const generic = Object.assign(
-    Object.assign({ strideHeader:  'threats.model.stride.header' }, stride),
+    Object.assign({ strideHeader:  'threats.model.stride.header' }, stride.all),
     Object.assign({ ciaHeader:  'threats.model.cia.header' }, cia),
-    Object.assign({ linddunHeader:  'threats.model.linddun.header' }, linddun)
+    Object.assign({ linddunHeader:  'threats.model.linddun.header' }, linddun.all)
 );
 
 const getByTranslationValue = (translation) => {
@@ -18,37 +18,26 @@ const getByTranslationValue = (translation) => {
         return 'CIA';
     }
 
-    if (Object.values(linddun).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'LINDDUN';
     }
 
-    if (Object.values(stride).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(stride.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'STRIDE';
     }
 
     return '';
 };
 
-const getThreatTypes = (modelType) => {
-    const threatTypesByModel = {
-        cia,
-        generic,
-        linddun,
-        stride
-    };
-    const threatTypes = threatTypesByModel[modelType.toLowerCase()];
-    return threatTypes || generic;
-};
-
 const getThreatTypesByElement = (modelType, cellType) => {
     let types;
-    console.log('modelType:' + modelType + ' cellType: ' + cellType);
-    switch (modelType) {
+
+    switch (modelType.toUpperCase()) {
     case 'CIA' :
         types = cia;
         break;
     case 'LINDDUN' :
-   	    if (cellType === 'tm.Actor') {
+        if (cellType === 'tm.Actor') {
              types = linddun.actor;
         } else {
              types = linddun.default;
@@ -75,11 +64,11 @@ const getThreatTypesByElement = (modelType, cellType) => {
         types = generic;
         break;
     }
+
     return types;
 };
 
 export default {
     getByTranslationValue,
-    getThreatTypes,
     getThreatTypesByElement
 };
