@@ -179,19 +179,4 @@ describe('components/ThreatEditModal.vue', () => {
             expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(1);
         });
     });
-
-    describe('updateData after delete', () => {
-        beforeEach(() => {
-            wrapper = getWrapper();
-            wrapper.vm.$refs.editModal.show = jest.fn();
-            mockStore.dispatch = jest.fn();
-            dataChanged.updateStyleAttrs = jest.fn();
-            wrapper.vm.show('fake');
-            wrapper.vm.updateData();
-        });
-
-        it('does not update the data', () => {
-            expect(mockStore.dispatch).not.toHaveBeenCalled();
-        });
-    });
 });

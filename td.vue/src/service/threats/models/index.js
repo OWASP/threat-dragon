@@ -2,6 +2,13 @@ import cia from './cia.js';
 import linddun from './linddun.js';
 import stride from './stride.js';
 
+// do it this way to 'persuade' generic to be in the right order
+const generic = Object.assign(
+    Object.assign({ strideHeader:  'threats.model.stride.header' }, stride.all),
+    Object.assign({ ciaHeader:  'threats.model.cia.header' }, cia),
+    Object.assign({ linddunHeader:  'threats.model.linddun.header' }, linddun.all)
+);
+
 const getByTranslationValue = (translation) => {
     if (!translation) {
         return '';
@@ -11,35 +18,57 @@ const getByTranslationValue = (translation) => {
         return 'CIA';
     }
 
-    if (Object.values(linddun).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'LINDDUN';
     }
 
-    if (Object.values(stride).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(stride.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'STRIDE';
     }
 
     return '';
 };
 
-const threatTypesByModel = {
-    cia,
-    linddun,
-    stride
-};
+const getThreatTypesByElement = (modelType, cellType) => {
+    let types;
 
-const getThreatTypes = (modelType) => {
-    const threatTypes = threatTypesByModel[modelType.toLowerCase()];
-    if (!threatTypes) {
-        console.error('Unknown model type: ', modelType);
+    switch (modelType.toUpperCase()) {
+    case 'CIA' :
+        types = cia;
+        break;
+    case 'LINDDUN' :
+        if (cellType === 'tm.Actor') {
+             types = linddun.actor;
+        } else {
+             types = linddun.default;
+        }
+        break;
+    case 'STRIDE' :
+        switch (cellType) {
+        case 'tm.Actor' :
+            types = stride.actor;
+            break;
+        case 'tm.Process' :
+            types = stride.process;
+            break;
+        case 'tm.Store' :
+            types = stride.store;
+            break;
+        case 'tm.Flow' :
+        default:
+            types = stride.flow;
+            break;
+        }
+        break;
+    default:
+        types = generic;
+        break;
     }
-    return threatTypes || {};
+
+    return types;
 };
 
 export default {
-    cia,
     getByTranslationValue,
-    getThreatTypes,
-    linddun,
-    stride
+    getThreatTypesByElement
 };
