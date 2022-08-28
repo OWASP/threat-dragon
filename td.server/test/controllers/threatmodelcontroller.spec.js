@@ -21,7 +21,7 @@ describe('threat model controller tests', () => {
                 organisation: 'test org',
                 repo: 'test repo',
                 branch: 'test branch',
-                model: { version: '2.0' }
+                model: { tdVersion: '2.0' }
             },
             query: {
                 page: 'test page'

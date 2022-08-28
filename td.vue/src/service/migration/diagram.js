@@ -21,14 +21,14 @@ const drawV1 = (diagram, graph) => {
 };
 
 const upgradeAndDraw = (diagram, graph) => {
-    if (diagram.version === '2.0') {
+    if (diagram.tdVersion === '2.0') {
         graph.fromJSON(diagram);
         return;
     }
 
     drawV1(diagram, graph);
     const updated = graph.toJSON();
-    updated.version = '2.0';
+    updated.tdVersion = '2.0';
     updated.title = diagram.title;
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;

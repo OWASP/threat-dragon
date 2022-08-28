@@ -1107,7 +1107,7 @@ export default {
                         ]
                     }
                 ],
-                'version': '2.0',
+                'tdVersion': '2.0',
                 'title': 'Main Request Data Flow',
                 'thumbnail': './public/content/images/thumbnail.stride.jpg',
                 'diagramType': 'STRIDE',
@@ -1116,5 +1116,5 @@ export default {
         ],
         'reviewer': 'Jane Smith'
     },
-    'version': '2.0'
+    'tdVersion': '2.0'
 };
