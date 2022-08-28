@@ -24,7 +24,7 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewTypedThreat = function(modelType) {
+export const createNewTypedThreat = function(modelType, cellType) {
     if (!modelType) {
         modelType = 'STRIDE';
     }
@@ -41,11 +41,15 @@ export const createNewTypedThreat = function(modelType) {
         break;
     case 'STRIDE':
         title = tc('threats.generic.stride');
-        type = tc('threats.model.stride.tampering');
+        if (cellType === 'tm.Actor' || cellType === 'tm.Process') {
+            type = tc('threats.model.stride.spoofing');
+        } else {
+            type = tc('threats.model.stride.tampering');
+        }
         break;
     default:
         title = tc('threats.generic.default');
-        type = tc('threats.model.stride.tampering');
+        type = tc('threats.model.stride.spoofing');
         break;
     }
 

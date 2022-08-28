@@ -29,23 +29,57 @@ const getByTranslationValue = (translation) => {
     return '';
 };
 
-const threatTypesByModel = {
-    cia,
-    generic,
-    linddun,
-    stride
-};
-
 const getThreatTypes = (modelType) => {
+    const threatTypesByModel = {
+        cia,
+        generic,
+        linddun,
+        stride
+    };
     const threatTypes = threatTypesByModel[modelType.toLowerCase()];
     return threatTypes || generic;
 };
 
+const getThreatTypesByElement = (modelType, cellType) => {
+    let types;
+    console.log('modelType:' + modelType + ' cellType: ' + cellType);
+    switch (modelType) {
+    case 'CIA' :
+        types = cia;
+        break;
+    case 'LINDDUN' :
+   	    if (cellType === 'tm.Actor') {
+             types = linddun.actor;
+        } else {
+             types = linddun.default;
+        }
+        break;
+    case 'STRIDE' :
+        switch (cellType) {
+        case 'tm.Actor' :
+            types = stride.actor;
+            break;
+        case 'tm.Process' :
+            types = stride.process;
+            break;
+        case 'tm.Store' :
+            types = stride.store;
+            break;
+        case 'tm.Flow' :
+        default:
+            types = stride.flow;
+            break;
+        }
+        break;
+    default:
+        types = generic;
+        break;
+    }
+    return types;
+};
+
 export default {
-    cia,
-    generic,
     getByTranslationValue,
     getThreatTypes,
-    linddun,
-    stride
+    getThreatTypesByElement
 };
