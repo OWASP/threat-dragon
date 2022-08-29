@@ -11,7 +11,7 @@ import parsersConfig from '../src/config/parsers.config.js';
 import routesConfig from '../src/config/routes.config.js';
 import securityHeaders from '../src/config/securityheaders.config.js';
 
-describe('app tests', () => {
+describe('app.js main application', () => {
     let mockApp;
     const mockLogger = {
         info: () => {},

@@ -6,7 +6,7 @@ import responseWrapper from '../../src/controllers/responseWrapper.js';
 import threatModelController from '../../src/controllers/threatmodelcontroller.js';
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
-describe('threat model controller tests', () => {
+describe('controllers/threatmodelcontroller.js threat model', () => {
     const headers = {
         link: 'url1; rel="link", url2; rel="link"'
     };

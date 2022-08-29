@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
 
-describe('threatmodel repository tests', () => {
+describe('repositories/threatmodelrepository.js', () => {
     const info = {
         body: {
             content: 'test content',

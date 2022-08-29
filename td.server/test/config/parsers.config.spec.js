@@ -4,7 +4,7 @@ import request from 'supertest';
 
 import parsers from '../../src/config/parsers.config.js';
 
-describe('request parser tests', () => {
+describe('config/parsers.config.js request parser', () => {
     let app;
     
     beforeEach(() => {

@@ -7,7 +7,7 @@ import GithubEnv from '../../src/env/Github.js';
 import EncryptionEnv from '../../src/env/Encryption.js';
 import ThreatDragonEnv from '../../src/env/ThreatDragon.js';
 
-describe('environment configuration tests', () => {
+describe('config/env.config.js environment configuration', () => {
     const mockEnv = {
         addProvider: () => {},
         hydrate: () => {}
