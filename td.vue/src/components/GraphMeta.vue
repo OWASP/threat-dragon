@@ -97,7 +97,7 @@ export default {
             this.$emit('threatSelected', threatId);
         },
         newThreat() {
-            const threat = createNewTypedThreat(this.diagram.diagramType);
+            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type);
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);

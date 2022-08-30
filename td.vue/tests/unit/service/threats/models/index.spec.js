@@ -28,22 +28,38 @@ describe('service/threats/models/index.js', () => {
         });
     });
 
-    describe('getThreatTypes', () => {
+    describe('getThreatTypesByElement', () => {
         it('gets the CIA threat types', () => {
-            expect(Object.keys(models.getThreatTypes('CIA'))).toHaveLength(3);
+            expect(Object.keys(models.getThreatTypesByElement('CIA', 'tm.Actor'))).toHaveLength(3);
         });
 
-        it('gets the LINDDUN threat types', () => {
-            expect(Object.keys(models.getThreatTypes('linddun'))).toHaveLength(7);
+        it('gets the LINDDUN Actor threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('linddun', 'tm.Actor'))).toHaveLength(3);
         });
 
-        it('gets the STRIDE threat types', () => {
-            expect(Object.keys(models.getThreatTypes('Stride'))).toHaveLength(6);
+        it('gets the LINDDUN Process threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('linddun', 'tm.Process'))).toHaveLength(6);
         });
 
-        it('returns an empty object if no threat types are found', () => {
+        it('gets the STRIDE Actor threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Actor'))).toHaveLength(2);
+        });
+
+        it('gets the STRIDE Process threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Process'))).toHaveLength(6);
+        });
+
+        it('gets the STRIDE Store threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Store'))).toHaveLength(4);
+        });
+
+        it('gets the STRIDE DataFlow threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Flow'))).toHaveLength(3);
+        });
+
+        it('returns generic threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(models.getThreatTypes('fake')).toEqual({});
+            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(19);
         });
     });
 });

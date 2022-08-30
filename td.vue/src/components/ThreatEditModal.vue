@@ -128,7 +128,6 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import { createNewTypedThreat } from '@/service/threats/index.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
@@ -144,7 +143,7 @@ export default {
             }
 
             const res = [];
-            const threatTypes = threatModels.getThreatTypes(this.threat.modelType);
+            const threatTypes = threatModels.getThreatTypesByElement(this.threat.modelType, this.cellRef.data.type);
             Object.keys(threatTypes).forEach((type) => {
                 res.push(this.$t(threatTypes[type]));
             }, this);
@@ -180,7 +179,7 @@ export default {
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
                 // this should never happen with a valid threatId
-                this.threat = createNewTypedThreat();
+                console.warn('Trying to access a non-existent threatId: ' + threatId);
             }
             this.$refs.editModal.show();
         },

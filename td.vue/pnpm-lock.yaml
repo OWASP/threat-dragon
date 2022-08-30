@@ -68,6 +68,7 @@ specifiers:
   pm2: ^5.2.0
   popper.js: ^1.16.1
   portal-vue: ^2.1.7
+  rimraf: ^3.0.2
   sass: ^1.32.12
   sass-loader: ^10.1.1
   spectron: ^19.0.0
@@ -153,6 +154,7 @@ devDependencies:
   pm2: 5.2.0
   popper.js: 1.16.1
   portal-vue: 2.1.7_vue@2.7.3
+  rimraf: 3.0.2
   sass: 1.53.0
   sass-loader: 10.3.1_sass@1.53.0+webpack@5.73.0
   spectron: 19.0.0_electron@18.3.5

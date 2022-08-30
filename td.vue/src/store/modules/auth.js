@@ -54,8 +54,6 @@ const mutations = {
             state.refreshToken = refreshToken;
         } catch (e) {
             console.error('Error decoding JWT', e);
-            console.error('Tokens:');
-            console.log(tokens);
             throw e;
         }
     },

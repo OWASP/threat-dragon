@@ -211,11 +211,13 @@ const en = {
     threats: {
         model: {
             cia: {
+                header: '--- CIA ---',
                 confidentiality: 'Confidentiality',
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
             linddun: {
+                header: '--- LINDDUN ---',
                 linkability: 'Linkability',
                 identifiability: 'Identifiability',
                 nonRepudiation: 'Non-repudiation',
@@ -225,6 +227,7 @@ const en = {
                 nonCompliance: 'Non-compliance'
             },
             stride: {
+                header: '--- STRIDE ---',
                 spoofing: 'Spoofing',
                 tampering: 'Tampering',
                 repudiation: 'Repudiation',
