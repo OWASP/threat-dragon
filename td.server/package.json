@@ -3,8 +3,9 @@
   "version": "2.0.0",
   "private": false,
   "scripts": {
-    "build": "npm-run-all clean transpile",
-    "clean": "rimraf dist",
+    "build": "npm-run-all clean:dist transpile",
+    "clean": "rimraf *.log .nyc_output/ coverage/ dist/ node_modules/",
+    "clean:dist": "rimraf dist",
     "codecov": "echo 'Disabled for now: codecov'",
     "dev": "nodemon dev.js --exec babel-node",
     "start": "npm run dev",

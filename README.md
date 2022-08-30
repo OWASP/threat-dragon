@@ -97,15 +97,15 @@ Specify this using environment variable `SERVER_API_PROTOCOL=http` in the dotenv
 ### Run the application
 
 When running on Windows, and during development, the front-end and back-end
-can be started separately in "watch" mode using commands : `npm run dev:server` and `npm run dev:vue`.
+can be started separately in "watch" mode using commands : `pnpm run dev:server` and `pnpm run dev:vue`.
 Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
-from the top directory using : `npm start`.
+from the top directory using : `pnpm start`.
 
 With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
 
-If using `npm start`, stop both the back-end server and the front-end application from the top directory: `npm stop`.
+If using `pnpm start`, stop both the back-end server and the front-end application from the top directory: `pnpm stop`.
 Otherwise break out of both the server and vue front-end.
 
 ### Docker (local build)
