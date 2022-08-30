@@ -30,6 +30,9 @@ module.exports = {
             builderOptions: {
                 appId: 'org.owasp.threatdragon',
                 productName: 'OWASP-Threat-Dragon',
+                directories: {
+                    output: 'dist-desktop'
+                },
                 publish: {
                     provider: 'github'
                 },
