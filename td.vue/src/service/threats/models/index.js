@@ -38,9 +38,9 @@ const getThreatTypesByElement = (modelType, cellType) => {
         break;
     case 'LINDDUN' :
         if (cellType === 'tm.Actor') {
-             types = linddun.actor;
+            types = linddun.actor;
         } else {
-             types = linddun.default;
+            types = linddun.default;
         }
         break;
     case 'STRIDE' :
