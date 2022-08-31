@@ -31,17 +31,7 @@ const getStencil = (target) => ({
         columns: 1,
         center: true,
         resizeToFit: true
-    },
-    search: (cell, keyword) => {
-        const search = keyword.toLowerCase();
-        if (cell.label && typeof cell.label !== 'undefined') {
-            return cell.label.toLowerCase().indexOf(search) !== -1;
-        }
-        return cell.shape.toLowerCase().indexOf(search) !== -1 ||
-            cell.constructor.name.toLowerCase().indexOf(search) !== -1;
-    },
-    placeholder: tc('threatmodel.stencil.search'),
-    notFoundText: tc('threatmodel.stencil.notFound')
+    }
 });
 
 // the target is the graph or diagram
