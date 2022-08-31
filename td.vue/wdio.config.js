@@ -9,7 +9,6 @@ const config = {
             {
                 appPath: join(__dirname, 'dist-desktop'),
                 appName: 'OWASP-Threat-Dragon',
-                appArgs: ['foo', 'bar=baz'],
                 chromedriver: {
                     port: 9519,
                     logFileName: 'wdio-chromedriver.log',
@@ -25,12 +24,7 @@ const config = {
     logLevel: 'debug',
     runner: 'local',
     outputDir: 'log/wdio-logs',
-    specs: ['./tests/e2e/desktop/*.spec.js'],
-    framework: 'mocha',
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 30000,
-    }
+    specs: ['./tests/e2e/desktop/*.spec.js']
 };
 
 module.exports = { config };
