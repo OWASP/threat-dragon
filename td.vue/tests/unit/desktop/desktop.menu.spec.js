@@ -4,7 +4,8 @@ import menu from '@/desktop/desktop.menu.js';
 describe('desktop/desktop.menu.js', () => {
 
     it('returns a dropdown menu', () => {
-        expect(menu.menuTemplate).toHaveLength(6);
+        // the actual length of the menu system is platform dependent
+        expect(menu.menuTemplate.length).toBeGreaterThanOrEqual(5);
     });
 
 });
