@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
-/dist
 
+# webpack output
+/dist
 
 # local env files
 .env.local
@@ -22,10 +23,12 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+# unit test and e2e testing logs
 *.log
 tests/e2e/reports/
 tests/e2e/videos
 log/
 results/
+
 #Electron-builder output
 /dist-desktop

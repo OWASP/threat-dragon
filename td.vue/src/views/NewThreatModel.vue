@@ -16,7 +16,7 @@ export default {
     mounted() {
         this.$store.dispatch(tmActions.clear);
         const newTm = {
-            version: '2.0',
+            tdVersion: '2.0',
             summary: {
                 title: 'New Threat Model',
                 owner: '',

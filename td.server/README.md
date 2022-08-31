@@ -11,29 +11,29 @@ pnpm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run dev
+pnpm run dev
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+pnpm build
 ```
 
 Clean the distribution with
 ```
-npm run clean
+pnpm clean
 ```
 
 ### Run unit tests
 ```
-npm run test:unit
+pnpm run test:unit
 ```
 For continuous testing:
 ```
-npm run test:unit -- --watch
+pnpm run test:unit -- --watch
 ```
 
 ### Lints and fixes files
 ```
-npm run lint
+pnpm run lint
 ```
