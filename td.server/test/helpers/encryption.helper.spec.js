@@ -6,7 +6,7 @@ import cryptoPromise from '../../src/helpers/crypto.promise.js';
 import encryptionHelper from '../../src/helpers/encryption.helper.js';
 import env from '../../src/env/Env.js';
 
-describe('encryption helper tests', () => {
+describe('helpers/encryption.helper.js', () => {
     const plainText = 'test plain text';
     const encryptedText = 'encrypted';
     const randomIv = 'test random iv';

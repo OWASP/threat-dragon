@@ -72,11 +72,11 @@ describe('service/threats/index.js', () => {
             expect(threat.title).toEqual('New CIA threat');
         });
 
-        it('has Linkability type', () => {
+        it('has Confidentiality type', () => {
             expect(threat.type).toEqual('Confidentiality');
         });
 
-        it('has a LINDDUN modelType', () => {
+        it('has a CIA modelType', () => {
             expect(threat.modelType).toEqual('CIA');
         });
     });

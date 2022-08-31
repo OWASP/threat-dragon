@@ -5,7 +5,7 @@ import env from '../../src/env/Env.js';
 import homeController from '../../src/controllers/homecontroller.js';
 import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
 
-describe('homecontroller tests', () => {
+describe('controllers/homecontroller.js', () => {
     let mockRequest, mockResponse;
 
     beforeEach(() => {

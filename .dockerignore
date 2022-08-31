@@ -15,4 +15,4 @@ ThreatDragonModels/
 utils/
 .vscode/
 */.vscode/
-*/dist_electron/
+*/dist-desktop/

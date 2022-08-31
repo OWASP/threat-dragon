@@ -35,6 +35,24 @@ const en = {
     demo: {
         select: 'Select a demo threat model from the list below'
     },
+    desktop: {
+        file: {
+            heading: 'File',
+            close: 'Close Model',
+            open: 'Open',
+            save: 'Save',
+            saveAs: 'Save As',
+        },
+        help: {
+            heading: 'Help',
+            docs: 'Documentation',
+            visit: 'Visit us at OWASP',
+            sheets: 'OWASP Cheat Sheets',
+            github: 'Visit us on GitHub',
+            submit: 'Submit an Issue',
+            check: 'Check for updates ...'
+        }
+    },
     repository: {
         select: 'Select a',
         from: 'repository from the list below',
@@ -68,9 +86,9 @@ const en = {
             addNewDiagram: 'Add a new diagram...',
             generic: {
                 diagramTitle: 'New generic diagram',
-	            select: `Generic`
-	        },
-	        stride: {
+                select: `Generic`
+            },
+            stride: {
                 diagramTitle: 'New STRIDE diagram',
                 select: `STRIDE`
             },

@@ -10,7 +10,7 @@ import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 
-describe('route config tests', () => {
+describe('config/routes.config.js routes', () => {
     let mockApp;
     const mockRouter = {
         get: () => {},

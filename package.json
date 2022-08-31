@@ -17,7 +17,7 @@
         "preinstall": "npx only-allow pnpm",
         "pretest": "npm-run-all pretest:server pretest:site",
         "pretest:server": "cd td.server && npm run pretest",
-        "pretest:site": "cd td.vue && npm run lint",
+        "pretest:site": "cd td.vue && npm run pretest",
         "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
         "start": "npm-run-all build:vue build:server start:server start:site",
         "start:desktop": "cd td.vue && npm run electron:serve",
@@ -27,6 +27,7 @@
         "stop:server": "cd td.server && npm run stop:serve",
         "stop:site": "cd td.vue && npm run stop:serve",
         "test": "npm-run-all build pretest test:site test:server",
+        "test:desktop": "cd td.vue && npm run electron:test",
         "test:server": "cd td.server && npm run test:unit",
         "test:site": "cd td.vue && npm run test:unit",
         "test:vue": "cd td.vue && npm run test:vue"

@@ -1,35 +1,10 @@
-// Jest tests MUST run in the node environment, add this to the top of each electron test:
-/**
- * @jest-environment node
- */
+// these unit tests are waiting to be filled in during the desktop development
+describe('desktop/desktop.js', () => {
 
-import spectron from 'spectron';
-import { testWithSpectron } from 'vue-cli-plugin-electron-builder';
-jest.setTimeout(15000);
+    describe('Desktop application main window', () => {
+        it('should exit cleanly', () => {
 
-test.skip('Window Loads Properly', async () => {
-    // Wait for dev server to start
-    const { app, stopServe } = await testWithSpectron(spectron);
-    const win = app.browserWindow;
-    const client = app.client;
+        });
+    });
 
-    // Window was created
-    expect(await client.getWindowCount()).toBe(1);
-    // It is not minimized
-    expect(await win.isMinimized()).toBe(false);
-    // Window is visible
-    expect(await win.isVisible()).toBe(true);
-    // Size is correct
-    const { width, height } = await win.getBounds();
-    expect(width).toBeGreaterThan(0);
-    expect(height).toBeGreaterThan(0);
-
-    // App is loaded properly
-    expect(
-        /Welcome to Your Vue\.js (\+ TypeScript )?App/.test(
-            await (await app.client.$('#app')).getHTML()
-        )
-    ).toBe(true);
-
-    await stopServe();
 });

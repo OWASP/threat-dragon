@@ -1,6 +1,7 @@
 'use strict';
 
 import { dialog } from 'electron';
+import { tc } from '../i18n/index.js';
 
 const isMacOS = process.platform === 'darwin';
 const { shell } = require('electron');
@@ -11,7 +12,7 @@ export const menuTemplate = [
         label: 'File',
         submenu: [
             {
-                label: 'Open (TBD)',
+                label: tc('desktop.file.open') + ' (TBD)',
                 click() {
                     dialog.showErrorBox( 'Not yet implemented', 'Open file system dialog TBD' );
                 }
@@ -23,19 +24,19 @@ export const menuTemplate = [
                 ]
             },
             {
-                label: 'Save (TBD)',
+                label: tc('desktop.file.save') + ' (TBD)',
                 click() {
                     dialog.showErrorBox( 'Not yet implemented', 'Save file system dialog TBD' );
                 }
             },
             {
-                label: 'Save As (TBD)',
+                label: tc('desktop.file.saveAs') + ' (TBD)',
                 click() {
                     dialog.showErrorBox( 'Not yet implemented', 'Save As file system dialog TBD' );
                 }
             },
             {
-                label: 'Close Model (TBD)',
+                label: tc('desktop.file.close') + ' (TBD)',
                 click() {
                     dialog.showErrorBox( 'Not yet implemented', 'Close Model file system dialog TBD' );
                 }
@@ -51,38 +52,38 @@ export const menuTemplate = [
         label: 'Help',
         submenu: [
             {
-                label: 'Documentation',
+                label: tc('desktop.help.docs'),
                 click: async () => {
                     await shell.openExternal('https://www.threatdragon.com/docs/');
                 }
             },
             {
-                label: 'Visit us at OWASP',
+                label: tc('desktop.help.visit'),
                 click: async () => {
                     await shell.openExternal('https://owasp.org/www-project-threat-dragon/');
                 }
             },
             {
-                label: 'OWASP Cheat Sheets',
+                label: tc('desktop.help.sheets'),
                 click: async () => {
                     await shell.openExternal('https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html');
                 }
             },
             { type: 'separator' },
             {
-                label: 'Visit us on GitHub',
+                label: tc('desktop.help.github'),
                 click: async () => {
                     await shell.openExternal('https://github.com/owasp/threat-dragon/');
                 }
             },
             {
-                label: 'Submit an Issue',
+                label: tc('desktop.help.submit'),
                 click: async () => {
                     await shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
                 }
             },
             {
-                label: 'Check for updates ...',
+                label: tc('desktop.help.check'),
                 click: async () => {
                     await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
                 }

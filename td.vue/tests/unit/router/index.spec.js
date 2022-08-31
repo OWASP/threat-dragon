@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import router from '@/router/index.js';
 import store from '@/store/index.js';
 
-describe('router', () => {
+describe('router/index.js', () => {
     it('creates a vue router', () => {
         expect(router.get()).toBeInstanceOf(VueRouter);
     });
