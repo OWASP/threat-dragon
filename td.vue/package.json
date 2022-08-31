@@ -9,7 +9,7 @@
     "dev": "vue-cli-service serve --port 8080",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --no-unsafe-inline",
-    "clean": "rimraf coverage/ cypress/ dist/ dist_electron/ node_modules/ tests/e2e/videos/",
+    "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "electron:test": "wdio run ./wdio.config.js",
