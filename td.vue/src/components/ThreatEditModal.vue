@@ -47,6 +47,7 @@
                     <b-col md=6>
                         <b-form-group
                             id="status-group"
+                            class="float-left"
                             :label="$t('threats.properties.status')"
                             label-for="status">
                             <b-form-radio-group
@@ -61,6 +62,7 @@
                     <b-col md=6>
                         <b-form-group
                             id="priority-group"
+                            class="float-right"
                             :label="$t('threats.properties.priority')"
                             label-for="priority">
                             <b-form-radio-group
