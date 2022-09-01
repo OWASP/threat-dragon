@@ -228,7 +228,7 @@ const fr = {
             modelType: 'Type de modèle'
         },
         status: {
-            notApplicable: 'Non applicable',
+            notApplicable: 'N/A',
             open: 'Ouvrir',
             mitigated: 'Atténué'
         },
