@@ -261,7 +261,7 @@ const en = {
             modelType: 'Model Type'
         },
         status: {
-            notApplicable: 'Not Applicable',
+            notApplicable: 'N/A',
             open: 'Open',
             mitigated: 'Mitigated'
         },

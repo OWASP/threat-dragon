@@ -49,11 +49,12 @@
                             id="status-group"
                             :label="$t('threats.properties.status')"
                             label-for="status">
-                            <b-form-select
+                            <b-form-radio-group
                                 id="status"
                                 v-model="threat.status"
-                                :options="statuses">
-                            </b-form-select>
+                                :options="statuses"
+                                buttons
+                            ></b-form-radio-group>
                         </b-form-group>
                     </b-col>
 
@@ -62,11 +63,12 @@
                             id="priority-group"
                             :label="$t('threats.properties.priority')"
                             label-for="priority">
-                            <b-form-select
+                            <b-form-radio-group
                                 id="priority"
                                 v-model="threat.severity"
-                                :options="priorities">
-                            </b-form-select>
+                                :options="priorities"
+                                buttons
+                            ></b-form-radio-group>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
