@@ -17,6 +17,7 @@ describe('components/ThreatEditModal.vue', () => {
         type: 'Information Disclosure',
         mitigation: 'we will mitigate it eventually',
         modelType: 'CIA',
+        new: false,
         id: threatId
     });
 

@@ -108,7 +108,7 @@
             <template #modal-footer>
                 <div class="w-100">
                 <b-button
-                    v-show=!newThreat
+                    v-if="!newThreat"
                     variant="danger"
                     class="float-left"
                     @click="confirmDelete()"
@@ -116,12 +116,12 @@
                     {{ $t('forms.delete') }}
                 </b-button>
                 <b-button
-                    v-show=newThreat
+                    v-if="newThreat"
                     variant="danger"
                     class="float-left"
                     @click="immediateDelete()"
                 >
-                    {{ $t('forms.cancel') }}
+                    {{ $t('forms.remove') }}
                 </b-button>
                  <b-button
                     variant="secondary"
@@ -131,7 +131,7 @@
                     {{ $t('forms.apply') }}
                 </b-button>
                 <b-button
-                    v-show=!newThreat
+                    v-if="!newThreat"
                     variant="secondary"
                     class="float-right"
                     @click="hideModal()"
@@ -204,9 +204,10 @@ export default {
             } else {
                 this.$refs.editModal.show();
             }
+            this.newThreat = this.threat.new;
         },
         updateThreat() {
-            const threatRef = this.cellRef.data.threats.find(x => x.id === this.threat.id);
+            const threatRef = this.threat;
 
             if (threatRef) {
                 threatRef.status = this.threat.status;
@@ -216,6 +217,7 @@ export default {
                 threatRef.description = this.threat.description;
                 threatRef.mitigation = this.threat.mitigation;
                 threatRef.modelType = this.threat.modelType;
+                threatRef.new = false;
                 
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
@@ -229,7 +231,6 @@ export default {
             dataChanged.updateStyleAttrs(this.cellRef);
         },
         hideModal() {
-            this.newThreat = false;
             this.$refs.editModal.hide();
         },
         async confirmDelete() {
