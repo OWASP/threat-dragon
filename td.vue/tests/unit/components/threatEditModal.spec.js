@@ -17,6 +17,7 @@ describe('components/ThreatEditModal.vue', () => {
         type: 'Information Disclosure',
         mitigation: 'we will mitigate it eventually',
         modelType: 'CIA',
+        new: false,
         id: threatId
     });
 
@@ -47,7 +48,7 @@ describe('components/ThreatEditModal.vue', () => {
             modal = wrapper.findComponent(BModal);
             wrapper.vm.$refs.editModal.show = jest.fn();
             wrapper.vm.$refs.editModal.hide = jest.fn();
-            wrapper.vm.show(getThreatData().id);
+            wrapper.vm.showModal(getThreatData().id);
         });
 
         it('has a bootstrap modal', () => {
@@ -139,7 +140,7 @@ describe('components/ThreatEditModal.vue', () => {
                 dataChanged.updateStyleAttrs = jest.fn();
                 mockStore.dispatch = jest.fn();
                 wrapper.vm.$refs.editModal.show = jest.fn();
-                await wrapper.vm.show(threatId);
+                await wrapper.vm.showModal(threatId);
                 await wrapper.vm.confirmDelete();
             }); 
 
@@ -161,14 +162,15 @@ describe('components/ThreatEditModal.vue', () => {
         });
     });
 
-    describe('updateData', () => {
+    describe('updateThreat', () => {
         beforeEach(() => {
             wrapper = getWrapper();
             wrapper.vm.$refs.editModal.show = jest.fn();
+            wrapper.vm.$refs.editModal.hide = jest.fn();
             mockStore.dispatch = jest.fn();
             dataChanged.updateStyleAttrs = jest.fn();
-            wrapper.vm.show(threatId);
-            wrapper.vm.updateData();
+            wrapper.vm.showModal(threatId);
+            wrapper.vm.updateThreat();
         });
 
         it('updates the data', () => {

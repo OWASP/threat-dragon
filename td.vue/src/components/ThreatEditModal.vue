@@ -9,7 +9,6 @@
             header-text-variant="light"
             :title="$t('threats.edit')"
             ref="editModal"
-            @hidden="updateData"
         >
             <b-form>
                 <b-form-row>
@@ -109,18 +108,35 @@
             <template #modal-footer>
                 <div class="w-100">
                 <b-button
-                    variant="secondary"
-                    class="float-right"
-                    @click="hideModal()"
-                >
-                    {{ $t('forms.apply') }}
-                </b-button>
-                <b-button
+                    v-if="!newThreat"
                     variant="danger"
                     class="float-left"
                     @click="confirmDelete()"
                 >
                     {{ $t('forms.delete') }}
+                </b-button>
+                <b-button
+                    v-if="newThreat"
+                    variant="danger"
+                    class="float-left"
+                    @click="immediateDelete()"
+                >
+                    {{ $t('forms.remove') }}
+                </b-button>
+                 <b-button
+                    variant="secondary"
+                    class="float-right"
+                    @click="updateThreat()"
+                >
+                    {{ $t('forms.apply') }}
+                </b-button>
+                <b-button
+                    v-if="!newThreat"
+                    variant="secondary"
+                    class="float-right"
+                    @click="hideModal()"
+                >
+                    {{ $t('forms.cancel') }}
                 </b-button>
                 </div>
             </template>
@@ -175,20 +191,23 @@ export default {
                 'CIA',
                 'LINDDUN',
                 'STRIDE'
-            ]
+            ],
+            newThreat: true
         };
     },
     methods: {
-        show(threatId) {
+        showModal(threatId) {
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn('Trying to access a non-existent threatId: ' + threatId);
+            } else {
+                this.$refs.editModal.show();
             }
-            this.$refs.editModal.show();
+            this.newThreat = this.threat.new;
         },
-        updateData() {
-            const threatRef = this.cellRef.data.threats.find(x => x.id === this.threat.id);
+        updateThreat() {
+            const threatRef = this.threat;
 
             if (threatRef) {
                 threatRef.status = this.threat.status;
@@ -198,10 +217,18 @@ export default {
                 threatRef.description = this.threat.description;
                 threatRef.mitigation = this.threat.mitigation;
                 threatRef.modelType = this.threat.modelType;
+                threatRef.new = false;
                 
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
+            this.hideModal();
+        },
+        deleteThreat() {
+            this.cellRef.data.threats = this.cellRef.data.threats.filter(x => x.id !== this.threat.id);
+            this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
+            this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
+            dataChanged.updateStyleAttrs(this.cellRef);
         },
         hideModal() {
             this.$refs.editModal.hide();
@@ -216,11 +243,11 @@ export default {
 
             if (!confirmed) { return; }
 
-            this.cellRef.data.threats = this.cellRef.data.threats.filter(x => x.id !== this.threat.id);
-            this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
-            this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
-            dataChanged.updateStyleAttrs(this.cellRef);
-
+            this.deleteThreat();
+            this.hideModal();
+        },
+        async immediateDelete() {
+            this.deleteThreat();
             this.hideModal();
         }
     }

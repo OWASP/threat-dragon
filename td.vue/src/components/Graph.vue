@@ -78,7 +78,7 @@ export default {
             stencil.get(this.graph, this.$refs.stencil_container);
         },
         threatSelected(threatId) {
-            this.$refs.threatEditModal.show(threatId);
+            this.$refs.threatEditModal.showModal(threatId);
         },
         saved() {
             const updated = Object.assign({}, this.diagram);

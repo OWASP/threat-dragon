@@ -32,7 +32,7 @@ describe('components/GraphButtons.vue', () => {
         threatEditStub = {
             render: jest.fn(),
             methods: {
-                show: jest.fn()
+                showModal: jest.fn()
             }
         };
 
@@ -112,7 +112,7 @@ describe('components/GraphButtons.vue', () => {
 
     it('shows the threat edit modal', () => {
         wrapper.vm.threatSelected('asdf');
-        expect(threatEditStub.methods.show).toHaveBeenCalledWith('asdf');
+        expect(threatEditStub.methods.showModal).toHaveBeenCalledWith('asdf');
     });
 
     it('saves the threat model diagram', () => {
