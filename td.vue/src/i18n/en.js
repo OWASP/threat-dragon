@@ -39,9 +39,9 @@ const en = {
         file: {
             heading: 'File',
             close: 'Close Model',
-            open: 'Open',
-            save: 'Save',
-            saveAs: 'Save As',
+            open: 'Open Model',
+            save: 'Save Model',
+            saveAs: 'Save Model As',
         },
         help: {
             heading: 'Help',

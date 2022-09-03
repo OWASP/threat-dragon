@@ -9,12 +9,26 @@ const { shell } = require('electron');
 export const menuTemplate = [
     ...(isMacOS ? [{ role: 'appMenu' }] : []),
     {
-        label: 'File',
+        label: tc('desktop.file.heading'),
         submenu: [
             {
-                label: tc('desktop.file.open') + ' (TBD)',
+                label: tc('desktop.file.open'),
                 click() {
-                    dialog.showErrorBox( 'Not yet implemented', 'Open file system dialog TBD' );
+                    // Open file system dialog
+                    dialog.showOpenDialog({
+                        title: tc('desktop.file.open'),
+                        properties: ['openFile'],
+                        filters: [
+                            { name: 'Threat Models', extensions: ['json'] },
+                            { name: 'All Files', extensions: ['*'] }
+                        ]
+                    }).then(result => {
+                        if (result.canceled === false) {
+                            console.log(result.filePaths)
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                    });
                 }
             },
             {
@@ -24,21 +38,37 @@ export const menuTemplate = [
                 ]
             },
             {
-                label: tc('desktop.file.save') + ' (TBD)',
+                label: tc('desktop.file.save'),
                 click() {
-                    dialog.showErrorBox( 'Not yet implemented', 'Save file system dialog TBD' );
+                    // Save file system dialog
+                    dialog.showErrorBox( 'Not yet implemented', 'Save model file TBD' );
                 }
             },
             {
-                label: tc('desktop.file.saveAs') + ' (TBD)',
+                label: tc('desktop.file.saveAs'),
                 click() {
-                    dialog.showErrorBox( 'Not yet implemented', 'Save As file system dialog TBD' );
+                    // SaveAs file system dialog
+                    dialog.showSaveDialog({
+                        title: tc('desktop.file.saveAs'),
+                        properties: ['showHiddenFiles'],
+                        filters: [
+                            { name: 'Threat Models', extensions: ['json'] },
+                            { name: 'All Files', extensions: ['*'] }
+                        ]
+                    }).then(result => {
+                        if (result.canceled === false) {
+                            console.log(result.filePath)
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                    });
                 }
             },
             {
-                label: tc('desktop.file.close') + ' (TBD)',
+                label: tc('desktop.file.close'),
                 click() {
-                    dialog.showErrorBox( 'Not yet implemented', 'Close Model file system dialog TBD' );
+                    // Close file system dialog
+                    dialog.showErrorBox( 'Not yet implemented', 'Close model file TBD' );
                 }
             },
             { type: 'separator' },
@@ -49,7 +79,7 @@ export const menuTemplate = [
     { role: 'viewMenu' },
     { role: 'windowMenu' },
     {
-        label: 'Help',
+        label: tc('desktop.help.heading'),
         submenu: [
             {
                 label: tc('desktop.help.docs'),
