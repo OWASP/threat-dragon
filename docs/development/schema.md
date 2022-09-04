@@ -11,7 +11,7 @@ group: Schema
 ## OTM object
 
 | Field       | Type       | Description                                                                | Examples                        |
-| ----------- | -----------| -                                      ----------------------------------- | ------------------------------- |
+| ----------- | -----------| -------------------------------------------------------------------------- | ------------------------------- |
 | otmVersion  | string     | **OPTIONAL** This field states the Threat Dragon version used in the model | "tdVersion': '2.0.0"            |
 | title       | string     | **REQUIRED** This field states the Threat Dragon version used in the model | "title": "Demo Threat Model"    |
 | owner       | string     | **REQUIRED** This field states the Threat Dragon version used in the model | "owner": "Mike Goodwin"         |
