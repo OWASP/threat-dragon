@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Process
-nav_order: 1
+nav_order: 6
 path: /schema/process
 group: Schema
 ---
