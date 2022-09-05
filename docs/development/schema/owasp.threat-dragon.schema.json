@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.threatdragon.com/docs/development/schema/owasp.threat-dragon.schema.json",
   "title": "Threat Dragon model",
   "description": "The threat models used by OWASP Threat Dragon",
@@ -9,11 +8,26 @@
       "description": "Threat model project meta-data",
       "type": "object",
       "properties": {
-        "version": { "type": "string" },
-        "title": { "type": "string" },
-        "owner": { "type": "string" },
-        "description": { "type": "string" },
-        "id": { "type": "number" }
+        "description": {
+          "description": "Description of the threat model used for report outputs",
+          "type": "string"
+        },
+        "id": {
+          "description": "A unique identifier for this main threat model object",
+          "type": "number"
+        },
+        "owner": {
+          "description": "The original creator or overall owner of the model",
+          "type": "string"
+        },
+        "tdVersion": {
+          "description": "Threat Dragon version used in the model",
+          "type": "string"
+        },
+        "title": {
+          "description": "Threat model title",
+          "type": "string"
+        }
       },
       "required": [ "title" ]
     },
@@ -21,16 +35,51 @@
       "description": "Threat model definition",
       "type": "object",
       "properties": {
-        "contributors": { "type": "object" },
-        "diagrams": {
-          "type": "object",
-          "properties": {
+        "contributors": {
+          "description": "An array of contributors to the threat model project",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the contributor",
+                "type": "string"
+              }
+            }
           }
         },
-        "reviewer": { "type": "string" }
-      }
-    },
-    "required": [ "contributors", "diagrams" ]
+        "diagrams": {
+          "description": "An array of single or multiple threat dataflow diagrams",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "thumbnail": {
+                "description": "The path to the thumbnail image",
+                "type": "string"
+              },
+              "title": {
+                "description": "The title of the dataflow diagram",
+                "type": "string"
+              },
+              "diagramType": {
+                "description": "The methodolgy used by the dataflow diagram",
+                "type": "string"
+              },
+              "id": {
+                "description": "The sequence number of the diagram",
+                "type": "number"
+              }
+            }
+          }
+        },
+        "reviewer": {
+          "description": "The reviewer of the overall threat model",
+          "type": "string"
+        }
+      },
+      "required": [ "contributors", "diagrams" ]
+    }
   },
   "required": [ "summary", "detail" ]
 }
