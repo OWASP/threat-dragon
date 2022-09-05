@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.threatdragon.com/docs/development/schema/owasp.threat-dragon.schema.json",
+  "title": "Threat Dragon model",
+  "description": "The threat models used by OWASP Threat Dragon",
+  "type": "object",
+  "properties": {
+    "summary": {
+      "description": "Threat model project meta-data",
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "title": { "type": "string" },
+        "owner": { "type": "string" },
+        "description": { "type": "string" },
+        "id": { "type": "number" }
+      },
+      "required": [ "title" ]
+    },
+    "detail": {
+      "description": "Threat model definition",
+      "type": "object",
+      "properties": {
+        "contributors": { "type": "object" },
+        "diagrams": {
+          "type": "object",
+          "properties": {
+          }
+        },
+        "reviewer": { "type": "string" }
+      }
+    },
+    "required": [ "contributors", "diagrams" ]
+  },
+  "required": [ "summary", "detail" ]
+}
