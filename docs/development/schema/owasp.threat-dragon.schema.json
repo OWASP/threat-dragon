@@ -14,7 +14,8 @@
         },
         "id": {
           "description": "A unique identifier for this main threat model object",
-          "type": "number"
+          "type": "integer",
+          "minimum": 0
         },
         "owner": {
           "description": "The original creator or overall owner of the model",
@@ -54,6 +55,16 @@
           "items": {
             "type": "object",
             "properties": {
+              "diagramType": {
+                "description": "The methodology used by the dataflow diagram",
+                "type": "string",
+                "minLength": 3
+              },
+              "id": {
+                "description": "The sequence number of the diagram",
+                "type": "integer",
+                "minimum": 0
+              },
               "thumbnail": {
                 "description": "The path to the thumbnail image",
                 "type": "string"
@@ -62,13 +73,28 @@
                 "description": "The title of the dataflow diagram",
                 "type": "string"
               },
-              "diagramType": {
-                "description": "The methodolgy used by the dataflow diagram",
-                "type": "string"
-              },
-              "id": {
-                "description": "The sequence number of the diagram",
-                "type": "number"
+              "diagramJson": {
+                "description": "The dataflow diagram components",
+                "type": "object",
+                "properties": {
+                  "size": {
+                    "description": "The size of the dataflow drawing canvas",
+                    "type": "object",
+                    "properties": {
+                      "height": {
+                        "description": "The height of the dataflow drawing canvas",
+                        "type": "integer",
+                        "minimum": 50
+                      },
+                      "width": {
+                        "description": "The width of the dataflow drawing canvas",
+                        "type": "integer",
+                        "minimum": 50
+                      }
+                    },
+                    "required": [ "height", "width" ]
+                  }
+                }
               }
             }
           }
