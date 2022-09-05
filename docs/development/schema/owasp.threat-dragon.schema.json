@@ -65,8 +65,29 @@
                 "type": "integer",
                 "minimum": 0
               },
+              "size": {
+                "description": "The size of the diagram drawing canvas",
+                "type": "object",
+                "properties": {
+                  "height": {
+                    "description": "The height of the diagram drawing canvas",
+                    "type": "integer",
+                    "minimum": 50
+                  },
+                  "width": {
+                    "description": "The width of the diagram drawing canvas",
+                    "type": "integer",
+                    "minimum": 50
+                  }
+                },
+                "required": [ "height", "width" ]
+              },
+              "tdVersion": {
+                "description": "Threat Dragon version used in the diagram",
+                "type": "string"
+              },
               "thumbnail": {
-                "description": "The path to the thumbnail image",
+                "description": "The path to the thumbnail image for the diagram",
                 "type": "string"
               },
               "title": {
@@ -77,26 +98,160 @@
                 "description": "The dataflow diagram components",
                 "type": "object",
                 "properties": {
-                  "size": {
-                    "description": "The size of the dataflow drawing canvas",
-                    "type": "object",
-                    "properties": {
-                      "height": {
-                        "description": "The height of the dataflow drawing canvas",
-                        "type": "integer",
-                        "minimum": 50
+                  "cells": {
+                    "description": "The individual diagram components",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "angle": {
+                          "description": "The component rotation angle",
+                          "type": "integer"
+                        },
+                        "description": {
+                          "description": "The component description",
+                          "type": "string"
+                        },
+                        "handlesCardPayment": {
+                          "description": "The component flag set if the process handles credit card payment",
+                          "type": "boolean"
+                        },
+                        "handlesGoodsOrServices": {
+                          "description": "The component flag set if the process is part of a retail site",
+                          "type": "boolean"
+                        },
+                        "hasOpenThreats": {
+                          "description": "The component flag set if there are open threats",
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "description": "The component unique identifier (UUID)",
+                          "type": "string"
+                        },
+                        "isALog": {
+                          "description": "The component flag set if the store contains logs",
+                          "type": "boolean"
+                        },
+                        "isWebApplication": {
+                          "description": "The component flag set if the process is a web application",
+                          "type": "boolean"
+                        },
+                        "isEncrypted": {
+                          "description": "The component flag set if the data flow or store is encrypted",
+                          "type": "boolean"
+                        },
+                        "isSigned": {
+                          "description": "The component flag set if the data store uses signatures",
+                          "type": "boolean"
+                        },
+                        "outOfScope": {
+                          "description": "The component flag set if it is not in scope",
+                          "type": "boolean"
+                        },
+                        "position": {
+                          "description": "The component position",
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "description": "The component horizontal position",
+                              "type": "integer"
+                            },
+                            "y": {
+                              "description": "The component vertical position",
+                              "type": "integer"
+                            }
+                          },
+                          "required": [ "x", "y" ]
+                        },
+                        "privilegeLevel": {
+                          "description": "The component's level of privilege/permissions",
+                          "type": "string"
+                        },
+                        "reasonOutOfScope": {
+                          "description": "The component description if out of scope",
+                          "type": "string"
+                        },
+                        "size": {
+                          "description": "The component size",
+                          "type": "object",
+                          "properties": {
+                            "height": {
+                              "description": "The component height",
+                              "type": "integer",
+                              "minimum": 10
+                            },
+                            "width": {
+                              "description": "The component width",
+                              "type": "integer",
+                              "minimum": 10
+                            }
+                          },
+                          "required": [ "height", "width" ]
+                        },
+                        "smooth": {
+                          "description": "The component curve type, for data flows and boundaries",
+                          "type": "boolean"
+                        },
+                        "source": {
+                          "description": "The component curve source",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "The dataflow source component",
+                              "type": "string"
+                            },
+                            "x": {
+                              "description": "The boundary horizontal curve source",
+                              "type": "integer"
+                            },
+                            "y": {
+                              "description": "The boundary vertical curve source",
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "storesCredentials": {
+                          "description": "The component flag set if store contains credentials/PII",
+                          "type": "boolean"
+                        },
+                        "storesInventory": {
+                          "description": "The component flag set if store is part of a retail web application",
+                          "type": "boolean"
+                        },
+                       "target": {
+                          "description": "The component curve target",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "The dataflow target component",
+                              "type": "string"
+                            },
+                            "x": {
+                              "description": "The boundary horizontal curve target",
+                              "type": "integer"
+                            },
+                            "y": {
+                              "description": "The boundary vertical curve target",
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "type": {
+                          "description": "The component type",
+                          "type": "string"
+                        },
+                        "z": {
+                          "description": "The component Z-plane",
+                          "type": "integer"
+                        }
                       },
-                      "width": {
-                        "description": "The width of the dataflow drawing canvas",
-                        "type": "integer",
-                        "minimum": 50
-                      }
-                    },
-                    "required": [ "height", "width" ]
+                      "required": [ "id", "size", "type", "z" ]
+                    }
                   }
                 }
               }
-            }
+            },
+            "required": [ "diagramType", "id", "size", "thumbnail", "title", "diagramJson" ]
           }
         },
         "reviewer": {
