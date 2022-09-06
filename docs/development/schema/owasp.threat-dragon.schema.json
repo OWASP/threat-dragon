@@ -5,6 +5,10 @@
   "description": "The threat models used by OWASP Threat Dragon",
   "type": "object",
   "properties": {
+    "tdVersion": {
+      "description": "Threat Dragon version used in the model",
+      "type": "string"
+    },
     "summary": {
       "description": "Threat model project meta-data",
       "type": "object",
@@ -20,10 +24,6 @@
         },
         "owner": {
           "description": "The original creator or overall owner of the model",
-          "type": "string"
-        },
-        "tdVersion": {
-          "description": "Threat Dragon version used in the model",
           "type": "string"
         },
         "title": {
