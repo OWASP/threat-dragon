@@ -25,19 +25,19 @@ Threat model definition
 
 | Field  | Type  | Description  | Example  |
 | ------ | ----- | ------------ | -------- |
-| contributors  | array  | **OPTIONAL** An array of contributors to the threat model project | "contributors": [ { "name": "Tom Brown" }, { "name": "Albert Moneypenny" } ] |
-| diagrams  | array  | **OPTIONAL** An array of single or multiple threat dataflow diagrams | "diagrams": []  |
+| contributors  | array  | **REQUIRED** An array of contributors to the threat model project | "contributors": [ { "name": "Tom Brown" }, { "name": "Albert Moneypenny" } ] |
+| diagrams  | array  | **REQUIRED** An array of single or multiple threat data-flow diagrams | "diagrams": []  |
 | reviewer  | string  | **OPTIONAL** The reviewer of the overall threat model | "reviewer": "Jane Smith"  |
 {:.table .table-striped}
 
 ## Diagrams
-An array of single or multiple threat dataflow diagrams
+An array of single or multiple threat data-flow diagrams
 
 | Field  | Type  | Description  | Example  |
 | ------ | ----- | ------------ | -------- |
-| diagramJson | object | **OPTIONAL** The dataflow diagram components | "diagramJson": { "cells": [] } |
-| diagramType | string | **OPTIONAL** The methodology used by the dataflow diagram | "diagramType": "STRIDE" |
+| diagramJson | object | **OPTIONAL** The data-flow diagram components | "diagramJson": { "cells": [] } |
+| diagramType | string | **OPTIONAL** The methodology used by the data-flow diagram | "diagramType": "STRIDE" |
 | id | integer | **OPTIONAL** The sequence number of the diagram | "id": 0 |
 | thumbnail | string | **OPTIONAL** The path to the thumbnail image | "thumbnail": "./public/content/images/thumbnail.stride.jpg" |
-| title | string | **OPTIONAL** The title of the dataflow diagram | "title": "Main Request Data Flow" |
+| title | string | **OPTIONAL** The title of the data-flow diagram | "title": "Main Request Data Flow" |
 {:.table .table-striped}
