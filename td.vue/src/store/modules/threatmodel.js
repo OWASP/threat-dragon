@@ -120,7 +120,7 @@ const mutations = {
 
         // TODO: This does NOT belong here, but is a placeholder until update/save are implemented
         // https://github.com/OWASP/threat-dragon/issues/340
-        Vue.set(state.data, 'tdVersion', '2.0');
+        Vue.set(state.data, 'version', '2.0');
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
@@ -147,7 +147,7 @@ const getters = {
         return contribs.map(x => x.name);
     },
     modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy,
-    isV1Model: (state) => Object.keys(state.data).length > 0 && state.data.tdVersion !== '2.0'
+    isV1Model: (state) => Object.keys(state.data).length > 0 && state.data.version !== '2.0'
 };
 
 export default {

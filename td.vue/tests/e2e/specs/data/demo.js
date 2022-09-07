@@ -1108,7 +1108,7 @@ export default `
             ]
           }
         ],
-        "tdVersion": "2.0",
+        "version": "2.0",
         "title": "Main Request Data Flow",
         "thumbnail": "./public/content/images/thumbnail.jpg",
         "id": 0
@@ -1116,5 +1116,5 @@ export default `
     ],
     "reviewer": "Jane Smith"
   },
-  "tdVersion": "2.0"
+  "version": "2.0"
 }`;

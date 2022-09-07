@@ -82,7 +82,7 @@ describe('service/migration/diagram.js', () => {
 
         describe('v2', () => {
             beforeEach(() => {
-                diagramMock.tdVersion = '2.0';
+                diagramMock.version = '2.0';
                 diagram.draw(null, diagramMock);
             });
 
@@ -94,7 +94,7 @@ describe('service/migration/diagram.js', () => {
 
     describe('edit', () => {
         beforeEach(() => {
-            diagramMock.tdVersion = '2.0';
+            diagramMock.version = '2.0';
             diagram.edit(null, diagramMock);
         });
 

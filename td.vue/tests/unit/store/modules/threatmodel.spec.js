@@ -457,7 +457,7 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('returns false when the version is set to 2.0', () => {
-                const state = { data: { tdVersion: '2.0' }};
+                const state = { data: { version: '2.0' }};
                 expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
             });
 
