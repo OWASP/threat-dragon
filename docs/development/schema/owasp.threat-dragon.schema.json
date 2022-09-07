@@ -5,7 +5,7 @@
   "description": "The threat models used by OWASP Threat Dragon",
   "type": "object",
   "properties": {
-    "tdVersion": {
+    "version": {
       "description": "Threat Dragon version used in the model",
       "type": "string"
     },
@@ -83,11 +83,6 @@
                 },
                 "required": [ "height", "width" ]
               },
-              "tdVersion": {
-                "description": "Threat Dragon version used in the diagram",
-                "type": "string",
-                "minLength": 5
-              },
               "thumbnail": {
                 "description": "The path to the thumbnail image for the diagram",
                 "type": "string"
@@ -95,6 +90,11 @@
               "title": {
                 "description": "The title of the data-flow diagram",
                 "type": "string"
+              },
+              "version": {
+                "description": "Threat Dragon version used in the diagram",
+                "type": "string",
+                "minLength": 5
               },
               "diagramJson": {
                 "description": "The data-flow diagram components",
