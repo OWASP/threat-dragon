@@ -24,10 +24,10 @@ export const menuTemplate = [
                         ]
                     }).then(result => {
                         if (result.canceled === false) {
-                            console.log(result.filePaths)
+                            console.log(result.filePaths);
                         }
                     }).catch(err => {
-                        console.log(err)
+                        console.log(err);
                     });
                 }
             },
@@ -57,10 +57,10 @@ export const menuTemplate = [
                         ]
                     }).then(result => {
                         if (result.canceled === false) {
-                            console.log(result.filePath)
+                            console.log(result.filePath);
                         }
                     }).catch(err => {
-                        console.log(err)
+                        console.log(err);
                     });
                 }
             },
