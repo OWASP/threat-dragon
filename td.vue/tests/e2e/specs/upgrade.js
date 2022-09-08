@@ -13,12 +13,8 @@ describe('upgrade', () => {
         cy.contains('Demo Threat Model');
     });
 
-    it('has the legacy desktop model', () => {
-        cy.contains('Legacy Desktop Model');
-    });
-
-    it('has the Legacy Model', () => {
-        cy.contains('Legacy Model');
+    it('has the V2 New Model', () => {
+        cy.contains('Version 2 New Model');
     });
 
     it('opens the demo threat model', () => {
