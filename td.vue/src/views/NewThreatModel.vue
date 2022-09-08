@@ -11,12 +11,13 @@ import tmActions from '@/store/actions/threatmodel.js';
 export default {
     name: 'NewThreatModel',
     computed: mapState({
-        providerType: state => getProviderType(state.provider.selected)
+        providerType: state => getProviderType(state.provider.selected),
+        version: 'packageBuildVersion'
     }),
     mounted() {
         this.$store.dispatch(tmActions.clear);
         const newTm = {
-            version: '2.0',
+            version: this.version,
             summary: {
                 title: 'New Threat Model',
                 owner: '',
@@ -29,7 +30,7 @@ export default {
                 reviewer: ''
             }
         };
-        
+
         this.$store.dispatch(tmActions.selected, newTm);
         const params = Object.assign({}, this.$route.params, {
             threatmodel: newTm.summary.title

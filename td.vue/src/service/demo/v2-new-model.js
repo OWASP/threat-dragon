@@ -1,5 +1,5 @@
 export default{
-    'tdVersion': '2.0',
+    'version': '2.0.0',
     'summary': {
         'title': 'New Threat Model',
         'owner': '',
@@ -12,4 +12,3 @@ export default{
         'reviewer': ''
     }
 };
-
