@@ -147,7 +147,7 @@ const getters = {
         return contribs.map(x => x.name);
     },
     modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy,
-    isV1Model: (state) => Object.keys(state.data).length > 0 && state.data.version !== '2.0'
+    isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
 };
 
 export default {
