@@ -13,6 +13,7 @@
                     {{ $t('threatmodel.threats') }}
 
                     <b-btn
+                        :disabled="disableNewThreat"
                         @click="newThreat()"
                         v-if="!!cellRef"
                         variant="primary"
@@ -86,7 +87,10 @@ export default {
     computed: mapState({
         cellRef: (state) => state.cell.ref,
         threats: (state) => state.cell.threats,
-        diagram: (state) => state.threatmodel.selectedDiagram
+        diagram: (state) => state.threatmodel.selectedDiagram,
+        disableNewThreat: function (state) {
+            return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
+        }
     }),
     components: {
         TdGraphProperties,
