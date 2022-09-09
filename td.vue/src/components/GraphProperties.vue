@@ -83,6 +83,7 @@
                         :label="$t('threatmodel.properties.reasonOutOfScope')"
                         label-for="reasonoutofscope">
                         <b-form-textarea
+                            :disabled="inScope"
                             id="reasonoutofscope"
                             v-model="cellRef.data.reasonOutOfScope"
                         ></b-form-textarea>
@@ -214,7 +215,8 @@ import { mapState } from 'vuex';
 export default {
     name: 'TdGraphProperties',
     computed: mapState({
-        cellRef: (state) => state.cell.ref
+        cellRef: (state) => state.cell.ref,
+        inScope: (state) => !state.cell.ref.data.outOfScope,
     })
 };
 </script>
