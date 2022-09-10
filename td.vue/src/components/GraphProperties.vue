@@ -72,6 +72,7 @@
                         <b-form-checkbox
                             id="outofscope"
                             v-model="cellRef.data.outOfScope"
+                            @change="onChangeScope()"
                         >{{ $t('threatmodel.properties.outOfScope') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -83,8 +84,8 @@
                         :label="$t('threatmodel.properties.reasonOutOfScope')"
                         label-for="reasonoutofscope">
                         <b-form-textarea
-                            :disabled="inScope"
                             id="reasonoutofscope"
+                            :disabled="!cellRef.data.outOfScope"
                             v-model="cellRef.data.reasonOutOfScope"
                         ></b-form-textarea>
                     </b-form-group>
@@ -207,6 +208,7 @@ label {
 
 <script>
 import { mapState } from 'vuex';
+import dataChanged from '@/service/x6/graph/data-changed.js';
 
 /**
  * TODO:
@@ -215,8 +217,13 @@ import { mapState } from 'vuex';
 export default {
     name: 'TdGraphProperties',
     computed: mapState({
-        cellRef: (state) => state.cell.ref,
-        inScope: (state) => !state.cell.ref.data.outOfScope,
-    })
+        cellRef: (state) => state.cell.ref
+    }),
+    methods: {
+        onChangeScope() {
+            document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;
+            dataChanged.updateStyleAttrs(this.cellRef);
+        }
+    }
 };
 </script>
