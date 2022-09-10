@@ -76,6 +76,13 @@ const updateStyleAttrs = (cell) => {
 
 };
 
+const updateName = (cell) => {
+    if (cell.setName && cell.getData) {
+        cell.setName(cell.getData().name);
+    }
+};
+
 export default {
+    updateName,
     updateStyleAttrs
 };
