@@ -184,6 +184,10 @@
                           "description": "The component flag set if the data store uses signatures",
                           "type": "boolean"
                         },
+                        "isTrustBoundary": {
+                          "description": "The flag set if the component is a trust boundary curve or trust boundary box",
+                          "type": "boolean"
+                        },
                         "labels": {
                           "description": "The floating labels used for boundary or data-flow",
                           "type": "array",
