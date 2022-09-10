@@ -47,6 +47,7 @@
                         <b-form-textarea
                             id="name"
                             v-model="cellRef.data.name"
+                            @change="onChangeName()"
                             :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"
                         ></b-form-textarea>
                     </b-form-group>
@@ -220,6 +221,9 @@ export default {
         cellRef: (state) => state.cell.ref
     }),
     methods: {
+        onChangeName() {
+            dataChanged.updateName(this.cellRef);
+        },
         onChangeScope() {
             document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;
             dataChanged.updateStyleAttrs(this.cellRef);
