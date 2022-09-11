@@ -77,7 +77,7 @@ const en = {
         owner: 'Owner',
         reviewer: 'Reviewer',
         contributors: 'Contributors',
-        contributorsPlaceholder: 'Add a new contributor',
+        contributorsPlaceholder: 'Start typing to add a contributor',
         description: 'High level system description',
         editing: 'Editing',
         title: 'Title',
