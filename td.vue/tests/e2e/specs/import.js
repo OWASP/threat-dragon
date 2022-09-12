@@ -1,4 +1,5 @@
-import demoJson from './data/demo.js';
+import v2ThreatModelJson from './data/v2-threat-model.js';
+import v2NewModelJson from './data/v2-new-model.js';
 
 describe('import', () => {
     const setup = () => {
@@ -8,7 +9,7 @@ describe('import', () => {
         cy.url().should('contain', '/local/threatmodel/import');
     };
 
-    describe('with a valid model', () => {
+    describe('using a valid V2 model with diagram', () => {
         before(() => {
             setup();
         });
@@ -22,7 +23,7 @@ describe('import', () => {
         });
 
         it('allows a user to manually enter the model JSON', () => {
-            cy.get('#json-input').paste(demoJson);
+            cy.get('#json-input').paste(v2ThreatModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/Demo%20Threat%20Model');
             cy.contains('Demo Threat Model');
@@ -33,7 +34,21 @@ describe('import', () => {
         });
     });
 
-    describe('with invalid JSON', () => {
+    describe('using a valid V2 model without diagram', () => {
+        before(() => {
+            setup();
+        });
+
+        it('allows a user to manually enter the model JSON', () => {
+            cy.get('#json-input').paste(v2NewModelJson);
+            cy.get('#td-import-btn').click();
+            cy.url().should('contain', '/local/New%20threat%20model');
+            cy.contains('New threat model');
+            cy.get('#tm-edit-btn').should('be.visible');
+        });
+    });
+
+    describe('using invalid JSON', () => {
         before(() => {
             setup();
         });
