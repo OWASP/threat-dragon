@@ -12,7 +12,7 @@ pnpm install
 
 ### Compiles and hot-reloads for development
 ```
-pnpm run serve
+pnpm serve
 ```
 
 ### Compiles and minifies for production
@@ -37,7 +37,7 @@ pnpm clean
 
 ### Run unit tests
 ```
-pnpm run test:unit
+pnpm test
 ```
 For continuous testing:
 ```
