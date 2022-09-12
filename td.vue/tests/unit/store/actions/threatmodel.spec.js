@@ -8,7 +8,8 @@ import {
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_RESTORE,
     THREATMODEL_SET_IMMUTABLE_COPY,
-    THREATMODEL_SAVE
+    THREATMODEL_SAVE,
+    THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 
 describe('store/actions/threatmodel.js', () => {
@@ -50,5 +51,9 @@ describe('store/actions/threatmodel.js', () => {
 
     it('defines a save action', () => {
         expect(THREATMODEL_SAVE).not.toBeUndefined();
+    });
+
+    it('defines an update action', () => {
+        expect(THREATMODEL_UPDATE).not.toBeUndefined();
     });
 });

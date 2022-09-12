@@ -10,7 +10,8 @@ import {
     THREATMODEL_FETCH_ALL,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_IMMUTABLE_COPY
+    THREATMODEL_SET_IMMUTABLE_COPY,
+    THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
@@ -254,6 +255,12 @@ describe('store/modules/threatmodel.js', () => {
                     });
                 });
             });
+        });
+
+        it('commits the diagram update action', () => {
+            const update = { foo: 'bar' };
+            threatmodelModule.actions[THREATMODEL_UPDATE](mocks, update);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_UPDATE, update);
         });
     });
 

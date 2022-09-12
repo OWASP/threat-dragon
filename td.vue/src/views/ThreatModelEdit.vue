@@ -188,7 +188,8 @@ export default {
     computed: {
         ...mapState({
             model: (state) => state.threatmodel.data,
-            providerType: state => getProviderType(state.provider.selected)
+            providerType: state => getProviderType(state.provider.selected),
+            version: state => state.packageBuildVersion
         }),
         contributors: {
             get() {
@@ -224,7 +225,8 @@ export default {
                 name: '',
                 title: tc('threatmodel.diagram.stride.diagramTitle'),
                 diagramType: 'STRIDE',
-                thumbnail: './public/content/images/thumbnail.stride.jpg'
+                thumbnail: './public/content/images/thumbnail.stride.jpg',
+                version: this.version
             };
             this.model.detail.diagrams.push(newDiagram);
         },

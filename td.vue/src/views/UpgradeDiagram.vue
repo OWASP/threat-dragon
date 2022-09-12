@@ -67,7 +67,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdReadOnlyDiagram from '@/components/ReadOnlyDiagram.vue';
 import TdUpgradeModal from '@/components/UpgradeModal.vue';
-import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_DIAGRAM_SELECTED, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'UpgradeDiagram',
@@ -78,7 +78,8 @@ export default {
     computed: {
         ...mapState({
             model: (state) => state.threatmodel.data,
-            providerType: state => getProviderType(state.provider.selected)
+            providerType: state => getProviderType(state.provider.selected),
+            version: state => state.packageBuildVersion
         })
     },
     mounted() {
@@ -91,6 +92,8 @@ export default {
             this.$router.push({ name: `${this.providerType}DiagramEdit`, params });
         },
         continueToModel() {
+            // update version to latest
+            this.$store.dispatch(THREATMODEL_UPDATE, { version: this.version });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         }
     }

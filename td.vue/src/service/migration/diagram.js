@@ -11,6 +11,8 @@ import store from '../../store/index.js';
 import tmActions from '../../store/actions/threatmodel.js';
 import events from '../x6/graph/events.js';
 
+const buildVersion = require('../../../package.json').version;
+
 const drawV1 = (diagram, graph) => {
     const { nodes, edges } = cells.map(diagram);
     const batchName = 'td-init';
@@ -20,15 +22,19 @@ const drawV1 = (diagram, graph) => {
     graph.stopBatch(batchName);
 };
 
+// update a version 1.x threat model (and diagrams) to version 2.x
 const upgradeAndDraw = (diagram, graph) => {
+
+    // check if diagram is already at version 2.x
     if (diagram.version != null && diagram.version.startsWith('2.')) {
         graph.fromJSON(diagram);
         return;
     }
 
+    console.log('Updating the 1.x threat model diagram: =' + diagram.title + '= to latest version');
     drawV1(diagram, graph);
     const updated = graph.toJSON();
-    updated.version = store.packageBuildVersion;
+    updated.version = buildVersion;
     updated.title = diagram.title;
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
