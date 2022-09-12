@@ -1,3 +1,4 @@
+export default `
 {
   "version": "1.6.1",
   "summary": {
@@ -7,4 +8,4 @@
     "contributors": [],
     "diagrams": []
   }
-}
+}`;
