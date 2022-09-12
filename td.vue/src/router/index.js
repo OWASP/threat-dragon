@@ -39,13 +39,13 @@ const upgradeGuard = ((to, from, next) => {
         'OAuthReturn',
         'Upgrade'
     ];
-
     if (!to.name || ignoreMatchers.some(x => to.name.indexOf(x) !== -1)) {
         return next();
     }
 
     const store = storeFactory.get();
     if (store.getters.isV1Model) {
+        // upgrade version 1.x diagrams to latest version
         return next({ name: `${getProviderType(store.state.provider.selected)}Upgrade`, params: to.params });
     }
 

@@ -15,7 +15,8 @@ import {
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_IMMUTABLE_COPY
+    THREATMODEL_SET_IMMUTABLE_COPY,
+    THREATMODEL_UPDATE
 } from '../actions/threatmodel.js';
 import save from '../../service/save.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
@@ -79,7 +80,6 @@ const actions = {
         }
         commit(THREATMODEL_RESTORE, originalModel);
     },
-    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
     [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
         try {
             // TODO: This ONLY works if the backend provider is GitHub
@@ -103,12 +103,18 @@ const actions = {
             console.error(ex);
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
-    } 
+    },
+    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
+    [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
 };
 
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
     [THREATMODEL_CREATE]: (state, threatModel) => setThreatModel(state, threatModel),
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
+        state.data.detail.contributors.length = 0;
+        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
+    },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         state.selectedDiagram = diagram;
     },
@@ -127,14 +133,13 @@ const mutations = {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
-    [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
-    [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
-        state.data.detail.contributors.length = 0;
-        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
-    },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
+    [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_SET_IMMUTABLE_COPY]: (state) => {
         Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
+    },
+    [THREATMODEL_UPDATE]: (state, update) => {
+        Vue.set(state.data, 'version', update.version);
     }
 };
 

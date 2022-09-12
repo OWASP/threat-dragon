@@ -13,10 +13,6 @@ describe('upgrade', () => {
         cy.contains('Demo Threat Model');
     });
 
-    it('has the V2 New Model', () => {
-        cy.contains('Version 2 New Model');
-    });
-
     it('opens the demo threat model', () => {
         cy.get('a').contains('Demo Threat Model').click();
         cy.url().should('contain', '/local/Demo%20Threat%20Model/upgrade');
@@ -46,6 +42,23 @@ describe('upgrade', () => {
         cy.get('.td-instructions').contains('your model');
         cy.get('.td-upgrade-continue').click();
         cy.url().should('contain', 'local/Demo%20Threat%20Model');
+    });
+
+    it('can edit the model', () => {
+        cy.get('#tm-edit-btn').click();
+        cy.url().should('contain', '/edit');
+        cy.get('#description').should('be.visible');
+        cy.get('button').contains('Cancel').click();
+    });
+
+    it('asks the user about the changes', () => {
+        cy.get('.modal-title').contains('Discard Changes?');
+        cy.get('button').contains('OK').click();
+    });
+
+    it('can edit the diagram', () => {
+        cy.get('.td-diagram-thumb').click();
+        cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
     });
 
 });

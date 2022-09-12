@@ -31,7 +31,8 @@ describe('views/UpgradeDiagram.vue', () => {
 
         storeMock = new Vuex.Store({
             actions: {
-                [tmActions.diagramSelected]: () => {}
+                [tmActions.diagramSelected]: () => {},
+                [tmActions.update]: () => {}
             },
             state: {
                 threatmodel: {
@@ -45,7 +46,8 @@ describe('views/UpgradeDiagram.vue', () => {
                 },
                 provider: {
                     selected: 'github'
-                }
+                },
+                packageBuildVersion: 'foo'
             }
         });
 
@@ -128,11 +130,27 @@ describe('views/UpgradeDiagram.vue', () => {
         });
     });
     
-    it('continues to the threat model page', () => {
-        wrapper.vm.continueToModel();
-        expect(routerMock.push).toHaveBeenCalledWith({
-            name: 'gitThreatModel',
-            params: routerMock.params
+    describe('continueToModel', () => {
+        let update;
+
+        beforeEach(() => {
+            update = { version: 'foo' };
+        });
+
+        it('dispatches the threat model update event', () => {
+            wrapper.vm.continueToModel();
+            expect(storeMock.dispatch).toHaveBeenCalledWith(
+                tmActions.update,
+                update
+            );
+        });
+
+        it('continues to the threat model page', () => {
+            wrapper.vm.continueToModel();
+            expect(routerMock.push).toHaveBeenCalledWith({
+                name: 'gitThreatModel',
+                params: routerMock.params
+            });
         });
     });
 });
