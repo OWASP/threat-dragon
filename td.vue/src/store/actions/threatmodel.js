@@ -22,5 +22,5 @@ export default {
     save: THREATMODEL_SAVE,
     selected: THREATMODEL_SELECTED,
     setImmutableCopy: THREATMODEL_SET_IMMUTABLE_COPY,
-    setVersion: THREATMODEL_UPDATE
+    update: THREATMODEL_UPDATE
 };

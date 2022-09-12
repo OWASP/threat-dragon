@@ -399,6 +399,14 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
+        describe('update', () => {
+            it('updates the threat model', () => {
+                const update = { version: 'bar' };
+                threatmodelModule.mutations[THREATMODEL_UPDATE](threatmodelModule.state, update);
+                expect(threatmodelModule.state.data.version).toEqual('bar');
+            });
+        });
+
         it('sets the immutable copy from the data', () => {
             threatmodelModule.state.data = { foo: 'bar' };
             threatmodelModule.mutations[THREATMODEL_SET_IMMUTABLE_COPY](threatmodelModule.state);
