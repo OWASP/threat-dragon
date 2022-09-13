@@ -1,4 +1,4 @@
-describe('demo', () => {
+describe('upgrade v2 demo', () => {
     before(() => {
         cy.setupTest();
         cy.get('#local-login-btn').click();

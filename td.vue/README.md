@@ -48,6 +48,11 @@ This means that vue components without any JS logic will not be included in the 
 This is a known limitation, so if you are reading this and there is a workaround
 or you know of another way of getting better coverage for `.vue` files, please open an issue or submit a PR! :)
 
+### Run e2e tests
+```
+pnpm run test:e2e
+```
+
 ### Lints and fixes files
 ```
 pnpm run lint

@@ -1,4 +1,4 @@
-describe('demo', () => {
+describe('print', () => {
     before(() => {
         cy.setupTest();
         cy.get('#local-login-btn').click();
@@ -26,16 +26,18 @@ describe('demo', () => {
         cy.url().should('contain', '/local/Version%202%20Demo%20Model');
     });
 
-    it('can edit the model', () => {
-        cy.get('#tm-edit-btn').click();
-        cy.url().should('contain', '/edit');
-        cy.get('#description').should('be.visible');
-        cy.get('button').contains('Cancel').click();
+    it('can report on the model', () => {
+        cy.contains('High level system description');
+        cy.get('button').contains('Report').click();
     });
 
-    it('can edit the diagram', () => {
-        cy.get('.td-diagram-thumb').click();
-        cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
+    it('can print the model', () => {
+        cy.window().then((win) => {
+            cy.stub(win, 'print').as('print');
+        });
+        cy.contains('High level system description');
+        cy.get('#td-print-btn').click({ force: true });
+        cy.get('@print').should('have.been.calledOnce');
     });
 
 });
