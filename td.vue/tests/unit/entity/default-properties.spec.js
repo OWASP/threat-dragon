@@ -76,8 +76,8 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.flow.type).toEqual('tm.Flow');
         });
 
-        it('has a blank name', () => {
-            expect(defaultProperties.flow.name).toEqual('');
+        it('has a name', () => {
+            expect(defaultProperties.flow.name).toEqual('Data Flow');
         });
 
         it('has a blank description', () => {

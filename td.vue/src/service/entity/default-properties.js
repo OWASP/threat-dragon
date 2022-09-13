@@ -25,7 +25,7 @@ const boundaryBox = {
 
 const flow = {
     type: 'tm.Flow',
-    name: '',
+    name: 'Data Flow',
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',
