@@ -51,11 +51,6 @@ describe('upgrade', () => {
         cy.get('button').contains('Cancel').click();
     });
 
-    it('asks the user about the changes', () => {
-        cy.get('.modal-title').contains('Discard Changes?');
-        cy.get('button').contains('OK').click();
-    });
-
     it('can edit the diagram', () => {
         cy.get('.td-diagram-thumb').click();
         cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
