@@ -59,6 +59,10 @@ const cellAdded = (graph) => ({ cell }) => {
     }
 
     removeCellTools({ cell });
+    // boundary boxes must not overlap other diagram components
+    if (cell.shape === 'trust-boundary-box') {
+        cell.zIndex = -1;
+    }
 
     dataChanged.updateStyleAttrs(cell);
     if (!cell.data) {
