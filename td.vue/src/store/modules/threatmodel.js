@@ -122,11 +122,8 @@ const mutations = {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
+        Vue.set(state.data, 'version', diagram.version);
         setThreatModel(state, state.data);
-
-        // TODO: This does NOT belong here, but is a placeholder until update/save are implemented
-        // https://github.com/OWASP/threat-dragon/issues/340
-        Vue.set(state.data, 'version', '2.0');
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {

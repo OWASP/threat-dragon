@@ -476,6 +476,11 @@ describe('store/modules/threatmodel.js', () => {
                 expect(threatmodelModule.getters.isV1Model(state)).toEqual(false);
             });
 
+            it('returns true when the version is set to 1.6.1', () => {
+                const state = { data: { version: '1.6.1' }};
+                expect(threatmodelModule.getters.isV1Model(state)).toEqual(true);
+            });
+
             it('returns true when the version is not set', () => {
                 const state = { data: { foo: '2.0' }};
                 expect(threatmodelModule.getters.isV1Model(state)).toEqual(true);
