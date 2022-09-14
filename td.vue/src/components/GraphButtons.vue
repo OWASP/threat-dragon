@@ -1,6 +1,12 @@
 <template>
     <b-btn-group>
         <td-form-button
+            :onBtnClick="deleteSelected"
+            icon="trash"
+            :title="$t('threatmodel.buttons.delete')"
+            text="" />
+
+        <td-form-button
             :onBtnClick="noOp"
             v-b-modal.shortcuts
             icon="keyboard"
@@ -29,12 +35,6 @@
             :onBtnClick="zoomOut"
             icon="search-minus"
             :title="$t('threatmodel.buttons.zoomOut')"
-            text="" />
-
-        <td-form-button
-            :onBtnClick="deleteSelected"
-            icon="trash"
-            :title="$t('forms.delete')"
             text="" />
 
         <td-form-button
