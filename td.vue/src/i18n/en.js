@@ -72,14 +72,14 @@ const en = {
         newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
-        jsonPaste: 'Paste the JSON of your threat model here:',
-        invalidJson: 'Invalid JSON. Please check your model and try again.',
-        owner: 'Owner',
-        reviewer: 'Reviewer',
         contributors: 'Contributors',
         contributorsPlaceholder: 'Start typing to add a contributor',
         description: 'High level system description',
         editing: 'Editing',
+        invalidJson: 'Invalid JSON. Please check your model and try again.',
+        jsonPaste: 'Paste the JSON of your threat model here:',
+        owner: 'Owner',
+        reviewer: 'Reviewer',
         title: 'Title',
         diagram: {
             diagrams: 'Diagrams',
@@ -168,17 +168,17 @@ const en = {
             }
         },
         stencil: {
+            boundaries: 'Boundaries',
             components: 'Components',
             entities: 'Entities',
-            boundaries: 'Boundaries',
             metadata: 'Metadata',
             search: 'Search',
             notFound: 'We don\'t have that yet, want to open an issue? :)'
         },
         shapes: {
             actor: 'Actor',
-            flowStencil: 'Data Flow',
             flow: 'Data Flow',
+            flowStencil: 'Data Flow',
             process: 'Process',
             store: 'Store',
             text: 'Descriptive text',

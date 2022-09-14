@@ -9,7 +9,8 @@ const fr = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo Threat Dragon',
-        description: 'Threat Dragon est un outil de modélisation des menaces open-source et gratuit d\'OWASP. Il peut être utilisé comme une application de bureau sur Windows, MacOS et Linux, ou comme une application Web. L\'application de bureau est idéale si vous voulez essayer Threat Dragon sans lui donner accès à vos projets GitHub, mais si vous choisissez la version en ligne, vous pouvez profiter de la puissance impressionnante de GitHub sur vos modèles de menace! Pour ce faire, vous devez d\'abord vous connecter.'
+        description: 'Threat Dragon est un outil de modélisation des menaces open-source et gratuit d\'OWASP. Il peut être utilisé comme une application de bureau sur Windows, MacOS et Linux, ou comme une application Web. L\'application de bureau est idéale si vous voulez essayer Threat Dragon sans lui donner accès à vos projets GitHub, mais si vous choisissez la version en ligne, vous pouvez profiter de la puissance impressionnante de GitHub sur vos modèles de menace! Pour ce faire, vous devez d\'abord vous connecter.',
+        loginWith: 'Login with'
     },
     providers: {
         github: {
@@ -71,14 +72,14 @@ const fr = {
         newThreatModel: 'Créer un nouveau modèle de menace'
     },
     threatmodel: {
-        jsonPaste: 'Collez le JSON de votre modèle de menace ici :',
-        invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
-        owner: 'Auteur',
-        reviewer: 'Réviseur',
         contributors: 'Contributeurs',
         contributorsPlaceholder: 'Ajouter un nouveau contributeur',
         description: 'Description de haut niveau du système',
         editing: 'Modification',
+        jsonPaste: 'Collez le JSON de votre modèle de menace ici :',
+        invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
+        owner: 'Auteur',
+        reviewer: 'Réviseur',
         title: 'Titre',
         diagram: {
             diagrams: 'Diagrammes',
@@ -101,6 +102,10 @@ const fr = {
             }
         },
         threats: 'Menaces',
+        errors: {
+            save: 'Error saving Threat Model. Please check the developer console for more information'
+        },
+        saved: 'Threat model successfully saved!',
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',
@@ -119,12 +124,13 @@ const fr = {
             publicNetwork: 'Réseau public'
         },
         buttons: {
-            shortcuts: 'Raccourcis clavier',
-            undo: 'Annuler',
+            delete: 'Delete selected',
             redo: 'Rétablir',
+            shortcuts: 'Raccourcis clavier',
+            toggleGrid: 'Grille d\'affichage',
+            undo: 'Annuler',
             zoomIn: 'Agrandir',
-            zoomOut: 'Rétrécir',
-            toggleGrid: 'Grille d\'affichage'
+            zoomOut: 'Rétrécir'
         },
         shortcuts: {
             title: 'Raccourcis',
@@ -162,14 +168,16 @@ const fr = {
             }
         },
         stencil: {
-            entities: 'Entités',
             boundaries: 'Délimitations',
+            components: 'Components',
+            entities: 'Entités',
             metadata: 'Métadonnées',
             search: 'Recherche',
             notFound: 'Nous ne l\'avons pas encore, voulez-vous le proposer? :)'
         },
         shapes: {
             actor: 'Acteur',
+            flow: 'Flux de données',
             flowStencil: 'Flux de données',
             process: 'Processus',
             store: 'Stockage',
@@ -178,25 +186,39 @@ const fr = {
         }
     },
     forms: {
-        edit: 'Modifier',
-        report: 'Rapport',
-        delete: 'Supprimer',
-        remove: 'Retirer',
-        save: 'Sauvegarder',
-        reload: 'Recharger',
+        apply: 'Apply',
         cancel: 'Annuler',
         close: 'Fermer',
-        search: 'Rechercher',
-        import: 'Importer'
+        closeModel: 'Close Model',
+        delete: 'Supprimer',
+        discardTitle: 'Discard Changes?',
+        discardMessage: 'Are you sure you want to discard your changes?',
+        edit: 'Modifier',
+        import: 'Importer',
+        ok: 'OK',
+        open: 'Open',
+        openModel: 'Open Model',
+        print: 'Print',
+        reload: 'Recharger',
+        remove: 'Retirer',
+        report: 'Rapport',
+        save: 'Sauvegarder',
+        saveAs: 'Save As',
+        saveModel: 'Save Model',
+        saveModelAs: 'Save Model As',
+        savePdf: 'Save PDF',
+        search: 'Rechercher'
     },
     threats: {
         model: {
             cia: {
+                header: '--- CIA ---',
                 confidentiality: 'Confidentialité',
                 integrity: 'Intégrité',
                 availability: 'Disponibilité'
             },
             linddun: {
+                header: '--- LINDDUN ---',
                 linkability: 'Capacité de liaison',
                 identifiability: 'Identifiabilité',
                 nonRepudiation: 'Non-répudiation',
@@ -206,6 +228,7 @@ const fr = {
                 nonCompliance: 'Non-conformité'
             },
             stride: {
+                header: '--- STRIDE ---',
                 spoofing: 'Usurpation d\'identité',
                 tampering: 'Falsification',
                 repudiation: 'Répudiation',
@@ -214,10 +237,21 @@ const fr = {
                 elevationOfPrivilege: 'Élévation de privilège'
             }
         },
+        generic: {
+            default: 'New generic threat',
+            cia: 'New CIA threat',
+            linddun: 'New LINDDUN threat',
+            stride: 'New STRIDE threat'
+        },
         edit: 'Modifier la menace',
         confirmDeleteTitle: 'Confirmer Supprimer',
         confirmDeleteMessage: 'Êtes-vous sûr de vouloir supprimer cette menace ?',
+        description: 'Provide a description for this threat',
+        emptyThreat: 'Select an element on the graph to add a threat',
+        mitigation: 'Provide mitigation or prevention for this threat',
         newThreat: 'Nouvelle menace',
+        newThreatByType: 'New Threat by Type',
+        newThreatByContext: 'New Threat by Context',
         properties: {
             title: 'Titre',
             status: 'Status',
@@ -237,6 +271,38 @@ const fr = {
             medium: 'Moyen',
             high: 'Élevé'
         }
+    },
+    report: {
+        options: {
+            showOutOfScope: 'Show out of scope elements',
+            showMitigatedThreats: 'Show mitigated threats',
+            showModelDiagrams: 'Show model diagrams',
+            showBranding: 'Show Threat Dragon Branding'
+        },
+        title: 'Threat model report for',
+        dateGenerated: 'Date Generated',
+        executiveSummary: 'Executive Summary',
+        notProvided: 'Not provided',
+        summary: 'Summary',
+        threatStats: {
+            total: 'Total Threats',
+            mitigated: 'Total Mitigated',
+            notMitigated: 'Not Mitigated',
+            openHigh: 'Open / High Priority',
+            openMedium: 'Open / Medium Priority',
+            openLow: 'Open / Low Priority',
+            openUnknown: 'Open / Unknown Priority',
+        }
+    },
+    upgrade: {
+        modal: {
+            header: 'Threatmodel Update',
+            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
+            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
+            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+        },
+        instructions: 'Great! Let\'s get you to your model.',
+        continue: 'Continue to Threat Model'
     }
 };
 
