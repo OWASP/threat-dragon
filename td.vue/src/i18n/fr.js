@@ -253,13 +253,15 @@ const fr = {
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
         properties: {
-            title: 'Titre',
-            status: 'Status',
-            priority: 'Priorité',
-            type: 'Type',
             description: 'Description',
             mitigation: 'Mesures d\'atténuation',
-            modelType: 'Type de modèle'
+            modelType: 'Type de modèle',
+            number: 'Number',
+            priority: 'Priorité',
+            score: "Score",
+            status: 'Status',
+            title: 'Titre',
+            type: 'Type'
         },
         status: {
             notApplicable: 'N/A',

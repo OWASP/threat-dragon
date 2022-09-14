@@ -338,6 +338,11 @@
                                 "description": "The threat methodology type",
                                 "type": "string"
                               },
+                              "number": {
+                                "description": "The unique number for the threat",
+                                "type": "integer",
+                                "minimum": 0
+                              },
                               "severity": {
                                 "description": "The threat severity as High, Medium or Low",
                                 "type": "string"

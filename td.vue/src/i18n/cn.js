@@ -253,13 +253,15 @@ const cn = {
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
         properties: {
-            title: '标题',
-            status: '状态',
-            priority: '优先级',
-            type: '类型',
             description: '描述',
             mitigation: '缓解措施',
-            modelType: '模型类型'
+            modelType: '模型类型',
+            number: 'Number',
+            priority: '优先级',
+            score: "Score",
+            status: '状态',
+            title: '标题',
+            type: '类型'
         },
         status: {
             notApplicable: '不适用',

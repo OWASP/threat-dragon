@@ -253,13 +253,15 @@ const ru = {
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
         properties: {
-            title: 'Title',
-            status: 'Status',
-            priority: 'Priority',
-            type: 'Type',
             description: 'Description',
             mitigation: 'Mitigations',
-            modelType: 'Model Type'
+            modelType: 'Model Type',
+            number: 'Number',
+            priority: 'Priority',
+            score: "Score",
+            status: 'Status',
+            title: 'Title',
+            type: 'Type'
         },
         status: {
             notApplicable: 'N/A',
