@@ -124,12 +124,13 @@ const en = {
             publicNetwork: 'Public Network'
         },
         buttons: {
-            shortcuts: 'Keyboard Shortcuts',
-            undo: 'Undo',
-            redo: 'Redo',
-            zoomIn: 'Zoom In',
-            zoomOut: 'Zoom Out',
-            toggleGrid: 'Toggle Grid'
+            delete: 'Delete selected',
+            redo: 'Redo edit',
+            shortcuts: 'Keyboard shortcuts',
+            toggleGrid: 'Toggle grid',
+            undo: 'Undo edit',
+            zoomIn: 'Zoom in',
+            zoomOut: 'Zoom out'
         },
         shortcuts: {
             title: 'Shortcuts',
