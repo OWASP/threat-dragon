@@ -259,7 +259,8 @@ const fr = {
             type: 'Type',
             description: 'Description',
             mitigation: 'Mesures d\'atténuation',
-            modelType: 'Type de modèle'
+            modelType: 'Type de modèle',
+            number: 'Number'
         },
         status: {
             notApplicable: 'N/A',

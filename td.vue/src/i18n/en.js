@@ -259,7 +259,8 @@ const en = {
             type: 'Type',
             description: 'Description',
             mitigation: 'Mitigations',
-            modelType: 'Model Type'
+            modelType: 'Model Type',
+            number: 'Number'
         },
         status: {
             notApplicable: 'N/A',

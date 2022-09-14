@@ -259,7 +259,8 @@ const el = {
             type: 'Τύπος',
             description: 'Περιγραφή',
             mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
-            modelType: 'Τύπος Μοντέλου'
+            modelType: 'Τύπος Μοντέλου',
+            number: 'Number'
         },
         status: {
             notApplicable: 'Δεν έχει εφαρμογή',

@@ -259,7 +259,8 @@ const cn = {
             type: '类型',
             description: '描述',
             mitigation: '缓解措施',
-            modelType: '模型类型'
+            modelType: '模型类型',
+            number: 'Number'
         },
         status: {
             notApplicable: '不适用',
