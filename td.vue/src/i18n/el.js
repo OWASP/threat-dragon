@@ -253,14 +253,15 @@ const el = {
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
         properties: {
-            title: 'Τίτλος',
-            status: 'Κατάσταση',
-            priority: 'Προτεραιότητα',
-            type: 'Τύπος',
             description: 'Περιγραφή',
             mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
-            number: 'Number'
+            number: 'Number',
+            priority: 'Προτεραιότητα',
+            score: "Score",
+            status: 'Κατάσταση',
+            title: 'Τίτλος',
+            type: 'Τύπος'
         },
         status: {
             notApplicable: 'Δεν έχει εφαρμογή',
