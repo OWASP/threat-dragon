@@ -7,7 +7,6 @@ import es from './es.js';
 import cn from './cn.js';
 import de from './de.js';
 import fr from './fr.js';
-import hi from './hi.js';
 import pt from './pt.js';
 import ru from './ru.js';
 import zh from './cn.js';
@@ -27,7 +26,6 @@ const get = () => {
                 cn,
                 de,
                 fr,
-                hi,
                 pt,
                 ru,
                 zh
