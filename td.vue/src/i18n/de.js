@@ -1,34 +1,34 @@
-const es = {
+const de = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'Esta es la versión 2.0 do OWASP Threat Dragon que todavía está en desarrollo. No la utilice para editar pantillas existentes, ya que esta versión puede romperlas.',
-        loggedInAs: 'Conectado como'
+        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development. Do not use this to edit existing models, as this version could break them!',
+        loggedInAs: 'Logged in as'
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Logo do Threat Dragon',
-        description: 'Threat Dragon es una herramienta de modelado de amenazas de fuente abierta y gratuita da OWASP. Se puede utilizar a través de desktop para Windows, MacOS y Linux o como una aplicación web. La aplicación de desktop es excelente si desea probarla sin otorgar acceso a sus repositorios do GitHub. Sin embargo, si elige la versión web, podrá liberar el increíble poder do GitHub en sus modelos de amenazas (threat model). Por supuesto, para hacer esto, deberá iniciar sesión en GitHub y permitir el acceso al repositorio de interés',
-        loginWith: 'Conectado como'
+        imgAlt: 'Threat Dragon Logo',
+        description: 'Threat Dragon is a free, open-source threat modeling tool from OWASP. It can be used as a standalone desktop app for Windows, MacOS and Linux or as a web application. The desktop app is great if you want to try the application without giving it access to your GitHub repos, but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! Obviously, to do this you need to log in first.',
+        loginWith: 'Login with'
     },
     providers: {
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
         },
         local: {
-            displayName: 'Sesión Local'
+            displayName: 'Local Session'
         }
     },
     dashboard: {
         welcome: {
-            title: '¡Te damos la bienvenida! ¡Estamos encantados de tenerte aquí!',
-            description: 'Con OWASP Threat Dragon terás los mecanismos para hacer que los diseños de sus aplicativos sean más seguros. Puedes abrir un modelo de amenaza (threat model) existente o crear un modelo desde cero. Simplemente elija una de las siguientes opciones'
+            title: 'Welcome!',
+            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
         },
         actions: {
-            openExisting: 'Abrir un modelo de amenazas (threat model) existente',
-            createNew: 'Crear un nuevo modelo de amenazas (threat model) desde cero',
-            download: 'Descargar y explotar un ejemplo de modelo de amenazas (threat model)',
+            openExisting: 'Open an existing threat model',
+            createNew: 'Create a new, empty threat model',
+            demo: 'Explore a sample threat model',
             import: 'Import a threat model via JSON'
         }
     },
@@ -54,36 +54,36 @@ const es = {
         }
     },
     repository: {
-        select: 'Seleccione',
-        from: 'repositório de los enumerados a continuación',
+        select: 'Select a',
+        from: 'repository from the list below',
         noneFound: 'No repositories found. To get started, create a new repository on'
     },
     branch: {
-        select: 'Seleccione una branch',
-        from: 'de la lista a continuación',
-        chooseRepo: 'elige otro repositorio'
+        select: 'Select a branch from',
+        from: 'from the list below or',
+        chooseRepo: 'choose another repo'
     },
     threatmodelSelect: {
-        select: 'Seleccione a Threat Model from',
-        from: 'de la lista a continuación o elige outro',
+        select: 'Select a Threat Model from',
+        from: 'from the list below, or choose another',
         branch: 'branch',
-        or: 'o',
-        repo: 'repositório',
-        newThreatModel: 'crear un nuevo modelo de amenazas (threat model)'
+        or: 'or',
+        repo: 'repo',
+        newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
-        contributors: 'Colaboradores',
-        contributorsPlaceholder: 'Agregar un nuevo colaborador',
-        description: 'Descripción de alto nível del sistema (high level system)',
-        editing: 'Edición',
+        contributors: 'Contributors',
+        contributorsPlaceholder: 'Start typing to add a contributor',
+        description: 'High level system description',
+        editing: 'Editing',
         invalidJson: 'Invalid JSON. Please check your model and try again.',
         jsonPaste: 'Paste the JSON of your threat model here:',
-        owner: 'Propietario',
-        reviewer: 'Revisor',
-        title: 'Título',
+        owner: 'Owner',
+        reviewer: 'Reviewer',
+        title: 'Title',
         diagram: {
-            diagrams: 'Diagramas',
-            addNewDiagram: 'Agregar un nuevo diagrama...',
+            diagrams: 'Diagrams',
+            addNewDiagram: 'Add a new diagram...',
             generic: {
                 diagramTitle: 'New generic diagram',
                 select: `Generic`
@@ -107,21 +107,21 @@ const es = {
         },
         saved: 'Threat model successfully saved!',
         properties: {
-            title: 'Propiedades',
-            emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',
-            name: 'Nombre',
-            text: 'Texto',
-            description: 'Descripción',
-            outOfScope: 'Fuera del contexto',
-            reasonOutOfScope: 'Por razón de estar fuera de contexto',
-            privilegeLevel: 'Nivel de Privilégio',
-            isALog: 'Es un Log',
-            storesCredentials: 'Almacienamiento de Credenciales',
-            isEncrypted: 'Cifrado',
-            isSigned: 'Firmado',
-            providesAuthentication: 'Proporcionar de Autenticación',
-            protocol: 'Protocolo',
-            publicNetwork: 'Red Pública'
+            title: 'Properties',
+            emptyState: 'Select an element on the graph to edit',
+            name: 'Name',
+            text: 'Text',
+            description: 'Description',
+            outOfScope: 'Out of Scope',
+            reasonOutOfScope: 'Reason for out of scope',
+            privilegeLevel: 'Privilege Level',
+            isALog: 'Is a Log',
+            storesCredentials: 'Stores Credentials',
+            isEncrypted: 'Encrypted',
+            isSigned: 'Signed',
+            providesAuthentication: 'Provides Authentication',
+            protocol: 'Protocol',
+            publicNetwork: 'Public Network'
         },
         buttons: {
             delete: 'Delete selected',
@@ -133,76 +133,76 @@ const es = {
             zoomOut: 'Zoom out'
         },
         shortcuts: {
-            title: 'Atajos',
+            title: 'Shortcuts',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Pegar'
+                action: 'Copy'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Pegar'
+                action: 'Paste'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Deshacer'
+                action: 'Undo'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Rehacer'
+                action: 'Redo'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Eliminaer'
+                action: 'Delete'
             },
             pan: {
-                shortcut: 'shift + botón izquierdo del ratón (mantener y arrastrar)',
-                action: 'Moverse por toda la imagen del diagrama'
+                shortcut: 'shift + left-click (hold/drag)',
+                action: 'Pan'
             },
             multiSelect: {
-                shortcut: 'hacer clic en el botón izquierdo del ratón en el espacio vacio y arrastrar',
-                action: 'Selección múltipla'
+                shortcut: 'left-click on empty space and drag',
+                action: 'Multi-select'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + desplazamiento del ratón',
+                shortcut: '(ctrl/cmd) + mousewheel',
                 action: 'Zoom'
             }
         },
         stencil: {
-            boundaries: 'Límites',
+            boundaries: 'Boundaries',
             components: 'Components',
-            entities: 'Entidades',
-            metadata: 'Metadados',
-            search: 'Buscar',
-            notFound: 'Todavia no tenemos esto. :( Pero, te gustaría abrir una issue? :)'
+            entities: 'Entities',
+            metadata: 'Metadata',
+            search: 'Search',
+            notFound: 'We don\'t have that yet, want to open an issue? :)'
         },
         shapes: {
             actor: 'Actor',
-            flow: 'Flujo de Dados',
-            flowStencil: 'Flujo de Dados',
-            process: 'Proceso',
-            store: 'Almacenameinto',
-            text: 'Texto opcional',
-            trustBoundary: 'Límite de Confianza'
+            flow: 'Data Flow',
+            flowStencil: 'Data Flow',
+            process: 'Process',
+            store: 'Store',
+            text: 'Descriptive text',
+            trustBoundary: 'Trust Boundary'
         }
     },
     forms: {
         apply: 'Apply',
-        cancel: 'Cancelar',
-        close: 'Cerrar',
+        cancel: 'Cancel',
+        close: 'Close',
         closeModel: 'Close Model',
-        delete: 'Eliminar',
+        delete: 'Delete',
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Editar',
+        edit: 'Edit',
         import: 'Import',
         ok: 'OK',
         open: 'Open',
         openModel: 'Open Model',
         print: 'Print',
-        reload: 'Recargar',
-        remove: 'Eliminar',
-        report: 'Reporte',
-        save: 'Salvar',
+        reload: 'Reload',
+        remove: 'Remove',
+        report: 'Report',
+        save: 'Save',
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
@@ -306,4 +306,4 @@ const es = {
     }
 };
 
-export default es;
+export default de;

@@ -5,8 +5,12 @@ import el from './el.js';
 import en from './en.js';
 import es from './es.js';
 import cn from './cn.js';
+import de from './de.js';
 import fr from './fr.js';
+import hi from './hi.js';
 import pt from './pt.js';
+import ru from './ru.js';
+import zh from './cn.js';
 
 Vue.use(VueI18n);
 
@@ -21,8 +25,12 @@ const get = () => {
                 en,
                 es,
                 cn,
+                de,
                 fr,
-                pt
+                hi,
+                pt,
+                ru,
+                zh
             }
         });
     }
