@@ -62,7 +62,9 @@ export const createNewTypedThreat = function(modelType, cellType) {
         description: tc('threats.description'),
         mitigation: tc('threats.mitigation'),
         modelType: modelType,
-        new: true
+        new: true,
+        number: 0,
+        score: 0
     };
 };
 

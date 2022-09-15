@@ -18,6 +18,8 @@ describe('components/ThreatEditModal.vue', () => {
         mitigation: 'we will mitigate it eventually',
         modelType: 'CIA',
         new: false,
+        number: 0,
+        score: 0,
         id: threatId
     });
 

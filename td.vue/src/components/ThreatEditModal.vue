@@ -192,7 +192,9 @@ export default {
                 'LINDDUN',
                 'STRIDE'
             ],
-            newThreat: true
+            newThreat: true,
+            number: 0,
+            score: 0
         };
     },
     methods: {
@@ -205,6 +207,11 @@ export default {
                 this.$refs.editModal.show();
             }
             this.newThreat = this.threat.new;
+            if (this.threat.new) {
+                // temp debug
+                console.log('need to increment global for new threat number from: ' + this.threat.number);
+                this.number = this.threat.number + 1;
+            }
         },
         updateThreat() {
             const threatRef = this.threat;
@@ -218,7 +225,12 @@ export default {
                 threatRef.mitigation = this.threat.mitigation;
                 threatRef.modelType = this.threat.modelType;
                 threatRef.new = false;
-                
+                threatRef.number = this.number;
+                threatRef.score = this.score;
+                // temp debug
+                console.log('this.number: ' + this.number);
+                console.log('this.score: ' + this.score);
+
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }

@@ -343,6 +343,11 @@
                                 "type": "integer",
                                 "minimum": 0
                               },
+                              "score": {
+                                "description": "The custom score/risk for the threat",
+                                "type": "integer",
+                                "minimum": 0
+                              },
                               "severity": {
                                 "description": "The threat severity as High, Medium or Low",
                                 "type": "string"
