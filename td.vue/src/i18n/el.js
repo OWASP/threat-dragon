@@ -258,7 +258,7 @@ const el = {
             modelType: 'Τύπος Μοντέλου',
             number: 'Number',
             priority: 'Προτεραιότητα',
-            score: "Score",
+            score: 'Score',
             status: 'Κατάσταση',
             title: 'Τίτλος',
             type: 'Τύπος'

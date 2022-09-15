@@ -258,7 +258,7 @@ const ru = {
             modelType: 'Model Type',
             number: 'Number',
             priority: 'Priority',
-            score: "Score",
+            score: 'Score',
             status: 'Status',
             title: 'Title',
             type: 'Type'

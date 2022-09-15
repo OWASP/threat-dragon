@@ -258,7 +258,7 @@ const cn = {
             modelType: '模型类型',
             number: 'Number',
             priority: '优先级',
-            score: "Score",
+            score: 'Score',
             status: '状态',
             title: '标题',
             type: '类型'
