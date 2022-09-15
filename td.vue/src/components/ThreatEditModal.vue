@@ -43,7 +43,7 @@
                 </b-form-row>
 
                 <b-form-row>
-                    <b-col md=6>
+                    <b-col md=5>
                         <b-form-group
                             id="status-group"
                             class="float-left"
@@ -58,7 +58,20 @@
                         </b-form-group>
                     </b-col>
 
-                    <b-col md=6>
+                    <b-col md=2>
+                        <b-form-group
+                            id="score-group"
+                            :label="$t('threats.properties.score')"
+                            label-for="score">
+                            <b-form-input
+                                id="score"
+                                v-model="threat.score"
+                                type="text"
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md=5>
                         <b-form-group
                             id="priority-group"
                             class="float-right"
@@ -193,8 +206,7 @@ export default {
                 'STRIDE'
             ],
             newThreat: true,
-            number: 0,
-            score: 0
+            number: 0
         };
     },
     methods: {
@@ -226,10 +238,10 @@ export default {
                 threatRef.modelType = this.threat.modelType;
                 threatRef.new = false;
                 threatRef.number = this.number;
-                threatRef.score = this.score;
+                threatRef.score = this.threat.score;
                 // temp debug
                 console.log('this.number: ' + this.number);
-                console.log('this.score: ' + this.score);
+                console.log('this.threat.score: ' + this.threat.score);
 
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);

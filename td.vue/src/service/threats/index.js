@@ -64,7 +64,7 @@ export const createNewTypedThreat = function(modelType, cellType) {
         modelType: modelType,
         new: true,
         number: 0,
-        score: 0
+        score: ''
     };
 };
 
