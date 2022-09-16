@@ -1114,7 +1114,8 @@
                 "id": 0
             }
         ],
-        "reviewer": "Jane Smith"
+        "reviewer": "Jane Smith",
+        "threatTop": 50
     },
     "version": "2.0"
 }
