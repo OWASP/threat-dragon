@@ -136,7 +136,9 @@ const mutations = {
         Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
     },
     [THREATMODEL_UPDATE]: (state, update) => {
-        Vue.set(state.data, 'version', update.version);
+	    if (update.version) {
+            Vue.set(state.data, 'version', update.version);
+        }
     }
 };
 

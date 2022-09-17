@@ -7,7 +7,7 @@
             ok-variant="primary"
             header-bg-variant="primary"
             header-text-variant="light"
-            :title="$t('threats.edit')"
+            :title="modalTitle"
             ref="editModal"
         >
             <b-form>
@@ -163,6 +163,7 @@ import { mapState } from 'vuex';
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
+import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'TdThreatEditModal',
@@ -195,7 +196,8 @@ export default {
                 { value: 'Medium', text: this.$t('threats.priority.medium') },
                 { value: 'High', text: this.$t('threats.priority.high') }
             ];
-        }
+        },
+        modalTitle() { return tc('threats.edit') + ' #' + this.number; }
     },
     data() {
         return {
@@ -206,6 +208,7 @@ export default {
                 'STRIDE'
             ],
             newThreat: true,
+            threatTop: 42,
             number: 0
         };
     },
@@ -219,10 +222,15 @@ export default {
                 this.$refs.editModal.show();
             }
             this.newThreat = this.threat.new;
+
             if (this.threat.new) {
-                // temp debug
-                console.log('need to increment global for new threat number from: ' + this.threat.number);
-                this.number = this.threat.number + 1;
+                // provide a threat number that is  unique project wide
+                console.warn('need to increment from global threat number: ' + this.threatTop);
+                if (this.threatTop) {
+                    this.number = this.threatTop + 1;
+                } else {
+                    this.number = 1;
+                }
             }
         },
         updateThreat() {
@@ -239,13 +247,11 @@ export default {
                 threatRef.new = false;
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
-                // temp debug
-                console.log('this.number: ' + this.number);
-                console.log('this.threat.score: ' + this.threat.score);
 
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
+            console.warn('need to store global threat number: this.threatTop with this.number: ' + this.number);
             this.hideModal();
         },
         deleteThreat() {
