@@ -54,14 +54,15 @@ describe('store/modules/cell.js', () => {
             });
         });
 
-        describe.skip('selected with threats', () => {
+        describe('selected with threats', () => {
 
             beforeEach(() => {
                 cell.data.threats = [{ one: 'two' }];
                 cellModule.mutations[CELL_SELECTED](cellModule.state, cell);
             });
 
-            it('sets the threats', () => {
+            // TODO skip test because it stumbles over Vue.set
+            it.skip('sets the threats', () => {
                 expect(cellModule.state.threats).toEqual([{ one: 'two' }]);
             });
         });
@@ -77,7 +78,7 @@ describe('store/modules/cell.js', () => {
             });
         });
 
-        describe.skip('data updated with threats', () => {
+        describe('data updated with threats', () => {
             const newThreats = [{ name: 'one' }, { name: 'two' }];
             
             beforeEach(() => {
@@ -86,11 +87,13 @@ describe('store/modules/cell.js', () => {
                 cellModule.mutations[CELL_DATA_UPDATED](cellModule.state, { threats: newThreats });
             });
 
-            it('updates the data object', () => {
+            // TODO skip test because it stumbles over Vue.set
+            it.skip('updates the data object', () => {
                 expect(cellModule.state.ref.setData).toHaveBeenCalledWith({ threats: newThreats });
             });
 
-            it('updates the threats', () => {
+            // TODO skip test because it stumbles over Vue.set
+            it.skip('updates the threats', () => {
                 expect(cellModule.state.threats).toEqual(newThreats);
             });
         });

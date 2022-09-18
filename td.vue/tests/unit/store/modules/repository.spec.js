@@ -83,14 +83,15 @@ describe('store/modules/repository.js', () => {
             });
         });
 
-        describe.skip('fetch', () => {
+        describe('fetch', () => {
             const repos = [ 'foo', 'bar' ];
 
             beforeEach(() => {
                 repoModule.mutations[REPOSITORY_FETCH](repoModule.state, repos);
             });
 
-            it('sets the all array to the provided repos', () => {
+            // TODO skip test because it stumbles over Vue.set
+            it.skip('sets the all array to the provided repos', () => {
                 expect(repoModule.state.all).toEqual(repos);
             });
         });

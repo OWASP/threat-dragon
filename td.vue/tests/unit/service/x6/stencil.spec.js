@@ -52,7 +52,7 @@ describe('service/x6/stencil.js', () => {
         });
     });
 
-    // skip this test until the search function is back in
+    // TODO skip this test until the search function is back in, issues #194 and #454
     describe.skip('search', () => {
         it('returns true for a matching shape regardless of case', () => {
             expect(cfg.search({ shape: 'MYSHAPE' }, 'mys')).toEqual(true);

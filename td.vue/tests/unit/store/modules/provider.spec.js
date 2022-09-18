@@ -84,14 +84,15 @@ describe('store/modules/provider.js', () => {
             });
         });
 
-        describe.skip('fetch', () => {
+        describe('fetch', () => {
             const providerNames = Object.keys(providerService.providerNames);
 
             beforeEach(() => {
                 providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
             });
 
-            it('sets the all array to the provided providers', () => {
+            // TODO skip test because it stumbles over Vue.set
+            it.skip('sets the all array to the provided providers', () => {
                 expect(providerModule.state.all).toEqual(providerNames);
             });
         });
