@@ -8,6 +8,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>{{ $t('threats.properties.number') }}</th>
                     <th>{{ $t('threats.properties.title') }}</th>
                     <th>{{ $t('threats.properties.priority') }}</th>
                     <th>{{ $t('threats.properties.status') }}</th>
@@ -20,6 +21,7 @@
                     v-for="(threat, idx) in threats"
                     :key="idx"
                 >
+                    <td>{{ threat.number }}</td>
                     <td>{{ threat.title }}</td>
                     <td>{{ threat.severity }}</td>
                     <td>{{ threat.status }}</td>
