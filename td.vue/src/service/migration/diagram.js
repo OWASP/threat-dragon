@@ -31,7 +31,6 @@ const upgradeAndDraw = (diagram, graph) => {
         return;
     }
 
-    console.log('Updating the 1.x threat model diagram: =' + diagram.title + '= to latest version');
     drawV1(diagram, graph);
     const updated = graph.toJSON();
     updated.version = buildVersion;

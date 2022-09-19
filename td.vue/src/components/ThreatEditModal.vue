@@ -7,7 +7,7 @@
             ok-variant="primary"
             header-bg-variant="primary"
             header-text-variant="light"
-            :title="$t('threats.edit')"
+            :title="modalTitle"
             ref="editModal"
         >
             <b-form>
@@ -43,7 +43,7 @@
                 </b-form-row>
 
                 <b-form-row>
-                    <b-col md=6>
+                    <b-col md=5>
                         <b-form-group
                             id="status-group"
                             class="float-left"
@@ -58,7 +58,20 @@
                         </b-form-group>
                     </b-col>
 
-                    <b-col md=6>
+                    <b-col md=2>
+                        <b-form-group
+                            id="score-group"
+                            :label="$t('threats.properties.score')"
+                            label-for="score">
+                            <b-form-input
+                                id="score"
+                                v-model="threat.score"
+                                type="text"
+                            ></b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md=5>
                         <b-form-group
                             id="priority-group"
                             class="float-right"
@@ -148,14 +161,17 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
+import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'TdThreatEditModal',
     computed: {
         ...mapState({
-            cellRef: (state) => state.cell.ref
+            cellRef: (state) => state.cell.ref,
+            threatTop: (state) => state.threatmodel.data.detail.threatTop
         }),
         threatTypes() {
             if (!this.threat || !this.threat.modelType) {
@@ -182,7 +198,8 @@ export default {
                 { value: 'Medium', text: this.$t('threats.priority.medium') },
                 { value: 'High', text: this.$t('threats.priority.high') }
             ];
-        }
+        },
+        modalTitle() { return tc('threats.edit') + ' #' + this.number; }
     },
     data() {
         return {
@@ -192,7 +209,8 @@ export default {
                 'LINDDUN',
                 'STRIDE'
             ],
-            newThreat: true
+            newThreat: true,
+            number: 0
         };
     },
     methods: {
@@ -205,6 +223,15 @@ export default {
                 this.$refs.editModal.show();
             }
             this.newThreat = this.threat.new;
+
+            if (this.threat.new) {
+                // provide a threat number that is unique project wide
+                if (this.threatTop) {
+                    this.number = this.threatTop + 1;
+                } else {
+                    this.number = 1;
+                }
+            }
         },
         updateThreat() {
             const threatRef = this.threat;
@@ -218,10 +245,13 @@ export default {
                 threatRef.mitigation = this.threat.mitigation;
                 threatRef.modelType = this.threat.modelType;
                 threatRef.new = false;
-                
+                threatRef.number = this.number;
+                threatRef.score = this.threat.score;
+
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
+            this.$store.dispatch(THREATMODEL_UPDATE, { threatTop: this.number });
             this.hideModal();
         },
         deleteThreat() {

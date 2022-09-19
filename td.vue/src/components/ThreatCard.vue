@@ -3,7 +3,7 @@
         <b-card-text>
             <b-row>
                 <b-col>
-                    <a href="javascript:void(0)" @click="threatSelected()">{{ title || 'Unknown Threat' }}</a>
+                    <a href="javascript:void(0)" @click="threatSelected()">#{{ number }} {{ title || 'Unknown Threat' }}</a>
                 </b-col>
             </b-row>
             <b-row>
@@ -85,7 +85,8 @@ export default {
         title: { type: String },
         type: { type: String },
         mitigation: { type: String },
-        modelType: { type: String }
+        modelType: { type: String },
+        number: { type: Number }
     },
     methods: {
         threatSelected() {

@@ -84,7 +84,8 @@ export default {
                 detail: {
                     contributors: [],
                     diagrams: [],
-                    reviewer: ''
+                    reviewer: '',
+                    threatTop: 0
                 }
             };
             this.$store.dispatch(threatmodelActions.create, newTm);

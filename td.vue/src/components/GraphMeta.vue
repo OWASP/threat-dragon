@@ -41,6 +41,7 @@
                                     :type="threat.type"
                                     :mitigation="threat.mitigation"
                                     :modelType="threat.modelType"
+                                    :number=threat.number
                                     @threatSelected="threatSelected" />
                             </b-col>
                         </b-row>

@@ -258,7 +258,7 @@ const fr = {
             modelType: 'Type de modèle',
             number: 'Number',
             priority: 'Priorité',
-            score: "Score",
+            score: 'Score',
             status: 'Status',
             title: 'Titre',
             type: 'Type'

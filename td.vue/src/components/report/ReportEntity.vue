@@ -64,6 +64,7 @@ export default {
                 showMitigated: this.showMitigated
             }).map((threat) => {
                 return {
+                    [this.$t('threats.properties.number')]: threat.number,
                     [this.$t('threats.properties.title')]: threat.title,
                     [this.$t('threats.properties.priority')]: threat.severity,
                     [this.$t('threats.properties.status')]: threat.status,

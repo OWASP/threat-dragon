@@ -1114,7 +1114,8 @@ export default {
                 'id': 0
             }
         ],
-        'reviewer': 'Jane Smith'
+        'reviewer': 'Jane Smith',
+        'threatTop': 0
     },
     'version': '2.0'
 };

@@ -16,6 +16,7 @@ describe('components/ThreatCard.vue', () => {
         type: 'Information Disclosure',
         mitigation: 'we will mitigate it eventually',
         modelType: 'CIA',
+        number: 42,
         id: 'asdf-asdf-asdf-asdf'
     });
 
@@ -140,7 +141,7 @@ describe('components/ThreatCard.vue', () => {
         });
 
         it('has a link for the threat title', () => {
-            expect(wrapper.find('a').text()).toEqual(propsData.title);
+            expect(wrapper.find('a').text()).toEqual('#42 My terrifying threat');
         });
 
         it('displays the type', () => {
