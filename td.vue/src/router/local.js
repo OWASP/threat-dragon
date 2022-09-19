@@ -36,7 +36,7 @@ export const localRoutes = [
     {
         path: `/${providerType}/threatmodel/open`,
         name: `${providerType}ThreatModelOpen`,
-        component: () => import(/* webpackChunkName: "threatmodel-import" */ '../views/OpenModel.vue')
+        component: () => import(/* webpackChunkName: "threatmodel-open" */ '../views/OpenModel.vue')
     },
     {
         path: `/${providerType}/:threatmodel/report`,

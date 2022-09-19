@@ -14,8 +14,8 @@ describe('service/local.provider.js', () => {
                 expect(action.to).toEqual('/local/threatmodel/open');
             });
 
-            it('uses the folder-open icon', () => {
-                expect(action.icon).toEqual('file-import');
+            it('uses the save icon', () => {
+                expect(action.icon).toEqual('save');
             });
         });
 

@@ -6,7 +6,7 @@ const getDashboardActions = () => ([
     {
         to: `/${providerType}/threatmodel/open`,
         key: 'openExisting',
-        icon: 'file-import'
+        icon: 'save'
     },
     {
         to: `/${providerType}/threatmodel/import`,
