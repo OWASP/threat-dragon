@@ -139,6 +139,9 @@ const mutations = {
 	    if (update.version) {
             Vue.set(state.data, 'version', update.version);
         }
+	    if (update.threatTop) {
+            Vue.set(state.data.detail, 'threatTop', update.threatTop);
+        }
     }
 };
 

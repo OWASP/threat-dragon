@@ -141,7 +141,7 @@ describe('components/ThreatCard.vue', () => {
         });
 
         it('has a link for the threat title', () => {
-            expect(wrapper.find('a').text()).toEqual("#42 My terrifying threat");
+            expect(wrapper.find('a').text()).toEqual('#42 My terrifying threat');
         });
 
         it('displays the type', () => {

@@ -161,6 +161,7 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 import { tc } from '@/i18n/index.js';
@@ -169,7 +170,8 @@ export default {
     name: 'TdThreatEditModal',
     computed: {
         ...mapState({
-            cellRef: (state) => state.cell.ref
+            cellRef: (state) => state.cell.ref,
+            threatTop: (state) => state.threatmodel.data.detail.threatTop
         }),
         threatTypes() {
             if (!this.threat || !this.threat.modelType) {
@@ -208,7 +210,6 @@ export default {
                 'STRIDE'
             ],
             newThreat: true,
-            threatTop: 42,
             number: 0
         };
     },
@@ -224,8 +225,7 @@ export default {
             this.newThreat = this.threat.new;
 
             if (this.threat.new) {
-                // provide a threat number that is  unique project wide
-                console.warn('need to increment from global threat number: ' + this.threatTop);
+                // provide a threat number that is unique project wide
                 if (this.threatTop) {
                     this.number = this.threatTop + 1;
                 } else {
@@ -251,7 +251,7 @@ export default {
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
-            console.warn('need to store global threat number: this.threatTop with this.number: ' + this.number);
+            this.$store.dispatch(THREATMODEL_UPDATE, { threatTop: this.number });
             this.hideModal();
         },
         deleteThreat() {
