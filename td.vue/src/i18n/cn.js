@@ -103,9 +103,11 @@ const cn = {
         },
         threats: '威胁',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: '特性',
             emptyState: '在图表上选择要编辑的元素',

@@ -103,9 +103,11 @@ const es = {
         },
         threats: 'Threats',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',

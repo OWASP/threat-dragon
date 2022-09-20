@@ -14,21 +14,7 @@ export const menuTemplate = [
             {
                 label: tc('desktop.file.open'),
                 click() {
-                    // Open file system dialog
-                    dialog.showOpenDialog({
-                        title: tc('desktop.file.open'),
-                        properties: ['openFile'],
-                        filters: [
-                            { name: 'Threat Models', extensions: ['json'] },
-                            { name: 'All Files', extensions: ['*'] }
-                        ]
-                    }).then(result => {
-                        if (result.canceled === false) {
-                            console.log(result.filePaths);
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                    });
+                    openThreatModel();
                 }
             },
             {
@@ -40,35 +26,19 @@ export const menuTemplate = [
             {
                 label: tc('desktop.file.save'),
                 click() {
-                    // Save file system dialog
-                    dialog.showErrorBox( 'Not yet implemented', 'Save model file TBD' );
+                    saveThreatModel();
                 }
             },
             {
                 label: tc('desktop.file.saveAs'),
                 click() {
-                    // SaveAs file system dialog
-                    dialog.showSaveDialog({
-                        title: tc('desktop.file.saveAs'),
-                        properties: ['showHiddenFiles'],
-                        filters: [
-                            { name: 'Threat Models', extensions: ['json'] },
-                            { name: 'All Files', extensions: ['*'] }
-                        ]
-                    }).then(result => {
-                        if (result.canceled === false) {
-                            console.log(result.filePath);
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                    });
+                    saveAsThreatModel();
                 }
             },
             {
                 label: tc('desktop.file.close'),
                 click() {
-                    // Close file system dialog
-                    dialog.showErrorBox( 'Not yet implemented', 'Close model file TBD' );
+                    closeThreatModel();
                 }
             },
             { type: 'separator' },
@@ -123,6 +93,54 @@ export const menuTemplate = [
         ]
     }
 ];
+
+// close the model using modal dialog if changed
+function closeThreatModel() {
+    // Close threat model, if changed then show Save? modal dialog
+    dialog.showErrorBox( 'Not yet implemented', 'Close model file TBD' );
+}
+
+// Open file system dialog
+function openThreatModel() {
+    dialog.showOpenDialog({
+        title: tc('desktop.file.open'),
+        properties: ['openFile'],
+        filters: [
+            { name: 'Threat Model', extensions: ['json'] },
+            { name: 'All Files', extensions: ['*'] }
+        ]
+    }).then(result => {
+        if (result.canceled === false) {
+            console.log(tc('threatmodel.opened') + ': ' + result.filePath);
+        }
+    }).catch(err => {
+        console.warn(tc('threatmodel.errors.open') + ': ' + err);
+    });
+}
+
+// save the model catching errors
+function saveThreatModel() {
+    // if threat model exists, save to file system without dialog
+    dialog.showErrorBox( 'Not yet implemented', 'Save model file TBD' );
+}
+
+// SaveAs file system dialog
+function saveAsThreatModel() {
+    dialog.showSaveDialog({
+        title: tc('desktop.file.saveAs'),
+        properties: ['showHiddenFiles'],
+        filters: [
+            { name: 'Threat Model', extensions: ['json'] },
+            { name: 'All Files', extensions: ['*'] }
+        ]
+    }).then(result => {
+        if (result.canceled === false) {
+            console.log(tc('threatmodel.saved') + ': ' + result.filePath);
+        }
+    }).catch(err => {
+        console.warn(tc('threatmodel.errors.save') + ': ' + err);
+    });
+}
 
 export default {
     menuTemplate
