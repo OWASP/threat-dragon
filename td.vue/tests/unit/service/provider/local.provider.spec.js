@@ -15,7 +15,7 @@ describe('service/local.provider.js', () => {
             });
 
             it('uses the save icon', () => {
-                expect(action.icon).toEqual('save');
+                expect(action.icon).toEqual('folder-open');
             });
         });
 

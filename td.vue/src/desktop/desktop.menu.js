@@ -118,7 +118,7 @@ function openThreatModel() {
     });
 }
 
-// save the model catching errors
+// save the model catching any errors
 function saveThreatModel() {
     // if threat model exists, save to file system without dialog
     dialog.showErrorBox( 'Not yet implemented', 'Save model file TBD' );
