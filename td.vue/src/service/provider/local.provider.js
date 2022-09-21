@@ -4,11 +4,6 @@ const providerType = providerTypes.local;
 
 const getDashboardActions = () => ([
     {
-        to: `/${providerType}/threatmodel/open`,
-        key: 'openExisting',
-        icon: 'folder-open'
-    },
-    {
         to: `/${providerType}/threatmodel/import`,
         key: 'import',
         icon: 'file-import'

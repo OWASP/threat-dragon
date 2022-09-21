@@ -3,22 +3,6 @@ import local from '@/service/provider/local.provider.js';
 describe('service/local.provider.js', () => {
     describe('getDashboardActions', () => {
 
-        describe('open existing', () => {
-            let action;
-
-            beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.key === 'openExisting');
-            });
-
-            it('links to the open page', () => {
-                expect(action.to).toEqual('/local/threatmodel/open');
-            });
-
-            it('uses the save icon', () => {
-                expect(action.icon).toEqual('folder-open');
-            });
-        });
-
         describe('import', () => {
             let action;
 

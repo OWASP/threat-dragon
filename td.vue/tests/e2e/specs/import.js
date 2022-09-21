@@ -17,11 +17,7 @@ describe('import', () => {
         });
 
         it('has the title', () => {
-            cy.contains('Import a threat model via JSON');
-        });
-
-        it('tells the user to paste the json', () => {
-            cy.contains('Paste the JSON of your threat model here');
+            cy.contains('Open / Import a threat model via JSON');
         });
 
         it('allows a user to manually enter the model JSON', () => {
