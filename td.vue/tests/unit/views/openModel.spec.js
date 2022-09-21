@@ -35,7 +35,7 @@ describe('OpenModel.vue', () => {
     });
 
     it('shows the jumbotron text', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toEqual('dashboard.actions.import');
+        expect(wrapper.findComponent(BJumbotron).text()).toEqual('forms.open / dashboard.actions.import');
     });
 
     it('has the textarea input', () => {

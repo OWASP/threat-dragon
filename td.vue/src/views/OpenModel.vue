@@ -4,7 +4,7 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        {{ $t('dashboard.actions.import') }}
+                        {{ $t('forms.open') }} / {{ $t('dashboard.actions.import') }}
                     </h4>
                 </b-jumbotron>
             </b-col>
@@ -16,12 +16,11 @@
                         <b-col>
                             <b-form-group
                                 id="json-input-group"
-                                :label="$t('threatmodel.jsonPaste')"
                                 label-for="json-input">
                                 <b-form-textarea
                                     id="json-input"
                                     v-model="tmJson"
-                                    placeholder="{ ... }"
+                                    :placeholder="prompt"
                                     rows="16"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -31,7 +30,16 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=8 offset=2 class="text-right">
+            <b-col md=4 offset=2  class="text-left">
+                <b-btn-group>
+                    <td-form-button
+                        id="td-open-btn"
+                        :onBtnClick="onImportClick"
+                        icon="folder-open"
+                        :text="$t('forms.open')" />
+                </b-btn-group>
+            </b-col>
+            <b-col md=4 class="text-right">
                 <b-btn-group>
                     <td-form-button
                         id="td-import-btn"
@@ -57,9 +65,12 @@ export default {
     components: {
         TdFormButton
     },
-    computed: mapState({
-        providerType: state => getProviderType(state.provider.selected)
-    }),
+    computed: {
+        ...mapState({
+            providerType: state => getProviderType(state.provider.selected)
+        }),
+        prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
+    },
     data() {
         return {
             tmJson: ''

@@ -164,7 +164,6 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'TdThreatEditModal',
@@ -199,7 +198,7 @@ export default {
                 { value: 'High', text: this.$t('threats.priority.high') }
             ];
         },
-        modalTitle() { return tc('threats.edit') + ' #' + this.number; }
+        modalTitle() { return this.$t('threats.edit') + ' #' + this.number; }
     },
     data() {
         return {

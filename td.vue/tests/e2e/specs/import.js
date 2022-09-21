@@ -21,7 +21,7 @@ describe('import', () => {
         });
 
         it('tells the user to paste the json', () => {
-            cy.contains('Paste the JSON of your threat model here:');
+            cy.contains('Paste the JSON of your threat model here');
         });
 
         it('allows a user to manually enter the model JSON', () => {
