@@ -37,20 +37,20 @@ const el = {
     },
     desktop: {
         file: {
-            heading: 'File',
-            close: 'Close Model',
-            open: 'Open Model',
-            save: 'Save Model',
-            saveAs: 'Save Model As',
+            heading: 'Αρχείο',
+            close: 'Κλείσιμο Μοντέλου',
+            open: 'Άνοιγμα Μοντέλου',
+            save: 'Αποθήκευση Μοντέλου',
+            saveAs: 'Αποθήκευση Μοντέλου ως',
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
+            heading: 'Βοήθεια',
+            docs: 'Τεκμηρίωση',
+            visit: 'Επισκεφθείτε μας στον OWASP',
             sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            github: 'Επισκεφθείτε μας στο GitHub',
+            submit: 'Υποβάλετε ένα πρόβλημα',
+            check: 'Έλεγχος για ενημερώσεις ...'
         }
     },
     repository: {
@@ -85,27 +85,27 @@ const el = {
             diagrams: 'Διαγράμματα',
             addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
             generic: {
-                diagramTitle: 'New generic diagram',
+                diagramTitle: 'Νέο γενικό διάγραμμα',
                 select: `Generic`
             },
             stride: {
-                diagramTitle: 'New STRIDE diagram',
+                diagramTitle: 'Νέο διάγραμμα STRIDE',
                 select: `STRIDE`
             },
             linddun: {
-                diagramTitle: 'New LINDDUN diagram',
+                diagramTitle: 'Νέο διάγραμμα LINDDUN',
                 select: `LINDDUN`
             },
             cia: {
-                diagramTitle: 'New CIA diagram',
+                diagramTitle: 'Νέο διάγραμμα CIA',
                 select: `CIA`,
             }
         },
         threats: 'Απειλές',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        saved: 'Threat model successfully saved!',
+        saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς!',
         properties: {
             title: 'Ιδιότητες',
             emptyState: 'Επιλέξτε ένα στοιχείο στο διάγραμμα για να το επεξεργαστείτε',
@@ -124,7 +124,7 @@ const el = {
             publicNetwork: 'Δημόσιο Δίκτυο'
         },
         buttons: {
-            delete: 'Delete selected',
+            delete: 'Διαγραφή επιλεγμένων',
             redo: 'Επανάληψη',
             shortcuts: 'Συντομεύσεις Πληκτρολογίου',
             toggleGrid: 'Εναλλαγή Πλέγματος',
@@ -169,7 +169,7 @@ const el = {
         },
         stencil: {
             boundaries: 'Όρια',
-            components: 'Components',
+            components: 'Συστατικά',
             entities: 'Οντότητες',
             metadata: 'Μεταδεδομένα',
             search: 'Αναζήτηση',
@@ -186,27 +186,27 @@ const el = {
         }
     },
     forms: {
-        apply: 'Apply',
+        apply: 'Εφαρμογή',
         cancel: 'Ακύρωση',
         close: 'Κλείσιμο',
-        closeModel: 'Close Model',
+        closeModel: 'Κλείσιμο Μοντέλου',
         delete: 'Διαγραφή',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
+        discardTitle: 'Απόρριψη αλλαγών;',
+        discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
         edit: 'Επεξεργασία',
         import: 'Εισαγωγή',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
+        open: 'Άνοιγμα',
+        openModel: 'Άνοιγμα Μοντέλου',
+        print: 'ΕΚτύπωση',
         reload: 'Φόρτωση εκ νέου',
         remove: 'Αφαίρεση',
         report: 'Αναφορά',
         save: 'Αποθήκευση',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
+        saveAs: 'Αποθήκευση ως',
+        saveModel: 'Αποθήκευση Μοντέλου',
+        saveModelAs: 'Αποθήκευση Μοντέλου ως',
+        savePdf: 'Αποθήκευση PDF',
         search: 'Αναζήτηση'
     },
     threats: {
@@ -238,27 +238,27 @@ const el = {
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            linddun: 'New LINDDUN threat',
-            stride: 'New STRIDE threat'
+            default: 'Νέα γενική απειλή',
+            cia: 'Νέα απειλή CIA',
+            linddun: 'Νέα απειλή LINDDUN',
+            stride: 'Νέα απειλή STRIDE'
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',
         confirmDeleteMessage: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την απειλή;',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide mitigation or prevention for this threat',
+        description: 'Παρέχετε μια περιγραφή για αυτή την απειλή',
+        emptyThreat: 'Επιλέξτε ένα στοιχείο στο γράφημα για να προσθέσετε την απειλή',
+        mitigation: 'Παρέχετε μετριασμό ή πρόληψη για αυτή την απειλή',
         newThreat: 'Νέα Απειλή',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        newThreatByType: 'Νέα απειλή βάσει τύπου',
+        newThreatByContext: 'Νέα απειλή βάσει του γενικότερου πλαισίου (Context)',
         properties: {
             description: 'Περιγραφή',
             mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
             number: 'Number',
             priority: 'Προτεραιότητα',
-            score: 'Score',
+            score: 'Σκορ',
             status: 'Κατάσταση',
             title: 'Τίτλος',
             type: 'Τύπος'
@@ -276,35 +276,35 @@ const el = {
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
+            showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
+            showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
+            showBranding: 'Εμφάνιση λογότυπων Threat Dragon'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'Αναφορά μοντέλου απειλών για',
+        dateGenerated: 'Ημερομηνία δημιουργίας',
+        executiveSummary: 'Επιτελική Σύνοψη',
+        notProvided: 'Δεν παρασχέθη',
+        summary: 'Σύνοψη',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority',
+            total: 'Σύνολο απειλών',
+            mitigated: 'Σύνολο μετριασμένων',
+            notMitigated: 'Μη μετριασμένες',
+            openHigh: 'Ανοιχτές / Υψηλής Προτεραιότητας',
+            openMedium: 'Ανοιχτές / Μέτριας Προτεραιότητας',
+            openLow: 'Ανοιχτές / Χαμηλής Προτεραιότητας',
+            openUnknown: 'Ανοιχτές / Άγνωστης Προτεραιότητας',
         }
     },
     upgrade: {
         modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+            header: 'Ενημέρωση Μοντέλου Απειλών',
+            welcome: 'Καλώς ήρθατε στην 2η έκδοση του OWASP Threat Dragon!',
+            p1: 'Η 2η έκδοση χρησιμοποιεί μια διαφορετική βιβλιοθήκη σχεδίασης, η οποία θα αλλάξει τον τρόπο με τον οποίο μέρη των μοντέλων απειλών αποθηκεύονται. Ενώ τα περισσότερα διαγράμματα θα δείχνουν το ίδιο όπως στις προηγούμενες εκδόσεις του Threat Dragon, υπάρχουν περιπτώσεις κατά τις οποίες ενδέχεται να απαιτηθούν κάποιες τροποποιήσεις.',
+            p2: 'Μετά το κλείσιμο του μοντέλου, θα δείτε πως κάθε διάγραμμα στο μοντέλο απεικονίζεται στη μορφή της 2ης έκδοση. Παρακαλούμε όπως σημειώσετε τα διαγράμματα που τυχόν απαιτήσουν τροποποιήσεις. Αυτή είναι μία "εφάπαξ" αναβάθμιση, και δε θα χρειαστεί να δείτε ξανά αυτό το μήνυμα μετά την αποθήκευση του μοντέλου.'
         },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+        instructions: 'Τέλεια! Ας προχωρήσουμε στο μοντέλο σας.',
+        continue: 'Συνέχεια στο μοντέλο απειλών'
     }
 };
 
