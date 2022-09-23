@@ -34,7 +34,7 @@
                 <b-btn-group>
                     <td-form-button
                         id="td-open-btn"
-                        :onBtnClick="onImportClick"
+                        :onBtnClick="onOpenClick"
                         icon="folder-open"
                         :text="$t('forms.open')" />
                 </b-btn-group>
@@ -60,6 +60,14 @@ import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
+// only search for text files
+const openFileOptions = {
+    types: [
+        { description: 'Threat models', accept: { 'text/*': ['.json'] } }
+    ],
+    multiple: false
+};
+
 export default {
     name: 'ImportModel',
     components: {
@@ -77,6 +85,9 @@ export default {
         };
     },
     methods: {
+        invalidJSONError() {
+            this.$toast.error(this.$t('threatmodel.invalidJson'));
+        },
         onImportClick() {
             let jsonModel;
             try {
@@ -92,10 +103,19 @@ export default {
             });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
-        invalidJSONError() {
-            this.$toast.error(this.$t('threatmodel.invalidJson'));
+        async onOpenClick() {
+            try {
+                // returns an array of file handles
+                const [handle] = await window.showOpenFilePicker(openFileOptions);
+                let file = await handle.getFile();
+                this.tmJson = await file.text();
+                // store the file handle for any future save
+            } catch (err) {
+                console.warn(this.$t('threatmodel.errors.open') + ': ' + err.message);
+            }
         }
     }
+
 };
 
 </script>
