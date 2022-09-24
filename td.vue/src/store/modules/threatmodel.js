@@ -82,10 +82,6 @@ const actions = {
     },
     [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
         try {
-            // TODO: This ONLY works if the backend provider is GitHub
-            // We need a separate code flow for localSession
-            // localSession needs to handle both a "download" type feature as well as saving to disk in electron
-
             if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
@@ -93,10 +89,11 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
+                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             } else {
+                console.log('save without an existing fileHandle');
                 save.local(state.data, `${state.data.summary.title}.json`);
             }
-            Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
             console.error('Failed to update threat model!');
@@ -141,6 +138,9 @@ const mutations = {
         }
 	    if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);
+        }
+	    if (update.fileHandle) {
+            Vue.set(state, 'fileHandle', update.fileHandle);
         }
     }
 };

@@ -24,14 +24,14 @@ export const localRoutes = [
         component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/DiagramEdit.vue')
     },
     {
-        path: `/${providerType}/threatmodel/new`,
-        name: `${providerType}NewThreatModel`,
-        component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
-    },
-    {
         path: `/${providerType}/threatmodel/import`,
         name: `${providerType}ThreatModelImport`,
         component: () => import(/* webpackChunkName: "threatmodel-import" */ '../views/ImportModel.vue')
+    },
+    {
+        path: `/${providerType}/threatmodel/new`,
+        name: `${providerType}NewThreatModel`,
+        component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
     },
     {
         path: `/${providerType}/:threatmodel/report`,

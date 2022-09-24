@@ -27,6 +27,7 @@ import {
     faExclamationTriangle,
     faCircle,
     faFilePdf,
+    faFolderOpen,
     faPrint,
     faProjectDiagram
 } from '@fortawesome/free-solid-svg-icons';
@@ -60,6 +61,7 @@ library.add(
     faExclamationTriangle,
     faCircle,
     faFilePdf,
+    faFolderOpen,
     faPrint,
     faProjectDiagram
 );

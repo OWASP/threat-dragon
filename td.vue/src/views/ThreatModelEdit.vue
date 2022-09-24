@@ -178,7 +178,6 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
-import { tc } from '@/i18n/index.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -223,7 +222,7 @@ export default {
             evt.preventDefault();
             let newDiagram = {
                 name: '',
-                title: tc('threatmodel.diagram.stride.diagramTitle'),
+                title: this.$t('threatmodel.diagram.stride.diagramTitle'),
                 diagramType: 'STRIDE',
                 thumbnail: './public/content/images/thumbnail.stride.jpg',
                 version: this.version
@@ -235,27 +234,28 @@ export default {
             switch (type) {
             case 'CIA':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
-                title = tc('threatmodel.diagram.cia.diagramTitle');
+                title = this.$t('threatmodel.diagram.cia.diagramTitle');
                 break;
             case 'LINDDUN':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
-                title = tc('threatmodel.diagram.linddun.diagramTitle');
+                title = this.$t('threatmodel.diagram.linddun.diagramTitle');
                 break;
             case 'STRIDE':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
-                title = tc('threatmodel.diagram.stride.diagramTitle');
+                title = this.$t('threatmodel.diagram.stride.diagramTitle');
                 break;
             default:
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.jpg';
-                title = tc('threatmodel.diagram.generic.diagramTitle');
-                type = tc('threatmodel.diagram.generic.select');
+                title = this.$t('threatmodel.diagram.generic.diagramTitle');
+                type = this.$t('threatmodel.diagram.generic.select');
                 break;
             }
             this.model.detail.diagrams[idx].diagramType = type;
-            if (this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.cia.diagramTitle')
-                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.linddun.diagramTitle')
-                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.stride.diagramTitle')
-                || this.model.detail.diagrams[idx].title === tc('threatmodel.diagram.generic.diagramTitle')
+            // if the diagram title is still generic, then change it to the new generic title
+            if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.diagramTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.diagramTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.diagramTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.diagramTitle')
             ) {
                 this.model.detail.diagrams[idx].title = title;
             }

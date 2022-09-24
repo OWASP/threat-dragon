@@ -75,9 +75,10 @@ const es = {
         contributors: 'Colaboradores',
         contributorsPlaceholder: 'Agregar un nuevo colaborador',
         description: 'Descripción de alto nível del sistema (high level system)',
+        dragAndDrop: 'Drag and drop or ',
         editing: 'Edición',
         invalidJson: 'Invalid JSON. Please check your model and try again.',
-        jsonPaste: 'Paste the JSON of your threat model here:',
+        jsonPaste: 'Paste the JSON of your threat model here',
         owner: 'Propietario',
         reviewer: 'Revisor',
         title: 'Título',
@@ -103,9 +104,11 @@ const es = {
         },
         threats: 'Threats',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',

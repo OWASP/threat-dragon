@@ -75,9 +75,10 @@ const en = {
         contributors: 'Contributors',
         contributorsPlaceholder: 'Start typing to add a contributor',
         description: 'High level system description',
+        dragAndDrop: 'Drag and drop or ',
         editing: 'Editing',
         invalidJson: 'Invalid JSON. Please check your model and try again.',
-        jsonPaste: 'Paste the JSON of your threat model here:',
+        jsonPaste: 'Paste the JSON of your threat model here',
         owner: 'Owner',
         reviewer: 'Reviewer',
         title: 'Title',
@@ -103,9 +104,11 @@ const en = {
         },
         threats: 'Threats',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: 'Properties',
             emptyState: 'Select an element on the graph to edit',

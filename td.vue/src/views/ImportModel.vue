@@ -4,7 +4,7 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        {{ $t('dashboard.actions.import') }}
+                        {{ $t('forms.open') }} / {{ $t('dashboard.actions.import') }}
                     </h4>
                 </b-jumbotron>
             </b-col>
@@ -16,12 +16,11 @@
                         <b-col>
                             <b-form-group
                                 id="json-input-group"
-                                :label="$t('threatmodel.jsonPaste')"
                                 label-for="json-input">
                                 <b-form-textarea
                                     id="json-input"
                                     v-model="tmJson"
-                                    placeholder="{ ... }"
+                                    :placeholder="prompt"
                                     rows="16"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -31,7 +30,16 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=8 offset=2 class="text-right">
+            <b-col md=4 offset=2  class="text-left">
+                <b-btn-group>
+                    <td-form-button
+                        id="td-open-btn"
+                        :onBtnClick="onOpenClick"
+                        icon="folder-open"
+                        :text="$t('forms.open')" />
+                </b-btn-group>
+            </b-col>
+            <b-col md=4 class="text-right">
                 <b-btn-group>
                     <td-form-button
                         id="td-import-btn"
@@ -51,21 +59,36 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+
+// only search for text files
+const pickerFileOptions = {
+    types: [
+        { description: 'Threat models', accept: { 'text/*': ['.json'] } }
+    ],
+    multiple: false
+};
 
 export default {
     name: 'ImportModel',
     components: {
         TdFormButton
     },
-    computed: mapState({
-        providerType: state => getProviderType(state.provider.selected)
-    }),
+    computed: {
+        ...mapState({
+            providerType: state => getProviderType(state.provider.selected)
+        }),
+        prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
+    },
     data() {
         return {
             tmJson: ''
         };
     },
     methods: {
+        invalidJSONError() {
+            this.$toast.error(this.$t('threatmodel.invalidJson'));
+        },
         onImportClick() {
             let jsonModel;
             try {
@@ -81,10 +104,25 @@ export default {
             });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
-        invalidJSONError() {
-            this.$toast.error(this.$t('threatmodel.invalidJson'));
+        async onOpenClick() {
+            if ('showOpenFilePicker' in window) {
+                // Chrome and Edge browsers
+                try {
+                    // returns an array of file handles
+                    const [handle] = await window.showOpenFilePicker(pickerFileOptions);
+                    let file = await handle.getFile();
+                    this.tmJson = await file.text();
+                    // store the file handle for any future save
+                    this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
+                } catch (err) {
+                    console.warn(this.$t('threatmodel.errors.open') + ': ' + err.message);
+                }
+            } else {
+                this.$toast.error('Opening files on this browser is not supported yet, working on it soon');
+            }
         }
     }
+
 };
 
 </script>

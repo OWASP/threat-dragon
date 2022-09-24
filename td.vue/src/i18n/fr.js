@@ -75,9 +75,10 @@ const fr = {
         contributors: 'Contributeurs',
         contributorsPlaceholder: 'Ajouter un nouveau contributeur',
         description: 'Description de haut niveau du système',
+        dragAndDrop: 'Drag and drop or ',
         editing: 'Modification',
-        jsonPaste: 'Collez le JSON de votre modèle de menace ici :',
         invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
+        jsonPaste: 'Collez le JSON de votre modèle de menace ici',
         owner: 'Auteur',
         reviewer: 'Réviseur',
         title: 'Titre',
@@ -103,9 +104,11 @@ const fr = {
         },
         threats: 'Menaces',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',

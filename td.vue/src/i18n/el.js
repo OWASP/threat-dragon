@@ -75,9 +75,10 @@ const el = {
         contributors: 'Συνεισφέροντες',
         contributorsPlaceholder: 'Προσθήκη ενός νέου συνεισφέροντος',
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
+        dragAndDrop: 'Drag and drop or ',
         editing: 'Υπό επεξεργασία',
         invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
-        jsonPaste: 'Κάντε επικόλληση (Paste) του JSON από το μοντέλο απειλών σας εδώ:',
+        jsonPaste: 'Κάντε επικόλληση (Paste) του JSON από το μοντέλο απειλών σας εδώ',
         owner: 'Ιδιοκτήτης',
         reviewer: 'Αξιολογητής',
         title: 'Τίτλος',
@@ -103,9 +104,11 @@ const el = {
         },
         threats: 'Απειλές',
         errors: {
+            open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς!',
+        opened: 'Threat model successfully opened',
+        saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
         properties: {
             title: 'Ιδιότητες',
             emptyState: 'Επιλέξτε ένα στοιχείο στο διάγραμμα για να το επεξεργαστείτε',

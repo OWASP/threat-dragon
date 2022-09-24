@@ -75,9 +75,10 @@ const cn = {
         contributors: '贡献者',
         contributorsPlaceholder: '添加新的贡献者',
         description: '高级系统描述',
+        dragAndDrop: 'Drag and drop or ',
         editing: '编辑',
         invalidJson: '无效的 JSON。请检查您的格式，然后重试。',
-        jsonPaste: '在此处粘贴威胁模型的 JSON：',
+        jsonPaste: '在此处粘贴威胁模型的 JSON',
         owner: '所有者',
         reviewer: '审稿人',
         title: '标题',
@@ -103,9 +104,11 @@ const cn = {
         },
         threats: '威胁',
         errors: {
-            save: 'Error saving Threat Model. Please check the developer console for more information'
+            open: 'Error opening this Threat Model. Check the developer console for more information',
+            save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        saved: 'Threat model successfully saved!',
+        opened: 'Threat model successfully opened',
+        saved: 'Threat model successfully saved',
         properties: {
             title: '特性',
             emptyState: '在图表上选择要编辑的元素',
