@@ -93,7 +93,6 @@ const actions = {
             } else {
                 console.log('save without an existing fileHandle');
                 save.local(state.data, `${state.data.summary.title}.json`);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             }
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
