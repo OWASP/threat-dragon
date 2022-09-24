@@ -89,10 +89,12 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
+                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             } else {
+                console.log('save without an existing fileHandle');
                 save.local(state.data, `${state.data.summary.title}.json`);
+                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             }
-            Vue.$toast.success(i18n.get().t('threatmodel.saved'));
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
             console.error('Failed to update threat model!');
@@ -137,6 +139,9 @@ const mutations = {
         }
 	    if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);
+        }
+	    if (update.fileHandle) {
+            Vue.set(state, 'fileHandle', update.fileHandle);
         }
     }
 };
