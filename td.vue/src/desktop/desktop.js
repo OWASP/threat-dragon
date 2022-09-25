@@ -17,10 +17,10 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-    { scheme: 'app', privileges: { secure: true, standard: true } },
+    { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
-async function createWindow() {
+async function createWindow () {
     // Create the browser window.
     const win = new BrowserWindow({
         width: 1400,
@@ -30,8 +30,8 @@ async function createWindow() {
             enableRemoteModule: !!process.env.IS_TEST,
 
             nodeIntegration: false,
-            contextIsolation: true,
-        },
+            contextIsolation: true
+        }
     });
 
     // set up electron-specific logging
@@ -72,8 +72,8 @@ app.on('activate', () => {
 app.on('ready', async () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 
+    // Install Vue Devtools
     if (isDevelopment && !process.env.IS_TEST) {
-        // Install Vue Devtools
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {

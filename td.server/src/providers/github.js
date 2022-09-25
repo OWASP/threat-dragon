@@ -43,7 +43,7 @@ const getOauthReturnUrl = (code) => {
  * @returns {String} jwt
  */
 const completeLoginAsync = async (code) => {
-    const url = `https://github.com/login/oauth/access_token`;
+    const url = 'https://github.com/login/oauth/access_token';
     const body = {
         client_id: env.get().config.GITHUB_CLIENT_ID,
         client_secret: env.get().config.GITHUB_CLIENT_SECRET,

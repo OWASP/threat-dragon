@@ -1,7 +1,7 @@
 ---
 layout: page
 title: API
-nav_order: 2
+nav_order: 1
 path: /api
 group: API
 ---

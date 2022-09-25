@@ -14,7 +14,7 @@ const el = {
     },
     providers: {
         github: {
-            displayName: 'GitHub',
+            displayName: 'GitHub'
         },
         local: {
             displayName: 'Τοπική Συνεδρία'
@@ -41,7 +41,7 @@ const el = {
             close: 'Κλείσιμο Μοντέλου',
             open: 'Άνοιγμα Μοντέλου',
             save: 'Αποθήκευση Μοντέλου',
-            saveAs: 'Αποθήκευση Μοντέλου ως',
+            saveAs: 'Αποθήκευση Μοντέλου ως'
         },
         help: {
             heading: 'Βοήθεια',
@@ -87,19 +87,19 @@ const el = {
             addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
             generic: {
                 diagramTitle: 'Νέο γενικό διάγραμμα',
-                select: `Generic`
+                select: 'Generic'
             },
             stride: {
                 diagramTitle: 'Νέο διάγραμμα STRIDE',
-                select: `STRIDE`
+                select: 'STRIDE'
             },
             linddun: {
                 diagramTitle: 'Νέο διάγραμμα LINDDUN',
-                select: `LINDDUN`
+                select: 'LINDDUN'
             },
             cia: {
                 diagramTitle: 'Νέο διάγραμμα CIA',
-                select: `CIA`,
+                select: 'CIA'
             }
         },
         threats: 'Απειλές',
@@ -296,7 +296,7 @@ const el = {
             openHigh: 'Ανοιχτές / Υψηλής Προτεραιότητας',
             openMedium: 'Ανοιχτές / Μέτριας Προτεραιότητας',
             openLow: 'Ανοιχτές / Χαμηλής Προτεραιότητας',
-            openUnknown: 'Ανοιχτές / Άγνωστης Προτεραιότητας',
+            openUnknown: 'Ανοιχτές / Άγνωστης Προτεραιότητας'
         }
     },
     upgrade: {

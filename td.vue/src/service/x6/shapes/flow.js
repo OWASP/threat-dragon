@@ -24,7 +24,7 @@ Flow.prototype.type = 'tm.Flow';
 Flow.prototype.updateStyle = function () {};
 
 Flow.prototype.setName = function (name) {
-    this.setLabels([ name ]);
+    this.setLabels([name]);
 };
 
 export default {

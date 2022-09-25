@@ -97,7 +97,7 @@ Specify this using environment variable `SERVER_API_PROTOCOL=http` in the dotenv
 ### Run the application
 
 When running on Windows, and during development, the front-end and back-end
-can be started separately in "watch" mode using commands : `pnpm run dev:server` and `pnpm run dev:vue`.
+can be started separately in "watch" mode using commands : `pnpm dev:server` and `pnpm dev:vue`.
 Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
 from the top directory using : `pnpm start`.
 

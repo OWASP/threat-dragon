@@ -12,7 +12,7 @@ const getStencil = (target) => ({
             name: 'components',
             title: tc('threatmodel.stencil.components'),
             collapsed: false,
-            collapsable: true,
+            collapsable: true
         },
         {
             name: 'boundaries',

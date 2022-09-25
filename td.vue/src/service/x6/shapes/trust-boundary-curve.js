@@ -38,7 +38,7 @@ TrustBoundaryCurve.prototype.updateStyle = function () {};
 // };
 
 TrustBoundaryCurve.prototype.setName = function (name) {
-    this.setLabels([ name ]);
+    this.setLabels([name]);
 };
 
 export default {

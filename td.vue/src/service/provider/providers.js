@@ -45,7 +45,7 @@ export const getDashboardActions = (providerKey) => {
         throw new Error(`Unknown provider: ${providerKey}`);
     }
 
-    if (!provider.provider || ! provider.provider.getDashboardActions()) {
+    if (!provider.provider || !provider.provider.getDashboardActions()) {
         throw new Error(`No dashboard actions configured for provider ${providerKey}`);
     }
 

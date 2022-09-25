@@ -14,7 +14,7 @@ const fr = {
     },
     providers: {
         github: {
-            displayName: 'GitHub',
+            displayName: 'GitHub'
         },
         local: {
             displayName: 'Session Locale'
@@ -41,7 +41,7 @@ const fr = {
             close: 'Fermer Projet',
             open: 'Ouvrir',
             save: 'Sauvegarder',
-            saveAs: 'Save As',
+            saveAs: 'Save As'
         },
         help: {
             heading: 'Help',
@@ -87,19 +87,19 @@ const fr = {
             addNewDiagram: 'Ajouter un nouveau diagramme...',
             generic: {
                 diagramTitle: 'Nouveau diagramme générique',
-	            select: `Générique`
-	        },
-	        stride: {
+                select: 'Générique'
+            },
+            stride: {
                 diagramTitle: 'Nouveau diagramme STRIDE',
-                select: `STRIDE`
+                select: 'STRIDE'
             },
             linddun: {
                 diagramTitle: 'Nouveau diagramme LINDDUN',
-                select: `LINDDUN`
+                select: 'LINDDUN'
             },
             cia: {
                 diagramTitle: 'Nouveau diagramme CIA',
-                select: `CIA`,
+                select: 'CIA'
             }
         },
         threats: 'Menaces',
@@ -296,7 +296,7 @@ const fr = {
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',
             openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority',
+            openUnknown: 'Open / Unknown Priority'
         }
     },
     upgrade: {

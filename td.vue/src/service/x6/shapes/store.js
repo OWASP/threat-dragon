@@ -23,7 +23,7 @@ export const StoreShape = Shape.Rect.define({
         {
             tagName: 'path',
             selector: 'bottomLine'
-        },
+        }
     ],
     attrs: {
         topLine: {
@@ -39,7 +39,7 @@ export const StoreShape = Shape.Rect.define({
         },
         body: {
             opacity: 0,
-            magnet: false      //needs to be disabled to grab whole shape
+            magnet: false // needs to be disabled to grab whole shape
         }
     },
     label: tc('threatmodel.shapes.store')

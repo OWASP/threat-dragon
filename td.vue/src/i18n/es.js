@@ -41,7 +41,7 @@ const es = {
             close: 'Close Model',
             open: 'Open Model',
             save: 'Save Model',
-            saveAs: 'Save Model As',
+            saveAs: 'Save Model As'
         },
         help: {
             heading: 'Help',
@@ -87,19 +87,19 @@ const es = {
             addNewDiagram: 'Agregar un nuevo diagrama...',
             generic: {
                 diagramTitle: 'New generic diagram',
-                select: `Generic`
+                select: 'Generic'
             },
             stride: {
                 diagramTitle: 'New STRIDE diagram',
-                select: `STRIDE`
+                select: 'STRIDE'
             },
             linddun: {
                 diagramTitle: 'New LINDDUN diagram',
-                select: `LINDDUN`
+                select: 'LINDDUN'
             },
             cia: {
                 diagramTitle: 'New CIA diagram',
-                select: `CIA`,
+                select: 'CIA'
             }
         },
         threats: 'Threats',
@@ -296,7 +296,7 @@ const es = {
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',
             openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority',
+            openUnknown: 'Open / Unknown Priority'
         }
     },
     upgrade: {

@@ -29,11 +29,11 @@ export const ProcessShape = Shape.Circle.define({
     attrs: {
         customBoundary: {
             opacity: 0,
-            refWidth: '110%',   // intentionally over-sized for usability
+            refWidth: '110%', // intentionally over-sized for usability
             refHeight: '110%'
         },
         body: {
-            magnet: false      //needs to be disabled to grab whole shape
+            magnet: false // needs to be disabled to grab whole shape
         }
     }
 });

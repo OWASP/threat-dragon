@@ -26,7 +26,7 @@ export const TrustBoundaryBox = Shape.HeaderedRect.define({
         headerText: {
             text: tc('threatmodel.shapes.trustBoundary'),
             fill: '#333',
-            strokeWidth: 0,
+            strokeWidth: 0
         },
         header: {
             rx: 10,
@@ -34,7 +34,7 @@ export const TrustBoundaryBox = Shape.HeaderedRect.define({
             strokeWidth: 0,
             fillOpacity: 0
         }
-    },
+    }
 });
 
 TrustBoundaryBox.prototype.setLabel = function (label) {

@@ -12,7 +12,7 @@ export class Env {
      * @constructor
      * @param {string} name
      */
-    constructor(name) {
+    constructor (name) {
         this._providers = [];
         this._defaultEnvFilePath = path.join(__dirname, upDir, upDir, upDir, '.env');
         this._config = {};
@@ -23,8 +23,8 @@ export class Env {
      * Gets the configuration
      * @returns {Object}
      */
-    get config() {
-        return Object.freeze({ ...this._config});
+    get config () {
+        return Object.freeze({ ...this._config });
     }
 
     /**
@@ -33,7 +33,7 @@ export class Env {
      *  GITHUB_CLIENT_ID => { key: 'CLIENT_ID', required: true }
      * @returns {Object[]}
      */
-    get properties() {
+    get properties () {
         const errorMessage = 'When creating a new Env configuration class, you must override the getter for properties.  See GithubEnv for an example.';
         console.error(errorMessage);
         throw new Error(errorMessage);
@@ -44,7 +44,7 @@ export class Env {
      * For example:
      * GITHUB_CLIENT_ID => "GITHUB_"
      */
-    get prefix() {
+    get prefix () {
         const errorMessage = 'When creating a new Env configuration class, you must override the getter for prefix.  See GithubEnv for an example.';
         console.error(errorMessage);
         throw new Error(errorMessage);
@@ -54,7 +54,7 @@ export class Env {
      * Initializes the configuration
      * This should be called during application startup
      */
-    hydrate() {
+    hydrate () {
         this._tryLoadDotEnv();
         for (let i = 0; i < this._providers.length; i++) {
             Object.assign(this._config, this._providers[i]._loadConfig());
@@ -65,10 +65,10 @@ export class Env {
      * Determines if there is a file with the associated
      * configuration and attempts to read the value from that
      * Useful for docker secrets and/or kubernetes deployments
-     * @param {string} basePropertyName 
+     * @param {string} basePropertyName
      * @returns {string|null}
      */
-    tryReadFromFile(basePropertyName) {
+    tryReadFromFile (basePropertyName) {
         const propertyName = `${basePropertyName}_FILE`;
         if (process.env[propertyName]) {
             const filePath = process.env[propertyName];
@@ -89,7 +89,7 @@ export class Env {
     /**
      * Loads all of the configuration.  This will error if required properties are missing
      */
-    _loadConfig() {
+    _loadConfig () {
         const config = {};
         this.properties.forEach(({ key, required, defaultValue }) => {
             const prop = `${this.prefix}${key}`;
@@ -108,14 +108,14 @@ export class Env {
      * Adds a provider to use for env configuration
      * @param {Env} provider
      */
-    addProvider(provider) {
+    addProvider (provider) {
         this._providers.push(provider);
     }
 
     /**
      * Attempts to load the configuration from a dotenv file
      */
-    _tryLoadDotEnv() {
+    _tryLoadDotEnv () {
         const envFilePath = process.env.ENV_FILE || this._defaultEnvFilePath;
         if (fs.existsSync(envFilePath)) {
             dotenv.config({
@@ -123,7 +123,7 @@ export class Env {
             });
             console.log(`Using config file: ${envFilePath}`);
         } else {
-            console.log(`Unable to find .env file, falling back to environment variables`);
+            console.log('Unable to find .env file, falling back to environment variables');
         }
     }
 }

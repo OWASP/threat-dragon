@@ -47,7 +47,7 @@ const modelAsync = (fullRepoName, branch, model) => {
     return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`);
 };
 
-const updateAsync = (fullRepoName, branch, modelName, threatModel )=> {
+const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
     return api.putAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/update`, threatModel);
 };

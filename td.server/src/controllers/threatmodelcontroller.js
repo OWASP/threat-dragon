@@ -18,7 +18,6 @@ const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     };
 }, req, res, logger);
 
-
 const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const repoInfo = {
         organisation: req.params.organisation,
@@ -28,16 +27,15 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
     logger.debug('API branches request: ' + req);
 
     const branchesResp = await repository.branchesAsync(repoInfo, req.provider.access_token);
-    const branches = branchesResp[0],
-        headers = branchesResp[1];
+    const branches = branchesResp[0];
+    const headers = branchesResp[1];
     const branchNames = branches.map((x) => x.name);
-    
+
     return {
         branches: branchNames,
         pagination: getPagination(headers, repoInfo.page)
     };
 }, req, res, logger);
-
 
 const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const branchInfo = {
@@ -54,12 +52,11 @@ const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
         if (e.statusCode === 404) {
             return [];
         }
-        
+
         throw e;
     }
     return modelsResp[0].map((x) => x.name);
 }, req, res, logger);
-
 
 const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const modelInfo = {
@@ -74,14 +71,13 @@ const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
     return JSON.parse(Buffer.from(modelResp[0].content, 'base64').toString('utf8'));
 }, req, res, logger);
 
-
 const create = async (req, res) => {
     const modelBody = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model,
-        body: req.body        
+        body: req.body
     };
     logger.debug('API create request: ' + req);
 
@@ -94,14 +90,13 @@ const create = async (req, res) => {
     }
 };
 
-
 const update = async (req, res) => {
     const modelBody = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
         model: req.params.model,
-        body: req.body        
+        body: req.body
     };
     logger.debug('API update request: ' + req);
 
@@ -114,13 +109,12 @@ const update = async (req, res) => {
     }
 };
 
-
 const deleteModel = async (req, res) => {
     const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
         branch: req.params.branch,
-        model: req.params.model,      
+        model: req.params.model
     };
     logger.debug('API deleteModel request: ' + req);
 
@@ -133,9 +127,8 @@ const deleteModel = async (req, res) => {
     }
 };
 
-
 const getPagination = (headers, page) => {
-    const pagination = { page: page, next: false, prev: false };
+    const pagination = { page, next: false, prev: false };
     const linkHeader = headers.link;
 
     if (linkHeader) {
@@ -145,16 +138,15 @@ const getPagination = (headers, page) => {
             if (isLinkType('"next"')) {
                 pagination.next = true;
             }
-            
+
             if (isLinkType('"prev"')) {
                 pagination.prev = true;
             }
         });
     }
-    
-    return pagination;  
-};
 
+    return pagination;
+};
 
 export default {
     branches,

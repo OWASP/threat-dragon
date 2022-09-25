@@ -19,7 +19,6 @@ const login = (req, res) => {
     }
 };
 
-
 const oauthReturn = (req, res) => {
     logger.debug('API oauthReturn request: ' + req);
 
@@ -29,7 +28,6 @@ const oauthReturn = (req, res) => {
     }
     return res.redirect(returnUrl);
 };
-
 
 const completeLogin = (req, res) => {
     logger.debug('API completeLogin request: ' + req);
@@ -52,7 +50,6 @@ const completeLogin = (req, res) => {
     }
 };
 
-
 const logout = (req, res) => responseWrapper.sendResponse(() => {
     logger.debug('API logout request: ' + req);
 
@@ -60,7 +57,7 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
         const refreshToken = req.body.refreshToken;
         if (!refreshToken) {
             logger.audit('Log out without a refresh token');
-            // Return OK, it could be a client error or an expired token 
+            // Return OK, it could be a client error or an expired token
             return '';
         }
 
@@ -73,7 +70,6 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
     }
 }, req, res, logger);
 
-
 const refresh = (req, res) => {
     logger.debug('API refresh request: ' + req);
 
@@ -84,12 +80,11 @@ const refresh = (req, res) => {
     return responseWrapper.sendResponseAsync(async () => {
         const { provider, user } = tokenBody;
         const { accessToken } = await jwtHelper.createAsync(provider.name, provider, user);
-        
+
         // Limit the time refresh tokens live, so do not provide a new one.
         return { accessToken, refreshToken: req.body.refreshToken };
     }, req, res, logger);
 };
-
 
 export default {
     completeLogin,

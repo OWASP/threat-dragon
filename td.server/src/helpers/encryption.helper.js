@@ -24,7 +24,7 @@ const getPrimaryKey = () => {
         logger.error(message);
         throw new Error(message);
     }
-    
+
     return {
         id: primaryKey.id,
         value: Buffer.from(primaryKey.value, keyEncoding)
@@ -46,11 +46,11 @@ const getKeyById = (id) => {
         logger.error(message);
         throw new Error(message);
     }
-    
+
     return {
         id: key.id,
         value: Buffer.from(key.value, keyEncoding)
-    };       
+    };
 };
 
 /**
@@ -110,7 +110,7 @@ const decrypt = (encryptedData) => {
     const key = getKeyById(encryptedData.keyId);
     logger.debug('Decrypting ciphertext');
 
-    return decryptData(encryptedData.data, key, iv);  
+    return decryptData(encryptedData.data, key, iv);
 };
 
 export default {

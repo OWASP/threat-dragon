@@ -1,15 +1,15 @@
 import { Env } from './Env.js';
 
 class EncryptionEnv extends Env {
-    constructor() {
+    constructor () {
         super('Encryption');
     }
 
-    get prefix() {
+    get prefix () {
         return 'ENCRYPTION_';
     }
 
-    get properties() {
+    get properties () {
         return [
             { key: 'KEYS', required: true },
             { key: 'JWT_SIGNING_KEY', required: true },

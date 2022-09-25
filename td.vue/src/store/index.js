@@ -33,7 +33,7 @@ const get = () => {
                 repo,
                 threatmodel
             },
-            plugins: [ vuexPersist.session.plugin ]
+            plugins: [vuexPersist.session.plugin]
         });
     }
 

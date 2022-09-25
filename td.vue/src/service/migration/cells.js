@@ -34,7 +34,7 @@ const getCellConverter = () => ({
  * @param {Object[]} edges
  */
 const relateEdges = (nodes, edges) => {
-    edges.forEach((edge) =>{
+    edges.forEach((edge) => {
         if (edge.source.id) {
             edge.source = nodes.find((node) => node.id === edge.source.id);
         }
@@ -46,7 +46,7 @@ const relateEdges = (nodes, edges) => {
 
 const map = (diagram) => {
     const resp = { nodes: [], edges: [] };
-    
+
     // If the diagram is blank, there is no diagramJson
     if (!diagram.diagramJson) {
         return resp;

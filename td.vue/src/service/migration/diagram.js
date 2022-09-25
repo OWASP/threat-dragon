@@ -24,7 +24,6 @@ const drawV1 = (diagram, graph) => {
 
 // update a version 1.x threat model (and diagrams) to version 2.x
 const upgradeAndDraw = (diagram, graph) => {
-
     // check if diagram is already at version 2.x
     if (diagram.version != null && diagram.version.startsWith('2.')) {
         graph.fromJSON(diagram);

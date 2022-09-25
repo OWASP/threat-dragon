@@ -21,7 +21,7 @@ const createClient = () => {
     const client = axios.create();
     client.defaults.headers.common.Accept = 'application/json';
     client.defaults.headers.post['Content-Type'] = 'application/json';
-    
+
     client.interceptors.request.use((config) => {
         const store = storeFactory.get();
         store.dispatch(LOADER_STARTED);
@@ -29,7 +29,7 @@ const createClient = () => {
         if (store.state.auth.jwt) {
             config.headers.authorization = `Bearer ${store.state.auth.jwt}`;
         }
-    
+
         return config;
     }, (err) => {
         console.error(err);
@@ -38,8 +38,8 @@ const createClient = () => {
         return Promise.reject(err);
     });
 
+    // Any status within 2xx lies here
     client.interceptors.response.use((resp) => {
-        // Any status within 2xx lies here
         const store = storeFactory.get();
         store.dispatch(LOADER_FINISHED);
         return resp;
@@ -51,7 +51,7 @@ const createClient = () => {
             store.dispatch(LOADER_FINISHED);
             return Promise.reject(err);
         };
-        
+
         if (err.response.status !== 401) {
             return logAndExit();
         }
