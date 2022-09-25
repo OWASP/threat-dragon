@@ -10,7 +10,7 @@ const es = {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo do Threat Dragon',
         description: 'Threat Dragon es una herramienta de modelado de amenazas de fuente abierta y gratuita da OWASP. Se puede utilizar a través de desktop para Windows, MacOS y Linux o como una aplicación web. La aplicación de desktop es excelente si desea probarla sin otorgar acceso a sus repositorios do GitHub. Sin embargo, si elige la versión web, podrá liberar el increíble poder do GitHub en sus modelos de amenazas (threat model). Por supuesto, para hacer esto, deberá iniciar sesión en GitHub y permitir el acceso al repositorio de interés',
-        loginWith: 'Conectado como'
+        loginWith: 'Conectado con'
     },
     providers: {
         github: {
@@ -29,19 +29,19 @@ const es = {
             openExisting: 'Abrir un modelo de amenazas (threat model) existente',
             createNew: 'Crear un nuevo modelo de amenazas (threat model) desde cero',
             download: 'Descargar y explotar un ejemplo de modelo de amenazas (threat model)',
-            import: 'Import a threat model via JSON'
+            import: 'Importar un modelo de amenazas (threat model) de JSON'
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'Seleccion un ejemplo de modelo de amenazas de la lista a continuación'
     },
     desktop: {
         file: {
-            heading: 'File',
-            close: 'Close Model',
-            open: 'Open Model',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: 'Archivo',
+            close: 'Cerrar Modelo',
+            open: 'Abrir Model',
+            save: 'Salvar Modelo',
+            saveAs: 'Salvar Modelo Como'
         },
         help: {
             heading: 'Help',
@@ -49,7 +49,7 @@ const es = {
             visit: 'Visit us at OWASP',
             sheets: 'OWASP Cheat Sheets',
             github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
+            submit: 'Abrir una issue',
             check: 'Check for updates ...'
         }
     },
@@ -77,8 +77,8 @@ const es = {
         description: 'Descripción de alto nível del sistema (high level system)',
         dragAndDrop: 'Drag and drop or ',
         editing: 'Edición',
-        invalidJson: 'Invalid JSON. Please check your model and try again.',
-        jsonPaste: 'Paste the JSON of your threat model here',
+        invalidJson: 'JSON erróneo. Comproba su modelo y pegue otro vez',
+        jsonPaste: 'Pegue el JSON de su modelo de amenazas aquí',
         owner: 'Propietario',
         reviewer: 'Revisor',
         title: 'Título',
@@ -86,29 +86,29 @@ const es = {
             diagrams: 'Diagramas',
             addNewDiagram: 'Agregar un nuevo diagrama...',
             generic: {
-                diagramTitle: 'New generic diagram',
-                select: 'Generic'
+                diagramTitle: 'Nuevo diagram genérico',
+                select: 'Genérico'
             },
             stride: {
-                diagramTitle: 'New STRIDE diagram',
+                diagramTitle: 'Nuevo diagrama STRIDE',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'New LINDDUN diagram',
+                diagramTitle: 'Nuevo diagrama LINDDUN',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'New CIA diagram',
+                diagramTitle: 'Nuevo diagrama CIA',
                 select: 'CIA'
             }
         },
-        threats: 'Threats',
+        threats: 'Amenazas',
         errors: {
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            open: 'Error al abrir el modelo de amenazas. Consulte la consola del desarrollador para obtener más información.',
+            save: 'Error al cerrar el modelo de amenazas. Consulte la consola del desarrollador para obtener más información.'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'Modelo de amenazas se abrió con éxito',
+        saved: 'Modelo de amenazas se cerró con éxito',
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',
@@ -130,16 +130,16 @@ const es = {
             delete: 'Delete selected',
             redo: 'Redo edit',
             shortcuts: 'Keyboard shortcuts',
-            toggleGrid: 'Toggle grid',
+            toggleGrid: 'Alternar cuadrícula',
             undo: 'Undo edit',
-            zoomIn: 'Zoom in',
-            zoomOut: 'Zoom out'
+            zoomIn: 'Ampliar zoom',
+            zoomOut: 'Reducir zoom'
         },
         shortcuts: {
             title: 'Atajos',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Pegar'
+                action: 'Copiar'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
@@ -189,28 +189,28 @@ const es = {
         }
     },
     forms: {
-        apply: 'Apply',
+        apply: 'Applicar',
         cancel: 'Cancelar',
         close: 'Cerrar',
-        closeModel: 'Close Model',
+        closeModel: 'Cerrar Modelo',
         delete: 'Eliminar',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
+        discardTitle: '¿Descartar los cambios?',
+        discardMessage: '¿Estás seguro de descartes tus cambios?',
         edit: 'Editar',
-        import: 'Import',
+        import: 'Importar',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
+        open: 'Abrir',
+        openModel: 'Abrir Modelo',
         print: 'Print',
         reload: 'Recargar',
         remove: 'Eliminar',
         report: 'Reporte',
         save: 'Salvar',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
-        search: 'Search'
+        saveAs: 'Salvar Como',
+        saveModel: 'Salvar modelo',
+        saveModelAs: 'Salvar modelo Como',
+        savePdf: 'Salvar PDF',
+        search: 'Buscar'
     },
     threats: {
         model: {
@@ -256,25 +256,25 @@ const es = {
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
         properties: {
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type',
-            number: 'Number',
-            priority: 'Priority',
+            description: 'Descripción',
+            mitigation: 'Mitigaciones',
+            modelType: 'Tipo de Modelo',
+            number: 'Numero',
+            priority: 'Prioridad',
             score: 'Score',
-            status: 'Status',
-            title: 'Title',
-            type: 'Type'
+            status: 'Estado',
+            title: 'Título',
+            type: 'Tipo'
         },
         status: {
             notApplicable: 'N/A',
-            open: 'Open',
-            mitigated: 'Mitigated'
+            open: 'Abierto',
+            mitigated: 'Mitigada'
         },
         priority: {
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High'
+            low: 'Baja',
+            medium: 'Media',
+            high: 'Alta'
         }
     },
     report: {
@@ -286,17 +286,17 @@ const es = {
         },
         title: 'Threat model report for',
         dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
+        executiveSummary: 'Resumen Ejecutivo',
         notProvided: 'Not provided',
-        summary: 'Summary',
+        summary: 'Resumen',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'Amenazas Totales',
+            mitigated: 'Amenazas Totales Mitigadas',
+            notMitigated: 'No Mitigadas',
+            openHigh: 'Abierto / Alta Prioridad',
+            openMedium: 'Abierto / Prioridad Media',
+            openLow: 'Abierto / Baja Prioridad',
+            openUnknown: 'Abierto / Prioridad Desconocida'
         }
     },
     upgrade: {
