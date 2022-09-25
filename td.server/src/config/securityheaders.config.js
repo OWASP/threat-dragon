@@ -5,7 +5,7 @@ const config = (app, forceSecure) => {
     const ninetyDaysInSeconds = 7776000;
     // Is forceSecure ever used?
     app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: forceSecure, includeSubDomains: false }));
-    app.use(helmet.frameguard({action: 'deny'}));
+    app.use(helmet.frameguard({ action: 'deny' }));
     app.use(helmet.hidePoweredBy());
     app.use(helmet.noSniff());
     app.use(helmet.xssFilter());
@@ -16,7 +16,7 @@ const config = (app, forceSecure) => {
             defaultSrc: ["'none'"],
             scriptSrc: ["'self'", "'unsafe-eval'"],
             connectSrc: ["'self'"],
-            styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], //needed for jquery
+            styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], // needed for jquery
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
             formAction: ["'self'", 'https://github.com'],

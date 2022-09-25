@@ -21,22 +21,21 @@ const logLevels = {
 // declare the various destinations for the logging messages
 const transports = {
     app: new winston.transports.File({
-            filename: 'app.log',
-            level: 'info',
-            silent: process.env.NODE_ENV === 'test'
-        }),
+        filename: 'app.log',
+        level: 'info',
+        silent: process.env.NODE_ENV === 'test'
+    }),
     audit: new winston.transports.File({
-            filename: 'audit.log',
-            level: 'audit',
-            silent: process.env.NODE_ENV === 'test'
-        }),
+        filename: 'audit.log',
+        level: 'audit',
+        silent: process.env.NODE_ENV === 'test'
+    }),
     console: new winston.transports.Console({
-            format: format.combine(format.colorize(), format.simple()),
-            level: 'info',
-            silent: process.env.NODE_ENV === 'test'
-        })
+        format: format.combine(format.colorize(), format.simple()),
+        level: 'info',
+        silent: process.env.NODE_ENV === 'test'
+    })
 };
-
 
 const _logger = winston.createLogger({
     levels: logLevels,
@@ -56,14 +55,13 @@ const _logger = winston.createLogger({
     silent: process.env.NODE_ENV === 'test'
 });
 
-
 class Logger {
-    constructor(service, logger) {
+    constructor (service, logger) {
         this.service = service;
         this.logger = logger || _logger;
     }
 
-    _formatMessage(service, message, level) {
+    _formatMessage (service, message, level) {
         if (typeof message === 'string') {
             return `${service}: ${message}`;
         }
@@ -71,21 +69,20 @@ class Logger {
         this.logger.log(level, message);
     }
 
-    log(level, message) { this.logger.log(level, this._formatMessage(this.service, message)); }
+    log (level, message) { this.logger.log(level, this._formatMessage(this.service, message)); }
 
-    silly(message) { this.logger.silly(this._formatMessage(this.service, message, 'silly')); }
+    silly (message) { this.logger.silly(this._formatMessage(this.service, message, 'silly')); }
 
-    debug(message) { this.logger.debug(this._formatMessage(this.service, message, 'debug')); }
+    debug (message) { this.logger.debug(this._formatMessage(this.service, message, 'debug')); }
 
-    info(message) { this.logger.info(this._formatMessage(this.service, message, 'info')); }
+    info (message) { this.logger.info(this._formatMessage(this.service, message, 'info')); }
 
-    warn(message) { this.logger.warn(this._formatMessage(this.service, message, 'warn')); }
+    warn (message) { this.logger.warn(this._formatMessage(this.service, message, 'warn')); }
 
-    error(message) { this.logger.error(this._formatMessage(this.service, message, 'error')); }
+    error (message) { this.logger.error(this._formatMessage(this.service, message, 'error')); }
 
-    audit(message) { this.logger.error(this._formatMessage(this.service, message, 'audit')); }
+    audit (message) { this.logger.error(this._formatMessage(this.service, message, 'audit')); }
 }
-
 
 /**
  * Gets a new instance of a logger for a given service

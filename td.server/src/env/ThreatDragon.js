@@ -1,16 +1,16 @@
 import { Env } from './Env.js';
 
 class ThreatDragonEnv extends Env {
-    constructor() {
+    constructor () {
         super('ThreatDragon');
     }
 
-    get prefix() {
+    get prefix () {
         return '';
     }
 
-    get properties() {
-        // if any  of the defaults are changed then ensure docs are updated at docs/development/env.md
+    // if any  of the defaults are changed then ensure docs are updated at docs/development/env.md
+    get properties () {
         return [
             { key: 'NODE_ENV', required: false },
             { key: 'PORT', required: false },

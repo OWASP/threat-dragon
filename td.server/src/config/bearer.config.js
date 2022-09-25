@@ -12,12 +12,12 @@ const logger = loggerHelper.get('config/bearer.config.js');
  */
 const getBearerToken = (authHeader) => {
     if (!authHeader) {
-        logger.info(`Bearer token not found, auth header is empty`);
+        logger.info('Bearer token not found, auth header is empty');
         return null;
     }
 
     if (authHeader.indexOf('Bearer ') === -1) {
-        logger.warn(`Bearer token key word not found in auth header`);
+        logger.warn('Bearer token key word not found in auth header');
         return null;
     }
 
@@ -42,7 +42,7 @@ const middleware = (req, res, next) => {
             logger.audit('Expired JWT encountered');
             return errors.unauthorized(res, logger);
         }
-        
+
         logger.audit('Error decoding JWT');
         logger.error(e);
         return errors.badRequest('Invalid JWT', res, logger);

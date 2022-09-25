@@ -1,11 +1,11 @@
 import github from 'octonode';
 
 const reposAsync = (page, accessToken) => github.client(accessToken).me().
-reposAsync(page);
+    reposAsync(page);
 
 const userAsync = async (accessToken) => {
     const resp = await github.client(accessToken).me().
-infoAsync();
+        infoAsync();
     return resp[0];
 };
 
@@ -15,21 +15,21 @@ const branchesAsync = (repoInfo, accessToken) => {
 };
 
 const modelsAsync = (branchInfo, accessToken) => github.client(accessToken).
-        repo(getRepoFullName(branchInfo)).
-        contentsAsync('ThreatDragonModels', branchInfo.branch);
+    repo(getRepoFullName(branchInfo)).
+    contentsAsync('ThreatDragonModels', branchInfo.branch);
 
 const modelAsync = (modelInfo, accessToken) => github.client(accessToken).
-        repo(getRepoFullName(modelInfo)).
-        contentsAsync(getModelPath(modelInfo), modelInfo.branch);
+    repo(getRepoFullName(modelInfo)).
+    contentsAsync(getModelPath(modelInfo), modelInfo.branch);
 
 const createAsync = (modelInfo, accessToken) => github.client(accessToken).
-        repo(getRepoFullName(modelInfo)).
-        createContentsAsync(
-            getModelPath(modelInfo),
-            'Created by OWASP Threat Dragon',
-            getModelContent(modelInfo),
-            modelInfo.branch
-        );
+    repo(getRepoFullName(modelInfo)).
+    createContentsAsync(
+        getModelPath(modelInfo),
+        'Created by OWASP Threat Dragon',
+        getModelContent(modelInfo),
+        modelInfo.branch
+    );
 
 const updateAsync = async (modelInfo, accessToken) => {
     const original = await modelAsync(modelInfo, accessToken);

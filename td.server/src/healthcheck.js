@@ -11,7 +11,7 @@ const req = (env.get().config.SERVER_API_PROTOCOL || 'https') + '://localhost:' 
 http.get(req, (res) => {
     const { statusCode } = res;
     logger.debug('Health check request: ' + req);
-    
+
     if (statusCode !== 200) {
         logger.error(`Healthcheck failure: invalid status code: ${statusCode}`);
         process.exit(1);
