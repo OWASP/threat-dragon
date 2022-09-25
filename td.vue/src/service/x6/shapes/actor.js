@@ -18,12 +18,12 @@ export const ActorShape = Shape.Rect.define({
     label: tc('threatmodel.shapes.actor'),
     attrs: {
         body: {
-            magnet: false      //needs to be disabled to grab whole shape
+            magnet: false // needs to be disabled to grab whole shape
         }
     }
 });
 
-ActorShape.prototype.updateStyle = function(color, dash, strokeWidth) {
+ActorShape.prototype.updateStyle = function (color, dash, strokeWidth) {
     this.setAttrByPath('body/stroke', color);
     this.setAttrByPath('body/strokeWidth', strokeWidth);
     this.setAttrByPath('body/strokeDasharray', dash);

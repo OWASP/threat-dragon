@@ -30,7 +30,7 @@ export default {
         informationDisclosure: 'threats.model.stride.informationDisclosure',
         denialOfService: 'threats.model.stride.denialOfService'
     },
-    all:  {
+    all: {
         spoofing: 'threats.model.stride.spoofing',
         tampering: 'threats.model.stride.tampering',
         repudiation: 'threats.model.stride.repudiation',

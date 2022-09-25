@@ -4,16 +4,16 @@ import stride from './stride.js';
 
 // do it this way to 'persuade' generic to be in the right order
 const generic = Object.assign(
-    Object.assign({ strideHeader:  'threats.model.stride.header' }, stride.all),
-    Object.assign({ ciaHeader:  'threats.model.cia.header' }, cia),
-    Object.assign({ linddunHeader:  'threats.model.linddun.header' }, linddun.all)
+    Object.assign({ strideHeader: 'threats.model.stride.header' }, stride.all),
+    Object.assign({ ciaHeader: 'threats.model.cia.header' }, cia),
+    Object.assign({ linddunHeader: 'threats.model.linddun.header' }, linddun.all)
 );
 
 const getByTranslationValue = (translation) => {
     if (!translation) {
         return '';
     }
-    
+
     if (Object.values(cia).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'CIA';
     }

@@ -58,7 +58,7 @@ const map = (entity, cell) => {
     applyStoreData(cell, data);
     applyActorData(cell, data);
 
-    entity.data = data;    
+    entity.data = data;
     return entity;
 };
 

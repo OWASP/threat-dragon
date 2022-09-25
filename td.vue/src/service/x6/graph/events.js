@@ -27,7 +27,7 @@ const removeCellTools = ({ cell }) => {
 };
 
 const mouseEnter = ({ cell }) => {
-    const tools = [ 'boundary', 'button-remove' ];
+    const tools = ['boundary', 'button-remove'];
     if (!cell.isNode()) {
         tools.push('vertices');
         tools.push('source-arrowhead');
@@ -97,7 +97,7 @@ const cellUnselected = ({ cell }) => {
     } else {
         console.log('Cannot set name');
     }
-    
+
     store.get().dispatch(CELL_UNSELECTED);
     dataChanged.updateStyleAttrs(cell);
 };

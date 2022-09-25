@@ -6,10 +6,10 @@ const getEdgeLabels = (cell) => {
         return res;
     }
 
-    cell.labels.forEach((label) => {        
+    cell.labels.forEach((label) => {
         res.push({
             position: label.position,
-            attrs: { label: { text: labels.getText(cell, label) }}
+            attrs: { label: { text: labels.getText(cell, label) } }
         });
     });
 

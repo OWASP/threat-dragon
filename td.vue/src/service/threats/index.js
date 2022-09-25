@@ -4,19 +4,19 @@ import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
 
 const valuesToTranslations = {
-    'Confidentiality': 'threats.model.cia.confidentiality',
-    'Integrity': 'threats.model.cia.integrity',
-    'Availability': 'threats.model.cia.availability',
-    'Linkability': 'threats.model.linddun.linkability',
-    'Identifiability': 'threats.model.linddun.identifiability',
+    Confidentiality: 'threats.model.cia.confidentiality',
+    Integrity: 'threats.model.cia.integrity',
+    Availability: 'threats.model.cia.availability',
+    Linkability: 'threats.model.linddun.linkability',
+    Identifiability: 'threats.model.linddun.identifiability',
     'Non-repudiation': 'threats.model.linddun.nonRepudiation',
-    'Detectability': 'threats.model.linddun.detectability',
+    Detectability: 'threats.model.linddun.detectability',
     'Disclosure of information': 'threats.model.linddun.disclosureOfInformation',
-    'Unawareness': 'threats.model.linddun.unawareness',
+    Unawareness: 'threats.model.linddun.unawareness',
     'Non-compliance': 'threats.model.linddun.nonCompliance',
-    'Spoofing': 'threats.model.stride.spoofing',
-    'Tampering': 'threats.model.stride.tampering',
-    'Repudiation': 'threats.model.stride.repudiation',
+    Spoofing: 'threats.model.stride.spoofing',
+    Tampering: 'threats.model.stride.tampering',
+    Repudiation: 'threats.model.stride.repudiation',
     'Information disclosure': 'threats.model.stride.informationDisclosure',
     'Denial of service': 'threats.model.stride.denialOfService',
     'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege'
@@ -24,7 +24,7 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewTypedThreat = function(modelType, cellType) {
+export const createNewTypedThreat = function (modelType, cellType) {
     if (!modelType) {
         modelType = 'STRIDE';
     }
@@ -55,13 +55,13 @@ export const createNewTypedThreat = function(modelType, cellType) {
 
     return {
         id: v4(),
-        title: title,
+        title,
         status: 'Open',
         severity: 'Medium',
-        type: type,
+        type,
         description: tc('threats.description'),
         mitigation: tc('threats.mitigation'),
-        modelType: modelType,
+        modelType,
         new: true,
         number: 0,
         score: ''
@@ -91,7 +91,6 @@ const filterForDiagram = (data, filters) => {
 
     return data.threats.filter(x => filters.showMitigated || x.status.toLowerCase() !== 'mitigated');
 };
-
 
 export default {
     convertToTranslationString,

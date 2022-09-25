@@ -13,7 +13,7 @@ export const menuTemplate = [
         submenu: [
             {
                 label: tc('desktop.file.open'),
-                click() {
+                click () {
                     openThreatModel();
                 }
             },
@@ -25,19 +25,19 @@ export const menuTemplate = [
             },
             {
                 label: tc('desktop.file.save'),
-                click() {
+                click () {
                     saveThreatModel();
                 }
             },
             {
                 label: tc('desktop.file.saveAs'),
-                click() {
+                click () {
                     saveAsThreatModel();
                 }
             },
             {
                 label: tc('desktop.file.close'),
-                click() {
+                click () {
                     closeThreatModel();
                 }
             },
@@ -95,13 +95,13 @@ export const menuTemplate = [
 ];
 
 // close the model using modal dialog if changed
-function closeThreatModel() {
+function closeThreatModel () {
     // Close threat model, if changed then show Save? modal dialog
-    dialog.showErrorBox( 'Not yet implemented', 'Close model file TBD' );
+    dialog.showErrorBox('Not yet implemented', 'Close model file TBD');
 }
 
 // Open file system dialog
-function openThreatModel() {
+function openThreatModel () {
     dialog.showOpenDialog({
         title: tc('desktop.file.open'),
         properties: ['openFile'],
@@ -119,13 +119,13 @@ function openThreatModel() {
 }
 
 // save the model catching any errors
-function saveThreatModel() {
+function saveThreatModel () {
     // if threat model exists, save to file system without dialog
-    dialog.showErrorBox( 'Not yet implemented', 'Save model file TBD' );
+    dialog.showErrorBox('Not yet implemented', 'Save model file TBD');
 }
 
 // SaveAs file system dialog
-function saveAsThreatModel() {
+function saveAsThreatModel () {
     dialog.showSaveDialog({
         title: tc('desktop.file.saveAs'),
         properties: ['showHiddenFiles'],

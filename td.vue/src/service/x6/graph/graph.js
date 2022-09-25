@@ -20,7 +20,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         enabled: true,
         beforeAddCommand: (event, args) => {
             // Showing and hiding the tools on mouseover events
-            // gets added to the history stack.  Since that is not 
+            // gets added to the history stack.  Since that is not
             // a "user" action, we can ignore those events
             return args.key !== 'tools';
         }

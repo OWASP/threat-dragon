@@ -9,7 +9,9 @@ import de from './de.js';
 import fr from './fr.js';
 import pt from './pt.js';
 import ru from './ru.js';
-import zh from './cn.js';
+
+// cn and zh are synonyms
+const zh = cn;
 
 Vue.use(VueI18n);
 
