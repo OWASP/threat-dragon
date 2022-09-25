@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Release Process
-nav_order: 1
+nav_order: 4
 path: /release-process
 group: Release-Process
 ---
