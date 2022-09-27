@@ -142,6 +142,7 @@ function openThreatModel () {
 
 // save the model catching any errors
 function saveThreatModel () {
+    log.debug('Save ' + providerType + ' model file');
     // if threat model exists, save to file system without dialog
     dialog.showErrorBox('Not yet implemented', 'Save model file TBD for ' + providerType);
 }
