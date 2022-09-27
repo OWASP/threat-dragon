@@ -3,8 +3,29 @@
 import { dialog } from 'electron';
 import { tc } from '../i18n/index.js';
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
+const isWin = (process.platform === 'win32' || process.platform === 'win64');
+
+export const log = require('electron-log');
+if (isDevelopment) {
+    if (isMacOS) {
+        console.log('** Redirecting console log to ~/Library/Logs/Threat\\ Dragon/main.log');
+    } else if (isWin) {
+        console.log('** Redirecting console log to AppData\\Roaming\\Threat/ Dragon\\logs\\main.log');
+    } else {
+        console.log('** Redirecting console log to ~/.config/Threat\\ Dragon/logs/main.log');
+    }
+}
+// use electron-log instead of default console
+console.log = log.log;
+// set up electron-specific logging
+const logLevel = process.env.LOG_LEVEL || 'info';
+log.debug('Log level is set to: ' + logLevel);
+log.transports.file.level = logLevel;
+
 const { shell } = require('electron');
+const providerType = 'local';
 
 export const menuTemplate = [
     ...(isMacOS ? [{ role: 'appMenu' }] : []),
@@ -96,12 +117,13 @@ export const menuTemplate = [
 
 // close the model using modal dialog if changed
 function closeThreatModel () {
-    // Close threat model, if changed then show Save? modal dialog
-    dialog.showErrorBox('Not yet implemented', 'Close model file TBD');
+    log.debug('Close ' + providerType + ' model file, redirect to /dashboard/');
+    dialog.showErrorBox('Not yet implemented', 'Close model file TBD for ' + providerType);
 }
 
 // Open file system dialog
 function openThreatModel () {
+    log.debug('Open File redirected to /${providerType}/threatmodel/import');
     dialog.showOpenDialog({
         title: tc('desktop.file.open'),
         properties: ['openFile'],
@@ -121,7 +143,7 @@ function openThreatModel () {
 // save the model catching any errors
 function saveThreatModel () {
     // if threat model exists, save to file system without dialog
-    dialog.showErrorBox('Not yet implemented', 'Save model file TBD');
+    dialog.showErrorBox('Not yet implemented', 'Save model file TBD for ' + providerType);
 }
 
 // SaveAs file system dialog
@@ -143,5 +165,6 @@ function saveAsThreatModel () {
 }
 
 export default {
+    log,
     menuTemplate
 };

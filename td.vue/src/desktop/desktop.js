@@ -3,16 +3,13 @@
 import { app, protocol, BrowserWindow, Menu } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { menuTemplate } from './desktop.menu.js';
+import { menuTemplate, log } from './desktop.menu.js';
 
 require('update-electron-app')({
     updateInterval: '1 hour',
     logger: require('electron-log')
 });
 
-const log = require('electron-log');
-// use electron-log instead of default console
-console.log = log.log;
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Scheme must be registered before the app is ready
@@ -26,18 +23,13 @@ async function createWindow () {
         width: 1400,
         height: 900,
         webPreferences: {
-            // Required for Spectron testing
-            enableRemoteModule: !!process.env.IS_TEST,
+            // Required for Spectron testing?
+            // enableRemoteModule: !!process.env.IS_TEST,
 
             nodeIntegration: false,
             contextIsolation: true
         }
     });
-
-    // set up electron-specific logging
-    const logLevel = process.env.LOG_LEVEL || 'info';
-    log.debug('Log level is set to: ' + logLevel);
-    log.transports.file.level = logLevel;
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
@@ -66,8 +58,8 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
+// This method will be called when Electron has finished initialization
+// and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
