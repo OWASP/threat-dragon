@@ -15,7 +15,6 @@ import { mapState } from 'vuex';
 
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 import env from '@/service/env.js';
-// import {ipcRenderer} from "electron";
 
 export default {
     name: 'TdLocalSelect',
@@ -33,9 +32,7 @@ export default {
             this.$store.dispatch(LOCALE_SELECTED, locale);
             if (env.isElectron()) {
                 // tell the electron main process that the locale has changed
-                console.log('locale has changed');
-                // ipcRenderer.send("locale-change-event", locale)
-                window.electronAPI.updateMenu();
+                window.electronAPI.updateMenu(locale);
             }
         }
     }

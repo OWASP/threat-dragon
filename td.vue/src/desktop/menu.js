@@ -1,119 +1,116 @@
 'use strict';
 
 import { dialog } from 'electron';
-import { tc } from '../i18n/index.js';
+import { log } from './logger.js';
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
-const isWin = (process.platform === 'win32' || process.platform === 'win64');
-
-export const log = require('electron-log');
-if (isDevelopment) {
-    if (isMacOS) {
-        console.log('** Redirecting console log to ~/Library/Logs/Threat\\ Dragon/main.log');
-    } else if (isWin) {
-        console.log('** Redirecting console log to AppData\\Roaming\\Threat/ Dragon\\logs\\main.log');
-    } else {
-        console.log('** Redirecting console log to ~/.config/Threat\\ Dragon/logs/main.log');
-    }
-}
-// use electron-log instead of default console
-console.log = log.log;
-// set up electron-specific logging
-const logLevel = process.env.LOG_LEVEL || 'info';
-log.debug('Log level is set to: ' + logLevel);
-log.transports.file.level = logLevel;
 
 const { shell } = require('electron');
 const providerType = 'local';
 
-export const menuTemplate = [
-    ...(isMacOS ? [{ role: 'appMenu' }] : []),
-    {
-        label: tc('desktop.file.heading'),
-        submenu: [
-            {
-                label: tc('desktop.file.open'),
-                click () {
-                    openThreatModel();
-                }
-            },
-            {
-                role: 'recentdocuments',
-                submenu: [
-                    { role: 'clearrecentdocuments' }
-                ]
-            },
-            {
-                label: tc('desktop.file.save'),
-                click () {
-                    saveThreatModel();
-                }
-            },
-            {
-                label: tc('desktop.file.saveAs'),
-                click () {
-                    saveAsThreatModel();
-                }
-            },
-            {
-                label: tc('desktop.file.close'),
-                click () {
-                    closeThreatModel();
-                }
-            },
-            { type: 'separator' },
-            { role: 'close' }
-        ]
-    },
-    { role: 'editMenu' },
-    { role: 'viewMenu' },
-    { role: 'windowMenu' },
-    {
-        label: tc('desktop.help.heading'),
-        submenu: [
-            {
-                label: tc('desktop.help.docs'),
-                click: async () => {
-                    await shell.openExternal('https://www.threatdragon.com/docs/');
-                }
-            },
-            {
-                label: tc('desktop.help.visit'),
-                click: async () => {
-                    await shell.openExternal('https://owasp.org/www-project-threat-dragon/');
-                }
-            },
-            {
-                label: tc('desktop.help.sheets'),
-                click: async () => {
-                    await shell.openExternal('https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html');
-                }
-            },
-            { type: 'separator' },
-            {
-                label: tc('desktop.help.github'),
-                click: async () => {
-                    await shell.openExternal('https://github.com/owasp/threat-dragon/');
-                }
-            },
-            {
-                label: tc('desktop.help.submit'),
-                click: async () => {
-                    await shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
-                }
-            },
-            {
-                label: tc('desktop.help.check'),
-                click: async () => {
-                    await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
-                }
-            },
-            { type: 'separator' },
-            { role: 'about' }
-        ]
-    }
-];
+// access the i18n message strings
+import el from '../i18n/el.js';
+import en from '../i18n/en.js';
+import es from '../i18n/es.js';
+import cn from '../i18n/cn.js';
+import de from '../i18n/de.js';
+import fr from '../i18n/fr.js';
+import pt from '../i18n/pt.js';
+import ru from '../i18n/ru.js';
+// cn and zh are synonyms
+const zh = cn;
+const messages = { el, en, es, cn, de, fr, pt, ru, zh};
+var language = 'en';
+
+export function getMenuTemplate () {
+    return [
+        ...(isMacOS ? [{ role: 'appMenu' }] : []),
+        {
+            label: messages[language].desktop.file.heading,
+            submenu: [
+                {
+                    label: messages[language].desktop.file.open,
+                    click () {
+                        openThreatModel();
+                    }
+                },
+                {
+                    role: 'recentdocuments',
+                    submenu: [
+                        { role: 'clearrecentdocuments' }
+                    ]
+                },
+                {
+                    label: messages[language].desktop.file.save,
+                    click () {
+                        saveThreatModel();
+                    }
+                },
+                {
+                    label: messages[language].desktop.file.saveAs,
+                    click () {
+                        saveAsThreatModel();
+                    }
+                },
+                {
+                    label: messages[language].desktop.file.close,
+                    click () {
+                        closeThreatModel();
+                    }
+                },
+                { type: 'separator' },
+                { role: 'close' }
+            ]
+        },
+        { role: 'editMenu' },
+        { role: 'viewMenu' },
+        { role: 'windowMenu' },
+        {
+            label: messages[language].desktop.help.heading,
+            submenu: [
+                {
+                    label: messages[language].desktop.help.docs,
+                    click: async () => {
+                        await shell.openExternal('https://www.threatdragon.com/docs/');
+                    }
+                },
+                {
+                    label: messages[language].desktop.help.visit,
+                    click: async () => {
+                        await shell.openExternal('https://owasp.org/www-project-threat-dragon/');
+                    }
+                },
+                {
+                    label: messages[language].desktop.help.sheets,
+                    click: async () => {
+                        await shell.openExternal('https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html');
+                    }
+                },
+                { type: 'separator' },
+                {
+                    label: messages[language].desktop.help.github,
+                    click: async () => {
+                        await shell.openExternal('https://github.com/owasp/threat-dragon/');
+                    }
+                },
+                {
+                    label: messages[language].desktop.help.submit,
+                    click: async () => {
+                        await shell.openExternal('https://github.com/owasp/threat-dragon/issues/new/choose/');
+                    }
+                },
+                {
+                    label: messages[language].desktop.help.check,
+                    click: async () => {
+                        await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
+                    }
+                },
+                { type: 'separator' },
+                { role: 'about' }
+            ]
+        }
+    ];
+}
 
 // close the model using modal dialog if changed
 function closeThreatModel () {
@@ -125,7 +122,7 @@ function closeThreatModel () {
 function openThreatModel () {
     log.debug('Open File redirected to /${providerType}/threatmodel/import');
     dialog.showOpenDialog({
-        title: tc('desktop.file.open'),
+        title: messages[language].desktop.file.open,
         properties: ['openFile'],
         filters: [
             { name: 'Threat Model', extensions: ['json'] },
@@ -133,10 +130,10 @@ function openThreatModel () {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            console.log(tc('threatmodel.opened') + ': ' + result.filePath);
+            log.info(messages[language].threatmodel.opened + ': ' + result.filePath);
         }
     }).catch(err => {
-        console.warn(tc('threatmodel.errors.open') + ': ' + err);
+        log.warn(messages[language].threatmodel.errors.open + ': ' + err);
     });
 }
 
@@ -150,7 +147,7 @@ function saveThreatModel () {
 // SaveAs file system dialog
 function saveAsThreatModel () {
     dialog.showSaveDialog({
-        title: tc('desktop.file.saveAs'),
+        title: messages[language].desktop.file.saveAs,
         properties: ['showHiddenFiles'],
         filters: [
             { name: 'Threat Model', extensions: ['json'] },
@@ -158,18 +155,18 @@ function saveAsThreatModel () {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            console.log(tc('threatmodel.saved') + ': ' + result.filePath);
+            log.info(messages[language].threatmodel.saved + ': ' + result.filePath);
         }
     }).catch(err => {
-        console.warn(tc('threatmodel.errors.save') + ': ' + err);
+        log.warn(messages[language].threatmodel.errors.save + ': ' + err);
     });
 }
 
-const updateLabels = () => {
+export const setLocale = (locale) => {
+    language = locale;
 };
 
 export default {
-    log,
-    menuTemplate,
-    updateLabels
+    getMenuTemplate,
+    setLocale
 };

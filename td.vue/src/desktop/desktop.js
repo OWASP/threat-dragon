@@ -3,7 +3,8 @@
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { menuTemplate, log } from './menu.js';
+import { getMenuTemplate, setLocale } from './menu.js';
+import { log } from './logger.js';
 
 const path = require('path');
 
@@ -70,8 +71,9 @@ app.on('activate', () => {
 // and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    log.debug('Building the menu system');
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+    log.debug('Building the menu system for the default language');
+    let template = getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     // Install Vue Devtools
     if (isDevelopment && !process.env.IS_TEST) {
@@ -86,9 +88,11 @@ app.on('ready', async () => {
     createWindow();
 });
 
-function handleUpdateMenu () {
-    log.debug('Re-labeling the menu system');
-    //updateLabels();
+function handleUpdateMenu (_event, locale) {
+    log.debug('Re-labeling the menu system for: ' + locale);
+    setLocale(locale);
+    let template = getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 // Exit cleanly on request from parent process in development mode.
