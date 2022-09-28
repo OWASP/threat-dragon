@@ -165,7 +165,11 @@ function saveAsThreatModel () {
     });
 }
 
+const updateLabels = () => {
+};
+
 export default {
     log,
-    menuTemplate
+    menuTemplate,
+    updateLabels
 };

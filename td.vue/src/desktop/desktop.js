@@ -3,7 +3,9 @@
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { menuTemplate, log } from './desktop.menu.js';
+import { menuTemplate, log } from './menu.js';
+
+const path = require('path');
 
 require('update-electron-app')({
     updateInterval: '1 hour',
@@ -24,11 +26,10 @@ async function createWindow () {
         width: 1400,
         height: 900,
         webPreferences: {
-            // Required for Spectron testing?
-            // enableRemoteModule: !!process.env.IS_TEST,
-
+            enableRemoteModule: false,
             nodeIntegration: false,
-            contextIsolation: true
+            contextIsolation: true,
+            preload: path.join(__static, 'preload.js')
         }
     });
 
@@ -81,13 +82,13 @@ app.on('ready', async () => {
         }
     }
 
-    ipcMain.on('build-menu', handleBuildMenu)
+    ipcMain.on('update-menu', handleUpdateMenu);
     createWindow();
 });
 
-function handleBuildMenu () {
-    log.debug('Rebuilding the menu system');
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+function handleUpdateMenu () {
+    log.debug('Re-labeling the menu system');
+    //updateLabels();
 }
 
 // Exit cleanly on request from parent process in development mode.

@@ -6,6 +6,9 @@ module.exports = {
         'plugin:vue/essential',
         'eslint:recommended'
     ],
+    globals: {
+        __static: 'readonly',
+    },
     parserOptions: {
         'ecmaVersion': 'latest',
         'sourceType': 'module'
