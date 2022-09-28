@@ -14,6 +14,7 @@
 import { mapState } from 'vuex';
 
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import env from '@/service/env.js';
 
 export default {
     name: 'TdLocalSelect',
@@ -29,6 +30,10 @@ export default {
     methods: {
         updateLocale(locale) {
             this.$store.dispatch(LOCALE_SELECTED, locale);
+            if (env.isElectron()) {
+                // tell the electron main process that the locale has changed
+                window.electronAPI.updateMenu(locale);
+            }
         }
     }
 };

@@ -1,9 +1,12 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { menuTemplate, log } from './desktop.menu.js';
+import { getMenuTemplate, setLocale } from './menu.js';
+import { log } from './logger.js';
+
+const path = require('path');
 
 require('update-electron-app')({
     updateInterval: '1 hour',
@@ -11,6 +14,7 @@ require('update-electron-app')({
 });
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const isWin = (process.platform === 'win32' || process.platform === 'win64');
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -23,11 +27,10 @@ async function createWindow () {
         width: 1400,
         height: 900,
         webPreferences: {
-            // Required for Spectron testing?
-            // enableRemoteModule: !!process.env.IS_TEST,
-
+            enableRemoteModule: false,
             nodeIntegration: false,
-            contextIsolation: true
+            contextIsolation: true,
+            preload: path.join(__static, 'preload.js')
         }
     });
 
@@ -48,21 +51,29 @@ app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
+        log.debug('Quit application');
         app.quit();
+    } else {
+        log.debug('Ignoring window-all-closed for MacOS');
     }
 });
 
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    log.debug('Activate application');
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
 });
 
 // This method will be called when Electron has finished initialization
 // and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+    log.debug('Building the menu system for the default language');
+    let template = getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     // Install Vue Devtools
     if (isDevelopment && !process.env.IS_TEST) {
@@ -72,12 +83,21 @@ app.on('ready', async () => {
             log.error('Vue Devtools failed to install:', e.toString());
         }
     }
+
+    ipcMain.on('update-menu', handleUpdateMenu);
     createWindow();
 });
 
+function handleUpdateMenu (_event, locale) {
+    log.debug('Re-labeling the menu system for: ' + locale);
+    setLocale(locale);
+    let template = getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
-    if (process.platform === 'win32') {
+    if (isWin) {
         process.on('message', (data) => {
             if (data === 'graceful-exit') {
                 app.quit();
