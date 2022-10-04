@@ -10,14 +10,14 @@ const fr = {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo Threat Dragon',
         description: 'Threat Dragon est un outil de modélisation des menaces open-source et gratuit d\'OWASP. Il peut être utilisé comme une application de bureau sur Windows, MacOS et Linux, ou comme une application Web. L\'application de bureau est idéale si vous voulez essayer Threat Dragon sans lui donner accès à vos projets GitHub, mais si vous choisissez la version en ligne, vous pouvez profiter de la puissance impressionnante de GitHub sur vos modèles de menace! Pour ce faire, vous devez d\'abord vous connecter.',
-        loginWith: 'Login with'
+        loginWith: 'Se connecter avec'
     },
     providers: {
         github: {
             displayName: 'GitHub'
         },
         local: {
-            displayName: 'Session Locale'
+            displayName: 'une session locale'
         }
     },
     dashboard: {
@@ -41,16 +41,16 @@ const fr = {
             close: 'Fermer Projet',
             open: 'Ouvrir',
             save: 'Sauvegarder',
-            saveAs: 'Save As'
+            saveAs: 'Sauvergarder en tant que'
         },
         help: {
-            heading: 'Help',
+            heading: 'Aide',
             docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            visit: 'Visitez-nous à OWASP',
+            sheets: 'OWASP Aide-mémoire',
+            github: 'Visitez-nous sur GitHub',
+            submit: 'Soumettre un problème',
+            check: 'Vérifier les mises à jour ...'
         }
     },
     repository: {
@@ -75,7 +75,7 @@ const fr = {
         contributors: 'Contributeurs',
         contributorsPlaceholder: 'Ajouter un nouveau contributeur',
         description: 'Description de haut niveau du système',
-        dragAndDrop: 'Drag and drop or ',
+        dragAndDrop: 'Glissez-déposez ou ',
         editing: 'Modification',
         invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
         jsonPaste: 'Collez le JSON de votre modèle de menace ici',
@@ -104,11 +104,11 @@ const fr = {
         },
         threats: 'Menaces',
         errors: {
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
+            save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'Modèle de menace ouvert avec succès',
+        saved: 'Modèle de menace sauvegardé avec succès',
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',
@@ -127,7 +127,7 @@ const fr = {
             publicNetwork: 'Réseau public'
         },
         buttons: {
-            delete: 'Delete selected',
+            delete: 'Supprimer la sélection',
             redo: 'Rétablir',
             shortcuts: 'Raccourcis clavier',
             toggleGrid: 'Grille d\'affichage',
@@ -189,27 +189,27 @@ const fr = {
         }
     },
     forms: {
-        apply: 'Apply',
+        apply: 'Appliquer',
         cancel: 'Annuler',
         close: 'Fermer',
-        closeModel: 'Close Model',
+        closeModel: 'Fermer le modèle',
         delete: 'Supprimer',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
+        discardTitle: 'Annuler les modifications?',
+        discardMessage: 'Êtes-vous sûr de vouloir abandonner vos modifications?',
         edit: 'Modifier',
         import: 'Importer',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
-        reload: 'Recharger',
+        open: 'Ouvrir',
+        openModel: 'Ouvrir le modèle',
+        print: 'Imprimer',
+        reload: 'Rafraîchir',
         remove: 'Retirer',
         report: 'Rapport',
         save: 'Sauvegarder',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
+        saveAs: 'Sauvergarder en tant que',
+        saveModel: 'Sauvergarder le modèle',
+        saveModelAs: 'Sauvergarder le modèle en tant que',
+        savePdf: 'Sauvergarder le PDF',
         search: 'Rechercher'
     },
     threats: {
@@ -241,25 +241,25 @@ const fr = {
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            linddun: 'New LINDDUN threat',
-            stride: 'New STRIDE threat'
+            default: 'Nouvelle menace générique',
+            cia: 'Nouvelle menace CIA',
+            linddun: 'Nouvelle menace LINDDUN',
+            stride: 'Nouvelle menace STRIDE'
         },
         edit: 'Modifier la menace',
         confirmDeleteTitle: 'Confirmer Supprimer',
-        confirmDeleteMessage: 'Êtes-vous sûr de vouloir supprimer cette menace ?',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide mitigation or prevention for this threat',
-        newThreat: 'Nouvelle menace',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        confirmDeleteMessage: 'Êtes-vous sûr de vouloir supprimer cette menace?',
+        description: 'Fournissez une description de cette menace',
+        emptyThreat: 'Sélectionnez un élément du graphique pour ajouter une menace',
+        mitigation: 'Fournir des mesures de mitigation ou de prévention pour cette menace',
+        newThreat: 'Nouvelle Menace',
+        newThreatByType: 'Nouvelle Menace par Type',
+        newThreatByContext: 'Nouvelle Menace par Contexte',
         properties: {
             description: 'Description',
-            mitigation: 'Mesures d\'atténuation',
+            mitigation: 'Mesures de mitigation',
             modelType: 'Type de modèle',
-            number: 'Number',
+            number: 'Numéro',
             priority: 'Priorité',
             score: 'Score',
             status: 'Status',
@@ -269,7 +269,7 @@ const fr = {
         status: {
             notApplicable: 'N/A',
             open: 'Ouvrir',
-            mitigated: 'Atténué'
+            mitigated: 'Mitigé'
         },
         priority: {
             low: 'Faible',
@@ -279,35 +279,35 @@ const fr = {
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showOutOfScope: 'Afficher les éléments hors du domaine visé',
+            showMitigatedThreats: 'Afficher les menaces mitigées',
+            showModelDiagrams: 'Afficher les diagrammes du modèle',
+            showBranding: 'Afficher l\'icône de Threat Dragon'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'Rapport sur le modèle de menace pour',
+        dateGenerated: 'Date de Création',
+        executiveSummary: 'Résumé Exécutif',
+        notProvided: 'Non fourni',
+        summary: 'Résumé',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'Menaces Totales',
+            mitigated: 'Menaces Totales Mitigées',
+            notMitigated: 'Menaces Totales Non-Mitigées',
+            openHigh: 'Ouvert / Haute Priorité',
+            openMedium: 'Ouvert / Moyenne Priorité',
+            openLow: 'Ouvert / Faible Priorité',
+            openUnknown: 'Ouvert / Priorité Inconnue'
         }
     },
     upgrade: {
         modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+            header: 'Mise à jour du modèle de menace - Threat Model',
+            welcome: 'Bienvenue à la version 2 de OWASP Threat Dragon!',
+            p1: 'La version 2 utilise une bibliothèque de dessins différente, ce qui modifie la façon dont certaines parties de vos modèles de menace sont enregistrées. Bien que la plupart des diagrammes se présenteront de la même manière que dans les versions précédentes de Threat Dragon, il est possible que de légères modifications soient nécessaires dans certains cas.',
+            p2: 'Après avoir fermé cette fenêtre, vous verrez comment chaque diagramme de ce modèle est rendu dans le format de la version 2. Veuillez noter les diagrammes que vous devrez éventuellement ajuster. Il s\'agit d\'une mise à jour unique, et vous ne devriez plus voir ce message après avoir sauvegardé ce modèle.'
         },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+        instructions: 'Excellent! Allons à votre modèle.',
+        continue: 'Continuer au modèle de menace'
     }
 };
 
