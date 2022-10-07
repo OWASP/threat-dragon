@@ -13,7 +13,7 @@
             <b-col md=8 offset=2>
                 <b-form>
                     <b-form-row>
-                        <b-col>
+                        <b-col @drop.prevent="dropFile" @dragenter.prevent @dragover.prevent>
                             <b-form-group
                                 id="json-input-group"
                                 :label="$t('threatmodel.jsonPaste')"
@@ -80,6 +80,23 @@ export default {
                 threatmodel: jsonModel.summary.title
             });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
+        },
+        dropFile(e) {
+            if (e.dataTransfer.files.length === 1) {
+                let file = e.dataTransfer.files[0];
+                if (file.name.endsWith('.json')) {
+                    file.text()
+                        .then(text => {
+                            this.tmJson = text;
+                            this.onImportClick();
+                        })
+                        .catch(e => this.$toast.error(e));
+                } else {
+                    this.$toast.error(this.$t('threatmodel.onlyJsonAllowed'));
+                }
+            } else {
+                this.$toast.error(this.$t('threatmodel.dropSingleFileOnly'));
+            }
         },
         invalidJSONError() {
             this.$toast.error(this.$t('threatmodel.invalidJson'));
