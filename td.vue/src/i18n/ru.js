@@ -76,11 +76,8 @@ const ru = {
         contributorsPlaceholder: 'Start typing to add a contributor',
         description: 'High level system description',
         dragAndDrop: 'Drag and drop or ',
-        dropSingleFileOnly: 'Drag and drop requires a single file.',
         editing: 'Editing',
-        invalidJson: 'Invalid JSON. Please check your model and try again.',
         jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: 'Owner',
         reviewer: 'Reviewer',
         title: 'Title',
@@ -106,6 +103,9 @@ const ru = {
         },
         threats: 'Threats',
         errors: {
+            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            invalidJson: 'Invalid JSON. Please check your model and try again.',
+            onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Error saving the Threat Model. Check the developer console for more information'
         },

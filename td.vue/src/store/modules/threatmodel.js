@@ -139,8 +139,9 @@ const mutations = {
         if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);
         }
-        if (update.fileHandle) {
+        if (update.fileHandle || update.fileName) {
             Vue.set(state, 'fileHandle', update.fileHandle);
+            Vue.set(state, 'fileName', update.fileName);
         }
     }
 };

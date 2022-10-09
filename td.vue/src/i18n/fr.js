@@ -76,11 +76,8 @@ const fr = {
         contributorsPlaceholder: 'Ajouter un nouveau contributeur',
         description: 'Description de haut niveau du système',
         dragAndDrop: 'Glissez-déposez ou ',
-        dropSingleFileOnly: 'Drag and drop requires a single file.',
         editing: 'Modification',
-        invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
         jsonPaste: 'Collez le JSON de votre modèle de menace ici',
-        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: 'Auteur',
         reviewer: 'Réviseur',
         title: 'Titre',
@@ -106,6 +103,9 @@ const fr = {
         },
         threats: 'Menaces',
         errors: {
+            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
+            onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },

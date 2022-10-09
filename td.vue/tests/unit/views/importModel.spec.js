@@ -75,12 +75,12 @@ describe('ImportModel.vue', () => {
             wrapper.vm.onImportClick();
         });
 
-        it('dispatches the selected event', () => {
+        it('does not dispatch the selected event', () => {
             expect(mockStore.dispatch).not.toHaveBeenCalled();
         });
 
         it('creates a toast notification', () => {
-            expect(toast.error).toHaveBeenCalledWith('threatmodel.invalidJson');
+            expect(toast.error).toHaveBeenCalledWith('threatmodel.errors.invalidJson');
         });
     });
 });

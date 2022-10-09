@@ -13,7 +13,7 @@
             <b-col md=8 offset=2>
                 <b-form>
                     <b-form-row>
-                        <b-col @drop.prevent="dropFile" @dragenter.prevent @dragover.prevent>
+                        <b-col @drop.prevent="onDropFile" @dragenter.prevent @dragover.prevent>
                             <b-form-group
                                 id="json-input-group"
                                 label-for="json-input">
@@ -86,32 +86,32 @@ export default {
         };
     },
     methods: {
-        dropFile(e) {
+        onDropFile(e) {
             if (e.dataTransfer.files.length === 1) {
                 let file = e.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
+                            // store the file name for any future save
+                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
                             this.onImportClick();
                         })
                         .catch(e => this.$toast.error(e));
                 } else {
-                    this.$toast.error(this.$t('threatmodel.onlyJsonAllowed'));
+                    this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                 }
             } else {
-                this.$toast.error(this.$t('threatmodel.dropSingleFileOnly'));
+                this.$toast.error(this.$t('threatmodel.errors.dropSingleFileOnly'));
             }
-        },
-        invalidJSONError() {
-            this.$toast.error(this.$t('threatmodel.invalidJson'));
         },
         onImportClick() {
             let jsonModel;
             try {
                 jsonModel = JSON.parse(this.tmJson);
             } catch (e) {
-                this.invalidJSONError();
+                this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
+                console.error(e);
                 return;
             }
 
@@ -128,11 +128,17 @@ export default {
                     // returns an array of file handles
                     const [handle] = await window.showOpenFilePicker(pickerFileOptions);
                     let file = await handle.getFile();
-                    this.tmJson = await file.text();
-                    // store the file handle for any future save
-                    this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
-                } catch (err) {
-                    console.warn(this.$t('threatmodel.errors.open') + ': ' + err.message);
+                    if (file.name.endsWith('.json')) {
+                        this.tmJson = await file.text();
+                        // store the file handle for any future save
+                        this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
+                        this.onImportClick();
+                    } else {
+                        this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+                    }
+                } catch (e) {
+                    this.$toast.error(this.$t('threatmodel.errors.open'));
+                    console.error(e);
                 }
             } else {
                 this.$toast.error('Opening files on this browser is not supported yet, working on it soon');

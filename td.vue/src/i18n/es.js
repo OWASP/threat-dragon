@@ -76,11 +76,8 @@ const es = {
         contributorsPlaceholder: 'Agregar un nuevo colaborador',
         description: 'Descripción de alto nível del sistema (high level system)',
         dragAndDrop: 'Drag and drop or ',
-        dropSingleFileOnly: 'Drag and drop requires a single file.',
         editing: 'Edición',
-        invalidJson: 'JSON erróneo. Comproba su modelo y pegue otro vez',
         jsonPaste: 'Pegue el JSON de su modelo de amenazas aquí',
-        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: 'Propietario',
         reviewer: 'Revisor',
         title: 'Título',
@@ -106,6 +103,9 @@ const es = {
         },
         threats: 'Amenazas',
         errors: {
+            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            invalidJson: 'JSON erróneo. Comproba su modelo y pegue otro vez',
+            onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error al abrir el modelo de amenazas. Consulte la consola del desarrollador para obtener más información.',
             save: 'Error al cerrar el modelo de amenazas. Consulte la consola del desarrollador para obtener más información.'
         },
