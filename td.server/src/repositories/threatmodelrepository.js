@@ -1,28 +1,44 @@
 import github from 'octonode';
 
-const reposAsync = (page, accessToken) => github.client(accessToken).me().
+import env from '../env/Env.js';
+
+const getClient = (accessToken) => {
+    const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
+    if (enterpriseHostname) {
+        const port = env.get().config.GITHUB_ENTERPRISE_PORT;
+        const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL;
+        const enterpriseOpts = { hostname: `${enterpriseHostname}/api/v3` };
+        if (port) { enterpriseOpts.port = parseInt(port, 10); }
+        if (protocol) { enterpriseOpts.protocol = protocol; }
+
+        return github.client(accessToken, enterpriseOpts);
+    }
+    return github.client(accessToken);
+};
+
+const reposAsync = (page, accessToken) => getClient(accessToken).me().
 reposAsync(page);
 
 const userAsync = async (accessToken) => {
-    const resp = await github.client(accessToken).me().
+    const resp = await getClient(accessToken).me().
 infoAsync();
     return resp[0];
 };
 
 const branchesAsync = (repoInfo, accessToken) => {
-    const client = github.client(accessToken);
+    const client = getClient(accessToken);
     return client.repo(getRepoFullName(repoInfo)).branchesAsync(repoInfo.page);
 };
 
-const modelsAsync = (branchInfo, accessToken) => github.client(accessToken).
+const modelsAsync = (branchInfo, accessToken) => getClient(accessToken).
         repo(getRepoFullName(branchInfo)).
         contentsAsync('ThreatDragonModels', branchInfo.branch);
 
-const modelAsync = (modelInfo, accessToken) => github.client(accessToken).
+const modelAsync = (modelInfo, accessToken) => getClient(accessToken).
         repo(getRepoFullName(modelInfo)).
         contentsAsync(getModelPath(modelInfo), modelInfo.branch);
 
-const createAsync = (modelInfo, accessToken) => github.client(accessToken).
+const createAsync = (modelInfo, accessToken) => getClient(accessToken).
         repo(getRepoFullName(modelInfo)).
         createContentsAsync(
             getModelPath(modelInfo),
@@ -33,7 +49,7 @@ const createAsync = (modelInfo, accessToken) => github.client(accessToken).
 
 const updateAsync = async (modelInfo, accessToken) => {
     const content = await modelAsync(modelInfo, accessToken);
-    return github.client(accessToken).
+    return getClient(accessToken).
         repo(getRepoFullName(modelInfo)).
         updateContentsAsync(
             getModelPath(modelInfo),
@@ -46,7 +62,7 @@ const updateAsync = async (modelInfo, accessToken) => {
 
 const deleteAsync = async (modelInfo, accessToken) => {
     const content = await modelAsync(modelInfo, accessToken);
-    return github.client(accessToken).
+    return getClient(accessToken).
         repo(getRepoFullName(modelInfo)).
         deleteContentsAsync(
             getModelPath(modelInfo),

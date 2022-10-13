@@ -5,6 +5,7 @@
         :emptyStateText="$t('threatmodelSelect.newThreatModel')"
         :onEmptyStateClick="newThreatModel">
             {{ $t('threatmodelSelect.select') }}
+            <!-- Fixme: The href should get the configured hostname from env -->
             <a
                 :href="`https://www.github.com/${repoName}`"
                 target="_blank"

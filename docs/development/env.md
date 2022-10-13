@@ -159,8 +159,11 @@ ___
 {:.table .table-striped}
 | Key | Description | Default |
 | --- | ----------- | ------- |
-| GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
-| GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
+| GITHUB_ENTERPRISE_HOSTNAME | The fully qualified github enterprise instance hostname, e.g. github.example.com | |
+| GITHUB_ENTERPRISE_PORT | Optional if your github enterprise instance uses a nonstandard port | `443` |
+| GITHUB_ENTERPRISE_PROTOCOL | Optional if your github enterprise instance uses a nonstandard protocol | `https` |
+| GITHUB_CLIENT_ID | The client_id value for the GitHub (or Github Enterprise) OAuth app used for authentication | |
+| GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub (or Github Enterprise) OAuth app used for authentication | |
 | GITHUB_SCOPE | `repo` for access to private repos as well as public, or `public_repo` for access to public repos only | `public_repo` |
 | NODE_ENV | The node environment.  Typically either `production` or `development`.  The `secure` flag is only set on cookies if running in `production` mode. | |
 | ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data. | |
