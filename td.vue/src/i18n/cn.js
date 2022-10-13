@@ -76,11 +76,8 @@ const cn = {
         contributorsPlaceholder: '添加新的贡献者',
         description: '高级系统描述',
         dragAndDrop: 'Drag and drop or ',
-        dropSingleFileOnly: 'Drag and drop requires a single file.',
         editing: '编辑',
-        invalidJson: '无效的 JSON。请检查您的格式，然后重试。',
         jsonPaste: '在此处粘贴威胁模型的 JSON',
-        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: '所有者',
         reviewer: '审稿人',
         title: '标题',
@@ -106,6 +103,9 @@ const cn = {
         },
         threats: '威胁',
         errors: {
+            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            invalidJson: '无效的 JSON。请检查您的格式，然后重试。',
+            onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Error saving the Threat Model. Check the developer console for more information'
         },

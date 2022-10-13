@@ -13,7 +13,7 @@
             <b-col md=8 offset=2>
                 <b-form>
                     <b-form-row>
-                        <b-col @drop.prevent="dropFile" @dragenter.prevent @dragover.prevent>
+                        <b-col @drop.prevent="onDropFile" @dragenter.prevent @dragover.prevent>
                             <b-form-group
                                 id="json-input-group"
                                 label-for="json-input">
@@ -86,56 +86,72 @@ export default {
         };
     },
     methods: {
-        dropFile(e) {
+        onDropFile(e) {
             if (e.dataTransfer.files.length === 1) {
                 let file = e.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
+                            // store the file name for any future save
+                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
                             this.onImportClick();
                         })
                         .catch(e => this.$toast.error(e));
                 } else {
-                    this.$toast.error(this.$t('threatmodel.onlyJsonAllowed'));
+                    this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                 }
             } else {
-                this.$toast.error(this.$t('threatmodel.dropSingleFileOnly'));
+                this.$toast.error(this.$t('threatmodel.errors.dropSingleFileOnly'));
             }
-        },
-        invalidJSONError() {
-            this.$toast.error(this.$t('threatmodel.invalidJson'));
         },
         onImportClick() {
             let jsonModel;
             try {
                 jsonModel = JSON.parse(this.tmJson);
             } catch (e) {
-                this.invalidJSONError();
+                // this catches blatant JSON errors, not schema errors
+                this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
+                console.error(e);
                 return;
             }
 
+            // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
+
             this.$store.dispatch(tmActions.selected, jsonModel);
-            const params = Object.assign({}, this.$route.params, {
-                threatmodel: jsonModel.summary.title
-            });
+            let params;
+            // this will fail if the threat model does not have a title in the summary
+            try {
+                params = Object.assign({}, this.$route.params, {
+                    threatmodel: jsonModel.summary.title
+                });
+            } catch (e) {
+                this.$toast.error(this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
+                console.error(e);
+                return;
+            }
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
         async onOpenClick() {
             if ('showOpenFilePicker' in window) {
-                // Chrome and Edge browsers
+                // Chrome and Edge browsers return an array of file handles
                 try {
-                    // returns an array of file handles
                     const [handle] = await window.showOpenFilePicker(pickerFileOptions);
                     let file = await handle.getFile();
-                    this.tmJson = await file.text();
-                    // store the file handle for any future save
-                    this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
-                } catch (err) {
-                    console.warn(this.$t('threatmodel.errors.open') + ': ' + err.message);
+                    if (file.name.endsWith('.json')) {
+                        this.tmJson = await file.text();
+                        // store the file handle for any future save
+                        this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
+                        this.onImportClick();
+                    } else {
+                        this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+                    }
+                } catch (e) {
+                    this.$toast.error(this.$t('threatmodel.errors.open'));
+                    console.error(e);
                 }
             } else {
-                this.$toast.error('Opening files on this browser is not supported yet, working on it soon');
+                this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
             }
         }
     }

@@ -76,11 +76,8 @@ const el = {
         contributorsPlaceholder: 'Προσθήκη ενός νέου συνεισφέροντος',
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
         dragAndDrop: 'Drag and drop or ',
-        dropSingleFileOnly: 'Drag and drop requires a single file.',
         editing: 'Υπό επεξεργασία',
-        invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
         jsonPaste: 'Κάντε επικόλληση (Paste) του JSON από το μοντέλο απειλών σας εδώ',
-        onlyJsonAllowed: 'Only files that end with .json are supported.',
         owner: 'Ιδιοκτήτης',
         reviewer: 'Αξιολογητής',
         title: 'Τίτλος',
@@ -106,6 +103,9 @@ const el = {
         },
         threats: 'Απειλές',
         errors: {
+            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
+            onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
