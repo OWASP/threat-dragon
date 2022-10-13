@@ -28,7 +28,7 @@ const getGithubUrl = () => {
         return enterpriseUrl;
     }
     else {
-        return 'https://www.github.com';
+        return 'https://github.com';
     }
 }
 
