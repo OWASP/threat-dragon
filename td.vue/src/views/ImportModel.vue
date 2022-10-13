@@ -110,22 +110,32 @@ export default {
             try {
                 jsonModel = JSON.parse(this.tmJson);
             } catch (e) {
+                // this catches blatant JSON errors, not schema errors
                 this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
                 console.error(e);
                 return;
             }
 
+            // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
+
             this.$store.dispatch(tmActions.selected, jsonModel);
-            const params = Object.assign({}, this.$route.params, {
-                threatmodel: jsonModel.summary.title
-            });
+            let params;
+            // this will fail if the threat model does not have a title in the summary
+            try {
+                params = Object.assign({}, this.$route.params, {
+                    threatmodel: jsonModel.summary.title
+                });
+            } catch (e) {
+                this.$toast.error(this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
+                console.error(e);
+                return;
+            }
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
         async onOpenClick() {
             if ('showOpenFilePicker' in window) {
-                // Chrome and Edge browsers
+                // Chrome and Edge browsers return an array of file handles
                 try {
-                    // returns an array of file handles
                     const [handle] = await window.showOpenFilePicker(pickerFileOptions);
                     let file = await handle.getFile();
                     if (file.name.endsWith('.json')) {
@@ -141,7 +151,7 @@ export default {
                     console.error(e);
                 }
             } else {
-                this.$toast.error('Opening files on this browser is not supported yet, working on it soon');
+                this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
             }
         }
     }
