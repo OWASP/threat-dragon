@@ -18,13 +18,15 @@ It is used to draw threat modeling diagrams and to list threats for elements in 
 [Mike Goodwin](https://github.com/mike-goodwin) created Threat Dragon as an open source community project
 that provides an intuitive and accessible way to model threats.
 
-Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
+[Threat Dragon](https://threatdragon.github.io/about)
+is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
 ## Check it out
-The production release area, conforming to [semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
-Threat Dragon version 2.0 is still in development, but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
+There are [documentation pages](https://threatdragon.github.io/about) to guide you and the production release area, conforming to
+[semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
+The next version of Threat Dragon 2.0 is still in development, but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
 Also well worth watching the video provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
 ### Version 1.x Maintenance mode
