@@ -178,6 +178,9 @@ ___
 | ENCRYPTION_KEYS | The encryption keys used to encrypt any sensitive data | |
 | ENCRYPTION_JWT_SIGNING_KEY | The key used to sign JWTs | |
 | ENCRYPTION_JWT_REFRESH_SIGNING_KEY | The key used to sign refresh tokens. See below for rationale | |
+| GITHUB_ENTERPRISE_HOSTNAME | The fully qualified github enterprise instance hostname, e.g. github.example.com | |
+| GITHUB_ENTERPRISE_PORT | Optional if your github enterprise instance uses a nonstandard port | `443` |
+| GITHUB_ENTERPRISE_PROTOCOL | Optional if your github enterprise instance uses a nonstandard protocol | `https` |
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |

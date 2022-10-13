@@ -3,6 +3,7 @@
         :items="branches"
         :onItemClick="onBranchClick">
         {{ $t('branch.select') }}
+        <!-- Fixme: The href should get the configured hostname from env -->
         <a
             id="repo_link"
             :href="`https://www.github.com/${repoName}`"

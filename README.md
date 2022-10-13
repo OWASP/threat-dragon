@@ -84,7 +84,7 @@ Pnpm (rather than npm) is used to install from the top directory of the project 
 ### Environment variables
 
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
-register it as a GitHub application. There is a
+register it as a GitHub application. Github Enterprise is also supported. There is a
 [step by step guide](https://www.threatdragon.com/docs/development/env.html) on how to do this.
 
 You will also have to provide other environment variables, again following
