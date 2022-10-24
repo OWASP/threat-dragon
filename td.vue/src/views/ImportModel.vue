@@ -147,7 +147,9 @@ export default {
                         this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                     }
                 } catch (e) {
+                    // the error is most likely due to the picker being cancelled
                     this.$toast.error(this.$t('threatmodel.errors.open'));
+                    // ToDo: does this really need to be treated as an error?
                     console.error(e);
                 }
             } else {
