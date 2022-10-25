@@ -37,20 +37,20 @@ const cn = {
     },
     desktop: {
         file: {
-            heading: 'File',
-            close: 'Close Model',
-            open: 'Open Model',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: '文件',
+            close: '关闭模型',
+            open: '打开模型',
+            save: '保存模型',
+            saveAs: '模型另存为'
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            heading: '帮助',
+            docs: '文档',
+            visit: 'OWASP网站项目页面',
+            sheets: 'OWASP备忘录',
+            github: 'GitHub项目页面',
+            submit: '提交Issue',
+            check: '检查更新...'
         }
     },
     repository: {
@@ -75,7 +75,7 @@ const cn = {
         contributors: '贡献者',
         contributorsPlaceholder: '添加新的贡献者',
         description: '高级系统描述',
-        dragAndDrop: 'Drag and drop or ',
+        dragAndDrop: '拖放或',
         editing: '编辑',
         jsonPaste: '在此处粘贴威胁模型的 JSON',
         owner: '所有者',
@@ -85,32 +85,32 @@ const cn = {
             diagrams: '图表',
             addNewDiagram: '添加新图表...',
             generic: {
-                diagramTitle: 'New generic diagram',
-                select: 'Generic'
+                diagramTitle: '新通用图',
+                select: '通用'
             },
             stride: {
-                diagramTitle: 'New STRIDE diagram',
+                diagramTitle: '新STRIDE图',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'New LINDDUN diagram',
+                diagramTitle: '新LINDDUN图',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'New CIA diagram',
+                diagramTitle: '新CIA图',
                 select: 'CIA'
             }
         },
         threats: '威胁',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            dropSingleFileOnly: '只能拖放一个文件。',
             invalidJson: '无效的 JSON。请检查您的格式，然后重试。',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            onlyJsonAllowed: '只支持以.json结尾的文件。',
+            open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
+            save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: '成功打开威胁模型',
+        saved: '成功保存威胁模型',
         properties: {
             title: '特性',
             emptyState: '在图表上选择要编辑的元素',
@@ -129,7 +129,7 @@ const cn = {
             publicNetwork: '公共网络'
         },
         buttons: {
-            delete: 'Delete selected',
+            delete: '删除选中',
             redo: '重做',
             shortcuts: '键盘快捷键',
             toggleGrid: '切换网格',
@@ -168,13 +168,13 @@ const cn = {
                 action: '多选'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + mousewheel',
+                shortcut: '(ctrl/cmd) + 鼠标滚轮',
                 action: '缩放'
             }
         },
         stencil: {
             boundaries: '边界',
-            components: 'Components',
+            components: '组件',
             entities: '实体',
             metadata: '数据',
             search: '搜索',
@@ -191,35 +191,35 @@ const cn = {
         }
     },
     forms: {
-        apply: 'Apply',
+        apply: '应用',
         cancel: '取消',
         close: '关闭',
-        closeModel: 'Close Model',
+        closeModel: '关闭模型',
         delete: '删除',
         discardTitle: '放弃更改？',
         discardMessage: '您确定要放弃您的更改吗？',
         edit: '编辑',
         import: '导入',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
+        open: '打开',
+        openModel: '打开模型',
+        print: '打印',
         reload: '重新输入',
         remove: '删除',
         report: '报告',
         save: '保存',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
+        saveAs: '保存为',
+        saveModel: '保存模型',
+        saveModelAs: '模型保存为',
+        savePdf: '保存PDF',
         search: '搜索'
     },
     threats: {
         model: {
             cia: {
                 header: '--- CIA ---',
-                confidentiality: '保密',
-                integrity: 'Integrity',
+                confidentiality: '机密性',
+                integrity: '完整性',
                 availability: '可用性'
             },
             linddun: {
@@ -237,31 +237,31 @@ const cn = {
                 spoofing: '身份盗窃',
                 tampering: '伪造',
                 repudiation: '否认',
-                informationDisclosure: '信息披露',
+                informationDisclosure: '信息泄露',
                 denialOfService: '拒绝服务',
                 elevationOfPrivilege: '权限提升'
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            linddun: 'New LINDDUN threat',
-            stride: 'New STRIDE threat'
+            default: '新通用威胁',
+            cia: '新CIA威胁',
+            linddun: '新LINDDUN威胁',
+            stride: '新STRIDE威胁'
         },
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',
         confirmDeleteMessage: '您确定要删除此威胁吗？',
-        description: 'Provide a description for this threat',
+        description: '为这种威胁提供一个描述',
         emptyThreat: '在图表上选择一个元素来添加威胁',
-        mitigation: 'Provide mitigation or prevention for this threat',
+        mitigation: '为这种威胁提供缓解或预防措施',
         newThreat: '新增威胁',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        newThreatByType: '按类型划分的新威胁',
+        newThreatByContext: '按关系划分的新威胁',
         properties: {
             description: '描述',
             mitigation: '缓解措施',
             modelType: '模型类型',
-            number: 'Number',
+            number: '编号',
             priority: '优先级',
             score: 'Score',
             status: '状态',
@@ -281,35 +281,35 @@ const cn = {
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showOutOfScope: '显示范围外的元素',
+            showMitigatedThreats: '显示已缓解的威胁',
+            showModelDiagrams: '显示模型图',
+            showBranding: '显示Threat Dragon形象'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: '威胁模型报告用于',
+        dateGenerated: '生成日期',
+        executiveSummary: '内容提要',
+        notProvided: '未提供',
+        summary: '摘要',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: '威胁总数',
+            mitigated: '已缓解总数',
+            notMitigated: '未缓解',
+            openHigh: '打开/高优先级',
+            openMedium: '打开/中优先级',
+            openLow: '打开/低优先级',
+            openUnknown: '打开/未知优先级'
         }
     },
     upgrade: {
         modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+            header: '威胁模型更新',
+            welcome: '欢迎来到OWASP Threat Dragon第2版!',
+            p1: '第二版使用不同的绘图库，这将改变你的威胁模型的部分保存方式。虽然大多数图看起来与以前版本的Threat Dragon相同，但在有些情况下可能需要稍作调整。',
+            p2: '关闭这个模式后，你会看到这个模型中的每个图是如何以第二版格式呈现的。请注意你可能需要调整的任何图表。这是一个一次性的升级，在保存这个模型后，你不应该再看到这个信息。'
         },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+        instructions: '完美! 让我们来看看你的模型。',
+        continue: '继续威胁模型'
     }
 };
 
