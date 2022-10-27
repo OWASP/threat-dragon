@@ -46,7 +46,7 @@ const cn = {
         help: {
             heading: '帮助',
             docs: '文档',
-            visit: 'OWASP网站项目页面',
+            visit: 'OWASP网站上项目页面',
             sheets: 'OWASP备忘录',
             github: 'GitHub项目页面',
             submit: '提交Issue',
@@ -61,23 +61,23 @@ const cn = {
     branch: {
         select: '选择一个分支',
         from: '从下面列表或',
-        chooseRepo: '选择另一个回购'
+        chooseRepo: '选择另一个源'
     },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',
         from: '从下面列表中，或选择另一个',
         branch: '分支',
         or: '或者',
-        repo: '回购',
+        repo: '源',
         newThreatModel: '创建新的威胁模型'
     },
     threatmodel: {
         contributors: '贡献者',
         contributorsPlaceholder: '添加新的贡献者',
-        description: '高级系统描述',
+        description: '详细系统描述',
         dragAndDrop: '拖放或',
         editing: '编辑',
-        jsonPaste: '在此处粘贴威胁模型的 JSON',
+        jsonPaste: '在此处粘贴威胁模型的JSON',
         owner: '所有者',
         reviewer: '审稿人',
         title: '标题',
@@ -104,7 +104,7 @@ const cn = {
         threats: '威胁',
         errors: {
             dropSingleFileOnly: '只能拖放一个文件。',
-            invalidJson: '无效的 JSON。请检查您的格式，然后重试。',
+            invalidJson: '无效的JSON。请检查您的格式，然后重试。',
             onlyJsonAllowed: '只支持以.json结尾的文件。',
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
@@ -112,7 +112,7 @@ const cn = {
         opened: '成功打开威胁模型',
         saved: '成功保存威胁模型',
         properties: {
-            title: '特性',
+            title: '组件',
             emptyState: '在图表上选择要编辑的元素',
             name: '名称',
             text: '文本',
@@ -224,18 +224,18 @@ const cn = {
             },
             linddun: {
                 header: '--- LINDDUN ---',
-                linkability: '链接能力',
+                linkability: '可链接性',
                 identifiability: '可识别性',
                 nonRepudiation: '不可否认性',
                 detectability: '可检测性',
-                disclosureOfInformation: '信息披露',
-                unawareness: '无意识',
-                nonCompliance: '不合规'
+                disclosureOfInformation: '信息泄露',
+                unawareness: '不了解',
+                nonCompliance: '不遵守规定'
             },
             stride: {
                 header: '--- STRIDE ---',
-                spoofing: '身份盗窃',
-                tampering: '伪造',
+                spoofing: '欺骗',
+                tampering: '篡改',
                 repudiation: '否认',
                 informationDisclosure: '信息泄露',
                 denialOfService: '拒绝服务',
@@ -263,15 +263,15 @@ const cn = {
             modelType: '模型类型',
             number: '编号',
             priority: '优先级',
-            score: 'Score',
+            score: '评分',
             status: '状态',
             title: '标题',
             type: '类型'
         },
         status: {
             notApplicable: '不适用',
-            open: '打开',
-            mitigated: '减轻'
+            open: '未解决',
+            mitigated: '缓解'
         },
         priority: {
             low: '低',
@@ -286,7 +286,7 @@ const cn = {
             showModelDiagrams: '显示模型图',
             showBranding: '显示Threat Dragon形象'
         },
-        title: '威胁模型报告用于',
+        title: '威胁模型报告来自',
         dateGenerated: '生成日期',
         executiveSummary: '内容提要',
         notProvided: '未提供',
@@ -295,10 +295,10 @@ const cn = {
             total: '威胁总数',
             mitigated: '已缓解总数',
             notMitigated: '未缓解',
-            openHigh: '打开/高优先级',
-            openMedium: '打开/中优先级',
-            openLow: '打开/低优先级',
-            openUnknown: '打开/未知优先级'
+            openHigh: '未解决/高优先级',
+            openMedium: '未解决/中优先级',
+            openLow: '未解决/低优先级',
+            openUnknown: '未解决/未知优先级'
         }
     },
     upgrade: {
