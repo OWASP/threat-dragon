@@ -62,7 +62,7 @@ export default {
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
-        providerType: state => getProviderType(state.provider.selected)
+        providerType: (state) => getProviderType(state.provider.selected)
     }),
     data() {
         return {

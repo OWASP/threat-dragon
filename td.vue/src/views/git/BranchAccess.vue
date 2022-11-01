@@ -31,10 +31,10 @@ export default {
         TdSelectionPage
     },
     computed: mapState({
-        branches: state => state.branch.all,
-        provider: state => state.provider.selected,
-        providerType: state => getProviderType(state.provider.selected),
-        repoName: state => state.repo.selected
+        branches: (state) => state.branch.all,
+        provider: (state) => state.provider.selected,
+        providerType: (state) => getProviderType(state.provider.selected),
+        repoName: (state) => state.repo.selected
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {

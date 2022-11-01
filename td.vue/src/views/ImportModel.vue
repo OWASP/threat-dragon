@@ -76,7 +76,7 @@ export default {
     },
     computed: {
         ...mapState({
-            providerType: state => getProviderType(state.provider.selected)
+            providerType: (state) => getProviderType(state.provider.selected)
         }),
         prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
     },

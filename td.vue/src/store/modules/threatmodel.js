@@ -40,14 +40,6 @@ const setThreatModel = (theState, threatModel) => {
     theState.immutableCopy = JSON.stringify(threatModel);
 };
 
-const pickerFileOptions = {
-    suggestedName: 'new-model.json',
-    types: [
-        { description: 'Threat models', accept: { 'text/*': ['.json'] } }
-    ],
-    multiple: false
-};
-
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CREATE]: ({ commit }, threatModel) => commit(THREATMODEL_CREATE, threatModel),
@@ -98,47 +90,6 @@ const actions = {
                     state.data
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved'));
-            } else if ('showSaveFilePicker' in window) {
-                let fileHandle = state.fileHandle;
-                if (fileHandle) {
-                    console.log('save with the existing fileHandle');
-                } else {
-                    fileHandle = await window.showSaveFilePicker(pickerFileOptions);
-                    console.log('save without an existing fileHandle');
-                    dispatch(THREATMODEL_UPDATE, { fileHandle: fileHandle });
-                    const file = await fileHandle.getFile();
-                    const contents = await file.text();
-                    console.log('file contents ' + contents);
-                }
-                if ((await fileHandle.queryPermission()) === 'granted')
-                {
-                    console.log('permission granted for existing file fileHandle');
-                    const writable = await fileHandle.createWritable();
-                } else {
-                    console.log('NO permissions for existing file fileHandle');
-                }
-                if ((await fileHandle.queryPermission({ mode: 'read' })) === 'granted')
-                {
-                    console.log('read permissions for existing file fileHandle');
-                } else {
-                    console.log('NO read permissions for existing file fileHandle');
-                }
-                if ((await fileHandle.queryPermission({ mode: 'readwrite' })) === 'granted')
-                {
-                    console.log('readwrite permissions for existing file fileHandle');
-                } else {
-                    console.log('NO readwrite permissions for existing file fileHandle');
-                    await fileHandle.requestPermission(pickerFileOptions);
-	                if ((await fileHandle.queryPermission({ mode: 'readwrite' })) === 'granted')
-	                {
-	                    console.log('readwrite permissions for existing file fileHandle on retry');
-	                } else {
-	                    console.log('NO readwrite permissions for existing file fileHandle on retry');
-	                }
-                }
-                 //const writableStream = await fileHandle.createWritable();
-                 //await writableStream.write(state.data);
-                 //await writableStream.close();
             } else {
                 console.log('save as a download file');
                 save.local(state.data, `${state.data.summary.title}.json`);
