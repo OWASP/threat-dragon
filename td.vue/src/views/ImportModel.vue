@@ -86,9 +86,9 @@ export default {
         };
     },
     methods: {
-        onDropFile(e) {
-            if (e.dataTransfer.files.length === 1) {
-                let file = e.dataTransfer.files[0];
+        onDropFile(event) {
+            if (event.dataTransfer.files.length === 1) {
+                let file = event.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
                         .then(text => {
@@ -149,8 +149,8 @@ export default {
                 } catch (e) {
                     // the error is most likely due to the picker being cancelled
                     this.$toast.error(this.$t('threatmodel.errors.open'));
-                    // ToDo: does this really need to be treated as an error?
-                    console.error(e);
+                    // just warning: most likely benign
+                    console.warn(e);
                 }
             } else {
                 this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
