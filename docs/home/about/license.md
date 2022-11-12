@@ -1,8 +1,8 @@
 ---
 layout: page
 title: License
-nav_order: 2
 path: /about/license
+nav_order: 3
 group: About
 ---
                                  Apache License
