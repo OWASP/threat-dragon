@@ -47,17 +47,17 @@ header_links:
 
 # TODO: Update relative_urls
 homeLinks:
-  - relative_url: /usage/install/desktop
+  - relative_url: /usage/install/desktop.html
     description: Download the Desktop Application
     fa_class: fas fa-cloud-download-alt
-  - relative_url: /usage/modeling/gettingstarted
+  - relative_url: /usage/modeling/gettingstarted.html
     description: Getting started with Threat Dragon
     fa_class: fas fa-play-circle
-  - relative_url: /usage/modeling/diagrams
+  - relative_url: /usage/modeling/diagrams.html
     description: How to use Diagrams
     fa_class: fas fa-project-diagram
-  - relative_url: /usage/modeling/threats
-    description: Rules Used for Threat Generation
+  - relative_url: /usage/modeling/threats.html
+    description: How to generate Threats
     fa_class: fas fa-bolt
 
 nav:
