@@ -1,3 +1,13 @@
+---
+layout: page
+title: Code of Conduct
+path: /about/conduct
+nav_order: 4
+group: About
+---
+
+## [OWASP](https://www.owasp.org) Threat Dragon
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
