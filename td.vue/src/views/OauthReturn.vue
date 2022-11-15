@@ -12,7 +12,7 @@ import loginApi from '@/service/api/loginApi.js';
 export default {
     name: 'OAuthReturn',
     computed: mapState({
-        provider: state => state.provider.selected
+        provider: (state) => state.provider.selected
     }),
     async mounted() {
         try {

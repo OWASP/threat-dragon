@@ -35,12 +35,12 @@ export default {
         TdSelectionPage
     },
     computed: mapState({
-        branch: state => state.branch.selected,
-        provider: state => state.provider.selected,
-        providerType: state => getProviderType(state.provider.selected),
-        repoName: state => state.repo.selected,
-        threatModels: state => state.threatmodel.all,
-        selectedModel: state => state.threatmodel.data
+        branch: (state) => state.branch.selected,
+        provider: (state) => state.provider.selected,
+        providerType: (state) => getProviderType(state.provider.selected),
+        repoName: (state) => state.repo.selected,
+        threatModels: (state) => state.threatmodel.all,
+        selectedModel: (state) => state.threatmodel.data
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {

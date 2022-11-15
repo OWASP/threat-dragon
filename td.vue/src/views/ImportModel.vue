@@ -76,7 +76,7 @@ export default {
     },
     computed: {
         ...mapState({
-            providerType: state => getProviderType(state.provider.selected)
+            providerType: (state) => getProviderType(state.provider.selected)
         }),
         prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
     },
@@ -86,9 +86,9 @@ export default {
         };
     },
     methods: {
-        onDropFile(e) {
-            if (e.dataTransfer.files.length === 1) {
-                let file = e.dataTransfer.files[0];
+        onDropFile(event) {
+            if (event.dataTransfer.files.length === 1) {
+                let file = event.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
                         .then(text => {
@@ -147,8 +147,10 @@ export default {
                         this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                     }
                 } catch (e) {
+                    // the error is most likely due to the picker being cancelled
                     this.$toast.error(this.$t('threatmodel.errors.open'));
-                    console.error(e);
+                    // just warning: most likely benign
+                    console.warn(e);
                 }
             } else {
                 this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');

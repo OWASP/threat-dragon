@@ -41,7 +41,7 @@ export default {
         TdDashboardAction
     },
     computed: mapState({
-        actions: state => getDashboardActions(state.provider.selected)
+        actions: (state) => getDashboardActions(state.provider.selected)
     })
 };
 </script>

@@ -21,9 +21,9 @@ export default {
         TdSelectionPage
     },
     computed: mapState({
-        provider: state => state.provider.selected,
-        providerType: state => getProviderType(state.provider.selected),
-        repositories: state => state.repo.all
+        provider: (state) => state.provider.selected,
+        providerType: (state) => getProviderType(state.provider.selected),
+        repositories: (state) => state.repo.all
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {

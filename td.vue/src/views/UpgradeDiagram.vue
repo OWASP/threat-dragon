@@ -78,8 +78,8 @@ export default {
     computed: {
         ...mapState({
             model: (state) => state.threatmodel.data,
-            providerType: state => getProviderType(state.provider.selected),
-            version: state => state.packageBuildVersion
+            providerType: (state) => getProviderType(state.provider.selected),
+            version: (state) => state.packageBuildVersion
         })
     },
     mounted() {

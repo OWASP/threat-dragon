@@ -102,7 +102,7 @@ export default {
     },
     computed: mapState({
         model: (state) => state.threatmodel.data,
-        providerType: state => getProviderType(state.provider.selected)
+        providerType: (state) => getProviderType(state.provider.selected)
     }),
     methods: {
         onEditClick(evt) {

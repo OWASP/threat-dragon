@@ -11,8 +11,8 @@ import tmActions from '@/store/actions/threatmodel.js';
 export default {
     name: 'NewThreatModel',
     computed: mapState({
-        providerType: state => getProviderType(state.provider.selected),
-        version: 'packageBuildVersion'
+        providerType: (state) => getProviderType(state.provider.selected),
+        version: (state) => state.packageBuildVersion
     }),
     mounted() {
         this.$store.dispatch(tmActions.clear);
