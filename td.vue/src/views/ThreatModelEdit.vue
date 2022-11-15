@@ -212,7 +212,7 @@ export default {
                 // desktop version always saves locally
                 console.warn('Save for desktop version is not yet implemented');
                 this.$toast.warning(this.$t('threatmodel.errors.save'));
-                window.electronAPI.saveModel(/*model*/);
+                window.electronAPI.saveModel();
             } else {
                 // web app version saves to repo or as a download file
                 await this.$store.dispatch(THREATMODEL_SAVE);

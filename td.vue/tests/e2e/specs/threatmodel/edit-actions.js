@@ -66,7 +66,7 @@ describe('editing a threat model', () => {
         });
     });
 
-    describe('save', () => {
+    describe.skip('save', () => {
         // TODO: Write better tests after implementation details of saving locally are determined
         it('returns to the threat model view', () => {
             cy.get('#title').clear().type(newName);

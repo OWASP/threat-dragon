@@ -96,7 +96,8 @@ function handleUpdateMenu (_event, locale) {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-function handleSaveModel (_event/*, model*/) {
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
+function handleSaveModel (_event) {
     log.debug('Saving model to local file');
 }
 
