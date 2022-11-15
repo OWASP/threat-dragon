@@ -85,6 +85,7 @@ app.on('ready', async () => {
     }
 
     ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.on('save-model', handleSaveModel);
     createWindow();
 });
 
@@ -93,6 +94,10 @@ function handleUpdateMenu (_event, locale) {
     setLocale(locale);
     let template = getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
+function handleSaveModel (_event/*, model*/) {
+    log.debug('Saving model to local file');
 }
 
 // Exit cleanly on request from parent process in development mode.
