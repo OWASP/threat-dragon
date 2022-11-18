@@ -56,10 +56,10 @@
 <script>
 import { mapState } from 'vuex';
 
+import env from '@/service/env.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 // only search for text files
 const pickerFileOptions = {
@@ -93,8 +93,6 @@ export default {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
-                            // store the file name for any future save
-                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
                             this.onImportClick();
                         })
                         .catch(e => this.$toast.error(e));
@@ -103,6 +101,35 @@ export default {
                 }
             } else {
                 this.$toast.error(this.$t('threatmodel.errors.dropSingleFileOnly'));
+            }
+        },
+        async onOpenClick() {
+            if (env.isElectron()) {
+                const file = await window.electronAPI.openModel();
+                console.warn('Opened model with file path: ', file.path);
+                console.warn('Opened model with file text: ', file.text);
+                this.tmJson = 'dummy text';
+                this.onImportClick();
+            } else {
+                if ('showOpenFilePicker' in window) {
+                    // Chrome and Edge browsers return an array of file handles
+                    try {
+                        const [handle] = await window.showOpenFilePicker(pickerFileOptions);
+                        let file = await handle.getFile();
+                        if (file.name.endsWith('.json')) {
+                            this.tmJson = await file.text();
+                            this.onImportClick();
+                        } else {
+                            this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+                        }
+                    } catch (e) {
+                        // any error is most likely due to the picker being cancelled, which is benign so just warn 
+                        this.$toast.warning(this.$t('threatmodel.errors.open'));
+                        console.warn(e);
+                    }
+                } else {
+                    this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
+                }
             }
         },
         onImportClick() {
@@ -118,6 +145,7 @@ export default {
 
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
 
+            // save the threat model in the store
             this.$store.dispatch(tmActions.selected, jsonModel);
             let params;
             // this will fail if the threat model does not have a title in the summary
@@ -131,30 +159,6 @@ export default {
                 return;
             }
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
-        },
-        async onOpenClick() {
-            if ('showOpenFilePicker' in window) {
-                // Chrome and Edge browsers return an array of file handles
-                try {
-                    const [handle] = await window.showOpenFilePicker(pickerFileOptions);
-                    let file = await handle.getFile();
-                    if (file.name.endsWith('.json')) {
-                        this.tmJson = await file.text();
-                        // store the file handle for any future save
-                        this.$store.dispatch(THREATMODEL_UPDATE, { fileHandle: handle });
-                        this.onImportClick();
-                    } else {
-                        this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
-                    }
-                } catch (e) {
-                    // the error is most likely due to the picker being cancelled
-                    this.$toast.error(this.$t('threatmodel.errors.open'));
-                    // just warning: most likely benign
-                    console.warn(e);
-                }
-            } else {
-                this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
-            }
         }
     }
 

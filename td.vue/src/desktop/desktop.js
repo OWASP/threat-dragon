@@ -3,7 +3,7 @@
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { getMenuTemplate, setLocale } from './menu.js';
+import { getMenuTemplate, modelClosed, setLocale } from './menu.js';
 import { log } from './logger.js';
 
 const path = require('path');
@@ -26,12 +26,19 @@ async function createWindow () {
     const win = new BrowserWindow({
         width: 1400,
         height: 900,
+        show: false,
         webPreferences: {
             enableRemoteModule: false,
             nodeIntegration: false,
             contextIsolation: true,
             preload: path.join(__static, 'preload.js')
         }
+    });
+
+    // Event listeners on the window
+    win.webContents.on('did-finish-load', () => {
+        win.show();
+        win.focus();
     });
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -85,7 +92,10 @@ app.on('ready', async () => {
     }
 
     ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.handle('dialog:openModel', handleOpenModel);
     ipcMain.on('save-model', handleSaveModel);
+    ipcMain.on('close-model', handleCloseModel);
+
     createWindow();
 });
 
@@ -96,9 +106,18 @@ function handleUpdateMenu (_event, locale) {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-/*eslint no-unused-vars: ["error", { "args": "none" }]*/
-function handleSaveModel (_event) {
-    log.debug('Saving model to local file');
+function handleOpenModel (event) {
+    log.debug('Open model requested from renderer frame: ' + event.senderFrame);
+    return { path: 'dummy-file-path', text: 'dummy text is here' };
+}
+
+function handleSaveModel (event) {
+    log.debug('Save model from renderer frame: ' + event.senderFrame);
+}
+
+function handleCloseModel (event) {
+    log.debug('Close model event from renderer frame: ' + event.senderFrame);
+    modelClosed();
 }
 
 // Exit cleanly on request from parent process in development mode.

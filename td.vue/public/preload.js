@@ -2,5 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
-    saveModel: (/*model*/) => ipcRenderer.send('save-model')
+    openModel: () => ipcRenderer.invoke('dialog:openModel'),
+    saveModel: () => ipcRenderer.send('save-model'),
+    closeModel: () => ipcRenderer.send('close-model')
 });

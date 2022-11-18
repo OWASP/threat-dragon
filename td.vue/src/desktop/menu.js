@@ -1,12 +1,12 @@
 'use strict';
 
-import { dialog } from 'electron';
+import { app, dialog } from 'electron';
 import { log } from './logger.js';
 
 const isMacOS = process.platform === 'darwin';
 
 const { shell } = require('electron');
-const providerType = 'local';
+const fs = require('fs');
 
 // access the i18n message strings
 import el from '../i18n/el.js';
@@ -22,6 +22,10 @@ const zh = cn;
 const messages = { el, en, es, cn, de, fr, pt, ru, zh};
 var language = 'en';
 
+var model = {};
+var filePath = '';
+var isOpen = false;
+
 export function getMenuTemplate () {
     return [
         ...(isMacOS ? [{ role: 'appMenu' }] : []),
@@ -31,7 +35,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.open,
                     click () {
-                        openThreatModel();
+                        openModel();
                     }
                 },
                 {
@@ -43,19 +47,19 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.save,
                     click () {
-                        saveThreatModel();
+                        saveModel();
                     }
                 },
                 {
                     label: messages[language].desktop.file.saveAs,
                     click () {
-                        saveAsThreatModel();
+                        saveAsModel();
                     }
                 },
                 {
                     label: messages[language].desktop.file.close,
                     click () {
-                        closeThreatModel();
+                        closeModel();
                     }
                 },
                 { type: 'separator' },
@@ -112,15 +116,23 @@ export function getMenuTemplate () {
     ];
 }
 
-// close the model using modal dialog if changed
-function closeThreatModel () {
-    log.debug('Close ' + providerType + ' model file, redirect to /dashboard/');
-    dialog.showErrorBox('Not yet implemented', 'Close model file TBD for ' + providerType);
+// close the model
+function closeModel () {
+    log.info(messages[language].desktop.file.close + ': ' + filePath);
+    // TODO: send an empty model to the renderer
+    modelClosed();
 }
 
-// Open file system dialog
-function openThreatModel () {
-    log.debug('Open File redirected to /${providerType}/threatmodel/import');
+// clear out the model
+export function modelClosed () {
+    model = '';
+    filePath = '';
+    isOpen = false;
+}
+
+// Open file system dialog and read file contents into model
+function openModel () {
+    // TODO check that an existing file is not open and modified
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -130,7 +142,22 @@ function openThreatModel () {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            log.info(messages[language].threatmodel.opened + ': ' + result.filePath);
+            filePath = result.filePaths[0];
+            log.info(messages[language].desktop.file.open + ': ' + filePath);
+            fs.readFile(filePath, (err, data) => {
+                if (!err) {
+                    // TODO: send the model to the renderer
+                    model = data.toJSON();
+                    isOpen = true;
+                    // add the file name to the recent file list
+                    app.addRecentDocument(filePath);
+                } else {
+                    log.warn(messages[language].threatmodel.errors.open + ': ' + err);
+                    isOpen = false;
+                }
+            });
+        } else {
+            log.debug(messages[language].desktop.file.open + ' canceled');
         }
     }).catch(err => {
         log.warn(messages[language].threatmodel.errors.open + ': ' + err);
@@ -138,27 +165,41 @@ function openThreatModel () {
 }
 
 // save the model catching any errors
-function saveThreatModel () {
-    log.debug('Save ' + providerType + ' model file');
+function saveModel () {
     // if threat model exists, save to file system without dialog
-    dialog.showErrorBox('Not yet implemented', 'Save model file TBD for ' + providerType);
+    if (isOpen === true) {
+        log.info(messages[language].threatmodel.saved + ': ' + filePath);
+        // TODO: get the model from the renderer
+        model = 'dummy data read from renderer';
+        fs.writeFile(filePath, model, (err) => {
+            if (err) {
+                log.error(messages[language].threatmodel.errors.save + ': ' + err);
+            }
+        });
+    } else {
+        // quietly ignore
+        log.debug(messages[language].desktop.file.save + ': empty file');
+    }
 }
 
-// SaveAs file system dialog
-function saveAsThreatModel () {
-    dialog.showSaveDialog({
+// Open saveAs file system dialog and write contents to new file location
+function saveAsModel () {
+    var dialogOptions = {
         title: messages[language].desktop.file.saveAs,
-        properties: ['showHiddenFiles'],
-        filters: [
-            { name: 'Threat Model', extensions: ['json'] },
-            { name: 'All Files', extensions: ['*'] }
-        ]
-    }).then(result => {
+        filters: [{ name: 'Threat Model', extensions: ['json'] }, { name: 'All Files', extensions: ['*'] }]
+    };
+
+    dialog.showSaveDialog(dialogOptions).then(result => {
         if (result.canceled === false) {
-            log.info(messages[language].threatmodel.saved + ': ' + result.filePath);
+            filePath = result.filePaths[0];
+            isOpen = true;
+            log.info(messages[language].desktop.file.saveAs + ': ' + filePath);
+            saveModel();
+        } else {
+            log.debug(messages[language].desktop.file.saveAs + ' canceled');
         }
     }).catch(err => {
-        log.warn(messages[language].threatmodel.errors.save + ': ' + err);
+        log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
     });
 }
 
@@ -168,5 +209,6 @@ export const setLocale = (locale) => {
 
 export default {
     getMenuTemplate,
+    modelClosed,
     setLocale
 };
