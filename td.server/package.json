@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon-server",
   "version": "2.0.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "build": "npm-run-all clean:dist transpile",
     "clean": "rimraf *.log .nyc_output/ coverage/ dist/ node_modules/",
