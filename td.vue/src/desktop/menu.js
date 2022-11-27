@@ -1,6 +1,7 @@
 'use strict';
 
 import { app, dialog } from 'electron';
+import path from 'path';
 import { log } from './logger.js';
 
 const isMacOS = process.platform === 'darwin';
@@ -23,9 +24,12 @@ const messages = { el, en, es, cn, de, fr, pt, ru, zh};
 var language = 'en';
 
 var model = {};
+var defaultDirectory = '';
 var filePath = '';
 var isOpen = false;
 
+// When a file is requested from the recent documents menu
+// the open-file event of app module will be emitted for it
 export function getMenuTemplate () {
     return [
         ...(isMacOS ? [{ role: 'appMenu' }] : []),
@@ -53,7 +57,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.saveAs,
                     click () {
-                        saveAsModel();
+                        saveModelAs();
                     }
                 },
                 {
@@ -149,8 +153,7 @@ function openModel () {
                     // TODO: send the model to the renderer
                     model = data.toJSON();
                     isOpen = true;
-                    // add the file name to the recent file list
-                    app.addRecentDocument(filePath);
+                    addRecent();
                 } else {
                     log.warn(messages[language].threatmodel.errors.open + ': ' + err);
                     isOpen = false;
@@ -161,6 +164,7 @@ function openModel () {
         }
     }).catch(err => {
         log.warn(messages[language].threatmodel.errors.open + ': ' + err);
+        isOpen = false;
     });
 }
 
@@ -183,24 +187,34 @@ function saveModel () {
 }
 
 // Open saveAs file system dialog and write contents to new file location
-function saveAsModel () {
+function saveModelAs () {
     var dialogOptions = {
         title: messages[language].desktop.file.saveAs,
+        defaultPath: path.join(defaultDirectory, 'new-model.json'),
         filters: [{ name: 'Threat Model', extensions: ['json'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {
         if (result.canceled === false) {
-            filePath = result.filePaths[0];
+            filePath = result.filePath;
             isOpen = true;
-            log.info(messages[language].desktop.file.saveAs + ': ' + filePath);
+            log.debug(messages[language].desktop.file.saveAs + ': ' + filePath);
+            addRecent();
             saveModel();
         } else {
             log.debug(messages[language].desktop.file.saveAs + ' canceled');
         }
     }).catch(err => {
         log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
+        isOpen = false;
     });
+}
+
+// Add the file to the recent list, and update default directory
+function addRecent () {
+    // add the file name to the recent file list
+    app.addRecentDocument(filePath);
+    defaultDirectory = path.dirname(filePath);
 }
 
 export const setLocale = (locale) => {
