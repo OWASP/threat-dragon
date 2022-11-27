@@ -120,20 +120,6 @@ export function getMenuTemplate () {
     ];
 }
 
-// close the model
-function closeModel () {
-    log.info(messages[language].desktop.file.close + ': ' + filePath);
-    // TODO: send an empty model to the renderer
-    modelClosed();
-}
-
-// clear out the model
-export function modelClosed () {
-    model = '';
-    filePath = '';
-    isOpen = false;
-}
-
 // Open file system dialog and read file contents into model
 function openModel () {
     // TODO check that an existing file is not open and modified
@@ -187,8 +173,11 @@ function saveModel () {
 }
 
 // Open saveAs file system dialog and write contents to new file location
-function saveModelAs () {
-	const newName = 'new-model.json';
+function saveModelAs (fileName) {
+	var newName = 'new-model.json';
+	if (fileName) {
+        newName = fileName;
+    }
     var dialogOptions = {
         title: messages[language].desktop.file.saveAs,
         defaultPath: path.join(fileDirectory, newName),
@@ -211,11 +200,35 @@ function saveModelAs () {
     });
 }
 
+// close the model
+function closeModel () {
+    log.info(messages[language].desktop.file.close + ': ' + filePath);
+    // TODO: send an empty model to the renderer
+    modelClosed();
+}
+
 // Add the file to the recent list, and update default directory
 function addRecent () {
     // add the file name to the recent file list
     app.addRecentDocument(filePath);
     fileDirectory = path.dirname(filePath);
+}
+
+// the renderer has requested to save the model with a filename
+export function modelSaved (fileName) {
+    // if the filePath is empty then this is the first time this has been requested
+    if (!filePath || filePath === '') {
+        saveModelAs(fileName);
+    } else {
+        saveModel();
+    }
+}
+
+// clear out the model
+export function modelClosed () {
+    model = '';
+    filePath = '';
+    isOpen = false;
 }
 
 export const setLocale = (locale) => {
@@ -225,5 +238,6 @@ export const setLocale = (locale) => {
 export default {
     getMenuTemplate,
     modelClosed,
+    modelSaved,
     setLocale
 };

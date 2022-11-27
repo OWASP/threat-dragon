@@ -3,7 +3,7 @@
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { getMenuTemplate, modelClosed, setLocale } from './menu.js';
+import { getMenuTemplate, modelClosed, modelSaved, setLocale } from './menu.js';
 import { log } from './logger.js';
 
 const path = require('path');
@@ -93,8 +93,8 @@ app.on('ready', async () => {
 
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.handle('dialog:openModel', handleOpenModel);
-    ipcMain.on('save-model', handleSaveModel);
-    ipcMain.on('close-model', handleCloseModel);
+    ipcMain.on('save-model', handleModelSaved);
+    ipcMain.on('close-model', handleModelClosed);
 
     createWindow();
 });
@@ -111,12 +111,13 @@ function handleOpenModel (event) {
     return { path: 'dummy-file-path', text: 'dummy text is here' };
 }
 
-function handleSaveModel () {
-    log.debug('Save model from renderer frame');
+function handleModelSaved (_event, fileName) {
+    log.debug('Model save request from renderer with file name : ' + fileName);
+    modelSaved(fileName);
 }
 
-function handleCloseModel (event) {
-    log.debug('Close model event from renderer frame: ' + event.senderFrame);
+function handleModelClosed (_event, fileName) {
+    log.debug('Close model event for file name: ' + fileName);
     modelClosed();
 }
 

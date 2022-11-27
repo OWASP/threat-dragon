@@ -25,6 +25,7 @@ import threatmodelApi from '../../service/api/threatmodelApi.js';
 export const clearState = (state) => {
     state.all.length = 0;
     state.data = {};
+    state.fileName = '',
     state.immutableCopy = '';
     state.selectedDiagram = {};
 };
@@ -32,6 +33,7 @@ export const clearState = (state) => {
 const state = {
     all: [],
     data: {},
+    fileName: '',
     immutableCopy: {},
     selectedDiagram: {}
 };
@@ -94,7 +96,7 @@ const actions = {
                 // desktop version always saves locally
                 console.warn('Save for desktop version is not yet implemented');
                 Vue.$toast.warning(i18n.get().t('threatmodel.errors.save'));
-                await window.electronAPI.saveModel();
+                await window.electronAPI.modelSaved(state.fileName);
             } else {
                 save.local(state.data, `${state.data.summary.title}.json`);
             }
