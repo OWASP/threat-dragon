@@ -56,10 +56,10 @@
 <script>
 import { mapState } from 'vuex';
 
-import env from '@/service/env.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 // only search for text files
 const pickerFileOptions = {
@@ -93,6 +93,7 @@ export default {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
+                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
                             this.onImportClick();
                         })
                         .catch(e => this.$toast.error(e));
@@ -104,32 +105,25 @@ export default {
             }
         },
         async onOpenClick() {
-            if (env.isElectron()) {
-                const file = await window.electronAPI.openModel();
-                console.warn('Opened model with file path: ', file.path);
-                console.warn('Opened model with file text: ', file.text);
-                this.tmJson = 'dummy text';
-                this.onImportClick();
-            } else {
-                if ('showOpenFilePicker' in window) {
-                    // Chrome and Edge browsers return an array of file handles
-                    try {
-                        const [handle] = await window.showOpenFilePicker(pickerFileOptions);
-                        let file = await handle.getFile();
-                        if (file.name.endsWith('.json')) {
-                            this.tmJson = await file.text();
-                            this.onImportClick();
-                        } else {
-                            this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
-                        }
-                    } catch (e) {
-                        // any error is most likely due to the picker being cancelled, which is benign so just warn 
-                        this.$toast.warning(this.$t('threatmodel.errors.open'));
-                        console.warn(e);
+            if ('showOpenFilePicker' in window) {
+                // Chrome and Edge browsers return an array of file handles
+                try {
+                    const [handle] = await window.showOpenFilePicker(pickerFileOptions);
+                    let file = await handle.getFile();
+                    if (file.name.endsWith('.json')) {
+                        this.tmJson = await file.text();
+                        this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
+                        this.onImportClick();
+                    } else {
+                        this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                     }
-                } else {
-                    this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
+                } catch (e) {
+                    // any error is most likely due to the picker being cancelled, which is benign so just warn
+                    this.$toast.warning(this.$t('threatmodel.errors.open'));
+                    console.warn(e);
                 }
+            } else {
+                this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
             }
         },
         onImportClick() {

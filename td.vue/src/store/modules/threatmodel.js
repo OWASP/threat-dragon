@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
+import env from '@/service/env.js';
 import { getProviderType } from '../../service/provider/providers.js';
 import i18n from '../../i18n/index.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
@@ -89,11 +90,15 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
+            } else if (env.isElectron()) {
+                // desktop version always saves locally
+                console.warn('Save for desktop version is not yet implemented');
+                Vue.$toast.warning(i18n.get().t('threatmodel.errors.save'));
+                await window.electronAPI.saveModel();
             } else {
-                console.log('save as a download file');
                 save.local(state.data, `${state.data.summary.title}.json`);
             }
+            Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
             console.error('Failed to update threat model!');
@@ -138,6 +143,9 @@ const mutations = {
         }
         if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);
+        }
+        if (update.fileName) {
+            Vue.set(state, 'fileName', update.fileName);
         }
     }
 };

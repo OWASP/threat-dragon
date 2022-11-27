@@ -175,7 +175,6 @@ select-diagram-type {
 <script>
 import { mapState } from 'vuex';
 
-import env from '@/service/env.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
@@ -208,15 +207,7 @@ export default {
         },
         async onSaveClick(evt) {
             evt.preventDefault();
-            if (env.isElectron()) {
-                // desktop version always saves locally
-                console.warn('Save for desktop version is not yet implemented');
-                this.$toast.warning(this.$t('threatmodel.errors.save'));
-                window.electronAPI.saveModel();
-            } else {
-                // web app version saves to repo or as a download file
-                await this.$store.dispatch(THREATMODEL_SAVE);
-            }
+            await this.$store.dispatch(THREATMODEL_SAVE);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {

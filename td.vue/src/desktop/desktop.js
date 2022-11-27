@@ -22,7 +22,7 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 async function createWindow () {
-    // Create the browser window.
+    // Create the browser window
     const win = new BrowserWindow({
         width: 1400,
         height: 900,
@@ -111,8 +111,8 @@ function handleOpenModel (event) {
     return { path: 'dummy-file-path', text: 'dummy text is here' };
 }
 
-function handleSaveModel (event) {
-    log.debug('Save model from renderer frame: ' + event.senderFrame);
+function handleSaveModel () {
+    log.debug('Save model from renderer frame');
 }
 
 function handleCloseModel (event) {

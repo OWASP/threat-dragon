@@ -24,7 +24,7 @@ const messages = { el, en, es, cn, de, fr, pt, ru, zh};
 var language = 'en';
 
 var model = {};
-var defaultDirectory = '';
+var fileDirectory = '';
 var filePath = '';
 var isOpen = false;
 
@@ -188,9 +188,10 @@ function saveModel () {
 
 // Open saveAs file system dialog and write contents to new file location
 function saveModelAs () {
+	const newName = 'new-model.json';
     var dialogOptions = {
         title: messages[language].desktop.file.saveAs,
-        defaultPath: path.join(defaultDirectory, 'new-model.json'),
+        defaultPath: path.join(fileDirectory, newName),
         filters: [{ name: 'Threat Model', extensions: ['json'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
@@ -214,7 +215,7 @@ function saveModelAs () {
 function addRecent () {
     // add the file name to the recent file list
     app.addRecentDocument(filePath);
-    defaultDirectory = path.dirname(filePath);
+    fileDirectory = path.dirname(filePath);
 }
 
 export const setLocale = (locale) => {
