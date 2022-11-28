@@ -18,7 +18,7 @@ if (isDevelopment) {
 console.log = log.log;
 // set up electron-specific logging
 const logLevel = process.env.LOG_LEVEL || 'info';
-log.debug('Log level is set to: ' + logLevel);
+log.info('Electron log level is set to: ' + logLevel);
 log.transports.file.level = logLevel;
 
 export default {

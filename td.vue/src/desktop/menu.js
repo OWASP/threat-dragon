@@ -23,13 +23,12 @@ const zh = cn;
 const messages = { el, en, es, cn, de, fr, pt, ru, zh};
 var language = 'en';
 
-var model = {};
-var fileDirectory = '';
-var filePath = '';
-var isOpen = false;
+const model = {
+    fileDirectory: '',
+    filePath: '',
+    isOpen: false
+};
 
-// When a file is requested from the recent documents menu
-// the open-file event of app module will be emitted for it
 export function getMenuTemplate () {
     return [
         ...(isMacOS ? [{ role: 'appMenu' }] : []),
@@ -122,7 +121,10 @@ export function getMenuTemplate () {
 
 // Open file system dialog and read file contents into model
 function openModel () {
-    // TODO check that an existing file is not open and modified
+    if (model.isOpen === true) {
+        log.debug('Checking that the existing file is not modified');
+        // TODO check from renderer that existing open file is not modified
+    }
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -132,17 +134,17 @@ function openModel () {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            filePath = result.filePaths[0];
-            log.info(messages[language].desktop.file.open + ': ' + filePath);
-            fs.readFile(filePath, (err, data) => {
+            model.filePath = result.filePaths[0];
+            log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
+            fs.readFile(model.filePath, (err, data) => {
                 if (!err) {
                     // TODO: send the model to the renderer
-                    model = data.toJSON();
-                    isOpen = true;
-                    addRecent();
+                    log.debug('data read from file :' +  data.toJSON());
+                    model.isOpen = true;
+                    addRecent(model.filePath);
                 } else {
                     log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-                    isOpen = false;
+                    model.isOpen = false;
                 }
             });
         } else {
@@ -150,20 +152,23 @@ function openModel () {
         }
     }).catch(err => {
         log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-        isOpen = false;
+        model.isOpen = false;
     });
 }
 
 // save the model catching any errors
-function saveModel () {
+function saveModel (modelData) {
     // if threat model exists, save to file system without dialog
-    if (isOpen === true) {
-        log.info(messages[language].threatmodel.saved + ': ' + filePath);
-        // TODO: get the model from the renderer
-        model = 'dummy data read from renderer';
-        fs.writeFile(filePath, model, (err) => {
+    if (model.isOpen === true) {
+        if (!modelData) {
+            // TODO: get the model from the renderer
+            modelData = { data: 'dummy data read from renderer' };
+        }
+        fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
             if (err) {
                 log.error(messages[language].threatmodel.errors.save + ': ' + err);
+            } else {
+                log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
             }
         });
     } else {
@@ -173,62 +178,63 @@ function saveModel () {
 }
 
 // Open saveAs file system dialog and write contents to new file location
-function saveModelAs (fileName) {
-	var newName = 'new-model.json';
-	if (fileName) {
+function saveModelAs (modelData, fileName) {
+    var newName = 'new-model.json';
+    if (fileName) {
         newName = fileName;
     }
     var dialogOptions = {
         title: messages[language].desktop.file.saveAs,
-        defaultPath: path.join(fileDirectory, newName),
+        defaultPath: path.join(model.fileDirectory, newName),
         filters: [{ name: 'Threat Model', extensions: ['json'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {
         if (result.canceled === false) {
-            filePath = result.filePath;
-            isOpen = true;
-            log.debug(messages[language].desktop.file.saveAs + ': ' + filePath);
-            addRecent();
-            saveModel();
+            model.filePath = result.filePath;
+            model.isOpen = true;
+            log.debug(messages[language].desktop.file.saveAs + ': ' + model.filePath);
+            addRecent(model.filePath);
+            saveModel(modelData);
         } else {
             log.debug(messages[language].desktop.file.saveAs + ' canceled');
         }
     }).catch(err => {
         log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
-        isOpen = false;
+        model.isOpen = false;
     });
 }
 
 // close the model
 function closeModel () {
-    log.info(messages[language].desktop.file.close + ': ' + filePath);
+    log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
     // TODO: send an empty model to the renderer
     modelClosed();
 }
 
-// Add the file to the recent list, and update default directory
-function addRecent () {
+// Add the file to the recent list, updating default directory
+function addRecent (filePath) {
     // add the file name to the recent file list
     app.addRecentDocument(filePath);
-    fileDirectory = path.dirname(filePath);
+    model.fileDirectory = path.dirname(filePath);
+    // When a file is requested from the recent documents menu
+    // the open-file event of app module will be emitted for it
 }
 
 // the renderer has requested to save the model with a filename
-export function modelSaved (fileName) {
-    // if the filePath is empty then this is the first time this has been requested
-    if (!filePath || filePath === '') {
-        saveModelAs(fileName);
+export function modelSaved (modelData, fileName) {
+    // if the filePath is empty then this is the first time a save has been requested
+    if (!model.filePath || model.filePath === '') {
+        saveModelAs(modelData, fileName);
     } else {
-        saveModel();
+        saveModel(modelData);
     }
 }
 
-// clear out the model
+// clear out the model, either by menu or by renderer request
 export function modelClosed () {
-    model = '';
-    filePath = '';
-    isOpen = false;
+    model.filePath = '';
+    model.isOpen = false;
 }
 
 export const setLocale = (locale) => {

@@ -92,7 +92,7 @@ app.on('ready', async () => {
     }
 
     ipcMain.on('update-menu', handleUpdateMenu);
-    ipcMain.handle('dialog:openModel', handleOpenModel);
+    ipcMain.handle('open-model', handleOpenModel);
     ipcMain.on('save-model', handleModelSaved);
     ipcMain.on('close-model', handleModelClosed);
 
@@ -108,12 +108,12 @@ function handleUpdateMenu (_event, locale) {
 
 function handleOpenModel (event) {
     log.debug('Open model requested from renderer frame: ' + event.senderFrame);
-    return { path: 'dummy-file-path', text: 'dummy text is here' };
+    return { name: 'dummy-file-path', model: 'dummy text is here' };
 }
 
-function handleModelSaved (_event, fileName) {
+function handleModelSaved (_event, modelData, fileName) {
     log.debug('Model save request from renderer with file name : ' + fileName);
-    modelSaved(fileName);
+    modelSaved(modelData, fileName);
 }
 
 function handleModelClosed (_event, fileName) {

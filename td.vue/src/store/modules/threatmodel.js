@@ -94,10 +94,9 @@ const actions = {
                 );
             } else if (env.isElectron()) {
                 // desktop version always saves locally
-                console.warn('Save for desktop version is not yet implemented');
-                Vue.$toast.warning(i18n.get().t('threatmodel.errors.save'));
-                await window.electronAPI.modelSaved(state.fileName);
+                await window.electronAPI.modelSaved(state.data, state.fileName);
             } else {
+                // save locally for web app when local login
                 save.local(state.data, `${state.data.summary.title}.json`);
             }
             Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
