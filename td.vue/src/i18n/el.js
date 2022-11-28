@@ -65,6 +65,8 @@ const el = {
         title: 'Τίτλος',
         diagrams: 'Διαγράμματα',
         addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         threats: 'Απειλές',
         properties: {
             title: 'Ιδιότητες',

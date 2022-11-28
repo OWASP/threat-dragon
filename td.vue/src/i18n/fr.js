@@ -64,6 +64,8 @@ const fr = {
         title: 'Titre',
         diagrams: 'Diagrammes',
         addNewDiagram: 'Ajouter un nouveau diagramme...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         threats: 'Menaces',
         properties: {
             title: 'Propriétés',

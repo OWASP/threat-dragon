@@ -55,6 +55,8 @@ const es = {
         title: 'Título',
         diagrams: 'Diagramas',
         addNewDiagram: 'Agregar un nuevo diagrama...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',

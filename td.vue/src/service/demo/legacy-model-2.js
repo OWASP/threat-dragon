@@ -15,6 +15,7 @@ export default {
         'diagrams': [
             {
                 'title': 'Main Request Flow',
+                'description': 'This is the main request flow diagram',
                 'thumbnail': './public/content/images/thumbnail.jpg',
                 'id': 0,
                 '$$hashKey': 'object:160',

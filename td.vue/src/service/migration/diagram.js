@@ -30,6 +30,7 @@ const upgradeAndDraw = (diagram, graph) => {
     const updated = graph.toJSON();
     updated.version = '2.0';
     updated.title = diagram.title;
+    updated.description = diagram.description;
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
     graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));

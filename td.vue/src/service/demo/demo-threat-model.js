@@ -17,6 +17,7 @@ export default {
         'diagrams': [
             {
                 'title': 'Main Request Data Flow',
+                'description': 'This is the main request data flow diagram',
                 'thumbnail': './public/content/images/thumbnail.jpg',
                 'id': 0,
                 'diagramJson': {

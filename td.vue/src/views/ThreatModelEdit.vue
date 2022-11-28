@@ -98,17 +98,30 @@
                                 :label-for="`diagram-${idx}`"
                                 class="mb-3"
                             >
-                                <b-form-input
-                                    v-model="model.detail.diagrams[idx].title"
-                                    type="text"
-                                    class="td-diagram"
-                                ></b-form-input>
-                                <b-input-group-append>
-                                    <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
-                                        <font-awesome-icon icon="times"></font-awesome-icon>
-                                        {{ $t('forms.remove') }}
-                                    </b-button>
-                                </b-input-group-append>
+                                <b-col md=4>
+                                    <b-form-input
+                                        :placeholder="$t('threatmodel.diagramTitle')"
+                                        v-model="model.detail.diagrams[idx].title"
+                                        type="text"
+                                        class="td-diagram"
+                                    ></b-form-input>
+                                </b-col>
+                                <b-col md=4>
+                                    <b-form-textarea
+                                        :placeholder="$t('threatmodel.diagramDescription')"
+                                        v-model="model.detail.diagrams[idx].description"
+                                        type="text"
+                                        class="td-diagram-description"
+                                    ></b-form-textarea>
+                                </b-col>
+                                <b-col md=4>
+                                    <b-input-group-append>
+                                        <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
+                                            <font-awesome-icon icon="times"></font-awesome-icon>
+                                            {{ $t('forms.remove') }}
+                                        </b-button>
+                                    </b-input-group-append>
+                                </b-col>
                             </b-input-group>
                         </b-col>
 

@@ -67,6 +67,8 @@ const en = {
         title: 'Title',
         diagrams: 'Diagrams',
         addNewDiagram: 'Add a new diagram...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         threats: 'Threats',
         properties: {
             title: 'Properties',

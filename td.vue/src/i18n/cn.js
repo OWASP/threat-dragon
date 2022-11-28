@@ -65,6 +65,8 @@ const cn = {
         title: '标题',
         diagrams: '图表',
         addNewDiagram: '添加新图表...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         threats: '威胁',
         properties: {
             title: '特性',

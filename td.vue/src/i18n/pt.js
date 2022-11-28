@@ -54,6 +54,8 @@ const pt = {
         title: 'Título',
         diagrams: 'Diagramas',
         addNewDiagram: 'Adicionar um novo diagrama...',
+        diagramTitle: 'Title',
+        diagramDescription: 'Diagram Description',
         properties: {
             title: 'Propriedades',
             emptyState: 'Selecione um elemento do diagrama para modificar suas propriedades',

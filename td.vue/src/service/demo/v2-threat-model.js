@@ -1109,6 +1109,7 @@ export default {
                 ],
                 'version': '2.0',
                 'title': 'Main Request Data Flow',
+                'description': 'This is the main request data flow diagram',
                 'thumbnail': './public/content/images/thumbnail.jpg',
                 'id': 0
             }
