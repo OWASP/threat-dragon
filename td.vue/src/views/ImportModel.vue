@@ -56,6 +56,7 @@
 <script>
 import { mapState } from 'vuex';
 
+import env from '@/service/env.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -94,7 +95,7 @@ export default {
                         .then(text => {
                             this.tmJson = text;
                             this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
-                            this.onImportClick();
+                            this.onImportClick(file.name);
                         })
                         .catch(e => this.$toast.error(e));
                 } else {
@@ -113,7 +114,7 @@ export default {
                     if (file.name.endsWith('.json')) {
                         this.tmJson = await file.text();
                         this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
-                        this.onImportClick();
+                        this.onImportClick(file.name);
                     } else {
                         this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                     }
@@ -126,12 +127,12 @@ export default {
                 this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
             }
         },
-        onImportClick() {
+        onImportClick(fileName) {
             let jsonModel;
+            // check for JSON syntax errors, schema errors come later
             try {
                 jsonModel = JSON.parse(this.tmJson);
             } catch (e) {
-                // this catches blatant JSON errors, not schema errors
                 this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
                 console.error(e);
                 return;
@@ -139,8 +140,14 @@ export default {
 
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
 
+            if (env.isElectron()) {
+                // tell any electron server that the model has changed
+                window.electronAPI.modelOpened(fileName);
+            }
+
             // save the threat model in the store
             this.$store.dispatch(tmActions.selected, jsonModel);
+
             let params;
             // this will fail if the threat model does not have a title in the summary
             try {

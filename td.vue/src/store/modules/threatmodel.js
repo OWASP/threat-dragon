@@ -23,6 +23,10 @@ import save from '../../service/save.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
+    if (env.isElectron()) {
+        // tell any electron server that the model has closed
+        window.electronAPI.modelClosed(state.fileName);
+    }
     state.all.length = 0;
     state.data = {};
     state.fileName = '',

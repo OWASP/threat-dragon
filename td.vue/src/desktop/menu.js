@@ -237,6 +237,14 @@ export function modelClosed () {
     model.isOpen = false;
 }
 
+// the renderer has opened a new model
+export function modelOpened () {
+    // for security reasons the renderer can not provide the full path
+    // so wait for a save before filling in the file path
+    model.filePath = '';
+    model.isOpen = true;
+}
+
 export const setLocale = (locale) => {
     language = locale;
 };
@@ -244,6 +252,7 @@ export const setLocale = (locale) => {
 export default {
     getMenuTemplate,
     modelClosed,
+    modelOpened,
     modelSaved,
     setLocale
 };
