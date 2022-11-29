@@ -37,12 +37,10 @@
                         </h6>
                     </template>
                     <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->
-                    <a href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <b-img-lazy
-                            class="m-auto d-block td-diagram-thumb"
-                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
-                            :alt="diagram.title" />
-                    </a>
+                    
+                    <h6 class="diagram-header-text diagram-edit">
+                        {{ diagram.description }}
+                    </h6>
                 </b-card>
             </b-col>
         </b-row>

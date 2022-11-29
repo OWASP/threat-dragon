@@ -12,8 +12,8 @@ describe('views/ThreatmodelEdit.vue', () => {
     const title = 'title';
     const description = 'Something about a threat model';
     const diagrams = [
-        { title: 'd1', diagramType: 'CIA' },
-        { title: 'd2', diagramType: 'STRIDE' }
+        { title: 'd1', description: 'd1 description', diagramType: 'CIA' },
+        { title: 'd2', description: 'd2 description', diagramType: 'STRIDE' }
     ];
     const path = '/git/github/foo/bar/baz';
 

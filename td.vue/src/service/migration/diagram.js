@@ -34,6 +34,7 @@ const upgradeAndDraw = (diagram, graph) => {
     const updated = graph.toJSON();
     updated.version = buildVersion;
     updated.title = diagram.title;
+    updated.description = diagram.description;
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
     updated.diagramType = diagram.diagramType;
