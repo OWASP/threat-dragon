@@ -111,6 +111,11 @@
                                     type="text"
                                     class="td-diagram"
                                 ></b-form-input>
+                                <b-form-input
+                                    v-model="model.detail.diagrams[idx].description"
+                                    type="text"
+                                    class="td-diagram-description"
+                                ></b-form-input>
                                 <b-input-group-append>
                                     <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
@@ -234,6 +239,7 @@ export default {
             let newDiagram = {
                 name: '',
                 title: this.$t('threatmodel.diagram.stride.diagramTitle'),
+                description: this.$t('threatmodel.diagram.stride.diagramDescription'),
                 diagramType: 'STRIDE',
                 thumbnail: './public/content/images/thumbnail.stride.jpg',
                 version: this.version
@@ -242,22 +248,27 @@ export default {
         },
         onDiagramTypeClick(idx, type) {
             let title;
+            let description;
             switch (type) {
             case 'CIA':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
                 title = this.$t('threatmodel.diagram.cia.diagramTitle');
+                description = this.$t('threatmodel.diagram.cia.diagramDescription');
                 break;
             case 'LINDDUN':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
                 title = this.$t('threatmodel.diagram.linddun.diagramTitle');
+                description = this.$t('threatmodel.diagram.linddun.diagramDescription');
                 break;
             case 'STRIDE':
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
                 title = this.$t('threatmodel.diagram.stride.diagramTitle');
+                description = this.$t('threatmodel.diagram.stride.diagramDescription');
                 break;
             default:
                 this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.jpg';
                 title = this.$t('threatmodel.diagram.generic.diagramTitle');
+                description = this.$t('threatmodel.diagram.generic.diagramDescription');
                 type = this.$t('threatmodel.diagram.generic.select');
                 break;
             }
@@ -269,6 +280,14 @@ export default {
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.diagramTitle')
             ) {
                 this.model.detail.diagrams[idx].title = title;
+            }
+            // if the diagram description is still generic, then change it to the new generic description
+            if (this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.cia.diagramDescription')
+                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.linddun.diagramDescription')
+                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.stride.diagramDescription')
+                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.generic.diagramDescription')
+            ) {
+                this.model.detail.diagrams[idx].description = description;
             }
         },
         onRemoveDiagramClick(idx) {
