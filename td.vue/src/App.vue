@@ -25,6 +25,10 @@ import { mapState } from 'vuex';
 import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import TdNavbar from '@/components/Navbar.vue';
 
+window.electronAPI.onCloseModel((_event, fileName) =>  {
+    console.warn('got this far! with file name : ' + fileName);
+})
+
 export default {
     name: 'TdApp',
     components: {

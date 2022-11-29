@@ -14,12 +14,17 @@ if (isDevelopment) {
         console.log('** Redirecting console log to ~/.config/Threat\\ Dragon/logs/main.log');
     }
 }
-// use electron-log instead of default console
-console.log = log.log;
+
 // set up electron-specific logging
-const logLevel = process.env.LOG_LEVEL || 'info';
+const logLevel = process.env.LOG_LEVEL || 'debug';
 log.info('Electron log level is set to: ' + logLevel);
 log.transports.file.level = logLevel;
+
+// use electron-log instead of default console
+console = log;
+
+// only print error messages to console
+log.transports.console.level = 'error';
 
 export default {
     log
