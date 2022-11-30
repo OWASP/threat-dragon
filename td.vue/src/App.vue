@@ -27,7 +27,7 @@ import TdNavbar from '@/components/Navbar.vue';
 
 window.electronAPI.onCloseModel((_event, fileName) =>  {
     console.warn('got this far! with file name : ' + fileName);
-})
+});
 
 export default {
     name: 'TdApp',

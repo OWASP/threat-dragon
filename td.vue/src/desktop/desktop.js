@@ -109,11 +109,6 @@ function handleUpdateMenu (_event, locale) {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-function handleOpenModel (event) {
-    log.debug('Open model requested from renderer frame: ' + event.senderFrame);
-    return { name: 'dummy-file-path', model: 'dummy text is here' };
-}
-
 function handleModelClosed (_event, fileName) {
     log.debug('Close model event for file name: ' + fileName);
     menu.modelClosed();

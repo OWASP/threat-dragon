@@ -21,7 +21,7 @@ log.info('Electron log level is set to: ' + logLevel);
 log.transports.file.level = logLevel;
 
 // use electron-log instead of default console
-console = log;
+Object.assign(console, log.functions);
 
 if (!isDevelopment) {
     // in production only print error messages to console

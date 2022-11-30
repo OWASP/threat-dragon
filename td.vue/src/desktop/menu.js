@@ -30,7 +30,7 @@ const model = {
     isOpen: false
 };
 
-export function getMenuTemplate () {
+function getMenuTemplate () {
     return [
         ...(isMacOS ? [{ role: 'appMenu' }] : []),
         {
@@ -224,30 +224,30 @@ function addRecent (filePath) {
 }
 
 // the renderer has requested to save the model with a filename
-export function modelSaved (modelData, fileName) {
+const modelSaved = (modelData, fileName) => {
     // if the filePath is empty then this is the first time a save has been requested
     if (!model.filePath || model.filePath === '') {
         saveModelAs(modelData, fileName);
     } else {
         saveModel(modelData);
     }
-}
+};
 
 // clear out the model, either by menu or by renderer request
-export function modelClosed () {
+const modelClosed = () => {
     model.filePath = '';
     model.isOpen = false;
-}
+};
 
 // the renderer has opened a new model
-export function modelOpened () {
+const modelOpened = () => {
     // for security reasons the renderer can not provide the full path
     // so wait for a save before filling in the file path
     model.filePath = '';
     model.isOpen = true;
-}
+};
 
-export const setLocale = (locale) => {
+const setLocale = (locale) => {
     language = locale;
 };
 
