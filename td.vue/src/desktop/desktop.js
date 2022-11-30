@@ -21,9 +21,12 @@ protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
+// export this for the electron menu module
+export let mainWindow;
+
 async function createWindow () {
     // Create the browser window
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
         show: false,

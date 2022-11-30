@@ -3,6 +3,7 @@
 import { app, dialog } from 'electron';
 import path from 'path';
 import { log } from './logger.js';
+import { mainWindow } from './desktop.js';
 
 const isMacOS = process.platform === 'darwin';
 
@@ -208,8 +209,9 @@ function saveModelAs (modelData, fileName) {
 // close the model
 function closeModel () {
     log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
-    // TODO: send an empty model to the renderer
     modelClosed();
+    // prompt the renderer to close the model
+    mainWindow.webContents.send('close-model', model.filePath);
 }
 
 // Add the file to the recent list, updating default directory

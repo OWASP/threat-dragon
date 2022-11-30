@@ -23,8 +23,10 @@ log.transports.file.level = logLevel;
 // use electron-log instead of default console
 console = log;
 
-// only print error messages to console
-log.transports.console.level = 'error';
+if (!isDevelopment) {
+    // in production only print error messages to console
+    log.transports.console.level = 'error';
+}
 
 export default {
     log
