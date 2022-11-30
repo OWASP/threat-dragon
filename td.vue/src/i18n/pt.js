@@ -88,7 +88,7 @@ threatmodel: {
                     diagramTitle : 'Novo diagrama genérico',
                     diagramDescription : 'Nova descrição genérica do diagrama',
     selecione: 'Genérico'
-            ],
+    },
     stride: {
                     diagramTitle : 'Novo diagrama STRIDE',
                     diagramDescription : 'Nova descrição do diagrama STRIDE',
