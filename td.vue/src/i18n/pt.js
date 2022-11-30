@@ -118,7 +118,7 @@ threatmodel: {
     properties: {
     title: ' Propriedades ',
     emptyState : ' Selecione um elemento do diagrama para modificar sua propriedades ',
-    name: nome',
+    name: 'nome',
     text: ' Texto ',
     description: ' Descrição ',
     outOfScope : 'Fora do escopo ',
@@ -165,9 +165,9 @@ publicNetwork : ' Rede pública '
             },
     pan: {
     shorrtcut: 'shift + botão mouse esquerdo ( segure e arraste )',
-    action: ' Mover por tudo o imagem do diagrama ' _
+    action: ' Mover por tudo o imagem do diagrama '
             },
-                multiSelect : {
+                multiSelect :{
     shortcut: 'clique no botão rato esquerdo no espaço esvazie e arraste ',
     action: ' Seleção múltiplo '
             },
@@ -182,7 +182,7 @@ publicNetwork : ' Rede pública '
     entities: ' Entidades ',
     metadata: ' Metadados ',
     search: ' Pesquisar ',
-                notFound : ' Ainda não temos isso ! :( Mas, eu gostaria de abrir um problema? :)
+                notFound : ' Ainda não temos isso ! :( Mas, eu gostaria de abrir um problema? :) '
         },
     shapes: {
     actor: ' Ator ',
@@ -220,7 +220,7 @@ publicNetwork : ' Rede pública '
     },
     threats: {
     model: {
-cia : {
+cia: {
     header: '--- CIA ---',
     confidentiality: 'Confidencialidade',
     integrity: 'Integridade',
