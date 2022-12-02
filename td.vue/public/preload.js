@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     // electron main to renderer
     onCloseModel: (callback) => ipcRenderer.on('close-model', callback),
+    onModelData: (callback) => ipcRenderer.on('model-data', callback),
     onNewModel: (callback) => ipcRenderer.on('new-model', callback),
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback)
 });

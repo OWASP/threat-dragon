@@ -16,11 +16,16 @@ import tmActions from '@/store/actions/threatmodel.js';
 Vue.config.productionTip = false;
 
 window.electronAPI.onCloseModel((_event, fileName) =>  {
-    // TODO check that any existing open model has not been modified
+    console.warn('TODO check that any existing open model has not been modified');
     console.debug('Closing model with file name : ' + fileName);
     store.get().dispatch(tmActions.clear);
-    /* TODO router.get().push({ name: 'MainDashboard' });*/
+    console.warn("TODO router.get().push({ name: 'MainDashboard' });*/");
     /*router.get().push('/dashboard');*/
+});
+
+window.electronAPI.onModelData((_event, fileName) =>  {
+    console.debug('Model data request for file name : ' + fileName);
+    console.warn('TODO provide model data to electron server */');
 });
 
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
@@ -28,14 +33,14 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     console.debug('Open model with file name : ' + fileName);
     store.get().dispatch(tmActions.update, { fileName: fileName });
     store.get().dispatch(tmActions.selected, jsonModel);
-    /* TODO router.get().push({ name: 'localThreatModel' });*/
+    console.warn("TODO router.get().push({ name: 'localThreatModel' });*/");
 });
 
 window.electronAPI.onNewModel((_event, fileName) =>  {
-    // TODO check that any existing open model has not been modified
+    console.warn('TODO check that any existing open model has not been modified');
     console.debug('New model with file name : ' + fileName);
     store.get().dispatch(tmActions.update, { fileName: fileName });
-    /* TODO router.get().push({ name: 'localNewThreatModel' });*/
+    console.warn("TODO router.get().push({ name: 'localNewThreatModel' });");
 });
 
 new Vue({

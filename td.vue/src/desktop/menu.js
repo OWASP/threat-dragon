@@ -130,7 +130,7 @@ function getMenuTemplate () {
 function openModel () {
     if (model.isOpen === true) {
         log.debug('Checking that the existing model is not modified');
-        // TODO check from renderer that existing open file is not modified
+        log.warn('TODO check from renderer that existing open file is not modified');
     }
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
@@ -168,8 +168,9 @@ function saveModel (modelData) {
     if (model.isOpen === true) {
         if (!modelData) {
             log.debug('get the model data from the renderer');
-            // TODO: get the model from the renderer
-            modelData = { data: 'saveModel: dummy data read from renderer' };
+            mainWindow.webContents.send('model-data', path.basename(model.filePath));
+            log.warn('TODO: get the model data from the renderer');
+            return;
         }
         fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
             if (err) {
