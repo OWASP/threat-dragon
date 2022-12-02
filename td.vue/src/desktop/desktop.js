@@ -110,12 +110,12 @@ function handleUpdateMenu (_event, locale) {
 }
 
 function handleModelClosed (_event, fileName) {
-    log.debug('Close model event for file name: ' + fileName);
+    log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
 }
 
 function handleModelOpened (_event, fileName) {
-    log.debug('Open model event for file name: ' + fileName);
+    log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 

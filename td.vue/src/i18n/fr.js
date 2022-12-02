@@ -39,6 +39,7 @@ const fr = {
         file: {
             heading: 'File',
             close: 'Fermer Projet',
+            new: 'New Model',
             open: 'Ouvrir',
             save: 'Sauvegarder',
             saveAs: 'Sauvergarder en tant que'

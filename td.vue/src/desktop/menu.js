@@ -61,6 +61,12 @@ function getMenuTemplate () {
                     }
                 },
                 {
+                    label: messages[language].desktop.file.new,
+                    click () {
+                        newModel();
+                    }
+                },
+                {
                     label: messages[language].desktop.file.close,
                     click () {
                         closeModel();
@@ -123,7 +129,7 @@ function getMenuTemplate () {
 // Open file system dialog and read file contents into model
 function openModel () {
     if (model.isOpen === true) {
-        log.debug('Checking that the existing file is not modified');
+        log.debug('Checking that the existing model is not modified');
         // TODO check from renderer that existing open file is not modified
     }
     dialog.showOpenDialog({
@@ -139,8 +145,7 @@ function openModel () {
             log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
             fs.readFile(model.filePath, (err, data) => {
                 if (!err) {
-                    // TODO: send the model to the renderer
-                    log.debug('data read from file :' +  data.toJSON());
+                    mainWindow.webContents.send('open-model', path.basename(model.filePath), JSON.parse(data));
                     model.isOpen = true;
                     addRecent(model.filePath);
                 } else {
@@ -162,8 +167,9 @@ function saveModel (modelData) {
     // if threat model exists, save to file system without dialog
     if (model.isOpen === true) {
         if (!modelData) {
+            log.debug('get the model data from the renderer');
             // TODO: get the model from the renderer
-            modelData = { data: 'dummy data read from renderer' };
+            modelData = { data: 'saveModel: dummy data read from renderer' };
         }
         fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
             if (err) {
@@ -174,13 +180,13 @@ function saveModel (modelData) {
         });
     } else {
         // quietly ignore
-        log.debug(messages[language].desktop.file.save + ': empty file');
+        log.debug(messages[language].desktop.file.save + ': ignored empty file');
     }
 }
 
 // Open saveAs file system dialog and write contents to new file location
 function saveModelAs (modelData, fileName) {
-    var newName = 'new-model.json';
+    let newName = 'new-model.json';
     if (fileName) {
         newName = fileName;
     }
@@ -206,12 +212,21 @@ function saveModelAs (modelData, fileName) {
     });
 }
 
+// open a new model
+function newModel () {
+    let newName = 'new-model.json';
+    log.debug(messages[language].desktop.file.new + ': ' + newName);
+    // prompt the renderer to open a new model
+    mainWindow.webContents.send('new-model', newName);
+    modelOpened();
+}
+
 // close the model
 function closeModel () {
     log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
-    modelClosed();
     // prompt the renderer to close the model
-    mainWindow.webContents.send('close-model', model.filePath);
+    mainWindow.webContents.send('close-model', path.basename(model.filePath));
+    modelClosed();
 }
 
 // Add the file to the recent list, updating default directory

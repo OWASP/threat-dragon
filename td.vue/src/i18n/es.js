@@ -39,6 +39,7 @@ const es = {
         file: {
             heading: 'Archivo',
             close: 'Cerrar Modelo',
+            new: 'Modelo Nuevo',
             open: 'Abrir Model',
             save: 'Salvar Modelo',
             saveAs: 'Salvar Modelo Como'
