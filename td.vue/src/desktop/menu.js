@@ -15,11 +15,12 @@ import es from '../i18n/es.js';
 import cn from '../i18n/cn.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
+import hin from '../i18n/hin.js';
 import pt from '../i18n/pt.js';
 import ru from '../i18n/ru.js';
 // cn and zh are synonyms
 const zh = cn;
-const messages = { el, en, es, cn, de, fr, pt, ru, zh};
+const messages = { el, en, es, cn, de, fr, hin, pt, ru, zh};
 var language = 'en';
 
 export function getMenuTemplate () {
