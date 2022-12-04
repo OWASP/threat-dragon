@@ -11,14 +11,14 @@ const { shell } = require('electron');
 const fs = require('fs');
 
 // access the i18n message strings
-import el from '../i18n/el.js';
-import en from '../i18n/en.js';
-import es from '../i18n/es.js';
-import cn from '../i18n/cn.js';
-import de from '../i18n/de.js';
-import fr from '../i18n/fr.js';
-import pt from '../i18n/pt.js';
-import ru from '../i18n/ru.js';
+import el from '@/i18n/el.js';
+import en from '@/i18n/en.js';
+import es from '@/i18n/es.js';
+import cn from '@/i18n/cn.js';
+import de from '@/i18n/de.js';
+import fr from '@/i18n/fr.js';
+import pt from '@/i18n/pt.js';
+import ru from '@/i18n/ru.js';
 // cn and zh are synonyms
 const zh = cn;
 const messages = { el, en, es, cn, de, fr, pt, ru, zh};

@@ -20,15 +20,20 @@ describe('import', () => {
             cy.contains('Open / Import a threat model via JSON');
         });
 
+        it('has the buttons visible', () => {
+            cy.get('#td-open-btn').should('be.visible');
+            cy.get('#td-import-btn').should('be.visible');
+        });
+
         it('allows a user to manually enter the model JSON', () => {
             cy.get('#json-input').paste(v2ThreatModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/Demo%20Threat%20Model');
             cy.contains('Demo Threat Model');
             cy.contains('Main Request Data Flow');
-            cy.get('#tm-edit-btn').should('be.visible');
-            cy.get('#tm-report-btn').should('be.visible');
-            cy.get('#tm-delete-btn').should('be.visible');
+            cy.get('#td-edit-btn').should('be.visible');
+            cy.get('#td-report-btn').should('be.visible');
+            cy.get('#td-delete-btn').should('be.visible');
         });
     });
 
@@ -42,7 +47,7 @@ describe('import', () => {
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/New%20threat%20model');
             cy.contains('New threat model');
-            cy.get('#tm-edit-btn').should('be.visible');
+            cy.get('#td-edit-btn').should('be.visible');
         });
     });
 
@@ -62,6 +67,7 @@ describe('import', () => {
             cy.get('.td-welcome-title').contains('Welcome to version 2');
             cy.get('.td-p1').contains('drawing library');
             cy.get('.td-p2').contains('upgrade');
+            cy.get('.td-upgrade-modal-ok').should('be.visible');
             cy.get('.td-upgrade-modal-ok').click();
         });
     
@@ -84,7 +90,7 @@ describe('import', () => {
         });
     
         it('can edit the model', () => {
-            cy.get('#tm-edit-btn').click();
+            cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
             cy.get('button').contains('Cancel').click();
@@ -123,7 +129,7 @@ describe('import', () => {
         });
     
         it('can edit the model', () => {
-            cy.get('#tm-edit-btn').click();
+            cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
             cy.get('button').contains('Cancel').click();

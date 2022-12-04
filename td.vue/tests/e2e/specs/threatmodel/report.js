@@ -5,7 +5,7 @@ describe('report', () => {
         cy.get('a[href="#/demo/select"]').click();
         cy.get('a[data-model-name="Version 2 Demo Model"').click();
         cy.url().should('contain', '/local/Version%202%20Demo%20Model');
-        cy.get('#tm-report-btn').trigger('click');
+        cy.get('#td-report-btn').trigger('click');
     });
 
     describe('report options', () => {

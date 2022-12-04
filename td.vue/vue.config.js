@@ -18,6 +18,11 @@ module.exports = {
         }
     },
     lintOnSave: false,
+    pages: {
+        index: {
+            entry: 'src/main.js'
+        }
+    },
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'scss',

@@ -50,18 +50,18 @@
             <b-col class="text-right">
                 <b-btn-group>
                     <td-form-button
-                        id="tm-edit-btn"
+                        id="td-edit-btn"
                         :isPrimary="true"
                         :onBtnClick="onEditClick"
                         icon="edit"
                         :text="$t('forms.edit')" />
                     <td-form-button
-                        id="tm-report-btn"
+                        id="td-report-btn"
                         :onBtnClick="onReportClick"
                         icon="file-alt"
                         :text="$t('forms.report')" />
                     <td-form-button
-                        id="tm-delete-btn"
+                        id="td-delete-btn"
                         :onBtnClick="onDeleteClick"
                         icon="times"
                         :text="$t('forms.delete')" />
