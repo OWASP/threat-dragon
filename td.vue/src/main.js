@@ -20,26 +20,25 @@ Vue.config.productionTip = false;
 
 window.electronAPI.onCloseModel((_event, fileName) =>  {
     console.warn('TODO check that any existing open model has not been modified');
+    // getConfirmModal();
     console.debug('Closing model with file name : ' + fileName);
     app.$store.dispatch(threatmodelActions.clear);
     localAuth();
     app.$router.push({ name: 'MainDashboard' }).catch(error => {
-       if (error.name != "NavigationDuplicated") {
-           throw error;
-       }
+        if (error.name != 'NavigationDuplicated') {
+            throw error;
+        }
     });
 });
 
-window.electronAPI.onModelData((_event, fileName) =>  {
-    console.debug('Model data request for file name : ' + fileName);
-    console.warn('TODO provide model data to electron server */');
+window.electronAPI.onSaveModel((_event, fileName) =>  {
+    console.debug('Save model for file name : ' + fileName);
+    app.$store.dispatch(threatmodelActions.save);
 });
 
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     // already checked that any existing open model has not been modified
     console.debug('Open model with file name : ' + fileName);
-    app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
-    app.$store.dispatch(threatmodelActions.selected, jsonModel);
     let params;
     // this will fail if the threat model does not have a title in the summary
     try {
@@ -49,22 +48,25 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     } catch (e) {
         app.$toast.error(app.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
         app.$router.push({ name: 'HomePage' }).catch(error => {
-            if (error.name != "NavigationDuplicated") {
-               throw error;
+            if (error.name != 'NavigationDuplicated') {
+                throw error;
             }
         });
         return;
     }
+    app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
+    app.$store.dispatch(threatmodelActions.selected, jsonModel);
     localAuth();
     app.$router.push({ name: `${providerNames.local}ThreatModel`, params });
 });
 
 window.electronAPI.onNewModel((_event, fileName) =>  {
     console.warn('TODO check that any existing open model has not been modified');
+    // getConfirmModal();
     console.debug('New model with file name : ' + fileName);
     app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
     localAuth();
-    app.$router.push({ name: providerNames.local + 'NewThreatModel' });
+    app.$router.push({ name: `${providerNames.local}NewThreatModel` });
 });
 
 const localAuth = () => {

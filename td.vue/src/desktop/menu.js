@@ -162,27 +162,10 @@ function openModel () {
     });
 }
 
-// save the model catching any errors
-function saveModel (modelData) {
-    // if threat model exists, save to file system without dialog
-    if (model.isOpen === true) {
-        if (!modelData) {
-            log.debug('get the model data from the renderer');
-            mainWindow.webContents.send('model-data', path.basename(model.filePath));
-            log.warn('TODO: get the model data from the renderer');
-            return;
-        }
-        fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
-            if (err) {
-                log.error(messages[language].threatmodel.errors.save + ': ' + err);
-            } else {
-                log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
-            }
-        });
-    } else {
-        // quietly ignore
-        log.debug(messages[language].desktop.file.save + ': ignored empty file');
-    }
+// prompt the renderer for the model data
+function saveModel () {
+    log.debug(messages[language].desktop.file.save + ': ' + 'prompt the renderer for the model data');
+    mainWindow.webContents.send('save-model', path.basename(model.filePath));
 }
 
 // Open saveAs file system dialog and write contents to new file location
@@ -203,7 +186,7 @@ function saveModelAs (modelData, fileName) {
             model.isOpen = true;
             log.debug(messages[language].desktop.file.saveAs + ': ' + model.filePath);
             addRecent(model.filePath);
-            saveModel(modelData);
+            saveModelData(modelData);
         } else {
             log.debug(messages[language].desktop.file.saveAs + ' canceled');
         }
@@ -245,9 +228,25 @@ const modelSaved = (modelData, fileName) => {
     if (!model.filePath || model.filePath === '') {
         saveModelAs(modelData, fileName);
     } else {
-        saveModel(modelData);
+        saveModelData(modelData);
     }
 };
+
+// save the model data
+function saveModelData (modelData) {
+    if (model.isOpen === true) {
+        fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
+            if (err) {
+                log.error(messages[language].threatmodel.errors.save + ': ' + err);
+            } else {
+                log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
+            }
+        });
+    } else {
+        // quietly ignore
+        log.debug(messages[language].desktop.file.save + ': ignored empty file');
+    }
+}
 
 // clear out the model, either by menu or by renderer request
 const modelClosed = () => {
