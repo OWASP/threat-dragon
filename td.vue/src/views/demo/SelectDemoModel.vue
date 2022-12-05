@@ -27,7 +27,7 @@
 
 <script>
 import demo from '@/service/demo/index.js';
-import env from '@/service/env.js';
+import isElectron from 'is-electron';
 import threatmodelActions from '@/store/actions/threatmodel.js';
 
 export default {
@@ -44,7 +44,7 @@ export default {
     methods: {
         onModelClick(model) {
             this.$store.dispatch(threatmodelActions.selected, model.model);
-            if (env.isElectron()) {
+            if (isElectron()) {
                 // tell any electron server that the model has changed
                 window.electronAPI.modelOpened(model.name);
             }

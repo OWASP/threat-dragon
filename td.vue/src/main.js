@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 import App from './App.vue';
 import i18nFactory from './i18n/index.js';
-import env from './service/env.js';
+import isElectron from 'is-electron';
 
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
@@ -19,7 +19,7 @@ import './plugins/toastification.js';
 
 Vue.config.productionTip = false;
 
-if (env.isElectron()) {
+if (isElectron()) {
     window.electronAPI.onCloseModel((_event, fileName) =>  {
         console.warn('TODO check that any existing open model has not been modified');
         // getConfirmModal();

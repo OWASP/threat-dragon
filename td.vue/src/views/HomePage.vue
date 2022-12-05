@@ -48,14 +48,14 @@
 
 <script>
 import { allProviders } from '@/service/provider/providers.js';
-import env from '@/service/env.js';
+import isElectron from 'is-electron';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 export default {
     name: 'HomePage',
     computed: {
         providers: () => {
-            if (env.isElectron()) {
+            if (isElectron()) {
                 return { local: allProviders.local };
             }
             return allProviders;

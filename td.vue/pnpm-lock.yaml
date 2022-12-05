@@ -62,6 +62,7 @@ specifiers:
   eslint-plugin-standard: ^4.0.0
   eslint-plugin-vue: ^8.7.1
   geckodriver: ^3.0.0
+  is-electron: ^2.2.1
   jest: ^27.5.1
   jquery: ^3.6.0
   mutationobserver-shim: ^0.3.7
@@ -103,6 +104,7 @@ dependencies:
   bootstrap-vue: 2.22.0_jquery@3.6.0+vue@2.7.3
   core-js: 3.23.3
   dotenv: 8.6.0
+  is-electron: 2.2.1
   jquery: 3.6.0
   uuid: 8.3.2
   vue: 2.7.3
@@ -9578,6 +9580,10 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
     dev: true
+
+  /is-electron/2.2.1:
+    resolution: {integrity: sha512-r8EEQQsqT+Gn0aXFx7lTFygYQhILLCB+wn0WCDL5LZRINeLH/Rvw1j2oKodELLXYNImQ3CRlVsY8wW4cGOsyuw==}
+    dev: false
 
   /is-extendable/0.1.1:
     resolution: {integrity: sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==}
