@@ -4,5 +4,6 @@ export const AUTH_SET_LOCAL = 'AUTH_SET_LOCAL';
 export const LOGOUT = 'LOGOUT';
 
 export default {
-    setJwt: AUTH_SET_JWT
+    setJwt: AUTH_SET_JWT,
+    setLocal: AUTH_SET_LOCAL
 };

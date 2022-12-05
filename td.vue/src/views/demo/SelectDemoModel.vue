@@ -27,6 +27,7 @@
 
 <script>
 import demo from '@/service/demo/index.js';
+import env from '@/service/env.js';
 import threatmodelActions from '@/store/actions/threatmodel.js';
 
 export default {
@@ -43,6 +44,10 @@ export default {
     methods: {
         onModelClick(model) {
             this.$store.dispatch(threatmodelActions.selected, model.model);
+            if (env.isElectron()) {
+                // tell any electron server that the model has changed
+                window.electronAPI.modelOpened(model.name);
+            }
             const params = Object.assign({}, this.$route.params, { threatmodel: model.name });
             this.$router.push({ name: 'localThreatModel' , params });
         }

@@ -39,6 +39,7 @@ const cn = {
         file: {
             heading: '文件',
             close: '关闭模型',
+            new: 'New Model',
             open: '打开模型',
             save: '保存模型',
             saveAs: '模型另存为'

@@ -49,7 +49,6 @@ import TdThreatEditModal from '@/components/ThreatEditModal.vue';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import diagramService from '@/service/migration/diagram.js';
-import env from '@/service/env.js';
 import stencil from '@/service/x6/stencil.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -85,15 +84,7 @@ export default {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
             this.$store.dispatch(tmActions.diagramUpdated, updated);
-            if (env.isElectron()) {
-                // desktop version always saves locally
-                console.warn('Save for desktop version is not yet implemented');
-                this.$toast.warning(this.$t('threatmodel.errors.save'));
-                window.electronAPI.saveModel();
-            } else {
-                // web app version saves to repo or as a download file
-                this.$store.dispatch(tmActions.save);
-            }
+            this.$store.dispatch(tmActions.save);
         },
         async closed() {
             const diagramChanged = JSON.stringify(this.graph.toJSON().cells) !== JSON.stringify(this.diagram.cells);

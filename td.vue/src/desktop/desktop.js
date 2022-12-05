@@ -3,7 +3,7 @@
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import { getMenuTemplate, setLocale } from './menu.js';
+import menu from './menu.js';
 import { log } from './logger.js';
 
 const path = require('path');
@@ -21,11 +21,15 @@ protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
+// export this for the electron menu module
+export let mainWindow;
+
 async function createWindow () {
-    // Create the browser window.
-    const win = new BrowserWindow({
+    // Create the browser window
+    mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
+        show: false,
         webPreferences: {
             enableRemoteModule: false,
             nodeIntegration: false,
@@ -34,15 +38,21 @@ async function createWindow () {
         }
     });
 
+    // Event listeners on the window
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.show();
+        mainWindow.focus();
+    });
+
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
         // Load the url of the dev server if in development mode
-        await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-        if (!process.env.IS_TEST) win.webContents.openDevTools();
+        await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+        if (!process.env.IS_TEST) mainWindow.webContents.openDevTools();
     } else {
         createProtocol('app');
         // Load the index.html when not in development
-        win.loadURL('app://./index.html');
+        mainWindow.loadURL('app://./index.html');
     }
 }
 
@@ -72,7 +82,7 @@ app.on('activate', () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
     log.debug('Building the menu system for the default language');
-    let template = getMenuTemplate();
+    let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     // Install Vue Devtools
@@ -85,20 +95,33 @@ app.on('ready', async () => {
     }
 
     ipcMain.on('update-menu', handleUpdateMenu);
-    ipcMain.on('save-model', handleSaveModel);
+    ipcMain.on('model-closed', handleModelClosed);
+    ipcMain.on('model-opened', handleModelOpened);
+    ipcMain.on('model-saved', handleModelSaved);
+
     createWindow();
 });
 
 function handleUpdateMenu (_event, locale) {
     log.debug('Re-labeling the menu system for: ' + locale);
-    setLocale(locale);
-    let template = getMenuTemplate();
+    menu.setLocale(locale);
+    let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-/*eslint no-unused-vars: ["error", { "args": "none" }]*/
-function handleSaveModel (_event) {
-    log.debug('Saving model to local file');
+function handleModelClosed (_event, fileName) {
+    log.debug('Close model notification from renderer for file name: ' + fileName);
+    menu.modelClosed();
+}
+
+function handleModelOpened (_event, fileName) {
+    log.debug('Open model notification from renderer for file name: ' + fileName);
+    menu.modelOpened();
+}
+
+function handleModelSaved (_event, modelData, fileName) {
+    log.debug('Model save request from renderer with file name : ' + fileName);
+    menu.modelSaved(modelData, fileName);
 }
 
 // Exit cleanly on request from parent process in development mode.

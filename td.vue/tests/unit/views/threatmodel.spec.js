@@ -82,7 +82,7 @@ describe('views/Threatmodel.vue', () => {
 
         describe('edit', () => {
             beforeEach(async () => {
-                await wrapper.find('#tm-edit-btn').trigger('click', evt);
+                await wrapper.find('#td-edit-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
@@ -96,7 +96,7 @@ describe('views/Threatmodel.vue', () => {
 
         describe('report', () => {
             beforeEach(async () => {
-                await wrapper.find('#tm-report-btn').trigger('click', evt);
+                await wrapper.find('#td-report-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
@@ -110,7 +110,7 @@ describe('views/Threatmodel.vue', () => {
 
         describe('delete', () => {
             beforeEach(async () => {
-                await wrapper.find('#tm-delete-btn').trigger('click', evt);
+                await wrapper.find('#td-delete-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {

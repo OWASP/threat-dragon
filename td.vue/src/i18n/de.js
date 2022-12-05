@@ -39,6 +39,7 @@ const de = {
         file: {
             heading: 'File',
             close: 'Close Model',
+            new: 'New Model',
             open: 'Open Model',
             save: 'Save Model',
             saveAs: 'Save Model As'

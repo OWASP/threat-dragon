@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
+import env from '@/service/env.js';
 import { getProviderType } from '../../service/provider/providers.js';
 import i18n from '../../i18n/index.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
@@ -22,8 +23,13 @@ import save from '../../service/save.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
+    if (env.isElectron()) {
+        // tell any electron server that the model has closed
+        window.electronAPI.modelClosed(state.fileName);
+    }
     state.all.length = 0;
     state.data = {};
+    state.fileName = '',
     state.immutableCopy = '';
     state.selectedDiagram = {};
 };
@@ -31,6 +37,7 @@ export const clearState = (state) => {
 const state = {
     all: [],
     data: {},
+    fileName: '',
     immutableCopy: {},
     selectedDiagram: {}
 };
@@ -89,9 +96,12 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved'));
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+            } else if (env.isElectron()) {
+                // desktop version always saves locally
+                await window.electronAPI.modelSaved(state.data, state.fileName);
             } else {
-                console.log('save as a download file');
+                // save locally for web app when local login
                 save.local(state.data, `${state.data.summary.title}.json`);
             }
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
@@ -139,8 +149,7 @@ const mutations = {
         if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);
         }
-        if (update.fileHandle || update.fileName) {
-            Vue.set(state, 'fileHandle', update.fileHandle);
+        if (update.fileName) {
             Vue.set(state, 'fileName', update.fileName);
         }
     }

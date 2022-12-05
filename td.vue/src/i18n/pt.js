@@ -37,11 +37,12 @@ const pt = {
     },
     desktop: {
         file: {
-            heading: 'Arquivo',
-            close: 'Fechar Modelo',
-            open: 'Modelo Aberto',
-            save: 'Salvar modelo',
-            saveAs : 'Salvar modelo como'
+            heading: 'File',
+            close: 'Close Model',
+            new: 'New Model',
+            open: 'Open Model',
+            save: 'Save Model',
+            saveAs: 'Save Model As'
         },
         help: {
             heading: 'Ajuda',
