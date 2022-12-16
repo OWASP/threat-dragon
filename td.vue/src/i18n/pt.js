@@ -74,11 +74,11 @@ const pt = {
     },
     threatmodel: {
         contibutors: 'Contribuintes',
-            contributorsPlaceholder : 'Adicionar um novo colaborador',
+        contributorsPlaceholder : 'Adicionar um novo colaborador',
         description : 'Descrição do sistema de alto nível',
-            dragAndDrop : 'Arraste e solte ou',
+        dragAndDrop : 'Arraste e solte ou',
         editing: 'Editar',
-            jsonPaste : 'Solte um arquivo JSON de modelo de ameaça ou cole seu conteúdo aqui:',
+        jsonPaste : 'Solte um arquivo JSON de modelo de ameaça ou cole seu conteúdo aqui:',
         owner: 'Proprietário',
         reviewer: 'Revisor',
         title: 'Título',
@@ -249,8 +249,8 @@ const pt = {
         },
         generic: {
             dafault: 'Nova ameaça genérica',
-                cia : 'Nova ameaça da CIA',
-                linddun : 'Nova ameaça LINDDUN',
+            cia : 'Nova ameaça da CIA',
+            linddun : 'Nova ameaça LINDDUN',
             stride: 'Nova ameaça STRIDE'
         },
         edit: 'Editar Ameaça',
@@ -292,11 +292,11 @@ const pt = {
             showBranding : 'Mostre a marca do Dragão de Ameaça'
         },
         title: 'Relatório do modelo de ameaças para',
-            dateGenerated : 'Data Gerada',
-            executiveSummary : 'Resumo Executivo',
-            notProvided : 'Não fornecido',
-            summary: 'Resumo',
-            threatStats : {
+        dateGenerated : 'Data Gerada',
+        executiveSummary : 'Resumo Executivo',
+        notProvided : 'Não fornecido',
+        summary: 'Resumo',
+        threatStats : {
             total: 'Ameaças totais',
             mitigated: 'Total Mitigado',
             notMitigated : 'Não atenuado',

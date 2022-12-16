@@ -26,8 +26,8 @@
         "stop": "npm-run-all stop:site stop:server",
         "stop:server": "cd td.server && npm run stop:serve",
         "stop:site": "cd td.vue && npm run stop:serve",
-        "test": "npm-run-all build pretest test:site test:server",
-        "test:desktop": "cd td.vue && npm run electron:test",
+        "test": "npm-run-all build pretest test:site test:server test:desktop",
+        "test:desktop": "cd td.vue && npm run test:desktop",
         "test:server": "cd td.server && npm run test:unit",
         "test:site": "cd td.vue && npm run test:unit",
         "test:vue": "cd td.vue && npm run test:vue"

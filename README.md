@@ -123,7 +123,9 @@ Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ## Docker (from dockerhub)
 
-Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`
+Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`:
+
+- `docker pull threatdragon/owasp-threat-dragon:v1.6.0`
 
 **Do _not use the latest tag_ (which is the default), as it could be a development release**
 

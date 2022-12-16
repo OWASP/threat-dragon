@@ -12,7 +12,6 @@
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
-    "electron:test": "wdio run ./wdio.config.js",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "pretest": "npm run lint",
@@ -23,6 +22,7 @@
     "test:help": "vue-cli-service help test:unit",
     "test:desktop": "vue-cli-service test:unit --testMatch '**/desktop/**/*.spec.js' --collectCoverageFrom='src/desktop/**/*.spec.js'",
     "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e:desktop": "wdio run ./wdio.config.js",
     "test:e2e:local": "vue-cli-service test:e2e -C cypress.local.json --url http://localhost:8080/",
     "test:e2e-ci": "vue-cli-service test:e2e --headless --url http://localhost:3000/",
     "test:e2e-ci-smokes": "vue-cli-service test:e2e -C cypress.smokes.ci.json --headless --url http://localhost:3000/",
@@ -141,7 +141,6 @@
       "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
     }
   },
-  "main": "background.js",
   "resolutions": {
     "ansi-regex": "^6.0.1"
   }
