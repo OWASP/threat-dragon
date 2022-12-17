@@ -142,8 +142,7 @@ Pull requests, feature requests, bug reports and feedback of any kind are very w
 [contributors](CONTRIBUTING.md).
 
 There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
-We are trying to keep the test coverage relatively high, so please try to update tests in any pull requests
-and create these pull requests off the [V2 development main branch](https://github.com/OWASP/threat-dragon).
+We are trying to keep the test coverage relatively high, so please try to update tests in your pull requests.
 
 ### Vulnerability disclosure
 

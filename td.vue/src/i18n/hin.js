@@ -1,319 +1,319 @@
 const hin = {
     auth: {
-        sessionExpired: 'Your session has expired. Please log in again to continue.'
+        sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
     nav: {
-        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development. Do not use this to edit existing models, as this version could break them!',
-        loggedInAs: 'Logged in as'
+        v2Warning: 'यह OWASP थ्रेट ड्रैगन का संस्करण 2.0 है और अभी भी विकास के अधीन है। मौजूदा मॉडलों को संपादित करने के लिए इसका उपयोग न करें, क्योंकि यह संस्करण उन्हें तोड़ सकता है!',
+        loggedInAs: 'के रूप में लॉग इन किया'
     },
     home: {
-        title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
-        description: 'Threat Dragon is a free, open-source threat modeling tool from OWASP. It can be used as a standalone desktop app for Windows, MacOS and Linux or as a web application. The desktop app is great if you want to try the application without giving it access to your GitHub repos, but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! Obviously, to do this you need to log in first.',
-        loginWith: 'Login with'
+        title: 'OWASP थ्रेट ड्रैगन',
+        imgAlt: 'थ्रेट ड्रैगन प्रतीक चिन्ह',
+        description: 'थ्रेट ड्रैगन OWASP का एक फ्री, ओपन-सोर्स थ्रेट मॉडलिंग टूल है। इसका उपयोग विंडोज, मैकओएस और लिनक्स के लिए एक स्टैंडअलोन डेस्कटॉप ऐप या वेब एप्लिकेशन के रूप में किया जा सकता है। डेस्कटॉप ऐप बहुत अच्छा है यदि आप एप्लिकेशन को अपने GitHub रेपो तक पहुंच दिए बिना इसे आज़माना चाहते हैं, लेकिन यदि आप ऑनलाइन संस्करण चुनते हैं तो आप अपने खतरे के मॉडल पर GitHub की भयानक शक्ति प्राप्त कर सकते हैं! जाहिर है, ऐसा करने के लिए आपको पहले लॉग इन करना होगा।',
+        loginWith: 'से लोगिन करें'
     },
     providers: {
         github: {
             displayName: 'GitHub'
         },
         local: {
-            displayName: 'Local Session'
+            displayName: 'स्थानीय सत्र'
         }
     },
     dashboard: {
         welcome: {
-            title: 'Welcome!',
-            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
+            title: 'स्वागत!',
+            description: 'आप अपने एप्लिकेशन डिज़ाइन को और अधिक सुरक्षित बनाने के लिए तैयार हैं। आप नीचे दिए गए विकल्पों में से किसी एक को चुनकर मौजूदा थ्रेट मॉडल खोल सकते हैं या नया बना सकते हैं।'
         },
         actions: {
-            openExisting: 'Open an existing threat model',
-            createNew: 'Create a new, empty threat model',
-            demo: 'Explore a sample threat model',
-            import: 'Import a threat model via JSON'
+            openExisting: 'एक मौजूदा थ्रेट मॉडल खोलें',
+            createNew: 'एक नया, खाली थ्रेट मॉडल बनाएँ',
+            demo: 'एक नमूना थ्रेट मॉडल का अन्वेषण करें',
+            import: 'JSON के माध्यम से एक थ्रेट मॉडल आयात करें'
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'नीचे दी गई सूची से एक डेमो थ्रेट मॉडल चुनें'
     },
     desktop: {
         file: {
-            heading: 'File',
-            close: 'Close Model',
-            open: 'Open Model',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: 'फ़ाइल',
+            close: 'क्लोज मॉडल',
+            open: 'ओपन मॉडल',
+            save: 'मॉडल सहेजें',
+            saveAs: 'मॉडल को इस रूप में सहेजें'
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            heading: 'सहायता',
+            docs: 'दस्तावेज़ीकरण',
+            visit: 'हमसे OWASP पर मिलें',
+            sheets: 'OWASP चीट शीट्स',
+            github: 'GitHub पर हमसे मिलें',
+            submit: 'कोई समस्या सबमिट करें',
+            check: 'अपडेट के लिए जांचें ...'
         }
     },
     repository: {
-        select: 'Select a',
-        from: 'repository from the list below',
-        noneFound: 'No repositories found. To get started, create a new repository on'
+        select: 'एक चुनें',
+        from: 'नीचे दी गई सूची से रिपॉजिटरी',
+        noneFound: 'कोई भंडार नहीं मिला। आरंभ करने के लिए, पर एक नया भंडार बनाएँ'
     },
     branch: {
-        select: 'Select a branch from',
-        from: 'from the list below or',
-        chooseRepo: 'choose another repo'
+        select: 'से एक शाखा का चयन करें',
+        from: 'नीचे दी गई सूची से या',
+        chooseRepo: 'एक और रेपो चुनें'
     },
     threatmodelSelect: {
-        select: 'Select a Threat Model from',
-        from: 'from the list below, or choose another',
-        branch: 'branch',
-        or: 'or',
-        repo: 'repo',
-        newThreatModel: 'Create a New Threat Model'
+        select: 'से एक थ्रेट मॉडल का चयन करें',
+        from: 'नीचे दी गई सूची से, या कोई अन्य चुनें',
+        branch: 'शाखा',
+        or: 'या',
+        repo: 'रेपो',
+        newThreatModel: 'एक नया थ्रेट मॉडल बनाएं'
     },
     threatmodel: {
-        contributors: 'Contributors',
-        contributorsPlaceholder: 'Start typing to add a contributor',
-        description: 'High level system description',
-        dragAndDrop: 'Drag and drop or ',
-        editing: 'Editing',
-        jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        owner: 'Owner',
-        reviewer: 'Reviewer',
-        title: 'Title',
+        contributors: 'योगदानकर्ता',
+        contributorsPlaceholder: 'योगदानकर्ता जोड़ने के लिए टाइप करना प्रारंभ करें',
+        description: 'उच्च स्तरीय सिस्टम विवरण',
+        dragAndDrop: 'खींचें और छोड़ें या',
+        editing: 'संपादन',
+        jsonPaste: 'थ्रेट का मॉडल JSON फाइल छोड़ें या इसकी सामग्री यहां पेस्ट करें:',
+        owner: 'मालिक',
+        reviewer: 'समीक्षक',
+        title: 'शीर्षक',
         diagram: {
-            diagrams: 'Diagrams',
-            addNewDiagram: 'Add a new diagram...',
+            diagrams: 'चित्',
+            addNewDiagram: 'एक नया चित्र जोड़ें...',
             generic: {
-                diagramTitle: 'New generic diagram',
-                diagramDescription: 'New generic diagram description',
-                select: 'Generic'
+                diagramTitle: 'न्यू जेनेरिक डायग्राम',
+                diagramDescription: 'न्यू जेनरिक डायग्राम डिस्क्रिप्शन',
+                select: 'जेनेरिक'
             },
             stride: {
-                diagramTitle: 'New STRIDE diagram',
-                diagramDescription: 'New STRIDE diagram description',
-                select: 'STRIDE'
+                diagramTitle: 'न्यू स्ट्राइड डायग्राम',
+                diagramDescription: 'न्यू स्ट्राइड डायग्राम डिस्क्रिप्शन',
+                select: 'स्ट्राइड'
             },
             linddun: {
-                diagramTitle: 'New LINDDUN diagram',
-                diagramDescription: 'New LINDDUN diagram description',
-                select: 'LINDDUN'
+                diagramTitle: 'न्यू लिंडन डायग्राम',
+                diagramDescription: 'न्यू लिंडडन डायग्राम डिस्क्रिप्शन',
+                select: 'लिंडडन'
             },
             cia: {
-                diagramTitle: 'New CIA diagram',
-                diagramDescription: 'New CIA diagram description',
-                select: 'CIA'
+                diagramTitle: 'न्यू सीआईए डायग्राम',
+                diagramDescription: 'नई सीआईए डायग्राम डिस्क्रिप्शन',
+                select: 'सीआईए'
             }
         },
-        threats: 'Threats',
+        threats: 'थ्रेटस',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'Invalid JSON. Please check your model and try again.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            dropSingleFileOnly: 'ड्रैग एंड ड्रॉप के लिए एक फ़ाइल की आवश्यकता होती है।',
+            invalidJson: 'अवैध JSON. कृपया अपने मॉडल की जाँच करें और पुनः प्रयास करें।',
+            onlyJsonAllowed: 'केवल .json के साथ समाप्त होने वाली फ़ाइलें समर्थित हैं।',
+            open: 'इस थ्रेट मॉडल को खोलने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें',
+            save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
+        saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया',
         properties: {
-            title: 'Properties',
-            emptyState: 'Select an element on the graph to edit',
-            name: 'Name',
-            text: 'Text',
-            description: 'Description',
-            outOfScope: 'Out of Scope',
-            reasonOutOfScope: 'Reason for out of scope',
-            privilegeLevel: 'Privilege Level',
-            isALog: 'Is a Log',
-            storesCredentials: 'Stores Credentials',
-            isEncrypted: 'Encrypted',
-            isSigned: 'Signed',
-            providesAuthentication: 'Provides Authentication',
-            protocol: 'Protocol',
-            publicNetwork: 'Public Network'
+            title: 'गुण',
+            emptyState: 'संपादित करने के लिए ग्राफ़ पर एक तत्व का चयन करें',
+            name: 'नाम',
+            text: 'टेक्स्ट',
+            description: 'विवरण',
+            outOfScope: 'आउट ऑफ स्कोप',
+            reasonOutOfScope: 'दायरे से बाहर होने का कारण',
+            privilegeLevel: 'विशेषाधिकार स्तर',
+            isALog: 'एक लॉग है',
+            storesCredentials: 'स्टोर क्रेडेंशियल',
+            isEncrypted: 'एन्क्रिप्टेड',
+            isSigned: 'हस्ताक्षरित',
+            providesAuthentication: 'प्रमाणीकरण प्रदान करता है',
+            protocol: 'प्रोटोकॉल',
+            publicNetwork: 'सार्वजनिक नेटवर्क'
         },
         buttons: {
-            delete: 'Delete selected',
-            redo: 'Redo edit',
-            shortcuts: 'Keyboard shortcuts',
-            toggleGrid: 'Toggle grid',
-            undo: 'Undo edit',
-            zoomIn: 'Zoom in',
-            zoomOut: 'Zoom out'
+            delete: 'चयनित हटाएं',
+            redo: 'फिर से संपादित करें',
+            shortcuts: 'कीबोर्ड शॉर्टकट',
+            toggleGrid: 'टॉगल ग्रिड',
+            undo: 'संपादन पूर्ववत करें',
+            zoomIn: 'ज़ूम इन',
+            zoomOut: 'ज़ूम आउट'
         },
         shortcuts: {
-            title: 'Shortcuts',
+            title: 'शॉर्टकट',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copy'
+                action: 'कॉपी'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Paste'
+                action: 'चिपकाएँ'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Undo'
+                action: 'पूर्ववत करें'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Redo'
+                action: 'फिर से करें'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Delete'
+                action: 'हटाएं'
             },
             pan: {
                 shortcut: 'shift + left-click (hold/drag)',
-                action: 'Pan'
+                action: 'पैन'
             },
             multiSelect: {
-                shortcut: 'left-click on empty space and drag',
-                action: 'Multi-select'
+                shortcut: 'खाली जगह पर बायाँ-क्लिक करें और खींचें',
+                action: 'बहु-चयन'
             },
             zoom: {
                 shortcut: '(ctrl/cmd) + mousewheel',
-                action: 'Zoom'
+                action: 'ज़ूम'
             }
         },
         stencil: {
-            boundaries: 'Boundaries',
-            components: 'Components',
-            entities: 'Entities',
-            metadata: 'Metadata',
-            search: 'Search',
-            notFound: 'We don\'t have that yet, want to open an issue? :)'
+            boundaries: 'सीमाएं',
+            components: 'घटक',
+            entities: 'संस्थाएँ',
+            metadata: 'मेटाडेटा',
+            search: 'खोज',
+            notFound: 'हमारे पास अभी तक वह नहीं है, कोई मुद्दा खोलना चाहते हैं? :)'
         },
         shapes: {
-            actor: 'Actor',
-            flow: 'Data Flow',
-            flowStencil: 'Data Flow',
-            process: 'Process',
-            store: 'Store',
-            text: 'Descriptive text',
-            trustBoundary: 'Trust Boundary'
+            actor: 'अभिनेता',
+            flow: 'डेटा प्रवाह',
+            flowStencil: 'डेटा प्रवाह',
+            process: 'प्रक्रिया',
+            store: 'स्टोर',
+            text: 'वर्णनात्मक पाठ',
+            trustBoundary: 'ट्रस्ट बाउंड्री'
         }
     },
     forms: {
-        apply: 'Apply',
-        cancel: 'Cancel',
-        close: 'Close',
-        closeModel: 'Close Model',
-        delete: 'Delete',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Edit',
-        import: 'Import',
-        ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
-        reload: 'Reload',
-        remove: 'Remove',
-        report: 'Report',
-        save: 'Save',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
-        search: 'Search'
+        apply: 'लागू करें',
+        cancel: 'रद्द करें',
+        close: 'बंद करें',
+        closeModel: 'क्लोजमॉडल',
+        delete: 'हटाएं',
+        discardTitle: 'परिवर्तनों को त्यागें?',
+        discardMessage: 'क्या आप सुनिश्चित हैं कि आप अपने परिवर्तनों को खारिज करना चाहते हैं?',
+        edit: 'संपादित करें',
+        import: 'आयात',
+        ok: 'ठीक है',
+        open: 'खुला',
+        openModel: 'ओपन मॉडल',
+        print: 'प्रिंट',
+        reload: 'पुनः लोड करें',
+        remove: 'निकालें',
+        report: 'रिपोर्ट',
+        save: 'सहेजें',
+        saveAs: 'इस रूप में सहेजें',
+        saveModel: 'मॉडल सेव करें',
+        saveModelAs: 'मॉडल को इस रूप में सहेजें',
+        savePdf: 'पीडीएफ सेव करें',
+        search: 'खोज'
     },
     threats: {
         model: {
             cia: {
-                header: '--- CIA ---',
-                confidentiality: 'Confidentiality',
-                integrity: 'Integrity',
-                availability: 'Availability'
+                header: '--- सीआईए ---',
+                confidentiality: 'गोपनीयता',
+                integrity: 'ईमानदारी',
+                availability: 'उपलब्धता'
             },
             linddun: {
-                header: '--- LINDDUN ---',
-                linkability: 'Linkability',
-                identifiability: 'Identifiability',
-                nonRepudiation: 'Non-repudiation',
-                detectability: 'Detectability',
-                disclosureOfInformation: 'Disclosure of information',
-                unawareness: 'Unawareness',
-                nonCompliance: 'Non-compliance'
+                header: '--- लिंडडन ---',
+                linkability: 'लिंक करने की क्षमता',
+                identifiability: 'पहचान',
+                nonRepudiation: 'अप्रतिबंध',
+                detectability: 'डिटेक्टेबिलिटी',
+                disclosureOfInformation: 'सूचना का प्रकटीकरण',
+                unawareness: 'अनभिज्ञता',
+                nonCompliance: 'गैर-अनुपालन'
             },
             stride: {
-                header: '--- STRIDE ---',
-                spoofing: 'Spoofing',
-                tampering: 'Tampering',
-                repudiation: 'Repudiation',
-                informationDisclosure: 'Information disclosure',
-                denialOfService: 'Denial of service',
-                elevationOfPrivilege: 'Elevation of privilege'
+                header: '--- स्ट्राइड ---',
+                spoofing: 'स्पूफिंग',
+                tampering: 'छेड़छाड़',
+                repudiation: 'अस्वीकृति',
+                informationDisclosure: 'सूचना प्रकटीकरण',
+                denialOfService: 'सेवा से इनकार',
+                elevationOfPrivilege: 'विशेषाधिकार का उन्नयन'
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            linddun: 'New LINDDUN threat',
-            stride: 'New STRIDE threat'
+            default: 'नया सामान्य थ्रेट',
+            cia: 'नया सीआईए थ्रेट',
+            linddun: 'न्यू लिंडडन थ्रेट',
+            stride: 'नया स्ट्राइड थ्रेट'
         },
-        edit: 'Edit Threat',
-        confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide mitigation or prevention for this threat',
-        newThreat: 'New Threat',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        edit: 'थ्रेट संपादित करें',
+        confirmDeleteTitle: 'हटाने की पुष्टि करें',
+        confirmDeleteMessage: 'क्या आप सुनिश्चित हैं कि आप वास्तव में इस खतरे को हटाना चाहते हैं?',
+        description: 'इस खतरे के लिए एक विवरण प्रदान करें',
+        emptyThreat: 'थ्रेट जोड़ने के लिए ग्राफ पर एक तत्व का चयन करें',
+        mitigation: 'इस खतरे के लिए शमन या रोकथाम प्रदान करें',
+        newThreat: 'नया थ्रेट',
+        newThreatByType: 'टाइप द्वारा नया थ्रेट',
+        newThreatByContext: 'संदर्भ के अनुसार थ्रेट',
         properties: {
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type',
-            number: 'Number',
-            priority: 'Priority',
-            score: 'Score',
-            status: 'Status',
-            title: 'Title',
-            type: 'Type'
+            description: 'विवरण',
+            mitigation: 'शमन',
+            modelType: 'मॉडल प्रकार',
+            number: 'नंबर',
+            priority: 'प्राथमिकता',
+            score: 'स्कोर',
+            status: 'स्थिति',
+            title: 'शीर्षक',
+            type: 'प्रकार'
         },
         status: {
-            notApplicable: 'N/A',
-            open: 'Open',
-            mitigated: 'Mitigated'
+            notApplicable: 'लागू नहीं',
+            open: 'खुला',
+            mitigated: 'शमन'
         },
         priority: {
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High'
+            low: 'कम',
+            medium: 'मध्यम',
+            high: 'ऊँचा'
         }
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showOutOfScope: 'दायरे से बाहर के तत्व दिखाएं',
+            showMitigatedThreats: 'कम किए गए खतरे दिखाएं',
+            showModelDiagrams: 'मॉडल आरेख दिखाएं',
+            showBranding: 'शो थ्रेट ड्रैगन ब्रांडिंग'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'के लिए थ्रेट मॉडल रिपोर्ट',
+        dateGenerated: 'तारीख उत्पन्न',
+        executiveSummary: 'कार्यकारी सारांश',
+        notProvided: 'प्रदान नहीं किया गया',
+        summary: 'सारांश',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'कुल खतरे',
+            mitigated: 'कुल शमन',
+            notMitigated: 'कम नहीं किया गया',
+            openHigh: 'ओपन / हाई प्रायोरिटी',
+            openMedium: 'ओपन / मीडियम प्रायोरिटी',
+            openLow: 'ओपन / लो प्रायोरिटी',
+            openUnknown: 'खुला / अज्ञात प्राथमिकता'
         }
     },
     upgrade: {
         modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+            header: 'थ्रेट मॉडल अद्यतन',
+            welcome: 'ओडब्ल्यूएएसपी थ्रेट ड्रैगन के संस्करण 2 में आपका स्वागत है!',
+            p1: 'संस्करण 2 एक अलग ड्राइंग लाइब्रेरी का उपयोग करता है, जो आपके खतरे के मॉडल के हिस्सों को सहेजे जाने के तरीके को बदल देगा। जबकि अधिकांश आरेख वैसे ही दिखेंगे जैसे वे थ्रेट ड्रैगन के पिछले संस्करणों में दिखाई देते थे, ऐसे मामले हैं जहां उन्हें थोड़ा समायोजित करने की आवश्यकता हो सकती है।',
+            p2: 'इस मोडल को बंद करने के बाद, आप देखेंगे कि इस मॉडल का प्रत्येक आरेख संस्करण 2 प्रारूप में कैसे प्रस्तुत होता है। कृपया किसी भी आरेख को नोट करें जिसे आपको समायोजित करने की आवश्यकता हो सकती है। यह एक बार का अपग्रेड है, और इस मॉडल को सेव करने के बाद आपको यह मैसेज दोबारा नहीं दिखना चाहिए।'
         },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+        instructions: 'महान! आइए आपको आपके मॉडल पर ले चलते हैं।',
+        continue: 'खतरे के मॉडल पर जारी रखें'
     }
 };
 
