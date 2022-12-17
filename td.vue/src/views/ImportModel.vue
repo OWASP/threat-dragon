@@ -56,7 +56,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import env from '@/service/env.js';
+import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -140,8 +140,8 @@ export default {
 
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
 
-            if (env.isElectron()) {
-                // tell any electron server that the model has changed
+            if (isElectron()) {
+                // tell the desktop server that the model has changed
                 window.electronAPI.modelOpened(fileName);
             }
 

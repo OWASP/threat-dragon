@@ -36,11 +36,17 @@
                             </a>
                         </h6>
                     </template>
-                    <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->
-                    
-                    <h6 class="diagram-header-text diagram-edit">
-                        {{ diagram.description }}
+                    <h6 v-if=diagram.description class="diagram-description-text">
+                        <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
+                            {{ diagram.description }}
+                        </a>
                     </h6>
+                    <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
+                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
+                            class="m-auto d-block td-diagram-thumb"
+                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
+                            :alt="diagram.title" />
+                    </a>
                 </b-card>
             </b-col>
         </b-row>
@@ -75,6 +81,10 @@
     white-space: pre-wrap;
 }
 .diagram-header-text a {
+    color: $black;
+}
+
+.diagram-description-text a {
     color: $black;
 }
 

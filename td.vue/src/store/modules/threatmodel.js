@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
-import env from '@/service/env.js';
+import isElectron from 'is-electron';
 import { getProviderType } from '../../service/provider/providers.js';
 import i18n from '../../i18n/index.js';
 import { providerTypes } from '../../service/provider/providerTypes.js';
@@ -23,7 +23,7 @@ import save from '../../service/save.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
-    if (env.isElectron()) {
+    if (isElectron()) {
         // tell any electron server that the model has closed
         window.electronAPI.modelClosed(state.fileName);
     }
@@ -97,7 +97,7 @@ const actions = {
                     state.data
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-            } else if (env.isElectron()) {
+            } else if (isElectron()) {
                 // desktop version always saves locally
                 await window.electronAPI.modelSaved(state.data, state.fileName);
             } else {

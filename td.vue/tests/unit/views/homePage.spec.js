@@ -4,7 +4,6 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
-import env from '@/service/env.js';
 import HomePage from '@/views/HomePage.vue';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
@@ -79,7 +78,7 @@ describe('HomePage.vue', () => {
         });
     });
 
-    describe('electron', () => {
+    describe('desktop', () => {
         beforeEach(() => {
             localVue = createLocalVue();
             localVue.use(Vuex);
@@ -91,7 +90,7 @@ describe('HomePage.vue', () => {
                     [PROVIDER_SELECTED]: () => {}
                 }
             });
-            env.isElectron = jest.fn().mockReturnValue(true);
+            isElectron = jest.fn().mockReturnValue(true);
             jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: redirectUrl });
             jest.spyOn(mockStore, 'dispatch');
 

@@ -18,11 +18,6 @@ module.exports = {
         }
     },
     lintOnSave: false,
-    pages: {
-        index: {
-            entry: 'src/main.js'
-        }
-    },
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'scss',
@@ -31,7 +26,9 @@ module.exports = {
             ]
         },
         electronBuilder: {
-            mainProcessFile: './src/desktop/desktop.js',
+            mainProcessFile: 'src/desktop/desktop.js',
+            mainProcessWatch: ['src/desktop/logger.js', 'src/desktop/menu.js'],
+            rendererProcessFile: 'src/main.desktop.js',
             outputDir: 'dist-desktop',
             builderOptions: {
                 appId: 'org.owasp.threatdragon',

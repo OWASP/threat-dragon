@@ -5,7 +5,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import env from '@/service/env.js';
+import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -37,8 +37,8 @@ export default {
         const params = Object.assign({}, this.$route.params, {
             threatmodel: newTm.summary.title
         });
-        if (env.isElectron()) {
-            // tell any electron server that the model has changed
+        if (isElectron()) {
+            // tell the desktop server that the model has changed
             window.electronAPI.modelOpened(newTm.summary.title);
         }
         this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params });

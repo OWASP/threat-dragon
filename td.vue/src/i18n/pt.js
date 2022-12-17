@@ -248,10 +248,10 @@ const pt = {
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            linddun: 'New LINDDUN threat',
-            stride: 'New STRIDE threat'
+            dafault: 'Nova ameaça genérica',
+            cia : 'Nova ameaça da CIA',
+            linddun : 'Nova ameaça LINDDUN',
+            stride: 'Nova ameaça STRIDE'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
@@ -291,19 +291,19 @@ const pt = {
             showModelDiagrams: 'Show model diagrams',
             showBranding: 'Show Threat Dragon Branding'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
-        threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+        title: 'Relatório do modelo de ameaças para',
+        dateGenerated : 'Data Gerada',
+        executiveSummary : 'Resumo Executivo',
+        notProvided : 'Não fornecido',
+        summary: 'Resumo',
+        threatStats : {
+            total: 'Ameaças totais',
+            mitigated: 'Total Mitigado',
+            notMitigated : 'Não atenuado',
+            openHigh : 'Abrir / Alta Prioridade',
+            openMedium : 'Abrir / Prioridade Média',
+            openLow : 'Abrir / Baixa Prioridade',
+            openUnknown : 'Prioridade Aberta / Desconhecida'
         }
     },
     upgrade: {
