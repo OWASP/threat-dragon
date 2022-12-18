@@ -14,15 +14,14 @@ const fs = require('fs');
 import el from '@/i18n/el.js';
 import en from '@/i18n/en.js';
 import es from '@/i18n/es.js';
-import cn from '@/i18n/cn.js';
 import de from '@/i18n/de.js';
 import fr from '@/i18n/fr.js';
-import hin from '@/i18n/hin.js';
+import hi from '@/i18n/hi.js';
 import pt from '@/i18n/pt.js';
 import ru from '@/i18n/ru.js';
-// cn and zh are synonyms
-const zh = cn;
-const messages = { el, en, es, cn, de, fr, hin, pt, ru, zh};
+import zh from '@/i18n/zh.js';
+
+const messages = { de, el, en, es, fr, hi, pt, ru, zh };
 var language = 'en';
 
 const model = {
