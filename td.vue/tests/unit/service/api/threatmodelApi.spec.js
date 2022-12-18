@@ -7,6 +7,16 @@ describe('service/threatmodelApi.js', () => {
         jest.spyOn(api, 'putAsync').mockImplementation(() => {});
     });
 
+    describe('organisationAsync', () => {
+        beforeEach(async () => {
+            await threatmodelApi.organisationAsync();
+        });
+
+        it('calls the organisation endpoint', () => {
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/organisation');
+        });
+    });
+
     describe('reposAsync', () => {
         beforeEach(async () => {
             await threatmodelApi.reposAsync();

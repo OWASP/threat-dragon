@@ -8,6 +8,13 @@ const extractRepoParts = (fullRepoName) => {
     return { org, repo };
 };
 
+
+/**
+ * Gets the organisation data configured for the express server
+ * @returns {Promise}
+ */
+const organisationAsync = () => api.getAsync(`${resource}/organisation`);
+
 /**
  * Gets the repos for the given user
  * @returns {Promise}
@@ -56,6 +63,7 @@ export default {
     branchesAsync,
     modelAsync,
     modelsAsync,
+    organisationAsync,
     reposAsync,
     updateAsync
 };

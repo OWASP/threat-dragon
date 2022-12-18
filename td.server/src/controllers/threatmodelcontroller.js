@@ -1,3 +1,4 @@
+import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
 import repository from '../repositories/threatmodelrepository.js';
 import responseWrapper from './responseWrapper.js';
@@ -148,12 +149,24 @@ const getPagination = (headers, page) => {
     return pagination;
 };
 
+const organisation = (req, res) => {
+    const organisation = {
+        protocol: env.get().config.ENTERPRISE_PROTOCOL || 'https',
+        hostname: env.get().config.GITHUB_ENTERPRISE_HOSTNAME || 'www.github.com',
+        port: env.get().config.GITHUB_ENTERPRISE_PORT || '',
+    };
+    logger.debug('API organisation request: ' + req);
+
+    return res.status(200).send(organisation);
+};
+
 export default {
     branches,
     create,
     deleteModel,
     model,
     models,
+    organisation,
     repos,
     update
 };
