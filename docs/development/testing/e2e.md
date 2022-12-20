@@ -43,7 +43,7 @@ To run the e2e tests locally, navigate to the `td.vue` directory and run:
 
 This will open the cypress runner application and load the suite of tests from `tests/e2e/specs`.
 From the cypress window you can select individual tests to run, or run all tests at once.
-This suite of tests uses cypress configuration file `e2e.config.json`.
+This suite of tests uses cypress configuration file `e2e.config.js`.
 
 A quick test can be done using command `pnpm test:vue`, from either the root directory or the `td.vue` directory.
 This runs the same suite of tests but in headless mode using an electron server back-end.

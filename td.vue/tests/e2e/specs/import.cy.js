@@ -8,7 +8,7 @@ describe('import', () => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/import"]').click();
         cy.url().should('contain', '/local/threatmodel/import');
-    };
+    });
 
     describe('using a valid V2 model with a diagram', () => {
         it('has the title', () => {
