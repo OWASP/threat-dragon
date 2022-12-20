@@ -16,6 +16,8 @@ const unauthRoutes = (router) => {
     router.get('/', homeController.index);
     router.get('/healthz', healthcheck.healthz);
 
+    router.get('/api/threatmodel/organisation', threatmodelController.organisation);
+
     router.get('/api/login/:provider', auth.login);
     router.get('/api/logout', auth.logout);
     router.get('/api/oauth/return', auth.oauthReturn);

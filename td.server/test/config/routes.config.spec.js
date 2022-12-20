@@ -95,6 +95,13 @@ describe('config/routes.config.js routes', () => {
             );
         });
         
+        it('routes GET /api/threatmodel/organisation', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/organisation',
+                threatmodelController.organisation
+            );
+        });
+        
         it('routes GET /api/threatmodel/:organisation/:repo/:branch/models', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/models',
