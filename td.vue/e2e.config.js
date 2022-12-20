@@ -14,6 +14,6 @@ module.exports = defineConfig({
   e2e: {
     excludeSpecPattern: '**/tests/e2e/specs/data/*.js',
     specPattern: 'tests/e2e/specs/home.cy.js',
-    supportFile: 'tests/e2e/support/index.js',
+    supportFile: 'tests/e2e/support/e2e.js',
   }
 });
