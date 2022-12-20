@@ -6,10 +6,6 @@ describe('navbar', () => {
             .and('have.attr', 'rel', 'noopener noreferrer');
     };
 
-    before(() => {
-        cy.setupTest();
-    });
-
     it('has a link to the home page', () => {
         cy.get('.navbar-brand').should('have.attr', 'href').and('contain', '#/');
     });

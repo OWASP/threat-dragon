@@ -65,7 +65,7 @@
         }
     ],
     "run_settings": {
-        "cypress_config_file": "cypress.smokes.json",
+        "cypress_config_file": "e2e.smokes.config.js",
         "project_name": "threat-dragon",
         "exclude": [],
         "parallels": "5",

@@ -1,6 +1,5 @@
 describe('report', () => {
-    before(() => {
-        cy.setupTest();
+    beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
         cy.get('a[data-model-name="Version 2 Demo Model"').click();

@@ -2,7 +2,6 @@ describe('editing a threat model', () => {
     const newName = 'Something New Goes Here!';
 
     beforeEach(() => {
-        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/new"]').click();
         cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model/edit');

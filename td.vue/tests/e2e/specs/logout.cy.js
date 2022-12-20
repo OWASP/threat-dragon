@@ -1,6 +1,5 @@
 describe('logout', () => {
     beforeEach(() => {
-        cy.setupTest();
         cy.get('#local-login-btn').click();
         cy.contains('Logged in as Guest');
         cy.get('#nav-sign-out').click();

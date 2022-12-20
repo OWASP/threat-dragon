@@ -1,14 +1,10 @@
-describe('layout', () => {
+describe('navbar', () => {
     const verifyExternalUrl = (selector, url) => {
         cy.get(selector)
             .find('a')
             .should('have.attr', 'href', url)
             .and('have.attr', 'rel', 'noopener noreferrer');
     };
-
-    before(() => {
-        cy.setupTest();
-    });
 
     it('has a link to the home page', () => {
         cy.get('.navbar-brand').should('have.attr', 'href', '#/');
