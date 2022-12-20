@@ -28,8 +28,6 @@ group: Testing
 End to end testing is done using [cypress](https://www.cypress.io/),
 and the tests are defined in the `td.vue/tests/e2e` directory.
 
-A quick test can be done from the root directory, or the `td.vue` directory, using command `pnpm test:vue` .
-
 You may need to install `vue-cli-service` if you are running some of the tests locally.
 If you get errors such as `vue-cli-service: command not found` then run command `pnpm install -g @vue/cli` from the root directory.
 
@@ -40,7 +38,10 @@ To run the e2e tests locally, navigate to the `td.vue` directory and run:
 
 This will open the cypress runner application and load the suite of tests from `tests/e2e/specs`.
 From the cypress window you can select individual tests to run, or run all tests at once.
-This suite of tests uses cypress plugin file `cypress.json` which calls `td.vue/tests/e2e/plugins/index.js`
+This suite of tests uses cypress plugin file `e2e.config.json`.
+
+A quick test can be done using command `pnpm test:vue`, from either the root directory or the `td.vue` directory.
+This runs the same suite of tests but in headless mode.
 
 ### Run test:e2e:local
 This suite of tests is identical to `test:e2e` but the target is an application already running at `http://localhost:8080/`.

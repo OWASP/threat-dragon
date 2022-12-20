@@ -1,5 +1,5 @@
 describe('home', () => {
-    before(() => {
+    beforeEach(() => {
         cy.setupTest();
     });
 
