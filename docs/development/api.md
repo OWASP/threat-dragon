@@ -39,7 +39,7 @@ APIs with no authorisation:
 | `/api/logout` | GET | Logout that will always succeed |
 | `/api/oauth/return` | GET | OAuth return request |
 | `/api/oauth/:provider` | GET | Provides access and refresh tokens if authorised |
-| `/api/organisation` | GET | Provides github organisation hostname |
+| `/api/threatmodel/organization` | GET | Provides github organisation hostname |
 
 Support for CI/CD pipelines is being worked on, and this API may include:
 * project status
