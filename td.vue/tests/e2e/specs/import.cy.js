@@ -4,18 +4,13 @@ import demoThreatModelJson from './data/demo-threat-model.js';
 import newModelJson from './data/new-model.js';
 
 describe('import', () => {
-    const setup = () => {
-        cy.setupTest();
+    beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/import"]').click();
         cy.url().should('contain', '/local/threatmodel/import');
-    };
+    });
 
     describe('using a valid V2 model with a diagram', () => {
-        before(() => {
-            setup();
-        });
-
         it('has the title', () => {
             cy.contains('Open / Import a threat model via JSON');
         });
@@ -38,10 +33,6 @@ describe('import', () => {
     });
 
     describe('using a valid V2 model without diagram', () => {
-        before(() => {
-            setup();
-        });
-
         it('allows a user to edit the model', () => {
             cy.get('#json-input').paste(v2NewModelJson);
             cy.get('#td-import-btn').click();
@@ -52,10 +43,6 @@ describe('import', () => {
     });
 
     describe('using a valid V1 model with a diagram', () => {
-        before(() => {
-            setup();
-        });
-
         it('allows a user to upgrade from v1 to v2', () => {
             cy.get('#json-input').paste(demoThreatModelJson);
             cy.get('#td-import-btn').click();
@@ -104,10 +91,6 @@ describe('import', () => {
     });
 
     describe('using a valid V1 model without diagram', () => {
-        before(() => {
-            setup();
-        });
-
         it('allows a user to upgrade from v1 to v2', () => {
             cy.get('#json-input').paste(newModelJson);
             cy.get('#td-import-btn').click();
@@ -143,10 +126,6 @@ describe('import', () => {
     });
 
     describe('using invalid JSON', () => {
-        before(() => {
-            setup();
-        });
-
         it('shows an error when there is invalid JSON', () => {
             cy.get('#json-input').type('some bad stuff');
             cy.get('#td-import-btn').click();

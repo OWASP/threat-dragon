@@ -1,8 +1,6 @@
-describe('home', () => {
-    before(() => {
-        cy.setupTest();
-    });
+// tests used to ensure the welcome page has the required components
 
+describe('home', () => {
     it('has a welcome message', () => {
         cy.contains('OWASP Threat Dragon');
     });

@@ -1,6 +1,5 @@
 describe('upgrade v1 new', () => {
-    before(() => {
-        cy.setupTest();
+    beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
     });
