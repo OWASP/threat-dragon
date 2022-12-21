@@ -70,19 +70,19 @@ For local testing of this script, an instance of the docker file can be used to 
 - from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - from directory `td.vue` invoke `pnpm test:e2e-ci`
 
-### Browserstack test:e2e-nightly
-The online Browserstack nightly tests use various browsers to run the tests in configuration file `browserstack.nightly.json`.
-The Browserstack configuration uses cypress configuration file `e2e.nightly.config.js`
+### BrowserStack test:e2e-nightly
+The online BrowserStack nightly tests use various browsers to run the tests in configuration file `browserstack.nightly.json`.
+The BrowserStack configuration uses cypress configuration file `e2e.nightly.config.js`
 and the suite of tests from is loaded from `tests/e2e/specs`. 
 
 The e2e nightly tests rely on the demo server to be running at `https://www.threatdragon.com/`.
 
-Browserstack tests are run by the CI pipeline using command `pnpm test:e2e-nightly`.
+BrowserStack tests are run by the CI pipeline using command `pnpm test:e2e-nightly`.
 Test and debug these pipelines using github rather than from the local command line
 
-### Browserstack test:e2e-smokes
+### BrowserStack test:e2e-smokes
 The e2e smoke tests rely on the demo server to be running at `https://www.threatdragon.com/`,
-and use Browserstack to test against various browsers.
+and use BrowserStack to test against various browsers.
 
 The pipeline tests rely on thedemo server running at `https://www.threatdragon.com/`
 and the scripts use command`pnpm test:e2e-smokes`

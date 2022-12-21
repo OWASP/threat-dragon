@@ -1,4 +1,4 @@
-name: Browserstack End to End Tests
+name: BrowserStack End to End Tests
 concurrency: browserstack_e2e
 on:
   schedule:

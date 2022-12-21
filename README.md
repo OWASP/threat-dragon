@@ -24,10 +24,12 @@ It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
 ## Check it out
-There are [documentation pages](https://threatdragon.github.io/about) to guide you and the production release area, conforming to
-[semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
-The next version of Threat Dragon 2.0 is still in development, but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
-Also well worth watching the video provided by the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
+There are [documentation pages](https://threatdragon.github.io/about) to guide you and the production release area,
+conforming to [semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
+The next version of Threat Dragon 2.0 is still in development,
+but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
+Also well worth watching the video provided by the
+[OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
 ### Version 1.x Maintenance mode
 Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
@@ -36,10 +38,12 @@ The main branch is now for version 2.x+, which is currently unreleased.
 For more information on building/running version 1.x,
 please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
 
-The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downloads and this will migrate to version 2.x during 2022. 
+The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downloads
+and this will migrate to version 2.x during 2022. 
 
 ## About Threat Dragon
-There is a good overview of [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
+There is a good overview of
+[threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
 
 - ease of use and accessible
@@ -107,8 +111,8 @@ With both front and back end running, access with a browser at http://localhost:
 
 ### Stop the application
 
-If using `pnpm start`, stop both the back-end server and the front-end application from the top directory: `pnpm stop`.
-Otherwise break out of both the server and vue front-end.
+If using `pnpm start`, stop both the back-end server and the front-end application
+from the top directory with command `pnpm stop`. Otherwise break out of both the server and vue front-end.
 
 ### Docker (local build)
 
@@ -123,7 +127,8 @@ Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ## Docker (from dockerhub)
 
-Threat Dragon maintains a docker image on Dockerhub. Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`:
+Threat Dragon maintains a docker image on Dockerhub.
+Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`:
 
 - `docker pull threatdragon/owasp-threat-dragon:v1.6.0`
 
@@ -138,10 +143,11 @@ Assuming that you are using http port 8080 and accessing Threat Dragon on `http:
 
 ### Contributing
 
-Pull requests, feature requests, bug reports and feedback of any kind are very welcome, please refer to the page for
-[contributors](CONTRIBUTING.md).
+Pull requests, feature requests, bug reports and feedback of any kind are very welcome,
+please refer to the page for [contributors](CONTRIBUTING.md).
 
-There are some [developer notes](https://www.threatdragon.com/docs/development/local.html) to help get started with this project.
+There are some [developer notes](https://www.threatdragon.com/docs/development/local.html)
+to help get started with this project.
 We are trying to keep the test coverage relatively high, so please try to update tests in your pull requests.
 
 ### Vulnerability disclosure
