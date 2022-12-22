@@ -55,7 +55,7 @@ homeLinks:
     fa_class: fas fa-play-circle
   - relative_url: /usage/modeling/diagrams.html
     description: How to use Diagrams
-    fa_class: fa-solid fa-diagram-project
+    fa_class: fas fa-diagram-project
   - relative_url: /usage/modeling/threats.html
     description: How to generate Threats
     fa_class: fas fa-bolt

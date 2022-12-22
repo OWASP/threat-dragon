@@ -79,8 +79,8 @@
         "exclude": [],
         "parallels": "5",
         "npm_dependencies": {
-            "@vue/cli-plugin-babel": "~4.5.0",
-            "cypress": "^9.6.0"
+            "@vue/cli-plugin-babel": "~5.0.8",
+            "cypress": "^12.1.0"
         },
         "package_config_options": {},
         "headless": true

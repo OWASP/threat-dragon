@@ -29,7 +29,8 @@ import {
     faFilePdf,
     faFolderOpen,
     faPrint,
-    faProjectDiagram
+    faProjectDiagram,
+    faDiagramProject
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -63,7 +64,8 @@ library.add(
     faFilePdf,
     faFolderOpen,
     faPrint,
-    faProjectDiagram
+    faProjectDiagram,
+    faDiagramProject
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
