@@ -15,10 +15,10 @@ import { upDir } from './helpers/path.helper.js';
 const siteDir = path.join(__dirname, upDir, upDir, 'dist');
 const docsDir = path.join(__dirname, upDir, upDir, 'docs');
 
-// set up rate limiter: maximum of 300 requests per 15 minutes
+// set up rate limiter: maximum of 600 requests per 10 minutes
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 300,
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 600,
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false // Disable the `X-RateLimit-*` headers
 });
