@@ -75,7 +75,7 @@ describe('docs', () => {
             cy.get('.fa-shield-alt').click();
             cy.get('.list-group-item-action[href="/docs/home/trust/sbom.html"]').click();
         });
-    
+
         it('has the download links for the SBOMs', () => {
             cy.get('a[href="/docs/downloads/site_json_bom.json"]').should('be.visible');
             cy.get('a[href="/docs/downloads/site_xml_bom.xml"]').should('be.visible');
@@ -84,11 +84,33 @@ describe('docs', () => {
             cy.get('a[href="/docs/downloads/canonical_json_bom.json"]').should('be.visible');
             cy.get('a[href="/docs/downloads/canonical_xml_bom.xml"]').should('be.visible');
         });
-    
+
         it('has a datatable with the canonical SBOM', () => {
             // Arbitrary number.  The datatable plugin manipulates the dom
             // anyways.  For a smoke test, we just want to know there's data in it
             cy.get('.td-data-table').find('tr').its('length').should('be.gt', 5);
         });
     });
+
+/*    describe('navbar', () => {
+        const verifyExternalUrl = (selector, url) => {
+            cy.get(selector)
+                .find('a')
+                .should('have.attr', 'href', url)
+                .and('have.attr', 'rel', 'noopener noreferrer');
+        };
+
+        it('links to the demo application', () => {
+            verifyExternalUrl('fa-flask', 'https://www.threatdragon.com/#');
+        });
+
+        it('links to Threat Dragon releases', () => {
+            verifyExternalUrl('fa-cloud-download-alt', 'https://github.com/OWASP/threat-dragon/releases');
+        });
+
+        it('links to Threat Dragon github', () => {
+            verifyExternalUrl('fa-github', 'https://github.com/OWASP/threat-dragon');
+        });
+    });
+*/
 });
