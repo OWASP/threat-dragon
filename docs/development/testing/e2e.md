@@ -139,6 +139,14 @@ For local testing of this script, an instance of the docker file can be used to 
 
 These tests are used by the CI pipeline to determine if the deploy was successful or not.
 
+## Cypress use of Electron
+Cypress uses the Electron server as a backend server, and has the Electron browser/renderer built in.
+When running locally some tests do not (as of Cypress version 12.x) run correctly.
+This means that it is good to choose a browser that is not Electron from the UI,
+and that some scripts that run in headless mode specify a different browser (such as Firefox).
+
+This is not a problem with the BrowserStack tests because here a specific browser is configured for each test run.
+
 ## Writing E2E Tests
 If you are new to cypress, we strongly suggest reading through the
 [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress).

@@ -68,7 +68,7 @@
         "cypress_config_file": "e2e.smokes.config.js",
         "project_name": "threat-dragon",
         "exclude": [],
-        "parallels": "2",
+        "parallels": "10",
         "npm_dependencies": {
             "@vue/cli-plugin-babel": "~5.0.8",
             "cypress": "^12.1.0"
