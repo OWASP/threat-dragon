@@ -90,7 +90,7 @@ Test and debug these pipelines using github rather than from the local command l
 
 To check the configuration file `e2e.nightly.config.js` run this command from directory `td.vue` :
 
-- `vue-cli-service test:e2e -C e2e.nightly.config.js --headless --url 'https://www.threatdragon.com/'`
+- `vue-cli-service test:e2e -C e2e.nightly.config.js --browser firefox --headless --url 'https://www.threatdragon.com/'`
 
 ### BrowserStack test:e2e-smokes
 The e2e pipeline Browserstack smoke tests rely on the demo server
@@ -104,7 +104,7 @@ and the suite of tests is loaded from `tests/e2e/specs/smokes`.
 These tests are run by the `deploy` github action.
 To check the configuration file `e2e.smokes.config.js` run this command from directory `td.vue` :
 
-- `vue-cli-service test:e2e -C e2e.smokes.config.js --headless --url 'https://www.threatdragon.com/'`
+- `vue-cli-service test:e2e -C e2e.smokes.config.js --browser firefox --headless --url 'https://www.threatdragon.com/'`
 
 ### Run test:e2e-smokes:local
 This suite of tests is similar to `test:e2e-smokes`
@@ -140,9 +140,13 @@ For local testing of this script, an instance of the docker file can be used to 
 These tests are used by the CI pipeline to determine if the deploy was successful or not.
 
 ## Writing E2E Tests
-Cypress is significantly different from many of the existing webdriver based frameworks
-and has a bit of a learning curve.
 If you are new to cypress, we strongly suggest reading through the
 [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress).
 The introduction document is a bit lengthy,
 but does a good job of preparing you to begin writing tests using cypress.
+
+Note that
+* `td.vue/e2e.ci.config.js` and `td.vue/e2e.smokes.ci.config.js` are used by the CI pipeline on pull-request and merge
+* `td.vue/e2e.smokes.config.js` is used by the CI pipeline on merge/deploy
+* `td.vue/e2e.nightly.config.js` is for the scheduled daily tests
+* `td.vue/e2e.local.config.js` and `td.vue/e2e.smokes.local.config.js` are useful in a local development environment

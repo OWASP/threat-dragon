@@ -5,10 +5,6 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-    retries: {
-        runMode: 2,
-        openMode: 0,
-    },
     fixturesFolder: 'tests/e2e/fixtures',
     screenshotsFolder: 'tests/e2e/screenshots',
     videosFolder: 'tests/e2e/videos',
