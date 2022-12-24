@@ -77,7 +77,7 @@
         "cypress_config_file": "e2e.nightly.config.js",
         "project_name": "threat-dragon",
         "exclude": [],
-        "parallels": "10",
+        "parallels": "2",
         "npm_dependencies": {
             "@vue/cli-plugin-babel": "~5.0.8",
             "cypress": "^12.1.0"

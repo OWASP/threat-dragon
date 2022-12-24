@@ -1,7 +1,9 @@
 // full suite of nightly end-to-end tests
 // run using cypress and Browserstack
 // tested against the demo application at 'https://www.threatdragon.com/'
-// Note: TODO specPattern: 'tests/e2e/specs/**/*.cy.js',
+// NOTE: TODO we have excluded most of the tests because
+//     the existing (free) Heroku web server infrastructure overloads
+//     reinstate the tests once this is corrected
 
 const { defineConfig } = require('cypress');
 
@@ -14,9 +16,8 @@ module.exports = defineConfig({
     screenshotsFolder: 'tests/e2e/screenshots',
     videosFolder: 'tests/e2e/videos',
     e2e: {
-        excludeSpecPattern: '**/tests/e2e/specs/smokes/*.cy.js',
         supportFile: 'tests/e2e/support/e2e.js',
-        specPattern: [ 'tests/e2e/specs/home.cy.js', 'tests/e2e/specs/docs.cy.js' ],
+        specPattern: [ 'tests/e2e/specs/home.cy.js', 'tests/e2e/specs/smokes/docs.cy.js' ],
         baseUrl: 'https://www.threatdragon.com/'
     }
 });

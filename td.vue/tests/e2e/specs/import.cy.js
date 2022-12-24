@@ -1,8 +1,3 @@
-import v2ThreatModelJson from './data/v2-threat-model.js';
-import v2NewModelJson from './data/v2-new-model.js';
-import demoThreatModelJson from './data/demo-threat-model.js';
-import newModelJson from './data/new-model.js';
-
 describe('import', () => {
     beforeEach(() => {
         cy.get('#local-login-btn').click();
@@ -21,6 +16,7 @@ describe('import', () => {
         });
 
         it('allows a user to manually enter the model JSON', () => {
+            cy.fixture('v2-threat-model').as('v2ThreatModelJson')
             cy.get('#json-input').paste(v2ThreatModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/Demo%20Threat%20Model');
@@ -34,6 +30,7 @@ describe('import', () => {
 
     describe('using a valid V2 model without diagram', () => {
         it('allows a user to edit the model', () => {
+            cy.fixture('v2-new-model').as('v2NewModelJson')
             cy.get('#json-input').paste(v2NewModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/New%20threat%20model');
@@ -44,6 +41,7 @@ describe('import', () => {
 
     describe('using a valid V1 model with a diagram', () => {
         it('allows a user to upgrade from v1 to v2', () => {
+            cy.fixture('demo-threat-model').as('demoThreatModelJson')
             cy.get('#json-input').paste(demoThreatModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/Demo%20Threat%20Model/upgrade');
@@ -92,6 +90,7 @@ describe('import', () => {
 
     describe('using a valid V1 model without diagram', () => {
         it('allows a user to upgrade from v1 to v2', () => {
+            cy.fixture('new-model').as('newModelJson')
             cy.get('#json-input').paste(newModelJson);
             cy.get('#td-import-btn').click();
             cy.url().should('contain', '/local/New%20threat%20model/upgrade');
