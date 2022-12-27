@@ -157,44 +157,48 @@ jobs:
 
       - name: Prepare for app notarization
         if: startsWith(matrix.config.os, 'macos')
-        Import Apple API key for app notarization on macOS
+        # Import Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
 
-      Win and OSX will just publish to the GH Release Draft (and create it if needed based on version)
-      Snap publishing fails using this plugin, so special care is needed for linux
+      # Win and OSX will just publish to the GH Release Draft
+      # (and create it if needed based on version)
+      # Snap publishing fails using this plugin,
+      # so special care is needed for linux
       - name: Build/release Electron app
         if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
 
-          If the commit is tagged with a version (e.g. "v1.0.0"),
-          release the app after building
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
 
+          # follow Comodo signing instructions
+          # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
           windows_certs: ${{ secrets.windows_certs }}
           windows_certs_password: ${{ secrets.windows_certs_password }}
 
           package_root: td.vue
         env:
-          macOS notarization API key
+          # macOS notarization API key
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
 
-      Build all linux images EXCEPT for the snap, with publish always
-      Snaps will not publish, even with snapcraft installed
+      # Build all linux images EXCEPT for the snap, with publish always
+      # Snaps will not publish, even with snapcraft installed
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: pnpm run electron-builder -- --linux AppImage deb rpm --publish always
         if: startsWith(matrix.config.os, 'ubuntu')
 
-      Build the snap, but do not publish
+      # Build the snap, but do not publish
       - shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -203,9 +207,9 @@ jobs:
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
-        Only install Snapcraft on Ubuntu
+        # Only install Snapcraft on Ubuntu
         with:
-          Log in to Snap Store
+          # Log in to Snap Store
           snapcraft_token: ${{ secrets.snapcraft_token }}
         if: startsWith(matrix.config.os, 'ubuntu')
 
