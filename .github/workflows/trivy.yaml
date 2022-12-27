@@ -1,13 +1,13 @@
 name: Trivy Scan
 on:
   schedule:
-    - cron: '0 20 * * *'
+    - cron: '0 08 * * *'
 jobs:
   build:
     name: Scan with Trivy
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: main
 

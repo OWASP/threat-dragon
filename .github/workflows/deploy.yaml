@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
         id: buildx
@@ -22,7 +22,7 @@ jobs:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -82,15 +82,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
