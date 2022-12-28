@@ -2,10 +2,9 @@ name: Build/Release Desktop
 
 on:
   push:
-    branches:
-      - 'main'
+    # only for version 2.x.x releases and release candidates
     tags:
-      - v*
+      - v2.?.?*
 
 env:
   image_name: "threatdragon/owasp-threat-dragon"

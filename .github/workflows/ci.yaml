@@ -5,7 +5,7 @@ on:
       - '*'
   pull_request:
     branches:
-      - 'main'
+      - main
 
 env:
   image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"

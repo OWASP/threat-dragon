@@ -1,7 +1,7 @@
 name: Trivy Scan
 on:
   schedule:
-    - cron: '0 08 * * *'
+    - cron: '0 8 * * *'
 jobs:
   build:
     name: Scan with Trivy
