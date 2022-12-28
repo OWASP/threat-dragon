@@ -1,7 +1,7 @@
 import { LOCALE_SELECTED } from '../actions/locale';
 
 const state = {
-    locale: 'en'
+    locale: 'eng'
 };
 
 const actions = {

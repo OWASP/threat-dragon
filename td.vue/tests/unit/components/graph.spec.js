@@ -42,7 +42,7 @@ describe('components/GraphButtons.vue', () => {
                     selected: 'github'
                 },
                 locale: {
-                    locale: 'en'
+                    locale: 'eng'
                 },
                 threatmodel: {
                     selectedDiagram: {

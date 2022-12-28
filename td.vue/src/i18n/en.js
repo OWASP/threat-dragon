@@ -1,4 +1,4 @@
-const en = {
+const eng = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -318,4 +318,4 @@ const en = {
     }
 };
 
-export default en;
+export default eng;

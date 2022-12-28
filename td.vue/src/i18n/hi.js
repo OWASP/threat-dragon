@@ -1,4 +1,4 @@
-const hi = {
+const hin = {
     auth: {
         sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
@@ -317,4 +317,4 @@ const hi = {
     }
 };
 
-export default hi;
+export default hin;

@@ -1,34 +1,34 @@
-const por = {
+const ukr = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'Essa é a versão 2.0 do OWASP Threat Dragon que, ainda, está em desenvolvimento. Por gentileza, não utilize essa versão para editar modelos já existentes, uma vez que essa versão poderá quebrá-los!',
-        loggedInAs: 'Logado como'
+        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development. Do not use this to edit existing models, as this version could break them!',
+        loggedInAs: 'Logged in as'
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Logo do Threat Dragon',
-        description: 'Threat Dragon é uma ferramenta gratuita e open-souce de modelagem de ameaças da OWASP e que pode ser utilizada via desktop para Windows, MacOS e Linux ou como uma aplicação web. A aplicação de desktop é excelente se você quiser experimentá-la sem conceder acesso aos seus repositórios do GitHub. No entanto, se você escolher a versão web, poderá liberar o incrível poder do GitHub em seus modelos de ameaça (threat model)! Obviamente, para fazer isso, será necessário realizar o login no GitHub e permitir o acesso ao repositório de interesse!',
-        loginWith: 'Login com'
+        imgAlt: 'Threat Dragon Logo',
+        description: 'Threat Dragon is a free, open-source threat modeling tool from OWASP. It can be used as a standalone desktop app for Windows, MacOS and Linux or as a web application. The desktop app is great if you want to use the application without giving it access to your GitHub repos, but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! Obviously, to do this you need to log in first.',
+        loginWith: 'Login with'
     },
     providers: {
         github: {
             displayName: 'GitHub'
         },
         local: {
-            displayName: 'Sessão Local'
+            displayName: 'Local Session'
         }
     },
     dashboard: {
         welcome: {
-            title: 'Desejamos boas-vindas! Ficamos felizes em te ter por aqui!',
-            description: 'Com OWASP Threat Dragon, você terá os mecanismos para tornar os designs de seus aplicativos mais seguros! Você pode abrir um modelo de ameaça (threat model) existente ou criar um modelo do zero! Basta escolher uma das opções abaixo!'
+            title: 'Welcome!',
+            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
         },
         actions: {
-            openExisting: 'Abrir um modelo de ameaça (threat model) existente',
-            createNew: 'Criar um novo modelo de ameaça (threat model) do zero',
-            download: 'Baixar e explorar um exemplo de modelo de ameaça (threat model)',
+            openExisting: 'Open an existing threat model',
+            createNew: 'Create a new, empty threat model',
+            demo: 'Explore a sample threat model',
             import: 'Import a threat model via JSON'
         }
     },
@@ -55,36 +55,36 @@ const por = {
         }
     },
     repository: {
-        select: 'Selecionar',
-        from: 'repositório da lista abaixo',
+        select: 'Select a',
+        from: 'repository from the list below',
         noneFound: 'No repositories found. To get started, create a new repository on'
     },
     branch: {
-        select: 'Selecionar uma branch',
-        from: 'da lista abaixo ou',
-        chooseRepo: 'escolher outro repositório'
+        select: 'Select a branch from',
+        from: 'from the list below or',
+        chooseRepo: 'choose another repo'
     },
     threatmodelSelect: {
-        select: 'Selecion a Threat Model from',
-        from: 'da lista abaixo, ou escolher outra',
+        select: 'Select a Threat Model from',
+        from: 'from the list below, or choose another',
         branch: 'branch',
-        or: 'ou',
-        repo: 'repositório',
+        or: 'or',
+        repo: 'repo',
         newThreatModel: 'Create a New Threat Model'
     },
     threatmodel: {
-        contributors: 'Contribuidores',
-        contributorsPlaceholder: 'Adicionar um novo contribuidor',
-        description: 'Descrição de alto nível do sistema (high level system)',
+        contributors: 'Contributors',
+        contributorsPlaceholder: 'Start typing to add a contributor',
+        description: 'High level system description',
         dragAndDrop: 'Drag and drop or ',
-        editing: 'Edição',
+        editing: 'Editing',
         jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        owner: 'Proprietário',
-        reviewer: 'Revisor',
-        title: 'Título',
+        owner: 'Owner',
+        reviewer: 'Reviewer',
+        title: 'Title',
         diagram: {
-            diagrams: 'Diagramas',
-            addNewDiagram: 'Adicionar um novo diagrama...',
+            diagrams: 'Diagrams',
+            addNewDiagram: 'Add a new diagram...',
             generic: {
                 diagramTitle: 'New generic diagram',
                 diagramDescription: 'New generic diagram description',
@@ -117,21 +117,21 @@ const por = {
         opened: 'Threat model successfully opened',
         saved: 'Threat model successfully saved',
         properties: {
-            title: 'Propriedades',
-            emptyState: 'Selecione um elemento do diagrama para modificar suas propriedades',
-            name: 'Nome',
-            text: 'Texto',
-            description: 'Descrição',
-            outOfScope: 'Fora do Escopo',
-            reasonOutOfScope: 'Razão por estar fora de escopo',
-            privilegeLevel: 'Nível de Privilégio',
-            isALog: 'É um Log',
-            storesCredentials: 'Armazenamento de Credenciais',
-            isEncrypted: 'Criptografado',
-            isSigned: 'Assinado',
-            providesAuthentication: 'Fornecimento de Autenticação',
-            protocol: 'Protocolo',
-            publicNetwork: 'Rede Pública'
+            title: 'Properties',
+            emptyState: 'Select an element on the graph to edit',
+            name: 'Name',
+            text: 'Text',
+            description: 'Description',
+            outOfScope: 'Out of Scope',
+            reasonOutOfScope: 'Reason for out of scope',
+            privilegeLevel: 'Privilege Level',
+            isALog: 'Is a Log',
+            storesCredentials: 'Stores Credentials',
+            isEncrypted: 'Encrypted',
+            isSigned: 'Signed',
+            providesAuthentication: 'Provides Authentication',
+            protocol: 'Protocol',
+            publicNetwork: 'Public Network'
         },
         buttons: {
             delete: 'Delete selected',
@@ -143,76 +143,76 @@ const por = {
             zoomOut: 'Zoom out'
         },
         shortcuts: {
-            title: 'Atalhos',
+            title: 'Shortcuts',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copiar'
+                action: 'Copy'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Colar'
+                action: 'Paste'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Desfazer'
+                action: 'Undo'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Refazer'
+                action: 'Redo'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Deletar'
+                action: 'Delete'
             },
             pan: {
-                shortcut: 'shift + botão esquerdo do mouse (segurar e arrastar)',
-                action: 'Movimentar-se por toda a imagem do diagrama'
+                shortcut: 'shift + left-click (hold/drag)',
+                action: 'Pan'
             },
             multiSelect: {
-                shortcut: 'clique no botão esquerdo mouse no espaço vazio e arrastar',
-                action: 'Seleção múltipla'
+                shortcut: 'left-click on empty space and drag',
+                action: 'Multi-select'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + rolagem do mouse',
+                shortcut: '(ctrl/cmd) + mousewheel',
                 action: 'Zoom'
             }
         },
         stencil: {
-            boundaries: 'Limites',
+            boundaries: 'Boundaries',
             components: 'Components',
-            entities: 'Entidades',
-            metadata: 'Metadados',
-            search: 'Pesquisar',
-            notFound: 'Ainda não temos isso! :( Mas, gostaria de abrir uma issue? :)'
+            entities: 'Entities',
+            metadata: 'Metadata',
+            search: 'Search',
+            notFound: 'We don\'t have that yet, want to open an issue? :)'
         },
         shapes: {
-            actor: 'Ator',
-            flow: 'Fluxo de Dados',
-            flowStencil: 'Fluxo de Dados',
-            process: 'Processo',
-            store: 'Armazenamento',
-            text: 'Texto facultativo',
-            trustBoundary: 'Limite de Confiança'
+            actor: 'Actor',
+            flow: 'Data Flow',
+            flowStencil: 'Data Flow',
+            process: 'Process',
+            store: 'Store',
+            text: 'Descriptive text',
+            trustBoundary: 'Trust Boundary'
         }
     },
     forms: {
         apply: 'Apply',
-        cancel: 'Cancelar',
-        close: 'Fechar',
+        cancel: 'Cancel',
+        close: 'Close',
         closeModel: 'Close Model',
-        delete: 'Deletar',
+        delete: 'Delete',
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Editar',
+        edit: 'Edit',
         import: 'Import',
         ok: 'OK',
         open: 'Open',
         openModel: 'Open Model',
         print: 'Print',
-        reload: 'Recarregar',
-        remove: 'Remover',
-        report: 'Reporte',
-        save: 'Salvar',
+        reload: 'Reload',
+        remove: 'Remove',
+        report: 'Report',
+        save: 'Save',
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
@@ -248,10 +248,10 @@ const por = {
             }
         },
         generic: {
-            dafault: 'Nova ameaça genérica',
-            cia : 'Nova ameaça da CIA',
-            linddun : 'Nova ameaça LINDDUN',
-            stride: 'Nova ameaça STRIDE'
+            default: 'New generic threat',
+            cia: 'New CIA threat',
+            linddun: 'New LINDDUN threat',
+            stride: 'New STRIDE threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
@@ -291,19 +291,19 @@ const por = {
             showModelDiagrams: 'Show model diagrams',
             showBranding: 'Show Threat Dragon Branding'
         },
-        title: 'Relatório do modelo de ameaças para',
-        dateGenerated : 'Data Gerada',
-        executiveSummary : 'Resumo Executivo',
-        notProvided : 'Não fornecido',
-        summary: 'Resumo',
-        threatStats : {
-            total: 'Ameaças totais',
-            mitigated: 'Total Mitigado',
-            notMitigated : 'Não atenuado',
-            openHigh : 'Abrir / Alta Prioridade',
-            openMedium : 'Abrir / Prioridade Média',
-            openLow : 'Abrir / Baixa Prioridade',
-            openUnknown : 'Prioridade Aberta / Desconhecida'
+        title: 'Threat model report for',
+        dateGenerated: 'Date Generated',
+        executiveSummary: 'Executive Summary',
+        notProvided: 'Not provided',
+        summary: 'Summary',
+        threatStats: {
+            total: 'Total Threats',
+            mitigated: 'Total Mitigated',
+            notMitigated: 'Not Mitigated',
+            openHigh: 'Open / High Priority',
+            openMedium: 'Open / Medium Priority',
+            openLow: 'Open / Low Priority',
+            openUnknown: 'Open / Unknown Priority'
         }
     },
     upgrade: {
@@ -318,4 +318,4 @@ const por = {
     }
 };
 
-export default por;
+export default ukr;
