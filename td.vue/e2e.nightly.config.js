@@ -17,7 +17,7 @@ module.exports = defineConfig({
     videosFolder: 'tests/e2e/videos',
     e2e: {
         supportFile: 'tests/e2e/support/e2e.js',
-        specPattern: [ 'tests/e2e/specs/home.cy.js', 'tests/e2e/specs/smokes/docs.cy.js' ],
+        specPattern: [ 'tests/e2e/specs/home.cy.js', 'tests/e2e/specs/docs.cy.js' ],
         baseUrl: 'https://www.threatdragon.com/'
     }
 });
