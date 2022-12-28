@@ -3,16 +3,18 @@ import VueI18n from 'vue-i18n';
 
 // the language codes follow
 // Internet Engineering Task Force (IETF) Best Current Practice (BCP) 47
+// using codes from ISO 639-2
 
-import el from './el.js';
-import en from './en.js';
-import es from './es.js';
-import de from './de.js';
-import fr from './fr.js';
-import hi from './hi.js';
-import pt from './pt.js';
-import ru from './ru.js';
-import zh from './zh.js';
+import ell from './el.js';
+import eng from './en.js';
+import spa from './es.js';
+import deu from './de.js';
+import fra from './fr.js';
+import hin from './hi.js';
+import por from './pt.js';
+import rus from './ru.js';
+import ukr from './uk.js';
+import zho from './zh.js';
 
 Vue.use(VueI18n);
 let i18n = null;
@@ -20,8 +22,8 @@ let i18n = null;
 const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
-            locale: 'en',
-            messages: { de, el, en, es, fr, hi, pt, ru, zh }
+            locale: 'eng',
+            messages: { deu, ell, eng, spa, fra, hin, por, rus, ukr, zho }
         });
     }
     return i18n;

@@ -11,18 +11,19 @@ const { shell } = require('electron');
 const fs = require('fs');
 
 // access the i18n message strings
-import el from '@/i18n/el.js';
-import en from '@/i18n/en.js';
-import es from '@/i18n/es.js';
-import de from '@/i18n/de.js';
-import fr from '@/i18n/fr.js';
-import hi from '@/i18n/hi.js';
-import pt from '@/i18n/pt.js';
-import ru from '@/i18n/ru.js';
-import zh from '@/i18n/zh.js';
+import ell from '@/i18n/el.js';
+import eng from '@/i18n/en.js';
+import spa from '@/i18n/es.js';
+import deu from '@/i18n/de.js';
+import fra from '@/i18n/fr.js';
+import hin from '@/i18n/hi.js';
+import por from '@/i18n/pt.js';
+import rus from '@/i18n/ru.js';
+import ukr from '@/i18n/uk.js';
+import zho from '@/i18n/zh.js';
 
-const messages = { de, el, en, es, fr, hi, pt, ru, zh };
-var language = 'en';
+const messages = { deu, ell, eng, spa, fra, hin, por, rus, ukr, zho };
+var language = 'eng';
 
 const model = {
     fileDirectory: '',

@@ -17,15 +17,15 @@ describe('components/LocaleSelect.vue', () => {
             localVue.use(BootstrapVue);
 
             const i18n = new VueI18n({
-                locale: 'en',
+                locale: 'eng',
                 messages: {
-                    en: { hello: 'Hello World' },
-                    de: { hello: 'Hallo Welt' }
+                    eng: { hello: 'Hello World' },
+                    deu: { hello: 'Hallo Welt' }
                 }
             });
 
             mockStore = new Vuex.Store({
-                state: { locale: { locale: 'en' }},
+                state: { locale: { locale: 'eng' }},
                 actions: { [LOCALE_SELECTED]: () => {} },
                 dispatch: () => {}
             });
@@ -42,18 +42,18 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('displays the current locale', () => {
-            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('en');
+            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('eng');
         });
 
-        it('has an option for en', () => {
+        it('has an option for eng', () => {
             expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'en').exists()
+                .filter((c) => c.text() === 'eng').exists()
             ).toEqual(true);
         });
 
-        it('has an option for de', () => {
+        it('has an option for deu', () => {
             expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'de').exists()
+                .filter((c) => c.text() === 'deu').exists()
             ).toEqual(true);
         });
 
@@ -62,22 +62,22 @@ describe('components/LocaleSelect.vue', () => {
                 mockStore.dispatch = jest.fn();
             });
 
-            it('updates the locale to de', async () => {
+            it('updates the locale to deu', async () => {
                 await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'de')
+                    .filter(c => c.text() === 'deu')
                     .at(0)
                     .trigger('click');
                 
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'de');
+                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'deu');
             });
 
-            it('updates the locale to en', async () => {
+            it('updates the locale to eng', async () => {
                 await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'en')
+                    .filter(c => c.text() === 'eng')
                     .at(0)
                     .trigger('click');
                 
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'en');
+                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'eng');
             });
         });
     });
@@ -91,10 +91,10 @@ describe('components/LocaleSelect.vue', () => {
             localVue.use(BootstrapVue);
 
             i18n = new VueI18n({
-                locale: 'en',
+                locale: 'eng',
                 messages: {
-                    en: { hello: 'Hello World' },
-                    de: { hello: 'Hallo Welt' }
+                    eng: { hello: 'Hello World' },
+                    deu: { hello: 'Hallo Welt' }
                 }
             });
 

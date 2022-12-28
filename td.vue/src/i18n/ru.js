@@ -1,4 +1,4 @@
-const ru = {
+const rus = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -318,4 +318,4 @@ const ru = {
     }
 };
 
-export default ru;
+export default rus;

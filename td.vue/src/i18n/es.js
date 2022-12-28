@@ -1,4 +1,4 @@
-const es = {
+const spa = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -318,4 +318,4 @@ const es = {
     }
 };
 
-export default es;
+export default spa;

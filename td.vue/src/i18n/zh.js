@@ -1,4 +1,4 @@
-const zh = {
+const zho = {
     auth: {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
@@ -318,4 +318,4 @@ const zh = {
     }
 };
 
-export default zh;
+export default zho;
