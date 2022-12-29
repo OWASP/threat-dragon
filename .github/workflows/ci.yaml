@@ -44,9 +44,6 @@ jobs:
       - name: Unit Test
         run: npm run test:unit
 
-      - name: Upload codecov report
-        run: npm run codecov
-
   site_unit_tests:
     runs-on: ubuntu-latest
     defaults:
@@ -80,9 +77,6 @@ jobs:
 
       - name: Unit Test
         run: npm run test:unit
-
-      - name: Upload codecov report
-        run: npm run codecov
 
   build_docker_image:
     runs-on: ubuntu-latest

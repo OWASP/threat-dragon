@@ -19,8 +19,8 @@ there is a concurrency group that prevents concurrent runs of the same action.
 {:.table .table-striped}
 |Name|Description|Dependencies|
 |---|---|---|
-|server_unit_tests|Runs the `td.server` unit tests and reports coverage to codecov.io|N/A|
-|site_unit_tests|Runs the `td.vue` unit tests and reports coverage to codecov.io|N/A|
+|server_unit_tests|Runs the `td.server` unit tests|N/A|
+|site_unit_tests|Runs the `td.vue` unit tests|N/A|
 |docker_build_and_publish|Builds the docker image from source and pushes it to a specific tag that is reserved for testing.|`site_unit_tests`, `server_unit_tests`|
 |e2e_smokes|Runs the E2E smoke tests against the freshly built web app.  Videos of the E2E tests are added as a build artifact|`docker_build_and_publish`|
 |e2e_tests|Runs the E2E tests against the freshly built web app.  Videos of the E2E tests are added as a build artifact|`docker_build_and_publish`|
