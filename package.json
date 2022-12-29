@@ -11,7 +11,6 @@
         "clean:server": "cd td.server && npm run clean",
         "clean:root": "rimraf node_modules/",
         "clean:vue": "cd td.vue && npm run clean",
-        "codecov": "echo 'Disabled for now: codecov'",
         "dev:vue": "cd td.vue && npm run dev",
         "dev:server": "cd td.server && npm run dev",
         "preinstall": "npx only-allow pnpm",
