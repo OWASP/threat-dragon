@@ -1,4 +1,4 @@
-ARG         NODE_VERSION=16
+ARG         NODE_VERSION=18
 
 # The base image with updates applied
 FROM        node:$NODE_VERSION-alpine as base-node
