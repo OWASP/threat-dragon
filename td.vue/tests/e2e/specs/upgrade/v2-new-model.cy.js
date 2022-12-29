@@ -4,11 +4,8 @@ describe('upgrade v2 new', () => {
         cy.get('a[href="#/demo/select"]').click();
     });
 
-    it('has the header text', () => {
-        cy.contains('demo threat model from the list');
-    });
-
     it('has the V2 New Model', () => {
+        cy.contains('demo threat model from the list');
         cy.contains('Version 2 New Model');
     });
 
@@ -18,6 +15,7 @@ describe('upgrade v2 new', () => {
     });
 
     it('can edit the model', () => {
+        cy.get('a').contains('Version 2 New Model').click();
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
