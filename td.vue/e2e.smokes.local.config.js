@@ -1,7 +1,7 @@
-// reduced set of end-to-end smoke tests using cypress test runner
+// reduced set of end-to-end tests used as smoke tests
+// run by the CI pipeline using cypress
 // tested against a local application at 'http://localhost:8080/'
-// excludes 'tests/e2e/specs/docs.cy.js' because the docs are not present
-// NOTE: TODO temporary exclude edit.cy.js
+// NOTE: exclude 'tests/e2e/specs/smokes/docs.cy.js' because no docs present for local dev
 
 const { defineConfig } = require('cypress');
 
