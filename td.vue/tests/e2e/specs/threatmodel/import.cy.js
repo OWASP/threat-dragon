@@ -27,7 +27,7 @@ describe('import', () => {
     // TODO: guard navigation error, so skip
     describe.skip('using a valid V1 model without diagram', () => {
         it('allows a user to upgrade from v1 to v2', () => {
-            cy.fixture('new-model').then((model) => {
+            cy.fixture('v1-new-model').then((model) => {
                 cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false});
             });
             cy.get('#td-import-btn').click();
@@ -80,7 +80,7 @@ describe('import', () => {
     //       also we get an uncaught navigation guard error
     describe.skip('using a valid V1 model with a diagram', () => {
         it('allows a user to upgrade from v1 to v2', () => {
-            cy.fixture('demo-threat-model').then((model) => {
+            cy.fixture('v1-model').then((model) => {
                 cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false, delay: 1});
             });
             cy.get('#td-import-btn').click();
@@ -128,10 +128,9 @@ describe('import', () => {
 
     });
 
-    // TODO: skipping because the threat model is large and we do not (yet) scroll
-    describe.skip('using a valid V2 model with a diagram', () => {
+    describe('using a valid V2 model with a diagram', () => {
         it('allows a user to manually enter the model JSON', () => {
-            cy.fixture('v2-threat-model').then((model) => {
+            cy.fixture('v2-model').then((model) => {
                 cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false, delay: 1});
             });
             cy.get('#td-import-btn').click();
@@ -139,6 +138,8 @@ describe('import', () => {
             cy.contains('Demo Threat Model');
             cy.contains('Main Request Data Flow');
             cy.get('#td-edit-btn').should('be.visible');
+            cy.get('#td-report-btn').should('be.visible');
+            cy.get('#td-delete-btn').should('be.visible');
         });
     });
 
