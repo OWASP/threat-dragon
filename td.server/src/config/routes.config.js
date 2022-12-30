@@ -39,7 +39,8 @@ const routes = (router) => {
     router.get('/api/threatmodel/:organisation/:repo/:branch/models', threatmodelController.models);
     router.get('/api/threatmodel/:organisation/:repo/:branch/:model/data', threatmodelController.model);
 
-    router.delete('/api/threatmodel/:organisation/:repo/:branch/:model', threatmodelController.deleteModel);
+    // removed because of security denial of service concerns (denial of models)
+    //router.delete('/api/threatmodel/:organisation/:repo/:branch/:model', threatmodelController.deleteModel);
 
     router.put('/api/threatmodel/:organisation/:repo/:branch/:model/create', threatmodelController.create);
     router.put('/api/threatmodel/:organisation/:repo/:branch/:model/update', threatmodelController.update);

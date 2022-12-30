@@ -116,12 +116,13 @@ describe('config/routes.config.js routes', () => {
             );
         });
         
-        it('routes DELETE /api/threatmodel/:organisation/:repo/:branch/:model', () => {
+        // removed because of security denial of service concerns (denial of models)
+        /* it('routes DELETE /api/threatmodel/:organisation/:repo/:branch/:model', () => {
             expect(mockRouter.delete).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model',
                 threatmodelController.deleteModel
             );
-        });
+        });*/
         
         it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
             expect(mockRouter.put).to.have.been.calledWith(

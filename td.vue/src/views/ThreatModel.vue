@@ -65,10 +65,10 @@
                         icon="file-alt"
                         :text="$t('forms.report')" />
                     <td-form-button
-                        id="td-delete-btn"
-                        :onBtnClick="onDeleteClick"
+                        id="td-close-btn"
+                        :onBtnClick="onCloseClick"
                         icon="times"
-                        :text="$t('forms.delete')" />
+                        :text="$t('forms.close')" />
                 </b-btn-group>
             </b-col>
         </b-row>
@@ -100,7 +100,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
-import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CLEAR, THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
@@ -121,9 +121,11 @@ export default {
             evt.preventDefault();
             this.$router.push({ name: `${this.providerType}Report`, params: this.$route.params });
         },
-        onDeleteClick(evt) {
+        onCloseClick(evt) {
             evt.preventDefault();
-            console.log('Delete clicked! Action TBA');
+            console.log('Close clicked! Action being tested');
+            this.$store.dispatch(THREATMODEL_CLEAR);
+            this.$router.push('/dashboard');
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {

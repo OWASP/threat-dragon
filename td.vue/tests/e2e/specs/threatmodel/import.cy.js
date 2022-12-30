@@ -72,7 +72,7 @@ describe('import', () => {
             cy.contains('New threat model');
             cy.get('#td-edit-btn').should('be.visible');
             cy.get('#td-report-btn').should('be.visible');
-            cy.get('#td-delete-btn').should('be.visible');
+            cy.get('#td-close-btn').should('be.visible');
         });
     });
 
@@ -139,7 +139,7 @@ describe('import', () => {
             cy.contains('Main Request Data Flow');
             cy.get('#td-edit-btn').should('be.visible');
             cy.get('#td-report-btn').should('be.visible');
-            cy.get('#td-delete-btn').should('be.visible');
+            cy.get('#td-close-btn').should('be.visible');
         });
     });
 
