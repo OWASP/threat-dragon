@@ -117,7 +117,7 @@ describe('views/Threatmodel.vue', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('navigates to the Dashboard view', () => {
+            it('returns to the Dashboard view', () => {
                 expect(mockRouter.push).toHaveBeenCalledWith('/dashboard');
             });
         });

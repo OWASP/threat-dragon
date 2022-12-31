@@ -123,7 +123,6 @@ export default {
         },
         onCloseClick(evt) {
             evt.preventDefault();
-            console.log('Close clicked! Action being tested');
             this.$store.dispatch(THREATMODEL_CLEAR);
             this.$router.push('/dashboard');
         },
