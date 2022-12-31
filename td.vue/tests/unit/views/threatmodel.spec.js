@@ -108,17 +108,17 @@ describe('views/Threatmodel.vue', () => {
             });
         });
 
-        describe('delete', () => {
+        describe('close', () => {
             beforeEach(async () => {
-                await wrapper.find('#td-delete-btn').trigger('click', evt);
+                await wrapper.find('#td-close-btn').trigger('click', evt);
             });
 
             it('prevents the default event', () => {
                 expect(evt.preventDefault).toHaveBeenCalledTimes(1);
             });
 
-            it('logs to the console and needs to be removed...', () => {
-                expect(console.log).toHaveBeenCalled();
+            it('returns to the Dashboard view', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith('/dashboard');
             });
         });
 

@@ -12,7 +12,7 @@ At present it there is a minimal application programming interface for
 [Threat Dragon](http://owasp.org/www-project-threat-dragon) .
 This API is used to access to threat models stored by repository providers, github being the first.
 
-APIs protected by authorisation, including threat model CRUD:
+APIs protected by authorisation, including threat model Create, Read, Update (but no Delete):
 
 {:.table .table-striped}
 | Path | Action | Description |
@@ -23,7 +23,6 @@ APIs protected by authorisation, including threat model CRUD:
 | `/api/threatmodel/:organisation/:repo/branches` | GET | List branches for a given repository |
 | `/api/threatmodel/:organisation/:repo/:branch/models` | GET | List models for a given branch and repository |
 | `/api/threatmodel/:organisation/:repo/:branch/:model/data` | GET | Reads the threat model contents for a given model |
-| `/api/threatmodel/:organisation/:repo/:branch/:model` | DELETE | Delete a model from a given branch and repository |
 | `/api/threatmodel/:organisation/:repo/:branch/:model/create` | PUT | Creates a new model in the given branch and repository |
 | `/api/threatmodel/:organisation/:repo/:branch/:model/update` | PUT | Update a model in the given branch and repository |
 
