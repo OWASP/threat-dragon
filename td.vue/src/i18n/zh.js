@@ -3,7 +3,7 @@ const zho = {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
-        v2Warning: '这是 OWASP Threat Dragon 的 2.0 版本，仍在开发中。不要使用它来编辑现有模型，因为这个版本可能会破坏它们！',
+        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: '登录身份为'
     },
     home: {

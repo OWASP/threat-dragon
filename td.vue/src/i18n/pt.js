@@ -3,7 +3,7 @@ const por = {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'Essa é a versão 2.0 do OWASP Threat Dragon que, ainda, está em desenvolvimento. Por gentileza, não utilize essa versão para editar modelos já existentes, uma vez que essa versão poderá quebrá-los!',
+        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Logado como'
     },
     home: {

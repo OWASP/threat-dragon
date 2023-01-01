@@ -14,7 +14,7 @@ describe('App.vue', () => {
     beforeEach(() => {
         console.log = jest.fn();
         mockToast = {
-            error: jest.fn()
+            warning: jest.fn()
         };
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
@@ -55,6 +55,6 @@ describe('App.vue', () => {
     });
 
     it('shows a warning toast for v2', () => {
-        expect(mockToast.error).toHaveBeenCalled();
+        expect(mockToast.warning).toHaveBeenCalled();
     });
 });

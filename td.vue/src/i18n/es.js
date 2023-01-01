@@ -3,7 +3,7 @@ const spa = {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'Esta es la versión 2.0 do OWASP Threat Dragon que todavía está en desarrollo. No la utilice para editar pantillas existentes, ya que esta versión puede romperlas.',
+        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Conectado como'
     },
     home: {

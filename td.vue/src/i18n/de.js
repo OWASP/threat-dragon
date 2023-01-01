@@ -3,7 +3,7 @@ const deu = {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'This is version 2.0 of OWASP Threat Dragon and is still under development. Do not use this to edit existing models, as this version could break them!',
+        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Logged in as'
     },
     home: {

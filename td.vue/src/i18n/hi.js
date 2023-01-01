@@ -3,7 +3,7 @@ const hin = {
         sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
     nav: {
-        v2Warning: 'यह OWASP थ्रेट ड्रैगन का संस्करण 2.0 है और अभी भी विकास के अधीन है। मौजूदा मॉडलों को संपादित करने के लिए इसका उपयोग न करें, क्योंकि यह संस्करण उन्हें तोड़ सकता है!',
+        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'के रूप में लॉग इन किया'
     },
     home: {
