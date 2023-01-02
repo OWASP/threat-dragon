@@ -113,6 +113,7 @@
                                 ></b-form-input>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].description"
+                                    :placeholder="model.detail.diagrams[idx].placeholder"
                                     type="text"
                                     class="td-diagram-description"
                                 ></b-form-input>
@@ -229,56 +230,50 @@ export default {
             evt.preventDefault();
             let newDiagram = {
                 name: '',
-                title: this.$t('threatmodel.diagram.stride.diagramTitle'),
-                description: this.$t('threatmodel.diagram.stride.diagramDescription'),
+                title: this.$t('threatmodel.diagram.stride.defaultTitle'),
                 diagramType: 'STRIDE',
+                placeholder: this.$t('threatmodel.diagram.stride.defaultDescription'),
                 thumbnail: './public/content/images/thumbnail.stride.jpg',
                 version: this.version
             };
             this.model.detail.diagrams.push(newDiagram);
         },
         onDiagramTypeClick(idx, type) {
-            let title;
-            let description;
+            let defaultTitle;
+            let placeholder;
+            let thumbnail;
             switch (type) {
-            case 'CIA':
-                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.cia.jpg';
-                title = this.$t('threatmodel.diagram.cia.diagramTitle');
-                description = this.$t('threatmodel.diagram.cia.diagramDescription');
-                break;
-            case 'LINDDUN':
-                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.linddun.jpg';
-                title = this.$t('threatmodel.diagram.linddun.diagramTitle');
-                description = this.$t('threatmodel.diagram.linddun.diagramDescription');
-                break;
-            case 'STRIDE':
-                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.stride.jpg';
-                title = this.$t('threatmodel.diagram.stride.diagramTitle');
-                description = this.$t('threatmodel.diagram.stride.diagramDescription');
-                break;
-            default:
-                this.model.detail.diagrams[idx].thumbnail = './public/content/images/thumbnail.jpg';
-                title = this.$t('threatmodel.diagram.generic.diagramTitle');
-                description = this.$t('threatmodel.diagram.generic.diagramDescription');
-                type = this.$t('threatmodel.diagram.generic.select');
-                break;
+	            case 'CIA':
+	                thumbnail = './public/content/images/thumbnail.cia.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
+	                break;
+	            case 'LINDDUN':
+	                thumbnail = './public/content/images/thumbnail.linddun.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
+	                break;
+	            case 'STRIDE':
+	                thumbnail = './public/content/images/thumbnail.stride.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
+	                break;
+	            default:
+	                thumbnail = './public/content/images/thumbnail.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
+	                type = this.$t('threatmodel.diagram.generic.select');
             }
             this.model.detail.diagrams[idx].diagramType = type;
-            // if the diagram title is still generic, then change it to the new generic title
-            if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.diagramTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.diagramTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.diagramTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.diagramTitle')
+            this.model.detail.diagrams[idx].placeholder = placeholder;
+            this.model.detail.diagrams[idx].thumbnail = thumbnail;
+            // if the diagram title is still default, then change it to the new default title
+            if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
             ) {
-                this.model.detail.diagrams[idx].title = title;
-            }
-            // if the diagram description is still generic, then change it to the new generic description
-            if (this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.cia.diagramDescription')
-                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.linddun.diagramDescription')
-                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.stride.diagramDescription')
-                || this.model.detail.diagrams[idx].description === this.$t('threatmodel.diagram.generic.diagramDescription')
-            ) {
-                this.model.detail.diagrams[idx].description = description;
+                this.model.detail.diagrams[idx].title = defaultTitle;
             }
         },
         onRemoveDiagramClick(idx) {

@@ -85,23 +85,23 @@ const hin = {
             diagrams: 'चित्',
             addNewDiagram: 'एक नया चित्र जोड़ें...',
             generic: {
-                diagramTitle: 'न्यू जेनेरिक डायग्राम',
-                diagramDescription: 'न्यू जेनरिक डायग्राम डिस्क्रिप्शन',
+                defaultTitle: 'न्यू जेनेरिक डायग्राम',
+                defaultDescription: 'न्यू जेनरिक डायग्राम डिस्क्रिप्शन',
                 select: 'जेनेरिक'
             },
             stride: {
-                diagramTitle: 'न्यू स्ट्राइड डायग्राम',
-                diagramDescription: 'न्यू स्ट्राइड डायग्राम डिस्क्रिप्शन',
+                defaultTitle: 'न्यू स्ट्राइड डायग्राम',
+                defaultDescription: 'न्यू स्ट्राइड डायग्राम डिस्क्रिप्शन',
                 select: 'स्ट्राइड'
             },
             linddun: {
-                diagramTitle: 'न्यू लिंडन डायग्राम',
-                diagramDescription: 'न्यू लिंडडन डायग्राम डिस्क्रिप्शन',
+                defaultTitle: 'न्यू लिंडन डायग्राम',
+                defaultDescription: 'न्यू लिंडडन डायग्राम डिस्क्रिप्शन',
                 select: 'लिंडडन'
             },
             cia: {
-                diagramTitle: 'न्यू सीआईए डायग्राम',
-                diagramDescription: 'नई सीआईए डायग्राम डिस्क्रिप्शन',
+                defaultTitle: 'न्यू सीआईए डायग्राम',
+                defaultDescription: 'नई सीआईए डायग्राम डिस्क्रिप्शन',
                 select: 'सीआईए'
             }
         },

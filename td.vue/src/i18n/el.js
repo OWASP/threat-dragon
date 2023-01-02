@@ -86,23 +86,23 @@ const ell = {
             diagrams: 'Διαγράμματα',
             addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
             generic: {
-                diagramTitle: 'Νέο γενικό διάγραμμα',
-                diagramDescription: 'New generic diagram description',
+                defaultTitle: 'Νέο γενικό διάγραμμα',
+                defaultDescription: 'New generic diagram description',
                 select: 'Generic'
             },
             stride: {
-                diagramTitle: 'Νέο διάγραμμα STRIDE',
-                diagramDescription: 'New STRIDE diagram description',
+                defaultTitle: 'Νέο διάγραμμα STRIDE',
+                defaultDescription: 'New STRIDE diagram description',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'Νέο διάγραμμα LINDDUN',
-                diagramDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'Νέο διάγραμμα LINDDUN',
+                defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'Νέο διάγραμμα CIA',
-                diagramDescription: 'New CIA diagram description',
+                defaultTitle: 'Νέο διάγραμμα CIA',
+                defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
             }
         },

@@ -86,23 +86,23 @@ const fra = {
             diagrams: 'Diagrammes',
             addNewDiagram: 'Ajouter un nouveau diagramme...',
             generic: {
-                diagramTitle: 'Nouveau diagramme générique',
-                diagramDescription: 'New generic diagram description',
+                defaultTitle: 'Nouveau diagramme générique',
+                defaultDescription: 'New generic diagram description',
                 select: 'Générique'
             },
             stride: {
-                diagramTitle: 'Nouveau diagramme STRIDE',
-                diagramDescription: 'New STRIDE diagram description',
+                defaultTitle: 'Nouveau diagramme STRIDE',
+                defaultDescription: 'New STRIDE diagram description',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'Nouveau diagramme LINDDUN',
-                diagramDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'Nouveau diagramme LINDDUN',
+                defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'Nouveau diagramme CIA',
-                diagramDescription: 'New CIA diagram description',
+                defaultTitle: 'Nouveau diagramme CIA',
+                defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
             }
         },

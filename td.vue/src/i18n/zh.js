@@ -86,23 +86,23 @@ const zho = {
             diagrams: '图表',
             addNewDiagram: '添加新图表...',
             generic: {
-                diagramTitle: '新通用图',
-                diagramDescription: 'New generic diagram description',
+                defaultTitle: '新通用图',
+                defaultDescription: 'New generic diagram description',
                 select: '通用'
             },
             stride: {
-                diagramTitle: '新STRIDE图',
-                diagramDescription: 'New STRIDE diagram description',
+                defaultTitle: '新STRIDE图',
+                defaultDescription: 'New STRIDE diagram description',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: '新LINDDUN图',
-                diagramDescription: 'New LINDDUN diagram description',
+                defaultTitle: '新LINDDUN图',
+                defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: '新CIA图',
-                diagramDescription: 'New CIA diagram description',
+                defaultTitle: '新CIA图',
+                defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
             }
         },

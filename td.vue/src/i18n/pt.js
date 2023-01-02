@@ -86,23 +86,23 @@ const por = {
             diagrams: 'Diagramas',
             addNewDiagram: 'Adicionar um novo diagrama...',
             generic: {
-                diagramTitle: 'New generic diagram',
-                diagramDescription: 'New generic diagram description',
+                defaultTitle: 'New generic diagram',
+                defaultDescription: 'New generic diagram description',
                 select: 'Generic'
             },
             stride: {
-                diagramTitle: 'New STRIDE diagram',
-                diagramDescription: 'New STRIDE diagram description',
+                defaultTitle: 'New STRIDE diagram',
+                defaultDescription: 'New STRIDE diagram description',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'New LINDDUN diagram',
-                diagramDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'New LINDDUN diagram',
+                defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'New CIA diagram',
-                diagramDescription: 'New CIA diagram description',
+                defaultTitle: 'New CIA diagram',
+                defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
             }
         },

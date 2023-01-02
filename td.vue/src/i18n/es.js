@@ -86,23 +86,23 @@ const spa = {
             diagrams: 'Diagramas',
             addNewDiagram: 'Agregar un nuevo diagrama...',
             generic: {
-                diagramTitle: 'Nuevo diagram genérico',
-                diagramDescription: 'New generic diagram description',
+                defaultTitle: 'Nuevo diagram genérico',
+                defaultDescription: 'New generic diagram description',
                 select: 'Genérico'
             },
             stride: {
-                diagramTitle: 'Nuevo diagrama STRIDE',
-                diagramDescription: 'New STRIDE diagram description',
+                defaultTitle: 'Nuevo diagrama STRIDE',
+                defaultDescription: 'New STRIDE diagram description',
                 select: 'STRIDE'
             },
             linddun: {
-                diagramTitle: 'Nuevo diagrama LINDDUN',
-                diagramDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'Nuevo diagrama LINDDUN',
+                defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
             cia: {
-                diagramTitle: 'Nuevo diagrama CIA',
-                diagramDescription: 'New CIA diagram description',
+                defaultTitle: 'Nuevo diagrama CIA',
+                defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
             }
         },
