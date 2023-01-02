@@ -7,7 +7,7 @@ describe('import', () => {
 
     describe('navigating to the import page', () => {
         it('has the title', () => {
-            cy.contains('Open / Import a threat model via JSON');
+            cy.contains('Import a threat model via JSON');
         });
 
         it('has the buttons visible', () => {

@@ -7,7 +7,7 @@ describe('service/local.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.key === 'import');
+                action = local.getDashboardActions().find(x=> x.key === 'openExisting');
             });
 
             it('links to the import page', () => {
@@ -39,7 +39,7 @@ describe('service/local.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = local.getDashboardActions().find(x=> x.key === 'demo');
+                action = local.getDashboardActions().find(x=> x.key === 'readDemo');
             });
 
             it('links to the demo select page', () => {

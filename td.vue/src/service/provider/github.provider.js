@@ -16,7 +16,7 @@ const getDashboardActions = () => ([
     },
     {
         to: '/demo/select',
-        key: 'demo',
+        key: 'readDemo',
         icon: 'cloud-download-alt'
     }
 ]);

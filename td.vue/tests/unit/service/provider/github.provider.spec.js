@@ -40,7 +40,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.key === 'demo');
+                action = github.getDashboardActions().find(x=> x.key === 'readDemo');
             });
 
             it('links to the demo select page', () => {

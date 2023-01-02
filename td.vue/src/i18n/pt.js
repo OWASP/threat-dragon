@@ -28,8 +28,8 @@ const por = {
         actions: {
             openExisting: 'Abrir um modelo de ameaça (threat model) existente',
             createNew: 'Criar um novo modelo de ameaça (threat model) do zero',
-            download: 'Baixar e explorar um exemplo de modelo de ameaça (threat model)',
-            import: 'Import a threat model via JSON'
+            readDemo: 'Baixar e explorar um exemplo de modelo de ameaça (threat model)',
+            importExisting: 'Import a threat model via JSON'
         }
     },
     demo: {

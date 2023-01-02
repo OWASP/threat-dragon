@@ -4,7 +4,7 @@
             <b-col>
                 <b-jumbotron class="text-center">
                     <h4>
-                        {{ $t('forms.open') }} / {{ $t('dashboard.actions.import') }}
+                        {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
                 </b-jumbotron>
             </b-col>

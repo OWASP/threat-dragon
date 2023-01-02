@@ -28,8 +28,8 @@ const zho = {
         actions: {
             openExisting: '打开现有的威胁模型',
             createNew: '创建一个新的、空的威胁模型',
-            demo: '打开示例威胁模型',
-            import: '通过 JSON 导入威胁模型'
+            readDemo: '打开示例威胁模型',
+            importExisting: '通过 JSON 导入威胁模型'
         }
     },
     demo: {

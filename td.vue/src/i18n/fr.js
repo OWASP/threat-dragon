@@ -28,8 +28,8 @@ const fra = {
         actions: {
             openExisting: 'Ouvrir un modèle de menace existant',
             createNew: 'Créer un nouveau modèle de menace',
-            demo: 'Explorez un exemple de modèle de menace',
-            import: 'Importer un modèle de menace via JSON'
+            readDemo: 'Explorez un exemple de modèle de menace',
+            importExisting: 'Importer un modèle de menace via JSON'
         }
     },
     demo: {

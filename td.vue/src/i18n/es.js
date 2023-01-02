@@ -28,8 +28,8 @@ const spa = {
         actions: {
             openExisting: 'Abrir un modelo de amenazas (threat model) existente',
             createNew: 'Crear un nuevo modelo de amenazas (threat model) desde cero',
-            download: 'Descargar y explotar un ejemplo de modelo de amenazas (threat model)',
-            import: 'Importar un modelo de amenazas (threat model) de JSON'
+            readDemo: 'Descargar y explotar un ejemplo de modelo de amenazas (threat model)',
+            importExisting: 'Importar un modelo de amenazas (threat model) de JSON'
         }
     },
     demo: {

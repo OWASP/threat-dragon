@@ -18,12 +18,6 @@ import './plugins/toastification.js';
 
 Vue.config.productionTip = false;
 
-
-// Detect the user agent when the `nodeIntegration` option is set to false
-if (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) {
-    console.log('Electron navigator running for renderer');
-}
-
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {
     console.warn('TODO check that any existing open model has not been modified');

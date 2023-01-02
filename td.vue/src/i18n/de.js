@@ -9,7 +9,7 @@ const deu = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'Threat Dragon is a free, open-source threat modeling tool from OWASP. It can be used as a standalone desktop app for Windows, MacOS and Linux or as a web application. The desktop app is great if you want to use the application without giving it access to your GitHub repos, but if you choose the online version you get to unleash the awesome power of GitHub on your threat models! Obviously, to do this you need to log in first.',
+        description: 'Threat Dragon is an open-source threat modeling tool from OWASP. It can be used as a standalone desktop app for Windows, MacOS and Linux or as a web application. Use the desktop application if you do not want it to access your GitHub repos, and if you choose the online version you get to unleash the awesome power of GitHub on your threat models! To do this you need to log in first.',
         loginWith: 'Login with'
     },
     providers: {
@@ -28,8 +28,8 @@ const deu = {
         actions: {
             openExisting: 'Open an existing threat model',
             createNew: 'Create a new, empty threat model',
-            demo: 'Explore a sample threat model',
-            import: 'Import a threat model via JSON'
+            readDemo: 'Explore a sample threat model',
+            importExisting: 'Import a threat model via JSON'
         }
     },
     demo: {
