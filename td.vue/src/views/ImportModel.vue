@@ -159,6 +159,7 @@ export default {
                 console.error(e);
                 return;
             }
+
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         }
     }
