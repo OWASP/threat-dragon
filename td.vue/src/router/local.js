@@ -9,11 +9,6 @@ export const localRoutes = [
         component: () => import(/* webpackChunkName: "threatmodel" */ '../views/ThreatModel.vue')
     },
     {
-        path: `/${providerType}/:threatmodel/upgrade`,
-        name: `${providerType}Upgrade`,
-        component: () => import(/* webpackChunkName: "upgrade-diagram" */ '../views/UpgradeDiagram.vue')
-    },
-    {
         path: `/${providerType}/:threatmodel/edit`,
         name: `${providerType}ThreatModelEdit`,
         component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')

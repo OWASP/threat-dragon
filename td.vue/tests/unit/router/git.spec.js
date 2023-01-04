@@ -145,21 +145,4 @@ describe('routes/git.js', () => {
         });
     });
 
-    describe('Upgrade diagram', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitUpgrade');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/upgrade');
-        });
-
-        it('uses the UpgradeDiagram view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('UpgradeDiagram');
-        });
-    });
 });
