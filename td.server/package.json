@@ -66,6 +66,7 @@
   },
   "pnpm": {
     "overrides": {
+      "debug@<3.1.0": ">=4.3.4",
       "follow-redirects": ">=1.14.8"
     }
   }
