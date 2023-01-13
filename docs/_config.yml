@@ -35,7 +35,7 @@ header_links:
     target: _blank
     url: https://www.threatdragon.com/#/
 
-  - text: Download the desktop app
+  - text: Desktop app download
     fa_class: fa fa-cloud-download-alt
     target: _blank
     url: https://github.com/OWASP/threat-dragon/releases
@@ -45,7 +45,6 @@ header_links:
     target: _blank
     url: https://github.com/OWASP/threat-dragon
 
-# TODO: Update relative_urls
 homeLinks:
   - relative_url: /usage/install/desktop.html
     description: Download the Desktop Application
@@ -54,8 +53,8 @@ homeLinks:
     description: Getting started with Threat Dragon
     fa_class: fas fa-play-circle
   - relative_url: /usage/modeling/diagrams.html
-    description: How to use Diagrams
-    fa_class: fas fa-diagram-project
+    description: How to create Diagrams
+    fa_class: fas fa-project-diagram
   - relative_url: /usage/modeling/threats.html
     description: How to generate Threats
     fa_class: fas fa-bolt
@@ -80,28 +79,31 @@ nav:
       groups:
         - name: Environment
           fa_class: fas fa-cog
-        - name: CLI
-          fa_class: fas fa-layer-group
-        - name: Schema
-          fa_class: fas fa-database
+        - name: Contributing
+          fa_class: fas fa-play-circle
         - name: API
           fa_class: fas fa-server
+        - name: Local
+          fa_class: fas fa-code
+        - name: CLI
+          fa_class: fas fa-layer-group
+        - name: Internationalization
+          fa_class: fas fa-globe-africa
+        - name: Schema
+          fa_class: fas fa-database
         - name: Testing
           fa_class: fas fa-heartbeat
         - name: Actions
           fa_class: fab fa-github-alt
-        - name: Internationalization
-          fa_class: fas fa-globe-africa
-        - name: Local
-          fa_class: fas fa-code
         - name: Release-Process
           fa_class: fas fa-rocket
+        - name: Code-of-Conduct
+          fa_class: fas fa-bolt
 
 
 
 # Build settings
 theme: owasp-td-jekyll
-
 
 
 # Exclude from processing.

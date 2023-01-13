@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Docker Installation
+nav_order: 4
 path: /install/docker
-nav_order: 3
 group: Installation
 ---
 

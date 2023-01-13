@@ -1,8 +1,8 @@
 ---
 layout: page
 title: About
-path: /about
 nav_order: 0
+path: /about
 group: About
 ---
 
@@ -37,9 +37,11 @@ are stored in GitHub, with other storage methods to follow.
 
 ____
 <p>
-<sup><a name="footnote1">1</a>: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege</sup>
-
-<sup><a name="footnote2">2</a>: Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance</sup>
-
+<sup><a name="footnote1">1</a>: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege</sup><br>
+</p>
+<p>
+<sup><a name="footnote2">2</a>: Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance</sup><br>
+</p>
+<p>
 <sup><a name="footnote3">3</a>: Confidentiality, Integrity, Availability</sup>
 </p>

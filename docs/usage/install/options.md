@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Installation Options
-path: /install/options
 nav_order: 0
+path: /install/options
 group: Installation
 ---
 

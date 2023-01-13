@@ -18,6 +18,7 @@ Note that MacOS users are advised to use chruby instead of the system ruby.
 * Navigate in a browser to server address: http://127.0.0.1:4000/
 
 ### Check for updates
+It is good to keep an eye on out-dated gem packages:
 
 * `bundle outdated`
 * `bundle update`

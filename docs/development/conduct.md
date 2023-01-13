@@ -1,9 +1,9 @@
 ---
 layout: page
 title: Code of Conduct
-path: /about/conduct
-nav_order: 4
-group: About
+path: /conduct
+nav_order: 7
+group: Code-of-Conduct
 ---
 
 ## [OWASP](https://www.owasp.org) Threat Dragon

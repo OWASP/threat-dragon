@@ -2,7 +2,7 @@
 layout: page
 title: Environment
 nav_order: 0
-path: /env
+path: /environment
 group: Environment
 ---
 

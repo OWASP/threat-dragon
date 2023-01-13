@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Internationalization
-nav_order: 3
+nav_order: 5
 path: /internationalization
 group: Internationalization
 ---

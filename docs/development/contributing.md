@@ -1,9 +1,9 @@
 ---
 layout: page
 title: Contributing
-path: /about/contribute
 nav_order: 1
-group: About
+path: /contributing
+group: Contributing
 ---
 
 ## [OWASP](https://www.owasp.org) Threat Dragon

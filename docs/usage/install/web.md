@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Webapp Installation
-path: /install/web
 nav_order: 2
+path: /install/web
 group: Installation
 ---
 

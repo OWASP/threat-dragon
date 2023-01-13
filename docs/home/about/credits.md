@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Credits
+nav_order: 1
 path: /about/credits
-nav_order: 2
 group: About
 ---
 

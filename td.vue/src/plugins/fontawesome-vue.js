@@ -69,18 +69,3 @@ library.add(
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
-/*
-Usage:
-<template>
-    <div id="something">
-        <font-awesome-icon icon="sign-out" />
-    </div>
-</template>
-
-<script>
-export default {
-    name: 'TdSomething'
-}
-</script>
-*/

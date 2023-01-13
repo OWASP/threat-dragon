@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Desktop Installation
-path: /install/desktop
 nav_order: 1
+path: /install/desktop
 group: Installation
 ---
 
