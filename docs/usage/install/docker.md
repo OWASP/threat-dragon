@@ -31,9 +31,10 @@ Use a command such as:
 Note that here we have used a tag `local`, but it could be almost anything such as `dev`.
 
 #### Pulling/Downloading
-The released docker images are stored in [Docker Hub](https://hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon)
-and can be accessed using docker `pull`. For example to download the `latest` development build from Docker hub use command :
-`docker pull threatdragon/owasp-threat-dragon:latest`.
+The released docker images are stored in [Docker Hub](https://hub.docker.com/r/owasp/threat-dragon/tags?page=1&ordering=name)
+and can be accessed using docker `pull`. For example to download the `v1.6.0` release build from Docker hub use command :
+`docker pull owasp/threat-dragon:v1.6.0`.
+
 Note that `latest` is the very latest docker image from the main branch on the repository, so it may contain transitory bugs etc.
 
 #### Running
