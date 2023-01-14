@@ -53,7 +53,7 @@ describe('docs', () => {
 
         it('navigates to the Actions page', () => {
             cy.get('.fa-github-alt').click();
-            cy.get('.list-group-item-action[href="/docs/development/actions/about.html"]').should('be.visible');
+            cy.get('.list-group-item-action[href="/docs/development/actions/ci.html"]').should('be.visible');
         });
 
         it('navigates to the Internationalization page', () => {
