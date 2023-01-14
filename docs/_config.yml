@@ -24,6 +24,8 @@ email: jon.gadsden@owasp.org
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
+# note that icons are loaded from
+# https://github.com/lreading/owasp-td-jekyll/tree/main/assets/webfonts
 
 brand: OWASP Threat Dragon
 faviconUrl: /assets/images/favicon.ico
@@ -47,10 +49,10 @@ header_links:
 
 homeLinks:
   - relative_url: /usage/install/desktop.html
-    description: Download the Desktop Application
+    description: Desktop downloads
     fa_class: fas fa-cloud-download-alt
   - relative_url: /usage/modeling/gettingstarted.html
-    description: Getting started with Threat Dragon
+    description: Getting started
     fa_class: fas fa-play-circle
   - relative_url: /usage/modeling/diagrams.html
     description: How to create Diagrams
@@ -72,7 +74,7 @@ nav:
         - name: Installation
           fa_class: fas fa-power-off
         - name: Modeling
-          fa_class: fas fa-project-diagram
+          fa_class: fas fa-pencil-alt
         - name: Collaboration
           fa_class: fas fa-user-ninja
     - name: Development

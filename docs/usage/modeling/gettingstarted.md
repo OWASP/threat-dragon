@@ -6,6 +6,15 @@ nav_order: 0
 group: Modeling
 ---
 
+<style type="text/css">
+.image-left {
+  display: block;
+  margin-left: auto;
+  margin-right: 15px;
+  float: left;
+}
+</style>
+
 ## [OWASP](https://www.owasp.org) Threat Dragon
 Getting started with [Threat Dragon](http://owasp.org/www-project-threat-dragon) models
 
@@ -17,8 +26,10 @@ This is so that the models can stay close to the code they are modelling.
 Future versions will provide a deeper integration so watch this space but for now,
 when you login to Threat Dragon for the first time you will need to access Github.
 
+![New model image]({{ '/assets/images/newmodel.png' | relative_url }}){: .image-left }
+
 To get started with your threat model access the welcome page and select
-click on the **plus** area.
+click on the **plus** area of the Welcome page.
 
 You will then be presented with a list of your GitHub repositories.
 Pick the one where you want to store your new model.
@@ -31,9 +42,12 @@ where you can enter general information about your model.
 
 ### If using the Desktop application
 The Threat Dragon desktop variant stores its threat models on your local filesystem.
+
+![New model image]({{ '/assets/images/newmodel.png' | relative_url }}){: .image-left }
+
 To get started with your threat model start  the applications and from the welcome page
-select on the **plus** area, or pull down menu 'New'. You will then need to save
-the model file - we did ot this way so that you can nbe sure your model can be saved.
+select on the **plus** area, or pull down menu 'File -> New Model'. You will then need to save
+the model file - we did it this way so that you can be sure your model can be saved.
 
 You will then be taken straight to the threat model edit page where you
 can enter general information about your model.
@@ -71,27 +85,40 @@ This does not apply to the desktop variant.
 Congratulations! You have got the basics done. Next step ...
 mapping out your system [in a diagram]({{ '/usage/modeling/diagrams.html' | relative_url }}).
 
-## Loading a demo model
-If you are wondering how to start you can load a sample threat model.
-On the welcome page you can download an example by clicking on the **download** area.
-If you are using the desktop application you can select 'Open Demo Model' pull down menu.
+## Loading a sample model
 
-This should give you some ideas on how to get started with your own model, and has
+![Sample model image]({{ '/assets/images/samplemodel.png' | relative_url }}){: .image-left }
+
+If you are wondering how to start you can explore some sample threat models.
+On the welcome page you can open an example model by clicking on the **sample model** area on the Welcome page.
+
+These should give you some ideas on how to get started with your own model, and have
 diagrams, model details and threats as examples.
 
 ## Opening an existing model
 
 ### Web application
+
+![Github model image]({{ '/assets/images/opengithubmodel.png' | relative_url }}){: .image-left }
+
 If you have a repository that already has threat models, you can open them by
 clicking on the **open** area on the Welcome page.
-You will then be able to select a repo and branch and then you will be able to choose from a list of models.
+
+You will then be able to select a github repository and branch,
+then you will be presented with a list of models to make your selection.
+
+The demo models should give you some ideas on how to get started with your own model.
 
 ### Desktop application
+
+![Open model image]({{ '/assets/images/openmodel.png' | relative_url }}){: .image-left }
+
 If you have an existing model file saved locally, you can open it by clicking on
 the **open** area on the Welcome page.
+
 You will then be able to navigate to the model file in your local file system and open it.
 
-The demo model should give you some ideas on how to get started with your own model.
+The demo models should give you some ideas on how to get started with your own model.
 
 ## Threat model report
 From the Threat Model details view you can see a summary report of your model listing the diagrams,

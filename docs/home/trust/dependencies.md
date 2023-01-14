@@ -7,11 +7,13 @@ group: Trust
 ---
 
 # Dependency Management
-The following controls are in place to assist with dependency management:
+The following controls are in place to assist with dependency management of the web application:
 - pnpm for dependency resolution and auditing
 - Trivy scanning per commit for SCA and OS dependency management within docker
 - Trivy scanning daily on the latest build in the default branch
 - Dependabot alerts
+
+The documentation pages are scanned on every commit using [OWASP ZAP](https://www.zaproxy.org/docs/) (Zed Attack Proxy).
 
 ## Fixing a vulnerable dependency
 If your build fails due to a trivy alert, try to find the part of the application that has the vulnerable component.

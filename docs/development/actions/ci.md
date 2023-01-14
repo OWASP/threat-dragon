@@ -5,7 +5,12 @@ nav_order: 1
 path: /actions/ci
 group: Actions
 ---
-# CI Action
+# GitHub Actions
+
+[GitHub Actions](https://docs.github.com/en/actions/reference) are used to test, build and deploy Threat Dragon.
+These actions live in the `.github/workflows` directory.
+
+## CI Action
 The CI Action is Threat Dragon's continuous integration pipeline.
 This pipeline is run on all branches and serves as a sanity check.
 When a pull request is opened, each step of this pipeline is added as a check to the pull request.
@@ -14,7 +19,7 @@ This gives the author and reviewers an opportunity to understand the state of th
 Because this action uses a docker image that is pushed to a remote repository for testing,
 there is a concurrency group that prevents concurrent runs of the same action.
 
-## Steps
+### Steps
 
 {:.table .table-striped}
 |Name|Description|Dependencies|

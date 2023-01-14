@@ -35,6 +35,16 @@ There are installers available for Windows, Mac OSX and Linux.
 1. [**A web application**](https://github.com/owasp/threat-dragon/releases): For the web application model files
 are stored in GitHub, with other storage methods to follow.
 
+The following translations are built into the Threat Dragon application:
+
+- English (eng-US)
+- Ελληνικά (ell-GR)
+- español (spa-ES)
+- français (fra-CA)
+- मानक हिन्दी (hin-IN)
+- português (por-BR)
+- 中文 (zho-CN)
+
 ____
 <p>
 <sup><a name="footnote1">1</a>: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege</sup><br>

@@ -5,7 +5,13 @@ nav_order: 4
 path: /actions/trivy
 group: Actions
 ---
-# Trivy Container Scan
+
+# GitHub Actions
+
+[GitHub Actions](https://docs.github.com/en/actions/reference) are used to test, build and deploy Threat Dragon.
+These actions live in the `.github/workflows` directory.
+
+## Trivy Container Scan
 
 [Trivy](https://github.com/aquasecurity/trivy) is an open-source container and artifact vulnerability scanning tool.
 

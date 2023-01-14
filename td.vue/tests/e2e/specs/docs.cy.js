@@ -21,7 +21,7 @@ describe('docs', () => {
         });
 
         it('navigates to the Modeling page', () => {
-            cy.get('.fa-project-diagram').click();
+            cy.get('.fa-pencil-alt').click();
             cy.get('.list-group-item-action[href="/docs/usage/modeling/gettingstarted.html"]').should('be.visible');
         });
 
