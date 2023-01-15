@@ -165,12 +165,18 @@ function openModel () {
 
 // prompt the renderer for the model data
 function saveModel () {
-    log.debug(messages[language].desktop.file.save + ': ' + 'prompt the renderer for the model data');
+    log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
+    mainWindow.webContents.send('save-model', path.basename(model.filePath));
+}
+
+function saveModelAs () {
+    log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
+    model.filePath = '';
     mainWindow.webContents.send('save-model', path.basename(model.filePath));
 }
 
 // Open saveAs file system dialog and write contents to new file location
-function saveModelAs (modelData, fileName) {
+function saveModelDataAs (modelData, fileName) {
     let newName = 'new-model.json';
     if (fileName) {
         newName = fileName;
@@ -227,13 +233,13 @@ function addRecent (filePath) {
 const modelSaved = (modelData, fileName) => {
     // if the filePath is empty then this is the first time a save has been requested
     if (!model.filePath || model.filePath === '') {
-        saveModelAs(modelData, fileName);
+        saveModelDataAs(modelData, fileName);
     } else {
         saveModelData(modelData);
     }
 };
 
-// save the model data
+// save the threat model
 function saveModelData (modelData) {
     if (model.isOpen === true) {
         fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
