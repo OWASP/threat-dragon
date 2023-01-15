@@ -28,7 +28,7 @@
 
     <div>
         <td-keyboard-shortcuts />
-        <td-threat-edit-modal ref="threatEditModal" />
+        <td-threat-edit-dialog ref="threatEditDialog" />
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ import { mapState } from 'vuex';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
-import TdThreatEditModal from '@/components/ThreatEditModal.vue';
+import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import diagramService from '@/service/migration/diagram.js';
@@ -58,7 +58,7 @@ export default {
         TdGraphButtons,
         TdGraphMeta,
         TdKeyboardShortcuts,
-        TdThreatEditModal
+        TdThreatEditDialog
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
@@ -78,7 +78,7 @@ export default {
             stencil.get(this.graph, this.$refs.stencil_container);
         },
         threatSelected(threatId) {
-            this.$refs.threatEditModal.showModal(threatId);
+            this.$refs.threatEditDialog.showModal(threatId);
         },
         saved() {
             const updated = Object.assign({}, this.diagram);
