@@ -1115,6 +1115,7 @@ export default {
                 'id': 0
             }
         ],
+        'diagramTop': 0,
         'reviewer': 'Jane Smith',
         'threatTop': 0
     },

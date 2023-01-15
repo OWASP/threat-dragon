@@ -408,6 +408,11 @@
             "required": [ "diagramType", "id", "size", "thumbnail", "title", "diagramJson" ]
           }
         },
+        "diagramTop": {
+          "description": "The highest diagram number in the threat model",
+          "type": "integer",
+          "minimum": 0
+        },
         "reviewer": {
           "description": "The reviewer of the overall threat model",
           "type": "string"
