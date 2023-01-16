@@ -76,6 +76,7 @@ export default {
         init() {
             this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
+            console.debug('diagram ID: ' + this.diagram.id);
         },
         threatSelected(threatId) {
             this.$refs.threatEditDialog.showModal(threatId);
