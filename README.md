@@ -22,6 +22,8 @@ is designed to be accessible for various types of teams, with an emphasis on fle
 It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
+## Call for testing of [pre-release 2.0.0-beta](https://github.com/OWASP/threat-dragon/releases/tag/v2.0.0-beta) prior to official 2.0 release
+
 ## Check it out
 There are [documentation pages](https://threatdragon.github.io/about) to guide you and the production release area,
 conforming to [semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
