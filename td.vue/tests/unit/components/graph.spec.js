@@ -6,7 +6,7 @@ import TdGraph from '@/components/Graph.vue';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
-import TdThreatEditModal from '@/components/ThreatEditModal.vue';
+import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 import diagramService from '@/service/migration/diagram.js';
 import stencilService from '@/service/x6/stencil.js';
@@ -59,7 +59,7 @@ describe('components/GraphButtons.vue', () => {
         wrapper = shallowMount(TdGraph, {
             localVue,
             stubs: {
-                'td-threat-edit-modal': threatEditStub
+                'td-threat-edit-dialog': threatEditStub
             },
             store: storeMock,
             mocks: {
@@ -97,8 +97,8 @@ describe('components/GraphButtons.vue', () => {
             .toEqual(true);
     });
 
-    it('has the threat edit modal', () => {
-        expect(wrapper.findComponent(TdThreatEditModal).exists())
+    it('has the threat edit modal dialog', () => {
+        expect(wrapper.findComponent(TdThreatEditDialog).exists())
             .toEqual(true);
     });
 
@@ -110,7 +110,7 @@ describe('components/GraphButtons.vue', () => {
         expect(diagramService.edit).toHaveBeenCalled();
     });
 
-    it('shows the threat edit modal', () => {
+    it('shows the threat edit modal dialog', () => {
         wrapper.vm.threatSelected('asdf');
         expect(threatEditStub.methods.showModal).toHaveBeenCalledWith('asdf');
     });

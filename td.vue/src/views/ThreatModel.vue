@@ -100,7 +100,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
-import { THREATMODEL_CLEAR, THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CLEAR, THREATMODEL_DIAGRAM_SELECTED, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
@@ -110,7 +110,8 @@ export default {
     },
     computed: mapState({
         model: (state) => state.threatmodel.data,
-        providerType: (state) => getProviderType(state.provider.selected)
+        providerType: (state) => getProviderType(state.provider.selected),
+        version: (state) => state.packageBuildVersion
     }),
     methods: {
         onEditClick(evt) {
@@ -137,6 +138,14 @@ export default {
             const path = `${this.$route.path}/edit/${encodeURIComponent(diagram.title)}`;
             this.$router.push(path);
         }
+    },
+    mounted() {
+        // make sure we are compatible with version 1.x and early 2.x
+        let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
+        let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
+        let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
+        console.debug('updates: ' + JSON.stringify(update));
+        this.$store.dispatch(THREATMODEL_UPDATE, update);
     }
 };
 </script>

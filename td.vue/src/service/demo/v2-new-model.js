@@ -9,6 +9,7 @@ export default{
     'detail': {
         'contributors': [],
         'diagrams': [],
+        'diagramTop': 0,
         'reviewer': '',
         'threatTop': 0
     }

@@ -124,12 +124,14 @@ const mutations = {
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         state.selectedDiagram = diagram;
+        console.debug('Threatmodel diagram selected: ' + state.selectedDiagram.id);
     },
     [THREATMODEL_DIAGRAM_UPDATED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
+        console.debug('Threatmodel diagram updated: ' + diagram.id + ' at index: ' + idx);
         setThreatModel(state, state.data);
     },
     [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
@@ -145,6 +147,9 @@ const mutations = {
     [THREATMODEL_UPDATE]: (state, update) => {
         if (update.version) {
             Vue.set(state.data, 'version', update.version);
+        }
+        if (update.diagramTop) {
+            Vue.set(state.data.detail, 'diagramTop', update.diagramTop);
         }
         if (update.threatTop) {
             Vue.set(state.data.detail, 'threatTop', update.threatTop);

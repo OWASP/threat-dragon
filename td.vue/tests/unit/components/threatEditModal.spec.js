@@ -3,9 +3,9 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import dataChanged from '@/service/x6/graph/data-changed.js';
-import TdThreatEditModal from '@/components/ThreatEditModal.vue';
+import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
-describe('components/ThreatEditModal.vue', () => {
+describe('components/ThreatEditDialog.vue', () => {
     let localVue, mockStore, wrapper;
     const threatId = 'asdf-asdf-asdf-asdf';
 
@@ -34,7 +34,7 @@ describe('components/ThreatEditModal.vue', () => {
         localVue.use(BootstrapVue);
     });
 
-    const getWrapper = () => shallowMount(TdThreatEditModal, {
+    const getWrapper = () => shallowMount(TdThreatEditDialog, {
         localVue,
         mocks: {
             $t: key => key

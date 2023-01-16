@@ -166,7 +166,7 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
 export default {
-    name: 'TdThreatEditModal',
+    name: 'TdThreatEditDialog',
     computed: {
         ...mapState({
             cellRef: (state) => state.cell.ref,

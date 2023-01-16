@@ -183,7 +183,7 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -196,6 +196,7 @@ export default {
             fileName: (state) => state.threatmodel.fileName,
             model: (state) => state.threatmodel.data,
             providerType: (state) => getProviderType(state.provider.selected),
+            diagramTop: (state) => state.threatmodel.data.detail.diagramTop,
             version: (state) => state.packageBuildVersion
         }),
         contributors: {
@@ -229,13 +230,14 @@ export default {
         onAddDiagramClick(evt) {
             evt.preventDefault();
             let newDiagram = {
-                name: '',
+                id: this.diagramTop,
                 title: this.$t('threatmodel.diagram.stride.defaultTitle'),
                 diagramType: 'STRIDE',
                 placeholder: this.$t('threatmodel.diagram.stride.defaultDescription'),
                 thumbnail: './public/content/images/thumbnail.stride.jpg',
                 version: this.version
             };
+            this.$store.dispatch(THREATMODEL_UPDATE, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
         },
         onDiagramTypeClick(idx, type) {
