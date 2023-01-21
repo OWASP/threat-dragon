@@ -86,7 +86,7 @@ ___
 
 The application will throw an error if a required environment variable is missing during application start:
 
-`GITHUB_CLIENT_ID is a required property.  Threat Dragon server cannot start without it.  Please see setup-env.md for more information`
+`GITHUB_CLIENT_ID is a required property.  Threat Dragon server cannot start without it.  Please see docs/development/environment.md for more information`
 
 ___
 

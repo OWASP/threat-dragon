@@ -7,10 +7,6 @@ group: Trust
 ---
 
 # Incident Response
-Threat Dragon maintains a [Demo Instance](https://www.threatdragon.com/) that is hosted on [Heroku](https://www.heroku.com/).
-We strongly recommend using a self-hosted instance or the desktop application as the most secure options.
-Threat Dragon can authenticate to GitHub repositories using a GitHub OAuth application as noted in the [environment setup](development/env) page.  
-
 Threat Dragon is open source software and contains many other open source components.
 Threat Dragon's community strives to stay abreast of security vulnerabilities and incidents impacting upstream providers or Threat Dragon itself.
 If there is a high impact or high profile incident or vulnerability,
