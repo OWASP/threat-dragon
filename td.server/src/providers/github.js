@@ -27,10 +27,8 @@ const getGithubUrl = () => {
         const enterpriseUrl = `${protocol}://${enterpriseHostname}${port ? ':' + port : ''}`;
         return enterpriseUrl;
     }
-    else {
-        return 'https://github.com';
-    }
-}
+    return 'https://github.com';
+};
 
 /**
  * Gets the Github OAuth Login URL
