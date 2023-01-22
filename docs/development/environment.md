@@ -181,6 +181,9 @@ ___
 | GITHUB_CLIENT_ID | The client_id value for the GitHub OAuth app used for authentication | |
 | GITHUB_CLIENT_SECRET | The client_secret generated for the GitHub OAuth app used for authentication | |
 | GITHUB_SCOPE | Defines the github scope: `repo` to access both private and public repos or `public_repo` to access public repos only | `public_repo` |
+| GITHUB_ENTERPRISE_HOSTNAME | The fully qualified github enterprise instance hostname, e.g. github.example.com | |
+| GITHUB_ENTERPRISE_PORT | Optional if your github enterprise instance uses a nonstandard port | `443` |
+| GITHUB_ENTERPRISE_PROTOCOL | Optional if your github enterprise instance uses a nonstandard protocol | `https` |
 
 **Note:** the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as a refresh token because it is tamper resistant and provides user context.
