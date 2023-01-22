@@ -87,7 +87,7 @@ const decryptData = (cipherText, key, iv) => {
 /**
  * Encrypts a plaintext to a ciphertext
  * This uses the configured encryption keys
- * See setup-env.md for more information
+ * See docs/development/environment.md for more information
  * @param {String} plainText
  * @returns {Promise<Object>}
  */
@@ -101,7 +101,7 @@ const encryptPromise = (plainText) => {
 
 /**
  * Decrypts a ciphertext using the configured encryption keys
- * See setup-env.md for more information
+ * See docs/development/environment.md for more information
  * @param {Object} encryptedData
  * @returns {String}
  */

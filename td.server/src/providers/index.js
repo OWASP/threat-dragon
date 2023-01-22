@@ -23,7 +23,7 @@ const get = (name) => {
     }
 
     if (!provider.isConfigured()) {
-        throw new Error(`Provider ${name} is not configured. See docs env.md for more info`);
+        throw new Error(`Provider ${name} is not configured. See docs/development/environment.md for more info`);
     }
 
     return provider;

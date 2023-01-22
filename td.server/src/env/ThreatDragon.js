@@ -9,7 +9,7 @@ class ThreatDragonEnv extends Env {
         return '';
     }
 
-    // if any  of the defaults are changed then ensure docs are updated at docs/development/env.md
+    // if any  of the defaults are changed then ensure docs are updated at docs/development/environment.md
     get properties () {
         return [
             { key: 'NODE_ENV', required: false },

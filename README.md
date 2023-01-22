@@ -92,10 +92,10 @@ Pnpm (rather than npm) is used to install from the top directory of the project 
 
 Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
 register it as a GitHub application. There is a
-[step by step guide](https://www.threatdragon.com/docs/development/env.html) on how to do this.
+[step by step guide](https://www.threatdragon.com/docs/development/environment.html) on how to do this.
 
 You will also have to provide other environment variables, again following
-[the documentation](https://www.threatdragon.com/docs/development/env.html) on this.
+[the documentation](https://www.threatdragon.com/docs/development/environment.html) on this.
 
 If running Threat Dragon locally then the front-end to server communication will
 probably need to be HTTP rather than HTTPS.
@@ -118,7 +118,7 @@ from the top directory with command `pnpm stop`. Otherwise break out of both the
 ### Docker (local build)
 
 To run Threat Dragon in a docker container,
-first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/env.html)
+first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/environment.html)
 and run from the top directory of the project:
 
 - `docker build -t owasp-threat-dragon:dev .`
