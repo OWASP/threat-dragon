@@ -26,3 +26,9 @@ Object.assign(console, log.functions);
 
 // only echo error messages to console
 log.transports.console.level = consoleLogLevel;
+
+export default {
+    consoleLogLevel,
+    fileLogLevel,
+    log
+};

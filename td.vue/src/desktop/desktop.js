@@ -4,7 +4,7 @@ import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
-import { log } from './logger.js';
+import logger from './logger.js';
 
 const path = require('path');
 
@@ -45,7 +45,7 @@ async function createWindow () {
     });
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
-        log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
+        logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
         // Load the url of the dev server if in development mode
         await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
         if (!process.env.IS_TEST) mainWindow.webContents.openDevTools();
@@ -61,17 +61,17 @@ app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
-        log.debug('Quit application');
+        logger.log.debug('Quit application');
         app.quit();
     } else {
-        log.debug('Ignoring window-all-closed for MacOS');
+        logger.log.debug('Ignoring window-all-closed for MacOS');
     }
 });
 
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    log.debug('Activate application');
+    logger.log.debug('Activate application');
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
@@ -81,7 +81,7 @@ app.on('activate', () => {
 // and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    log.debug('Building the menu system for the default language');
+    logger.log.debug('Building the menu system for the default language');
     let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
@@ -90,7 +90,7 @@ app.on('ready', async () => {
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {
-            log.error('Vue Devtools failed to install:', e.toString());
+            logger.log.error('Vue Devtools failed to install:', e.toString());
         }
     }
 
@@ -103,24 +103,24 @@ app.on('ready', async () => {
 });
 
 function handleUpdateMenu (_event, locale) {
-    log.debug('Re-labeling the menu system for: ' + locale);
+    logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
     let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 function handleModelClosed (_event, fileName) {
-    log.debug('Close model notification from renderer for file name: ' + fileName);
+    logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
 }
 
 function handleModelOpened (_event, fileName) {
-    log.debug('Open model notification from renderer for file name: ' + fileName);
+    logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 
 function handleModelSaved (_event, modelData, fileName) {
-    log.debug('Model save request from renderer with file name : ' + fileName);
+    logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSaved(modelData, fileName);
 }
 
