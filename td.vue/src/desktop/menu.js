@@ -3,12 +3,14 @@
 import { app, dialog } from 'electron';
 import path from 'path';
 import logger from './logger.js';
-import { mainWindow } from './desktop.js';
 
 const isMacOS = process.platform === 'darwin';
 
 const { shell } = require('electron');
 const fs = require('fs');
+
+// provided by electron server bootstrap
+var mainWindow;
 
 // access the i18n message strings
 import ell from '@/i18n/el.js';
@@ -273,10 +275,15 @@ export const setLocale = (locale) => {
     language = locale;
 };
 
+export const setMainWindow = (window) => {
+    mainWindow = window;
+};
+
 export default {
     getMenuTemplate,
     modelClosed,
     modelOpened,
     modelSaved,
-    setLocale
+    setLocale,
+    setMainWindow
 };

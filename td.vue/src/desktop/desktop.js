@@ -21,12 +21,9 @@ protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
-// export this for the electron menu module
-export let mainWindow;
-
 async function createWindow () {
     // Create the browser window
-    mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
         show: false,
@@ -42,6 +39,8 @@ async function createWindow () {
     mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.show();
         mainWindow.focus();
+        // menu system needs to access the main window
+        menu.setMainWindow(mainWindow);
     });
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
