@@ -1,11 +1,11 @@
 'use strict';
+export const log = require('electron-log');
 
-const logLevel = process.env.LOG_LEVEL || 'debug';
+export const consoleLogLevel = 'error';
+export const fileLogLevel = process.env.LOG_LEVEL || 'debug';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
 const isWin = (process.platform === 'win32' || process.platform === 'win64');
-
-export const log = require('electron-log');
 
 if (isDevelopment) {
     if (isMacOS) {
@@ -17,16 +17,12 @@ if (isDevelopment) {
     }
 }
 
-// set up electron-specific logLevel for the log file
-log.info('Electron log level is set to: ' + logLevel);
-log.transports.file.level = logLevel;
+// set up electron-specific fileLogLevel for the log file
+log.info('Electron log level is set to: ' + fileLogLevel);
+log.transports.file.level = fileLogLevel;
 
-// redirect electron-console messages to electron-log file (also using logLevel)
+// redirect electron-console messages to electron-log file (also uses fileLogLevel)
 Object.assign(console, log.functions);
 
 // only echo error messages to console
-log.transports.console.level = 'error';
-
-export default {
-    log
-};
+log.transports.console.level = consoleLogLevel;

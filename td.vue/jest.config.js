@@ -17,7 +17,7 @@ module.exports = {
         '!src/service/demo/**',
         '!**/node_modules/**',
         '!**/coverage/**',
-        '!src/main.js', // Bootstrap code
+        '!src/main*.js', // Bootstrap code for web app and desktop app
         '!src/plugins/*.js' // Boostrap code
     ],
     resetMocks: true,
