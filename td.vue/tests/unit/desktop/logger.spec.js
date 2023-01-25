@@ -4,11 +4,11 @@ describe('desktop/logger.js', () => {
 
     describe('Electron server log levels', () => {
 
-        it('should set the file log level', () => {
-            expect(logger.fileLogLevel).toMatch(process.env.LOG_LEVEL);
+        it('should set the default file log level', () => {
+            expect(logger.fileLogLevel).toMatch('debug');
         });
 
-        it('should set the console log level', () => {
+        it('should set the error console log level', () => {
             expect(logger.consoleLogLevel).toMatch('error');
         });
 
