@@ -57,8 +57,8 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(modal.exists()).toBe(true);
         });
 
-        it.skip('uses threat edit as a title', () => {
-            expect(modal.attributes('title')).toEqual('Edit Threat #0');
+        it('uses threat edit as a title', () => {
+            expect(modal.attributes('title')).toEqual('threats.edit #0');
         });
 
         it('shows the modal', () => {
