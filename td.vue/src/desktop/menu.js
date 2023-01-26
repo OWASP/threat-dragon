@@ -27,7 +27,7 @@ import zho from '@/i18n/zh.js';
 const messages = { deu, ell, eng, spa, fra, hin, por, rus, ukr, zho };
 var language = 'eng';
 
-const model = {
+export const model = {
     fileDirectory: '',
     filePath: '',
     isOpen: false
