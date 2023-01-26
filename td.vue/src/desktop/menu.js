@@ -13,19 +13,21 @@ const fs = require('fs');
 var mainWindow;
 
 // access the i18n message strings
+import deu from '@/i18n/de.js';
 import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
-import spa from '@/i18n/es.js';
-import deu from '@/i18n/de.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
 import por from '@/i18n/pt.js';
 import rus from '@/i18n/ru.js';
+import spa from '@/i18n/es.js';
 import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { deu, ell, eng, spa, fra, hin, por, rus, ukr, zho };
-var language = 'eng';
+const messages = { deu, ell, eng, fra, hin, por, rus, spa, ukr, zho };
+const languages = [ 'deu', 'ell', 'eng', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const defaultLanguage = 'eng';
+var language = defaultLanguage;
 
 export const model = {
     fileDirectory: '',
@@ -272,7 +274,7 @@ export const modelOpened = () => {
 };
 
 export const setLocale = (locale) => {
-    language = locale;
+    language = languages.includes(locale) ? locale : defaultLanguage;
 };
 
 export const setMainWindow = (window) => {
