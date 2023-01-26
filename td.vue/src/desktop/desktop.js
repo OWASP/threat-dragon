@@ -101,6 +101,14 @@ app.on('ready', async () => {
     createWindow();
 });
 
+// this is emitted when a 'recent document' is opened
+app.on('open-file', function(event, path) {
+    // handle this event
+    event.preventDefault();
+    logger.log.debug('Open file from recent documents: ' + path);
+    menu.readModelData(path);
+});
+
 function handleUpdateMenu (_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);

@@ -79,8 +79,9 @@ describe('HomePage.vue', () => {
             });
         });
     });
-/* TODO: this needs to be fixed: issue #560 'Desktop: create unit tests'
-    describe('desktop', () => {
+
+    describe.skip('desktop', () => {
+        // TODO: this needs to be reinstated
         beforeEach(() => {
             localVue = createLocalVue();
             localVue.use(Vuex);
@@ -118,5 +119,5 @@ describe('HomePage.vue', () => {
             });
         });
     });
-*/
+
 });

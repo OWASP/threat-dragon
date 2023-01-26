@@ -135,6 +135,13 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).not.toBeDefined();
             });
 
+            it('readModelData() should send open-model to renderer with file path', () => {
+                // TODO: need to mock mainWindow
+                // readModelData('another/file/path');
+                //expect(model).toEqual( expect.objectContaining({fileDirectory: 'another/file/', filePath: 'path'}) );
+                expect(model.isOpen).not.toBeDefined();
+            });
+
             it('saveModel() should send save-model to renderer with a file path', () => {
                 // TODO: click on the server menu item for saveModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );

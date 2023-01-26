@@ -150,9 +150,11 @@ function openModel () {
             logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
             fs.readFile(model.filePath, (err, data) => {
                 if (!err) {
-                    mainWindow.webContents.send('open-model', path.basename(model.filePath), JSON.parse(data));
+                    let modelData = JSON.parse(data);
+                    mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
                     model.isOpen = true;
-                    addRecent(model.filePath);
+                    model.fileDirectory = path.dirname(model.filePath);
+                    app.addRecentDocument(model.filePath);
                 } else {
                     logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
                     model.isOpen = false;
@@ -195,8 +197,9 @@ function saveModelDataAs (modelData, fileName) {
         if (result.canceled === false) {
             model.filePath = result.filePath;
             model.isOpen = true;
+            model.fileDirectory = path.dirname(model.filePath);
             logger.log.debug(messages[language].desktop.file.saveAs + ': ' + model.filePath);
-            addRecent(model.filePath);
+            app.addRecentDocument(model.filePath);
             saveModelData(modelData);
         } else {
             logger.log.debug(messages[language].desktop.file.saveAs + ' canceled');
@@ -224,13 +227,22 @@ function closeModel () {
     modelClosed();
 }
 
-// Add the file to the recent list, updating default directory
-function addRecent (filePath) {
-    // add the file name to the recent file list
-    app.addRecentDocument(filePath);
-    model.fileDirectory = path.dirname(filePath);
-    // When a file is requested from the recent documents menu
-    // the open-file event of app module will be emitted for it
+// read threat model from file, eg after open-file app module event
+export function readModelData (filePath) {
+    model.filePath = filePath;
+    logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
+
+    fs.readFile(model.filePath, (err, data) => {
+        if (!err) {
+            let modelData = JSON.parse(data);
+            mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
+            model.fileDirectory = path.dirname(filePath);
+            model.isOpen = true;
+        } else {
+            logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
+            model.isOpen = false;
+        }
+    });
 }
 
 // save the threat model
@@ -286,6 +298,7 @@ export default {
     modelClosed,
     modelOpened,
     modelSaved,
+    readModelData,
     setLocale,
     setMainWindow
 };
