@@ -32,7 +32,7 @@ module.exports = {
             outputDir: 'dist-desktop',
             builderOptions: {
                 appId: 'org.owasp.threatdragon',
-                productName: 'OWASP-Threat-Dragon',
+                productName: 'Threat-Dragon-ng',
                 directories: {
                     output: 'dist-desktop'
                 },
