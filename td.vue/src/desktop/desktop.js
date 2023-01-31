@@ -15,6 +15,13 @@ require('update-electron-app')({
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const isWin = (process.platform === 'win32' || process.platform === 'win64');
+const isTest = process.env.IS_TEST === 'true';
+
+if (isTest) {
+    console.log('require wdio-electron-service/main');
+    require('wdio-electron-service/main');
+}
+
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([

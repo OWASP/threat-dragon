@@ -1,5 +1,10 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
+if (process.env.IS_TEST === 'true') {
+    console.log('require wdio-electron-service/preload');
+    require('wdio-electron-service/preload');
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
