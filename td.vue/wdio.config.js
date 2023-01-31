@@ -8,7 +8,7 @@ const config = {
             'electron',
             {
                 appPath: join(__dirname, 'dist-desktop'),
-                appName: 'OWASP-Threat-Dragon',
+                appName: 'Threat-Dragon-ng',
                 chromedriver: {
                     port: 9519,
                     logFileName: 'wdio-chromedriver.log',
@@ -24,7 +24,12 @@ const config = {
     logLevel: 'debug',
     runner: 'local',
     outputDir: 'log/wdio-logs',
-    specs: ['./tests/e2e/desktop/*.spec.js']
+    specs: ['./tests/e2e/desktop/*.spec.js'],
+    framework: 'mocha',
+    mochaOpts: {
+        ui: 'bdd',
+        timeout: 30000,
+    }
 };
 
 module.exports = { config };

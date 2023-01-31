@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "build": "npm-run-all build:vue build:server",
-        "build:desktop": "cd td.vue && npm run electron:build",
+        "build:desktop": "cd td.vue && npm run build:desktop",
         "build:server": "cd td.server && npm run build",
         "build:vue": "cd td.vue && npm run build",
         "clean": "npm-run-all clean:server clean:vue clean:root",
@@ -19,7 +19,7 @@
         "pretest:site": "cd td.vue && npm run pretest",
         "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
         "start": "npm-run-all build:vue build:server start:server start:site",
-        "start:desktop": "cd td.vue && npm run electron:serve",
+        "start:desktop": "cd td.vue && npm run start:desktop",
         "start:server": "cd td.server && npm run start:serve",
         "start:site": "cd td.vue && npm run start:serve",
         "stop": "npm-run-all stop:site stop:server",
@@ -27,6 +27,7 @@
         "stop:site": "cd td.vue && npm run stop:serve",
         "test": "npm-run-all build pretest test:site test:server test:desktop",
         "test:desktop": "cd td.vue && npm run test:desktop",
+        "test:e2e:desktop": "cd td.vue && npm run test:e2e:desktop",
         "test:server": "cd td.server && npm run test:unit",
         "test:site": "cd td.vue && npm run test:unit",
         "test:vue": "cd td.vue && npm run test:vue"
