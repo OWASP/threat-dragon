@@ -5,6 +5,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
 import logger from './logger.js';
+import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
 
 const path = require('path');
 
@@ -13,15 +14,9 @@ require('update-electron-app')({
     logger: require('electron-log')
 });
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const isWin = (process.platform === 'win32' || process.platform === 'win64');
-const isTest = process.env.IS_TEST === 'true';
-
 if (isTest) {
-    console.log('require wdio-electron-service/main');
     require('wdio-electron-service/main');
 }
-
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -50,14 +45,14 @@ async function createWindow () {
         menu.setMainWindow(mainWindow);
     });
 
-    if (process.env.WEBPACK_DEV_SERVER_URL) {
-        logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + process.env.WEBPACK_DEV_SERVER_URL);
-        // Load the url of the dev server if in development mode
-        await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-        if (!process.env.IS_TEST) mainWindow.webContents.openDevTools();
+    if (electronURL) {
+        logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
+        // Load the url of the dev server when in development mode
+        await mainWindow.loadURL(electronURL);
+        if (!isTest) mainWindow.webContents.openDevTools();
     } else {
         createProtocol('app');
-        // Load the index.html when not in development
+        // Load the index.html when not in development mode
         mainWindow.loadURL('app://./index.html');
     }
 }
@@ -66,7 +61,7 @@ async function createWindow () {
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
+    if (!isMacOS) {
         logger.log.debug('Quit application');
         app.quit();
     } else {
@@ -92,7 +87,7 @@ app.on('ready', async () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     // Install Vue Devtools
-    if (isDevelopment && !process.env.IS_TEST) {
+    if (isDevelopment && !isTest) {
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {

@@ -1,11 +1,10 @@
 'use strict';
+import { isDevelopment, isMacOS, isWin, logLevel } from './utils.js';
+
 export const log = require('electron-log');
 
 export const consoleLogLevel = 'error';
-export const fileLogLevel = process.env.LOG_LEVEL || 'debug';
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const isMacOS = process.platform === 'darwin';
-const isWin = (process.platform === 'win32' || process.platform === 'win64');
+export const fileLogLevel = logLevel;
 
 if (isDevelopment) {
     if (isMacOS) {

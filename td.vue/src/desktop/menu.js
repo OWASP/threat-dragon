@@ -3,8 +3,7 @@
 import { app, dialog } from 'electron';
 import path from 'path';
 import logger from './logger.js';
-
-const isMacOS = process.platform === 'darwin';
+import { isMacOS } from './utils.js';
 
 const { shell } = require('electron');
 const fs = require('fs');
