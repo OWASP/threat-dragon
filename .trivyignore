@@ -11,3 +11,7 @@ CVE-2022-37434
 # release description, is not vulnerable).
 CVE-2022-24999
 
+# by inspection, this vunerability is not exploitable here
+CVE-2022-25881
+https://avd.aquasec.com/nvd/cve-2022-25881
+
