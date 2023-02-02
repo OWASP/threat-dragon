@@ -35,13 +35,13 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
 
-      - name: Unit Test
+      - name: Unit test
         run: npm run test:unit
 
   site_unit_tests:
@@ -69,13 +69,13 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
 
-      - name: Unit Test
+      - name: Unit test
         run: npm run test:unit
 
   desktop_unit_tests:
@@ -103,13 +103,13 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
   
-      - name: Unit Test
+      - name: Unit test
         run: npm run test:desktop
 
   release_desktop:
@@ -144,9 +144,10 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
+      - name: Build installer
       - run: npm run electron:build
 
       - name: Prepare for app notarization
