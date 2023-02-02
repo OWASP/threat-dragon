@@ -11,7 +11,9 @@ CVE-2022-37434
 # release description, is not vulnerable).
 CVE-2022-24999
 
+# https://avd.aquasec.com/nvd/cve-2022-25881
+# http-cache-semantics prior to 4.1.1
+# vulnerable to Regular Expression Denial of Service
 # by inspection, this vunerability is not exploitable here
 CVE-2022-25881
-https://avd.aquasec.com/nvd/cve-2022-25881
 
