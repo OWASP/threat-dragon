@@ -394,5 +394,8 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
 
+      - name: Build installer
+        run: npm run build:desktop
+
       - name: End to end tests
         run: npm run test:e2e:desktop
