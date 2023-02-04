@@ -148,7 +148,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build installer
-      - run: npm run electron:build
+      - run: npm run build:desktop
 
       - name: Prepare for app notarization
         if: startsWith(matrix.config.os, 'macos')
