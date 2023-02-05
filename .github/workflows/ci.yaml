@@ -366,7 +366,7 @@ jobs:
           exit-code: 1
 
   desktop_e2e_tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: [site_unit_tests, desktop_unit_tests]
     defaults:
       run:
