@@ -366,14 +366,8 @@ jobs:
           exit-code: 1
 
   desktop_e2e_tests:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
-    strategy:
-      matrix:
-        config:
-          - { os: macos-latest }
-          - { os: ubuntu-latest }
-          - { os: windows-latest }
     defaults:
       run:
         working-directory: td.vue
@@ -381,6 +375,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # ubuntu-latest does not find the chrome driver
+      # so until this is fixed, only windows-latest
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.0.1
 
@@ -406,5 +402,7 @@ jobs:
       - name: Build application
         run: npm run build:e2e:desktop
 
+      # for macos-latest running locally works but pipeline times out 
+      # so until this is fixed, only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
