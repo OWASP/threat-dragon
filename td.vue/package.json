@@ -8,7 +8,7 @@
     "dev": "vue-cli-service serve --port 8080",
     "cypress:open": "cypress open",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --no-unsafe-inline",
+    "build": "vue-cli-service build --no-unsafe-inline --publish never",
     "build:desktop": "vue-cli-service electron:build",
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
     "postinstall": "electron-builder install-app-deps",
