@@ -23,12 +23,13 @@ const config = {
         }
     }],
     port: 9519,
-    waitforTimeout: 5000,
+    waitforTimeout: 30000,
     connectionRetryCount: 10,
     connectionRetryTimeout: 30000,
     logLevel: 'debug',
     runner: 'local',
-    outputDir: 'log/wdio-logs',
+    // to redirect logs to files instead of console:
+    // outputDir: 'log/wdio-logs',
     specs: ['./tests/e2e/desktop/*.spec.js'],
     framework: 'mocha',
     mochaOpts: {

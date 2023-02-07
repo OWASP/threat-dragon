@@ -371,9 +371,9 @@ jobs:
     strategy:
       matrix:
         config:
-          - { os: macos-latest, os_short: osx }
-          - { os: ubuntu-latest, os_short: lin }
-          - { os: windows-latest, os_short: win }
+          - { os: macos-latest }
+          - { os: ubuntu-latest }
+          - { os: windows-latest }
     defaults:
       run:
         working-directory: td.vue
