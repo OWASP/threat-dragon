@@ -402,7 +402,7 @@ jobs:
       - name: Build application
         run: npm run build:e2e:desktop
 
-      # for macos-latest running locally works but pipeline times out 
+      # works for macos-latest running locally but pipeline times out 
       # so until this is fixed, only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
