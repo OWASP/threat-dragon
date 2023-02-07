@@ -375,10 +375,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use previous Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Cache NPM dir
         uses: actions/cache@v3
@@ -394,8 +394,8 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
 
-      - name: Build installer
-        run: npm run build:desktop
+      - name: Build application
+        run: npm run build:e2e:desktop
 
       - name: End to end tests
         run: npm run test:e2e:desktop
