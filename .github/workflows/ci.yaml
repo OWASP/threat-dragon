@@ -35,13 +35,13 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
 
-      - name: Unit Test
+      - name: Unit test
         run: npm run test:unit
 
   site_unit_tests:
@@ -69,14 +69,48 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
 
-      - name: Unit Test
+      - name: Unit test
         run: npm run test:unit
+
+  desktop_unit_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: lint
+        run: npm run lint
+  
+      - name: Unit test
+        run: npm run test:desktop
 
   build_docker_image:
     runs-on: ubuntu-latest
@@ -156,7 +190,7 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: Run e2e tests
@@ -209,7 +243,7 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: pnpm install
+      - name: Install packages
         run: pnpm install --frozen-lockfile
 
       - name: Run e2e tests
@@ -330,3 +364,45 @@ jobs:
           image-ref: '${{ env.image_name }}'
           format: 'table'
           exit-code: 1
+
+  desktop_e2e_tests:
+    runs-on: windows-latest
+    needs: [desktop_unit_tests, site_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # ubuntu-latest does not find the chrome driver
+      # so until this is fixed, only windows-latest
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.0.1
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: npm run build:e2e:desktop
+
+      # works for macos-latest running locally but pipeline times out 
+      # so until this is fixed, only windows-latest
+      - name: End to end tests
+        run: npm run test:e2e:desktop

@@ -32,7 +32,7 @@ module.exports = {
             outputDir: 'dist-desktop',
             builderOptions: {
                 appId: 'org.owasp.threatdragon',
-                productName: 'OWASP-Threat-Dragon',
+                productName: 'Threat-Dragon-ng',
                 directories: {
                     output: 'dist-desktop'
                 },
@@ -96,6 +96,9 @@ module.exports = {
             });
     },
     configureWebpack: {
-        devtool: 'source-map'
+        devtool: 'source-map',
+        output: {
+            hashFunction: 'xxhash64'
+        }
     }
 };

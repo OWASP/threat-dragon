@@ -191,11 +191,11 @@ A JWT is used as a refresh token because it is tamper resistant and provides use
 {:.table .table-striped}
 | Desktop specific variables | Description | Default |
 | --- | ----------- | ------- |
-| IS_TEST | Enabled during testing, required for Spectron | false |
-| WEBPACK_DEV_SERVER_URL | Server load URL when in development mode | http://localhost:3000/ |
+| IS_TEST | Enabled during automated testing | false |
+| WEBPACK_DEV_SERVER_URL | Electron load URL when in development mode | http://localhost:3000/ |
 
-**Note:** the desktop environment variable WEBPACK_DEV_SERVER_URL determines either development/test
-mode if defined of production mode if not defined
+**Note:** the desktop environment variable WEBPACK_DEV_SERVER_URL determines the mode;
+either development/test mode if defined or production mode if not defined
 
 ___
 ## Github OAuth App Screenshot
