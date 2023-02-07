@@ -16,7 +16,12 @@ const config = {
             },
         ],
     ],
-    capabilities: [{}],
+    capabilities: [{
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: ['headless', 'disable-gpu']
+        }
+    }],
     port: 9519,
     waitforTimeout: 5000,
     connectionRetryCount: 10,
