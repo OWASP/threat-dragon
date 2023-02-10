@@ -375,8 +375,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # ubuntu-latest does not find the chrome driver
-      # so until this is fixed, only windows-latest
+      # ubuntu-latest does not find this chrome driver
+      # so until this is fixed, use only windows-latest
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.0.1
 
@@ -400,9 +400,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build application
-        run: npm run build:e2e:desktop
+        # test only so do not publish
+        run: npm run build:desktop -- --publish=never
 
       # works for macos-latest running locally but pipeline times out 
-      # so until this is fixed, only windows-latest
+      # so until this is fixed, use only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
