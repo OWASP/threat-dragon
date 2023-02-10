@@ -2,6 +2,8 @@ name: Build/Release Desktop
 
 on:
   push:
+    # TODO: comment this out, only used for development
+    branches: [ sign-images ]
     # only for version 2.x.x releases and release candidates
     tags:
       - v2.?.?*
@@ -22,7 +24,7 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Cache NPM dir
         uses: actions/cache@v3
@@ -56,7 +58,7 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Cache NPM dir
         uses: actions/cache@v3
@@ -90,7 +92,7 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Cache NPM dir
         uses: actions/cache@v3
@@ -134,7 +136,7 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Cache NPM dir
         uses: actions/cache@v3
