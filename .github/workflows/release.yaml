@@ -198,7 +198,7 @@ jobs:
       - name: Build installer
         env:
           # GITHUB_TOKEN automatically provided to the action
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop
 
       - name: Prepare for app notarization
@@ -241,7 +241,7 @@ jobs:
       - name: Build snap desktop
         shell: bash
         env:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run electron-builder -- --linux AppImage deb rpm --publish always
         if: startsWith(matrix.config.os, 'ubuntu')
 
@@ -249,7 +249,7 @@ jobs:
       - name: Build snap installer
         shell: bash
         env:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run electron-builder -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
