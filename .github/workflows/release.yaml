@@ -12,11 +12,11 @@ env:
   image_name: "threatdragon/owasp-threat-dragon"
 
 jobs:
-  server_unit_tests:
+  site_unit_tests:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: td.server
+        working-directory: td.vue
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,11 +46,11 @@ jobs:
       - name: Unit test
         run: npm run test:unit
 
-  site_unit_tests:
+  server_unit_tests:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: td.vue
+        working-directory: td.server
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -114,9 +114,52 @@ jobs:
       - name: Unit test
         run: npm run test:desktop
 
+  desktop_e2e_tests:
+    runs-on: windows-latest
+    needs: [desktop_unit_tests, site_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # ubuntu-latest does not find this chrome driver
+      # so until this is fixed, use only windows-latest
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.0.1
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-cache-server-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        # test only so do not publish
+        run: npm run build:desktop -- --publish=never
+
+      # works for macos-latest running locally but pipeline times out 
+      # so until this is fixed, use only windows-latest
+      - name: End to end tests
+        run: npm run test:e2e:desktop
+
   desktop_installers:
     runs-on: ${{ matrix.config.os }}
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     strategy:
       matrix:
         config:
@@ -195,7 +238,8 @@ jobs:
       - name: Build snap desktop
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          # GitHub token, GITHUB_TOKEN, automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run electron-builder -- --linux AppImage deb rpm --publish always
         if: startsWith(matrix.config.os, 'ubuntu')
 
@@ -203,7 +247,8 @@ jobs:
       - name: Build snap installer
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          # GitHub token, GITHUB_TOKEN, automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run electron-builder -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
@@ -263,3 +308,6 @@ jobs:
       #     tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }},stable
       #     cache-from: type=local,src=/tmp/.buildx-cache
       #     cache-to: type=local,dest=/tmp/.buildx-cache
+
+# TODO: Can we add a table with shasums to the release description?
+# Is it worth automating that portion?
