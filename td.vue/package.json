@@ -11,6 +11,7 @@
     "build": "vue-cli-service build --no-unsafe-inline",
     "build:desktop": "vue-cli-service electron:build",
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
+    "electron-builder": "electron-builder",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "pretest": "npm run lint",

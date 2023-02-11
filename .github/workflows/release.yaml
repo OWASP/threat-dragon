@@ -197,8 +197,8 @@ jobs:
 
       - name: Build installer
         env:
-          # GitHub token, GITHUB_TOKEN, automatically provided to the action
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_TOKEN automatically provided to the action
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop
 
       - name: Prepare for app notarization
@@ -212,11 +212,10 @@ jobs:
       # (and create it if needed based on version)
       # Snap publishing fails using this plugin,
       # so special care is needed for linux
-      - name: Build/release Electron app
-        if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
+      - name: Release for Windows and MacOS
         uses: samuelmeuli/action-electron-builder@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
@@ -235,22 +234,23 @@ jobs:
           # macOS notarization API key
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+        if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
 
       # Build all linux images EXCEPT for the snap, with publish always
       # Snaps will not publish, even with snapcraft installed
       - name: Build snap desktop
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run electron-builder -- --linux AppImage deb rpm --publish always
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run electron-builder -- --linux AppImage deb rpm --publish always
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # Build the snap, but do not publish
       - name: Build snap installer
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run electron-builder -- --linux snap
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run electron-builder -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
       - name: Login to Snap Store
