@@ -199,7 +199,7 @@ jobs:
         env:
           # GitHub token, GITHUB_TOKEN, automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: npm run build:desktop
+        run: npm run build:desktop
 
       - name: Prepare for app notarization
         if: startsWith(matrix.config.os, 'macos')
