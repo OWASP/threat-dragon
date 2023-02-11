@@ -4,17 +4,16 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "dev": "vue-cli-service serve --port 8080",
-    "cypress:open": "cypress open",
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --no-unsafe-inline",
     "build:desktop": "vue-cli-service electron:build",
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
+    "cypress:open": "cypress open",
+    "dev": "vue-cli-service serve --port 8080",
     "electron-builder": "electron-builder",
+    "lint": "vue-cli-service lint",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
     "pretest": "npm run lint",
+    "serve": "vue-cli-service serve",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
     "start:desktop": "vue-cli-service electron:serve",
     "start:serve": "pm2 --name td.vue start 'vue-cli-service serve'",
@@ -30,8 +29,7 @@
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C e2e.smokes.local.config.js --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "test:unit": "vue-cli-service test:unit",
-    "test:vue": "vue-cli-service test:e2e -C e2e.local.config.js --headless --browser chrome",
-    "lint": "vue-cli-service lint"
+    "test:vue": "vue-cli-service test:e2e -C e2e.local.config.js --headless --browser chrome"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
