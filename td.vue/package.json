@@ -9,7 +9,6 @@
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
     "cypress:open": "cypress open",
     "dev": "vue-cli-service serve --port 8080",
-    "electron-builder": "electron-builder",
     "lint": "vue-cli-service lint",
     "postinstall": "electron-builder install-app-deps",
     "pretest": "npm run lint",

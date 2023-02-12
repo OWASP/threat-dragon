@@ -197,52 +197,69 @@ jobs:
 
       - name: Build installer
         env:
-          # GITHUB_TOKEN automatically provided to the action
+          # github token is automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop
 
       - name: Prepare for app notarization
-        if: startsWith(matrix.config.os, 'macos')
         # Import Apple API key for app notarization on macOS
+        # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+        if: startsWith(matrix.config.os, 'macos')
+
+      # Publish MacOS to GH Release Draft based on version (and create if needed)
+      - name: Release for MacOS
+        env:
+          # macOS notarization API IDs
+          # see github.com/samuelmeuli/action-electron-builder#notarization
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          # macOS signing certificate and password
+          # see github.com/samuelmeuli/action-electron-builder#code-signing
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+          CSC_LINK:  ${{ secrets.MAC_CERTS }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --mac --publish always 
+        if: startsWith(matrix.config.os, 'macos')
 
       # Win and OSX will just publish to the GH Release Draft
       # (and create it if needed based on version)
       # Snap publishing fails using this plugin,
       # so special care is needed for linux
-      - name: Release for Windows and MacOS
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Release for Windows and MacOS
+      #   uses: samuelmeuli/action-electron-builder@v1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      #     release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
-          mac_certs: ${{ secrets.mac_certs }}
-          mac_certs_password: ${{ secrets.mac_certs_password }}
+          # see github.com/samuelmeuli/action-electron-builder#code-signing
+      #     mac_certs: ${{ secrets.MAC_CERTS }}
+      #     mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
 
           # follow Comodo signing instructions
           # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
-          windows_certs: ${{ secrets.windows_certs }}
-          windows_certs_password: ${{ secrets.windows_certs_password }}
+      #     windows_certs: ${{ secrets.WINDOWS_CERTS }}
+      #     windows_certs_password: ${{ secrets.WINDOWS_CERTS_PASSWORD }}
 
-          package_root: td.vue
-        env:
-          # macOS notarization API key
-          API_KEY_ID: ${{ secrets.api_key_id }}
-          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
-        if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
+      #     package_root: td.vue
+      #   env:
+          # macOS notarization API key and ID
+      #     API_KEY_ID: ${{ secrets.API_KEY_ID }}
+      #     API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+      #   if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
 
       # Build all linux images EXCEPT for the snap, with publish always
       # Snaps will not publish, even with snapcraft installed
-      - name: Build snap desktop
+      - name: Release for Linux
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run electron-builder -- --linux AppImage deb rpm --publish always
+        run: npx electron-builder --linux AppImage deb rpm --publish always
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # Build the snap, but do not publish
@@ -258,7 +275,7 @@ jobs:
         # Only install Snapcraft on Ubuntu
         with:
           # Log in to Snap Store
-          snapcraft_token: ${{ secrets.snapcraft_token }}
+          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # TODO: Uncomment when ready to start deploying again
