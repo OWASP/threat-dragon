@@ -6,8 +6,8 @@ path: /security/dast
 group: Trust
 ---
 
-# Dynamic Application Security Testing (SAST)
-Static application security testing is the process of testing code that is running to identify potential vulnerabilities and misconfigurations.
+# Dynamic Application Security Testing (DAST)
+Dynamic application security testing is the process of testing code that is running to identify potential vulnerabilities and misconfigurations.
 This is provided by [OWASP ZAP](https://www.zaproxy.org/docs/docker/about/) and is run as part of every commit.
 
 ZAP scan results are attached to the output of an action.
