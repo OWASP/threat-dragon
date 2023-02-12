@@ -38,7 +38,7 @@ For more information on building/running version 1.x,
 please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
 
 The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downloads
-and this will migrate to version 2.x during 2022. 
+and this will migrate to version 2.x during 2023.
 
 ## About Threat Dragon
 There is a good overview of
@@ -55,7 +55,7 @@ and this repository has been migrated from
 Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
 Since then the project team has continued development, culminating with release version 1.6.1.
-The project is now going through a substantial changes which will see version 2.0 released in 2022.
+The project is now going through a substantial changes which will see version 2.0 released in 2023.
 
 Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases),
 with threat model files stored in GitHub. Over time other storage methods will become available.
@@ -69,7 +69,7 @@ and upcoming [version 2.x](https://www.threatdragon.com/docs).
 
 ### Version 2.0 Development
 After many years using AngularJS and JointJS, Threat Dragon is migrating development to Vue
-and antv/g6 drawing library. This version will be ready later in 2022,
+and antv/g6 drawing library. This version will be ready later in 2023,
 until then use the [latest version of Threat Dragon 1.x](https://github.com/OWASP/threat-dragon/releases/tag/v1.6.1).
 
 ### Installing version 2.x
