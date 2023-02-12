@@ -195,11 +195,10 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
 
-      - name: Build installer
-        env:
-          # github token is automatically provided to the action
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop
+      # - name: Build installer
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: npm run build:desktop
 
       - name: Prepare for app notarization
         # Import Apple API key for app notarization on macOS
@@ -210,19 +209,20 @@ jobs:
         if: startsWith(matrix.config.os, 'macos')
 
       # Publish MacOS to GH Release Draft based on version (and create if needed)
-      # - name: Release for MacOS
-      #   env:
+      - name: Release for MacOS
+        env:
           # macOS notarization API IDs
           # see github.com/samuelmeuli/action-electron-builder#notarization
-      #     API_KEY_ID: ${{ secrets.API_KEY_ID }}
-      #     API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
           # macOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
-      #     CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-      #     CSC_LINK:  ${{ secrets.MAC_CERTS }}
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: npm run build:desktop -- --mac --publish always 
-      #   if: startsWith(matrix.config.os, 'macos')
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+          CSC_LINK:  ${{ secrets.MAC_CERTS }}
+          # github token is automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --mac --publish always 
+        if: startsWith(matrix.config.os, 'macos')
 
       # Win and OSX will just publish to the GH Release Draft
       # (and create it if needed based on version)
@@ -267,7 +267,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run electron-builder -- --linux snap
+        run: npm run build:desktop -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
       - name: Login to Snap Store
