@@ -173,9 +173,6 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.0.1
-
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
@@ -195,11 +192,6 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
 
-      # - name: Build installer
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: npm run build:desktop
-
       - name: Prepare for app notarization
         # Import Apple API key for app notarization on macOS
         # see github.com/samuelmeuli/action-electron-builder#notarization
@@ -208,21 +200,34 @@ jobs:
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
         if: startsWith(matrix.config.os, 'macos')
 
-      # Publish MacOS to GH Release Draft based on version (and create if needed)
+      # Build and publish MacOS installer to github Release Draft
+      # the draft name uses version and is created if it does not already exist
       - name: Release for MacOS
         env:
-          # macOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          # macOS signing certificate and password
+          # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
           # github token is automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --mac --publish always 
+          # MacOS notarization API IDs
+          # see github.com/samuelmeuli/action-electron-builder#notarization
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+        run: npm run build:desktop -- --mac --publish always
         if: startsWith(matrix.config.os, 'macos')
+
+      # Build and publish Windows installer to github Release Draft
+      - name: Release for Windows
+        env:
+          # Windows signing certificate and password
+          # follow Comodo signing instructions
+          # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTS_PASSWORD}}
+          CSC_LINK:  ${{ secrets.WINDOWS_CERTS }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish always
+        if: startsWith(matrix.config.os, 'windows')
 
       # Win and OSX will just publish to the GH Release Draft
       # (and create it if needed based on version)
@@ -253,9 +258,10 @@ jobs:
       #     API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
       #   if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
 
-      # Build all linux images EXCEPT for the snap, with publish always
-      # Snaps will not publish, even with snapcraft installed
-      - name: Release for Linux
+      # Build and publish Linux installers to github Release Draft
+      # for all linux images EXCEPT for the snap
+      # Snaps do not publish, even with snapcraft installed, so use Snap Store
+      - name: Release for Linux AppImage, deb and rpm
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
