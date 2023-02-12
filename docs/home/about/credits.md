@@ -21,7 +21,7 @@ group: About
 
 [Mike Goodwin](mailto:mike.goodwin@owasp.org) is the originator, founder and leader of OWASP Threat Dragon.
 The [first commit](https://github.com/mike-goodwin/owasp-threat-dragon/commit/942bdff78191ef0eae40f7610b8397739749d8b8)
-to the original threat dragon repository was made on 9th October 2015, so that is Threat Dragon's birthday.
+to the original Threat Dragon repository was made on 9th October 2015, so that is Threat Dragon's birthday.
 
 Some years later we found that using JointJS for the diagramming library was not proving sustainable,
 so [Leo Reading](mailto:leo.reading@owasp.org) migrated the project to Vue/Express using the drawing library antv/x6.

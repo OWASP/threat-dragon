@@ -77,7 +77,7 @@ This runs the desktop application in development mode that will relaunch the app
 
 ## Docker
 A Dockerfile is provided that can be used to create a docker image:
-* checkout the threat dragon source repo
+* checkout the Threat Dragon source repo
 * from the root directory build the docker image using `docker build -t owasp-threat-dragon:dev .`
 * wait for the docker image to build
 * create a `.env` environment variable file using the example `example.env` as a template

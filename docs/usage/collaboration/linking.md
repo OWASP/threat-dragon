@@ -11,7 +11,7 @@ Threat Dragon supports the concept of deep linking.  The deep links have changed
 the addition of identity providers. Please take note of the new structure.
 
 ## Provider Types
-Threat dragon supports multiple provider types.  Each provider "type" can have multiple providers,
+Threat Dragon supports multiple provider types.  Each provider "type" can have multiple providers,
 but they fall under the same category as far as deep linking is concerned.
 More providers and provider types will be added in the future.
 
