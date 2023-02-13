@@ -34,11 +34,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -68,11 +67,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -102,11 +100,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -142,11 +139,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: Build application
         # test only so do not publish
@@ -193,7 +189,7 @@ jobs:
 
       # Build and publish MacOS installer to github Release Draft
       # the draft name uses version and is created if it does not already exist
-      - name: Release for MacOS
+      - name: Release for MacOS - prepare for notarization
         # Import Apple API key for app notarization on macOS
         # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
@@ -201,7 +197,8 @@ jobs:
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
         if: startsWith(matrix.config.os, 'macos')
 
-      - run: npm run build:desktop -- --mac --publish always
+      - name: Release for MacOS
+        run: npm run build:desktop -- --mac --publish always
         env:
           # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
@@ -245,16 +242,16 @@ jobs:
         run: npm run build:desktop -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
-      # Release for Linux snap - Log in to Snap Store
-      - uses: samuelmeuli/action-snapcraft@v1
+      - name: Release for Linux snap - login to Snap Store
+        uses: samuelmeuli/action-snapcraft@v1
         with:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
         # Only install Snapcraft on Ubuntu
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # TODO: Uncomment when ready to start deploying again
-      # Release for Linux snap - upload to Snap Store site
-      # - shell: bash
+      # - name: Release for Linux snap - upload to Snap Store
+      #   shell: bash
       #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
       #   if: startsWith(matrix.config.os, 'ubuntu')
 

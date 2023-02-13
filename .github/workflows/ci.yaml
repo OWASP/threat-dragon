@@ -32,11 +32,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -66,11 +65,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -100,11 +98,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: lint
         run: npm run lint
@@ -187,11 +184,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
@@ -240,11 +236,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: Run e2e tests
         run: npm run test:e2e-ci-smokes
@@ -393,11 +388,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: Build application
         # test only so do not publish

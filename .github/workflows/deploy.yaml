@@ -97,11 +97,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-pnpm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
-      - name: pnpm install
-        run: pnpm install --frozen-lockfile
+      - name: Install packages
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       - name: BrowserStack Env Setup
         uses: browserstack/github-actions/setup-env@master

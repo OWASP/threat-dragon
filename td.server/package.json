@@ -8,6 +8,7 @@
     "clean:dist": "rimraf dist",
     "dev": "nodemon dev.js --exec babel-node",
     "lint": "eslint src --fix",
+    "preinstall": "npx only-allow pnpm",
     "pretest": "npm run lint",
     "start": "npm run dev",
     "start:serve": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
