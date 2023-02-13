@@ -186,13 +186,14 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-npm-cache-server-
 
-      - name: Install pnpm
-        run: npm i -g pnpm
-
       - name: Install packages
-        run: pnpm install --frozen-lockfile
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
-      - name: Prepare for app notarization
+      # Build and publish MacOS installer to github Release Draft
+      # the draft name uses version and is created if it does not already exist
+      - name: Release for MacOS
         # Import Apple API key for app notarization on macOS
         # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
@@ -200,68 +201,36 @@ jobs:
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
         if: startsWith(matrix.config.os, 'macos')
 
-      # Build and publish MacOS installer to github Release Draft
-      # the draft name uses version and is created if it does not already exist
-      - name: Release for MacOS
+      - run: npm run build:desktop -- --mac --publish always
         env:
           # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # github token is automatically provided to the action
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # MacOS notarization API IDs
           # see github.com/samuelmeuli/action-electron-builder#notarization
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-        run: npm run build:desktop -- --mac --publish always
+          # github token is automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: startsWith(matrix.config.os, 'macos')
 
       # Build and publish Windows installer to github Release Draft
       - name: Release for Windows
+        # follow Comodo signing instructions
+        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
           # Windows signing certificate and password
-          # follow Comodo signing instructions
-          # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTS_PASSWORD}}
           CSC_LINK:  ${{ secrets.WINDOWS_CERTS }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --windows --publish always
         if: startsWith(matrix.config.os, 'windows')
 
-      # Win and OSX will just publish to the GH Release Draft
-      # (and create it if needed based on version)
-      # Snap publishing fails using this plugin,
-      # so special care is needed for linux
-      # - name: Release for Windows and MacOS
-      #   uses: samuelmeuli/action-electron-builder@v1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-      #     release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-
-          # see github.com/samuelmeuli/action-electron-builder#code-signing
-      #     mac_certs: ${{ secrets.MAC_CERTS }}
-      #     mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
-
-          # follow Comodo signing instructions
-          # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
-      #     windows_certs: ${{ secrets.WINDOWS_CERTS }}
-      #     windows_certs_password: ${{ secrets.WINDOWS_CERTS_PASSWORD }}
-
-      #     package_root: td.vue
-      #   env:
-          # macOS notarization API key and ID
-      #     API_KEY_ID: ${{ secrets.API_KEY_ID }}
-      #     API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-      #   if: ${{ !startsWith(matrix.config.os, 'ubuntu') }}
-
       # Build and publish Linux installers to github Release Draft
       # for all linux images EXCEPT for the snap
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Release for Linux AppImage, deb and rpm
+      - name: Release for Linux
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -269,24 +238,23 @@ jobs:
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # Build the snap, but do not publish
-      - name: Build snap installer
+      - name: Release for Linux snap
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
         if: startsWith(matrix.config.os, 'ubuntu')
 
-      - name: Login to Snap Store
-        uses: samuelmeuli/action-snapcraft@v1
-        # Only install Snapcraft on Ubuntu
+      # Release for Linux snap - Log in to Snap Store
+      - uses: samuelmeuli/action-snapcraft@v1
         with:
-          # Log in to Snap Store
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
+        # Only install Snapcraft on Ubuntu
         if: startsWith(matrix.config.os, 'ubuntu')
 
       # TODO: Uncomment when ready to start deploying again
-      # - name: Upload snap
-      #   shell: bash
+      # Release for Linux snap - upload to Snap Store site
+      # - shell: bash
       #   run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
       #   if: startsWith(matrix.config.os, 'ubuntu')
 
