@@ -63,7 +63,7 @@ module.exports = {
                 },
                 linux: {
                     category: 'Development',
-                    executableName: 'threat-dragon',
+                    executableName: 'threat-dragon-ng',
                     icon: './src/icons/td-256.png',
                     synopsis: 'OWASP Threat Dragon',
                     target: [
