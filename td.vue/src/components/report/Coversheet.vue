@@ -2,8 +2,8 @@
     <div class="no-print">
         <b-row class="mb-2 td-branding">
             <b-col>
-                <em v-if="branding" class="td-brand-text">
-                    {{ new Date().toDateString() }} | OWASP Threat Dragon 
+                <em>
+                    {{ new Date().toDateString() }} <span v-if="branding" class="td-brand-text">| OWASP Threat Dragon </span>
                 </em>
             </b-col>
         </b-row>
@@ -14,12 +14,6 @@
         </b-row>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.td-branding {
-    margin-top: 60px;
-}
-</style>
 
 <script>
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
