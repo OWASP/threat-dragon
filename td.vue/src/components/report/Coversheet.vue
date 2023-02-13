@@ -15,12 +15,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.td-branding {
-    margin-top: 60px;
-}
-</style>
-
 <script>
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 export default {

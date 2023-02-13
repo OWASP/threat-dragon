@@ -1,6 +1,6 @@
 <template>
     <div class="td-report">
-        <b-row class="no-print td-report-options fixed">
+        <b-row class="no-print td-report-options sticky">
             <b-col>
                 <b-form class="">
                     <b-form-row>
@@ -129,11 +129,11 @@
 }
 
 .td-report-container {
-    margin-top: 85px;
+    margin-top: 5px;
 }
 
-.fixed {
-    position: fixed;
+.sticky {
+    position: sticky;
     top: 45px;
     width: 100%;
     background-color: $white;
