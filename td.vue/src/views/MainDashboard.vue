@@ -9,8 +9,8 @@
                 </b-jumbotron>
             </b-col>
         </b-row>
-        <b-row>
-            <td-dashboard-action
+        <b-row >
+            <td-dashboard-action class="dashboard-action"
                 v-for="(action, idx) in actions"
                 :key="idx"
                 :to="action.to"
@@ -27,6 +27,11 @@
     color: $orange;
     margin-bottom: 15px;
 }
+
+.dashboard-action {
+    padding-bottom: 2rem;
+}
+
 </style>
 
 <script>
