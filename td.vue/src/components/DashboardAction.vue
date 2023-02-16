@@ -1,6 +1,6 @@
 <template>    
     <b-col lg>
-        <b-jumbotron class="text-center">
+        <b-jumbotron class="text-center action-pane">
             <router-link :to="to">
                 <font-awesome-icon
                 :icon="[iconPreface, icon]"
@@ -18,6 +18,11 @@
 .action-icon {
     color: $orange;
     margin-bottom: 15px;
+}
+
+.action-pane {
+    min-height: 100%;
+    margin-bottom: 0px;
 }
 </style>
 
