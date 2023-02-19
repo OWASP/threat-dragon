@@ -54,6 +54,7 @@ specifiers:
   electron-chromedriver: ^18.0.0
   electron-devtools-installer: ^3.2.0
   electron-log: ^4.4.8
+  electron-updater: ^5.3.0
   eslint: ^8.21.0
   eslint-config-standard: ^17.0.0
   eslint-plugin-import: ^2.26.0
@@ -142,6 +143,7 @@ devDependencies:
   electron-chromedriver: 18.0.0
   electron-devtools-installer: 3.2.0
   electron-log: 4.4.8
+  electron-updater: 5.3.0
   eslint: 8.33.0
   eslint-config-standard: 17.0.0_xh3wrndcszbt2l7hdksdjqnjcq
   eslint-plugin-import: 2.27.5_eslint@8.33.0
@@ -6695,6 +6697,22 @@ packages:
     resolution: {integrity: sha512-Vp3CVhmYpgf4iXNKAucoQUDcCrBQX3XLBtwgFqP9BUXuucgvAV9zWp1kYU7LL9j4++s9O+12cb3wMtN4SJy6UQ==}
     dev: true
 
+  /electron-updater/5.3.0:
+    resolution: {integrity: sha512-iKEr7yQBcvnQUPnSDYGSWC9t0eF2YbZWeYYYZzYxdl+HiRejXFENjYMnYjoOm2zxyD6Cr2JTHZhp9pqxiXuCOw==}
+    dependencies:
+      '@types/semver': 7.3.13
+      builder-util-runtime: 9.1.1
+      fs-extra: 10.1.0
+      js-yaml: 4.1.0
+      lazy-val: 1.0.5
+      lodash.escaperegexp: 4.1.2
+      lodash.isequal: 4.5.0
+      semver: 7.3.8
+      typed-emitter: 2.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /electron/18.3.15:
     resolution: {integrity: sha512-frkBt8skyo8SmlG4TbByDxZw6/tqttRYYIBaeTBfkoG18OyD59IVwVaXXHO8UYKB5/1C2Rce0Gj6uoxlAHQHzQ==}
     engines: {node: '>= 8.6'}
@@ -10352,12 +10370,20 @@ packages:
     resolution: {integrity: sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==}
     dev: true
 
+  /lodash.escaperegexp/4.1.2:
+    resolution: {integrity: sha512-TM9YBvyC84ZxE3rgfefxUWiQKLilstD6k7PTGt6wfbtXF8ixIJLOL3VYyV/z+ZiPLsVxAsKAFVwWlWeb2Y8Yyw==}
+    dev: true
+
   /lodash.flatten/4.4.0:
     resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
     dev: true
 
   /lodash.flattendeep/4.4.0:
     resolution: {integrity: sha512-uHaJFihxmJcEX3kT4I23ABqKKalJ/zDrDg0lsFtc1h+3uw49SIJ5beyhx5ExVRti3AvKoOJngIj7xz3oylPdWQ==}
+    dev: true
+
+  /lodash.isequal/4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
     dev: true
 
   /lodash.isobject/3.0.2:
@@ -14091,6 +14117,12 @@ packages:
       call-bind: 1.0.2
       for-each: 0.3.3
       is-typed-array: 1.1.10
+    dev: true
+
+  /typed-emitter/2.1.0:
+    resolution: {integrity: sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==}
+    optionalDependencies:
+      rxjs: 7.8.0
     dev: true
 
   /typedarray-to-buffer/3.1.5:
