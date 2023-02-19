@@ -7,12 +7,8 @@ import menu from './menu.js';
 import logger from './logger.js';
 import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
 
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
-
-require('update-electron-app')({
-    updateInterval: '1 hour',
-    logger: require('electron-log')
-});
 
 if (isTest) {
     require('wdio-electron-service/main');
@@ -101,6 +97,9 @@ app.on('ready', async () => {
     ipcMain.on('model-saved', handleModelSaved);
 
     createWindow();
+
+    // check for updates from github releases site
+    autoUpdater.checkForUpdatesAndNotify();
 });
 
 // this is emitted when a 'recent document' is opened
