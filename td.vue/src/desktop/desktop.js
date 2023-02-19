@@ -9,11 +9,6 @@ import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
 
 const path = require('path');
 
-require('update-electron-app')({
-    updateInterval: '1 hour',
-    logger: require('electron-log')
-});
-
 if (isTest) {
     require('wdio-electron-service/main');
 }
