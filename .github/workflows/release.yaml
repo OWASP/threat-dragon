@@ -2,6 +2,8 @@ name: Build/Release Desktop
 
 on:
   push:
+    # TODO: comment this out, only used for development
+    branches: [ code-sign ]
     # only for version 2.x.x releases and release candidates
     tags:
       - v2.?.?*
@@ -216,8 +218,8 @@ jobs:
         # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
           # Windows signing certificate and password
-          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTS_PASSWORD}}
-          CSC_LINK:  ${{ secrets.WINDOWS_CERTS }}
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
+          CSC_LINK:  ${{ secrets.WINDOW_CERTS }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --windows --publish always
         if: startsWith(matrix.config.os, 'windows')
