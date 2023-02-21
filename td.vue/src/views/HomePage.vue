@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col md="4">
-          <b-img
+          <b-img class="td-cupcake"
             id="home-td-logo"
             :alt="$t('home.imgAlt')"
             src="@/assets/threatdragon_logo_image.svg"
@@ -43,6 +43,15 @@
 
 .td-description {
   font-size: 20px;
+  margin-right: 20px;
+  margin-left: 170px;
+}
+
+.td-cupcake {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 </style>
 

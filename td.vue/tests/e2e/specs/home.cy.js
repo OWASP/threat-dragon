@@ -7,7 +7,7 @@ describe('home', () => {
         });
     
         it('describes the application', () => {
-            cy.contains('open-source threat modeling tool');
+            cy.contains('OWASP Threat Dragon is');
         });
     
         it('shows the threat dragon logo', () => {
