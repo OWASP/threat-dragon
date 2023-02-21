@@ -367,5 +367,17 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-# TODO: Can we add a table with shasums to the release description?
-# Is it worth automating that portion?
+  release_notes:
+    runs-on: ubuntu-latest
+    needs: [desktop_linux, desktop_macos, desktop_windows]
+    steps:
+      - name: Upload
+        uses: djn24/add-comment-to-release@v1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          comment: |-
+            First line of comment.
+            Second line of comment.
+            The description field of a GitHub release uses markdown so it can
+            * have bulleted lists,
+            * for example.
