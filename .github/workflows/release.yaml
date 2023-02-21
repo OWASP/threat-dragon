@@ -314,7 +314,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --linux snap --publish never
+        run: npm run build:desktop -- --linux snap
 
       - name: Login to Snap Store
         uses: samuelmeuli/action-snapcraft@v1
