@@ -2,6 +2,8 @@ name: Build/Release Desktop
 
 on:
   push:
+    # TODO: comment this out, only used for development
+    branches: [ code-sign ]
     # only for version 2.x.x releases and release candidates
     tags:
       - v2.?.?*
@@ -151,15 +153,48 @@ jobs:
       - name: End to end tests
         run: npm run test:e2e:desktop
 
-  desktop_installers:
-    runs-on: ${{ matrix.config.os }}
+  desktop_windows:
+    runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
-    strategy:
-      matrix:
-        config:
-          - { os: macos-latest, os_short: osx }
-          - { os: ubuntu-latest, os_short: lin }
-          - { os: windows-latest, os_short: win }
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
+      - name: Install packages
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
+
+      # Build and publish Windows installer to github Release Draft
+      - name: Release for Windows
+        # follow Comodo signing instructions
+        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
+        env:
+          # Windows signing certificate and password
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
+          CSC_LINK:  ${{ secrets.WINDOWS_CERT }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish always
+
+  desktop_macos:
+    runs-on: macos-latest
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -193,10 +228,8 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-        if: startsWith(matrix.config.os, 'macos')
 
       - name: Release for MacOS
-        run: npm run build:desktop -- --mac --publish always
         env:
           # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
@@ -208,19 +241,35 @@ jobs:
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
           # github token is automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: startsWith(matrix.config.os, 'macos')
+        run: npm run build:desktop -- --mac --publish always
 
-      # Build and publish Windows installer to github Release Draft
-      - name: Release for Windows
-        # follow Comodo signing instructions
-        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
-        env:
-          # Windows signing certificate and password
-          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTS_PASSWORD}}
-          CSC_LINK:  ${{ secrets.WINDOWS_CERTS }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --windows --publish always
-        if: startsWith(matrix.config.os, 'windows')
+  desktop_linux:
+    runs-on: ubuntu-latest
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
+      - name: Install packages
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
 
       # Build and publish Linux installers to github Release Draft
       # for all linux images EXCEPT for the snap
@@ -230,27 +279,56 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
-        if: startsWith(matrix.config.os, 'ubuntu')
 
-      # Build the snap, but do not publish
+  desktop_linux_snap:
+    runs-on: ubuntu-latest
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-server-
+
+      - name: Install packages
+        run: |
+          npm i -g pnpm
+          pnpm install --frozen-lockfile
+
+      # Build the snap, but do not use inbuilt publish
+      # Snaps do not publish, even with snapcraft installed, so use Snap Store
       - name: Release for Linux snap
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
-        if: startsWith(matrix.config.os, 'ubuntu')
 
-      - name: Release for Linux snap - login to Snap Store
-        uses: samuelmeuli/action-snapcraft@v1
-        with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
-        # Only install Snapcraft on Ubuntu
-        if: startsWith(matrix.config.os, 'ubuntu')
+# TODO: snapcraft use of SNAPCRAFT_STORE_CREDENTIALS is currently broken (snapcraft v7.2.10)
+# and the use of command `snapcraft login --with snap-token.txt` has stopped working
+# even using export SNAPCRAFT_STORE_CREDENTIALS=`cat snap-token.txt`
+# when it is fixed, use `snapcraft export-login --snaps threat-dragon --channels stable snap-token.txt`
+# and then load github secret SNAPCRAFT_TOKEN with contents of snap-token.txt
+#      - name: Login to Snap Store
+#        uses: samuelmeuli/action-snapcraft@v1
+#        with:
+#          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
 
-      - name: Release for Linux snap - upload to Snap Store
-        shell: bash
-        run: snapcraft upload --release=stable installers/threat-dragon-desktop*.snap
-        if: startsWith(matrix.config.os, 'ubuntu')
+#      - name: Upload to Snap Store
+#        shell: bash
+#        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
   dockerhub_release:
     runs-on: ubuntu-latest
@@ -294,5 +372,20 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-# TODO: Can we add a table with shasums to the release description?
-# Is it worth automating that portion?
+      - name: Release notes for Docker Hub
+        uses: jeking3/release-feedback@v1
+        with:
+          content: "Release notes for Docker Hub"
+          release: ${{ github.event.release.id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  release_notes:
+    runs-on: ubuntu-latest
+    needs: [desktop_linux, desktop_macos, desktop_windows]
+    steps:
+      - name: Release notes
+        uses: jeking3/release-feedback@v1
+        with:
+          content: "final release notes"
+          release: ${{ github.event.release.id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
