@@ -316,14 +316,19 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
 
-      - name: Login to Snap Store
-        uses: samuelmeuli/action-snapcraft@v1
-        with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
+# TODO: snapcraft use of SNAPCRAFT_STORE_CREDENTIALS is currently broken (snapcraft v7.2.10)
+# and the use of command `snapcraft login --with snap-token.txt` has stopped working
+# even using export SNAPCRAFT_STORE_CREDENTIALS=`cat snap-token.txt`
+# when it is fixed, use `snapcraft export-login --snaps threat-dragon --channels stable snap-token.txt`
+# and then load github secret SNAPCRAFT_TOKEN with contents of snap-token.txt
+#      - name: Login to Snap Store
+#        uses: samuelmeuli/action-snapcraft@v1
+#        with:
+#          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
 
-      - name: Upload to Snap Store
-        shell: bash
-        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
+#      - name: Upload to Snap Store
+#        shell: bash
+#        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
   dockerhub_release:
     runs-on: ubuntu-latest
@@ -367,20 +372,20 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-#      - name: Release notes for Docker Hub
-#        uses: jeking3/release-feedback@v1
-#        with:
-#          content: "Release notes for Docker Hub"
-#          release: ${{ github.event.release.id }}
-#          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release notes for Docker Hub
+        uses: jeking3/release-feedback@v1
+        with:
+          content: "Release notes for Docker Hub"
+          release: ${{ github.event.release.id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-#  release_notes:
-#    runs-on: ubuntu-latest
-#    needs: [desktop_linux, desktop_macos, desktop_windows]
-#    steps:
-#      - name: Release notes
-#        uses: jeking3/release-feedback@v1
-#        with:
-#          content: "final release notes"
-#          release: ${{ github.event.release.id }}
-#          token: ${{ secrets.GITHUB_TOKEN }}
+  release_notes:
+    runs-on: ubuntu-latest
+    needs: [desktop_linux, desktop_macos, desktop_windows]
+    steps:
+      - name: Release notes
+        uses: jeking3/release-feedback@v1
+        with:
+          content: "final release notes"
+          release: ${{ github.event.release.id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
