@@ -2,11 +2,10 @@ name: Build/Release Desktop
 
 on:
   push:
-    # TODO: comment this out, only used for development
-    branches: [ code-sign ]
     # only for version 2.x.x releases and release candidates
     tags:
       - v2.?.?*
+  workflow_dispatch:
 
 env:
   image_name: "threatdragon/owasp-threat-dragon"
