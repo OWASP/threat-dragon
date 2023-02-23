@@ -1,4 +1,4 @@
-name: Delete stale workflow runs
+name: Housekeeping
 on:
   # Run daily at 7:00
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  del_runs:
+  housekeeping:
     runs-on: ubuntu-latest
     steps:
       - name: Delete stale workflow runs

@@ -1,9 +1,11 @@
-name: Deploy
+name: Deploy to Heroku
 concurrency: deploy
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
 env:
   # TODO: Update after we get an "official" home
   image_name: threatdragon/owasp-threat-dragon

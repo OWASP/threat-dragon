@@ -6,6 +6,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"

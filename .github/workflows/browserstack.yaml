@@ -1,8 +1,11 @@
 name: BrowserStack End to End Tests
 concurrency: browserstack_e2e
 on:
+  # Run daily at 8:40
   schedule:
     - cron: '40 8 * * *'
+  workflow_dispatch:
+
 jobs:
   browserstack_e2e:
     runs-on: ubuntu-latest
