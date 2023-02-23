@@ -1,4 +1,4 @@
-name: Build/Release Desktop
+name: Release Desktop
 
 on:
   push:
@@ -370,21 +370,3 @@ jobs:
           tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }},stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Release notes for Docker Hub
-        uses: jeking3/release-feedback@v1
-        with:
-          content: "Release notes for Docker Hub"
-          release: ${{ github.event.release.id }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  release_notes:
-    runs-on: ubuntu-latest
-    needs: [desktop_linux, desktop_macos, desktop_windows]
-    steps:
-      - name: Release notes
-        uses: jeking3/release-feedback@v1
-        with:
-          content: "final release notes"
-          release: ${{ github.event.release.id }}
-          token: ${{ secrets.GITHUB_TOKEN }}
