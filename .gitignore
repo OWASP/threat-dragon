@@ -28,3 +28,6 @@ audit.log
 # Cypress introduction files
 td.vue/cypress
 
+# Sectigo sigining certificates
+Sectigo*
+

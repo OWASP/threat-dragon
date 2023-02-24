@@ -1,4 +1,4 @@
-name: Release Desktop
+name: Release desktop and docker
 
 on:
   push:
@@ -12,6 +12,7 @@ env:
 
 jobs:
   site_unit_tests:
+    name: Site unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,6 +46,7 @@ jobs:
         run: npm run test:unit
 
   server_unit_tests:
+    name: Server unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -78,6 +80,7 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
+    name: Desktop unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -111,6 +114,7 @@ jobs:
         run: npm run test:desktop
 
   desktop_e2e_tests:
+    name: Desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -153,6 +157,7 @@ jobs:
         run: npm run test:e2e:desktop
 
   desktop_windows:
+    name: Windows installer
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -192,6 +197,7 @@ jobs:
         run: npm run build:desktop -- --windows --publish always
 
   desktop_macos:
+    name: MacOS installer
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -243,6 +249,7 @@ jobs:
         run: npm run build:desktop -- --mac --publish always
 
   desktop_linux:
+    name: Linux installers
     runs-on: ubuntu-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -280,6 +287,7 @@ jobs:
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
 
   desktop_linux_snap:
+    name: Linux snap
     runs-on: ubuntu-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -309,27 +317,22 @@ jobs:
 
       # Build the snap, but do not use inbuilt publish
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Release for Linux snap
+      - name: Build Linux snap
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
 
-# TODO: snapcraft use of SNAPCRAFT_STORE_CREDENTIALS is currently broken (snapcraft v7.2.10)
-# and the use of command `snapcraft login --with snap-token.txt` has stopped working
-# even using export SNAPCRAFT_STORE_CREDENTIALS=`cat snap-token.txt`
-# when it is fixed, use `snapcraft export-login --snaps threat-dragon --channels stable snap-token.txt`
-# and then load github secret SNAPCRAFT_TOKEN with contents of snap-token.txt
-#      - name: Login to Snap Store
-#        uses: samuelmeuli/action-snapcraft@v1
-#        with:
-#          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
-
-#      - name: Upload to Snap Store
-#        shell: bash
-#        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
+      - name: Upload to Snap Store
+        shell: bash
+        env:
+          SNAPCRAFT_TOKEN: ${{ secrets.SNAPCRAFT_TOKEN }}
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
   dockerhub_release:
+    name: Docker hub image
     runs-on: ubuntu-latest
     needs: [server_unit_tests, site_unit_tests]
     steps:

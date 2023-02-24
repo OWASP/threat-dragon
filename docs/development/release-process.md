@@ -26,11 +26,18 @@ The github release workflow then creates the draft release and creates all the i
 ### Publish docker image
 1. once tagged, the github workflow pushes the docker image to docker hub 
 2. check using `docker pull threatdragon/owasp-threat-dragon:v2.0.0`
-3. Test this releases; ideally on Windows, linux and MacOS
+3. on MacOS M1 this command may need to be used `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.0`
+4. Test this release; ideally on Windows, linux and MacOS
 
 If the image tests corrrectly, promote the docker image from dockerhub `threatdragon/`
 to dockerhub `OWASP/threat-dragon/v2.0.0`.
-There is no going back on this last step, so it is deliberately left as a manual task.
+There is _no going back_ on this last step, so it is deliberately left as a manual task:
+
+```
+docker pull threatdragon/owasp-threat-dragon:v2.0.0
+docker tag threatdragon/owasp-threat-dragon:v2.0.0 owasp/threat-dragon:v2.0.0
+docker push owasp/threat-dragon:v2.0.0
+```
 
 ### Update release notes
 All going well then update the release notes for the draft in the

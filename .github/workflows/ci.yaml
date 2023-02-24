@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI pipeline
 on:
   push:
     branches:
@@ -12,6 +12,7 @@ env:
   image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
 jobs:
   server_unit_tests:
+    name: Server unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,6 +46,7 @@ jobs:
         run: npm run test:unit
 
   site_unit_tests:
+    name: Site unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -78,6 +80,7 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
+    name: Desktop unit tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -111,6 +114,7 @@ jobs:
         run: npm run test:desktop
 
   build_docker_image:
+    name: Build docker image
     runs-on: ubuntu-latest
     needs: [site_unit_tests, server_unit_tests]
     steps:
@@ -150,6 +154,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   e2e_tests:
+    name: Site e2e tests
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     defaults:
@@ -202,6 +207,7 @@ jobs:
 
 
   e2e_smokes:
+    name: Site e2e smoke tests
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     defaults:
@@ -253,6 +259,7 @@ jobs:
         if: ${{ always() }}
 
   zap_scan_web:
+    name: Site zap scan
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     steps:
@@ -300,6 +307,7 @@ jobs:
 
 
   zap_scan_docs:
+    name: Docs zap scan
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     steps:
@@ -347,6 +355,7 @@ jobs:
 
 
   scan_image_with_trivy:
+    name: Site trivy scan
     runs-on: ubuntu-latest
     needs: [build_docker_image]
     steps:
@@ -362,6 +371,7 @@ jobs:
           exit-code: 1
 
   desktop_e2e_tests:
+    name: Desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
