@@ -3,9 +3,6 @@ on:
   # Run daily at 7:00
   schedule:
     - cron: '0 7 * * *'
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
