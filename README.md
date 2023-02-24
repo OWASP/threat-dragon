@@ -17,28 +17,21 @@ It is used to draw threat modeling diagrams and to list threats for elements in 
 [Mike Goodwin](https://github.com/mike-goodwin) created Threat Dragon as an open source community project
 that provides an intuitive and accessible way to model threats.
 
-[Threat Dragon](https://threatdragon.github.io/about)
+[Threat Dragon](https://www.threatdragon.com/docs/)
 is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
-It is an [OWASP Lab Project](https://www.owasp.org/index.php/OWASP_Threat_Dragon)
+It is an [OWASP Lab Project](https://owasp.org/www-project-threat-dragon/)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
-## Check it out
-There are [documentation pages](https://threatdragon.github.io/about) to guide you and the production release area,
-conforming to [semver](https://semver.org/spec/v2.0.0.html), contains the Threat Dragon 1.x releases.
-The next version of Threat Dragon 2.0 is still in development,
-but you can try the snapshot on [our website](https://www.threatdragon.com/#/).
+## Try Threat Dragon
+You can access the the latest version of Threat Dragon on [our website](https://www.threatdragon.com/#/)
+and look through the [documentation pages](https://www.threatdragon.com/docs/).
+
 Also well worth watching the video provided by the
 [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
 
-### Version 1.x Maintenance mode
-Threat Dragon was originally written using AngularJS version 1.x, which is reaching end of life.
-All versions 1.x are using the AngularJS implementation.  Future versions (2.x+) are using Vue.js.
-The main branch is now for version 2.x+, which is currently unreleased. 
-For more information on building/running version 1.x,
-please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
-
-The [release area](https://github.com/OWASP/threat-dragon/releases) has the version 1.x downloads
-and this will migrate to version 2.x during 2023.
+The [github release area](https://github.com/OWASP/threat-dragon/releases)
+contains Threat Dragon from version 1.3 to the latest versions 2.x.
+Previous releases are from Mike Goodwin's [original repository](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases).
 
 ## About Threat Dragon
 There is a good overview of
@@ -54,48 +47,49 @@ from OWASP, and this expands on what the Threat Dragon project aims for:
 and this repository has been migrated from
 Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
-Since then the project team has continued development, culminating with release version 1.6.1.
-The project is now going through a substantial changes which will see version 2.0 released in 2023.
 
 Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases),
 with threat model files stored in GitHub. Over time other storage methods will become available.
 
-There is also a [desktop version](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
-which stores the threat model files on the local filesystem rather than in a repository.
-The releases provide installers for Windows, Mac OSX and Linux.
+There are [desktop versions](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
+which store the threat model files on the local filesystem rather than in a repository.
+You can [download installers](https://github.com/OWASP/threat-dragon/releases) for Windows, MacOS and Linux.
 
-End user help is available for both the existing [version 1.x](https://threatdragon.github.io)
-and upcoming [version 2.x](https://www.threatdragon.com/docs).
+End user help is available for both the latest [version 2.x](https://www.threatdragon.com/docs)
+and the previous [version 1.x](https://threatdragon.github.io).
 
-### Version 2.0 Development
-After many years using AngularJS and JointJS, Threat Dragon is migrating development to Vue
-and antv/g6 drawing library. This version will be ready later in 2023,
-until then use the [latest version of Threat Dragon 1.x](https://github.com/OWASP/threat-dragon/releases/tag/v1.6.1).
+### Version 1.x maintenance mode
+Threat Dragon was originally written using AngularJS version 1.x,
+and this version of Angular has reached end of life.
+This means that versions 1.x of Threat Dragon are no longer actively maintained
+and versions 2.x were re-written to use Vue.js.
 
-### Installing version 2.x
+For more information on building/running version 1.x,
+please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
 
-Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/)
-- which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
+### Building version 2.x
 
-To get the code navigate to a target directory and use command
+Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/) -
+which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
 
-`git clone https://github.com/owasp/threat-dragon.git`
+Clone the repository using: `git clone https://github.com/owasp/threat-dragon.git`
 
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
 Pnpm (rather than npm) is used to install from the top directory of the project : `pnpm install`
 
-### Environment variables
+### Environment variables for web application
+The web application variant of Threat Dragon requires some environment variables;
+follow [the documentation](https://www.threatdragon.com/docs/development/environment.html)
+on how to set these variables.
 
-Threat Dragon uses GitHub to store threat models, so you need to go to your GitHub account and
-register it as a GitHub application. Github Enterprise is also supported. There is a
-[step by step guide](https://www.threatdragon.com/docs/development/environment.html) on how to do this.
+The Threat Dragon web application uses GitHub to store threat models,
+so you need to go to your GitHub account and register it as a GitHub application.
+There is a [step by step guide](https://www.threatdragon.com/docs/development/environment.html)
+on how to do this. Github Enterprise is also supported.
 
-You will also have to provide other environment variables, again following
-[the documentation](https://www.threatdragon.com/docs/development/environment.html) on this.
-
-If running Threat Dragon locally then the front-end to server communication will
+If running the web application locally then the front-end to server communication will
 probably need to be HTTP rather than HTTPS.
 Specify this using environment variable `SERVER_API_PROTOCOL=http` in the dotenv file or the command line.
 
@@ -121,6 +115,8 @@ and run from the top directory of the project:
 
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
+- or if using Windows:
+- `docker run -it --rm -p 8080:3000 -v %CD%/.env:/app/.env owasp-threat-dragon:dev`
 
 Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
@@ -129,14 +125,17 @@ Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 Threat Dragon maintains docker images within the OWASP organisation area on Dockerhub.
 Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`:
 
-- `docker pull owasp/threat-dragon:v1.6.0`
+- `docker pull owasp/threat-dragon:v2.0.0`
 
 Do _not use the latest tag_ (which is the default), as it could be a development release.
 
 Alternatively, you can use the `stable` tag, which will always be the latest official release:
 
 - `docker pull threatdragon/owasp-threat-dragon:stable`
-- `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:stable`
+- For MacOS and Linux:
+- `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.0.0`
+- For Windows:
+- `docker run -it --rm -p 8080:3000 -v %CD%/.env:/app/.env threatdragon/owasp-threat-dragon:v2.0.0`
 
 Assuming that you are using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
@@ -147,7 +146,7 @@ please refer to the page for [contributors](CONTRIBUTING.md).
 
 There are some [developer notes](https://www.threatdragon.com/docs/development/local.html)
 to help get started with this project.
-We are trying to keep the test coverage relatively high, so please try to update tests in your pull requests.
+We are trying to keep the test coverage relatively high so include tests in your pull requests.
 
 ### Vulnerability disclosure
 
@@ -159,3 +158,5 @@ For secure disclosure, please see the [security policy](SECURITY.md).
 - Mike Goodwin (mike.goodwin@owasp.org)
 - Jon Gadsden (jon.gadsden@owasp.org)
 - Leo Reading (leo.reading@owasp.org)
+
+_Threat Dragon: making threat modeling less threatening_
