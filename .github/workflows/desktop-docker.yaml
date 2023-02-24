@@ -326,7 +326,7 @@ jobs:
       - name: Upload to Snap Store
         shell: bash
         env:
-          SNAPCRAFT_TOKEN: ${{ secrets.SNAPCRAFT_TOKEN }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: |
           sudo snap install snapcraft --classic
           snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
