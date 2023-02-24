@@ -3,11 +3,16 @@ on:
   # Run daily at 7:00
   schedule:
     - cron: '0 7 * * *'
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   housekeeping:
+    name: Housekeeping
     runs-on: ubuntu-latest
+
     steps:
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@v2
@@ -16,3 +21,54 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 182
           keep_minimum_runs: 3
+
+  trivy:
+    name: Scan with Trivy
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Run vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+
+      - name: Upload scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  codeql:
+    name: Analyze with CodeQL
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: 'javascript'
+          config-file: ./.github/codeql/codeql-config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      - name: CodeQL autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform vulnerability analysis
+        uses: github/codeql-action/analyze@v2
