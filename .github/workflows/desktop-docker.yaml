@@ -12,8 +12,8 @@ env:
 
 jobs:
   site_unit_tests:
-    name: Site unit tests
-    runs-on: ubuntu-latest
+    name: site unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.vue
@@ -46,8 +46,8 @@ jobs:
         run: npm run test:unit
 
   server_unit_tests:
-    name: Server unit tests
-    runs-on: ubuntu-latest
+    name: server unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.server
@@ -80,8 +80,8 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
-    name: Desktop unit tests
-    runs-on: ubuntu-latest
+    name: desktop unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.vue
@@ -114,7 +114,7 @@ jobs:
         run: npm run test:desktop
 
   desktop_e2e_tests:
-    name: Desktop e2e tests
+    name: desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -124,7 +124,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # ubuntu-latest does not find this chrome driver
+      # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.0.1
@@ -157,7 +157,7 @@ jobs:
         run: npm run test:e2e:desktop
 
   desktop_windows:
-    name: Windows installer
+    name: windows installer
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -197,7 +197,7 @@ jobs:
         run: npm run build:desktop -- --windows --publish always
 
   desktop_macos:
-    name: MacOS installer
+    name: macos installer
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -249,8 +249,8 @@ jobs:
         run: npm run build:desktop -- --mac --publish always
 
   desktop_linux:
-    name: Linux installers
-    runs-on: ubuntu-latest
+    name: linux installers
+    runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
@@ -287,8 +287,8 @@ jobs:
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
 
   desktop_linux_snap:
-    name: Linux snap
-    runs-on: ubuntu-latest
+    name: linux snap
+    runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
@@ -332,8 +332,8 @@ jobs:
           snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
   dockerhub_release:
-    name: Docker hub image
-    runs-on: ubuntu-latest
+    name: publish to dockerhub
+    runs-on: ubuntu-22.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout

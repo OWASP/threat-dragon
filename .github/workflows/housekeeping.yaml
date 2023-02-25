@@ -7,8 +7,8 @@ on:
 
 jobs:
   housekeeping:
-    name: Housekeeping
-    runs-on: ubuntu-latest
+    name: housekeeping
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Delete stale workflow runs
@@ -20,7 +20,7 @@ jobs:
           keep_minimum_runs: 3
 
   trivy:
-    name: Scan with Trivy
+    name: scan with trivy
     runs-on: ubuntu-22.04
 
     steps:
@@ -43,7 +43,7 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 
   codeql:
-    name: Analyze with CodeQL
+    name: analyze with codeql
     runs-on: ubuntu-22.04
 
     strategy:

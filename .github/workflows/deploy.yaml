@@ -13,8 +13,8 @@ env:
   heroku_app: threatdragon-v2
 jobs:
   publish_docker:
-    name: Upload docker image
-    runs-on: ubuntu-latest
+    name: publish docker
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,8 +52,8 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   deploy:
-    name: Upload to Heroku
-    runs-on: ubuntu-latest
+    name: upload to Heroku
+    runs-on: ubuntu-22.04
     needs: [publish_docker]
     # There is an action to build and deploy a heroku app
     # We already built the container though, so why not just re-tag and push
@@ -80,8 +80,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   smoke_tests:
-    name: Run smoke tests
-    runs-on: ubuntu-latest
+    name: smoke tests
+    runs-on: ubuntu-22.04
     needs: [deploy]
     defaults:
       run:
@@ -118,8 +118,8 @@ jobs:
         run: pnpm run test:e2e-smokes
 
   rollback:
-    name: Rollback on fail
-    runs-on: ubuntu-latest
+    name: rollback on fail
+    runs-on: ubuntu-22.04
     needs: [smoke_tests]
     if: ${{ failure() }}
     steps:

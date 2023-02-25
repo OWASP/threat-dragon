@@ -12,8 +12,8 @@ env:
   image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
 jobs:
   server_unit_tests:
-    name: Server unit tests
-    runs-on: ubuntu-latest
+    name: server unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.server
@@ -46,8 +46,8 @@ jobs:
         run: npm run test:unit
 
   site_unit_tests:
-    name: Site unit tests
-    runs-on: ubuntu-latest
+    name: site unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.vue
@@ -80,8 +80,8 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
-    name: Desktop unit tests
-    runs-on: ubuntu-latest
+    name: desktop unit tests
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.vue
@@ -114,8 +114,8 @@ jobs:
         run: npm run test:desktop
 
   build_docker_image:
-    name: Build docker image
-    runs-on: ubuntu-latest
+    name: build docker image
+    runs-on: ubuntu-22.04
     needs: [site_unit_tests, server_unit_tests]
     steps:
       - name: Checkout
@@ -154,8 +154,8 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   e2e_tests:
-    name: Site e2e tests
-    runs-on: ubuntu-latest
+    name: site e2e tests
+    runs-on: ubuntu-22.04
     needs: [build_docker_image]
     defaults:
       run:
@@ -207,8 +207,8 @@ jobs:
 
 
   e2e_smokes:
-    name: Site e2e smoke tests
-    runs-on: ubuntu-latest
+    name: site e2e smokes
+    runs-on: ubuntu-22.04
     needs: [build_docker_image]
     defaults:
       run:
@@ -259,8 +259,8 @@ jobs:
         if: ${{ always() }}
 
   zap_scan_web:
-    name: Site zap scan
-    runs-on: ubuntu-latest
+    name: site zap scan
+    runs-on: ubuntu-22.04
     needs: [build_docker_image]
     steps:
       - name: Run Threat Dragon
@@ -307,8 +307,8 @@ jobs:
 
 
   zap_scan_docs:
-    name: Docs zap scan
-    runs-on: ubuntu-latest
+    name: docs zap scan
+    runs-on: ubuntu-22.04
     needs: [build_docker_image]
     steps:
       - name: Run Threat Dragon
@@ -355,8 +355,8 @@ jobs:
 
 
   scan_image_with_trivy:
-    name: Site trivy scan
-    runs-on: ubuntu-latest
+    name: site trivy scan
+    runs-on: ubuntu-22.04
     needs: [build_docker_image]
     steps:
       # Need .trivyignore
@@ -371,7 +371,7 @@ jobs:
           exit-code: 1
 
   desktop_e2e_tests:
-    name: Desktop e2e tests
+    name: desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -381,7 +381,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # ubuntu-latest does not find this chrome driver
+      # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.0.1

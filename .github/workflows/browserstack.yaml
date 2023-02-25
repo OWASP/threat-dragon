@@ -8,7 +8,8 @@ on:
 
 jobs:
   browserstack_e2e:
-    runs-on: ubuntu-latest
+    name: browserstack e2e
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.vue
