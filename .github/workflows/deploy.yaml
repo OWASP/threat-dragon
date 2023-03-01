@@ -11,22 +11,24 @@ env:
   # owasp/threat-dragon is the final release area so DO NOT use that
   image_name: threatdragon/owasp-threat-dragon
   heroku_app: threatdragon-v2
+
+# for security reasons the github actions are pinned to specific release versions
 jobs:
   publish_docker:
     name: publish docker
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2.4.1
         with:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -34,14 +36,14 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./
           file: ./Dockerfile
@@ -62,7 +64,7 @@ jobs:
         run: docker pull ${{ env.image_name }}
 
       - name: Login to Heroku Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2.1.0
         with:
           registry: registry.heroku.com
           username: _
@@ -88,15 +90,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -109,7 +111,7 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: BrowserStack Env Setup
-        uses: browserstack/github-actions/setup-env@master
+        uses: browserstack/github-actions/setup-env@v1.0.1
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

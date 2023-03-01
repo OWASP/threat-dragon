@@ -37,7 +37,7 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: BrowserStack Env Setup
-        uses: browserstack/github-actions/setup-env@1.0.1
+        uses: browserstack/github-actions/setup-env@v1.0.1
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
