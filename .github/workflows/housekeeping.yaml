@@ -5,6 +5,7 @@ on:
     - cron: '0 7 * * *'
   workflow_dispatch:
 
+# for security reasons the github actions are pinned to specific release versions
 jobs:
   housekeeping:
     name: housekeeping
@@ -12,7 +13,7 @@ jobs:
 
     steps:
       - name: Delete stale workflow runs
-        uses: Mattraks/delete-workflow-runs@v2
+        uses: Mattraks/delete-workflow-runs@v2.0.3
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
@@ -25,12 +26,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           ref: main
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.9.1
         with:
           image-ref: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
           format: 'template'
@@ -38,7 +39,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2.12.3
         with:
           sarif_file: 'trivy-results.sarif'
 
@@ -51,12 +52,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           ref: main
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v2.12.3
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -65,7 +66,7 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v2
+        uses: github/codeql-action/autobuild@v2.12.3
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v2.12.3
