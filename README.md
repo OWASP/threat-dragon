@@ -8,7 +8,6 @@
 [![Deploy](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
 [![CodeQL](https://github.com/OWASP/threat-dragon/workflows/CodeQL/badge.svg)](https://github.com/OWASP/threat-dragon/actions?query=workflow%3ACodeQL)
-[![Trivy Scan](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/trivy.yaml)
 
 # OWASP Threat Dragon
 

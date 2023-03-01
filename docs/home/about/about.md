@@ -48,7 +48,8 @@ The following translations are built into the Threat Dragon application:
 ### Demonstration site
 Threat Dragon maintains a [Demo Instance](https://www.threatdragon.com/) that is hosted on [Heroku](https://www.heroku.com/).
 We strongly recommend using a self-hosted instance or the desktop application as the most secure options.
-Threat Dragon can authenticate to GitHub repositories using a GitHub OAuth application as noted in the [environment setup](development/environment) page. 
+Threat Dragon can authenticate to GitHub repositories using a GitHub OAuth application
+as noted in the [environment setup]({{ 'development/environment.html' | relative_url }}) page.
 ____
 <p>
 <sup><a name="footnote1">1</a>: Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege</sup><br>

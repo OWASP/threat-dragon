@@ -1,0 +1,15 @@
+# ignore these falae positives from the link checker housekeeper
+
+# links referred to in documentation, not intended as actual links
+http://localhost
+http://127.0.0.1
+
+# incorrectly get 'Network error: Forbidden'
+https://www.deviantart.com
+
+# lychee gets confused by the script in sbom.md
+website.url
+
+# script in td.vue/public/index.html
+BASE_URL
+
