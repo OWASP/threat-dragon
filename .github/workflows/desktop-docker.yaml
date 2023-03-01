@@ -10,6 +10,7 @@ on:
 env:
   image_name: "threatdragon/owasp-threat-dragon"
 
+# for security reasons the github actions are pinned to specific release versions
 jobs:
   site_unit_tests:
     name: site unit tests
@@ -19,15 +20,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -53,15 +54,15 @@ jobs:
         working-directory: td.server
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -87,15 +88,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -122,20 +123,20 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.0.1
+        uses: browser-actions/setup-chrome@v1.1.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -165,15 +166,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -205,15 +206,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -257,15 +258,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -295,15 +296,15 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
@@ -337,16 +338,16 @@ jobs:
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2.4.1
         with:
           install: true
 
       - name: Setup dockerx cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.2.6
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -354,7 +355,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -364,7 +365,7 @@ jobs:
 
       - name: Build and push to Docker Hub
         id: docker_build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./
           file: ./Dockerfile
