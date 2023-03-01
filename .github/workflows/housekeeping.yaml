@@ -70,3 +70,15 @@ jobs:
 
       - name: Perform vulnerability analysis
         uses: github/codeql-action/analyze@v2.12.3
+
+  link_checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.6.1
+        with:
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
