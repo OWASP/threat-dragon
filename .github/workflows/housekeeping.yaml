@@ -72,6 +72,7 @@ jobs:
         uses: github/codeql-action/analyze@v2.2.5
 
   link_checker:
+    name: link checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0

@@ -40,7 +40,10 @@ associated with it, and less likely to be vulnerable to
 Tampering, Information disclosure, Denial of service or Elevation of privileges.
 
 According to the type of diagram (STRIDE, LINDDUN and CIA),
-Threat Dragon will restrict the threat type according to threats per element.
+Threat Dragon will restrict the threat type according to  the element chosen.
+If you find this too restrictive then change the diagram type to 'Generic'
+and this will allow you to select any threat type for any type of element;
+you can always change the diagram back to STRIDE, LINDDUN or CIA later on.
 
 ## STRIDE, LINDDUN, CIA and Generic
 The threat model can have different types of threats added to it according to the diagram methodology.
