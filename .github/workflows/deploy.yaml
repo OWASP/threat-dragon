@@ -17,6 +17,7 @@ jobs:
   publish_docker:
     name: publish docker
     runs-on: ubuntu-22.04
+    if: github.repository == 'OWASP/threat-dragon'
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
