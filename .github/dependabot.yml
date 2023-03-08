@@ -4,3 +4,5 @@ updates:
     directory: ".github/workflows"
     schedule:
       interval: "daily"
+    ignore:
+      update-types: ["version-update:semver-patch"]
