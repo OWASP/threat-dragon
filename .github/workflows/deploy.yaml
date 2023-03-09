@@ -29,7 +29,7 @@ jobs:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v3.2.6
+        uses: actions/cache@v3.3.0
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -99,7 +99,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.2.6
+        uses: actions/cache@v3.3.0
         with:
           path: ~/.pnpm-store
           key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
