@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm-run-all clean:dist transpile",
-    "clean": "rimraf *.log .nyc_output/ coverage/ dist/ node_modules/",
+    "clean": "rimraf --glob *.log .nyc_output/ coverage/ dist/ node_modules/",
     "clean:dist": "rimraf dist",
     "dev": "nodemon dev.js --exec babel-node",
     "lint": "eslint src --fix",
@@ -64,7 +64,7 @@
     "nyc": "^15.1.0",
     "passport-local": "1.0.0",
     "pm2": "^5.2.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.4.0",
     "sinon": "^10.0.0",
     "sinon-chai": "^3.7.0",
     "supertest": "^4.0.2"
@@ -72,7 +72,8 @@
   "pnpm": {
     "overrides": {
       "debug@<3.1.0": ">=4.3.4",
-      "follow-redirects": ">=1.14.8"
+      "follow-redirects": ">=1.14.8",
+      "minimatch@<3.0.5": ">=3.0.5"
     }
   }
 }
