@@ -5,6 +5,6 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-      # ignore all patch updates 
+      # ignore all (non-security) patch updates
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
