@@ -20,7 +20,7 @@ jobs:
     if: github.repository == 'OWASP/threat-dragon'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.4.0
 
       - name: Set up Docker Buildx
         id: buildx
@@ -91,7 +91,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.4.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
