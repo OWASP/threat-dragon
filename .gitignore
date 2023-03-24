@@ -1,33 +1,64 @@
-node_modules/
-npm-debug.log
-coverage/
-typings/
-build/
-installers/
+# uses allow-list, so ignore everything
+*
 
-# ignore Apple's desktop store files
-**/.DS_Store
-# ignore VS and Eclipse files
-.project
-.vscode/
-.settings/
-# ignore IntelliJ IDEA files
-.idea/
+# allow github, workflows and templates
+!.github/**/*
+!.gitignore
+!.gitattributes
+!.lycheeignore
+!.trivyignore
 
-# ignore .env file with sensitive information/secrets
-.env
+# docker files
+!.dockerignore
+!Dockerfile
 
-dist/
-.nyc_output
+# allow build system and artwork
+!./*.md
+!LICENSE.txt
+!cupcake/icons/*.ico
+!cupcake/png/*.png
+!cupcake/png/*.gif
+!example.env
+!package.json
+!pnpm-lock.yaml
+!pnpm_workspace.yaml
 
-# Ignore logs from server
-td.server/*.log
-app.log
-audit.log
+# sample threat models
+!ThreatDragonModels/**/*.json
 
-# Cypress introduction files
-td.vue/cypress
+# documentation site
+!docs/404.html
+!docs/Gemfile
+!docs/Gemfile.lock
+!docs/README.md
+!docs/_config.yml
+!docs/assets/images/*.png
+!docs/**/*.md
+!docs/development/schema/owasp.threat-dragon.schema.json
 
-# Sectigo sigining certificates
-Sectigo*
+# Express server
+!td.server/**/*.js
+!td.server/.babelrc
+!td.server/README.md
+!td.server/package.json
+!td.server/pnpm-lock.yaml
+
+# Vue front end
+!td.vue/**/*.vue
+!td.vue/**/*.js
+!td.vue/**/*.scss
+!td.vue/tests/e2e/fixtures/*.json
+!td.vue/src/icons/*
+!td.vue/src/assets/*
+!td.vue/public/*
+!td.vue/package.json
+!td.vue/pnpm-lock.yaml
+!td.vue/.browserslistrc
+!td.vue/.editorconfig
+!td.vue/README.md
+!td.vue/browserstack.nightly.json
+!td.vue/browserstack.smokes.json
+
+# utility scripts
+!utils/**/*
 
