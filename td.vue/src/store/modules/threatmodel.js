@@ -2,9 +2,9 @@ import Vue from 'vue';
 
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
-import { getProviderType } from '../../service/provider/providers.js';
+import { getProviderType } from '@/service/provider/providers';
 import i18n from '../../i18n/index.js';
-import { providerTypes } from '../../service/provider/providerTypes.js';
+import { providerTypes } from '@/service/provider/providerTypes';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
@@ -29,7 +29,7 @@ export const clearState = (state) => {
     }
     state.all.length = 0;
     state.data = {};
-    state.fileName = '',
+    state.fileName = '';
     state.immutableCopy = '';
     state.selectedDiagram = {};
 };
@@ -49,7 +49,30 @@ const setThreatModel = (theState, threatModel) => {
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
-    [THREATMODEL_CREATE]: ({ commit }, threatModel) => commit(THREATMODEL_CREATE, threatModel),
+    [THREATMODEL_CREATE]: async ({ dispatch, rootState, state }) => {
+        try {
+            if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+                await threatmodelApi.createAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    state.data.summary.title,
+                    state.data
+                );
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+            } else if (isElectron()) {
+                // desktop version always saves locally
+                await window.electronAPI.modelSaved(state.data, state.fileName);
+            } else {
+                // save locally for web app when local login
+                save.local(state.data, `${state.data.summary.title}.json`);
+            }
+            dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
+        } catch (ex) {
+            console.error('Failed to update threat model!');
+            console.error(ex);
+            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+        }
+    },
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
     [THREATMODEL_DIAGRAM_UPDATED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_UPDATED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {

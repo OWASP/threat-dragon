@@ -42,7 +42,7 @@ export default {
             // tell the desktop server that the model has changed
             window.electronAPI.modelOpened(newTm.summary.title);
         }
-        this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params });
+        this.$router.push({ name: `${this.providerType}ThreatModelCreate`, params });
     }
 };
 </script>
