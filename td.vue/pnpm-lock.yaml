@@ -5,9 +5,7 @@ overrides:
   follow-redirects: '>=1.14.8'
   glob-parent@<5.1.2: '>=5.1.2'
   lodash@<4.17.19: '>=4.17.19'
-  minimatch@<3.0.5: '>=3.0.5'
   minimist@>=1.0.0 <1.2.3: '>=1.2.3'
-  minimist@<0.2.1: '>=0.2.1'
   node-fetch: '>=2.6.7'
   node-notifier@<8.0.1: '>=8.0.1'
   nth-check@<2.0.1: '>=2.0.1'
@@ -6346,7 +6344,7 @@ packages:
       buffer-equal: 1.0.0
       colors: 1.0.3
       commander: 2.9.0
-      minimatch: 3.1.2
+      minimatch: 3.0.4
     dev: true
 
   /dir-glob/3.0.1:
@@ -10739,6 +10737,12 @@ packages:
 
   /minimalistic-assert/1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
+    dev: true
+
+  /minimatch/3.0.4:
+    resolution: {integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==}
+    dependencies:
+      brace-expansion: 1.1.11
     dev: true
 
   /minimatch/3.0.8:
