@@ -87,35 +87,35 @@ describe('config/routes.config.js routes', () => {
                 threatmodelController.repos
             );
         });
-        
+
         it('routes GET /api/threatmodel/:organisation/:repo/branches', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/branches',
                 threatmodelController.branches
             );
         });
-        
+
         it('routes GET /api/threatmodel/organisation', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/organisation',
                 threatmodelController.organisation
             );
         });
-        
+
         it('routes GET /api/threatmodel/:organisation/:repo/:branch/models', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/models',
                 threatmodelController.models
             );
         });
-        
+
         it('routes GET /api/threatmodel/:organisation/:repo/:branch/:model/data', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/data',
                 threatmodelController.model
             );
         });
-        
+
         // removed because of security denial of service concerns (denial of models)
         /* it('routes DELETE /api/threatmodel/:organisation/:repo/:branch/:model', () => {
             expect(mockRouter.delete).to.have.been.calledWith(
@@ -123,14 +123,14 @@ describe('config/routes.config.js routes', () => {
                 threatmodelController.deleteModel
             );
         });*/
-        
-        it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
-            expect(mockRouter.put).to.have.been.calledWith(
+
+        it('routes POST /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/create',
                 threatmodelController.create
             );
         });
-        
+
         it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/update',

@@ -1,4 +1,4 @@
-import { providerTypes } from '../service/provider/providerTypes.js';
+import { providerTypes } from '@/service/provider/providerTypes';
 
 const providerType = providerTypes.git;
 
@@ -28,6 +28,11 @@ export const gitRoutes = [
         path: `/${providerType}/:provider/:repository/:branch/new`,
         name: `${providerType}NewThreatModel`,
         component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
+    },
+    {
+        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/create`,
+        name: `${providerType}ThreatModelCreate`,
+        component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/edit`,

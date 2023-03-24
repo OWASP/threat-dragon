@@ -173,7 +173,7 @@
     font-size: 12px;
 }
 
-select-diagram-type {
+.select-diagram-type {
     font-size: 12px;
 }
 </style>
@@ -183,7 +183,7 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_SAVE, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_CREATE, THREATMODEL_RESTORE, THREATMODEL_SAVE, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -214,7 +214,11 @@ export default {
         },
         async onSaveClick(evt) {
             evt.preventDefault();
-            await this.$store.dispatch(THREATMODEL_SAVE);
+            if (this.$route.name === 'gitThreatModelCreate') {
+                await this.$store.dispatch(THREATMODEL_CREATE);
+            } else {
+                await this.$store.dispatch(THREATMODEL_SAVE);
+            }
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
