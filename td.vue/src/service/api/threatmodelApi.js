@@ -57,7 +57,7 @@ const modelAsync = (fullRepoName, branch, model) => {
 const createAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
     return api.postAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/create`, threatModel);
-}
+};
 
 const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);

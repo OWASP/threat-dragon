@@ -15,7 +15,7 @@ import {
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '../../../../src/store/actions/threatmodel';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel';
 
 describe('store/modules/threatmodel.js', () => {
     const getRootState = () => ({
@@ -79,10 +79,64 @@ describe('store/modules/threatmodel.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SELECTED, diagram);
         });
 
-        it('commits the create action with the data', () => {
-            const diagram = { foo: 'bar' };
-            threatmodelModule.actions[THREATMODEL_CREATE](mocks, diagram);
-            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CREATE, diagram);
+        it('create action with the data', () => {
+            const data = 'foobar';
+
+            beforeEach(() => {
+                Vue.$toast = {
+                    success: jest.fn(),
+                    error: jest.fn()
+                };
+            });
+
+            describe('local provider', () => {
+                beforeEach(async () => {
+                    save.local = jest.fn();
+                    mocks.rootState.provider.selected = 'local';
+                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                });
+
+                it('saves the file locally', () => {
+                    expect(save.local).toHaveBeenCalledTimes(1);
+                });
+            });
+
+            describe('git provider', () => {
+                describe('without error', () => {
+                    beforeEach(async () => {
+                        jest.spyOn(threatmodelApi, 'createAsync').mockResolvedValue({ data });
+                        await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                    });
+
+                    it('dispatches the set immutable copy event', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_IMMUTABLE_COPY);
+                    });
+
+                    it('calls the createAsync api', () => {
+                        expect(threatmodelApi.createAsync).toHaveBeenCalledTimes(1);
+                    });
+
+                    it('shows a toast success message', () => {
+                        expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
+                    });
+                });
+
+                describe('with API error', () => {
+                    beforeEach(async () => {
+                        jest.spyOn(threatmodelApi, 'createAsync').mockRejectedValue({ data });
+                        console.error = jest.fn();
+                        await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                    });
+
+                    it('logs the error', () => {
+                        expect(console.error).toHaveBeenCalledTimes(2);
+                    });
+
+                    it('shows a toast error message', () => {
+                        expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
+                    });
+                });
+            });
         });
 
         it('commits the diagram updated action', () => {
@@ -102,7 +156,7 @@ describe('store/modules/threatmodel.js', () => {
             it('dispatches the clear event', () => {
                 expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
             });
-        
+
             it('commits the fetch action', () => {
                 expect(mocks.commit).toHaveBeenCalledWith(
                     THREATMODEL_FETCH,
@@ -110,7 +164,7 @@ describe('store/modules/threatmodel.js', () => {
                 );
             });
         });
-        
+
         it('commits the fetch all action', async () => {
             const data = 'foobar';
             jest.spyOn(threatmodelApi, 'modelsAsync').mockResolvedValue({ data });
@@ -225,31 +279,31 @@ describe('store/modules/threatmodel.js', () => {
                         jest.spyOn(threatmodelApi, 'updateAsync').mockResolvedValue({ data });
                         await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
                     });
-    
+
                     it('dispatches the set immutable copy event', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_IMMUTABLE_COPY);
                     });
-    
+
                     it('calls the updateAsync api', () => {
                         expect(threatmodelApi.updateAsync).toHaveBeenCalledTimes(1);
                     });
-    
+
                     it('shows a toast success message', () => {
                         expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
                     });
                 });
-    
+
                 describe('with API error', () => {
                     beforeEach(async () => {
                         jest.spyOn(threatmodelApi, 'updateAsync').mockRejectedValue({ data });
                         console.error = jest.fn();
                         await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
                     });
-    
+
                     it('logs the error', () => {
                         expect(console.error).toHaveBeenCalledTimes(2);
                     });
-    
+
                     it('shows a toast error message', () => {
                         expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
                     });

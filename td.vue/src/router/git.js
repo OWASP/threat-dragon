@@ -30,9 +30,9 @@ export const gitRoutes = [
         component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
     },
     {
-      path: `/${providerType}/:provider/:repository/:branch/:threatmodel/create`,
-      name: `${providerType}ThreatModelCreate`,
-      component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
+        path: `/${providerType}/:provider/:repository/:branch/:threatmodel/create`,
+        name: `${providerType}ThreatModelCreate`,
+        component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
     },
     {
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/edit`,
