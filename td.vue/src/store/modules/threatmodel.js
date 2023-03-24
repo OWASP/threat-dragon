@@ -140,7 +140,6 @@ const actions = {
 
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
-    [THREATMODEL_CREATE]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));

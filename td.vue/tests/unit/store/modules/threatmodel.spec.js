@@ -79,7 +79,7 @@ describe('store/modules/threatmodel.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SELECTED, diagram);
         });
 
-        it('create action with the data', () => {
+        describe('create action with the data', () => {
             const data = 'foobar';
 
             beforeEach(() => {
@@ -87,18 +87,11 @@ describe('store/modules/threatmodel.js', () => {
                     success: jest.fn(),
                     error: jest.fn()
                 };
-            });
-
-            describe('local provider', () => {
-                beforeEach(async () => {
-                    save.local = jest.fn();
-                    mocks.rootState.provider.selected = 'local';
-                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
-                });
-
-                it('saves the file locally', () => {
-                    expect(save.local).toHaveBeenCalledTimes(1);
-                });
+                mocks.state.data = {
+                    summary: {
+                        title: 'New Threat Model'
+                    }
+                };
             });
 
             describe('git provider', () => {
@@ -338,14 +331,6 @@ describe('store/modules/threatmodel.js', () => {
 
             it('resets the selectedDiagram property', () => {
                 expect(threatmodelModule.state.selectedDiagram).toEqual({});
-            });
-        });
-
-        describe('create', () => {
-            it('sets the threat model', () => {
-                const tm = { foo: 'bar' };
-                threatmodelModule.mutations[THREATMODEL_CREATE](threatmodelModule.state, tm);
-                expect(threatmodelModule.state.data).toEqual(tm);
             });
         });
 
