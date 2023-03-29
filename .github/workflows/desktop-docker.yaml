@@ -20,7 +20,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -54,7 +54,7 @@ jobs:
         working-directory: td.server
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -88,7 +88,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -123,7 +123,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
@@ -166,7 +166,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -206,7 +206,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -258,7 +258,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -296,7 +296,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.6.0
@@ -338,7 +338,7 @@ jobs:
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Set up Docker Buildx
         id: buildx

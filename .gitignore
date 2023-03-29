@@ -2,6 +2,7 @@
 *
 
 # allow github, workflows and templates
+!.github
 !.github/**/*
 !.gitignore
 !.gitattributes
@@ -24,9 +25,11 @@
 !pnpm_workspace.yaml
 
 # sample threat models
+!ThreatDragonModels
 !ThreatDragonModels/**/*.json
 
 # documentation site
+!docs
 !docs/404.html
 !docs/Gemfile
 !docs/Gemfile.lock
@@ -37,6 +40,7 @@
 !docs/development/schema/owasp.threat-dragon.schema.json
 
 # Express server
+!td.server
 !td.server/**/*.js
 !td.server/.babelrc
 !td.server/README.md
@@ -44,6 +48,7 @@
 !td.server/pnpm-lock.yaml
 
 # Vue front end
+!td.vue
 !td.vue/**/*.vue
 !td.vue/**/*.js
 !td.vue/**/*.scss
@@ -60,5 +65,6 @@
 !td.vue/browserstack.smokes.json
 
 # utility scripts
+!utils
 !utils/**/*
 
