@@ -71,6 +71,12 @@ export function getMenuTemplate () {
                     }
                 },
                 {
+                    label: messages[language].forms.savePdf,
+                    click () {
+                        printModel();
+                    }
+                },
+                {
                     label: messages[language].desktop.file.close,
                     click () {
                         closeModel();
@@ -218,6 +224,13 @@ function newModel () {
     modelOpened();
 }
 
+// print the model report
+function printModel () {
+    logger.log.debug(messages[language].forms.savePdf+ ': ' + model.filePath);
+    // prompt the renderer to open the print/report window
+    mainWindow.webContents.send('print-model');
+}
+
 // close the model
 function closeModel () {
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
@@ -276,6 +289,11 @@ export const modelClosed = () => {
     model.isOpen = false;
 };
 
+// the renderer has requested a PDF report
+export const modelPrint = () => {
+    mainWindow.webContents.printToPDF();
+};
+
 // the renderer has opened a new model
 export const modelOpened = () => {
     // for security reasons the renderer can not provide the full path
@@ -296,6 +314,7 @@ export default {
     getMenuTemplate,
     modelClosed,
     modelOpened,
+    modelPrint,
     modelSaved,
     readModelData,
     setLocale,

@@ -54,6 +54,11 @@
             <b-col class="text-right right">
                 <b-btn-group>
                     <td-form-button
+                        id="td-print-pdf-btn"
+                        :onBtnClick="printPdf"
+                        icon="file-pdf"
+                        :text="$t('forms.savePdf')" />
+                    <td-form-button
                         id="td-print-btn"
                         :onBtnClick="print"
                         icon="print"
@@ -199,6 +204,9 @@ export default {
         },
         print() {
             window.print();
+        },
+        printPdf() {
+
         }
     }
 };

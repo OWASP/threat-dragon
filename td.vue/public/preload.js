@@ -9,11 +9,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
     modelClosed: (fileName) => ipcRenderer.send('model-closed', fileName),
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
-    modelSaved: (fileName, modelData) => ipcRenderer.send('model-saved', fileName, modelData),
+    modelPrint: (fileName) => ipcRenderer.send('model-print', fileName),
+    modelSaved: (modelData, fileName) => ipcRenderer.send('model-saved', modelData, fileName),
 
     // electron main to renderer
     onCloseModel: (callback) => ipcRenderer.on('close-model', callback),
     onNewModel: (callback) => ipcRenderer.on('new-model', callback),
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback),
+    onPrintModel: (callback) => ipcRenderer.on('print-model', callback),
     onSaveModel: (callback) => ipcRenderer.on('save-model', callback)
 });

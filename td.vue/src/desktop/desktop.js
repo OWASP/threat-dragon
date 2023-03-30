@@ -94,6 +94,7 @@ app.on('ready', async () => {
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-opened', handleModelOpened);
+    ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-saved', handleModelSaved);
 
     createWindow();
@@ -125,6 +126,11 @@ function handleModelClosed (_event, fileName) {
 function handleModelOpened (_event, fileName) {
     logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
+}
+
+function handleModelPrint (_event, fileName) {
+    logger.log.debug('Model print PDF request from renderer with file name : ' + fileName);
+    menu.modelPrint();
 }
 
 function handleModelSaved (_event, modelData, fileName) {
