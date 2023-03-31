@@ -12,6 +12,7 @@ import TdPrintCoversheet from '@/components/printed-report/Coversheet.vue';
 import TdPrintExecutiveSummary from '@/components/printed-report/ExecutiveSummary.vue';
 import { useThreatModelStore } from '@/stores/threatmodel';
 import { useProviderStore } from '@/stores/provider';
+import isElectron from 'is-electron';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
