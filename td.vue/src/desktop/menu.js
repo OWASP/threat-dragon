@@ -166,7 +166,7 @@ function openModel () {
                 }
             });
         } else {
-            logger.log.debug(messages[language].desktop.file.open + ' canceled');
+            logger.log.debug(messages[language].desktop.file.open + ' : canceled');
         }
     }).catch(err => {
         logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
@@ -207,7 +207,7 @@ function saveModelDataAs (modelData, fileName) {
             app.addRecentDocument(model.filePath);
             saveModelData(modelData);
         } else {
-            logger.log.debug(messages[language].desktop.file.saveAs + ' canceled');
+            logger.log.debug(messages[language].desktop.file.saveAs + ' : canceled');
         }
     }).catch(err => {
         logger.log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
@@ -289,9 +289,53 @@ export const modelClosed = () => {
     model.isOpen = false;
 };
 
-// the renderer has requested a PDF report
-export const modelPrint = () => {
-    mainWindow.webContents.printToPDF();
+// Open saveAs file system dialog and write PDF report
+function savePDFReport (pdfPath) {
+    pdfPath += '.pdf';
+    var dialogOptions = {
+        title: messages[language].forms.savePdf,
+        defaultPath: pdfPath,
+        filters: [{ name: 'Report', extensions: ['.pdf'] }, { name: 'All Files', extensions: ['*'] }]
+    };
+
+    dialog.showSaveDialog(dialogOptions).then(result => {
+        if (result.canceled === false) {
+            pdfPath = result.filePath;
+            mainWindow.webContents.printToPDF({
+                landscape: false,
+                displayHeaderFooter: false,
+                printBackground: false,
+                pageSize: 'A4',
+                margins: { top: 0, bottom: 0, left: 0, right: 0 },
+                preferCSSPageSize: true
+            }).then(data => {
+                fs.writeFile(pdfPath, data, (error) => {
+                    if (error) throw error;
+                    logger.log.debug(`Wrote PDF successfully to ` + pdfPath);
+                })
+            }).catch(error => {
+                logger.log.error(`Failed to write PDF to ${pdfPath}: `, error);
+            });
+
+            logger.log.debug(messages[language].forms.savePdf + ' : ' + pdfPath);
+        } else {
+            logger.log.debug(messages[language].forms.savePdf + ' : canceled');
+        }
+    }).catch(err => {
+        logger.log.error(err);
+    });
+}
+
+// the renderer has requested a report to be printed
+export const modelPrint = (printer) => {
+    let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
+    if (!model.filePath || model.filePath === '') {
+        reportPath = path.join(__dirname, '/new_model');
+    }
+
+    if (printer === 'PDF') {
+        savePDFReport(reportPath);
+    }
 };
 
 // the renderer has opened a new model

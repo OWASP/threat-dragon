@@ -56,6 +56,7 @@
                     <td-form-button
                         id="td-print-pdf-btn"
                         :onBtnClick="printPdf"
+                        v-if="isElectron"
                         icon="file-pdf"
                         :text="$t('forms.savePdf')" />
                     <td-form-button
@@ -153,6 +154,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import isElectron from 'is-electron';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdCoversheet from '@/components/report/Coversheet.vue';
@@ -180,7 +182,8 @@ export default {
                 mitigated: true,
                 diagrams: true,
                 branding: true
-            }
+            },
+            isElectron: isElectron()
         };
     },
     computed: {
@@ -206,7 +209,10 @@ export default {
             window.print();
         },
         printPdf() {
-
+            if (isElectron()) {
+                // request electron server to print PDF
+                window.electronAPI.modelPrint('PDF');
+            }
         }
     }
 };

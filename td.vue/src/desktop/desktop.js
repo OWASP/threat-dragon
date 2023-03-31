@@ -128,9 +128,9 @@ function handleModelOpened (_event, fileName) {
     menu.modelOpened();
 }
 
-function handleModelPrint (_event, fileName) {
-    logger.log.debug('Model print PDF request from renderer with file name : ' + fileName);
-    menu.modelPrint();
+function handleModelPrint (_event, printer) {
+    logger.log.debug('Model print request from renderer with printer : ' + printer);
+    menu.modelPrint(printer);
 }
 
 function handleModelSaved (_event, modelData, fileName) {
