@@ -312,7 +312,7 @@ function savePDFReport (pdfPath) {
                 fs.writeFile(pdfPath, data, (error) => {
                     if (error) throw error;
                     logger.log.debug(`Wrote PDF successfully to ` + pdfPath);
-                })
+                });
             }).catch(error => {
                 logger.log.error(`Failed to write PDF to ${pdfPath}: `, error);
             });

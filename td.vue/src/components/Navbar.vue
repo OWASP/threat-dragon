@@ -109,7 +109,11 @@ export default {
         onLogOut(evt) {
             evt.preventDefault();
             this.$store.dispatch(LOGOUT);
-            this.$router.push('/');
+            this.$router.push('/').catch(error => {
+                if (error.name != 'NavigationDuplicated') {
+                    throw error;
+                }
+            });
         }
     }
 };

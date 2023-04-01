@@ -10,6 +10,6 @@ describe('logout', () => {
     });
 
     it('should redirect to the home page', () => {
-        cy.url().should('not.contain', '/dashboard');
+        cy.url().should('contain', '/#/');
     });
 });
