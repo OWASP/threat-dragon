@@ -9,6 +9,8 @@
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
 [![CodeQL](https://github.com/OWASP/threat-dragon/workflows/CodeQL/badge.svg)](https://github.com/OWASP/threat-dragon/actions?query=workflow%3ACodeQL)
 
+## Note to contributors: we are in the process of migrating from Vue 2 to Vue 3, and from veux to Pinia, so expect significant changes to the code
+
 # OWASP Threat Dragon
 
 [OWASP](https://www.owasp.org) Threat Dragon is a free, open-source, cross-platform threat modeling application.
