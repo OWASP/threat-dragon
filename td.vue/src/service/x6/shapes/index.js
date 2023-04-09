@@ -19,13 +19,13 @@ Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
 Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
 
 export default {
-    ActorShape,
-    Flow,
-    FlowStencil,
-    ProcessShape,
-    StoreShape,
-    TextBlock,
-    TrustBoundaryBox,
-    TrustBoundaryCurve,
-    TrustBoundaryCurveStencil
+  ActorShape,
+  Flow,
+  FlowStencil,
+  ProcessShape,
+  StoreShape,
+  TextBlock,
+  TrustBoundaryBox,
+  TrustBoundaryCurve,
+  TrustBoundaryCurveStencil
 };

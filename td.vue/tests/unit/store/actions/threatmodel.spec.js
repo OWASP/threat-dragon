@@ -10,9 +10,9 @@ import {
     THREATMODEL_SET_IMMUTABLE_COPY,
     THREATMODEL_SAVE,
     THREATMODEL_UPDATE
-} from '@/store/actions/threatmodel.js';
+} from '@/stores/actions/threatmodel.js';
 
-describe('store/actions/threatmodel.js', () => {
+describe('stores/actions/threatmodel.js', () => {
     it('defines a clear action', () => {
         expect(THREATMODEL_CLEAR).not.toBeUndefined();
     });

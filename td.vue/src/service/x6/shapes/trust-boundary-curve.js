@@ -4,27 +4,27 @@ import defaultProperties from '../../entity/default-properties';
 const name = 'trust-boundary-curve';
 
 export const TrustBoundaryCurve = Shape.Edge.define({
-    constructorName: name,
-    width: 200,
-    height: 100,
-    zIndex: 10,
+  constructorName: name,
+  width: 200,
+  height: 100,
+  zIndex: 10,
+  attrs: {
+    line: {
+      strokeWidth: 3,
+      strokeDasharray: '5 5',
+      sourceMarker: null,
+      targetMarker: null
+    }
+  },
+  connector: 'smooth',
+  labels: [{
     attrs: {
-        line: {
-            strokeWidth: 3,
-            strokeDasharray: '5 5',
-            sourceMarker: null,
-            targetMarker: null
-        }
-    },
-    connector: 'smooth',
-    labels: [{
-        attrs: {
-            text: {
-                text: ''
-            }
-        }
-    }],
-    data: defaultProperties.boundary
+      text: {
+        text: ''
+      }
+    }
+  }],
+  data: defaultProperties.boundary
 });
 
 TrustBoundaryCurve.prototype.type = 'tm.Boundary';
@@ -38,10 +38,10 @@ TrustBoundaryCurve.prototype.updateStyle = function () {};
 // };
 
 TrustBoundaryCurve.prototype.setName = function (name) {
-    this.setLabels([name]);
+  this.setLabels([name]);
 };
 
 export default {
-    TrustBoundaryCurve,
-    name
+  TrustBoundaryCurve,
+  name
 };

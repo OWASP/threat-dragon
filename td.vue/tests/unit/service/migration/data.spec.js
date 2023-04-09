@@ -26,7 +26,7 @@ describe('service/migration/data.js', () => {
         expect(res.data).toEqual(expect.objectContaining(cell));
     });
 
-    it('applies store data', () => {
+    it('applies stores data', () => {
         cell = getCell();
         cell.type = 'tm.Store';
         cell.isALog = true;
@@ -50,20 +50,20 @@ describe('service/migration/data.js', () => {
         cell = getCell();
         delete cell.name;
         cell.type = 'tm.Actor';
-        cell.attrs = { text: { text: 'my store' }};
+        cell.attrs = { text: { text: 'my stores' }};
         res = data.map({}, cell);
 
-        expect(res.data.name).toEqual('my store');
+        expect(res.data.name).toEqual('my stores');
     });
 
     it('gest the name from labels[0].attrs.text.text', () => {
         cell = getCell();
         delete cell.name;
         cell.type = 'tm.Actor';
-        cell.labels = [{ attrs: { text: { text: 'my store' }}}];
+        cell.labels = [{ attrs: { text: { text: 'my stores' }}}];
         res = data.map({}, cell);
 
-        expect(res.data.name).toEqual('my store');
+        expect(res.data.name).toEqual('my stores');
     });
 
     it('does not find a name', () => {
@@ -89,7 +89,7 @@ describe('service/migration/data.js', () => {
         cell.type = 'tm.Process';
         cell.threats = [{ modelType: 'foo' }];
         res = data.map({}, cell);
-        
+
         expect(res.data.threats).toHaveLength(1);
     });
 
@@ -99,7 +99,7 @@ describe('service/migration/data.js', () => {
         cell.type = 'tm.Process';
         cell.threats = [{ modelType: 'foo', id: threatId }];
         res = data.map({}, cell);
-        
+
         expect(res.data.threats[0].id).toEqual(threatId);
     });
 });

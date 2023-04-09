@@ -1,13 +1,13 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/store/actions/branch.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
-import { THREATMODEL_FETCH_ALL } from '@/store/actions/threatmodel.js';
+import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/stores/actions/branch.js';
+import { PROVIDER_SELECTED } from '@/stores/actions/provider.js';
+import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/stores/actions/repository.js';
+import { THREATMODEL_FETCH_ALL } from '@/stores/actions/threatmodel.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import ThreatModelSelect from '@/views/git/ThreatModelSelect.vue';
-import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_FETCH, THREATMODEL_SELECTED } from '../../../src/store/actions/threatmodel';
+import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_FETCH, THREATMODEL_SELECTED } from '../../../src/stores/actions/threatmodel';
 
 
 describe('views/ThreatModelSelect.vue', () => {
@@ -97,7 +97,7 @@ describe('views/ThreatModelSelect.vue', () => {
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, 'notTheRightOne');
         });
-        
+
         it('fetches the threat models', () => {
             getLocalVue({
                 params: {
@@ -220,7 +220,7 @@ describe('views/ThreatModelSelect.vue', () => {
         });
 
         it('creates the threat model', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything()); 
+            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything());
         });
 
         it('navigates to the edit page', () => {

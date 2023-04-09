@@ -1,12 +1,12 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
-import authModule, { clearState } from '@/store/modules/auth.js';
-import { BRANCH_CLEAR } from '@/store/actions/branch.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/stores/actions/auth.js';
+import authModule, { clearState } from '@/stores/auth.js';
+import { BRANCH_CLEAR } from '@/stores/actions/branch.js';
 import loginApi from '@/service/api/loginApi.js';
-import { PROVIDER_CLEAR } from '@/store/actions/provider.js';
-import { REPOSITORY_CLEAR } from '@/store/actions/repository.js';
-import { THREATMODEL_CLEAR } from '@/store/actions/threatmodel.js';
+import { PROVIDER_CLEAR } from '@/stores/actions/provider.js';
+import { REPOSITORY_CLEAR } from '@/stores/actions/repository.js';
+import { THREATMODEL_CLEAR } from '@/stores/actions/threatmodel.js';
 
-describe('store/modules/auth.js', () => {
+describe('stores/modules/auth.js', () => {
     const getMocks = () => ({
         commit: () => {},
         dispatch: () => {},
@@ -68,10 +68,10 @@ describe('store/modules/auth.js', () => {
             authModule.actions[AUTH_SET_LOCAL](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL);
         });
-        
+
         describe('logout', () => {
 
-            describe('local provider', () => {     
+            describe('local provider', () => {
                 beforeEach(() => {
                     mocks.rootState.provider = { selected: 'local' };
                     authModule.actions[LOGOUT](mocks);
@@ -102,7 +102,7 @@ describe('store/modules/auth.js', () => {
                 });
             });
 
-            describe('remote provider', () => {  
+            describe('remote provider', () => {
                 describe('without error', () => {
                     beforeEach(() => {
                         mocks.rootState.provider = { selected: 'github' };
@@ -113,23 +113,23 @@ describe('store/modules/auth.js', () => {
                     it('calls the API', () => {
                         expect(loginApi.logoutAsync).toHaveBeenCalledWith(mocks.state.refreshToken);
                     });
-    
+
                     it('dispatches the AUTH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
                     });
-    
+
                     it('dispatches the BRANCH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
                     });
-    
+
                     it('dispatches the PROVIDER_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
                     });
-    
+
                     it('dispatches the REPOSITORY_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
                     });
-    
+
                     it('dispatches the THREATMODEL_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
                     });
@@ -153,23 +153,23 @@ describe('store/modules/auth.js', () => {
                     it('logs the error', () => {
                         expect(console.error).toHaveBeenCalledWith('Error calling logout api', err);
                     });
-    
+
                     it('dispatches the AUTH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
                     });
-    
+
                     it('dispatches the BRANCH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
                     });
-    
+
                     it('dispatches the PROVIDER_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
                     });
-    
+
                     it('dispatches the REPOSITORY_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
                     });
-    
+
                     it('dispatches the THREATMODEL_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
                     });
@@ -210,19 +210,19 @@ describe('store/modules/auth.js', () => {
                 beforeEach(() => {
                     authModule.mutations[AUTH_SET_JWT](authModule.state, apiResp);
                 });
-    
+
                 it('sets the jwt', () => {
                     expect(authModule.state.jwt).toEqual(apiResp.accessToken);
                 });
-    
+
                 it('sets the refreshToken', () => {
                     expect(authModule.state.refreshToken).toEqual(apiResp.refreshToken);
                 });
-    
+
                 it('sets the user', () => {
                     expect(authModule.state.user).toEqual(jwtBody.user);
                 });
-    
+
                 it('sets the jwtBody', () => {
                     expect(authModule.state.jwtBody).toEqual(jwtBody);
                 });

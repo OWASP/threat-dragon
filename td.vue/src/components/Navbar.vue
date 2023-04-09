@@ -1,21 +1,50 @@
+<script>
+export default {
+  name: 'TdNavbar'
+};
+</script>
+<script setup>
+import TdLocaleSelect from './LocaleSelect.vue';
+import { useAppStore } from '@/stores/app';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const appStore = useAppStore();
+const authStore = useAuthStore();
+
+const router = useRouter();
+const { t } = useI18n();
+
+const onLogOut = (evt) => {
+  evt.preventDefault();
+  authStore.logout();
+  router.push('/').catch(error => {
+    if (error.name != 'NavigationDuplicated') {
+      throw error;
+    }
+  });
+};
+</script>
+
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
-    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
-      <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
-      Threat Dragon v{{this.$store.state.packageBuildVersion}}{{this.$store.state.packageBuildState}}
+    <b-navbar-brand :to="authStore.username ? '/dashboard' : '/'" class="td-brand">
+      <b-img src="images/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+      Threat Dragon v{{ appStore.packageBuildVersion }}{{ appStore.packageBuildState }}
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item>
-            <td-locale-select />
+          <td-locale-select />
         </b-nav-item>
       </b-navbar-nav>
-      
+
       <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
-        <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
+        <b-nav-text v-show="authStore.username" class="logged-in-as">{{ t('nav.loggedInAs') }} {{ authStore.username }}</b-nav-text>
+        <b-nav-item v-show="authStore.username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
@@ -49,7 +78,7 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" />
+          <b-img src="images/owasp.svg" class="td-fa-nav td-owasp-logo" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -88,33 +117,3 @@ $icon-height: 1.2rem;
   }
 }
 </style>
-
-<script>
-import { mapGetters } from 'vuex';
-
-import { LOGOUT } from '@/store/actions/auth.js';
-import TdLocaleSelect from './LocaleSelect.vue';
-
-export default {
-    name: 'TdNavbar',
-    components: {
-        TdLocaleSelect
-    },
-    computed: {
-        ...mapGetters([
-            'username'
-        ])
-    },
-    methods: {
-        onLogOut(evt) {
-            evt.preventDefault();
-            this.$store.dispatch(LOGOUT);
-            this.$router.push('/').catch(error => {
-                if (error.name != 'NavigationDuplicated') {
-                    throw error;
-                }
-            });
-        }
-    }
-};
-</script>

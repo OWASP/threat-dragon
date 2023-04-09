@@ -1,15 +1,15 @@
 import Vuex from 'vuex';
 
-import storeFactory from '@/store/index.js';
+import storeFactory from '@/stores/index.js';
 
-describe('store.get()/index.js', () => {
+describe('stores.get()/index.js', () => {
     let store;
 
     beforeEach(() => {
         store = storeFactory.get();
     });
 
-    it('is a vuex store', () => {
+    it('is a vuex stores', () => {
         expect(store).toBeInstanceOf(Vuex.Store);
     });
 

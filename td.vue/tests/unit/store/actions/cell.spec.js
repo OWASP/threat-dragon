@@ -1,6 +1,6 @@
-import { CELL_SELECTED, CELL_UNSELECTED, CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import { CELL_SELECTED, CELL_UNSELECTED, CELL_DATA_UPDATED } from '@/stores/actions/cell.js';
 
-describe('store/actions/cell.js', () => {
+describe('stores/actions/cell.js', () => {
     it('defines a selected action', () => {
         expect(CELL_SELECTED).not.toBeUndefined();
     });

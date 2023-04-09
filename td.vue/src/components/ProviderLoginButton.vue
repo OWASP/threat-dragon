@@ -1,21 +1,60 @@
+<script>
+export default {
+  name: 'TdProviderLoginButton'
+};
+</script>
+<script setup>
+import { useAuthStore } from '@/stores/auth';
+import { useProviderStore } from '@/stores/provider';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { providerNames } from '@/service/provider/providers.js';
+import loginApi from '@/service/api/loginApi.js';
+
+const props = defineProps({
+  provider: {
+    type: Object,
+    required: true
+  }
+});
+
+const authStore = useAuthStore();
+const providerStore = useProviderStore();
+const router = useRouter();
+const { t } = useI18n();
+
+const onProviderClick = async () => {
+  providerStore.selected = props.provider.key;
+
+  if (props.provider.key === providerNames.local) {
+    authStore.setLocal();
+    return router.push('/dashboard');
+  }
+
+  const resp = await loginApi.loginAsync(props.provider.key);
+  window.location.href = resp.data;
+};
+</script>
+
 <template>
-    <b-btn
-        :id="`${provider.key}-login-btn`"
-        class="m-1"
-        variant="secondary"
-        @click="onProviderClick()"> 
-        <span class="login-btn-icon">
-            <font-awesome-icon
-                :icon="provider.icon"
-                size="2x"
-                color="white"
-                class="mr-2"
-            ></font-awesome-icon>
-        </span>
-        <span>
-            {{ $t('home.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
-        </span>
-    </b-btn>
+  <b-btn
+    :id="`${provider.key}-login-btn`"
+    class="m-1"
+    variant="secondary"
+    @click="onProviderClick()"
+  >
+    <span class="login-btn-icon">
+      <font-awesome-icon
+        :icon="provider.icon"
+        size="2x"
+        color="white"
+        class="mr-2"
+      />
+    </span>
+    <span>
+      {{ t('home.loginWith') }} {{ t('providers.' + provider.key + '.displayName') }}
+    </span>
+  </b-btn>
 </template>
 
 <style lang="scss" scoped>
@@ -23,30 +62,3 @@
   display: block;
 }
 </style>
-
-<script>
-import { providerNames } from '@/service/provider/providers.js';
-import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
-import loginApi from '@/service/api/loginApi.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-
-export default {
-    name: 'TdProviderLoginButton',
-    props: {
-        provider: Object
-    },
-    methods: {
-        async onProviderClick() {
-            this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
-
-            if (this.provider.key === providerNames.local) {
-                this.$store.dispatch(AUTH_SET_LOCAL);
-                return this.$router.push('/dashboard');
-            }
-          
-            const resp = await loginApi.loginAsync(this.provider.key);
-            window.location.href = resp.data;
-        }
-    }
-};
-</script>

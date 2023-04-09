@@ -1,6 +1,6 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
+import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/stores/actions/auth.js';
 
-describe('store/actions/auth.js', () => {
+describe('stores/actions/auth.js', () => {
     it('defines a clear action', () => {
         expect(AUTH_CLEAR).not.toBeUndefined();
     });

@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 import ThreatModel from '@/views/ThreatModel.vue';
 import ThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
-import { THREATMODEL_DIAGRAM_SELECTED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_DIAGRAM_SELECTED } from '@/stores/actions/threatmodel.js';
 
 describe('views/Threatmodel.vue', () => {
     const contributors = ['foo', 'bar' ];

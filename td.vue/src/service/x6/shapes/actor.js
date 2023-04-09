@@ -1,6 +1,6 @@
 import { Shape } from '@antv/x6';
 
-import { tc } from '@/i18n/index.js';
+import { t } from '@/i18n/index.js';
 
 const name = 'actor';
 
@@ -11,31 +11,31 @@ const name = 'actor';
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
 export const ActorShape = Shape.Rect.define({
-    height: 80,
-    width: 150,
-    constructorName: name,
-    zIndex: 0,
-    label: tc('threatmodel.shapes.actor'),
-    attrs: {
-        body: {
-            magnet: false // needs to be disabled to grab whole shape
-        }
+  height: 80,
+  width: 150,
+  constructorName: name,
+  zIndex: 0,
+  label: t('threatmodel.shapes.actor'),
+  attrs: {
+    body: {
+      magnet: false // needs to be disabled to grab whole shape
     }
+  }
 });
 
 ActorShape.prototype.updateStyle = function (color, dash, strokeWidth) {
-    this.setAttrByPath('body/stroke', color);
-    this.setAttrByPath('body/strokeWidth', strokeWidth);
-    this.setAttrByPath('body/strokeDasharray', dash);
+  this.setAttrByPath('body/stroke', color);
+  this.setAttrByPath('body/strokeWidth', strokeWidth);
+  this.setAttrByPath('body/strokeDasharray', dash);
 };
 
 ActorShape.prototype.type = 'tm.Actor';
 
 ActorShape.prototype.setName = function (name) {
-    this.label = name;
+  this.label = name;
 };
 
 export default {
-    name,
-    ActorShape
+  name,
+  ActorShape
 };

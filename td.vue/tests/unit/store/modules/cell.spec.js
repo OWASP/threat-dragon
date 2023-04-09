@@ -1,7 +1,7 @@
-import { CELL_SELECTED, CELL_UNSELECTED, CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import cellModule, { clearState } from '@/store/modules/cell.js';
+import { CELL_SELECTED, CELL_UNSELECTED, CELL_DATA_UPDATED } from '@/stores/actions/cell.js';
+import cellModule, { clearState } from '@/stores/cell.js';
 
-describe('store/modules/cell.js', () => {
+describe('stores/modules/cell.js', () => {
     const mocks = {
         commit: () => {},
         dispatch: () => {}
@@ -80,7 +80,7 @@ describe('store/modules/cell.js', () => {
 
         describe('data updated with threats', () => {
             const newThreats = [{ name: 'one' }, { name: 'two' }];
-            
+
             beforeEach(() => {
                 cellModule.state = { ref: cell, threats: [] };
                 cellModule.state.ref.setData = jest.fn();

@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import { AUTH_SET_LOCAL } from '@/stores/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { PROVIDER_SELECTED } from '@/stores/actions/provider.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 describe('components/ProviderLoginButton.vue', () => {
@@ -27,7 +27,7 @@ describe('components/ProviderLoginButton.vue', () => {
         localVue.use(BootstrapVue);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
-        
+
         routerMock = { push: jest.fn() };
         mockStore = new Vuex.Store(getMockStore());
 
@@ -60,11 +60,11 @@ describe('components/ProviderLoginButton.vue', () => {
             it('reads the provider value', () => {
                 expect(wrapper.props().provider).toEqual(provider);
             });
-    
+
             it('uses a bootstrap button', () => {
                 expect(wrapper.findComponent(BButton).exists()).toEqual(true);
             });
-    
+
             it('uses a font awesome icon', () => {
                 expect(wrapper.findComponent(FontAwesomeIcon).exists()).toEqual(true);
             });

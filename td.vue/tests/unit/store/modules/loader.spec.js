@@ -1,7 +1,7 @@
-import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
-import loaderModule from '@/store/modules/loader.js';
+import { LOADER_FINISHED, LOADER_STARTED } from '@/stores/actions/loader.js';
+import loaderModule from '@/stores/loader.js';
 
-describe('store/modules/loader.js', () => {
+describe('stores/modules/loader.js', () => {
     const mocks = {
         commit: () => {}
     };
@@ -13,7 +13,7 @@ describe('store/modules/loader.js', () => {
     afterEach(() => {
         loaderModule.state.loading = false;
     });
-    
+
     describe('state', () => {
         it('defines the loading property', () => {
             expect(loaderModule.state.loading).toEqual(false);
@@ -40,7 +40,7 @@ describe('store/modules/loader.js', () => {
                 expect(loaderModule.state.loading).toEqual(false);
             });
         });
-        
+
         describe('started', () => {
             it('sets the loading property to true', () => {
                 loaderModule.mutations[LOADER_STARTED](loaderModule.state);

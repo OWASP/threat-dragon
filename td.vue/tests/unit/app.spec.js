@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 
 import App from '@/App.vue';
 import i18nFactory from '@/i18n/index.js';
-import { LOADER_FINISHED } from '@/store/actions/loader.js';
+import { LOADER_FINISHED } from '@/stores/actions/loader.js';
 import Navbar from '@/components/Navbar.vue';
 
 describe('App.vue', () => {

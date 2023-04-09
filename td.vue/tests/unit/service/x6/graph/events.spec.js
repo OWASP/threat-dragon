@@ -1,6 +1,6 @@
 import events from '@/service/x6/graph/events.js';
 import shapes from '@/service/x6/shapes/index.js';
-import store from '@/store/index.js';
+import store from '@/stores/index.js';
 import dataChanged from '../../../../../src/service/x6/graph/data-changed';
 
 describe('service/x6/graph/events.js', () => {

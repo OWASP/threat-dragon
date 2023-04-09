@@ -78,6 +78,7 @@ This will need the following:
     - `dashboardActions`: An array of objects that describe the actions a user can take from the dashboard (after selecting the provider)
 
 ## Local Storage
+[//]: # (TODO: modify)
 [vuex-persist](https://github.com/championswimmer/vuex-persist) is used to save stores (state) from vuex to session storage
 By default, all stores are persisted to session storage.
 This is configured in [vuex-persist](src/plugins/vuex-persist.js).

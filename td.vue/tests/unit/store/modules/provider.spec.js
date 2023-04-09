@@ -1,8 +1,8 @@
-import { PROVIDER_CLEAR, PROVIDER_FETCH, PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import providerModule, { clearState } from '@/store/modules/provider.js';
+import { PROVIDER_CLEAR, PROVIDER_FETCH, PROVIDER_SELECTED } from '@/stores/actions/provider.js';
+import providerModule, { clearState } from '@/stores/provider.js';
 import providerService from '@/service/provider/providers.js';
 
-describe('store/modules/provider.js', () => {
+describe('stores/modules/provider.js', () => {
     const mocks = {
         commit: () => {},
         dispatch: () => {}
@@ -32,7 +32,7 @@ describe('store/modules/provider.js', () => {
             providerModule.actions[PROVIDER_CLEAR](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
         });
-        
+
         describe('fetch', () => {
             beforeEach(() => {
                 providerModule.actions[PROVIDER_FETCH](mocks);
@@ -49,7 +49,7 @@ describe('store/modules/provider.js', () => {
                 );
             });
         });
-        
+
         describe('selected', () => {
             it('throws an error if providerName is falsy', () => {
                 expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).toThrowError();

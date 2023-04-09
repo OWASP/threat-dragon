@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n';
 import Vuex from 'vuex';
 
 import LocaleSelect from '@/components/LocaleSelect.vue';
-import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import { LOCALE_SELECTED } from '@/stores/actions/locale.js';
 
 describe('components/LocaleSelect.vue', () => {
     let mockStore, wrapper;
@@ -67,7 +67,7 @@ describe('components/LocaleSelect.vue', () => {
                     .filter(c => c.text() === 'deu')
                     .at(0)
                     .trigger('click');
-                
+
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'deu');
             });
 
@@ -76,7 +76,7 @@ describe('components/LocaleSelect.vue', () => {
                     .filter(c => c.text() === 'eng')
                     .at(0)
                     .trigger('click');
-                
+
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'eng');
             });
         });

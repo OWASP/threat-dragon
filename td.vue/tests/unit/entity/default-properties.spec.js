@@ -225,7 +225,7 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.getByType('tm.Process')).toEqual(defaultProperties.tmProcess);
         });
 
-        it('gets store', () => {
+        it('gets stores', () => {
             expect(defaultProperties.getByType('tm.Store')).toEqual(defaultProperties.store);
         });
 

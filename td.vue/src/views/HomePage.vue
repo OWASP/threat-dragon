@@ -1,23 +1,48 @@
+<script>
+export default {
+  name: 'HomePage'
+};
+</script>
+<script setup>
+import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import isElectron from 'is-electron';
+import { allProviders } from '@/service/provider/providers.js';
+
+const { t } = useI18n();
+
+const providers = computed(() => {
+  if (isElectron()) {
+    return { local: allProviders.local };
+  }
+  return allProviders;
+});
+</script>
+
 <template>
   <b-container>
     <b-jumbotron id="welcome-jumbotron">
       <b-row class="text-center mb-2">
         <b-col md="12">
-          <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
+          <h1 class="display-3 text-center">
+            {{ t("home.title") }}
+          </h1>
         </b-col>
       </b-row>
       <b-row>
         <b-col md="4">
-          <b-img class="td-cupcake"
+          <b-img
             id="home-td-logo"
-            :alt="$t('home.imgAlt')"
-            src="@/assets/threatdragon_logo_image.svg"
+            class="td-cupcake"
+            :alt="t('home.imgAlt')"
+            src="images/threatdragon_logo_image.svg"
           />
         </b-col>
         <b-col md="8">
           <b-row>
             <p class="td-description">
-              {{ $t("home.description") }}
+              {{ t("home.description") }}
             </p>
           </b-row>
           <b-row>
@@ -48,30 +73,6 @@
 }
 
 .td-cupcake {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin: 10px 20px 20px;
 }
 </style>
-
-<script>
-import { allProviders } from '@/service/provider/providers.js';
-import isElectron from 'is-electron';
-import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
-
-export default {
-    name: 'HomePage',
-    computed: {
-        providers: () => {
-            if (isElectron()) {
-                return { local: allProviders.local };
-            }
-            return allProviders;
-        },
-    },
-    components: {
-        TdProviderLoginButton,
-    },
-};
-</script>

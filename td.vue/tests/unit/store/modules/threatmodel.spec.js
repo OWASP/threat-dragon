@@ -12,12 +12,12 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_SET_IMMUTABLE_COPY,
     THREATMODEL_UPDATE
-} from '@/store/actions/threatmodel.js';
-import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
+} from '@/stores/actions/threatmodel.js';
+import threatmodelModule, { clearState } from '@/stores/threatmodel.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/stores/actions/threatmodel';
 
-describe('store/modules/threatmodel.js', () => {
+describe('stores/modules/threatmodel.js', () => {
     const getRootState = () => ({
         auth: {
             jwt: 'test'

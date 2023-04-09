@@ -1,6 +1,6 @@
-import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
+import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/stores/actions/branch.js';
 
-describe('store/actions/branch.js', () => {
+describe('stores/actions/branch.js', () => {
     it('defines a clear action', () => {
         expect(BRANCH_CLEAR).not.toBeUndefined();
     });

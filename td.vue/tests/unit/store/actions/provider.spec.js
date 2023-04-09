@@ -2,9 +2,9 @@ import {
     PROVIDER_CLEAR,
     PROVIDER_FETCH,
     PROVIDER_SELECTED
-} from '@/store/actions/provider.js';
+} from '@/stores/actions/provider.js';
 
-describe('store/actions/provider.js', () => {
+describe('stores/actions/provider.js', () => {
     it('defines a clear action', () => {
         expect(PROVIDER_CLEAR).not.toBeUndefined();
     });

@@ -1,8 +1,8 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import { REPOSITORY_CLEAR, REPOSITORY_SELECTED, REPOSITORY_FETCH } from '@/store/actions/repository.js';
+import { PROVIDER_SELECTED } from '@/stores/actions/provider.js';
+import { REPOSITORY_CLEAR, REPOSITORY_SELECTED, REPOSITORY_FETCH } from '@/stores/actions/repository.js';
 import RepositoryAccess from '@/views/git/RepositoryAccess.vue';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
@@ -57,7 +57,7 @@ describe('views/RepositoryAccess.vue', () => {
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
         });
-        
+
         it('fetches the repos', () => {
             getLocalVue({
                 params: {

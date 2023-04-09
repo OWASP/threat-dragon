@@ -1,8 +1,8 @@
-import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
-import branchModule, { clearState } from '@/store/modules/branch.js';
+import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/stores/actions/branch.js';
+import branchModule, { clearState } from '@/stores/branch.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 
-describe('store/modules/branch.js', () => {
+describe('stores/modules/branch.js', () => {
     const mocks = {
         commit: () => {},
         dispatch: () => {},

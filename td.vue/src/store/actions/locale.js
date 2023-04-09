@@ -1,1 +1,0 @@
-export const LOCALE_SELECTED = 'LOCALE_SELECTED';

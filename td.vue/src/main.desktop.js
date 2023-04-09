@@ -7,16 +7,12 @@ import i18nFactory from './i18n/index.js';
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
 
-import storeFactory from './store/index.js';
-import authActions from './store/actions/auth.js';
-import providerActions from './store/actions/provider.js';
-import threatmodelActions from './store/actions/threatmodel.js';
+import storeFactory from './stores/index.js';
+import authActions from './stores/actions/auth.js';
+import providerActions from './stores/actions/provider.js';
+import threatmodelActions from './stores/actions/threatmodel.js';
 
-import './plugins/bootstrap-vue.js';
 import './plugins/fontawesome-vue.js';
-import './plugins/toastification.js';
-
-Vue.config.productionTip = false;
 
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {

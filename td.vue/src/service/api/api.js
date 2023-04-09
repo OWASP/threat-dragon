@@ -7,8 +7,8 @@ import clientFactory from '../httpClient.js';
  * @returns Promise
  */
 const getAsync = async (url) => {
-    const res = await clientFactory.get().get(url);
-    return res.data;
+  const res = await clientFactory.get().get(url);
+  return res.data;
 };
 
 /**
@@ -19,8 +19,8 @@ const getAsync = async (url) => {
  * @param {Object?} body
  */
 const postAsync = async (url, body) => {
-    const res = await clientFactory.get().post(url, body);
-    return res.data;
+  const res = await clientFactory.get().post(url, body);
+  return res.data;
 };
 
 /**
@@ -31,12 +31,12 @@ const postAsync = async (url, body) => {
  * @param {Object} body
  */
 const putAsync = async (url, body) => {
-    const res = await clientFactory.get().put(url, body);
-    return res.data;
+  const res = await clientFactory.get().put(url, body);
+  return res.data;
 };
 
 export default {
-    getAsync,
-    postAsync,
-    putAsync
+  getAsync,
+  postAsync,
+  putAsync
 };

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { LOGOUT } from '@/store/actions/auth.js';
+import { LOGOUT } from '@/stores/actions/auth.js';
 import Navbar from '@/components/Navbar.vue';
 
 describe('components/Navbar.vue', () => {

@@ -4,26 +4,26 @@ import nodes from './nodes.js';
 import shapes from '../x6/shapes/index.js';
 
 const getCellConverter = () => ({
-    'tm.Actor': {
-        isNode: true,
-        mapper: nodes.map(shapes.ActorShape)
-    },
-    'tm.Boundary': {
-        isNode: false,
-        mapper: edges.map(shapes.TrustBoundaryCurve)
-    },
-    'tm.Flow': {
-        isNode: false,
-        mapper: edges.map(shapes.Flow)
-    },
-    'tm.Process': {
-        isNode: true,
-        mapper: nodes.map(shapes.ProcessShape)
-    },
-    'tm.Store': {
-        isNode: true,
-        mapper: nodes.map(shapes.StoreShape)
-    }
+  'tm.Actor': {
+    isNode: true,
+    mapper: nodes.map(shapes.ActorShape)
+  },
+  'tm.Boundary': {
+    isNode: false,
+    mapper: edges.map(shapes.TrustBoundaryCurve)
+  },
+  'tm.Flow': {
+    isNode: false,
+    mapper: edges.map(shapes.Flow)
+  },
+  'tm.Process': {
+    isNode: true,
+    mapper: nodes.map(shapes.ProcessShape)
+  },
+  'tm.Store': {
+    isNode: true,
+    mapper: nodes.map(shapes.StoreShape)
+  }
 });
 
 /**
@@ -34,35 +34,35 @@ const getCellConverter = () => ({
  * @param {Object[]} edges
  */
 const relateEdges = (nodes, edges) => {
-    edges.forEach((edge) => {
-        if (edge.source.id) {
-            edge.source = nodes.find((node) => node.id === edge.source.id);
-        }
-        if (edge.target.id) {
-            edge.target = nodes.find((node) => node.id === edge.target.id);
-        }
-    });
+  edges.forEach((edge) => {
+    if (edge.source.id) {
+      edge.source = nodes.find((node) => node.id === edge.source.id);
+    }
+    if (edge.target.id) {
+      edge.target = nodes.find((node) => node.id === edge.target.id);
+    }
+  });
 };
 
 const map = (diagram) => {
-    const resp = { nodes: [], edges: [] };
+  const resp = { nodes: [], edges: [] };
 
-    // If the diagram is blank, there is no diagramJson
-    if (!diagram.diagramJson) {
-        return resp;
-    }
-
-    diagram.diagramJson.cells.forEach((cell) => {
-        const { isNode, mapper } = getCellConverter()[cell.type];
-        const entity = mapper(cell);
-        const arr = isNode ? resp.nodes : resp.edges;
-        arr.push(data.map(entity, cell));
-    });
-
-    relateEdges(resp.nodes, resp.edges);
+  // If the diagram is blank, there is no diagramJson
+  if (!diagram.diagramJson) {
     return resp;
+  }
+
+  diagram.diagramJson.cells.forEach((cell) => {
+    const { isNode, mapper } = getCellConverter()[cell.type];
+    const entity = mapper(cell);
+    const arr = isNode ? resp.nodes : resp.edges;
+    arr.push(data.map(entity, cell));
+  });
+
+  relateEdges(resp.nodes, resp.edges);
+  return resp;
 };
 
 export default {
-    map
+  map
 };

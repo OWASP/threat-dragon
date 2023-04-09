@@ -1,6 +1,6 @@
-import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import { LOCALE_SELECTED } from '@/stores/actions/locale.js';
 
-describe('store/actions/locale.js', () => {
+describe('stores/actions/locale.js', () => {
     it('defines a selected action', () => {
         expect(LOCALE_SELECTED).not.toBeUndefined();
     });

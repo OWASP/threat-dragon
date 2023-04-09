@@ -2,9 +2,9 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import BranchAccess from '@/views/git/BranchAccess.vue';
-import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
+import { BRANCH_FETCH, BRANCH_SELECTED } from '@/stores/actions/branch.js';
+import { PROVIDER_SELECTED } from '@/stores/actions/provider.js';
+import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/stores/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
 
@@ -74,7 +74,7 @@ describe('views/BranchAccess.vue', () => {
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
         });
-        
+
         it('fetches the branches', () => {
             getLocalVue({
                 params: {

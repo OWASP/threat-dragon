@@ -1,6 +1,6 @@
 import { StoreShape }  from '@/service/x6/shapes/store.js';
 
-describe('service/x6/shapes/store.js', () => {
+describe('service/x6/shapes/stores.js', () => {
     let victim;
 
     beforeEach(() => {

@@ -3,9 +3,9 @@ import api from './api.js';
 const resource = '/api/threatmodel';
 
 const extractRepoParts = (fullRepoName) => {
-    const org = fullRepoName.split('/')[0];
-    const repo = fullRepoName.replace(`${org}/`, '');
-    return { org, repo };
+  const org = fullRepoName.split('/')[0];
+  const repo = fullRepoName.replace(`${org}/`, '');
+  return { org, repo };
 };
 
 
@@ -27,8 +27,8 @@ const reposAsync = () => api.getAsync(`${resource}/repos`);
  * @returns {Promise}
  */
 const branchesAsync = (fullRepoName) => {
-    const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`);
+  const { org, repo } = extractRepoParts(fullRepoName);
+  return api.getAsync(`${resource}/${org}/${repo}/branches`);
 };
 
 /**
@@ -38,8 +38,8 @@ const branchesAsync = (fullRepoName) => {
  * @returns {Promise}
  */
 const modelsAsync = (fullRepoName, branch) => {
-    const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${encodeURIComponent(branch)}/models`);
+  const { org, repo } = extractRepoParts(fullRepoName);
+  return api.getAsync(`${resource}/${org}/${repo}/${encodeURIComponent(branch)}/models`);
 };
 
 /**
@@ -50,26 +50,26 @@ const modelsAsync = (fullRepoName, branch) => {
  * @returns {Promise}
  */
 const modelAsync = (fullRepoName, branch, model) => {
-    const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`);
+  const { org, repo } = extractRepoParts(fullRepoName);
+  return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`);
 };
 
 const createAsync = (fullRepoName, branch, modelName, threatModel) => {
-    const { org, repo } = extractRepoParts(fullRepoName);
-    return api.postAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/create`, threatModel);
+  const { org, repo } = extractRepoParts(fullRepoName);
+  return api.postAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/create`, threatModel);
 };
 
 const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
-    const { org, repo } = extractRepoParts(fullRepoName);
-    return api.putAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/update`, threatModel);
+  const { org, repo } = extractRepoParts(fullRepoName);
+  return api.putAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/update`, threatModel);
 };
 
 export default {
-    branchesAsync,
-    modelAsync,
-    modelsAsync,
-    organisationAsync,
-    reposAsync,
-    createAsync,
-    updateAsync
+  branchesAsync,
+  modelAsync,
+  modelsAsync,
+  organisationAsync,
+  reposAsync,
+  createAsync,
+  updateAsync
 };

@@ -6,7 +6,7 @@ const logger = loggerHelper.get('repositories/token.js');
 /**
  * The refresh tokens
  * This is a bit of a code smell having this held in memory
- * Typically you would store this in a database, since we will
+ * Typically you would stores this in a database, since we will
  * lose all valid refresh tokens when the server restarts
  * Threat Dragon does not currently have a canonical persistence layer
  * @type {Array<String>}
@@ -23,7 +23,7 @@ const add = (token) => {
 };
 
 /**
- * Removes a token from the refresh store
+ * Removes a token from the refresh stores
  * This is the same as invalidating the refresh token
  * @param {String} token
  */

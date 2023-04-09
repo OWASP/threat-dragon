@@ -1,308 +1,341 @@
+<script>
+export default {
+  name: 'ThreatModelEdit'
+};
+</script>
+<script setup>
+import TdFormButton from '@/components/FormButton.vue';
+import { useThreatModelStore } from '@/stores/threatmodel';
+import { useProviderStore } from '@/stores/provider';
+import { useAppStore } from '@/stores/app';
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { getProviderType } from '@/service/provider/providers.js';
+
+const threatModelStore = useThreatModelStore();
+const providerStore = useProviderStore();
+const appStore = useAppStore();
+
+const router = useRouter();
+const { t } = useI18n();
+
+// const fileHandle = computed(() => threatModelStore.fileHandle);
+// const fileName = computed(() => threatModelStore.fileName);
+const model = computed(() => threatModelStore.data);
+const providerType = computed(() => getProviderType(providerStore.selected));
+const diagramTop = computed(() => threatModelStore.data.detail.diagramTop);
+const version = computed(() => appStore.packageBuildVersion);
+const contributors = ref({
+  get() {
+    return threatModelStore.contributors;
+  },
+  set(contributors) {
+    threatModelStore.contributorsUpdated(contributors);
+  }
+});
+
+const onSubmit = (event) => {
+  onSaveClick(event);
+};
+const onSaveClick = async (event) => {
+  event.preventDefault();
+  if (router.currentRoute.value.name === 'gitThreatModelCreate') {
+    await threatModelStore.create();
+  } else {
+    await threatModelStore.save();
+  }
+  await router.push({ name: `${providerType.value}ThreatModel`, params: router.currentRoute.value.params });
+};
+const onReloadClick = async (event) => {
+  event.preventDefault();
+  await restoreAsync();
+};
+const onCancelClick = async (event) => {
+  event.preventDefault();
+  if (await restoreAsync()) {
+    await router.push({ name: `${providerType.value}ThreatModel`, params: router.currentRoute.value.params });
+  }
+};
+const onAddDiagramClick = (event) => {
+  event.preventDefault();
+  let newDiagram = {
+    id: diagramTop.value,
+    title: t('threatmodel.diagram.stride.defaultTitle'),
+    diagramType: 'STRIDE',
+    placeholder: t('threatmodel.diagram.stride.defaultDescription'),
+    thumbnail: './public/content/images/thumbnail.stride.jpg',
+    version: version.value
+  };
+  threatModelStore.update({ diagramTop: diagramTop.value + 1 });
+  model.value.detail.diagrams.push(newDiagram);
+};
+const onDiagramTypeClick = (idx, type) => {
+  let defaultTitle;
+  let placeholder;
+  let thumbnail;
+  switch (type) {
+  case 'CIA':
+    thumbnail = './public/content/images/thumbnail.cia.jpg';
+    defaultTitle = t('threatmodel.diagram.cia.defaultTitle');
+    placeholder = t('threatmodel.diagram.cia.defaultDescription');
+    break;
+  case 'LINDDUN':
+    thumbnail = './public/content/images/thumbnail.linddun.jpg';
+    defaultTitle = t('threatmodel.diagram.linddun.defaultTitle');
+    placeholder = t('threatmodel.diagram.linddun.defaultDescription');
+    break;
+  case 'STRIDE':
+    thumbnail = './public/content/images/thumbnail.stride.jpg';
+    defaultTitle = t('threatmodel.diagram.stride.defaultTitle');
+    placeholder = t('threatmodel.diagram.stride.defaultDescription');
+    break;
+  default:
+    thumbnail = './public/content/images/thumbnail.jpg';
+    defaultTitle = t('threatmodel.diagram.generic.defaultTitle');
+    placeholder = t('threatmodel.diagram.generic.defaultDescription');
+    type = t('threatmodel.diagram.generic.select');
+  }
+  model.value.detail.diagrams[idx].diagramType = type;
+  model.value.detail.diagrams[idx].placeholder = placeholder;
+  model.value.detail.diagrams[idx].thumbnail = thumbnail;
+  // if the diagram title is still default, then change it to the new default title
+  if (model.value.detail.diagrams[idx].title === t('threatmodel.diagram.cia.defaultTitle')
+        || model.value.detail.diagrams[idx].title === t('threatmodel.diagram.linddun.defaultTitle')
+        || model.value.detail.diagrams[idx].title === t('threatmodel.diagram.stride.defaultTitle')
+        || model.value.detail.diagrams[idx].title === t('threatmodel.diagram.generic.defaultTitle')
+  ) {
+    model.value.detail.diagrams[idx].title = defaultTitle;
+  }
+};
+const onRemoveDiagramClick = (idx) => {
+  model.value.detail.diagrams.splice(idx, 1);
+};
+const restoreAsync = async () => {
+  if (!threatModelStore.modelChanged || await getConfirmModal()) {
+    await threatModelStore.restore();
+    return true;
+  }
+  return false;
+};
+const getConfirmModal = async () => {
+  return window.confirm(t('forms.discardTitle') + '! ' + t('forms.discardMessage'));
+  // TODO: create temporary modal component
+  // return this.$bvModal.msgBoxConfirm(t('forms.discardMessage'), {
+  //   title: t('forms.discardTitle'),
+  //   okVariant: 'danger',
+  //   okTitle: t('forms.ok'),
+  //   cancelTitle: t('forms.cancel'),
+  //   hideHeaderClose: true,
+  //   centered: true
+  // });
+};
+</script>
+
 <template>
-    <b-row>
-        <b-col v-if="model && model.summary">
-            <b-card
-                :header="`${$t('threatmodel.editing')}: ${model.summary.title}`"
-                id="parent-card"
+  <b-row>
+    <b-col v-if="model && model.summary">
+      <b-card
+        id="parent-card"
+        :header="`${t('threatmodel.editing')}: ${model.summary.title}`"
+      >
+        <b-form @submit="onSubmit">
+          <b-form-row>
+            <b-col>
+              <b-form-group
+                id="title-group"
+                :label="t('threatmodel.title')"
+                label-for="title"
+              >
+                <b-form-input
+                  id="title"
+                  v-model="model.summary.title"
+                  type="text"
+                  required
+                />
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col md="6">
+              <b-form-group
+                id="owner-group"
+                :label="t('threatmodel.owner')"
+                label-for="owner"
+              >
+                <b-form-input
+                  id="owner"
+                  v-model="model.summary.owner"
+                  type="text"
+                />
+              </b-form-group>
+            </b-col>
+
+            <b-col md="6">
+              <b-form-group
+                id="reviewer-group"
+                :label="t('threatmodel.reviewer')"
+                label-for="reviewer"
+              >
+                <b-form-input
+                  id="reviewer"
+                  v-model="model.detail.reviewer"
+                  type="text"
+                />
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col>
+              <b-form-group
+                id="description-group"
+                :label="t('threatmodel.description')"
+                label-for="description"
+              >
+                <b-form-textarea
+                  id="description"
+                  v-model="model.summary.description"
+                  type="text"
+                />
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col>
+              <b-form-group
+                id="contributors-group"
+                :label="t('threatmodel.contributors')"
+                label-for="contributors"
+              >
+                <b-form-tags
+                  id="contributors"
+                  v-model="contributors"
+                  :placeholder="t('threatmodel.contributorsPlaceholder')"
+                  variant="primary"
+                />
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col>
+              <h5>{{ t('threatmodel.diagram.diagrams') }}</h5>
+            </b-col>
+          </b-form-row>
+
+          <b-form-row>
+            <b-col
+              v-for="(diagram, idx) in model.detail.diagrams"
+              :key="idx"
+              md="6"
             >
-                <b-form @submit="onSubmit">
+              <b-input-group
+                :id="`diagram-group-${idx}`"
+                :label-for="`diagram-${idx}`"
+                class="mb-3"
+              >
+                <b-input-group-prepend>
+                  <b-dropdown
+                    split
+                    variant="secondary"
+                    class="select-diagram-type"
+                    :text="model.detail.diagrams[idx].diagramType"
+                  >
+                    <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">
+                      {{ t('threatmodel.diagram.cia.select') }}
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">
+                      {{ t('threatmodel.diagram.linddun.select') }}
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">
+                      {{ t('threatmodel.diagram.stride.select') }}
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">
+                      {{ t('threatmodel.diagram.generic.select') }}
+                    </b-dropdown-item-button>
+                  </b-dropdown>
+                </b-input-group-prepend>
+                <b-form-input
+                  v-model="model.detail.diagrams[idx].title"
+                  type="text"
+                  class="td-diagram"
+                />
+                <b-form-input
+                  v-model="model.detail.diagrams[idx].description"
+                  :placeholder="model.detail.diagrams[idx].placeholder"
+                  type="text"
+                  class="td-diagram-description"
+                />
+                <b-input-group-append>
+                  <b-button
+                    variant="secondary"
+                    class="td-remove-diagram"
+                    @click="onRemoveDiagramClick(idx)"
+                  >
+                    <font-awesome-icon icon="times" />
+                    {{ t('forms.remove') }}
+                  </b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-col>
 
-                    <b-form-row>
-                        <b-col>
-                            <b-form-group
-                                id="title-group"
-                                :label="$t('threatmodel.title')"
-                                label-for="title">
-                                <b-form-input
-                                    id="title"
-                                    v-model="model.summary.title"
-                                    type="text"
-                                    required
-                                ></b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-form-row>
+            <b-col md="6">
+              <a
+                href="javascript:void(0)"
+                class="add-diagram-link m-2"
+                @click="onAddDiagramClick"
+              >
+                <font-awesome-icon icon="plus" />
+                {{ t('threatmodel.diagram.addNewDiagram') }}
+              </a>
+            </b-col>
+          </b-form-row>
 
-                    <b-form-row>
-                        <b-col md=6>
-                            <b-form-group
-                                id="owner-group"
-                                :label="$t('threatmodel.owner')"
-                                label-for="owner">
-                                <b-form-input
-                                    id="owner"
-                                    v-model="model.summary.owner"
-                                    type="text"
-                                ></b-form-input>
-                            </b-form-group>
-                        </b-col>
-
-                        <b-col md=6>
-                            <b-form-group
-                                id="reviewer-group"
-                                :label="$t('threatmodel.reviewer')"
-                                label-for="reviewer">
-                                <b-form-input
-                                    id="reviewer"
-                                    v-model="model.detail.reviewer"
-                                    type="text"
-                                ></b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-form-row>
-
-                    <b-form-row>
-                        <b-col>
-                            <b-form-group
-                                id="description-group"
-                                :label="$t('threatmodel.description')"
-                                label-for="description">
-                                <b-form-textarea
-                                    id="description"
-                                    v-model="model.summary.description"
-                                    type="text"
-                                ></b-form-textarea>
-                            </b-form-group>
-                        </b-col>
-                    </b-form-row>
-
-                    <b-form-row>
-                        <b-col>
-                            <b-form-group
-                                id="contributors-group"
-                                :label="$t('threatmodel.contributors')"
-                                label-for="contributors">
-                                <b-form-tags
-                                    id="contributors"
-                                    :placeholder="$t('threatmodel.contributorsPlaceholder')"
-                                    v-model="contributors"
-                                    variant="primary"
-                                ></b-form-tags>
-                            </b-form-group>
-                        </b-col>
-                    </b-form-row>
-
-                    <b-form-row>
-                        <b-col>
-                            <h5>{{ $t('threatmodel.diagram.diagrams') }}</h5>
-                        </b-col>
-                    </b-form-row>
-
-                    <b-form-row>
-                        <b-col md=6
-                            v-for="(diagram, idx) in model.detail.diagrams"
-                            :key="idx"
-                        >
-                            <b-input-group
-                                :id="`diagram-group-${idx}`"
-                                :label-for="`diagram-${idx}`"
-                                class="mb-3"
-                            >
-                                <b-input-group-prepend>
-                                    <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
-                                    </b-dropdown>
-                                </b-input-group-prepend>
-                                <b-form-input
-                                    v-model="model.detail.diagrams[idx].title"
-                                    type="text"
-                                    class="td-diagram"
-                                ></b-form-input>
-                                <b-form-input
-                                    v-model="model.detail.diagrams[idx].description"
-                                    :placeholder="model.detail.diagrams[idx].placeholder"
-                                    type="text"
-                                    class="td-diagram-description"
-                                ></b-form-input>
-                                <b-input-group-append>
-                                    <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
-                                        <font-awesome-icon icon="times"></font-awesome-icon>
-                                        {{ $t('forms.remove') }}
-                                    </b-button>
-                                </b-input-group-append>
-                            </b-input-group>
-                        </b-col>
-
-                        <b-col md=6>
-                            <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
-                                <font-awesome-icon icon="plus"></font-awesome-icon>
-                                {{ $t('threatmodel.diagram.addNewDiagram') }}
-                            </a>
-                        </b-col>
-                    </b-form-row>
-
-                    <b-form-row>
-                        <b-col class="text-right mt-5">
-                            <b-btn-group>
-                                <td-form-button
-                                    id="td-save-btn"
-                                    :isPrimary="true"
-                                    :onBtnClick="onSaveClick"
-                                    icon="save"
-                                    :text="$t('forms.save')" />
-                                <td-form-button
-                                    id="td-reload-btn"
-                                    :onBtnClick="onReloadClick"
-                                    icon="undo"
-                                    :text="$t('forms.reload')" />
-                                <td-form-button
-                                    id="td-cancel-btn"
-                                    :onBtnClick="onCancelClick"
-                                    icon="times"
-                                    :text="$t('forms.cancel')" />
-                            </b-btn-group>
-                        </b-col>
-                    </b-form-row>
-
-                </b-form>
-            </b-card>
-        </b-col>
-    </b-row>
+          <b-form-row>
+            <b-col class="text-right mt-5">
+              <b-btn-group>
+                <td-form-button
+                  id="td-save-btn"
+                  :is-primary="true"
+                  :on-btn-click="onSaveClick"
+                  icon="save"
+                  :text="t('forms.save')"
+                />
+                <td-form-button
+                  id="td-reload-btn"
+                  :on-btn-click="onReloadClick"
+                  icon="undo"
+                  :text="t('forms.reload')"
+                />
+                <td-form-button
+                  id="td-cancel-btn"
+                  :on-btn-click="onCancelClick"
+                  icon="times"
+                  :text="t('forms.cancel')"
+                />
+              </b-btn-group>
+            </b-col>
+          </b-form-row>
+        </b-form>
+      </b-card>
+    </b-col>
+  </b-row>
 </template>
 
 <style lang="scss" scoped>
 .add-diagram-link {
-    color: $orange;
-    font-size: 14px;
+  color: $orange;
+  font-size: 14px;
 }
 
 .remove-diagram-btn {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .select-diagram-type {
-    font-size: 12px;
+  font-size: 12px;
 }
 </style>
-
-<script>
-import { mapState } from 'vuex';
-
-import { getProviderType } from '@/service/provider/providers.js';
-import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_CREATE, THREATMODEL_RESTORE, THREATMODEL_SAVE, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
-
-export default {
-    name: 'ThreatModelEdit',
-    components: {
-        TdFormButton
-    },
-    computed: {
-        ...mapState({
-            fileHandle: (state) => state.threatmodel.fileHandle,
-            fileName: (state) => state.threatmodel.fileName,
-            model: (state) => state.threatmodel.data,
-            providerType: (state) => getProviderType(state.provider.selected),
-            diagramTop: (state) => state.threatmodel.data.detail.diagramTop,
-            version: (state) => state.packageBuildVersion
-        }),
-        contributors: {
-            get() {
-                return this.$store.getters.contributors;
-            },
-            set(contributors) {
-                this.$store.dispatch(THREATMODEL_CONTRIBUTORS_UPDATED, contributors);
-            }
-        }
-    },
-    methods: {
-        onSubmit() {
-            // noop
-        },
-        async onSaveClick(evt) {
-            evt.preventDefault();
-            if (this.$route.name === 'gitThreatModelCreate') {
-                await this.$store.dispatch(THREATMODEL_CREATE);
-            } else {
-                await this.$store.dispatch(THREATMODEL_SAVE);
-            }
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
-        },
-        async onReloadClick(evt) {
-            evt.preventDefault();
-            await this.restoreAsync();
-        },
-        async onCancelClick(evt) {
-            evt.preventDefault();
-            if (await this.restoreAsync()) {
-                this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
-            }
-        },
-        onAddDiagramClick(evt) {
-            evt.preventDefault();
-            let newDiagram = {
-                id: this.diagramTop,
-                title: this.$t('threatmodel.diagram.stride.defaultTitle'),
-                diagramType: 'STRIDE',
-                placeholder: this.$t('threatmodel.diagram.stride.defaultDescription'),
-                thumbnail: './public/content/images/thumbnail.stride.jpg',
-                version: this.version
-            };
-            this.$store.dispatch(THREATMODEL_UPDATE, { diagramTop: this.diagramTop + 1 });
-            this.model.detail.diagrams.push(newDiagram);
-        },
-        onDiagramTypeClick(idx, type) {
-            let defaultTitle;
-            let placeholder;
-            let thumbnail;
-            switch (type) {
-	            case 'CIA':
-	                thumbnail = './public/content/images/thumbnail.cia.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
-	                break;
-	            case 'LINDDUN':
-	                thumbnail = './public/content/images/thumbnail.linddun.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
-	                break;
-	            case 'STRIDE':
-	                thumbnail = './public/content/images/thumbnail.stride.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
-	                break;
-	            default:
-	                thumbnail = './public/content/images/thumbnail.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
-	                type = this.$t('threatmodel.diagram.generic.select');
-            }
-            this.model.detail.diagrams[idx].diagramType = type;
-            this.model.detail.diagrams[idx].placeholder = placeholder;
-            this.model.detail.diagrams[idx].thumbnail = thumbnail;
-            // if the diagram title is still default, then change it to the new default title
-            if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
-            ) {
-                this.model.detail.diagrams[idx].title = defaultTitle;
-            }
-        },
-        onRemoveDiagramClick(idx) {
-            this.model.detail.diagrams.splice(idx, 1);
-        },
-        async restoreAsync() {
-            if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
-                this.$store.dispatch(THREATMODEL_RESTORE);
-                return true;
-            }
-            return false;
-        },
-        getConfirmModal() {
-            return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {
-                title: this.$t('forms.discardTitle'),
-                okVariant: 'danger',
-                okTitle: this.$t('forms.ok'),
-                cancelTitle: this.$t('forms.cancel'),
-                hideHeaderClose: true,
-                centered: true
-            });
-        }
-    }
-};
-
-</script>

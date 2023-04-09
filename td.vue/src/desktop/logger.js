@@ -7,13 +7,13 @@ export const consoleLogLevel = 'error';
 export const fileLogLevel = logLevel;
 
 if (isDevelopment) {
-    if (isMacOS) {
-        console.log('** Redirecting console to log ~/Library/Logs/Threat\\ Dragon/main.log');
-    } else if (isWin) {
-        console.log('** Redirecting console to log AppData\\Roaming\\Threat/ Dragon\\logs\\main.log');
-    } else {
-        console.log('** Redirecting console to log ~/.config/Threat\\ Dragon/logs/main.log');
-    }
+  if (isMacOS) {
+    console.log('** Redirecting console to log ~/Library/Logs/Threat\\ Dragon/main.log');
+  } else if (isWin) {
+    console.log('** Redirecting console to log AppData\\Roaming\\Threat/ Dragon\\logs\\main.log');
+  } else {
+    console.log('** Redirecting console to log ~/.config/Threat\\ Dragon/logs/main.log');
+  }
 }
 
 // set up electron-specific fileLogLevel for the log file
@@ -27,7 +27,7 @@ Object.assign(console, log.functions);
 log.transports.console.level = consoleLogLevel;
 
 export default {
-    consoleLogLevel,
-    fileLogLevel,
-    log
+  consoleLogLevel,
+  fileLogLevel,
+  log
 };

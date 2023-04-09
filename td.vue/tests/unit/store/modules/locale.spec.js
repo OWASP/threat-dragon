@@ -1,7 +1,7 @@
-import { LOCALE_SELECTED } from '@/store/actions/locale.js';
-import localeModule from '@/store/modules/locale.js';
+import { LOCALE_SELECTED } from '@/stores/actions/locale.js';
+import localeModule from '@/stores/locale.js';
 
-describe('store/modules/locale.js', () => {
+describe('stores/modules/locale.js', () => {
     const mocks = {
         commit: () => {}
     };
@@ -24,7 +24,7 @@ describe('store/modules/locale.js', () => {
     });
 
     describe('mutations', () => {
-        describe('selected', () => {    
+        describe('selected', () => {
             beforeEach(() => {
                 localeModule.mutations[LOCALE_SELECTED](localeModule.state, 'foobar');
             });

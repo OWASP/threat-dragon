@@ -7,7 +7,7 @@ const completeLoginAsync = (provider, code) => api.getAsync(`/api/oauth/${provid
 const logoutAsync = (refreshToken) => api.postAsync('/api/logout', { refreshToken });
 
 export default {
-    completeLoginAsync,
-    loginAsync,
-    logoutAsync
+  completeLoginAsync,
+  loginAsync,
+  logoutAsync
 };

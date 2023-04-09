@@ -3,7 +3,7 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/stores/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];

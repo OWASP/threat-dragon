@@ -3,8 +3,8 @@ import diagram from '@/service/migration/diagram.js';
 import events from '@/service/x6/graph/events.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import graphFactory from '@/service/x6/graph/graph.js';
-import store from '@/store/index.js';
-import tmActions from '@/store/actions/threatmodel.js';
+import store from '@/stores/index.js';
+import tmActions from '@/stores/actions/threatmodel.js';
 
 describe('service/migration/diagram.js', () => {
     let diagramMock, graphMock, storeMock;
@@ -74,7 +74,7 @@ describe('service/migration/diagram.js', () => {
                 expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(cellsMock.length);
             });
 
-            it('dispatches the diagramUpdated event to the store', () => {
+            it('dispatches the diagramUpdated event to the stores', () => {
                 expect(storeMock.dispatch)
                     .toHaveBeenCalledWith(tmActions.diagramUpdated, diagramMock);
             });

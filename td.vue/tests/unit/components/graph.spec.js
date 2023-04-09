@@ -11,7 +11,7 @@ import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 import diagramService from '@/service/migration/diagram.js';
 import stencilService from '@/service/x6/stencil.js';
 import providerService from '@/service/provider/providers.js';
-import tmActions from '@/store/actions/threatmodel.js';
+import tmActions from '@/stores/actions/threatmodel.js';
 
 describe('components/GraphButtons.vue', () => {
     let graphMock, localVue, routerMock, storeMock, threatEditStub, wrapper;
@@ -20,7 +20,7 @@ describe('components/GraphButtons.vue', () => {
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);
-        
+
         graphMock = {
             toJSON: jest.fn().mockReturnValue({ cells: [] })
         };
