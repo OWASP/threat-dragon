@@ -17,3 +17,4 @@ describe('stores/actions/auth.js', () => {
     expect(LOGOUT).not.toBeUndefined();
   });
 });
+

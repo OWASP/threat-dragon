@@ -77,6 +77,7 @@ const getDataTestId = (item) => {
 };
 </script>
 
+
 <template>
   <div class="td-executive-summary no-print">
     <b-row>

@@ -355,12 +355,11 @@ export const setMainWindow = (window) => {
 };
 
 export default {
-    getMenuTemplate,
-    modelClosed,
-    modelOpened,
-    modelPrint,
-    modelSaved,
-    readModelData,
-    setLocale,
-    setMainWindow
+  getMenuTemplate,
+  modelClosed,
+  modelOpened,
+  modelPrint,modelSaved,
+  readModelData,
+  setLocale,
+  setMainWindow
 };
