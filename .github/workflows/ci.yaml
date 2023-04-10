@@ -28,15 +28,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -65,15 +60,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -102,15 +92,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -194,15 +179,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -250,15 +230,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -409,15 +384,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
