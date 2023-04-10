@@ -98,18 +98,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: BrowserStack Env Setup
         uses: browserstack/github-actions/setup-env@v1.0.1
@@ -118,7 +121,7 @@ jobs:
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Run cross-browser smoke tests
-        run: pnpm run test:e2e-smokes
+        run: npm run test:e2e-smokes
 
   rollback:
     name: rollback on fail

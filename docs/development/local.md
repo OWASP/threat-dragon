@@ -10,12 +10,11 @@ group: Local
 
 ## Quickstart
 1. Clone the repository: `git clone https://github.com/OWASP/threat-dragon.git`
-1. [Install pnpm](https://pnpm.io/installation) and use node 16
-1. Run `pnpm install`
-1. Configure your [environment]({{ 'development/environment.html' | relative_url }}) 
-1. Run `pnpm dev:server`
-1. In another terminal, run `pnpm dev:vue`
-1. Visit [http://localhost:8080](http://localhost:8080/)
+2. Run `npm install`
+3. Configure your [environment]({{ 'development/environment.html' | relative_url }})
+4. Run `npm run dev:server`
+5. In another terminal, run `npm run dev:vue`
+6. Visit [http://localhost:8080](http://localhost:8080/)
 
 ## Coding style
 The coding style is not strict, and follows generally accepted styles such as
@@ -27,15 +26,8 @@ Indents are set to 4 for now, but this may change and we might go to a 2 space i
 
 ## Dependencies
 
-### Pnpm
-Threat Dragon uses pnpm as a package manager.  You can install it by running `npm install -g pnpm`,
-or by following any of the [alternative installation methods](https://pnpm.io/installation).
-
 ### NodeJs
-Threat Dragon uses nodejs and is developed against version 16.
-If you already have pnpm installed and do not have a node version manager,
-you can easily manage your node environment (version) commands from [pnpm](https://pnpm.io/cli/env).
-
+Threat Dragon uses nodejs and is developed against version 18.
 There are multiple ways of installing and managing versions of node,
 including [nvm](https://github.com/nvm-sh/nvm) and some others, the choice is yours!
 
@@ -58,27 +50,27 @@ in the format `<command>:<vue|server|desktop>`. As an example run from top-level
 {:.table .table-striped}
 | Command | Description |
 | ---- | ---- | ---- |
-| `pnpm build` | Builds the web-based project(s). |
-| `pnpm dev` | Starts the development version of the project and watches for changes. *This requires using two different terminals.* Run `pnpm dev:vue` and in another terminal, `pnpm dev:server`. |
-| `pnpm start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. |
-| `pnpm start:desktop` | Starts the development desktop version. |
-| `pnpm test:vue` | Runs the end-to-end tests in headless mode. |
-| `pnpm test` | Runs the unit tests for the project(s). |
+| `npm build` | Builds the web-based project(s). |
+| `npm run dev` | Starts the development version of the project and watches for changes. *This requires using two different terminals.* Run `npm run dev:vue` and in another terminal, `npm run dev:server`. |
+| `npm start` | Starts the development version of the project(s) using [pm2](https://github.com/Unitech/pm2). *This only requires a single terminal*. |
+| `npm run start:desktop` | Starts the development desktop version. |
+| `npm run test:vue` | Runs the end-to-end tests in headless mode. |
+| `npm test` | Runs the unit tests for the project(s). |
 
 ## Logs
 Server logs `app.log` and  `audit.log` can be accessed from directory `td.server`.
 
 ## Desktop
 Threat Dragon uses electron to build install images for the desktop application, supporting Linux, MacOS and Windows.
-Build these using `pnpm build:desktop` from the top directory.
+Build these using `npm run build:desktop` from the top directory.
 
-During development launch the electron-based desktop application from the top directory: `pnpm start:desktop`.
+During development launch the electron-based desktop application from the top directory: `npm run start:desktop`.
 This runs the desktop application in development mode that will relaunch the application as changes are made.
 
 ## Docker
 A Dockerfile is provided that can be used to create a docker image:
 * checkout the Threat Dragon source repo
-* from the root directory build the docker image using `docker build -t owasp-threat-dragon:dev .`
+* from the root directory build the docker image using `docker build -t owasp-threat-dragon:dev -f Dockerfile`
 * wait for the docker image to build
 * create a `.env` environment variable file using the example `example.env` as a template
 * run a docker container, mapping port 8080:

@@ -25,8 +25,8 @@ ___
 1. [Generate Keys](#generating-keys) for encryption and JWT signing
 1. Copy `example.env` to `.env`
 1. Update the values in `.env`
-1. `pnpm install`
-1. `pnpm run serve`
+1. `npm install`
+1. `npm run serve`
 
 ___
 

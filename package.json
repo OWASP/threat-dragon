@@ -13,11 +13,9 @@
     "clean:vue": "cd td.vue && npm run clean",
     "dev:vue": "cd td.vue && npm run dev",
     "dev:server": "cd td.server && npm run dev",
-    "preinstall": "npx only-allow pnpm",
     "pretest": "npm-run-all pretest:server pretest:site",
     "pretest:server": "cd td.server && npm run pretest",
     "pretest:site": "cd td.vue && npm run pretest",
-    "postinstall": "cd td.server && pnpm install && cd ../td.vue && pnpm install",
     "start": "npm-run-all build:vue build:server start:server start:site",
     "start:desktop": "cd td.vue && npm run start:desktop",
     "start:server": "cd td.server && npm run start:serve",
@@ -64,16 +62,15 @@
     "td.vue",
     "td.server"
   ],
-  "pnpm": {
-    "overrides": {
-      "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
-      "nth-check@<2.0.1": ">=2.0.1",
-      "tar@>=6.0.0 <6.1.9": ">=6.1.9",
-      "glob-parent@<5.1.2": ">=5.1.2",
-      "lodash@<4.17.21": ">=4.17.21",
-      "minimatch@<3.0.5": ">=3.0.5",
-      "node-notifier@<8.0.1": ">=8.0.1",
-      "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
-    }
+  "overrides": {
+    "node-ipc": ">=10.1.7",
+    "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
+    "nth-check@<2.0.1": ">=2.0.1",
+    "tar@>=6.0.0 <6.1.9": ">=6.1.9",
+    "glob-parent@<5.1.2": ">=5.1.2",
+    "lodash@<4.17.21": ">=4.17.21",
+    "minimatch@<3.0.5": ">=3.0.5",
+    "node-notifier@<8.0.1": ">=8.0.1",
+    "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   }
 }

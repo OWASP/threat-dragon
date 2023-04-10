@@ -28,9 +28,9 @@ git clone https://github.com/owasp/threat-dragon.git
 ```
 
 This installs code in two sub-folders. One for the main application (`td.site`) and one for the server (`td.server`).
-To install use pnpm (rather than npm):
+To install :
 
-`pnpm install`
+`npm install`
 
 ### Environment variables
 

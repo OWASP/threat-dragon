@@ -3,45 +3,43 @@ This is a Vue project that serves as the front end of the OWASP Threat Dragon we
 and also provides the electron desktop project
 
 ## Project setup
-Use `pnpm` rather than `npm` :
 
 ```
-npm install --location=global pnpm
-pnpm install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-pnpm serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-pnpm build
+npm run build
 ```
 
 ### Builds the desktop application
 ```
-pnpm run electron:build
+npm run electron:build
 ```
 
 ### Runs the desktop application for development
 ```
-pnpm run electron:serve
+npm run electron:serve
 ```
 
 Clean the distribution with
 ```
-pnpm clean
+npm run clean
 ```
 
 ### Run unit tests
 ```
-pnpm test
+npm test
 ```
 For continuous testing:
 ```
-pnpm run test:unit -- --watch
+npm run test:unit -- --watch
 ```
 Jest coverage will only show coverage for files containing executable javascript.
 This means that vue components without any JS logic will not be included in the coverage report.
@@ -50,12 +48,12 @@ or you know of another way of getting better coverage for `.vue` files, please o
 
 ### Run e2e tests
 ```
-pnpm run test:e2e
+npm run test:e2e
 ```
 
 ### Lints and fixes files
 ```
-pnpm run lint
+npm run lint
 ```
 
 ## Styles

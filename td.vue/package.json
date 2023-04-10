@@ -10,7 +10,6 @@
     "cypress:open": "cypress open",
     "dev": "vue-cli-service serve --port 8080",
     "lint": "vue-cli-service lint",
-    "preinstall": "npx only-allow pnpm",
     "pretest": "npm run lint",
     "serve": "vue-cli-service serve",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
@@ -111,7 +110,7 @@
     "jest": "^27.5.1",
     "mutationobserver-shim": "^0.3.7",
     "npm-force-resolutions": "^0.0.10",
-    "pm2": "^5.2.0",
+    "pm2": "^5.3.0",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "rimraf": "^3.0.2",
@@ -128,20 +127,20 @@
     "webdriverio": "^8.3.3",
     "webpack": "^5.77.0"
   },
-  "pnpm": {
-    "overrides": {
-      "debug@<3.1.0": ">=4.3.4",
-      "follow-redirects": ">=1.14.8",
-      "glob-parent@<5.1.2": ">=5.1.2",
-      "lodash@<4.17.19": ">=4.17.19",
-      "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
-      "node-fetch": ">=2.6.7",
-      "node-notifier@<8.0.1": ">=8.0.1",
-      "nth-check@<2.0.1": ">=2.0.1",
-      "tar@>=6.0.0 <6.1.9": ">=6.1.9",
-      "webpack@<5.0.0": ">=5.77.0",
-      "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
-    }
+
+  "overrides": {
+    "node-ipc": ">=10.1.7",
+    "debug@<3.1.0": ">=4.3.4",
+    "follow-redirects": ">=1.14.8",
+    "glob-parent@<5.1.2": ">=5.1.2",
+    "lodash@<4.17.19": ">=4.17.19",
+    "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
+    "node-fetch": ">=2.6.7",
+    "node-notifier@<8.0.1": ">=8.0.1",
+    "nth-check@<2.0.1": ">=2.0.1",
+    "tar@>=6.0.0 <6.1.9": ">=6.1.9",
+    "webpack@<5.0.0": ">=5.77.0",
+    "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
   "main": "background.js",
   "resolutions": {

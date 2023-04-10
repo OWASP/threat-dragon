@@ -1,6 +1,0 @@
-packages:
-  - 'td.server/**'
-  - 'td.vue/**'
-  - '!docs/**'
-  - '!utils/**'
-  - '!ThreatDragonModels/**'

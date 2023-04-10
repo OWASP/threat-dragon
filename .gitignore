@@ -21,8 +21,7 @@
 !cupcake/png/*.gif
 !example.env
 !package.json
-!pnpm-lock.yaml
-!pnpm_workspace.yaml
+!package-lock.json
 
 # sample threat models
 !ThreatDragonModels
@@ -45,7 +44,7 @@
 !td.server/.babelrc
 !td.server/README.md
 !td.server/package.json
-!td.server/pnpm-lock.yaml
+!td.server/package-lock.json
 
 # Vue front end
 !td.vue
@@ -57,7 +56,7 @@
 !td.vue/src/assets/*
 !td.vue/public/*
 !td.vue/package.json
-!td.vue/pnpm-lock.yaml
+!td.vue/package-lock.json
 !td.vue/.browserslistrc
 !td.vue/.editorconfig
 !td.vue/README.md

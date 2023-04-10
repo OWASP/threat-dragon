@@ -35,13 +35,11 @@ Run the installer and invoke the application from the shortcut.
 
 ### Command line using npm
 
-For the latest versions of code between releases, `pnpm` and `npm` can be used to install and run Threat Dragon locally:
+For the latest versions of code between releases, `npm` can be used to install and run Threat Dragon locally:
 
 `git clone https://github.com/owasp/threat-dragon`
 
 `cd threat-dragon`
-
-`pnpm install`
 
 To run Threat Dragon in development mode:
 

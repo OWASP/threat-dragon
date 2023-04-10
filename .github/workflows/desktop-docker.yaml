@@ -27,18 +27,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -61,18 +64,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -95,18 +101,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -135,18 +144,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: Build application
         # test only so do not publish
@@ -173,18 +185,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       # Build and publish Windows installer to github Release Draft
       - name: Release for Windows
@@ -213,18 +228,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       # Build and publish MacOS installer to github Release Draft
       # the draft name uses version and is created if it does not already exist
@@ -265,18 +283,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       # Build and publish Linux installers to github Release Draft
       # for all linux images EXCEPT for the snap
@@ -303,18 +324,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       # Build the snap, but do not use inbuilt publish
       # Snaps do not publish, even with snapcraft installed, so use Snap Store

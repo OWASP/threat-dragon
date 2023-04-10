@@ -28,14 +28,14 @@ group: Testing
 ### Jest (td.vue)
 Unit testing for the vue application is done using [jest](https://jestjs.io/), and lives in the `td.vue/tests/unit` directory.
 To run the tests locally, navigate to the `td.vue` directory and run:
-- `pnpm run test:unit`
+- `npm run test:unit`
 
-If you'd prefer to work in a more TDD fashion, you can have the tests run continuously by running `ppnpm run test:unit -- --watch`.
+If you'd prefer to work in a more TDD fashion, you can have the tests run continuously by running `npm run test:unit -- --watch`.
 
 ### Mocha (td.server)
 Unit testing for the server application is done using [Mocha](https://mochajs.org/),
 with a little help from our friends [sinon](https://sinonjs.org/) and [chai](https://www.chaijs.com/).  To run the tests locally, navigate to the `td.server` directory and run:
-- `pnpm run test:unit`
+- `npm run test:unit`
 
 ## Code Coverage
 When you run unit tests for both the front-end and back-end application, you will be presented with a code coverage report.
