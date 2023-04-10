@@ -13,6 +13,7 @@
     "clean:vue": "cd td.vue && npm run clean",
     "dev:vue": "cd td.vue && npm run dev",
     "dev:server": "cd td.server && npm run dev",
+    "preinstall": "npx only-allow pnpm",
     "pretest": "npm-run-all pretest:server pretest:site",
     "pretest:server": "cd td.server && npm run pretest",
     "pretest:site": "cd td.vue && npm run pretest",
