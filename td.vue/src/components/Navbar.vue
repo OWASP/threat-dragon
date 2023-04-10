@@ -22,7 +22,7 @@ const onLogOut = async (evt) => {
   evt.preventDefault();
   await authStore.logout();
   await router.push('/').catch(error => {
-    if (error.name != 'NavigationDuplicated') {
+    if (error.name !== 'NavigationDuplicated') {
       throw error;
     }
   });
