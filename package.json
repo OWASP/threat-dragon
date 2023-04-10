@@ -16,6 +16,7 @@
     "pretest": "npm-run-all pretest:server pretest:site",
     "pretest:server": "cd td.server && npm run pretest",
     "pretest:site": "cd td.vue && npm run pretest",
+    "postinstall": "cd td.server && npm install && cd ../td.vue && npm install",
     "start": "npm-run-all build:vue build:server start:server start:site",
     "start:desktop": "cd td.vue && npm run start:desktop",
     "start:server": "cd td.server && npm run start:serve",
@@ -58,10 +59,6 @@
     "npm-run-all": "^4.1.5",
     "rimraf": "^4.4.0"
   },
-  "workspaces": [
-    "td.vue",
-    "td.server"
-  ],
   "overrides": {
     "node-ipc": ">=10.1.7",
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",

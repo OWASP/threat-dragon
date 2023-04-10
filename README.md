@@ -78,7 +78,7 @@ Clone the repository using: `git clone https://github.com/owasp/threat-dragon.gi
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-Pnpm (rather than npm) is used to install from the top directory of the project : `npm install`
+Install from the top directory of the project using : `npm install`
 
 ### Environment variables for web application
 The web application variant of Threat Dragon requires some environment variables;
