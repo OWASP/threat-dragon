@@ -36,7 +36,7 @@ const providers = computed(() => {
             id="home-td-logo"
             class="td-cupcake"
             :alt="t('home.imgAlt')"
-            src="images/threatdragon_logo_image.svg"
+            src="/images/threatdragon_logo_image.svg"
           />
         </b-col>
         <b-col md="8">

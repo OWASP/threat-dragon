@@ -8,13 +8,17 @@ export const useRepositoryStore = defineStore('repositoryStore', {
     selected: ''
   }),
   actions: {
+    $reset() {
+      this.all = [];
+      this.selected = '';
+    },
     async fetch() {
       this.$reset();
       const resp = await threatmodelApi.reposAsync();
       resp.data.repos.forEach((repo, idx) => this.all[idx] = repo);
     },
-    selected(state, repo) {
-      state.selected = repo;
+    setSelected(repo) {
+      this.selected = repo;
     }
   }
 });

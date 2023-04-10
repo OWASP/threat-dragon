@@ -29,14 +29,20 @@ const updateLocale = (locale) => {
 </script>
 
 <template>
-<div class="locale-changer">
-  <b-dropdown right :text="currentLocale" variant="primary">
-    <b-dropdown-item v-for="locale in $i18n.availableLocales"
-      :key="`locale-${locale}`"
-      :value="locale"
-      @click="updateLocale(locale)">
+  <div class="locale-changer">
+    <b-dropdown
+      right
+      :text="currentLocale"
+      variant="primary"
+    >
+      <b-dropdown-item
+        v-for="locale in $i18n.availableLocales"
+        :key="`locale-${locale}`"
+        :value="locale"
+        @click="updateLocale(locale)"
+      >
         {{ locale }}
-    </b-dropdown-item>
-  </b-dropdown>
-</div>
+      </b-dropdown-item>
+    </b-dropdown>
+  </div>
 </template>

@@ -16,10 +16,10 @@ const authStore = useAuthStore();
 const router = useRouter();
 const { t } = useI18n();
 
-const onLogOut = (evt) => {
+const onLogOut = async (evt) => {
   evt.preventDefault();
-  authStore.logout();
-  router.push('/').catch(error => {
+  await authStore.logout();
+  await router.push('/').catch(error => {
     if (error.name != 'NavigationDuplicated') {
       throw error;
     }
@@ -30,7 +30,7 @@ const onLogOut = (evt) => {
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
     <b-navbar-brand :to="authStore.username ? '/dashboard' : '/'" class="td-brand">
-      <b-img src="images/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+      <b-img src="/images/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{ appStore.packageBuildVersion }}{{ appStore.packageBuildState }}
     </b-navbar-brand>
 
@@ -78,7 +78,7 @@ const onLogOut = (evt) => {
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="images/owasp.svg" class="td-fa-nav td-owasp-logo" />
+          <b-img src="/images/owasp.svg" class="td-fa-nav td-owasp-logo" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>

@@ -4,6 +4,7 @@ export default {
 };
 </script>
 <script setup>
+import {computed, ref} from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
@@ -27,12 +28,12 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+const filter = ref('');
 
-const filter = '';
-const displayedItems = () => {
-  if (!filter) { return props.items; }
-  return props.items.filter(x => x.toLowerCase().includes(filter.toLowerCase()));
-};
+const displayedItems = computed(() => {
+  if (!filter.value) { return props.items; }
+  return props.items.filter(x => x.toLowerCase().includes(filter.value.toLowerCase()));
+});
 </script>
 
 <template>

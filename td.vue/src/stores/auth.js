@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 import { useBranchStore } from '@/stores/branch';
 import { useCellStore } from '@/stores/cell';
@@ -10,15 +11,21 @@ import providers from '../service/provider/providers.js';
 
 export const useAuthStore = defineStore( 'authStore', {
   state: () => ({
-    jwt: '',
-    refreshToken: '',
-    jwtBody: {},
-    user: {}
+    jwt: useStorage('pinia/auth/jwt', ''),
+    refreshToken: useStorage('pinia/auth/refreshToken', ''),
+    jwtBody: useStorage('pinia/auth/jwtBody', {}),
+    user: useStorage('pinia/auth/user', {}),
   }),
   getters: {
     username: (state) => state.user.username || ''
   },
   actions: {
+    $reset() {
+      this.jwt = '';
+      this.refreshToken = '';
+      this.jwtBody = {};
+      this.user = {};
+    },
     setJWT(tokens) {
       try {
         const { accessToken, refreshToken } = tokens;

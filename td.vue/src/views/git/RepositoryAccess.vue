@@ -7,11 +7,9 @@ export default {
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import { useProviderStore } from '@/stores/provider';
 import { useRepositoryStore } from '@/stores/repository';
-
-import {computed, onMounted} from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-
+import { useRouter } from 'vue-router';
 import { getProviderType } from '@/service/provider/providers.js';
 
 const providerStore = useProviderStore();
@@ -24,16 +22,16 @@ const provider = computed(() => providerStore.selected);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const repositories = computed(() => repositoryStore.all);
 
-onMounted(() => {
+onMounted(async () => {
   if (provider.value !== router.currentRoute.value.params.provider) {
-    providerStore.selected(router.currentRoute.value.params.provider);
+    providerStore.setSelected(router.currentRoute.value.params.provider);
   }
 
-  repositoryStore.fetch();
+  await repositoryStore.fetch();
 });
 
 const onRepoClick = (repoName) => {
-  repositoryStore.selected(repoName.value);
+  repositoryStore.setSelected(repoName);
   const params = Object.assign({}, router.currentRoute.value.params, {
     repository: repoName
   });

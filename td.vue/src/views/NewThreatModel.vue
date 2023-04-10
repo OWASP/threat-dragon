@@ -41,7 +41,7 @@ onMounted(() => {
     }
   };
 
-  threatModelStore.selected(newTm);
+  threatModelStore.setSelected(newTm);
   const params = Object.assign({}, router.currentRoute.value.params, {
     threatmodel: newTm.summary.title
   });

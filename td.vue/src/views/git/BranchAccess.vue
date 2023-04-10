@@ -8,7 +8,7 @@ import TdSelectionPage from '@/components/SelectionPage.vue';
 import { useProviderStore } from '@/stores/provider';
 import { useBranchStore } from '@/stores/branch';
 import { useRepositoryStore } from '@/stores/repository';
-import {computed, onMounted} from 'vue';
+import { computed, onMounted} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { getProviderType } from '@/service/provider/providers.js';
@@ -20,21 +20,21 @@ const repositoryStore = useRepositoryStore();
 const router = useRouter();
 const { t } = useI18n();
 
-const branches = computed(() => branchStore.all);
 const provider = computed(() => providerStore.selected);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const repoName = computed(() => repositoryStore.selected);
+const branches = computed(() => branchStore.all);
 
-onMounted(() => {
+onMounted(async () => {
   if (provider.value !== router.currentRoute.value.params.provider) {
-    providerStore.selected(router.currentRoute.value.params.provider);
+    providerStore.setSelected(router.currentRoute.value.params.provider);
   }
 
   if (repoName.value !== router.currentRoute.value.params.repository) {
-    repositoryStore.selected(router.currentRoute.value.params.repository);
+    repositoryStore.setSelected(router.currentRoute.value.params.repository);
   }
 
-  branchStore.fetch();
+  await branchStore.fetch();
 });
 
 const selectRepoClick = () => {
@@ -42,7 +42,7 @@ const selectRepoClick = () => {
   router.push({ name: `${providerType.value}Repository` });
 };
 const onBranchClick = (branch) => {
-  branchStore.selected(branch);
+  branchStore.setSelected(branch);
   const params = Object.assign({}, router.currentRoute.value.params, {
     branch
   });

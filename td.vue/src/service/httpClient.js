@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import { useLoaderStore } from '@/stores/loader';
 import { t } from '@/i18n/index.js';
-import {useToast} from 'vue-toastification';
+import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
 
 let cachedClient = null;

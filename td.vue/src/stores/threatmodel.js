@@ -32,6 +32,13 @@ export const useThreatModelStore = defineStore('threatModelStore', {
     isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
   },
   actions: {
+    $reset() {
+      this.all = [];
+      this.data = {};
+      this.fileName = '';
+      this.immutableCopy = {};
+      this.selectedDiagram = {};
+    },
     clearState() {
       if (isElectron()) {
         // tell any electron server that the model has closed
@@ -86,8 +93,8 @@ export const useThreatModelStore = defineStore('threatModelStore', {
     async fetch(threatModel) {
       this.clearState();
       const resp = await threatmodelApi.modelAsync(
-        useBranchStore().selected,
         useRepositoryStore().selected,
+        useBranchStore().selected,
         threatModel
       );
       this.setThreatModel(resp.data);
@@ -95,8 +102,8 @@ export const useThreatModelStore = defineStore('threatModelStore', {
     async fetchAll() {
       if (getProviderType(useProviderStore().selected) !== providerTypes.local) {
         const resp = await threatmodelApi.modelsAsync(
-          useBranchStore().selected,
-          useRepositoryStore().selected
+          useRepositoryStore().selected,
+          useBranchStore().selected
         );
         this.all.length = 0;
         resp.data.forEach((model, idx) => this.all[idx] = model);
@@ -150,7 +157,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
         toast.error(t('threatmodel.errors.save'));
       }
     },
-    selected(threatModel) {
+    setSelected(threatModel) {
       this.setThreatModel(threatModel);
     },
     setInmutableCopy() {

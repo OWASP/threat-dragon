@@ -9,13 +9,17 @@ export const useBranchStore = defineStore('branchStore', {
     selected: ''
   }),
   actions: {
+    $reset() {
+      this.all = [];
+      this.selected = '';
+    },
     async fetch() {
       this.$reset();
       const repositoryStore = useRepositoryStore();
-      const resp = await threatmodelApi.branchesAsync(repositoryStore.repo.selected);
+      const resp = await threatmodelApi.branchesAsync(repositoryStore.selected);
       resp.data.branches.forEach((branch, idx) => this.all[idx] = branch);
     },
-    selected(repo) {
+    setSelected(repo) {
       this.selected = repo;
     }
   }

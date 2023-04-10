@@ -18,9 +18,9 @@ const provider = computed(() => providerStore.selected);
 
 onMounted(async () => {
   try {
-    const resp = await loginApi.completeLoginAsync(provider, router.currentRoute.value.query.code);
+    const resp = await loginApi.completeLoginAsync(provider.value, router.currentRoute.value.query.code);
     authStore.setJWT(resp.data);
-    await this.router.push('/dashboard');
+    await router.push('/dashboard');
   } catch (ex) {
     console.error('Error getting token');
     console.error(ex);

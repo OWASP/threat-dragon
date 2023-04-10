@@ -45,7 +45,7 @@ const getOauthRedirectUrl = () => {
  * @returns {String}
  */
 const getOauthReturnUrl = (code) => {
-    let returnUrl = `/#/oauth-return?code=${code}`;
+    let returnUrl = `/oauth-return?code=${code}`;
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
     }

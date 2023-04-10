@@ -49,9 +49,9 @@ const onCloseClick = (evt) => {
 };
 const getThumbnailUrl = (diagram) => {
   if (!diagram || !diagram.diagramType) {
-    return '../images/thumbnail.jpg';
+    return '/images/thumbnail.jpg';
   }
-  return `../images/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
+  return `/images/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
 };
 
 const editDiagram = (diagram) => {

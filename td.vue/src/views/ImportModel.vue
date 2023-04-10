@@ -89,7 +89,7 @@ const onImportClick = (fileName) => {
   }
 
   // save the threat model in the stores
-  threatModelStore.selected(jsonModel);
+  threatModelStore.setSelected(jsonModel);
 
   let params;
   // this will fail if the threat model does not have a title in the summary

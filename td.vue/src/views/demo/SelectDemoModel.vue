@@ -23,7 +23,7 @@ onMounted(() => {
 });
 
 const onModelClick = (model) => {
-  threatmodelStore.selected(model.model);
+  threatmodelStore.setSelected(model.model);
   if (isElectron()) {
     // tell any electron server that the model has changed
     window.electronAPI.modelOpened(model.name);

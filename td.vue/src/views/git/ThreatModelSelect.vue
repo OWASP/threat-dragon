@@ -5,58 +5,56 @@ export default {
 </script>
 <script setup>
 import TdSelectionPage from '@/components/SelectionPage.vue';
-import {useBranchStore} from '@/stores/branch';
-import {useProviderStore} from '@/stores/provider';
-import {useRepositoryStore} from '@/stores/repository';
-import {useThreatModelStore} from '@/stores/threatmodel';
-import {computed, onMounted} from 'vue';
-import {useI18n} from 'vue-i18n';
-import {useRouter} from 'vue-router';
+import { useProviderStore } from '@/stores/provider';
+import { useRepositoryStore } from '@/stores/repository';
+import { useBranchStore } from '@/stores/branch';
+import { useThreatModelStore } from '@/stores/threatmodel';
+import { computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { getProviderType } from '@/service/provider/providers.js';
 
-const branchStore = useBranchStore();
 const providerStore = useProviderStore();
+const branchStore = useBranchStore();
 const repositoryStore = useRepositoryStore();
 const threatModelStore = useThreatModelStore();
 
 const router = useRouter();
 const { t } = useI18n();
 
-const branch = computed(() => branchStore.selected);
 const provider = computed(() => providerStore.selected);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const repoName = computed(() => repositoryStore.selected);
+const branch = computed(() => branchStore.selected);
 const threatModels = computed(() => threatModelStore.all);
-const selectedModel = computed(() => threatModelStore.data);
 
-onMounted(() => {
+onMounted(async () => {
   if (provider.value !== router.currentRoute.value.params.provider) {
-    providerStore.selected(router.currentRoute.value.params.provider);
+    providerStore.setSelected(router.currentRoute.value.params.provider);
   }
 
   if (repoName.value !== router.currentRoute.value.params.repository) {
-    repositoryStore.selected(router.currentRoute.value.params.repository);
+    repositoryStore.setSelected(router.currentRoute.value.params.repository);
   }
 
   if (branch.value !== router.currentRoute.value.params.branch) {
-    branchStore.selected(router.currentRoute.value.params.branch);
+    branchStore.setSelected(router.currentRoute.value.params.branch);
   }
 
-  threatModelStore.fetchAll();
+  await threatModelStore.fetchAll();
 });
 
-const selectBranchClick = () => {
-  branchStore.$reset();
-  router.push({ name: 'gitBranch', params: { provider: provider.value, repository: repoName.value }});
-};
 const selectRepoClick = () => {
   repositoryStore.$reset();
-  router.push({ name: 'gitRepository', params: { provider: provider.value }});
+  router.push({ name: `${providerType.value}Repository`, params: { provider: provider.value }});
 };
-const onThreatmodelClick = async (threatmodel) => {
+const selectBranchClick = () => {
+  branchStore.$reset();
+  router.push({ name: `${providerType.value}Branch`, params: { provider: provider.value, repository: repoName.value }});
+};
+const onThreatModelClick = async (threatmodel) => {
   await threatModelStore.fetch(threatmodel);
   const params = Object.assign({}, router.currentRoute.value.params, { threatmodel });
-  threatModelStore.selected(selectedModel);
   await router.push({ name: `${providerType.value}ThreatModel`, params });
 };
 const newThreatModel = () => {
@@ -87,7 +85,7 @@ const newThreatModel = () => {
 <template>
   <td-selection-page
     :items="threatModels"
-    :on-item-click="onThreatmodelClick"
+    :on-item-click="onThreatModelClick"
     :empty-state-text="t('threatmodelSelect.newThreatModel')"
     :on-empty-state-click="newThreatModel"
   >
