@@ -114,7 +114,7 @@ To run Threat Dragon in a docker container,
 first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/environment.html)
 and run from the top directory of the project:
 
-- `docker build -t owasp-threat-dragon:dev -f Dockerfile`
+- `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 - or if using Windows:
 - `docker run -it --rm -p 8080:3000 -v %CD%/.env:/app/.env owasp-threat-dragon:dev`

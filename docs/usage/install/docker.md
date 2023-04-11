@@ -27,7 +27,7 @@ Once your environment variables are set up, you can either build the image yours
 #### Building
 You can build a local docker image from the top directory of the project, which contains the `Dockerfile`.
 Use a command such as:
-`docker build -t owasp-threat-dragon:local -f Dockerfile`
+`docker build -t owasp-threat-dragon:local .`
 Note that here we have used a tag `local` but almost any tag is accepted, for example `dev`.
 
 #### Pulling/Downloading
