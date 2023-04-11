@@ -35,24 +35,30 @@ FROM        cyclonedx/cyclonedx-cli:0.24.2 as build-canonical-bom
 RUN         mkdir boms
 RUN         ./cyclonedx add files \
                 --no-input \
+                --output-file boms/site_json_bom.json \
+                --output-format json \
+                --base-path ./td.vue/
+RUN         ./cyclonedx add files \
+                --no-input \
                 --output-file boms/server_json_bom.json \
                 --output-format json \
                 --base-path ./td.server/
+RUN         ./cyclonedx merge \
+                --input-files boms/site_json_bom.json boms/server_json_bom.json \
+                --output-file boms/canonical_json_bom.json
+RUN         ./cyclonedx add files \
+                --no-input \
+                --output-file boms/site_xml_bom.xml \
+                --output-format xml \
+                --base-path ./td.site/
 RUN         ./cyclonedx add files \
                 --no-input \
                 --output-file boms/server_xml_bom.xml \
                 --output-format xml \
                 --base-path ./td.server/
-RUN         ./cyclonedx add files \
-                --input-file boms/server_json_bom.json \
-                --output-file boms/canonical_json_bom.json \
-                --output-format json \
-                --base-path ./td.vue/
-RUN         ./cyclonedx add files \
-                --input-file boms/server_xml_bom.xml \
-                --output-file boms/canonical_xml_bom.xml \
-                --output-format xml \
-                --base-path ./td.vue/
+RUN         ./cyclonedx merge \
+                --input-files boms/site_json_bom.xml boms/server_json_bom.xml \
+                --output-file boms/canonical_xml_bom.xml
 
 # Builds the docs, including the SBOMs from this build
 FROM        imoshtokill/jekyll-bundler as build-docs
