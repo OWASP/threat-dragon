@@ -16,8 +16,8 @@ FROM        base-node as build
 RUN         mkdir boms
 
 COPY        package-lock.json package.json /app/
-COPY        ./td.server/package.json ./td.server/
-COPY        ./td.vue/package.json ./td.vue/
+COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
+COPY        ./td.vue/package-lock.json ./td.vue/package.json ./td.vue/
 
 COPY        ./td.server/.babelrc ./td.server/
 COPY        ./td.server/src/ ./td.server/src/
@@ -25,31 +25,34 @@ COPY        ./td.vue/src/ ./td.vue/src/
 COPY        ./td.vue/public/ ./td.vue/public/
 COPY        ./td.vue/*.config.js ./td.vue/
 
-RUN         npm clean-install
+RUN         npm clean-install --ignore-scripts
+RUN         cd td.server && npm clean-install
+RUN         cd td.vue && npm clean-install
 RUN         npm run build
 
-# Build Software BOMs
-RUN         npx cyclonedx-bom -o boms/server_xml_bom.xml ./td.server
-RUN         npx cyclonedx-bom -o boms/site_xml_bom.xml ./td.vue
-
-
-# Build the canonical SBOM.
-FROM        cyclonedx/cyclonedx-cli:0.15.0 as build-canonical-bom
+# Build the canonical SBOM
+FROM        cyclonedx/cyclonedx-cli:0.24.2 as build-canonical-bom
 RUN         mkdir boms
-COPY        --from=build /app/boms/* ./boms/
-RUN         ./cyclonedx convert \
-                --input-file boms/site_xml_bom.xml \
-                --output-file boms/site_json_bom.json 
-RUN         ./cyclonedx convert \
+RUN         ./cyclonedx add files \
+                --no-input \
+                --output-file boms/server_json_bom.json \
+                --output-format json \
+                --base-path ./td.server/
+RUN         ./cyclonedx add files \
+                --no-input \
+                --output-file boms/server_xml_bom.xml \
+                --output-format xml \
+                --base-path ./td.server/
+RUN         ./cyclonedx add files \
+                --input-file boms/server_json_bom.json \
+                --output-file boms/canonical_json_bom.json \
+                --output-format json \
+                --base-path ./td.vue/
+RUN         ./cyclonedx add files \
                 --input-file boms/server_xml_bom.xml \
-                --output-file boms/server_json_bom.json
-RUN         ./cyclonedx merge \
-                --input-files boms/site_json_bom.json boms/server_json_bom.json \
-                --output-file boms/canonical_json_bom.json
-RUN         ./cyclonedx convert \
-                --input-file boms/canonical_json_bom.json \
-                --output-file boms/canonical_xml_bom.xml
-
+                --output-file boms/canonical_xml_bom.xml \
+                --output-format xml \
+                --base-path ./td.vue/
 
 # Builds the docs, including the SBOMs from this build
 FROM        imoshtokill/jekyll-bundler as build-docs
@@ -69,11 +72,8 @@ RUN         bundle exec jekyll build -b docs/
 FROM        base-node
 COPY        --from=build-docs /td.docs/_site /app/docs
 
-COPY        package-lock.json package.json /app/
-COPY        ./td.server/package.json ./td.server/
-COPY        ./td.vue/package.json ./td.vue/
-
-RUN         npm clean-install --omit dev --ignore-scripts
+COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
+RUN         cd td.server && npm clean-install --omit dev --ignore-scripts
 COPY        --from=build /app/td.server/dist ./td.server/dist
 COPY        --from=build /app/td.vue/dist ./dist
 COPY        ./td.server/index.js ./td.server/index.js
