@@ -57,7 +57,7 @@ RUN         ./cyclonedx add files \
                 --output-format xml \
                 --base-path ./td.server/
 RUN         ./cyclonedx merge \
-                --input-files boms/site_json_bom.xml boms/server_json_bom.xml \
+                --input-files boms/site_xml_bom.xml boms/server_xml_bom.xml \
                 --output-file boms/canonical_xml_bom.xml
 
 # Builds the docs, including the SBOMs from this build
