@@ -31,7 +31,6 @@ const contributors = computed({
     return threatModelStore.data.detail.contributors;
   },
   set(contributors) {
-    console.log('contributors', typeof contributors);
     if (typeof contributors === 'object' && contributors !== null) {
       threatModelStore.contributorsUpdated(contributors);
     }
