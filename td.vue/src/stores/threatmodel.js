@@ -114,12 +114,12 @@ export const useThreatModelStore = defineStore('threatModelStore', {
     },
     contributorsUpdated(contributors) {
       this.data.detail.contributors.length = 0;
-      contributors.forEach((name, idx) => this.data.detail.contributors[idx] = { name });
+      contributors.forEach((name, idx) => this.data.detail.contributors[idx] = name);
     },
     async restore() {
       let originalModel = JSON.parse(this.immutableCopy);
       if (getProviderType(useProviderStore().selected) !== providerTypes.local) {
-        const originalTitle = (JSON.parse(this.immutableCopy)).summary.title;
+        const originalTitle = originalModel.summary.title;
         const resp = await threatmodelApi.modelAsync(
           useBranchStore().selected,
           useRepositoryStore().selected,
@@ -127,7 +127,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
         );
         originalModel = resp.data;
       }
-      this.setThreatModel(this, originalModel);
+      this.setThreatModel(originalModel);
     },
     async save() {
       try {
@@ -148,7 +148,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
           // save locally for web app when local login
           save.local(this.data, `${this.data.summary.title}.json`);
         }
-        this.setInmutableCopy();
+        this.setInmutableCopy(this.data);
       } catch (ex) {
         console.error('Failed to update threat model!');
         console.error(ex);

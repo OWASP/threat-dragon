@@ -8,7 +8,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import { useThreatModelStore } from '@/stores/threatmodel';
 import { useProviderStore } from '@/stores/provider';
 import { useAppStore } from '@/stores/app';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { getProviderType } from '@/service/provider/providers.js';
@@ -26,12 +26,15 @@ const model = computed(() => threatModelStore.data);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const diagramTop = computed(() => threatModelStore.data.detail.diagramTop);
 const version = computed(() => appStore.packageBuildVersion);
-const contributors = ref({
+const contributors = computed({
   get() {
-    return threatModelStore.contributors;
+    return threatModelStore.data.detail.contributors;
   },
   set(contributors) {
-    threatModelStore.contributorsUpdated(contributors);
+    console.log('contributors', typeof contributors);
+    if (typeof contributors === 'object' && contributors !== null) {
+      threatModelStore.contributorsUpdated(contributors);
+    }
   }
 });
 
@@ -213,6 +216,7 @@ const getConfirmModal = async () => {
                 <b-form-tags
                   id="contributors"
                   v-model="contributors"
+                  separator=" ,;"
                   :placeholder="t('threatmodel.contributorsPlaceholder')"
                   variant="primary"
                 />
