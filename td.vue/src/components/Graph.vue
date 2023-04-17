@@ -38,7 +38,7 @@ onUnmounted(() => {
 
 const init = () => {
   graph.value = diagramService.edit(graphContainer.value, diagram.value);
-  stencil.get(graph, stencilContainer.value);
+  stencil.get(graph.value, stencilContainer.value);
   console.debug('diagram ID: ' + diagram.value.id);
 };
 const threatSelected = (threatId) => {
@@ -47,7 +47,7 @@ const threatSelected = (threatId) => {
 const saved = () => {
   const updated = Object.assign({}, diagram.value);
   updated.cells = graph.value.toJSON().cells;
-  threatModelStore.update(updated);
+  threatModelStore.diagramUpdated(updated);
   threatModelStore.save();
 };
 const closed = async () => {

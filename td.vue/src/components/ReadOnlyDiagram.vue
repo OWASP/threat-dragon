@@ -15,8 +15,8 @@ const props = defineProps({
   }
 });
 
-const diagramContainer = ref(null);
 const graph = ref(null);
+const diagramContainer = ref(null);
 const debounceTimeoutMs = 100;
 
 onMounted(() => {
@@ -30,7 +30,7 @@ onUnmounted(() => {
 });
 
 const init = () => {
-  graph.value = diagramService.draw(diagramContainer, props.diagram);
+  graph.value = diagramService.draw(diagramContainer.value, props.diagram);
   resizeGraph();
 };
 const resizeGraph = () => {
@@ -39,7 +39,7 @@ const resizeGraph = () => {
   const height = 700;
   const maxWidth = 1000;
 
-  const width = this.$parent.$el.clientWidth;
+  const width = diagramContainer.value.clientWidth;
   graph.value.unfreeze();
   graph.value.resize(Math.min(width, maxWidth) - 50, height - 50);
   graph.value.scaleContentToFit({

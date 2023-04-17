@@ -25,11 +25,11 @@ const props = defineProps({
 const { t } = useI18n();
 
 const dataType = computed(() => {
-  const entityType = props.entity.value.data.type.replace('tm.', '').replace('td.', '');
+  const entityType = props.entity.data.type.replace('tm.', '').replace('td.', '');
   return t(`threatmodel.shapes.${toCamelCase(entityType)}`);
 });
 const threats = computed(() => {
-  return threatService.filterForDiagram(props.entity.value.data, {
+  return threatService.filterForDiagram(props.entity.data, {
     showOutOfScope: props.showOutOfScope,
     showMitigated: props.showMitigated
   });

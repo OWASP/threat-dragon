@@ -27,7 +27,7 @@ const overviewCardData = computed(() => {
   kvs.push({key: t('threatmodel.reviewer'), value: model.value.detail.reviewer});
   kvs.push({
     key: t('threatmodel.contributors'),
-    value: model.value.detail.contributors.map(x => x).join(', ')
+    value: model.value.detail.contributors.map(x => x.name).join(', ')
   });
   return kvs;
 });

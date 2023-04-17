@@ -28,7 +28,7 @@ const diagramTop = computed(() => threatModelStore.data.detail.diagramTop);
 const version = computed(() => appStore.packageBuildVersion);
 const contributors = computed({
   get() {
-    return threatModelStore.data.detail.contributors;
+    return threatModelStore.contributors;
   },
   set(contributors) {
     if (typeof contributors === 'object' && contributors !== null) {

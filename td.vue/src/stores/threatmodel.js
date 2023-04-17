@@ -88,7 +88,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
       this.data.detail.diagrams[idx] = diagram;
       this.data.version = diagram.version;
       console.debug('Threatmodel diagram updated: ' + diagram.id + ' at index: ' + idx);
-      this.setThreatModel(this, this.data);
+      this.setThreatModel(this.data);
     },
     async fetch(threatModel) {
       this.clearState();
@@ -114,7 +114,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
     },
     contributorsUpdated(contributors) {
       this.data.detail.contributors.length = 0;
-      contributors.forEach((name, idx) => this.data.detail.contributors[idx] = name);
+      contributors.forEach((name, idx) => this.data.detail.contributors[idx] = { name });
     },
     async restore() {
       let originalModel = JSON.parse(this.immutableCopy);

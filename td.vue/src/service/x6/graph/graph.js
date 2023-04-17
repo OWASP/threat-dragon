@@ -1,6 +1,6 @@
 /**
  * @name graph
- * @description Creates an x6 graph object
+ * @description Creates a x6 graph object
  */
 import events from './events.js';
 import factory from '../factory.js';

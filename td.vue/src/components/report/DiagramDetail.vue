@@ -24,6 +24,7 @@ const props = defineProps( {
     default: true
   }
 });
+
 const entitiesWithThreats = computed(() => {
   return props.diagram.cells
     .filter(x => !!x.data && !!x.data.threats)
