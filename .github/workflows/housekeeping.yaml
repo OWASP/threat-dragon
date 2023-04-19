@@ -31,7 +31,7 @@ jobs:
           ref: main
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.9.1
+        uses: aquasecurity/trivy-action@0.10.0
         with:
           image-ref: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
           format: 'template'
