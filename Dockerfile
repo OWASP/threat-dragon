@@ -41,7 +41,7 @@ RUN         mkdir downloads
 RUN         bundle exec jekyll build -b docs/
 
 
-# Build the final, production image. 
+# Build the final, production image.
 FROM        base-node
 COPY        --from=build-docs /td.docs/_site /app/docs
 

@@ -13,3 +13,6 @@ docs/_layouts/%7B%7B%20page.redirect_to%20%7D%7D
 # script in td.vue/public/index.html
 BASE_URL
 
+# reference to old docs site
+www.threatdragon.com/docs/
+
