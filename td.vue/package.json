@@ -37,7 +37,7 @@
     "url": "https://owasp.org/www-project-threat-dragon/"
   },
   "license": "Apache-2.0",
-  "homepage": "https://www.threatdragon.com/docs/",
+  "homepage": "https://owasp.org/www-project-threat-dragon/",
   "buildState": "-demo",
   "repository": {
     "type": "git",

@@ -32,7 +32,7 @@ describe('home', () => {
         });
         
         it('links to the threat dragon docs', () => {
-            verifyExternalUrl('#nav-docs', 'https://www.threatdragon.com/docs');
+            verifyExternalUrl('#nav-docs', 'https://owasp.org/www-project-threat-dragon/docs-2/');
         });
     
         it('links to the OWASP Threat Modeling Cheat Sheet', () => {

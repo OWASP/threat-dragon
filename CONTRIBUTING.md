@@ -11,13 +11,13 @@ sets out what is needed to get to the new version of Threat Dragon, and we are l
 When contributing:
 * see if there is [already an issue](https://github.com/OWASP/threat-dragon/issues) for what you want to do
 * follow our [Code of Conduct](CODE_OF_CONDUCT.md)
-* get started by following the [developer notes](https://www.threatdragon.com/docs/development/local.html)
+* get started by following the [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
 
 ## Got a Question or Problem?
 If you have a question or problem relating to using Threat Dragon then the first thing to do is to check the
 [Frequently Asked Questions](https://owasp.org/www-project-threat-dragon/#div-faqs) tab
 on the [OWASP project page](https://owasp.org/www-project-threat-dragon/).
-Threat Dragon documentation is [available online](https://www.threatdragon.com/docs).
+Threat Dragon documentation is [available online](https://owasp.org/www-project-threat-dragon/docs-2/).
 
 If this does not help then one of the
 [leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/master/leaders.md) should be able to help.
