@@ -17,7 +17,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 182
+          retain_days: 91
           keep_minimum_runs: 3
 
   trivy:
