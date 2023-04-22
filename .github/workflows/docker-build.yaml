@@ -1,4 +1,4 @@
-name: OWASP ZAP scan
+name: Build Docker Image
 on:
   # Run daily at 7:00
   schedule:
