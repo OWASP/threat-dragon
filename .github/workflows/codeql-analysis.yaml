@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: CodeQL
 on:
   # Run daily at 7:00
   schedule:
