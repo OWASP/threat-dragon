@@ -46,6 +46,8 @@ const { t } = useI18n();
 </template>
 
 <style lang="scss" scoped>
+@import '../scss/colors';
+
 .action-icon {
     color: $orange;
     margin-bottom: 15px;

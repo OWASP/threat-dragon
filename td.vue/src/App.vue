@@ -41,6 +41,7 @@ onMounted(() => {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
+@import 'scss/sizes';
 
 #app {
   font-size: 20px;

@@ -13,17 +13,17 @@ const routes = [
   {
     path: '/dashboard',
     name: 'MainDashboard',
-    component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue')
+    component: () => import('../views/MainDashboard.vue')
   },
   {
     path: '/oauth-return',
     name: 'OAuthReturn',
-    component: () => import(/* webpackChunkName: "oauth-return" */ '../views/OauthReturn.vue')
+    component: () => import('../views/OauthReturn.vue')
   },
   {
     path: '/demo/select',
     name: 'DemoSelect',
-    component: () => import(/* webpackChunkName: "demo-select" */ '../views/demo/SelectDemoModel.vue')
+    component: () => import('../views/demo/SelectDemoModel.vue')
   },
   ...gitRoutes,
   ...localRoutes

@@ -26,7 +26,11 @@ module.exports = {
     {
       // over-ride for both .js and .ts files (and OK, any .Xs file)
       files: ['**/__tests__/*.?s', '**/tests/unit/**/*.spec.?s'],
-      env: { jest: true },
+      env: {
+        es2022: true,
+        jest: true,
+        node: true
+      },
       plugins: ['jest'],
       'extends': ['plugin:jest/recommended'],
       rules: {

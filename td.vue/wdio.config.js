@@ -1,6 +1,6 @@
 const { join } = require('path');
 
-process.env.IS_TEST = true;
+import.meta.env.IS_TEST = true;
 
 const config = {
   services: [

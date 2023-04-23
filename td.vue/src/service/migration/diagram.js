@@ -10,8 +10,6 @@ import dataChanged from '../x6/graph/data-changed.js';
 import graphFactory from '../x6/graph/graph.js';
 import events from '../x6/graph/events.js';
 
-const buildVersion = require('../../../package.json').version;
-
 const drawV1 = (diagram, graph) => {
   const { nodes, edges } = cells.map(diagram);
   const batchName = 'td-init';
@@ -31,7 +29,7 @@ const upgradeAndDraw = (diagram, graph) => {
 
   drawV1(diagram, graph);
   const updated = graph.toJSON();
-  updated.version = buildVersion;
+  updated.version = __APP_VERSION__
   updated.title = diagram.title;
   updated.description = diagram.description;
   updated.thumbnail = diagram.thumbnail;

@@ -4,7 +4,6 @@ export default {
 };
 </script>
 <script setup>
-import {useAppStore} from '@/stores/app';
 import {useProviderStore} from '@/stores/provider';
 import {useThreatModelStore} from '@/stores/threatmodel';
 
@@ -15,12 +14,11 @@ import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
 
 const providerStore = useProviderStore();
-const appStore = useAppStore();
 const threatModelStore = useThreatModelStore();
 const router = useRouter();
+const version = __APP_VERSION__;
 
 const providerType = computed(() => getProviderType(providerStore.selected));
-const version = computed(() => appStore.packageBuildVersion);
 
 onMounted(() => {
   threatModelStore.clearState();

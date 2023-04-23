@@ -7,7 +7,6 @@ export default {
 import TdFormButton from '@/components/FormButton.vue';
 import { useThreatModelStore } from '@/stores/threatmodel';
 import { useProviderStore } from '@/stores/provider';
-import { useAppStore } from '@/stores/app';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -15,17 +14,16 @@ import { getProviderType } from '@/service/provider/providers.js';
 
 const threatModelStore = useThreatModelStore();
 const providerStore = useProviderStore();
-const appStore = useAppStore();
 
 const router = useRouter();
 const { t } = useI18n();
+const version = __APP_VERSION__;
 
 // const fileHandle = computed(() => threatModelStore.fileHandle);
 // const fileName = computed(() => threatModelStore.fileName);
 const model = computed(() => threatModelStore.data);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const diagramTop = computed(() => threatModelStore.data.detail.diagramTop);
-const version = computed(() => appStore.packageBuildVersion);
 const contributors = computed({
   get() {
     return threatModelStore.contributors;
@@ -329,6 +327,8 @@ const getConfirmModal = async () => {
 </template>
 
 <style lang="scss" scoped>
+@import '../scss/colors';
+
 .add-diagram-link {
   color: $orange;
   font-size: 14px;

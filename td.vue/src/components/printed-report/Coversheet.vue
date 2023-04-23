@@ -54,7 +54,7 @@ const { t } = useI18n();
     </div>
     <img
       v-if="props.branding"
-      src="../../../public/images/threatdragon_logo_image.svg"
+      src="../../../images/threatdragon_logo_image.svg"
       alt="Threat Dragon Logo"
       class="td-brand-logo"
     >

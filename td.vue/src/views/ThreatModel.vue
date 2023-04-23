@@ -8,7 +8,6 @@ import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import { useThreatModelStore } from '@/stores/threatmodel';
 import { useProviderStore } from '@/stores/provider';
-import { useAppStore } from '@/stores/app';
 import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -16,14 +15,13 @@ import { getProviderType } from '@/service/provider/providers.js';
 
 const threatModelStore = useThreatModelStore();
 const providerStore = useProviderStore();
-const appStore = useAppStore();
 
 const router = useRouter();
 const { t } = useI18n();
+const version = __APP_VERSION__;
 
 const model = computed(() => threatModelStore.data);
 const providerType = computed(() => getProviderType(providerStore.selected));
-const version = computed(() => appStore.packageBuildVersion);
 
 onMounted(() => {
   // make sure we are compatible with version 1.x and early 2.x
@@ -164,6 +162,8 @@ const editDiagram = (diagram) => {
 </template>
 
 <style lang="scss" scoped>
+@import '../scss/colors';
+
 .tm-card {
   font-size: 14px;
   white-space: pre-wrap;
