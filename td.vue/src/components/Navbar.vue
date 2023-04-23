@@ -114,6 +114,9 @@ const onLogOut = async (evt) => {
 </template>
 
 <style lang="scss" scoped>
+@import '../scss/colors';
+@import '../scss/sizes';
+
 $icon-height: 1.2rem;
 
 .navbar {
