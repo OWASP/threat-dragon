@@ -17,6 +17,7 @@ const providerStore = useProviderStore();
 
 const router = useRouter();
 const { t } = useI18n();
+// eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
 
 // const fileHandle = computed(() => threatModelStore.fileHandle);
@@ -327,7 +328,7 @@ const getConfirmModal = async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/colors';
+@import '@/scss/bootstrap.scss';
 
 .add-diagram-link {
   color: $orange;

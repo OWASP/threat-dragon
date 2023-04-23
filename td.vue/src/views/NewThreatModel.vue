@@ -16,6 +16,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 const providerStore = useProviderStore();
 const threatModelStore = useThreatModelStore();
 const router = useRouter();
+// eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
 
 const providerType = computed(() => getProviderType(providerStore.selected));

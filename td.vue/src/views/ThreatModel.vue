@@ -18,6 +18,7 @@ const providerStore = useProviderStore();
 
 const router = useRouter();
 const { t } = useI18n();
+// eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
 
 const model = computed(() => threatModelStore.data);
@@ -162,7 +163,7 @@ const editDiagram = (diagram) => {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/colors';
+@import '@/scss/bootstrap.scss';
 
 .tm-card {
   font-size: 14px;

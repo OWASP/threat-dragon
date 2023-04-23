@@ -7,22 +7,25 @@ export default {
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
-  title: String,
+  title: {
+    type:String,
+    required: true
+  },
   owner: {
     type: String,
-    required: false
+    required: true
   },
   reviewer: {
     type: String,
-    required: false
+    required: true
   },
   contributors: {
     type: Array,
-    required: false
+    required: true
   },
   branding: {
     type: Boolean,
-    default: true
+    required: true
   }
 });
 
@@ -45,7 +48,7 @@ const { t } = useI18n();
           <strong>{{ t('threatmodel.reviewer') }}</strong>: {{ props.reviewer }}
         </li>
         <li class="td-contributors">
-          <strong>{{ t('threatmodel.contributors') }}</strong>: {{ (props.contributors || []).join(', ') }}
+          <strong>{{ t('threatmodel.contributors') }}</strong>: {{ props.contributors.join(', ') }}
         </li>
         <li class="td-date-generated">
           <strong>{{ t('report.dateGenerated') }}</strong>: {{ new Date().toDateString() }}
@@ -54,7 +57,7 @@ const { t } = useI18n();
     </div>
     <img
       v-if="props.branding"
-      src="../../../images/threatdragon_logo_image.svg"
+      src="/images/threatdragon_logo_image.svg"
       alt="Threat Dragon Logo"
       class="td-brand-logo"
     >

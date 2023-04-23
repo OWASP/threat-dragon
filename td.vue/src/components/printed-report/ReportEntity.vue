@@ -7,7 +7,10 @@ import { useI18n } from 'vue-i18n';
 import threatService from '@/service/threats/index.js';
 
 const props = defineProps({
-  entity: Object,
+  entity: {
+    type: Object,
+    required: true
+  },
   outOfScope: {
     type: Boolean,
     default: false

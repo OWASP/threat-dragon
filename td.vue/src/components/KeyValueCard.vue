@@ -5,8 +5,14 @@ export default {
 </script>
 <script setup>
 const props = defineProps({
-  title: String,
-  values: Array
+  title: {
+    type: String,
+    required: true
+  },
+  values: {
+    type: Array,
+    required: true
+  }
 });
 </script>
 

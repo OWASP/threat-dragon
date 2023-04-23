@@ -5,15 +5,42 @@ export default {
 </script>
 <script setup>
 const props = defineProps({
-  id: { type: String },
-  status: { type: String },
-  severity: { type: String },
-  description: { type: String },
-  title: { type: String },
-  type: { type: String },
-  mitigation: { type: String },
-  modelType: { type: String },
-  number: { type: Number }
+  id: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    required: true
+  },
+  severity: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  mitigation: {
+    type: String,
+    required: true
+  },
+  modelType: {
+    type: String,
+    required: true
+  },
+  number: {
+    type: Number,
+    required: true
+  }
 });
 const threatSelected = () => {
   emits('threat-selected', props.id);
@@ -82,6 +109,10 @@ const emits = defineEmits(['threat-selected']);
 </template>
 
 <style lang="scss" scoped>
+@import '@/scss/bootstrap.scss';
+@import 'bootstrap/scss/functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+
 .threat-card {
   font-size: 14px;
 }

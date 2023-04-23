@@ -13,16 +13,17 @@ const props = defineProps({
     required: true
   },
   onItemClick: {
-    required: true,
-    type: Function
+    type: Function,
+    required: true
   },
   emptyStateText: {
+    type: String,
     required: false,
-    type: String
+    default: null
   },
   onEmptyStateClick: {
-    required: false,
     type: Function,
+    required: false,
     default: () => {}
   }
 });

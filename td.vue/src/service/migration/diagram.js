@@ -29,7 +29,8 @@ const upgradeAndDraw = (diagram, graph) => {
 
   drawV1(diagram, graph);
   const updated = graph.toJSON();
-  updated.version = __APP_VERSION__
+  // eslint-disable-next-line no-undef
+  updated.version = __APP_VERSION__;
   updated.title = diagram.title;
   updated.description = diagram.description;
   updated.thumbnail = diagram.thumbnail;

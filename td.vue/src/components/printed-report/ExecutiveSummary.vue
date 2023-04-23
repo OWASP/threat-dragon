@@ -9,7 +9,8 @@ import {computed} from 'vue';
 const props = defineProps({
   summary: {
     type: String,
-    required: false
+    required: false,
+    default: null
   },
   threats: {
     type: Array,

@@ -10,7 +10,7 @@ import { useI18n } from 'vue-i18n';
 const props = defineProps({
   branding: {
     type: Boolean,
-    default: true
+    required: true
   }
 });
 

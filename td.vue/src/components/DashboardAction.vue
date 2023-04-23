@@ -46,7 +46,7 @@ const { t } = useI18n();
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/colors';
+@import '@/scss/bootstrap.scss';
 
 .action-icon {
     color: $orange;

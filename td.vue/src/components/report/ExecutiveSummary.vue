@@ -10,7 +10,8 @@ import { useI18n } from 'vue-i18n';
 const props = defineProps({
   summary: {
     type: String,
-    required: false
+    required: false,
+    default: null
   },
   threats: {
     type: Array,

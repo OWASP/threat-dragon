@@ -13,7 +13,9 @@ const authStore = useAuthStore();
 
 const router = useRouter();
 const { t } = useI18n();
+// eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
+// eslint-disable-next-line no-undef
 const state = __APP_BUILD_STATE__;
 
 const onLogOut = async (evt) => {
@@ -112,9 +114,6 @@ const onLogOut = async (evt) => {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/colors';
-@import '../scss/sizes';
-
 $icon-height: 1.2rem;
 
 .navbar {

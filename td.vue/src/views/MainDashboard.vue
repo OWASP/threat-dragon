@@ -40,7 +40,7 @@ const actions = computed(() => getDashboardActions(providerStore.selected));
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/colors';
+@import '@/scss/bootstrap.scss';
 
 .action-icon {
   color: $orange;

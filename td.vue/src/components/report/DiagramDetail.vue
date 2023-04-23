@@ -10,7 +10,10 @@ import TdReportEntity from '@/components/report/ReportEntity.vue';
 import { computed } from 'vue';
 
 const props = defineProps( {
-  diagram: Object,
+  diagram: {
+    type: Object,
+    required: true
+  },
   showOutOfScope: {
     type: Boolean,
     default: true
