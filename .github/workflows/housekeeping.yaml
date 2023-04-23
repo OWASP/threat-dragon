@@ -17,7 +17,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 91
+          retain_days: 28
           keep_minimum_runs: 3
 
   trivy:
@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
         with:
           ref: main
 
@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
         with:
           ref: main
 
@@ -75,7 +75,7 @@ jobs:
     name: link checker
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
 
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.7.0
