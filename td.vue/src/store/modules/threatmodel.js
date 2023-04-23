@@ -179,6 +179,7 @@ const mutations = {
         if (update.fileName) {
             Vue.set(state, 'fileName', update.fileName);
         }
+        console.debug('Threatmodel update: ' + JSON.stringify(update));
     }
 };
 

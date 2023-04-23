@@ -50,7 +50,7 @@ describe('components/ThreatEditDialog.vue', () => {
             modal = wrapper.findComponent(BModal);
             wrapper.vm.$refs.editModal.show = jest.fn();
             wrapper.vm.$refs.editModal.hide = jest.fn();
-            wrapper.vm.showModal(getThreatData().id);
+            wrapper.vm.editThreat(getThreatData().id);
         });
 
         it('has a bootstrap modal', () => {
@@ -150,7 +150,7 @@ describe('components/ThreatEditDialog.vue', () => {
                 dataChanged.updateStyleAttrs = jest.fn();
                 mockStore.dispatch = jest.fn();
                 wrapper.vm.$refs.editModal.show = jest.fn();
-                await wrapper.vm.showModal(threatId);
+                await wrapper.vm.editThreat(threatId);
                 await wrapper.vm.confirmDelete();
             }); 
 
@@ -179,7 +179,7 @@ describe('components/ThreatEditDialog.vue', () => {
             wrapper.vm.$refs.editModal.hide = jest.fn();
             mockStore.dispatch = jest.fn();
             dataChanged.updateStyleAttrs = jest.fn();
-            wrapper.vm.showModal(threatId);
+            wrapper.vm.editThreat(threatId);
             wrapper.vm.updateThreat();
         });
 

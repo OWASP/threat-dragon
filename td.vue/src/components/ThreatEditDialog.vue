@@ -213,7 +213,7 @@ export default {
         };
     },
     methods: {
-        showModal(threatId) {
+        editThreat(threatId) {
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
                 // this should never happen with a valid threatId
@@ -223,13 +223,16 @@ export default {
             }
             this.newThreat = this.threat.new;
 
-            if (this.threat.new) {
-                // provide a threat number that is unique project wide
+            if (this.threat.new === true) {
+                // provide a new threat number that is unique project wide
                 if (this.threatTop) {
                     this.number = this.threatTop + 1;
                 } else {
                     this.number = 1;
                 }
+                this.$store.dispatch(THREATMODEL_UPDATE, { threatTop: this.number });
+            } else {
+                this.number = this.threat.number;
             }
         },
         updateThreat() {
@@ -250,7 +253,6 @@ export default {
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
-            this.$store.dispatch(THREATMODEL_UPDATE, { threatTop: this.number });
             this.hideModal();
         },
         deleteThreat() {
