@@ -10,6 +10,8 @@ import dataChanged from '../x6/graph/data-changed.js';
 import graphFactory from '../x6/graph/graph.js';
 import events from '../x6/graph/events.js';
 
+const buildVersion = require('../../../package.json').version;
+
 const drawV1 = (diagram, graph) => {
   const { nodes, edges } = cells.map(diagram);
   const batchName = 'td-init';
