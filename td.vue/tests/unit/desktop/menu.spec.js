@@ -164,7 +164,8 @@ describe('desktop/menu.js', () => {
         // TODO: click on the server menu item for printModel()
         // expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
         expect(model.isOpen).not.toBeDefined();
-      });it('closeModel() should send close-model to renderer with name from file path', () => {
+      });
+      it('closeModel() should send close-model to renderer with name from file path', () => {
         // TODO: click on the server menu item for closeModel()
         expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
         expect(model.isOpen).not.toBeDefined();
