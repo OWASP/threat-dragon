@@ -15,16 +15,22 @@ describe('components/report/ReportEntity.vue', () => {
                 description: 'Some actor doing some things',
                 threats: [
                     {
+                        number: '1',
                         title: 't1',
                         severity: 'High',
+                        score: '10',
                         status: 'Open',
+                        type: 'type1',
                         description: 'Threat 1',
                         mitigation: 'We did things'
                     },
                     {
+                        number: '2',
                         title: 't2',
                         severity: 'Medium',
+                        score: '20',
                         status: 'Mitigated',
+                        type: 'type2',
                         description: 'Threat 2',
                         mitigation: 'We did other things'
                     },

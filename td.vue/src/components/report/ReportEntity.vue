@@ -66,8 +66,10 @@ export default {
                 return {
                     [this.$t('threats.properties.number')]: threat.number,
                     [this.$t('threats.properties.title')]: threat.title,
+                    [this.$t('threats.properties.type')]: threat.type,
                     [this.$t('threats.properties.priority')]: threat.severity,
                     [this.$t('threats.properties.status')]: threat.status,
+                    [this.$t('threats.properties.score')]: threat.score,
                     [this.$t('threats.properties.description')]: threat.description,
                     [this.$t('threats.properties.mitigation')]: threat.mitigation
 
