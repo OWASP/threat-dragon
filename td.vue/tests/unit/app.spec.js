@@ -1,60 +1,49 @@
-import { BootstrapVue, BContainer } from 'bootstrap-vue';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import VueI18n from 'vue-i18n';
-import Vuex from 'vuex';
-
 import App from '@/App.vue';
-import i18nFactory from '@/i18n/index.js';
-import { LOADER_FINISHED } from '@/stores/actions/loader.js';
+import { BContainer } from 'bootstrap-vue';
 import Navbar from '@/components/Navbar.vue';
+import { createTestingPinia } from '@pinia/testing';
+import { shallowMount } from '@vue/test-utils';
+import { useI18n } from 'vue-i18n';
+
+vi.mock('vue-i18n');
+
+useI18n.mockReturnValue({
+  t: key => key
+});
 
 describe('App.vue', () => {
-    let wrapper, localVue, mockStore, mockToast;
+  let wrapper, mockToast;
 
-    beforeEach(() => {
-        console.log = jest.fn();
-        mockToast = {
-            warning: jest.fn()
-        };
-        localVue = createLocalVue();
-        localVue.use(BootstrapVue);
-        localVue.use(Vuex);
-        localVue.use(VueI18n);
-        mockStore = new Vuex.Store({
-            state: {
-                loader: {
-                    loading: false
-                }
-            },
-            actions: {
-                [LOADER_FINISHED]: () => {}
-            }
-        });
-        wrapper = shallowMount(App, {
-            localVue,
-            i18n: i18nFactory.get(),
-            stubs: ['router-view'],
-            store: mockStore,
-            mocks: {
-                $t: key => key,
-                $toast: mockToast
-            }
-        });
+  beforeEach(() => {
+    console.log = vi.fn();
+    mockToast = {
+      warning: vi.fn()
+    };
+    wrapper = shallowMount(App, {
+      global: {
+        mocks: {
+          $t: key => key,
+          $toast: mockToast
+        },
+        plugins: [createTestingPinia()],
+        stubs: ['router-view']
+      }
     });
+  });
 
-    it('renders the app', () => {
-        expect(wrapper.exists()).toBe(true);
-    });
+  it('renders the app', () => {
+    expect(wrapper.exists()).toBe(true);
+  });
 
-    it('has the navbar', () => {
-        expect(wrapper.findComponent(Navbar).exists()).toBe(true);
-    });
+  it('has the navbar', () => {
+    expect(wrapper.findComponent(Navbar).exists()).toBe(true);
+  });
 
-    it('has a b-container', () => {
-        expect(wrapper.findComponent(BContainer).exists()).toBe(true);
-    });
+  it('has a b-container', () => {
+    expect(wrapper.findComponent(BContainer).exists()).toBe(true);
+  });
 
-    it('shows a warning toast for v2', () => {
-        expect(mockToast.warning).toHaveBeenCalled();
-    });
+  it('shows a warning toast for v2', () => {
+    expect(mockToast.warning).toHaveBeenCalled();
+  });
 });

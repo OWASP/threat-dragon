@@ -1,148 +1,148 @@
 import { gitRoutes } from '@/router/git.js';
 
 describe('routes/git.js', () => {
-    describe('Repository access', () => {
-        let route;
+  describe('Repository access', () => {
+    let route;
 
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitRepository');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/repository');
-        });
-
-        it('uses the RepositoryAccess view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('RepositoryAccess');
-        });
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitRepository');
     });
 
-    describe('Repository branch access', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitBranch');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/branch');
-        });
-
-        it('uses the BranchAccess view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('BranchAccess');
-        });
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/repository');
     });
 
-    describe('Threat model select', () => {
-        let route;
+    it('uses the RepositoryAccess view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('RepositoryAccess');
+    });
+  });
 
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitThreatModelSelect');
-        });
+  describe('Repository branch access', () => {
+    let route;
 
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/threatmodels');
-        });
-
-        it('uses the ThreatModelSelect view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('ThreatModelSelect');
-        });
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitBranch');
     });
 
-    describe('New threat model', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitNewThreatModel');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/new');
-        });
-
-        it('uses the NewThreatModel view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('NewThreatModel');
-        });
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/branch');
     });
 
-    describe('Threat model', () => {
-        let route;
+    it('uses the BranchAccess view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('BranchAccess');
+    });
+  });
 
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitThreatModel');
-        });
+  describe('Threat model select', () => {
+    let route;
 
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel');
-        });
-
-        it('uses the ThreatModel view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('ThreatModel');
-        });
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitThreatModelSelect');
     });
 
-    describe('Threat model edit', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitThreatModelEdit');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit');
-        });
-
-        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('ThreatModelEdit');
-        });
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/threatmodels');
     });
 
-    describe('DiagramEdit', () => {
-        let route;
+    it('uses the ThreatModelSelect view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('ThreatModelSelect');
+    });
+  });
 
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitDiagramEdit');
-        });
+  describe('New threat model', () => {
+    let route;
 
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit/:diagram');
-        });
-
-        it('uses the DiagramEdit view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('DiagramEdit');
-        });
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitNewThreatModel');
     });
 
-    describe('Report model', () => {
-        let route;
-
-        beforeEach(() => {
-            route = gitRoutes
-                .find(x => x.name === 'gitReport');
-        });
-
-        it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/report');
-        });
-
-        it('uses the ReportModel view as a lazily loaded component', async () => {
-            const cmp = await route.component();
-            expect(cmp.default.name).toEqual('ReportModel');
-        });
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/new');
     });
+
+    it('uses the NewThreatModel view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('NewThreatModel');
+    });
+  });
+
+  describe('Threat model', () => {
+    let route;
+
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitThreatModel');
+    });
+
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel');
+    });
+
+    it('uses the ThreatModel view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('ThreatModel');
+    });
+  });
+
+  describe('Threat model edit', () => {
+    let route;
+
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitThreatModelEdit');
+    });
+
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit');
+    });
+
+    it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('ThreatModelEdit');
+    });
+  });
+
+  describe('DiagramEdit', () => {
+    let route;
+
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitDiagramEdit');
+    });
+
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit/:diagram');
+    });
+
+    it('uses the DiagramEdit view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('DiagramEdit');
+    });
+  });
+
+  describe('Report model', () => {
+    let route;
+
+    beforeEach(() => {
+      route = gitRoutes
+        .find(x => x.name === 'gitReport');
+    });
+
+    it('uses the expected path', () => {
+      expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/report');
+    });
+
+    it('uses the ReportModel view as a lazily loaded component', async () => {
+      const cmp = await route.component();
+      expect(cmp.default.name).toEqual('ReportModel');
+    });
+  });
 
 });

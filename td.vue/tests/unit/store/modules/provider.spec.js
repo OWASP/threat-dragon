@@ -3,114 +3,114 @@ import providerModule, { clearState } from '@/stores/provider.js';
 import providerService from '@/service/provider/providers.js';
 
 describe('stores/modules/provider.js', () => {
-    const mocks = {
-        commit: () => {},
-        dispatch: () => {}
-    };
+  const mocks = {
+    commit: () => {},
+    dispatch: () => {}
+  };
 
-    beforeEach(() => {
-        jest.spyOn(mocks, 'commit');
-        jest.spyOn(mocks, 'dispatch');
+  beforeEach(() => {
+    jest.spyOn(mocks, 'commit');
+    jest.spyOn(mocks, 'dispatch');
+  });
+
+  afterEach(() => {
+    clearState(providerModule.state);
+  });
+
+  describe('state', () => {
+    it('defines an all array', () => {
+      expect(providerModule.state.all).toBeInstanceOf(Array);
     });
 
-    afterEach(() => {
-        clearState(providerModule.state);
+    it('defines a selected string', () => {
+      expect(providerModule.state.selected).toEqual('');
+    });
+  });
+
+  describe('actions', () => {
+    it('commits the clear action', () => {
+      providerModule.actions[PROVIDER_CLEAR](mocks);
+      expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
     });
 
-    describe('state', () => {
-        it('defines an all array', () => {
-            expect(providerModule.state.all).toBeInstanceOf(Array);
-        });
+    describe('fetch', () => {
+      beforeEach(() => {
+        providerModule.actions[PROVIDER_FETCH](mocks);
+      });
 
-        it('defines a selected string', () => {
-            expect(providerModule.state.selected).toEqual('');
-        });
+      it('dispatches the clear action', () => {
+        expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+      });
+
+      it('commits the fetch action will providerNames', () => {
+        expect(mocks.commit).toHaveBeenCalledWith(
+          PROVIDER_FETCH,
+          Object.keys(providerService.providerNames)
+        );
+      });
     });
 
-    describe('actions', () => {
-        it('commits the clear action', () => {
-            providerModule.actions[PROVIDER_CLEAR](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
-        });
+    describe('selected', () => {
+      it('throws an error if providerName is falsy', () => {
+        expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).toThrowError();
+      });
 
-        describe('fetch', () => {
-            beforeEach(() => {
-                providerModule.actions[PROVIDER_FETCH](mocks);
-            });
+      it('throws an error for an unknown provider', () => {
+        expect(() => providerModule.actions[PROVIDER_SELECTED](mocks, 'fake')).toThrowError();
+      });
 
-            it('dispatches the clear action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
-            });
+      it('commits the selected provider', () => {
+        providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
+        expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, providerService.providerNames.github);
+      });
+    });
+  });
 
-            it('commits the fetch action will providerNames', () => {
-                expect(mocks.commit).toHaveBeenCalledWith(
-                    PROVIDER_FETCH,
-                    Object.keys(providerService.providerNames)
-                );
-            });
-        });
+  describe('mutations', () => {
+    describe('clear', () => {
+      beforeEach(() => {
+        providerModule.state.all.push('test1');
+        providerModule.state.all.push('test2');
+        providerModule.state.selected = 'github';
+        providerModule.mutations[PROVIDER_CLEAR](providerModule.state);
+      });
 
-        describe('selected', () => {
-            it('throws an error if providerName is falsy', () => {
-                expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).toThrowError();
-            });
+      it('empties the all array', () => {
+        expect(providerModule.state.all).toHaveLength(0);
+      });
 
-            it('throws an error for an unknown provider', () => {
-                expect(() => providerModule.actions[PROVIDER_SELECTED](mocks, 'fake')).toThrowError();
-            });
-
-            it('commits the selected provider', () => {
-                providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, providerService.providerNames.github);
-            });
-        });
+      it('resets the selected property', () => {
+        expect(providerModule.state.selected).toEqual('');
+      });
     });
 
-    describe('mutations', () => {
-        describe('clear', () => {
-            beforeEach(() => {
-                providerModule.state.all.push('test1');
-                providerModule.state.all.push('test2');
-                providerModule.state.selected = 'github';
-                providerModule.mutations[PROVIDER_CLEAR](providerModule.state);
-            });
+    describe('fetch', () => {
+      const providerNames = Object.keys(providerService.providerNames);
 
-            it('empties the all array', () => {
-                expect(providerModule.state.all).toHaveLength(0);
-            });
+      beforeEach(() => {
+        providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
+      });
 
-            it('resets the selected property', () => {
-                expect(providerModule.state.selected).toEqual('');
-            });
-        });
-
-        describe('fetch', () => {
-            const providerNames = Object.keys(providerService.providerNames);
-
-            beforeEach(() => {
-                providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the all array to the provided providers', () => {
-                expect(providerModule.state.all).toEqual(providerNames);
-            });
-        });
-
-        describe('selected', () => {
-            const provider = 'test';
-
-            beforeEach(() => {
-                providerModule.mutations[PROVIDER_SELECTED](providerModule.state, provider);
-            });
-
-            it('sets the provider prop', () => {
-                expect(providerModule.state.selected).toEqual(provider);
-            });
-        });
+      // TODO skip test because it stumbles over Vue.set
+      it.skip('sets the all array to the provided providers', () => {
+        expect(providerModule.state.all).toEqual(providerNames);
+      });
     });
 
-    it('defines a getters object', () => {
-        expect(providerModule.getters).toBeInstanceOf(Object);
+    describe('selected', () => {
+      const provider = 'test';
+
+      beforeEach(() => {
+        providerModule.mutations[PROVIDER_SELECTED](providerModule.state, provider);
+      });
+
+      it('sets the provider prop', () => {
+        expect(providerModule.state.selected).toEqual(provider);
+      });
     });
+  });
+
+  it('defines a getters object', () => {
+    expect(providerModule.getters).toBeInstanceOf(Object);
+  });
 });

@@ -4,102 +4,102 @@ import threats from '@/service/threats/index.js';
 import store from '../../../../src/service/x6/shapes/store';
 
 describe('service/migration/data.js', () => {
-    let cell, res;
+  let cell, res;
 
-    const getCell = () => ({
-        name: 'test',
-        description: 'foo',
-        isTrustBoundary: false
-    });
+  const getCell = () => ({
+    name: 'test',
+    description: 'foo',
+    isTrustBoundary: false
+  });
 
-    beforeEach(() => {
-        edges.applyData = jest.fn();
-        threats.hasOpenThreats = jest.fn().mockReturnValue(false);
-    });
+  beforeEach(() => {
+    edges.applyData = jest.fn();
+    threats.hasOpenThreats = jest.fn().mockReturnValue(false);
+  });
 
-    it('applies actor data', () => {
-        cell = getCell();
-        cell.type = 'tm.Actor';
-        cell.providesAuthentication = false;
-        res = data.map({}, cell);
+  it('applies actor data', () => {
+    cell = getCell();
+    cell.type = 'tm.Actor';
+    cell.providesAuthentication = false;
+    res = data.map({}, cell);
 
-        expect(res.data).toEqual(expect.objectContaining(cell));
-    });
+    expect(res.data).toEqual(expect.objectContaining(cell));
+  });
 
-    it('applies stores data', () => {
-        cell = getCell();
-        cell.type = 'tm.Store';
-        cell.isALog = true;
-        cell.storesCredentials = false;
-        store.isEncrypted = true;
-        store.isSigned = false;
-        res = data.map({}, cell);
+  it('applies stores data', () => {
+    cell = getCell();
+    cell.type = 'tm.Store';
+    cell.isALog = true;
+    cell.storesCredentials = false;
+    store.isEncrypted = true;
+    store.isSigned = false;
+    res = data.map({}, cell);
 
-        expect(res.data).toEqual(expect.objectContaining(cell));
-    });
+    expect(res.data).toEqual(expect.objectContaining(cell));
+  });
 
-    it('applies trust boundary data', () => {
-        cell = getCell();
-        cell.type = 'tm.Boundary';
-        res = data.map({}, cell);
+  it('applies trust boundary data', () => {
+    cell = getCell();
+    cell.type = 'tm.Boundary';
+    res = data.map({}, cell);
 
-        expect(res.data.isTrustBoundary).toEqual(true);
-    });
+    expect(res.data.isTrustBoundary).toEqual(true);
+  });
 
-    it('gest the name from attrs.text.text', () => {
-        cell = getCell();
-        delete cell.name;
-        cell.type = 'tm.Actor';
-        cell.attrs = { text: { text: 'my stores' }};
-        res = data.map({}, cell);
+  it('gest the name from attrs.text.text', () => {
+    cell = getCell();
+    delete cell.name;
+    cell.type = 'tm.Actor';
+    cell.attrs = { text: { text: 'my stores' }};
+    res = data.map({}, cell);
 
-        expect(res.data.name).toEqual('my stores');
-    });
+    expect(res.data.name).toEqual('my stores');
+  });
 
-    it('gest the name from labels[0].attrs.text.text', () => {
-        cell = getCell();
-        delete cell.name;
-        cell.type = 'tm.Actor';
-        cell.labels = [{ attrs: { text: { text: 'my stores' }}}];
-        res = data.map({}, cell);
+  it('gest the name from labels[0].attrs.text.text', () => {
+    cell = getCell();
+    delete cell.name;
+    cell.type = 'tm.Actor';
+    cell.labels = [{ attrs: { text: { text: 'my stores' }}}];
+    res = data.map({}, cell);
 
-        expect(res.data.name).toEqual('my stores');
-    });
+    expect(res.data.name).toEqual('my stores');
+  });
 
-    it('does not find a name', () => {
-        cell = getCell();
-        delete cell.name;
-        cell.type = 'tm.Actor';
-        res = data.map({}, cell);
+  it('does not find a name', () => {
+    cell = getCell();
+    delete cell.name;
+    cell.type = 'tm.Actor';
+    res = data.map({}, cell);
 
-        expect(res.data.name).toEqual('');
-    });
+    expect(res.data.name).toEqual('');
+  });
 
-    it('does not find a description', () => {
-        cell = getCell();
-        delete cell.description;
-        cell.type = 'tm.Actor';
-        res = data.map({}, cell);
+  it('does not find a description', () => {
+    cell = getCell();
+    delete cell.description;
+    cell.type = 'tm.Actor';
+    res = data.map({}, cell);
 
-        expect(res.data.description).toEqual('');
-    });
+    expect(res.data.description).toEqual('');
+  });
 
-    it('updates threat data', () => {
-        cell = getCell();
-        cell.type = 'tm.Process';
-        cell.threats = [{ modelType: 'foo' }];
-        res = data.map({}, cell);
+  it('updates threat data', () => {
+    cell = getCell();
+    cell.type = 'tm.Process';
+    cell.threats = [{ modelType: 'foo' }];
+    res = data.map({}, cell);
 
-        expect(res.data.threats).toHaveLength(1);
-    });
+    expect(res.data.threats).toHaveLength(1);
+  });
 
-    it('does not modify the threat id', () => {
-        const threatId = '1234567';
-        cell = getCell();
-        cell.type = 'tm.Process';
-        cell.threats = [{ modelType: 'foo', id: threatId }];
-        res = data.map({}, cell);
+  it('does not modify the threat id', () => {
+    const threatId = '1234567';
+    cell = getCell();
+    cell.type = 'tm.Process';
+    cell.threats = [{ modelType: 'foo', id: threatId }];
+    res = data.map({}, cell);
 
-        expect(res.data.threats[0].id).toEqual(threatId);
-    });
+    expect(res.data.threats[0].id).toEqual(threatId);
+  });
 });

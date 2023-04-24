@@ -3,41 +3,41 @@ import Vuex from 'vuex';
 import storeFactory from '@/stores/index.js';
 
 describe('stores.get()/index.js', () => {
-    let store;
+  let store;
 
-    beforeEach(() => {
-        store = storeFactory.get();
-    });
+  beforeEach(() => {
+    store = storeFactory.get();
+  });
 
-    it('is a vuex stores', () => {
-        expect(store).toBeInstanceOf(Vuex.Store);
-    });
+  it('is a vuex stores', () => {
+    expect(store).toBeInstanceOf(Vuex.Store);
+  });
 
-    it('defines the auth module', () => {
-        expect(store.state.auth).toBeInstanceOf(Object);
-    });
+  it('defines the auth module', () => {
+    expect(store.state.auth).toBeInstanceOf(Object);
+  });
 
-    it('defines the branch module', () => {
-        expect(store.state.branch).toBeInstanceOf(Object);
-    });
+  it('defines the branch module', () => {
+    expect(store.state.branch).toBeInstanceOf(Object);
+  });
 
-    it('defines the loader module', () => {
-        expect(store.state.loader).toBeInstanceOf(Object);
-    });
+  it('defines the loader module', () => {
+    expect(store.state.loader).toBeInstanceOf(Object);
+  });
 
-    it('defines the provider module', () => {
-        expect(store.state.provider).toBeInstanceOf(Object);
-    });
+  it('defines the provider module', () => {
+    expect(store.state.provider).toBeInstanceOf(Object);
+  });
 
-    it('defines the repo module', () => {
-        expect(store.state.repo).toBeInstanceOf(Object);
-    });
+  it('defines the repo module', () => {
+    expect(store.state.repo).toBeInstanceOf(Object);
+  });
 
-    it('defines the threatmodel module', () => {
-        expect(store.state.threatmodel).toBeInstanceOf(Object);
-    });
+  it('defines the threatmodel module', () => {
+    expect(store.state.threatmodel).toBeInstanceOf(Object);
+  });
 
-    it('defines the cell module', () => {
-        expect(store.state.cell).toBeInstanceOf(Object);
-    });
+  it('defines the cell module', () => {
+    expect(store.state.cell).toBeInstanceOf(Object);
+  });
 });

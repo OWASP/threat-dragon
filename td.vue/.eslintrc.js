@@ -1,11 +1,11 @@
 module.exports = {
   env: {
     'node': true,
-    'vue/setup-compiler-macros': true,
+    'vue/setup-compiler-macros': true
   },
   'extends': [
-    'plugin:vue/vue3-recommended',
-    'eslint:recommended'
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended'
   ],
   globals: {
     __static: 'readonly',
@@ -28,15 +28,7 @@ module.exports = {
       files: ['**/__tests__/*.?s', '**/tests/unit/**/*.spec.?s'],
       env: {
         es2022: true,
-        jest: true,
         node: true
-      },
-      plugins: ['jest'],
-      'extends': ['plugin:jest/recommended'],
-      rules: {
-        'jest/prefer-to-have-length': 'warn',
-        'jest/no-done-callback': 'warn',
-        'jest/valid-expect': 'warn'
       }
     }
   ],
