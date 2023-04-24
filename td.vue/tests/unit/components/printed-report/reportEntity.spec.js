@@ -14,16 +14,22 @@ describe('components/printed-report/ReportEntity.vue', () => {
                 description: 'Some actor doing some things',
                 threats: [
                     {
+                        number: '1',
                         title: 't1',
                         severity: 'High',
+                        score: '10',
                         status: 'Open',
+                        type: 'type1',
                         description: 'Threat 1',
                         mitigation: 'We did things'
                     },
                     {
+                        number: '2',
                         title: 't2',
                         severity: 'Medium',
+                        score: '20',
                         status: 'Mitigated',
+                        type: 'type2',
                         description: 'Threat 2',
                         mitigation: 'We did other things'
                     },
@@ -71,6 +77,14 @@ describe('components/printed-report/ReportEntity.vue', () => {
             .toEqual(propsData.entity.data.description);
     });
 
+    it('shows the first threat', () => {
+        expect(tableHasCellWithText('1')).toEqual(true);
+    });
+
+    it('shows the second threat', () => {
+        expect(tableHasCellWithText('2')).toEqual(true);
+    });
+
     it('shows the first threat title', () => {
         expect(tableHasCellWithText('t1')).toEqual(true);
     });
@@ -87,12 +101,28 @@ describe('components/printed-report/ReportEntity.vue', () => {
         expect(tableHasCellWithText('Medium')).toEqual(true);
     });
 
+    it('shows the first score', () => {
+        expect(tableHasCellWithText('10')).toEqual(true);
+    });
+
+    it('shows the second score', () => {
+        expect(tableHasCellWithText('20')).toEqual(true);
+    });
+
     it('shows the open status', () => {
         expect(tableHasCellWithText('Open')).toEqual(true);
     });
 
     it('shows the mitigated status', () => {
         expect(tableHasCellWithText('Mitigated')).toEqual(true);
+    });
+
+    it('shows the first type', () => {
+        expect(tableHasCellWithText('type1')).toEqual(true);
+    });
+
+    it('shows the second type', () => {
+        expect(tableHasCellWithText('type2')).toEqual(true);
     });
 
     it('shows the threat description for t1', () => {
