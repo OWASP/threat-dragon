@@ -28,8 +28,21 @@ COPY        ./td.vue/*.config.js ./td.vue/
 RUN         pnpm install -r --frozen-lockfile
 RUN         npm run build
 
+
+# Builds the docs
+FROM        imoshtokill/jekyll-bundler as build-docs
+WORKDIR     /td.docs
+COPY        ./docs/Gemfile* ./
+RUN         bundle install
+COPY        ./docs .
+RUN         mkdir _data
+RUN         mkdir downloads
+RUN         bundle exec jekyll build -b docs/
+
+
 # Build the final, production image. 
 FROM        base-node
+COPY        --from=build-docs /td.docs/_site /app/docs
 COPY        ./td.server/package*.json ./td.server/pnpm-lock.yaml ./td.server/
 RUN         cd td.server && pnpm install --prod --frozen-lockfile --ignore-scripts
 COPY        --from=build /app/td.server/dist ./td.server/dist

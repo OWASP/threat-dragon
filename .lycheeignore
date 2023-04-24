@@ -13,6 +13,3 @@ website.url
 # script in td.vue/public/index.html
 BASE_URL
 
-# reference to old docs site
-www.threatdragon.com/docs/
-
