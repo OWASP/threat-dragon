@@ -1,0 +1,21 @@
+@import 'colors';
+@import 'print';
+@import 'sizes';
+
+$primary: $orange;
+$secondary: $gray;
+
+$body-bg: $white;
+$body-color: $black;
+
+$font-family-base: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.btn-secondary {
+    color: $white !important;
+}
+
+.modal-backdrop {
+    opacity: .5;
+}
+
+@import "~bootstrap/scss/bootstrap";
