@@ -10,8 +10,10 @@
                 <tr>
                     <th>{{ $t('threats.properties.number') }}</th>
                     <th>{{ $t('threats.properties.title') }}</th>
+                    <th>{{ $t('threats.properties.type') }}</th>
                     <th>{{ $t('threats.properties.priority') }}</th>
                     <th>{{ $t('threats.properties.status') }}</th>
+                    <th>{{ $t('threats.properties.score') }}</th>
                     <th>{{ $t('threats.properties.description') }}</th>
                     <th>{{ $t('threats.properties.mitigation') }}</th>
                 </tr>
@@ -23,8 +25,10 @@
                 >
                     <td>{{ threat.number }}</td>
                     <td>{{ threat.title }}</td>
+                    <td>{{ threat.type }}</td>
                     <td>{{ threat.severity }}</td>
                     <td>{{ threat.status }}</td>
+                    <td>{{ threat.score }}</td>
                     <td>{{ threat.description }}</td>
                     <td>{{ threat.mitigation }}</td>
                 </tr>

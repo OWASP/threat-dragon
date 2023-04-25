@@ -1,18 +1,16 @@
 ---
-title: OWASP Threat Dragon Docs
-layout: home
-path: /
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: page
 ---
-## [OWASP](https://www.owasp.org) Threat Dragon
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) is an open-source threat modelling tool from OWASP.
-It comes as a web application or an Electron based installable desktop app for MacOS, Windows and Linux.
 
-The desktop app saves your threat models on your local file system, and the online version stores its files in GitHub.
-To use web app you have to sign in with a GitHub account and give it write access to your public repos.
-Other than that, the user experience is currently almost identical between the web and desktop variants.
-In the future, there will be deeper integration with GitHub (and other code repositories).
+## Threat Dragon documentation
+The documentation site at `www.threatdragon.com/docs/`
+has been migrated to the OWASP project pages which provide the latest [version 2.0 documentation][docs2x].
 
-You can find the source code for Threat Dragon on [GitHub](https://github.com/OWASP/threat-dragon),
-where you can also ask for changes or report any issues.
+Similarly the old documentation site for [version 1.x](https://threatdragon.github.io)
+has been migrated to the new [version 1.x documentation][docs1x] on the OWASP project pages.
 
-![OWASP logo]({{ 'assets/images/owasp.png' | relative_url }}){: .float-right .mr-4 .mt-3 }
+[docs1x]: https://owasp.org/www-project-threat-dragon/docs-1/
+[docs2x]: https://owasp.org/www-project-threat-dragon/docs-2/

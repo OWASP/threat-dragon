@@ -18,14 +18,13 @@ It is used to draw threat modeling diagrams and to list threats for elements in 
 [Mike Goodwin](https://github.com/mike-goodwin) created Threat Dragon as an open source community project
 that provides an intuitive and accessible way to model threats.
 
-[Threat Dragon](https://www.threatdragon.com/docs/)
-is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
+Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://owasp.org/www-project-threat-dragon/)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
 ## Try Threat Dragon
 You can access the the latest version of Threat Dragon on [our website](https://www.threatdragon.com/#/)
-and look through the [documentation pages](https://www.threatdragon.com/docs/).
+and look through the [documentation pages](https://owasp.org/www-project-threat-dragon/docs-2/).
 
 Also well worth watching the video provided by the
 [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
@@ -56,14 +55,12 @@ There are [desktop versions](https://github.com/OWASP/threat-dragon/releases) of
 which store the threat model files on the local filesystem rather than in a repository.
 You can [download installers](https://github.com/OWASP/threat-dragon/releases) for Windows, MacOS and Linux.
 
-End user help is available for both the latest [version 2.x](https://www.threatdragon.com/docs)
-and the previous [version 1.x](https://threatdragon.github.io).
+End user help is available for both the latest [version 2.x](https://owasp.org/www-project-threat-dragon/docs-2/)
+and the previous [version 1.x](https://owasp.org/www-project-threat-dragon/docs-1/).
 
 ### Version 1.x maintenance mode
-Threat Dragon was originally written using AngularJS version 1.x,
-and this version of Angular has reached end of life.
-This means that versions 1.x of Threat Dragon are no longer actively maintained
-and versions 2.x were re-written to use Vue.js.
+Threat Dragon was originally written using AngularJS version 1.x, and this version of Angular has reached end of life.
+This means that versions 1.x of Threat Dragon are no longer actively maintained and versions 2.x were re-written to use Vue.js.
 
 For more information on building/running version 1.x,
 please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
@@ -82,12 +79,12 @@ Install from the top directory of the project using : `npm install`
 
 ### Environment variables for web application
 The web application variant of Threat Dragon requires some environment variables;
-follow [the documentation](https://www.threatdragon.com/docs/development/environment.html)
+follow [the documentation](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to set these variables.
 
 The Threat Dragon web application uses GitHub to store threat models,
 so you need to go to your GitHub account and register it as a GitHub application.
-There is a [step by step guide](https://www.threatdragon.com/docs/development/environment.html)
+There is a [step by step guide](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to do this. Github Enterprise is also supported.
 
 If running the web application locally then the front-end to server communication will
@@ -111,7 +108,7 @@ from the top directory with command `npm stop`. Otherwise break out of both the 
 ### Docker (local build)
 
 To run Threat Dragon in a docker container,
-first configure your [environment using dotenv](https://www.threatdragon.com/docs/development/environment.html)
+first configure your [environment using dotenv](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 and run from the top directory of the project:
 
 - `docker build -t owasp-threat-dragon:dev .`
@@ -145,7 +142,7 @@ Assuming that you are using http port 8080 and accessing Threat Dragon on `http:
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome,
 please refer to the page for [contributors](CONTRIBUTING.md).
 
-There are some [developer notes](https://www.threatdragon.com/docs/development/local.html)
+There are some [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
 to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
 

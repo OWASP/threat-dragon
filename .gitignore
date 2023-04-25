@@ -29,14 +29,13 @@
 
 # documentation site
 !docs
-!docs/404.html
 !docs/Gemfile
 !docs/Gemfile.lock
-!docs/README.md
-!docs/_config.yml
-!docs/assets/images/*.png
-!docs/**/*.md
-!docs/development/schema/owasp.threat-dragon.schema.json
+!docs/*.md
+!docs/*.yml
+!docs/*.html
+!docs/_layouts/
+!docs/_layouts/*.html
 
 # Express server
 !td.server
