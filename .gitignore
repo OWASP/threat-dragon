@@ -14,7 +14,7 @@
 !Dockerfile
 
 # allow build system and artwork
-!./*.md
+!*.md
 !LICENSE.txt
 !cupcake/icons/*.ico
 !cupcake/png/*.png
