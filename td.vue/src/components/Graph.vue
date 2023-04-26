@@ -79,7 +79,7 @@ export default {
             console.debug('diagram ID: ' + this.diagram.id);
         },
         threatSelected(threatId) {
-            this.$refs.threatEditDialog.showModal(threatId);
+            this.$refs.threatEditDialog.editThreat(threatId);
         },
         saved() {
             const updated = Object.assign({}, this.diagram);
