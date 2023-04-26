@@ -7,8 +7,8 @@ http://127.0.0.1
 # incorrectly get 'Network error: Forbidden'
 https://www.deviantart.com
 
-# lychee gets confused by the script in sbom.md
-website.url
+# trips up on the redirect page scripts
+docs/_layouts/%7B%7B%20page.redirect_to%20%7D%7D
 
 # script in td.vue/public/index.html
 BASE_URL
