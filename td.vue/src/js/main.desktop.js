@@ -11,7 +11,9 @@ import authActions from './stores/actions/auth.js';
 import providerActions from './stores/actions/provider.js';
 import threatmodelActions from './stores/actions/threatmodel.js';
 
-import '../plugins/fontawesome-vue.js';
+import './plugins/bootstrap-vue.js';
+import './plugins/fontawesome-vue.js';
+import './plugins/toastification.js';
 
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {
@@ -27,10 +29,28 @@ window.electronAPI.onCloseModel((_event, fileName) =>  {
   });
 });
 
-// request from desktop menu shell -> renderer to save the model
-window.electronAPI.onSaveModel((_event, fileName) =>  {
-  console.debug('Save model for file name : ' + fileName);
-  app.$store.dispatch(threatmodelActions.save);
+// informing renderer that desktop menu shell has closed the model
+window.electronAPI.onCloseModel((_event, fileName) =>  {
+  console.warn('TODO check that any existing open model has not been modified');
+  // getConfirmModal();
+  console.debug('Closing model with file name : ' + fileName);
+  app.$store.dispatch(threatmodelActions.clear);
+  localAuth();
+  app.$router.push({ name: 'MainDashboard' }).catch(error => {
+    if (error.name != 'NavigationDuplicated') {
+      throw error;
+    }
+  });
+});
+
+// request from desktop menu shell -> renderer to start a new model
+window.electronAPI.onNewModel((_event, fileName) =>  {
+  console.warn('TODO check that any existing open model has not been modified');
+  // getConfirmModal();
+  console.debug('New model with file name : ' + fileName);
+  app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
+  localAuth();
+  app.$router.push({ name: `${providerNames.local}NewThreatModel` });
 });
 
 // informing renderer that desktop menu shell is providing new model cntents
@@ -58,14 +78,21 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
   app.$router.push({ name: `${providerNames.local}ThreatModel`, params });
 });
 
-// request from desktop menu shell -> renderer to start a new model
-window.electronAPI.onNewModel((_event, fileName) =>  {
-  console.warn('TODO check that any existing open model has not been modified');
-  // getConfirmModal();
-  console.debug('New model with file name : ' + fileName);
-  app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
+// request from desktop menu shell -> renderer to print the model report
+window.electronAPI.onPrintModel((_event, fileName) =>  {
+  console.debug('Print report for model with file name : ' + fileName);
   localAuth();
-  app.$router.push({ name: `${providerNames.local}NewThreatModel` });
+  app.$router.push({ name: `${providerNames.local}Report` }).catch(error => {
+    if (error.name != 'NavigationDuplicated') {
+      throw error;
+    }
+  });
+});
+
+// request from desktop menu shell -> renderer to save the model
+window.electronAPI.onSaveModel((_event, fileName) =>  {
+  console.debug('Save model for file name : ' + fileName);
+  app.$store.dispatch(threatmodelActions.save);
 });
 
 const localAuth = () => {

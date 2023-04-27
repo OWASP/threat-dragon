@@ -9,7 +9,7 @@
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
     "cypress:open": "cypress open",
     "dev": "vite --port 8080",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "eslint --ext .js,.vue --fix src",
     "preinstall": "npx only-allow pnpm",
     "pretest": "npm run lint",
     "serve": "vite preview",
