@@ -195,8 +195,6 @@ const printPdf = () => {
 </style>
 
 <style lang="scss" scoped>
-@import '@/scss/bootstrap.scss';
-
 .td-branding {
   padding-left: 50px;
 }

@@ -109,7 +109,6 @@ const emits = defineEmits(['threat-selected']);
 </template>
 
 <style lang="scss" scoped>
-@import '@/scss/bootstrap.scss';
 @import 'bootstrap/scss/functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 

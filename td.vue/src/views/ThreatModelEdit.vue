@@ -328,8 +328,6 @@ const getConfirmModal = async () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/scss/bootstrap.scss';
-
 .add-diagram-link {
   color: $orange;
   font-size: 14px;

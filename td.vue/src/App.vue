@@ -40,8 +40,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import '@/scss/bootstrap';
-
 #app {
   font-size: 20px;
   line-height: 1.42857143;

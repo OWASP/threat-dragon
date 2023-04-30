@@ -164,8 +164,6 @@ const editDiagram = (diagram) => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/scss/bootstrap.scss';
-
 .tm-card {
   font-size: 14px;
   white-space: pre-wrap;
