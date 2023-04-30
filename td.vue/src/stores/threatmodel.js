@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 import { useBranchStore } from '@/stores/branch';
 import { useProviderStore } from '@/stores/provider';
@@ -14,11 +15,11 @@ import { providerTypes } from '@/service/provider/providerTypes';
 
 export const useThreatModelStore = defineStore('threatModelStore', {
   state: () => ({
-    all: [],
-    data: {},
-    fileName: '',
-    immutableCopy: {},
-    selectedDiagram: {}
+    all: useStorage('pinia/threatModel/all', []),
+    data: useStorage('pinia/threatModel/data', {}),
+    fileName: useStorage('pinia/threatModel/fileName', ''),
+    immutableCopy: useStorage('pinia/threatModel/immutableCopy', {}),
+    selectedDiagram: useStorage('pinia/threatModel/selectedDiagram', {})
   }),
   getters: {
     contributors: (state) => {

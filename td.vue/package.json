@@ -10,7 +10,6 @@
     "cypress:open": "cypress open",
     "dev": "vite --port 8080",
     "lint": "eslint --ext .js,.vue --fix src",
-    "preinstall": "npx only-allow pnpm",
     "pretest": "npm run lint",
     "serve": "vite preview",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",

@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 import threatmodelApi from '../service/api/threatmodelApi.js';
 import {useRepositoryStore} from '@/stores/repository';
 
 export const useBranchStore = defineStore('branchStore', {
   state: () => ({
-    all: [],
-    selected: ''
+    all: useStorage('pinia/branch/all', []),
+    selected: useStorage('pinia/branch/selected', ''),
   }),
   actions: {
     $reset() {

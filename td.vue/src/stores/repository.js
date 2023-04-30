@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 import threatmodelApi from '../service/api/threatmodelApi.js';
 
 export const useRepositoryStore = defineStore('repositoryStore', {
   state: () => ({
-    all: [],
-    selected: ''
+    all: useStorage('pinia/repository/all', []),
+    selected: useStorage('pinia/repository/selected', '')
   }),
   actions: {
     $reset() {

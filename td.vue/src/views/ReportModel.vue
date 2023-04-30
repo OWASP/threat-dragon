@@ -215,7 +215,7 @@ const printPdf = () => {
 
 .sticky {
   position: sticky;
-  top: 45px;
+  top: $header-height + 10;
   width: 100%;
   background-color: $white;
   padding-top: 15px;

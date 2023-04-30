@@ -42,6 +42,7 @@ const onReportClick = (evt) => {
   router.push({ name: `${providerType.value}Report`, params: router.currentRoute.value.params });
 };
 const onCloseClick = (evt) => {
+  // TODO: Reset ThreatTop or re-calculate it onMounte?
   evt.preventDefault();
   threatModelStore.clearState();
   router.push('/dashboard');

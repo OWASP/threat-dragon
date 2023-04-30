@@ -7,7 +7,7 @@ export default {
 import { useCellStore } from '@/stores/cell';
 import { useThreatModelStore } from '@/stores/threatmodel';
 import { computed , ref} from 'vue';
-import {useI18n} from 'vue-i18n';
+import { useI18n } from 'vue-i18n';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
@@ -80,24 +80,15 @@ const editThreat = (threatId)  => {
   }
 };
 const updateThreat = () => {
-  debugger;
-  const threatRef = threat.value;
-
-  if (threatRef) {
-    threatRef.status = threat.value.status;
-    threatRef.severity = threat.value.severity;
-    threatRef.title = threat.value.title;
-    threatRef.type = threat.value.type;
-    threatRef.description = threat.value.description;
-    threatRef.mitigation = threat.value.mitigation;
-    threatRef.modelType = threat.value.modelType;
-    threatRef.new = false;
-    threatRef.number = number;
-    threatRef.score = threat.value.score;
-
-    cellStore.dataUpdated(cellRef.value.data);
-    dataChanged.updateStyleAttrs(cellRef.value);
+  if (newThreat.value) {
+    threat.value.number = number.value;
+    threat.value.new = false;
+    newThreat.value = false;
   }
+
+  cellStore.dataUpdated(cellRef.value.data);
+  dataChanged.updateStyleAttrs(cellRef.value);
+
   hideModal();
 };
 const deleteThreat = () => {
@@ -105,6 +96,12 @@ const deleteThreat = () => {
   cellRef.value.data.hasOpenThreats = cellRef.value.data.threats.length > 0;
   cellStore.dataUpdated(cellRef.value.data);
   dataChanged.updateStyleAttrs(cellRef.value);
+  newThreat.value = false;
+};
+const hideModalClick = () => {
+  if (newThreat.value) {
+    immediateDelete();
+  }
 };
 const hideModal= () => {
   editModal.value.hide();
@@ -125,6 +122,9 @@ const confirmDelete = async () => {
   hideModal();
 };
 const immediateDelete = async () => {
+  number.value = number.value - 1;
+  threatModelStore.update({ threatTop: number.value });
+
   deleteThreat();
   hideModal();
 };
@@ -143,6 +143,7 @@ defineExpose({ editThreat });
       header-bg-variant="primary"
       header-text-variant="light"
       :title="modalTitle"
+      @hide="hideModalClick"
     >
       <b-form>
         <b-form-row>

@@ -58,12 +58,14 @@ const entitiesWithThreats = computed(() => {
       :key="idx"
       class="mt-3 no-print"
     >
-      <td-report-entity
-        :entity="entity"
-        :out-of-scope="entity.data.outOfScope"
-        :show-out-of-scope="props.showOutOfScope"
-        :show-mitigated="props.showMitigated"
-      />
+      <b-col>
+        <td-report-entity
+          :entity="entity"
+          :out-of-scope="entity.data.outOfScope"
+          :show-out-of-scope="props.showOutOfScope"
+          :show-mitigated="props.showMitigated"
+        />
+      </b-col>
     </b-row>
 
     <div class="page-title print-only td-threats-title">
