@@ -67,15 +67,15 @@ please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/
 
 ### Building version 2.x
 
-Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/) -
-which includes the node package manager npm - and then [Install pnpm](https://pnpm.io/installation)
+Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/)
+which includes the node package manager npm
 
 Clone the repository using: `git clone https://github.com/owasp/threat-dragon.git`
 
 This downloads the code into a `threat-dragon` directory and the application code is in two sub-folders,
 one for the back-end application (`td.server`) and one for the front-end (`td.vue`).
 
-Pnpm (rather than npm) is used to install from the top directory of the project : `pnpm install`
+Install from the top directory of the project using : `npm install`
 
 ### Environment variables for web application
 The web application variant of Threat Dragon requires some environment variables;
@@ -94,16 +94,16 @@ Specify this using environment variable `SERVER_API_PROTOCOL=http` in the dotenv
 ### Run the application
 
 When running on Windows, and during development, the front-end and back-end
-can be started separately in "watch" mode using commands : `pnpm dev:server` and `pnpm dev:vue`.
+can be started separately in "watch" mode using commands : `npm run dev:server` and `npm run dev:vue`.
 Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
-from the top directory using : `pnpm start`.
+from the top directory using : `npm start`.
 
 With both front and back end running, access with a browser at http://localhost:8080/
 
 ### Stop the application
 
-If using `pnpm start`, stop both the back-end server and the front-end application
-from the top directory with command `pnpm stop`. Otherwise break out of both the server and vue front-end.
+If using `npm start`, stop both the back-end server and the front-end application
+from the top directory with command `npm stop`. Otherwise break out of both the server and vue front-end.
 
 ### Docker (local build)
 

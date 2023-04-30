@@ -31,15 +31,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -65,15 +63,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -99,15 +95,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: lint
         run: npm run lint
@@ -188,15 +182,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: Run e2e tests
         run: npm run test:e2e-ci
@@ -241,15 +233,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: Run e2e tests
         run: npm run test:e2e-ci-smokes
@@ -397,15 +387,13 @@ jobs:
       - name: Cache NPM dir
         uses: actions/cache@v3.3.0
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.OS }}-pnpm-cache-server-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-pnpm-cache-server-
+            ${{ runner.os }}-node-
 
       - name: Install packages
-        run: |
-          npm i -g pnpm
-          pnpm install --frozen-lockfile
+        run: npm clean-install
 
       - name: Build application
         # test only so do not publish

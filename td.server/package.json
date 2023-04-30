@@ -8,7 +8,6 @@
     "clean:dist": "rimraf dist",
     "dev": "nodemon dev.js --exec babel-node",
     "lint": "eslint src --fix",
-    "preinstall": "npx only-allow pnpm",
     "pretest": "npm run lint",
     "start": "npm run dev",
     "start:serve": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
@@ -69,12 +68,12 @@
     "sinon-chai": "^3.7.0",
     "supertest": "^4.0.2"
   },
-  "pnpm": {
-    "overrides": {
-      "debug@<3.1.0": ">=4.3.4",
-      "follow-redirects": ">=1.14.8",
-      "got": ">=11.8.5",
-      "minimatch@<3.0.5": ">=3.0.5"
-    }
+
+  "overrides": {
+    "node-ipc": ">=10.1.7",
+    "debug@<3.1.0": ">=4.3.4",
+    "follow-redirects": ">=1.14.8",
+    "got": ">=11.8.5",
+    "minimatch@<3.0.5": ">=3.0.5"
   }
 }
