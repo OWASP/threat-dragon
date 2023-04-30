@@ -72,12 +72,12 @@ export function getMenuTemplate () {
         },
         {
           label: messages[language].forms.savePdf,
-                    click () {
-                        printModel();
-                    }
-                },
-                {
-                    label: messages[language].desktop.file.close,
+          click () {
+            printModel();
+          }
+        },
+        {
+          label: messages[language].desktop.file.close,
           click () {
             closeModel();
           }
@@ -328,14 +328,14 @@ function savePDFReport (pdfPath) {
 
 // the renderer has requested a report to be printed
 export const modelPrint = (printer) => {
-    let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
-    if (!model.filePath || model.filePath === '') {
-        reportPath = path.join(__dirname, '/new_model');
-    }
+  let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
+  if (!model.filePath || model.filePath === '') {
+    reportPath = path.join(__dirname, '/new_model');
+  }
 
-    if (printer === 'PDF') {
-        savePDFReport(reportPath);
-    }
+  if (printer === 'PDF') {
+    savePDFReport(reportPath);
+  }
 };
 
 // the renderer has opened a new model

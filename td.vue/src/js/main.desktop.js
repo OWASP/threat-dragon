@@ -1,33 +1,17 @@
 import Vue from 'vue';
 
-import App from '../App.vue';
-import i18nFactory from '../i18n';
+import App from './App.vue';
+import i18nFactory from './i18n/index.js';
 
-import router from '../router';
-import { providerNames } from '../service/provider/providers.js';
+import router from './router/index.js';
+import { providerNames } from './service/provider/providers.js';
 
 import storeFactory from './stores/index.js';
 import authActions from './stores/actions/auth.js';
 import providerActions from './stores/actions/provider.js';
 import threatmodelActions from './stores/actions/threatmodel.js';
 
-import './plugins/bootstrap-vue.js';
 import './plugins/fontawesome-vue.js';
-import './plugins/toastification.js';
-
-// informing renderer that desktop menu shell has closed the model
-window.electronAPI.onCloseModel((_event, fileName) =>  {
-  console.warn('TODO check that any existing open model has not been modified');
-  // getConfirmModal();
-  console.debug('Closing model with file name : ' + fileName);
-  app.$store.dispatch(threatmodelActions.clear);
-  localAuth();
-  app.$router.push({ name: 'MainDashboard' }).catch(error => {
-    if (error.name != 'NavigationDuplicated') {
-      throw error;
-    }
-  });
-});
 
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {

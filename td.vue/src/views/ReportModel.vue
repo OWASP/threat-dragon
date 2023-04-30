@@ -122,9 +122,9 @@ const printPdf = () => {
       <b-col class="text-right right">
         <b-btn-group>
           <td-form-button
+            v-if="isElectron()"
             id="td-print-pdf-btn"
             :on-btn-click="printPdf"
-            v-if="isElectron"
             icon="file-pdf"
             :text="t('forms.savePdf')"
           />

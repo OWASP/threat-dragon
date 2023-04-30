@@ -26,7 +26,7 @@ const threatTypes = computed(() => {
   }
 
   const res = [];
-  const threatTypes = threatModels.getThreatTypesByElement(threat.modelType, cellRef.value.data.type);
+  const threatTypes = threatModels.getThreatTypesByElement(threat.value.modelType, cellRef.value.data.type);
   Object.keys(threatTypes).forEach((type) => {
     res.push(t(threatTypes[type]));
   }, this);
@@ -76,10 +76,11 @@ const editThreat = (threatId)  => {
     }
     threatModelStore.update({ threatTop: number.value });
   } else {
-    number.value = threat.number;
+    number.value = threat.value.number;
   }
 };
 const updateThreat = () => {
+  debugger;
   const threatRef = threat.value;
 
   if (threatRef) {
@@ -128,7 +129,7 @@ const immediateDelete = async () => {
   hideModal();
 };
 
-defineExpose({ showModal });
+defineExpose({ editThreat });
 </script>
 
 <template>
