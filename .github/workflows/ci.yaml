@@ -142,11 +142,25 @@ jobs:
           path: './td.vue/'
           output: './sboms/threat-dragon-site-bom.xml'
 
+      - name: Create JSON site SBOM
+        uses: CycloneDX/gh-node-module-generatebom@v1.0.2
+        with:
+          path: './td.vue/'
+          output: './sboms/threat-dragon-site-bom.json'
+          json: true
+
       - name: Create XML server SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.2
         with:
           path: './td.server/'
           output: './sboms/threat-dragon-server-bom.xml'
+
+      - name: Create JSON server SBOM
+        uses: CycloneDX/gh-node-module-generatebom@v1.0.2
+        with:
+          path: './td.server/'
+          output: './sboms/threat-dragon-server-bom.json'
+          json: true
 
       - name: Save SBOMs artifact
         uses: actions/upload-artifact@master
