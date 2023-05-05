@@ -109,6 +109,13 @@ jobs:
       - name: Unit test
         run: npm run test:desktop
 
+  sbom_web:
+    name: build sbom
+    runs-on: ubuntu-22.04
+    needs: [server_unit_tests, site_unit_tests]
+    steps:
+      - uses: anchore/sbom-action@v0.14.1
+
   build_docker_image:
     name: build docker image
     runs-on: ubuntu-22.04

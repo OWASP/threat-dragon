@@ -358,3 +358,10 @@ jobs:
           tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }},${{ env.image_name }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+  webapp_release:
+    name: publish sbom
+    runs-on: ubuntu-22.04
+    needs: [server_unit_tests, site_unit_tests]
+    steps:
+      - uses: anchore/sbom-action@v0.14.1
