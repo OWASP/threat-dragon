@@ -298,55 +298,6 @@ jobs:
           path: zap/report_web.html
         if: ${{ always() }}
 
-
-  zap_scan_docs:
-    name: docs zap scan
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
-    steps:
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.image_name }}
-
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      # There's probably a better way of doing this.
-      # Not a great idea to chmod 777, even if it's only
-      # in a CI runner
-      - name: Make report dir
-        run: sudo mkdir zap && sudo chmod 0777 zap
-        
-      - name: ZAP Scan
-        run: |
-          docker run -v $(pwd):/zap/wrk/:rw \
-            -t \
-            --network=host \
-            owasp/zap2docker-stable \
-            zap-baseline.py \
-            -t http://localhost:3000/docs \
-            -r zap/report_docs.html \
-            -a \
-            -c .github/workflows/.zap-rules-web.tsv \
-            -j
-
-      - name: Upload scan report
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: zap_report_docs.zip
-          path: zap/report_docs.html
-        if: ${{ always() }}
-
-
   scan_image_with_trivy:
     name: site trivy scan
     runs-on: ubuntu-22.04
