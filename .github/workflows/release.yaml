@@ -360,8 +360,30 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   webapp_release:
-    name: publish sbom
+    name: publish web application
     runs-on: ubuntu-22.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
-      - uses: anchore/sbom-action@v0.14.1
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Create SBOM with CycloneDX
+        uses: CycloneDX/gh-node-module-generatebom@v1.0.2
+        with:
+          output: './threat-dragon.bom.xml'
