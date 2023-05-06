@@ -46,7 +46,8 @@ module.exports = {
                     entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
                     hardenedRuntime: true,
                     target: [
-                        'dmg'
+                        'dmg',
+                        `zip`
                     ]
                 },
                 win: {
