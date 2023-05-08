@@ -17,6 +17,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import threatService from '@/service/threats/index.js';
+import { getProviderType } from '@/service/provider/providers';
 
 const threatModelStore = useThreatModelStore();
 const providerStore = useProviderStore();
@@ -24,7 +25,7 @@ const router = useRouter();
 const { t } = useI18n();
 
 const model = computed(() => threatModelStore.data);
-const providerType = computed(() => providerStore.selected);
+const providerType = computed(() => getProviderType(providerStore.selected));
 
 const allThreats = computed (() => {
   return threatService.filter(threatModelStore.data.detail.diagrams, {
@@ -41,6 +42,7 @@ const display = ref({
 });
 
 const onCloseClick = () => {
+  console.log(providerType.value);
   router.push({ name: `${providerType.value}ThreatModel`, params: router.currentRoute.value.params });
 };
 const print = () => {

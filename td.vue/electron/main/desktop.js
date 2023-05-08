@@ -1,11 +1,10 @@
 'use strict';
 
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import menu from './menu.js';
-import logger from './logger.js';
-import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
+import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer';
+import menu from '../desktop/menu.js';
+import logger from '../desktop/logger.js';
+import { electronURL, isDevelopment, isTest, isMacOS, isWin } from '../desktop/utils.js';
 
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
@@ -26,10 +25,9 @@ async function createWindow () {
     height: 900,
     show: false,
     webPreferences: {
-      enableRemoteModule: false,
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__static, 'preload.js')
+      preload: path.join(__dirname, '../preload/index.js')
     }
   });
 
@@ -41,15 +39,18 @@ async function createWindow () {
     menu.setMainWindow(mainWindow);
   });
 
-  if (electronURL) {
-    logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
+  if (isDevelopment && electronURL) {
+    logger.log.info('Running in development mode with ELECTRON_RENDERER_URL: ' + electronURL);
     // Load the url of the dev server when in development mode
     await mainWindow.loadURL(electronURL);
     if (!isTest) mainWindow.webContents.openDevTools();
   } else {
-    createProtocol('app');
+    logger.log.info('Running in production mode');
+    // import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
+    // createProtocol('app');
     // Load the index.html when not in development mode
-    mainWindow.loadURL('app://./index.html');
+    // await mainWindow.loadURL('app://./index.html');
+    await mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
   }
 }
 
@@ -65,12 +66,12 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
+app.on('activate', async () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   logger.log.debug('Activate application');
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    await createWindow();
   }
 });
 
@@ -85,7 +86,7 @@ app.on('ready', async () => {
   // Install Vue Devtools
   if (isDevelopment && !isTest) {
     try {
-      await installExtension(VUEJS_DEVTOOLS);
+      await installExtension(VUEJS3_DEVTOOLS);
     } catch (e) {
       logger.log.error('Vue Devtools failed to install:', e.toString());
     }
@@ -97,10 +98,10 @@ app.on('ready', async () => {
   ipcMain.on('model-print', handleModelPrint);
   ipcMain.on('model-saved', handleModelSaved);
 
-  createWindow();
+  await createWindow();
 
   // check for updates from github releases site
-  autoUpdater.checkForUpdatesAndNotify();
+  await autoUpdater.checkForUpdatesAndNotify();
 });
 
 // this is emitted when a 'recent document' is opened

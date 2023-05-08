@@ -12,7 +12,7 @@ import 'vue-toastification/dist/index.css';
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
 app.use(createPinia());
-app.use(PiniaVuePlugin); // TODO: remove when Vue3 works
+app.use(PiniaVuePlugin); // TODO: remove when Vue3 fully works
 app.use(router);
 app.use(i18n);
 app.use(Toast, {

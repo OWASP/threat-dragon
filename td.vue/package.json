@@ -5,19 +5,20 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "build:desktop": "vite electron:build",
+    "build:desktop": "electron-vite build",
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
     "cypress:open": "cypress open",
     "dev": "vite --port 8080",
+    "dev:desktop": "electron-vite dev",
     "lint": "eslint --ext .js,.vue --fix src",
     "pretest": "npm run lint",
     "serve": "vite preview",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
-    "start:desktop": "electron .",
+    "start:desktop": "electron-vite preview",
     "start:serve": "pm2 --name td.vue start 'vite preview'",
     "stop:serve": "pm2 delete td.vue",
     "test": "vitest",
-    "test:desktop": "vite test:unit --testMatch '**/unit/desktop/**/*.spec.js' --collectCoverageFrom='src/desktop/**/*.js'",
+    "test:desktop": "vite test:unit --testMatch '**/unit/desktop/**/*.spec.js' --collectCoverageFrom='electron/**/*.js'",
     "test:e2e": "vite test:e2e -C e2e.local.config.js",
     "test:e2e:desktop": "wdio --verbose run ./wdio.config.js",
     "test:e2e:local": "vite test:e2e -C e2e.local.config.js --url http://localhost:8080/",
@@ -92,6 +93,7 @@
     "electron-builder-notarize": "^1.5.1",
     "electron-chromedriver": "^18.0.0",
     "electron-devtools-installer": "^3.2.0",
+    "electron-vite": "^1.0.22",
     "eslint": "^8.39.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -113,7 +115,6 @@
     "wdio-electron-service": "^4.0.2",
     "webdriverio": "^8.6.9"
   },
-
   "overrides": {
     "node-ipc": ">=10.1.7",
     "debug@<3.1.0": ">=4.3.4",
@@ -128,7 +129,7 @@
     "webpack@<5.0.0": ">=5.77.0",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
-  "main": "background.js",
+  "main": "./out/main/index.js",
   "resolutions": {
     "ansi-regex": "^6.0.1"
   }

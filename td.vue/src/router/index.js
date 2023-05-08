@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import {createRouter, createWebHashHistory} from 'vue-router';
 
 import { gitRoutes } from './git.js';
 import HomePage from '../views/HomePage.vue';
@@ -30,7 +30,7 @@ const routes = [
 ];
 
 const router = new createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 });
 
