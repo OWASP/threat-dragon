@@ -258,7 +258,7 @@ const rus = {
         confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
         description: 'Provide a description for this threat',
         emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide mitigation or prevention for this threat',
+        mitigation: 'Provide remediation for this threat or a reason if status is N/A',
         newThreat: 'New Threat',
         newThreatByType: 'New Threat by Type',
         newThreatByContext: 'New Threat by Context',
