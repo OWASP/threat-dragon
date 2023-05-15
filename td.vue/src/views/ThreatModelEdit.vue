@@ -20,8 +20,6 @@ const { t } = useI18n();
 // eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
 
-// const fileHandle = computed(() => threatModelStore.fileHandle);
-// const fileName = computed(() => threatModelStore.fileName);
 const model = computed(() => threatModelStore.data);
 const providerType = computed(() => getProviderType(providerStore.selected));
 const diagramTop = computed(() => threatModelStore.data.detail.diagramTop);
@@ -65,7 +63,6 @@ const onAddDiagramClick = (event) => {
     title: t('threatmodel.diagram.stride.defaultTitle'),
     diagramType: 'STRIDE',
     placeholder: t('threatmodel.diagram.stride.defaultDescription'),
-    thumbnail: '/images/thumbnail.stride.jpg',
     version: version.value
   };
   threatModelStore.update({ diagramTop: diagramTop.value + 1 });
@@ -77,22 +74,18 @@ const onDiagramTypeClick = (idx, type) => {
   let thumbnail;
   switch (type) {
   case 'CIA':
-    thumbnail = '/images/thumbnail.cia.jpg';
     defaultTitle = t('threatmodel.diagram.cia.defaultTitle');
     placeholder = t('threatmodel.diagram.cia.defaultDescription');
     break;
   case 'LINDDUN':
-    thumbnail = '/images/thumbnail.linddun.jpg';
     defaultTitle = t('threatmodel.diagram.linddun.defaultTitle');
     placeholder = t('threatmodel.diagram.linddun.defaultDescription');
     break;
   case 'STRIDE':
-    thumbnail = '/images/thumbnail.stride.jpg';
     defaultTitle = t('threatmodel.diagram.stride.defaultTitle');
     placeholder = t('threatmodel.diagram.stride.defaultDescription');
     break;
   default:
-    thumbnail = '/images/thumbnail.jpg';
     defaultTitle = t('threatmodel.diagram.generic.defaultTitle');
     placeholder = t('threatmodel.diagram.generic.defaultDescription');
     type = t('threatmodel.diagram.generic.select');

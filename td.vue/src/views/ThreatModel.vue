@@ -12,6 +12,7 @@ import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { getProviderType } from '@/service/provider/providers.js';
+import isElectron from 'is-electron';
 
 const threatModelStore = useThreatModelStore();
 const providerStore = useProviderStore();
@@ -49,9 +50,9 @@ const onCloseClick = (evt) => {
 };
 const getThumbnailUrl = (diagram) => {
   if (!diagram || !diagram.diagramType) {
-    return '/images/thumbnail.jpg';
+    return isElectron() ? 'images/thumbnail.jpg' : '/images/thumbnail.jpg';
   }
-  return `/images/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
+  return isElectron() ? `images/thumbnail.${diagram.diagramType.toLowerCase()}.jpg` : `/images/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
 };
 
 const editDiagram = (diagram) => {

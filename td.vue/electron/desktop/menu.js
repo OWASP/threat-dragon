@@ -358,7 +358,8 @@ export default {
   getMenuTemplate,
   modelClosed,
   modelOpened,
-  modelPrint,modelSaved,
+  modelPrint,
+  modelSaved,
   readModelData,
   setLocale,
   setMainWindow

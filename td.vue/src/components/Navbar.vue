@@ -8,15 +8,19 @@ import TdLocaleSelect from './LocaleSelect.vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import isElectron from 'is-electron';
 
 const authStore = useAuthStore();
 
 const router = useRouter();
 const { t } = useI18n();
+const threatDragonImage = isElectron()? 'images/threatdragon_logo_image.svg' : '/images/threatdragon_logo_image.svg';
+const owaspImage = isElectron()? 'images/owasp.svg' : '/images/owasp.svg';
 // eslint-disable-next-line no-undef
 const version = __APP_VERSION__;
 // eslint-disable-next-line no-undef
 const state = __APP_BUILD_STATE__;
+
 
 const onLogOut = async (evt) => {
   evt.preventDefault();
@@ -40,7 +44,7 @@ const onLogOut = async (evt) => {
       class="td-brand"
     >
       <b-img
-        src="/images/threatdragon_logo_image.svg"
+        :src=threatDragonImage
         class="td-brand-img"
         alt="Threat Dragon Logo"
       />
@@ -104,7 +108,7 @@ const onLogOut = async (evt) => {
           rel="noopener noreferrer"
         >
           <b-img
-            src="/images/owasp.svg"
+            :src=owaspImage
             class="td-fa-nav td-owasp-logo"
           />
         </b-nav-item>

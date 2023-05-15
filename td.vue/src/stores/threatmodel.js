@@ -63,16 +63,13 @@ export const useThreatModelStore = defineStore('threatModelStore', {
           const toast = useToast();
           const { t } = useI18n();
           toast.success(t('threatmodel.saved') + ' : ' + this.fileName);
-        } else if (isElectron()) {
-          // desktop version always saves locally
-          await window.electronAPI.modelSaved(this.data, this.fileName);
         } else {
           // save locally for web app when local login
           save.local(this.data, `${this.data.summary.title}.json`);
         }
         this.setInmutableCopy();
       } catch (ex) {
-        console.error('Failed to update threat model!');
+        console.error('Failed to create threat model!');
         console.error(ex);
         const toast = useToast();
         const { t } = useI18n();
@@ -144,7 +141,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
           toast.success(t('threatmodel.saved') + ' : ' + this.fileName);
         } else if (isElectron()) {
           // desktop version always saves locally
-          await window.electronAPI.modelSaved(this.data, this.fileName);
+          window.electronAPI.modelSaved(this.data.value, `${this.data.summary.title}.json`);
         } else {
           // save locally for web app when local login
           save.local(this.data, `${this.data.summary.title}.json`);

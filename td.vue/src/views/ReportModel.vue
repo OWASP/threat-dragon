@@ -42,7 +42,6 @@ const display = ref({
 });
 
 const onCloseClick = () => {
-  console.log(providerType.value);
   router.push({ name: `${providerType.value}ThreatModel`, params: router.currentRoute.value.params });
 };
 const print = () => {

@@ -5,6 +5,9 @@ export default {
 </script>
 <script setup>
 import { useI18n } from 'vue-i18n';
+import isElectron from 'is-electron';
+
+const threatDragonImage = isElectron()? 'images/threatdragon_logo_image.svg' : '/images/threatdragon_logo_image.svg';
 
 const props = defineProps({
   title: {
@@ -57,7 +60,7 @@ const { t } = useI18n();
     </div>
     <img
       v-if="props.branding"
-      src="/images/threatdragon_logo_image.svg"
+      :src=threatDragonImage
       alt="Threat Dragon Logo"
       class="td-brand-logo"
     >

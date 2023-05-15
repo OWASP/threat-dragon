@@ -11,6 +11,7 @@ import isElectron from 'is-electron';
 import { allProviders } from '@/service/provider/providers.js';
 
 const { t } = useI18n();
+const threatDragonImage = isElectron() ? 'images/threatdragon_logo_image.svg' : '/images/threatdragon_logo_image.svg';
 
 const providers = computed(() => {
   if (isElectron()) {
@@ -36,7 +37,7 @@ const providers = computed(() => {
             id="home-td-logo"
             class="td-cupcake"
             :alt="t('home.imgAlt')"
-            src="/images/threatdragon_logo_image.svg"
+            :src=threatDragonImage
           />
         </b-col>
         <b-col md="8">
