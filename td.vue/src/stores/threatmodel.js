@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
-
 import { useBranchStore } from '@/stores/branch';
 import { useProviderStore } from '@/stores/provider';
 import { useRepositoryStore } from '@/stores/repository';
@@ -141,7 +140,7 @@ export const useThreatModelStore = defineStore('threatModelStore', {
           toast.success(t('threatmodel.saved') + ' : ' + this.fileName);
         } else if (isElectron()) {
           // desktop version always saves locally
-          window.electronAPI.modelSaved(this.data.value, `${this.data.summary.title}.json`);
+          window.electronAPI.modelSaved(JSON.stringify(this.data, undefined, 2), `${this.data.summary.title}.json`);
         } else {
           // save locally for web app when local login
           save.local(this.data, `${this.data.summary.title}.json`);

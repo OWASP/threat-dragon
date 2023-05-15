@@ -260,7 +260,7 @@ export function readModelData (filePath) {
 // save the threat model
 function saveModelData (modelData) {
   if (model.isOpen === true) {
-    fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
+    fs.writeFile(model.filePath, modelData, (err) => {
       if (err) {
         logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
       } else {

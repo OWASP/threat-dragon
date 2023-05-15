@@ -1,8 +1,9 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router';
 
 import { gitRoutes } from './git.js';
 import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
+import isElectron from 'is-electron';
 
 const routes = [
   {
@@ -30,7 +31,7 @@ const routes = [
 ];
 
 const router = new createRouter({
-  history: createWebHashHistory(),
+  history: isElectron() ? createWebHashHistory() : createWebHistory(),
   routes
 });
 

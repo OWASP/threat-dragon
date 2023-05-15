@@ -1,7 +1,7 @@
 'use strict';
 
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
-import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from '../desktop/menu.js';
 import logger from '../desktop/logger.js';
 import { electronURL, isDevelopment, isTest, isMacOS, isWin } from '../desktop/utils.js';
@@ -39,18 +39,21 @@ async function createWindow () {
     menu.setMainWindow(mainWindow);
   });
 
-  if (isDevelopment && electronURL) {
+  if (isDevelopment) {
+    if (!isTest) mainWindow.webContents.openDevTools();
+  }
+  if (electronURL) {
     logger.log.info('Running in development mode with ELECTRON_RENDERER_URL: ' + electronURL);
     // Load the url of the dev server when in development mode
     await mainWindow.loadURL(electronURL);
-    if (!isTest) mainWindow.webContents.openDevTools();
+
   } else {
     logger.log.info('Running in production mode');
     // import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
     // createProtocol('app');
-    // Load the index.html when not in development mode
-    // await mainWindow.loadURL('app://./index.html');
-    await mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
+    // Load the index.desktop.html when not in development mode
+    // await mainWindow.loadURL('app://./index.desktop.html');
+    await mainWindow.loadFile(path.join(__dirname, '../renderer/index.desktop.html'));
   }
 }
 
@@ -78,7 +81,7 @@ app.on('activate', async () => {
 // This method will be called when Electron has finished initialization
 // and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
+app.whenReady().then(async () => {
   logger.log.debug('Building the menu system for the default language');
   let template = menu.getMenuTemplate();
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
@@ -86,17 +89,17 @@ app.on('ready', async () => {
   // Install Vue Devtools
   if (isDevelopment && !isTest) {
     try {
-      await installExtension(VUEJS3_DEVTOOLS);
+      await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
       logger.log.error('Vue Devtools failed to install:', e.toString());
     }
   }
 
   ipcMain.on('update-menu', handleUpdateMenu);
-  ipcMain.on('model-closed', handleModelClosed);
   ipcMain.on('model-opened', handleModelOpened);
-  ipcMain.on('model-print', handleModelPrint);
   ipcMain.on('model-saved', handleModelSaved);
+  ipcMain.on('model-print', handleModelPrint);
+  ipcMain.on('model-closed', handleModelClosed);
 
   await createWindow();
 
@@ -119,14 +122,14 @@ function handleUpdateMenu (_event, locale) {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-function handleModelClosed (_event, fileName) {
-  logger.log.debug('Close model notification from renderer for file name: ' + fileName);
-  menu.modelClosed();
-}
-
 function handleModelOpened (_event, fileName) {
   logger.log.debug('Open model notification from renderer for file name: ' + fileName);
   menu.modelOpened();
+}
+
+function handleModelSaved (_event, modelData, fileName) {
+  logger.log.debug('Model save request from renderer with file name : ' + fileName);
+  menu.modelSaved(modelData, fileName);
 }
 
 function handleModelPrint (_event, printer) {
@@ -134,9 +137,9 @@ function handleModelPrint (_event, printer) {
   menu.modelPrint(printer);
 }
 
-function handleModelSaved (_event, modelData, fileName) {
-  logger.log.debug('Model save request from renderer with file name : ' + fileName);
-  menu.modelSaved(modelData, fileName);
+function handleModelClosed (_event, fileName) {
+  logger.log.debug('Close model notification from renderer for file name: ' + fileName);
+  menu.modelClosed();
 }
 
 // Exit cleanly on request from parent process in development mode.

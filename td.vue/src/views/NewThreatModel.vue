@@ -4,11 +4,11 @@ export default {
 };
 </script>
 <script setup>
-import {useProviderStore} from '@/stores/provider';
-import {useThreatModelStore} from '@/stores/threatmodel';
+import { useProviderStore } from '@/stores/provider';
+import { useThreatModelStore } from '@/stores/threatmodel';
 
-import {computed, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';

@@ -55,7 +55,7 @@ export default defineConfig({
       copyPublicDir: true,
       rollupOptions: {
         input: {
-          index: resolve(__dirname, 'index.html')
+          index: resolve(__dirname, 'index.desktop.html')
         }
       }
     },
