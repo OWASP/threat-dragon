@@ -20,7 +20,7 @@ on the [OWASP project page](https://owasp.org/www-project-threat-dragon/).
 Threat Dragon documentation is [available online](https://owasp.org/www-project-threat-dragon/docs-2/).
 
 If this does not help then one of the
-[leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/master/leaders.md) should be able to help.
+[leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/main/leaders.md) should be able to help.
 
 ## Found an Issue?
 If you have found a bug then raise an issue on
@@ -32,7 +32,7 @@ and including as much information as you can to help us diagnose your problem.
 
 ## Found a Vulnerability?
 If you think you have found a vulnerability in Threat Dragon then please report it to our
-[leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/master/leaders.md).
+[leaders / collaborators](https://github.com/OWASP/www-project-threat-dragon/blob/main/leaders.md).
 
 We are always very grateful to researchers who report vulnerabilities responsibly and are very happy
 to give all credit for the valuable assistance they provide.

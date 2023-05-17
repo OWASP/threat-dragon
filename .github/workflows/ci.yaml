@@ -161,7 +161,7 @@ jobs:
           output: './sboms/threat-dragon-server-bom.json'
 
       - name: Save SBOMs artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: threat-dragon-sboms
           path: sboms
