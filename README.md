@@ -9,8 +9,6 @@
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
 [![CodeQL](https://github.com/OWASP/threat-dragon/workflows/CodeQL/badge.svg)](https://github.com/OWASP/threat-dragon/actions?query=workflow%3ACodeQL)
 
-## Note to contributors: we are in the process of migrating from Vue 2 to Vue 3, and from veux to Pinia, so expect significant changes to the code
-
 # OWASP Threat Dragon
 
 [OWASP](https://www.owasp.org) Threat Dragon is a free, open-source, cross-platform threat modeling application.
@@ -125,9 +123,8 @@ Each release is tagged as `v{major}.{minor}.{patch}`, eg `v1.6.0`:
 
 - `docker pull owasp/threat-dragon:v2.0.0`
 
-Do _not use the latest tag_ (which is the default), as it could be a development release.
-
-Alternatively, you can use the `stable` tag, which will always be the latest official release:
+The latest tag (which is the default) may well be a development version
+so use the `stable` tag, which will always be the latest official release:
 
 - `docker pull threatdragon/owasp-threat-dragon:stable`
 - For MacOS and Linux:
@@ -145,6 +142,9 @@ please refer to the page for [contributors](CONTRIBUTING.md).
 There are some [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
 to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
+
+The easiest way to get in contact with the Threat Dragon community is via the OWASP Slack
+[#project-threat-dragon](https://owasp.slack.com/messages/CURE8PQ68) project channel.
 
 ### Vulnerability disclosure
 
