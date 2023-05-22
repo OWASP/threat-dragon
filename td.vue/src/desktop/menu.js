@@ -289,6 +289,31 @@ export const modelClosed = () => {
     model.isOpen = false;
 };
 
+// Open saveAs file system dialog and write contents as HTML
+function saveHTMLReport (htmlPath) {
+    htmlPath += '.html';
+    var dialogOptions = {
+        title: messages[language].forms.saveAS,
+        defaultPath: htmlPath,
+        filters: [{ name: 'Report', extensions: ['.html'] }, { name: 'All Files', extensions: ['*'] }]
+    };
+
+    dialog.showSaveDialog(dialogOptions).then(result => {
+        if (result.canceled === false) {
+            htmlPath = result.filePath;
+            mainWindow.webContents.savePage(htmlPath, 'HTMLComplete').then(() => {
+                logger.log.debug(messages[language].forms.saveAs + ' : ' + htmlPath);
+            }).catch(error => {
+                logger.log.error(`Failed to write HTML to ${htmlPath}: `, error);
+            });
+        } else {
+            logger.log.debug(messages[language].forms.saveAs + ' : canceled');
+        }
+    }).catch(err => {
+        logger.log.error(err);
+    });
+}
+
 // Open saveAs file system dialog and write PDF report
 function savePDFReport (pdfPath) {
     pdfPath += '.pdf';
@@ -335,6 +360,10 @@ export const modelPrint = (printer) => {
 
     if (printer === 'PDF') {
         savePDFReport(reportPath);
+    } else if (printer === 'HTML') {
+        saveHTMLReport(reportPath);
+    } else {
+        logger.log.warn('Print output type not recognised');
     }
 };
 

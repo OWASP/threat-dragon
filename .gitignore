@@ -50,9 +50,12 @@
 !td.vue/**/*.vue
 !td.vue/**/*.js
 !td.vue/**/*.scss
-!td.vue/tests/e2e/fixtures/*.json
+!td.vue/src/
+!td.vue/src/assets/*.jpg
+!td.vue/src/assets/*.svg
 !td.vue/src/icons/*
-!td.vue/src/assets/*
+!td.vue/tests/e2e/fixtures/*.json
+!td.vue/src/desktop/
 !td.vue/public/*
 !td.vue/package.json
 !td.vue/package-lock.json
