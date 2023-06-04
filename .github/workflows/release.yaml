@@ -13,7 +13,7 @@ env:
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   site_unit_tests:
-    name: site unit tests
+    name: Site unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -45,7 +45,7 @@ jobs:
         run: npm run test:unit
 
   server_unit_tests:
-    name: server unit tests
+    name: Server unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -77,7 +77,7 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
-    name: desktop unit tests
+    name: Desktop unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -109,7 +109,7 @@ jobs:
         run: npm run test:desktop
 
   desktop_e2e_tests:
-    name: desktop e2e tests
+    name: Desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -150,7 +150,7 @@ jobs:
         run: npm run test:e2e:desktop
 
   desktop_windows:
-    name: windows installer
+    name: Windows installer
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -188,7 +188,7 @@ jobs:
         run: npm run build:desktop -- --windows --publish always
 
   desktop_macos:
-    name: macos installer
+    name: MacOS installer
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -238,7 +238,7 @@ jobs:
         run: npm run build:desktop -- --mac --publish always
 
   desktop_linux:
-    name: linux installers
+    name: Linux installers
     runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -274,7 +274,7 @@ jobs:
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
 
   desktop_linux_snap:
-    name: linux snap
+    name: Linux snap
     runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
@@ -317,7 +317,7 @@ jobs:
           snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
   dockerhub_release:
-    name: publish to dockerhub
+    name: Publish to dockerhub
     runs-on: ubuntu-22.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
@@ -360,7 +360,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   webapp_release:
-    name: publish web application
+    name: Publish web application
     runs-on: ubuntu-22.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
