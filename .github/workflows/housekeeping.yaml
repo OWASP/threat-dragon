@@ -8,7 +8,7 @@ on:
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   housekeeping:
-    name: housekeeping
+    name: Housekeeping
     runs-on: ubuntu-22.04
 
     steps:
@@ -20,8 +20,13 @@ jobs:
           retain_days: 28
           keep_minimum_runs: 3
 
+      - name Delete deprecated workflows
+        uses: otto-de/purge-deprecated-workflow-runs@v1.1.1
+        with:
+          token: ${{ github.token }}
+
   trivy:
-    name: scan with trivy
+    name: Scan with trivy
     runs-on: ubuntu-22.04
 
     steps:
@@ -44,7 +49,7 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 
   codeql:
-    name: analyze with codeql
+    name: Analyze with codeql
     runs-on: ubuntu-22.04
 
     strategy:
@@ -72,7 +77,7 @@ jobs:
         uses: github/codeql-action/analyze@v2.3.0
 
   link_checker:
-    name: link checker
+    name: Link checker
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout markdown

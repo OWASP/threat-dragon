@@ -14,7 +14,7 @@ env:
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   server_unit_tests:
-    name: server unit tests
+    name: Server unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -46,7 +46,7 @@ jobs:
         run: npm run test:unit
 
   site_unit_tests:
-    name: site unit tests
+    name: Site unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -78,7 +78,7 @@ jobs:
         run: npm run test:unit
 
   desktop_unit_tests:
-    name: desktop unit tests
+    name: Desktop unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -167,7 +167,7 @@ jobs:
           path: sboms
 
   build_docker_image:
-    name: build docker image
+    name: Build docker image
     runs-on: ubuntu-22.04
     needs: [site_unit_tests, server_unit_tests]
     if: github.repository == 'OWASP/threat-dragon'
@@ -208,7 +208,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   e2e_tests:
-    name: site e2e tests
+    name: Site e2e tests
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
     defaults:
@@ -259,7 +259,7 @@ jobs:
 
 
   e2e_smokes:
-    name: site e2e smokes
+    name: Site e2e smokes
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
     defaults:
@@ -309,7 +309,7 @@ jobs:
         if: ${{ always() }}
 
   zap_scan_web:
-    name: site zap scan
+    name: Site zap scan
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
     steps:
@@ -356,7 +356,7 @@ jobs:
         if: ${{ always() }}
 
   scan_image_with_trivy:
-    name: site trivy scan
+    name: Site trivy scan
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
     steps:
@@ -372,7 +372,7 @@ jobs:
           exit-code: 1
 
   desktop_e2e_tests:
-    name: desktop e2e tests
+    name: Desktop e2e tests
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:

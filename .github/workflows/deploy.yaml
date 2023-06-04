@@ -15,7 +15,7 @@ env:
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   publish_docker:
-    name: publish docker
+    name: Publish docker
     runs-on: ubuntu-22.04
     if: github.repository == 'OWASP/threat-dragon'
     steps:
@@ -55,7 +55,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   deploy:
-    name: upload to Heroku
+    name: Upload to Heroku
     runs-on: ubuntu-22.04
     needs: [publish_docker]
     # There is an action to build and deploy a heroku app
@@ -83,7 +83,7 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   smoke_tests:
-    name: smoke tests
+    name: Smoke tests
     runs-on: ubuntu-22.04
     needs: [deploy]
     defaults:
@@ -119,7 +119,7 @@ jobs:
         run: npm run test:e2e-smokes
 
   rollback:
-    name: rollback on fail
+    name: Rollback on fail
     runs-on: ubuntu-22.04
     needs: [smoke_tests]
     if: ${{ failure() }}

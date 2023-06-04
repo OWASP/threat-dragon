@@ -9,7 +9,7 @@ on:
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   browserstack_e2e:
-    name: browserstack e2e
+    name: Browserstack e2e
     runs-on: ubuntu-22.04
     defaults:
       run:
