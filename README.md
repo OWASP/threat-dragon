@@ -137,14 +137,15 @@ Assuming that you are using http port 8080 and accessing Threat Dragon on `http:
 ### Contributing
 
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome,
-please refer to the page for [contributors](CONTRIBUTING.md).
+please refer to the page for [contributors](contributing.md).
 
 There are some [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
 to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
 
 The easiest way to get in contact with the Threat Dragon community is via the OWASP Slack
-[#project-threat-dragon](https://owasp.slack.com/messages/CURE8PQ68) project channel.
+[#project-threat-dragon](https://owasp.slack.com/messages/CURE8PQ68) project channel
+(you may need to [subscribe](https://owasp.org/slack/invite) first).
 
 ### Vulnerability disclosure
 
