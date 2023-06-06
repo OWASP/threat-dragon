@@ -2,8 +2,12 @@
 *
 
 # allow github, workflows and templates
-!.github
-!.github/**/*
+!.github/
+!.github/*.yaml
+!.github/issue_template/
+!.github/issue_template/*.md
+!.github/workflows/
+!.github/workflows/*.yaml
 !.gitignore
 !.gitattributes
 !.lycheeignore
@@ -15,7 +19,7 @@
 
 # allow build system and artwork
 !*.md
-!LICENSE.txt
+!license.txt
 !cupcake/icons/*.ico
 !cupcake/png/*.png
 !cupcake/png/*.gif

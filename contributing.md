@@ -1,16 +1,9 @@
 # Contributing to OWASP Threat Dragon
 Threat Dragon is a community project, and we are always delighted to welcome new contributors!
 
-We are now developing for version 2.0, with the previous version of Threat Dragon 1.x in maintenance mode.
-
-## Version 2.0 Threat Dragon
-There are various ways to help out with Threat Dragon project.
-The [roadmap for version 2.0](https://owasp.org/www-project-threat-dragon/#div-roadmap)
-sets out what is needed to get to the new version of Threat Dragon, and we are looking for help and contributions.
-
 When contributing:
 * see if there is [already an issue](https://github.com/OWASP/threat-dragon/issues) for what you want to do
-* follow our [Code of Conduct](CODE_OF_CONDUCT.md)
+* follow our [Code of Conduct](code_of_conduct.md)
 * get started by following the [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
 
 ## Got a Question or Problem?
