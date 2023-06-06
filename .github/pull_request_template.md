@@ -14,6 +14,5 @@ or "closes #xxxx", where #xxxx is the issue number
 **Other info**
 <!--
 Thanks for submitting a pull request!
-Please make sure you read our contributing guidelines;
-https://github.com/OWASP/threat-dragon/blob/main/CONTRIBUTING.md
+Please make sure you read our contributing guidelines contributing.md
 -->
