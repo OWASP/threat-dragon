@@ -1,4 +1,4 @@
-## Security Policy 
+## Security Policy
 
 If you find a vulnerability anywhere in this project, such as the source or scripts,
 then please let the project admins know ASAP and we will fix it as a critical priority.
