@@ -12,6 +12,7 @@
 !.gitattributes
 !.lycheeignore
 !.trivyignore
+!.markdownlint.yaml
 
 # docker files
 !.dockerignore
