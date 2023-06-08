@@ -13,12 +13,69 @@ env:
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
+  link_checker:
+    name: Link checker
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout markdown
+        uses: actions/checkout@v3.5.2
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.8.0
+        with:
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  md_linter:
+    name: Lint markdown
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout markdown
+        uses: actions/checkout@v3.5.2
+
+      # use  **/*.md for all markdown files in project
+      - name: Lint markdown
+        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        with:
+          command: config
+          globs: |
+            .markdownlint.yaml
+            *.md td.*/*.md .github/**/*.md docs/**/*.md
+
+  codeql:
+    name: Analyze with codeql
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2.3.0
+        with:
+          languages: 'javascript'
+          config-file: ./.github/codeql/codeql-config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      - name: CodeQL autobuild
+        uses: github/codeql-action/autobuild@v2.3.0
+
+      - name: Perform vulnerability analysis
+        uses: github/codeql-action/analyze@v2.3.0
+
   server_unit_tests:
     name: Server unit tests
     runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: td.server
+    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
@@ -51,6 +108,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
@@ -83,6 +141,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
@@ -365,7 +424,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.10.0
+        uses: aquasecurity/trivy-action@0.11.0
         with:
           image-ref: '${{ env.image_name }}'
           format: 'table'

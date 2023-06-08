@@ -4,10 +4,8 @@
 </p>
 
 [![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml)
-[![BrowserStack Status](https://automate.browserstack.com/badge.svg?badge_key=SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)](https://automate.browserstack.com/public-build/SG1sSFpJeUJ0M1pmY1hrM2F0dVNLclRPSzdCb3lLN253MzcrV0liZWd1bz0tLWxXQWdQaTJRcVF1TVEwS2FWbXJxcHc9PQ==--41330f50fd1c2bd4ac8eaac4a36ebfb1577be89b)
 [![Deploy](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml)
-[![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](LICENSE.txt)
-[![CodeQL](https://github.com/OWASP/threat-dragon/workflows/CodeQL/badge.svg)](https://github.com/OWASP/threat-dragon/actions?query=workflow%3ACodeQL)
+[![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 
 # OWASP Threat Dragon
 
@@ -21,6 +19,7 @@ It is an [OWASP Lab Project](https://owasp.org/www-project-threat-dragon/)
 and follows the values and principles of the [threat modeling manifesto](https://www.threatmodelingmanifesto.org/).
 
 ## Try Threat Dragon
+
 You can access the the latest version of Threat Dragon on [our website](https://www.threatdragon.com/#/)
 and look through the [documentation pages](https://owasp.org/www-project-threat-dragon/docs-2/).
 
@@ -29,9 +28,11 @@ Also well worth watching the video provided by the
 
 The [github release area](https://github.com/OWASP/threat-dragon/releases)
 contains Threat Dragon from version 1.3 to the latest versions 2.x.
-Previous releases are from Mike Goodwin's [original repository](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases).
+Previous releases are from Mike Goodwin's
+[original repository](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases).
 
 ## About Threat Dragon
+
 There is a good overview of
 [threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
@@ -57,8 +58,10 @@ End user help is available for both the latest [version 2.x](https://owasp.org/w
 and the previous [version 1.x](https://owasp.org/www-project-threat-dragon/docs-1/).
 
 ### Version 1.x maintenance mode
+
 Threat Dragon was originally written using AngularJS version 1.x, and this version of Angular has reached end of life.
-This means that versions 1.x of Threat Dragon are no longer actively maintained and versions 2.x were re-written to use Vue.js.
+This means that versions 1.x of Threat Dragon are no longer actively maintained
+and versions 2.x have been re-written to use Vue.js.
 
 For more information on building/running version 1.x,
 please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/legacy-v1.x).
@@ -76,6 +79,7 @@ one for the back-end application (`td.server`) and one for the front-end (`td.vu
 Install from the top directory of the project using : `npm install`
 
 ### Environment variables for web application
+
 The web application variant of Threat Dragon requires some environment variables;
 follow [the documentation](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to set these variables.
@@ -96,7 +100,7 @@ can be started separately in "watch" mode using commands : `npm run dev:server` 
 Alternatively, if running on Linux or MacOS, start both the back-end server and the front-end application
 from the top directory using : `npm start`.
 
-With both front and back end running, access with a browser at http://localhost:8080/
+With both front and back end running, access with a browser at `http://localhost:8080/`
 
 ### Stop the application
 
@@ -150,12 +154,12 @@ The easiest way to get in contact with the Threat Dragon community is via the OW
 ### Vulnerability disclosure
 
 If you find a vulnerability in this project please let us know ASAP and we will fix it as a priority.
-For secure disclosure, please see the [security policy](SECURITY.md).
+For secure disclosure, please see the [security policy](security.md).
 
 ### Project leaders
 
-- Mike Goodwin (mike.goodwin@owasp.org)
-- Jon Gadsden (jon.gadsden@owasp.org)
-- Leo Reading (leo.reading@owasp.org)
+- [Mike Goodwin](mailto:mike.goodwin@owasp.org)
+- [Jon Gadsden](mailto:jon.gadsden@owasp.org)
+- [Leo Reading](mailto:leo.reading@owasp.org)
 
-_Threat Dragon: making threat modeling less threatening_
+Threat Dragon: _making threat modeling less threatening_

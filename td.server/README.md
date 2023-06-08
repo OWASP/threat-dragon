@@ -1,37 +1,31 @@
 # OWASP Threat Dragon Server
+
 This is a Express project that is the back end server for the OWASP Threat Dragon website project
 
 ## Project setup
 
-```
-npm install
-```
+`npm install`
 
 ### Compiles and hot-reloads for development
-```
-npm run dev
-```
+
+`npm run dev`
 
 ### Compiles and minifies for production
-```
-npm build
-```
+
+`npm build`
 
 Clean the distribution with
-```
-npm run clean
-```
+
+`npm run clean`
 
 ### Run unit tests
-```
-npm run test:unit
-```
+
+`npm run test:unit`
+
 For continuous testing:
-```
-npm run test:unit -- --watch
-```
+
+`npm run test:unit -- --watch`
 
 ### Lints and fixes files
-```
-npm run lint
-```
+
+`npm run lint`

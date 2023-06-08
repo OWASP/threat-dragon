@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-**Describe what problem your feature request solves**
+**Describe what problem your feature request solves**:
 <!-- Describe below what the problem is -->
 
-**Describe the solution you'd like**
+**Describe the solution you'd like**:
 <!-- Describe below what you want to happen -->
 
-**Additional context**
+**Additional context**:
 <!-- Add below any other context or screenshots about the feature request -->
