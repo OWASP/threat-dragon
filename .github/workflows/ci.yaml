@@ -36,7 +36,7 @@ jobs:
 
       # use  **/*.md for all markdown files in project
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        uses: DavidAnson/markdownlint-cli2-action@v11.0.0
         with:
           command: config
           globs: |
