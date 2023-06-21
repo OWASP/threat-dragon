@@ -34,12 +34,12 @@ jobs:
       - name: Checkout markdown
         uses: actions/checkout@v3.5.2
 
-      # use  **/*.md for all markdown files in project
+      # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
         uses: DavidAnson/markdownlint-cli2-action@v11.0.0
         with:
           config: '.markdownlint.yaml'
-          globs: '*.md td.*/*.md .github/**/*.md docs/**/*.md'
+          globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
 
   codeql:
     name: Analyze with codeql
