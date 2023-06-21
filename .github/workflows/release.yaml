@@ -383,6 +383,14 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
+      - name: Add standard text to release
+        uses: irongut/EditRelease@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          id: ${{ github.event.release.id }}
+          body: 'Released to GitHub Packages.'
+          files: '.release-note-template.md'
+
       - name: Prepare SBOM generation
         run: mkdir sboms
 
@@ -422,11 +430,3 @@ jobs:
           files: |
             ./sboms/threat-dragon-site-bom.xml
             ./sboms/threat-dragon-server-bom.xml
-
-      - name: Add standard text to release
-        uses: irongut/EditRelease@v1.2.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          id: ${{ github.event.release.id }}
-          body: 'Released to GitHub Packages.'
-          files: '.release-note-template.md'
