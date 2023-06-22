@@ -383,14 +383,6 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: Add standard text to release
-        uses: irongut/EditRelease@v1.2.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          id: '2.0.3'
-          body: 'Released to GitHub Packages.'
-          files: '.release-note-template.md'
-
       - name: Prepare SBOM generation
         run: mkdir sboms
 
