@@ -46,11 +46,15 @@
                 </b-list-group>
             </b-col>
         </b-row>
-        <div class="pagination" v-if="pageNext || pagePrev">
-			<button @click="previous(page-1)" :disabled="!pagePrev">Previous</button>
-            <button class="btn" data-toggle="buttons" disabled="true">{{page}}</button>
-			<button @click="paginate(page+1)" :disabled="!pageNext">Next</button>
-		</div>
+        <b-row>
+            <b-col md=6 offset=3>
+                <div class="pagination">
+                    <button @click="previous(page-1)" :disabled="!pagePrev">Previous</button>
+                    <button class="btn" data-toggle="buttons" disabled="true">{{page}}</button>
+                    <button @click="paginate(page+1)" :disabled="!pageNext">Next</button>
+                </div>
+            </b-col>
+        </b-row>
     </b-container>    
 </template>
 
