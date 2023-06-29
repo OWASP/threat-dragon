@@ -19,7 +19,10 @@ const organisationAsync = () => api.getAsync(`${resource}/organisation`);
  * Gets the repos for the given user
  * @returns {Promise}
  */
-const reposAsync = () => api.getAsync(`${resource}/repos`);
+const reposAsync = (page = 1) => {
+
+    api.getAsync(`${resource}/repos`, { params: { page: page } });
+}
 
 /**
  * Gets the branches for the given repository

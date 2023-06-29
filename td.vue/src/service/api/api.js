@@ -6,8 +6,8 @@ import clientFactory from '../httpClient.js';
  * @param {String} url
  * @returns Promise
  */
-const getAsync = async (url) => {
-    const res = await clientFactory.get().get(url);
+const getAsync = async (url, query) => {
+    const res = await clientFactory.get().get(url, query);
     return res.data;
 };
 
