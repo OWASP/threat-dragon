@@ -20,8 +20,7 @@ const organisationAsync = () => api.getAsync(`${resource}/organisation`);
  * @returns {Promise}
  */
 const reposAsync = (page = 1) => {
-
-    api.getAsync(`${resource}/repos`, { params: { page: page } });
+    return api.getAsync(`${resource}/repos`, { params: { page: page } });
 }
 
 /**
