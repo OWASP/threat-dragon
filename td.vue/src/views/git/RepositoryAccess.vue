@@ -1,7 +1,11 @@
 <template>
     <td-selection-page
         :items="repositories"
+        :page="page"
+        :pageNext="pageNext"
+        :pagePrev="pagePrev"
         :onItemClick="onRepoClick"
+        :paginate="paginate"
         :emptyStateText="`${$t('repository.noneFound')} ${$t('providers.' + provider + '.displayName')}`">
         {{ $t('repository.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('repository.from') }}
     </td-selection-page>
@@ -23,7 +27,10 @@ export default {
     computed: mapState({
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
-        repositories: (state) => state.repo.all
+        repositories: (state) => state.repo.all,
+        page: (state) => state.page,
+        pageNext: (state) => state.pageNext,
+        pagePrev: (state) => state.pagePrev
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
@@ -40,6 +47,9 @@ export default {
             });
             this.$router.push({ name: `${this.providerType}Branch`, params, query: this.$route.query });
         },
+        paginate(page) {
+            this.$store.dispatch(repoActions.fetch, page);
+        }
     }
 };
 </script>
