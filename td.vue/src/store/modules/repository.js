@@ -14,7 +14,10 @@ export const clearState = (state) => {
 
 const state = {
     all: [],
-    selected: ''
+    selected: '',
+    page: 1,
+    pageNext: false,
+    pagePrev: false
 };
 
 const actions = {
