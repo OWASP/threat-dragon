@@ -10,7 +10,11 @@ import threatmodelApi from '../../service/api/threatmodelApi.js';
 export const clearState = (state) => {
     state.all.length = 0;
     state.selected = '';
+    state.page = 1,
+    state.pageNext = false,
+    state.pagePrev = false
 };
+
 
 const state = {
     all: [],

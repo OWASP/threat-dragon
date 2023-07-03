@@ -37,7 +37,7 @@ export default {
             this.$store.dispatch(providerActions.selected, this.$route.params.provider);
         }
 
-        this.$store.dispatch(repoActions.fetch);
+        this.$store.dispatch(repoActions.fetch, 1);
     },
     methods: {
         onRepoClick(repoName) {
