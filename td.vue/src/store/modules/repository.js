@@ -29,14 +29,19 @@ const actions = {
     [REPOSITORY_FETCH]: async ({ commit, dispatch }, page=1) => {
         dispatch(REPOSITORY_CLEAR);
         const resp = await threatmodelApi.reposAsync(page);
-        commit(REPOSITORY_FETCH, resp.data.repos, resp.data.pagination.page, resp.data.pagination.next, resp.data.pagination.prev);
+        commit(REPOSITORY_FETCH, { 
+            'repos': resp.data.repos,
+            'page': resp.data.pagination.page,
+            'pageNext': resp.data.pagination.next,
+            'pagePrev': resp.data.pagination.prev
+        });
     },
     [REPOSITORY_SELECTED]: ({ commit }, repo) => commit(REPOSITORY_SELECTED, repo)
 };
 
 const mutations = {
     [REPOSITORY_CLEAR]: (state) => clearState(state),
-    [REPOSITORY_FETCH]: (state, repos, page, pageNext, pagePrev) => {
+    [REPOSITORY_FETCH]: (state, { repos, page, pageNext, pagePrev }) => {
         state.all.length = 0;
         repos.forEach((repo, idx) => Vue.set(state.all, idx, repo));
         state.page = page;
