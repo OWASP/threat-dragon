@@ -1,6 +1,7 @@
 import githubProvider from './github.provider.js';
 import localProvider from './local.provider.js';
 import { providerTypes } from './providerTypes.js';
+import env from '../env/Env.js';
 
 const providers = {
     github: {
@@ -32,6 +33,20 @@ export const providerNames = (() => {
 export const getDisplayName = (providerKey) => providers[providerKey].displayName;
 
 export const getProviderType = (providerKey) => providers[providerKey].type;
+
+export const getProviderUri = (providerKey) => {
+    if (providerKey == providers.github.key) {
+        const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
+        if (enterpriseHostname) {
+            const port = env.get().config.GITHUB_ENTERPRISE_PORT;
+            const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL;
+    
+            return protocol + "://" + enterpriseHostname + ":" + port;
+        }
+
+        return "https://github.com"
+    }
+}
 
 /**
  * Gets the dashboard actions based on the selected provider

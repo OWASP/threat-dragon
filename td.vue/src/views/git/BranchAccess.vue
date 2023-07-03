@@ -6,7 +6,7 @@
         <!-- Fixme: The href should get the configured hostname from env -->
         <a
             id="repo_link"
-            :href="`https://www.github.com/${repoName}`"
+            :href="`${providerUri}/${repoName}`"
             target="_blank"
             rel="noopener noreferrer"
         >{{ repoName }}</a>
@@ -21,7 +21,7 @@
 import { mapState } from 'vuex';
 
 import branchActions from '@/store/actions/branch.js';
-import { getProviderType } from '@/service/provider/providers.js';
+import { getProviderType, getProviderUri } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
@@ -35,6 +35,7 @@ export default {
         branches: (state) => state.branch.all,
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
+        providerUri: (state) => getProviderUri(state.provider.selected),
         repoName: (state) => state.repo.selected
     }),
     mounted() {
