@@ -28,9 +28,9 @@ export default {
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
         repositories: (state) => state.repo.all,
-        page: (state) => state.page,
-        pageNext: (state) => state.pageNext,
-        pagePrev: (state) => state.pagePrev
+        page: (state) => state.repo.page,
+        pageNext: (state) => state.repo.pageNext,
+        pagePrev: (state) => state.repo.pagePrev
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
