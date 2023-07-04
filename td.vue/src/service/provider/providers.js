@@ -1,7 +1,7 @@
 import githubProvider from './github.provider.js';
 import localProvider from './local.provider.js';
 import { providerTypes } from './providerTypes.js';
-import env from '../env/Env.js';
+import env from '../../../../td.server/src/env/Env.js';
 
 const providers = {
     github: {
