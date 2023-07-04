@@ -33,7 +33,7 @@ const actions = {
         }
         const resp = await threatmodelApi.organisationAsync();
         const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
-        commit(PROVIDER_SELECTED, {'providerName': providerName, 'providerUri': providerUri});
+        commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': providerUri });
     }
 };
 
@@ -43,9 +43,9 @@ const mutations = {
         state.all.length = 0;
         providers.forEach((provider, idx) => Vue.set(state.all, idx, provider));
     },
-    [PROVIDER_SELECTED]: (state, {provider, providerUri}) => {
-        state.selected = provider;
-        state.providerUri;
+    [PROVIDER_SELECTED]: (state, { providerName, providerUri }) => {
+        state.selected = providerName;
+        state.providerUri = providerUri;
     }
 };
 
