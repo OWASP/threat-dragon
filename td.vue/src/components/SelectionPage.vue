@@ -64,7 +64,7 @@ export default {
     data() {
         return {
             filter: '',
-            pageRef: this.$route.query.page ? this.$route.query.page : this.page
+            pageRef: this.page
         };
     },
     props: {
