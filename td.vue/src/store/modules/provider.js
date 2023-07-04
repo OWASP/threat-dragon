@@ -6,15 +6,18 @@ import {
     PROVIDER_SELECTED
 } from '../actions/provider.js';
 import providers from '../../service/provider/providers.js';
+import threatmodelApi from '../../service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     state.all.length = 0;
     state.selected = '';
+    state.providerUri = '';
 };
 
 const state = {
     all: [],
-    selected: ''
+    selected: '',
+    providerUri: ''
 };
 
 const actions = {
@@ -24,11 +27,13 @@ const actions = {
         // TODO: Get a list of configured providers from the backend
         commit(PROVIDER_FETCH, Object.keys(providers.providerNames));
     },
-    [PROVIDER_SELECTED]: ({ commit }, providerName) => {
+    [PROVIDER_SELECTED]: async ({ commit }, providerName) => {
         if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
-        commit(PROVIDER_SELECTED, providerName);
+        const resp = await threatmodelApi.organisationAsync();
+        const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
+        commit(PROVIDER_SELECTED, {'providerName': providerName, 'providerUri': providerUri});
     }
 };
 
@@ -38,8 +43,9 @@ const mutations = {
         state.all.length = 0;
         providers.forEach((provider, idx) => Vue.set(state.all, idx, provider));
     },
-    [PROVIDER_SELECTED]: (state, provider) => {
+    [PROVIDER_SELECTED]: (state, {provider, providerUri}) => {
         state.selected = provider;
+        state.providerUri;
     }
 };
 

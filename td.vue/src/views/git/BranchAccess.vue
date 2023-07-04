@@ -35,7 +35,7 @@ export default {
         branches: (state) => state.branch.all,
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
-        providerUri: (state) => getProviderUri(state.provider.selected),
+        providerUri: (state) => state.provider.providerUri,
         repoName: (state) => state.repo.selected
     }),
     mounted() {
