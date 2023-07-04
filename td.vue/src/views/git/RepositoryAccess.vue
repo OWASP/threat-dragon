@@ -36,8 +36,14 @@ export default {
         if (this.provider !== this.$route.params.provider) {
             this.$store.dispatch(providerActions.selected, this.$route.params.provider);
         }
+        const page = 1;
+        if (this.$route.query.page) {
+            page = this.$route.query.page;
+        } else if(this.$store.state.repo.page) {
+            page = this.$store.state.repo.page;
+        }
 
-        this.$store.dispatch(repoActions.fetch, 1);
+        this.$store.dispatch(repoActions.fetch, page);
     },
     methods: {
         onRepoClick(repoName) {
