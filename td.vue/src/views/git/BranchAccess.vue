@@ -4,8 +4,9 @@
         :page="page"
         :pageNext="pageNext"
         :pagePrev="pagePrev"
-        :onItemClick="onBranchClick">
-        :paginate="paginate"
+        :onItemClick="onBranchClick"
+        :paginate="paginate">
+        
         {{ $t('branch.select') }}
         <!-- Fixme: The href should get the configured hostname from env -->
         <a
@@ -54,7 +55,7 @@ export default {
             this.$store.dispatch(repoActions.selected, this.$route.params.repository);
         }
 
-        this.$store.dispatch(branchActions.fetch);
+        this.$store.dispatch(branchActions.fetch, 1);
     },
     methods: {
         selectRepoClick() {

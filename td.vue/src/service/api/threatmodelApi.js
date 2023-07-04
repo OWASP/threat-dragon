@@ -28,9 +28,9 @@ const reposAsync = (page = 1) => {
  * @param {String} fullRepoName
  * @returns {Promise}
  */
-const branchesAsync = (fullRepoName) => {
+const branchesAsync = (fullRepoName, page = 1) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`);
+    return api.getAsync(`${resource}/${org}/${repo}/branches`, { params: { page: page } });
 };
 
 /**

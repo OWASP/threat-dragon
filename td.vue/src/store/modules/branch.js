@@ -25,9 +25,9 @@ const state = {
 
 const actions = {
     [BRANCH_CLEAR]: ({ commit }) => commit(BRANCH_CLEAR),
-    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }) => {
+    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }, page = 1) => {
         dispatch(BRANCH_CLEAR);
-        const resp = await threatmodelApi.branchesAsync(rootState.repo.selected);
+        const resp = await threatmodelApi.branchesAsync(rootState.repo.selected, page);
         commit(BRANCH_FETCH, { 
             'branches': resp.data.branches,
             'page': resp.data.pagination.page,
