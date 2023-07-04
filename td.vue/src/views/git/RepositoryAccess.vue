@@ -39,7 +39,7 @@ export default {
         let page = 1;
         if (this.$route.query.page) {
             page = this.$route.query.page;
-        } else if(this.$store.state.repo.page) {
+        } else if(this.$store.state.repo.page && window.history.state.back.endsWith("/branch")) {
             page = this.$store.state.repo.page;
         }
 

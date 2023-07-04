@@ -1,6 +1,7 @@
 import { PROVIDER_CLEAR, PROVIDER_FETCH, PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import providerModule, { clearState } from '@/store/modules/provider.js';
 import providerService from '@/service/provider/providers.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 describe('store/modules/provider.js', () => {
     const mocks = {
