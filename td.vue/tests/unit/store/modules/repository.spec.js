@@ -73,8 +73,8 @@ describe('store/modules/repository.js', () => {
                     {
                         'repos': repos,
                         'page': pagination.page,
-                        'pageNext': pagination.pageNext,
-                        'pagePrev': pagination.pagePrev
+                        'pageNext': pagination.next,
+                        'pagePrev': pagination.prev
                     }
                 );
             });

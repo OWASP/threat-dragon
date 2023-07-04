@@ -56,11 +56,6 @@ describe('store/modules/provider.js', () => {
         });
         
         describe('selected', () => {
-            const organization = {
-                'protocol': 'https',
-                'hostname': 'github.com',
-                'port': ''
-            };
             beforeEach(async () => {
                 jest.spyOn(threatmodelApi, 'organisationAsync').mockResolvedValue(
                     { 
