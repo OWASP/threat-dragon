@@ -51,6 +51,16 @@ describe('store/modules/provider.js', () => {
         });
         
         describe('selected', () => {
+            const organization = {
+                'protocol': 'http',
+                'hostname': 'github.com',
+                'port': ''
+            };
+            beforeEach(async () => {
+                jest.spyOn(threatmodelApi, 'organisationAsync').mockResolvedValue({ data: organization});
+                await providerModule.actions[PROVIDER_SELECTED](mocks);
+            });
+
             it('throws an error if providerName is falsy', () => {
                 expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).toThrowError();
             });
