@@ -28,7 +28,7 @@ export default {
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
         repositories: (state) => state.repo.all,
-        page: (state) => { this.$route.query.page ? this.$route.query.page : state.repo.page },
+        page: (state) => state.repo.page,
         pageNext: (state) => state.repo.pageNext,
         pagePrev: (state) => state.repo.pagePrev
     }),

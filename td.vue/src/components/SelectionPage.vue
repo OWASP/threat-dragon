@@ -50,7 +50,7 @@
             <b-col md=6 offset=3>
                 <div class="pagination">
                     <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
-                    <button class="btn" data-toggle="buttons" disabled="true">{{page}}</button>
+                    <button class="btn" data-toggle="buttons" disabled="true">{{pageRef}}</button>
                     <button @click="paginate(++pageRef)" :disabled="!pageNext">Next</button>
                 </div>
             </b-col>
@@ -64,7 +64,7 @@ export default {
     data() {
         return {
             filter: '',
-            pageRef: this.page
+            pageRef: this.$route.query.page ? this.$route.query.page : this.page
         };
     },
     props: {
