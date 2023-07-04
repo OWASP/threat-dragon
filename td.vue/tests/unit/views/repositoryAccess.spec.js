@@ -108,7 +108,11 @@ describe('views/RepositoryAccess.vue', () => {
             };
 
             getLocalVue({
-                params: mockRoute
+                params: mockRoute,
+                query: {
+                    page: 1
+                }
+                
             });
             wrapper.vm.onRepoClick(repoName);
         });
