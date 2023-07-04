@@ -5,6 +5,7 @@
         :pageNext="pageNext"
         :pagePrev="pagePrev"
         :onItemClick="onBranchClick">
+        :paginate="paginate"
         {{ $t('branch.select') }}
         <!-- Fixme: The href should get the configured hostname from env -->
         <a
@@ -69,6 +70,9 @@ export default {
             const routeName = `${this.providerType}${this.$route.query.action === 'create' ? 'NewThreatModel' : 'ThreatModelSelect'}`;
 
             this.$router.push({ name: routeName, params });
+        },
+        paginate(page) {
+            this.$store.dispatch(branchActions.fetch, page);
         }
     }
 };

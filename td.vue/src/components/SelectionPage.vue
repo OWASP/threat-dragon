@@ -49,9 +49,9 @@
         <b-row>
             <b-col md=6 offset=3>
                 <div class="pagination">
-                    <button @click="paginate(page-1)" :disabled="!pagePrev">Previous</button>
+                    <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
                     <button class="btn" data-toggle="buttons" disabled="true">{{page}}</button>
-                    <button @click="paginate(1 + page)" :disabled="!pageNext">Next</button>
+                    <button @click="paginate(++pageRef)" :disabled="!pageNext">Next</button>
                 </div>
             </b-col>
         </b-row>
@@ -63,7 +63,8 @@ export default {
     name: 'TdSelectionPage',
     data() {
         return {
-            filter: ''
+            filter: '',
+            pageRef: this.page
         };
     },
     props: {
@@ -72,18 +73,21 @@ export default {
         },
         page: {
             required: false,
-            type: Number
+            type: Number,
+            default: 1
         },
         pageNext: {
             required: false,
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         pagePrev: {
             required: false,
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         paginate: {
-            required: true,
+            required: false,
             type: Function
         },
         onItemClick: {
