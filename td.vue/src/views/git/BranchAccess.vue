@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         selectRepoClick() {
-            //this.$store.dispatch(repoActions.clear);
+            this.$store.dispatch(repoActions.clear);
             this.$router.push({ name: `${this.providerType}Repository` });
         },
         onBranchClick(branch) {
