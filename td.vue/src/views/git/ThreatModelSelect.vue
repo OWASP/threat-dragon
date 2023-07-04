@@ -7,7 +7,7 @@
             {{ $t('threatmodelSelect.select') }}
             <!-- Fixme: The href should get the configured hostname from env -->
             <a
-                :href="`https://www.github.com/${repoName}`"
+                :href="`${providerUri}/${repoName}`"
                 target="_blank"
                 rel="noopener noreferrer"
             >{{ `${repoName}/${branch}` }}</a>
@@ -39,6 +39,7 @@ export default {
         branch: (state) => state.branch.selected,
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
+        providerUri: (state) => state.provider.providerUri,
         repoName: (state) => state.repo.selected,
         threatModels: (state) => state.threatmodel.all,
         selectedModel: (state) => state.threatmodel.data

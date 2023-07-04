@@ -1,6 +1,9 @@
 <template>
     <td-selection-page
         :items="branches"
+        :page="page"
+        :pageNext="pageNext"
+        :pagePrev="pagePrev"
         :onItemClick="onBranchClick">
         {{ $t('branch.select') }}
         <!-- Fixme: The href should get the configured hostname from env -->
@@ -36,7 +39,10 @@ export default {
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
         providerUri: (state) => state.provider.providerUri,
-        repoName: (state) => state.repo.selected
+        repoName: (state) => state.repo.selected,
+        page: (state) => state.branch.page,
+        pageNext: (state) => state.branch.pageNext,
+        pagePrev: (state) => state.branch.pagePrev
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
