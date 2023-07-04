@@ -25,7 +25,7 @@
 import { mapState } from 'vuex';
 
 import branchActions from '@/store/actions/branch.js';
-import { getProviderType, getProviderUri } from '@/service/provider/providers.js';
+import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
