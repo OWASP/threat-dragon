@@ -71,15 +71,15 @@ export default {
             required: true
         },
         page: {
-            required: true,
+            required: false,
             type: Number
         },
         pageNext: {
-            required: true,
+            required: false,
             type: Boolean
         },
         pagePrev: {
-            required: true,
+            required: false,
             type: Boolean
         },
         paginate: {
