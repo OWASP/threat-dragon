@@ -100,6 +100,9 @@ describe('views/RepositoryAccess.vue', () => {
 
     describe('onRepoClick', () => {
         const repoName = 'fakeRepo';
+        const query = {
+            page: 1
+        }
         let mockRoute;
 
         beforeEach(() => {
@@ -109,10 +112,7 @@ describe('views/RepositoryAccess.vue', () => {
 
             getLocalVue({
                 params: mockRoute,
-                query: {
-                    page: 1
-                }
-                
+                query
             });
             wrapper.vm.onRepoClick(repoName);
         });
@@ -123,7 +123,7 @@ describe('views/RepositoryAccess.vue', () => {
 
         it('navigates to the branch select page', () => {
             mockRoute.repository = repoName;
-            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitBranch', params: mockRoute });
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitBranch', params: mockRoute,  query});
         });
     });
 });
