@@ -37,7 +37,10 @@ describe('views/RepositoryAccess.vue', () => {
             },
             repo: {
                 all: [],
-                selected: ''
+                selected: '',
+                page: 1,
+                pageNext: true,
+                pagePrev: false
             }
         },
         actions: {
@@ -53,6 +56,9 @@ describe('views/RepositoryAccess.vue', () => {
             getLocalVue({
                 params: {
                     provider: 'local'
+                },
+                query: {
+                    page: 1
                 }
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
@@ -62,9 +68,12 @@ describe('views/RepositoryAccess.vue', () => {
             getLocalVue({
                 params: {
                     provider: mockStore.state.provider.selected
+                },
+                query: {
+                    page: 1
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, 1);
         });
     });
 
@@ -73,6 +82,9 @@ describe('views/RepositoryAccess.vue', () => {
             getLocalVue({
                 params: {
                     provider: mockStore.state.provider.selected
+                },
+                query: {
+                    page: 1
                 }
             });
         });

@@ -26,6 +26,10 @@ describe('store/modules/provider.js', () => {
         it('defines a selected string', () => {
             expect(providerModule.state.selected).toEqual('');
         });
+
+        it('defines a providerUri string', () => {
+            expect(providerModule.state.providerUri).toEqual('');
+        });
     });
 
     describe('actions', () => {
@@ -53,26 +57,34 @@ describe('store/modules/provider.js', () => {
         
         describe('selected', () => {
             const organization = {
-                'protocol': 'http',
+                'protocol': 'https',
                 'hostname': 'github.com',
                 'port': ''
             };
             beforeEach(async () => {
-                jest.spyOn(threatmodelApi, 'organisationAsync').mockResolvedValue({ data: organization});
-                await providerModule.actions[PROVIDER_SELECTED](mocks);
+                jest.spyOn(threatmodelApi, 'organisationAsync').mockResolvedValue(
+                    { 
+                        'protocol': 'https',
+                        'hostname': 'github.com',
+                        'port': ''
+                    });
             });
 
-            it('throws an error if providerName is falsy', () => {
-                expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).toThrowError();
+            it('throws an error if providerName is falsy', async () => {
+                await expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).rejects.toThrowError();
             });
 
-            it('throws an error for an unknown provider', () => {
-                expect(() => providerModule.actions[PROVIDER_SELECTED](mocks, 'fake')).toThrowError();
+            it('throws an error for an unknown provider', async () => {
+                await expect(() => providerModule.actions[PROVIDER_SELECTED](mocks, 'fake')).rejects.toThrowError();
             });
 
-            it('commits the selected provider', () => {
-                providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, providerService.providerNames.github);
+            it('commits the selected provider', async () => {
+                await providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
+                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, 
+                    { 
+                        'providerName': providerService.providerNames.github, 
+                        'providerUri': 'https://github.com' 
+                    });
             });
         });
     });
@@ -83,6 +95,7 @@ describe('store/modules/provider.js', () => {
                 providerModule.state.all.push('test1');
                 providerModule.state.all.push('test2');
                 providerModule.state.selected = 'github';
+                providerModule.state.providerUri = 'https://github.com';
                 providerModule.mutations[PROVIDER_CLEAR](providerModule.state);
             });
 
@@ -92,6 +105,10 @@ describe('store/modules/provider.js', () => {
 
             it('resets the selected property', () => {
                 expect(providerModule.state.selected).toEqual('');
+            });
+
+            it('resets the providerUri property', () => {
+                expect(providerModule.state.providerUri).toEqual('');
             });
         });
 
@@ -110,13 +127,18 @@ describe('store/modules/provider.js', () => {
 
         describe('selected', () => {
             const provider = 'test';
+            const providerUri = 'https://github.com';
 
             beforeEach(() => {
-                providerModule.mutations[PROVIDER_SELECTED](providerModule.state, provider);
+                providerModule.mutations[PROVIDER_SELECTED](providerModule.state, {'providerName': provider, 'providerUri': providerUri});
             });
 
             it('sets the provider prop', () => {
                 expect(providerModule.state.selected).toEqual(provider);
+            });
+
+            it('sets the providerUri prop', () => {
+                expect(providerModule.state.providerUri).toEqual(providerUri);
             });
         });
     });

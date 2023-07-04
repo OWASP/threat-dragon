@@ -33,6 +33,18 @@ describe('store/modules/branch.js', () => {
         it('defines a selected string', () => {
             expect(branchModule.state.selected).toEqual('');
         });
+
+        it('defines a page number', () => {
+            expect(branchModule.state.page).toEqual(1);
+        });
+
+        it('defines a pageNext bool', () => {
+            expect(branchModule.state.pageNext).toEqual(false);
+        });
+
+        it('defines a pagePrev bool', () => {
+            expect(branchModule.state.pagePrev).toEqual(false);
+        });
     });
 
     describe('actions', () => {
@@ -43,9 +55,14 @@ describe('store/modules/branch.js', () => {
 
         describe('fetch', () => {
             const branches = [ 'foo', 'bar' ];
+            const pagination = {
+                page: 1,
+                next: true,
+                prev: false
+            }
 
             beforeEach(async () => {
-                jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue({ data: { branches }});
+                jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue({ data: { branches, pagination }});
                 await branchModule.actions[BRANCH_FETCH](mocks);
             });
 
@@ -56,7 +73,12 @@ describe('store/modules/branch.js', () => {
             it('commits the fetch action', () => {
                 expect(mocks.commit).toHaveBeenCalledWith(
                     BRANCH_FETCH,
-                    branches
+                    {
+                        'branches': branches,
+                        'page': pagination.page,
+                        'pageNext': pagination.next,
+                        'pagePrev': pagination.prev
+                    } 
                 );
             });
         });
@@ -74,6 +96,9 @@ describe('store/modules/branch.js', () => {
                 branchModule.state.all.push('test1');
                 branchModule.state.all.push('test2');
                 branchModule.state.selected = 'test5';
+                branchModule.state.page = 1;
+                branchModule.state.pageNext = false;
+                branchModule.state.pagePrev = false;
                 branchModule.mutations[BRANCH_CLEAR](branchModule.state);
             });
 
@@ -83,6 +108,18 @@ describe('store/modules/branch.js', () => {
 
             it('resets the selected property', () => {
                 expect(branchModule.state.selected).toEqual('');
+            });
+
+            it('resets the page property', () => {
+                expect(branchModule.state.page).toEqual(1);
+            });
+
+            it('resets the pageNext property', () => {
+                expect(branchModule.state.pageNext).toEqual(false);
+            });
+
+            it('resets the pagePrev property', () => {
+                expect(branchModule.state.pagePrev).toEqual(false);
             });
         });
 
