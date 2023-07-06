@@ -19,16 +19,18 @@ const organisationAsync = () => api.getAsync(`${resource}/organisation`);
  * Gets the repos for the given user
  * @returns {Promise}
  */
-const reposAsync = () => api.getAsync(`${resource}/repos`);
+const reposAsync = (page = 1) => {
+    return api.getAsync(`${resource}/repos`, { params: { page: page } });
+};
 
 /**
  * Gets the branches for the given repository
  * @param {String} fullRepoName
  * @returns {Promise}
  */
-const branchesAsync = (fullRepoName) => {
+const branchesAsync = (fullRepoName, page = 1) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`);
+    return api.getAsync(`${resource}/${org}/${repo}/branches`, { params: { page: page } });
 };
 
 /**

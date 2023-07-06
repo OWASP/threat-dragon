@@ -46,6 +46,15 @@
                 </b-list-group>
             </b-col>
         </b-row>
+        <b-row>
+            <b-col md=6 offset=3>
+                <div class="pagination">
+                    <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
+                    <button class="btn" data-toggle="buttons" disabled="true">{{pageRef}}</button>
+                    <button @click="paginate(++pageRef)" :disabled="!pageNext">Next</button>
+                </div>
+            </b-col>
+        </b-row>
     </b-container>    
 </template>
 
@@ -54,12 +63,32 @@ export default {
     name: 'TdSelectionPage',
     data() {
         return {
-            filter: ''
+            filter: '',
+            pageRef: this.page
         };
     },
     props: {
         items: {
             required: true
+        },
+        page: {
+            required: false,
+            type: Number,
+            default: 1
+        },
+        pageNext: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+        pagePrev: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+        paginate: {
+            required: false,
+            type: Function
         },
         onItemClick: {
             required: true,

@@ -1,12 +1,17 @@
 <template>
     <td-selection-page
         :items="branches"
-        :onItemClick="onBranchClick">
+        :page="page"
+        :pageNext="pageNext"
+        :pagePrev="pagePrev"
+        :onItemClick="onBranchClick"
+        :paginate="paginate">
+        
         {{ $t('branch.select') }}
         <!-- Fixme: The href should get the configured hostname from env -->
         <a
             id="repo_link"
-            :href="`https://www.github.com/${repoName}`"
+            :href="`${providerUri}/${repoName}`"
             target="_blank"
             rel="noopener noreferrer"
         >{{ repoName }}</a>
@@ -35,7 +40,11 @@ export default {
         branches: (state) => state.branch.all,
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
-        repoName: (state) => state.repo.selected
+        providerUri: (state) => state.provider.providerUri,
+        repoName: (state) => state.repo.selected,
+        page: (state) => state.branch.page,
+        pageNext: (state) => state.branch.pageNext,
+        pagePrev: (state) => state.branch.pagePrev
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
@@ -46,7 +55,7 @@ export default {
             this.$store.dispatch(repoActions.selected, this.$route.params.repository);
         }
 
-        this.$store.dispatch(branchActions.fetch);
+        this.$store.dispatch(branchActions.fetch, 1);
     },
     methods: {
         selectRepoClick() {
@@ -62,6 +71,9 @@ export default {
             const routeName = `${this.providerType}${this.$route.query.action === 'create' ? 'NewThreatModel' : 'ThreatModelSelect'}`;
 
             this.$router.push({ name: routeName, params });
+        },
+        paginate(page) {
+            this.$store.dispatch(branchActions.fetch, page);
         }
     }
 };

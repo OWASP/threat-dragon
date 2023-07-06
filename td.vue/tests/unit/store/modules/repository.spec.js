@@ -30,6 +30,18 @@ describe('store/modules/repository.js', () => {
         it('defines a selected string', () => {
             expect(repoModule.state.selected).toEqual('');
         });
+
+        it('defines a page number', () => {
+            expect(repoModule.state.page).toEqual(1);
+        });
+
+        it('defines a pageNext bool', () => {
+            expect(repoModule.state.pageNext).toEqual(false);
+        });
+
+        it('defines a pagePrev bool', () => {
+            expect(repoModule.state.pagePrev).toEqual(false);
+        });
     });
 
     describe('actions', () => {
@@ -40,10 +52,15 @@ describe('store/modules/repository.js', () => {
 
         describe('fetch', () => {
             const repos = [ 'foo', 'bar' ];
+            const pagination = {
+                page: 1,
+                next: true,
+                prev: false
+            }
 
             beforeEach(async () => {
-                jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos }});
-                await repoModule.actions[REPOSITORY_FETCH](mocks);
+                jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos, pagination }});
+                await repoModule.actions[REPOSITORY_FETCH](mocks, 1);
             });
 
             it('dispatches the clear event', () => {
@@ -53,7 +70,12 @@ describe('store/modules/repository.js', () => {
             it('commits the fetch action', () => {
                 expect(mocks.commit).toHaveBeenCalledWith(
                     REPOSITORY_FETCH,
-                    repos
+                    {
+                        'repos': repos,
+                        'page': pagination.page,
+                        'pageNext': pagination.next,
+                        'pagePrev': pagination.prev
+                    }
                 );
             });
         });
@@ -71,6 +93,9 @@ describe('store/modules/repository.js', () => {
                 repoModule.state.all.push('test1');
                 repoModule.state.all.push('test2');
                 repoModule.state.selected = 'github';
+                repoModule.state.page = 1;
+                repoModule.state.pageNext = false;
+                repoModule.state.pagePrev = false;
                 repoModule.mutations[REPOSITORY_CLEAR](repoModule.state);
             });
 
@@ -80,6 +105,18 @@ describe('store/modules/repository.js', () => {
 
             it('resets the selected property', () => {
                 expect(repoModule.state.selected).toEqual('');
+            });
+
+            it('resets the page property', () => {
+                expect(repoModule.state.page).toEqual(1);
+            });
+
+            it('resets the pageNext property', () => {
+                expect(repoModule.state.pageNext).toEqual(false);
+            });
+
+            it('resets the pagePrev property', () => {
+                expect(repoModule.state.pagePrev).toEqual(false);
             });
         });
 
