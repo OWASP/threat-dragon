@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         async onProviderClick() {
-            this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
+            await this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
 
             if (this.provider.key === providerNames.local) {
                 this.$store.dispatch(AUTH_SET_LOCAL);
