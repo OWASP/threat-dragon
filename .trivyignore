@@ -22,3 +22,7 @@ CVE-2022-25881
 # this vulnerability is for the build system, not run time, so ignore
 CVE-2023-28155
 
+# https://avd.aquasec.com/nvd/cve-2022-25883
+# semver prior to version 7.5.2 vulnerable to Regular Expression DoS
+# not applicable to Threat Dragon       
+CVE-2022-25883
