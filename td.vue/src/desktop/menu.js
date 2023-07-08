@@ -320,7 +320,7 @@ function savePDFReport (pdfPath) {
     var dialogOptions = {
         title: messages[language].forms.savePdf,
         defaultPath: pdfPath,
-        filters: [{ name: 'Report', extensions: ['.pdf'] }, { name: 'All Files', extensions: ['*'] }]
+        filters: [{ name: 'Report', extensions: ['pdf'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {
