@@ -289,7 +289,7 @@ const spa = {
             showOutOfScope: 'Mostrar elementos fuera de contexto',
             showMitigatedThreats: 'Mostrar amenazas mitigadas',
             showModelDiagrams: 'Mostrar diagramas de modelo',
-            showBranding: 'Mostrar la marca de Threat Dragon'
+            showBranding: 'Marca de Threat Dragon'
         },
         title: 'Reporte de modelo de amenaza para',
         dateGenerated: 'Generado en fecha',

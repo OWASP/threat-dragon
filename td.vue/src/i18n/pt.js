@@ -289,7 +289,7 @@ const por = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Relatório do modelo de ameaças para',
         dateGenerated : 'Data Gerada',

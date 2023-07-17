@@ -50,13 +50,13 @@ describe('report', () => {
     
         it('shows/hides TD branding', () => {
             cy.get('.td-brand-text')
-                .contains('OWASP Threat Dragon')
-                .should('be.visible');
+                .should('not.be','visible');
     
             cy.get('#show_branding').click({ force: true });
-    
+
             cy.get('.td-brand-text')
-                .should('not.be','visible');
+                .contains('OWASP Threat Dragon')
+                .should('be.visible');
     
             cy.get('#show_branding').click({ force: true });
         });

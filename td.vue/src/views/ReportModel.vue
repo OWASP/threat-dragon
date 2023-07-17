@@ -181,7 +181,7 @@ export default {
                 outOfScope: true,
                 mitigated: true,
                 diagrams: true,
-                branding: true
+                branding: false
             },
             isElectron: isElectron()
         };

@@ -289,7 +289,7 @@ const fra = {
             showOutOfScope: 'Afficher les éléments hors du domaine visé',
             showMitigatedThreats: 'Afficher les menaces mitigées',
             showModelDiagrams: 'Afficher les diagrammes du modèle',
-            showBranding: 'Afficher l\'icône de Threat Dragon'
+            showBranding: 'Icône de Threat Dragon'
         },
         title: 'Rapport sur le modèle de menace pour',
         dateGenerated: 'Date de Création',

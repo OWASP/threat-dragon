@@ -289,7 +289,7 @@ const rus = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',
         dateGenerated: 'Date Generated',

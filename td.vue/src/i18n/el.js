@@ -289,7 +289,7 @@ const ell = {
             showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
-            showBranding: 'Εμφάνιση λογότυπων Threat Dragon'
+            showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
         dateGenerated: 'Ημερομηνία δημιουργίας',
