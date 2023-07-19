@@ -89,7 +89,7 @@
                     </b-form-row>
 
                     <b-form-row>
-                        <b-col md=6
+                        <b-col md=8
                             v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
                         >
@@ -125,7 +125,9 @@
                                 </b-input-group-append>
                             </b-input-group>
                         </b-col>
+                    </b-form-row>
 
+                    <b-form-row>
                         <b-col md=6>
                             <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
