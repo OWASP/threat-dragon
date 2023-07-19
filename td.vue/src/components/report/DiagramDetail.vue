@@ -9,7 +9,7 @@
             </b-row>
             <b-row class="mt-3">
                 <b-col>
-                    <h3 class="td-diagram-title">{{ diagram.description }}</h3>
+                    <p class="td-diagram-title">{{ diagram.description }}</p>
                 </b-col>
             </b-row>
             <b-row v-if="showDiagram" class="mt-3 page diagram-drawing">
