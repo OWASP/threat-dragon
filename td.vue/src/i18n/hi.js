@@ -288,6 +288,7 @@ const hin = {
             showOutOfScope: 'दायरे से बाहर के तत्व दिखाएं',
             showMitigatedThreats: 'कम किए गए खतरे दिखाएं',
             showModelDiagrams: 'मॉडल आरेख दिखाएं',
+            showEmpty: 'Show empty elements',
             showBranding: 'शो थ्रेट ड्रैगन ब्रांडिंग'
         },
         title: 'के लिए थ्रेट मॉडल रिपोर्ट',

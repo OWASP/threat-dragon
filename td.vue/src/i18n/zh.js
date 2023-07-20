@@ -289,6 +289,7 @@ const zho = {
             showOutOfScope: '显示范围外的元素',
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
+            showEmpty: 'Show empty elements',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',

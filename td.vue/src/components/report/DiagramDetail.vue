@@ -27,6 +27,7 @@
                     :outOfScope="entity.data.outOfScope"
                     :showOutOfScope="showOutOfScope"
                     :showMitigated="showMitigated"
+                    :showEmpty="showEmpty"
                 ></td-report-entity>
             </b-row>
 
@@ -42,6 +43,7 @@
                     :outOfScope="entity.data.outOfScope"
                     :showOutOfScope="showOutOfScope"
                     :showMitigated="showMitigated"
+                    :showEmpty="showEmpty"
                 ></td-print-report-entity>
             </div>
         </div>
@@ -64,7 +66,7 @@ export default {
     name: 'TdDiagramDetail',
     props: {
         diagram: Object,
-        showOutOfScope: {
+        showDiagram: {
             type: Boolean,
             default: true
         },
@@ -72,9 +74,13 @@ export default {
             type: Boolean,
             default: true
         },
-        showDiagram: {
+        showOutOfScope: {
             type: Boolean,
             default: true
+        },
+        showEmpty: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -85,9 +91,9 @@ export default {
     computed: {
         entitiesWithThreats: function () {
             return this.diagram.cells
-                .filter(x => !!x.data && !!x.data.threats)
-                .filter(x => this.showOutOfScope || !x.data.outOfScope)
-                .filter(x => x.data.threats.some(y => this.showMitigated || y.status.toLowerCase() !== 'mitigated'));
+                .filter(x => !!x.data && !!x.data.threats
+                    && (this.showOutOfScope || !x.data.outOfScope)
+                    && (this.showEmpty || x.data.threats.some(y => this.showMitigated || y.status.toLowerCase() !== 'mitigated')));
         }
     },
 };
