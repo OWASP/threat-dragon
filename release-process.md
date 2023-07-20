@@ -6,7 +6,7 @@ The steps used during the release process
 2. `cd threat-dragon`
 3. update version eg `"version": "2.0.2",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
 4. update build state in `td.server/package.json`
-5. `pnpm install`
+5. `npm install`
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`

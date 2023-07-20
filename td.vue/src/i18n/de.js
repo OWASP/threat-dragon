@@ -214,6 +214,7 @@ const deu = {
         report: 'Report',
         save: 'Save',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',
@@ -289,7 +290,8 @@ const deu = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',
         dateGenerated: 'Date Generated',

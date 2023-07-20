@@ -214,6 +214,7 @@ const por = {
         report: 'Reporte',
         save: 'Salvar',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',
@@ -289,7 +290,8 @@ const por = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Relatório do modelo de ameaças para',
         dateGenerated : 'Data Gerada',

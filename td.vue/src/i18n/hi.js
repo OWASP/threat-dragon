@@ -213,6 +213,7 @@ const hin = {
         report: 'रिपोर्ट',
         save: 'सहेजें',
         saveAs: 'इस रूप में सहेजें',
+        saveHtml: 'HTML सेव करें',
         saveModel: 'मॉडल सेव करें',
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
         savePdf: 'पीडीएफ सेव करें',
@@ -288,6 +289,7 @@ const hin = {
             showOutOfScope: 'दायरे से बाहर के तत्व दिखाएं',
             showMitigatedThreats: 'कम किए गए खतरे दिखाएं',
             showModelDiagrams: 'मॉडल आरेख दिखाएं',
+            showEmpty: 'Show empty elements',
             showBranding: 'शो थ्रेट ड्रैगन ब्रांडिंग'
         },
         title: 'के लिए थ्रेट मॉडल रिपोर्ट',

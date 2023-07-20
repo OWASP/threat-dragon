@@ -214,6 +214,7 @@ const fra = {
         report: 'Rapport',
         save: 'Sauvegarder',
         saveAs: 'Sauvergarder en tant que',
+        saveHtml: 'Sauvergarder le HTML',
         saveModel: 'Sauvergarder le modèle',
         saveModelAs: 'Sauvergarder le modèle en tant que',
         savePdf: 'Sauvergarder le PDF',
@@ -289,7 +290,8 @@ const fra = {
             showOutOfScope: 'Afficher les éléments hors du domaine visé',
             showMitigatedThreats: 'Afficher les menaces mitigées',
             showModelDiagrams: 'Afficher les diagrammes du modèle',
-            showBranding: 'Afficher l\'icône de Threat Dragon'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Icône de Threat Dragon'
         },
         title: 'Rapport sur le modèle de menace pour',
         dateGenerated: 'Date de Création',

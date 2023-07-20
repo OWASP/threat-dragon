@@ -214,6 +214,7 @@ const ell = {
         report: 'Αναφορά',
         save: 'Αποθήκευση',
         saveAs: 'Αποθήκευση ως',
+        saveHtml: 'Αποθήκευση HTML',
         saveModel: 'Αποθήκευση Μοντέλου',
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
         savePdf: 'Αποθήκευση PDF',
@@ -289,7 +290,8 @@ const ell = {
             showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
-            showBranding: 'Εμφάνιση λογότυπων Threat Dragon'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
         dateGenerated: 'Ημερομηνία δημιουργίας',

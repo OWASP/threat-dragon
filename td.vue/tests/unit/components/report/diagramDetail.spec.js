@@ -13,9 +13,10 @@ describe('components/report/DiagramDetail.vue', () => {
             title: 'foo',
             cells: []
         },
-        showOutOfScope: true,
+        showDiagram: true,
         showMitigated: true,
-        showDiagram: true
+        showOutOfScope: true,
+        showEmpty: true
     });
 
     const setup = (data) => {
@@ -25,9 +26,10 @@ describe('components/report/DiagramDetail.vue', () => {
             localVue,
             propsData: {
                 diagram: data.diagram,
-                showOutOfScope: data.showOutOfScope,
+                showDiagram: data.showDiagram,
                 showMitigated: data.showMitigated,
-                showDiagram: data.showDiagram
+                showOutOfScope: data.showOutOfScope,
+                showEmpty: data.showEmpty
             }
         });
     };
@@ -70,35 +72,79 @@ describe('components/report/DiagramDetail.vue', () => {
     describe('entitiesWithThreats', () => {
         let cells;
 
-        it('shows out of scope enties', () => {
+        it('shows empty elements', () => {
             cells = [
-                { outOfScope: true, data: { threats: [ {} ] } }
+                { data: { threats: [] } },
+                { data: { threats: [ {} ] } },
             ];
             propsData = getData();
             propsData.diagram.cells = cells;
+            setup(propsData);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(2);
+        });
+
+        it('hides empty elements', () => {
+            cells = [
+                { data: { threats: [] } },
+                { data: { threats: [ {} ] } },
+            ];
+            propsData = getData();
+            propsData.diagram.cells = cells;
+            propsData.showEmpty = false;
+            setup(propsData);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(1);
+        });
+
+        it('shows out of scope elements', () => {
+            cells = [
+                { data: { outOfScope: false, threats: [ {} ] } },
+                { data: { outOfScope: true, threats: [ {} ] } },
+            ];
+            propsData = getData();
+            propsData.diagram.cells = cells;
+            propsData.showEmpty = false;
+            setup(propsData);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(2);
+        });
+
+        it('hides out of scope elements', () => {
+            cells = [
+                { data: { outOfScope: false, threats: [ {} ] } },
+                { data: { outOfScope: true, threats: [ {} ] } },
+            ];
+            propsData = getData();
+            propsData.diagram.cells = cells;
+            propsData.showEmpty = false;
+            propsData.showOutOfScope = false;
             setup(propsData);
             expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(1);
         });
 
         it('shows mitigated threats', () => {
             cells = [
-                { outOfScope: true, data: { threats: [ { status: 'Mitigated' } ] } }
+                { data: { threats: [ { status: 'Open' } ] } },
+                { data: { threats: [ { status: 'Mitigated' } ] } },
+                { data: { threats: [ { status: 'Mitigated'}, { status: 'Open' } ] } }
             ];
             propsData = getData();
             propsData.diagram.cells = cells;
+            propsData.showEmpty = false;
             setup(propsData);
-            expect(wrapper.findAllComponents(TdReportEntity).exists()).toEqual(true);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(3);
         });
 
         it('hides mitigated threats', () => {
             cells = [
-                { data: { threats: [ { status: 'Mitigated' } ] } }
+                { data: { threats: [ { status: 'Open' } ] } },
+                { data: { threats: [ { status: 'Mitigated' } ] } },
+                { data: { threats: [ { status: 'Mitigated'}, { status: 'Open' } ] } }
             ];
             propsData = getData();
             propsData.diagram.cells = cells;
+            propsData.showEmpty = false;
             propsData.showMitigated = false;
             setup(propsData);
-            expect(wrapper.findAllComponents(TdReportEntity).exists()).toEqual(false);
+            expect(wrapper.findAllComponents(TdReportEntity)).toHaveLength(2);
         });
     });
 });

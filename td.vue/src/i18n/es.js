@@ -214,6 +214,7 @@ const spa = {
         report: 'Reporte',
         save: 'Guardar',
         saveAs: 'Guardar como',
+        saveHtml: 'Exportar HTML',
         saveModel: 'Guardar modelo',
         saveModelAs: 'Guardar modelo como',
         savePdf: 'Exportar PDF',
@@ -289,7 +290,8 @@ const spa = {
             showOutOfScope: 'Mostrar elementos fuera de contexto',
             showMitigatedThreats: 'Mostrar amenazas mitigadas',
             showModelDiagrams: 'Mostrar diagramas de modelo',
-            showBranding: 'Mostrar la marca de Threat Dragon'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Marca de Threat Dragon'
         },
         title: 'Reporte de modelo de amenaza para',
         dateGenerated: 'Generado en fecha',

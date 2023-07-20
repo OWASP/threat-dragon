@@ -214,6 +214,7 @@ const zho = {
         report: '报告',
         save: '保存',
         saveAs: '保存为',
+        saveHtml: '保存HTML',
         saveModel: '保存模型',
         saveModelAs: '模型保存为',
         savePdf: '保存PDF',
@@ -289,6 +290,7 @@ const zho = {
             showOutOfScope: '显示范围外的元素',
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
+            showEmpty: 'Show empty elements',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',
