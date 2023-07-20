@@ -214,6 +214,7 @@ const spa = {
         report: 'Reporte',
         save: 'Guardar',
         saveAs: 'Guardar como',
+        saveHtml: 'Exportar HTML',
         saveModel: 'Guardar modelo',
         saveModelAs: 'Guardar modelo como',
         savePdf: 'Exportar PDF',

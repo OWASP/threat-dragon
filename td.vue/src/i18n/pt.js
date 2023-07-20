@@ -214,6 +214,7 @@ const por = {
         report: 'Reporte',
         save: 'Salvar',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',

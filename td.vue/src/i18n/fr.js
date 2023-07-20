@@ -214,6 +214,7 @@ const fra = {
         report: 'Rapport',
         save: 'Sauvegarder',
         saveAs: 'Sauvergarder en tant que',
+        saveHtml: 'Sauvergarder le HTML',
         saveModel: 'Sauvergarder le modèle',
         saveModelAs: 'Sauvergarder le modèle en tant que',
         savePdf: 'Sauvergarder le PDF',

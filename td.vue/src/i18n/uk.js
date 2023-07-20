@@ -214,6 +214,7 @@ const ukr = {
         report: 'Report',
         save: 'Save',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',

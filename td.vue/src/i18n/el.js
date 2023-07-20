@@ -214,6 +214,7 @@ const ell = {
         report: 'Αναφορά',
         save: 'Αποθήκευση',
         saveAs: 'Αποθήκευση ως',
+        saveHtml: 'Αποθήκευση HTML',
         saveModel: 'Αποθήκευση Μοντέλου',
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
         savePdf: 'Αποθήκευση PDF',

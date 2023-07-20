@@ -214,6 +214,7 @@ const zho = {
         report: '报告',
         save: '保存',
         saveAs: '保存为',
+        saveHtml: '保存HTML',
         saveModel: '保存模型',
         saveModelAs: '模型保存为',
         savePdf: '保存PDF',

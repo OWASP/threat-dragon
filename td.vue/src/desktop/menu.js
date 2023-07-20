@@ -74,6 +74,14 @@ export function getMenuTemplate () {
                     label: messages[language].forms.savePdf,
                     click () {
                         printModel();
+                        modelPrint('PDF');
+                    }
+                },
+                {
+                    label: messages[language].forms.saveHtml,
+                    click () {
+                        printModel();
+                        modelPrint('HTML');
                     }
                 },
                 {
@@ -295,7 +303,7 @@ function saveHTMLReport (htmlPath) {
     var dialogOptions = {
         title: messages[language].forms.saveAS,
         defaultPath: htmlPath,
-        filters: [{ name: 'Report', extensions: ['.html'] }, { name: 'All Files', extensions: ['*'] }]
+        filters: [{ name: 'HTML export', extensions: ['html'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {
@@ -320,7 +328,7 @@ function savePDFReport (pdfPath) {
     var dialogOptions = {
         title: messages[language].forms.savePdf,
         defaultPath: pdfPath,
-        filters: [{ name: 'Report', extensions: ['pdf'] }, { name: 'All Files', extensions: ['*'] }]
+        filters: [{ name: 'PDF report', extensions: ['.pdf'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {

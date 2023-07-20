@@ -213,6 +213,7 @@ const hin = {
         report: 'रिपोर्ट',
         save: 'सहेजें',
         saveAs: 'इस रूप में सहेजें',
+        saveHtml: 'HTML सेव करें',
         saveModel: 'मॉडल सेव करें',
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
         savePdf: 'पीडीएफ सेव करें',
