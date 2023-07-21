@@ -9,15 +9,20 @@ const fra = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo Threat Dragon',
-        description: 'Threat Dragon est un outil de modélisation des menaces open-source et gratuit d\'OWASP. Il peut être utilisé comme une application de bureau sur Windows, MacOS et Linux, ou comme une application Web. L\'application de bureau est idéale si vous voulez essayer Threat Dragon sans lui donner accès à vos projets GitHub, mais si vous choisissez la version en ligne, vous pouvez profiter de la puissance impressionnante de GitHub sur vos modèles de menace! Pour ce faire, vous devez d\'abord vous connecter.',
-        loginWith: 'Se connecter avec'
+        description: 'Threat Dragon est un outil de modélisation des menaces open-source et gratuit d\'OWASP. Il peut être utilisé comme une application de bureau sur Windows, MacOS et Linux, ou comme une application Web. L\'application de bureau est idéale si vous voulez essayer Threat Dragon sans lui donner accès à vos projets GitHub, mais si vous choisissez la version en ligne, vous pouvez profiter de la puissance impressionnante de GitHub sur vos modèles de menace! Pour ce faire, vous devez d\'abord vous connecter.'
     },
     providers: {
+        desktop: {
+            displayName: 'Threat Dragon',
+            loginWith: 'Start'
+        },
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
+            loginWith: 'Se connecter avec'
         },
         local: {
-            displayName: 'une session locale'
+            displayName: 'une session locale',
+            loginWith: 'Se connecter avec'
         }
     },
     dashboard: {

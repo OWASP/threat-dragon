@@ -1,8 +1,16 @@
 import githubProvider from './github.provider.js';
 import localProvider from './local.provider.js';
+import desktopProvider from './desktop.provider.js';
 import { providerTypes } from './providerTypes.js';
 
 const providers = {
+    desktop: {
+        key: 'desktop',
+        displayName: 'Start',
+        provider: desktopProvider,
+        type: providerTypes.desktop,
+        icon: ['fab', 'vuejs']
+    },
     github: {
         key: 'github',
         displayName: 'GitHub',
