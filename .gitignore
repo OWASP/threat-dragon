@@ -62,7 +62,17 @@
 !td.vue/src/icons/*
 !td.vue/src/desktop/
 !td.vue/src/i18n/
+!td.vue/src/service/
+!td.vue/src/service/api/
+!td.vue/src/service/demo/
+!td.vue/src/service/entity/
+!td.vue/src/service/migration/
+!td.vue/src/service/provider/
+!td.vue/src/service/threats/
+!td.vue/src/service/x6/
 !td.vue/src/views/
+!td.vue/src/views/demo/
+!td.vue/src/views/git/
 !td.vue/tests/
 !td.vue/tests/e2e/
 !td.vue/tests/e2e/fixtures/
