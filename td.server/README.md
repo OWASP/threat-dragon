@@ -12,7 +12,7 @@ This is a Express project that is the back end server for the OWASP Threat Drago
 
 ### Compiles and minifies for production
 
-`npm build`
+`npm run build`
 
 Clean the distribution with
 
