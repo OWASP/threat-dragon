@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import { desktopRoutes } from './desktop.js';
 import { gitRoutes } from './git.js';
 import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
@@ -26,6 +27,7 @@ const routes = [
         name: 'DemoSelect',
         component: () => import(/* webpackChunkName: "demo-select" */ '../views/demo/SelectDemoModel.vue')
     },
+    ...desktopRoutes,
     ...gitRoutes,
     ...localRoutes
 ];

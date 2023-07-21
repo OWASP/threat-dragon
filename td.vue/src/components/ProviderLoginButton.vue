@@ -40,10 +40,7 @@ export default {
             console.debug('login with provider: ' + this.provider.key);
             await this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
 
-            if (this.provider.key === providerNames.local) {
-                this.$store.dispatch(AUTH_SET_LOCAL);
-                return this.$router.push('/dashboard');
-            } else if (this.provider.key === providerNames.desktop) {
+            if (this.provider.key === providerNames.local || this.provider.key === providerNames.desktop) {
                 this.$store.dispatch(AUTH_SET_LOCAL);
                 return this.$router.push('/dashboard');
             }

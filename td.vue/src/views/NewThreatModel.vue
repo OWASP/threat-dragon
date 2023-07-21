@@ -42,7 +42,7 @@ export default {
             // tell the desktop server that the model has changed
             window.electronAPI.modelOpened(newTm.summary.title);
         }
-        if (this.providerType === 'local') {
+        if (this.providerType === 'local' || this.providerType === 'desktop') {
             this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params });
         } else {
             this.$router.push({ name: `${this.providerType}ThreatModelCreate`, params });
