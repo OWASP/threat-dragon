@@ -23,7 +23,7 @@ describe('service/threatmodelApi.js', () => {
         });
 
         it('calls the repos endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/repos', {"params": {"page": 1}});
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/repos', {'params': {'page': 1}});
         });
     });
 
@@ -35,7 +35,7 @@ describe('service/threatmodelApi.js', () => {
         });
 
         it('calls the branches endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/branches', {"params": {"page": 1}});
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/branches', {'params': {'page': 1}});
         });
     });
 

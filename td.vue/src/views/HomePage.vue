@@ -65,9 +65,9 @@ export default {
     computed: {
         providers: () => {
             if (isElectron()) {
-                return { local: allProviders.local };
+                return { desktop: allProviders.desktop };
             }
-            return allProviders;
+            return { github: allProviders.github, local: allProviders.local };
         },
     },
     components: {

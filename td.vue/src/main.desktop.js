@@ -39,7 +39,7 @@ window.electronAPI.onNewModel((_event, fileName) =>  {
     console.debug('New model with file name : ' + fileName);
     app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
     localAuth();
-    app.$router.push({ name: `${providerNames.local}NewThreatModel` });
+    app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
 });
 
 // informing renderer that desktop menu shell is providing new model cntents
@@ -64,14 +64,14 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
     app.$store.dispatch(threatmodelActions.selected, jsonModel);
     localAuth();
-    app.$router.push({ name: `${providerNames.local}ThreatModel`, params });
+    app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params });
 });
 
 // request from desktop menu shell -> renderer to print the model report
 window.electronAPI.onPrintModel((_event, fileName) =>  {
     console.debug('Print report for model with file name : ' + fileName);
     localAuth();
-    app.$router.push({ name: `${providerNames.local}Report` }).catch(error => {
+    app.$router.push({ name: `${providerNames.desktop}Report` }).catch(error => {
         if (error.name != 'NavigationDuplicated') {
             throw error;
         }
@@ -85,7 +85,7 @@ window.electronAPI.onSaveModel((_event, fileName) =>  {
 });
 
 const localAuth = () => {
-    app.$store.dispatch(providerActions.selected, providerNames.local);
+    app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);
 };
 

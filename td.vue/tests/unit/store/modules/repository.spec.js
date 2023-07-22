@@ -56,7 +56,7 @@ describe('store/modules/repository.js', () => {
                 page: 1,
                 next: true,
                 prev: false
-            }
+            };
 
             beforeEach(async () => {
                 jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos, pagination }});

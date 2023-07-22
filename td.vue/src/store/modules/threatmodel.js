@@ -51,7 +51,13 @@ const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CREATE]: async ({ dispatch, rootState, state }) => {
         try {
-            if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+            if (getProviderType(rootState.provider.selected) === providerTypes.local) {
+                // save locally for web app when local login
+                save.local(state.data, `${state.data.summary.title}.json`);
+            } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                // desktop version always saves locally
+                await window.electronAPI.modelSaved(state.data, state.fileName);
+            } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
                     rootState.branch.selected,
@@ -59,12 +65,6 @@ const actions = {
                     state.data
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-            } else if (isElectron()) {
-                // desktop version always saves locally
-                await window.electronAPI.modelSaved(state.data, state.fileName);
-            } else {
-                // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
             }
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {
@@ -85,21 +85,21 @@ const actions = {
         commit(THREATMODEL_FETCH, resp.data);
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
-        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+        if (getProviderType(rootState.provider.selected) === providerTypes.local || getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            commit(THREATMODEL_FETCH_ALL, demo.models);
+        } else {
             const resp = await threatmodelApi.modelsAsync(
                 rootState.repo.selected,
                 rootState.branch.selected
             );
             commit(THREATMODEL_FETCH_ALL, resp.data);
-        } else {
-            commit(THREATMODEL_FETCH_ALL, demo.models);
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.immutableCopy);
-        if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
             const originalTitle = (JSON.parse(state.immutableCopy)).summary.title;
             const resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,
@@ -112,7 +112,13 @@ const actions = {
     },
     [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
         try {
-            if (getProviderType(rootState.provider.selected) !== providerTypes.local) {
+            if (getProviderType(rootState.provider.selected) === providerTypes.local) {
+                // save locally for web app when local login
+                save.local(state.data, `${state.data.summary.title}.json`);
+            } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                // desktop version always saves locally
+                await window.electronAPI.modelSaved(state.data, state.fileName);
+            } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
                     rootState.branch.selected,
@@ -120,12 +126,6 @@ const actions = {
                     state.data
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-            } else if (isElectron()) {
-                // desktop version always saves locally
-                await window.electronAPI.modelSaved(state.data, state.fileName);
-            } else {
-                // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
             }
             dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
         } catch (ex) {

@@ -31,9 +31,13 @@ const actions = {
         if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
-        const resp = await threatmodelApi.organisationAsync();
-        const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
-        commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': providerUri });
+        if (providerName === 'desktop'){
+            commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': 'desktop' });
+        } else {
+            const resp = await threatmodelApi.organisationAsync();
+            const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
+            commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': providerUri });
+        }
     }
 };
 

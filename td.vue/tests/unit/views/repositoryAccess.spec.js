@@ -102,7 +102,7 @@ describe('views/RepositoryAccess.vue', () => {
         const repoName = 'fakeRepo';
         const query = {
             page: 1
-        }
+        };
         let mockRoute;
 
         beforeEach(() => {

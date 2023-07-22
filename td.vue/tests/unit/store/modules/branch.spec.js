@@ -59,7 +59,7 @@ describe('store/modules/branch.js', () => {
                 page: 1,
                 next: true,
                 prev: false
-            }
+            };
 
             beforeEach(async () => {
                 jest.spyOn(threatmodelApi, 'branchesAsync').mockResolvedValue({ data: { branches, pagination }});
