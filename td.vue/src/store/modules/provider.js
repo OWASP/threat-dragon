@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import isElectron from 'is-electron';
 
 import {
     PROVIDER_CLEAR,
