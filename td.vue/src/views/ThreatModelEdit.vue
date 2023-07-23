@@ -241,7 +241,8 @@ export default {
                 diagramType: 'STRIDE',
                 placeholder: this.$t('threatmodel.diagram.stride.defaultDescription'),
                 thumbnail: './public/content/images/thumbnail.stride.jpg',
-                version: this.version
+                version: this.version,
+                cells: []
             };
             this.$store.dispatch(THREATMODEL_UPDATE, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
