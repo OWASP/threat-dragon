@@ -109,7 +109,11 @@
             </div>
 
             <td-diagram-detail
-                v-for="(diagram, idx) in model.detail.diagrams"
+                v-for="(diagram, idx) in model.detail.diagrams.sort((a, b) => {
+                        if (a.title < b.title) return -1;
+                        if (a.title > b.title) return 1;
+                        return 0;
+                    })"
                 :key="idx"
                 :diagram="diagram"
                 :showOutOfScope="display.outOfScope"
