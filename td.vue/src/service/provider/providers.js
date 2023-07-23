@@ -6,7 +6,7 @@ import { providerTypes } from './providerTypes.js';
 const providers = {
     desktop: {
         key: 'desktop',
-        displayName: 'Start',
+        displayName: 'Desktop',
         provider: desktopProvider,
         type: providerTypes.desktop,
         icon: ['fab', 'vuejs']

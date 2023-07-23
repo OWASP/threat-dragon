@@ -109,7 +109,7 @@
             </div>
 
             <td-diagram-detail
-                v-for="(diagram, idx) in model.detail.diagrams"
+                v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
                 :showOutOfScope="display.outOfScope"
@@ -213,7 +213,17 @@ export default {
         }),
         ...mapGetters({
             contributors: 'contributors'
-        })
+        }),
+        diagrams: function () {
+            const sortedDiagrams = this.model.detail.diagrams.slice().sort((a, b) => {
+                if (a.title < b.title)
+                    return -1;
+                if (a.title > b.title)
+                    return 1;
+                return 0;
+            });
+            return sortedDiagrams;
+        }
     },
     methods: {
         onCloseClick() {

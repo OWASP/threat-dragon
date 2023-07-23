@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import isElectron from 'is-electron';
 
 import {
     PROVIDER_CLEAR,
@@ -31,8 +32,8 @@ const actions = {
         if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
-        if (providerName === 'desktop'){
-            commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': 'desktop' });
+        if (providerName === 'desktop' || isElectron()){
+            commit(PROVIDER_SELECTED, { 'providerName': 'desktop', 'providerUri': 'threat-dragon-desktop' });
         } else {
             const resp = await threatmodelApi.organisationAsync();
             const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
