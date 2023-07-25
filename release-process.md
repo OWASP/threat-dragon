@@ -5,7 +5,7 @@ The steps used during the release process
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
 3. update version eg `"version": "2.0.2",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
-4. update build state in `td.server/package.json`
+4. update `buildState` in `td.vue/package.json`
 5. `npm install`
 6. `npm run build`
 7. `npm test`
