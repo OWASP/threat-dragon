@@ -55,7 +55,7 @@
     "@babel/register": "^7.21.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^8.37.0",
+    "eslint": "^8.46.0",
     "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
     "npm-force-resolutions": "^0.0.10",
