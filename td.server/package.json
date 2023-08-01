@@ -10,8 +10,8 @@
     "lint": "eslint src --fix",
     "pretest": "npm run lint",
     "start": "npm run dev",
-    "start:serve": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
-    "stop:serve": "pm2 delete td.server",
+    "start:server": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
+    "stop:server": "pm2 delete td.server",
     "transpile": "babel ./src --out-dir dist",
     "test": "NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js",
     "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js"

@@ -152,7 +152,7 @@ jobs:
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
     defaults:
       run:
         working-directory: td.vue
@@ -190,7 +190,7 @@ jobs:
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
     defaults:
       run:
         working-directory: td.vue
@@ -240,7 +240,7 @@ jobs:
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-22.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
     defaults:
       run:
         working-directory: td.vue
@@ -383,42 +383,39 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: Prepare SBOM generation
-        run: mkdir sboms
+      - name: Create release notes
+        run: sed -e 's/2.x.x/${{ env.RELEASE_VERSION }}/g' .release-note-template.md > ./release-notes.txt
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.xml'
+          output: './threat-dragon-site-bom.xml'
 
       - name: Create JSON site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.json'
+          output: './threat-dragon-site-bom.json'
 
       - name: Create XML server SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.xml'
+          output: './threat-dragon-server-bom.xml'
 
       - name: Create JSON server SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.json'
+          output: './threat-dragon-server-bom.json'
 
-      - name: Save SBOMs artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: threat-dragon-sboms
-          path: sboms
-
-      - name: Add SBOMs to release
+      - name: Draft release
         uses: softprops/action-gh-release@v0.1.15
         with:
+          draft: true
+          name: 'Version ${{ env.RELEASE_VERSION }}'
+          body_path: ./release-notes.txt
           files: |
-            ./sboms/threat-dragon-site-bom.xml
-            ./sboms/threat-dragon-server-bom.xml
+            ./threat-dragon-site-bom.xml
+            ./threat-dragon-server-bom.xml
