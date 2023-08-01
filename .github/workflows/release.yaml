@@ -237,6 +237,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish always
 
+      - name: Print error log
+        if: ${{ failure() }}
+        run: |
+          find . -name "*.log"
+          cat notarization-error.log
+
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-22.04
@@ -384,7 +390,7 @@ jobs:
         run: npm clean-install
 
       - name: Create release notes
-        run: sed -e 's/2.x.x/${{ env.RELEASE_VERSION }}/g' .release-note-template.md > ./release-notes.txt
+        run: sed -e 's/2.x.x/${GITHUB_REF#refs/*/}/g' .release-note-template.md > ./release-notes.txt
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
@@ -414,7 +420,6 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           draft: true
-          name: 'Version ${{ env.RELEASE_VERSION }}'
           body_path: ./release-notes.txt
           files: |
             ./threat-dragon-site-bom.xml
