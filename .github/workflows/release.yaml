@@ -390,7 +390,9 @@ jobs:
         run: npm clean-install
 
       - name: Create release notes
-        run: sed -e 's/2.x.x/${GITHUB_REF#refs/*/}/g' .release-note-template.md > ./release-notes.txt
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          sed -e 's/2.x.x/${{ env.RELEASE_VERSION }}/g' .release-note-template.md > ./release-notes.txt
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
