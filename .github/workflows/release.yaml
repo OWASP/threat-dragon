@@ -152,7 +152,7 @@ jobs:
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -187,10 +187,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --windows --publish always
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;  -print
+
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -237,16 +241,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish always
 
-      - name: Print error log
+      - name: Print logs on error
         if: ${{ failure() }}
-        run: |
-          find . -name "*.log"
-          cat notarization-error.log
+        run: find . -name "*.log" -exec cat '{}' \;  -print
 
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-22.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests, webapp_release]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -278,6 +280,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;  -print
 
   desktop_linux_snap:
     name: Linux snap
@@ -321,6 +327,10 @@ jobs:
         run: |
           sudo snap install snapcraft --classic
           snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;  -print
 
   dockerhub_release:
     name: Publish to dockerhub
@@ -368,7 +378,7 @@ jobs:
   webapp_release:
     name: Publish web application
     runs-on: ubuntu-22.04
-    needs: [server_unit_tests, site_unit_tests]
+    needs: [desktop_macos, desktop_linux, desktop_windows]
     steps:
       - name: Check out
         uses: actions/checkout@v3.5.2
@@ -422,6 +432,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           draft: true
+          append_body: true
           body_path: ./release-notes.txt
           files: |
             ./threat-dragon-site-bom.xml
