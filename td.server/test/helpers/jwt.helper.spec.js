@@ -67,7 +67,7 @@ describe('helpers/jwt.helper.js', () => {
                 sinon.match.any,
                 config.ENCRYPTION_JWT_SIGNING_KEY,
                 {
-                    expiresIn: '5m'
+                    expiresIn: '1d'
                 }
             );
         });
