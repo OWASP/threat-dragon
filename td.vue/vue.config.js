@@ -47,7 +47,7 @@ module.exports = {
                     hardenedRuntime: true,
                     target: [
                         'dmg',
-                        `zip`
+                        'zip'
                     ]
                 },
                 win: {

@@ -177,7 +177,7 @@ jobs:
         run: npm clean-install
 
       # Build and publish Windows installer to github Release Draft
-      - name: Release for Windows
+      - name: Publish Windows executable
         # follow Comodo signing instructions
         # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
@@ -189,7 +189,7 @@ jobs:
 
       - name: Print logs on error
         if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;  -print
+        run: find . -name "*.log" -exec cat '{}' \; -print
 
   desktop_macos:
     name: MacOS installer
@@ -220,14 +220,14 @@ jobs:
 
       # Build and publish MacOS installer to github Release Draft
       # the draft name uses version and is created if it does not already exist
-      - name: Release for MacOS - prepare for notarization
+      - name: Prepare for MacOS notarization
         # Import Apple API key for app notarization on macOS
         # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
-      - name: Release for MacOS
+      - name: Publish MacOS disk image
         env:
           # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
@@ -243,7 +243,7 @@ jobs:
 
       - name: Print logs on error
         if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;  -print
+        run: find . -name "*.log" -exec cat '{}' \; -print
 
   desktop_linux:
     name: Linux installers
@@ -275,7 +275,7 @@ jobs:
       # Build and publish Linux installers to github Release Draft
       # for all linux images EXCEPT for the snap
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Release for Linux
+      - name: Publish Linux app image
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -283,7 +283,7 @@ jobs:
 
       - name: Print logs on error
         if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;  -print
+        run: find . -name "*.log" -exec cat '{}' \; -print
 
   desktop_linux_snap:
     name: Linux snap
@@ -330,7 +330,7 @@ jobs:
 
       - name: Print logs on error
         if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;  -print
+        run: find . -name "*.log" -exec cat '{}' \; -print
 
   dockerhub_release:
     name: Publish to dockerhub
