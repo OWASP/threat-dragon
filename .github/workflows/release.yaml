@@ -189,7 +189,7 @@ jobs:
 
       - name: Print logs on error
         if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
+        run: find . -name "*.log" -exec cat '{}' \;
 
   desktop_macos:
     name: MacOS installer
