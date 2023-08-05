@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
@@ -199,7 +196,7 @@ jobs:
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
 
-      # works for macos-latest running locally but pipeline times out 
+      # works for macos-latest running locally but pipeline times out
       # so until this is fixed, use only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
