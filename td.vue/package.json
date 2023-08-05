@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon",
   "productName": "Threat Dragon",
-  "version": "2.0.4-RC1",
+  "version": "2.0.4-RC2",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build --no-unsafe-inline",

@@ -62,7 +62,7 @@ const deu = {
     repository: {
         select: 'Wählen Sie ein',
         from: 'Repository aus folgender Liste',  //in line with Github wording https://docs.github.com/de/repositories
-    noneFound: 'Kein Repository gefunden. Legen Sie zum Starten eine neues Repository an.'
+        noneFound: 'Kein Repository gefunden. Legen Sie zum Starten eine neues Repository an.'
     },
     branch: {
         select: 'Wähle einen Branch aus', //in line with Github wording https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository
