@@ -93,8 +93,8 @@
     "chromedriver": "^104.0.0",
     "cypress": "^12.1.0",
     "electron": "^18.3.5",
-    "electron-builder": "^23.6.0",
-    "electron-builder-notarize": "^1.5.0",
+    "electron-builder": "^24.6.3",
+    "electron-builder-notarize": "^1.5.1",
     "electron-chromedriver": "^18.0.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^8.46.0",
@@ -131,6 +131,7 @@
   "overrides": {
     "node-ipc": ">=10.1.7",
     "debug@<3.1.0": ">=4.3.4",
+    "electron-builder@<23.0.3": ">=23.0.3",
     "follow-redirects": ">=1.14.8",
     "glob-parent@<5.1.2": ">=5.1.2",
     "lodash@<4.17.19": ">=4.17.19",
@@ -140,6 +141,9 @@
     "nth-check@<2.0.1": ">=2.0.1",
     "tar@>=6.0.0 <6.1.9": ">=6.1.9",
     "vm2@<3.9.16": ">=3.9.19",
+    "vue-cli-plugin-electron-builder": {
+      "electron-builder": "^23.0.3"
+    },
     "webpack@<5.0.0": ">=5.77.0",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
