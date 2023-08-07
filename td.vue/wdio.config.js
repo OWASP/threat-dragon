@@ -16,7 +16,14 @@ const config = {
             },
         ],
     ],
-    capabilities: [{}],
+    capabilities: [{
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            // run chrome headless
+            args: ['--headless', '--disable-gpu']
+        }
+    }],
+    hostname: 'localhost',
     port: 9519,
     waitforTimeout: 30000,
     connectionRetryCount: 10,
@@ -24,7 +31,7 @@ const config = {
     logLevel: 'debug',
     runner: 'local',
     // to redirect logs to files instead of console:
-    // outputDir: 'log/wdio-logs',
+    outputDir: 'wdio-logs',
     specs: ['./tests/e2e/desktop/*.spec.js'],
     framework: 'mocha',
     mochaOpts: {

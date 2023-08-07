@@ -138,7 +138,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install packages
-        run: npm clean-install
+        run: npm install
 
       - name: Build application
         # test only so do not publish
@@ -148,6 +148,10 @@ jobs:
       # so until this is fixed, use only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;
 
   desktop_windows:
     name: Windows installer
@@ -173,7 +177,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish Windows installer to github Release Draft
@@ -215,7 +219,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish MacOS installer to github Release Draft
@@ -269,7 +273,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish Linux installers to github Release Draft
@@ -309,7 +313,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build the snap, but do not use inbuilt publish
