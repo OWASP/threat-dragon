@@ -366,7 +366,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Print release version
-        run: echo "release version: ${{ env.RELEASE_VERSION }}"
+        run: |
+          echo "release version: ${{ env.RELEASE_VERSION }}"
 
       - name: Build and push to Docker Hub
         id: docker_build
@@ -437,8 +438,6 @@ jobs:
       - name: Create release notes
         uses: softprops/action-gh-release@v0.1.15
         with:
-          draft: true
-          name: "Version ${{ startsWith(github.ref, 'refs/tags/v') }}"
           append_body: true
           body_path: ./release-notes.txt
           files: |
