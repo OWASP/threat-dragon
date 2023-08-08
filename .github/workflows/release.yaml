@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: "threatdragon/owasp-threat-dragon"
+  # threatdragon is the working area on docker hub so use this area
+  # owasp/threat-dragon is the final release area so DO NOT use that
+  IMAGE_NAME: threatdragon/owasp-threat-dragon
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -364,10 +366,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Print release version
-        run: |
-          echo "release version: $GITHUB_REF_NAME"
-
       - name: Build and push to Docker Hub
         id: docker_build
         uses: docker/build-push-action@v4.1.1
@@ -376,7 +374,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          tags: ${{ env.IMAGE_NAME }}:${{ github.GITHUB_REF_NAME }},${{ env.IMAGE_NAME }}:stable
+          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
