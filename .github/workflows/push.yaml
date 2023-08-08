@@ -461,3 +461,171 @@ jobs:
         with:
           name: threat-dragon-sboms
           path: sboms
+
+  desktop_windows_test:
+    name: Windows installer build
+    runs-on: windows-latest
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      # Build Windows installer
+      - name: Build Windows executable
+        # follow Comodo signing instructions
+        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
+        env:
+          # Windows signing certificate and password
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
+          CSC_LINK:  ${{ secrets.WINDOWS_CERT }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish never
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;
+
+  desktop_macos_test:
+    name: MacOS installer build
+    runs-on: macos-latest
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Prepare for MacOS notarization
+        # Import Apple API key for app notarization on macOS
+        # see github.com/samuelmeuli/action-electron-builder#notarization
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+
+      - name: Build MacOS disk image
+        env:
+          # MacOS signing certificate and password
+          # see github.com/samuelmeuli/action-electron-builder#code-signing
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+          CSC_LINK:  ${{ secrets.MAC_CERTS }}
+          # MacOS notarization API IDs
+          # see github.com/samuelmeuli/action-electron-builder#notarization
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          # github token is automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --mac --publish never
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+  desktop_linux_test:
+    name: Linux installers build
+    runs-on: ubuntu-22.04
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Build Linux app images
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --linux AppImage deb rpm --publish never
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+  desktop_linux_snap:
+    name: Linux snap build
+    runs-on: ubuntu-22.04
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Build Linux snap
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --linux snap
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
