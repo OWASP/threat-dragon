@@ -376,7 +376,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          tags: ${{ env.IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }},${{ env.IMAGE_NAME }}:stable
+          tags: ${{ env.IMAGE_NAME }}:${{ github.GITHUB_REF_NAME }},${{ env.IMAGE_NAME }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -401,12 +401,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: Prepare release notes
         run: |
-          sed -e s/2.x.x/${{ env.GITHUB_REF_NAME }}/g .release-note-template.md > ./release-notes.txt
+          sed -e s/2.x.x/${{ github.ref_name }}/g .release-note-template.md > ./release-notes.txt
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
@@ -437,7 +437,7 @@ jobs:
         with:
           append_body: true
           body_path: ./release-notes.txt
+          generate_release_notes: true
           files: |
             ./threat-dragon-site-bom.xml
             ./threat-dragon-server-bom.xml
-          generate_release_notes: true

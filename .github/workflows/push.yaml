@@ -463,7 +463,7 @@ jobs:
           path: sboms
 
   desktop_windows_test:
-    name: Windows installer build
+    name: Windows desktop build
     runs-on: windows-latest
     needs: [desktop_e2e_tests]
     defaults:
@@ -505,7 +505,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \;
 
   desktop_macos_test:
-    name: MacOS installer build
+    name: MacOS desktop build
     runs-on: macos-latest
     needs: [desktop_e2e_tests]
     defaults:
@@ -557,7 +557,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
   desktop_linux_test:
-    name: Linux installers build
+    name: Linux desktop build
     runs-on: ubuntu-22.04
     needs: [desktop_e2e_tests]
     defaults:
