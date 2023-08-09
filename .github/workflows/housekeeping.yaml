@@ -5,6 +5,9 @@ on:
     - cron: '0 7 * * *'
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: threatdragon/owasp-threat-dragon
+
 # for security reasons the github actions are pinned to specific release versions
 jobs:
   chores:
@@ -38,7 +41,7 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.11.0
         with:
-          image-ref: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
+          image-ref: '${{ env.IMAGE_NAME }}:latest'
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
