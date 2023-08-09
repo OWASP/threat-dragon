@@ -9,13 +9,13 @@ on:
 env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
-  image_name: threatdragon/owasp-threat-dragon
-  heroku_app: threatdragon-v2
+  IMAGE_NAME: threatdragon/owasp-threat-dragon
+  HEROKU_APP: threatdragon-v2
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
-  publish_docker:
-    name: Publish docker
+  latest_docker:
+    name: Latest docker
     runs-on: ubuntu-22.04
     if: github.repository == 'OWASP/threat-dragon'
     steps:
@@ -41,8 +41,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+
       - name: Build and push
+        # using an image name without a :tag gives 'latest' image
         id: docker_build
         uses: docker/build-push-action@v4.1.1
         with:
@@ -50,19 +51,19 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags:  ${{ env.image_name }}
+          tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   deploy:
     name: Upload to Heroku
     runs-on: ubuntu-22.04
-    needs: [publish_docker]
+    needs: [latest_docker]
     # There is an action to build and deploy a heroku app
     # We already built the container though, so why not just re-tag and push
     steps:
       - name: Pull docker image
-        run: docker pull ${{ env.image_name }}
+        run: docker pull ${{ env.IMAGE_NAME }}
 
       - name: Login to Heroku Registry
         uses: docker/login-action@v2.2.0
@@ -72,13 +73,13 @@ jobs:
           password: ${{ secrets.HEROKU_API_KEY }}
 
       - name: Tag Heroku image
-        run: docker tag ${{ env.image_name }} registry.heroku.com/${{ env.heroku_app }}/web
+        run: docker tag ${{ env.IMAGE_NAME }} registry.heroku.com/${{ env.HEROKU_APP }}/web
 
       - name: Push to Heroku
-        run: docker push registry.heroku.com/${{ env.heroku_app }}/web
+        run: docker push registry.heroku.com/${{ env.HEROKU_APP }}/web
 
       - name: Deploy to Heroku
-        run: heroku container:release web --app ${{ env.heroku_app }}
+        run: heroku container:release web --app ${{ env.HEROKU_APP }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
@@ -125,6 +126,6 @@ jobs:
     if: ${{ failure() }}
     steps:
       - name: Rollback
-        run: heroku rollback --app ${{ env.heroku_app }}
+        run: heroku rollback --app ${{ env.HEROKU_APP }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
