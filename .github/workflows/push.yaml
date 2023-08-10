@@ -309,7 +309,9 @@ jobs:
 
       - name: Rollback heroku on error
         if: ${{ failure() }}
-        run: heroku rollback --app ${{ env.HEROKU_APP }}
+        run: |
+          heroku rollback --app ${{ env.HEROKU_APP }}
+          heroku logs --source heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
