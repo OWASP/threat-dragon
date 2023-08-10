@@ -59,7 +59,7 @@ const mutations = {
     },
     [AUTH_SET_LOCAL]: (state) => {
         state.user = {
-            username: 'Guest'
+            username: 'local-user'
         };
     }
 };

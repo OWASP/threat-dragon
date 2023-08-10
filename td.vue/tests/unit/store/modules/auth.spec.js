@@ -242,8 +242,8 @@ describe('store/modules/auth.js', () => {
                 authModule.mutations[AUTH_SET_LOCAL](authModule.state);
             });
 
-            it('sets the username to "Guest"', () => {
-                expect(authModule.state.user.username).toEqual('Guest');
+            it('sets the username to "local-user"', () => {
+                expect(authModule.state.user.username).toEqual('local-user');
             });
 
             it('does not set the jwt', () => {
