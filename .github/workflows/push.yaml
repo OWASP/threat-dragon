@@ -9,6 +9,7 @@ env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
+  HEROKU_APP: threatdragon-v2
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
