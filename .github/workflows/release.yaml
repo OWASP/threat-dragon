@@ -404,7 +404,8 @@ jobs:
 
       - name: Prepare release notes
         run: |
-          sed -e s/2.x.x/${{ github.ref_name }}/g .release-note-template.md > ./release-notes.txt
+          releaseVersion=${{ github.ref_name }}
+          sed -e s/2.x.x/${releaseVersion:1}/g .release-note-template.md > ./release-notes.txt
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
@@ -433,6 +434,8 @@ jobs:
       - name: Create release notes
         uses: softprops/action-gh-release@v0.1.15
         with:
+          draft: true
+          name: "${releaseVersion:1}"
           append_body: true
           body_path: ./release-notes.txt
           generate_release_notes: true
