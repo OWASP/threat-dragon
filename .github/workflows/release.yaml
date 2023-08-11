@@ -402,34 +402,35 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      - name: Prepare release notes
-        run: |
-          releaseVersion=${{ github.ref_name }}
-          sed -e s/2.x.x/${releaseVersion:1}/g .release-note-template.md > ./release-notes.txt
-
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.vue/'
-          output: './threat-dragon-site-bom.xml'
+          output: './sboms/threat-dragon-site-bom.xml'
 
       - name: Create JSON site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.vue/'
-          output: './threat-dragon-site-bom.json'
+          output: './sboms/threat-dragon-site-bom.json'
 
       - name: Create XML server SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.server/'
-          output: './threat-dragon-server-bom.xml'
+          output: './sboms/threat-dragon-server-bom.xml'
 
       - name: Create JSON server SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
           path: './td.server/'
-          output: './threat-dragon-server-bom.json'
+          output: './sboms/threat-dragon-server-bom.json'
+
+      - name: Prepare release notes
+        run: |
+          releaseVersion=${{ github.ref_name }}
+          sed -e s/2.x.x/${releaseVersion:1}/g .release-note-template.md > ./release-notes.txt
+          tar -czvf threat-dragon-sboms.zip sboms
 
       - name: Create release notes
         uses: softprops/action-gh-release@v0.1.15
@@ -440,5 +441,4 @@ jobs:
           body_path: ./release-notes.txt
           generate_release_notes: true
           files: |
-            ./threat-dragon-site-bom.xml
-            ./threat-dragon-server-bom.xml
+            threat-dragon-sboms.zip
