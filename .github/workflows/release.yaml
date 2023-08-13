@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  image_name: "threatdragon/owasp-threat-dragon"
+  # threatdragon is the working area on docker hub so use this area
+  # owasp/threat-dragon is the final release area so DO NOT use that
+  IMAGE_NAME: threatdragon/owasp-threat-dragon
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -23,7 +25,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -55,7 +57,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -87,7 +89,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -125,7 +127,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1.2.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -138,7 +140,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install packages
-        run: npm clean-install
+        run: npm install
 
       - name: Build application
         # test only so do not publish
@@ -149,10 +151,14 @@ jobs:
       - name: End to end tests
         run: npm run test:e2e:desktop
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;
+
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -161,7 +167,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -173,11 +179,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish Windows installer to github Release Draft
-      - name: Release for Windows
+      - name: Publish Windows executable
         # follow Comodo signing instructions
         # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
@@ -187,10 +193,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --windows --publish always
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;
+
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -199,7 +209,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -211,19 +221,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish MacOS installer to github Release Draft
       # the draft name uses version and is created if it does not already exist
-      - name: Release for MacOS - prepare for notarization
+      - name: Prepare for MacOS notarization
         # Import Apple API key for app notarization on macOS
         # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
-      - name: Release for MacOS
+      - name: Publish MacOS disk image
         env:
           # MacOS signing certificate and password
           # see github.com/samuelmeuli/action-electron-builder#code-signing
@@ -237,10 +247,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish always
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-22.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -249,7 +263,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -261,22 +275,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build and publish Linux installers to github Release Draft
       # for all linux images EXCEPT for the snap
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Release for Linux
+      - name: Publish Linux app images
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux AppImage deb rpm --publish always
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
   desktop_linux_snap:
     name: Linux snap
     runs-on: ubuntu-22.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_tests]
+    needs: [desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
@@ -285,7 +303,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -297,7 +315,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       # Build the snap, but do not use inbuilt publish
@@ -316,6 +334,10 @@ jobs:
           sudo snap install snapcraft --classic
           snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
   dockerhub_release:
     name: Publish to dockerhub
     runs-on: ubuntu-22.04
@@ -326,7 +348,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2.7.0
+        uses: docker/setup-buildx-action@v2.9.0
         with:
           install: true
 
@@ -344,9 +366,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Get Release Version
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
       - name: Build and push to Docker Hub
         id: docker_build
         uses: docker/build-push-action@v4.1.1
@@ -355,20 +374,20 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          tags: ${{ env.image_name }}:${{ env.RELEASE_VERSION }},${{ env.image_name }}:stable
+          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   webapp_release:
     name: Publish web application
     runs-on: ubuntu-22.04
-    needs: [server_unit_tests, site_unit_tests]
+    needs: [desktop_macos, desktop_linux, desktop_windows]
     steps:
       - name: Check out
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -380,11 +399,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
-
-      - name: Prepare SBOM generation
-        run: mkdir sboms
 
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
@@ -410,15 +426,19 @@ jobs:
           path: './td.server/'
           output: './sboms/threat-dragon-server-bom.json'
 
-      - name: Save SBOMs artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: threat-dragon-sboms
-          path: sboms
+      - name: Prepare release notes
+        run: |
+          releaseVersion=${{ github.ref_name }}
+          sed -e s/2.x.x/${releaseVersion:1}/g .release-note-template.md > ./release-notes.txt
+          tar -czvf threat-dragon-sboms.zip sboms
 
-      - name: Add SBOMs to release
+      - name: Create release notes
         uses: softprops/action-gh-release@v0.1.15
         with:
+          draft: true
+          name: "${releaseVersion:1}"
+          append_body: true
+          body_path: ./release-notes.txt
+          generate_release_notes: true
           files: |
-            ./sboms/threat-dragon-site-bom.xml
-            ./sboms/threat-dragon-server-bom.xml
+            threat-dragon-sboms.zip

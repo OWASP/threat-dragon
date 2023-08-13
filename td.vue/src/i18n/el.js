@@ -9,15 +9,20 @@ const ell = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'Το Threat Dragon είναι ένα δωρεάν, ανοιχτού κώδικα εργαλείο μοντελοποίησης απειλών (threat modeling) του Οργανισμού OWASP. Μπορεί να χρησιμοποιηθεί ως μια αυτόνομη desktop εφαρμογή για Windows, MacOS και Linux ή ως μια web εφαρμογή. Η desktop εφαρμογή είναι ιδανική αν θέλετε να δοκιμάσετε την εφαρμογή χωρίς να της δώσετε πρόσβαση στα github αποθετήρια σας, αλλά αν επιλέξετε την online έκδοση τότε θα "εξαπολύσετε" την φοβερή δύναμη του GitHub στα μοντέλα απειλών σας! Προφανώς, για να το κάνετε αυτό θα πρέπει πρώτα να συνδεθείτε.',
-        loginWith: 'Είσοδος με'
+        description: 'Το Threat Dragon είναι ένα δωρεάν, ανοιχτού κώδικα εργαλείο μοντελοποίησης απειλών (threat modeling) του Οργανισμού OWASP. Μπορεί να χρησιμοποιηθεί ως μια αυτόνομη desktop εφαρμογή για Windows, MacOS και Linux ή ως μια web εφαρμογή. Η desktop εφαρμογή είναι ιδανική αν θέλετε να δοκιμάσετε την εφαρμογή χωρίς να της δώσετε πρόσβαση στα github αποθετήρια σας, αλλά αν επιλέξετε την online έκδοση τότε θα "εξαπολύσετε" την φοβερή δύναμη του GitHub στα μοντέλα απειλών σας! Προφανώς, για να το κάνετε αυτό θα πρέπει πρώτα να συνδεθείτε.'
     },
     providers: {
+        desktop: {
+            displayName: 'Threat Dragon',
+            loginWith: 'Start'
+        },
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
+            loginWith: 'Είσοδος με'
         },
         local: {
-            displayName: 'Τοπική Συνεδρία'
+            displayName: 'Τοπική Συνεδρία',
+            loginWith: 'Είσοδος με'
         }
     },
     dashboard: {
@@ -219,6 +224,7 @@ const ell = {
         report: 'Αναφορά',
         save: 'Αποθήκευση',
         saveAs: 'Αποθήκευση ως',
+        saveHtml: 'Αποθήκευση HTML',
         saveModel: 'Αποθήκευση Μοντέλου',
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
         savePdf: 'Αποθήκευση PDF',
@@ -301,7 +307,8 @@ const ell = {
             showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
-            showBranding: 'Εμφάνιση λογότυπων Threat Dragon'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
         dateGenerated: 'Ημερομηνία δημιουργίας',

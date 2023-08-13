@@ -3,13 +3,13 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
-  image_name: "threatdragon/owasp-threat-dragon:${{ github.sha }}"
+  # threatdragon is the working area on docker hub so use this area
+  # owasp/threat-dragon is the final release area so DO NOT use that
+  IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
+  HEROKU_APP: threatdragon-v2
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2.20.0
+        uses: github/codeql-action/init@v2.21.2
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -62,10 +62,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v2.20.0
+        uses: github/codeql-action/autobuild@v2.21.2
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v2.20.0
+        uses: github/codeql-action/analyze@v2.21.2
 
   server_unit_tests:
     name: Server unit tests
@@ -73,13 +73,12 @@ jobs:
     defaults:
       run:
         working-directory: td.server
-    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -106,13 +105,12 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
-    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -139,13 +137,12 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
-    needs: [codeql]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -166,16 +163,331 @@ jobs:
       - name: Unit test
         run: npm run test:desktop
 
+  desktop_e2e_tests:
+    name: Desktop e2e tests
+    runs-on: windows-latest
+    needs: [desktop_unit_tests, site_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      # ubuntu does not find this chrome driver
+      # so until this is fixed, use only windows-latest
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.2.1
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build application
+        # test only so do not publish
+        run: npm run build:desktop -- --publish=never
+
+      # works for macos-latest running locally but pipeline times out
+      # so until this is fixed, use only windows-latest
+      - name: End to end tests
+        run: npm run test:e2e:desktop
+
+  build_docker_image:
+    name: Build Latest docker
+    runs-on: ubuntu-22.04
+    needs: [site_unit_tests, server_unit_tests]
+    if: github.repository == 'OWASP/threat-dragon'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2.9.0
+        with:
+          install: true
+
+      - name: Setup dockerx cache
+        uses: actions/cache@v3.3.0
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v4.1.1
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags:  ${{ env.IMAGE_NAME }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+  heroku_deploy:
+    name: Upload to Heroku
+    runs-on: ubuntu-22.04
+    needs: [build_docker_image]
+    steps:
+      - name: Pull docker image
+        run: docker pull ${{ env.IMAGE_NAME }}
+
+      - name: Login to Heroku Registry
+        uses: docker/login-action@v2.2.0
+        with:
+          registry: registry.heroku.com
+          username: _
+          password: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Tag Heroku image
+        run: docker tag ${{ env.IMAGE_NAME }} registry.heroku.com/${{ env.HEROKU_APP }}/web
+
+      - name: Push to Heroku
+        run: docker push registry.heroku.com/${{ env.HEROKU_APP }}/web
+
+      - name: Deploy to Heroku
+        run: heroku container:release web --app ${{ env.HEROKU_APP }}
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  browserstack_smoke_test:
+    name: Browserstack smoke test
+    runs-on: ubuntu-22.04
+    needs: [heroku_deploy]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: BrowserStack Env Setup
+        uses: browserstack/github-actions/setup-env@v1.0.1
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Run cross-browser smoke tests
+        run: npm run test:e2e-smokes
+
+      - name: Rollback heroku on error
+        if: ${{ failure() }}
+        run: |
+          heroku rollback --app ${{ env.HEROKU_APP }}
+          heroku logs --source heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  e2e_smokes:
+    name: Site e2e smokes
+    runs-on: ubuntu-22.04
+    needs: [build_docker_image]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e SERVER_API_PROTOCOL='http' \
+            ${{ env.IMAGE_NAME }}
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Run e2e tests
+        run: npm run test:e2e-ci-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
+  e2e_tests:
+    name: Site e2e tests
+    runs-on: ubuntu-22.04
+    needs: [e2e_smokes]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e SERVER_API_PROTOCOL='http' \
+            ${{ env.IMAGE_NAME }}
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Run e2e tests
+        run: npm run test:e2e-ci
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ always() }}
+
+  zap_scan_web:
+    name: Site zap scan
+    runs-on: ubuntu-22.04
+    needs: [e2e_smokes]
+    steps:
+      - name: Run Threat Dragon
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e NODE_ENV='development' \
+            -e SERVER_API_PROTOCOL='http' \
+            ${{ env.IMAGE_NAME }}
+
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      # There's probably a better way of doing this.
+      # Not a great idea to chmod 777, even if it's only
+      # in a CI runner
+      - name: Make report dir
+        run: sudo mkdir zap && sudo chmod 0777 zap
+        
+      - name: ZAP Scan
+        run: |
+          docker run -v $(pwd):/zap/wrk/:rw \
+            -t \
+            --network=host \
+            owasp/zap2docker-stable \
+            zap-baseline.py \
+            -t http://localhost:3000 \
+            -r zap/report_web.html \
+            -a \
+            -c .github/workflows/.zap-rules-web.tsv \
+            -j
+
+      - name: Upload scan report
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: zap_report_web.zip
+          path: zap/report_web.html
+        if: ${{ always() }}
+
+  scan_image_with_trivy:
+    name: Site trivy scan
+    runs-on: ubuntu-22.04
+    needs: [e2e_smokes]
+    steps:
+      # Need .trivyignore
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.11.0
+        with:
+          image-ref: '${{ env.IMAGE_NAME }}'
+          format: 'table'
+          exit-code: 1
+
   sbom_web:
     name: SBOM web application
     runs-on: ubuntu-22.04
-    needs: [server_unit_tests, site_unit_tests]
+    needs: [e2e_smokes]
     steps:
       - name: Check out
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -223,229 +535,19 @@ jobs:
           name: threat-dragon-sboms
           path: sboms
 
-  build_docker_image:
-    name: Build docker image
-    runs-on: ubuntu-22.04
-    needs: [site_unit_tests, server_unit_tests]
-    if: github.repository == 'OWASP/threat-dragon'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2.7.0
-        with:
-          install: true
-
-      - name: Setup dockerx cache
-        uses: actions/cache@v3.3.0
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2.2.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v4.1.1
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags:  ${{ env.image_name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-  e2e_tests:
-    name: Site e2e tests
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
-    defaults:
-      run:
-        working-directory: td.vue
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.image_name }}
-
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: '18'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v3
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
-
-
-  e2e_smokes:
-    name: Site e2e smokes
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
-    defaults:
-      run:
-        working-directory: td.vue
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.image_name }}
-
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: '18'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci-smokes
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v3
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
-
-  zap_scan_web:
-    name: Site zap scan
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
-    steps:
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.image_name }}
-
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      # There's probably a better way of doing this.
-      # Not a great idea to chmod 777, even if it's only
-      # in a CI runner
-      - name: Make report dir
-        run: sudo mkdir zap && sudo chmod 0777 zap
-        
-      - name: ZAP Scan
-        run: |
-          docker run -v $(pwd):/zap/wrk/:rw \
-            -t \
-            --network=host \
-            owasp/zap2docker-stable \
-            zap-baseline.py \
-            -t http://localhost:3000 \
-            -r zap/report_web.html \
-            -a \
-            -c .github/workflows/.zap-rules-web.tsv \
-            -j
-
-      - name: Upload scan report
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: zap_report_web.zip
-          path: zap/report_web.html
-        if: ${{ always() }}
-
-  scan_image_with_trivy:
-    name: Site trivy scan
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
-    steps:
-      # Need .trivyignore
-      - name: Checkout
-        uses: actions/checkout@v3.5.2
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.11.0
-        with:
-          image-ref: '${{ env.image_name }}'
-          format: 'table'
-          exit-code: 1
-
-  desktop_e2e_tests:
-    name: Desktop e2e tests
+  desktop_windows_test:
+    name: Windows desktop build
     runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_e2e_tests]
     defaults:
       run:
         working-directory: td.vue
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v3.5.2
 
-      # ubuntu does not find this chrome driver
-      # so until this is fixed, use only windows-latest
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.2.1
-
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
 
@@ -458,13 +560,145 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install packages
-        run: npm clean-install
+        run: npm install
 
-      - name: Build application
-        # test only so do not publish
-        run: npm run build:desktop -- --publish=never
+      # Build Windows installer
+      - name: Build Windows executable
+        # follow Comodo signing instructions
+        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
+        env:
+          # Windows signing certificate and password
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
+          CSC_LINK:  ${{ secrets.WINDOWS_CERT }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish never
 
-      # works for macos-latest running locally but pipeline times out 
-      # so until this is fixed, use only windows-latest
-      - name: End to end tests
-        run: npm run test:e2e:desktop
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \;
+
+  desktop_macos_test:
+    name: MacOS desktop build
+    runs-on: macos-latest
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Prepare for MacOS notarization
+        # Import Apple API key for app notarization on macOS
+        # see github.com/samuelmeuli/action-electron-builder#notarization
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+
+      - name: Build MacOS disk image
+        env:
+          # MacOS signing certificate and password
+          # see github.com/samuelmeuli/action-electron-builder#code-signing
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+          CSC_LINK:  ${{ secrets.MAC_CERTS }}
+          # MacOS notarization API IDs
+          # see github.com/samuelmeuli/action-electron-builder#notarization
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          # github token is automatically provided to the action
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --mac --publish never
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+  desktop_linux_test:
+    name: Linux desktop build
+    runs-on: ubuntu-22.04
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Build Linux app images
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --linux AppImage deb rpm --publish never
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+  desktop_linux_snap_test:
+    name: Linux snap build
+    runs-on: ubuntu-22.04
+    needs: [desktop_e2e_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.5.2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v3.3.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm install
+
+      - name: Build Linux snap
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --linux snap
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print

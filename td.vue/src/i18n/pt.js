@@ -9,15 +9,20 @@ const por = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo do Threat Dragon',
-        description: 'Threat Dragon é uma ferramenta gratuita e open-souce de modelagem de ameaças da OWASP e que pode ser utilizada via desktop para Windows, MacOS e Linux ou como uma aplicação web. A aplicação de desktop é excelente se você quiser experimentá-la sem conceder acesso aos seus repositórios do GitHub. No entanto, se você escolher a versão web, poderá liberar o incrível poder do GitHub em seus modelos de ameaça (threat model)! Obviamente, para fazer isso, será necessário realizar o login no GitHub e permitir o acesso ao repositório de interesse!',
-        loginWith: 'Login com'
+        description: 'Threat Dragon é uma ferramenta gratuita e open-souce de modelagem de ameaças da OWASP e que pode ser utilizada via desktop para Windows, MacOS e Linux ou como uma aplicação web. A aplicação de desktop é excelente se você quiser experimentá-la sem conceder acesso aos seus repositórios do GitHub. No entanto, se você escolher a versão web, poderá liberar o incrível poder do GitHub em seus modelos de ameaça (threat model)! Obviamente, para fazer isso, será necessário realizar o login no GitHub e permitir o acesso ao repositório de interesse!'
     },
     providers: {
+        desktop: {
+            displayName: 'Threat Dragon',
+            loginWith: 'Start'
+        },
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
+            loginWith: 'Login com'
         },
         local: {
-            displayName: 'Sessão Local'
+            displayName: 'Sessão Local',
+            loginWith: 'Login com'
         }
     },
     dashboard: {
@@ -219,6 +224,7 @@ const por = {
         report: 'Reporte',
         save: 'Salvar',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',
@@ -301,7 +307,8 @@ const por = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Relatório do modelo de ameaças para',
         dateGenerated : 'Data Gerada',

@@ -9,15 +9,20 @@ const eng = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.',
-        loginWith: 'Login with'
+        description: 'OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.'
     },
     providers: {
+        desktop: {
+            displayName: 'Threat Dragon',
+            loginWith: 'Start'
+        },
         github: {
-            displayName: 'GitHub'
+            displayName: 'GitHub',
+            loginWith: 'Login with'
         },
         local: {
-            displayName: 'Local Session'
+            displayName: 'Local Session',
+            loginWith: 'Login to'
         }
     },
     dashboard: {
@@ -219,6 +224,7 @@ const eng = {
         report: 'Report',
         save: 'Save',
         saveAs: 'Save As',
+        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         savePdf: 'Save PDF',
@@ -301,7 +307,8 @@ const eng = {
             showOutOfScope: 'Show out of scope elements',
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
-            showBranding: 'Show Threat Dragon Branding'
+            showEmpty: 'Show empty elements',
+            showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',
         dateGenerated: 'Date Generated',

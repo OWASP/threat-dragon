@@ -26,7 +26,7 @@ const actions = {
     [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL),
     [LOGOUT]: async ({ dispatch, state, rootState }) => {
         try {
-            if (rootState.provider.selected !== providers.allProviders.local.key) {
+            if (rootState.provider.selected !== providers.allProviders.local.key && rootState.provider.selected !== providers.allProviders.desktop.key) {
                 await loginApi.logoutAsync(state.refreshToken);
             }
         } catch (e) {
@@ -59,7 +59,7 @@ const mutations = {
     },
     [AUTH_SET_LOCAL]: (state) => {
         state.user = {
-            username: 'Guest'
+            username: 'local-user'
         };
     }
 };

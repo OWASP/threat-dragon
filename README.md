@@ -3,8 +3,7 @@
   width="200" alt="Threat Dragon Logo"/>
 </p>
 
-[![Build](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/ci.yaml)
-[![Deploy](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/deploy.yaml)
+[![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 
 # OWASP Threat Dragon

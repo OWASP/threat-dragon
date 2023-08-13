@@ -13,7 +13,7 @@
             ></font-awesome-icon>
         </span>
         <span>
-            {{ $t('home.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
+            {{ $t('providers.' + provider.key + '.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
         </span>
     </b-btn>
 </template>
@@ -37,9 +37,10 @@ export default {
     },
     methods: {
         async onProviderClick() {
-            this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
+            console.debug('login with provider: ' + this.provider.key);
+            await this.$store.dispatch(PROVIDER_SELECTED, this.provider.key);
 
-            if (this.provider.key === providerNames.local) {
+            if (this.provider.key === providerNames.local || this.provider.key === providerNames.desktop) {
                 this.$store.dispatch(AUTH_SET_LOCAL);
                 return this.$router.push('/dashboard');
             }

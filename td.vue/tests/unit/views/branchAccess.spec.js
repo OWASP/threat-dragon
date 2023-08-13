@@ -35,11 +35,17 @@ describe('views/BranchAccess.vue', () => {
     const getMockStore = () => new Vuex.Store({
         state: {
             repo: {
-                selected: repo
+                selected: repo,
+                page: 1,
+                pageNext: true,
+                pagePrev: false
             },
             branch: {
                 selected: 'someBranch',
-                all: ['b1', 'b2', 'b3']
+                all: ['b1', 'b2', 'b3'],
+                page: 1,
+                pageNext: true,
+                pagePrev: false
             },
             provider: {
                 selected: 'github'
@@ -82,7 +88,7 @@ describe('views/BranchAccess.vue', () => {
                     repository: mockStore.state.repo.selected
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_FETCH);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_FETCH, 1);
         });
     });
 

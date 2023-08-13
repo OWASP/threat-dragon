@@ -7,11 +7,11 @@
                         <b-col>
                             <b-form-group
                                 label-cols="auto"
-                                id="outofscope-group">
+                                id="model-group">
                                 <b-form-checkbox
-                                    id="show_outofscope"
-                                    v-model="display.outOfScope"
-                                >{{ $t('report.options.showOutOfScope') }}</b-form-checkbox>
+                                    id="show_models"
+                                    v-model="display.diagrams"
+                                >{{ $t('report.options.showModelDiagrams') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
 
@@ -29,11 +29,22 @@
                         <b-col>
                             <b-form-group
                                 label-cols="auto"
-                                id="model-group">
+                                id="outofscope-group">
                                 <b-form-checkbox
-                                    id="show_models"
-                                    v-model="display.diagrams"
-                                >{{ $t('report.options.showModelDiagrams') }}</b-form-checkbox>
+                                    id="show_outofscope"
+                                    v-model="display.outOfScope"
+                                >{{ $t('report.options.showOutOfScope') }}</b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col>
+                            <b-form-group
+                                label-cols="auto"
+                                id="empty-group">
+                                <b-form-checkbox
+                                    id="show_empty"
+                                    v-model="display.empty"
+                                >{{ $t('report.options.showEmpty') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
 
@@ -98,12 +109,13 @@
             </div>
 
             <td-diagram-detail
-                v-for="(diagram, idx) in model.detail.diagrams"
+                v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
                 :showOutOfScope="display.outOfScope"
                 :showMitigated="display.mitigated"
                 :showDiagram="display.diagrams"
+                :showEmpty="display.empty"
             ></td-diagram-detail>
         </div>
     </div>
@@ -178,10 +190,11 @@ export default {
     data() {
         return {
             display: {
-                outOfScope: true,
-                mitigated: true,
                 diagrams: true,
-                branding: true
+                mitigated: true,
+                outOfScope: true,
+                empty: true,
+                branding: false
             },
             isElectron: isElectron()
         };
@@ -193,13 +206,24 @@ export default {
             allThreats: function (state) {
                 return threatService.filter(state.threatmodel.data.detail.diagrams, {
                     showOutOfScope: true,
-                    showMitigated: true
+                    showMitigated: true,
+                    showEmpty: true
                 });
             }
         }),
         ...mapGetters({
             contributors: 'contributors'
-        })
+        }),
+        diagrams: function () {
+            const sortedDiagrams = this.model.detail.diagrams.slice().sort((a, b) => {
+                if (a.title < b.title)
+                    return -1;
+                if (a.title > b.title)
+                    return 1;
+                return 0;
+            });
+            return sortedDiagrams;
+        }
     },
     methods: {
         onCloseClick() {

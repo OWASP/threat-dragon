@@ -16,3 +16,4 @@
 10049	IGNORE	Non-Storable Content
 10055	IGNORE	(CSP: style-src unsafe-inline)
 10063	IGNORE	(Feature Policy Header Not Set)
+90005	IGNORE	(Sec-Fetch-Dest Header is Missing)

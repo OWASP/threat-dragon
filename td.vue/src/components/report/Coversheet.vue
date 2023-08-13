@@ -25,7 +25,7 @@ export default {
     props: {
         branding: {
             type: Boolean,
-            default: true
+            default: false
         }
     }
 };

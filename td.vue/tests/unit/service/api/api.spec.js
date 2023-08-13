@@ -3,6 +3,7 @@ import httpClient from '@/service/httpClient.js';
 
 describe('service/api.js', () => {
     const url = 'http://threatdragon.org/api/foobar';
+    const query = {page: 1};
     const mockResp = { data: 'foo' };
     const mockClient = {
         get: () => mockResp,
@@ -21,11 +22,11 @@ describe('service/api.js', () => {
 
     describe('getAsync', () => {
         beforeEach(async () => {
-            res = await api.getAsync(url);
+            res = await api.getAsync(url, query);
         });
 
         it('calls client.get', () => {
-            expect(mockClient.get).toHaveBeenCalledWith(url);
+            expect(mockClient.get).toHaveBeenCalledWith(url, query);
         });
 
         it('returns the data', () => {
