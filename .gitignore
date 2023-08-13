@@ -87,6 +87,7 @@
 !td.vue/tests/e2e/
 !td.vue/tests/e2e/desktop/
 !td.vue/tests/e2e/fixtures/
+!td.vue/tests/e2e/fixtures/*.json
 !td.vue/tests/e2e/specs/
 !td.vue/tests/e2e/support/
 !td.vue/tests/unit/

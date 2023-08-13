@@ -205,6 +205,7 @@ export default {
             threat: {},
             modelTypes: [
                 'CIA',
+                'DIE',
                 'LINDDUN',
                 'STRIDE'
             ],

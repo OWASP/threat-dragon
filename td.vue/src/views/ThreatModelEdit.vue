@@ -101,6 +101,7 @@
                                 <b-input-group-prepend>
                                     <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'DIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
@@ -252,21 +253,31 @@ export default {
             let placeholder;
             let thumbnail;
             switch (type) {
+
 	            case 'CIA':
 	                thumbnail = './public/content/images/thumbnail.cia.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
 	                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
 	                break;
+
+	            case 'DIE':
+	                thumbnail = './public/content/images/thumbnail.die.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.die.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.die.defaultDescription');
+	                break;
+
 	            case 'LINDDUN':
 	                thumbnail = './public/content/images/thumbnail.linddun.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
 	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
 	                break;
+
 	            case 'STRIDE':
 	                thumbnail = './public/content/images/thumbnail.stride.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
 	                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
 	                break;
+
 	            default:
 	                thumbnail = './public/content/images/thumbnail.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
@@ -278,6 +289,7 @@ export default {
             this.model.detail.diagrams[idx].thumbnail = thumbnail;
             // if the diagram title is still default, then change it to the new default title
             if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.die.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
