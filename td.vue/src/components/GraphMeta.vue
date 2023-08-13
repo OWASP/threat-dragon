@@ -32,7 +32,7 @@
                                 v-for="(threat, idx) in threats || []"
                                 :key="idx"
                             >
-                                <td-threat-card
+                                <td-graph-threats
                                     :id="threat.id"
                                     :status="threat.status"
                                     :severity="threat.severity"
@@ -81,7 +81,7 @@ import { createNewTypedThreat } from '@/service/threats/index.js';
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
-import TdThreatCard from '@/components/ThreatCard.vue';
+import TdGraphThreats from '@/components/GraphThreats.vue';
 
 export default {
     name: 'TdGraphMeta',
@@ -95,14 +95,16 @@ export default {
     }),
     components: {
         TdGraphProperties,
-        TdThreatCard
+        TdGraphThreats
     },
     methods: {
         threatSelected(threatId) {
+            console.debug('selected threat ID: ' + threatId);
             this.$emit('threatSelected', threatId);
         },
         newThreat() {
             const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type);
+            console.debug('new threat ID: ' + threat.id);
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
