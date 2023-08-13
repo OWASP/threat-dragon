@@ -100,6 +100,11 @@ const zho = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: '新DIE图',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: '新CIA图',
                 defaultDescription: 'New CIA diagram description',
@@ -227,6 +232,12 @@ const zho = {
                 integrity: '完整性',
                 availability: '可用性'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: '可链接性',
@@ -250,6 +261,7 @@ const zho = {
         generic: {
             default: '新通用威胁',
             cia: '新CIA威胁',
+            die: '新DIE威胁',
             linddun: '新LINDDUN威胁',
             stride: '新STRIDE威胁'
         },

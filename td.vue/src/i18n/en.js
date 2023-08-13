@@ -100,6 +100,11 @@ const eng = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
@@ -227,6 +232,12 @@ const eng = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability',
@@ -250,6 +261,7 @@ const eng = {
         generic: {
             default: 'New generic threat',
             cia: 'New CIA threat',
+            die: 'New DIE threat',
             linddun: 'New LINDDUN threat',
             stride: 'New STRIDE threat'
         },

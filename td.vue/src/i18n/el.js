@@ -100,6 +100,11 @@ const ell = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: 'Νέο διάγραμμα CIA',
                 defaultDescription: 'New CIA diagram description',
@@ -227,6 +232,12 @@ const ell = {
                 integrity: 'Ακεραιότητα',
                 availability: 'Διαθεσιμότητα'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: 'Συνδεσιμότητα',
@@ -250,6 +261,7 @@ const ell = {
         generic: {
             default: 'Νέα γενική απειλή',
             cia: 'Νέα απειλή CIA',
+            die: 'Νέα απειλή DIE',
             linddun: 'Νέα απειλή LINDDUN',
             stride: 'Νέα απειλή STRIDE'
         },

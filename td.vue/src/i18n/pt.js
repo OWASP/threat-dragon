@@ -100,6 +100,11 @@ const por = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
@@ -227,6 +232,12 @@ const por = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability',
@@ -250,6 +261,7 @@ const por = {
         generic: {
             dafault: 'Nova ameaça genérica',
             cia : 'Nova ameaça da CIA',
+            die : 'Nova ameaça da DIE',
             linddun : 'Nova ameaça LINDDUN',
             stride: 'Nova ameaça STRIDE'
         },

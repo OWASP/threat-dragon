@@ -39,6 +39,7 @@ const hin = {
         file: {
             heading: 'फ़ाइल',
             close: 'क्लोज मॉडल',
+            new: 'New Model',
             open: 'ओपन मॉडल',
             save: 'मॉडल सहेजें',
             saveAs: 'मॉडल को इस रूप में सहेजें'
@@ -98,6 +99,11 @@ const hin = {
                 defaultTitle: 'न्यू लिंडन डायग्राम',
                 defaultDescription: 'न्यू लिंडडन डायग्राम डिस्क्रिप्शन',
                 select: 'लिंडडन'
+            },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
             },
             cia: {
                 defaultTitle: 'न्यू सीआईए डायग्राम',
@@ -226,6 +232,12 @@ const hin = {
                 integrity: 'ईमानदारी',
                 availability: 'उपलब्धता'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- लिंडडन ---',
                 linkability: 'लिंक करने की क्षमता',
@@ -249,6 +261,7 @@ const hin = {
         generic: {
             default: 'नया सामान्य थ्रेट',
             cia: 'नया सीआईए थ्रेट',
+            die: 'नया DIE थ्रेट',
             linddun: 'न्यू लिंडडन थ्रेट',
             stride: 'नया स्ट्राइड थ्रेट'
         },
