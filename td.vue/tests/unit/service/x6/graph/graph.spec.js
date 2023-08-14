@@ -182,7 +182,7 @@ describe('service/x6/graph/graph.js', () => {
                 autoResize: true,
                 pannable: false,
                 pageVisible: true,
-                pageBreak: true
+                pageBreak: false
             });
         });
 

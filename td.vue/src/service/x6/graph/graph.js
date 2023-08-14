@@ -91,7 +91,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         autoResize: true,
         pannable: false, // disable because it interferes with rubberbanding, see panning above
         pageVisible: true,
-        pageBreak: true
+        pageBreak: false
     }
 });
 
