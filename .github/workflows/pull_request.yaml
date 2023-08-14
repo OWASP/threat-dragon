@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -109,7 +109,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -141,7 +141,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -179,7 +179,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1.2.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -269,7 +269,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -319,7 +319,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
@@ -416,7 +416,7 @@ jobs:
         uses: actions/checkout@v3.5.2
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.7.0
+        uses: actions/setup-node@v3.8.0
         with:
           node-version: '18'
 
