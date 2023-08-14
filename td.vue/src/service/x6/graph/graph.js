@@ -92,7 +92,9 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         pannable: false, // disable because it interferes with rubberbanding, see panning above
         pageVisible: true,
         pageBreak: false
-    }
+    },
+    container: container,  // still not able to auto-size, see https://x6.antv.vision/en/docs/api/graph/graph#autoresize
+    autoResize: true
 });
 
 const getEditGraph = (container) => {
