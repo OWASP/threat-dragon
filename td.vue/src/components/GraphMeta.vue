@@ -78,7 +78,7 @@
 import { mapState } from 'vuex';
 
 import { createNewTypedThreat } from '@/service/threats/index.js';
-import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import { CELL_DATA_UPDATED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
@@ -97,7 +97,13 @@ export default {
         TdGraphProperties,
         TdGraphThreats
     },
+    async mounted() {
+        this.init();
+    },
     methods: {
+        init() {
+            this.$store.dispatch(CELL_UNSELECTED);
+        },
         threatSelected(threatId) {
             console.debug('selected threat ID: ' + threatId);
             this.$emit('threatSelected', threatId);

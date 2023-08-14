@@ -211,10 +211,6 @@ label {
 import { mapState } from 'vuex';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 
-/**
- * TODO:
- * Note: The data is bound, but the UI is only updated when the unselected event happens.  We may want to find a way to force this as needed.
- */
 export default {
     name: 'TdGraphProperties',
     computed: mapState({
