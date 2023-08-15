@@ -79,7 +79,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         modifiers: ['ctrl', 'meta']
     },
     panning: {
-        enabled: true, // provides panning, disable scroller.pannable below
+        enabled: true, // provides panning using shift key, as we have to disable scroller.pannable below
         modifiers: ['shift']
     },
     connecting: {
@@ -91,8 +91,10 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         autoResize: true,
         pannable: false, // disable because it interferes with rubberbanding, see panning above
         pageVisible: true,
-        pageBreak: true
-    }
+        pageBreak: false
+    },
+    // container: container,  // still not able to auto-size, see https://x6.antv.vision/en/docs/api/graph/graph#autoresize
+    //autoResize: true        // note that this is inherited from getReadOnlyConfig
 });
 
 const getEditGraph = (container) => {

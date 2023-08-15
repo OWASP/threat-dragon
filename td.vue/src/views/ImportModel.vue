@@ -65,7 +65,12 @@ import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 // only search for text files
 const pickerFileOptions = {
     types: [
-        { description: 'Threat models', accept: { 'text/*': ['.json'] } }
+        {
+            description: 'Threat models',
+            accept: {
+                'application/json': ['.json']
+            }
+        }
     ],
     multiple: false
 };

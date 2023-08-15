@@ -18,7 +18,7 @@
             <div
               id="graph-container"
               ref="graph_container"
-              style="height: 65vh"
+              style="height: 65vh; flex: 1"
             ></div>
           </b-col>
         </b-row>

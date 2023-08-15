@@ -3,9 +3,9 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuex from 'vuex';
 
-import TdThreatCard from '@/components/ThreatCard.vue';
+import TdGraphThreats from '@/components/GraphThreats.vue';
 
-describe('components/ThreatCard.vue', () => {
+describe('components/GraphThreats.vue', () => {
     let emitter, localVue, wrapper;
 
     const getDefaultPropsData = () => ({
@@ -27,7 +27,7 @@ describe('components/ThreatCard.vue', () => {
         localVue.component('font-awesome-icon', FontAwesomeIcon);
     });
 
-    const getWrapper = (propsData) => shallowMount(TdThreatCard, {
+    const getWrapper = (propsData) => shallowMount(TdGraphThreats, {
         localVue,
         mocks: {
             $t: key => key,
@@ -38,31 +38,31 @@ describe('components/ThreatCard.vue', () => {
 
     describe('props', () => {
         it('has the status prop', () => {
-            expect(TdThreatCard.props.status).toBeDefined();
+            expect(TdGraphThreats.props.status).toBeDefined();
         });
 
         it('has the severity prop', () => {
-            expect(TdThreatCard.props.severity).toBeDefined();
+            expect(TdGraphThreats.props.severity).toBeDefined();
         });
 
         it('has the description prop', () => {
-            expect(TdThreatCard.props.description).toBeDefined();
+            expect(TdGraphThreats.props.description).toBeDefined();
         });
 
         it('has the title prop', () => {
-            expect(TdThreatCard.props.title).toBeDefined();
+            expect(TdGraphThreats.props.title).toBeDefined();
         });
 
         it('has the type prop', () => {
-            expect(TdThreatCard.props.type).toBeDefined();
+            expect(TdGraphThreats.props.type).toBeDefined();
         });
 
         it('has the mitigation prop', () => {
-            expect(TdThreatCard.props.mitigation).toBeDefined();
+            expect(TdGraphThreats.props.mitigation).toBeDefined();
         });
 
         it('has the model type', () => {
-            expect(TdThreatCard.props.modelType).toBeDefined();
+            expect(TdGraphThreats.props.modelType).toBeDefined();
         });
     });
 

@@ -61,7 +61,7 @@ describe('service/x6/graph/graph.js', () => {
             );
         });
 
-        it('does not pprevent default context menus', () => {
+        it('does not prevent default context menus', () => {
             expect(factory.graph).toHaveBeenCalledWith(
                 expect.objectContaining({ preventDefaultContextMenu: false })
             );
@@ -182,7 +182,7 @@ describe('service/x6/graph/graph.js', () => {
                 autoResize: true,
                 pannable: false,
                 pageVisible: true,
-                pageBreak: true
+                pageBreak: false
             });
         });
 

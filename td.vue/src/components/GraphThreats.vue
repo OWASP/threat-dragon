@@ -76,7 +76,7 @@
 
 <script>
 export default {
-    name: 'TdThreatCard',
+    name: 'TdGraphThreats',
     props: {
         id: { type: String },
         status: { type: String },

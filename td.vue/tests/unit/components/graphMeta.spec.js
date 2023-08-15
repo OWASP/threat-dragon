@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuex from 'vuex';
 
 import TdGraphMeta from '@/components/GraphMeta.vue';
-import TdThreatCard from '@/components/ThreatCard.vue';
+import TdGraphThreats from '@/components/GraphThreats.vue';
 
 describe('components/GraphMeta.vue', () => {
     let wrapper;
@@ -76,7 +76,7 @@ describe('components/GraphMeta.vue', () => {
         });
 
         it('displays the threat card', () => {
-            expect(wrapper.findComponent(TdThreatCard).exists()).toEqual(true);
+            expect(wrapper.findComponent(TdGraphThreats).exists()).toEqual(true);
         });
     });
 
