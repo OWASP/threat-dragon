@@ -105,6 +105,11 @@ const deu = {
                 defaultDescription: 'Neue LINDDUN Diagramm Beschreibung',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: 'Neues CIA Diagramm',
                 defaultDescription: 'Neue CIA Diagramm Beschreibung',
@@ -233,6 +238,12 @@ const deu = {
                 integrity: 'Integrität',
                 availability: 'Verfügbarkeit'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: { //unable to find german sources to Linddun. The official website is also not available on german. will leave the specific terms as in the original 
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability',
@@ -256,6 +267,7 @@ const deu = {
         generic: {
             default: 'Neue generische Bedrohung',
             cia: 'Neue CIA Bedrohung',
+            die: 'Neue DIE Bedrohung',
             linddun: 'Neue LINDDUN Bedrohung',
             stride: 'Neue STRIDE Bedrohung'
         },

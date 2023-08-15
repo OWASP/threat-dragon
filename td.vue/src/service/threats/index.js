@@ -7,6 +7,11 @@ const valuesToTranslations = {
     Confidentiality: 'threats.model.cia.confidentiality',
     Integrity: 'threats.model.cia.integrity',
     Availability: 'threats.model.cia.availability',
+
+    Distributed: 'threats.model.die.distributed',
+    Immutable: 'threats.model.die.immutable',
+    Ephemeral: 'threats.model.die.ephemeral',
+
     Linkability: 'threats.model.linddun.linkability',
     Identifiability: 'threats.model.linddun.identifiability',
     'Non-repudiation': 'threats.model.linddun.nonRepudiation',
@@ -14,6 +19,7 @@ const valuesToTranslations = {
     'Disclosure of information': 'threats.model.linddun.disclosureOfInformation',
     Unawareness: 'threats.model.linddun.unawareness',
     'Non-compliance': 'threats.model.linddun.nonCompliance',
+
     Spoofing: 'threats.model.stride.spoofing',
     Tampering: 'threats.model.stride.tampering',
     Repudiation: 'threats.model.stride.repudiation',
@@ -31,14 +37,22 @@ export const createNewTypedThreat = function (modelType, cellType) {
     let title, type;
 
     switch (modelType) {
+
     case 'CIA':
         title = tc('threats.generic.cia');
         type = tc('threats.model.cia.confidentiality');
         break;
+
+    case 'DIE':
+        title = tc('threats.generic.die');
+        type = tc('threats.model.die.distributed');
+        break;
+
     case 'LINDDUN':
         title = tc('threats.generic.linddun');
         type = tc('threats.model.linddun.linkability');
         break;
+
     case 'STRIDE':
         title = tc('threats.generic.stride');
         if (cellType === 'tm.Actor' || cellType === 'tm.Process') {
@@ -47,6 +61,7 @@ export const createNewTypedThreat = function (modelType, cellType) {
             type = tc('threats.model.stride.tampering');
         }
         break;
+
     default:
         title = tc('threats.generic.default');
         type = tc('threats.model.stride.spoofing');

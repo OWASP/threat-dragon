@@ -81,6 +81,26 @@ describe('service/threats/index.js', () => {
         });
     });
 
+    describe('create new DIE threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('DIE');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('New DIE threat');
+        });
+
+        it('has Distributed type', () => {
+            expect(threat.type).toEqual('Distributed');
+        });
+
+        it('has a DIE modelType', () => {
+            expect(threat.modelType).toEqual('DIE');
+        });
+    });
+
     describe('hasOpenThreats', () => {
         it('returns false if there is no data', () => {
             expect(threats.hasOpenThreats(null))
@@ -116,7 +136,8 @@ describe('service/threats/index.js', () => {
     });
 
     describe('convertToTranslationString', () => {
-        it('converts confidentiality to the translation string', () => {
+
+        it('converts Confidentiality to the translation string', () => {
             expect(threats.convertToTranslationString('Confidentiality'))
                 .toEqual('threats.model.cia.confidentiality');
         });
@@ -129,6 +150,21 @@ describe('service/threats/index.js', () => {
         it('converts Availability to the translation string', () => {
             expect(threats.convertToTranslationString('Availability'))
                 .toEqual('threats.model.cia.availability');
+        });
+
+        it('converts Distributed to the translation string', () => {
+            expect(threats.convertToTranslationString('Distributed'))
+                .toEqual('threats.model.die.distributed');
+        });
+
+        it('converts Immutable to the translation string', () => {
+            expect(threats.convertToTranslationString('Immutable'))
+                .toEqual('threats.model.die.immutable');
+        });
+
+        it('converts Ephemeral to the translation string', () => {
+            expect(threats.convertToTranslationString('Ephemeral'))
+                .toEqual('threats.model.die.ephemeral');
         });
 
         it('converts Linkability to the translation string', () => {

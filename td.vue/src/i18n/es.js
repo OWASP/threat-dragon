@@ -105,6 +105,11 @@ const spa = {
                 defaultDescription: 'Descripción de nuevo diagrama LINDDUN',
                 select: 'LINDDUN'
             },
+            die: {
+                defaultTitle: 'New DIE diagram',
+                defaultDescription: 'New DIE diagram description',
+                select: 'DIE'
+            },
             cia: {
                 defaultTitle: 'Nuevo diagrama CIA',
                 defaultDescription: 'Descripción de Nuevo diagrama CIA',
@@ -233,6 +238,12 @@ const spa = {
                 integrity: 'Integrity - Integridad',
                 availability: 'Availability - Disponibilidad'
             },
+            die: {
+                header: '--- DIE ---',
+                distributed: 'Distributed',
+                immutable: 'Immutable',
+                ephemeral: 'Ephemeral'
+            },
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability / Facilidad de vinculación',
@@ -256,6 +267,7 @@ const spa = {
         generic: {
             default: 'Nueva amenaza genérica',
             cia: 'Nueva amenaza CIA',
+            die: 'Nueva amenaza DIE',
             linddun: 'Nueva amenaza LINDDUN',
             stride: 'Nueva amenaza STRIDE'
         },

@@ -1,4 +1,5 @@
 import cia from './cia.js';
+import die from './die.js';
 import linddun from './linddun.js';
 import stride from './stride.js';
 
@@ -6,6 +7,7 @@ import stride from './stride.js';
 const generic = Object.assign(
     Object.assign({ strideHeader: 'threats.model.stride.header' }, stride.all),
     Object.assign({ ciaHeader: 'threats.model.cia.header' }, cia),
+    Object.assign({ dieHeader: 'threats.model.die.header' }, die),
     Object.assign({ linddunHeader: 'threats.model.linddun.header' }, linddun.all)
 );
 
@@ -16,6 +18,10 @@ const getByTranslationValue = (translation) => {
 
     if (Object.values(cia).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'CIA';
+    }
+
+    if (Object.values(die).find(x => x.toLowerCase() === translation.toLowerCase())) {
+        return 'DIE';
     }
 
     if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
@@ -33,9 +39,15 @@ const getThreatTypesByElement = (modelType, cellType) => {
     let types;
 
     switch (modelType.toUpperCase()) {
+
     case 'CIA' :
         types = cia;
         break;
+
+    case 'DIE' :
+        types = die;
+        break;
+
     case 'LINDDUN' :
         if (cellType === 'tm.Actor') {
             types = linddun.actor;
@@ -43,6 +55,7 @@ const getThreatTypesByElement = (modelType, cellType) => {
             types = linddun.default;
         }
         break;
+
     case 'STRIDE' :
         switch (cellType) {
         case 'tm.Actor' :
@@ -60,6 +73,7 @@ const getThreatTypesByElement = (modelType, cellType) => {
             break;
         }
         break;
+
     default:
         types = generic;
         break;
