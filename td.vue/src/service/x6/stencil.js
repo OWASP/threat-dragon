@@ -42,17 +42,17 @@ const get = (target, container) => {
         new shapes.ProcessShape(),
         new shapes.StoreShape(),
         new shapes.ActorShape(),
-        new shapes.FlowStencil()
+        //new shapes.FlowStencil()
     ], 'components');
 
-    stencil.load([
+/*    stencil.load([
         new shapes.TrustBoundaryBox({
             width: 160,
             height: 75
         }),
         new shapes.TrustBoundaryCurveStencil()
     ], 'boundaries');
-
+*/
     stencil.load([
         new shapes.TextBlock()
     ], 'metadata');

@@ -2,30 +2,30 @@ import { Graph } from '@antv/x6';
 
 import { ActorShape } from './actor.js';
 import { Flow } from './flow.js';
-import { FlowStencil } from './flow-stencil.js';
+//import { FlowStencil } from './flow-stencil.js';
 import { ProcessShape } from './process.js';
 import { StoreShape } from './store.js';
 import { TextBlock } from './text.js';
-import { TrustBoundaryBox } from './trust-boundary-box.js';
+//import { TrustBoundaryBox } from './trust-boundary-box.js';
 import { TrustBoundaryCurve } from './trust-boundary-curve.js';
-import { TrustBoundaryCurveStencil } from './trust-boundary-curve-stencil.js';
+//import { TrustBoundaryCurveStencil } from './trust-boundary-curve-stencil.js';
 
 Graph.registerNode('actor', ActorShape);
 Graph.registerNode('flow', Flow);
 Graph.registerNode('process', ProcessShape);
 Graph.registerNode('store', StoreShape);
 Graph.registerNode('td-text-block', TextBlock);
-Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
+//Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
 Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
 
 export default {
     ActorShape,
     Flow,
-    FlowStencil,
+    //FlowStencil,
     ProcessShape,
     StoreShape,
     TextBlock,
-    TrustBoundaryBox,
+    //TrustBoundaryBox,
     TrustBoundaryCurve,
-    TrustBoundaryCurveStencil
+    //TrustBoundaryCurveStencil
 };
