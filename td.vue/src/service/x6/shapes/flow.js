@@ -1,4 +1,5 @@
 import { Shape } from '@antv/x6';
+
 import defaultProperties from '../../entity/default-properties';
 
 const name = 'flow';
@@ -21,11 +22,11 @@ export const Flow = Shape.Edge.define({
 
 Flow.prototype.type = 'tm.Flow';
 
-Flow.prototype.updateStyle = function () {};
-
 Flow.prototype.setName = function (name) {
     this.setLabels([name]);
 };
+
+Flow.prototype.updateStyle = function () {};
 
 export default {
     Flow,

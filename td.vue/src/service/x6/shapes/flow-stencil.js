@@ -5,7 +5,7 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'flow-stencil';
 
-export const FlowStencil = Shape.Empty.define({
+export const FlowStencil = Shape.Edge.define({
     constructorName: name,
     width: 200,
     height: 100,
@@ -37,13 +37,13 @@ export const FlowStencil = Shape.Empty.define({
 });
 
 FlowStencil.prototype.type = 'tm.FlowStencil';
-FlowStencil.prototype.convertToEdge = true;
-
-FlowStencil.prototype.updateStyle = function () {};
+//FlowStencil.prototype.convertToEdge = true;
 
 FlowStencil.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);
 };
+
+FlowStencil.prototype.updateStyle = function () {};
 
 export default {
     FlowStencil,

@@ -381,7 +381,7 @@ export default {
                         }
                     },
                     {
-                        'shape': 'trust-broundary-curve',
+                        'shape': 'trust-boundary-curve',
                         'attrs': {
                             'line': {
                                 'targetMarker': '',
@@ -425,7 +425,7 @@ export default {
                         ]
                     },
                     {
-                        'shape': 'trust-broundary-curve',
+                        'shape': 'trust-boundary-curve',
                         'attrs': {
                             'line': {
                                 'targetMarker': '',
@@ -726,7 +726,7 @@ export default {
                         ]
                     },
                     {
-                        'shape': 'trust-broundary-curve',
+                        'shape': 'trust-boundary-curve',
                         'attrs': {
                             'line': {
                                 'targetMarker': '',

@@ -12,7 +12,7 @@ const name = 'trust-boundary-curve-stencil';
  * Attrs can use standard SVG attributes (in camelCase)
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
  */
-export const TrustBoundaryCurveStencil = Shape.Empty.define({
+export const TrustBoundaryCurveStencil = Shape.Edge.define({
     constructorName: name,
     width: 200,
     height: 100,
@@ -45,7 +45,7 @@ export const TrustBoundaryCurveStencil = Shape.Empty.define({
 });
 
 TrustBoundaryCurveStencil.prototype.type = 'tm.BoundaryStencil';
-TrustBoundaryCurveStencil.prototype.convertToEdge = true;
+//TrustBoundaryCurveStencil.prototype.convertToEdge = true;
 
 TrustBoundaryCurveStencil.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);

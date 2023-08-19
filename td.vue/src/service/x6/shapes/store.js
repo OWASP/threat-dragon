@@ -4,16 +4,12 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'store';
 
-/**
- * A graphical representation of a store (parallel lines, white background)
- * https://x6.antv.vision/en/docs/tutorial/intermediate/custom-node
- * Attrs can use standard SVG attributes (in camelCase)
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
- */
+// store (parallel lines, white background)
 export const StoreShape = Shape.Rect.define({
+    constructorName: name,
     width: 150,
     height: 75,
-    constructorName: name,
+    zIndex: 0,
     markup: [
         ...Shape.Rect.getMarkup(),
         {
@@ -45,6 +41,12 @@ export const StoreShape = Shape.Rect.define({
     label: tc('threatmodel.shapes.store')
 });
 
+StoreShape.prototype.type = 'tm.Store';
+
+StoreShape.prototype.setName = function (name) {
+    this.label = name;
+};
+
 StoreShape.prototype.updateStyle = function (color, dash, strokeWidth) {
     this.setAttrByPath('topLine/stroke', color);
     this.setAttrByPath('topLine/strokeWidth', strokeWidth);
@@ -52,12 +54,6 @@ StoreShape.prototype.updateStyle = function (color, dash, strokeWidth) {
     this.setAttrByPath('bottomLine/stroke', color);
     this.setAttrByPath('bottomLine/strokeWidth', strokeWidth);
     this.setAttrByPath('bottomLine/strokeDasharray', dash);
-};
-
-StoreShape.prototype.type = 'tm.Store';
-
-StoreShape.prototype.setName = function (name) {
-    this.label = name;
 };
 
 export default {
