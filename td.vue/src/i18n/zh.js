@@ -3,7 +3,7 @@ const zho = {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
+        v2Warning: '2.0 版威胁模型与 1.x 版Threat Dragon模型不兼容。导入的 1.x 版模型将升级到 2.0 版本',
         loggedInAs: '登录身份为'
     },
     home: {
@@ -92,27 +92,27 @@ const zho = {
             addNewDiagram: '添加新图表...',
             generic: {
                 defaultTitle: '新通用图',
-                defaultDescription: 'New generic diagram description',
+                defaultDescription: '新通用图描述',
                 select: '通用'
             },
             stride: {
                 defaultTitle: '新STRIDE图',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultDescription: '新STRIDE图描述',
                 select: 'STRIDE'
             },
             linddun: {
                 defaultTitle: '新LINDDUN图',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultDescription: '新LINDDUN图描述',
                 select: 'LINDDUN'
             },
             die: {
                 defaultTitle: '新DIE图',
-                defaultDescription: 'New DIE diagram description',
+                defaultDescription: '新DIE图描述',
                 select: 'DIE'
             },
             cia: {
                 defaultTitle: '新CIA图',
-                defaultDescription: 'New CIA diagram description',
+                defaultDescription: '新CIA图描述',
                 select: 'CIA'
             }
         },
@@ -175,7 +175,7 @@ const zho = {
                 action: '删除'
             },
             pan: {
-                shortcut: 'shift + left-click (hold/drag)',
+                shortcut: 'shift + 左键 (按住/拖动)',
                 action: '移动整个图表图像'
             },
             multiSelect: {
@@ -307,7 +307,7 @@ const zho = {
             showOutOfScope: '显示范围外的元素',
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
-            showEmpty: 'Show empty elements',
+            showEmpty: '显示空元素',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',
