@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.8.0
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2.21.2
@@ -75,7 +75,7 @@ jobs:
         working-directory: td.server
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -107,7 +107,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -139,7 +139,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -172,7 +172,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
@@ -211,7 +211,7 @@ jobs:
     if: github.repository == 'OWASP/threat-dragon'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Set up Docker Buildx
         id: buildx
@@ -280,7 +280,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -324,7 +324,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Run Threat Dragon
         run: |
@@ -374,7 +374,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Run Threat Dragon
         run: |
@@ -434,7 +434,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       # There's probably a better way of doing this.
       # Not a great idea to chmod 777, even if it's only
@@ -469,7 +469,7 @@ jobs:
     steps:
       # Need .trivyignore
       - name: Checkout
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.11.0
@@ -484,7 +484,7 @@ jobs:
     needs: [e2e_smokes]
     steps:
       - name: Check out
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -544,7 +544,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -586,7 +586,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -638,7 +638,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
@@ -675,7 +675,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.0.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3.8.0
