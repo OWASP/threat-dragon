@@ -56,7 +56,6 @@
     "@antv/x6-plugin-snapline": "^2.1.7",
     "@antv/x6-plugin-stencil": "^2.1.4",
     "@antv/x6-plugin-transform": "^2.1.7",
-    "@antv/x6-vue-shape": "^2.1.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",

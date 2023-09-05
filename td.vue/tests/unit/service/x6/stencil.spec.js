@@ -1,4 +1,3 @@
-import factory from '@/service/x6/factory.js';
 import shapes from '@/service/x6/shapes/index.js';
 import stencil from '@/service/x6/stencil.js';
 
@@ -8,14 +7,6 @@ describe('service/x6/stencil.js', () => {
     beforeEach(() => {
         load = jest.fn();
         search = jest.fn();
-        factory.stencil = jest.fn().mockImplementation((config) => {
-            cfg = config;
-            return {
-                container,
-                load,
-                onSearch: search
-            };
-        });
         shapes.ActorShape = jest.fn();
         shapes.ProcessShape = jest.fn();
         shapes.StoreShape = jest.fn();
@@ -28,10 +19,6 @@ describe('service/x6/stencil.js', () => {
         stencil.get(target, container);
     });
 
-    it('creates a new stencil', () => {
-        expect(factory.stencil).toHaveBeenCalledTimes(1);
-    });
-    
     it('has a title', () => {
         expect(cfg.title).toEqual('Entities');
     });

@@ -90,8 +90,8 @@ describe('components/GraphButtons.vue', () => {
 
         describe('graph can undo', () => {
             beforeEach(() => {
-                graph.canUndo = () => true;
-                graph.undo = jest.fn();
+                graph.history.canUndo = () => true;
+                graph.history.undo = jest.fn();
                 wrapper.vm.undo();
             });
 
@@ -102,8 +102,8 @@ describe('components/GraphButtons.vue', () => {
 
         describe('graph cannot undo', () => {
             beforeEach(() => {
-                graph.canUndo = () => false;
-                graph.undo = jest.fn();
+                graph.history.canUndo = () => false;
+                graph.history.undo = jest.fn();
                 wrapper.vm.undo();
             });
 
@@ -124,25 +124,25 @@ describe('components/GraphButtons.vue', () => {
 
         describe('graph can redo', () => {
             beforeEach(() => {
-                graph.canRedo = () => true;
-                graph.redo = jest.fn();
+                graph.history.canRedo = () => true;
+                graph.history.redo = jest.fn();
                 wrapper.vm.redo();
             });
 
             it('calls redo', () => {
-                expect(graph.redo).toHaveBeenCalledTimes(1);
+                expect(graph.history.redo).toHaveBeenCalledTimes(1);
             });
         });
 
         describe('graph cannot redo', () => {
             beforeEach(() => {
-                graph.canRedo = () => false;
-                graph.redo = jest.fn();
+                graph.history.canRedo = () => false;
+                graph.history.redo = jest.fn();
                 wrapper.vm.redo();
             });
 
             it('calls redo', () => {
-                expect(graph.redo).not.toHaveBeenCalled();
+                expect(graph.history.redo).not.toHaveBeenCalled();
             });
         });
     });
