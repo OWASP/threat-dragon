@@ -35,7 +35,7 @@ jobs:
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v11.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v12.0.0
         with:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
@@ -214,7 +214,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2.9.0
+        uses: docker/setup-buildx-action@v2.10.0
         with:
           install: true
 
@@ -401,7 +401,7 @@ jobs:
         uses: actions/checkout@v4.0.0
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.11.0
+        uses: aquasecurity/trivy-action@0.12.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
