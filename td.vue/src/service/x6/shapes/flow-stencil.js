@@ -1,10 +1,12 @@
 import { Shape } from '@antv/x6';
 
-import defaultProperties from '../../entity/default-properties.js';
 import { tc } from '@/i18n/index.js';
+
+import defaultProperties from '../../entity/default-properties.js';
 
 const name = 'flow-stencil';
 
+// stencil item for data flow (edge)
 export const FlowStencil = Shape.Empty.define({
     constructorName: name,
     width: 200,
@@ -39,11 +41,11 @@ export const FlowStencil = Shape.Empty.define({
 FlowStencil.prototype.type = 'tm.FlowStencil';
 FlowStencil.prototype.convertToEdge = true;
 
-FlowStencil.prototype.updateStyle = function () {};
-
 FlowStencil.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);
 };
+
+FlowStencil.prototype.updateStyle = function () {};
 
 export default {
     FlowStencil,

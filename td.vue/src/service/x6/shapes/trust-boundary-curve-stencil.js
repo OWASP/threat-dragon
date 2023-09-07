@@ -6,12 +6,7 @@ import defaultProperties from '../../entity/default-properties.js';
 
 const name = 'trust-boundary-curve-stencil';
 
-/**
- * A trust boundary shape (dotted line, gray opaque background)
- * https://x6.antv.vision/en/docs/tutorial/intermediate/custom-node
- * Attrs can use standard SVG attributes (in camelCase)
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
- */
+// trust boundary curve (edge, dotted line, gray opaque background)
 export const TrustBoundaryCurveStencil = Shape.Empty.define({
     constructorName: name,
     width: 200,

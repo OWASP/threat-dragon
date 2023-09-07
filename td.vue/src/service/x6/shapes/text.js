@@ -4,10 +4,11 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'text';
 
+// text block (rectangle, transparent)
 export const TextBlock = Shape.Rect.define({
-    height: 80,
-    width: 150,
     constructorName: name,
+    width: 150,
+    height: 80,
     zIndex: 0,
     label: tc('threatmodel.shapes.text'),
     attrs: {
@@ -19,13 +20,13 @@ export const TextBlock = Shape.Rect.define({
     }
 });
 
-TextBlock.prototype.updateStyle = function () {};
-
 TextBlock.prototype.type = 'tm.Text';
 
 TextBlock.prototype.setName = function (name) {
     this.label = name;
 };
+
+TextBlock.prototype.updateStyle = function () {};
 
 export default {
     name,

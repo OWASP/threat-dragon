@@ -1,8 +1,10 @@
 import { Shape } from '@antv/x6';
+
 import defaultProperties from '../../entity/default-properties';
 
 const name = 'trust-boundary-curve';
 
+// trust boundary curve (edge, dotted line, gray opaque background))
 export const TrustBoundaryCurve = Shape.Edge.define({
     constructorName: name,
     width: 200,
@@ -29,19 +31,13 @@ export const TrustBoundaryCurve = Shape.Edge.define({
 
 TrustBoundaryCurve.prototype.type = 'tm.Boundary';
 
-TrustBoundaryCurve.prototype.updateStyle = function () {};
-
-// TrustBoundaryCurve.prototype.updateStyle = function (color, dash, strokeWidth) {
-//     // this.setAttrByPath('line/stroke', color);
-//     this.setAttrByPath('line/strokeWidth', 3);
-//     this.setAttrByPath('line/strokeDasharray', '5 5');
-// };
-
 TrustBoundaryCurve.prototype.setName = function (name) {
     this.setLabels([name]);
 };
 
+TrustBoundaryCurve.prototype.updateStyle = function () {};
+
 export default {
-    TrustBoundaryCurve,
-    name
+    name,
+    TrustBoundaryCurve
 };

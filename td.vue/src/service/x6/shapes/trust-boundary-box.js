@@ -4,12 +4,7 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'trust-boundary-box';
 
-/**
- * A trust boundary shape (dotted line, gray opaque background)
- * https://x6.antv.vision/en/docs/tutorial/intermediate/custom-node
- * Attrs can use standard SVG attributes (in camelCase)
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
- */
+// trust boundary box (dotted line, gray opaque background)
 export const TrustBoundaryBox = Shape.HeaderedRect.define({
     constructorName: name,
     width: 500,
@@ -45,13 +40,13 @@ TrustBoundaryBox.prototype.getLabel = function () {
     return this.getAttrByPath('headerText/text');
 };
 
+TrustBoundaryBox.prototype.type = 'tm.BoundaryBox';
+
 TrustBoundaryBox.prototype.setName = function (name) {
     this.setAttrByPath('headerText/text', name);
 };
 
 TrustBoundaryBox.prototype.updateStyle = function () {};
-
-TrustBoundaryBox.prototype.type = 'tm.BoundaryBox';
 
 export default {
     name,
