@@ -5,7 +5,7 @@
 import { CELL_SELECTED, CELL_UNSELECTED } from '../../../store/actions/cell.js';
 import dataChanged from './data-changed.js';
 import defaultProperties from '../../entity/default-properties.js';
-import shapes from '../shapes/index.js';
+//import shapes from '../shapes/index.js';
 import store from '../../../store/index.js';
 //import { FlowStencil } from '../shapes/flow-stencil.js';
 //import { TrustBoundaryCurveStencil } from '../shapes/trust-boundary-curve-stencil.js';
@@ -36,9 +36,11 @@ const mouseEnter = ({ cell }) => {
     cell.addTools(tools);
 };
 
-const cellAdded = (graph) => ({ cell }) => {
+const cellAdded = ({ cell }) => {
     if (cell.convertToEdge) {
+        /*
         const position = cell.position();
+
         const config = {
             source: position,
             target: {
@@ -48,13 +50,13 @@ const cellAdded = (graph) => ({ cell }) => {
             data: cell.getData()
         };
 
-/*        if (cell.type === FlowStencil.prototype.type) {
+        if (cell.type === FlowStencil.prototype.type) {
             graph.addEdge(new shapes.Flow(config));
         }
         if (cell.type === TrustBoundaryCurveStencil.prototype.type) {
             graph.addEdge(new shapes.TrustBoundaryCurve(config));
         }
-*/
+        */
         cell.remove();
     }
 
@@ -110,7 +112,7 @@ const listen = (graph) => {
     graph.on('edge:connected', edgeConnected);
     graph.on('cell:mouseleave', removeCellTools);
     graph.on('cell:mouseenter', mouseEnter);
-    graph.on('cell:added', cellAdded(graph));
+    graph.on('cell:added', cellAdded);
     graph.on('cell:unselected', cellUnselected);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
@@ -120,7 +122,7 @@ const removeListeners = (graph) => {
     graph.off('edge:connected', edgeConnected);
     graph.off('cell:mouseleave', removeCellTools);
     graph.off('cell:mouseenter', mouseEnter);
-    graph.off('cell:added', cellAdded(graph));
+    graph.off('cell:added', cellAdded);
     graph.off('cell:unselected', cellUnselected);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected);
