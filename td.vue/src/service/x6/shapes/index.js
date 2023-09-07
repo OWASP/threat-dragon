@@ -16,7 +16,7 @@ Graph.registerNode('process', ProcessShape);
 Graph.registerNode('store', StoreShape);
 Graph.registerNode('td-text-block', TextBlock);
 Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
-Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
+Graph.registerNode('trust-boundary-curve', TrustBoundaryCurve);
 
 export default {
     ActorShape,
