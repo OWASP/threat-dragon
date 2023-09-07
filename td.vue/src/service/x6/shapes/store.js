@@ -10,6 +10,7 @@ export const StoreShape = Shape.Rect.define({
     width: 150,
     height: 75,
     zIndex: 0,
+    label: tc('threatmodel.shapes.store'),
     markup: [
         ...Shape.Rect.getMarkup(),
         {
@@ -37,8 +38,7 @@ export const StoreShape = Shape.Rect.define({
             opacity: 0,
             magnet: false // needs to be disabled to grab whole shape
         }
-    },
-    label: tc('threatmodel.shapes.store')
+    }
 });
 
 StoreShape.prototype.type = 'tm.Store';

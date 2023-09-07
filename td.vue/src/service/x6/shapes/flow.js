@@ -4,6 +4,7 @@ import defaultProperties from '../../entity/default-properties';
 
 const name = 'flow';
 
+// data flow (edge)
 export const Flow = Shape.Edge.define({
     constructorName: name,
     width: 200,

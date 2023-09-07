@@ -24,7 +24,7 @@ jobs:
           keep_minimum_runs: 10
 
       - name: Delete unused workflows
-        uses: otto-de/purge-deprecated-workflow-runs@v1.1.1
+        uses: otto-de/purge-deprecated-workflow-runs@v1.4.0
         with:
           token: ${{ github.token }}
 
@@ -34,12 +34,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
         with:
           ref: main
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.11.0
+        uses: aquasecurity/trivy-action@0.12.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}:latest'
           format: 'template'
@@ -60,7 +60,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
         with:
           ref: main
 
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
 
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.8.0

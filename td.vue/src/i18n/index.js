@@ -9,6 +9,7 @@ import ell from './el.js';
 import eng from './en.js';
 import spa from './es.js';
 import deu from './de.js';
+import fin from './fi.js';
 import fra from './fr.js';
 import hin from './hi.js';
 import por from './pt.js';
@@ -23,7 +24,7 @@ const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
             locale: 'eng',
-            messages: { deu, ell, eng, spa, fra, hin, por, rus, ukr, zho }
+            messages: { deu, ell, eng, spa, fin, fra, hin, por, rus, ukr, zho }
         });
     }
     return i18n;

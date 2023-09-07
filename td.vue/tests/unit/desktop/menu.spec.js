@@ -2,6 +2,7 @@ import menu, { model } from '@/desktop/menu.js';
 import deu from '@/i18n/de.js';
 import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
+import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
 import por from '@/i18n/pt.js';
@@ -271,6 +272,12 @@ describe('desktop/menu.js', () => {
             it('should provide translation for eng', () => {
                 menu.setLocale('eng');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === eng.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for fin', () => {
+                menu.setLocale('fin');
+                const helpItems = menu.getMenuTemplate().find((item) => item.label === fin.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 

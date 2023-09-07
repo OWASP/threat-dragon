@@ -4,10 +4,11 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'text';
 
+// text block (rectangle, transparent)
 export const TextBlock = Shape.Rect.define({
     constructorName: name,
-    height: 80,
     width: 150,
+    height: 80,
     zIndex: 0,
     label: tc('threatmodel.shapes.text'),
     attrs: {

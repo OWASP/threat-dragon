@@ -7,8 +7,8 @@ const name = 'actor';
 // actor (rectangle, white background)
 export const ActorShape = Shape.Rect.define({
     constructorName: name,
-    height: 80,
     width: 150,
+    height: 80,
     zIndex: 0,
     label: tc('threatmodel.shapes.actor'),
     attrs: {
@@ -31,6 +31,6 @@ ActorShape.prototype.updateStyle = function (color, dash, strokeWidth) {
 };
 
 export default {
-    name,
-    ActorShape
+    ActorShape,
+    name
 };
