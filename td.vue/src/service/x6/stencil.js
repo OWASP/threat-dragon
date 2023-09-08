@@ -145,7 +145,6 @@ const get = (target, container) => {
         new shapes.StoreShape(),
         new shapes.ActorShape(),
         new shapes.ProcessShape(),
-        //new shapes.FlowStencil()
     ], 'components');
 
     stencil.load([
@@ -153,7 +152,6 @@ const get = (target, container) => {
             width: 160,
             height: 75
         }),
-        //new shapes.TrustBoundaryCurveStencil()
     ], 'boundaries');
 
     stencil.load([

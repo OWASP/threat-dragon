@@ -7,8 +7,6 @@ import dataChanged from './data-changed.js';
 import defaultProperties from '../../entity/default-properties.js';
 //import shapes from '../shapes/index.js';
 import store from '../../../store/index.js';
-//import { FlowStencil } from '../shapes/flow-stencil.js';
-//import { TrustBoundaryCurveStencil } from '../shapes/trust-boundary-curve-stencil.js';
 
 // We need to add the router and connector data when a new edge is added.
 // https://x6.antv.vision/en/docs/tutorial/intermediate/events

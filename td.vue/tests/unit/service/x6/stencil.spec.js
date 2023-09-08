@@ -87,15 +87,13 @@ describe('service/x6/stencil.js', () => {
         expect(load).toHaveBeenCalledWith([
             expect.any(shapes.ProcessShape),
             expect.any(shapes.StoreShape),
-            expect.any(shapes.ActorShape),
-            expect.any(shapes.FlowStencil)
+            expect.any(shapes.ActorShape)
         ], 'components');
     });
 
     it('loads the trust boundaries', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(shapes.TrustBoundaryBox),
-            expect.any(shapes.TrustBoundaryCurveStencil)
+            expect.any(shapes.TrustBoundaryBox)
         ], 'boundaries');
     });
 

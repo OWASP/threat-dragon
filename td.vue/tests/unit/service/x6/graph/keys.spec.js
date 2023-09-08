@@ -7,10 +7,12 @@ describe('service/x6/graph/keys.js', () => {
         graph = {
             removeCells: jest.fn(),
             getSelectedCells: jest.fn(),
-            canUndo: jest.fn(),
-            undo: jest.fn(),
-            canRedo: jest.fn(),
-            redo: jest.fn(),
+            history: {
+                canUndo: jest.fn(),
+                undo: jest.fn(),
+                canRedo: jest.fn(),
+                redo: jest.fn()
+            },
             copy: jest.fn(),
             isClipboardEmpty: jest.fn(),
             paste: jest.fn(),
@@ -50,7 +52,7 @@ describe('service/x6/graph/keys.js', () => {
             });
 
             it('checks if it can undo', () => {
-                expect(graph.canUndo).toHaveBeenCalled();
+                expect(graph.history.canUndo).toHaveBeenCalled();
             });
 
             it('calls undo', () => {

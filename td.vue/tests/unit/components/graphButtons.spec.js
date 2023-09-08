@@ -9,7 +9,7 @@ describe('components/GraphButtons.vue', () => {
     let btn, graph, localVue, wrapper;
 
     beforeEach(() => {
-        graph = {};
+        graph = { history: {} };
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);
@@ -96,7 +96,7 @@ describe('components/GraphButtons.vue', () => {
             });
 
             it('calls undo', () => {
-                expect(graph.undo).toHaveBeenCalledTimes(1);
+                expect(graph.history.undo).toHaveBeenCalledTimes(1);
             });
         });
 
@@ -108,7 +108,7 @@ describe('components/GraphButtons.vue', () => {
             });
 
             it('calls undo', () => {
-                expect(graph.undo).not.toHaveBeenCalled();
+                expect(graph.history.undo).not.toHaveBeenCalled();
             });
         });
     });
