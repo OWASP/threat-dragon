@@ -70,7 +70,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         orthogonal: true,
         restricted: false,
         autoScroll: true,
-        preserveAspectRatio: true,
+        preserveAspectRatio: false,
         allowReverse: true
     },
     mousewheel: {
