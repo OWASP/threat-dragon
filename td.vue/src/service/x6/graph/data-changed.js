@@ -9,17 +9,18 @@ const styles = {
     default: {
         color: '#333333',
         strokeDasharray: null,
-        strokeWidth: 1.0
+        strokeWidth: 1.5
     },
     hasOpenThreats: {
-        color: 'red'
+        color: 'red',
+        strokeWidth: 2.5
     },
     outOfScope: {
-        strokeDasharray: '5 2'
+        strokeDasharray: '4 3'
     },
     trustBoundary: {
-        strokeDasharray: '5 5',
-        strokeWidth: 3
+        strokeDasharray: '7 5',
+        strokeWidth: 3.0
     },
     unencrypted: {
         color: 'red',
@@ -58,7 +59,7 @@ const updateStyleAttrs = (cell) => {
 
     if (cellData.hasOpenThreats) {
         color = styles.hasOpenThreats.color;
-        strokeWidth = 3.0;
+        strokeWidth = styles.hasOpenThreats.strokeWidth;
     }
 
     if (cellData.outOfScope) {

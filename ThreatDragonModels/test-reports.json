@@ -1,0 +1,952 @@
+{
+  "version": "2.0.3",
+  "summary": {
+    "title": "+test model+",
+    "owner": "+test owner+",
+    "description": "+testing report mechanisms+",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "03 - test STRIDE diagram",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.0.2",
+        "cells": [
+          {
+            "position": {
+              "x": 229.375,
+              "y": 80.0000000000004
+            },
+            "size": {
+              "width": 170,
+              "height": 90.66666666666667
+            },
+            "attrs": {
+              "text": {
+                "text": "Out of scope"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": "5 2"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "id": "578b5170-74f1-401d-a72f-c06ccc966ca0",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Out of scope",
+              "description": "",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 471,
+              "y": 80.0000000000004
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "In scope"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 2,
+            "id": "cd7b94a3-65af-489e-a0f5-d2d173d6e8fc",
+            "data": {
+              "type": "tm.Actor",
+              "name": "In scope",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 230,
+              "y": 265.0000000000001
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Out of scope\nwith unmitigated threat"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": "5 2"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 3,
+            "id": "82149a02-1bcb-4d06-a93b-d498d94efa68",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Out of scope\nwith unmitigated threat",
+              "description": "",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "a05d7240-9259-47b3-9d4b-4c8806db2fc0",
+                  "title": "Out of scope threat",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 471,
+              "y": 265.0000000000001
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "In scope\nwith unmitigated threat"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 4,
+            "id": "24e07ba1-cae4-4b8e-8a2d-b6a4a7279622",
+            "data": {
+              "type": "tm.Actor",
+              "name": "In scope\nwith unmitigated threat",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "cc9c55cf-bccf-491b-abe7-5a98f7df7e47",
+                  "title": "In scope threat",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 230,
+              "y": 451.0000000000001
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Out of scope\nwith mitigated threat"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": "5 2"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "0f821963-ed5d-40ae-90c1-d3d7efa1ccdc",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Out of scope\nwith mitigated threat",
+              "description": "",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "id": "53b811d5-fdf3-4a3e-bbaf-a1b134eb0be1",
+                  "title": "Out of scope threat mitigated",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 4,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 471,
+              "y": 451.0000000000001
+            },
+            "size": {
+              "width": 168.75,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "In scope\nwith mitigated threat"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 6,
+            "id": "1ce627a5-f18c-47cd-af71-164240ce1a3f",
+            "data": {
+              "type": "tm.Actor",
+              "name": "In scope\nwith mitigated threat",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "id": "b6c24c40-2582-4c53-9d1e-0039e46ca769",
+                  "title": "In scope threat mitigated",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 3,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "a3be5eae-014b-408c-be0e-98f6e1204248",
+            "source": {
+              "cell": "24e07ba1-cae4-4b8e-8a2d-b6a4a7279622"
+            },
+            "target": {
+              "cell": "1ce627a5-f18c-47cd-af71-164240ce1a3f"
+            },
+            "labels": [
+              ""
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": "5 2"
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "",
+              "description": "",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "729cf6a4-3057-4b6c-97e4-f6c214a1ce80",
+            "source": {
+              "cell": "82149a02-1bcb-4d06-a93b-d498d94efa68"
+            },
+            "target": {
+              "cell": "0f821963-ed5d-40ae-90c1-d3d7efa1ccdc"
+            },
+            "labels": [
+              ""
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "In scope data flow",
+              "description": "this is an in scope data flow",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "2dfa2a5c-347c-465d-a48f-be0ef026b785",
+            "source": {
+              "cell": "cd7b94a3-65af-489e-a0f5-d2d173d6e8fc"
+            },
+            "target": {
+              "cell": "24e07ba1-cae4-4b8e-8a2d-b6a4a7279622"
+            },
+            "labels": [
+              "In scope data flow"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": "5 2"
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Out of scope data flow",
+              "description": "this is an out of scope data flow",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "34a5bc53-9fa1-4c9a-9315-f97f1c9d0afa",
+            "source": {
+              "cell": "578b5170-74f1-401d-a72f-c06ccc966ca0"
+            },
+            "target": {
+              "cell": "82149a02-1bcb-4d06-a93b-d498d94efa68"
+            },
+            "labels": [
+              "Out of scope data flow"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "title": "01 - wide CIA diagram",
+        "diagramType": "CIA",
+        "placeholder": "New CIA diagram description",
+        "thumbnail": "./public/content/images/thumbnail.cia.jpg",
+        "version": "2.0.3",
+        "description": "a wide CIA diagram for landscape",
+        "cells": [
+          {
+            "position": {
+              "x": 1540,
+              "y": 120
+            },
+            "size": {
+              "width": 128,
+              "height": 60
+            },
+            "shape": "trust-boundary-box",
+            "id": "07d6b9e7-9ae9-486a-b891-c624a0789a1a",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Trust Boundary",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 20,
+              "y": 120
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "id": "a3521f98-6f64-4f5d-bd86-f28899740c85",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Actor",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 540,
+              "y": 120
+            },
+            "size": {
+              "width": 60,
+              "height": 60
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 2,
+            "id": "f390ac46-1720-45ee-a7ee-ea6406960f65",
+            "data": {
+              "type": "tm.Process",
+              "name": "Process",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "",
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 800,
+              "y": 120
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "topLine": {
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "id": "81e71478-af02-45c4-be58-f39ed1541fc0",
+            "zIndex": 3,
+            "data": {
+              "type": "tm.Store",
+              "name": "Store",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "63092af0-537e-4a62-972e-1607d1055a22",
+            "source": {
+              "x": 259,
+              "y": 120
+            },
+            "target": {
+              "x": 359,
+              "y": 220
+            }
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              {
+                "attrs": {
+                  "text": {
+                    "text": ""
+                  }
+                }
+              }
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "17a5ae3c-6ba4-4f90-adf2-f34dfb02ea2d",
+            "source": {
+              "x": 1212,
+              "y": 120
+            },
+            "target": {
+              "x": 1312,
+              "y": 220
+            }
+          },
+          {
+            "position": {
+              "x": 1980,
+              "y": 120
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "visible": true,
+            "shape": "td-text-block",
+            "id": "7e646636-e4ac-42b2-ad0c-0b942230093a",
+            "zIndex": 11,
+            "data": {
+              "type": "tm.Text",
+              "name": "Arbitrary Text",
+              "hasOpenThreats": false
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "02 - narrow LINDDUN diagram",
+        "diagramType": "LINDDUN",
+        "placeholder": "New LINDDUN diagram description",
+        "thumbnail": "./public/content/images/thumbnail.linddun.jpg",
+        "version": "2.0.3",
+        "description": "a narrow LINDDUN diagram for portrait",
+        "cells": [
+          {
+            "position": {
+              "x": 92,
+              "y": 700
+            },
+            "size": {
+              "width": 128,
+              "height": 60
+            },
+            "shape": "trust-boundary-box",
+            "id": "d1f97882-3ecb-42a9-826c-1bd7fb5279f4",
+            "zIndex": -1,
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Trust Boundary",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 100,
+              "y": 50
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "id": "dfd95719-9e67-4997-97ad-ed7dc82aa004",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Actor",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 126,
+              "y": 205
+            },
+            "size": {
+              "width": 60,
+              "height": 60
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "id": "6da30bce-0e2c-4899-be97-ee53e04f7236",
+            "zIndex": 3,
+            "data": {
+              "type": "tm.Process",
+              "name": "Process",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "",
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 96,
+              "y": 346
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "topLine": {
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "id": "94a2604b-aaf3-46ee-8948-f0b27fb95dd3",
+            "zIndex": 4,
+            "data": {
+              "type": "tm.Store",
+              "name": "Store",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "fe9c2307-0d71-4e51-8fa6-1d73d806cc2d",
+            "source": {
+              "x": 96,
+              "y": 489
+            },
+            "target": {
+              "x": 196,
+              "y": 589
+            }
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              {
+                "attrs": {
+                  "text": {
+                    "text": ""
+                  }
+                }
+              }
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "21bc206c-b605-4f8a-bb96-37ec32c04f05",
+            "source": {
+              "x": 96,
+              "y": 885
+            },
+            "target": {
+              "x": 196,
+              "y": 985
+            }
+          },
+          {
+            "position": {
+              "x": 103.5,
+              "y": 1078
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "visible": true,
+            "shape": "td-text-block",
+            "id": "345f613b-bfef-44e2-bf9a-65095b99cde9",
+            "zIndex": 11,
+            "data": {
+              "type": "tm.Text",
+              "name": "Arbitrary Text",
+              "hasOpenThreats": false
+            }
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "New DIE diagram",
+        "diagramType": "DIE",
+        "placeholder": "New DIE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.die.jpg",
+        "version": "2.0.3",
+        "description": "test DIE diagram description",
+        "cells": [
+          {
+            "position": {
+              "x": 90,
+              "y": 40.00000000000017
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Threatened\nprocess"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 3,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 1,
+            "id": "87978702-9f46-40e4-8728-5cca5325773b",
+            "data": {
+              "type": "tm.Process",
+              "name": "Threatened\nprocess",
+              "description": "Process in a DIE diagram with a threat",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "",
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "e824e98b-8116-47ac-824d-1408b33e3f41",
+                  "title": "New DIE threat",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Distributed",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "DIE",
+                  "new": false,
+                  "number": 7,
+                  "score": ""
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "diagramTop": 5,
+    "reviewer": "+test reviewer+",
+    "threatTop": 7
+  }
+}
