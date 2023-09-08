@@ -35,6 +35,7 @@ export const StoreShape = Shape.Rect.define({
             refD: 'M 0 0 l 100 0'
         },
         body: {
+            fill: 'transparent',
             opacity: 0,
             magnet: false // needs to be disabled to grab whole shape
         }

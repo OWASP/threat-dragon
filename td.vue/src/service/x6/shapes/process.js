@@ -28,6 +28,7 @@ export const ProcessShape = Shape.Circle.define({
             refHeight: '110%'
         },
         body: {
+            fill: 'transparent',
             magnet: false // needs to be disabled to grab whole shape
         }
     }

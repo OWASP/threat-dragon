@@ -26,7 +26,7 @@ export const FlowStencil = Shape.Empty.define({
         boundary: {
             strokeWidth: 1,
             stroke: '#333333',
-            fill: '#ffffff',
+            fill: 'transparent',
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
