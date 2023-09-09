@@ -16,7 +16,9 @@ class GithubEnv extends Env {
             { key: 'SCOPE', required: false },
             { key: 'ENTERPRISE_HOSTNAME', required: false },
             { key: 'ENTERPRISE_PROTOCOL', required: false },
-            { key: 'ENTERPRISE_PORT', required: false }
+            { key: 'ENTERPRISE_PORT', required: false },
+            { key: 'USE_SEARCH', required: false },
+            { key: 'SEARCH_QUERY', required: false }
         ];
     }
 }

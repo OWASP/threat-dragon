@@ -8,8 +8,18 @@ const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;
-    const reposResp = await repository.reposAsync(page, req.provider.access_token);
-    const repos = reposResp[0];
+    var reposResp;
+    var repos;
+    if (env.get().config.GITHUB_USE_SEARCH === 'true') {
+        logger.debug('Using searchAsync');
+        const searchQuery = env.get().config.GITHUB_SEARCH_QUERY;
+        reposResp = await repository.searchAsync(page, req.provider.access_token, searchQuery);
+        repos = reposResp[0]['items'];
+    } else {
+        logger.debug('Using reposAsync');
+        reposResp = await repository.reposAsync(page, req.provider.access_token);
+        repos = reposResp[0];
+    }
     const headers = reposResp[1];
     logger.debug('API repos request: ' + req);
 
