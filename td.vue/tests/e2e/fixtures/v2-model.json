@@ -134,7 +134,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "classic"
+                  "name": "block"
                 },
                 "strokeDasharray": null
               }
@@ -175,7 +175,7 @@
               "line": {
                 "stroke": "red",
                 "targetMarker": {
-                  "name": "classic"
+                  "name": "block"
                 },
                 "strokeDasharray": null
               }

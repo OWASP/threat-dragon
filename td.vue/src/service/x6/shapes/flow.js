@@ -12,7 +12,7 @@ export const Flow = Shape.Edge.define({
     zIndex: 10,
     attrs: {
         line: {
-            strokeWidth: 3,
+            strokeWidth: 1.5,
             sourceMarker: null,
             targetMarker: null
         }

@@ -42,7 +42,8 @@ const edgeUpdater = (edge, color, dash, strokeWidth) => {
     edge.setAttrByPath('line/stroke', color);
     edge.setAttrByPath('line/strokeWidth', strokeWidth);
     edge.setAttrByPath('line/strokeDasharray', dash);
-    edge.setAttrByPath('line/targetMarker/name', 'classic');
+    edge.setAttrByPath('line/targetMarker/name', 'block');
+    edge.setAttrByPath('line/sourceMarker/name', '');
 };
 
 const updateStyleAttrs = (cell) => {
