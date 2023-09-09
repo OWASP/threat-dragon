@@ -8,8 +8,10 @@ import threats from '../../threats/index.js';
 const styles = {
     default: {
         color: '#333333',
+        sourceMarker: 'block',
         strokeDasharray: null,
-        strokeWidth: 1.5
+        strokeWidth: 1.5,
+        targetMarker: 'block'
     },
     hasOpenThreats: {
         color: 'red',
@@ -28,7 +30,7 @@ const styles = {
     }
 };
 
-const edgeUpdater = (edge, color, dash, strokeWidth) => {
+const edgeUpdater = (edge, color, dash, strokeWidth, sourceMarker) => {
     const data = edge.getData();
     if (data.isTrustBoundary) {
         edge.setAttrByPath('line/stroke', styles.trustBoundary.color);
@@ -36,14 +38,13 @@ const edgeUpdater = (edge, color, dash, strokeWidth) => {
         edge.setAttrByPath('line/strokeWidth', styles.trustBoundary.strokeWidth);
         edge.setAttrByPath('line/sourceMarker', '');
         edge.setAttrByPath('line/targetMarker', '');
-        return;
+    } else {
+        edge.setAttrByPath('line/stroke', color);
+        edge.setAttrByPath('line/strokeWidth', strokeWidth);
+        edge.setAttrByPath('line/strokeDasharray', dash);
+        edge.setAttrByPath('line/sourceMarker/name', sourceMarker);
+        edge.setAttrByPath('line/targetMarker/name', styles.default.targetMarker);
     }
-
-    edge.setAttrByPath('line/stroke', color);
-    edge.setAttrByPath('line/strokeWidth', strokeWidth);
-    edge.setAttrByPath('line/strokeDasharray', dash);
-    edge.setAttrByPath('line/targetMarker/name', 'block');
-    edge.setAttrByPath('line/sourceMarker/name', '');
 };
 
 const updateStyleAttrs = (cell) => {
@@ -56,7 +57,7 @@ const updateStyleAttrs = (cell) => {
 
     cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
 
-    let { color, strokeDasharray, strokeWidth } = styles.default;
+    let { color, strokeDasharray, strokeWidth, sourceMarker } = styles.default;
 
     if (cellData.hasOpenThreats) {
         color = styles.hasOpenThreats.color;
@@ -67,8 +68,12 @@ const updateStyleAttrs = (cell) => {
         strokeDasharray = styles.outOfScope.strokeDasharray;
     }
 
+    if (!cellData.isBidirectional) {
+        sourceMarker = '';
+    }
+
     if (cell.isEdge()) {
-        edgeUpdater(cell, color, strokeDasharray, strokeWidth);
+        edgeUpdater(cell, color, strokeDasharray, strokeWidth, sourceMarker);
         return;
     }
 

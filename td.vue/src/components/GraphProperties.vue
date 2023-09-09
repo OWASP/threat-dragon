@@ -25,6 +25,7 @@
                 - providesAuthentication
 
             Flow:
+                - isBidirectional
                 - protocol
                 - isEncrypted
                 - isPublicNetwork
@@ -75,6 +76,11 @@
                             v-model="cellRef.data.outOfScope"
                             @change="onChangeScope()"
                         >{{ $t('threatmodel.properties.outOfScope') }}</b-form-checkbox>
+                        <b-form-checkbox
+                            id="bidirection"
+                            v-model="cellRef.data.isBidirectional"
+                            @change="onChangeBidirection()"
+                        >{{ $t('threatmodel.properties.bidirection') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
 
@@ -219,6 +225,9 @@ export default {
     methods: {
         onChangeName() {
             dataChanged.updateName(this.cellRef);
+        },
+        onChangeBidirection() {
+            dataChanged.updateStyleAttrs(this.cellRef);
         },
         onChangeScope() {
             document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;

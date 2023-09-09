@@ -43,6 +43,7 @@ describe('components/GraphProperties.vue', () => {
                 name: 'some actor',
                 description: 'describing the thing',
                 outOfScope: true,
+                isBidirectional: true,
                 reasonOutOfScope: 'someone thought so'
             };
             const localVue = createLocalVue();
@@ -100,6 +101,13 @@ describe('components/GraphProperties.vue', () => {
                 .filter(x => x.attributes('id') === 'reasonoutofscope')
                 .at(0);
             expect(input.attributes('value')).toEqual(entityData.reasonOutOfScope);
+        });
+
+        it('has a bidirectional checkbox', () => {
+            const input = wrapper.findAllComponents(BFormCheckbox)
+                .filter(x => x.attributes('id') === 'bidirection')
+                .at(0);
+            expect(input.attributes('value')).toEqual(entityData.isBidirectional.toString());
         });
     });
 

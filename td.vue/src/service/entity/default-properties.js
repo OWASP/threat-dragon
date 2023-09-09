@@ -28,6 +28,7 @@ const flow = {
     name: 'Data Flow',
     description: '',
     outOfScope: false,
+    isBidirectional: false,
     reasonOutOfScope: '',
     protocol: '',
     isEncrypted: false,

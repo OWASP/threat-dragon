@@ -133,6 +133,7 @@ const deu = {
             text: 'Text',
             description: 'Beschreibung',
             outOfScope: 'Nicht im Geltungsbereich',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Begründung für nicht im Geltungsbereich',
             privilegeLevel: 'Privilegstufe',
             isALog: 'Ist ein Log',

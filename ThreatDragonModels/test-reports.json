@@ -1,5 +1,5 @@
 {
-  "version": "2.0.3",
+  "version": "2.0.5",
   "summary": {
     "title": "+test model+",
     "owner": "+test owner+",
@@ -284,7 +284,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": null
               }
@@ -323,7 +323,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": "5 2"
               }
@@ -362,7 +362,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": null
               }
@@ -401,7 +401,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": "5 2"
               }
@@ -454,8 +454,8 @@
               "height": 60
             },
             "shape": "trust-boundary-box",
-            "id": "07d6b9e7-9ae9-486a-b891-c624a0789a1a",
             "zIndex": -1,
+            "id": "07d6b9e7-9ae9-486a-b891-c624a0789a1a",
             "data": {
               "type": "tm.BoundaryBox",
               "name": "Trust Boundary",
@@ -547,8 +547,8 @@
             },
             "visible": true,
             "shape": "store",
-            "id": "81e71478-af02-45c4-be58-f39ed1541fc0",
             "zIndex": 3,
+            "id": "81e71478-af02-45c4-be58-f39ed1541fc0",
             "data": {
               "type": "tm.Store",
               "name": "Store",
@@ -570,7 +570,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": null
               }
@@ -584,6 +584,7 @@
               "name": "Data Flow",
               "description": "",
               "outOfScope": false,
+              "isBidirectional": false,
               "reasonOutOfScope": "",
               "protocol": "",
               "isEncrypted": false,
@@ -640,6 +641,94 @@
             }
           },
           {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": true,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "8001a4ef-c6ee-4a03-beda-99f911386df4",
+            "source": {
+              "x": 348,
+              "y": 120
+            },
+            "target": {
+              "x": 450,
+              "y": 220
+            },
+            "labels": [
+              "Data Flow"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": "4 3"
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": true,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "eaaed457-b833-40a4-bcd2-afc8c390e828",
+            "source": {
+              "x": 180,
+              "y": 130
+            },
+            "target": {
+              "x": 260,
+              "y": 220
+            },
+            "labels": [
+              "Data Flow"
+            ]
+          },
+          {
             "position": {
               "x": 1980,
               "y": 120
@@ -650,8 +739,8 @@
             },
             "visible": true,
             "shape": "td-text-block",
-            "id": "7e646636-e4ac-42b2-ad0c-0b942230093a",
             "zIndex": 11,
+            "id": "7e646636-e4ac-42b2-ad0c-0b942230093a",
             "data": {
               "type": "tm.Text",
               "name": "Arbitrary Text",
@@ -795,7 +884,7 @@
                 "stroke": "#333333",
                 "strokeWidth": 1,
                 "targetMarker": {
-                  "name": "block"
+                  "name": "classic"
                 },
                 "strokeDasharray": null
               }

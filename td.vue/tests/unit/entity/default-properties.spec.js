@@ -88,6 +88,10 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.flow.outOfScope).toEqual(false);
         });
 
+        it('defines bidirection', () => {
+            expect(defaultProperties.flow.isBidirectional).toEqual(false);
+        });
+
         it('defines reasonOutOfScope', () => {
             expect(defaultProperties.flow.reasonOutOfScope).toEqual('');
         });

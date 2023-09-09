@@ -124,7 +124,8 @@ describe('service/x6/graph/data-changed.js', () => {
             cell.constructor = { name: 'Edge' };
             cell.getData.mockImplementation(() => ({
                 isTrustBoundary: false,
-                isEncrypted: true
+                isEncrypted: true,
+                isBidirectional: true
             }));
             dataChanged.updateStyleAttrs(cell);
         });
@@ -137,6 +138,11 @@ describe('service/x6/graph/data-changed.js', () => {
         it('sets the strokeDasharray', () => {
             expect(cell.setAttrByPath)
                 .toHaveBeenCalledWith('line/strokeDasharray', null);
+        });
+
+        it('sets the source marker to block', () => {
+            expect(cell.setAttrByPath)
+                .toHaveBeenCalledWith('line/sourceMarker/name', 'block');
         });
 
         it('sets the target marker to block', () => {

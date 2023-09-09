@@ -133,6 +133,7 @@ const spa = {
             text: 'Texto',
             description: 'Descripción',
             outOfScope: 'Fuera de contexto',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Razón para estar fuera de contexto',
             privilegeLevel: 'Nivel de Privilegio',
             isALog: 'Es un Log',
