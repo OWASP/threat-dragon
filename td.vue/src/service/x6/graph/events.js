@@ -110,9 +110,22 @@ const cellDataChanged = ({ cell }) => {
     dataChanged.updateStyleAttrs(cell);
 };
 
-const nodeAddFlow = ({ node }) => {
+const nodeAddFlow = (graph) => ({ node }) => {
     if (!node.data.isTrustBoundary) {
         console.debug('in future add flow from selected node: ' + node.data.name);
+
+        const position = node.position();
+        const config = {
+            source: {
+                cell: node.id
+            },
+            target: {
+                x: position.x + 50,
+                y: position.y - 50
+            }
+        };
+        console.debug('add data flow to node id:' + node.id);
+        graph.addEdge(new shapes.Flow(config));
     }
 };
 
@@ -125,7 +138,7 @@ const listen = (graph) => {
     graph.on('cell:unselected', cellUnselected);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
-    graph.on('node:dblclick', nodeAddFlow);
+    graph.on('node:dblclick', nodeAddFlow(graph));
 };
 
 const removeListeners = (graph) => {
@@ -137,7 +150,7 @@ const removeListeners = (graph) => {
     graph.off('cell:unselected', cellUnselected);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected);
-    graph.off('node:dblclick', nodeAddFlow);
+    graph.off('node:dblclick', nodeAddFlow(graph));
 };
 
 export default {
