@@ -133,6 +133,7 @@ const fin = {
             text: 'Teksti',
             description: 'Kuvaus',
             outOfScope: 'Rajattu ulos',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Ulos rajaamisen peruste',
             privilegeLevel: 'Käyttöoikeustaso',
             isALog: 'On loki',

@@ -133,6 +133,7 @@ const eng = {
             text: 'Text',
             description: 'Description',
             outOfScope: 'Out of Scope',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Reason for out of scope',
             privilegeLevel: 'Privilege Level',
             isALog: 'Is a Log',

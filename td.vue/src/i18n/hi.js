@@ -133,6 +133,7 @@ const hin = {
             text: 'टेक्स्ट',
             description: 'विवरण',
             outOfScope: 'आउट ऑफ स्कोप',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'दायरे से बाहर होने का कारण',
             privilegeLevel: 'विशेषाधिकार स्तर',
             isALog: 'एक लॉग है',

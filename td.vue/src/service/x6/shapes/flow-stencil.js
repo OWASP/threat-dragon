@@ -2,7 +2,7 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
-import defaultProperties from '../../entity/default-properties.js';
+import defaultProperties from '@/service/entity/default-properties.js';
 
 const name = 'flow-stencil';
 
@@ -24,15 +24,19 @@ export const FlowStencil = Shape.Empty.define({
     ],
     attrs: {
         boundary: {
-            strokeWidth: 1,
+            strokeWidth: 1.5,
             stroke: '#333333',
-            fill: '#ffffff',
+            fill: 'transparent',
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {
             text: tc('threatmodel.shapes.flowStencil'),
             fill: '#333',
             textVerticalAnchor: 'middle'
+        },
+        line: {
+            targetMarker: 'block',
+            sourceMarker: ''
         }
     },
     data: defaultProperties.flow

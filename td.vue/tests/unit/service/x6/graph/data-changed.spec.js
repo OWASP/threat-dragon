@@ -39,7 +39,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('red', '5 2', 3.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('red', '4 3', 2.5);
         });
     });
 
@@ -57,7 +57,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5);
         });
     });
 
@@ -72,7 +72,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.0);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5);
         });
     });
 
@@ -124,7 +124,8 @@ describe('service/x6/graph/data-changed.js', () => {
             cell.constructor = { name: 'Edge' };
             cell.getData.mockImplementation(() => ({
                 isTrustBoundary: false,
-                isEncrypted: true
+                isEncrypted: true,
+                isBidirectional: true
             }));
             dataChanged.updateStyleAttrs(cell);
         });
@@ -139,9 +140,14 @@ describe('service/x6/graph/data-changed.js', () => {
                 .toHaveBeenCalledWith('line/strokeDasharray', null);
         });
 
-        it('sets the target marker to classic', () => {
+        it('sets the source marker to block', () => {
             expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/targetMarker/name', 'classic');
+                .toHaveBeenCalledWith('line/sourceMarker/name', 'block');
+        });
+
+        it('sets the target marker to block', () => {
+            expect(cell.setAttrByPath)
+                .toHaveBeenCalledWith('line/targetMarker/name', 'block');
         });
     });
 });

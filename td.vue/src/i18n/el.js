@@ -133,6 +133,7 @@ const ell = {
             text: 'Κείμενο',
             description: 'Περιγραφή',
             outOfScope: 'Εκτός πεδίου εφαρμογής',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             isALog: 'Είναι αρχείο καταγραφής',

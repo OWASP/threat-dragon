@@ -5,11 +5,11 @@
  */
 
 import cells from './cells.js';
-import dataChanged from '../x6/graph/data-changed.js';
-import graphFactory from '../x6/graph/graph.js';
-import store from '../../store/index.js';
-import tmActions from '../../store/actions/threatmodel.js';
-import events from '../x6/graph/events.js';
+import dataChanged from '@/service/x6/graph/data-changed.js';
+import graphFactory from '@/service/x6/graph/graph.js';
+import events from '@/service/x6/graph/events.js';
+import store from '@/store/index.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 const buildVersion = require('../../../package.json').version;
 
@@ -24,13 +24,8 @@ const drawV1 = (diagram, graph) => {
 
 // update a version 1.x threat model (and diagrams) to version 2.x
 const upgradeAndDraw = (diagram, graph) => {
-    // check if diagram is already at version 2.x
-    if (diagram.version != null && diagram.version.startsWith('2.')) {
-        graph.fromJSON(diagram);
-        return;
-    }
-
     drawV1(diagram, graph);
+
     const updated = graph.toJSON();
     updated.version = buildVersion;
     updated.title = diagram.title;
@@ -44,7 +39,13 @@ const upgradeAndDraw = (diagram, graph) => {
 };
 
 const drawGraph = (diagram, graph) => {
-    upgradeAndDraw(diagram, graph);
+    if (diagram.version && diagram.version.startsWith('2.')) {
+	    console.debug('open version 2.x diagram');
+        graph.fromJSON(diagram);
+    } else {
+	    console.debug('upgrade version 1.x diagram');
+        upgradeAndDraw(diagram, graph);
+    }
     return graph;
 };
 

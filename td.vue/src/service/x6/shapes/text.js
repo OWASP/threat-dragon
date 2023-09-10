@@ -13,6 +13,7 @@ export const TextBlock = Shape.Rect.define({
     label: tc('threatmodel.shapes.text'),
     attrs: {
         body: {
+            fill: 'transparent',
             magnet: false, // disabled because data flows not allowed to text box
             fillOpacity: 0,
             strokeOpacity: 0

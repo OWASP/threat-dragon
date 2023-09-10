@@ -149,7 +149,7 @@ describe('service/x6/graph/graph.js', () => {
                 orthogonal: true,
                 restricted: false,
                 autoScroll: true,
-                preserveAspectRatio: true,
+                preserveAspectRatio: false,
                 allowReverse: true
             });
         });

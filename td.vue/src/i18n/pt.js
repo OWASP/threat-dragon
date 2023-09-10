@@ -133,6 +133,7 @@ const por = {
             text: 'Texto',
             description: 'Descrição',
             outOfScope: 'Fora do Escopo',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Razão por estar fora de escopo',
             privilegeLevel: 'Nível de Privilégio',
             isALog: 'É um Log',

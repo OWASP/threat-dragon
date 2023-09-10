@@ -133,6 +133,7 @@ const fra = {
             text: 'Texte',
             description: 'Description',
             outOfScope: 'Hors du domaine visé',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: 'Raison de l\'exclusion du domaine visé',
             privilegeLevel: 'Niveau de privilège',
             isALog: 'Est un journal',

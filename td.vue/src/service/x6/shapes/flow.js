@@ -1,6 +1,6 @@
 import { Shape } from '@antv/x6';
 
-import defaultProperties from '../../entity/default-properties';
+import defaultProperties from '@/service/entity/default-properties';
 
 const name = 'flow';
 
@@ -12,7 +12,7 @@ export const Flow = Shape.Edge.define({
     zIndex: 10,
     attrs: {
         line: {
-            strokeWidth: 3,
+            strokeWidth: 1.5,
             sourceMarker: null,
             targetMarker: null
         }

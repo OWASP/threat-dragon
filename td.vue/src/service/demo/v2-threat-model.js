@@ -479,7 +479,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -542,7 +542,7 @@ export default {
                             'line': {
                                 'stroke': 'red',
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -605,7 +605,7 @@ export default {
                             'line': {
                                 'stroke': 'red',
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -668,7 +668,7 @@ export default {
                             'line': {
                                 'stroke': 'red',
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -784,7 +784,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -848,7 +848,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': '2 2'
                             }
@@ -901,7 +901,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': '2 2'
                             }
@@ -954,7 +954,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -1007,7 +1007,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }
@@ -1060,7 +1060,7 @@ export default {
                                 'stroke': '#333333',
                                 'strokeWidth': 1,
                                 'targetMarker': {
-                                    'name': 'classic'
+                                    'name': 'block'
                                 },
                                 'strokeDasharray': null
                             }

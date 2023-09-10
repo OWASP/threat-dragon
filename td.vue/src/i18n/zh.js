@@ -133,6 +133,7 @@ const zho = {
             text: '文本',
             description: '说明',
             outOfScope: '超出范围',
+            bidirection: 'Bidirectional',
             reasonOutOfScope: '超出范围的原因',
             privilegeLevel: '权限级别',
             isALog: '是日志',

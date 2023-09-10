@@ -76,6 +76,8 @@
 !td.vue/src/service/provider/
 !td.vue/src/service/threats/
 !td.vue/src/service/x6/
+!td.vue/src/service/x6/graph/
+!td.vue/src/service/x6/shapes/
 !td.vue/src/store/
 !td.vue/src/store/actions/
 !td.vue/src/store/modules/
@@ -105,6 +107,8 @@
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/threats/
 !td.vue/tests/unit/service/x6/
+!td.vue/tests/unit/service/x6/graph/
+!td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/modules/
 !td.vue/tests/unit/views/
