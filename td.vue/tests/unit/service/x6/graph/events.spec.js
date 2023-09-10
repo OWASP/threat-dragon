@@ -69,7 +69,7 @@ describe('service/x6/graph/events.js', () => {
                 events.listen(graph);
             });
 
-            it('listens to the event', () => {
+            it('listens to the edge double click event', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:dblclick', expect.any(Function));
             });
         });
@@ -114,6 +114,7 @@ describe('service/x6/graph/events.js', () => {
     });
 
     describe('cell:mouseenter', () => {
+
         describe('isNode is true', () => {
             beforeEach(() => {
                 cell.isNode.mockImplementation(() => true);
@@ -154,6 +155,10 @@ describe('service/x6/graph/events.js', () => {
                 cell.constructor = { name: 'other' };
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
                 events.listen(graph);
+            });
+
+            it('listens to the cell added event', () => {
+                expect(graph.on).toHaveBeenCalledWith('cell:added', expect.any(Function));
             });
 
             it('does not add an edge', () => {
@@ -260,6 +265,10 @@ describe('service/x6/graph/events.js', () => {
                 graph.evts['cell:unselected']({ cell });
             });
 
+            it('listens to the cell unselected event', () => {
+                expect(graph.on).toHaveBeenCalledWith('cell:unselected', expect.any(Function));
+            });
+
             it('sets the name', () => {
                 expect(cell.setName).toHaveBeenCalledWith('test');
             });
@@ -274,6 +283,10 @@ describe('service/x6/graph/events.js', () => {
                 cell.hasTools.mockImplementation(() => true);
                 cell.isNode.mockImplementation(() => false);
                 events.listen(graph);
+            });
+
+            it('listens to the cell selected event', () => {
+                expect(graph.on).toHaveBeenCalledWith('cell:selected', expect.any(Function));
             });
 
             describe('trust boundary', () => {
@@ -314,6 +327,27 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
         });
+
+        describe('cell:dblclick', () => {
+            beforeEach(() => {
+                cell.hasTools.mockImplementation(() => true);
+                cell.isNode.mockImplementation(() => false);
+                events.listen(graph);
+            });
+
+            it('listens to the cell double click event', () => {
+                expect(graph.on).toHaveBeenCalledWith('cell:dblclick', expect.any(Function));
+            });
+
+            describe('without getLabels', () => {
+                it('does not set the name', () => {
+                    delete cell.getLabels;
+                    events.listen(graph);
+                    graph.evts['cell:dblclick']({ cell });
+                    expect(cell.data.name).toBeUndefined();
+                });
+            });
+        });
     });
 
     describe('removeListeners', () => {
@@ -350,7 +384,15 @@ describe('service/x6/graph/events.js', () => {
         });
 
         it('removes the cell:change:data listener', () => {
-            expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
+            expect(graph.off).toHaveBeenCalledWith('cell:change:data', expect.anything());
+        });
+
+        it('removes the cell:selected listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:selected', expect.anything());
+        });
+
+        it('removes the cell:dblclick listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:dblclick', expect.anything());
         });
 
         it('removes the cell:added listener again', () => {

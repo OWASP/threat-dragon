@@ -2,7 +2,7 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
-import defaultProperties from '../../entity/default-properties.js';
+import defaultProperties from '@/service/entity/default-properties.js';
 
 const name = 'trust-boundary-curve-stencil';
 

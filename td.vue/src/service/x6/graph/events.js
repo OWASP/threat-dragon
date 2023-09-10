@@ -2,18 +2,14 @@
  * @name events
  * @description Event listeners for the graph
  */
-import { CELL_SELECTED, CELL_UNSELECTED } from '../../../store/actions/cell.js';
 import dataChanged from './data-changed.js';
-import defaultProperties from '../../entity/default-properties.js';
-import shapes from '../shapes/index.js';
-import store from '../../../store/index.js';
-import { FlowStencil } from '../shapes/flow-stencil.js';
-import { TrustBoundaryCurveStencil } from '../shapes/trust-boundary-curve-stencil.js';
+import defaultProperties from '@/service/entity/default-properties.js';
+import store from '@/store/index.js';
+import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
+import shapes from '@/service/x6/shapes/index.js';
+//import { FlowStencil } from '@/service/x6/shapes/flow-stencil.js';
+import { TrustBoundaryCurveStencil } from '@/service/x6/shapes/trust-boundary-curve-stencil.js';
 
-// We need to add the router and connector data when a new edge is added.
-// https://x6.antv.vision/en/docs/tutorial/intermediate/events
-// If we do not, it is just a straight line with no collision detection
-// This may be what we want in some cases
 const edgeConnected = ({ isNew, edge }) => {
     if (isNew) {
         edge.connector = 'smooth';
@@ -48,7 +44,7 @@ const cellAdded = (graph) => ({ cell }) => {
             data: cell.getData()
         };
 
-        if (cell.type === FlowStencil.prototype.type) {
+        if (cell.type === shapes.FlowStencil.prototype.type) {
             graph.addEdge(new shapes.Flow(config));
         }
         if (cell.type === TrustBoundaryCurveStencil.prototype.type) {
@@ -80,12 +76,18 @@ const cellSelected = ({ cell }) => {
             cell.data.name = cell.getLabel();
             console.debug('cell selected: ' + cell.data.name);
         } else {
-            if (!cell.data.name && cell.getLabels) {
+            if (cell.data.name) {
+                console.debug('edge selected: ' + cell.data.name);
+            } else if (cell.getLabels) {
                 const labels = cell.getLabels();
                 if (labels.length) {
                     cell.data.name = cell.data.isTrustBoundary ? labels[0].attrs.text.text : labels[0].attrs.label.text;
-                    console.debug('cell selected: ' + cell.data.name);
+                    console.debug('edge selected: ' + cell.data.name);
+                } else {
+                    console.debug('edge selected with no label');
                 }
+            } else {
+                console.debug('edge selected with no name');
             }
         }
     }
@@ -110,6 +112,13 @@ const cellDataChanged = ({ cell }) => {
     dataChanged.updateStyleAttrs(cell);
 };
 
+const cellAddFlow = ({ cell }) => {
+    // if this is a node then add data flow
+    if (cell.isNode() && !cell.data.isTrustBoundary) {
+        console.debug('add flow to selected node: ' + cell.data.name);
+    }
+};
+
 const listen = (graph) => {
     graph.on('edge:connected', edgeConnected);
     graph.on('edge:dblclick', cellSelected);
@@ -119,6 +128,7 @@ const listen = (graph) => {
     graph.on('cell:unselected', cellUnselected);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
+    graph.on('cell:dblclick', cellAddFlow);
 };
 
 const removeListeners = (graph) => {
@@ -130,6 +140,7 @@ const removeListeners = (graph) => {
     graph.off('cell:unselected', cellUnselected);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected);
+    graph.off('cell:dblclick', cellAddFlow);
 };
 
 export default {

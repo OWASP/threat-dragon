@@ -107,6 +107,8 @@
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/threats/
 !td.vue/tests/unit/service/x6/
+!td.vue/tests/unit/service/x6/graph/
+!td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/modules/
 !td.vue/tests/unit/views/

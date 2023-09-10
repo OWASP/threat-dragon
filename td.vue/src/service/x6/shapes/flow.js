@@ -1,6 +1,6 @@
 import { Shape } from '@antv/x6';
 
-import defaultProperties from '../../entity/default-properties';
+import defaultProperties from '@/service/entity/default-properties';
 
 const name = 'flow';
 
