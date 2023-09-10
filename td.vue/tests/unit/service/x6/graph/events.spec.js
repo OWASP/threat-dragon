@@ -62,6 +62,19 @@ describe('service/x6/graph/events.js', () => {
         });
     });
 
+    describe('edge:dblclick', () => {
+        describe('select edge', () => {
+            beforeEach(() => {
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                events.listen(graph);
+            });
+
+            it('listens to the event', () => {
+                expect(graph.on).toHaveBeenCalledWith('edge:dblclick', expect.any(Function));
+            });
+        });
+    });
+
     describe('removeCellTools', () => {
         describe('hasTools is true', () => {
             beforeEach(() => {
@@ -310,6 +323,10 @@ describe('service/x6/graph/events.js', () => {
 
         it('removes the edge:connected listener', () => {
             expect(graph.off).toHaveBeenCalledWith('edge:connected', expect.anything());
+        });
+
+        it('removes the edge:dblclick listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('edge:dblclick', expect.anything());
         });
 
         it('removes the cell:mouseleave listener', () => {
