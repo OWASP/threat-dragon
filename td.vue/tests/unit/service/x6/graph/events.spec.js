@@ -4,7 +4,7 @@ import store from '@/store/index.js';
 import dataChanged from '../../../../../src/service/x6/graph/data-changed';
 
 describe('service/x6/graph/events.js', () => {
-    let cell, edge, graph, mockStore;
+    let cell, node, edge, graph, mockStore;
 
     beforeEach(() => {
         console.log = jest.fn();
@@ -31,13 +31,16 @@ describe('service/x6/graph/events.js', () => {
             id: 'foobar',
             position: jest.fn().mockReturnValue({ x: 1, y: 2 })
         };
+        node = {
+            data: { isTrustBoundary: true }
+        };
         edge = {};
     });
 
     describe('edge:connected', () => {
         describe('new edge', () => {
             beforeEach(() => {
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: true, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: true, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -52,7 +55,7 @@ describe('service/x6/graph/events.js', () => {
 
         describe('old edge', () => {
             beforeEach(() => {
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -65,7 +68,7 @@ describe('service/x6/graph/events.js', () => {
     describe('edge:dblclick', () => {
         describe('select edge', () => {
             beforeEach(() => {
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -79,7 +82,7 @@ describe('service/x6/graph/events.js', () => {
         describe('hasTools is true', () => {
             beforeEach(() => {
                 cell.hasTools.mockImplementation(() => true);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -103,7 +106,7 @@ describe('service/x6/graph/events.js', () => {
         describe('hasTools is false', () => {
             beforeEach(() => {
                 cell.hasTools.mockImplementation(() => false);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -118,7 +121,7 @@ describe('service/x6/graph/events.js', () => {
         describe('isNode is true', () => {
             beforeEach(() => {
                 cell.isNode.mockImplementation(() => true);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -134,7 +137,7 @@ describe('service/x6/graph/events.js', () => {
         describe('isNode is false', () => {
             beforeEach(() => {
                 cell.isNode.mockImplementation(() => false);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -153,7 +156,7 @@ describe('service/x6/graph/events.js', () => {
             beforeEach(() => {
                 cell.isNode.mockImplementation(() => true);
                 cell.constructor = { name: 'other' };
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -174,7 +177,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.type = shapes.StoreShape.prototype.type;
                 if (cell.data) { delete cell.data; }
                 cell.setData.mockImplementation((data) => cell.data = data);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -189,7 +192,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.isNode.mockImplementation(() => true);
                 cell.constructor = { name: 'TrustBoundaryCurveStencil' };
                 cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -212,7 +215,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.isNode.mockImplementation(() => true);
                 cell.constructor = { name: 'FlowStencil' };
                 cell.type = shapes.FlowStencil.prototype.type;
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -238,7 +241,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.type = shapes.FlowStencil.prototype.type;
                 if (cell.data) { delete cell.data; }
                 cell.setData.mockImplementation((data) => cell.data = data);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, cell }));
+                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
 
@@ -328,25 +331,17 @@ describe('service/x6/graph/events.js', () => {
             });
         });
 
-        describe('cell:dblclick', () => {
+        describe('node:dblclick', () => {
             beforeEach(() => {
-                cell.hasTools.mockImplementation(() => true);
-                cell.isNode.mockImplementation(() => false);
+                node.data.isTrustBoundary = true;
+                graph.on.mockImplementation((evt, fn) => fn({ node, edge, cell }));
                 events.listen(graph);
             });
 
             it('listens to the cell double click event', () => {
-                expect(graph.on).toHaveBeenCalledWith('cell:dblclick', expect.any(Function));
+                expect(graph.on).toHaveBeenCalledWith('node:dblclick', expect.any(Function));
             });
 
-            describe('without getLabels', () => {
-                it('does not set the name', () => {
-                    delete cell.getLabels;
-                    events.listen(graph);
-                    graph.evts['cell:dblclick']({ cell });
-                    expect(cell.data.name).toBeUndefined();
-                });
-            });
         });
     });
 
@@ -391,8 +386,8 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:selected', expect.anything());
         });
 
-        it('removes the cell:dblclick listener', () => {
-            expect(graph.off).toHaveBeenCalledWith('cell:dblclick', expect.anything());
+        it('removes the node:dblclick listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('node:dblclick', expect.anything());
         });
 
         it('removes the cell:added listener again', () => {

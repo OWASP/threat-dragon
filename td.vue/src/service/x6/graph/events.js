@@ -7,8 +7,6 @@ import defaultProperties from '@/service/entity/default-properties.js';
 import store from '@/store/index.js';
 import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import shapes from '@/service/x6/shapes/index.js';
-//import { FlowStencil } from '@/service/x6/shapes/flow-stencil.js';
-import { TrustBoundaryCurveStencil } from '@/service/x6/shapes/trust-boundary-curve-stencil.js';
 
 const edgeConnected = ({ isNew, edge }) => {
     if (isNew) {
@@ -47,7 +45,7 @@ const cellAdded = (graph) => ({ cell }) => {
         if (cell.type === shapes.FlowStencil.prototype.type) {
             graph.addEdge(new shapes.Flow(config));
         }
-        if (cell.type === TrustBoundaryCurveStencil.prototype.type) {
+        if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
             graph.addEdge(new shapes.TrustBoundaryCurve(config));
         }
 
@@ -112,10 +110,9 @@ const cellDataChanged = ({ cell }) => {
     dataChanged.updateStyleAttrs(cell);
 };
 
-const cellAddFlow = ({ cell }) => {
-    // if this is a node then add data flow
-    if (cell.isNode() && !cell.data.isTrustBoundary) {
-        console.debug('add flow to selected node: ' + cell.data.name);
+const nodeAddFlow = ({ node }) => {
+    if (!node.data.isTrustBoundary) {
+        console.debug('in future add flow from selected node: ' + node.data.name);
     }
 };
 
@@ -128,7 +125,7 @@ const listen = (graph) => {
     graph.on('cell:unselected', cellUnselected);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
-    graph.on('cell:dblclick', cellAddFlow);
+    graph.on('node:dblclick', nodeAddFlow);
 };
 
 const removeListeners = (graph) => {
@@ -140,7 +137,7 @@ const removeListeners = (graph) => {
     graph.off('cell:unselected', cellUnselected);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected);
-    graph.off('cell:dblclick', cellAddFlow);
+    graph.off('node:dblclick', nodeAddFlow);
 };
 
 export default {
