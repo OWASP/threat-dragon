@@ -112,8 +112,6 @@ const cellDataChanged = ({ cell }) => {
 
 const nodeAddFlow = (graph) => ({ node }) => {
     if (!node.data.isTrustBoundary) {
-        console.debug('in future add flow from selected node: ' + node.data.name);
-
         const position = node.position();
         const config = {
             source: {
