@@ -402,6 +402,9 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
+      - name: Prepare SBOM generation
+        run: mkdir ./sboms
+
       - name: Create XML site SBOM
         uses: CycloneDX/gh-node-module-generatebom@v1.0.3
         with:
