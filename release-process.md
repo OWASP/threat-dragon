@@ -26,7 +26,7 @@ The github release workflow then creates the draft release and the install image
     `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.6`
 4. Test using the command to run a detached container:
     `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.0.6`
-5. Ideally test this release on Windows, linux and MacOS
+5. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
 
 If the image tests correctly, promote the docker image
 from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.0.6`.
@@ -37,7 +37,10 @@ There is _no going back_ on this last step, so it is deliberately left as a manu
 docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.6
 docker tag threatdragon/owasp-threat-dragon:v2.0.6 owasp/threat-dragon:v2.0.6
 docker push owasp/threat-dragon:v2.0.6
+docker pull owasp/threat-dragon:v2.0.6
 ```
+
+ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
 
 ### Update release notes
 
