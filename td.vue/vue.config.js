@@ -47,7 +47,8 @@ module.exports = {
                     hardenedRuntime: true,
                     target: [
                         'default'
-                    ]
+                    ],
+                    tool: notarytool
                 },
                 win: {
                     icon: './src/icons/icon.ico',
