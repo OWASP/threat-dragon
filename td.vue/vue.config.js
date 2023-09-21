@@ -43,12 +43,10 @@ module.exports = {
                 mac: {
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
-                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
                     hardenedRuntime: true,
-                    target: [
-                        'default'
-                    ],
-                    tool: notarytool
+                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
+                    entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
+                    target: 'default'
                 },
                 win: {
                     icon: './src/icons/icon.ico',

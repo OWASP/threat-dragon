@@ -126,7 +126,6 @@
     "webdriverio": "^8.3.3",
     "webpack": "^5.77.0"
   },
-
   "overrides": {
     "node-ipc": ">=10.1.7",
     "debug@<3.1.0": ">=4.3.4",
