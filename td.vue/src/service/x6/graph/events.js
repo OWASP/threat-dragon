@@ -111,7 +111,7 @@ const cellDataChanged = ({ cell }) => {
 };
 
 const nodeAddFlow = (graph) => ({ node }) => {
-    if (!node.data.isTrustBoundary) {
+    if (!node.data.isTrustBoundary && node.data.type !== 'tm.Text') {
         const position = node.position();
         const config = {
             source: {
@@ -119,7 +119,7 @@ const nodeAddFlow = (graph) => ({ node }) => {
             },
             target: {
                 x: position.x + 50,
-                y: position.y - 50
+                y: position.y - 100
             }
         };
         console.debug('add data flow to node id:' + node.id);
