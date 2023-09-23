@@ -40,8 +40,8 @@ const edgeUpdater = (edge, color, dash, strokeWidth, sourceMarker) => {
         edge.setAttrByPath('line/targetMarker', '');
     } else {
         edge.setAttrByPath('line/stroke', color);
-        edge.setAttrByPath('line/strokeWidth', strokeWidth);
         edge.setAttrByPath('line/strokeDasharray', dash);
+        edge.setAttrByPath('line/strokeWidth', strokeWidth);
         edge.setAttrByPath('line/sourceMarker/name', sourceMarker);
         edge.setAttrByPath('line/targetMarker/name', styles.default.targetMarker);
     }
