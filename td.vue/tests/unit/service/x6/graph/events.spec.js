@@ -75,6 +75,10 @@ describe('service/x6/graph/events.js', () => {
             it('listens to the edge double click event', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:dblclick', expect.any(Function));
             });
+
+            it('listens to the edge move event', () => {
+                expect(graph.on).toHaveBeenCalledWith('edge:move', expect.any(Function));
+            });
         });
     });
 
@@ -296,7 +300,7 @@ describe('service/x6/graph/events.js', () => {
                 beforeEach(() => {
                     cell.data.isTrustBoundary = true;
                     cell.getLabels.mockImplementation(() => ([
-                        { attrs: { text: { text: 'test' }}}
+                        { attrs: { label: { text: 'test' }}}
                     ]));
                     events.listen(graph);
                     graph.evts['cell:selected']({ cell });
@@ -331,18 +335,23 @@ describe('service/x6/graph/events.js', () => {
             });
         });
 
-        describe('node:dblclick', () => {
+        describe('node events', () => {
             beforeEach(() => {
                 node.data.isTrustBoundary = true;
                 graph.on.mockImplementation((evt, fn) => fn({ node, edge, cell }));
                 events.listen(graph);
             });
 
-            it('listens to the cell double click event', () => {
+            it('listens to the node double click event', () => {
                 expect(graph.on).toHaveBeenCalledWith('node:dblclick', expect.any(Function));
             });
 
+            it('listens to the node move event', () => {
+                expect(graph.on).toHaveBeenCalledWith('node:move', expect.any(Function));
+            });
+
         });
+
     });
 
     describe('removeListeners', () => {
@@ -358,6 +367,10 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('edge:dblclick', expect.anything());
         });
 
+        it('removes the edge:move listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('edge:move', expect.anything());
+        });
+
         it('removes the cell:mouseleave listener', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:mouseleave', expect.anything());
         });
@@ -370,14 +383,6 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:added', expect.anything());
         });
 
-        it('removes the cell:unselected listener', () => {
-            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
-        });
-
-        it('removes the cell:unselected listener again', () => {
-            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
-        });
-
         it('removes the cell:change:data listener', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:change:data', expect.anything());
         });
@@ -386,8 +391,20 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:selected', expect.anything());
         });
 
+        it('removes the cell:unselected listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
+        });
+
+        it('removes the cell:unselected listener again', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
+        });
+
         it('removes the node:dblclick listener', () => {
             expect(graph.off).toHaveBeenCalledWith('node:dblclick', expect.anything());
+        });
+
+        it('removes the node:move listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('node:move', expect.anything());
         });
 
         it('removes the cell:added listener again', () => {

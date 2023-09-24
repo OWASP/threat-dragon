@@ -39,8 +39,8 @@ describe('components/GraphProperties.vue', () => {
 
         beforeEach(() => {
             entityData = {
-                type: 'tm.Actor',
-                name: 'some actor',
+                type: 'tm.Flow',
+                name: 'some flow',
                 description: 'describing the thing',
                 outOfScope: true,
                 isBidirectional: true,

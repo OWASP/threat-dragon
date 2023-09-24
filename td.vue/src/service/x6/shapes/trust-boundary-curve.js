@@ -19,13 +19,6 @@ export const TrustBoundaryCurve = Shape.Edge.define({
         }
     },
     connector: 'smooth',
-    labels: [{
-        attrs: {
-            text: {
-                text: ''
-            }
-        }
-    }],
     data: defaultProperties.boundary
 });
 

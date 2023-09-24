@@ -67,7 +67,19 @@
                     </b-form-group>
                 </b-col>
                 
-                <b-col v-if="!cellRef.data.isTrustBoundary && cellRef.data.type !== 'tm.Text'" md="6">
+                <b-col v-if="!cellRef.data.isTrustBoundary && cellRef.data.type !== 'tm.Text' && cellRef.data.type !== 'tm.Flow'" md="6">
+                    <b-form-group
+                        label-cols="auto"
+                        id="outofscope-group">
+                        <b-form-checkbox
+                            id="outofscope"
+                            v-model="cellRef.data.outOfScope"
+                            @change="onChangeScope()"
+                        >{{ $t('threatmodel.properties.outOfScope') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
+                <b-col v-if="cellRef.data.type === 'tm.Flow'" md="6">
                     <b-form-group
                         label-cols="auto"
                         id="outofscope-group">

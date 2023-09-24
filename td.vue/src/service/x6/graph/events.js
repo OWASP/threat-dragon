@@ -72,15 +72,15 @@ const cellSelected = ({ cell }) => {
     if (cell.data) {
         if (cell.isNode()) {
             cell.data.name = cell.getLabel();
-            console.debug('cell selected: ' + cell.data.name);
+            console.debug('node selected: ' + cell.data.name);
         } else {
             if (cell.data.name) {
                 console.debug('edge selected: ' + cell.data.name);
             } else if (cell.getLabels) {
                 const labels = cell.getLabels();
-                if (labels.length) {
-                    cell.data.name = cell.data.isTrustBoundary ? labels[0].attrs.text.text : labels[0].attrs.label.text;
-                    console.debug('edge selected: ' + cell.data.name);
+                if (labels.length && labels[0].attrs.label) {
+                    cell.data.name = labels[0].attrs.label.text;
+                    console.debug('edge selected with label: ' + cell.data.name);
                 } else {
                     console.debug('edge selected with no label');
                 }
@@ -88,9 +88,12 @@ const cellSelected = ({ cell }) => {
                 console.debug('edge selected with no name');
             }
         }
+    } else {
+        console.debug('cell selected with no name');
     }
 
     store.get().dispatch(CELL_SELECTED, cell);
+    dataChanged.updateStyleAttrs(cell);
 };
 
 const cellUnselected = ({ cell }) => {
@@ -130,25 +133,29 @@ const nodeAddFlow = (graph) => ({ node }) => {
 const listen = (graph) => {
     graph.on('edge:connected', edgeConnected);
     graph.on('edge:dblclick', cellSelected);
+    graph.on('edge:move', cellSelected);
     graph.on('cell:mouseleave', removeCellTools);
     graph.on('cell:mouseenter', mouseEnter);
     graph.on('cell:added', cellAdded(graph));
-    graph.on('cell:unselected', cellUnselected);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected);
+    graph.on('cell:unselected', cellUnselected);
     graph.on('node:dblclick', nodeAddFlow(graph));
+    graph.on('node:move', cellSelected);
 };
 
 const removeListeners = (graph) => {
     graph.off('edge:connected', edgeConnected);
     graph.off('edge:dblclick', cellSelected);
+    graph.off('edge:move', cellSelected);
     graph.off('cell:mouseleave', removeCellTools);
     graph.off('cell:mouseenter', mouseEnter);
     graph.off('cell:added', cellAdded(graph));
-    graph.off('cell:unselected', cellUnselected);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected);
+    graph.off('cell:unselected', cellUnselected);
     graph.off('node:dblclick', nodeAddFlow(graph));
+    graph.off('node:move', cellSelected);
 };
 
 export default {
