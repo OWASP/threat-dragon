@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon",
   "productName": "Threat Dragon",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build --no-unsafe-inline",
@@ -37,7 +37,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
-  "buildState": "-demo",
+  "buildState": "",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

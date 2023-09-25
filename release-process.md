@@ -52,6 +52,10 @@ Promote the release from draft to public once everything is in place
 
 ### Announce
 
+Update the [releases tab][releases] and the [info pane][td-info] on the OWASP Threat Dragon project pages.
+
 Finally ensure Threat Dragon announces the new release, for example on the OWASP slack channels
 
 [area]: https://github.com/OWASP/threat-dragon/releases
+[releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
+[td-info]: https://github.com/OWASP/www-project-threat-dragon/blob/main/info.md
