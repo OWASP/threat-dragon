@@ -4,40 +4,40 @@ The steps used during the release process
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version eg `"version": "2.0.6",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
-4. update `buildState` in `td.vue/package.json`
+3. update version eg `"version": "2.0.8",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
+4. update `buildState` in `td.vue/package.json` away from `-demo`, usually ''
 5. `npm install`
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
 9. `git add --all; git status`
-10. `git commit -m"release version 2.0.6"`
+10. `git commit -m"release version 2.0.8"`
 11. `git push`
-12. tag the release `git tag v2.0.6`
-13. `git push origin v2.0.6`
+12. tag the release `git tag v2.0.8`
+13. `git push origin v2.0.8`
 
 The github release workflow then creates the draft release and the install images
 
 ### Publish docker image
 
 1. once tagged, the github workflow pushes the docker image to docker hub
-2. check using `docker pull threatdragon/owasp-threat-dragon:v2.0.6`
+2. check using `docker pull threatdragon/owasp-threat-dragon:v2.0.8`
 3. on MacOS M1 this command may need to be used:
-    `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.6`
+    `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.8`
 4. Test using the command to run a detached container:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.0.6`
+    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.0.8`
 5. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
 
 If the image tests correctly, promote the docker image
-from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.0.6`.
+from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.0.8`.
 
 There is _no going back_ on this last step, so it is deliberately left as a manual task:
 
 ```text
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.6
-docker tag threatdragon/owasp-threat-dragon:v2.0.6 owasp/threat-dragon:v2.0.6
-docker push owasp/threat-dragon:v2.0.6
-docker pull owasp/threat-dragon:v2.0.6
+docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.0.8
+docker tag threatdragon/owasp-threat-dragon:v2.0.8 owasp/threat-dragon:v2.0.8
+docker push owasp/threat-dragon:v2.0.8
+docker pull owasp/threat-dragon:v2.0.8
 ```
 
 ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
@@ -46,7 +46,7 @@ ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r
 
 Update the release notes for the draft in the [Threat Dragon release area][area]
 using the release notes using markdown provided by `.release-note-template.md` as a template,
-making sure to revise `2.0.x` to the correct version number such as `2.0.6`
+making sure to revise `2.x.x` to the correct version number such as `2.0.8`
 
 Promote the release from draft to public once everything is in place
 
