@@ -110,6 +110,11 @@ const cellUnselected = ({ cell }) => {
 };
 
 const cellDataChanged = ({ cell }) => {
+    if (cell.getData) {
+        console.debug('cell data changed for: ' + cell.getData().name);
+    } else {
+        console.debug('cell data changed');
+    }
     dataChanged.updateStyleAttrs(cell);
 };
 
