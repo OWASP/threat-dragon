@@ -51,7 +51,7 @@ const updateStyleAttrs = (cell) => {
     const cellData = cell.getData();
 
     // New UI elements will not have any cell data
-    if (!cellData) {
+    if (!cellData || !cell.data) {
         return;
     }
 

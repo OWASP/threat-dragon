@@ -31,6 +31,7 @@ describe('service/x6/graph/events.js', () => {
             id: 'foobar',
             position: jest.fn().mockReturnValue({ x: 1, y: 2 })
         };
+        cell.getData.mockImplementation(() => ({ name: 'test' }));
         node = {
             data: { isTrustBoundary: true }
         };
@@ -244,6 +245,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.constructor = { name: 'FlowStencil' };
                 cell.type = shapes.FlowStencil.prototype.type;
                 if (cell.data) { delete cell.data; }
+                dataChanged.updateStyleAttrs = jest.fn();
                 cell.setData.mockImplementation((data) => cell.data = data);
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
