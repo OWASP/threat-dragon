@@ -91,7 +91,7 @@ describe('components/GraphProperties.vue', () => {
 
         it('has an out of scope checkbox', () => {
             const input = wrapper.findAllComponents(BFormCheckbox)
-                .filter(x => x.attributes('id') === 'outofscope')
+                .filter(x => x.attributes('id') === 'flowoutofscope')
                 .at(0);
             expect(input.attributes('value')).toEqual(entityData.outOfScope.toString());
         });
