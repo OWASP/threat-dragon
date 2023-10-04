@@ -82,9 +82,9 @@
                 <b-col v-if="cellRef.data.type === 'tm.Flow'" md="6">
                     <b-form-group
                         label-cols="auto"
-                        id="outofscope-group">
+                        id="flowoutofscope-group">
                         <b-form-checkbox
-                            id="outofscope"
+                            id="flowoutofscope"
                             v-model="cellRef.data.outOfScope"
                             @change="onChangeScope()"
                         >{{ $t('threatmodel.properties.outOfScope') }}</b-form-checkbox>
@@ -242,6 +242,7 @@ export default {
             dataChanged.updateStyleAttrs(this.cellRef);
         },
         onChangeScope() {
+            console.debug('scope changed');
             document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;
             dataChanged.updateStyleAttrs(this.cellRef);
         }

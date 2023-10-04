@@ -51,7 +51,7 @@ const updateStyleAttrs = (cell) => {
     const cellData = cell.getData();
 
     // New UI elements will not have any cell data
-    if (!cellData) {
+    if (!cellData || !cell.data) {
         return;
     }
 
@@ -83,7 +83,11 @@ const updateStyleAttrs = (cell) => {
 };
 
 const updateName = (cell) => {
-    if (cell.setName && cell.getData) {
+
+    if (!cell || !cell.setName || !cell.getData) {
+        console.debug('Name update ignored for empty cell');
+    } else {
+        console.debug('Updating name for cell ' + cell.getData().name);
         cell.setName(cell.getData().name);
     }
 };

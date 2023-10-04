@@ -97,14 +97,9 @@ const cellSelected = ({ cell }) => {
 };
 
 const cellUnselected = ({ cell }) => {
+    console.debug('cell unselected');
     removeCellTools({ cell });
-
-    if (cell.setName && cell.getData) {
-        cell.setName(cell.getData().name);
-    } else {
-        console.log('Cannot set name');
-    }
-
+    dataChanged.updateName(cell);
     store.get().dispatch(CELL_UNSELECTED);
     dataChanged.updateStyleAttrs(cell);
 };
