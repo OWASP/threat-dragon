@@ -173,7 +173,7 @@ export default {
             threatTop: (state) => state.threatmodel.data.detail.threatTop
         }),
         threatTypes() {
-            if (!this.threat || !this.threat.modelType) {
+            if (!this.cellRef || !this.threat || !this.threat.modelType) {
                 return [];
             }
 
