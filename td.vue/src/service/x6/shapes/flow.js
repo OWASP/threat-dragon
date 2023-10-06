@@ -14,7 +14,7 @@ export const Flow = Shape.Edge.define({
         line: {
             strokeWidth: 1.5,
             sourceMarker: null,
-            targetMarker: null
+            targetMarker: 'block'
         }
     },
     connector: 'smooth',
@@ -27,7 +27,13 @@ Flow.prototype.setName = function (name) {
     this.setLabels([name]);
 };
 
-Flow.prototype.updateStyle = function () {};
+Flow.prototype.updateStyle = function (color, dash, strokeWidth, sourceMarker) {
+    this.setAttrByPath('line/stroke', color);
+    this.setAttrByPath('line/strokeWidth', strokeWidth);
+    this.setAttrByPath('line/strokeDasharray', dash);
+    this.setAttrByPath('line/sourceMarker/name', sourceMarker);
+    this.setAttrByPath('line/targetMarker/name', 'block');
+};
 
 export default {
     Flow,

@@ -99,9 +99,7 @@ const cellSelected = ({ cell }) => {
 const cellUnselected = ({ cell }) => {
     console.debug('cell unselected');
     removeCellTools({ cell });
-    dataChanged.updateName(cell);
     store.get().dispatch(CELL_UNSELECTED);
-    dataChanged.updateStyleAttrs(cell);
 };
 
 const cellDataChanged = ({ cell }) => {
