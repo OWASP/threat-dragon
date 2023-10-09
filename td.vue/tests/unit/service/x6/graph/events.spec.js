@@ -278,12 +278,8 @@ describe('service/x6/graph/events.js', () => {
                 expect(graph.on).toHaveBeenCalledWith('cell:unselected', expect.any(Function));
             });
 
-            it('sets the name', () => {
-                expect(cell.setName).toHaveBeenCalledWith('test');
-            });
-
-            it('updates the style attributes', () => {
-                expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(1);
+            it('does not update the style attributes', () => {
+                expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(0);
             });
         });
 

@@ -39,7 +39,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('red', '4 3', 2.5);
+            expect(cell.updateStyle).toHaveBeenCalledWith('red', '4 3', 2.5, '');
         });
     });
 
@@ -57,7 +57,7 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5, '');
         });
     });
 
@@ -72,21 +72,24 @@ describe('service/x6/graph/data-changed.js', () => {
         });
 
         it('calls updateStyle', () => {
-            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5);
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5, '');
         });
     });
 
-    describe('with an unknown shape', () => {
+    describe('trust boundary box', () => {
         beforeEach(() => {
             cell = getCell();
-            cell.constructor = { name: 'FakeThingy' };
+            cell.constructor = { name: 'BoundaryBox' };
             cell.isEdge.mockReturnValue(false);
-            cell.getData.mockImplementation(() => ({}));
+            cell.getData.mockImplementation(() => ({
+                isTrustBoundary: true
+            }));
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
-        it('does not call updateStyle for the unknown shape', () => {
-            expect(cell.updateStyle).not.toBeDefined();
+        it('calls updateStyle', () => {
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5, '');
         });
     });
 
@@ -98,22 +101,12 @@ describe('service/x6/graph/data-changed.js', () => {
             cell.getData.mockImplementation(() => ({
                 isTrustBoundary: true
             }));
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
 
-        it('sets the strokeWidth', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/strokeWidth', 3);
-        });
-
-        it('removes the source marker', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/sourceMarker', '');
-        });
-
-        it('removes the target marker', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/targetMarker', '');
+        it('calls updateStyle', () => {
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5, '');
         });
     });
 
@@ -127,27 +120,26 @@ describe('service/x6/graph/data-changed.js', () => {
                 isEncrypted: true,
                 isBidirectional: true
             }));
+            cell.updateStyle = jest.fn();
             dataChanged.updateStyleAttrs(cell);
         });
         
-        it('sets the stroke', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/stroke', '#333333');
+        it('calls updateStyle', () => {
+            expect(cell.updateStyle).toHaveBeenCalledWith('#333333', null, 1.5, 'block');
+        });
+    });
+
+    describe('with an unknown shape', () => {
+        beforeEach(() => {
+            cell = getCell();
+            cell.constructor = { name: 'FakeThingy' };
+            cell.isEdge.mockReturnValue(false);
+            cell.getData.mockImplementation(() => ({}));
+            dataChanged.updateStyleAttrs(cell);
         });
 
-        it('sets the strokeDasharray', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/strokeDasharray', null);
-        });
-
-        it('sets the source marker to block', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/sourceMarker/name', 'block');
-        });
-
-        it('sets the target marker to block', () => {
-            expect(cell.setAttrByPath)
-                .toHaveBeenCalledWith('line/targetMarker/name', 'block');
+        it('does not call updateStyle', () => {
+            expect(cell.updateStyle).not.toBeDefined();
         });
     });
 });

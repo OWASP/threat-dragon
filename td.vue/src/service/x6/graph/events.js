@@ -53,6 +53,7 @@ const cellAdded = (graph) => ({ cell }) => {
     }
 
     removeCellTools({ cell });
+
     // boundary boxes must not overlap other diagram components
     if (cell.shape === 'trust-boundary-box') {
         cell.zIndex = -1;
@@ -65,6 +66,7 @@ const cellAdded = (graph) => ({ cell }) => {
         }
         cell.setData(defaultProperties.getByType(cell.type));
     }
+    store.get().dispatch(CELL_SELECTED, cell);
 };
 
 const cellSelected = ({ cell }) => {
@@ -99,9 +101,7 @@ const cellSelected = ({ cell }) => {
 const cellUnselected = ({ cell }) => {
     console.debug('cell unselected');
     removeCellTools({ cell });
-    dataChanged.updateName(cell);
     store.get().dispatch(CELL_UNSELECTED);
-    dataChanged.updateStyleAttrs(cell);
 };
 
 const cellDataChanged = ({ cell }) => {
@@ -110,6 +110,7 @@ const cellDataChanged = ({ cell }) => {
     } else {
         console.debug('cell data changed');
     }
+    store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateStyleAttrs(cell);
 };
 
