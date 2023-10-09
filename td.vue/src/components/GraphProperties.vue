@@ -63,6 +63,7 @@
                         <b-form-textarea
                             id="description"
                             v-model="cellRef.data.description"
+                            @change="onChangeProperties()"
                         ></b-form-textarea>
                     </b-form-group>
                 </b-col>
@@ -106,6 +107,7 @@
                             id="reasonoutofscope"
                             :disabled="!cellRef.data.outOfScope"
                             v-model="cellRef.data.reasonOutOfScope"
+                            @change="onChangeProperties()"
                         ></b-form-textarea>
                     </b-form-group>
                 </b-col>
@@ -119,6 +121,7 @@
                         <b-form-input
                             id="privilegelevel"
                             v-model="cellRef.data.privilegeLevel"
+                            @change="onChangeProperties()"
                             type="text"
                         ></b-form-input>
                     </b-form-group>
@@ -131,6 +134,7 @@
                         <b-form-checkbox
                             id="isalog"
                             v-model="cellRef.data.isALog"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isALog') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -142,6 +146,7 @@
                         <b-form-checkbox
                             id="storesCredentials"
                             v-model="cellRef.data.storesCredentials"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.storesCredentials') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -153,6 +158,7 @@
                         <b-form-checkbox
                             id="isEncrypted"
                             v-model="cellRef.data.isEncrypted"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -164,6 +170,7 @@
                         <b-form-checkbox
                             id="isSigned"
                             v-model="cellRef.data.isSigned"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isSigned') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -175,6 +182,7 @@
                         <b-form-checkbox
                             id="providesAuthentication"
                             v-model="cellRef.data.providesAuthentication"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.providesAuthentication') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -188,6 +196,7 @@
                         <b-form-input
                             id="protocol"
                             v-model="cellRef.data.protocol"
+                            @change="onChangeProperties()"
                             type="text"
                         ></b-form-input>
                     </b-form-group>
@@ -200,6 +209,7 @@
                         <b-form-checkbox
                             id="isEncrypted"
                             v-model="cellRef.data.isEncrypted"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -211,6 +221,7 @@
                         <b-form-checkbox
                             id="isPublicNetwork"
                             v-model="cellRef.data.isPublicNetwork"
+                            @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.publicNetwork') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
@@ -235,16 +246,27 @@ export default {
         cellRef: (state) => state.cell.ref
     }),
     methods: {
+        updateComponent() {
+            // should not need to need to force an update
+            this.$forceUpdate();
+        },
         onChangeName() {
             dataChanged.updateName(this.cellRef);
+            this.updateComponent();
         },
         onChangeBidirection() {
+            dataChanged.updateProperties(this.cellRef);
             dataChanged.updateStyleAttrs(this.cellRef);
+            this.updateComponent();
+        },
+        onChangeProperties() {
+            dataChanged.updateProperties(this.cellRef);
+            this.updateComponent();
         },
         onChangeScope() {
-            console.debug('scope changed');
             document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;
             dataChanged.updateStyleAttrs(this.cellRef);
+            this.updateComponent();
         }
     }
 };

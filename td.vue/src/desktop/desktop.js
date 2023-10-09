@@ -23,7 +23,7 @@ async function createWindow () {
     // Create the browser window
     const mainWindow = new BrowserWindow({
         width: 1400,
-        height: 900,
+        height: 1000,
         show: false,
         webPreferences: {
             enableRemoteModule: false,
