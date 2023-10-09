@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": true,
   "scripts": {
     "build": "npm-run-all clean:dist transpile",
