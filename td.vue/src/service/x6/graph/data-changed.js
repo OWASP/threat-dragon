@@ -67,13 +67,13 @@ const updateName = (cell) => {
     if (!cell || !cell.setName || !cell.getData) {
         console.debug('Name update ignored for empty cell');
     } else {
-        console.debug('Update name for cell: ' + cell.getData().name);
+        // console.debug('Update name for cell: ' + cell.getData().name);
         cell.setName(cell.getData().name);
     }
 };
 
 const updateProperties = (cell) => {
-    if (cell.data) {
+    if (!!cell && !!cell.data) {
         console.debug('Update property for cell: ' + cell.getData().name);
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
     } else {

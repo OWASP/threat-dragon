@@ -48,7 +48,7 @@
                         <b-form-textarea
                             id="name"
                             v-model="cellRef.data.name"
-                            @change="onChangeName()"
+                            @update="onChangeName()"
                             :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"
                         ></b-form-textarea>
                     </b-form-group>
