@@ -32,6 +32,7 @@ const mouseEnter = ({ cell }) => {
 
 const cellAdded = (graph) => ({ cell }) => {
     if (cell.convertToEdge) {
+        let edge = cell;
         const position = cell.position();
         const config = {
             source: position,
@@ -43,13 +44,15 @@ const cellAdded = (graph) => ({ cell }) => {
         };
 
         if (cell.type === shapes.FlowStencil.prototype.type) {
-            graph.addEdge(new shapes.Flow(config));
-        }
-        if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
-            graph.addEdge(new shapes.TrustBoundaryCurve(config));
+            edge = graph.addEdge(new shapes.Flow(config));
+        } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
+            edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
+        } else {
+            console.warn('Removed unknown edge');
         }
 
         cell.remove();
+        cell = edge;
     }
 
     removeCellTools({ cell });
@@ -63,6 +66,7 @@ const cellAdded = (graph) => ({ cell }) => {
     if (!cell.data) {
         if (cell.isEdge()) {
             cell.type = defaultProperties.flow.type;
+            console.debug('edge cell given type: ' + cell.type);
         }
         cell.setData(defaultProperties.getByType(cell.type));
     }
