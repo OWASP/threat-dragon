@@ -39,7 +39,7 @@ jobs:
           ref: main
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.12.0
+        uses: aquasecurity/trivy-action@0.13.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}:latest'
           format: 'template'
