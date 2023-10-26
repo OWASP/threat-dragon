@@ -22,10 +22,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -54,10 +54,10 @@ jobs:
         working-directory: td.server
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -86,10 +86,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -119,7 +119,7 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
@@ -127,7 +127,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1.2.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -164,10 +164,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -206,10 +206,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -260,10 +260,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -300,10 +300,10 @@ jobs:
         working-directory: td.vue
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 
@@ -344,7 +344,7 @@ jobs:
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Set up Docker Buildx
         id: buildx
@@ -384,10 +384,10 @@ jobs:
     needs: [desktop_macos, desktop_linux, desktop_windows]
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v3.8.0
+        uses: actions/setup-node@v4.0.0
         with:
           node-version: '18'
 

@@ -127,7 +127,7 @@
     "webpack": "^5.77.0"
   },
   "overrides": {
-    "node-ipc": ">=10.1.7",
+    "@babel/traverse": ">=7.23.2",
     "debug@<3.1.0": ">=4.3.4",
     "electron-builder@<23.0.3": ">=23.0.3",
     "follow-redirects": ">=1.14.8",
@@ -136,6 +136,7 @@
     "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
     "node-fetch": ">=2.6.7",
     "node-notifier@<8.0.1": ">=8.0.1",
+    "node-ipc": ">=10.1.7",
     "nth-check@<2.0.1": ">=2.0.1",
     "systeminformation@<5.21.8": ">=5.21.8",
     "tar@>=6.0.0 <6.1.9": ">=6.1.9",
