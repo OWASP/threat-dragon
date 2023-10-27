@@ -3,7 +3,7 @@ import Vue from 'vue';
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers';
-import i18n from '../../i18n/index.js';
+import i18n from '@/i18n/index.js';
 import { providerTypes } from '@/service/provider/providerTypes';
 import {
     THREATMODEL_CLEAR,
@@ -13,10 +13,12 @@ import {
     THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
+    THREATMODEL_MODIFIED,
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_IMMUTABLE_COPY,
+    THREATMODEL_SET_ROLLBACK,
+    THREATMODEL_UNMODIFIED,
     THREATMODEL_UPDATE
 } from '../actions/threatmodel.js';
 import save from '../../service/save.js';
@@ -31,6 +33,7 @@ export const clearState = (state) => {
     state.data = {};
     state.fileName = '';
     state.immutableCopy = '';
+    state.modified = false;
     state.selectedDiagram = {};
 };
 
@@ -39,6 +42,7 @@ const state = {
     data: {},
     fileName: '',
     immutableCopy: {},
+    modified: false,
     selectedDiagram: {}
 };
 
@@ -49,7 +53,7 @@ const setThreatModel = (theState, threatModel) => {
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
-    [THREATMODEL_CREATE]: async ({ dispatch, rootState, state }) => {
+    [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
@@ -66,9 +70,10 @@ const actions = {
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
-            dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
+            dispatch(THREATMODEL_SET_ROLLBACK);
+            commit(THREATMODEL_UNMODIFIED);
         } catch (ex) {
-            console.error('Failed to update threat model!');
+            console.error('Failed to save new threat model!');
             console.error(ex);
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
@@ -110,7 +115,7 @@ const actions = {
         }
         commit(THREATMODEL_RESTORE, originalModel);
     },
-    [THREATMODEL_SAVE]: async ({ dispatch, rootState, state }) => {
+    [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
@@ -127,14 +132,15 @@ const actions = {
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
-            dispatch(THREATMODEL_SET_IMMUTABLE_COPY);
+            dispatch(THREATMODEL_SET_ROLLBACK);
+            commit(THREATMODEL_UNMODIFIED);
         } catch (ex) {
-            console.error('Failed to update threat model!');
+            console.error('Failed to save threat model!');
             console.error(ex);
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
     },
-    [THREATMODEL_SET_IMMUTABLE_COPY]: ({ commit }) => commit(THREATMODEL_SET_IMMUTABLE_COPY),
+    [THREATMODEL_SET_ROLLBACK]: ({ commit }) => commit(THREATMODEL_SET_ROLLBACK),
     [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
 };
 
@@ -161,11 +167,13 @@ const mutations = {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
+    [THREATMODEL_MODIFIED]: (state) => state.modified = true,
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
     [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
-    [THREATMODEL_SET_IMMUTABLE_COPY]: (state) => {
+    [THREATMODEL_SET_ROLLBACK]: (state) => {
         Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
     },
+    [THREATMODEL_UNMODIFIED]: (state) => state.modified = false,
     [THREATMODEL_UPDATE]: (state, update) => {
         if (update.version) {
             Vue.set(state.data, 'version', update.version);

@@ -6,9 +6,11 @@ import {
     THREATMODEL_FETCH_ALL,
     THREATMODEL_SELECTED,
     THREATMODEL_CONTRIBUTORS_UPDATED,
+    THREATMODEL_MODIFIED,
     THREATMODEL_RESTORE,
-    THREATMODEL_SET_IMMUTABLE_COPY,
+    THREATMODEL_SET_ROLLBACK,
     THREATMODEL_SAVE,
+    THREATMODEL_UNMODIFIED,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 
@@ -41,16 +43,24 @@ describe('store/actions/threatmodel.js', () => {
         expect(THREATMODEL_CONTRIBUTORS_UPDATED).not.toBeUndefined();
     });
 
+    it('defines a modified flag action', () => {
+        expect(THREATMODEL_MODIFIED).not.toBeUndefined();
+    });
+
     it('defines a restore action', () => {
         expect(THREATMODEL_RESTORE).not.toBeUndefined();
     });
 
     it('defines a set immutable copy action', () => {
-        expect(THREATMODEL_SET_IMMUTABLE_COPY).not.toBeUndefined();
+        expect(THREATMODEL_SET_ROLLBACK).not.toBeUndefined();
     });
 
     it('defines a save action', () => {
         expect(THREATMODEL_SAVE).not.toBeUndefined();
+    });
+
+    it('defines an unmodified flag action', () => {
+        expect(THREATMODEL_UNMODIFIED).not.toBeUndefined();
     });
 
     it('defines an update action', () => {
