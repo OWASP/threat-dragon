@@ -15,6 +15,7 @@ export const THREATMODEL_UPDATE = 'THREATMODEL_UPDATE';
 
 export default {
     clear: THREATMODEL_CLEAR,
+    contributorsUpdated: THREATMODEL_CONTRIBUTORS_UPDATED,
     create: THREATMODEL_CREATE,
     diagramSelected: THREATMODEL_DIAGRAM_SELECTED,
     diagramUpdated: THREATMODEL_DIAGRAM_UPDATED,

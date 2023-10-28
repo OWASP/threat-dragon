@@ -53,6 +53,7 @@ const setThreatModel = (theState, threatModel) => {
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
@@ -100,8 +101,7 @@ const actions = {
             commit(THREATMODEL_FETCH_ALL, resp.data);
         }
     },
-    [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
-    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
+    [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.immutableCopy);
         if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
@@ -140,7 +140,9 @@ const actions = {
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
     },
+    [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
     [THREATMODEL_SET_ROLLBACK]: ({ commit }) => commit(THREATMODEL_SET_ROLLBACK),
+    [THREATMODEL_UNMODIFIED]: ({ commit }) => commit(THREATMODEL_UNMODIFIED),
     [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
 };
 
@@ -167,7 +169,12 @@ const mutations = {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
-    [THREATMODEL_MODIFIED]: (state) => state.modified = true,
+    [THREATMODEL_MODIFIED]: (state) => {
+        if (state.modified === false) {
+            console.debug('model now modified');
+        }
+        state.modified = true;
+    },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
     [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
     [THREATMODEL_SET_ROLLBACK]: (state) => {
@@ -199,7 +206,10 @@ const getters = {
         }
         return contribs.map(x => x.name);
     },
-    modelChanged: (state) => JSON.stringify(state.data) !== state.immutableCopy,
+    modelChanged: (state) => {
+        console.debug('model modified: ' + state.modified);
+        return state.modified;
+    },
     isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
 };
 
