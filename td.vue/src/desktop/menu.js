@@ -148,7 +148,7 @@ export function getMenuTemplate () {
 
 // Open file system dialog and read file contents into model
 function openModel () {
-    if (guardModifiedModel() === false) {
+    if (guardModel() === false) {
         return;
     }
     dialog.showOpenDialog({
@@ -226,7 +226,7 @@ function saveModelDataAs (modelData, fileName) {
 
 // open a new model
 function newModel () {
-    if (guardModifiedModel() === false) {
+    if (guardModel() === false) {
         return;
     }
     let newName = 'new-model.json';
@@ -245,7 +245,7 @@ function printModel () {
 
 // close the model
 function closeModel () {
-    if (guardModifiedModel() === false) {
+    if (guardModel() === false) {
         return;
     }
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
@@ -255,7 +255,7 @@ function closeModel () {
 }
 
 // close the model
-function guardModifiedModel () {
+export function guardModel () {
     if (model.isOpen === false || model.isModified === false) {
         return true;
     }
@@ -264,7 +264,7 @@ function guardModifiedModel () {
         title: messages[language].forms.discardTitle,
         message: messages[language].forms.discardMessage,
         buttons: [ messages[language].forms.ok, messages[language].forms.cancel ],
-        type: 'question',
+        type: 'warning',
         defaultId: 1,
         cancelId: 1
     };
@@ -429,6 +429,7 @@ export const setMainWindow = (window) => {
 
 export default {
     getMenuTemplate,
+    guardModel,
     modelClosed,
     modelModified,
     modelOpened,

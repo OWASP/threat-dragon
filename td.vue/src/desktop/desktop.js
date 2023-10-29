@@ -109,7 +109,9 @@ app.on('open-file', function(event, path) {
     // handle this event
     event.preventDefault();
     logger.log.debug('Open file from recent documents: ' + path);
-    menu.readModelData(path);
+    if (menu.guardModel() === true) {
+        menu.readModelData(path);
+    }
 });
 
 function handleUpdateMenu (_event, locale) {

@@ -121,7 +121,6 @@ describe('desktop/menu.js', () => {
         const mockData = { 'title': 'test title' };
         var mockFilename = 'test name';
 
-
         describe('Server actions', () => {
 
             beforeEach(() => {
@@ -133,13 +132,6 @@ describe('desktop/menu.js', () => {
             it('openModel() should send open-model to renderer with file path', () => {
                 // TODO: click on the server menu item for openModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
-                expect(model.isOpen).not.toBeDefined();
-            });
-
-            it('readModelData() should send open-model to renderer with file path', () => {
-                // TODO: need to mock mainWindow
-                // readModelData('another/file/path');
-                //expect(model).toEqual( expect.objectContaining({fileDirectory: 'another/file/', filePath: 'path'}) );
                 expect(model.isOpen).not.toBeDefined();
             });
 
@@ -174,7 +166,6 @@ describe('desktop/menu.js', () => {
             });
 
         });
-
 
         describe('Renderer actions', () => {
 
@@ -242,6 +233,34 @@ describe('desktop/menu.js', () => {
                 // menu.modelSaved(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: undefined}) );
                 expect(true).toBe(true);
+            });
+
+        });
+
+        describe('Server utilities', () => {
+
+            beforeEach(() => {
+                model.fileDirectory = 'test directory';
+                model.filePath = 'test path';
+                model.isOpen = true;
+                model.isModified = true;
+            });
+
+            it('guardModel() should pass when model is closed', () => {
+                model.isOpen = false;
+                expect(menu.guardModel()).toBe(true);
+            });
+
+            it('guardModel() should pass when model is unmodified', () => {
+                model.isModified = false;
+                expect(menu.guardModel()).toBe(true);
+            });
+
+            it('readModelData() should send open-model to renderer with file path', () => {
+                // TODO: need to mock mainWindow
+                // readModelData('another/file/path');
+                //expect(model).toEqual( expect.objectContaining({fileDirectory: 'another/file/', filePath: 'path'}) );
+                expect(model.isOpen).toEqual(true);
             });
 
         });
