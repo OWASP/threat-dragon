@@ -148,9 +148,8 @@ export function getMenuTemplate () {
 
 // Open file system dialog and read file contents into model
 function openModel () {
-    if (model.isOpen === true) {
-        logger.log.debug('Checking that the existing model is not modified');
-        logger.log.warn('TODO check from renderer that existing open file is not modified');
+    if (guardModifiedModel() === false) {
+        return;
     }
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
@@ -227,6 +226,9 @@ function saveModelDataAs (modelData, fileName) {
 
 // open a new model
 function newModel () {
+    if (guardModifiedModel() === false) {
+        return;
+    }
     let newName = 'new-model.json';
     logger.log.debug(messages[language].desktop.file.new + ': ' + newName);
     // prompt the renderer to open a new model
@@ -243,10 +245,36 @@ function printModel () {
 
 // close the model
 function closeModel () {
+    if (guardModifiedModel() === false) {
+        return;
+    }
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
     // prompt the renderer to close the model
     mainWindow.webContents.send('close-model', path.basename(model.filePath));
     modelClosed();
+}
+
+// close the model
+function guardModifiedModel () {
+    if (model.isOpen === false || model.isModified === false) {
+        return true;
+    }
+    logger.log.debug('Check existing open and modified model can be closed');
+    const dialogOptions = {
+        title: messages[language].forms.discardTitle,
+        message: messages[language].forms.discardMessage,
+        buttons: [ messages[language].forms.ok, messages[language].forms.cancel ],
+        type: 'question',
+        defaultId: 1,
+        cancelId: 1
+    };
+    let guard = false;
+    let result = dialog.showMessageBoxSync(mainWindow, dialogOptions);
+    if (result === 0) {
+        guard = true;
+    }
+    logger.log.debug(messages[language].forms.discardTitle + ': ' + guard);
+    return guard;
 }
 
 // read threat model from file, eg after open-file app module event
@@ -282,22 +310,6 @@ function saveModelData (modelData) {
         logger.log.debug(messages[language].desktop.file.save + ': ignored empty file');
     }
 }
-
-// the renderer has requested to save the model with a filename
-export const modelSaved = (modelData, fileName) => {
-    // if the filePath is empty then this is the first time a save has been requested
-    if (!model.filePath || model.filePath === '') {
-        saveModelDataAs(modelData, fileName);
-    } else {
-        saveModelData(modelData);
-    }
-};
-
-// clear out the model, either by menu or by renderer request
-export const modelClosed = () => {
-    model.filePath = '';
-    model.isOpen = false;
-};
 
 // Open saveAs file system dialog and write contents as HTML
 function saveHTMLReport (htmlPath) {
@@ -361,6 +373,25 @@ function savePDFReport (pdfPath) {
     });
 }
 
+// clear out the model, either by menu or by renderer request
+export const modelClosed = () => {
+    model.filePath = '';
+    model.isOpen = false;
+};
+
+// the renderer has modified the model
+export const modelModified = (modified) => {
+    model.isModified = modified;
+};
+
+// the renderer has opened a new model
+export const modelOpened = () => {
+    // for security reasons the renderer can not provide the full path
+    // so wait for a save before filling in the file path
+    model.filePath = '';
+    model.isOpen = true;
+};
+
 // the renderer has requested a report to be printed
 export const modelPrint = (printer) => {
     let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
@@ -377,24 +408,23 @@ export const modelPrint = (printer) => {
     }
 };
 
-// the renderer has opened a new model
-export const modelOpened = () => {
-    // for security reasons the renderer can not provide the full path
-    // so wait for a save before filling in the file path
-    model.filePath = '';
-    model.isOpen = true;
+// the renderer has requested to save the model with a filename
+export const modelSaved = (modelData, fileName) => {
+    // if the filePath is empty then this is the first time a save has been requested
+    if (!model.filePath || model.filePath === '') {
+        saveModelDataAs(modelData, fileName);
+    } else {
+        saveModelData(modelData);
+    }
 };
 
+// the renderer has changed the language
 export const setLocale = (locale) => {
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 
 export const setMainWindow = (window) => {
     mainWindow = window;
-};
-
-export const modelModified = (modified) => {
-    model.isModified = modified;
 };
 
 export default {
