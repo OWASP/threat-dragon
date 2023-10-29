@@ -93,6 +93,7 @@ app.on('ready', async () => {
 
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
+    ipcMain.on('model-modified', handleModelModified);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-saved', handleModelSaved);
@@ -121,6 +122,11 @@ function handleUpdateMenu (_event, locale) {
 function handleModelClosed (_event, fileName) {
     logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
+}
+
+function handleModelModified (_event, modified) {
+    logger.log.debug('Modified model notification from renderer: ' + modified);
+    menu.modelModified(modified);
 }
 
 function handleModelOpened (_event, fileName) {

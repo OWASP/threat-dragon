@@ -233,6 +233,7 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.save);
             }
+            this.$store.dispatch(tmActions.unmodified);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
@@ -317,6 +318,7 @@ export default {
         async restoreAsync() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
                 this.$store.dispatch(tmActions.restore);
+                this.$store.dispatch(tmActions.unmodified);
                 return true;
             }
             return false;

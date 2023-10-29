@@ -172,6 +172,9 @@ const mutations = {
     [THREATMODEL_MODIFIED]: (state) => {
         if (state.modified === false) {
             console.debug('model now modified');
+            if (isElectron()) {
+                window.electronAPI.modelModified(true);
+            }
         }
         state.modified = true;
     },
@@ -180,7 +183,13 @@ const mutations = {
     [THREATMODEL_SET_ROLLBACK]: (state) => {
         Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
     },
-    [THREATMODEL_UNMODIFIED]: (state) => state.modified = false,
+    [THREATMODEL_UNMODIFIED]: (state) => {
+        console.debug('model is unmodified');
+        if (isElectron()) {
+            window.electronAPI.modelModified(false);
+        }
+        state.modified = false;
+    },
     [THREATMODEL_UPDATE]: (state, update) => {
         if (update.version) {
             Vue.set(state.data, 'version', update.version);

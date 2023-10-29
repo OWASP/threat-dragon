@@ -182,6 +182,7 @@ describe('desktop/menu.js', () => {
                 model.fileDirectory = 'test directory';
                 model.filePath = 'test path';
                 model.isOpen = undefined;
+                model.isModified = false;
             });
 
             it('modelClosed() should close the model', () => {
@@ -190,6 +191,11 @@ describe('desktop/menu.js', () => {
                 expect(model.filePath).toMatch('');
                 expect(model.isOpen).toBeDefined();
                 expect(model.isOpen).toBeFalsy();
+            });
+
+            it('modelModified() should flag model as modified', () => {
+                menu.modelModified(true);
+                expect(model.isModified).toBe(true);
             });
 
             it('modelOpened() should open a model', () => {

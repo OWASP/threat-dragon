@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
     modelClosed: (fileName) => ipcRenderer.send('model-closed', fileName),
+    modelModified: (modified) => ipcRenderer.send('model-modified', modified),
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
     modelPrint: (printer) => ipcRenderer.send('model-print', printer),
     modelSaved: (modelData, fileName) => ipcRenderer.send('model-saved', modelData, fileName),

@@ -32,7 +32,8 @@ var language = defaultLanguage;
 export const model = {
     fileDirectory: '',
     filePath: '',
-    isOpen: false
+    isOpen: false,
+    isModified: false
 };
 
 export function getMenuTemplate () {
@@ -392,9 +393,14 @@ export const setMainWindow = (window) => {
     mainWindow = window;
 };
 
+export const modelModified = (modified) => {
+    model.isModified = modified;
+};
+
 export default {
     getMenuTemplate,
     modelClosed,
+    modelModified,
     modelOpened,
     modelPrint,
     modelSaved,
