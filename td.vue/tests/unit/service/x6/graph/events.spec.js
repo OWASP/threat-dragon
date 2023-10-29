@@ -381,6 +381,10 @@ describe('service/x6/graph/events.js', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:added', expect.anything());
         });
 
+        it('removes the cell:removed listener', () => {
+            expect(graph.off).toHaveBeenCalledWith('cell:removed', expect.anything());
+        });
+
         it('removes the cell:change:data listener', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:change:data', expect.anything());
         });

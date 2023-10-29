@@ -16,6 +16,7 @@
                                 <b-form-input
                                     id="title"
                                     v-model="model.summary.title"
+                                    @change="onModifyModel()"
                                     type="text"
                                     required
                                 ></b-form-input>
@@ -32,6 +33,7 @@
                                 <b-form-input
                                     id="owner"
                                     v-model="model.summary.owner"
+                                    @change="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -45,6 +47,7 @@
                                 <b-form-input
                                     id="reviewer"
                                     v-model="model.detail.reviewer"
+                                    @change="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -60,6 +63,7 @@
                                 <b-form-textarea
                                     id="description"
                                     v-model="model.summary.description"
+                                    @change="onModifyModel()"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -76,6 +80,7 @@
                                     id="contributors"
                                     :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
+                                    @change="onModifyModel()"
                                     variant="primary"
                                 ></b-form-tags>
                             </b-form-group>
@@ -186,7 +191,7 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_CREATE, THREATMODEL_RESTORE, THREATMODEL_SAVE, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -207,21 +212,28 @@ export default {
                 return this.$store.getters.contributors;
             },
             set(contributors) {
-                this.$store.dispatch(THREATMODEL_CONTRIBUTORS_UPDATED, contributors);
+                this.$store.dispatch(tmActions.contributorsUpdated, contributors);
             }
         }
     },
+    async mounted() {
+        this.init();
+    },
     methods: {
+        init() {
+            this.$store.dispatch(tmActions.unmodified);
+        },
         onSubmit() {
             // noop
         },
         async onSaveClick(evt) {
             evt.preventDefault();
             if (this.$route.name === 'gitThreatModelCreate') {
-                await this.$store.dispatch(THREATMODEL_CREATE);
+                await this.$store.dispatch(tmActions.create);
             } else {
-                await this.$store.dispatch(THREATMODEL_SAVE);
+                await this.$store.dispatch(tmActions.save);
             }
+            this.$store.dispatch(tmActions.unmodified);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
@@ -245,7 +257,7 @@ export default {
                 version: this.version,
                 cells: []
             };
-            this.$store.dispatch(THREATMODEL_UPDATE, { diagramTop: this.diagramTop + 1 });
+            this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
         },
         onDiagramTypeClick(idx, type) {
@@ -300,9 +312,13 @@ export default {
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
         },
+        onModifyModel() {
+            this.$store.dispatch(tmActions.modified);
+        },
         async restoreAsync() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
-                this.$store.dispatch(THREATMODEL_RESTORE);
+                this.$store.dispatch(tmActions.restore);
+                this.$store.dispatch(tmActions.unmodified);
                 return true;
             }
             return false;

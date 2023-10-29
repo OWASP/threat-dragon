@@ -35,7 +35,9 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.diagramType = diagram.diagramType;
     graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
     store.get().dispatch(tmActions.diagramUpdated, updated);
-    store.get().dispatch(tmActions.setImmutableCopy);
+    store.get().dispatch(tmActions.setRollback);
+    store.get().dispatch(tmActions.unmodified);
+
 };
 
 const drawGraph = (diagram, graph) => {

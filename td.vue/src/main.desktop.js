@@ -20,8 +20,6 @@ Vue.config.productionTip = false;
 
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {
-    console.warn('TODO check that any existing open model has not been modified');
-    // getConfirmModal();
     console.debug('Closing model with file name : ' + fileName);
     app.$store.dispatch(threatmodelActions.clear);
     localAuth();
@@ -34,8 +32,6 @@ window.electronAPI.onCloseModel((_event, fileName) =>  {
 
 // request from desktop menu shell -> renderer to start a new model
 window.electronAPI.onNewModel((_event, fileName) =>  {
-    console.warn('TODO check that any existing open model has not been modified');
-    // getConfirmModal();
     console.debug('New model with file name : ' + fileName);
     app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
     localAuth();
