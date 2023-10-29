@@ -28,7 +28,7 @@
 <script>
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
-import threatmodelActions from '@/store/actions/threatmodel.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'SelectDemoModel',
@@ -38,12 +38,12 @@ export default {
         };
     },
     mounted() {
-        this.$store.dispatch(threatmodelActions.clear);
-        this.$store.dispatch(threatmodelActions.fetchAll);
+        this.$store.dispatch(tmActions.clear);
+        this.$store.dispatch(tmActions.fetchAll);
     },
     methods: {
         onModelClick(model) {
-            this.$store.dispatch(threatmodelActions.selected, model.model);
+            this.$store.dispatch(tmActions.selected, model.model);
             if (isElectron()) {
                 // tell any electron server that the model has changed
                 window.electronAPI.modelOpened(model.name);

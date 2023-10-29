@@ -100,7 +100,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
-import { THREATMODEL_CLEAR, THREATMODEL_DIAGRAM_SELECTED, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
@@ -124,7 +124,7 @@ export default {
         },
         onCloseClick(evt) {
             evt.preventDefault();
-            this.$store.dispatch(THREATMODEL_CLEAR);
+            this.$store.dispatch(tmActions.clear);
             this.$router.push('/dashboard');
         },
         getThumbnailUrl(diagram) {
@@ -134,7 +134,7 @@ export default {
             return `../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
         },
         editDiagram(diagram) {
-            this.$store.dispatch(THREATMODEL_DIAGRAM_SELECTED, diagram);
+            this.$store.dispatch(tmActions.diagramSelected, diagram);
             const path = `${this.$route.path}/edit/${encodeURIComponent(diagram.title)}`;
             this.$router.push(path);
         }
@@ -145,7 +145,7 @@ export default {
         let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
         let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         console.debug('updates: ' + JSON.stringify(update));
-        this.$store.dispatch(THREATMODEL_UPDATE, update);
+        this.$store.dispatch(tmActions.update, update);
     }
 };
 </script>

@@ -519,12 +519,12 @@ describe('store/modules/threatmodel.js', () => {
 
         describe('modelChanged', () => {
             it('returns true when the model has changed', () => {
-                const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ something: 'else' })};
+                const state = { modified: true};
                 expect(threatmodelModule.getters.modelChanged(state)).toEqual(true);
             });
 
             it('returns false when the model has not changed', () => {
-                const state = { data: { foo: 'bar' }, immutableCopy: JSON.stringify({ foo: 'bar' })};
+                const state = { modified: false};
                 expect(threatmodelModule.getters.modelChanged(state)).toEqual(false);
             });
         });
