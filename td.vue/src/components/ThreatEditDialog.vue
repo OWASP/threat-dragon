@@ -161,7 +161,7 @@
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_MODIFIED, THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 
@@ -235,6 +235,7 @@ export default {
             } else {
                 this.number = this.threat.number;
             }
+            this.$store.dispatch(THREATMODEL_MODIFIED);
         },
         updateThreat() {
             const threatRef = this.threat;
@@ -252,6 +253,7 @@ export default {
                 threatRef.score = this.threat.score;
 
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
+                this.$store.dispatch(THREATMODEL_MODIFIED);
                 dataChanged.updateStyleAttrs(this.cellRef);
             }
             this.hideModal();
@@ -260,6 +262,7 @@ export default {
             this.cellRef.data.threats = this.cellRef.data.threats.filter(x => x.id !== this.threat.id);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
+            this.$store.dispatch(THREATMODEL_MODIFIED);
             dataChanged.updateStyleAttrs(this.cellRef);
         },
         hideModal() {
