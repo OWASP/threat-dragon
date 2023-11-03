@@ -44,7 +44,7 @@ const ell = {
         file: {
             heading: 'Αρχείο',
             close: 'Κλείσιμο Μοντέλου',
-            new: 'New Model',
+            new: 'Νέο Μοντέλο',
             open: 'Άνοιγμα Μοντέλου',
             save: 'Αποθήκευση Μοντέλου',
             saveAs: 'Αποθήκευση Μοντέλου ως'
@@ -106,7 +106,7 @@ const ell = {
                 select: 'LINDDUN'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
+                defaultTitle: 'Νέο διάγραμμα DIE',
                 defaultDescription: 'New DIE diagram description',
                 select: 'DIE'
             },
@@ -118,13 +118,13 @@ const ell = {
         },
         threats: 'Απειλές',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
             invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
+            onlyJsonAllowed: 'Υποστηρίζονται μόνο αρχεία με κατάληξη .json.',
+            open: 'Σφάλμα κατά το άνοιγμα αυτού του μοντέλου απειλών. Ελέγξτε την κονσόλα του προγραμματιστή για περισσότερες πληροφορίες',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        opened: 'Threat model successfully opened',
+        opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
         saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
         properties: {
             title: 'Ιδιότητες',
@@ -133,7 +133,7 @@ const ell = {
             text: 'Κείμενο',
             description: 'Περιγραφή',
             outOfScope: 'Εκτός πεδίου εφαρμογής',
-            bidirection: 'Bidirectional',
+            bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             isALog: 'Είναι αρχείο καταγραφής',
@@ -283,9 +283,9 @@ const ell = {
         newThreatByContext: 'Νέα απειλή βάσει του γενικότερου πλαισίου (Context)',
         properties: {
             description: 'Περιγραφή',
-            mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
+            mitigation: 'Μέτρα Περιορισμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
-            number: 'Number',
+            number: 'Αριθμός',
             priority: 'Προτεραιότητα',
             score: 'Σκορ',
             status: 'Κατάσταση',
@@ -308,7 +308,7 @@ const ell = {
             showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
-            showEmpty: 'Show empty elements',
+            showEmpty: 'Προβολή κενών στοιχείων',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
