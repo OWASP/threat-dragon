@@ -43,9 +43,12 @@ const spa = {
     desktop: {
         file: {
             heading: 'Archivo',
+            clearRecentDocs: 'Clear Menu',
             close: 'Cerrar modelo',
+            closeWindow: 'Close Window',
             new: 'Modelo nuevo',
             open: 'Abrir modelo',
+            recentDocs: 'Open Recent',
             save: 'Guardar modelo',
             saveAs: 'Guardar modelo como'
         },

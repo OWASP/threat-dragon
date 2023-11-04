@@ -43,9 +43,12 @@ const deu = {
     desktop: {
         file: {
             heading: 'Datei',
+            clearRecentDocs: 'Clear Menu',
             close: 'Modell schließen',
+            closeWindow: 'Close Window',
             new: 'Neues Modell',
             open: 'Modell öffnen',
+            recentDocs: 'Open Recent',
             save: 'Modell speichern',
             saveAs: 'Modell speichern als'
         },

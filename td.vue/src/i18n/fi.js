@@ -43,9 +43,12 @@ const fin = {
     desktop: {
         file: {
             heading: 'Tiedosto',
+            clearRecentDocs: 'Clear Menu',
             close: 'Sulje Uhkamalli',
+            closeWindow: 'Close Window',
             new: 'Uusi Uhkamalli',
             open: 'Avaa Uhkamalli',
+            recentDocs: 'Open Recent',
             save: 'Tallenna Uhkamalli',
             saveAs: 'Tallenna Uhkamalli Nimellä'
         },
