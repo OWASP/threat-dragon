@@ -43,9 +43,12 @@ const hin = {
     desktop: {
         file: {
             heading: 'फ़ाइल',
+            clearRecentDocs: 'Clear Menu',
             close: 'क्लोज मॉडल',
+            closeWindow: 'Close Window',
             new: 'New Model',
             open: 'ओपन मॉडल',
+            recentDocs: 'Open Recent',
             save: 'मॉडल सहेजें',
             saveAs: 'मॉडल को इस रूप में सहेजें'
         },

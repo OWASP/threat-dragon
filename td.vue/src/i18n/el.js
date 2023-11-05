@@ -8,7 +8,7 @@ const ell = {
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
+        imgAlt: 'Λογότυπο Threat Dragon',
         description: 'Το Threat Dragon είναι ένα δωρεάν, ανοιχτού κώδικα εργαλείο μοντελοποίησης απειλών (threat modeling) του Οργανισμού OWASP. Μπορεί να χρησιμοποιηθεί ως μια αυτόνομη desktop εφαρμογή για Windows, MacOS και Linux ή ως μια web εφαρμογή. Η desktop εφαρμογή είναι ιδανική αν θέλετε να δοκιμάσετε την εφαρμογή χωρίς να της δώσετε πρόσβαση στα github αποθετήρια σας, αλλά αν επιλέξετε την online έκδοση τότε θα "εξαπολύσετε" την φοβερή δύναμη του GitHub στα μοντέλα απειλών σας! Προφανώς, για να το κάνετε αυτό θα πρέπει πρώτα να συνδεθείτε.'
     },
     providers: {
@@ -43,9 +43,12 @@ const ell = {
     desktop: {
         file: {
             heading: 'Αρχείο',
+            clearRecentDocs: 'Καθαρισμός ιστορικού',
             close: 'Κλείσιμο Μοντέλου',
-            new: 'New Model',
+            closeWindow: 'Κλείσιμο Παραθύρου',
+            new: 'Νέο Μοντέλο',
             open: 'Άνοιγμα Μοντέλου',
+            recentDocs: 'Άνοιγμα πρόσφατου αρχείου',
             save: 'Αποθήκευση Μοντέλου',
             saveAs: 'Αποθήκευση Μοντέλου ως'
         },
@@ -92,39 +95,39 @@ const ell = {
             addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
             generic: {
                 defaultTitle: 'Νέο γενικό διάγραμμα',
-                defaultDescription: 'New generic diagram description',
+                defaultDescription: 'Περιγραφή νέου γενικού διαγράμματος',
                 select: 'Generic'
             },
             stride: {
                 defaultTitle: 'Νέο διάγραμμα STRIDE',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος STRIDE',
                 select: 'STRIDE'
             },
             linddun: {
                 defaultTitle: 'Νέο διάγραμμα LINDDUN',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος LINDDUN',
                 select: 'LINDDUN'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultTitle: 'Νέο διάγραμμα DIE',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος DIE',
                 select: 'DIE'
             },
             cia: {
                 defaultTitle: 'Νέο διάγραμμα CIA',
-                defaultDescription: 'New CIA diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος CIA',
                 select: 'CIA'
             }
         },
         threats: 'Απειλές',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
+            dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
             invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
+            onlyJsonAllowed: 'Υποστηρίζονται μόνο αρχεία με κατάληξη .json.',
+            open: 'Σφάλμα κατά το άνοιγμα αυτού του μοντέλου απειλών. Ελέγξτε την κονσόλα του προγραμματιστή για περισσότερες πληροφορίες',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        opened: 'Threat model successfully opened',
+        opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
         saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
         properties: {
             title: 'Ιδιότητες',
@@ -133,7 +136,7 @@ const ell = {
             text: 'Κείμενο',
             description: 'Περιγραφή',
             outOfScope: 'Εκτός πεδίου εφαρμογής',
-            bidirection: 'Bidirectional',
+            bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             isALog: 'Είναι αρχείο καταγραφής',
@@ -241,9 +244,9 @@ const ell = {
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'Κατανεμημένο (Distributed)',
+                immutable: 'Αμετάβλητο (Immutable)',
+                ephemeral: 'Εφήμερο (Ephemeral)'
             },
             linddun: {
                 header: '--- LINDDUN ---',
@@ -283,9 +286,9 @@ const ell = {
         newThreatByContext: 'Νέα απειλή βάσει του γενικότερου πλαισίου (Context)',
         properties: {
             description: 'Περιγραφή',
-            mitigation: 'Μέτρα Μετριασμού Κινδύνου (mitigations)',
+            mitigation: 'Μέτρα Περιορισμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
-            number: 'Number',
+            number: 'Αριθμός',
             priority: 'Προτεραιότητα',
             score: 'Σκορ',
             status: 'Κατάσταση',
@@ -308,7 +311,7 @@ const ell = {
             showOutOfScope: 'Εμφάνιση απειλών εκτός πεδίου εφαρμογής',
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
-            showEmpty: 'Show empty elements',
+            showEmpty: 'Προβολή κενών στοιχείων',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',

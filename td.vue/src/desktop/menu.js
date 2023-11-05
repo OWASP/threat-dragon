@@ -49,9 +49,13 @@ export function getMenuTemplate () {
                     }
                 },
                 {
+                    label: messages[language].desktop.file.recentDocs,
                     role: 'recentdocuments',
                     submenu: [
-                        { role: 'clearrecentdocuments' }
+                        {
+                            label: messages[language].desktop.file.clearRecentDocs,
+                            role: 'clearrecentdocuments'
+                        }
                     ]
                 },
                 {
@@ -93,7 +97,10 @@ export function getMenuTemplate () {
                     }
                 },
                 { type: 'separator' },
-                { role: 'close' }
+                {
+                    label: messages[language].desktop.file.closeWindow,
+                    role: 'close'
+                }
             ]
         },
         { role: 'editMenu' },

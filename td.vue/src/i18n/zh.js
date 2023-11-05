@@ -43,9 +43,12 @@ const zho = {
     desktop: {
         file: {
             heading: '文件',
+            clearRecentDocs: 'Clear Menu',
             close: '关闭模型',
+            closeWindow: 'Close Window',
             new: 'New Model',
             open: '打开模型',
+            recentDocs: 'Open Recent',
             save: '保存模型',
             saveAs: '模型另存为'
         },

@@ -43,9 +43,12 @@ const por = {
     desktop: {
         file: {
             heading: 'File',
+            clearRecentDocs: 'Clear Menu',
             close: 'Close Model',
+            closeWindow: 'Close Window',
             new: 'New Model',
             open: 'Open Model',
+            recentDocs: 'Open Recent',
             save: 'Save Model',
             saveAs: 'Save Model As'
         },
