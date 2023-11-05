@@ -43,9 +43,12 @@ const ell = {
     desktop: {
         file: {
             heading: 'Αρχείο',
+            clearRecentDocs: 'Clear Menu',
             close: 'Κλείσιμο Μοντέλου',
+            closeWindow: 'Close Window',
             new: 'Νέο Μοντέλο',
             open: 'Άνοιγμα Μοντέλου',
+            recentDocs: 'Open Recent',
             save: 'Αποθήκευση Μοντέλου',
             saveAs: 'Αποθήκευση Μοντέλου ως'
         },

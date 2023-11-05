@@ -43,9 +43,12 @@ const fra = {
     desktop: {
         file: {
             heading: 'File',
+            clearRecentDocs: 'Clear Menu',
             close: 'Fermer Projet',
+            closeWindow: 'Close Window',
             new: 'New Model',
             open: 'Ouvrir',
+            recentDocs: 'Open Recent',
             save: 'Sauvegarder',
             saveAs: 'Sauvergarder en tant que'
         },
