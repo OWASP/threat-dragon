@@ -8,7 +8,7 @@ const ell = {
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
+        imgAlt: 'Λογότυπο Threat Dragon',
         description: 'Το Threat Dragon είναι ένα δωρεάν, ανοιχτού κώδικα εργαλείο μοντελοποίησης απειλών (threat modeling) του Οργανισμού OWASP. Μπορεί να χρησιμοποιηθεί ως μια αυτόνομη desktop εφαρμογή για Windows, MacOS και Linux ή ως μια web εφαρμογή. Η desktop εφαρμογή είναι ιδανική αν θέλετε να δοκιμάσετε την εφαρμογή χωρίς να της δώσετε πρόσβαση στα github αποθετήρια σας, αλλά αν επιλέξετε την online έκδοση τότε θα "εξαπολύσετε" την φοβερή δύναμη του GitHub στα μοντέλα απειλών σας! Προφανώς, για να το κάνετε αυτό θα πρέπει πρώτα να συνδεθείτε.'
     },
     providers: {
@@ -43,12 +43,12 @@ const ell = {
     desktop: {
         file: {
             heading: 'Αρχείο',
-            clearRecentDocs: 'Clear Menu',
+            clearRecentDocs: 'Καθαρισμός ιστορικού',
             close: 'Κλείσιμο Μοντέλου',
-            closeWindow: 'Close Window',
+            closeWindow: 'Κλείσιμο Παραθύρου',
             new: 'Νέο Μοντέλο',
             open: 'Άνοιγμα Μοντέλου',
-            recentDocs: 'Open Recent',
+            recentDocs: 'Άνοιγμα πρόσφατου αρχείου',
             save: 'Αποθήκευση Μοντέλου',
             saveAs: 'Αποθήκευση Μοντέλου ως'
         },
@@ -95,27 +95,27 @@ const ell = {
             addNewDiagram: 'Προσθέστε ένα νέο διάγραμμα...',
             generic: {
                 defaultTitle: 'Νέο γενικό διάγραμμα',
-                defaultDescription: 'New generic diagram description',
+                defaultDescription: 'Περιγραφή νέου γενικού διαγράμματος',
                 select: 'Generic'
             },
             stride: {
                 defaultTitle: 'Νέο διάγραμμα STRIDE',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος STRIDE',
                 select: 'STRIDE'
             },
             linddun: {
                 defaultTitle: 'Νέο διάγραμμα LINDDUN',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος LINDDUN',
                 select: 'LINDDUN'
             },
             die: {
                 defaultTitle: 'Νέο διάγραμμα DIE',
-                defaultDescription: 'New DIE diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος DIE',
                 select: 'DIE'
             },
             cia: {
                 defaultTitle: 'Νέο διάγραμμα CIA',
-                defaultDescription: 'New CIA diagram description',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος CIA',
                 select: 'CIA'
             }
         },
@@ -244,9 +244,9 @@ const ell = {
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'Κατανεμημένο (Distributed)',
+                immutable: 'Αμετάβλητο (Immutable)',
+                ephemeral: 'Εφήμερο (Ephemeral)'
             },
             linddun: {
                 header: '--- LINDDUN ---',
