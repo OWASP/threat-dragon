@@ -44,7 +44,7 @@ describe('desktop/menu.js', () => {
         const fileItems = menu.getMenuTemplate().find((item) => item.label === 'File');
 
         it('contains the Close role', () => {
-            const closeRole = {'role': 'close'};
+            const closeRole = {'label': 'Close Window', 'role': 'close'};
             expect(fileItems.submenu).toContainEqual(closeRole);
         });
 
@@ -54,7 +54,11 @@ describe('desktop/menu.js', () => {
         });
 
         it('contains recent items', () => {
-            const recentItems = {'role': 'recentdocuments', 'submenu': [{'role': 'clearrecentdocuments'}]};
+            const recentItems = {
+                'label': 'Open Recent',
+                'role': 'recentdocuments',
+                'submenu': [{'label': 'Clear Menu', 'role': 'clearrecentdocuments'}]
+            };
             expect(fileItems.submenu).toContainEqual(recentItems);
         });
 
