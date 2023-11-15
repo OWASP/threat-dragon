@@ -48,11 +48,10 @@
             icon="times"
             :text="$t('forms.close')" />
             
-        <td-form-button
-            :isPrimary="true"
-            :onBtnClick="save"
-            icon="save"
-            :text="$t('forms.save')" />
+        <b-dropdown right :isPrimary="true" icon="save" :text="$t('forms.save')">
+            <b-dropdown-item-button :text="$t('forms.savetd')" icon="savetd" @click="savetd">{{$t('forms.savetd')}}</b-dropdown-item-button>
+            <b-dropdown-item-button :text="$t('forms.saveotm')" icon="saveotm" @click="saveotm">{{$t('forms.saveotm')}}</b-dropdown-item-button>
+        </b-dropdown>
 
     </b-btn-group>
 </template>
@@ -76,8 +75,11 @@ export default {
         }
     },
     methods: {
-        save() {
-            this.$emit('saved');
+        savetd() {
+            this.$emit('savedtd');
+        },
+        saveotm() {
+            this.$emit('savedotm');
         },
         async closeDiagram() {
             this.$emit('closed');

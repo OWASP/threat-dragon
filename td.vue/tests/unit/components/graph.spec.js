@@ -115,8 +115,14 @@ describe('components/GraphButtons.vue', () => {
         expect(threatEditStub.methods.editThreat).toHaveBeenCalledWith('asdf');
     });
 
-    it('saves the threat model diagram', () => {
-        wrapper.vm.saved();
+    it('saves the threat model diagram in td format', () => {
+        wrapper.vm.savedtd();
+        expect(storeMock.dispatch)
+            .toHaveBeenCalledWith(tmActions.diagramUpdated, expect.anything());
+    });
+
+    it('saves the threat model diagram in otm format', () => {
+        wrapper.vm.savedotm();
         expect(storeMock.dispatch)
             .toHaveBeenCalledWith(tmActions.diagramUpdated, expect.anything());
     });

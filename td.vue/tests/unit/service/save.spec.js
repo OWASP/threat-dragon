@@ -3,6 +3,7 @@ import save from '@/service/save.js';
 describe('service/save.js', () => {
     const data = { foo: 'bar' };
     const name = 'test.json';
+    const format = 'td';
     
     describe('local', () => {
 
@@ -16,7 +17,7 @@ describe('service/save.js', () => {
                 createObjectURL: jest.fn()
             };
             document.createElement = jest.fn().mockReturnValue(mockAnchor);
-            save.local(data, name);
+            save.local(data, name, format);
         });
 
         it('creates the object url', () => {

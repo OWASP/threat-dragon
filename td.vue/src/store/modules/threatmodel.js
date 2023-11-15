@@ -119,7 +119,7 @@ const actions = {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
+                save.local(state.data, `${state.data.summary.title}.json`, state.format);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
                 await window.electronAPI.modelSaved(state.data, state.fileName);
@@ -161,6 +161,7 @@ const mutations = {
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
+        Vue.set(state, 'format', diagram.format)
         console.debug('Threatmodel diagram updated: ' + diagram.id + ' at index: ' + idx);
         setThreatModel(state, state.data);
     },

@@ -227,6 +227,8 @@ const eng = {
         remove: 'Remove',
         report: 'Report',
         save: 'Save',
+        savetd: 'Threat Dragon Format',
+        saveotm: 'OTM Format',
         saveAs: 'Save As',
         saveHtml: 'Save HTML',
         saveModel: 'Save Model',
