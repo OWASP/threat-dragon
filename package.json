@@ -38,7 +38,8 @@
     "STRIDE",
     "LINDDUN",
     "CIA",
-    "DIE"
+    "DIE",
+    "PLOT4ai"
   ],
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {

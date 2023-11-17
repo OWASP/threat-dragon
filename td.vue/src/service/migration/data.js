@@ -22,11 +22,16 @@ const applyThreatData = (cell, data) => {
         data.outOfScope = !!cell.outOfScope;
         data.reasonOutOfScope = cell.reasonOutOfScope || '';
         data.threats = cell.threats || [];
+	console.debug('DATA THREATS:');
+        console.debug(data.threats);
         if (data.threats.length) {
             data.threats.forEach((threat) => {
+		console.debug(threat)
+		console.debug(threat.type)
                 threat.modelType = threats.getModelByTranslation(
                     threats.convertToTranslationString(threat.type)
                 );
+		console.debug(threat.modelType)
                 if (!threat.id) {
                     threat.id = v4();
                 }

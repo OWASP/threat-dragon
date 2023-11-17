@@ -19,7 +19,22 @@ const valuesToTranslations = {
     'Disclosure of information': 'threats.model.linddun.disclosureOfInformation',
     Unawareness: 'threats.model.linddun.unawareness',
     'Non-compliance': 'threats.model.linddun.nonCompliance',
-
+/**
+ * @todo : the current structure doesn´t allow frameworks to have categories with the same name.
+ * This is a problem for plot4ai & linddun.
+ * However, since this mapping object seems to be used only for migration and plot4ai didn´t exist
+ * when version 1 was current, it should not be a problem that plot4ai is not added here
+ *
+ *
+    'Technique & Processes': 'threats.model.plot4ai.techniqueProcesses',
+    'Accessibility': 'threats.model.plot4ai.accessibility',
+    'Identifiability & Linkability': 'threats.model.plot4ai.identifiabilityLinkability',
+    Security: 'threats.model.plot4ai.security',
+    Safety: 'threats.model.plot4ai.safety',
+    Unawareness: 'threats.model.plot4ai.unawareness',
+    'Ethics & Human Rights': 'threats.model.plot4ai.ethicsHumanRights',
+    'Non-compliance': 'threats.model.plot4ai.nonCompliance'
+*/
     Spoofing: 'threats.model.stride.spoofing',
     Tampering: 'threats.model.stride.tampering',
     Repudiation: 'threats.model.stride.repudiation',
@@ -51,6 +66,15 @@ export const createNewTypedThreat = function (modelType, cellType) {
     case 'LINDDUN':
         title = tc('threats.generic.linddun');
         type = tc('threats.model.linddun.linkability');
+        break;
+
+    case 'PLOT4ai':
+        title = tc('threats.generic.plot4ai');
+        if (cellType === 'tm.Actor') {
+            type = tc('threats.model.plot4ai.accessibility');
+        } else {
+            type = tc('threats.model.plot4ai.techniqueProcesses');
+        }
         break;
 
     case 'STRIDE':

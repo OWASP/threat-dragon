@@ -207,6 +207,7 @@ export default {
                 'CIA',
                 'DIE',
                 'LINDDUN',
+                'PLOT4ai',
                 'STRIDE'
             ],
             newThreat: true,

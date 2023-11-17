@@ -108,6 +108,11 @@ const deu = {
                 defaultDescription: 'Neue LINDDUN Diagramm Beschreibung',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'Neues PLOT4ai Diagramm',
+                defaultDescription: 'Neue PLOT4ai Diagramm Beschreibung',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'New DIE diagram',
                 defaultDescription: 'New DIE diagram description',
@@ -258,6 +263,17 @@ const deu = {
                 unawareness: 'Unawareness',
                 nonCompliance: 'Non-compliance'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---', //translation according to https://learn.microsoft.com/de-de/azure/security/develop/threat-modeling-tool-threats
                 spoofing: 'Spoofing',
@@ -273,6 +289,7 @@ const deu = {
             cia: 'Neue CIA Bedrohung',
             die: 'Neue DIE Bedrohung',
             linddun: 'Neue LINDDUN Bedrohung',
+            plot4ai: 'Neue PLOT4ai Bedrohung',
             stride: 'Neue STRIDE Bedrohung'
         },
         edit: 'Bedrohung bearbeiten',
