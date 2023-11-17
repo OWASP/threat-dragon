@@ -108,6 +108,7 @@
 !td.vue/tests/unit/service/migration/
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/threats/
+!td.vue/tests/unit/service/threats/models/
 !td.vue/tests/unit/service/x6/
 !td.vue/tests/unit/service/x6/graph/
 !td.vue/tests/unit/service/x6/shapes/
