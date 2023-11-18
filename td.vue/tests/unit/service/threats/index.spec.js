@@ -72,8 +72,8 @@ describe('service/threats/index.js', () => {
             expect(threat.title).toEqual('New PLOT4ai threat');
         });
 
-        it('has Security type', () => {
-            expect(threat.type).toEqual('Security');
+        it('has Technique & Processes type', () => {
+            expect(threat.type).toEqual('Technique & Processes');
         });
 
         it('has a PLOT4ai modelType', () => {

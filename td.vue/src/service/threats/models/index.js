@@ -119,7 +119,6 @@ const getThreatTypesByElement = (modelType, cellType) => {
         types = generic;
         break;
     }
-console.debug(types)
     return types;
 };
 
