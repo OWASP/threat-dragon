@@ -156,8 +156,11 @@ describe('service/threats/index.js', () => {
     });
 
     /**
-     * @todo this structure doesn´t accomodate for the fact that frameworks can have
+     * This structure doesn´t accomodate for the fact that frameworks can have
      * categories with the same name. This is problem for plot4ai & linddun.
+     * However, this functionality is only used in the v1->v2 migration flow and it is unlikely
+     * to find plot4ai in v1 json files (due to it's recent addition).
+     * PLOT4ai has therefor not been added to these unit-tests
      */
     describe('convertToTranslationString', () => {
 

@@ -4,31 +4,28 @@ import linddun from './linddun.js';
 import plot4ai from './plot4ai.js';
 import stride from './stride.js';
 
-// do it this way to 'persuade' generic to be in the right order
+const swapKeyValuePairs = (obj) => {
+    let swappedObj = {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            swappedObj[obj[key]] = key;
+        }
+    }
+    return swappedObj;
+}
 /**
- * @todo : this object needs to be changed. When different framework have the same category, it clashes
- * This is currently the case with LINDDUN and PLOT4ai:
- *
- * Object { 
- *   ..: "..."
- *   unawareness: "threats.model.plot4ai.unawareness"
- *   }
- *
- * Object { 
- *   ..: "..."
- *   unawareness: "threats.model.linddun.unawareness"
- *   }
- *
- * This is only a problem when there is no modelType though.
- * Note that when this object changes, the types object returned by getThreatTypesByElement also needs to be changed for the individual model
+ * below, we're swapping the key-value pairs, because the current objects might have keys that are the same
+ * (in fact, linddun and plot4ai share two keys / categories)
+ * Because we're doing this, we will also swap the return object from getThreatTypesByElement(), to be consistent 
  */
 const generic = Object.assign(
-    Object.assign({ strideHeader: 'threats.model.stride.header' }, stride.all),
-    Object.assign({ ciaHeader: 'threats.model.cia.header' }, cia),
-    Object.assign({ dieHeader: 'threats.model.die.header' }, die),
-    Object.assign({ linddunHeader: 'threats.model.linddun.header' }, linddun.all),
-    Object.assign({ plot4aiHeader: 'threats.model.plot4ai.header' }, plot4ai.all)
+    Object.assign({ 'threats.model.stride.header': 'strideHeader' }, swapKeyValuePairs(stride.all)),
+    Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
+    Object.assign({ 'threats.model.die.header': 'dieHeader' }, swapKeyValuePairs(die)),
+    Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
+    Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
 );
+
 
 const getByTranslationValue = (translation) => {
     if (!translation) {
@@ -116,13 +113,20 @@ const getThreatTypesByElement = (modelType, cellType) => {
         break;
 
     default:
-        types = generic;
+	return generic;
         break;
     }
-    return types;
+    /**
+     * swapping the key-value pairs of types to be consistent with how generic (returned as default)
+     * is formed
+     */
+    return swapKeyValuePairs(types);
 };
+
+const allModels = ['CIA', 'DIE', 'LINDDUN', 'PLOT4ai', 'STRIDE']
 
 export default {
     getByTranslationValue,
-    getThreatTypesByElement
+    getThreatTypesByElement,
+    allModels
 };

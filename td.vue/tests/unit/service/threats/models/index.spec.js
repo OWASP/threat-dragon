@@ -1,11 +1,7 @@
 import models from '@/service/threats/models/index.js';
 
 describe('service/threats/models/index.js', () => {
-    /**
-     * @todo : this might not be a good idea to keep.
-     * Framework can have categories with the same name, therefor it is impossible
-     * to determine the model based on the category name
-     */
+
     describe('getByTranslationValue', () => {
 
         it('identifies a CIA threat', () => {
@@ -126,13 +122,9 @@ describe('service/threats/models/index.js', () => {
             expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Flow'))).toHaveLength(3);
         });
 
-	/**
-	 * @todo : this should +2 when the generic type is fixed
-	 * Currently two categories from plot4ai are missing because they clash with linddun
-	 */
         it('returns all threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(30);
+            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(32);
         });
     });
 });

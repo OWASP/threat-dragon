@@ -24,9 +24,14 @@ const applyThreatData = (cell, data) => {
         data.threats = cell.threats || [];
         if (data.threats.length) {
             data.threats.forEach((threat) => {
-                threat.modelType = threats.getModelByTranslation(
-                    threats.convertToTranslationString(threat.type)
-                );
+                if (cell.modelType) {
+                    threat.modelType = cell.modelType;
+		}
+                else {
+                    threat.modelType = threats.getModelByTranslation(
+                        threats.convertToTranslationString(threat.type)
+                    );
+                }
                 if (!threat.id) {
                     threat.id = v4();
                 }
