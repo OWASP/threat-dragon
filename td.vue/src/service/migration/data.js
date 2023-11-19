@@ -26,7 +26,7 @@ const applyThreatData = (cell, data) => {
             data.threats.forEach((threat) => {
                 if (cell.modelType) {
                     threat.modelType = cell.modelType;
-		}
+                }
                 else {
                     threat.modelType = threats.getModelByTranslation(
                         threats.convertToTranslationString(threat.type)

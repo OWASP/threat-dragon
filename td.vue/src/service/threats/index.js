@@ -20,7 +20,7 @@ const valuesToTranslations = {
     'Disclosure of information': 'threats.model.linddun.disclosureOfInformation',
     Unawareness: 'threats.model.linddun.unawareness',
     'Non-compliance': 'threats.model.linddun.nonCompliance',
-/**
+    /**
  * PLOT4ai is intentionally not added here.
  *
  * The current structure doesn´t allow frameworks to have categories with the same name. This is a problem for plot4ai & linddun,

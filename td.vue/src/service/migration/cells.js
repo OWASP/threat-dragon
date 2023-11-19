@@ -54,9 +54,9 @@ const map = (diagram) => {
     }
 
     diagram.diagramJson.cells.forEach((cell) => {
-	if (diagram.diagramType && models.allModels.includes(diagram.diagramType)) {
-            cell.modelType = diagram.diagramType
-	}
+        if (diagram.diagramType && models.allModels.includes(diagram.diagramType)) {
+            cell.modelType = diagram.diagramType;
+        }
         const { isNode, mapper } = getCellConverter()[cell.type];
         const entity = mapper(cell);
         const arr = isNode ? resp.nodes : resp.edges;

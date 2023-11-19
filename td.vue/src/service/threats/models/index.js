@@ -7,12 +7,12 @@ import stride from './stride.js';
 const swapKeyValuePairs = (obj) => {
     let swappedObj = {};
     for (let key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
             swappedObj[obj[key]] = key;
         }
     }
     return swappedObj;
-}
+};
 /**
  * below, we're swapping the key-value pairs, because the current objects might have keys that are the same
  * (in fact, linddun and plot4ai share two keys / categories)
@@ -113,8 +113,7 @@ const getThreatTypesByElement = (modelType, cellType) => {
         break;
 
     default:
-	return generic;
-        break;
+        return generic;
     }
     /**
      * swapping the key-value pairs of types to be consistent with how generic (returned as default)
@@ -123,7 +122,7 @@ const getThreatTypesByElement = (modelType, cellType) => {
     return swapKeyValuePairs(types);
 };
 
-const allModels = ['CIA', 'DIE', 'LINDDUN', 'PLOT4ai', 'STRIDE']
+const allModels = ['CIA', 'DIE', 'LINDDUN', 'PLOT4ai', 'STRIDE'];
 
 export default {
     getByTranslationValue,
