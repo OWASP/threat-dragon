@@ -33,7 +33,7 @@ import {
     faDiagramProject
 } from '@fortawesome/free-solid-svg-icons';
 
-import { faGithub, faVuejs } from '@fortawesome/free-brands-svg-icons';
+import {faBitbucket, faGithub, faVuejs} from '@fortawesome/free-brands-svg-icons';
 
 // Add icons to the library for use
 library.add(
@@ -41,6 +41,7 @@ library.add(
     faQuestionCircle,
     faGift,
     faGithub,
+    faBitbucket,
     faVuejs,
     faPlus,
     faCloudDownloadAlt,

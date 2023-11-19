@@ -20,6 +20,10 @@ const hin = {
             displayName: 'GitHub',
             loginWith: 'से लोगिन करें'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'से लोगिन करें'
+        },
         local: {
             displayName: 'स्थानीय सत्र',
             loginWith: 'से लोगिन करें'

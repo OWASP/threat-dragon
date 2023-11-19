@@ -11,8 +11,8 @@ class GithubEnv extends Env {
 
     get properties () {
         return [
-            { key: 'CLIENT_ID', required: true },
-            { key: 'CLIENT_SECRET', required: true },
+            { key: 'CLIENT_ID', required: false },
+            { key: 'CLIENT_SECRET', required: false },
             { key: 'SCOPE', required: false },
             { key: 'ENTERPRISE_HOSTNAME', required: false },
             { key: 'ENTERPRISE_PROTOCOL', required: false },

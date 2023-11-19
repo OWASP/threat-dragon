@@ -20,6 +20,10 @@ const por = {
             displayName: 'GitHub',
             loginWith: 'Login com'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Login com'
+        },
         local: {
             displayName: 'Sessão Local',
             loginWith: 'Login com'

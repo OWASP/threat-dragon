@@ -20,6 +20,10 @@ const fin = {
             displayName: 'GitHubilla',
             loginWith: 'Kirjaudu sisään'
         },
+        bitbucket: {
+            displayName: 'Bitbucketissa',
+            loginWith: 'Kirjaudu sisään'
+        },
         local: {
             displayName: 'paikallisesti',
             loginWith: 'Kirjaudu sisään'

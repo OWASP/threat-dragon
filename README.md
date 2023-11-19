@@ -47,7 +47,7 @@ Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
 
 Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases),
-with threat model files stored in GitHub. Over time other storage methods will become available.
+with threat model files stored in GitHub or Bitbucket. Over time other storage methods will become available.
 
 There are [desktop versions](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
 which store the threat model files on the local filesystem rather than in a repository.
@@ -83,8 +83,8 @@ The web application variant of Threat Dragon requires some environment variables
 follow [the documentation](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to set these variables.
 
-The Threat Dragon web application uses GitHub to store threat models,
-so you need to go to your GitHub account and register it as a GitHub application.
+The Threat Dragon web application uses GitHub or Bitbucket to store threat models,
+so you need to go to your GitHub or Bitbucket account and register it as a GitHub application.
 There is a [step by step guide](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to do this. Github Enterprise is also supported.
 

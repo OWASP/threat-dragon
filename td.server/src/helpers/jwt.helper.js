@@ -42,6 +42,7 @@ const verifyToken = (token) => decode(token, env.get().config.ENCRYPTION_JWT_SIG
 
 const verifyRefresh = (token) => decode(token, env.get().config.ENCRYPTION_JWT_REFRESH_SIGNING_KEY);
 
+
 export default {
     createAsync,
     verifyToken,

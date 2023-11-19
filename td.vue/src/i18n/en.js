@@ -20,6 +20,10 @@ const eng = {
             displayName: 'GitHub',
             loginWith: 'Login with'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Login with'
+        },
         local: {
             displayName: 'Local Session',
             loginWith: 'Login to'

@@ -44,7 +44,10 @@
 
 # Express server
 !td.server
+!td.server/src/**/*.js
+!td.server/test/**/*.js
 !td.server/**/*.js
+!td.server/**/**/*.js
 !td.server/.babelrc
 !td.server/README.md
 !td.server/package.json
@@ -59,7 +62,6 @@
 !td.vue/src/
 !td.vue/src/assets/*.jpg
 !td.vue/src/assets/*.svg
-!td.vue/src/components/
 !td.vue/src/components/
 !td.vue/src/components/printed-report/
 !td.vue/src/components/report/
