@@ -58,6 +58,7 @@ import { mapState } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
+import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';

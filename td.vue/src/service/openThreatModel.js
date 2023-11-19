@@ -77,16 +77,16 @@ const convertTDtoOTM = (data) => {
             }
 
             store.representations = [];
-            var rep = new Object();
-            rep.id = cell.id;
-            rep.name = cell.data.type;
-            rep.position = new Object();
-            rep.position.x = cell.position.x;
-            rep.position.y = cell.position.y;
-            rep.size = new Object();
-            rep.size.width = cell.size.width;
-            rep.size.height = cell.size.height;
-            store.representations.push(rep);
+            var storeRep = new Object();
+            storeRep.id = cell.id;
+            storeRep.name = cell.data.type;
+            storeRep.position = new Object();
+            storeRep.position.x = cell.position.x;
+            storeRep.position.y = cell.position.y;
+            storeRep.size = new Object();
+            storeRep.size.width = cell.size.width;
+            storeRep.size.height = cell.size.height;
+            store.representations.push(storeRep);
 
             otm.components.push(store);
         }
@@ -119,16 +119,16 @@ const convertTDtoOTM = (data) => {
             }
 
             actor.representations = [];
-            var rep = new Object();
-            rep.id = cell.id;
-            rep.name = cell.data.type;
-            rep.position = new Object();
-            rep.position.x = cell.position.x;
-            rep.position.y = cell.position.y;
-            rep.size = new Object();
-            rep.size.width = cell.size.width;
-            rep.size.height = cell.size.height;
-            actor.representations.push(rep);
+            var actorRep = new Object();
+            actorRep.id = cell.id;
+            actorRep.name = cell.data.type;
+            actorRep.position = new Object();
+            actorRep.position.x = cell.position.x;
+            actorRep.position.y = cell.position.y;
+            actorRep.size = new Object();
+            actorRep.size.width = cell.size.width;
+            actorRep.size.height = cell.size.height;
+            actor.representations.push(actorRep);
 
             otm.components.push(actor);
         }
@@ -160,16 +160,16 @@ const convertTDtoOTM = (data) => {
             }
 
             process.representations = [];
-            var rep = new Object();
-            rep.id = cell.id;
-            rep.name = cell.data.type;
-            rep.position = new Object();
-            rep.position.x = cell.position.x;
-            rep.position.y = cell.position.y;
-            rep.size = new Object();
-            rep.size.width = cell.size.width;
-            rep.size.height = cell.size.height;
-            process.representations.push(rep);
+            var processRep = new Object();
+            processRep.id = cell.id;
+            processRep.name = cell.data.type;
+            processRep.position = new Object();
+            processRep.position.x = cell.position.x;
+            processRep.position.y = cell.position.y;
+            processRep.size = new Object();
+            processRep.size.width = cell.size.width;
+            processRep.size.height = cell.size.height;
+            process.representations.push(processRep);
 
             otm.components.push(process);
         }
@@ -209,10 +209,10 @@ const convertTDtoOTM = (data) => {
             }
 
             flow.representations = [];
-            var rep = new Object();
-            rep.id = cell.id;
-            rep.name = cell.data.type;
-            flow.representations.push(rep);
+            var flowRep = new Object();
+            flowRep.id = cell.id;
+            flowRep.name = cell.data.type;
+            flow.representations.push(flowRep);
 
             otm.dataflows.push(flow);
         }
