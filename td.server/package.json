@@ -3,6 +3,7 @@
   "version": "2.1.1",
   "private": true,
   "scripts": {
+    "audit": "npm audit",
     "build": "npm-run-all clean:dist transpile",
     "clean": "rimraf --glob *.log .nyc_output/ coverage/ dist/ node_modules/",
     "clean:dist": "rimraf dist",
@@ -70,12 +71,13 @@
   },
 
   "overrides": {
+    "@achrinza/node-ipc": ">=10.1.10",
     "@babel/traverse": ">=7.23.2",
     "debug@<3.1.0": ">=4.3.4",
     "follow-redirects": ">=1.14.8",
     "got": ">=11.8.5",
     "minimatch@<3.0.5": ">=3.0.5",
-    "node-ipc": ">=10.1.7",
+    "node-ipc": ">=11.1.0",
     "systeminformation@<5.21.8": ">=5.21.8",
     "tough-cookie@<4.1.3": ">=4.1.3",
     "vm2@<3.9.16": ">=3.9.19"
