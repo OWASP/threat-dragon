@@ -88,7 +88,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.5.1",
     "bootstrap": "^4.6.1",
-    "browserstack-cypress-cli": "^1.19.2",
+    "browserstack-cypress-cli": "^1.26.2",
     "chromedriver": "^104.0.0",
     "cypress": "^13.2.0",
     "electron": "^26.3.0",
