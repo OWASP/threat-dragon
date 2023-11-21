@@ -180,7 +180,7 @@ export default {
             const res = [];
             const threatTypes = threatModels.getThreatTypesByElement(this.threat.modelType, this.cellRef.data.type);
             Object.keys(threatTypes).forEach((type) => {
-                res.push(this.$t(threatTypes[type]));
+                res.push(this.$t(type));
             }, this);
             return res;
         },
@@ -207,6 +207,7 @@ export default {
                 'CIA',
                 'DIE',
                 'LINDDUN',
+                'PLOT4ai',
                 'STRIDE'
             ],
             newThreat: true,

@@ -1,6 +1,7 @@
 import models from '@/service/threats/models/index.js';
 
 describe('service/threats/models/index.js', () => {
+
     describe('getByTranslationValue', () => {
 
         it('identifies a CIA threat', () => {
@@ -13,9 +14,14 @@ describe('service/threats/models/index.js', () => {
                 .toEqual('DIE');
         });
 
-        it('identifies a LINDUN threat', () => {
+        it('identifies a LINDDUN threat', () => {
             expect(models.getByTranslationValue('threats.model.linddun.linkability'))
                 .toEqual('LINDDUN');
+        });
+
+        it('identifies a PLOT4ai threat', () => {
+            expect(models.getByTranslationValue('threats.model.plot4ai.safety'))
+                .toEqual('PLOT4ai');
         });
 
         it('identifies a STRIDE threat', () => {
@@ -84,6 +90,22 @@ describe('service/threats/models/index.js', () => {
             expect(Object.keys(models.getThreatTypesByElement('linddun', 'tm.Flow'))).toHaveLength(6);
         });
 
+        it('gets the PLOT4ai Actor threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('plot4ai', 'tm.Actor'))).toHaveLength(6);
+        });
+
+        it('gets the PLOT4ai Process threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('plot4ai', 'tm.Process'))).toHaveLength(5);
+        });
+
+        it('gets the PLOT4ai Store threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('plot4ai', 'tm.Store'))).toHaveLength(5);
+        });
+
+        it('gets the PLOT4ai DataFlow threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('plot4ai', 'tm.Flow'))).toHaveLength(4);
+        });
+
         it('gets the STRIDE Actor threat types', () => {
             expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Actor'))).toHaveLength(2);
         });
@@ -102,7 +124,7 @@ describe('service/threats/models/index.js', () => {
 
         it('returns all threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(23);
+            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(32);
         });
     });
 });

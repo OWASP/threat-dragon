@@ -102,4 +102,25 @@ describe('service/migration/data.js', () => {
         
         expect(res.data.threats[0].id).toEqual(threatId);
     });
+
+    it('copies a valid modelType from the cell to the threat', () => {
+        const threatId = '1234567';
+        cell = getCell();
+        cell.type = 'tm.Process';
+        cell.modelType = 'LINDDUN';
+        cell.threats = [{ type: 'Foo', id: threatId }];
+        res = data.map({}, cell);
+        
+        expect(res.data.threats[0].modelType).toEqual('LINDDUN');
+    });
+
+    it('uses the threat-type to determine the modelType when the cell does not contain a modelType', () => {
+        const threatId = '1234567';
+        cell = getCell();
+        cell.type = 'tm.Process';
+        cell.threats = [{ type: 'Linkability', id: threatId }];
+        res = data.map({}, cell);
+        
+        expect(res.data.threats[0].modelType).toEqual('LINDDUN');
+    });
 });

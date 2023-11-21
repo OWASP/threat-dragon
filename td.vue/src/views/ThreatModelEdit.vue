@@ -108,6 +108,7 @@
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'DIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'PLOT4ai')">{{ $t('threatmodel.diagram.plot4ai.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
@@ -284,6 +285,12 @@ export default {
 	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
 	                break;
 
+	            case 'PLOT4ai':
+	                thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
+	                break;
+
 	            case 'STRIDE':
 	                thumbnail = './public/content/images/thumbnail.stride.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
@@ -303,6 +310,7 @@ export default {
             if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.die.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.plot4ai.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
             ) {

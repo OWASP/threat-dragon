@@ -108,6 +108,11 @@ const spa = {
                 defaultDescription: 'Descripción de nuevo diagrama LINDDUN',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'Nuevo diagrama PLOT4ai',
+                defaultDescription: 'Descripción de nuevo diagrama PLOT4ai',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'New DIE diagram',
                 defaultDescription: 'New DIE diagram description',
@@ -258,6 +263,17 @@ const spa = {
                 unawareness: 'Unawareness / Falta de Conciencia',
                 nonCompliance: 'Non-compliance / Incumplimiento'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: 'Spoofing / Spoofing',
@@ -273,6 +289,7 @@ const spa = {
             cia: 'Nueva amenaza CIA',
             die: 'Nueva amenaza DIE',
             linddun: 'Nueva amenaza LINDDUN',
+            plot4ai: 'Nueva amenaza PLOT4ai',
             stride: 'Nueva amenaza STRIDE'
         },
         edit: 'Editar amenaza',
