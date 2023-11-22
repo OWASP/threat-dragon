@@ -104,6 +104,7 @@ const cellSelected = (graph) => ({ cell }) => {
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
+    dataChanged.upgradeProperties(cell);
 };
 
 const cellUnselected = ({ cell }) => {
