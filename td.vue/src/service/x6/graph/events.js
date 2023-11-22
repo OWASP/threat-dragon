@@ -32,6 +32,9 @@ const mouseEnter = ({ cell }) => {
 };
 
 const cellAdded = (graph) => ({ cell }) => {
+    graph.resetSelection(cell);
+    console.debug('cell added with shape: ', cell.shape);
+
     if (cell.convertToEdge) {
         let edge = cell;
         const position = cell.position();
@@ -76,7 +79,7 @@ const cellAdded = (graph) => ({ cell }) => {
 };
 
 const cellDeleted = () => {
-    console.debug('cell deleted: ');
+    console.debug('cell deleted');
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 

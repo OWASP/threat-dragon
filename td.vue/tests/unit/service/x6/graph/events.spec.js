@@ -12,8 +12,9 @@ describe('service/x6/graph/events.js', () => {
         store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
             evts: {},
+            off: jest.fn(),
             on: function(evt, cb) { this.evts[evt] = cb; },
-            off: jest.fn()
+            resetSelection: jest.fn()
         };
         jest.spyOn(graph, 'on');
         cell = {
