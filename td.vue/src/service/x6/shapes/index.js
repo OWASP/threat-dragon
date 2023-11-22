@@ -10,6 +10,9 @@ import { TrustBoundaryBox } from './trust-boundary-box.js';
 import { TrustBoundaryCurve } from './trust-boundary-curve.js';
 import { TrustBoundaryCurveStencil } from './trust-boundary-curve-stencil.js';
 
+// this looks and is wrong, but a lot of existing models have this typo, so make compatible
+Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
+
 Graph.registerNode('actor', ActorShape);
 Graph.registerNode('flow', Flow);
 Graph.registerNode('process', ProcessShape);
@@ -17,9 +20,6 @@ Graph.registerNode('store', StoreShape);
 Graph.registerNode('td-text-block', TextBlock);
 Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
 Graph.registerNode('trust-boundary-curve', TrustBoundaryCurve);
-
-// this looks and is wrong, but a lot of existing models have this typo, so make compatible
-Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
 
 export default {
     ActorShape,

@@ -5,7 +5,9 @@
 
 import store from '@/store/index.js';
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
 import threats from '@/service/threats/index.js';
+import defaultProperties from '@/service/entity/default-properties.js';
 
 const styles = {
     default: {
@@ -40,6 +42,7 @@ const updateStyleAttrs = (cell) => {
     if (cell.data) {
         cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
+        store.get().dispatch(THREATMODEL_MODIFIED);
     }
 
     let { color, strokeDasharray, strokeWidth, sourceMarker } = styles.default;
@@ -73,16 +76,58 @@ const updateName = (cell) => {
 };
 
 const updateProperties = (cell) => {
-    if (!!cell && !!cell.data) {
-        console.debug('Update property for cell: ' + cell.getData().name);
+    if (cell) {
+        if (cell.data) {
+            console.debug('Update properties for cell: ' + cell.getData().name);
+        } else {
+            if (cell.isEdge()) {
+                cell.type = defaultProperties.flow.type;
+                console.debug('Edge cell given type: ' + cell.type);
+            }
+            cell.setData(defaultProperties.getByType(cell.type));
+            console.debug('Setting properties for cell: ' + cell.getData().name);
+        }
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
+        store.get().dispatch(THREATMODEL_MODIFIED);
     } else {
         console.debug('No cell data to update');
+    }
+};
+
+// future modifications to the list of properties applied to cells that may not have them
+const upgradeProperties = (cell) => {
+    // fundamentally the shape is the only constant identifier
+    switch (cell.shape) {
+	    case 'actor':
+        cell.data.type = 'tm.Actor';
+        break;
+	    case 'store':
+        cell.data.type = 'tm.Store';
+        break;
+	    case 'process':
+        cell.data.type = 'tm.Process';
+        break;
+	    case 'flow':
+        cell.data.type = 'tm.Flow';
+        break;
+	    case 'trust-boundary-box':
+        cell.data.type = 'tm.BoundaryBox';
+        break;
+	    case 'trust-boundary-curve':
+	    case 'trust-broundary-curve':
+        cell.data.type = 'tm.Boundary';
+        break;
+	    case 'td-text-block':
+        cell.data.type = 'tm.Text';
+        break;
+    default:
+        console.debug('Unrecognized shape');
     }
 };
 
 export default {
     updateName,
     updateStyleAttrs,
-    updateProperties
+    updateProperties,
+    upgradeProperties
 };

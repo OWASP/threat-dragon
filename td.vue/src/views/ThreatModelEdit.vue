@@ -260,6 +260,7 @@ export default {
             };
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
+            this.$store.dispatch(tmActions.modified);
         },
         onDiagramTypeClick(idx, type) {
             let defaultTitle;
@@ -316,9 +317,11 @@ export default {
             ) {
                 this.model.detail.diagrams[idx].title = defaultTitle;
             }
+            this.$store.dispatch(tmActions.modified);
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
+            this.$store.dispatch(tmActions.modified);
         },
         onModifyModel() {
             this.$store.dispatch(tmActions.modified);
