@@ -3,7 +3,6 @@
  * @description Event listeners for the graph
  */
 import dataChanged from './data-changed.js';
-import defaultProperties from '@/service/entity/default-properties.js';
 import store from '@/store/index.js';
 import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
@@ -66,15 +65,9 @@ const cellAdded = (graph) => ({ cell }) => {
         cell.zIndex = -1;
     }
 
-    dataChanged.updateStyleAttrs(cell);
-    if (!cell.data) {
-        if (cell.isEdge()) {
-            cell.type = defaultProperties.flow.type;
-            console.debug('edge cell given type: ' + cell.type);
-        }
-        cell.setData(defaultProperties.getByType(cell.type));
-    }
     store.get().dispatch(CELL_SELECTED, cell);
+    dataChanged.updateProperties(cell);
+    dataChanged.updateStyleAttrs(cell);
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
@@ -83,7 +76,8 @@ const cellDeleted = () => {
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
-const cellSelected = ({ cell }) => {
+const cellSelected = (graph) => ({ cell }) => {
+    graph.resetSelection(cell);
     // try and get the cell name
     if (cell.data) {
         if (cell.isNode()) {
@@ -109,6 +103,7 @@ const cellSelected = ({ cell }) => {
     }
 
     store.get().dispatch(CELL_SELECTED, cell);
+    dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
@@ -142,7 +137,8 @@ const nodeAddFlow = (graph) => ({ node }) => {
             }
         };
         console.debug('add data flow to node id:' + node.id);
-        graph.addEdge(new shapes.Flow(config));
+        let cell = graph.addEdge(new shapes.Flow(config));
+        graph.resetSelection(cell);
     }
 };
 
@@ -155,7 +151,7 @@ const listen = (graph) => {
     graph.on('cell:added', cellAdded(graph));
     graph.on('cell:removed', cellDeleted);
     graph.on('cell:change:data', cellDataChanged);
-    graph.on('cell:selected', cellSelected);
+    graph.on('cell:selected', cellSelected(graph));
     graph.on('cell:unselected', cellUnselected);
     graph.on('node:dblclick', nodeAddFlow(graph));
     graph.on('node:move', cellSelected);
@@ -170,7 +166,7 @@ const removeListeners = (graph) => {
     graph.off('cell:added', cellAdded(graph));
     graph.off('cell:removed', cellDeleted);
     graph.off('cell:change:data', cellDataChanged);
-    graph.off('cell:selected', cellSelected);
+    graph.off('cell:selected', cellSelected(graph));
     graph.off('cell:unselected', cellUnselected);
     graph.off('node:dblclick', nodeAddFlow(graph));
     graph.off('node:move', cellSelected);

@@ -6,6 +6,7 @@
 import store from '@/store/index.js';
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import threats from '@/service/threats/index.js';
+import defaultProperties from '@/service/entity/default-properties.js';
 
 const styles = {
     default: {
@@ -73,8 +74,17 @@ const updateName = (cell) => {
 };
 
 const updateProperties = (cell) => {
-    if (!!cell && !!cell.data) {
-        console.debug('Update property for cell: ' + cell.getData().name);
+    if (cell) {
+        if (cell.data) {
+            console.debug('Update properties for cell: ' + cell.getData().name);
+        } else {
+            if (cell.isEdge()) {
+                cell.type = defaultProperties.flow.type;
+                console.debug('Edge cell given type: ' + cell.type);
+            }
+            cell.setData(defaultProperties.getByType(cell.type));
+            console.debug('Setting properties for cell: ' + cell.getData().name);
+        }
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
     } else {
         console.debug('No cell data to update');
