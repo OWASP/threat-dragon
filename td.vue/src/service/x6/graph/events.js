@@ -68,7 +68,6 @@ const cellAdded = (graph) => ({ cell }) => {
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
-    store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
 const cellDeleted = () => {
@@ -105,7 +104,6 @@ const cellSelected = (graph) => ({ cell }) => {
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
-    store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
 const cellUnselected = ({ cell }) => {
@@ -122,6 +120,7 @@ const cellDataChanged = ({ cell }) => {
     }
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateStyleAttrs(cell);
+    store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
 const nodeAddFlow = (graph) => ({ node }) => {

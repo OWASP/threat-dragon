@@ -265,6 +265,7 @@ export default {
         },
         onChangeScope() {
             document.getElementById('reasonoutofscope').disabled = !this.cellRef.data.outOfScope;
+            dataChanged.updateProperties(this.cellRef);
             dataChanged.updateStyleAttrs(this.cellRef);
             this.updateComponent();
         }
