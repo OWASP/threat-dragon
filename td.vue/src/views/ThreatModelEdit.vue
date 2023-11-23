@@ -104,7 +104,7 @@
                                 class="mb-3"
                             >
                                 <b-input-group-prepend>
-                                    <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
+                                    <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'DIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
