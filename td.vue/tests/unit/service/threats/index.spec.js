@@ -61,6 +61,26 @@ describe('service/threats/index.js', () => {
         });
     });
 
+    describe('create new PLOT4ai threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('PLOT4ai');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('New PLOT4ai threat');
+        });
+
+        it('has Technique & Processes type', () => {
+            expect(threat.type).toEqual('Technique & Processes');
+        });
+
+        it('has a PLOT4ai modelType', () => {
+            expect(threat.modelType).toEqual('PLOT4ai');
+        });
+    });
+
     describe('create new CIA threat', () => {
         let threat;
 
@@ -135,6 +155,13 @@ describe('service/threats/index.js', () => {
         });
     });
 
+    /**
+     * This structure doesn´t accomodate for the fact that frameworks can have
+     * categories with the same name. This is problem for plot4ai & linddun.
+     * However, this functionality is only used in the v1->v2 migration flow and it is unlikely
+     * to find plot4ai in v1 json files (due to it's recent addition).
+     * PLOT4ai has therefor not been added to these unit-tests
+     */
     describe('convertToTranslationString', () => {
 
         it('converts Confidentiality to the translation string', () => {

@@ -112,6 +112,11 @@ const zho = {
                 defaultDescription: '新LINDDUN图描述',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: '新PLOT4ai图',
+                defaultDescription: '新PLOT4ai图描述',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: '新DIE图',
                 defaultDescription: '新DIE图描述',
@@ -262,6 +267,17 @@ const zho = {
                 unawareness: '不了解',
                 nonCompliance: '不遵守规定'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: '欺骗',
@@ -277,6 +293,7 @@ const zho = {
             cia: '新CIA威胁',
             die: '新DIE威胁',
             linddun: '新LINDDUN威胁',
+            plot4ai: '新PLOT4ai威胁',
             stride: '新STRIDE威胁'
         },
         edit: '编辑威胁',

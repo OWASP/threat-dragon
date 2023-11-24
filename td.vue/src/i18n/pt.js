@@ -112,6 +112,11 @@ const por = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'New PLOT4ai diagram',
+                defaultDescription: 'New PLOT4ai diagram description',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'New DIE diagram',
                 defaultDescription: 'New DIE diagram description',
@@ -262,6 +267,17 @@ const por = {
                 unawareness: 'Unawareness',
                 nonCompliance: 'Non-compliance'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: 'Spoofing',
@@ -277,6 +293,7 @@ const por = {
             cia : 'Nova ameaça da CIA',
             die : 'Nova ameaça da DIE',
             linddun : 'Nova ameaça LINDDUN',
+            plot4ai : 'Nova ameaça PLOT4ai',
             stride: 'Nova ameaça STRIDE'
         },
         edit: 'Edit Threat',

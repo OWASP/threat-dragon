@@ -3,6 +3,9 @@
   "version": "2.1.1",
   "private": true,
   "scripts": {
+    "audit": "npm-run-all -c audit:server audit:site",
+    "audit:server": "cd td.server && npm run audit",
+    "audit:site": "cd td.vue && npm run audit",
     "build": "npm-run-all build:vue build:server",
     "build:desktop": "cd td.vue && npm run build:desktop",
     "build:server": "cd td.server && npm run build",
@@ -38,7 +41,8 @@
     "STRIDE",
     "LINDDUN",
     "CIA",
-    "DIE"
+    "DIE",
+    "PLOT4ai"
   ],
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
@@ -61,14 +65,8 @@
     "rimraf": "^4.4.0"
   },
   "overrides": {
-    "node-ipc": ">=10.1.7",
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
-    "nth-check@<2.0.1": ">=2.0.1",
-    "tar@>=6.0.0 <6.1.9": ">=6.1.9",
     "glob-parent@<5.1.2": ">=5.1.2",
-    "lodash@<4.17.21": ">=4.17.21",
-    "minimatch@<3.0.5": ">=3.0.5",
-    "node-notifier@<8.0.1": ">=8.0.1",
-    "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
+    "minimatch@<3.0.5": ">=3.0.5"
   }
 }

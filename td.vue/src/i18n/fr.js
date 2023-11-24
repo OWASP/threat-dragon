@@ -112,6 +112,11 @@ const fra = {
                 defaultDescription: 'New LINDDUN diagram description',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'Nouveau diagramme PLOT4ai',
+                defaultDescription: 'New PLOT4ai diagram description',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'New DIE diagram',
                 defaultDescription: 'New DIE diagram description',
@@ -262,6 +267,17 @@ const fra = {
                 unawareness: 'Inconscience',
                 nonCompliance: 'Non-conformité'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: 'Usurpation d\'identité',
@@ -277,6 +293,7 @@ const fra = {
             cia: 'Nouvelle menace CIA',
             die: 'Nouvelle menace DIE',
             linddun: 'Nouvelle menace LINDDUN',
+            plot4ai: 'Nouvelle menace PLOT4ai',
             stride: 'Nouvelle menace STRIDE'
         },
         edit: 'Modifier la menace',

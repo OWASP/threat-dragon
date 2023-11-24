@@ -112,6 +112,11 @@ const hin = {
                 defaultDescription: 'न्यू लिंडडन डायग्राम डिस्क्रिप्शन',
                 select: 'लिंडडन'
             },
+            plot4ai: {
+                defaultTitle: 'New PLOT4ai diagram',
+                defaultDescription: 'New PLOT4ai diagram description',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'New DIE diagram',
                 defaultDescription: 'New DIE diagram description',
@@ -262,6 +267,17 @@ const hin = {
                 unawareness: 'अनभिज्ञता',
                 nonCompliance: 'गैर-अनुपालन'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- स्ट्राइड ---',
                 spoofing: 'स्पूफिंग',
@@ -277,6 +293,7 @@ const hin = {
             cia: 'नया सीआईए थ्रेट',
             die: 'नया DIE थ्रेट',
             linddun: 'न्यू लिंडडन थ्रेट',
+            plot4ai: 'नया DPLOT4ai थ्रेट',
             stride: 'नया स्ट्राइड थ्रेट'
         },
         edit: 'थ्रेट संपादित करें',

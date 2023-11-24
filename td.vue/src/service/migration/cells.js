@@ -2,6 +2,7 @@ import edges from './edges.js';
 import data from './data.js';
 import nodes from './nodes.js';
 import shapes from '../x6/shapes/index.js';
+import models from '../threats/models/index.js';
 
 const getCellConverter = () => ({
     'tm.Actor': {
@@ -53,6 +54,9 @@ const map = (diagram) => {
     }
 
     diagram.diagramJson.cells.forEach((cell) => {
+        if (diagram.diagramType && models.allModels.includes(diagram.diagramType)) {
+            cell.modelType = diagram.diagramType;
+        }
         const { isNode, mapper } = getCellConverter()[cell.type];
         const entity = mapper(cell);
         const arr = isNode ? resp.nodes : resp.edges;

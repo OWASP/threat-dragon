@@ -112,6 +112,11 @@ const fin = {
                 defaultDescription: 'Uuden LINDDUN-kaavion kuvaus',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'Uusi PLOT4ai-kaavio',
+                defaultDescription: 'Uuden PLOT4ai-kaavion kuvaus',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'Uusi DIE-kaavio',
                 defaultDescription: 'Uuden DIE-kaavion kuvaus',
@@ -262,6 +267,17 @@ const fin = {
                 unawareness: 'Unawareness',
                 nonCompliance: 'Non-compliance'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: 'Spoofing',
@@ -277,6 +293,7 @@ const fin = {
             cia: 'Uusi CIA-uhka',
             die: 'Uusi DIE-uhka',
             linddun: 'Uusi LINDDUN-uhka',
+            plot4ai: 'Uusi PLOT4ai-uhka',
             stride: 'Uusi STRIDE-uhka'
         },
         edit: 'Muokkaa Uhkaa',

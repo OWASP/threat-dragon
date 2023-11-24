@@ -104,10 +104,11 @@
                                 class="mb-3"
                             >
                                 <b-input-group-prepend>
-                                    <b-dropdown split variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
+                                    <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'DIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'PLOT4ai')">{{ $t('threatmodel.diagram.plot4ai.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
@@ -259,6 +260,7 @@ export default {
             };
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
+            this.$store.dispatch(tmActions.modified);
         },
         onDiagramTypeClick(idx, type) {
             let defaultTitle;
@@ -284,6 +286,12 @@ export default {
 	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
 	                break;
 
+	            case 'PLOT4ai':
+	                thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
+	                defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
+	                placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
+	                break;
+
 	            case 'STRIDE':
 	                thumbnail = './public/content/images/thumbnail.stride.jpg';
 	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
@@ -303,14 +311,17 @@ export default {
             if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.die.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.plot4ai.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
             ) {
                 this.model.detail.diagrams[idx].title = defaultTitle;
             }
+            this.$store.dispatch(tmActions.modified);
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
+            this.$store.dispatch(tmActions.modified);
         },
         onModifyModel() {
             this.$store.dispatch(tmActions.modified);

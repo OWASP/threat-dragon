@@ -112,6 +112,11 @@ const ell = {
                 defaultDescription: 'Περιγραφή νέου διαγράμματος LINDDUN',
                 select: 'LINDDUN'
             },
+            plot4ai: {
+                defaultTitle: 'Νέο διάγραμμα PLOT4ai',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος PLOT4ai',
+                select: 'PLOT4ai'
+            },
             die: {
                 defaultTitle: 'Νέο διάγραμμα DIE',
                 defaultDescription: 'Περιγραφή νέου διαγράμματος DIE',
@@ -262,6 +267,17 @@ const ell = {
                 unawareness: 'Έλλειψη επίγνωσης (Unawareness)',
                 nonCompliance: 'Μη συμμόρφωση (Non-compliance)'
             },
+            plot4ai: {
+                header: '--- PLOT4ai ---',
+                techniqueProcesses: 'Technique & Processes',
+                accessibility: 'Accessibility',
+                identifiabilityLinkability: 'Identifiability & Linkability',
+                security: 'Security',
+                safety: 'Safety',
+                unawareness: 'Unawareness',
+                ethicsHumanRights: 'Ethics & Human Rights',
+                nonCompliance: 'Non-compliance'
+            },
             stride: {
                 header: '--- STRIDE ---',
                 spoofing: 'Παραπλάνηση (Spoofing)',
@@ -277,6 +293,7 @@ const ell = {
             cia: 'Νέα απειλή CIA',
             die: 'Νέα απειλή DIE',
             linddun: 'Νέα απειλή LINDDUN',
+            plot4ai: 'Νέα απειλή PLOT4ai',
             stride: 'Νέα απειλή STRIDE'
         },
         edit: 'Επεξεργασία Απειλής',
