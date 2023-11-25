@@ -9,6 +9,7 @@ import homeController from '../../src/controllers/homecontroller.js';
 import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
+import configcontroller from "../../src/controllers/configcontroller";
 
 describe('config/routes.config.js routes', () => {
     let mockApp;
@@ -45,6 +46,10 @@ describe('config/routes.config.js routes', () => {
 
         it('routes GET /healthz', () => {
             expect(mockRouter.get).to.have.been.calledWith('/healthz', healthcheck.healthz);
+        });
+
+        it('routes GET /api/config', () => {
+            expect(mockRouter.get).to.have.been.calledWith('/api/config', configcontroller.config);
         });
     });
 

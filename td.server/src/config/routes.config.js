@@ -2,6 +2,7 @@ import express from 'express';
 
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
+import configController from "../controllers/configcontroller";
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
@@ -15,6 +16,8 @@ import threatmodelController from '../controllers/threatmodelcontroller.js';
 const unauthRoutes = (router) => {
     router.get('/', homeController.index);
     router.get('/healthz', healthcheck.healthz);
+
+    router.get('/api/config', configController.config);
 
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
 

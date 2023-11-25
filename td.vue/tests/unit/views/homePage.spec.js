@@ -22,6 +22,13 @@ describe('HomePage.vue', () => {
             localVue.use(BootstrapVue);
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             mockStore = new Vuex.Store({
+                state: {
+                    config: {
+                        config: {
+                            githubEnabled: true,
+                        },
+                    }
+                },
                 actions: {
                     [AUTH_SET_LOCAL]: () => {},
                     [PROVIDER_SELECTED]: () => {}
@@ -52,28 +59,28 @@ describe('HomePage.vue', () => {
             it('renders the home view', () => {
                 expect(wrapper.exists()).toBe(true);
             });
-        
+
             it('has a b-container', () => {
                 expect(wrapper.findComponent(BContainer).exists()).toBe(true);
             });
-        
+
             it('has a jumbotron', () => {
                 expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
             });
-        
+
             it('displays the title', () => {
                 expect(wrapper.find('h1.display-3').text()).toContain('home.title');
             });
-        
+
             it('displays the threat dragon logo', () => {
                 expect(wrapper.findComponent(BImg).attributes('src'))
                     .toContain('threatdragon_logo_image');
             });
-        
+
             it('has the description of the project', () => {
                 expect(wrapper.find('p').exists()).toBe(true);
             });
-        
+
             it('has a login button', () => {
                 expect(wrapper.findComponent(TdProviderLoginButton).exists()).toEqual(true);
             });
