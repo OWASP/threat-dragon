@@ -3,9 +3,9 @@ import github from 'octonode';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import threatModelRepository from '../../src/repositories/threatmodelrepository.js';
+import threatModelRepository from '../../src/repositories/githubthreatmodelrepository.js';
 
-describe('repositories/threatmodelrepository.js', () => {
+describe('repositories/githubthreatmodelrepository.js', () => {
     const info = {
         body: {
             content: 'test content',

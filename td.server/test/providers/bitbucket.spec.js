@@ -1,49 +1,49 @@
 import axios from 'axios';
+import bitbucketProvider from '../../src/providers/bitbucket.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import githubProvider from '../../src/providers/github.js';
-import repo from '../../src/repositories/githubthreatmodelrepository.js';
+import repo from '../../src/repositories/bitbucketthreatmodelrepository.js';
 
-describe('providers/github.js', () => {
+describe('providers/bitbucket.js', () => {
     describe('isConfigured', () => {
-        it('returns true if GITHUB_CLIENT_ID is set', () => {
-            const config = { GITHUB_CLIENT_ID: '1234567' };
+        it('returns true if BITBUCKET_CLIENT_ID is set', () => {
+            const config = { BITBUCKET_CLIENT_ID: '1234567' };
             sinon.stub(env, 'get').returns({ config });
-            expect(githubProvider.isConfigured()).to.be.true;
+            expect(bitbucketProvider.isConfigured()).to.be.true;
         });
 
-        it('returns false if GITHUB_CLIENT_ID is not set', () => {
-            expect(githubProvider.isConfigured()).to.be.false;
+        it('returns false if BITBUCKET_CLIENT_ID is not set', () => {
+            expect(bitbucketProvider.isConfigured()).to.be.false;
         });
     });
 
     describe('getOauthRedirectUrl', () => {
-        const config = { GITHUB_CLIENT_ID: '1234567' };
+        const config = { BITBUCKET_CLIENT_ID: '1234567' };
 
-        it('contains the github login oauth url', () => {
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain('https://github.com/login/oauth/authorize');
+        it('contains the bitbucket login oauth url', () => {
+            expect(bitbucketProvider.getOauthRedirectUrl()).to
+                .contain('https://bitbucket.org/site/oauth2/authorize');
         });
 
         it('adds the client_id', () => {
             sinon.stub(env, 'get').returns({ config });
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain(`client_id=${config.GITHUB_CLIENT_ID}`);
+            expect(bitbucketProvider.getOauthRedirectUrl()).to
+                .contain(`client_id=${config.BITBUCKET_CLIENT_ID}`);
         });
 
         it('uses the default scope', () => {
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain('scope=public_repo');
+            expect(bitbucketProvider.getOauthRedirectUrl()).to
+                .contain('');
         });
 
         it('uses the configured scope', () => {
             const scopedCfg = Object.assign({}, config, {
-                GITHUB_SCOPE: 'repo'
+                BITBUCKET_SCOPE: 'repo'
             });
             sinon.stub(env, 'get').returns({ config: scopedCfg });
-            expect(githubProvider.getOauthRedirectUrl()).to
+            expect(bitbucketProvider.getOauthRedirectUrl()).to
                 .contain('scope=repo');
         });
     });
@@ -61,12 +61,12 @@ describe('providers/github.js', () => {
             });
 
             it('gives a relative url when not in development mode', () => {
-                const idx = githubProvider.getOauthReturnUrl(code).indexOf('/#/oauth-return');
+                const idx = bitbucketProvider.getOauthReturnUrl(code).indexOf('/#/oauth-return');
                 expect(idx).to.eq(0);
             });
 
             it('adds the code as a query param', () => {
-                expect(githubProvider.getOauthReturnUrl(code)).to
+                expect(bitbucketProvider.getOauthReturnUrl(code)).to
                     .contain(`code=${code}`);
             });
         });
@@ -81,7 +81,7 @@ describe('providers/github.js', () => {
             });
 
             it('returns an absolute url with the front-end port', () => {
-                const idx = githubProvider.getOauthReturnUrl(code).indexOf('http://localhost:8080');
+                const idx = bitbucketProvider.getOauthReturnUrl(code).indexOf('http://localhost:8080');
                 expect(idx).to.eq(0);
             });
         });
@@ -89,8 +89,8 @@ describe('providers/github.js', () => {
 
     describe('completeLoginAsync', () => {
         const config = {
-            GITHUB_CLIENT_ID: '12345678',
-            GITHUB_CLIENT_SECRET: '098765432109865432'
+            BITBUCKET_CLIENT_ID: '12345678',
+            BITBUCKET_CLIENT_SECRET: '098765432109865432'
         };
         const code = 'mycode';
 
@@ -99,20 +99,21 @@ describe('providers/github.js', () => {
             sinon.stub(env, 'get').returns({ config });
             sinon.stub(repo, 'userAsync').resolves({});
 
-            await githubProvider.completeLoginAsync(code);
+            await bitbucketProvider.completeLoginAsync(code);
         });
 
-        it('gets the access_token from github', () => {
+        it('gets the access_token from bitbucket', () => {
+            var form = new FormData();
+            form.append('grant_type', 'authorization_code');
+            form.append('client_id', config.BITBUCKET_CLIENT_ID);
+            form.append('client_secret', config.BITBUCKET_CLIENT_SECRET);
+            form.append('code', code);
             expect(axios.post).to.have.been.calledWith(
-                'https://github.com/login/oauth/access_token',
-                {
-                    client_id: config.GITHUB_CLIENT_ID,
-                    client_secret: config.GITHUB_CLIENT_SECRET,
-                    code
-                },
+                'https://bitbucket.org/site/oauth2/access_token',
+                form,
                 {
                     headers: {
-                        accept: 'application/json'
+                        'Content-Type': 'multipart/form-data; boundary=undefined',
                     }
                 }
             );

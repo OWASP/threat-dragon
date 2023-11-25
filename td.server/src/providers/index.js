@@ -1,3 +1,4 @@
+import bitbucket from './bitbucket.js';
 import github from './github.js';
 
 /**
@@ -6,7 +7,8 @@ import github from './github.js';
  * @type {Object}
  */
 const all = Object.freeze({
-    github
+    github,
+    bitbucket
 });
 
 /**

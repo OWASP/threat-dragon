@@ -20,6 +20,10 @@ const deu = {
             displayName: 'GitHub',
             loginWith: 'Anmelden mit'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Anmelden mit'
+        },
         local: {
             displayName: 'Lokale Sitzung',
             loginWith: 'Anmelden an'
@@ -253,7 +257,7 @@ const deu = {
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
             },
-            linddun: { //unable to find german sources to Linddun. The official website is also not available on german. will leave the specific terms as in the original 
+            linddun: { //unable to find german sources to Linddun. The official website is also not available on german. will leave the specific terms as in the original
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability',
                 identifiability: 'Identifiability',

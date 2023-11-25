@@ -1,12 +1,12 @@
 import { Env } from './Env.js';
 
-class GithubEnv extends Env {
+class BitbucketEnv extends Env {
     constructor () {
-        super('Github');
+        super('Bitbucket');
     }
 
     get prefix () {
-        return 'GITHUB_';
+        return 'BITBUCKET_';
     }
 
     get properties () {
@@ -18,9 +18,10 @@ class GithubEnv extends Env {
             { key: 'ENTERPRISE_PROTOCOL', required: false },
             { key: 'ENTERPRISE_PORT', required: false },
             { key: 'USE_SEARCH', required: false },
-            { key: 'SEARCH_QUERY', required: false }
+            { key: 'SEARCH_QUERY', required: false },
+            { key: 'WORKSPACE', required: false }
         ];
     }
 }
 
-export default GithubEnv;
+export default BitbucketEnv;

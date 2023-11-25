@@ -5,7 +5,7 @@
 import axios from 'axios';
 
 import env from '../env/Env.js';
-import repo from '../repositories/threatmodelrepository.js';
+import repositories from "../repositories";
 
 const name = 'github';
 
@@ -40,7 +40,7 @@ const getOauthRedirectUrl = () => {
 };
 
 /**
- * Gets the return URL for our appliaction, returning from github
+ * Gets the return URL for our application, returning from github
  * @param {string} code
  * @returns {String}
  */
@@ -71,6 +71,9 @@ const completeLoginAsync = async (code) => {
     };
 
     const providerResp = await axios.post(url, body, options);
+
+    repositories.set("githubthreatmodelrepository");
+    const repo = repositories.get();
     const fullUser = await repo.userAsync(providerResp.data.access_token);
     const user = {
         username: fullUser.login,

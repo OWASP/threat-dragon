@@ -22,18 +22,18 @@ describe('env/Github.js', () => {
         expect(githubEnv.prefix).to.eq('GITHUB_');
     });
 
-    it('has the required property CLIENT_ID', () => {
+    it('has the optional property CLIENT_ID', () => {
         const isRequired = githubEnv.properties
             .find(x => x.key === 'CLIENT_ID')
             .required;
-        expect(isRequired).to.be.true;
+        expect(isRequired).to.be.false;
     });
 
-    it('has the required property CLIENT_SECRET', () => {
+    it('has the optional property CLIENT_SECRET', () => {
         const isRequired = githubEnv.properties
             .find(x => x.key === 'CLIENT_SECRET')
             .required;
-        expect(isRequired).to.be.true;
+        expect(isRequired).to.be.false;
     });
 
     it('has the optional property SCOPE', () => {

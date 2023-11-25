@@ -1,12 +1,14 @@
 import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
-import repository from '../repositories/threatmodelrepository.js';
+import repositories from "../repositories";
 import responseWrapper from './responseWrapper.js';
 import { serverError } from './errors.js';
 
 const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
 
 const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
+    const repository = repositories.get();
+
     const page = req.query.page || 1;
     let reposResp;
     let repos;
@@ -21,15 +23,23 @@ const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
         repos = reposResp[0];
     }
     const headers = reposResp[1];
+    const pageLinks = reposResp[2];
     logger.debug('API repos request: ' + req);
+
+    const pagination = getPagination(headers, pageLinks, page);
 
     return {
         repos: repos.map((x) => x.full_name),
-        pagination: getPagination(headers, page)
+        pagination: pagination
     };
 }, req, res, logger);
 
+
+
 const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
+
+    const repository = repositories.get();
+
     const repoInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -40,15 +50,21 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const branchesResp = await repository.branchesAsync(repoInfo, req.provider.access_token);
     const branches = branchesResp[0];
     const headers = branchesResp[1];
+    const pageLinks = branchesResp[2];
+
     const branchNames = branches.map((x) => x.name);
+
+    const pagination = getPagination(headers, pageLinks, repoInfo.page);
 
     return {
         branches: branchNames,
-        pagination: getPagination(headers, repoInfo.page)
+        pagination: pagination
     };
 }, req, res, logger);
 
 const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
+    const repository = repositories.get();
+
     const branchInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -70,6 +86,7 @@ const models = (req, res) => responseWrapper.sendResponseAsync(async () => {
 }, req, res, logger);
 
 const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
+    const repository = repositories.get();
     const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -83,6 +100,8 @@ const model = (req, res) => responseWrapper.sendResponseAsync(async () => {
 }, req, res, logger);
 
 const create = async (req, res) => {
+    const repository = repositories.get();
+
     const modelBody = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -102,6 +121,8 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
+    const repository = repositories.get();
+
     const modelBody = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -121,6 +142,8 @@ const update = async (req, res) => {
 };
 
 const deleteModel = async (req, res) => {
+    const repository = repositories.get();
+
     const modelInfo = {
         organisation: req.params.organisation,
         repo: req.params.repo,
@@ -138,10 +161,28 @@ const deleteModel = async (req, res) => {
     }
 };
 
-const getPagination = (headers, page) => {
-    const pagination = { page, next: false, prev: false };
-    const linkHeader = headers.link;
+const getPagination = (headers, pageLinks, page) => {
 
+    if(headers === undefined || headers === null || (Object.keys(headers).length === 0) || headers?.link === null){
+        if (pageLinks === undefined || pageLinks === null || (Object.keys(pageLinks).length === 0)) {
+            return {page, next: false, prev: false};
+        }
+        return getPaginationFromPageLinks(pageLinks, page);
+    } 
+        return getPaginationFromHeaders(headers, page);
+    
+};
+
+const getPaginationFromPageLinks = (pageLinks, page) => {
+    const pagination = {page, next: false, prev: false};
+    pagination.next = pageLinks.next;
+    pagination.prev = pageLinks.prev;
+    return pagination;
+};
+
+const getPaginationFromHeaders = (headers, page) => {
+    const pagination = {page, next: false, prev: false};
+    const linkHeader = headers.link;
     if (linkHeader) {
         linkHeader.split(',').forEach((link) => {
             const isLinkType = (type) => link.split(';')[1].split('=')[1] === type;
@@ -155,7 +196,6 @@ const getPagination = (headers, page) => {
             }
         });
     }
-
     return pagination;
 };
 

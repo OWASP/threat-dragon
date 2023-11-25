@@ -67,7 +67,7 @@ export default {
             if (isElectron()) {
                 return { desktop: allProviders.desktop };
             }
-            return { github: allProviders.github, local: allProviders.local };
+            return { github: allProviders.github, bitbucket: allProviders.bitbucket, local: allProviders.local };
         },
     },
     components: {

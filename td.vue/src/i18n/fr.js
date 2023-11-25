@@ -20,6 +20,10 @@ const fra = {
             displayName: 'GitHub',
             loginWith: 'Se connecter avec'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Se connecter avec'
+        },
         local: {
             displayName: 'une session locale',
             loginWith: 'Se connecter avec'

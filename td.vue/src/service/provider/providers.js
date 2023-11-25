@@ -2,6 +2,7 @@ import githubProvider from './github.provider.js';
 import localProvider from './local.provider.js';
 import desktopProvider from './desktop.provider.js';
 import { providerTypes } from './providerTypes.js';
+import bitbucketProvider from '@/service/provider/bitbucket.provider';
 
 const providers = {
     desktop: {
@@ -17,6 +18,13 @@ const providers = {
         provider: githubProvider,
         type: providerTypes.git,
         icon: ['fab', 'github']
+    },
+    bitbucket: {
+        key: 'bitbucket',
+        displayName: 'Bitbucket',
+        provider: bitbucketProvider,
+        type: providerTypes.git,
+        icon: ['fab', 'bitbucket']
     },
     local: {
         key: 'local',

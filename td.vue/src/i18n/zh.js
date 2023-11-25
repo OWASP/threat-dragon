@@ -20,6 +20,10 @@ const zho = {
             displayName: 'GitHub',
             loginWith: '登录'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: '登录'
+        },
         local: {
             displayName: '本地',
             loginWith: '登录'

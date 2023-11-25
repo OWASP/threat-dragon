@@ -20,6 +20,10 @@ const ell = {
             displayName: 'GitHub',
             loginWith: 'Είσοδος με'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Είσοδος με'
+        },
         local: {
             displayName: 'Τοπική Συνεδρία',
             loginWith: 'Είσοδος με'

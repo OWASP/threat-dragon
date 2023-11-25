@@ -3,6 +3,8 @@ import github from 'octonode';
 import env from '../env/Env.js';
 
 const getClient = (accessToken) => {
+
+
     const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
     if (enterpriseHostname) {
         const port = env.get().config.GITHUB_ENTERPRISE_PORT;
@@ -23,6 +25,7 @@ const searchAsync = (page, accessToken, searchQuery) => getClient(accessToken).s
     reposAsync({ page: page, q: searchQuery });
 
 const userAsync = async (accessToken) => {
+
     const resp = await getClient(accessToken).me().
 infoAsync();
     return resp[0];

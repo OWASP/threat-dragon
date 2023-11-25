@@ -20,6 +20,10 @@ const spa = {
             displayName: 'GitHub',
             loginWith: 'Conectarse con'
         },
+        bitbucket: {
+            displayName: 'Bitbucket',
+            loginWith: 'Conectarse con'
+        },
         local: {
             displayName: 'Sesión Local',
             loginWith: 'Conectarse con'
