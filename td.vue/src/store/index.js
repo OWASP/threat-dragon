@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth.js';
 import branch from './modules/branch.js';
 import cell from './modules/cell.js';
+import config from './modules/config.js';
 import loader from './modules/loader.js';
 import locale from './modules/locale.js';
 import provider from './modules/provider.js';
@@ -27,6 +28,7 @@ const get = () => {
                 auth,
                 branch,
                 cell,
+                config,
                 loader,
                 locale,
                 provider,
