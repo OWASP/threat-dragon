@@ -35,7 +35,7 @@ jobs:
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v13.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v14.0.0
         with:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
