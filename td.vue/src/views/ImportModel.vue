@@ -58,6 +58,7 @@ import { mapState } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
+import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
@@ -144,6 +145,13 @@ export default {
             }
 
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
+
+            // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
+            if (Object.hasOwn(jsonModel, 'otmVersion'))
+            {
+                jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+            }
+            // End code to convert OTM back to dragon format
 
             if (isElectron()) {
                 // tell the desktop server that the model has changed
