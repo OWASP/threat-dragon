@@ -85,7 +85,7 @@ export default {
         savedtd() {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
-            updated.format = "td";
+            updated.format = 'td';
             this.$store.dispatch(tmActions.diagramUpdated, updated);
             this.$store.dispatch(tmActions.save);
             this.$store.dispatch(tmActions.unmodified);
@@ -93,7 +93,7 @@ export default {
         savedotm() {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
-            updated.format = "otm";
+            updated.format = 'otm';
             this.$store.dispatch(tmActions.diagramUpdated, updated);
             this.$store.dispatch(tmActions.save);
             this.$store.dispatch(tmActions.unmodified);

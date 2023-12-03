@@ -56,6 +56,13 @@ ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r
   4.3 `sha512sum Threat-Dragon-ng-Setup-2.1.1.exe`
 5. upload `checksum*.yml` files
 
+### Check demo site
+
+1. Install [Heroku CLI tools][herokucli] if necessary
+2. Login to [Heroku][heroku]
+3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
+4. Ensure no rollback shown in [dashboard][herokudash]
+
 ### Update release notes
 
 Update the release notes for the draft in the [Threat Dragon release area][area]
@@ -71,5 +78,8 @@ Update the [releases tab][releases] and the [info pane][td-info] on the OWASP Th
 Finally ensure Threat Dragon announces the new release, for example on the OWASP slack channels
 
 [area]: https://github.com/OWASP/threat-dragon/releases
+[heroku]: https://id.heroku.com/login
+[herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
+[herokudash]: https://dashboard.heroku.com/apps
 [releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
 [td-info]: https://github.com/OWASP/www-project-threat-dragon/blob/main/info.md

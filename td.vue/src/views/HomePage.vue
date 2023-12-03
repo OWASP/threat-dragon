@@ -73,14 +73,16 @@ export default {
                     return {desktop: allProviders.desktop};
                 }
                 let providers = {};
-                if (state.config.config.githubEnabled){
-                    providers.github = allProviders.github;
-                }
-                if (state.config.config.bitbucketEnabled){
-                    providers.bitbucket = allProviders.bitbucket;
-                }
-                if (state.config.config.localEnabled){
-                    providers.local = allProviders.local;
+                if (state.config.config) {
+                    if (state.config.config.githubEnabled) {
+                        providers.github = allProviders.github;
+                    }
+                    if (state.config.config.bitbucketEnabled) {
+                        providers.bitbucket = allProviders.bitbucket;
+                    }
+                    if (state.config.config.localEnabled) {
+                        providers.local = allProviders.local;
+                    }
                 }
                 return providers;
             },
