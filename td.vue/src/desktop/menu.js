@@ -261,7 +261,7 @@ function closeModel () {
     modelClosed();
 }
 
-// close the model
+// check that it is OK to close the model
 export function guardModel () {
     if (model.isOpen === false || model.isModified === false) {
         return true;

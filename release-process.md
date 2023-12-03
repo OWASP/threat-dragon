@@ -42,6 +42,20 @@ docker pull owasp/threat-dragon:v2.1.2
 
 ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
 
+### Check desktop downloads
+
+1. Download desktop installers for Linux, MacOS and Windows
+2. Download the `latest*.yml` auto-update checksum files
+3. Create SHA512 `checksum*.yml` files:
+  3.1 `grep sha512 latest-linux.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum-linux.yml`
+  3.2 `grep sha512 latest-mac.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum-mac.yml`
+  3.3 `grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum.yml`
+4. Confirm SHA512 with:
+  4.1 `sha512sum Threat-Dragon-ng-2.1.1.AppImage`
+  4.2 `sha512sum Threat-Dragon-ng-2.1.1.dmg`
+  4.3 `sha512sum Threat-Dragon-ng-Setup-2.1.1.exe`
+5. upload `checksum*.yml` files
+
 ### Update release notes
 
 Update the release notes for the draft in the [Threat Dragon release area][area]
