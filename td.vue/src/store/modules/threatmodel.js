@@ -161,7 +161,7 @@ const mutations = {
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
-        Vue.set(state, 'format', diagram.format)
+        Vue.set(state, 'format', diagram.format);
         console.debug('Threatmodel diagram updated: ' + diagram.id + ' at index: ' + idx);
         setThreatModel(state, state.data);
     },

@@ -42,33 +42,33 @@ describe('components/GraphButtons.vue', () => {
 
     describe('savetd', () => {
         beforeEach(() => {
-                btn = getItemButtonByIcon('savetd');
-                wrapper.vm.savetd();
-            });
-    
-            it('has the save translation text', () => {
-                expect(btn.attributes('text')).toEqual('forms.savetd');
-            });
-    
-            it('emits the savedtd event', () => {
-                expect(wrapper.emitted().savedtd);
-            });
+            btn = getItemButtonByIcon('savetd');
+            wrapper.vm.savetd();
         });
+    
+        it('has the save translation text', () => {
+            expect(btn.attributes('text')).toEqual('forms.savetd');
+        });
+    
+        it('emits the savedtd event', () => {
+            expect(wrapper.emitted().savedtd);
+        });
+    });
     
     describe('saveotm', () => {
         beforeEach(() => {
-                btn = getItemButtonByIcon('saveotm');
-                wrapper.vm.saveotm();
-            });
-    
-            it('has the saveotm translation text', () => {
-                expect(btn.attributes('text')).toEqual('forms.saveotm');
-            });
-    
-            it('emits the savedotm event', () => {
-                expect(wrapper.emitted().savedotm);
-            });
+            btn = getItemButtonByIcon('saveotm');
+            wrapper.vm.saveotm();
         });
+    
+        it('has the saveotm translation text', () => {
+            expect(btn.attributes('text')).toEqual('forms.saveotm');
+        });
+    
+        it('emits the savedotm event', () => {
+            expect(wrapper.emitted().savedotm);
+        });
+    });
 
     describe('close', () => {
         beforeEach(() => {
