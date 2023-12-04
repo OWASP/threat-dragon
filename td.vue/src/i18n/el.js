@@ -227,6 +227,9 @@ const ell = {
         discardTitle: 'Απόρριψη αλλαγών;',
         discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
         edit: 'Επεξεργασία',
+        exportAs: 'Export Model As',
+        exportHtml: 'Αναφορά HTML',
+        exportPdf: 'Αναφορά PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Εισαγωγή',
@@ -239,10 +242,8 @@ const ell = {
         report: 'Αναφορά',
         save: 'Αποθήκευση',
         saveAs: 'Αποθήκευση ως',
-        saveHtml: 'Αποθήκευση HTML',
         saveModel: 'Αποθήκευση Μοντέλου',
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
-        savePdf: 'Αποθήκευση PDF',
         search: 'Αναζήτηση'
     },
     threats: {

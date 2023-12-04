@@ -227,6 +227,9 @@ const fin = {
         discardTitle: 'Menetä muutokset?',
         discardMessage: 'Oletko varma, että haluat menettää muutokset?',
         edit: 'Muokkaa',
+        exportAs: 'Export Model As',
+        exportHtml: 'Raportti HTML',
+        exportPdf: 'Raportti PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Tuo',
@@ -239,10 +242,8 @@ const fin = {
         report: 'Raportti',
         save: 'Tallenna',
         saveAs: 'Tallenna Nimellä',
-        saveHtml: 'Tallenna HTML',
         saveModel: 'Tallenna Uhkamalli',
         saveModelAs: 'Tallenna Uhkamalli Nimellä',
-        savePdf: 'Tallenna PDF',
         search: 'Etsi'
     },
     threats: {

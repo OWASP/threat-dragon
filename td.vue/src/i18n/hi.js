@@ -227,6 +227,9 @@ const hin = {
         discardTitle: 'परिवर्तनों को त्यागें?',
         discardMessage: 'क्या आप सुनिश्चित हैं कि आप अपने परिवर्तनों को खारिज करना चाहते हैं?',
         edit: 'संपादित करें',
+        exportAs: 'Export Model As',
+        exportHtml: 'HTML रिपोर्टें',
+        exportPdf: 'पीडीएफ रिपोर्टें',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'आयात',
@@ -239,10 +242,8 @@ const hin = {
         report: 'रिपोर्ट',
         save: 'सहेजें',
         saveAs: 'इस रूप में सहेजें',
-        saveHtml: 'HTML सेव करें',
         saveModel: 'मॉडल सेव करें',
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
-        savePdf: 'पीडीएफ सेव करें',
         search: 'खोज'
     },
     threats: {

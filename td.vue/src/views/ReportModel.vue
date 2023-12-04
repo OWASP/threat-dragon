@@ -69,7 +69,7 @@
                         :onBtnClick="printPdf"
                         v-if="isElectron"
                         icon="file-pdf"
-                        :text="$t('forms.savePdf')" />
+                        :text="$t('forms.exportPdf')" />
                     <td-form-button
                         id="td-print-btn"
                         :onBtnClick="print"

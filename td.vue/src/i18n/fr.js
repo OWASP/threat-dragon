@@ -227,6 +227,9 @@ const fra = {
         discardTitle: 'Annuler les modifications?',
         discardMessage: 'Êtes-vous sûr de vouloir abandonner vos modifications?',
         edit: 'Modifier',
+        exportAs: 'Export Model As',
+        exportHtml: 'Rapport HTML',
+        exportPdf: 'Rapport PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importer',
@@ -239,10 +242,8 @@ const fra = {
         report: 'Rapport',
         save: 'Sauvegarder',
         saveAs: 'Sauvergarder en tant que',
-        saveHtml: 'Sauvergarder le HTML',
         saveModel: 'Sauvergarder le modèle',
         saveModelAs: 'Sauvergarder le modèle en tant que',
-        savePdf: 'Sauvergarder le PDF',
         search: 'Rechercher'
     },
     threats: {

@@ -227,6 +227,9 @@ const zho = {
         discardTitle: '放弃更改？',
         discardMessage: '您确定要放弃您的更改吗？',
         edit: '编辑',
+        exportAs: 'Export Model As',
+        exportHtml: '报告HTML',
+        exportPdf: '报告PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: '导入',
@@ -239,10 +242,8 @@ const zho = {
         report: '报告',
         save: '保存',
         saveAs: '保存为',
-        saveHtml: '保存HTML',
         saveModel: '保存模型',
         saveModelAs: '模型保存为',
-        savePdf: '保存PDF',
         search: '搜索'
     },
     threats: {

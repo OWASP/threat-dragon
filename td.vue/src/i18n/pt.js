@@ -227,6 +227,9 @@ const por = {
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
         edit: 'Editar',
+        exportAs: 'Export Model As',
+        exportHtml: 'HTML Reporte',
+        exportPdf: 'PDF Reporte',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Import',
@@ -239,10 +242,8 @@ const por = {
         report: 'Reporte',
         save: 'Salvar',
         saveAs: 'Save As',
-        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
         search: 'Search'
     },
     threats: {
