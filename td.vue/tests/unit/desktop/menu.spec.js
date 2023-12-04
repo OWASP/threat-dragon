@@ -1,4 +1,5 @@
 import menu, { model } from '@/desktop/menu.js';
+import ara from '@/i18n/ar.js';
 import deu from '@/i18n/de.js';
 import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
@@ -286,67 +287,73 @@ describe('desktop/menu.js', () => {
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for deu', () => {
+            it('should provide translation for Arabic', () => {
+                menu.setLocale('ara');
+                const helpItems = menu.getMenuTemplate().find((item) => item.label === ara.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for German', () => {
                 menu.setLocale('deu');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === deu.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for ell', () => {
+            it('should provide translation for Greek (Modern)', () => {
                 menu.setLocale('ell');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === ell.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for eng', () => {
+            it('should provide translation for English', () => {
                 menu.setLocale('eng');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === eng.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for fin', () => {
+            it('should provide translation for Finnish', () => {
                 menu.setLocale('fin');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === fin.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for fra', () => {
+            it('should provide translation for French', () => {
                 menu.setLocale('fra');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === fra.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for hin', () => {
+            it('should provide translation for Hindi', () => {
                 menu.setLocale('hin');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === hin.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for por', () => {
+            it('should provide translation for Portuguese', () => {
                 menu.setLocale('por');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === por.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for rus', () => {
+            it('should provide translation for Russian', () => {
                 menu.setLocale('rus');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === rus.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for spa', () => {
+            it('should provide translation for Spanish (Castilian)', () => {
                 menu.setLocale('spa');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === spa.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for ukr', () => {
+            it('should provide translation for Ukrainian', () => {
                 menu.setLocale('ukr');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === ukr.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
-            it('should provide translation for zho', () => {
+            it('should provide translation for Chinese', () => {
                 menu.setLocale('zho');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === zho.desktop.help.heading);
                 expect(helpItems).toBeDefined();
