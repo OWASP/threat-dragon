@@ -227,6 +227,8 @@ const rus = {
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
         edit: 'Edit',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'Import',
         ok: 'OK',
         open: 'Open',

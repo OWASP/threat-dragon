@@ -227,6 +227,8 @@ const spa = {
         discardTitle: '¿Descartar los cambios?',
         discardMessage: '¿Está seguro de descartar sus cambios?',
         edit: 'Editar',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'Importar',
         ok: 'OK',
         open: 'Abrir',

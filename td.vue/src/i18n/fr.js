@@ -227,6 +227,8 @@ const fra = {
         discardTitle: 'Annuler les modifications?',
         discardMessage: 'Êtes-vous sûr de vouloir abandonner vos modifications?',
         edit: 'Modifier',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'Importer',
         ok: 'OK',
         open: 'Ouvrir',
