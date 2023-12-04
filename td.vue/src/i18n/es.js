@@ -227,6 +227,9 @@ const spa = {
         discardTitle: '¿Descartar los cambios?',
         discardMessage: '¿Está seguro de descartar sus cambios?',
         edit: 'Editar',
+        exportAs: 'Export Model As',
+        exportHtml: 'Reporte HTML',
+        exportPdf: 'Reporte PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importar',
@@ -239,10 +242,8 @@ const spa = {
         report: 'Reporte',
         save: 'Guardar',
         saveAs: 'Guardar como',
-        saveHtml: 'Exportar HTML',
         saveModel: 'Guardar modelo',
         saveModelAs: 'Guardar modelo como',
-        savePdf: 'Exportar PDF',
         search: 'Buscar'
     },
     threats: {

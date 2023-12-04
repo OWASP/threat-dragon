@@ -227,6 +227,9 @@ const deu = {
         discardTitle: 'Änderung verwerfen?',
         discardMessage: 'Sind Sie sicher, dass Sie Ihre Änderungen verwerfen wollen?',
         edit: 'Editieren',
+        exportAs: 'Export Model As',
+        exportHtml: 'Speichern als HTML',
+        exportPdf: 'Speichern als PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importieren',
@@ -239,10 +242,8 @@ const deu = {
         report: 'Bericht',
         save: 'Speichern',
         saveAs: 'Speichern als',
-        saveHtml: 'Speichern als HTML',
         saveModel: 'Modell speichern',
         saveModelAs: 'Modell speichern als',
-        savePdf: 'Speichern als PDF',
         search: 'Suchen'
     },
     threats: {

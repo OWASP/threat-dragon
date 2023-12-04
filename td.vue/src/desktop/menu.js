@@ -79,18 +79,31 @@ export function getMenuTemplate () {
                     }
                 },
                 {
-                    label: messages[language].forms.savePdf,
-                    click () {
-                        printModel();
-                        modelPrint('PDF');
-                    }
-                },
-                {
-                    label: messages[language].forms.saveHtml,
-                    click () {
-                        printModel();
-                        modelPrint('HTML');
-                    }
+                    label: messages[language].forms.exportAs,
+                    submenu: [
+                        {
+                            label: messages[language].forms.exportHtml,
+                            click () {
+                                printModel();
+                                modelPrint('HTML');
+                            }
+                        },
+                        {
+                            label: messages[language].forms.exportPdf,
+                            click () {
+                                printModel();
+                                modelPrint('PDF');
+                            }
+                        },
+                        {
+                            label: messages[language].forms.exportOtm,
+                            enabled: false
+                        },
+                        {
+                            label: messages[language].forms.exportTd,
+                            enabled: false
+                        }
+                    ]
                 },
                 {
                     label: messages[language].desktop.file.close,
@@ -247,7 +260,7 @@ function newModel () {
 
 // print the model report
 function printModel () {
-    logger.log.debug(messages[language].forms.savePdf+ ': ' + model.filePath);
+    logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
     // prompt the renderer to open the print/report window
     mainWindow.webContents.send('print-model');
 }
@@ -349,7 +362,7 @@ function saveHTMLReport (htmlPath) {
 function savePDFReport (pdfPath) {
     pdfPath += '.pdf';
     var dialogOptions = {
-        title: messages[language].forms.savePdf,
+        title: messages[language].forms.exportPdf,
         defaultPath: pdfPath,
         filters: [{ name: 'PDF report', extensions: ['.pdf'] }, { name: 'All Files', extensions: ['*'] }]
     };
@@ -373,9 +386,9 @@ function savePDFReport (pdfPath) {
                 logger.log.error(`Failed to write PDF to ${pdfPath}: `, error);
             });
 
-            logger.log.debug(messages[language].forms.savePdf + ' : ' + pdfPath);
+            logger.log.debug(messages[language].forms.exportPdf + ' : ' + pdfPath);
         } else {
-            logger.log.debug(messages[language].forms.savePdf + ' : canceled');
+            logger.log.debug(messages[language].forms.exportPdf + ' : canceled');
         }
     }).catch(err => {
         logger.log.error(err);

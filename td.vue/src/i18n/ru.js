@@ -227,6 +227,9 @@ const rus = {
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
         edit: 'Edit',
+        exportAs: 'Export Model As',
+        exportHtml: 'HTML Report',
+        exportPdf: 'PDF Report',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Import',
@@ -239,10 +242,8 @@ const rus = {
         report: 'Report',
         save: 'Save',
         saveAs: 'Save As',
-        saveHtml: 'Save HTML',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
         search: 'Search'
     },
     threats: {
