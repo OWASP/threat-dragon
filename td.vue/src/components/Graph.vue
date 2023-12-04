@@ -82,18 +82,10 @@ export default {
         threatSelected(threatId) {
             this.$refs.threatEditDialog.editThreat(threatId);
         },
-        savedtd() {
+        saved() {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
             updated.format = 'td';
-            this.$store.dispatch(tmActions.diagramUpdated, updated);
-            this.$store.dispatch(tmActions.save);
-            this.$store.dispatch(tmActions.unmodified);
-        },
-        savedotm() {
-            const updated = Object.assign({}, this.diagram);
-            updated.cells = this.graph.toJSON().cells;
-            updated.format = 'otm';
             this.$store.dispatch(tmActions.diagramUpdated, updated);
             this.$store.dispatch(tmActions.save);
             this.$store.dispatch(tmActions.unmodified);
