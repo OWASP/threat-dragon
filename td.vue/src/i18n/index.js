@@ -13,8 +13,8 @@ import fin from './fi.js';
 import fra from './fr.js';
 import hin from './hi.js';
 import por from './pt.js';
-import rus from './ru.js';
-import ukr from './uk.js';
+// hide RUS & UKR for now: import rus from './ru.js';
+// hide RUS & UKR for now: import ukr from './uk.js';
 import zho from './zh.js';
 
 Vue.use(VueI18n);
@@ -24,7 +24,8 @@ const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
             locale: 'eng',
-            messages: { deu, ell, eng, spa, fin, fra, hin, por, rus, ukr, zho }
+            messages: { deu, ell, eng, spa, fin, fra, hin, por, zho }
+            // hide RUS & UKR for now: messages: { deu, ell, eng, spa, fin, fra, hin, por, rus, ukr, zho }
         });
     }
     return i18n;

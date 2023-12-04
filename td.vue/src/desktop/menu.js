@@ -19,13 +19,15 @@ import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
 import por from '@/i18n/pt.js';
-import rus from '@/i18n/ru.js';
+// hide RUS & UKR for now: import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
-import ukr from '@/i18n/uk.js';
+// hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { deu, ell, eng, fin, fra, hin, por, rus, spa, ukr, zho };
-const languages = [ 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const messages = { deu, ell, eng, fin, fra, hin, por, spa, zho };
+// hide RUS & UKR for now: const messages = { deu, ell, eng, fin, fra, hin, por, rus, spa, ukr, zho };
+const languages = [ 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'spa', 'zho' ];
+// hide RUS & UKR for now: const languages = [ 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
