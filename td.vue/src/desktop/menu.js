@@ -12,6 +12,7 @@ const fs = require('fs');
 var mainWindow;
 
 // access the i18n message strings
+import ara from '@/i18n/ar.js';
 import deu from '@/i18n/de.js';
 import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
@@ -24,10 +25,10 @@ import spa from '@/i18n/es.js';
 // hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { deu, ell, eng, fin, fra, hin, por, spa, zho };
-// hide RUS & UKR for now: const messages = { deu, ell, eng, fin, fra, hin, por, rus, spa, ukr, zho };
-const languages = [ 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'spa', 'zho' ];
-// hide RUS & UKR for now: const languages = [ 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const messages = { ara, deu, ell, eng, fin, fra, hin, por, spa, zho };
+// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, fin, fra, hin, por, rus, spa, ukr, zho };
+const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'spa', 'zho' ];
+// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
