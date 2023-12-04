@@ -1,366 +1,366 @@
 const ara = {
     auth: {
-        sessionExpired: 'Your session has expired. Please log in again to continue.'
+        sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
-        loggedInAs: 'Logged in as'
+        v2Warning: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،',
+        loggedInAs: 'تم تسجيل الدخول كـ '
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.'
+        imgAlt: 'شعار Threat Dragon',
+        description: 'OWASP Threat Dragon هو تطبيق مجاني ومفتوح المصدر وقابل للتشغيل على مختلف الأنظمة لإنشاء نماذج تهديد. استخدمه لرسم مخططات تهديد وتحديد التهديدات لنظامك. مع التركيز على المرونة والبساطة ، يُعد سهل الوصول لجميع أنواع المستخدمين.'
     },
     providers: {
         desktop: {
             displayName: 'Threat Dragon',
-            loginWith: 'Start'
+            loginWith: 'ابدأ'
         },
         github: {
             displayName: 'GitHub',
-            loginWith: 'Login with'
+            loginWith: 'تسجيل الدخول باستخدام'
         },
         bitbucket: {
             displayName: 'Bitbucket',
-            loginWith: 'Login with'
+            loginWith: 'تسجيل الدخول باستخدام'
         },
         local: {
-            displayName: 'Local Session',
-            loginWith: 'Login to'
+            displayName: 'جلسة محلية',
+            loginWith: 'تسجيل الدخول إلى'
         }
     },
     dashboard: {
         welcome: {
-            title: 'Welcome!',
-            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
+            title: 'مرحبًا!',
+            description: 'أنت مستعد الآن للبدء في تعزيز أمان تصميمات تطبيقك. يمكنك فتح نموذج تهديد موجود أو إنشاء نموذج جديد عن طريق إحدى الخيارات أدناه.'
         },
         actions: {
-            openExisting: 'Open an existing threat model',
-            createNew: 'Create a new, empty threat model',
-            readDemo: 'Explore a sample threat model',
-            importExisting: 'Import a threat model via JSON'
+            openExisting: 'فتح نموذج تهديد موجود',
+            createNew: 'إنشاء نموذج تهديد جديد فارغ',
+            readDemo: 'استكشاف نموذج تهديد تجريبي',
+            importExisting: 'استيراد نموذج التهديد بصيغة  JSON'
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'حدد نموذج تهديد تجريبي من القائمة أدناه'
     },
     desktop: {
         file: {
-            heading: 'File',
-            clearRecentDocs: 'Clear Menu',
-            close: 'Close Model',
-            closeWindow: 'Close Window',
-            new: 'New Model',
-            open: 'Open Model',
-            recentDocs: 'Open Recent',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: 'ملف',
+            clearRecentDocs: 'مسح القائمة',
+            close: 'إغلاق النموذج',
+            closeWindow: 'إغلاق النافذة',
+            new: 'نموذج جديد',
+            open: 'فتح نموذج',
+            recentDocs: 'المستندات الأخيرة المفتوحة',
+            save: 'حفظ النموذج',
+            saveAs: 'حفظ النموذج كـ '
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            heading: 'مساعدة',
+            docs: 'التوثيق',
+            visit: 'زيارتنا على OWASP',
+            sheets: 'أوراق الغش OWASP',
+            github: 'زيارتنا على GitHub',
+            submit: 'تقديم مشكلة',
+            check: 'التحقق من وجود تحديثات ...'
         }
     },
     repository: {
-        select: 'Select a',
-        from: 'repository from the list below',
-        noneFound: 'No repositories found. To get started, create a new repository on'
+        select: 'حدد',
+        from: 'مستودع من القائمة أدناه',
+        noneFound: 'لم يتم العثور على مستودعات. للبدء ، أنشئ مستودعًا جديدًا على'
     },
     branch: {
-        select: 'Select a branch from',
-        from: 'from the list below or',
-        chooseRepo: 'choose another repo'
+        select: 'حدد فرعًا من',
+        from: 'من القائمة أدناه أو',
+        chooseRepo: 'اختيار مستودع آخر'
     },
     threatmodelSelect: {
-        select: 'Select a Threat Model from',
-        from: 'from the list below, or choose another',
-        branch: 'branch',
-        or: 'or',
-        repo: 'repo',
-        newThreatModel: 'Create a New Threat Model'
+        select: 'حدد نموذج تهديد من',
+        from: 'من القائمة أدناه ، أو اختر آخر',
+        branch: 'فرع',
+        or: 'أو',
+        repo: 'مستودع',
+        newThreatModel: 'إنشاء نموذج تهديد جديد'
     },
     threatmodel: {
-        contributors: 'Contributors',
-        contributorsPlaceholder: 'Start typing to add a contributor',
-        description: 'High level system description',
-        dragAndDrop: 'Drag and drop or ',
-        editing: 'Editing',
-        jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        owner: 'Owner',
-        reviewer: 'Reviewer',
-        title: 'Title',
+        contributors: 'المساهمون',
+        contributorsPlaceholder: 'ابدأ الكتابة لإضافة مساهم',
+        description: 'وصف مجرد وعام للنظام (وصف عالي المستوى)',
+        dragAndDrop: 'السحب والإفلات أو',
+        editing: 'تحرير',
+        jsonPaste: 'اسحب ملف JSON لنموذج التهديد أو لصق محتواه هنا:',
+        owner: 'المالك',
+        reviewer: 'المراجع',
+        title: 'العنوان',
         diagram: {
-            diagrams: 'Diagrams',
-            addNewDiagram: 'Add a new diagram...',
+            diagrams: 'المخططات',
+            addNewDiagram: 'إضافة مخطط جديد...',
             generic: {
-                defaultTitle: 'New generic diagram',
-                defaultDescription: 'New generic diagram description',
-                select: 'Generic'
+                defaultTitle: 'مخطط جديد عام',
+                defaultDescription: 'وصف مخطط جديد عام',
+                select: 'عام'
             },
             stride: {
-                defaultTitle: 'New STRIDE diagram',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultTitle: 'مخطط STRIDE جديد',
+                defaultDescription: 'وصف مخطط STRIDE جديد',
                 select: 'STRIDE'
             },
             linddun: {
-                defaultTitle: 'New LINDDUN diagram',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'مخطط LINDDUN جديد',
+                defaultDescription: 'وصف مخطط LINDDUN جديد',
                 select: 'LINDDUN'
             },
             plot4ai: {
-                defaultTitle: 'New PLOT4ai diagram',
-                defaultDescription: 'New PLOT4ai diagram description',
+                defaultTitle: 'مخطط PLOT4ai جديد',
+                defaultDescription: 'وصف مخطط PLOT4ai جديد',
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultTitle: 'مخطط DIE جديد',
+                defaultDescription: 'وصف مخطط DIE جديد',
                 select: 'DIE'
             },
             cia: {
-                defaultTitle: 'New CIA diagram',
-                defaultDescription: 'New CIA diagram description',
+                defaultTitle: 'مخطط CIA جديد',
+                defaultDescription: 'وصف مخطط CIA جديد',
                 select: 'CIA'
             }
         },
-        threats: 'Threats',
+        threats: 'التهديدات',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'Invalid JSON. Please check your model and try again.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            dropSingleFileOnly: 'يتطلب السحب والإفلات ملفاً واحداً فقط.',
+            invalidJson: 'ملف JSON غير صالح. يرجى التحقق من النموذج الخاص بك والمحاولة مرة أخرى.',
+            onlyJsonAllowed: 'الملفات التي يمكن التعامل معها هي التي تنتهي بامتداد .json فقط.',
+            open: 'حدث خطأ في فتح نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
+            save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'تم فتح نموذج التهديد بنجاح',
+        saved: 'تم حفظ نموذج التهديد بنجاح',
         properties: {
-            title: 'Properties',
-            emptyState: 'Select an element on the graph to edit',
-            name: 'Name',
-            text: 'Text',
-            description: 'Description',
-            outOfScope: 'Out of Scope',
-            bidirection: 'Bidirectional',
-            reasonOutOfScope: 'Reason for out of scope',
-            privilegeLevel: 'Privilege Level',
-            isALog: 'Is a Log',
-            storesCredentials: 'Stores Credentials',
-            isEncrypted: 'Encrypted',
-            isSigned: 'Signed',
-            providesAuthentication: 'Provides Authentication',
-            protocol: 'Protocol',
-            publicNetwork: 'Public Network'
+            title: 'الخصائص',
+            emptyState: 'حدد عنصرًا على الرسم البياني للتحرير',
+            name: 'الاسم',
+            text: 'النص',
+            description: 'الوصف',
+            outOfScope: 'خارج نطاق العمل',
+            bidirection: 'ثنائي الاتجاه',
+            reasonOutOfScope: 'سبب خارج نطاق العمل',
+            privilegeLevel: 'مستوى الامتياز',
+            isALog: 'هل هو سجل',
+            storesCredentials: 'تخزين بيانات الاعتماد credentials',
+            isEncrypted: 'هل هو مشفر',
+            isSigned: 'هل هو موقع signed',
+            providesAuthentication: 'يوفر المصادقة',
+            protocol: 'بروتوكول',
+            publicNetwork: 'شبكة عامة'
         },
         buttons: {
-            delete: 'Delete selected',
-            redo: 'Redo edit',
-            shortcuts: 'Keyboard shortcuts',
-            toggleGrid: 'Toggle grid',
-            undo: 'Undo edit',
-            zoomIn: 'Zoom in',
-            zoomOut: 'Zoom out'
+            delete: 'حذف المحدد',
+            redo: 'إعادة القيام بالتحرير',
+            shortcuts: 'اختصارات لوحة المفاتيح',
+            toggleGrid: 'تبديل الشبكة',
+            undo: 'تراجع عن التحرير',
+            zoomIn: 'تكبير',
+            zoomOut: 'تصغير'
         },
         shortcuts: {
-            title: 'Shortcuts',
+            title: 'اختصارات لوحة المفاتيح',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copy'
+                action: 'نسخ'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Paste'
+                action: 'لصق'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Undo'
+                action: 'تراجع'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Redo'
+                action: 'إعادة'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Delete'
+                action: 'حذف'
             },
             pan: {
-                shortcut: 'shift + left-click (hold/drag)',
-                action: 'Pan'
+                shortcut: 'shift + نقرة يسار (تثبيت / سحب)',
+                action: 'تمرير'
             },
             multiSelect: {
-                shortcut: 'left-click on empty space and drag',
-                action: 'Multi-select'
+                shortcut: 'نقر يسار فوق مساحة فارغة وسحب',
+                action: 'تحديد متعدد'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + mousewheel',
-                action: 'Zoom'
+                shortcut: '(ctrl/cmd) + عجلة الماوس',
+                action: 'تكبير/تصغير'
             }
         },
         stencil: {
-            boundaries: 'Boundaries',
-            components: 'Components',
-            entities: 'Entities',
-            metadata: 'Metadata',
-            search: 'Search',
-            notFound: 'We don\'t have that yet, want to open an issue? :)'
+            boundaries: 'الحدود',
+            components: 'المكونات',
+            entities: 'الكيانات',
+            metadata: 'البيانات الوصفية',
+            search: 'البحث',
+            notFound: 'ليس لدينا ذلك حتى الآن، هل تريد فتح مشكلة؟ :)'
         },
         shapes: {
-            actor: 'Actor',
-            flow: 'Data Flow',
-            flowStencil: 'Data Flow',
-            process: 'Process',
-            store: 'Store',
-            text: 'Descriptive text',
-            trustBoundary: 'Trust Boundary'
+            actor: 'الممثل',
+            flow: 'تدفق البيانات',
+            flowStencil: 'تدفق البيانات',
+            process: 'العملية',
+            store: 'التخزين',
+            text: 'نص وصفي',
+            trustBoundary: 'حد الثقة'
         }
     },
     forms: {
-        apply: 'Apply',
-        cancel: 'Cancel',
-        close: 'Close',
-        closeModel: 'Close Model',
-        delete: 'Delete',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Edit',
-        exportTd: 'Original (Threat Dragon)',
-        exportOtm: 'Open Threat Model (OTM)',
-        import: 'Import',
-        ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
-        reload: 'Reload',
-        remove: 'Remove',
-        report: 'Report',
-        save: 'Save',
-        saveAs: 'Save As',
-        saveHtml: 'Save HTML',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        savePdf: 'Save PDF',
-        search: 'Search'
+        apply: 'تطبيق',
+        cancel: 'إلغاء',
+        close: 'إغلاق',
+        closeModel: 'إغلاق النموذج',
+        delete: 'حذف',
+        discardTitle: 'هل تريد تجاهل التغييرات؟',
+        discardMessage: 'هل أنت متأكد من رغبتك في تجاهل التغييرات الخاصة بك؟',
+        edit: 'تحرير',
+        import: 'استيراد',
+        ok: 'موافق',
+        open: 'فتح',
+        openModel: 'فتح النموذج',
+        print: 'طباعة',
+        reload: 'إعادة تحميل',
+        remove: 'إزالة',
+        report: 'تقرير',
+        save: 'حفظ',
+        savetd: 'تنسيق Threat Dragon',
+        saveotm: 'تنسيق OTM',
+        saveAs: 'حفظ كـ',
+        saveHtml: 'حفظ HTML',
+        saveModel: 'حفظ النموذج',
+        saveModelAs: 'حفظ النموذج كـ',
+        savePdf: 'حفظ PDF',
+        search: 'بحث'
     },
     threats: {
         model: {
             cia: {
                 header: '--- CIA ---',
-                confidentiality: 'Confidentiality',
-                integrity: 'Integrity',
-                availability: 'Availability'
+                confidentiality: 'Confidentiality السرية',
+                integrity: 'Integrity النزاهة',
+                availability: 'Availability التوفر'
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'Distributed موزع',
+                immutable: 'Immutable لا يمكن تغييره',
+                ephemeral: 'Ephemeral زائل'
             },
             linddun: {
                 header: '--- LINDDUN ---',
-                linkability: 'Linkability',
-                identifiability: 'Identifiability',
-                nonRepudiation: 'Non-repudiation',
-                detectability: 'Detectability',
-                disclosureOfInformation: 'Disclosure of information',
-                unawareness: 'Unawareness',
-                nonCompliance: 'Non-compliance'
+                linkability: 'Linkability القابلية للربط',
+                identifiability: 'Identifiability التعرف',
+                nonRepudiation: 'Non-repudiation عدم الإنكار',
+                detectability: 'Detectability الكشف',
+                disclosureOfInformation: 'Disclosure of information كشف المعلومات',
+                unawareness: 'Unawareness عدم الوعي',
+                nonCompliance: 'Non-compliance عدم الامتثال'
             },
             plot4ai: {
                 header: '--- PLOT4ai ---',
-                techniqueProcesses: 'Technique & Processes',
-                accessibility: 'Accessibility',
-                identifiabilityLinkability: 'Identifiability & Linkability',
-                security: 'Security',
-                safety: 'Safety',
-                unawareness: 'Unawareness',
-                ethicsHumanRights: 'Ethics & Human Rights',
-                nonCompliance: 'Non-compliance'
+                techniqueProcesses: 'Technique & Processes تقنية وعمليات',
+                accessibility: 'Accessibility التوفر',
+                identifiabilityLinkability: 'Identifiability & Linkability التعرف والربط',
+                security: 'Security الأمان',
+                safety: 'Safety السلامة',
+                unawareness: 'Unawareness عدم الوعي',
+                ethicsHumanRights: 'Ethics & Human Rights الأخلاق وحقوق الإنسان',
+                nonCompliance: 'Non-compliance عدم الامتثال'
             },
             stride: {
                 header: '--- STRIDE ---',
-                spoofing: 'Spoofing',
-                tampering: 'Tampering',
-                repudiation: 'Repudiation',
-                informationDisclosure: 'Information disclosure',
-                denialOfService: 'Denial of service',
-                elevationOfPrivilege: 'Elevation of privilege'
+                spoofing: 'Spoofing التزييف',
+                tampering: 'Tampering التلاعب',
+                repudiation: 'Repudiation رفض',
+                informationDisclosure: 'Information disclosure كشف المعلومات',
+                denialOfService: 'Denial of service إنكار الخدمة',
+                elevationOfPrivilege: 'Elevation of privilege تسلق الامتياز'
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            die: 'New DIE threat',
-            linddun: 'New LINDDUN threat',
-            plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            default: 'تهديد عام جديد',
+            cia: 'تهديد CIA جديد',
+            die: 'تهديد DIE جديد',
+            linddun: 'تهديد LINDDUN جديد',
+            plot4ai: 'تهديد PLOT4ai جديد',
+            stride: 'تهديد STRIDE جديد'
         },
-        edit: 'Edit Threat',
-        confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide remediation for this threat or a reason if status is N/A',
-        newThreat: 'New Threat',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        edit: 'تحرير التهديد',
+        confirmDeleteTitle: 'تأكيد الحذف',
+        confirmDeleteMessage: 'هل أنت متأكد من حذف هذا التهديد؟',
+        description: 'اكتب وصفًا لهذا التهديد',
+        emptyThreat: 'حدد عنصرًا على الرسم البياني لإضافة تهديد',
+        mitigation: "اكتب طرق مواجهة وتخفيف هذا التهديد أو السبب إذا كانت الحالة N/A",
+        newThreat: 'تهديد جديد',
+        newThreatByType: 'تهديد جديد حسب النوع',
+        newThreatByContext: 'تهديد جديد حسب السياق',
         properties: {
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type',
-            number: 'Number',
-            priority: 'Priority',
-            score: 'Score',
-            status: 'Status',
-            title: 'Title',
-            type: 'Type'
+            description: 'الوصف',
+            mitigation: 'التخفيف',
+            modelType: 'نوع النموذج',
+            number: 'الرقم',
+            priority: 'الأولوية',
+            score: 'النقاط',
+            status: 'الحالة',
+            title: 'العنوان',
+            type: 'النوع'
         },
         status: {
-            notApplicable: 'N/A',
-            open: 'Open',
-            mitigated: 'Mitigated'
+            notApplicable: 'غير قابل للتطبيق',
+            open: 'مفتوح',
+            mitigated: 'تم التخفيف'
         },
         priority: {
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High'
+            low: 'منخفض',
+            medium: 'متوسط',
+            high: 'عالي'
         }
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showEmpty: 'Show empty elements',
-            showBranding: 'Threat Dragon logo'
+            showOutOfScope: 'إظهار العناصر خارج النطاق',
+            showMitigatedThreats: 'إظهار التهديدات المُخففة',
+            showModelDiagrams: 'إظهار الرسوم التوضيحية للنموذج',
+            showEmpty: 'إظهار العناصر الفارغة',
+            showBranding: 'شعار تهديد التنين'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'تقرير نموذج التهديد لـ',
+        dateGenerated: 'تاريخ الإنشاء',
+        executiveSummary: 'ملخص تنفيذي',
+        notProvided: 'غير متاح',
+        summary: 'ملخص',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'إجمالي التهديدات',
+            mitigated: 'الإجمالي المُخفف',
+            notMitigated: 'الإجمالي غير المُخفف',
+            openHigh: 'مفتوح / أولوية عالية',
+            openMedium: 'مفتوح / أولوية متوسطة',
+            openLow: 'مفتوح / أولوية منخفضة',
+            openUnknown: 'مفتوح / أولوية غير معروفة'
         }
     },
     upgrade: {
         modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
+            header: 'تحديث نموذج التهديد',
+            welcome: 'مرحبًا بك في الإصدار 2 من OWASP Threat Dragon!',
+            p1: 'الإصدار 2 يستخدم مكتبة رسم مختلفة، مما سيغير طريقة حفظ بعض أجزاء نماذج التهديد الخاصة بك. على الرغم من أن معظم الرسوم التوضيحية ستبدو كما كانت في الإصدارات السابقة من Threat Dragon، هناك حالات قد تحتاج فيها إلى ضبطها قليلاً.',
+            p2: 'بعد إغلاق هذا النموذج، سترى كيف يتم عرض كل رسم تخطيطي في هذا النموذج بتنسيق الإصدار 2. يرجى الانتباه إلى أي مخططات قد تحتاج إلى تعديلها، هذه ترقية تتم لمرة واحدة، ومن المفترض ألا ترى هذه الرسالة مرة أخرى بعد حفظ هذا النموذج.'
         },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+        instructions: 'عظيم! دعنا نوصلك إلى النموذج الخاص بك.',
+        continue: 'المتابعة إلى نموذج التهديد'
     }
 };
 
