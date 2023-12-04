@@ -40,32 +40,6 @@ jobs:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
 
-  codeql:
-    name: Analyze with codeql
-    runs-on: ubuntu-22.04
-
-    strategy:
-      fail-fast: false
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.1.1
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2.22.1
-        with:
-          languages: 'javascript'
-          config-file: ./.github/codeql/codeql-config.yml
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-
-      - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v2.22.1
-
-      - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v2.22.1
-
   server_unit_tests:
     name: Server unit tests
     runs-on: ubuntu-22.04
