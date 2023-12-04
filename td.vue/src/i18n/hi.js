@@ -227,6 +227,8 @@ const hin = {
         discardTitle: 'परिवर्तनों को त्यागें?',
         discardMessage: 'क्या आप सुनिश्चित हैं कि आप अपने परिवर्तनों को खारिज करना चाहते हैं?',
         edit: 'संपादित करें',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'आयात',
         ok: 'ठीक है',
         open: 'खुला',

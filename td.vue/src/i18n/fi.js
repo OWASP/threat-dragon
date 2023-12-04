@@ -227,6 +227,8 @@ const fin = {
         discardTitle: 'Menetä muutokset?',
         discardMessage: 'Oletko varma, että haluat menettää muutokset?',
         edit: 'Muokkaa',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'Tuo',
         ok: 'OK',
         open: 'Avaa',

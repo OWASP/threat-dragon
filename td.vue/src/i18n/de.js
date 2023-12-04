@@ -227,6 +227,8 @@ const deu = {
         discardTitle: 'Änderung verwerfen?',
         discardMessage: 'Sind Sie sicher, dass Sie Ihre Änderungen verwerfen wollen?',
         edit: 'Editieren',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: 'Importieren',
         ok: 'OK',
         open: 'Öffnen',

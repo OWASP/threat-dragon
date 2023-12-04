@@ -3,7 +3,6 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import TdFormButton from '@/components/FormButton.vue';
-import { BDropdownItemButton } from 'bootstrap-vue';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 
 describe('components/GraphButtons.vue', () => {
@@ -36,37 +35,19 @@ describe('components/GraphButtons.vue', () => {
         .filter(x => x.attributes('icon') === icon)
         .at(0);
 
-    const getItemButtonByIcon = (icon) => wrapper.findAllComponents(BDropdownItemButton)
-        .filter(x => x.attributes('icon') === icon)
-        .at(0);
+    describe('save', () => {
+        beforeEach(() => {
+            btn = getButtonByIcon('save');
+            wrapper.vm.save();
+        });
 
-    describe('savetd', () => {
-        beforeEach(() => {
-            btn = getItemButtonByIcon('savetd');
-            wrapper.vm.savetd();
-        });
-    
         it('has the save translation text', () => {
-            expect(btn.attributes('text')).toEqual('forms.savetd');
+            expect(btn.attributes('text')).toEqual('forms.save');
+
         });
-    
-        it('emits the savedtd event', () => {
-            expect(wrapper.emitted().savedtd);
-        });
-    });
-    
-    describe('saveotm', () => {
-        beforeEach(() => {
-            btn = getItemButtonByIcon('saveotm');
-            wrapper.vm.saveotm();
-        });
-    
-        it('has the saveotm translation text', () => {
-            expect(btn.attributes('text')).toEqual('forms.saveotm');
-        });
-    
-        it('emits the savedotm event', () => {
-            expect(wrapper.emitted().savedotm);
+
+        it('emits the saved event', () => {
+            expect(wrapper.emitted().saved);
         });
     });
 

@@ -227,6 +227,8 @@ const zho = {
         discardTitle: '放弃更改？',
         discardMessage: '您确定要放弃您的更改吗？',
         edit: '编辑',
+        exportTd: 'Original (Threat Dragon)',
+        exportOtm: 'Open Threat Model (OTM)',
         import: '导入',
         ok: 'OK',
         open: '打开',
