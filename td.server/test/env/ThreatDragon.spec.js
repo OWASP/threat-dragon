@@ -47,7 +47,7 @@ describe('env/ThreatDragon.js', () => {
         const isRequired = tdEnv.properties
             .find(x => x.key === 'LOG_LEVEL')
             .required;
-        expect(isRequired).to.be.true;
+        expect(isRequired).to.be.false;
     });
 
     it('has the optional property SERVER_API_PROTOCOL', () => {
