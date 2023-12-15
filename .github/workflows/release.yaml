@@ -124,7 +124,7 @@ jobs:
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.3.0
+        uses: browser-actions/setup-chrome@v1.4.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4.0.0

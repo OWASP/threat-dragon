@@ -20,9 +20,9 @@ import {
     THREATMODEL_SET_ROLLBACK,
     THREATMODEL_UNMODIFIED,
     THREATMODEL_UPDATE
-} from '../actions/threatmodel.js';
-import save from '../../service/save.js';
-import threatmodelApi from '../../service/api/threatmodelApi.js';
+} from '@/store/actions/threatmodel.js';
+import save from '@/service/save.js';
+import threatmodelApi from '@/service/api/threatmodelApi.js';
 
 export const clearState = (state) => {
     if (isElectron()) {
