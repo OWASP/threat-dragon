@@ -9,6 +9,7 @@ class EncryptionEnv extends Env {
         return 'ENCRYPTION_';
     }
 
+    // Note that the actual env var will be prepended with ENCRYPTION_
     get properties () {
         return [
             { key: 'KEYS', required: true },

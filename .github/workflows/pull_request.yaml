@@ -262,7 +262,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -312,7 +312,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -359,7 +359,7 @@ jobs:
             -j
 
       - name: Upload scan report
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: zap_report_web.zip
           path: zap/report_web.html
@@ -433,7 +433,7 @@ jobs:
           output: './sboms/threat-dragon-server-bom.json'
 
       - name: Save SBOMs artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: threat-dragon-sboms
           path: sboms

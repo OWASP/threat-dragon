@@ -9,6 +9,7 @@ class GithubEnv extends Env {
         return 'GITHUB_';
     }
 
+    // Note that the actual env var will be prepended with GITHUB_
     get properties () {
         return [
             { key: 'CLIENT_ID', required: false },

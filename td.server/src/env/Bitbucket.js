@@ -9,6 +9,7 @@ class BitbucketEnv extends Env {
         return 'BITBUCKET_';
     }
 
+    // Note that the actual env var will be prepended with BITBUCKET_
     get properties () {
         return [
             { key: 'CLIENT_ID', required: false },
