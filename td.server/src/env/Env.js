@@ -95,7 +95,7 @@ export class Env {
             const prop = `${this.prefix}${key}`;
             const value = process.env[prop] || this.tryReadFromFile(prop) || defaultValue;
             if (!value && required) {
-                const errMsg = `${prop} is a required property, Threat Dragon server cannot start without it. Please see docs/development/environment.md for more information`;
+                const errMsg = `${prop} is a required property, Threat Dragon server cannot start without it. Refer to development/environment.md for more information`;
                 console.error(errMsg);
                 throw new Error(errMsg);
             }

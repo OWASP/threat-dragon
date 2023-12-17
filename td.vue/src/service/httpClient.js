@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-import { AUTH_SET_JWT } from '../store/actions/auth.js';
-import i18n from '../i18n/index.js';
-import { LOADER_FINISHED, LOADER_STARTED } from '../store/actions/loader.js';
-import router from '../router/index.js';
-import storeFactory from '../store/index.js';
+import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import i18n from '@/i18n/index.js';
+import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
+import router from '@/router/index.js';
+import storeFactory from '@/store/index.js';
 
 let cachedClient = null;
 
@@ -63,7 +63,7 @@ const createClient = () => {
 
         // Do not use this axios instance for the refresh token
         // Should this request fail and we use the same instance,
-        // we could be stuck in an infinte loop
+        // we could be stuck in an infinite loop
         try {
             const response = await axios.post('/api/token/refresh', { refreshToken });
             const tokens = response.data.data;

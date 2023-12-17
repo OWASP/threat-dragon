@@ -1,10 +1,7 @@
+import env from '../env/Env.js';
 import github from 'octonode';
 
-import env from '../env/Env.js';
-
 const getClient = (accessToken) => {
-
-
     const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
     if (enterpriseHostname) {
         const port = env.get().config.GITHUB_ENTERPRISE_PORT;

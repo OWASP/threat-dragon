@@ -16,7 +16,7 @@ const name = 'github';
 const isConfigured = () => Boolean(env.get().config.GITHUB_CLIENT_ID);
 
 /**
- * Gets the Github endpoint, which will be github.com by default OR a custom endpoint for Github enterprise scenarios
+ * Gets the Github endpoint, which will be github.com by default OR a custom endpoint for Github enterprise
  * @returns {String}
  */
 const getGithubUrl = () => {
@@ -24,8 +24,7 @@ const getGithubUrl = () => {
     if(enterpriseHostname) {
         const port = env.get().config.GITHUB_ENTERPRISE_PORT || '';
         const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL || 'https';
-        const enterpriseUrl = `${protocol}://${enterpriseHostname}${port ? ':' + port : ''}`;
-        return enterpriseUrl;
+        return `${protocol}://${enterpriseHostname}${port ? ':' + port : ''}`;
     }
     return 'https://github.com';
 };
@@ -72,7 +71,7 @@ const completeLoginAsync = async (code) => {
 
     const providerResp = await axios.post(url, body, options);
 
-    repositories.set("githubthreatmodelrepository");
+    repositories.set("githubrepo");
     const repo = repositories.get();
     const fullUser = await repo.userAsync(providerResp.data.access_token);
     const user = {

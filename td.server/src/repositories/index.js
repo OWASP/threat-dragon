@@ -1,5 +1,5 @@
-import bitbucketthreatmodelrepository from "./bitbucketthreatmodelrepository";
-import githubthreatmodelrepository from "./githubthreatmodelrepository";
+import bitbucketrepo from "./bitbucketrepo";
+import githubrepo from "./githubrepo";
 
 /**
  * An immutable object containing all
@@ -7,11 +7,11 @@ import githubthreatmodelrepository from "./githubthreatmodelrepository";
  * @type {Object}
  */
 const all = Object.freeze({
-    githubthreatmodelrepository,
-    bitbucketthreatmodelrepository,
+    githubrepo,
+    bitbucketrepo,
 });
 
-let selection = 'bitbucketthreatmodelrepository';
+let selection = 'bitbucketrepo';
 
 const get = () => getSpecific(selection);
 

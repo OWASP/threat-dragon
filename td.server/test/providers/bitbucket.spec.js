@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import repo from '../../src/repositories/bitbucketthreatmodelrepository.js';
+import repo from '../../src/repositories/bitbucketrepo.js';
 
 describe('providers/bitbucket.js', () => {
     describe('isConfigured', () => {

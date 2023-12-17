@@ -16,7 +16,7 @@ const name = 'bitbucket';
 const isConfigured = () => Boolean(env.get().config.BITBUCKET_CLIENT_ID);
 
 /**
- * Gets the Bitbucket endpoint, which will be bitbucket.com by default OR a custom endpoint for Bitbucket enterprise scenarios
+ * Gets the Bitbucket endpoint, which will be bitbucket.com by default OR a custom endpoint for Bitbucket enterprise
  * @returns {String}
  */
 const getBitbucketUrl = () => {
@@ -58,21 +58,18 @@ const getOauthReturnUrl = (code) => {
  */
 const completeLoginAsync = async (code) => {
     const url = `${getBitbucketUrl()}/site/oauth2/access_token`;
-
     const form = new FormData();
     form.append("grant_type", "authorization_code");
     form.append("client_id", env.get().config.BITBUCKET_CLIENT_ID);
     form.append("client_secret", env.get().config.BITBUCKET_CLIENT_SECRET);
     form.append("code", code);
-
-
     const options = {
         headers: {
             'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
         }
     };
 
-    repositories.set("bitbucketthreatmodelrepository");
+    repositories.set("bitbucketrepo");
     const repo = repositories.get();
     const providerResp = await axios.post(url, form, options);
     const fullUser = await repo.userAsync(providerResp.data.access_token);

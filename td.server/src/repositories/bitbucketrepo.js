@@ -1,6 +1,5 @@
-import {Bitbucket} from "bitbucket";
+import {Bitbucket} from 'bitbucket';
 import env from '../env/Env.js';
-
 
 export class BitbucketClientWrapper {
     static getClient(clientOptions){
@@ -21,7 +20,6 @@ export const getClient = (accessToken) => {
     return BitbucketClientWrapper.getClient(clientOptions);
 };
 
-//Migrated
 export const reposAsync = async (page, accessToken) => {
     //Migrated
     const workspace = env.get().config.BITBUCKET_WORKSPACE;
