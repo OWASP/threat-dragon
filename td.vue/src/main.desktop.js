@@ -10,7 +10,7 @@ import { providerNames } from './service/provider/providers.js';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
-import threatmodelActions from './store/actions/threatmodel.js';
+import tmActions from './store/actions/threatmodel.js';
 
 import './plugins/bootstrap-vue.js';
 import './plugins/fontawesome-vue.js';
@@ -21,7 +21,7 @@ Vue.config.productionTip = false;
 // informing renderer that desktop menu shell has closed the model
 window.electronAPI.onCloseModel((_event, fileName) =>  {
     console.debug('Closing model with file name : ' + fileName);
-    app.$store.dispatch(threatmodelActions.clear);
+    app.$store.dispatch(tmActions.clear);
     localAuth();
     app.$router.push({ name: 'MainDashboard' }).catch(error => {
         if (error.name != 'NavigationDuplicated') {
@@ -33,12 +33,12 @@ window.electronAPI.onCloseModel((_event, fileName) =>  {
 // request from desktop menu shell -> renderer to start a new model
 window.electronAPI.onNewModel((_event, fileName) =>  {
     console.debug('New model with file name : ' + fileName);
-    app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
+    app.$store.dispatch(tmActions.update, { fileName: fileName });
     localAuth();
     app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
 });
 
-// informing renderer that desktop menu shell is providing new model cntents
+// informing renderer that desktop menu shell is providing new model contents
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     // already checked that any existing open model has not been modified
     console.debug('Open model with file name : ' + fileName);
@@ -57,8 +57,8 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         });
         return;
     }
-    app.$store.dispatch(threatmodelActions.update, { fileName: fileName });
-    app.$store.dispatch(threatmodelActions.selected, jsonModel);
+    app.$store.dispatch(tmActions.update, { fileName: fileName });
+    app.$store.dispatch(tmActions.selected, jsonModel);
     localAuth();
     app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params });
 });
@@ -77,7 +77,7 @@ window.electronAPI.onPrintModel((_event, fileName) =>  {
 // request from desktop menu shell -> renderer to save the model
 window.electronAPI.onSaveModel((_event, fileName) =>  {
     console.debug('Save model for file name : ' + fileName);
-    app.$store.dispatch(threatmodelActions.save);
+    app.$store.dispatch(tmActions.save);
 });
 
 const localAuth = () => {

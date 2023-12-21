@@ -279,8 +279,9 @@ function closeModel () {
 
 // check that it is OK to close the model
 export function guardModel () {
+    let allow = true;
     if (model.isOpen === false || model.isModified === false) {
-        return true;
+        return allow;
     }
     logger.log.debug('Check existing open and modified model can be closed');
     const dialogOptions = {
@@ -291,13 +292,9 @@ export function guardModel () {
         defaultId: 1,
         cancelId: 1
     };
-    let guard = false;
-    let result = dialog.showMessageBoxSync(mainWindow, dialogOptions);
-    if (result === 0) {
-        guard = true;
-    }
-    logger.log.debug(messages[language].forms.discardTitle + ': ' + guard);
-    return guard;
+    allow = (dialog.showMessageBoxSync(mainWindow, dialogOptions) === 0);
+    logger.log.debug(messages[language].forms.discardTitle + ': ' + allow);
+    return allow;
 }
 
 // read threat model from file, eg after open-file app module event

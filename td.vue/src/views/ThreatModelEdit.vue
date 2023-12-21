@@ -16,7 +16,7 @@
                                 <b-form-input
                                     id="title"
                                     v-model="model.summary.title"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                     required
                                 ></b-form-input>
@@ -33,7 +33,7 @@
                                 <b-form-input
                                     id="owner"
                                     v-model="model.summary.owner"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -47,7 +47,7 @@
                                 <b-form-input
                                     id="reviewer"
                                     v-model="model.detail.reviewer"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -63,7 +63,7 @@
                                 <b-form-textarea
                                     id="description"
                                     v-model="model.summary.description"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -80,7 +80,7 @@
                                     id="contributors"
                                     :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     variant="primary"
                                 ></b-form-tags>
                             </b-form-group>
