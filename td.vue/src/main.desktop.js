@@ -18,16 +18,31 @@ import './plugins/toastification.js';
 
 Vue.config.productionTip = false;
 
-// informing renderer that desktop menu shell has closed the model
-window.electronAPI.onCloseModel((_event, fileName) =>  {
-    console.debug('Closing model with file name : ' + fileName);
-    app.$store.dispatch(tmActions.clear);
-    localAuth();
-    app.$router.push({ name: 'MainDashboard' }).catch(error => {
-        if (error.name != 'NavigationDuplicated') {
-            throw error;
-        }
+const getConfirmModal = () => {
+    return app.$bvModal.msgBoxConfirm(app.$t('forms.discardMessage'), {
+        title: app.$t('forms.discardTitle'),
+        okVariant: 'danger',
+        okTitle: app.$t('forms.ok'),
+        cancelTitle: app.$t('forms.cancel'),
+        hideHeaderClose: true,
+        centered: true
     });
+};
+
+// request from electron to renderer to close the model
+window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
+    console.debug('Close model request received for file name : ' + fileName);
+    if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+        console.debug('Closing model');
+        // store clear action sends notification back to electron server
+        app.$store.dispatch(tmActions.clear);
+        localAuth();
+        app.$router.push({ name: 'MainDashboard' }).catch(error => {
+            if (error.name != 'NavigationDuplicated') {
+                throw error;
+            }
+        });
+    }
 });
 
 // request from desktop menu shell -> renderer to start a new model

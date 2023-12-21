@@ -7,6 +7,7 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_MODIFIED,
+    THREATMODEL_MODIFIED_DIAGRAM,
     THREATMODEL_RESTORE,
     THREATMODEL_SET_ROLLBACK,
     THREATMODEL_SAVE,
@@ -45,6 +46,10 @@ describe('store/actions/threatmodel.js', () => {
 
     it('defines a modified flag action', () => {
         expect(THREATMODEL_MODIFIED).not.toBeUndefined();
+    });
+
+    it('defines a modified diagram flag action', () => {
+        expect(THREATMODEL_MODIFIED_DIAGRAM).not.toBeUndefined();
     });
 
     it('defines a restore action', () => {

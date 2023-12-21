@@ -109,7 +109,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.close,
                     click () {
-                        closeModel();
+                        closeModelRequest();
                     }
                 },
                 { type: 'separator' },
@@ -266,15 +266,10 @@ function printModel () {
     mainWindow.webContents.send('print-model');
 }
 
-// close the model
-function closeModel () {
-    if (guardModel() === false) {
-        return;
-    }
+// request that the renderer close the model
+function closeModelRequest () {
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
-    // prompt the renderer to close the model
-    mainWindow.webContents.send('close-model', path.basename(model.filePath));
-    modelClosed();
+    mainWindow.webContents.send('close-model-request', path.basename(model.filePath));
 }
 
 // check that it is OK to close the model
@@ -393,7 +388,7 @@ function savePDFReport (pdfPath) {
     });
 }
 
-// clear out the model, either by menu or by renderer request
+// close / clear out the model from renderer request
 export const modelClosed = () => {
     model.filePath = '';
     model.isOpen = false;

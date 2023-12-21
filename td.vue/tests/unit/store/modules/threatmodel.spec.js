@@ -9,6 +9,7 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
+    THREATMODEL_MODIFIED_DIAGRAM,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_SET_ROLLBACK,
@@ -431,6 +432,14 @@ describe('store/modules/threatmodel.js', () => {
 	        it('sets the modified flag', () => {
 	            threatmodelModule.state.modified = false;
 	            threatmodelModule.mutations[THREATMODEL_MODIFIED](threatmodelModule.state);
+	            expect(threatmodelModule.state.modified).toEqual(true);
+	        });
+        });
+
+        describe('modified diagram', () => {
+	        it('sets the modified flag', () => {
+	            threatmodelModule.state.modified = false;
+	            threatmodelModule.mutations[THREATMODEL_MODIFIED_DIAGRAM](threatmodelModule.state);
 	            expect(threatmodelModule.state.modified).toEqual(true);
 	        });
         });

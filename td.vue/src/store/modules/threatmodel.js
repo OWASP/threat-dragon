@@ -14,6 +14,7 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
+    THREATMODEL_MODIFIED_DIAGRAM,
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
@@ -102,6 +103,7 @@ const actions = {
         }
     },
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
+    [THREATMODEL_MODIFIED_DIAGRAM]: ({ commit }) => commit(THREATMODEL_MODIFIED_DIAGRAM),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.immutableCopy);
         if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
@@ -173,6 +175,15 @@ const mutations = {
     [THREATMODEL_MODIFIED]: (state) => {
         if (state.modified === false) {
             console.debug('model now modified');
+            if (isElectron()) {
+                window.electronAPI.modelModified(true);
+            }
+        }
+        state.modified = true;
+    },
+    [THREATMODEL_MODIFIED_DIAGRAM]: (state) => {
+        if (state.modified === false) {
+            console.debug('model (diagram) now modified');
             if (isElectron()) {
                 window.electronAPI.modelModified(true);
             }

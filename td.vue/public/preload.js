@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     modelSaved: (modelData, fileName) => ipcRenderer.send('model-saved', modelData, fileName),
 
     // electron main to renderer
-    onCloseModel: (callback) => ipcRenderer.on('close-model', callback),
+    onCloseModelRequest: (callback) => ipcRenderer.on('close-model-request', callback),
     onNewModel: (callback) => ipcRenderer.on('new-model', callback),
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback),
     onPrintModel: (callback) => ipcRenderer.on('print-model', callback),
