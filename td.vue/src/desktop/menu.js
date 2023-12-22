@@ -48,7 +48,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.open,
                     click () {
-                        openModelRequest('menu');
+                        openModelRequest('');
                     }
                 },
                 {
@@ -170,6 +170,10 @@ export function getMenuTemplate () {
 // Open file system dialog and read file contents into model
 function openModel (filename) {
     logger.log.debug('Open file with name : ' + filename);
+    if (filename !== '') {
+        openModelFile(filename);
+        return;
+    }
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -180,19 +184,7 @@ function openModel (filename) {
     }).then(result => {
         if (result.canceled === false) {
             model.filePath = result.filePaths[0];
-            logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
-            fs.readFile(model.filePath, (err, data) => {
-                if (!err) {
-                    let modelData = JSON.parse(data);
-                    mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
-                    model.isOpen = true;
-                    model.fileDirectory = path.dirname(model.filePath);
-                    app.addRecentDocument(model.filePath);
-                } else {
-                    logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-                    model.isOpen = false;
-                }
-            });
+            openModelFile(model.filePath);
         } else {
             logger.log.debug(messages[language].desktop.file.open + ' : canceled');
         }
@@ -206,6 +198,23 @@ function openModel (filename) {
 function openModelRequest (filename) {
     logger.log.debug('Request to renderer to open an existing model');
     mainWindow.webContents.send('open-model-request', filename);
+}
+
+// request to the renderer for confirmation that it is OK to open a model file
+function openModelFile (filename) {
+    logger.log.debug(messages[language].desktop.file.open + ': ' + filename);
+    fs.readFile(filename, (err, data) => {
+        if (!err) {
+            let modelData = JSON.parse(data);
+            mainWindow.webContents.send('open-model', path.basename(filename), modelData);
+            model.isOpen = true;
+            model.fileDirectory = path.dirname(filename);
+            app.addRecentDocument(filename);
+        } else {
+            logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
+            model.isOpen = false;
+        }
+    });
 }
 
 // prompt the renderer for the model data
@@ -271,24 +280,6 @@ function printModel (format) {
 function closeModelRequest () {
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
     mainWindow.webContents.send('close-model-request', path.basename(model.filePath));
-}
-
-// read threat model from file, eg after open-file app module event
-export function readModelData (filePath) {
-    model.filePath = filePath;
-    logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
-
-    fs.readFile(model.filePath, (err, data) => {
-        if (!err) {
-            let modelData = JSON.parse(data);
-            mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
-            model.fileDirectory = path.dirname(filePath);
-            model.isOpen = true;
-        } else {
-            logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-            model.isOpen = false;
-        }
-    });
 }
 
 // save the threat model
@@ -432,7 +423,6 @@ export default {
     modelSaved,
     openModel,
     openModelRequest,
-    readModelData,
     setLocale,
     setMainWindow
 };

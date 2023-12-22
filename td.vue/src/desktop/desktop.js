@@ -109,8 +109,8 @@ app.on('ready', async () => {
 app.on('open-file', function(event, path) {
     // apply custom handler to this event
     event.preventDefault();
-    logger.log.debug('Open file from recent documents: ' + path);
-    menu.readModelData(path);
+    logger.log.debug('Request to open file from recent documents: ' + path);
+    menu.openModelRequest(path);
 });
 
 function handleUpdateMenu (_event, locale) {
