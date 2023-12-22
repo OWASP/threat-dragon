@@ -94,6 +94,7 @@ app.on('ready', async () => {
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-modified', handleModelModified);
+    ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-saved', handleModelSaved);
@@ -106,12 +107,10 @@ app.on('ready', async () => {
 
 // this is emitted when a 'recent document' is opened
 app.on('open-file', function(event, path) {
-    // handle this event
+    // apply custom handler to this event
     event.preventDefault();
     logger.log.debug('Open file from recent documents: ' + path);
-    if (menu.guardModel() === true) {
-        menu.readModelData(path);
-    }
+    menu.readModelData(path);
 });
 
 function handleUpdateMenu (_event, locale) {
@@ -129,6 +128,11 @@ function handleModelClosed (_event, fileName) {
 function handleModelModified (_event, modified) {
     logger.log.debug('Modified model notification from renderer: ' + modified);
     menu.modelModified(modified);
+}
+
+function handleModelOpenConfirmed (_event, fileName) {
+    logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
+    menu.openModel(fileName);
 }
 
 function handleModelOpened (_event, fileName) {

@@ -19,7 +19,7 @@ import './plugins/toastification.js';
 Vue.config.productionTip = false;
 
 const getConfirmModal = () => {
-    const decision = app.$bvModal.msgBoxConfirm(app.$t('forms.discardMessage'), {
+    return app.$bvModal.msgBoxConfirm(app.$t('forms.discardMessage'), {
         title: app.$t('forms.discardTitle'),
         okVariant: 'danger',
         okTitle: app.$t('forms.ok'),
@@ -27,12 +27,6 @@ const getConfirmModal = () => {
         hideHeaderClose: true,
         centered: true
     });
-    if (decision === true) {
-        // OK to discard the changes
-        app.$store.dispatch(tmActions.restore);
-        app.$store.dispatch(tmActions.unmodified);
-    }
-    return decision;
 };
 
 // request from electron to renderer to close the model
@@ -64,9 +58,8 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
     }
 });
 
-// informing renderer that desktop menu shell is providing new model contents
+// provide renderer with model contents from electron
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
-    // already checked that any existing open model has not been modified
     console.debug('Open model with file name : ' + fileName);
     let params;
     // this will fail if the threat model does not have a title in the summary
@@ -89,11 +82,22 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params });
 });
 
+// request from electron to renderer to provide new model contents
+window.electronAPI.onOpenModelRequest(async (_event, fileName) =>  {
+    console.debug('Open request for model file name : ' + fileName);
+    if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+        console.debug('Confirm model can be opened');
+        window.electronAPI.modelOpenConfirmed(fileName);
+    }
+});
+
 // request from electron to renderer to print the model report
 window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
     console.debug('Print report request for model using format : ' + format);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Printing model as ' + format);
+        app.$store.dispatch(tmActions.restore);
+        app.$store.dispatch(tmActions.unmodified);
         localAuth();
         app.$router.push({ name: `${providerNames.desktop}Report` }).catch(error => {
             if (error.name != 'NavigationDuplicated') {

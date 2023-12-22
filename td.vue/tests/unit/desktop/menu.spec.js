@@ -251,16 +251,6 @@ describe('desktop/menu.js', () => {
                 model.isModified = true;
             });
 
-            it('guardModel() should pass when model is closed', () => {
-                model.isOpen = false;
-                expect(menu.guardModel()).toBe(true);
-            });
-
-            it('guardModel() should pass when model is unmodified', () => {
-                model.isModified = false;
-                expect(menu.guardModel()).toBe(true);
-            });
-
             it('readModelData() should send open-model to renderer with file path', () => {
                 // TODO: need to mock mainWindow
                 // readModelData('another/file/path');

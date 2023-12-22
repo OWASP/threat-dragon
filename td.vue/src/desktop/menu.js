@@ -48,7 +48,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.open,
                     click () {
-                        openModel();
+                        openModelRequest('menu');
                     }
                 },
                 {
@@ -168,10 +168,8 @@ export function getMenuTemplate () {
 }
 
 // Open file system dialog and read file contents into model
-function openModel () {
-    if (guardModel() === false) {
-        return;
-    }
+function openModel (filename) {
+    logger.log.debug('Open file with name : ' + filename);
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -202,6 +200,12 @@ function openModel () {
         logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
         model.isOpen = false;
     });
+}
+
+// request to the renderer for confirmation that it is OK to open a model file
+function openModelRequest (filename) {
+    logger.log.debug('Request to renderer to open an existing model');
+    mainWindow.webContents.send('open-model-request', filename);
 }
 
 // prompt the renderer for the model data
@@ -267,26 +271,6 @@ function printModel (format) {
 function closeModelRequest () {
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
     mainWindow.webContents.send('close-model-request', path.basename(model.filePath));
-}
-
-// check that it is OK to close the model
-export function guardModel () {
-    let allow = true;
-    if (model.isOpen === false || model.isModified === false) {
-        return allow;
-    }
-    logger.log.debug('Check existing open and modified model can be closed');
-    const dialogOptions = {
-        title: messages[language].forms.discardTitle,
-        message: messages[language].forms.discardMessage,
-        buttons: [ messages[language].forms.ok, messages[language].forms.cancel ],
-        type: 'warning',
-        defaultId: 1,
-        cancelId: 1
-    };
-    allow = (dialog.showMessageBoxSync(mainWindow, dialogOptions) === 0);
-    logger.log.debug(messages[language].forms.discardTitle + ': ' + allow);
-    return allow;
 }
 
 // read threat model from file, eg after open-file app module event
@@ -441,12 +425,13 @@ export const setMainWindow = (window) => {
 
 export default {
     getMenuTemplate,
-    guardModel,
     modelClosed,
     modelModified,
     modelOpened,
     modelPrint,
     modelSaved,
+    openModel,
+    openModelRequest,
     readModelData,
     setLocale,
     setMainWindow
