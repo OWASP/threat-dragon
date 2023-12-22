@@ -85,15 +85,13 @@ export function getMenuTemplate () {
                         {
                             label: messages[language].forms.exportHtml,
                             click () {
-                                printModel();
-                                modelPrint('HTML');
+                                printModel('HTML');
                             }
                         },
                         {
                             label: messages[language].forms.exportPdf,
                             click () {
-                                printModel();
-                                modelPrint('PDF');
+                                printModel('PDF');
                             }
                         },
                         {
@@ -247,23 +245,23 @@ function saveModelDataAs (modelData, fileName) {
     });
 }
 
-// open a new model
+// request that the renderer open a new model
 function newModel () {
-    if (guardModel() === false) {
-        return;
-    }
     let newName = 'new-model.json';
     logger.log.debug(messages[language].desktop.file.new + ': ' + newName);
-    // prompt the renderer to open a new model
-    mainWindow.webContents.send('new-model', newName);
-    modelOpened();
+    mainWindow.webContents.send('new-model-request', newName);
 }
 
-// print the model report
-function printModel () {
+// request that the renderer display the model report page
+function printModel (format) {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip print request because no model open');
+        return;
+    }
     logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
     // prompt the renderer to open the print/report window
     mainWindow.webContents.send('print-model');
+    modelPrint(format);
 }
 
 // request that the renderer close the model
@@ -326,7 +324,7 @@ function saveModelData (modelData) {
     }
 }
 
-// Open saveAs file system dialog and write contents as HTML
+// Open saveAs file system dialog and write report contents as HTML
 function saveHTMLReport (htmlPath) {
     htmlPath += '.html';
     var dialogOptions = {
@@ -388,7 +386,7 @@ function savePDFReport (pdfPath) {
     });
 }
 
-// close / clear out the model from renderer request
+// the renderer has closeed / cleared out the model
 export const modelClosed = () => {
     model.filePath = '';
     model.isOpen = false;
@@ -407,7 +405,7 @@ export const modelOpened = () => {
     model.isOpen = true;
 };
 
-// the renderer has requested a report to be printed
+// the renderer has requested a report to be saved
 export const modelPrint = (printer) => {
     let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
     if (!model.filePath || model.filePath === '') {

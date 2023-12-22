@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     // electron main to renderer
     onCloseModelRequest: (callback) => ipcRenderer.on('close-model-request', callback),
-    onNewModel: (callback) => ipcRenderer.on('new-model', callback),
+    onNewModelRequest: (callback) => ipcRenderer.on('new-model-request', callback),
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback),
     onPrintModel: (callback) => ipcRenderer.on('print-model', callback),
     onSaveModel: (callback) => ipcRenderer.on('save-model', callback)

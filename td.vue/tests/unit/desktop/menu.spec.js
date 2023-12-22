@@ -152,7 +152,7 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('newModel() should send new-model to renderer with file name', () => {
+            it('newModel() should send new-model-request to renderer with file name', () => {
                 // TODO: click on the server menu item for newModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();
@@ -164,7 +164,7 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('closeModel() should send close-model to renderer with name from file path', () => {
+            it('closeModel() should send close-model-request to renderer with name from file path', () => {
                 // TODO: click on the server menu item for closeModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();

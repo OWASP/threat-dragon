@@ -31,10 +31,10 @@ const getConfirmModal = () => {
 
 // request from electron to renderer to close the model
 window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
-    console.debug('Close model request received for file name : ' + fileName);
+    console.debug('Close model request for file name : ' + fileName);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Closing model');
-        // store clear action sends notification back to electron server
+        // store clear action sends modelClosed notification back to electron server
         app.$store.dispatch(tmActions.clear);
         localAuth();
         app.$router.push({ name: 'MainDashboard' }).catch(error => {
@@ -45,12 +45,17 @@ window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
     }
 });
 
-// request from desktop menu shell -> renderer to start a new model
-window.electronAPI.onNewModel((_event, fileName) =>  {
-    console.debug('New model with file name : ' + fileName);
-    app.$store.dispatch(tmActions.update, { fileName: fileName });
-    localAuth();
-    app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
+// request from electron to renderer to start a new model
+window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
+    console.debug('New model request  with file name : ' + fileName);
+    if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+        console.debug('Opening new model');
+        app.$store.dispatch(tmActions.update, { fileName: fileName });
+        localAuth();
+        app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
+        // send notification of new model back to electron server
+        window.electronAPI.modelOpened(fileName);
+    }
 });
 
 // informing renderer that desktop menu shell is providing new model contents
