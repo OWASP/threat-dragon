@@ -19,7 +19,7 @@ import './plugins/toastification.js';
 Vue.config.productionTip = false;
 
 const getConfirmModal = () => {
-    return app.$bvModal.msgBoxConfirm(app.$t('forms.discardMessage'), {
+    const decision = app.$bvModal.msgBoxConfirm(app.$t('forms.discardMessage'), {
         title: app.$t('forms.discardTitle'),
         okVariant: 'danger',
         okTitle: app.$t('forms.ok'),
@@ -27,6 +27,12 @@ const getConfirmModal = () => {
         hideHeaderClose: true,
         centered: true
     });
+    if (decision === true) {
+        // OK to discard the changes
+        app.$store.dispatch(tmActions.restore);
+        app.$store.dispatch(tmActions.unmodified);
+    }
+    return decision;
 };
 
 // request from electron to renderer to close the model
@@ -53,7 +59,7 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
         app.$store.dispatch(tmActions.update, { fileName: fileName });
         localAuth();
         app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
-        // send notification of new model back to electron server
+        // send modelOpened notification of new model back to electron server
         window.electronAPI.modelOpened(fileName);
     }
 });
@@ -83,15 +89,20 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params });
 });
 
-// request from desktop menu shell -> renderer to print the model report
-window.electronAPI.onPrintModel((_event, fileName) =>  {
-    console.debug('Print report for model with file name : ' + fileName);
-    localAuth();
-    app.$router.push({ name: `${providerNames.desktop}Report` }).catch(error => {
-        if (error.name != 'NavigationDuplicated') {
-            throw error;
-        }
-    });
+// request from electron to renderer to print the model report
+window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
+    console.debug('Print report request for model using format : ' + format);
+    if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+        console.debug('Printing model as ' + format);
+        localAuth();
+        app.$router.push({ name: `${providerNames.desktop}Report` }).catch(error => {
+            if (error.name != 'NavigationDuplicated') {
+                throw error;
+            }
+        });
+        // send modelPrint notification back to electron server along with format
+        window.electronAPI.modelPrint(format);
+    }
 });
 
 // request from desktop menu shell -> renderer to save the model

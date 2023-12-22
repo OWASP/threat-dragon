@@ -252,7 +252,7 @@ function newModel () {
     mainWindow.webContents.send('new-model-request', newName);
 }
 
-// request that the renderer display the model report page
+// request that the renderer display the model report/print page
 function printModel (format) {
     if (model.isOpen === false) {
         logger.log.debug('Skip print request because no model open');
@@ -260,8 +260,7 @@ function printModel (format) {
     }
     logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
     // prompt the renderer to open the print/report window
-    mainWindow.webContents.send('print-model');
-    modelPrint(format);
+    mainWindow.webContents.send('print-model-request', format);
 }
 
 // request that the renderer close the model
@@ -406,18 +405,18 @@ export const modelOpened = () => {
 };
 
 // the renderer has requested a report to be saved
-export const modelPrint = (printer) => {
+export const modelPrint = (format) => {
     let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
     if (!model.filePath || model.filePath === '') {
         reportPath = path.join(__dirname, '/new_model');
     }
 
-    if (printer === 'PDF') {
+    if (format === 'PDF') {
         savePDFReport(reportPath);
-    } else if (printer === 'HTML') {
+    } else if (format === 'HTML') {
         saveHTMLReport(reportPath);
     } else {
-        logger.log.warn('Print output type not recognised');
+        logger.log.warn('Report output type not recognised:' + format);
     }
 };
 

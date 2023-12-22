@@ -158,7 +158,7 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('printModel() should send print-model to renderer', () => {
+            it('printModel() should send print-model-request to renderer', () => {
                 // TODO: click on the server menu item for printModel()
                 // expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();

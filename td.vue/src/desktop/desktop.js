@@ -136,9 +136,9 @@ function handleModelOpened (_event, fileName) {
     menu.modelOpened();
 }
 
-function handleModelPrint (_event, printer) {
-    logger.log.debug('Model print request from renderer with printer : ' + printer);
-    menu.modelPrint(printer);
+function handleModelPrint (_event, format) {
+    logger.log.debug('Model print request from renderer with printer : ' + format);
+    menu.modelPrint(format);
 }
 
 function handleModelSaved (_event, modelData, fileName) {
