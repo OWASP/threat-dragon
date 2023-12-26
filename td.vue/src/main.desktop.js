@@ -97,7 +97,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Printing model as ' + format);
         app.$store.dispatch(tmActions.restore);
-        app.$store.dispatch(tmActions.unmodified);
+        app.$store.dispatch(tmActions.notModified);
         localAuth();
         app.$router.push({ name: `${providerNames.desktop}Report` }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
@@ -109,9 +109,9 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
     }
 });
 
-// request from desktop menu shell -> renderer to save the model
-window.electronAPI.onSaveModel((_event, fileName) =>  {
-    console.debug('Save model for file name : ' + fileName);
+// request from electron to renderer to provide the model data so that it can be saved
+window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
+    console.debug('Save model request for file name : ' + fileName);
     app.$store.dispatch(tmActions.save);
 });
 

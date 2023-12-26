@@ -14,12 +14,12 @@ import {
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
-    THREATMODEL_MODIFIED_DIAGRAM,
+    THREATMODEL_NOT_MODIFIED,
+    THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_ROLLBACK,
-    THREATMODEL_UNMODIFIED,
+    THREATMODEL_STASH,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 import save from '@/service/save.js';
@@ -62,7 +62,7 @@ const actions = {
                 save.local(state.data, `${state.data.summary.title}.json`);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
-                await window.electronAPI.modelSaved(state.data, state.fileName);
+                await window.electronAPI.modelSave(state.data, state.fileName);
             } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
@@ -72,8 +72,8 @@ const actions = {
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
-            dispatch(THREATMODEL_SET_ROLLBACK);
-            commit(THREATMODEL_UNMODIFIED);
+            dispatch(THREATMODEL_STASH);
+            commit(THREATMODEL_NOT_MODIFIED);
         } catch (ex) {
             console.error('Failed to save new threat model!');
             console.error(ex);
@@ -103,7 +103,7 @@ const actions = {
         }
     },
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
-    [THREATMODEL_MODIFIED_DIAGRAM]: ({ commit }) => commit(THREATMODEL_MODIFIED_DIAGRAM),
+    [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.immutableCopy);
         if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
@@ -124,7 +124,7 @@ const actions = {
                 save.local(state.data, `${state.data.summary.title}.json`, state.format);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
-                await window.electronAPI.modelSaved(state.data, state.fileName);
+                await window.electronAPI.modelSave(state.data, state.fileName);
             } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
@@ -134,8 +134,8 @@ const actions = {
                 );
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
-            dispatch(THREATMODEL_SET_ROLLBACK);
-            commit(THREATMODEL_UNMODIFIED);
+            dispatch(THREATMODEL_STASH);
+            commit(THREATMODEL_NOT_MODIFIED);
         } catch (ex) {
             console.error('Failed to save threat model!');
             console.error(ex);
@@ -143,8 +143,8 @@ const actions = {
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
-    [THREATMODEL_SET_ROLLBACK]: ({ commit }) => commit(THREATMODEL_SET_ROLLBACK),
-    [THREATMODEL_UNMODIFIED]: ({ commit }) => commit(THREATMODEL_UNMODIFIED),
+    [THREATMODEL_STASH]: ({ commit }) => commit(THREATMODEL_STASH),
+    [THREATMODEL_NOT_MODIFIED]: ({ commit }) => commit(THREATMODEL_NOT_MODIFIED),
     [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
 };
 
@@ -181,7 +181,7 @@ const mutations = {
         }
         state.modified = true;
     },
-    [THREATMODEL_MODIFIED_DIAGRAM]: (state) => {
+    [THREATMODEL_DIAGRAM_MODIFIED]: (state) => {
         if (state.modified === false) {
             console.debug('model (diagram) now modified');
             if (isElectron()) {
@@ -192,11 +192,11 @@ const mutations = {
     },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
     [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
-    [THREATMODEL_SET_ROLLBACK]: (state) => {
+    [THREATMODEL_STASH]: (state) => {
         Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
     },
-    [THREATMODEL_UNMODIFIED]: (state) => {
-        console.debug('model is unmodified');
+    [THREATMODEL_NOT_MODIFIED]: (state) => {
+        console.debug('model is not modified');
         if (isElectron()) {
             window.electronAPI.modelModified(false);
         }

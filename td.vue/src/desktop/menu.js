@@ -170,10 +170,13 @@ export function getMenuTemplate () {
 // Open file system dialog and read file contents into model
 function openModel (filename) {
     logger.log.debug('Open file with name : ' + filename);
+
     if (filename !== '') {
         openModelFile(filename);
         return;
     }
+
+    // no filename yet, so ask for one
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -183,8 +186,7 @@ function openModel (filename) {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            model.filePath = result.filePaths[0];
-            openModelFile(model.filePath);
+            openModelFile(result.filePaths[0]);
         } else {
             logger.log.debug(messages[language].desktop.file.open + ' : canceled');
         }
@@ -207,6 +209,7 @@ function openModelFile (filename) {
         if (!err) {
             let modelData = JSON.parse(data);
             mainWindow.webContents.send('open-model', path.basename(filename), modelData);
+            model.filePath = filename;
             model.isOpen = true;
             model.fileDirectory = path.dirname(filename);
             app.addRecentDocument(filename);
@@ -220,13 +223,13 @@ function openModelFile (filename) {
 // prompt the renderer for the model data
 function saveModel () {
     logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
-    mainWindow.webContents.send('save-model', path.basename(model.filePath));
+    mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
 
 function saveModelAs () {
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
     model.filePath = '';
-    mainWindow.webContents.send('save-model', path.basename(model.filePath));
+    mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
 
 // Open saveAs file system dialog and write contents to new file location
@@ -396,7 +399,7 @@ export const modelPrint = (format) => {
 };
 
 // the renderer has requested to save the model with a filename
-export const modelSaved = (modelData, fileName) => {
+export const modelSave = (modelData, fileName) => {
     // if the filePath is empty then this is the first time a save has been requested
     if (!model.filePath || model.filePath === '') {
         saveModelDataAs(modelData, fileName);
@@ -420,7 +423,7 @@ export default {
     modelModified,
     modelOpened,
     modelPrint,
-    modelSaved,
+    modelSave,
     openModel,
     openModelRequest,
     setLocale,

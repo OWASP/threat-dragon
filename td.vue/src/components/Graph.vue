@@ -77,7 +77,7 @@ export default {
             this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
             console.debug('diagram ID: ' + this.diagram.id);
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
         },
         threatSelected(threatId) {
             this.$refs.threatEditDialog.editThreat(threatId);
@@ -88,11 +88,11 @@ export default {
             updated.format = 'td';
             this.$store.dispatch(tmActions.diagramUpdated, updated);
             this.$store.dispatch(tmActions.save);
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
-                this.$store.dispatch(tmActions.unmodified);
+                this.$store.dispatch(tmActions.notModified);
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             }
         },

@@ -97,7 +97,7 @@ app.on('ready', async () => {
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
-    ipcMain.on('model-saved', handleModelSaved);
+    ipcMain.on('model-save', handleModelSave);
 
     createWindow();
 
@@ -145,9 +145,9 @@ function handleModelPrint (_event, format) {
     menu.modelPrint(format);
 }
 
-function handleModelSaved (_event, modelData, fileName) {
+function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
-    menu.modelSaved(modelData, fileName);
+    menu.modelSave(modelData, fileName);
 }
 
 // Exit cleanly on request from parent process in development mode.

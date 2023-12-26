@@ -7,11 +7,11 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_MODIFIED,
-    THREATMODEL_MODIFIED_DIAGRAM,
+    THREATMODEL_NOT_MODIFIED,
+    THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_RESTORE,
-    THREATMODEL_SET_ROLLBACK,
+    THREATMODEL_STASH,
     THREATMODEL_SAVE,
-    THREATMODEL_UNMODIFIED,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 
@@ -49,7 +49,7 @@ describe('store/actions/threatmodel.js', () => {
     });
 
     it('defines a modified diagram flag action', () => {
-        expect(THREATMODEL_MODIFIED_DIAGRAM).not.toBeUndefined();
+        expect(THREATMODEL_DIAGRAM_MODIFIED).not.toBeUndefined();
     });
 
     it('defines a restore action', () => {
@@ -57,7 +57,7 @@ describe('store/actions/threatmodel.js', () => {
     });
 
     it('defines a set immutable copy action', () => {
-        expect(THREATMODEL_SET_ROLLBACK).not.toBeUndefined();
+        expect(THREATMODEL_STASH).not.toBeUndefined();
     });
 
     it('defines a save action', () => {
@@ -65,7 +65,7 @@ describe('store/actions/threatmodel.js', () => {
     });
 
     it('defines an unmodified flag action', () => {
-        expect(THREATMODEL_UNMODIFIED).not.toBeUndefined();
+        expect(THREATMODEL_NOT_MODIFIED).not.toBeUndefined();
     });
 
     it('defines an update action', () => {

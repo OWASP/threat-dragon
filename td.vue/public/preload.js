@@ -11,8 +11,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     modelModified: (modified) => ipcRenderer.send('model-modified', modified),
     modelOpenConfirmed: (fileName) => ipcRenderer.send('model-open-confirmed', fileName),
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
-    modelPrint: (printer) => ipcRenderer.send('model-print', printer),
-    modelSaved: (modelData, fileName) => ipcRenderer.send('model-saved', modelData, fileName),
+    modelPrint: (format) => ipcRenderer.send('model-print', format),
+    modelSave: (modelData, fileName) => ipcRenderer.send('model-save', modelData, fileName),
 
     // electron main to renderer
     onCloseModelRequest: (callback) => ipcRenderer.on('close-model-request', callback),
@@ -20,5 +20,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback),
     onOpenModelRequest: (callback) => ipcRenderer.on('open-model-request', callback),
     onPrintModelRequest: (callback) => ipcRenderer.on('print-model-request', callback),
-    onSaveModel: (callback) => ipcRenderer.on('save-model', callback)
+    onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback)
 });

@@ -222,7 +222,7 @@ export default {
     },
     methods: {
         init() {
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
         },
         onSubmit() {
             // noop
@@ -234,7 +234,7 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.save);
             }
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
@@ -329,7 +329,7 @@ export default {
         async restoreAsync() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
                 this.$store.dispatch(tmActions.restore);
-                this.$store.dispatch(tmActions.unmodified);
+                this.$store.dispatch(tmActions.notModified);
                 return true;
             }
             return false;

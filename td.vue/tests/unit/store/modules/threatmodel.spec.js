@@ -4,16 +4,16 @@ import save from '@/service/save.js';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
-    THREATMODEL_DIAGRAM_UPDATED,
+    THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_DIAGRAM_SELECTED,
+    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
-    THREATMODEL_MODIFIED_DIAGRAM,
+    THREATMODEL_NOT_MODIFIED,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_ROLLBACK,
-    THREATMODEL_UNMODIFIED,
+    THREATMODEL_STASH,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
@@ -105,7 +105,7 @@ describe('store/modules/threatmodel.js', () => {
                     });
 
                     it('dispatches the set rollback copy event', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_ROLLBACK);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
                     });
 
                     it('calls the createAsync api', () => {
@@ -239,9 +239,9 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('commits the set rollback copy action', () => {
-                threatmodelModule.actions[THREATMODEL_SET_ROLLBACK](mocks);
+                threatmodelModule.actions[THREATMODEL_STASH](mocks);
                 expect(mocks.commit).toHaveBeenCalledWith(
-                    THREATMODEL_SET_ROLLBACK
+                    THREATMODEL_STASH
                 );
             });
         });
@@ -277,7 +277,7 @@ describe('store/modules/threatmodel.js', () => {
                     });
 
                     it('dispatches the set rollback copy event', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_ROLLBACK);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
                     });
 
                     it('calls the updateAsync api', () => {
@@ -439,7 +439,7 @@ describe('store/modules/threatmodel.js', () => {
         describe('modified diagram', () => {
 	        it('sets the modified flag', () => {
 	            threatmodelModule.state.modified = false;
-	            threatmodelModule.mutations[THREATMODEL_MODIFIED_DIAGRAM](threatmodelModule.state);
+	            threatmodelModule.mutations[THREATMODEL_DIAGRAM_MODIFIED](threatmodelModule.state);
 	            expect(threatmodelModule.state.modified).toEqual(true);
 	        });
         });
@@ -462,19 +462,19 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe('setRollback', () => {
+        describe('stash', () => {
 	        it('sets the rollback copy from the data', () => {
 	            threatmodelModule.state.data = { foo: 'bar' };
-	            threatmodelModule.mutations[THREATMODEL_SET_ROLLBACK](threatmodelModule.state);
+	            threatmodelModule.mutations[THREATMODEL_STASH](threatmodelModule.state);
 	            expect(threatmodelModule.state.immutableCopy)
 	                .toEqual(JSON.stringify(threatmodelModule.state.data));
 	        });
         });
 
         describe('unmodified', () => {
-	        it('resets the unmodified flag', () => {
+	        it('resets the modified flag', () => {
 	            threatmodelModule.state.modified = true;
-	            threatmodelModule.mutations[THREATMODEL_UNMODIFIED](threatmodelModule.state);
+	            threatmodelModule.mutations[THREATMODEL_NOT_MODIFIED](threatmodelModule.state);
 	            expect(threatmodelModule.state.modified).toEqual(false);
 	        });
         });
