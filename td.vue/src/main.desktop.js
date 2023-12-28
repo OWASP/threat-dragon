@@ -79,7 +79,11 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     app.$store.dispatch(tmActions.update, { fileName: fileName });
     app.$store.dispatch(tmActions.selected, jsonModel);
     localAuth();
-    app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params });
+    app.$router.push({ name: `${providerNames.desktop}ThreatModel`, params }).catch(error => {
+        if (error.name != 'NavigationDuplicated') {
+            throw error;
+        }
+    });
 });
 
 // request from electron to renderer to provide new model contents
@@ -112,8 +116,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
 // request from electron to renderer to provide the model data so that it can be saved
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
-    //app.$store.dispatch(tmActions.save);
-    console.debug('app.$router: ' + JSON.stringify(app.$router));
+    app.$store.dispatch(tmActions.save);
 });
 
 const localAuth = () => {
