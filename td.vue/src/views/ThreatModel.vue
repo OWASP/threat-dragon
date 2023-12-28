@@ -68,7 +68,7 @@
                         id="td-close-btn"
                         :onBtnClick="onCloseClick"
                         icon="times"
-                        :text="$t('forms.close')" />
+                        :text="$t('forms.closeModel')" />
                 </b-btn-group>
             </b-col>
         </b-row>
