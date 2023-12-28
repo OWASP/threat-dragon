@@ -61,7 +61,6 @@ import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 // only search for text files
 const pickerFileOptions = {
@@ -100,7 +99,7 @@ export default {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
-                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
+                            this.$store.dispatch(tmActions.update, { fileName: file.name });
                             this.onImportClick(file.name);
                         })
                         .catch(e => this.$toast.error(e));

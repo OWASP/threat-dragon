@@ -112,7 +112,8 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
 // request from electron to renderer to provide the model data so that it can be saved
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
-    app.$store.dispatch(tmActions.save);
+    //app.$store.dispatch(tmActions.save);
+    console.debug('app.$router: ' + JSON.stringify(app.$router));
 });
 
 const localAuth = () => {
