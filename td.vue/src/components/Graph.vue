@@ -78,17 +78,17 @@ export default {
             stencil.get(this.graph, this.$refs.stencil_container);
             console.debug('diagram ID: ' + this.diagram.id);
             this.$store.dispatch(tmActions.notModified);
+            this.graph.history.on('change', () => {
+                console.debug('history changed, model change : ' + this.$store.getters.modelChanged);
+                this.$store.dispatch(tmActions.modified);
+            });
         },
         threatSelected(threatId) {
             this.$refs.threatEditDialog.editThreat(threatId);
         },
         saved() {
-            const updated = Object.assign({}, this.diagram);
-            updated.cells = this.graph.toJSON().cells;
-            updated.format = 'td';
-            this.$store.dispatch(tmActions.diagramUpdated, updated);
+            this.stashDiagram();
             this.$store.dispatch(tmActions.save);
-            this.$store.dispatch(tmActions.notModified);
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
@@ -105,6 +105,12 @@ export default {
                 hideHeaderClose: true,
                 centered: true
             });
+        },
+        stashDiagram() {
+            console.debug('Stash diagram');
+            const updated = Object.assign({}, this.diagram);
+            updated.cells = this.graph.toJSON().cells;
+            this.$store.dispatch(tmActions.diagramUpdated, updated);
         }
     },
     destroyed() {

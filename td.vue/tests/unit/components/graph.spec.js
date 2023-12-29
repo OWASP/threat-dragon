@@ -22,7 +22,10 @@ describe('components/GraphButtons.vue', () => {
         localVue.use(Vuex);
         
         graphMock = {
-            toJSON: jest.fn().mockReturnValue({ cells: [] })
+            toJSON: jest.fn().mockReturnValue({ cells: [] }),
+            history: {
+                on: jest.fn()
+            }
         };
         routerMock = { push: jest.fn(), params: {} };
         diagramService.edit = jest.fn().mockReturnValue(graphMock);

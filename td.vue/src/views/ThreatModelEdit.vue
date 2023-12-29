@@ -234,7 +234,6 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.save);
             }
-            this.$store.dispatch(tmActions.notModified);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
