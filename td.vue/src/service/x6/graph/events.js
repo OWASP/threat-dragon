@@ -5,7 +5,7 @@
 import dataChanged from './data-changed.js';
 import store from '@/store/index.js';
 import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
-import { THREATMODEL_DIAGRAM_MODIFIED } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
 import shapes from '@/service/x6/shapes/index.js';
 
 const edgeConnected = ({ isNew, edge }) => {
@@ -72,7 +72,7 @@ const cellAdded = (graph) => ({ cell }) => {
 
 const cellDeleted = () => {
     console.debug('cell deleted');
-    store.get().dispatch(THREATMODEL_DIAGRAM_MODIFIED);
+    store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
 const cellSelected = (graph) => ({ cell }) => {
@@ -121,7 +121,7 @@ const cellDataChanged = ({ cell }) => {
     }
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateStyleAttrs(cell);
-    store.get().dispatch(THREATMODEL_DIAGRAM_MODIFIED);
+    store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
 const nodeAddFlow = (graph) => ({ node }) => {

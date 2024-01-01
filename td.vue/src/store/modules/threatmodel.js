@@ -9,13 +9,13 @@ import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
+    THREATMODEL_DIAGRAM_MODIFIED,
+    THREATMODEL_DIAGRAM_SAVED,
     THREATMODEL_DIAGRAM_SELECTED,
-    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
     THREATMODEL_NOT_MODIFIED,
-    THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
@@ -25,31 +25,18 @@ import {
 import save from '@/service/save.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 
-export const clearState = (state) => {
-    if (isElectron()) {
-        // tell any electron server that the model has closed
-        window.electronAPI.modelClosed(state.fileName);
-    }
-    state.all.length = 0;
-    state.data = {};
-    state.fileName = '';
-    state.immutableCopy = '';
-    state.modified = false;
-    state.selectedDiagram = {};
-};
-
 const state = {
     all: [],
     data: {},
     fileName: '',
-    immutableCopy: {},
+    stash: {},
     modified: false,
     selectedDiagram: {}
 };
 
-const setThreatModel = (theState, threatModel) => {
+const stashThreatModel = (theState, threatModel) => {
     theState.data = threatModel;
-    theState.immutableCopy = JSON.stringify(threatModel);
+    theState.stash = JSON.stringify(threatModel);
 };
 
 const actions = {
@@ -62,6 +49,7 @@ const actions = {
                 save.local(state.data, `${state.data.summary.title}.json`);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
+                console.debug('Desktop create action');
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else {
                 await threatmodelApi.createAsync(
@@ -80,8 +68,9 @@ const actions = {
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
     },
+    [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
+    [THREATMODEL_DIAGRAM_SAVED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SAVED, diagram),
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
-    [THREATMODEL_DIAGRAM_UPDATED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_UPDATED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
         const resp = await threatmodelApi.modelAsync(
@@ -103,11 +92,10 @@ const actions = {
         }
     },
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
-    [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
-        let originalModel = JSON.parse(state.immutableCopy);
+        let originalModel = JSON.parse(state.stash);
         if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
-            const originalTitle = (JSON.parse(state.immutableCopy)).summary.title;
+            const originalTitle = (JSON.parse(state.stash)).summary.title;
             const resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,
                 rootState.branch.selected,
@@ -154,20 +142,33 @@ const mutations = {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
-    [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
-        state.selectedDiagram = diagram;
-        console.debug('Threatmodel diagram selected: ' + state.selectedDiagram.id);
+    [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
+        if (state.modified === false) {
+            console.debug('model (diagram) now modified');
+            if (isElectron()) {
+                window.electronAPI.modelModified(true);
+            }
+        }
+        state.modified = true;
+        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+        console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+        //Vue.set(state, 'selectedDiagram', diagram);
+        //Vue.set(state.data.detail.diagrams, idx, diagram);
+        //Vue.set(state.data, 'version', diagram.version);
     },
-    [THREATMODEL_DIAGRAM_UPDATED]: (state, diagram) => {
+    [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         Vue.set(state, 'selectedDiagram', diagram);
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
-        Vue.set(state, 'format', diagram.format);
         console.debug('Threatmodel diagram updated: ' + diagram.id + ' at index: ' + idx);
-        setThreatModel(state, state.data);
+        stashThreatModel(state, state.data);
     },
-    [THREATMODEL_FETCH]: (state, threatModel) => setThreatModel(state, threatModel),
+    [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
+        state.selectedDiagram = diagram;
+        console.debug('Threatmodel diagram selected: ' + state.selectedDiagram.id);
+    },
+    [THREATMODEL_FETCH]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
         state.all.length = 0;
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
@@ -181,19 +182,10 @@ const mutations = {
         }
         state.modified = true;
     },
-    [THREATMODEL_DIAGRAM_MODIFIED]: (state) => {
-        if (state.modified === false) {
-            console.debug('model (diagram) now modified');
-            if (isElectron()) {
-                window.electronAPI.modelModified(true);
-            }
-        }
-        state.modified = true;
-    },
-    [THREATMODEL_RESTORE]: (state, originalThreatModel) => setThreatModel(state, originalThreatModel),
-    [THREATMODEL_SELECTED]: (state, threatModel) => setThreatModel(state, threatModel),
+    [THREATMODEL_RESTORE]: (state, originalThreatModel) => stashThreatModel(state, originalThreatModel),
+    [THREATMODEL_SELECTED]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_STASH]: (state) => {
-        Vue.set(state, 'immutableCopy', JSON.stringify(state.data));
+        Vue.set(state, 'stash', JSON.stringify(state.data));
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
         console.debug('model is not modified');
@@ -232,6 +224,19 @@ const getters = {
         return state.modified;
     },
     isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
+};
+
+export const clearState = (state) => {
+    state.all.length = 0;
+    state.data = {};
+    state.fileName = '';
+    state.stash = '';
+    state.modified = false;
+    state.selectedDiagram = {};
+    if (isElectron()) {
+        // tell any electron server that the model has closed
+        window.electronAPI.modelClosed(state.fileName);
+    }
 };
 
 export default {

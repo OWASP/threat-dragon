@@ -55,7 +55,7 @@ describe('components/GraphButtons.vue', () => {
                 }
             },
             actions: {
-                [tmActions.diagramUpdated]: () => {}
+                [tmActions.diagramSaved]: () => {}
             }
         });
         jest.spyOn(storeMock, 'dispatch');

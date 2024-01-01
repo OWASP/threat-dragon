@@ -80,14 +80,19 @@ export default {
             this.$store.dispatch(tmActions.notModified);
             this.graph.history.on('change', () => {
                 console.debug('history changed, model change : ' + this.$store.getters.modelChanged);
-                this.$store.dispatch(tmActions.modified);
+                const updated = Object.assign({}, this.diagram);
+                updated.cells = this.graph.toJSON().cells;
+                console.debug('diagram : ' + JSON.stringify(updated));
             });
         },
         threatSelected(threatId) {
             this.$refs.threatEditDialog.editThreat(threatId);
         },
         saved() {
-            this.stashDiagram();
+            console.debug('Save diagram');
+            const updated = Object.assign({}, this.diagram);
+            updated.cells = this.graph.toJSON().cells;
+            this.$store.dispatch(tmActions.diagramSaved, updated);
             this.$store.dispatch(tmActions.save);
         },
         async closed() {
@@ -105,12 +110,6 @@ export default {
                 hideHeaderClose: true,
                 centered: true
             });
-        },
-        stashDiagram() {
-            console.debug('Stash diagram');
-            const updated = Object.assign({}, this.diagram);
-            updated.cells = this.graph.toJSON().cells;
-            this.$store.dispatch(tmActions.diagramUpdated, updated);
         }
     },
     destroyed() {

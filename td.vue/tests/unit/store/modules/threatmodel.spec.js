@@ -5,8 +5,8 @@ import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
     THREATMODEL_DIAGRAM_MODIFIED,
+    THREATMODEL_DIAGRAM_SAVED,
     THREATMODEL_DIAGRAM_SELECTED,
-    THREATMODEL_DIAGRAM_UPDATED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
@@ -65,8 +65,8 @@ describe('store/modules/threatmodel.js', () => {
             expect(threatmodelModule.state.selectedDiagram).toBeInstanceOf(Object);
         });
 
-        it('defines an immutableCopy string', () => {
-            expect(threatmodelModule.state.immutableCopy).toEqual('');
+        it('defines a stash string', () => {
+            expect(threatmodelModule.state.stash).toEqual('');
         });
     });
 
@@ -135,10 +135,19 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
+        describe.skip('modifies the diagram', () => {
+	        it('sets the modified flag', () => {
+                const diagram = { foo: 'bar' };
+	            threatmodelModule.state.modified = false;
+	            threatmodelModule.mutations[THREATMODEL_DIAGRAM_MODIFIED](threatmodelModule.state, diagram);
+	            expect(threatmodelModule.state.modified).toEqual(true);
+	        });
+        });
+
         it('commits the diagram updated action', () => {
             const diagram = { foo: 'bar' };
-            threatmodelModule.actions[THREATMODEL_DIAGRAM_UPDATED](mocks, diagram);
-            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_UPDATED, diagram);
+            threatmodelModule.actions[THREATMODEL_DIAGRAM_SAVED](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SAVED, diagram);
         });
 
         describe('fetch', () => {
@@ -201,7 +210,7 @@ describe('store/modules/threatmodel.js', () => {
 
             beforeEach(() => {
                 threatmodelApi.modelAsync = jest.fn().mockReturnValue({ data: originalModel });
-                mocks.state.immutableCopy = JSON.stringify(originalModel);
+                mocks.state.stash = JSON.stringify(originalModel);
                 mocks.state.data = { summary: { title: 'edited test', foo: 'bar' } };
             });
 
@@ -342,7 +351,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('diagramUpdated', () => {
+        describe.skip('diagramSaved', () => {
             let diagram;
             beforeEach(() => {
                 threatmodelModule.state.data.detail = {
@@ -353,7 +362,7 @@ describe('store/modules/threatmodel.js', () => {
                 };
                 threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
                 diagram = { id: 2, foo: 'baz' };
-                threatmodelModule.mutations[THREATMODEL_DIAGRAM_UPDATED](threatmodelModule.state, diagram);
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, diagram);
             });
 
             it('updates the selectedDiagram', () => {
@@ -436,20 +445,12 @@ describe('store/modules/threatmodel.js', () => {
 	        });
         });
 
-        describe('modified diagram', () => {
-	        it('sets the modified flag', () => {
-	            threatmodelModule.state.modified = false;
-	            threatmodelModule.mutations[THREATMODEL_DIAGRAM_MODIFIED](threatmodelModule.state);
-	            expect(threatmodelModule.state.modified).toEqual(true);
-	        });
-        });
-
         describe('restore', () => {
             const orig = { foo: 'bar' };
             let state;
 
             beforeEach(() => {
-                state = { data: { bar: 'foo' }, immutableCopy: 'test' };
+                state = { data: { bar: 'foo' }, stash: 'test' };
                 threatmodelModule.mutations[THREATMODEL_RESTORE](state, orig);
             });
 
@@ -458,7 +459,7 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('sets the immutable copy', () => {
-                expect(state.immutableCopy).toEqual(JSON.stringify(orig));
+                expect(state.stash).toEqual(JSON.stringify(orig));
             });
         });
 
@@ -466,7 +467,7 @@ describe('store/modules/threatmodel.js', () => {
 	        it('sets the rollback copy from the data', () => {
 	            threatmodelModule.state.data = { foo: 'bar' };
 	            threatmodelModule.mutations[THREATMODEL_STASH](threatmodelModule.state);
-	            expect(threatmodelModule.state.immutableCopy)
+	            expect(threatmodelModule.state.stash)
 	                .toEqual(JSON.stringify(threatmodelModule.state.data));
 	        });
         });
