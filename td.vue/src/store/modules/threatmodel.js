@@ -146,17 +146,19 @@ const mutations = {
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
-        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+        if (diagram && state.data.detail) {
+            const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+            console.debug('Threatmodel diagram history modified: ' + diagram.id + ' at index: ' + idx);
+            state.selectedDiagram = diagram;
+            state.data.detail.diagrams[idx] = diagram;
+        }
         if (state.modified === false) {
             console.debug('model (diagram) now modified');
             if (isElectron()) {
                 window.electronAPI.modelModified(true);
             }
+            state.modified = true;
         }
-        state.modified = true;
-        // disable for now
-        // Vue.set(state.data.detail.diagrams, idx, diagram);
     },
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
@@ -167,7 +169,7 @@ const mutations = {
         stashThreatModel(state, state.data);
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
-        state.selectedDiagram = diagram;
+        Vue.set(state, 'selectedDiagram', diagram);
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         console.debug('Threatmodel diagram selected: ' + diagram.id + ' at index: ' + idx);
     },

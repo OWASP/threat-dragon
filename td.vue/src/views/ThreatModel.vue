@@ -146,6 +146,8 @@ export default {
         let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         console.debug('updates: ' + JSON.stringify(update));
         this.$store.dispatch(tmActions.update, update);
+        // if a diagram has just been closed, the history insists on marking the model as modified
+        this.$store.dispatch(tmActions.notModified);
     }
 };
 </script>
