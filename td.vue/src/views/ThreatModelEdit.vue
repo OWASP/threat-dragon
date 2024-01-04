@@ -234,7 +234,8 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.save);
             }
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+            // stop the save button from leaving the threat model edit view
+            // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
             evt.preventDefault();

@@ -121,11 +121,8 @@ describe('views/ThreatmodelEdit.vue', () => {
                 expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SAVE');
             });
 
-            it('routes back to the threat model page', () => {
-                expect(mockRouter.push).toHaveBeenCalledWith({
-                    name: 'localThreatModel',
-                    params: undefined
-                });
+            it('no longer routes back to the threat model page', () => {
+                expect(mockRouter.push).not.toHaveBeenCalled();
             });
         });
 
