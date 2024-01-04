@@ -29,7 +29,7 @@ const state = {
     all: [],
     data: {},
     fileName: '',
-    stash: {},
+    stash: '',
     modified: false,
     selectedDiagram: {}
 };
@@ -242,7 +242,7 @@ export const clearState = (state) => {
     console.debug('Threatmodel cleared');
     state.all.length = 0;
     state.data = {};
-    state.stash = {};
+    state.stash = '';
     state.modified = false;
     state.selectedDiagram = {};
     if (isElectron()) {

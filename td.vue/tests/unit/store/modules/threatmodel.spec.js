@@ -375,9 +375,16 @@ describe('store/modules/threatmodel.js', () => {
         });
 
         describe('diagramSelected', () => {
-            const diagram = { foo: 'bar' };
-
+            let diagram;
             beforeEach(() => {
+                threatmodelModule.state.data.detail = {
+                    diagrams: [
+                        { id: 1 },
+                        { id: 2}
+                    ]
+                };
+                threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
+                diagram = { id: 2, foo: 'baz' };
                 threatmodelModule.mutations[THREATMODEL_DIAGRAM_SELECTED](threatmodelModule.state, diagram);
             });
 
