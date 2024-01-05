@@ -220,14 +220,24 @@ function openModelFile (filename) {
     });
 }
 
-// prompt the renderer for the model data
+// request that the renderer send the model data, retain existing filename
 function saveModel () {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip save request because no model is open');
+        return;
+    }
     logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
     mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
 
+// request that the renderer send the model data
 function saveModelAs () {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip saveAs request because no model is open');
+        return;
+    }
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
+    // clear any existing filename to force a SaveAs
     model.filePath = '';
     mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
