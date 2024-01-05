@@ -151,13 +151,13 @@ const mutations = {
             console.debug('Threatmodel diagram history modified: ' + diagram.id + ' at index: ' + idx);
             state.selectedDiagram = diagram;
             state.data.detail.diagrams[idx] = diagram;
-        }
-        if (state.modified === false) {
-            console.debug('model (diagram) now modified');
-            if (isElectron()) {
-                window.electronAPI.modelModified(true);
+            if (state.modified === false) {
+                console.debug('model (diagram) now modified');
+                if (isElectron()) {
+                    window.electronAPI.modelModified(true);
+                }
+                state.modified = true;
             }
-            state.modified = true;
         }
     },
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {

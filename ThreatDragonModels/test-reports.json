@@ -1,5 +1,5 @@
 {
-  "version": "2.0.5",
+  "version": "2.1.2",
   "summary": {
     "title": "+test model+",
     "owner": "+test owner+",
@@ -1032,9 +1032,27 @@
             }
           }
         ]
+      },
+      {
+        "id": 5,
+        "title": "New PLOT4ai diagram",
+        "diagramType": "PLOT4ai",
+        "placeholder": "New PLOT4ai diagram description",
+        "thumbnail": "./public/content/images/thumbnail.plot4ai.jpg",
+        "version": "2.1.2",
+        "cells": []
+      },
+      {
+        "id": 6,
+        "title": "New generic diagram",
+        "diagramType": "Generic",
+        "placeholder": "New generic diagram description",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "version": "2.1.2",
+        "cells": []
       }
     ],
-    "diagramTop": 5,
+    "diagramTop": 7,
     "reviewer": "+test reviewer+",
     "threatTop": 7
   }

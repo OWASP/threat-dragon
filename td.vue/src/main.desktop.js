@@ -34,14 +34,14 @@ window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
     console.debug('Close model request for file name : ' + fileName);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Closing model');
-        // store clear action sends modelClosed notification back to electron server
-        app.$store.dispatch(tmActions.clear);
         localAuth();
         app.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
                 throw error;
             }
         });
+        // store clear action sends modelClosed notification back to electron server
+        app.$store.dispatch(tmActions.clear);
     }
 });
 
