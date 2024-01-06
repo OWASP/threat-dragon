@@ -47,13 +47,13 @@ describe('components/LocaleSelect.vue', () => {
 
         it('has an option for eng', () => {
             expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'eng').exists()
+                .filter((c) => c.text() === 'English').exists()
             ).toEqual(true);
         });
 
         it('has an option for deu', () => {
             expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'deu').exists()
+                .filter((c) => c.text() === 'Deutsch').exists()
             ).toEqual(true);
         });
 
@@ -64,7 +64,7 @@ describe('components/LocaleSelect.vue', () => {
 
             it('updates the locale to deu', async () => {
                 await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'deu')
+                    .filter(c => c.text() === 'Deutsch')
                     .at(0)
                     .trigger('click');
                 
@@ -73,7 +73,7 @@ describe('components/LocaleSelect.vue', () => {
 
             it('updates the locale to eng', async () => {
                 await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'eng')
+                    .filter(c => c.text() === 'English')
                     .at(0)
                     .trigger('click');
                 
