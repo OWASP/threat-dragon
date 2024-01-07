@@ -14,11 +14,11 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
+          <b-col style="display: flex;  width: 100vw; ">
             <div
               id="graph-container"
               ref="graph_container"
-              style="height: 65vh; flex: 1"
+              style="height: 65vh; width: 100%; flex: 1; "
             ></div>
           </b-col>
         </b-row>
