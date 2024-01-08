@@ -95,7 +95,7 @@ export default {
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
-                this.$store.dispatch(tmActions.notModified);
+                await this.$store.dispatch(tmActions.diagramClosed);
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             }
         },

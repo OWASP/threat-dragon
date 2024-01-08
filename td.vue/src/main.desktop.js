@@ -33,7 +33,8 @@ const getConfirmModal = () => {
 window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
     console.debug('Close model request for file name : ' + fileName);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
-        console.debug('Closing model');
+        console.debug('Closing model and diagram');
+        app.$store.dispatch(tmActions.diagramClosed);
         localAuth();
         app.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
@@ -50,6 +51,7 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
     console.debug('New model request  with file name : ' + fileName);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Opening new model');
+        app.$store.dispatch(tmActions.diagramClosed);
         app.$store.dispatch(tmActions.update, { fileName: fileName });
         localAuth();
         app.$router.push({ name: `${providerNames.desktop}NewThreatModel` });
@@ -100,6 +102,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
     console.debug('Print report request for model using format : ' + format);
     if (!app.$store.getters.modelChanged || await getConfirmModal()) {
         console.debug('Printing model as ' + format);
+        app.$store.dispatch(tmActions.diagramClosed);
         app.$store.dispatch(tmActions.restore);
         app.$store.dispatch(tmActions.notModified);
         localAuth();
@@ -116,6 +119,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
 // request from electron to renderer to provide the model data so that it can be saved
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
+    app.$store.dispatch(tmActions.diagramApplied);
     app.$store.dispatch(tmActions.save);
 });
 

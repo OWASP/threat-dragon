@@ -9,6 +9,8 @@ import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
+    THREATMODEL_DIAGRAM_APPLIED,
+    THREATMODEL_DIAGRAM_CLOSED,
     THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_DIAGRAM_SAVED,
     THREATMODEL_DIAGRAM_SELECTED,
@@ -31,6 +33,7 @@ const state = {
     fileName: '',
     stash: '',
     modified: false,
+    modifiedDiagram: {},
     selectedDiagram: {}
 };
 
@@ -69,6 +72,8 @@ const actions = {
             Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
     },
+    [THREATMODEL_DIAGRAM_APPLIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_APPLIED),
+    [THREATMODEL_DIAGRAM_CLOSED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_CLOSED),
     [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
     [THREATMODEL_DIAGRAM_SAVED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SAVED, diagram),
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
@@ -115,6 +120,7 @@ const actions = {
                 save.local(state.data, `${state.data.summary.title}.json`, state.format);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
+                // console.debug('Save threat model action state.data is: ' + JSON.stringify(state.data));
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else {
                 await threatmodelApi.updateAsync(
@@ -145,12 +151,24 @@ const mutations = {
         state.data.detail.contributors.length = 0;
         contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
+    [THREATMODEL_DIAGRAM_APPLIED]: (state) => {
+	    if (Object.keys(state.modifiedDiagram).length !== 0) {
+            const idx = state.data.detail.diagrams.findIndex(x => x.id === state.modifiedDiagram.id);
+            console.debug('Threatmodel modified diagram applied : ' + state.modifiedDiagram.id + ' at index: ' + idx);
+            state.data.detail.diagrams[idx] = state.modifiedDiagram;
+        }
+    },
+    [THREATMODEL_DIAGRAM_CLOSED]: (state) => {
+	    state.modified = false;
+	    state.modifiedDiagram = {};
+	    console.debug('Threatmodel diagram closed to edits');
+    },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
-        if (diagram && state.data.detail) {
+        if (diagram && Object.keys(state.modifiedDiagram).length !== 0) {
             const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-            console.debug('Threatmodel diagram history modified: ' + diagram.id + ' at index: ' + idx);
-            state.selectedDiagram = diagram;
-            state.data.detail.diagrams[idx] = diagram;
+            console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+            state.modifiedDiagram = diagram;
+            // console.debug('Threatmodel diagram modified diagram: ' + JSON.stringify(state.modifiedDiagram));
             if (state.modified === false) {
                 console.debug('model (diagram) now modified');
                 if (isElectron()) {
@@ -170,8 +188,9 @@ const mutations = {
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
         Vue.set(state, 'selectedDiagram', diagram);
+        state.modifiedDiagram = diagram;
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram selected: ' + diagram.id + ' at index: ' + idx);
+        console.debug('Threatmodel diagram selected for edits: ' + diagram.id + ' at index: ' + idx);
     },
     [THREATMODEL_FETCH]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
@@ -246,6 +265,7 @@ export const clearState = (state) => {
     state.data = {};
     state.stash = '';
     state.modified = false;
+    state.modifiedDiagram = {};
     state.selectedDiagram = {};
     if (isElectron()) {
         // advise electron server that the model has closed

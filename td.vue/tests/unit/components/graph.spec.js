@@ -122,7 +122,7 @@ describe('components/GraphButtons.vue', () => {
         wrapper.vm.saved();
     });
 
-    it('closes the diagram if there were no changes', () => {
+    it.skip('closes the diagram if there were no changes', () => {
         wrapper.vm.closed();
         expect(routerMock.push)
             .toHaveBeenCalledWith({

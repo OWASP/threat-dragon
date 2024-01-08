@@ -328,6 +328,7 @@ export default {
         },
         async restoreAsync() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
+                await this.$store.dispatch(tmActions.diagramClosed);
                 this.$store.dispatch(tmActions.restore);
                 this.$store.dispatch(tmActions.notModified);
                 return true;

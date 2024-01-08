@@ -230,9 +230,11 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         print() {
+            console.debug('Print the report window');
             window.print();
         },
         printPdf() {
+            console.debug('Export the report window to PDF (desktop only)');
             if (isElectron()) {
                 // request electron server to print PDF
                 window.electronAPI.modelPrint('PDF');
