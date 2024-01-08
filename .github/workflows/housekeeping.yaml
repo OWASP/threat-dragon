@@ -47,7 +47,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3.22.11
+        uses: github/codeql-action/upload-sarif@v3.23.0
         with:
           sarif_file: 'trivy-results.sarif'
 
@@ -65,7 +65,7 @@ jobs:
           ref: main
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.22.11
+        uses: github/codeql-action/init@v3.23.0
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -74,10 +74,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v3.22.11
+        uses: github/codeql-action/autobuild@v3.23.0
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v3.22.11
+        uses: github/codeql-action/analyze@v3.23.0
 
   link_checker:
     name: Link checker
