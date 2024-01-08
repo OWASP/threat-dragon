@@ -140,31 +140,31 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('saveModel() should send save-model to renderer with a file path', () => {
+            it('saveModel() should send save-model-request to renderer with a file path', () => {
                 // TODO: click on the server menu item for saveModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('saveModelAs() should send save-model to renderer without a file path', () => {
+            it('saveModelAs() should send save-model-request to renderer without a file path', () => {
                 // TODO: click on the server menu item for saveModelAs()
                 // expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('newModel() should send new-model to renderer with file name', () => {
+            it('newModel() should send new-model-request to renderer with file name', () => {
                 // TODO: click on the server menu item for newModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('printModel() should send print-model to renderer', () => {
+            it('printModel() should send print-model-request to renderer', () => {
                 // TODO: click on the server menu item for printModel()
                 // expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();
             });
 
-            it('closeModel() should send close-model to renderer with name from file path', () => {
+            it('closeModel() should send close-model-request to renderer with name from file path', () => {
                 // TODO: click on the server menu item for closeModel()
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).not.toBeDefined();
@@ -200,42 +200,42 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).toBeTruthy();
             });
 
-            it('modelSaved() should save an open model with a file path', () => {
+            it('modelSave() should save an open model with a file path', () => {
                 model.isOpen = true;
                 // TODO: mock the fs
-                // menu.modelSaved(mockData, mockFilename);
+                // menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).toBe(true);
             });
 
-            it('modelSaved()should not save a closed model with a file path', () => {
+            it('modelSave()should not save a closed model with a file path', () => {
                 model.isOpen = false;
-                menu.modelSaved(mockData, mockFilename);
+                menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
                 expect(model.isOpen).toBe(false);
             });
 
-            it('modelSaved() should saveAs a model with a file name and without a file path', () => {
+            it('modelSave() should saveAs a model with a file name and without a file path', () => {
                 model.filePath = '';
                 // TODO: mock the fs
-                // menu.modelSaved(mockData, mockFilename);
+                // menu.modelSavd(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
                 expect(true).toBe(true);
             });
 
-            it('modelSaved() should saveAs a model without a file name and without a file path', () => {
+            it('modelSave() should saveAs a model without a file name and without a file path', () => {
                 model.filePath = '';
                 mockFilename = '';
                 // TODO: mock the fs
-                // menu.modelSaved(mockData, mockFilename);
+                // menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
                 expect(true).toBe(true);
             });
 
-            it('modelSaved() should saveAs a model with an undefined file path', () => {
+            it('modelSave() should saveAs a model with an undefined file path', () => {
                 model.filePath = undefined;
                 // TODO: mock the fs
-                // menu.modelSaved(mockData, mockFilename);
+                // menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: undefined}) );
                 expect(true).toBe(true);
             });
@@ -249,16 +249,6 @@ describe('desktop/menu.js', () => {
                 model.filePath = 'test path';
                 model.isOpen = true;
                 model.isModified = true;
-            });
-
-            it('guardModel() should pass when model is closed', () => {
-                model.isOpen = false;
-                expect(menu.guardModel()).toBe(true);
-            });
-
-            it('guardModel() should pass when model is unmodified', () => {
-                model.isModified = false;
-                expect(menu.guardModel()).toBe(true);
             });
 
             it('readModelData() should send open-model to renderer with file path', () => {

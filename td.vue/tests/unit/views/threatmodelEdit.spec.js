@@ -3,7 +3,7 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED,  } from '@/store/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -121,11 +121,8 @@ describe('views/ThreatmodelEdit.vue', () => {
                 expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SAVE');
             });
 
-            it('routes back to the threat model page', () => {
-                expect(mockRouter.push).toHaveBeenCalledWith({
-                    name: 'localThreatModel',
-                    params: undefined
-                });
+            it('no longer routes back to the threat model page', () => {
+                expect(mockRouter.push).not.toHaveBeenCalled();
             });
         });
 
@@ -159,6 +156,10 @@ describe('views/ThreatmodelEdit.vue', () => {
 
                     it('dispatches the restore action', () => {
                         expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_RESTORE);
+                    });
+
+                    it('dispatches the not-modified action', () => {
+                        expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                     });
                 });
 

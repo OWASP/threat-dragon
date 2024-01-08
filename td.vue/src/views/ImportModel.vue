@@ -61,7 +61,6 @@ import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
 
 // only search for text files
 const pickerFileOptions = {
@@ -100,7 +99,7 @@ export default {
                     file.text()
                         .then(text => {
                             this.tmJson = text;
-                            this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
+                            this.$store.dispatch(tmActions.update, { fileName: file.name });
                             this.onImportClick(file.name);
                         })
                         .catch(e => this.$toast.error(e));
@@ -119,7 +118,7 @@ export default {
                     let file = await handle.getFile();
                     if (file.name.endsWith('.json')) {
                         this.tmJson = await file.text();
-                        this.$store.dispatch(THREATMODEL_UPDATE, { fileName: file.name });
+                        this.$store.dispatch(tmActions.update, { fileName: file.name });
                         this.onImportClick(file.name);
                     } else {
                         this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
@@ -147,11 +146,9 @@ export default {
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
 
             // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
-            if (Object.hasOwn(jsonModel, 'otmVersion'))
-            {
+            if (Object.hasOwn(jsonModel, 'otmVersion')) {
                 jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
             }
-            // End code to convert OTM back to dragon format
 
             if (isElectron()) {
                 // tell the desktop server that the model has changed

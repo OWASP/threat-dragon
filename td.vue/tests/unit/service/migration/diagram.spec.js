@@ -74,9 +74,9 @@ describe('service/migration/diagram.js', () => {
                 expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(cellsMock.length);
             });
 
-            it('dispatches the diagramUpdated event to the store', () => {
+            it('dispatches the diagramSaved event to the store', () => {
                 expect(storeMock.dispatch)
-                    .toHaveBeenCalledWith(tmActions.diagramUpdated, diagramMock);
+                    .toHaveBeenCalledWith(tmActions.diagramSaved, diagramMock);
             });
         });
 

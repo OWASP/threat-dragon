@@ -94,9 +94,10 @@ app.on('ready', async () => {
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-modified', handleModelModified);
+    ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
-    ipcMain.on('model-saved', handleModelSaved);
+    ipcMain.on('model-save', handleModelSave);
 
     createWindow();
 
@@ -106,12 +107,10 @@ app.on('ready', async () => {
 
 // this is emitted when a 'recent document' is opened
 app.on('open-file', function(event, path) {
-    // handle this event
+    // apply custom handler to this event
     event.preventDefault();
-    logger.log.debug('Open file from recent documents: ' + path);
-    if (menu.guardModel() === true) {
-        menu.readModelData(path);
-    }
+    logger.log.debug('Request to open file from recent documents: ' + path);
+    menu.openModelRequest(path);
 });
 
 function handleUpdateMenu (_event, locale) {
@@ -131,19 +130,24 @@ function handleModelModified (_event, modified) {
     menu.modelModified(modified);
 }
 
+function handleModelOpenConfirmed (_event, fileName) {
+    logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
+    menu.openModel(fileName);
+}
+
 function handleModelOpened (_event, fileName) {
     logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 
-function handleModelPrint (_event, printer) {
-    logger.log.debug('Model print request from renderer with printer : ' + printer);
-    menu.modelPrint(printer);
+function handleModelPrint (_event, format) {
+    logger.log.debug('Model print request from renderer with printer : ' + format);
+    menu.modelPrint(format);
 }
 
-function handleModelSaved (_event, modelData, fileName) {
+function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
-    menu.modelSaved(modelData, fileName);
+    menu.modelSave(modelData, fileName);
 }
 
 // Exit cleanly on request from parent process in development mode.

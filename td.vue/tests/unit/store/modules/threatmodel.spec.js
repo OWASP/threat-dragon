@@ -4,15 +4,16 @@ import save from '@/service/save.js';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
-    THREATMODEL_DIAGRAM_UPDATED,
+    THREATMODEL_DIAGRAM_MODIFIED,
+    THREATMODEL_DIAGRAM_SAVED,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
     THREATMODEL_MODIFIED,
+    THREATMODEL_NOT_MODIFIED,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
-    THREATMODEL_SET_ROLLBACK,
-    THREATMODEL_UNMODIFIED,
+    THREATMODEL_STASH,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel.js';
 import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
@@ -64,8 +65,8 @@ describe('store/modules/threatmodel.js', () => {
             expect(threatmodelModule.state.selectedDiagram).toBeInstanceOf(Object);
         });
 
-        it('defines an immutableCopy string', () => {
-            expect(threatmodelModule.state.immutableCopy).toEqual('');
+        it('defines a stash string', () => {
+            expect(threatmodelModule.state.stash).toEqual('');
         });
     });
 
@@ -104,7 +105,7 @@ describe('store/modules/threatmodel.js', () => {
                     });
 
                     it('dispatches the set rollback copy event', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_ROLLBACK);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
                     });
 
                     it('calls the createAsync api', () => {
@@ -134,10 +135,19 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
+        describe.skip('modifies the diagram', () => {
+	        it('sets the modified flag', () => {
+                const diagram = { foo: 'bar' };
+	            threatmodelModule.state.modified = false;
+	            threatmodelModule.mutations[THREATMODEL_DIAGRAM_MODIFIED](threatmodelModule.state, diagram);
+	            expect(threatmodelModule.state.modified).toEqual(true);
+	        });
+        });
+
         it('commits the diagram updated action', () => {
             const diagram = { foo: 'bar' };
-            threatmodelModule.actions[THREATMODEL_DIAGRAM_UPDATED](mocks, diagram);
-            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_UPDATED, diagram);
+            threatmodelModule.actions[THREATMODEL_DIAGRAM_SAVED](mocks, diagram);
+            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SAVED, diagram);
         });
 
         describe('fetch', () => {
@@ -200,7 +210,7 @@ describe('store/modules/threatmodel.js', () => {
 
             beforeEach(() => {
                 threatmodelApi.modelAsync = jest.fn().mockReturnValue({ data: originalModel });
-                mocks.state.immutableCopy = JSON.stringify(originalModel);
+                mocks.state.stash = JSON.stringify(originalModel);
                 mocks.state.data = { summary: { title: 'edited test', foo: 'bar' } };
             });
 
@@ -238,9 +248,9 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('commits the set rollback copy action', () => {
-                threatmodelModule.actions[THREATMODEL_SET_ROLLBACK](mocks);
+                threatmodelModule.actions[THREATMODEL_STASH](mocks);
                 expect(mocks.commit).toHaveBeenCalledWith(
-                    THREATMODEL_SET_ROLLBACK
+                    THREATMODEL_STASH
                 );
             });
         });
@@ -276,7 +286,7 @@ describe('store/modules/threatmodel.js', () => {
                     });
 
                     it('dispatches the set rollback copy event', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_SET_ROLLBACK);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
                     });
 
                     it('calls the updateAsync api', () => {
@@ -341,7 +351,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('diagramUpdated', () => {
+        describe.skip('diagramSaved', () => {
             let diagram;
             beforeEach(() => {
                 threatmodelModule.state.data.detail = {
@@ -352,7 +362,7 @@ describe('store/modules/threatmodel.js', () => {
                 };
                 threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
                 diagram = { id: 2, foo: 'baz' };
-                threatmodelModule.mutations[THREATMODEL_DIAGRAM_UPDATED](threatmodelModule.state, diagram);
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, diagram);
             });
 
             it('updates the selectedDiagram', () => {
@@ -365,9 +375,16 @@ describe('store/modules/threatmodel.js', () => {
         });
 
         describe('diagramSelected', () => {
-            const diagram = { foo: 'bar' };
-
+            let diagram;
             beforeEach(() => {
+                threatmodelModule.state.data.detail = {
+                    diagrams: [
+                        { id: 1 },
+                        { id: 2}
+                    ]
+                };
+                threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
+                diagram = { id: 2, foo: 'baz' };
                 threatmodelModule.mutations[THREATMODEL_DIAGRAM_SELECTED](threatmodelModule.state, diagram);
             });
 
@@ -440,7 +457,7 @@ describe('store/modules/threatmodel.js', () => {
             let state;
 
             beforeEach(() => {
-                state = { data: { bar: 'foo' }, immutableCopy: 'test' };
+                state = { data: { bar: 'foo' }, stash: 'test' };
                 threatmodelModule.mutations[THREATMODEL_RESTORE](state, orig);
             });
 
@@ -449,23 +466,23 @@ describe('store/modules/threatmodel.js', () => {
             });
 
             it('sets the immutable copy', () => {
-                expect(state.immutableCopy).toEqual(JSON.stringify(orig));
+                expect(state.stash).toEqual(JSON.stringify(orig));
             });
         });
 
-        describe('setRollback', () => {
+        describe('stash', () => {
 	        it('sets the rollback copy from the data', () => {
 	            threatmodelModule.state.data = { foo: 'bar' };
-	            threatmodelModule.mutations[THREATMODEL_SET_ROLLBACK](threatmodelModule.state);
-	            expect(threatmodelModule.state.immutableCopy)
+	            threatmodelModule.mutations[THREATMODEL_STASH](threatmodelModule.state);
+	            expect(threatmodelModule.state.stash)
 	                .toEqual(JSON.stringify(threatmodelModule.state.data));
 	        });
         });
 
         describe('unmodified', () => {
-	        it('resets the unmodified flag', () => {
+	        it('resets the modified flag', () => {
 	            threatmodelModule.state.modified = true;
-	            threatmodelModule.mutations[THREATMODEL_UNMODIFIED](threatmodelModule.state);
+	            threatmodelModule.mutations[THREATMODEL_NOT_MODIFIED](threatmodelModule.state);
 	            expect(threatmodelModule.state.modified).toEqual(false);
 	        });
         });

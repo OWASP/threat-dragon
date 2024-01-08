@@ -16,7 +16,7 @@
                                 <b-form-input
                                     id="title"
                                     v-model="model.summary.title"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                     required
                                 ></b-form-input>
@@ -33,7 +33,7 @@
                                 <b-form-input
                                     id="owner"
                                     v-model="model.summary.owner"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -47,7 +47,7 @@
                                 <b-form-input
                                     id="reviewer"
                                     v-model="model.detail.reviewer"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -63,7 +63,7 @@
                                 <b-form-textarea
                                     id="description"
                                     v-model="model.summary.description"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
@@ -80,7 +80,7 @@
                                     id="contributors"
                                     :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
-                                    @change="onModifyModel()"
+                                    @input="onModifyModel()"
                                     variant="primary"
                                 ></b-form-tags>
                             </b-form-group>
@@ -222,7 +222,7 @@ export default {
     },
     methods: {
         init() {
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
         },
         onSubmit() {
             // noop
@@ -234,8 +234,8 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.save);
             }
-            this.$store.dispatch(tmActions.unmodified);
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+            // stop the save button from leaving the threat model edit view
+            // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
             evt.preventDefault();
@@ -328,8 +328,9 @@ export default {
         },
         async restoreAsync() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
+                await this.$store.dispatch(tmActions.diagramClosed);
                 this.$store.dispatch(tmActions.restore);
-                this.$store.dispatch(tmActions.unmodified);
+                this.$store.dispatch(tmActions.notModified);
                 return true;
             }
             return false;
