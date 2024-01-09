@@ -37,30 +37,30 @@ export default {
         },
         getLanguageName(locale) {
             switch (locale) {
-                case 'ara':
+            case 'ara':
                 return 'العربية'; // Arabic
-                case 'deu':
+            case 'deu':
                 return 'Deutsch'; // German
-                case 'ell':
+            case 'ell':
                 return 'Ελληνικά'; // Greek
-                case 'eng':
+            case 'eng':
                 return 'English';
-                case 'spa':
+            case 'spa':
                 return 'Español'; // Spanish
-                case 'fin':
+            case 'fin':
                 return 'Suomi'; // Finnish
-                case 'fra':
+            case 'fra':
                 return 'Français'; // French
-                case 'hin':
+            case 'hin':
                 return 'हिंदी'; // Hindi
-                case 'por':
+            case 'por':
                 return 'Português'; // Portuguese
-                case 'zho':
+            case 'zho':
                 return '中文'; // Chinese
-                default:
+            default:
                 return locale; // Default to the original locale code if not found
             }
-            }
+        }
     },
     
 };
