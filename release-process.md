@@ -51,9 +51,9 @@ ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r
   3.2 `grep sha512 latest-mac.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum-mac.yml`
   3.3 `grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum.yml`
 4. Confirm SHA512 with:
-  4.1 `sha512sum Threat-Dragon-ng-2.1.3.AppImage`
-  4.2 `sha512sum Threat-Dragon-ng-2.1.3.dmg`
-  4.3 `sha512sum Threat-Dragon-ng-Setup-2.1.3.exe`
+  4.1 `echo "$(cat checksum-linux.yml) Threat-Dragon-ng-2.1.3.AppImage" | sha512sum --check`
+  4.2 `echo "$(cat checksum-mac.yml) Threat-Dragon-ng-2.1.3.dmg" | sha512sum --check`
+  4.3 `echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.1.3.exe" | sha512sum --check`
 5. upload `checksum*.yml` files
 
 ### Check demo site
@@ -65,7 +65,11 @@ ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r
 
 ### Update release notes
 
-Update the release notes for the draft in the [Threat Dragon release area][area]
+Before adding text to the draft release, click on 'Generate Release Notes' button from the edit window.
+If this is done after text is added it does not work.
+Edit the 'What's Changed' to filter out any chores.
+
+Then update the release notes for the draft in the [Threat Dragon release area][area]
 using the release notes using markdown provided by `.release-note-template.md` as a template,
 making sure to revise `2.x.x` to the correct version number such as `2.1.3`
 
