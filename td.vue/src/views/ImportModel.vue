@@ -62,6 +62,7 @@ import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import { THREATMODEL_UPDATE } from '@/store/actions/threatmodel.js';
+import { isValidSchema } from '../service/ajv-SchemaVerification';
 
 // only search for text files
 const pickerFileOptions = {
@@ -127,7 +128,7 @@ export default {
                 } catch (e) {
                     // any error is most likely due to the picker being cancelled, which is benign so just warn
                     this.$toast.warning(this.$t('threatmodel.errors.open'));
-                    console.warn(e);
+                    // console.warn(e);
                 }
             } else {
                 this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
@@ -145,6 +146,13 @@ export default {
             }
 
             // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
+
+            console.log(jsonModel)
+            if(!isValidSchema(jsonModel)){
+                return 
+            }
+
+            
 
             // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
             if (Object.hasOwn(jsonModel, 'otmVersion'))
