@@ -76,23 +76,26 @@ export default {
         init() {
             this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
-            console.debug('diagram ID: ' + this.diagram.id);
-            this.$store.dispatch(tmActions.unmodified);
+            this.$store.dispatch(tmActions.notModified);
+            this.graph.history.on('change', () => {
+                const updated = Object.assign({}, this.diagram);
+                updated.cells = this.graph.toJSON().cells;
+                this.$store.dispatch(tmActions.diagramModified, updated);
+            });
         },
         threatSelected(threatId) {
             this.$refs.threatEditDialog.editThreat(threatId);
         },
         saved() {
+            console.debug('Save diagram');
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
-            updated.format = 'td';
-            this.$store.dispatch(tmActions.diagramUpdated, updated);
+            this.$store.dispatch(tmActions.diagramSaved, updated);
             this.$store.dispatch(tmActions.save);
-            this.$store.dispatch(tmActions.unmodified);
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
-                this.$store.dispatch(tmActions.unmodified);
+                await this.$store.dispatch(tmActions.diagramClosed);
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             }
         },

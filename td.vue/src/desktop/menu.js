@@ -48,7 +48,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.open,
                     click () {
-                        openModel();
+                        openModelRequest('');
                     }
                 },
                 {
@@ -85,15 +85,13 @@ export function getMenuTemplate () {
                         {
                             label: messages[language].forms.exportHtml,
                             click () {
-                                printModel();
-                                modelPrint('HTML');
+                                printModel('HTML');
                             }
                         },
                         {
                             label: messages[language].forms.exportPdf,
                             click () {
-                                printModel();
-                                modelPrint('PDF');
+                                printModel('PDF');
                             }
                         },
                         {
@@ -109,7 +107,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.file.close,
                     click () {
-                        closeModel();
+                        closeModelRequest();
                     }
                 },
                 { type: 'separator' },
@@ -170,10 +168,15 @@ export function getMenuTemplate () {
 }
 
 // Open file system dialog and read file contents into model
-function openModel () {
-    if (guardModel() === false) {
+function openModel (filename) {
+    logger.log.debug('Open file with name : ' + filename);
+
+    if (filename !== '') {
+        openModelFile(filename);
         return;
     }
+
+    // no filename yet, so ask for one
     dialog.showOpenDialog({
         title: messages[language].desktop.file.open,
         properties: ['openFile'],
@@ -183,20 +186,7 @@ function openModel () {
         ]
     }).then(result => {
         if (result.canceled === false) {
-            model.filePath = result.filePaths[0];
-            logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
-            fs.readFile(model.filePath, (err, data) => {
-                if (!err) {
-                    let modelData = JSON.parse(data);
-                    mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
-                    model.isOpen = true;
-                    model.fileDirectory = path.dirname(model.filePath);
-                    app.addRecentDocument(model.filePath);
-                } else {
-                    logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-                    model.isOpen = false;
-                }
-            });
+            openModelFile(result.filePaths[0]);
         } else {
             logger.log.debug(messages[language].desktop.file.open + ' : canceled');
         }
@@ -206,16 +196,50 @@ function openModel () {
     });
 }
 
-// prompt the renderer for the model data
-function saveModel () {
-    logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
-    mainWindow.webContents.send('save-model', path.basename(model.filePath));
+// request to the renderer for confirmation that it is OK to open a model file
+function openModelRequest (filename) {
+    logger.log.debug('Request to renderer to open an existing model');
+    mainWindow.webContents.send('open-model-request', filename);
 }
 
+// request to the renderer for confirmation that it is OK to open a model file
+function openModelFile (filename) {
+    logger.log.debug(messages[language].desktop.file.open + ': ' + filename);
+    fs.readFile(filename, (err, data) => {
+        if (!err) {
+            let modelData = JSON.parse(data);
+            mainWindow.webContents.send('open-model', path.basename(filename), modelData);
+            model.filePath = filename;
+            model.isOpen = true;
+            model.fileDirectory = path.dirname(filename);
+            app.addRecentDocument(filename);
+        } else {
+            logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
+            model.isOpen = false;
+        }
+    });
+}
+
+// request that the renderer send the model data, retain existing filename
+function saveModel () {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip save request because no model is open');
+        return;
+    }
+    logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
+    mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
+}
+
+// request that the renderer send the model data
 function saveModelAs () {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip saveAs request because no model is open');
+        return;
+    }
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
+    // clear any existing filename to force a SaveAs
     model.filePath = '';
-    mainWindow.webContents.send('save-model', path.basename(model.filePath));
+    mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
 
 // Open saveAs file system dialog and write contents to new file location
@@ -247,75 +271,28 @@ function saveModelDataAs (modelData, fileName) {
     });
 }
 
-// open a new model
+// request that the renderer open a new model
 function newModel () {
-    if (guardModel() === false) {
-        return;
-    }
     let newName = 'new-model.json';
     logger.log.debug(messages[language].desktop.file.new + ': ' + newName);
-    // prompt the renderer to open a new model
-    mainWindow.webContents.send('new-model', newName);
-    modelOpened();
+    mainWindow.webContents.send('new-model-request', newName);
 }
 
-// print the model report
-function printModel () {
-    logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
-    // prompt the renderer to open the print/report window
-    mainWindow.webContents.send('print-model');
-}
-
-// close the model
-function closeModel () {
-    if (guardModel() === false) {
+// request that the renderer display the model report/print page
+function printModel (format) {
+    if (model.isOpen === false) {
+        logger.log.debug('Skip print request because no model open');
         return;
     }
+    logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
+    // prompt the renderer to open the print/report window
+    mainWindow.webContents.send('print-model-request', format);
+}
+
+// request that the renderer close the model
+function closeModelRequest () {
     logger.log.debug(messages[language].desktop.file.close + ': ' + model.filePath);
-    // prompt the renderer to close the model
-    mainWindow.webContents.send('close-model', path.basename(model.filePath));
-    modelClosed();
-}
-
-// check that it is OK to close the model
-export function guardModel () {
-    if (model.isOpen === false || model.isModified === false) {
-        return true;
-    }
-    logger.log.debug('Check existing open and modified model can be closed');
-    const dialogOptions = {
-        title: messages[language].forms.discardTitle,
-        message: messages[language].forms.discardMessage,
-        buttons: [ messages[language].forms.ok, messages[language].forms.cancel ],
-        type: 'warning',
-        defaultId: 1,
-        cancelId: 1
-    };
-    let guard = false;
-    let result = dialog.showMessageBoxSync(mainWindow, dialogOptions);
-    if (result === 0) {
-        guard = true;
-    }
-    logger.log.debug(messages[language].forms.discardTitle + ': ' + guard);
-    return guard;
-}
-
-// read threat model from file, eg after open-file app module event
-export function readModelData (filePath) {
-    model.filePath = filePath;
-    logger.log.debug(messages[language].desktop.file.open + ': ' + model.filePath);
-
-    fs.readFile(model.filePath, (err, data) => {
-        if (!err) {
-            let modelData = JSON.parse(data);
-            mainWindow.webContents.send('open-model', path.basename(model.filePath), modelData);
-            model.fileDirectory = path.dirname(filePath);
-            model.isOpen = true;
-        } else {
-            logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
-            model.isOpen = false;
-        }
-    });
+    mainWindow.webContents.send('close-model-request', path.basename(model.filePath));
 }
 
 // save the threat model
@@ -334,7 +311,7 @@ function saveModelData (modelData) {
     }
 }
 
-// Open saveAs file system dialog and write contents as HTML
+// Open saveAs file system dialog and write report contents as HTML
 function saveHTMLReport (htmlPath) {
     htmlPath += '.html';
     var dialogOptions = {
@@ -396,7 +373,7 @@ function savePDFReport (pdfPath) {
     });
 }
 
-// clear out the model, either by menu or by renderer request
+// the renderer has closeed / cleared out the model
 export const modelClosed = () => {
     model.filePath = '';
     model.isOpen = false;
@@ -415,24 +392,24 @@ export const modelOpened = () => {
     model.isOpen = true;
 };
 
-// the renderer has requested a report to be printed
-export const modelPrint = (printer) => {
+// the renderer has requested a report to be saved
+export const modelPrint = (format) => {
     let reportPath = path.join(path.dirname(model.filePath), path.basename(model.filePath, '.json'));
     if (!model.filePath || model.filePath === '') {
         reportPath = path.join(__dirname, '/new_model');
     }
 
-    if (printer === 'PDF') {
+    if (format === 'PDF') {
         savePDFReport(reportPath);
-    } else if (printer === 'HTML') {
+    } else if (format === 'HTML') {
         saveHTMLReport(reportPath);
     } else {
-        logger.log.warn('Print output type not recognised');
+        logger.log.warn('Report output type not recognised:' + format);
     }
 };
 
 // the renderer has requested to save the model with a filename
-export const modelSaved = (modelData, fileName) => {
+export const modelSave = (modelData, fileName) => {
     // if the filePath is empty then this is the first time a save has been requested
     if (!model.filePath || model.filePath === '') {
         saveModelDataAs(modelData, fileName);
@@ -452,13 +429,13 @@ export const setMainWindow = (window) => {
 
 export default {
     getMenuTemplate,
-    guardModel,
     modelClosed,
     modelModified,
     modelOpened,
     modelPrint,
-    modelSaved,
-    readModelData,
+    modelSave,
+    openModel,
+    openModelRequest,
     setLocale,
     setMainWindow
 };

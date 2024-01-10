@@ -28,7 +28,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
-import threatmodelActions from '@/store/actions/threatmodel.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelSelect',
@@ -57,7 +57,7 @@ export default {
             this.$store.dispatch(branchActions.selected, this.$route.params.branch);
         }
 
-        this.$store.dispatch(threatmodelActions.fetchAll);
+        this.$store.dispatch(tmActions.fetchAll);
     },
     methods: {
         selectBranchClick() {
@@ -69,13 +69,13 @@ export default {
             this.$router.push({ name: 'gitRepository', params: { provider: this.provider }});
         },
         async onThreatmodelClick(threatmodel) {
-            await this.$store.dispatch(threatmodelActions.fetch, threatmodel);
+            await this.$store.dispatch(tmActions.fetch, threatmodel);
             const params = Object.assign({}, this.$route.params, { threatmodel });
-            this.$store.dispatch(threatmodelActions.selected, this.selectedModel);
+            this.$store.dispatch(tmActions.selected, this.selectedModel);
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
         newThreatModel() {
-            this.$store.dispatch(threatmodelActions.clear);
+            this.$store.dispatch(tmActions.clear);
             const newTm = {
                 summary: {
                     title: 'New Threat Model',
@@ -91,7 +91,7 @@ export default {
                     threatTop: 0
                 }
             };
-            this.$store.dispatch(threatmodelActions.create, newTm);
+            this.$store.dispatch(tmActions.create, newTm);
             const params = Object.assign({}, this.$route.params, {
                 threatmodel: newTm.summary.title
             });
