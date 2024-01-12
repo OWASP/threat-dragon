@@ -4,5 +4,6 @@ import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 
 Vue.use(Toast, {
-    position: POSITION.BOTTOM_LEFT
+    position: POSITION.BOTTOM_LEFT,
+    timeout: 6000
 });

@@ -1,78 +1,76 @@
 <template>
-    <div v-if="!!model && model.summary">
-        <b-row class="mb-4" id="title_row">
-            <b-col>
-                <td-threat-model-summary-card />
-            </b-col>
-        </b-row>
+  <div v-if="model && model.summary">
+    <b-row class="mb-4" id="title_row">
+      <b-col>
+        <td-threat-model-summary-card />
+      </b-col>
+    </b-row>
 
-        <!-- Description -->
-        <b-row class="mb-4">
+    <!-- Description -->
+    <b-row class="mb-4">
+      <b-col>
+        <b-card :header="$t('threatmodel.description')">
+          <b-row class="tm-card">
             <b-col>
-                <b-card
-                    :header="$t('threatmodel.description')">
-                    <b-row class="tm-card">
-                        <b-col>
-                            <p id="tm_description">{{ model.summary.description }}</p>
-                        </b-col>
-                    </b-row>
-                </b-card>
+              <p id="tm_description">{{ model.summary.description }}</p>
             </b-col>
-        </b-row>
+          </b-row>
+        </b-card>
+      </b-col>
+    </b-row>
 
-        <!-- Diagrams -->
-        <b-row class="mb-4">
-            <b-col
-                class="tm_diagram"
-                lg="3"
-                v-for="(diagram, idx) in model.detail.diagrams"
-                :key="idx"
-            >
-                <b-card>
-                    <template #header>
-                        <h6 class="diagram-header-text">
-                            <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
-                                {{ diagram.title }}
-                            </a>
-                        </h6>
-                    </template>
-                    <h6 v-if=diagram.description class="diagram-description-text">
-                        <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
-                            {{ diagram.description }}
-                        </a>
-                    </h6>
-                    <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
-                            class="m-auto d-block td-diagram-thumb"
-                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
-                            :alt="diagram.title" />
-                    </a>
-                </b-card>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col class="text-right">
-                <b-btn-group>
-                    <td-form-button
-                        id="td-edit-btn"
-                        :isPrimary="true"
-                        :onBtnClick="onEditClick"
-                        icon="edit"
-                        :text="$t('forms.edit')" />
-                    <td-form-button
-                        id="td-report-btn"
-                        :onBtnClick="onReportClick"
-                        icon="file-alt"
-                        :text="$t('forms.report')" />
-                    <td-form-button
-                        id="td-close-btn"
-                        :onBtnClick="onCloseClick"
-                        icon="times"
-                        :text="$t('forms.closeModel')" />
-                </b-btn-group>
-            </b-col>
-        </b-row>
-    </div>
+    <!-- Diagrams -->
+    <b-row class="mb-4">
+      <b-col lg="3" v-for="(diagram, idx) in (model.detail?.diagrams || [])" :key="idx">
+        <b-card>
+          <template #header>
+            <h6 class="diagram-header-text">
+              <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
+                {{ diagram.title }}
+              </a>
+            </h6>
+          </template>
+          <h6 v-if="diagram.description" class="diagram-description-text">
+            <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
+              {{ diagram.description }}
+            </a>
+          </h6>
+          <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
+            <b-img-lazy
+              class="m-auto d-block td-diagram-thumb"
+              :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
+              :alt="diagram.title"
+            />
+          </a>
+        </b-card>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col class="text-right">
+        <b-btn-group>
+          <td-form-button
+            id="td-edit-btn"
+            :isPrimary="true"
+            :onBtnClick="onEditClick"
+            icon="edit"
+            :text="$t('forms.edit')"
+          />
+          <td-form-button
+            id="td-report-btn"
+            :onBtnClick="onReportClick"
+            icon="file-alt"
+            :text="$t('forms.report')"
+          />
+          <td-form-button
+            id="td-close-btn"
+            :onBtnClick="onCloseClick"
+            icon="times"
+            :text="$t('forms.closeModel')"
+          />
+        </b-btn-group>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -120,8 +118,20 @@ export default {
         },
         onReportClick(evt) {
             evt.preventDefault();
+            if (!this.providerType) {
+                console.error('Provider type is undefined');
+                return;
+            }
+            if (!this.$route.params) {
+                console.error('Route parameters are undefined');
+                return;
+            }
+            if (!this.$router) {
+                console.error('Router instance is undefined');
+                return;
+            }
             this.$router.push({ name: `${this.providerType}Report`, params: this.$route.params });
-        },
+            },
         onCloseClick(evt) {
             evt.preventDefault();
             this.$store.dispatch(tmActions.clear);

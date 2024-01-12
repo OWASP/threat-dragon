@@ -28,7 +28,7 @@ import TdNavbar from '@/components/Navbar.vue';
 export default {
     name: 'TdApp',
     components: {
-        TdNavbar
+        TdNavbar 
     },
     computed: mapState({
         isLoading: (state) => state.loader.loading
