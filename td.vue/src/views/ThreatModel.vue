@@ -5,7 +5,7 @@
                 <td-threat-model-summary-card />
             </b-col>
         </b-row>
-
+        
         <!-- Description -->
         <b-row class="mb-4">
             <b-col>
