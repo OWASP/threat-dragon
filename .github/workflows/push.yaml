@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.9.0
+        uses: lycheeverse/lychee-action@v1.9.1
         with:
           fail: true
         env:
@@ -78,12 +78,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -110,12 +110,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -142,12 +142,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -180,12 +180,12 @@ jobs:
         uses: browser-actions/setup-chrome@v1.4.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -220,7 +220,7 @@ jobs:
           install: true
 
       - name: Setup dockerx cache
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -283,12 +283,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -340,12 +340,12 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -359,7 +359,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.1.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -390,12 +390,12 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -409,7 +409,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.1.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -456,7 +456,7 @@ jobs:
             -j
 
       - name: Upload scan report
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.1.0
         with:
           name: zap_report_web.zip
           path: zap/report_web.html
@@ -472,7 +472,7 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.16.0
+        uses: aquasecurity/trivy-action@0.16.1
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
@@ -487,12 +487,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -530,7 +530,7 @@ jobs:
           output: './sboms/threat-dragon-server-bom.json'
 
       - name: Save SBOMs artifact
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.1.0
         with:
           name: threat-dragon-sboms
           path: sboms
@@ -547,12 +547,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -589,12 +589,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -641,12 +641,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -678,12 +678,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
