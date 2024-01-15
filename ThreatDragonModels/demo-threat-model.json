@@ -4,7 +4,7 @@
     "owner": "Mike Goodwin",
     "description": "A sample model of a web application, with a queue-decoupled background process.",
     "id": 0
-  }, 
+  },
   "detail": {
     "contributors": [
       {
