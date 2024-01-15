@@ -35,7 +35,7 @@
                                     v-model="display.outOfScope"
                                 >{{ $t('report.options.showOutOfScope') }}</b-form-checkbox>
                             </b-form-group>
-                        </b-col> 
+                        </b-col>
 
                         <b-col>
                             <b-form-group
