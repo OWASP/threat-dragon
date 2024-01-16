@@ -128,7 +128,7 @@ export default {
                 } catch (e) {
                     // any error is most likely due to the picker being cancelled, which is benign so just warn
                     this.$toast.warning(this.$t('threatmodel.errors.open'));
-                    // console.warn(e);
+                    console.warn(e);
                 }
             } else {
                 this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
