@@ -1,10 +1,11 @@
 import Ajv from 'ajv';
 import { schema } from '../assets/threat-model-schema';
 
+const ajv = new Ajv({strict : false});
+const validate = ajv.compile(schema);
+
 export const isValidSchema = (jsonFile) => {
 
-    const ajv = new Ajv({strict : false});
-    const validate = ajv.compile(schema);
 
     const valid = validate(jsonFile);
 
