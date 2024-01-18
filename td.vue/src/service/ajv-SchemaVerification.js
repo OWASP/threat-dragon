@@ -9,7 +9,7 @@ export const isValidSchema = (jsonFile) => {
 
     const valid = validate(jsonFile);
 
-    if (valid.errors) {
+    if (!valid) {
         console.error("Failed to validate", validate.errors);
         return false;
     } else {

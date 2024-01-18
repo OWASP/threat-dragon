@@ -145,9 +145,7 @@ export default {
                 return;
             }
 
-            // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
-
-            console.log(jsonModel)
+            // check for schema errors
             if(!isValidSchema(jsonModel)){
                 return 
             }
