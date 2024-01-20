@@ -147,7 +147,7 @@ export default {
 
             // check for schema errors
             if(!isValidSchema(jsonModel)){
-                return 
+                this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
             }
 
             
