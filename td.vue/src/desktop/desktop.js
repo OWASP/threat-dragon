@@ -19,7 +19,20 @@ protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
+let loadingScreen;
 async function createWindow () {
+
+    loadingScreen = new BrowserWindow({
+        width: 1400,
+        height: 1000,
+        show: false,
+        frame: false,
+    })
+
+    loadingScreen.loadFile('../../utils/Desktop-Loader/loading.html')
+    loadingScreen.show()
+
+
     // Create the browser window
     const mainWindow = new BrowserWindow({
         width: 1400,
@@ -33,8 +46,11 @@ async function createWindow () {
         }
     });
 
+    
+
     // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
+        if(loadingScreen) loadingScreen.close();
         mainWindow.show();
         mainWindow.focus();
         // menu system needs to access the main window
