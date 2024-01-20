@@ -25,12 +25,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -57,12 +57,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -89,12 +89,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -127,12 +127,12 @@ jobs:
         uses: browser-actions/setup-chrome@v1.4.0
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -167,12 +167,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -209,12 +209,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -263,12 +263,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -303,12 +303,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -353,7 +353,7 @@ jobs:
           install: true
 
       - name: Setup dockerx cache
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -387,12 +387,12 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

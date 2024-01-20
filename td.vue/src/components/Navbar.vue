@@ -87,6 +87,21 @@ $icon-height: 1.2rem;
     max-height: ($header-height - 10);
   }
 }
+
+/* Add this media query */
+@media (max-width: 576px) { /* This is the typical breakpoint for phones */
+  .nav-link {
+  color: red !important;
+  }
+}
+@media (max-width: 576px) {
+  .td-owasp-logo { /* Target the OWASP logo */
+    background-color: red;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  }
+
 </style>
 
 <script>
