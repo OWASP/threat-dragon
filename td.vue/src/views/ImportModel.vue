@@ -61,6 +61,8 @@ import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import { isValidSchema } from '../service/ajv-SchemaVerification';
+
 
 // only search for text files
 const pickerFileOptions = {
@@ -143,7 +145,12 @@ export default {
                 return;
             }
 
-            // ToDo: need to catch invalid threat model schemas, possibly using npmjs.com/package/ajv
+            // check for schema errors
+            if(!isValidSchema(jsonModel)){
+                this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
+            }
+
+            
 
             // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
             if (Object.hasOwn(jsonModel, 'otmVersion')) {
