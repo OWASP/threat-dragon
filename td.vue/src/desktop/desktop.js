@@ -23,15 +23,14 @@ let loadingScreen;
 async function createWindow () {
 
     loadingScreen = new BrowserWindow({
-        width: 1400,
-        height: 1000,
+        width: 400,
+        height: 500,
         show: false,
         frame: false,
-    })
+    });
 
-    loadingScreen.loadFile('../../utils/Desktop-Loader/loading.html')
-    loadingScreen.show()
-
+    loadingScreen.loadFile('../public/desktop-loading.html');
+    loadingScreen.show();
 
     // Create the browser window
     const mainWindow = new BrowserWindow({
@@ -45,8 +44,6 @@ async function createWindow () {
             preload: path.join(__static, 'preload.js')
         }
     });
-
-    
 
     // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
