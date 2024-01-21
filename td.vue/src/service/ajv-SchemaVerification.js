@@ -1,8 +1,8 @@
 import Ajv from 'ajv';
-import { schema } from '@/assets/threat-model-schema';
-import { schema as schemaV2 } from '@/assets/threat-model-schema.V2';
+import { schema } from '@/assets/schema/threat-model-schema';
+import { schema as schemaV2 } from '@/assets/schema/threat-model-schema.V2';
 
-const ajv = new Ajv({'allowUnionTypes' : true , "strict" : false});
+const ajv = new Ajv({'allowUnionTypes' : true});
 const validate = ajv.compile(schema);
 const validateV2 = ajv.compile(schemaV2);
 
@@ -21,4 +21,4 @@ export const isValidSchema = (jsonFile) => {
 
     console.debug('Schema validate success');
     return true;
-}
+};

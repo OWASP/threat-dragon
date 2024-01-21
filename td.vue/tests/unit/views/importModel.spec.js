@@ -9,7 +9,7 @@ describe('ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
 
     beforeEach(() => {
-        toast = { error: jest.fn() };
+        toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);

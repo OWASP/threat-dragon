@@ -150,8 +150,6 @@ export default {
                 this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
             }
 
-            
-
             // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
             if (Object.hasOwn(jsonModel, 'otmVersion')) {
                 jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
