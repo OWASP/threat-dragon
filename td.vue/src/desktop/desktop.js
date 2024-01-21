@@ -25,8 +25,7 @@ async function createWindow () {
     loadingScreen = new BrowserWindow({
         width: 400,
         height: 500,
-        show: false,
-        frame: false,
+        show: false
     });
 
     loadingScreen.loadFile('../public/desktop-loading.html');
@@ -47,9 +46,11 @@ async function createWindow () {
 
     // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
-        if(loadingScreen) loadingScreen.close();
         mainWindow.show();
         mainWindow.focus();
+        if (loadingScreen) {
+            loadingScreen.close();
+        }
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
     });
