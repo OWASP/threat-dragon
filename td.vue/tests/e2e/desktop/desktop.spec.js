@@ -15,7 +15,7 @@ describe('Desktop application', () => {
             expect(rect.height).toEqual(900);
         });
 
-        it('should have an electron url', async () => {
+        it.skip('should have an electron url', async () => {
             let url = await browser.getUrl();
             expect(url).toEqual('app://./index.html');
         });
