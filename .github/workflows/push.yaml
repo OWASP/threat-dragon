@@ -36,7 +36,7 @@ jobs:
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v14.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v15.0.0
         with:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
@@ -83,7 +83,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -115,7 +115,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -147,7 +147,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -185,7 +185,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -220,7 +220,7 @@ jobs:
           install: true
 
       - name: Setup dockerx cache
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -288,7 +288,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -345,7 +345,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -359,7 +359,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.1.0
+        uses: actions/upload-artifact@v4.2.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -395,7 +395,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -409,7 +409,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.1.0
+        uses: actions/upload-artifact@v4.2.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -456,7 +456,7 @@ jobs:
             -j
 
       - name: Upload scan report
-        uses: actions/upload-artifact@v4.1.0
+        uses: actions/upload-artifact@v4.2.0
         with:
           name: zap_report_web.zip
           path: zap/report_web.html
@@ -492,7 +492,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -530,7 +530,7 @@ jobs:
           output: './sboms/threat-dragon-server-bom.json'
 
       - name: Save SBOMs artifact
-        uses: actions/upload-artifact@v4.1.0
+        uses: actions/upload-artifact@v4.2.0
         with:
           name: threat-dragon-sboms
           path: sboms
@@ -552,7 +552,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -594,7 +594,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -646,7 +646,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -683,7 +683,7 @@ jobs:
           node-version: '18'
 
       - name: Cache NPM dir
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

@@ -23,15 +23,13 @@ let loadingScreen;
 async function createWindow () {
 
     loadingScreen = new BrowserWindow({
-        width: 1400,
-        height: 1000,
-        show: false,
-        frame: false,
-    })
+        width: 400,
+        height: 500,
+        show: false
+    });
 
-    loadingScreen.loadFile('../../utils/Desktop-Loader/loading.html')
-    loadingScreen.show()
-
+    loadingScreen.loadFile('../public/desktop-loading.html');
+    loadingScreen.show();
 
     // Create the browser window
     const mainWindow = new BrowserWindow({
@@ -46,13 +44,14 @@ async function createWindow () {
         }
     });
 
-    
-
     // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
-        if(loadingScreen) loadingScreen.close();
         mainWindow.show();
         mainWindow.focus();
+        if (loadingScreen) {
+            logger.log.debug('Close loading screen');
+            loadingScreen.close();
+        }
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
     });
@@ -61,7 +60,9 @@ async function createWindow () {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
         // Load the url of the dev server when in development mode
         await mainWindow.loadURL(electronURL);
-        if (!isTest) mainWindow.webContents.openDevTools();
+        if (!isTest) {
+            mainWindow.webContents.openDevTools();
+        }
     } else {
         createProtocol('app');
         // Load the index.html when not in development mode
