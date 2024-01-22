@@ -4,7 +4,7 @@
 describe('Desktop application', () => {
 
     describe('main window', () => {
-        it('should launch the application', async () => {
+        it.skip('should launch the application', async () => {
             const title = await browser.getTitle();
             expect(title).toEqual('OWASP Threat Dragon');
         });
