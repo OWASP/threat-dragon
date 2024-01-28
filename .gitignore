@@ -61,6 +61,8 @@
 !td.vue/public/*
 !td.vue/src/
 !td.vue/src/assets/
+!td.vue/src/assets/schema/
+!td.vue/src/assets/schema/*.js
 !td.vue/src/assets/*.jpg
 !td.vue/src/assets/*.svg
 !td.vue/src/components/
