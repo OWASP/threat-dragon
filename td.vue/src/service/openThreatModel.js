@@ -1,3 +1,5 @@
+const buildVersion = require('../../../package.json').version;
+
 const convertTDtoOTM = (data) => {
     const jsonData = JSON.stringify(data, null, 2);
 
@@ -222,20 +224,31 @@ const convertTDtoOTM = (data) => {
 };
 
 const convertOTMtoTD = (jsonModel) => {
+    console.log(jsonModel);
+
     var dragonModel = new Object();
-    dragonModel.version = '2.0';
+    dragonModel.version = buildVersion;
+    dragonModel.otmVersion = jsonModel.otmVersion;
+
     dragonModel.summary = new Object();
     dragonModel.summary.title = jsonModel.project.name;
-    dragonModel.summary.owner = '';
-    dragonModel.summary.description = '';
+    dragonModel.summary.owner = jsonModel.project.owner;
+    dragonModel.summary.ownerContact = jsonModel.project.ownerContact;
+    dragonModel.summary.description = jsonModel.project.description;
     dragonModel.summary.id = jsonModel.project.id;
+
+    dragonModel.attributes = new Object();
+    dragonModel.attributes.cmdbId = jsonModel.project.attributes.cmdbId;
+
     dragonModel.detail = new Object();
     dragonModel.detail.contributors = [];
     dragonModel.detail.diagrams = [];
     dragonModel.detail.diagramTop = 0;
     dragonModel.detail.reviewer = '';
     dragonModel.detail.threatTop = 0;
+    console.log(dragonModel);
 
+/*
     var diagram = new Object();
     diagram.version = '2.0';
     diagram.title = 'Main Request Data Flow';
@@ -366,6 +379,8 @@ const convertOTMtoTD = (jsonModel) => {
     });
 
     dragonModel.detail.diagrams.push(diagram);
+
+*/
     return dragonModel;
 };
 

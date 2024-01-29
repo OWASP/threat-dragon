@@ -36,6 +36,5 @@ export const schema = {
             'required': [ 'name', 'id' ]
         }
     },
-    'required': [ 'otmVersion', 'project' ],
-    additionalProperties: false
+    'required': [ 'otmVersion', 'project' ]
 };
