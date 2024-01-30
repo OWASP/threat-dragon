@@ -75,8 +75,7 @@ const cellDeleted = () => {
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
-const cellSelected = (graph) => ({ cell }) => {
-    graph.resetSelection(cell);
+const cellSelected = () => ({ cell }) => {
     // try and get the cell name
     if (cell.data) {
         if (cell.isNode()) {
