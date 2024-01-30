@@ -41,6 +41,8 @@ describe('service/openThreatModel.js', () => {
     mockOTM.trustZones = [];
     mockOTM.components = [];
     mockOTM.dataflows = [];
+    //mockOTM.project.attributes = new Object();
+    //mockOTM.project.attributes.cmdbId = 'test cmdbId';
 
     let tdModel;
     describe('convertOTMtoTD', () => {

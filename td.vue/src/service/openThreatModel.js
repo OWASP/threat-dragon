@@ -225,6 +225,7 @@ const convertTDtoOTM = (data) => {
 
 const convertOTMtoTD = (jsonModel) => {
     console.log(jsonModel);
+    const noteText = 'Note that Open Threat Model is not supported, yet.\n ';
 
     var dragonModel = new Object();
     dragonModel.version = buildVersion;
@@ -234,11 +235,13 @@ const convertOTMtoTD = (jsonModel) => {
     dragonModel.summary.title = jsonModel.project.name;
     dragonModel.summary.owner = jsonModel.project.owner;
     dragonModel.summary.ownerContact = jsonModel.project.ownerContact;
-    dragonModel.summary.description = jsonModel.project.description;
+    dragonModel.summary.description = noteText + jsonModel.project.description;
     dragonModel.summary.id = jsonModel.project.id;
 
     dragonModel.attributes = new Object();
-    dragonModel.attributes.cmdbId = jsonModel.project.attributes.cmdbId;
+    if (jsonModel.project.attributes) {
+        dragonModel.attributes.cmdbId = jsonModel.project.attributes.cmdbId;
+    }
 
     dragonModel.detail = new Object();
     dragonModel.detail.contributors = [];
@@ -248,7 +251,7 @@ const convertOTMtoTD = (jsonModel) => {
     dragonModel.detail.threatTop = 0;
     console.log(dragonModel);
 
-/*
+    /*
     var diagram = new Object();
     diagram.version = '2.0';
     diagram.title = 'Main Request Data Flow';
