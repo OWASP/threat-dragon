@@ -29,41 +29,47 @@ export const schema = {
         },
         'representations': {
             'type': ['array', 'null'],
-            'required': ['name', 'id', 'type'],
-            'properties': {
-                'name': {'type': 'string'},
-                'id': {'type': 'string'},
-                'type': {'type': 'string'},
-                'description': {'type': ['string', 'null']},
-                'size': {'$ref': '#/definitions/size'},
-                'repository': {
-                    'type': ['object', 'null'],
-                    'required': ['url'],
-                    'properties': {
-                        'url': {'type': ['string', 'null']}
-                    }
-                },
-                'attributes': {'type': ['object', 'null']}
+            'items': {
+                'type': 'object',
+                'required': ['name', 'id', 'type'],
+                'properties': {
+                    'name': {'type': 'string'},
+                    'id': {'type': 'string'},
+                    'type': {'type': 'string'},
+                    'description': {'type': ['string', 'null']},
+                    'size': {'$ref': '#/definitions/size'},
+                    'repository': {
+                        'type': ['object', 'null'],
+                        'required': ['url'],
+                        'properties': {
+                            'url': {'type': ['string', 'null']}
+                        }
+                    },
+                    'attributes': {'type': ['object', 'null']}
+                }
             }
         },
         'assets': {
             'type': ['array', 'null'],
-            'required': ['name', 'id', 'risk'],
-            'properties': {
-                'name': {'type': 'string'},
-                'id': {'type': 'string'},
-                'description': {'type': ['string', 'null']},
-                'risk': {
-                    'type': 'object',
-                    'required': ['confidentiality', 'integrity', 'availability'],
-                    'properties': {
-                        'confidentiality': {'type': 'number'},
-                        'integrity': {'type': 'number'},
-                        'availability': {'type': 'number'},
-                        'comment': {'type': ['string', 'null']}
-                    }
-                },
-                'attributes': {'type': ['object', 'null']}
+            'items': {
+                'type': 'object',
+                'required': ['name', 'id', 'risk'],
+                'properties': {
+                    'name': {'type': 'string'},
+                    'id': {'type': 'string'},
+                    'description': {'type': ['string', 'null']},
+                    'risk': {
+                        'type': 'object',
+                        'required': ['confidentiality', 'integrity', 'availability'],
+                        'properties': {
+                            'confidentiality': {'type': 'number'},
+                            'integrity': {'type': 'number'},
+                            'availability': {'type': 'number'},
+                            'comment': {'type': ['string', 'null']}
+                        }
+                    },
+                    'attributes': {'type': ['object', 'null']}
+                }
             }
         },
         'trustZones': {
