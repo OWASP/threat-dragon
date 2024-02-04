@@ -111,7 +111,8 @@ export default {
         }
     },
     destroyed() {
-        diagramService.dispose(this.graph);
+      diagramService.dispose(this.graph);
+      this.$store.dispatch(tmActions.notModified);
     }
 };
 </script>

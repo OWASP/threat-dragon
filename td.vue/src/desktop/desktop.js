@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain, dialog } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -55,6 +55,35 @@ async function createWindow () {
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
     });
+
+    mainWindow.on("close" , (event) => {
+        const modified = menu.model.isModified
+
+        if(modified){
+
+        const choice =  dialog.showMessageBoxSync(mainWindow, {
+            type: 'question',
+            buttons: ['Save', 'Don\'t Save, Quit', 'Cancel'],
+            defaultId: 0,
+            message: 'Do you want to save your changes before closing?'
+        });
+
+        if (choice === 0) {
+            // User clicked "Save"
+            mainWindow.webContents.send('save-model-request', path.basename(menu.model.filePath));
+            event.preventDefault();
+
+        } else if (choice === 2) {
+            // User clicked "Cancel" or closed the dialog
+            // Prevent the window from closing
+            event.preventDefault();
+        } else {
+            // User clicked "Don't Save"
+            // Close the window without saving changes
+        }
+
+    }
+})
 
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
