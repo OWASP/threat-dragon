@@ -238,9 +238,12 @@ const convertOTMtoTD = (jsonModel) => {
     dragonModel.summary.description = noteText + jsonModel.project.description;
     dragonModel.summary.id = jsonModel.project.id;
 
-    dragonModel.attributes = new Object();
+    // both attributes and tags are not used yet by TD, but need to be preserved if present
     if (jsonModel.project.attributes) {
-        dragonModel.attributes.cmdbId = jsonModel.project.attributes.cmdbId;
+        dragonModel.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
+    }
+    if (jsonModel.project.tags) {
+        dragonModel.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
     }
 
     dragonModel.detail = new Object();

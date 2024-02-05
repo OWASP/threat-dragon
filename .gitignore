@@ -30,7 +30,9 @@
 
 # sample threat models
 !ThreatDragonModels
-!ThreatDragonModels/**/*.json
+!ThreatDragonModels/*.json
+!ThreatDragonModels/test/
+!ThreatDragonModels/test/*.json
 
 # documentation site
 !docs
