@@ -131,6 +131,35 @@
                     </b-form-group>
                 </b-col>
 
+                <b-col v-if="cellRef.data.type === 'tm.Process'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="process-handles-group">
+                        <b-form-checkbox
+                            id="handlesCardPayment"
+                            v-model="cellRef.data.handlesCardPayment"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.handlesCardPayment') }}</b-form-checkbox>
+                        <b-form-checkbox
+                            id="handlesGoodsOrServices"
+                            v-model="cellRef.data.handlesGoodsOrServices"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.handlesGoodsOrServices') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
+                <b-col v-if="cellRef.data.type === 'tm.Process'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="web-app-group">
+                        <b-form-checkbox
+                            id="isWebApplication"
+                            v-model="cellRef.data.isWebApplication"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.isWebApplication') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
                 <b-col v-if="cellRef.data.type === 'tm.Store'">
                     <b-form-group
                         label-cols="auto"
