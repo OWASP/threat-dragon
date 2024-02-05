@@ -1,3 +1,5 @@
+const buildVersion = require('../../../package.json').version;
+
 const convertTDtoOTM = (data) => {
     const jsonData = JSON.stringify(data, null, 2);
 
@@ -222,20 +224,37 @@ const convertTDtoOTM = (data) => {
 };
 
 const convertOTMtoTD = (jsonModel) => {
+    console.log(jsonModel);
+    const noteText = 'Note that Open Threat Model is not supported, yet.\n ';
+
     var dragonModel = new Object();
-    dragonModel.version = '2.0';
+    dragonModel.version = buildVersion;
+    dragonModel.otmVersion = jsonModel.otmVersion;
+
     dragonModel.summary = new Object();
     dragonModel.summary.title = jsonModel.project.name;
-    dragonModel.summary.owner = '';
-    dragonModel.summary.description = '';
+    dragonModel.summary.owner = jsonModel.project.owner;
+    dragonModel.summary.ownerContact = jsonModel.project.ownerContact;
+    dragonModel.summary.description = noteText + jsonModel.project.description;
     dragonModel.summary.id = jsonModel.project.id;
+
+    // both attributes and tags are not used yet by TD, but need to be preserved if present
+    if (jsonModel.project.attributes) {
+        dragonModel.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
+    }
+    if (jsonModel.project.tags) {
+        dragonModel.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
+    }
+
     dragonModel.detail = new Object();
     dragonModel.detail.contributors = [];
     dragonModel.detail.diagrams = [];
     dragonModel.detail.diagramTop = 0;
     dragonModel.detail.reviewer = '';
     dragonModel.detail.threatTop = 0;
+    console.log(dragonModel);
 
+    /*
     var diagram = new Object();
     diagram.version = '2.0';
     diagram.title = 'Main Request Data Flow';
@@ -366,6 +385,8 @@ const convertOTMtoTD = (jsonModel) => {
     });
 
     dragonModel.detail.diagrams.push(diagram);
+
+*/
     return dragonModel;
 };
 

@@ -120,7 +120,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
     app.$store.dispatch(tmActions.diagramApplied);
-    app.$store.dispatch(tmActions.save);
+    app.$store.dispatch(tmActions.saveModel);
 });
 
 const localAuth = () => {

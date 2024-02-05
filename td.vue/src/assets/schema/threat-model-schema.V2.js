@@ -429,6 +429,5 @@ export const schema = {
             'required': [ 'contributors', 'diagrams', 'diagramTop', 'reviewer', 'threatTop' ]
         }
     },
-    'required': [ 'version', 'summary', 'detail' ],
-    additionalProperties: false
+    'required': [ 'version', 'summary', 'detail' ]
 };

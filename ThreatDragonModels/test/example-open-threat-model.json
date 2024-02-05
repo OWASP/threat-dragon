@@ -6,6 +6,10 @@
     "description": "This is a test project for the OTM development",
     "owner": "John Doe",
     "ownerContact": "john.doe@example.com",
+    "tags": [
+      "test tag 1",
+      "test tag 2"
+    ],
     "attributes": {
       "cmdbId": "MyApp123"
     }
@@ -25,10 +29,24 @@
       "name": "Application Code",
       "id": "application-code",
       "type": "code",
+      "description": "the Application Code description",
       "repository": {
         "url": "https://github.com/my-project"
       },
       "attributes": null
+    },
+    {
+      "name": "Empty Diagram",
+      "id": "578b5170-74f1-401d-a72f-c06ccc966ca0",
+      "type": "diagram",
+      "description": "a description of the Empty Diagram",
+      "size": {
+        "width": 500,
+        "height": 300
+      },
+      "attributes": {
+        "diagramType": "LINDDUN"
+      }
     }
   ],
   "assets": [
@@ -40,7 +58,7 @@
         "confidentiality": 100,
         "integrity": 100,
         "availability": 100,
-        "riskComments": "We have decided that the values are a 100 for all values since this highly sensitive information"
+        "riskComments": "We have decided that the values are a 100 for all values since this is highly sensitive information"
       },
       "attributes": null
     },
@@ -61,7 +79,7 @@
     {
       "name": "Web Client",
       "id": "web-client",
-      "description": "It represent a connection from the internet to our ecosystem",
+      "description": "It represents a connection from the internet to our ecosystem",
       "parent": {
         "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
       },
@@ -290,9 +308,9 @@
       ],
       "risk": {
         "likelihood": 50,
-        "likelihoodComment": "It is reasonable to think this might happen but it requires for the attaketr to have a deep cyprografy knowledge",
+        "likelihoodComment": "It is reasonable to think this might happen but it requires for the attacker to have a deep cryptography knowledge",
         "impact": 100,
-        "impactComment": "If this threat becomes a rallity company will strruggle to keep customers and the monetory loss would jeopardise the whole company"
+        "impactComment": "If this threat becomes a reality then the company will strruggle to keep customers and the monetary loss would jeopardise the whole company"
       },
       "attributes": null,
       "tags": [
@@ -311,7 +329,7 @@
     },
     {
       "name": "Mitigation 2",
-      "id": "3b837730-e300-11eb-ba80-0242ac130004",
+      "id": "3b837730-e300-11eb-ba80-0242ac130ab4",
       "description": "Description for mitigation 2",
       "riskReduction": 100,
       "attributes": null

@@ -91,7 +91,7 @@ export default {
             const updated = Object.assign({}, this.diagram);
             updated.cells = this.graph.toJSON().cells;
             this.$store.dispatch(tmActions.diagramSaved, updated);
-            this.$store.dispatch(tmActions.save);
+            this.$store.dispatch(tmActions.saveModel);
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {

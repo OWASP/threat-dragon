@@ -150,21 +150,21 @@ export default {
                 this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
             }
 
-            // Identify if threat model is in OTM format and if so, convert OTM back to dragon format
+            // Identify if threat model is in OTM format and if so, convert OTM to dragon format
             if (Object.hasOwn(jsonModel, 'otmVersion')) {
                 jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
             }
+
+            // save the threat model in the store
+            this.$store.dispatch(tmActions.selected, jsonModel);
 
             if (isElectron()) {
                 // tell the desktop server that the model has changed
                 window.electronAPI.modelOpened(fileName);
             }
 
-            // save the threat model in the store
-            this.$store.dispatch(tmActions.selected, jsonModel);
-
             let params;
-            // this will fail if the threat model does not have a title in the summary
+            // this will deliberately fail if the threat model does not have a title in the summary
             try {
                 params = Object.assign({}, this.$route.params, {
                     threatmodel: jsonModel.summary.title

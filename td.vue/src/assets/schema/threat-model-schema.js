@@ -426,6 +426,5 @@ export const schema = {
             'required': [ 'contributors', 'diagrams' ]
         },
     },
-    'required': [ 'summary', 'detail' ],
-    additionalProperties: false
+    'required': [ 'summary', 'detail' ]
 };
