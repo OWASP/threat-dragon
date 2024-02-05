@@ -30,7 +30,7 @@ export default {
     modified: THREATMODEL_MODIFIED,
     notModified: THREATMODEL_NOT_MODIFIED,
     restore: THREATMODEL_RESTORE,
-    save: THREATMODEL_SAVE,
+    saveModel: THREATMODEL_SAVE,
     selected: THREATMODEL_SELECTED,
     stash: THREATMODEL_STASH,
     update: THREATMODEL_UPDATE

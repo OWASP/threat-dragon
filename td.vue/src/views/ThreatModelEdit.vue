@@ -232,7 +232,7 @@ export default {
             if (this.$route.name === 'gitThreatModelCreate') {
                 await this.$store.dispatch(tmActions.create);
             } else {
-                await this.$store.dispatch(tmActions.save);
+                await this.$store.dispatch(tmActions.saveModel);
             }
             // stop the save button from leaving the threat model edit view
             // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });

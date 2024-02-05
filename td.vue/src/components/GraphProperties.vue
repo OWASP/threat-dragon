@@ -13,6 +13,9 @@
                 - threats
 
             Process:
+                - handlesCardPayment"
+                - handlesGoodsOrServices
+                - isWebApplication
                 - privilegeLevel
 
             Store:
@@ -20,6 +23,7 @@
                 - storesCredentials
                 - isEncrypted
                 - isSigned
+                - storesInventory
 
             Actor:
                 - providesAuthentication
