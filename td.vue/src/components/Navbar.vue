@@ -15,12 +15,13 @@
       
       <b-navbar-nav class="ml-auto">
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
-        <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
-          <font-awesome-icon
-            icon="sign-out-alt"
-            class="td-fa-nav"
-          ></font-awesome-icon>
-        </b-nav-item>
+       <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
+      <font-awesome-icon
+        icon="sign-out-alt"
+        class="td-fa-nav"
+        v-b-tooltip.hover title="Sign out"
+      ></font-awesome-icon>
+    </b-nav-item>
         <b-nav-item
           href="https://owasp.org/www-project-threat-dragon/docs-2/"
           target="_blank"
@@ -30,6 +31,7 @@
           <font-awesome-icon
             icon="question-circle"
             class="td-fa-nav"
+            v-b-tooltip.hover title="Docs"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -41,6 +43,7 @@
           <font-awesome-icon
             icon="gift"
             class="td-fa-nav"
+            v-b-tooltip.hover title="cheatsheets"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -49,7 +52,7 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" />
+          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" title="Threat Dragon Project"/>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
