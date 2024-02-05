@@ -4,8 +4,8 @@ const actor = {
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',
-    providesAuthentication: false,
     hasOpenThreats: false,
+    providesAuthentication: false,
     threats: []
 };
 
@@ -28,12 +28,12 @@ const flow = {
     name: 'Data Flow',
     description: '',
     outOfScope: false,
-    isBidirectional: false,
     reasonOutOfScope: '',
-    protocol: '',
+    hasOpenThreats: false,
+    isBidirectional: false,
     isEncrypted: false,
     isPublicNetwork: false,
-    hasOpenThreats: false,
+    protocol: '',
     threats: []
 };
 
@@ -43,8 +43,11 @@ const tmProcess = {
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',
-    privilegeLevel: '',
     hasOpenThreats: false,
+    handlesCardPayment: false,
+    handlesGoodsOrServices: false,
+    isWebApplication: false,
+    privilegeLevel: '',
     threats: []
 };
 
@@ -54,11 +57,12 @@ const store = {
     description: '',
     outOfScope: false,
     reasonOutOfScope: '',
+    hasOpenThreats: false,
     isALog: false,
-    storesCredentials: false,
     isEncrypted: false,
     isSigned: false,
-    hasOpenThreats: false,
+    storesCredentials: false,
+    storesInventory: false,
     threats: []
 };
 

@@ -147,14 +147,18 @@ const fin = {
             outOfScope: 'Rajattu ulos',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Ulos rajaamisen peruste',
-            privilegeLevel: 'Käyttöoikeustaso',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'On loki',
-            storesCredentials: 'Tallentaa tunnistetietoja',
             isEncrypted: 'Salattu',
             isSigned: 'Allekirjoitettu',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Käyttöoikeustaso',
             providesAuthentication: 'Tarjoaa tunnistautumisen',
             protocol: 'Protokolla',
-            publicNetwork: 'Julkinen tietoverkko'
+            publicNetwork: 'Julkinen tietoverkko',
+            storesCredentials: 'Tallentaa tunnistetietoja',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Poista valitut',

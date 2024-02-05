@@ -147,14 +147,18 @@ const fra = {
             outOfScope: 'Hors du domaine visé',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Raison de l\'exclusion du domaine visé',
-            privilegeLevel: 'Niveau de privilège',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'Est un journal',
-            storesCredentials: 'Conserve les informations d\'identification',
             isEncrypted: 'Encrypté',
             isSigned: 'Signé',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Niveau de privilège',
             providesAuthentication: 'Fournit de l\'authentification',
             protocol: 'Protocole',
-            publicNetwork: 'Réseau public'
+            publicNetwork: 'Réseau public',
+            storesCredentials: 'Conserve les informations d\'identification',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Supprimer la sélection',
