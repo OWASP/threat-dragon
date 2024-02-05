@@ -149,12 +149,13 @@ const fra = {
             reasonOutOfScope: 'Raison de l\'exclusion du domaine visé',
             privilegeLevel: 'Niveau de privilège',
             isALog: 'Est un journal',
-            storesCredentials: 'Conserve les informations d\'identification',
             isEncrypted: 'Encrypté',
             isSigned: 'Signé',
             providesAuthentication: 'Fournit de l\'authentification',
             protocol: 'Protocole',
-            publicNetwork: 'Réseau public'
+            publicNetwork: 'Réseau public',
+            storesCredentials: 'Conserve les informations d\'identification',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Supprimer la sélection',

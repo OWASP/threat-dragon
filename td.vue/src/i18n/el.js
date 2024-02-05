@@ -149,12 +149,13 @@ const ell = {
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             isALog: 'Είναι αρχείο καταγραφής',
-            storesCredentials: 'Αποθηκεύει στοιχεία πρόσβασης',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
             providesAuthentication: 'Παρέχει αυθεντικοποίηση',
             protocol: 'Πρωτόκολλο',
-            publicNetwork: 'Δημόσιο Δίκτυο'
+            publicNetwork: 'Δημόσιο Δίκτυο',
+            storesCredentials: 'Αποθηκεύει στοιχεία πρόσβασης',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Διαγραφή επιλεγμένων',

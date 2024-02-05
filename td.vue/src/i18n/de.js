@@ -149,12 +149,13 @@ const deu = {
             reasonOutOfScope: 'Begründung für nicht im Geltungsbereich',
             privilegeLevel: 'Privilegstufe',
             isALog: 'Ist ein Log',
-            storesCredentials: 'Speichert Zugangsinformationen',
             isEncrypted: 'Verschlüsselt',
             isSigned: 'Signiert',
             providesAuthentication: 'Stellt Authentifizierung bereit',
             protocol: 'Protokoll',
-            publicNetwork: 'Öffentliches Netzwerk'
+            publicNetwork: 'Öffentliches Netzwerk',
+            storesCredentials: 'Speichert Zugangsinformationen',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Auswahl löschen',

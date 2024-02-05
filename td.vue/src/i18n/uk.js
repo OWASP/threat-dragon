@@ -149,12 +149,13 @@ const ukr = {
             reasonOutOfScope: 'Reason for out of scope',
             privilegeLevel: 'Privilege Level',
             isALog: 'Is a Log',
-            storesCredentials: 'Stores Credentials',
             isEncrypted: 'Encrypted',
             isSigned: 'Signed',
             providesAuthentication: 'Provides Authentication',
             protocol: 'Protocol',
-            publicNetwork: 'Public Network'
+            publicNetwork: 'Public Network',
+            storesCredentials: 'Stores Credentials',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Delete selected',

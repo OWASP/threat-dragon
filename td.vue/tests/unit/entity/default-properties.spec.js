@@ -138,12 +138,24 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.tmProcess.reasonOutOfScope).toEqual('');
         });
 
-        it('defines privilegeLevel', () => {
-            expect(defaultProperties.tmProcess.privilegeLevel).toEqual('');
-        });
-
         it('defines hasOpenThreats', () => {
             expect(defaultProperties.tmProcess.hasOpenThreats).toEqual(false);
+        });
+
+        it('defines handlesCardPayment', () => {
+            expect(defaultProperties.tmProcess.handlesCardPayment).toEqual(false);
+        });
+
+        it('defines handlesGoodsOrServices', () => {
+            expect(defaultProperties.tmProcess.handlesGoodsOrServices).toEqual(false);
+        });
+
+        it('defines isWebApplication', () => {
+            expect(defaultProperties.tmProcess.isWebApplication).toEqual(false);
+        });
+
+        it('defines privilegeLevel', () => {
+            expect(defaultProperties.tmProcess.privilegeLevel).toEqual('');
         });
 
         it('defines threats', () => {
@@ -168,12 +180,12 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.store.reasonOutOfScope).toEqual('');
         });
 
-        it('defines isALog', () => {
-            expect(defaultProperties.store.isALog).toEqual(false);
+        it('defines hasOpenThreats', () => {
+            expect(defaultProperties.store.hasOpenThreats).toEqual(false);
         });
 
-        it('defines storesCredentials', () => {
-            expect(defaultProperties.store.storesCredentials).toEqual(false);
+        it('defines isALog', () => {
+            expect(defaultProperties.store.isALog).toEqual(false);
         });
 
         it('defines isEncrypted', () => {
@@ -184,8 +196,12 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.store.isSigned).toEqual(false);
         });
 
-        it('defines hasOpenThreats', () => {
-            expect(defaultProperties.store.hasOpenThreats).toEqual(false);
+        it('defines storesCredentials', () => {
+            expect(defaultProperties.store.storesCredentials).toEqual(false);
+        });
+
+        it('defines storesInventory', () => {
+            expect(defaultProperties.store.storesInventory).toEqual(false);
         });
 
         it('defines threats', () => {

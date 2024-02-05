@@ -149,12 +149,13 @@ const por = {
             reasonOutOfScope: 'Razão por estar fora de escopo',
             privilegeLevel: 'Nível de Privilégio',
             isALog: 'É um Log',
-            storesCredentials: 'Armazenamento de Credenciais',
             isEncrypted: 'Criptografado',
             isSigned: 'Assinado',
             providesAuthentication: 'Fornecimento de Autenticação',
             protocol: 'Protocolo',
-            publicNetwork: 'Rede Pública'
+            publicNetwork: 'Rede Pública',
+            storesCredentials: 'Armazenamento de Credenciais',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Delete selected',

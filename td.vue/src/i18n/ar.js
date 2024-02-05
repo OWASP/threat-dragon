@@ -149,12 +149,13 @@ const ara = {
             reasonOutOfScope: 'سبب خارج نطاق العمل',
             privilegeLevel: 'مستوى الامتياز',
             isALog: 'هل هو سجل',
-            storesCredentials: 'تخزين بيانات الاعتماد credentials',
             isEncrypted: 'هل هو مشفر',
             isSigned: 'هل هو موقع signed',
             providesAuthentication: 'يوفر المصادقة',
             protocol: 'بروتوكول',
-            publicNetwork: 'شبكة عامة'
+            publicNetwork: 'شبكة عامة',
+            storesCredentials: 'تخزين بيانات الاعتماد credentials',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'حذف المحدد',

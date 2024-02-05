@@ -13,6 +13,9 @@
                 - threats
 
             Process:
+                - handlesCardPayment
+                - handlesGoodsOrServices
+                - isWebApplication
                 - privilegeLevel
 
             Store:
@@ -20,6 +23,7 @@
                 - storesCredentials
                 - isEncrypted
                 - isSigned
+                - storesInventory
 
             Actor:
                 - providesAuthentication
@@ -136,13 +140,6 @@
                             v-model="cellRef.data.isALog"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isALog') }}</b-form-checkbox>
-                    </b-form-group>
-                </b-col>
-
-                <b-col v-if="cellRef.data.type === 'tm.Store'">
-                    <b-form-group
-                        label-cols="auto"
-                        id="storesCredentials-group">
                         <b-form-checkbox
                             id="storesCredentials"
                             v-model="cellRef.data.storesCredentials"
@@ -160,18 +157,23 @@
                             v-model="cellRef.data.isEncrypted"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
-                    </b-form-group>
-                </b-col>
-                
-                <b-col v-if="cellRef.data.type === 'tm.Store'">
-                    <b-form-group
-                        label-cols="auto"
-                        id="isSigned-group">
                         <b-form-checkbox
                             id="isSigned"
                             v-model="cellRef.data.isSigned"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isSigned') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
+                 <b-col v-if="cellRef.data.type === 'tm.Store'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="storesInventory-group">
+                        <b-form-checkbox
+                            id="storesInventory"
+                            v-model="cellRef.data.storesInventory"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.storesInventory') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
 

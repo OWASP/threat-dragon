@@ -149,12 +149,13 @@ const spa = {
             reasonOutOfScope: 'Razón para estar fuera de contexto',
             privilegeLevel: 'Nivel de Privilegio',
             isALog: 'Es un Log',
-            storesCredentials: 'Almacena Credenciales',
             isEncrypted: 'Está cifrado',
             isSigned: 'Está firmado',
             providesAuthentication: 'Provee Autenticación',
             protocol: 'Protocolo',
-            publicNetwork: 'Red Pública'
+            publicNetwork: 'Red Pública',
+            storesCredentials: 'Almacena Credenciales',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Eliminar seleccionado',

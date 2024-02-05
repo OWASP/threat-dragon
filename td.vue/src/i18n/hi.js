@@ -149,12 +149,13 @@ const hin = {
             reasonOutOfScope: 'दायरे से बाहर होने का कारण',
             privilegeLevel: 'विशेषाधिकार स्तर',
             isALog: 'एक लॉग है',
-            storesCredentials: 'स्टोर क्रेडेंशियल',
             isEncrypted: 'एन्क्रिप्टेड',
             isSigned: 'हस्ताक्षरित',
             providesAuthentication: 'प्रमाणीकरण प्रदान करता है',
             protocol: 'प्रोटोकॉल',
-            publicNetwork: 'सार्वजनिक नेटवर्क'
+            publicNetwork: 'सार्वजनिक नेटवर्क',
+            storesCredentials: 'स्टोर क्रेडेंशियल',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'चयनित हटाएं',

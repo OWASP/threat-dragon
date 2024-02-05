@@ -149,12 +149,13 @@ const fin = {
             reasonOutOfScope: 'Ulos rajaamisen peruste',
             privilegeLevel: 'Käyttöoikeustaso',
             isALog: 'On loki',
-            storesCredentials: 'Tallentaa tunnistetietoja',
             isEncrypted: 'Salattu',
             isSigned: 'Allekirjoitettu',
             providesAuthentication: 'Tarjoaa tunnistautumisen',
             protocol: 'Protokolla',
-            publicNetwork: 'Julkinen tietoverkko'
+            publicNetwork: 'Julkinen tietoverkko',
+            storesCredentials: 'Tallentaa tunnistetietoja',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Poista valitut',
