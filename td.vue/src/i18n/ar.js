@@ -147,14 +147,18 @@ const ara = {
             outOfScope: 'خارج نطاق العمل',
             bidirection: 'ثنائي الاتجاه',
             reasonOutOfScope: 'سبب خارج نطاق العمل',
-            privilegeLevel: 'مستوى الامتياز',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'هل هو سجل',
-            storesCredentials: 'تخزين بيانات الاعتماد credentials',
             isEncrypted: 'هل هو مشفر',
             isSigned: 'هل هو موقع signed',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'مستوى الامتياز',
             providesAuthentication: 'يوفر المصادقة',
             protocol: 'بروتوكول',
-            publicNetwork: 'شبكة عامة'
+            publicNetwork: 'شبكة عامة',
+            storesCredentials: 'تخزين بيانات الاعتماد credentials',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'حذف المحدد',

@@ -147,14 +147,18 @@ const spa = {
             outOfScope: 'Fuera de contexto',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Razón para estar fuera de contexto',
-            privilegeLevel: 'Nivel de Privilegio',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'Es un Log',
-            storesCredentials: 'Almacena Credenciales',
             isEncrypted: 'Está cifrado',
             isSigned: 'Está firmado',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Nivel de Privilegio',
             providesAuthentication: 'Provee Autenticación',
             protocol: 'Protocolo',
-            publicNetwork: 'Red Pública'
+            publicNetwork: 'Red Pública',
+            storesCredentials: 'Almacena Credenciales',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Eliminar seleccionado',

@@ -147,14 +147,18 @@ const deu = {
             outOfScope: 'Nicht im Geltungsbereich',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Begründung für nicht im Geltungsbereich',
-            privilegeLevel: 'Privilegstufe',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'Ist ein Log',
-            storesCredentials: 'Speichert Zugangsinformationen',
             isEncrypted: 'Verschlüsselt',
             isSigned: 'Signiert',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Privilegstufe',
             providesAuthentication: 'Stellt Authentifizierung bereit',
             protocol: 'Protokoll',
-            publicNetwork: 'Öffentliches Netzwerk'
+            publicNetwork: 'Öffentliches Netzwerk',
+            storesCredentials: 'Speichert Zugangsinformationen',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Auswahl löschen',

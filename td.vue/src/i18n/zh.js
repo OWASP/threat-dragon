@@ -147,14 +147,18 @@ const zho = {
             outOfScope: '超出范围',
             bidirection: 'Bidirectional',
             reasonOutOfScope: '超出范围的原因',
-            privilegeLevel: '权限级别',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: '是日志',
-            storesCredentials: '存储凭证',
             isEncrypted: '加密',
             isSigned: '签名',
+            isWebApplication: 'Web Application',
+            privilegeLevel: '权限级别',
             providesAuthentication: '提供身份验证',
             protocol: '协议',
-            publicNetwork: '公共网络'
+            publicNetwork: '公共网络',
+            storesCredentials: '存储凭证',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: '删除选中',

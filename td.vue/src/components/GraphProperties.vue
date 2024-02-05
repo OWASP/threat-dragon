@@ -13,7 +13,7 @@
                 - threats
 
             Process:
-                - handlesCardPayment"
+                - handlesCardPayment
                 - handlesGoodsOrServices
                 - isWebApplication
                 - privilegeLevel
@@ -131,6 +131,35 @@
                     </b-form-group>
                 </b-col>
 
+                <b-col v-if="cellRef.data.type === 'tm.Process'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="process-handles-group">
+                        <b-form-checkbox
+                            id="handlesCardPayment"
+                            v-model="cellRef.data.handlesCardPayment"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.handlesCardPayment') }}</b-form-checkbox>
+                        <b-form-checkbox
+                            id="handlesGoodsOrServices"
+                            v-model="cellRef.data.handlesGoodsOrServices"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.handlesGoodsOrServices') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
+                <b-col v-if="cellRef.data.type === 'tm.Process'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="web-app-group">
+                        <b-form-checkbox
+                            id="isWebApplication"
+                            v-model="cellRef.data.isWebApplication"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.isWebApplication') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
                 <b-col v-if="cellRef.data.type === 'tm.Store'">
                     <b-form-group
                         label-cols="auto"
@@ -140,13 +169,6 @@
                             v-model="cellRef.data.isALog"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isALog') }}</b-form-checkbox>
-                    </b-form-group>
-                </b-col>
-
-                <b-col v-if="cellRef.data.type === 'tm.Store'">
-                    <b-form-group
-                        label-cols="auto"
-                        id="storesCredentials-group">
                         <b-form-checkbox
                             id="storesCredentials"
                             v-model="cellRef.data.storesCredentials"
@@ -164,18 +186,23 @@
                             v-model="cellRef.data.isEncrypted"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
-                    </b-form-group>
-                </b-col>
-                
-                <b-col v-if="cellRef.data.type === 'tm.Store'">
-                    <b-form-group
-                        label-cols="auto"
-                        id="isSigned-group">
                         <b-form-checkbox
                             id="isSigned"
                             v-model="cellRef.data.isSigned"
                             @change="onChangeProperties()"
                         >{{ $t('threatmodel.properties.isSigned') }}</b-form-checkbox>
+                    </b-form-group>
+                </b-col>
+
+                 <b-col v-if="cellRef.data.type === 'tm.Store'">
+                    <b-form-group
+                        label-cols="auto"
+                        id="storesInventory-group">
+                        <b-form-checkbox
+                            id="storesInventory"
+                            v-model="cellRef.data.storesInventory"
+                            @change="onChangeProperties()"
+                        >{{ $t('threatmodel.properties.storesInventory') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
 

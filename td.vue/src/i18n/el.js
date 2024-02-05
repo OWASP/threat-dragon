@@ -147,14 +147,18 @@ const ell = {
             outOfScope: 'Εκτός πεδίου εφαρμογής',
             bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
-            privilegeLevel: 'Επίπεδο δικαιώματος',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'Είναι αρχείο καταγραφής',
-            storesCredentials: 'Αποθηκεύει στοιχεία πρόσβασης',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Επίπεδο δικαιώματος',
             providesAuthentication: 'Παρέχει αυθεντικοποίηση',
             protocol: 'Πρωτόκολλο',
-            publicNetwork: 'Δημόσιο Δίκτυο'
+            publicNetwork: 'Δημόσιο Δίκτυο',
+            storesCredentials: 'Αποθηκεύει στοιχεία πρόσβασης',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Διαγραφή επιλεγμένων',

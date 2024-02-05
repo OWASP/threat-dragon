@@ -147,14 +147,18 @@ const eng = {
             outOfScope: 'Out of Scope',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Reason for out of scope',
-            privilegeLevel: 'Privilege Level',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'Is a Log',
-            storesCredentials: 'Stores Credentials',
             isEncrypted: 'Encrypted',
             isSigned: 'Signed',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Privilege Level',
             providesAuthentication: 'Provides Authentication',
             protocol: 'Protocol',
-            publicNetwork: 'Public Network'
+            publicNetwork: 'Public Network',
+            storesCredentials: 'Stores Credentials',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Delete selected',

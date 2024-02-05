@@ -147,14 +147,18 @@ const por = {
             outOfScope: 'Fora do Escopo',
             bidirection: 'Bidirectional',
             reasonOutOfScope: 'Razão por estar fora de escopo',
-            privilegeLevel: 'Nível de Privilégio',
+            handlesCardPayment: 'Card payment',
+            handlesGoodsOrServices: 'Goods or Services',
             isALog: 'É um Log',
-            storesCredentials: 'Armazenamento de Credenciais',
             isEncrypted: 'Criptografado',
             isSigned: 'Assinado',
+            isWebApplication: 'Web Application',
+            privilegeLevel: 'Nível de Privilégio',
             providesAuthentication: 'Fornecimento de Autenticação',
             protocol: 'Protocolo',
-            publicNetwork: 'Rede Pública'
+            publicNetwork: 'Rede Pública',
+            storesCredentials: 'Armazenamento de Credenciais',
+            storesInventory: 'stores inventory'
         },
         buttons: {
             delete: 'Delete selected',
