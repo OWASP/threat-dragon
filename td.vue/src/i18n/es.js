@@ -4,7 +4,8 @@ const spa = {
     },
     nav: {
         v2Warning: 'Los modelos de amenazas(threat models) version 2.0 no son compatibles con los modelos de amenazas(threat model) de Threat Dragon versión 1.x. Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0',
-        loggedInAs: 'Conectado como'
+        loggedInAs: 'Conectado como',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -158,7 +159,7 @@ const spa = {
             protocol: 'Protocolo',
             publicNetwork: 'Red Pública',
             storesCredentials: 'Almacena Credenciales',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: 'Eliminar seleccionado',

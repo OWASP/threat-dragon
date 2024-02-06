@@ -4,7 +4,8 @@ const ara = {
     },
     nav: {
         v2Warning: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،',
-        loggedInAs: 'تم تسجيل الدخول كـ '
+        loggedInAs: 'تم تسجيل الدخول كـ ',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -158,7 +159,7 @@ const ara = {
             protocol: 'بروتوكول',
             publicNetwork: 'شبكة عامة',
             storesCredentials: 'تخزين بيانات الاعتماد credentials',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: 'حذف المحدد',

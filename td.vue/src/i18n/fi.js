@@ -4,7 +4,8 @@ const fin = {
     },
     nav: {
         v2Warning: 'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
-        loggedInAs: 'Kirjautunut käyttäjänä'
+        loggedInAs: 'Kirjautunut käyttäjänä',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -158,7 +159,7 @@ const fin = {
             protocol: 'Protokolla',
             publicNetwork: 'Julkinen tietoverkko',
             storesCredentials: 'Tallentaa tunnistetietoja',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: 'Poista valitut',
