@@ -29,6 +29,16 @@ const getConfirmModal = () => {
     });
 };
 
+// request from electron to renderer to close the application
+window.electronAPI.onCloseAppRequest(async (_event) =>  { // eslint-disable-line no-unused-vars
+    console.debug('Close application request');
+    if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+        console.debug('Closing application');
+        // send request back to electron server to close the application
+        window.electronAPI.appClose();
+    }
+});
+
 // request from electron to renderer to close the model
 window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
     console.debug('Close model request for file name : ' + fileName);

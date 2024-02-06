@@ -4,7 +4,8 @@ const zho = {
     },
     nav: {
         v2Warning: '2.0 版威胁模型与 1.x 版Threat Dragon模型不兼容。导入的 1.x 版模型将升级到 2.0 版本',
-        loggedInAs: '登录身份为'
+        loggedInAs: '登录身份为',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -158,7 +159,7 @@ const zho = {
             protocol: '协议',
             publicNetwork: '公共网络',
             storesCredentials: '存储凭证',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: '删除选中',

@@ -20,6 +20,7 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 let loadingScreen;
+let runApp = true;
 async function createWindow () {
 
     loadingScreen = new BrowserWindow({
@@ -54,6 +55,13 @@ async function createWindow () {
         }
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
+    });
+
+    mainWindow.on('close', (event) => {
+        if (runApp) {
+            event.preventDefault();
+            mainWindow.webContents.send('close-app-request');
+        }
     });
 
     if (electronURL) {
@@ -108,13 +116,13 @@ app.on('ready', async () => {
         }
     }
 
-    ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
-    ipcMain.on('model-modified', handleModelModified);
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
+    ipcMain.on('update-menu', handleUpdateMenu);
 
     createWindow();
 
@@ -130,21 +138,15 @@ app.on('open-file', function(event, path) {
     menu.openModelRequest(path);
 });
 
-function handleUpdateMenu (_event, locale) {
-    logger.log.debug('Re-labeling the menu system for: ' + locale);
-    menu.setLocale(locale);
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+function handleCloseApp() {
+    logger.log.debug('Close application request from renderer ');
+    runApp = false;
+    app.quit();
 }
 
 function handleModelClosed (_event, fileName) {
     logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
-}
-
-function handleModelModified (_event, modified) {
-    logger.log.debug('Modified model notification from renderer: ' + modified);
-    menu.modelModified(modified);
 }
 
 function handleModelOpenConfirmed (_event, fileName) {
@@ -165,6 +167,13 @@ function handleModelPrint (_event, format) {
 function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
+}
+
+function handleUpdateMenu (_event, locale) {
+    logger.log.debug('Re-labeling the menu system for: ' + locale);
+    menu.setLocale(locale);
+    let template = menu.getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 // Exit cleanly on request from parent process in development mode.

@@ -4,7 +4,8 @@ const deu = {
     },
     nav: {
         v2Warning: 'Version 2.0 Bedrohungsmodelle sind nicht Abwärtskompatibel mit Version 1.x Threat Dragon Modellen. Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben', //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
-        loggedInAs: 'Angemeldet als'
+        loggedInAs: 'Angemeldet als',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -158,7 +159,7 @@ const deu = {
             protocol: 'Protokoll',
             publicNetwork: 'Öffentliches Netzwerk',
             storesCredentials: 'Speichert Zugangsinformationen',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: 'Auswahl löschen',

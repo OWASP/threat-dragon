@@ -4,7 +4,8 @@ const hin = {
     },
     nav: {
         v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
-        loggedInAs: 'के रूप में लॉग इन किया'
+        loggedInAs: 'के रूप में लॉग इन किया',
+        logOut: 'Log out'
     },
     home: {
         title: 'OWASP थ्रेट ड्रैगन',
@@ -158,7 +159,7 @@ const hin = {
             protocol: 'प्रोटोकॉल',
             publicNetwork: 'सार्वजनिक नेटवर्क',
             storesCredentials: 'स्टोर क्रेडेंशियल',
-            storesInventory: 'stores inventory'
+            storesInventory: 'Stores Inventory'
         },
         buttons: {
             delete: 'चयनित हटाएं',

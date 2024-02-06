@@ -189,11 +189,6 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).toBeFalsy();
             });
 
-            it('modelModified() should flag model as modified', () => {
-                menu.modelModified(true);
-                expect(model.isModified).toBe(true);
-            });
-
             it('modelOpened() should open a model', () => {
                 menu.modelOpened();
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
