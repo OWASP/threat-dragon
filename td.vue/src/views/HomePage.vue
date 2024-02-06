@@ -80,6 +80,9 @@ export default {
                     if (state.config.config.bitbucketEnabled) {
                         providers.bitbucket = allProviders.bitbucket;
                     }
+                    if (state.config.config.gitlabEnabled) {
+                        providers.gitlab = allProviders.gitlab;
+                    }
                     if (state.config.config.localEnabled) {
                         providers.local = allProviders.local;
                     }

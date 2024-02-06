@@ -1,5 +1,6 @@
 import bitbucket from './bitbucket.js';
 import github from './github.js';
+import gitlab from "./gitlab";
 
 /**
  * An immutable object containing all
@@ -8,6 +9,7 @@ import github from './github.js';
  */
 const all = Object.freeze({
     github,
+    gitlab,
     bitbucket
 });
 

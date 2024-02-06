@@ -17,7 +17,6 @@ const actions = {
         try {
             console.log('FETCHING');
             const response = await api.getAsync('/api/config',);
-            console.log('RETRIEVED ' + JSON.stringify(response.data));
 
             commit(CONFIG_LOADED, { config: response.data });
         } catch (error) {
