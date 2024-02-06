@@ -55,7 +55,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.8",
     "ajv": "^8.11.0",
     "axios": "^1.6.0",
-    "bootstrap-vue": "^2.22.0",
+    "bootstrap-vue": "^2.23.1",
     "core-js": "^3.23.3",
     "dotenv": "^8.6.0",
     "electron-log": "^4.4.8",
