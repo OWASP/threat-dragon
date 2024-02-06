@@ -56,34 +56,12 @@ async function createWindow () {
         menu.setMainWindow(mainWindow);
     });
 
-    mainWindow.on("close" , (event) => {
-        const modified = menu.model.isModified
-
-        if(modified){
-
-        const choice =  dialog.showMessageBoxSync(mainWindow, {
-            type: 'question',
-            buttons: ['Save', 'Don\'t Save, Quit', 'Cancel'],
-            defaultId: 0,
-            message: 'Do you want to save your changes before closing?'
-        });
-
-        if (choice === 0) {
-            // User clicked "Save"
-            mainWindow.webContents.send('save-model-request', path.basename(menu.model.filePath));
-            event.preventDefault();
-
-        } else if (choice === 2) {
-            // User clicked "Cancel" or closed the dialog
-            // Prevent the window from closing
-            event.preventDefault();
-        } else {
-            // User clicked "Don't Save"
-            // Close the window without saving changes
+    mainWindow.on("close", (event) => {
+        if (runApp) {
+            event.preventDefault()
+            mainWindow.webContents.send("close-app-request")
         }
-
-    }
-})
+    })
 
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
@@ -137,6 +115,7 @@ app.on('ready', async () => {
         }
     }
 
+    ipcMain.on("close-app", handleCloseApp)
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-modified', handleModelModified);
@@ -158,6 +137,12 @@ app.on('open-file', function(event, path) {
     logger.log.debug('Request to open file from recent documents: ' + path);
     menu.openModelRequest(path);
 });
+
+function handleCloseApp() {
+    logger.log.debug('Close application request from renderer ');
+    runApp = false;
+    app.quit();
+}
 
 function handleUpdateMenu (_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
