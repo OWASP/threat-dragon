@@ -416,8 +416,6 @@ export const modelSave = (modelData, fileName) => {
     } else {
         saveModelData(modelData);
     }
-
-    model.isModified = false;
 };
 
 // the renderer has changed the language
@@ -429,10 +427,6 @@ export const setMainWindow = (window) => {
     mainWindow = window;
 };
 
-export const getMainWindow = () => {
-    return mainWindow;
-}
-
 export default {
     getMenuTemplate,
     modelClosed,
@@ -443,7 +437,5 @@ export default {
     openModel,
     openModelRequest,
     setLocale,
-    setMainWindow,
-    getMainWindow,
-    model
+    setMainWindow
 };

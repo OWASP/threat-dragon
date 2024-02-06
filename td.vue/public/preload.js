@@ -7,13 +7,13 @@ if (process.env.IS_TEST === 'true') {
 contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     appClose: () => ipcRenderer.send('close-app'),
-    updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
     modelClosed: (fileName) => ipcRenderer.send('model-closed', fileName),
     modelModified: (modified) => ipcRenderer.send('model-modified', modified),
     modelOpenConfirmed: (fileName) => ipcRenderer.send('model-open-confirmed', fileName),
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
     modelPrint: (format) => ipcRenderer.send('model-print', format),
     modelSave: (modelData, fileName) => ipcRenderer.send('model-save', modelData, fileName),
+    updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
 
     // electron main to renderer
     onCloseAppRequest: (callback) => ipcRenderer.on('close-app-request', callback),

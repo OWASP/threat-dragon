@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain, dialog } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -20,6 +20,7 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 let loadingScreen;
+let runApp = true;
 async function createWindow () {
 
     loadingScreen = new BrowserWindow({
@@ -56,12 +57,12 @@ async function createWindow () {
         menu.setMainWindow(mainWindow);
     });
 
-    mainWindow.on("close", (event) => {
+    mainWindow.on('close', (event) => {
         if (runApp) {
-            event.preventDefault()
-            mainWindow.webContents.send("close-app-request")
+            event.preventDefault();
+            mainWindow.webContents.send('close-app-request');
         }
-    })
+    });
 
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
@@ -115,14 +116,14 @@ app.on('ready', async () => {
         }
     }
 
-    ipcMain.on("close-app", handleCloseApp)
-    ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-modified', handleModelModified);
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
+    ipcMain.on('update-menu', handleUpdateMenu);
 
     createWindow();
 
@@ -142,13 +143,6 @@ function handleCloseApp() {
     logger.log.debug('Close application request from renderer ');
     runApp = false;
     app.quit();
-}
-
-function handleUpdateMenu (_event, locale) {
-    logger.log.debug('Re-labeling the menu system for: ' + locale);
-    menu.setLocale(locale);
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 function handleModelClosed (_event, fileName) {
@@ -179,6 +173,13 @@ function handleModelPrint (_event, format) {
 function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
+}
+
+function handleUpdateMenu (_event, locale) {
+    logger.log.debug('Re-labeling the menu system for: ' + locale);
+    menu.setLocale(locale);
+    let template = menu.getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 // Exit cleanly on request from parent process in development mode.
