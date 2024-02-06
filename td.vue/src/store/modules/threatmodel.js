@@ -177,9 +177,6 @@ const mutations = {
             // console.debug('Threatmodel diagram modified diagram: ' + JSON.stringify(state.modifiedDiagram));
             if (state.modified === false) {
                 console.debug('model (diagram) now modified');
-                if (isElectron()) {
-                    window.electronAPI.modelModified(true);
-                }
                 state.modified = true;
             }
         }
@@ -206,9 +203,6 @@ const mutations = {
     [THREATMODEL_MODIFIED]: (state) => {
         if (state.modified === false) {
             console.debug('model now modified');
-            if (isElectron()) {
-                window.electronAPI.modelModified(true);
-            }
         }
         state.modified = true;
     },
@@ -227,9 +221,6 @@ const mutations = {
     [THREATMODEL_NOT_MODIFIED]: (state) => {
         if (state.modified === true) {
             console.debug('model now unmodified');
-        }
-        if (isElectron()) {
-            window.electronAPI.modelModified(false);
         }
         state.modified = false;
     },

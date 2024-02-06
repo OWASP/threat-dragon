@@ -60,6 +60,7 @@
 !td.vue/**/*.vue
 !td.vue/**/*.js
 !td.vue/**/*.scss
+!td.vue/public/
 !td.vue/public/*
 !td.vue/src/
 !td.vue/src/assets/

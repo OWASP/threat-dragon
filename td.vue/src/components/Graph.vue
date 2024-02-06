@@ -1,41 +1,41 @@
 <template>
-  <div>
-    <b-row>
-      <b-col md="2">
-        <div ref="stencil_container"></div>
-      </b-col>
-      <b-col md="10">
-        <b-row>
-          <b-col>
-            <h3 class="td-graph-title">{{ diagram.title }}</h3>
-          </b-col>
-          <b-col align="right">
-                <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" />
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col style="display: flex;  width: 100vw; ">
-            <div
-              id="graph-container"
-              ref="graph_container"
-              style="height: 65vh; width: 100%; flex: 1; "
-            ></div>
-          </b-col>
-        </b-row>
-      </b-col>
-    </b-row>
-    <td-graph-meta @threatSelected="threatSelected" />
-
     <div>
-        <td-keyboard-shortcuts />
-        <td-threat-edit-dialog ref="threatEditDialog" />
+        <b-row>
+            <b-col md="2">
+                <div ref="stencil_container"></div>
+            </b-col>
+            <b-col md="10">
+                <b-row>
+                    <b-col>
+                        <h3 class="td-graph-title">{{ diagram.title }}</h3>
+                    </b-col>
+                    <b-col align="right">
+                        <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" />
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col style="display: flex;    width: 100vw; ">
+                        <div
+                            id="graph-container"
+                            ref="graph_container"
+                            style="height: 65vh; width: 100%; flex: 1; "
+                        ></div>
+                    </b-col>
+                </b-row>
+            </b-col>
+        </b-row>
+        <td-graph-meta @threatSelected="threatSelected" />
+
+        <div>
+            <td-keyboard-shortcuts />
+            <td-threat-edit-dialog ref="threatEditDialog" />
+        </div>
     </div>
-  </div>
 </template>
 
 <style lang="scss" scoped>
 .td-graph-title {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 </style>
 
@@ -111,8 +111,7 @@ export default {
         }
     },
     destroyed() {
-      diagramService.dispose(this.graph);
-      this.$store.dispatch(tmActions.notModified);
+        diagramService.dispose(this.graph);
     }
 };
 </script>
