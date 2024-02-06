@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain, dialog } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -56,6 +56,13 @@ async function createWindow () {
         menu.setMainWindow(mainWindow);
     });
 
+    mainWindow.on("close", (event) => {
+        if (runApp) {
+            event.preventDefault()
+            mainWindow.webContents.send("close-app-request")
+        }
+    })
+
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
         // Load the url of the dev server when in development mode
@@ -108,6 +115,7 @@ app.on('ready', async () => {
         }
     }
 
+    ipcMain.on("close-app", handleCloseApp)
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-modified', handleModelModified);
@@ -129,6 +137,12 @@ app.on('open-file', function(event, path) {
     logger.log.debug('Request to open file from recent documents: ' + path);
     menu.openModelRequest(path);
 });
+
+function handleCloseApp() {
+    logger.log.debug('Close application request from renderer ');
+    runApp = false;
+    app.quit();
+}
 
 function handleUpdateMenu (_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);

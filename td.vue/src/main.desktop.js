@@ -29,6 +29,16 @@ const getConfirmModal = () => {
     });
 };
 
++// request from electron to renderer to close the application
+window.electronAPI.onCloseAppRequest(async (_event) =>  {
+        console.debug('Close application request');
+        if (!app.$store.getters.modelChanged || await getConfirmModal()) {
+            console.debug('Closing application');
+            // send request back to electron server to close the application
+            window.electronAPI.appClose();
+        };
+    });
+
 // request from electron to renderer to close the model
 window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
     console.debug('Close model request for file name : ' + fileName);
@@ -36,14 +46,14 @@ window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
         console.debug('Closing model and diagram');
         app.$store.dispatch(tmActions.diagramClosed);
         localAuth();
-        app.$router.push({ name: 'MainDashboard' }).catch(error => {
-            if (error.name != 'NavigationDuplicated') {
-                throw error;
+            app.$router.push({ name: 'MainDashboard' }).catch(error => {
+                if (error.name != 'NavigationDuplicated') {
+                    throw error;
+                }
+            });
+            // store clear action sends modelClosed notification back to electron server
+            app.$store.dispatch(tmActions.clear);
             }
-        });
-        // store clear action sends modelClosed notification back to electron server
-        app.$store.dispatch(tmActions.clear);
-    }
 });
 
 // request from electron to renderer to start a new model
