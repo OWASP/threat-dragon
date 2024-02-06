@@ -118,7 +118,6 @@ app.on('ready', async () => {
 
     ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
-    ipcMain.on('model-modified', handleModelModified);
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
@@ -148,11 +147,6 @@ function handleCloseApp() {
 function handleModelClosed (_event, fileName) {
     logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
-}
-
-function handleModelModified (_event, modified) {
-    logger.log.debug('Modified model notification from renderer: ' + modified);
-    menu.modelModified(modified);
 }
 
 function handleModelOpenConfirmed (_event, fileName) {

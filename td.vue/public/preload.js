@@ -8,7 +8,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     appClose: () => ipcRenderer.send('close-app'),
     modelClosed: (fileName) => ipcRenderer.send('model-closed', fileName),
-    modelModified: (modified) => ipcRenderer.send('model-modified', modified),
     modelOpenConfirmed: (fileName) => ipcRenderer.send('model-open-confirmed', fileName),
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
     modelPrint: (format) => ipcRenderer.send('model-print', format),
