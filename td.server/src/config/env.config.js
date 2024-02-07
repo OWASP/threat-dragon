@@ -2,8 +2,8 @@ import BitbucketEnv from '../env/Bitbucket.js';
 import EncryptionEnv from '../env/Encryption.js';
 import env from '../env/Env.js';
 import GithubEnv from '../env/Github.js';
-import ThreatDragonEnv from '../env/ThreatDragon.js';
 import GitlabEnv from "../env/Gitlab";
+import ThreatDragonEnv from '../env/ThreatDragon.js';
 
 const tryLoadDotEnv = () => {
     const github = new GithubEnv();
