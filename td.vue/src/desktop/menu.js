@@ -35,8 +35,7 @@ var language = defaultLanguage;
 export const model = {
     fileDirectory: '',
     filePath: '',
-    isOpen: false,
-    isModified: false
+    isOpen: false
 };
 
 export function getMenuTemplate () {
@@ -379,11 +378,6 @@ export const modelClosed = () => {
     model.isOpen = false;
 };
 
-// the renderer has modified the model
-export const modelModified = (modified) => {
-    model.isModified = modified;
-};
-
 // the renderer has opened a new model
 export const modelOpened = () => {
     // for security reasons the renderer can not provide the full path
@@ -430,7 +424,6 @@ export const setMainWindow = (window) => {
 export default {
     getMenuTemplate,
     modelClosed,
-    modelModified,
     modelOpened,
     modelPrint,
     modelSave,

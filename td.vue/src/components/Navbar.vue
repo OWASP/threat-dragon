@@ -19,6 +19,7 @@
           <font-awesome-icon
             icon="sign-out-alt"
             class="td-fa-nav"
+            v-b-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -30,6 +31,7 @@
           <font-awesome-icon
             icon="question-circle"
             class="td-fa-nav"
+            v-b-tooltip.hover :title="$t('desktop.help.docs')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -41,6 +43,7 @@
           <font-awesome-icon
             icon="gift"
             class="td-fa-nav"
+            v-b-tooltip.hover :title="$t('desktop.help.sheets')"
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
@@ -49,7 +52,7 @@
           rel="noopener noreferrer"
           id="nav-owasp-td"
         >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" />
+          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')"/>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
