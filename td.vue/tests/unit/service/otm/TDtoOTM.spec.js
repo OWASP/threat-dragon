@@ -1,6 +1,6 @@
-import openThreatModel from '@/service/openThreatModel.js';
+import convert from '@/service/otm/TDtoOTM.js';
 
-describe('service/openThreatModel.js', () => {
+describe('service/otm/openThreatModel.js', () => {
     var dragonModel = new Object();
     dragonModel.version = '2.0';
     dragonModel.summary = new Object();
@@ -25,33 +25,11 @@ describe('service/openThreatModel.js', () => {
     let otmModel;
     describe('convertTDtoOTM', () => {
         beforeEach(() => {
-            otmModel = openThreatModel.convertTDtoOTM(dragonModel);
+            otmModel = convert.convertTDtoOTM(dragonModel);
         });
 
         it('converts td format to otm', () => {
             expect(otmModel.otmVersion).toEqual('0.2.0');
-        });
-    });
-
-    var mockOTM = new Object();
-    mockOTM.otmVersion = '0.2.0';
-    mockOTM.project = new Object();
-    mockOTM.project.id = 1;
-    mockOTM.project.name = 'title';
-    mockOTM.trustZones = [];
-    mockOTM.components = [];
-    mockOTM.dataflows = [];
-    //mockOTM.project.attributes = new Object();
-    //mockOTM.project.attributes.cmdbId = 'test cmdbId';
-
-    let tdModel;
-    describe('convertOTMtoTD', () => {
-        beforeEach(() => {
-            tdModel = openThreatModel.convertOTMtoTD(mockOTM);
-        });
-
-        it('converts otm format to td', () => {
-            expect(tdModel.summary.title).toEqual('title');
         });
     });
 });
