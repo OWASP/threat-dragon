@@ -48,12 +48,12 @@ const hin = {
     desktop: {
         file: {
             heading: 'फ़ाइल',
-            clearRecentDocs: 'Clear Menu',
+            clearRecentDocs: 'मेनू हटाएं',
             close: 'क्लोज मॉडल',
-            closeWindow: 'Close Window',
-            new: 'New Model',
+            closeWindow: 'विंडो बंद करें',
+            new: 'नया मॉडल',
             open: 'ओपन मॉडल',
-            recentDocs: 'Open Recent',
+            recentDocs: 'नवीनतम खोलें',
             save: 'मॉडल सहेजें',
             saveAs: 'मॉडल को इस रूप में सहेजें'
         },
@@ -114,13 +114,13 @@ const hin = {
                 select: 'लिंडडन'
             },
             plot4ai: {
-                defaultTitle: 'New PLOT4ai diagram',
-                defaultDescription: 'New PLOT4ai diagram description',
+                defaultTitle: 'नया PLOT4ai आरेख',
+                defaultDescription: 'नया PLOT4ai आरेख विवरण',
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultTitle: 'नया DIE आरेख',
+                defaultDescription: 'नया DIE आरेख विवरण',
                 select: 'DIE'
             },
             cia: {
@@ -146,10 +146,10 @@ const hin = {
             text: 'टेक्स्ट',
             description: 'विवरण',
             outOfScope: 'आउट ऑफ स्कोप',
-            bidirection: 'Bidirectional',
+            bidirection: 'द्विदिशीय',
             reasonOutOfScope: 'दायरे से बाहर होने का कारण',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
+            handlesCardPayment: 'कार्ड भुगतान',
+            handlesGoodsOrServices: 'सामान या सेवाएँ',
             isALog: 'एक लॉग है',
             isEncrypted: 'एन्क्रिप्टेड',
             isSigned: 'हस्ताक्षरित',
@@ -232,7 +232,7 @@ const hin = {
         discardTitle: 'परिवर्तनों को त्यागें?',
         discardMessage: 'क्या आप सुनिश्चित हैं कि आप अपने परिवर्तनों को खारिज करना चाहते हैं?',
         edit: 'संपादित करें',
-        exportAs: 'Export Model As',
+        exportAs: 'मॉडल को निर्यात करें जैसे',
         exportHtml: 'HTML रिपोर्टें',
         exportPdf: 'पीडीएफ रिपोर्टें',
         exportTd: 'Original (Threat Dragon)',
@@ -261,9 +261,9 @@ const hin = {
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'वितरित',
+                immutable: 'अपरिवर्तनीय',
+                ephemeral: 'क्षणिक'
             },
             linddun: {
                 header: '--- लिंडडन ---',
@@ -277,14 +277,14 @@ const hin = {
             },
             plot4ai: {
                 header: '--- PLOT4ai ---',
-                techniqueProcesses: 'Technique & Processes',
-                accessibility: 'Accessibility',
-                identifiabilityLinkability: 'Identifiability & Linkability',
-                security: 'Security',
-                safety: 'Safety',
-                unawareness: 'Unawareness',
-                ethicsHumanRights: 'Ethics & Human Rights',
-                nonCompliance: 'Non-compliance'
+                techniqueProcesses: 'तकनीक और प्रक्रियाएँ',
+                accessibility: 'सुलभता',
+                identifiabilityLinkability: 'पहचान योग्यता और संबंधनीयता',
+                security: 'सुरक्षा',
+                safety: 'सुरक्षा',
+                unawareness: 'अनजानी',
+                ethicsHumanRights: 'नैतिकता और मानवाधिकार',
+                nonCompliance: 'अनुपालन न करना'
             },
             stride: {
                 header: '--- स्ट्राइड ---',
@@ -340,7 +340,7 @@ const hin = {
             showOutOfScope: 'दायरे से बाहर के तत्व दिखाएं',
             showMitigatedThreats: 'कम किए गए खतरे दिखाएं',
             showModelDiagrams: 'मॉडल आरेख दिखाएं',
-            showEmpty: 'Show empty elements',
+            showEmpty: 'खाली तत्व दिखाएं',
             showBranding: 'शो थ्रेट ड्रैगन ब्रांडिंग'
         },
         title: 'के लिए थ्रेट मॉडल रिपोर्ट',
