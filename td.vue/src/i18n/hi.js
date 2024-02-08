@@ -4,8 +4,8 @@ const hin = {
     },
     nav: {
         v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
-        loggedInAs: 'के रूप में लॉग इन किया',
-        logOut: 'Log out'
+        loggedInAs: 'लॉग-इन किया गया है भूमिका में',
+        logOut: 'लॉगआउट'
     },
     home: {
         title: 'OWASP थ्रेट ड्रैगन',
