@@ -185,7 +185,7 @@ describe('views/ThreatmodelEdit.vue', () => {
                 beforeEach(async () => {
                     mockRouter.push = jest.fn();
                     wrapper.vm.restoreAsync = jest.fn().mockResolvedValue(true);
-                    await wrapper.find('#td-cancel-btn').trigger('click', evt);
+                    await wrapper.find('#td-close-btn').trigger('click', evt);
                 });
 
                 it('prevents the default event', () => {
@@ -205,7 +205,7 @@ describe('views/ThreatmodelEdit.vue', () => {
                 beforeEach(async () => {
                     mockRouter.push = jest.fn();
                     wrapper.vm.restoreAsync = jest.fn().mockResolvedValue(false);
-                    await wrapper.find('#td-cancel-btn').trigger('click', evt);
+                    await wrapper.find('#td-close-btn').trigger('click', evt);
                 });
 
                 it('calls the restoreAsync function', () => {

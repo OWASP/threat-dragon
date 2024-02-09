@@ -58,11 +58,10 @@ import { mapState } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
-import openThreatModel from '@/service/openThreatModel.js';
+import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { isValidSchema } from '../service/ajv-SchemaVerification';
-
+import { isValidSchema } from '@/service/schema/ajv';
 
 // only search for text files
 const pickerFileOptions = {
