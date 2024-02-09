@@ -158,7 +158,7 @@
                                     icon="undo"
                                     :text="$t('forms.reload')" />
                                 <td-form-button
-                                    id="td-cancel-btn"
+                                    id="td-close-btn"
                                     :onBtnClick="onCloseClick"
                                     icon="times"
                                     :text="$t('forms.close')" />

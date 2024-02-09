@@ -19,7 +19,7 @@ describe('upgrade v2 demo', () => {
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
-        cy.get('button').contains('Cancel').click();
+        cy.get('button').contains('Close').click();
     });
 
     it('can edit the diagram', () => {

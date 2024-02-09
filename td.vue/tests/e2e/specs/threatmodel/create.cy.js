@@ -42,6 +42,6 @@ describe('create a new threat model', () => {
     it('has the form control buttons', () => {
         cy.get('#td-save-btn').should('be.visible');
         cy.get('#td-reload-btn').should('be.visible');
-        cy.get('#td-cancel-btn').should('be.visible');
+        cy.get('#td-close-btn').should('be.visible');
     });
 });

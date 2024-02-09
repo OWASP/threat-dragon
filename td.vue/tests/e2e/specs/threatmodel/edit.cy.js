@@ -13,7 +13,7 @@ describe('editing a threat model', () => {
 
     describe('cancel', () => {
         it('goes back without prompting if data has not been edited', () => {
-            cy.get('#td-cancel-btn').click();
+            cy.get('#td-close-btn').click();
             cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model');
             cy.contains('New Threat Model');
         });
@@ -22,7 +22,7 @@ describe('editing a threat model', () => {
             beforeEach(() => {
                 cy.get('#title').clear().type(newName);
                 cy.contains(`Editing: ${newName}`);
-                cy.get('#td-cancel-btn').click();
+                cy.get('#td-close-btn').click();
             });
 
             it('does not reset if the user selects cancel', () => {

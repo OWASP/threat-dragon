@@ -52,7 +52,7 @@ describe('import', () => {
             cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
-            cy.get('button').contains('Cancel').click();
+            cy.get('button').contains('Close').click();
         });
     
         it('asks the user about the changes', () => {
@@ -118,7 +118,7 @@ describe('import', () => {
             cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
-            cy.get('button').contains('Cancel').click();
+            cy.get('button').contains('Close').click();
         });
     
         it('can edit the diagram', () => {
