@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container-fluid>
         <b-jumbotron id="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
@@ -16,12 +16,12 @@
                 </b-col>
                 <b-col md="8">
                     <b-row>
-                        <p class="td-description">
+                        <p class="td-description mt-5">
                             {{ $t("home.description") }}
                         </p>
                     </b-row>
                     <b-row>
-                        <b-col class="mt-5 mr-5 text-right">
+                        <b-col class="mt-5 ml-5 text-center">
                             <td-provider-login-button
                                 v-for="(provider, idx) in providers"
                                 :key="idx"
@@ -32,7 +32,7 @@
                 </b-col>
             </b-row>
         </b-jumbotron>
-    </b-container>
+    </b-container-fluid>
 </template>
 
 <style lang="scss" scoped>
