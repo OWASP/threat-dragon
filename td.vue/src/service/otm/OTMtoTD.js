@@ -3,21 +3,67 @@ const buildVersion = require('../../../package.json').version;
 const convertSummary = (jsonModel) => {
     const noteText = 'Note that Open Threat Model is not supported, yet.\n';
     let summary = new Object();
-    summary.title = jsonModel.project.name;
-    summary.owner = jsonModel.project.owner;
-    summary.ownerContact = jsonModel.project.ownerContact;
-    summary.description = noteText + jsonModel.project.description;
-    summary.id = jsonModel.project.id;
 
-    // both attributes and tags are not used yet by TD, but need to be preserved if present
-    if (jsonModel.project.attributes) {
-        summary.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
-    }
-    if (jsonModel.project.tags) {
-        summary.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
+    if (jsonModel.project) {
+        summary.title = jsonModel.project.name;
+        summary.owner = jsonModel.project.owner;
+        summary.ownerContact = jsonModel.project.ownerContact;
+        summary.description = noteText + jsonModel.project.description;
+        summary.id = jsonModel.project.id;
+    
+        // both attributes and tags are not used yet by TD, but need to be preserved if present
+        if (jsonModel.project.attributes) {
+            summary.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
+        }
+        if (jsonModel.project.tags) {
+            summary.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
+        }
     }
 
     return summary;
+};
+
+const getDiagramType = (representation) => {
+    let diagram = new Object();
+
+    if (representation.attributes && representation.attributes.diagramType) {
+        switch(representation.attributes.diagramType) {
+        case 'CIA':
+            diagram.diagramType = 'CIA';
+            diagram.thumbnail = './public/content/images/thumbnail.cia.jpg';
+            diagram.placeholder = 'New CIA diagram description';
+            break;
+        case 'DIE':
+            diagram.diagramType = 'DIE';
+            diagram.thumbnail = './public/content/images/thumbnail.die.jpg';
+            diagram.placeholder = 'New DIE diagram description';
+            break;
+        case 'LINDDUN':
+            diagram.diagramType = 'LINDDUN';
+            diagram.thumbnail = './public/content/images/thumbnail.linddun.jpg';
+            diagram.placeholder = 'New LINDDUN diagram description';
+            break;
+        case 'PLOT4ai':
+            diagram.diagramType = 'PLOT4ai';
+            diagram.thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
+            diagram.placeholder = 'New PLOT4ai diagram description';
+            break;
+        case 'STRIDE':
+            diagram.diagramType = 'STRIDE';
+            diagram.thumbnail = './public/content/images/thumbnail.stride.jpg';
+            diagram.placeholder = 'New STRIDE diagram description';
+            break;
+        default:
+            diagram.diagramType = 'Generic';
+            diagram.thumbnail = './public/content/images/thumbnail.jpg';
+            diagram.placeholder = 'New generic diagram description';
+        }
+    } else {
+        diagram.diagramType = 'Generic';
+        diagram.thumbnail = './public/content/images/thumbnail.jpg';
+        diagram.placeholder = 'New generic diagram description';
+    }
+    return diagram;
 };
 
 const convertDetail = (jsonModel) => {
@@ -27,24 +73,29 @@ const convertDetail = (jsonModel) => {
     detail.diagramTop = 0;
     detail.reviewer = '';
     detail.threatTop = 0;
+    detail.representations = [];
 
     if (jsonModel.representations) {
         let diagramID = 0;
         jsonModel.representations.forEach(function(representation) {
             if (representation.type === 'diagram') {
-                let diagram = new Object();
+                // threat dragon only knows about diagrams
+                let diagram = getDiagramType(representation);
                 diagram.cells = [];
                 diagram.version = buildVersion;
                 diagram.id = diagramID++;
-                diagram.diagramType = 'Generic';
-                diagram.thumbnail = './public/content/images/thumbnail.jpg';
-                diagram.placeholder = 'New generic diagram description';
                 diagram.title = representation.name;
                 diagram.description = representation.description;
                 diagram.otmId = representation.id;
+                diagram.size = representation.size;
+                diagram.attributes = representation.attributes;
                 detail.diagrams.push(diagram);
+            } else {
+                // keep records of any other representations
+                detail.representations.push(representation);
             }
         });
+        detail.diagramTop = diagramID;
     }
 
     return detail;

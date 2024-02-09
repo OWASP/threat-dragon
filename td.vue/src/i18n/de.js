@@ -120,7 +120,7 @@ const deu = {
             },
             die: {
                 defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultDescription: 'Neue DIE Diagramm Beschreibung',
                 select: 'DIE'
             },
             cia: {

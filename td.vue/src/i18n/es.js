@@ -120,7 +120,7 @@ const spa = {
             },
             die: {
                 defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultDescription: 'Descripción de nuevo diagrama DIE',
                 select: 'DIE'
             },
             cia: {
