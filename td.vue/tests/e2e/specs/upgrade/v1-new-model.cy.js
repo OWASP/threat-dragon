@@ -33,7 +33,7 @@ describe('upgrade v1 new', () => {
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
-        cy.get('button').contains('Cancel').click();
+        cy.get('button').contains('Close').click();
     });
 
     it.skip('asks the user about the changes', () => {
