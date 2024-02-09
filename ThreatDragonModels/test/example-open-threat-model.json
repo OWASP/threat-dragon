@@ -70,7 +70,7 @@
         "confidentiality": 0,
         "integrity": 100,
         "availability": 50,
-        "riskComments": "Public information has no confidentiality at all but it is quite important for it to be available and to not be changed by attakers"
+        "riskComments": "Public information has no confidentiality at all but it is quite important for it to be available and to not be changed by attackers"
       },
       "attributes": null
     }
@@ -297,7 +297,7 @@
     {
       "name": "Threat 1",
       "id": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
-      "description": "Description fo the threat number 1",
+      "description": "Description for the threat number 1",
       "categories": [
         "Spoofing",
         "Tampering"

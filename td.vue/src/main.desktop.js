@@ -7,6 +7,8 @@ import i18nFactory from './i18n/index.js';
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
 
+import openThreatModel from './service/otm/openThreatModel.js';
+import { isValidSchema } from './service/schema/ajv';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
@@ -74,6 +76,16 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     console.debug('Open model with file name : ' + fileName);
     let params;
+    // check for schema errors
+    if(!isValidSchema(jsonModel)){
+        this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
+    }
+
+    // Identify if threat model is in OTM format and if so, convert OTM to dragon format
+    if (Object.hasOwn(jsonModel, 'otmVersion')) {
+        jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+    }
+
     // this will fail if the threat model does not have a title in the summary
     try {
         params = Object.assign({}, app.$route.params, {

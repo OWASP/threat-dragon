@@ -1,7 +1,7 @@
 const buildVersion = require('../../../package.json').version;
 
 const convertSummary = (jsonModel) => {
-    const noteText = 'Note that Open Threat Model is not supported, yet.\n';
+    const noteText = 'Note that support for Open Threat Model is experimental and subject to large scale changes.\n';
     let summary = new Object();
 
     if (jsonModel.project) {

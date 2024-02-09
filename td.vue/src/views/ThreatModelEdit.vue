@@ -159,9 +159,9 @@
                                     :text="$t('forms.reload')" />
                                 <td-form-button
                                     id="td-cancel-btn"
-                                    :onBtnClick="onCancelClick"
+                                    :onBtnClick="onCloseClick"
                                     icon="times"
-                                    :text="$t('forms.cancel')" />
+                                    :text="$t('forms.close')" />
                             </b-btn-group>
                         </b-col>
                     </b-form-row>
@@ -241,7 +241,7 @@ export default {
             evt.preventDefault();
             await this.restoreAsync();
         },
-        async onCancelClick(evt) {
+        async onCloseClick(evt) {
             evt.preventDefault();
             if (await this.restoreAsync()) {
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });

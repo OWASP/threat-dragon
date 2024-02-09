@@ -32,7 +32,7 @@ describe('service/otm/OTMtoTD.js', () => {
         });
 
         it('converts otm project description', () => {
-            expect(tdModel.summary.description).toEqual('Note that Open Threat Model is not supported, yet.\n' + 'This is a test project for the OTM development');
+            expect(tdModel.summary.description).toMatch(new RegExp('This is a test project for the OTM development'));
         });
 
         it('converts otm project owner', () => {
