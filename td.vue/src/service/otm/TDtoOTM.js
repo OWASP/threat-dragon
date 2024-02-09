@@ -1,4 +1,4 @@
-const convertTDtoOTM = (data) => {
+export const convert = function (data) {
     const jsonData = JSON.stringify(data, null, 2);
 
     var dragonData = JSON.parse(jsonData);
@@ -222,5 +222,5 @@ const convertTDtoOTM = (data) => {
 };
 
 export default {
-    convertTDtoOTM
+    convert
 };

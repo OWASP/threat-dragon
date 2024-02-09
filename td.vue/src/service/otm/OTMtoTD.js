@@ -1,40 +1,38 @@
 const buildVersion = require('../../../package.json').version;
 
-const convertOTMtoTD = (jsonModel) => {
-    console.log(jsonModel);
+const convertSummary = (jsonModel) => {
     const noteText = 'Note that Open Threat Model is not supported, yet.\n';
-
-    var dragonModel = new Object();
-    dragonModel.version = buildVersion;
-    dragonModel.otmVersion = jsonModel.otmVersion;
-
-    dragonModel.summary = new Object();
-    dragonModel.summary.title = jsonModel.project.name;
-    dragonModel.summary.owner = jsonModel.project.owner;
-    dragonModel.summary.ownerContact = jsonModel.project.ownerContact;
-    dragonModel.summary.description = noteText + jsonModel.project.description;
-    dragonModel.summary.id = jsonModel.project.id;
+    let summary = new Object();
+    summary.title = jsonModel.project.name;
+    summary.owner = jsonModel.project.owner;
+    summary.ownerContact = jsonModel.project.ownerContact;
+    summary.description = noteText + jsonModel.project.description;
+    summary.id = jsonModel.project.id;
 
     // both attributes and tags are not used yet by TD, but need to be preserved if present
     if (jsonModel.project.attributes) {
-        dragonModel.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
+        summary.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
     }
     if (jsonModel.project.tags) {
-        dragonModel.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
+        summary.tags = JSON.parse(JSON.stringify(jsonModel.project.tags));
     }
 
-    dragonModel.detail = new Object();
-    dragonModel.detail.contributors = [];
-    dragonModel.detail.diagrams = [];
-    dragonModel.detail.diagramTop = 0;
-    dragonModel.detail.reviewer = '';
-    dragonModel.detail.threatTop = 0;
+    return summary;
+};
+
+const convertDetail = (jsonModel) => {
+    let detail = new Object();
+    detail.contributors = [];
+    detail.diagrams = [];
+    detail.diagramTop = 0;
+    detail.reviewer = '';
+    detail.threatTop = 0;
 
     if (jsonModel.representations) {
-        var diagramID = 0;
+        let diagramID = 0;
         jsonModel.representations.forEach(function(representation) {
             if (representation.type === 'diagram') {
-                var diagram = new Object();
+                let diagram = new Object();
                 diagram.cells = [];
                 diagram.version = buildVersion;
                 diagram.id = diagramID++;
@@ -44,10 +42,21 @@ const convertOTMtoTD = (jsonModel) => {
                 diagram.title = representation.name;
                 diagram.description = representation.description;
                 diagram.otmId = representation.id;
-                dragonModel.detail.diagrams.push(diagram);
+                detail.diagrams.push(diagram);
             }
         });
     }
+
+    return detail;
+};
+
+export const convert = function (jsonModel) {
+    let dragonModel = new Object();
+
+    dragonModel.version = buildVersion;
+    dragonModel.otmVersion = jsonModel.otmVersion;
+    dragonModel.summary = convertSummary(jsonModel);
+    dragonModel.detail = convertDetail(jsonModel);
 
     console.log(dragonModel);
     /*
@@ -173,12 +182,10 @@ const convertOTMtoTD = (jsonModel) => {
         diagram.cells.push(cell);
     });
 
-    dragonModel.detail.diagrams.push(diagram);
-
 */
     return dragonModel;
 };
 
 export default {
-    convertOTMtoTD
+    convert
 };

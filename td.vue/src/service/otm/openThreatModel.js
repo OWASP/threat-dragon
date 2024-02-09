@@ -1,5 +1,5 @@
-import convertTDtoOTM from './TDtoOTM.js';
-import convertOTMtoTD from './OTMtoTD.js';
+import { convert as convertTDtoOTM } from './TDtoOTM.js';
+import { convert as convertOTMtoTD } from './OTMtoTD.js';
 
 export default {
     convertOTMtoTD,

@@ -1,4 +1,4 @@
-import convert from '@/service/otm/TDtoOTM.js';
+import { convert as convertTDtoOTM }  from '@/service/otm/TDtoOTM.js';
 
 describe('service/otm/openThreatModel.js', () => {
     var dragonModel = new Object();
@@ -25,7 +25,7 @@ describe('service/otm/openThreatModel.js', () => {
     let otmModel;
     describe('convertTDtoOTM', () => {
         beforeEach(() => {
-            otmModel = convert.convertTDtoOTM(dragonModel);
+            otmModel = convertTDtoOTM(dragonModel);
         });
 
         it('converts td format to otm', () => {
