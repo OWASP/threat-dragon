@@ -60,7 +60,7 @@ describe('HomePage.vue', () => {
                 expect(wrapper.exists()).toBe(true);
             });
 
-            it('has a b-container-fluid', () => {
+            it('has a b-container', () => {
                 expect(wrapper.findComponent(BContainer).exists()).toBe(true);
             });
 

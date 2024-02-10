@@ -1,5 +1,5 @@
 <template>
-    <b-container-fluid>
+    <b-container fluid>
         <b-jumbotron id="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
@@ -32,7 +32,7 @@
                 </b-col>
             </b-row>
         </b-jumbotron>
-    </b-container-fluid>
+    </b-container>
 </template>
 
 <style lang="scss" scoped>
