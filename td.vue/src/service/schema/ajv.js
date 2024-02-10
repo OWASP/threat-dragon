@@ -30,6 +30,15 @@ export const isValidSchema = (jsonFile) => {
         return true;
     }
 
-    console.error('Failed to validate', validate.errors);
+    console.warn('Failed to validate', validateV2.errors);
     return false;
+};
+
+export const isValidOTM = (jsonFile) => {
+    return validateOTM(jsonFile);
+}
+
+export default {
+    isValidOTM,
+    isValidSchema
 };

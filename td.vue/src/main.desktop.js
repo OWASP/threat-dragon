@@ -8,7 +8,7 @@ import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
 
 import openThreatModel from './service/otm/openThreatModel.js';
-import { isValidSchema } from './service/schema/ajv';
+import { isValidOTM, isValidSchema } from './service/schema/ajv';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
@@ -78,11 +78,9 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     let params;
     // check for schema errors
     if(!isValidSchema(jsonModel)){
-        this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
-    }
-
-    // Identify if threat model is in OTM format and if so, convert OTM to dragon format
-    if (Object.hasOwn(jsonModel, 'otmVersion')) {
+        console.warn('Invalid threat model');
+    } else if (isValidOTM(jsonModel)) {
+        // if threat model is in OTM format then convert OTM to dragon format
         jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
     }
 
