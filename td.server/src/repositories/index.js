@@ -1,5 +1,6 @@
 import bitbucketrepo from "./bitbucketrepo";
 import githubrepo from "./githubrepo";
+import gitlabrepo from "./gitlabrepo";
 
 /**
  * An immutable object containing all
@@ -8,6 +9,7 @@ import githubrepo from "./githubrepo";
  */
 const all = Object.freeze({
     githubrepo,
+    gitlabrepo,
     bitbucketrepo,
 });
 

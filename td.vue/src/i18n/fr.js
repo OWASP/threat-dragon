@@ -21,6 +21,10 @@ const fra = {
             displayName: 'GitHub',
             loginWith: 'Se connecter avec'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Se connecter avec'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Se connecter avec'

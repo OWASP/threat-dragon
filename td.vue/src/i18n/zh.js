@@ -21,6 +21,10 @@ const zho = {
             displayName: 'GitHub',
             loginWith: '登录'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: '登录'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: '登录'

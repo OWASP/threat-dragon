@@ -21,6 +21,10 @@ const por = {
             displayName: 'GitHub',
             loginWith: 'Login com'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Login com'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Login com'

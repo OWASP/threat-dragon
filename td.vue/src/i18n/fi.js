@@ -21,6 +21,10 @@ const fin = {
             displayName: 'GitHubilla',
             loginWith: 'Kirjaudu sisään'
         },
+        gitlab: {
+            displayName: 'GitLabilla',
+            loginWith: 'Kirjaudu sisään'
+        },
         bitbucket: {
             displayName: 'Bitbucketissa',
             loginWith: 'Kirjaudu sisään'

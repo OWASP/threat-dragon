@@ -21,6 +21,10 @@ const ara = {
             displayName: 'GitHub',
             loginWith: 'تسجيل الدخول باستخدام'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'تسجيل الدخول باستخدام'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'تسجيل الدخول باستخدام'

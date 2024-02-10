@@ -21,6 +21,10 @@ const ell = {
             displayName: 'GitHub',
             loginWith: 'Είσοδος με'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Είσοδος με'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Είσοδος με'

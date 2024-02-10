@@ -21,6 +21,10 @@ const hin = {
             displayName: 'GitHub',
             loginWith: 'से लोगिन करें'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'से लोगिन करें'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'से लोगिन करें'
