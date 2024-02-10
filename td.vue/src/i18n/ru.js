@@ -21,6 +21,10 @@ const rus = {
             displayName: 'GitHub',
             loginWith: 'Login with'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Login with'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Login with'

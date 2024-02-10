@@ -21,6 +21,10 @@ const spa = {
             displayName: 'GitHub',
             loginWith: 'Conectarse con'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Conectarse con'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Conectarse con'

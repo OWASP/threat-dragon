@@ -21,6 +21,10 @@ const deu = {
             displayName: 'GitHub',
             loginWith: 'Anmelden mit'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Anmelden mit'
+        },
         bitbucket: {
             displayName: 'Bitbucket',
             loginWith: 'Anmelden mit'
