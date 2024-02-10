@@ -1,7 +1,7 @@
 import Ajv from 'ajv';
-import { schema } from '@/assets/schema/threat-model-schema';
-import { schema as schemaV2 } from '@/assets/schema/threat-model-schema.V2';
-import { schema as schemaOTM } from '@/assets/schema/open-threat-model-schema';
+import { schema } from './threat-model-schema';
+import { schema as schemaV2 } from './threat-model-schema.V2';
+import { schema as schemaOTM } from './open-threat-model-schema';
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 const validate = ajv.compile(schema);
@@ -30,6 +30,15 @@ export const isValidSchema = (jsonFile) => {
         return true;
     }
 
-    console.error('Failed to validate', validate.errors);
+    console.warn('Failed to validate', validateV2.errors);
     return false;
+};
+
+export const isValidOTM = (jsonFile) => {
+    return validateOTM(jsonFile);
+}
+
+export default {
+    isValidOTM,
+    isValidSchema
 };

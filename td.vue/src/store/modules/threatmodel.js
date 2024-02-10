@@ -116,33 +116,32 @@ const actions = {
         console.debug('Save threat model action');
         // Identify if threat model is in OTM format and if so, convert dragon to OTM format
         if (Object.hasOwn(state.data, 'otmVersion')) {
-            Vue.$toast.warning('Open Threat Model not yet supported');
-        } else {
-            try {
-                if (getProviderType(rootState.provider.selected) === providerTypes.local) {
-                    // save locally for web app when local login
-                    Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-                    save.local(state.data, `${state.data.summary.title}.json`, state.format);
-                } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-                    // desktop version always saves locally
-                    Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-                    await window.electronAPI.modelSave(state.data, state.fileName);
-                } else {
-                    await threatmodelApi.updateAsync(
-                        rootState.repo.selected,
-                        rootState.branch.selected,
-                        state.data.summary.title,
-                        state.data
-                    );
-                    Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
-                }
-                dispatch(THREATMODEL_STASH);
-                commit(THREATMODEL_NOT_MODIFIED);
-            } catch (ex) {
-                console.error('Failed to save threat model!');
-                console.error(ex);
-                Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+            Vue.$toast.warning('Saving in Open Threat Model format not yet supported');
+        }
+        try {
+            if (getProviderType(rootState.provider.selected) === providerTypes.local) {
+                // save locally for web app when local login
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                save.local(state.data, `${state.data.summary.title}.json`);
+            } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                // desktop version always saves locally
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                await window.electronAPI.modelSave(state.data, state.fileName);
+            } else {
+                await threatmodelApi.updateAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    state.data.summary.title,
+                    state.data
+                );
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
+            dispatch(THREATMODEL_STASH);
+            commit(THREATMODEL_NOT_MODIFIED);
+        } catch (ex) {
+            console.error('Failed to save threat model!');
+            console.error(ex);
+            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
