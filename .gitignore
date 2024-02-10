@@ -58,7 +58,7 @@
 # Vue front end
 !td.vue
 !td.vue/**/*.vue
-!td.vue/**/*.js
+!td.vue/*config.js
 !td.vue/**/*.scss
 !td.vue/public/
 !td.vue/public/*
@@ -81,7 +81,9 @@
 !td.vue/src/service/demo/
 !td.vue/src/service/entity/
 !td.vue/src/service/migration/
+!td.vue/src/service/otm/
 !td.vue/src/service/provider/
+!td.vue/src/service/schema/
 !td.vue/src/service/threats/
 !td.vue/src/service/threats/models/
 !td.vue/src/service/x6/
@@ -113,7 +115,9 @@
 !td.vue/tests/unit/service/demo/
 !td.vue/tests/unit/service/entity/
 !td.vue/tests/unit/service/migration/
+!td.vue/tests/unit/service/otm/
 !td.vue/tests/unit/service/provider/
+!td.vue/tests/unit/service/schema/
 !td.vue/tests/unit/service/threats/
 !td.vue/tests/unit/service/threats/models/
 !td.vue/tests/unit/service/x6/

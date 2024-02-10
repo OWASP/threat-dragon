@@ -56,6 +56,10 @@ export const schema = {
                     'items': {
                         'type': 'object',
                         'properties': {
+                            'description': {
+                                'description': 'The description of the diagram',
+                                'type': 'string'
+                            },
                             'diagramType': {
                                 'description': 'The methodology used by the data-flow diagram',
                                 'type': 'string',
@@ -67,7 +71,7 @@ export const schema = {
                                 'minimum': 0
                             },
                             'placeholder': {
-                                'description': 'The extended description of the diagram',
+                                'description': 'The text used when the description is empty',
                                 'type': 'string'
                             },
                             'thumbnail': {
