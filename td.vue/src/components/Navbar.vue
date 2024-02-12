@@ -96,6 +96,11 @@ $icon-height: 1.2rem;
   .nav-link {
   color: red !important;
   }
+  .logged-in-as {
+    background-color: $orange;
+    border-radius: 5px;
+    padding:10px;
+  }
 }
 @media (max-width: 576px) {
   .td-owasp-logo { /* Target the OWASP logo */
