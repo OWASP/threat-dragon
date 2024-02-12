@@ -36,7 +36,7 @@ export const isValidSchema = (jsonFile) => {
 
 export const isValidOTM = (jsonFile) => {
     return validateOTM(jsonFile);
-}
+};
 
 export default {
     isValidOTM,
