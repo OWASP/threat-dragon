@@ -127,6 +127,9 @@ app.on('ready', async () => {
     createWindow();
 
     // check for updates from github releases site
+    autoUpdater.autoInstallOnAppQuit = true
+    // require user to agree to download
+    autoUpdater.autoDownload = false;
     autoUpdater.checkForUpdatesAndNotify();
 });
 

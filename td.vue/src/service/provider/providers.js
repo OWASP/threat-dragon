@@ -3,7 +3,7 @@ import localProvider from './local.provider.js';
 import desktopProvider from './desktop.provider.js';
 import { providerTypes } from './providerTypes.js';
 import bitbucketProvider from '@/service/provider/bitbucket.provider';
-import gitlabProvider from "@/service/provider/gitlab.provider";
+import gitlabProvider from '@/service/provider/gitlab.provider';
 
 const providers = {
     desktop: {
