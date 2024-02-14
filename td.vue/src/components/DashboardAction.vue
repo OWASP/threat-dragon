@@ -24,6 +24,9 @@
     min-height: 100%;
     margin-bottom: 0px;
 }
+.action-pane:hover{
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 .action-pane-link:hover {
     text-decoration: none;
 }
