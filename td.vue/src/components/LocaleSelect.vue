@@ -55,6 +55,8 @@ export default {
                 return 'हिंदी'; // Hindi
             case 'id':
                 return 'Bahasa Indonesia'; // Indonesia 
+            case 'jpn':
+                return '日本語'; // Japanese
             case 'ms':
                 return 'Malay'; // Malay
             case 'por':
@@ -66,6 +68,6 @@ export default {
             }
         }
     },
-    
+
 };
 </script>
