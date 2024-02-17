@@ -46,11 +46,16 @@ and this repository has been migrated from
 Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
 
-Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases),
-with threat model files stored in GitHub or Bitbucket. Over time other storage methods will become available.
+Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases).
+The web application can store threat model files on the local filesystem or access can be configured for :
 
-There are [desktop versions](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
-which store the threat model files on the local filesystem rather than in a repository.
+- GitHub
+- Bitbucket
+- GitLab
+- Github Enterprise
+
+The [desktop versions](https://github.com/OWASP/threat-dragon/releases) of Threat Dragon
+stores the threat model files on the local filesystem and do not access external repositories.
 You can [download installers](https://github.com/OWASP/threat-dragon/releases) for Windows, MacOS and Linux.
 
 End user help is available for both the latest [version 2.x](https://owasp.org/www-project-threat-dragon/docs-2/)
@@ -58,7 +63,7 @@ and the previous [version 1.x](https://owasp.org/www-project-threat-dragon/docs-
 
 ### Version 1.x maintenance mode
 
-Threat Dragon was originally written using AngularJS version 1.x, and this version of Angular has reached end of life.
+Threat Dragon was originally written using AngularJS version 1.x, but this version of Angular reached end of life.
 This means that versions 1.x of Threat Dragon are no longer actively maintained
 and versions 2.x have been re-written to use Vue.js.
 
@@ -83,10 +88,10 @@ The web application variant of Threat Dragon requires some environment variables
 follow [the documentation](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
 on how to set these variables.
 
-The Threat Dragon web application uses GitHub or Bitbucket to store threat models,
-so you need to go to your GitHub or Bitbucket account and register it as a GitHub application.
-There is a [step by step guide](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
-on how to do this. Github Enterprise is also supported.
+If access to external repositories is required, such as GitHub / Bitbucket / GitLab,
+then you need to go to your to the repository account and register it as a GitHub application.
+There are [step by step guides](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
+on how to do this.
 
 If running the web application locally then the front-end to server communication will
 probably need to be HTTP rather than HTTPS.

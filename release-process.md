@@ -4,57 +4,68 @@ The steps used during the release process
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version eg `"version": "2.1.3",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
+3. update version eg `"version": "2.2.0",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
 4. update `buildState` in `td.vue/package.json` away from `-demo`, usually ''
-5. `npm install`
+5. update package lock files: `npm install`
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
 9. `git add --all; git status`
-10. `git commit -m"release version 2.1.3"`
+10. `git commit -m"release version 2.2.0"`
 11. `git push`
-12. tag the release `git tag v2.1.3`
-13. `git push origin v2.1.3`
+12. tag the release `git tag v2.2.0`
+13. `git push origin v2.2.0`
 
 The github release workflow then creates the draft release and the install images
 
 ### Publish docker image
 
 1. once tagged, the github workflow pushes the docker image to docker hub
-2. check using `docker pull threatdragon/owasp-threat-dragon:v2.1.3`
+2. check using `docker pull threatdragon/owasp-threat-dragon:v2.2.0`
 3. on MacOS M1 this command may need to be used:
-    `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.1.3`
+    `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.2.0`
 4. Test using the command to run a detached container:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.1.3`
+    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.2.0`
 5. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
 
 If the image tests correctly, promote the docker image
-from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.1.3`.
+from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.2.0`.
 
 There is _no going back_ on this last step, so it is deliberately left as a manual task:
 
 ```text
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.1.3
-docker tag threatdragon/owasp-threat-dragon:v2.1.3 owasp/threat-dragon:v2.1.3
-docker push owasp/threat-dragon:v2.1.3
-docker pull owasp/threat-dragon:v2.1.3
+docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.2.0
+docker tag threatdragon/owasp-threat-dragon:v2.2.0 owasp/threat-dragon:v2.2.0
+docker push owasp/threat-dragon:v2.2.0
+docker pull owasp/threat-dragon:v2.2.0
 ```
 
 ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
 
 ### Check desktop downloads
 
-1. Download desktop installers for Linux, MacOS and Windows
-2. Download the `latest*.yml` auto-update checksum files
-3. Create SHA512 `checksum*.yml` files:
-  3.1 `grep sha512 latest-linux.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum-linux.yml`
-  3.2 `grep sha512 latest-mac.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum-mac.yml`
-  3.3 `grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  hexdump -ve '1/1 "%.2x"' >> checksum.yml`
-4. Confirm SHA512 with:
-  4.1 `echo "$(cat checksum-linux.yml) Threat-Dragon-ng-2.1.3.AppImage" | sha512sum --check`
-  4.2 `echo "$(cat checksum-mac.yml) Threat-Dragon-ng-2.1.3.dmg" | sha512sum --check`
-  4.3 `echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.1.3.exe" | sha512sum --check`
-5. upload `checksum*.yml` files
+- Download desktop installers for Linux, MacOS and Windows
+- Download the `latest*.yml` auto-update checksum files
+- Create SHA512 `checksum*.yml` files:
+
+ ```text
+grep sha512 latest-linux.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
+    hexdump -ve '1/1 "%.2x"' >> checksum-linux.yml
+grep sha512 latest-mac.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
+    hexdump -ve '1/1 "%.2x"' >> checksum-mac.yml
+grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
+    hexdump -ve '1/1 "%.2x"' >> checksum.yml
+```
+
+- Confirm SHA512 with:
+
+```text
+echo "$(cat checksum-linux.yml) Threat-Dragon-ng-2.2.0.AppImage" | sha512sum --check
+echo "$(cat checksum-mac.yml) Threat-Dragon-ng-2.2.0.dmg" | sha512sum --check
+echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.2.0.exe" | sha512sum --check
+```
+
+- upload `checksum*.yml` files
 
 ### Check demo site
 
@@ -71,7 +82,7 @@ Edit the 'What's Changed' to filter out any chores.
 
 Then update the release notes for the draft in the [Threat Dragon release area][area]
 using the release notes using markdown provided by `.release-note-template.md` as a template,
-making sure to revise `2.x.x` to the correct version number such as `2.1.3`
+making sure to revise `2.x.x` to the correct version number such as `2.2.0`
 
 Promote the release from draft to public once everything is in place
 
