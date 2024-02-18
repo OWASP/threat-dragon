@@ -42,9 +42,16 @@ docker pull owasp/threat-dragon:v2.2.0
 
 ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
 
+### Check demo site
+
+1. Install [Heroku CLI tools][herokucli] if necessary
+2. Login to [Heroku][heroku]
+3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
+4. Ensure no rollback shown in [dashboard][herokudash]
+
 ### Check desktop downloads
 
-- Download desktop installers for Linux, MacOS and Windows
+- Download desktop AppImage for Linux and installers for MacOS `.dmg` and Windows `.exe`
 - Download the `latest*.yml` auto-update checksum files
 - Create SHA512 `checksum*.yml` files:
 
@@ -66,13 +73,6 @@ echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.2.0.exe" | sha512sum --check
 ```
 
 - upload `checksum*.yml` files
-
-### Check demo site
-
-1. Install [Heroku CLI tools][herokucli] if necessary
-2. Login to [Heroku][heroku]
-3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
-4. Ensure no rollback shown in [dashboard][herokudash]
 
 ### Update release notes
 
