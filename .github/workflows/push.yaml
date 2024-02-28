@@ -418,7 +418,7 @@ jobs:
   zap_scan_web:
     name: Site zap scan
     runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    needs: [build_docker_image]
     steps:
       - name: Run Threat Dragon
         run: |
@@ -465,7 +465,7 @@ jobs:
   scan_image_with_trivy:
     name: Site trivy scan
     runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    needs: [build_docker_image]
     steps:
       # Need .trivyignore
       - name: Checkout
