@@ -31,8 +31,3 @@ CVE-2022-25883
 # tough-cookie prior to version 4.1.3 has prototype pollution in cookie memstore
 # not applicable to Threat Dragon as no cookies used
 CVE-2023-26136
-
-# https://avd.aquasec.com/nvd/2023/cve-2023-42282
-# NPM IP Package v.1.1.8 and before allows execute arbitrary code via isPublic
-# no patch available
-CVE-2023-42282
