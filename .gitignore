@@ -72,6 +72,8 @@
 !td.vue/src/components/printed-report/
 !td.vue/src/components/report/
 !td.vue/src/desktop/
+!td.vue/src/desktop/*.html
+!td.vue/src/desktop/*.js
 !td.vue/src/i18n/
 !td.vue/src/icons/
 !td.vue/src/plugins/
@@ -93,6 +95,7 @@
 !td.vue/src/store/actions/
 !td.vue/src/store/modules/
 !td.vue/src/styles/
+!td.vue/src/styles/*.css
 !td.vue/src/views/
 !td.vue/src/views/demo/
 !td.vue/src/views/git/
