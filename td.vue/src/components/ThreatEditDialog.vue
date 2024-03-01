@@ -134,7 +134,7 @@
                     class="float-left"
                     @click="immediateDelete()"
                 >
-                    {{ $t('forms.remove') }}
+                    {{ $t('forms.remove') }} 
                 </b-button>
                  <b-button
                     variant="secondary"
@@ -211,11 +211,25 @@ export default {
                 'STRIDE'
             ],
             newThreat: true,
-            number: 0
+            number: 0,
+            applyClicked: false,
+            removeClicked: false
         };
     },
+    mounted() {
+        // Add event listener to modal close event
+        this.$refs.editModal.$on('hidden', this.handleModalClose);
+    },
     methods: {
+        handleModalClose() {
+            // Check if neither "apply" nor "remove" button is clicked
+            if (!this.applyClicked && !this.removeClicked) {
+                this.immediateDelete();
+            }
+        },
         editThreat(threatId) {
+            this.applyClicked = false;
+            this.removeClicked = false;
             this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
             if (!this.threat) {
                 // this should never happen with a valid threatId
@@ -240,6 +254,7 @@ export default {
         },
         updateThreat() {
             const threatRef = this.threat;
+            this.applyClicked=true;
 
             if (threatRef) {
                 threatRef.status = this.threat.status;
@@ -283,6 +298,7 @@ export default {
             this.hideModal();
         },
         async immediateDelete() {
+            this.removeClicked=true;
             this.deleteThreat();
             this.hideModal();
         }
