@@ -38,7 +38,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
-  "buildState": "",
+  "buildState": "-latest",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
@@ -136,6 +136,8 @@
     "electron-builder@<23.0.3": ">=23.0.3",
     "follow-redirects": ">=1.15.4",
     "glob-parent@<5.1.2": ">=5.1.2",
+    "ip@<1.1.9": "1.1.9",
+    "ip@=2.0.0": ">=2.0.1",
     "lodash@<4.17.21": ">=4.17.21",
     "minimist@>=1.0.0 <1.2.3": ">=1.2.3",
     "node-fetch": ">=2.6.7",

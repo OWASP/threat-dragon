@@ -47,7 +47,7 @@ Mike Goodwin's [original](https://github.com/mike-goodwin/owasp-threat-dragon)
 which has the issues and pull requests from October 2015 up to June 2020.
 
 Threat Dragon is [primarily a web application](https://github.com/OWASP/threat-dragon/releases).
-The web application can store threat model files on the local filesystem or access can be configured for :
+The web application can store threat model files on the local filesystem; in addition access can be configured for :
 
 - GitHub
 - Bitbucket

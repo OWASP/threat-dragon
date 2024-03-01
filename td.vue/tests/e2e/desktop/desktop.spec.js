@@ -4,7 +4,7 @@
 describe('Desktop application', () => {
 
     describe('main window', () => {
-        it.skip('should launch the application', async () => {
+        it('should launch the application', async () => {
             const title = await browser.getTitle();
             expect(title).toEqual('OWASP Threat Dragon');
         });
@@ -15,7 +15,7 @@ describe('Desktop application', () => {
             expect(rect.height).toEqual(900);
         });
 
-        it.skip('should have an electron url', async () => {
+        it('should have an electron url', async () => {
             let url = await browser.getUrl();
             expect(url).toEqual('app://./index.html');
         });

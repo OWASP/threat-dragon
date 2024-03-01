@@ -150,7 +150,7 @@ jobs:
       # ubuntu does not find this chrome driver
       # so until this is fixed, use only windows-latest
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.4.0
+        uses: browser-actions/setup-chrome@v1.5.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4.0.1
@@ -188,7 +188,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.1.0
         with:
           install: true
 
@@ -321,7 +321,7 @@ jobs:
   zap_scan_web:
     name: Site zap scan
     runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    needs: [build_docker_image]
     steps:
       - name: Run Threat Dragon
         run: |
@@ -368,14 +368,14 @@ jobs:
   scan_image_with_trivy:
     name: Site trivy scan
     runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    needs: [build_docker_image]
     steps:
       # Need .trivyignore
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.17.0
+        uses: aquasecurity/trivy-action@0.18.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
