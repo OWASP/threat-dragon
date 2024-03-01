@@ -240,7 +240,12 @@ export default {
         },
         updateThreat() {
             const threatRef = this.threat;
-
+            const existingThreat = this.cellRef.data.threats.find(x => x.type === threatRef.type && x.id !== threatRef.id);
+            if (existingThreat) {
+                console.warn('A threat of the same type already exists:', existingThreat);
+                this.$toast.warning("A threat of the same type already exists for Current Model !!")
+                return; // Return without adding the threat
+            }
             if (threatRef) {
                 threatRef.status = this.threat.status;
                 threatRef.severity = this.threat.severity;
