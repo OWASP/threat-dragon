@@ -15,6 +15,11 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Delete unused workflows
+        uses: otto-de/purge-deprecated-workflow-runs@v2.0.3
+        with:
+          token: ${{ github.token }}
+
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.6
         with:
@@ -22,11 +27,6 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 28
           keep_minimum_runs: 10
-
-      - name: Delete unused workflows
-        uses: otto-de/purge-deprecated-workflow-runs@v2.0.3
-        with:
-          token: ${{ github.token }}
 
   trivy:
     name: Scan with trivy
@@ -97,8 +97,8 @@ jobs:
     name: Tidy pull requests
     runs-on: ubuntu-22.04
     steps:
-      - name: Delete stale PRs
-      - uses: actions/stale@v9
+      - name: Close stale PRs
+        uses: actions/stale@v9
         with:
           stale-pr-message: 'This PR is stale because it has been open 21 days with no activity. Remove stale label, or add a comment, otherwise it will be closed in 7 days.'
           close-pr-message: 'This PR was closed because it has been stalled for 28 days with no activity.'
