@@ -98,41 +98,43 @@ $icon-height: 1.2rem;
   max-height: $icon-height;
   margin: 0 5px 0 5px;
 }
+.navbar {
+  background-color: $orange;
+  border-color: $orange-alt;
+  height: 60px;
+  font-size: 15px;
+}
+
+.nav-link, .logged-in-as {
+  color: $white !important;
+}
+
+.td-fa-nav {
+  font-size: $icon-height;
+  max-height: $icon-height;
+  margin: 0 5px 0 5px;
+}
 
 .td-brand {
   color: $white !important;
   .td-brand-img {
-    max-height: 50px; // Adjusted for example
+    max-height: 50px;
   }
 }
 
 /* Dark mode specific styles */
 .dark {
-  background-color: $dark-navbar !important;
-  border-color: $dark-border !important;
+  background-color: $lavender-dark-bg !important;
+  border-color: $lavender-dark-border !important;
 
-  .nav-link,
-  .logged-in-as,
-  .td-brand {
-    color: $dark-text !important;
+  .nav-link, .logged-in-as, .td-brand {
+    color: $lavender-dark-text !important;
   }
 
   .td-fa-nav {
-    color: $dark-text !important;
+    color: $lavender-light-text !important;
   }
 }
-
-@media (max-width: 576px) {
-  .nav-link {
-    color: red !important; // Consider adjusting for dark mode
-  }
-  .logged-in-as {
-    background-color: $orange; // Consider adjusting for dark mode
-    border-radius: 5px;
-    padding: 10px;
-  }
-}
-
 @media (max-width: 576px) {
   .td-owasp-logo {
     background-color: red; // Consider adjusting for dark mode
