@@ -146,7 +146,7 @@
                 <b-button
                     v-if="!newThreat"
                     variant="secondary"
-                    class="float-right"
+                    class="float-right mr-2"
                     @click="hideModal()"
                 >
                     {{ $t('forms.cancel') }}
