@@ -33,6 +33,9 @@ jobs:
   trivy:
     name: Scan with trivy
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -56,6 +59,8 @@ jobs:
   codeql:
     name: Analyze with codeql
     runs-on: ubuntu-22.04
+    permissions:
+      security-events: write
 
     strategy:
       fail-fast: false
@@ -84,6 +89,7 @@ jobs:
   link_checker:
     name: Link checker
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.1.1
@@ -98,10 +104,14 @@ jobs:
   stale:
     name: Tidy pull requests
     runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
+
     steps:
       - name: Close stale PRs
         uses: actions/stale@v9
         with:
+          days-before-issue-stale: -1
           stale-pr-message: 'This PR is stale because it has been open 21 days with no activity. Remove stale label, or add a comment, otherwise it will be closed in 7 days.'
           close-pr-message: 'This PR was closed because it has been stalled for 28 days with no activity.'
           days-before-pr-stale: 21

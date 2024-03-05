@@ -366,9 +366,12 @@ jobs:
         if: ${{ always() }}
 
   scan_image_with_trivy:
-    name: Site trivy scan
+    name: Scan with trivy
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+    permissions:
+      contents: write
+
     steps:
       # Need .trivyignore
       - name: Checkout
