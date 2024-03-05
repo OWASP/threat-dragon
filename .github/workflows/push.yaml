@@ -16,6 +16,7 @@ jobs:
   link_checker:
     name: Link checker
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.1.1
@@ -30,6 +31,7 @@ jobs:
   md_linter:
     name: Lint markdown
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.1.1
@@ -44,6 +46,8 @@ jobs:
   codeql:
     name: Analyze with codeql
     runs-on: ubuntu-22.04
+    permissions:
+      security-events: write
 
     strategy:
       fail-fast: false
@@ -73,6 +77,7 @@ jobs:
     defaults:
       run:
         working-directory: td.server
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -105,6 +110,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -137,6 +143,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -170,6 +177,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -209,6 +217,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [site_unit_tests, server_unit_tests]
     if: github.repository == 'OWASP/threat-dragon'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -249,6 +258,7 @@ jobs:
     name: Upload to Heroku
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+
     steps:
       - name: Pull docker image
         run: docker pull ${{ env.IMAGE_NAME }}
@@ -278,6 +288,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -322,6 +333,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -372,6 +384,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -419,6 +432,7 @@ jobs:
     name: Site zap scan
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+
     steps:
       - name: Run Threat Dragon
         run: |
@@ -463,9 +477,12 @@ jobs:
         if: ${{ always() }}
 
   scan_image_with_trivy:
-    name: Site trivy scan
+    name: Scan with trivy
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+    permissions:
+      contents: write
+
     steps:
       # Need .trivyignore
       - name: Checkout
@@ -482,6 +499,7 @@ jobs:
     name: SBOM web application
     runs-on: ubuntu-22.04
     needs: [e2e_smokes]
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -542,6 +560,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -584,6 +603,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -636,6 +656,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -673,6 +694,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
