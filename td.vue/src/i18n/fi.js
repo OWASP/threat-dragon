@@ -47,7 +47,11 @@ const fin = {
         }
     },
     demo: {
-        select: 'Valitse uhkamalli alla olevista'
+        select: 'Valitse uhkamalli alla olevista',
+        "New Threat Model": "Uusi uhkamalli",
+        "Demo Threat Model": "Demouhkamalli",
+        "Version 2 New Model": "Versio 2 Uusi malli",
+        "Version 2 Demo Model": "Versio 2 Demomalli"
     },
     desktop: {
         file: {

@@ -47,7 +47,11 @@ const por = {
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: "Selecione um modelo de ameaça de demonstração da lista abaixo.",
+        "New Threat Model": "Novo modelo de ameaça",
+        "Demo Threat Model": "Modelo de ameaça de demonstração",
+        "Version 2 New Model": "Versão 2 Novo modelo",
+        "Version 2 Demo Model": "Versão 2 Modelo de demonstração"
     },
     desktop: {
         file: {
@@ -302,10 +306,10 @@ const por = {
         },
         generic: {
             dafault: 'Nova ameaça genérica',
-            cia : 'Nova ameaça da CIA',
-            die : 'Nova ameaça da DIE',
-            linddun : 'Nova ameaça LINDDUN',
-            plot4ai : 'Nova ameaça PLOT4ai',
+            cia: 'Nova ameaça da CIA',
+            die: 'Nova ameaça da DIE',
+            linddun: 'Nova ameaça LINDDUN',
+            plot4ai: 'Nova ameaça PLOT4ai',
             stride: 'Nova ameaça STRIDE'
         },
         edit: 'Edit Threat',
@@ -348,18 +352,18 @@ const por = {
             showBranding: 'Threat Dragon logo'
         },
         title: 'Relatório do modelo de ameaças para',
-        dateGenerated : 'Data Gerada',
-        executiveSummary : 'Resumo Executivo',
-        notProvided : 'Não fornecido',
+        dateGenerated: 'Data Gerada',
+        executiveSummary: 'Resumo Executivo',
+        notProvided: 'Não fornecido',
         summary: 'Resumo',
-        threatStats : {
+        threatStats: {
             total: 'Ameaças totais',
             mitigated: 'Total Mitigado',
-            notMitigated : 'Não atenuado',
-            openHigh : 'Abrir / Alta Prioridade',
-            openMedium : 'Abrir / Prioridade Média',
-            openLow : 'Abrir / Baixa Prioridade',
-            openUnknown : 'Prioridade Aberta / Desconhecida'
+            notMitigated: 'Não atenuado',
+            openHigh: 'Abrir / Alta Prioridade',
+            openMedium: 'Abrir / Prioridade Média',
+            openLow: 'Abrir / Baixa Prioridade',
+            openUnknown: 'Prioridade Aberta / Desconhecida'
         }
     },
     upgrade: {
