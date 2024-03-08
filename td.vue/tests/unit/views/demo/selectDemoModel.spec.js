@@ -41,15 +41,16 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(wrapper.findComponent(BJumbotron).text()).toEqual('demo.select');
     });
 
-    it('displays the demo threat model', () => {
-        expect(
-            wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model' || x.text()===`demo.${ "New Threat Model" }` || x.text()===`demo.${ "Demo Threat Model" }` || x.text()===`demo.${ "Version 2 New Model" }` || x.text()===`demo.${ "Version 2 Demo Model" }`)
-                .at(0)
-                .exists()
-        ).toEqual(true);
+    it('displays the demo threat models', () => {
+        const demoModelNames = ['Demo Threat Model', 'New Threat Model', 'Version 2 New Model', 'Version 2 Demo Model'];
+
+        demoModelNames.forEach(modelName => {
+            const translationKey = `demo.${modelName}`;
+            expect(wrapper.text()).toContain(translationKey);
+        });
     });
-    
+
+
     it('clears the threatmodels', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
     });
@@ -61,7 +62,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
     describe('selecting a demo model', () => {
         let demoModelItem;
 
-        beforeEach(async () => {
+        beforeEach(async() => {
             demoModelItem = await wrapper.findAllComponents(BListGroupItem)
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
@@ -73,9 +74,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
         });
 
         it('navigates to the threat model page', () => {
-            expect(mockRouter.push).toHaveBeenCalledWith(
-                { name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' }}
-            );
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' } });
         });
     });
 });
