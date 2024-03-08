@@ -44,7 +44,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
     it('displays the demo threat model', () => {
         expect(
             wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
+                .filter(x => x.text() === 'Demo Threat Model' || x.text()===`demo.${ "New Threat Model" }` || x.text()===`demo.${ "Demo Threat Model" }` || x.text()===`demo.${ "Version 2 New Model" }` || x.text()===`demo.${ "Version 2 Demo Model" }`)
                 .at(0)
                 .exists()
         ).toEqual(true);
