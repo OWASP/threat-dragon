@@ -3,9 +3,9 @@ const ell = {
         sessionExpired: 'Η συνεδρία σας έχει λήξει.  Παρακαλούμε συνδεθείτε εκ νέου για να συνεχίσετε.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
+        v2Warning: 'Η έκδοση 2.0 των μοντέλων απειλών δεν είναι συμβατή με την έκδοση 1.x των μοντέλων του Threat Dragon. Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0',
         loggedInAs: 'Σύνδεση ως',
-        logOut: 'Log out'
+        logOut: 'Αποσύνδεση'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -15,7 +15,7 @@ const ell = {
     providers: {
         desktop: {
             displayName: 'Threat Dragon',
-            loginWith: 'Start'
+            loginWith: 'Έναρξη'
         },
         github: {
             displayName: 'GitHub',
@@ -281,14 +281,14 @@ const ell = {
             },
             plot4ai: {
                 header: '--- PLOT4ai ---',
-                techniqueProcesses: 'Technique & Processes',
-                accessibility: 'Accessibility',
-                identifiabilityLinkability: 'Identifiability & Linkability',
-                security: 'Security',
-                safety: 'Safety',
-                unawareness: 'Unawareness',
-                ethicsHumanRights: 'Ethics & Human Rights',
-                nonCompliance: 'Non-compliance'
+                techniqueProcesses: 'Τεχνική & Διαδικασίες (Technique & Processes)',
+                accessibility: 'Προσβασιμότητα (Accessibility)',
+                identifiabilityLinkability: 'Αναγνωρισιμότητα & Συνδεσιμότητα (Identifiability & Linkability)',
+                security: 'Ασφάλεια (Security)',
+                safety: 'Ασφάλεια (Safety)',
+                unawareness: 'Έλλειψη επίγνωσης (Unawareness)',
+                ethicsHumanRights: 'Ηθική και Ανθρώπινα Δικαιώματα (Ethics & Human Rights)',
+                nonCompliance: 'Μη συμμόρφωση (Non-compliance)'
             },
             stride: {
                 header: '--- STRIDE ---',
