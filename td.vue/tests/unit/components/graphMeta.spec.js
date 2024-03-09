@@ -158,9 +158,15 @@ describe('components/GraphMeta.vue', () => {
                     threatmodel: {
                         selectedDiagram: {
                             diagramType: 'LINDDUN'
+                        },
+                        data:{
+                            detail:{
+                                threatTop:0,
+                            },
                         }
                     }
-                }
+                },
+                actions:{ THREATMODEL_UPDATE: ()=> {}},
             });
             wrapper = shallowMount(TdGraphMeta, {
                 localVue,

@@ -80,6 +80,7 @@ import { mapState } from 'vuex';
 import { createNewTypedThreat } from '@/service/threats/index.js';
 import { CELL_DATA_UPDATED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
+import tmActions from '@/store/actions/threatmodel.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
 
@@ -89,6 +90,7 @@ export default {
         cellRef: (state) => state.cell.ref,
         threats: (state) => state.cell.threats,
         diagram: (state) => state.threatmodel.selectedDiagram,
+        threatTop: (state) => state.threatmodel.data.detail.threatTop,
         disableNewThreat: function (state) {
             return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
         }
@@ -109,10 +111,12 @@ export default {
             this.$emit('threatSelected', threatId);
         },
         newThreat() {
-            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type);
+            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);
             console.debug('new threat ID: ' + threat.id);
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
+            this.$store.dispatch(tmActions.update, { threatTop: this.threatTop+1 });
+            this.$store.dispatch(tmActions.modified);
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
             this.threatSelected(threat.id);

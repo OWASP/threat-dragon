@@ -42,7 +42,7 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewTypedThreat = function (modelType, cellType) {
+export const createNewTypedThreat = function (modelType, cellType,number) {
     if (!modelType) {
         modelType = 'STRIDE';
     }
@@ -99,7 +99,7 @@ export const createNewTypedThreat = function (modelType, cellType) {
         mitigation: tc('threats.mitigation'),
         modelType,
         new: true,
-        number: 0,
+        number: number,
         score: ''
     };
 };
