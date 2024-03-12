@@ -22,11 +22,9 @@ The github release workflow then creates the draft release and the install image
 
 1. once tagged, the github workflow pushes the docker image to docker hub
 2. check using `docker pull threatdragon/owasp-threat-dragon:v2.2.0`
-3. on MacOS M1 this command may need to be used:
-    `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.2.0`
-4. Test using the command to run a detached container:
+3. Test using the command to run a detached container:
     `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.2.0`
-5. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
+4. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
 
 If the image tests correctly, promote the docker image
 from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.2.0`.
