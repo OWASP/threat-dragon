@@ -47,7 +47,12 @@ const ara = {
         }
     },
     demo: {
-        select: 'حدد نموذج تهديد تجريبي من القائمة أدناه'
+        select: 'حدد نموذج تهديد تجريبي من القائمة أدناه',
+        "New Threat Model": "نموذج تهديد جديد",
+        "Demo Threat Model": "نموذج تهديد تجريبي",
+        "Version 2 New Model": "الإصدار ٢ نموذج جديد",
+        "Version 2 Demo Model": "الإصدار ٢ نموذج تجريبي"
+
     },
     desktop: {
         file: {

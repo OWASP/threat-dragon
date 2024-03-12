@@ -47,7 +47,11 @@ const zho = {
         }
     },
     demo: {
-        select: '从下面的列表中选择一个演示威胁模型'
+        select: '从下面的列表中选择一个演示威胁模型',
+        "New Threat Model": "新威胁模型",
+        "Demo Threat Model": "演示威胁模型",
+        "Version 2 New Model": "第二版新模型",
+        "Version 2 Demo Model": "第二版演示模型"
     },
     desktop: {
         file: {

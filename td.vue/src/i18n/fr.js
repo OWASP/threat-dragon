@@ -47,7 +47,11 @@ const fra = {
         }
     },
     demo: {
-        select: 'Sélectionnez une démo de modèle de menace dans la liste ci-dessous'
+        select: 'Sélectionnez une démo de modèle de menace dans la liste ci-dessous',
+        "New Threat Model": "Nouveau modèle de menace",
+        "Demo Threat Model": "Modèle de menace de démonstration",
+        "Version 2 New Model": "Version 2 Nouveau modèle",
+        "Version 2 Demo Model": "Version 2 Modèle de démonstration"
     },
     desktop: {
         file: {
