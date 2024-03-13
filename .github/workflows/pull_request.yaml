@@ -182,9 +182,14 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [site_unit_tests, server_unit_tests]
     if: github.repository == 'OWASP/threat-dragon'
+    outputs:
+      image_is_pushed: ${{ steps.set-outputs.outputs.CREDS_PRESENT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         id: buildx
@@ -202,9 +207,12 @@ jobs:
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3.0.0
+        if: ${{ env.DOCKERHUB_TOKEN != '' }}
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and push
         id: docker_build
@@ -213,15 +221,22 @@ jobs:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: true
+          push: ${{ env.DOCKERHUB_TOKEN != '' }}
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
+
+      - name: Set outputs
+        id: set-outputs
+        run: |-
+          echo "CREDS_PRESENT=${{ secrets.DOCKERHUB_TOKEN != ''}}" >> $GITHUB_OUTPUT
 
   e2e_smokes:
     name: Site e2e smokes
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+    if: ${{ needs.build_docker_image.outputs.image_is_pushed == 'true'}}
     defaults:
       run:
         working-directory: td.vue
@@ -322,6 +337,7 @@ jobs:
     name: Site zap scan
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+    if: ${{ needs.build_docker_image.outputs.image_is_pushed == 'true'}}
     steps:
       - name: Run Threat Dragon
         run: |
@@ -369,6 +385,7 @@ jobs:
     name: Scan with trivy
     runs-on: ubuntu-22.04
     needs: [build_docker_image]
+    if: ${{ needs.build_docker_image.outputs.image_is_pushed == 'true'}}
     permissions:
       contents: write
 

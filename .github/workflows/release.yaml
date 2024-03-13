@@ -346,6 +346,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v3.1.0
@@ -377,6 +380,7 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/amd64,linux/arm64
 
   webapp_release:
     name: Publish web application
