@@ -106,9 +106,9 @@ export default {
         init() {
             this.$store.dispatch(CELL_UNSELECTED);
         },
-        threatSelected(threatId) {
+        threatSelected(threatId,state) {
             console.debug('selected threat ID: ' + threatId);
-            this.$emit('threatSelected', threatId);
+            this.$emit('threatSelected', threatId,state);
         },
         newThreat() {
             const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);
@@ -119,7 +119,7 @@ export default {
             this.$store.dispatch(tmActions.modified);
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
-            this.threatSelected(threat.id);
+            this.threatSelected(threat.id,'new');
         }
     },
 };

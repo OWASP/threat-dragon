@@ -214,7 +214,7 @@ export default {
         };
     },
     methods: {
-        editThreat(threatId) {
+        editThreat(threatId,state) {
             const crnthreat = this.cellRef.data.threats.find(x => x.id === threatId);
             this.threat = {...crnthreat};
             if (!this.threat) {
@@ -222,7 +222,7 @@ export default {
                 console.warn('Trying to access a non-existent threatId: ' + threatId);
             } else {
                 this.number = this.threat.number;
-                this.newThreat = this.threat.new;
+                this.newThreat = state==='new';
                 this.$refs.editModal.show();
             }
         },

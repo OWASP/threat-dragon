@@ -90,7 +90,7 @@ export default {
     },
     methods: {
         threatSelected() {
-            this.$emit('threatSelected', this.id);
+            this.$emit('threatSelected', this.id,'old');
         }
     }
 };
