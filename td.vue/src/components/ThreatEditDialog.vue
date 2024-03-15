@@ -144,13 +144,13 @@
                     {{ $t('forms.apply') }}
                 </b-button>
                 <b-button
-                    v-if="!newThreat"
-                    variant="secondary"
-                    class="float-right mr-2"
-                    @click="hideModal()"
-                >
-                    {{ $t('forms.cancel') }}
-                </b-button>
+                v-if="!newThreat"
+                variant="secondary"
+                class="float-right mr-2"
+                @click="hideModal()"
+            >
+                {{ $t('forms.cancel') }}
+            </b-button>
                 </div>
             </template>
         </b-modal>
@@ -210,36 +210,24 @@ export default {
                 'PLOT4ai',
                 'STRIDE'
             ],
-            newThreat: true,
             number: 0
         };
     },
     methods: {
-        editThreat(threatId) {
-            this.threat = this.cellRef.data.threats.find(x => x.id === threatId);
+        editThreat(threatId,state) {
+            const crnthreat = this.cellRef.data.threats.find(x => x.id === threatId);
+            this.threat = {...crnthreat};
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn('Trying to access a non-existent threatId: ' + threatId);
             } else {
+                this.number = this.threat.number;
+                this.newThreat = state==='new';
                 this.$refs.editModal.show();
             }
-            this.newThreat = this.threat.new;
-
-            if (this.threat.new === true) {
-                // provide a new threat number that is unique project wide
-                if (this.threatTop) {
-                    this.number = this.threatTop + 1;
-                } else {
-                    this.number = 1;
-                }
-                this.$store.dispatch(tmActions.update, { threatTop: this.number });
-            } else {
-                this.number = this.threat.number;
-            }
-            this.$store.dispatch(tmActions.modified);
         },
         updateThreat() {
-            const threatRef = this.threat;
+            const threatRef = this.cellRef.data.threats.find(x => x.id === this.threat.id);
 
             if (threatRef) {
                 threatRef.status = this.threat.status;
@@ -252,7 +240,6 @@ export default {
                 threatRef.new = false;
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
-
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 this.$store.dispatch(tmActions.modified);
                 dataChanged.updateStyleAttrs(this.cellRef);

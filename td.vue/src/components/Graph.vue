@@ -83,8 +83,8 @@ export default {
                 this.$store.dispatch(tmActions.diagramModified, updated);
             });
         },
-        threatSelected(threatId) {
-            this.$refs.threatEditDialog.editThreat(threatId);
+        threatSelected(threatId,state) {
+            this.$refs.threatEditDialog.editThreat(threatId,state);
         },
         saved() {
             console.debug('Save diagram');
