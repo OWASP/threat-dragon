@@ -162,7 +162,7 @@ describe('components/GraphThreats.vue', () => {
         });
 
         it('emits the threatSelected event with the threat id', () => {
-            expect(emitter).toHaveBeenCalledWith('threatSelected', propsData.id);
+            expect(emitter).toHaveBeenCalledWith('threatSelected', propsData.id,'old');
         });
     });
 });

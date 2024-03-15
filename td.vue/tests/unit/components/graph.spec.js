@@ -114,8 +114,8 @@ describe('components/GraphButtons.vue', () => {
     });
 
     it('shows the threat edit modal dialog', () => {
-        wrapper.vm.threatSelected('asdf');
-        expect(threatEditStub.methods.editThreat).toHaveBeenCalledWith('asdf');
+        wrapper.vm.threatSelected('asdf','new');
+        expect(threatEditStub.methods.editThreat).toHaveBeenCalledWith('asdf','new');
     });
 
     it('saves the threat model diagram', () => {
