@@ -2,6 +2,7 @@
     <b-row>
         <b-col v-if="model && model.summary">
             <b-card
+                class="setdark" :class="{'dark-mode': currentTheme === 'dark'}"
                 :header="`${$t('threatmodel.editing')}: ${model.summary.title}`"
                 id="parent-card"
             >
@@ -13,7 +14,7 @@
                                 id="title-group"
                                 :label="$t('threatmodel.title')"
                                 label-for="title">
-                                <b-form-input
+                                <b-form-input class="setdark"
                                     id="title"
                                     v-model="model.summary.title"
                                     @input="onModifyModel()"
@@ -30,7 +31,7 @@
                                 id="owner-group"
                                 :label="$t('threatmodel.owner')"
                                 label-for="owner">
-                                <b-form-input
+                                <b-form-input class="setdark"
                                     id="owner"
                                     v-model="model.summary.owner"
                                     @input="onModifyModel()"
@@ -44,7 +45,7 @@
                                 id="reviewer-group"
                                 :label="$t('threatmodel.reviewer')"
                                 label-for="reviewer">
-                                <b-form-input
+                                <b-form-input class="setdark"
                                     id="reviewer"
                                     v-model="model.detail.reviewer"
                                     @input="onModifyModel()"
@@ -60,7 +61,7 @@
                                 id="description-group"
                                 :label="$t('threatmodel.description')"
                                 label-for="description">
-                                <b-form-textarea
+                                <b-form-textarea class="setdark"
                                     id="description"
                                     v-model="model.summary.description"
                                     @input="onModifyModel()"
@@ -72,11 +73,11 @@
 
                     <b-form-row>
                         <b-col>
-                            <b-form-group
+                            <b-form-group 
                                 id="contributors-group"
                                 :label="$t('threatmodel.contributors')"
                                 label-for="contributors">
-                                <b-form-tags
+                                <b-form-tags class="setdark"
                                     id="contributors"
                                     :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
@@ -185,10 +186,17 @@
 .select-diagram-type {
     font-size: 12px;
 }
+
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
+}
+
 </style>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState} from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
@@ -215,7 +223,7 @@ export default {
             set(contributors) {
                 this.$store.dispatch(tmActions.contributorsUpdated, contributors);
             }
-        }
+        },
     },
     async mounted() {
         this.init();

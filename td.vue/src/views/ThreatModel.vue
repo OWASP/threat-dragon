@@ -10,6 +10,7 @@
         <b-row class="mb-4">
             <b-col>
                 <b-card
+                    class="setdark" :class="{'dark-mode': currentTheme === 'dark'}"
                     :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
@@ -92,10 +93,15 @@
     max-width: 200px;
     max-height: 160px;
 }
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
+}
 </style>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState} from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
@@ -111,7 +117,7 @@ export default {
     computed: mapState({
         model: (state) => state.threatmodel.data,
         providerType: (state) => getProviderType(state.provider.selected),
-        version: (state) => state.packageBuildVersion
+        version: (state) => state.packageBuildVersion,
     }),
     methods: {
         onEditClick(evt) {

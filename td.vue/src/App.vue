@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class=" themeClass" class="jump pt-4">
     <td-navbar />
     <b-container fluid id="app">
       <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
@@ -12,14 +12,13 @@
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
 
-body.light {
-  --text-color: #000;
-  --bg-color: #fff;
+.jump{
+  height: 100vh;
 }
 
 body.dark {
-  --text-color: #fff;
-  --bg-color: #000;
+  background-color: $dark-bg !important;
+  border-color: $dark-border !important;
 }
 
 #app {
@@ -58,7 +57,6 @@ export default {
         this.$store.dispatch(LOADER_FINISHED);
         this.$toast.warning(this.$t('nav.v2Warning'), { timeout: false });
 
-        // Apply the initial theme
         document.body.className = this.themeClass; // Or manage class addition/removal more granularly
     }
 };

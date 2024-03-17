@@ -22,9 +22,11 @@
 .login-btn-icon {
   display: block;
 }
+
 </style>
 
 <script>
+// import { mapGetters } from 'vuex';
 import { providerNames } from '@/service/provider/providers.js';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
@@ -35,6 +37,7 @@ export default {
     props: {
         provider: Object
     },
+    
     methods: {
         async onProviderClick() {
             console.debug('login with provider: ' + this.provider.key);
@@ -48,6 +51,11 @@ export default {
             const resp = await loginApi.loginAsync(this.provider.key);
             window.location.href = resp.data;
         }
-    }
+    },
+    // computed: {
+    //     ...mapGetters({
+    //         themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
+    //     }),
+    // }
 };
 </script>

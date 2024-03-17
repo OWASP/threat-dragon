@@ -1,5 +1,5 @@
 <template>
-  <b-navbar :class="themeClass" toggleable="lg" fixed="top" id="navbar">
+  <b-navbar toggleable="lg" fixed="top" id="navbar" :class="themeClass">
     <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
       <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{ packageBuildVersion }}{{ packageBuildState }}
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 import ThemeToggleButton from './ToggleTheme.vue';
@@ -52,14 +52,6 @@ export default {
     components: {
         TdLocaleSelect,
         ThemeToggleButton,
-    },
-    computed: {
-        ...mapGetters({
-            username: 'username', // Assuming 'username' is defined in one of your Vuex modules
-            packageBuildVersion: state => state.packageBuildVersion,
-            packageBuildState: state => state.packageBuildState,
-            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
-        }),
     },
     methods: {
         onLogOut(evt) {
@@ -122,19 +114,21 @@ $icon-height: 1.2rem;
   }
 }
 
-/* Dark mode specific styles */
-.dark {
-  background-color: $lavender-dark-bg !important;
-  border-color: $lavender-dark-border !important;
-
-  .nav-link, .logged-in-as, .td-brand {
-    color: $lavender-dark-text !important;
+  .nav-link,
+  .logged-in-as,
+  .td-brand {
+    &.dark {
+      color: $dark-text !important;
+    }
   }
 
   .td-fa-nav {
-    color: $lavender-light-text !important;
+    &.dark {
+      color: $light-text !important;
+    }
   }
-}
+
+
 @media (max-width: 576px) {
   .td-owasp-logo {
     background-color: red; // Consider adjusting for dark mode

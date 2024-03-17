@@ -25,6 +25,11 @@ const get = () => {
                 packageBuildVersion: buildVersion,
                 packageBuildState: buildState
             },
+            getters: {
+                // Define getters for accessing the state
+                packageBuildVersion: state => state.packageBuildVersion,
+                packageBuildState: state => state.packageBuildState,
+            },
             modules: {
                 auth,
                 branch,
