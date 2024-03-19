@@ -9,7 +9,7 @@ import { desktopRoutes } from './desktop.js';
 const routes = [
     {
         path: '/',
-        name: 'HomePage',
+        name: '',
         component: HomePage
     },
     {
