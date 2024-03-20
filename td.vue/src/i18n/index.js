@@ -9,10 +9,11 @@ import ara from './ar.js';
 import deu from './de.js';
 import ell from './el.js';
 import eng from './en.js';
-import id from './id.js';
 import fin from './fi.js';
 import fra from './fr.js';
 import hin from './hi.js';
+import id from './id.js';
+import ms from './ms.js';
 import por from './pt.js';
 // hide RUS & UKR for now: import rus from './ru.js';
 import spa from './es.js';
@@ -26,8 +27,8 @@ const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
             locale: 'eng',
-            messages: { ara, deu, ell, eng, id, spa, fin, fra, hin, por, zho }
-            // hide RUS & UKR for now: messages: { ara, deu, ell, eng, id, spa, fin, fra, hin, por, rus, ukr, zho }
+            messages: { ara, deu, ell, eng, spa, fin, fra, hin, id, ms, por, zho }
+            // hide RUS & UKR for now: messages: { ara, deu, ell, eng, spa, fin, fra, hin, id, ms, por, rus, ukr, zho }
         });
     }
     return i18n;
