@@ -53,6 +53,10 @@ export default {
                 return 'Français'; // French
             case 'hin':
                 return 'हिंदी'; // Hindi
+            case 'id':
+                return 'Bahasa Indonesia'; // Indonesia 
+            case 'ms':
+                return 'Malay'; // Malay
             case 'por':
                 return 'Português'; // Portuguese
             case 'zho':
