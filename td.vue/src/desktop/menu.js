@@ -27,10 +27,10 @@ import spa from '@/i18n/es.js';
 // hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, id, ms, fin, fra, hin, por, spa, zho };
-// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, id, ms, fin, fra, hin, por, rus, spa, ukr, zho };
-const languages = [ 'ara', 'deu', 'ell', 'eng', 'id', 'ms', 'fin', 'fra', 'hin', 'por', 'spa', 'zho' ];
-// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'id', 'ms', 'fin', 'fra', 'hin', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const messages = { ara, deu, ell, eng, fin, fra, hin, id, ms, por, spa, zho };
+// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, fin, fra, hin, id, ms, por, rus, spa, ukr, zho };
+const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'ms', 'por', 'spa', 'zho' ];
+// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'ms', 'por', 'rus', 'spa', 'ukr', 'zho' ];
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
