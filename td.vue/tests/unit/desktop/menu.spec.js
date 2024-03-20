@@ -4,6 +4,7 @@ import deu from '@/i18n/de.js';
 import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
 import id from '@/i18n/id.js';
+import ms from '@/i18n/ms.js';
 import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
@@ -300,6 +301,12 @@ describe('desktop/menu.js', () => {
             it('should provide translation for Bahasa Indonesia', () => {
                 menu.setLocale('id');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === id.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for Malay', () => {
+                menu.setLocale('ms');
+                const helpItems = menu.getMenuTemplate().find((item) => item.label === ms.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
