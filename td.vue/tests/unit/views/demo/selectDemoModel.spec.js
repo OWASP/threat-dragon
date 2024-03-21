@@ -44,12 +44,12 @@ describe('views/demo/SelectDemoModel.vue', () => {
     it('displays the demo threat model', () => {
         expect(
             wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0)
-                .exists()
+            .filter(x => x.text() === (`demo.${'Demo Threat Model'}`))
+            .at(0)
+            .exists()
         ).toEqual(true);
     });
-    
+
     it('clears the threatmodels', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
     });
@@ -61,10 +61,9 @@ describe('views/demo/SelectDemoModel.vue', () => {
     describe('selecting a demo model', () => {
         let demoModelItem;
 
-        beforeEach(async () => {
+        beforeEach(async() => {
             demoModelItem = await wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0);
+                .filter(x => x.text() === (`demo.${'Demo Threat Model'}`));
             await demoModelItem.trigger('click');
         });
 
@@ -73,9 +72,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
         });
 
         it('navigates to the threat model page', () => {
-            expect(mockRouter.push).toHaveBeenCalledWith(
-                { name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' }}
-            );
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' } });
         });
     });
 });

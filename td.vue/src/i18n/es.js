@@ -47,7 +47,11 @@ const spa = {
         }
     },
     demo: {
-        select: 'Seleccione un ejemplo de modelo de amenazas (threat model) de la lista a continuación'
+        select: 'Seleccione un ejemplo de modelo de amenazas (threat model) de la lista a continuación',
+        "New Threat Model": "Nuevo modelo de amenaza",
+        "Demo Threat Model": "Modelo de amenaza de demostración",
+        "Version 2 New Model": "Versión 2 Nuevo modelo",
+        "Version 2 Demo Model": "Versión 2 Modelo de demostración"
     },
     desktop: {
         file: {

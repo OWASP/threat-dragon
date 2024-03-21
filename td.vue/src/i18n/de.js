@@ -47,7 +47,11 @@ const deu = {
         }
     },
     demo: {
-        select: 'Wählen Sie ein Beispiel Bedrohungsmodell aus der folgenden Liste'
+        select: 'Wählen Sie ein Beispiel Bedrohungsmodell aus der folgenden Liste',
+        "New Threat Model": "Neues Bedrohungsmodell",
+        "Demo Threat Model": "Demo-Bedrohungsmodell",
+        "Version 2 New Model": "Version 2 Neues Modell",
+        "Version 2 Demo Model": "Version 2 Demo-Modell"
     },
     desktop: {
         file: {
@@ -73,7 +77,7 @@ const deu = {
     },
     repository: {
         select: 'Wählen Sie ein',
-        from: 'Repository aus folgender Liste',  //in line with Github wording https://docs.github.com/de/repositories
+        from: 'Repository aus folgender Liste', //in line with Github wording https://docs.github.com/de/repositories
         noneFound: 'Kein Repository gefunden. Legen Sie zum Starten eine neues Repository an.'
     },
     branch: {

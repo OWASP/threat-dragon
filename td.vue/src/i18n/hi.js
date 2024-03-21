@@ -47,7 +47,11 @@ const hin = {
         }
     },
     demo: {
-        select: 'नीचे दी गई सूची से एक डेमो थ्रेट मॉडल चुनें'
+        select: 'नीचे दी गई सूची से एक डेमो थ्रेट मॉडल चुनें',
+        'New Threat Model': 'नया थ्रेट मॉडल',
+        'Demo Threat Model': 'डेमो थ्रेट मॉडल',
+        'Version 2 New Model': 'संस्करण 2 नया मॉडल',
+        'Version 2 Demo Model': 'संस्करण 2 डेमो मॉडल'
     },
     desktop: {
         file: {

@@ -47,7 +47,11 @@ const eng = {
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'Select a demo threat model from the list below',
+        "New Threat Model": "New Threat Model",
+        "Demo Threat Model": "Demo Threat Model",
+        "Version 2 New Model": "Version 2 New Model",
+        "Version 2 Demo Model": "Version 2 Demo Model"
     },
     desktop: {
         file: {
