@@ -1,7 +1,7 @@
 <template>
-    <div
+    <div :class="{'dark-mode': currentTheme === 'dark'}"
         ref="diagram_container"
-        class="td-readonly-diagram"
+        class="td-readonly-diagram setdark"
     ></div>
 </template>
 

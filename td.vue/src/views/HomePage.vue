@@ -1,7 +1,7 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
-            <b-row class="text-center mb-2">
+        <b-jumbotron id="welcome-jumbotron" :class="themeClass">
+            <b-row class="heer text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
                 </b-col>
@@ -52,6 +52,20 @@
     margin-right: 20px;
     margin-left: 20px;
 }
+.dark .td-cupcake {
+    filter: invert(100%) brightness(80%);
+}
+
+.dark{
+    background-color: $dark-card-bg;
+    color: $dark-text;
+}
+
+.td-cupcake {&.dark{
+    color: $dark-text;
+}}
+
+
 </style>
 
 <script>
@@ -59,20 +73,18 @@ import {allProviders} from '@/service/provider/providers.js';
 import isElectron from 'is-electron';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 import configActions from '@/store/actions/config.js';
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
 
 export default {
     name: 'HomePage',
-    computed:
-        mapState({
-            config: state => {
-                return state.config.config;
-            },
-            providers: (state) => {
-                if (isElectron()) {
-                    return {desktop: allProviders.desktop};
-                }
+    computed: {
+        ...mapState({
+            config: state => state.config.config,
+            providers(state) {
                 let providers = {};
+                if (isElectron()) {
+                    return { desktop: allProviders.desktop };
+                }
                 if (state.config.config) {
                     if (state.config.config.githubEnabled) {
                         providers.github = allProviders.github;
@@ -90,6 +102,10 @@ export default {
                 return providers;
             },
         }),
+        ...mapGetters({
+            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
+        }),
+    },
     mounted() {
         if (!isElectron()) {
             this.$store.dispatch(configActions.fetch);

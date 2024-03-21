@@ -2,7 +2,7 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron :header="$t('dashboard.welcome.title')">
+                <b-jumbotron :header="$t('dashboard.welcome.title')" :class="{ 'dark-mode': currentTheme === 'dark' }" class="jump">
                     <p>
                         {{ $t('dashboard.welcome.description') }}
                     </p>
@@ -27,16 +27,22 @@
     color: $orange;
     margin-bottom: 15px;
 }
-
 .dashboard-action {
     padding-bottom: 2rem;
+}
+.jump{
+    height: 300px;
+}
+.dark .jump {
+    height: 300px;
+    background-color: $dark-card-bg;
+    color: $dark-text;
 }
 
 </style>
 
 <script>
-import { mapState } from 'vuex';
-
+import { mapState} from 'vuex';
 import TdDashboardAction from '@/components/DashboardAction.vue';
 import { getDashboardActions } from '@/service/provider/providers.js';
 
@@ -47,6 +53,6 @@ export default {
     },
     computed: mapState({
         actions: (state) => getDashboardActions(state.provider.selected)
-    })
+    }),
 };
 </script>

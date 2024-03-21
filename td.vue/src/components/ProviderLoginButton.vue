@@ -22,6 +22,7 @@
 .login-btn-icon {
   display: block;
 }
+
 </style>
 
 <script>
@@ -35,6 +36,7 @@ export default {
     props: {
         provider: Object
     },
+    
     methods: {
         async onProviderClick() {
             console.debug('login with provider: ' + this.provider.key);
@@ -48,6 +50,6 @@ export default {
             const resp = await loginApi.loginAsync(this.provider.key);
             window.location.href = resp.data;
         }
-    }
+    },
 };
 </script>
