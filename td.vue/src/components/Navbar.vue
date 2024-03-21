@@ -41,8 +41,72 @@
   </b-navbar>
 </template>
 
-<script>
+<style lang="scss" scoped>
+$icon-height: 1.2rem;
+.navbar {
+  background-color: $orange;
+  border-color: $orange-alt;
+  height: $header-height+10;
+  font-size: 15px;
+}
 
+.nav-link,
+.logged-in-as {
+  color: $white !important;
+}
+
+.logged-in-as {
+  margin-right: 10px;
+}
+
+.navbar {
+  background-color: $orange;
+  border-color: $orange-alt;
+  height: 60px;
+  font-size: 15px;
+}
+
+.nav-link, .logged-in-as {
+  color: $white !important;
+}
+
+.td-fa-nav {
+  font-size: $icon-height;
+  max-height: $icon-height;
+  margin: 0 5px 0 5px;
+}
+
+.td-brand {
+  color: $white !important;
+  .td-brand-img {
+    max-height: ($header-height - 10);
+  }
+}
+
+  .nav-link,
+  .logged-in-as,
+  .td-brand {
+    &.dark {
+      color: $dark-text !important;
+    }
+  }
+
+  .td-fa-nav {
+    &.dark {
+      color: $light-text !important;
+    }
+  }
+
+@media (max-width: 576px) {
+  .td-owasp-logo {
+    background-color: red; // Consider adjusting for dark mode
+    border-radius: 50%;
+    padding: 5px;
+  }
+}
+</style>
+
+<script>
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 import ThemeToggleButton from './ToggleTheme.vue';
@@ -66,74 +130,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss" scoped>
-$icon-height: 1.2rem;
-.navbar {
-  background-color: $orange;
-  border-color: $orange-alt;
-  height: 60px; // Adjusted for example
-  font-size: 15px;
-}
-
-.nav-link,
-.logged-in-as {
-  color: $white !important;
-}
-
-.logged-in-as {
-  margin-right: 10px;
-}
-
-.td-fa-nav {
-  font-size: $icon-height;
-  max-height: $icon-height;
-  margin: 0 5px 0 5px;
-}
-.navbar {
-  background-color: $orange;
-  border-color: $orange-alt;
-  height: 60px;
-  font-size: 15px;
-}
-
-.nav-link, .logged-in-as {
-  color: $white !important;
-}
-
-.td-fa-nav {
-  font-size: $icon-height;
-  max-height: $icon-height;
-  margin: 0 5px 0 5px;
-}
-
-.td-brand {
-  color: $white !important;
-  .td-brand-img {
-    max-height: 50px;
-  }
-}
-
-  .nav-link,
-  .logged-in-as,
-  .td-brand {
-    &.dark {
-      color: $dark-text !important;
-    }
-  }
-
-  .td-fa-nav {
-    &.dark {
-      color: $light-text !important;
-    }
-  }
-
-
-@media (max-width: 576px) {
-  .td-owasp-logo {
-    background-color: red; // Consider adjusting for dark mode
-    border-radius: 50%;
-    padding: 5px;
-  }
-}
-</style>

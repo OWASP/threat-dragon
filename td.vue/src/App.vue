@@ -12,9 +12,6 @@
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
 
-.jump{
-  height: 100vh;
-}
 
 body.dark {
   background-color: $dark-bg !important;

@@ -196,7 +196,7 @@
 </style>
 
 <script>
-import { mapState} from 'vuex';
+import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
