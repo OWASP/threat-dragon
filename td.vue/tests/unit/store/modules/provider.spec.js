@@ -114,8 +114,7 @@ describe('store/modules/provider.js', () => {
                 providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
             });
 
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the all array to the provided providers', () => {
+            it('sets the all array to the provided providers', () => {
                 expect(providerModule.state.all).toEqual(providerNames);
             });
         });

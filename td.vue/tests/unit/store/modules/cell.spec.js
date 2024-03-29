@@ -61,8 +61,7 @@ describe('store/modules/cell.js', () => {
                 cellModule.mutations[CELL_SELECTED](cellModule.state, cell);
             });
 
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the threats', () => {
+            it('sets the threats', () => {
                 expect(cellModule.state.threats).toEqual([{ one: 'two' }]);
             });
         });
@@ -87,13 +86,11 @@ describe('store/modules/cell.js', () => {
                 cellModule.mutations[CELL_DATA_UPDATED](cellModule.state, { threats: newThreats });
             });
 
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('updates the data object', () => {
+            it('updates the data object', () => {
                 expect(cellModule.state.ref.setData).toHaveBeenCalledWith({ threats: newThreats });
             });
 
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('updates the threats', () => {
+            it('updates the threats', () => {
                 expect(cellModule.state.threats).toEqual(newThreats);
             });
         });

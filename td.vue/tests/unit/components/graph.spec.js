@@ -122,7 +122,7 @@ describe('components/GraphButtons.vue', () => {
         wrapper.vm.saved();
     });
 
-    it.skip('closes the diagram if there were no changes', () => {
+    it('closes the diagram if there were no changes', () => {
         wrapper.vm.closed();
         expect(routerMock.push)
             .toHaveBeenCalledWith({
@@ -131,7 +131,7 @@ describe('components/GraphButtons.vue', () => {
             });
     });
 
-    it.skip('prompts the user before closing if data has changed', () => {
+    it('prompts the user before closing if data has changed', () => {
         wrapper.setData({ diagram: { cells: [ 1, 2 ]}});
         storeMock.state.threatmodel.modified = true;
         wrapper.vm.closed();
@@ -139,7 +139,7 @@ describe('components/GraphButtons.vue', () => {
             .toHaveBeenCalled();
     });
 
-    it.skip('does not close if the user selects no', () => {
+    it('does not close if the user selects no', () => {
         wrapper.vm.$bvModal.msgBoxConfirm.mockResolvedValue(false);
         wrapper.setData({ diagram: { cells: [ 1, 2 ]}});
         storeMock.state.threatmodel.modified = true;

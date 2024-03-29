@@ -175,7 +175,7 @@ describe('service/x6/graph/events.js', () => {
             });
         });
 
-        describe.skip('a node without data', () => {
+        describe('a node without data', () => {
             beforeEach(() => {
                 cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);

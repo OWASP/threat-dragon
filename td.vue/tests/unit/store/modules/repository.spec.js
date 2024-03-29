@@ -127,8 +127,7 @@ describe('store/modules/repository.js', () => {
                 repoModule.mutations[REPOSITORY_FETCH](repoModule.state, repos);
             });
 
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the all array to the provided repos', () => {
+            it('sets the all array to the provided repos', () => {
                 expect(repoModule.state.all).toEqual(repos);
             });
         });

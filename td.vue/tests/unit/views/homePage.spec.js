@@ -87,8 +87,7 @@ describe('HomePage.vue', () => {
         });
     });
 
-    describe.skip('desktop', () => {
-        // TODO: this needs to be reinstated
+    describe('desktop', () => {
         beforeEach(() => {
             localVue = createLocalVue();
             localVue.use(Vuex);

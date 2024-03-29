@@ -135,7 +135,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('modifies the diagram', () => {
+        describe('modifies the diagram', () => {
 	        it('sets the modified flag', () => {
                 const diagram = { foo: 'bar' };
 	            threatmodelModule.state.modified = false;
@@ -351,7 +351,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('diagramSaved', () => {
+        describe('diagramSaved', () => {
             let diagram;
             beforeEach(() => {
                 threatmodelModule.state.data.detail = {
@@ -404,7 +404,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('fetch all', () => {
+        describe('fetch all', () => {
             const models = [ 'foo', 'bar' ];
 
             beforeEach(() => {
@@ -428,7 +428,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('contributors updated', () => {
+        describe('contributors updated', () => {
             const contribs = [ 'test1', 'test2' ];
             beforeEach(() => {
                 threatmodelModule.state.data = {

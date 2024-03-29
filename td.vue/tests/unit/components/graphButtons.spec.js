@@ -36,32 +36,25 @@ describe('components/GraphButtons.vue', () => {
         .at(0);
 
     describe('save', () => {
-        beforeEach(() => {
-            btn = getButtonByIcon('save');
-            wrapper.vm.save();
-        });
-
         it('has the save translation text', () => {
+            btn = getButtonByIcon('save');
             expect(btn.attributes('text')).toEqual('forms.save');
-
         });
 
         it('emits the saved event', () => {
+            wrapper.vm.save();
             expect(wrapper.emitted().saved);
         });
     });
 
     describe('close', () => {
-        beforeEach(() => {
-            btn = getButtonByIcon('times');
-            wrapper.vm.closeDiagram();
-        });
-
         it('has the save translation text', () => {
+            btn = getButtonByIcon('times');
             expect(btn.attributes('text')).toEqual('forms.close');
         });
 
         it('emits the closed event', () => {
+            wrapper.vm.closeDiagram();
             expect(wrapper.emitted().closed);
         });
     });
