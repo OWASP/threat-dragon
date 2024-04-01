@@ -153,6 +153,7 @@
       "electron-builder": "^23.0.3"
     },
     "webpack@<5.0.0": ">=5.77.0",
+    "webpack-dev-middleware": ">=5.3.4",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
   "main": "background.js",
