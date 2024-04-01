@@ -57,6 +57,12 @@ describe('components/LocaleSelect.vue', () => {
             ).toEqual(true);
         });
 
+        it('has an option for jpn', () => {
+            expect(wrapper.findAllComponents(BDropdownItem)
+                .filter((c) => c.text() === '日本語').exists()
+            ).toEqual(true);
+        });
+
         describe('updates', () => {
             beforeEach(() => {
                 mockStore.dispatch = jest.fn();
@@ -67,7 +73,7 @@ describe('components/LocaleSelect.vue', () => {
                     .filter(c => c.text() === 'Deutsch')
                     .at(0)
                     .trigger('click');
-                
+
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'deu');
             });
 
@@ -76,8 +82,17 @@ describe('components/LocaleSelect.vue', () => {
                     .filter(c => c.text() === 'English')
                     .at(0)
                     .trigger('click');
-                
+
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'eng');
+            });
+
+            it('updates the locale to jpn', async () => {
+                await wrapper.findAllComponents(BDropdownItem)
+                    .filter(c => c.text() === '日本語')
+                    .at(0)
+                    .trigger('click');
+
+                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'jpn');
             });
         });
     });

@@ -20,6 +20,7 @@ import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
 import id from '@/i18n/id.js';
+import jpn from '@/i18n/ja.js';
 import ms from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
 // hide RUS & UKR for now: import rus from '@/i18n/ru.js';
@@ -27,10 +28,10 @@ import spa from '@/i18n/es.js';
 // hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, fin, fra, hin, id, ms, por, spa, zho };
-// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, fin, fra, hin, id, ms, por, rus, spa, ukr, zho };
-const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'ms', 'por', 'spa', 'zho' ];
-// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'ms', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const messages = { ara, deu, ell, eng, fin, fra, hin, id, jpn, ms, por, spa, zho };
+// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, fin, fra, hin, id, jpn, ms, por, rus, spa, ukr, zho };
+const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'jpn', 'ms', 'por', 'spa', 'zho' ];
+// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'jpn', 'ms', 'por', 'rus', 'spa', 'ukr', 'zho' ];
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
