@@ -9,6 +9,7 @@
     "build:desktop": "vue-cli-service electron:build",
     "clean": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/",
     "cypress:open": "cypress open",
+    "cypress:update": "npx update-browserslist-db@latest",
     "dev": "vue-cli-service serve --port 8080",
     "lint": "vue-cli-service lint",
     "pretest": "npm run lint",
@@ -93,7 +94,7 @@
     "bootstrap": "^4.6.1",
     "browserstack-cypress-cli": "^1.26.2",
     "chromedriver": "^119.0.1",
-    "cypress": "^13.2.0",
+    "cypress": "13.6.4",
     "electron": "^26.3.0",
     "electron-builder": "^24.6.4",
     "electron-builder-notarize": "^1.5.1",
@@ -134,6 +135,7 @@
     "@babel/traverse": ">=7.23.2",
     "debug@<3.1.0": ">=4.3.4",
     "electron-builder@<23.0.3": ">=23.0.3",
+    "express": ">=4.19.2",
     "follow-redirects": ">=1.15.6",
     "glob-parent@<5.1.2": ">=5.1.2",
     "ip@<1.1.9": "1.1.9",
@@ -153,6 +155,7 @@
       "electron-builder": "^23.0.3"
     },
     "webpack@<5.0.0": ">=5.77.0",
+    "webpack-dev-middleware": ">=5.3.4",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
   "main": "background.js",
