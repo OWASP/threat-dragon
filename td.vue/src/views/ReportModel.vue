@@ -156,7 +156,7 @@
     width: 100%;
     background-color: $white;
     padding-top: 15px;
-    z-index: 9999;
+    z-index: 100;
 }
 
 .right {
