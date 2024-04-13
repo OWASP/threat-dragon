@@ -38,7 +38,7 @@ jobs:
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v15.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
         with:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
@@ -227,7 +227,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.2.0
+        uses: docker/setup-buildx-action@v3.3.0
         with:
           install: true
 
