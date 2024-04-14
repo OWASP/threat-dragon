@@ -1,12 +1,22 @@
 <template>
     <td-key-value-card
+        class="setdark"
+        :class="{'dark-mode': currentTheme === 'dark'}"
         :title="`${titlePrefix ? titlePrefix + ' ' : ''}${model.summary.title}`"
         :values="overviewCardData">
     </td-key-value-card>
 </template>
 
+<style lang="scss" scoped>
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
+}
+</style>
+
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import TdKeyValueCard from '@/components/KeyValueCard.vue';
 
@@ -18,6 +28,9 @@ export default {
     computed: {
         ...mapState({
             model: (state) => state.threatmodel.data,
+        }),
+        ...mapGetters({
+            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
         }),
         overviewCardData: function () {
             const kvs = [];

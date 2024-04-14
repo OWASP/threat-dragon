@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
+        <b-jumbotron id="welcome-jumbotron" :class="themeClass">
             <b-row class="text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
@@ -52,6 +52,19 @@
     margin-right: 20px;
     margin-left: 20px;
 }
+.dark .td-cupcake {
+    filter: invert(100%) brightness(80%);
+}
+
+.dark{
+    background-color: $dark-card-bg;
+    color: $dark-text;
+}
+
+.td-cupcake {&.dark{
+    color: $dark-text;
+}}
+
 </style>
 
 <script>
@@ -59,12 +72,12 @@ import {allProviders} from '@/service/provider/providers.js';
 import isElectron from 'is-electron';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 import configActions from '@/store/actions/config.js';
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
 
 export default {
     name: 'HomePage',
-    computed:
-        mapState({
+    computed: {
+        ...mapState({
             config: state => {
                 return state.config.config;
             },
@@ -90,6 +103,10 @@ export default {
                 return providers;
             },
         }),
+        ...mapGetters({
+            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
+        }),
+    },
     mounted() {
         if (!isElectron()) {
             this.$store.dispatch(configActions.fetch);

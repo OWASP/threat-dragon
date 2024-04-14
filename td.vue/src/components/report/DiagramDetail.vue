@@ -1,13 +1,13 @@
 <template>
     <div>
         
-        <div class="page">
-            <b-row class="mt-3">
+        <div class="page" :class="{'dark-mode': currentTheme === 'dark'}">
+            <b-row class="mt-3 setdark">
                 <b-col>
                     <h2 class="td-diagram-title">{{ diagram.title }}</h2>
                 </b-col>
             </b-row>
-            <b-row class="mt-3">
+            <b-row class="mt-3 setdark">
                 <b-col>
                     <p class="td-diagram-title">{{ diagram.description }}</p>
                 </b-col>
@@ -54,6 +54,9 @@
 .diagram-drawing {
     min-height: 600px;
     display: flex !important;
+}
+.setdark{
+    color: $dark-text;
 }
 </style>
 

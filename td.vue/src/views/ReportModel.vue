@@ -1,6 +1,6 @@
 <template>
     <div class="td-report">
-        <b-row class="no-print td-report-options sticky">
+        <b-row class="no-print td-report-options sticky setdark" :class="{'dark-mode': currentTheme === 'dark'}">
             <b-col>
                 <b-form class="">
                     <b-form-row>
@@ -161,6 +161,11 @@
 
 .right {
     right: 0;
+}
+.dark .setdark{
+  background-color: $dark-bg;
+  color: $dark-text;
+  border-color: $dark-border;
 }
 </style>
 

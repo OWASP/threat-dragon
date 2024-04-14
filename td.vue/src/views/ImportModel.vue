@@ -2,7 +2,7 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <b-jumbotron class="setdark text-center" :class="{ 'dark-mode': currentTheme === 'dark' }">
                     <h4>
                         {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
@@ -18,6 +18,8 @@
                                 id="json-input-group"
                                 label-for="json-input">
                                 <b-form-textarea
+                                    class="setdark"
+                                    :class="{ 'dark-mode': currentTheme === 'dark' }"
                                     id="json-input"
                                     v-model="tmJson"
                                     :placeholder="prompt"
@@ -53,8 +55,16 @@
     </div>
 </template>
 
+<style lang="scss" scoped>
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
+}
+</style>
+
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
@@ -85,7 +95,10 @@ export default {
         ...mapState({
             providerType: (state) => getProviderType(state.provider.selected)
         }),
-        prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
+        prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; },
+        ...mapGetters({
+            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
+        }),
     },
     data() {
         return {

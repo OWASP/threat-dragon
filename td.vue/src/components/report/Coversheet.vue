@@ -1,5 +1,5 @@
 <template>
-    <div class="no-print">
+    <div class="no-print setdark" :class="{'dark-mode': currentTheme === 'dark'}">
         <b-row class="mb-2 td-branding">
             <b-col>
                 <em>
@@ -14,6 +14,14 @@
         </b-row>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.dark .setdark {
+    background-color: #4D4D4D;
+    color: #FFFFFF;
+    border-color: #dd3820;
+}
+</style>
 
 <script>
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';

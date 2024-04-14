@@ -1,14 +1,14 @@
 <template>
-    <div class="td-executive-summary no-print">
+    <div class="td-executive-summary no-print" :class="{'dark-mode': currentTheme === 'dark'}">
         <b-row>
             <b-col>
-                <b-card :header="$t('report.executiveSummary')">
+                <b-card class="setdark" :header="$t('report.executiveSummary')">
                     <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
                     <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
 
                     <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
                     <b-table
-                        class="td-executive-summary-data"
+                        class="td-executive-summary-data setdark"
                         :fields="null"
                         :items="tableRows"
                         :tbody-tr-attr="getDataTestId"
@@ -23,6 +23,11 @@
 <style lang="scss" scoped>
 .td-summary {
     white-space: pre-wrap;
+}
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
 }
 </style>
 

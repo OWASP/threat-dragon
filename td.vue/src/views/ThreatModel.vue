@@ -10,6 +10,8 @@
         <b-row class="mb-4">
             <b-col>
                 <b-card
+                    class="setdark"
+                    :class="{'dark-mode': currentTheme === 'dark'}"
                     :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
@@ -91,6 +93,11 @@
 .td-diagram-thumb {
     max-width: 200px;
     max-height: 160px;
+}
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
 }
 </style>
 

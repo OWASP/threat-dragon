@@ -1,5 +1,5 @@
 <template>
-    <div class="report-box print-only">
+    <div class="report-box print-only setdark" :class="{'dark-mode': currentTheme === 'dark'}">
         <div class="entity-title">
             {{ `${entity.data.name} (${dataType})` }}
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
@@ -54,6 +54,10 @@
 .entity-description {
     padding: 15px;
     white-space: pre-wrap;
+}
+.dark .setdark{
+  color: $dark-text;
+  border-color: $dark-border;
 }
 </style>
 

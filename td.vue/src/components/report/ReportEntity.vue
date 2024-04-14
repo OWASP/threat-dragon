@@ -1,8 +1,8 @@
 <template>
-    <div class="td-threat-data no-print">
+    <div class="td-threat-data no-print" :class="{'dark-mode': currentTheme === 'dark'}">
         <b-row>
             <b-col>
-                <h3 class="entity-title">
+                <h3 class="entity-title setdark">
                     {{ `${entity.data.name} (${dataType})` }}
                     <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
                 </h3>
@@ -10,7 +10,7 @@
         </b-row>
         <b-row>
             <b-col>
-                <p class="entity-description">{{ entity.data.description }}</p>
+                <p class="entity-description setdark">{{ entity.data.description }}</p>
             </b-col>
         </b-row>
         <b-row>
@@ -30,6 +30,14 @@
 .td-threat-data {
     width: 99%;
     white-space: pre-wrap;
+}
+.dark .td-threat-data ::v-deep .b-table {
+    color: $dark-text !important;
+    background-color: $dark-card-bg;/* Apply pink color in dark mode only */
+}
+.dark .setdark{
+  color: $dark-text;
+  border-color: $dark-border;
 }
 </style>
 

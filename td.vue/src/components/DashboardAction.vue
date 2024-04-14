@@ -1,7 +1,7 @@
 <template>    
     <b-col lg>
     <router-link :to="to" class="action-pane-link">
-        <b-jumbotron class="text-center action-pane">
+        <b-jumbotron class="text-center action-pane" :class="{ 'dark-mode': currentTheme === 'dark' }">
                 <font-awesome-icon
                 :icon="[iconPreface, icon]"
                 size="4x"
@@ -30,9 +30,14 @@ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 .action-pane-link:hover {
     text-decoration: none;
 }
+.dark-mode {
+    background-color: $dark-card-bg; // Dark background for dark mode
+    color: $dark-text; // Light text for dark mode
+}
 </style>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     name: 'TdDashboardAction',
     props: {
@@ -53,6 +58,11 @@ export default {
             type: String,
             required: true
         }
+    },
+    computed: {
+        ...mapGetters({
+            currentTheme: 'theme/currentTheme' // Get the current theme from the store
+        })
     }
 };
 </script>
