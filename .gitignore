@@ -26,7 +26,7 @@
 !cupcake/png/*.gif
 !example.env
 !package.json
-!package-lock.json
+# !package-lock.json
 
 # sample threat models
 !ThreatDragonModels
@@ -53,7 +53,7 @@
 !td.server/.babelrc
 !td.server/README.md
 !td.server/package.json
-!td.server/package-lock.json
+# !td.server/package-lock.json
 
 # Vue front end
 !td.vue
@@ -131,7 +131,7 @@
 !td.vue/tests/unit/views/
 !td.vue/tests/unit/views/demo/
 !td.vue/package.json
-!td.vue/package-lock.json
+# !td.vue/package-lock.json
 !td.vue/.browserslistrc
 !td.vue/.editorconfig
 !td.vue/README.md
@@ -142,3 +142,5 @@
 !utils
 !utils/**/*
 
+# Ignore all package-lock.json files
+package-lock.json

@@ -11,6 +11,7 @@ import provider from './modules/provider.js';
 import repo from './modules/repository.js';
 import threatmodel from './modules/threatmodel.js';
 import vuexPersist from '../plugins/vuex-persist.js';
+import theme from './modules/theme.js';
 
 let store = null;
 const buildVersion = require('../../package.json').version;
@@ -33,7 +34,8 @@ const get = () => {
                 locale,
                 provider,
                 repo,
-                threatmodel
+                threatmodel,
+                theme
             },
             plugins: [vuexPersist.session.plugin]
         });

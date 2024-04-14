@@ -11,6 +11,9 @@
         <b-nav-item>
             <td-locale-select />
         </b-nav-item>
+        <b-nav-item>
+          <theme-toggle-button />
+        </b-nav-item>
       </b-navbar-nav>
       
       <b-navbar-nav class="ml-auto">
@@ -117,16 +120,18 @@ import { mapGetters } from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
+import ThemeToggleButton from './ToggleTheme.vue';
 
 export default {
     name: 'TdNavbar',
     components: {
-        TdLocaleSelect
+        TdLocaleSelect,
+        ThemeToggleButton
     },
     computed: {
         ...mapGetters([
             'username'
-        ])
+        ]),
     },
     methods: {
         onLogOut(evt) {
