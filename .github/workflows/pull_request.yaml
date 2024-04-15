@@ -346,6 +346,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:3000'
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
+          allow_issue_writing: false
+          fail_action: true
           cmd_options: '-a'
 
   scan_image_with_trivy:
