@@ -152,11 +152,11 @@
 
 .sticky {
     position: sticky;
-    top: 45px;
-    width: 100%;
+    top: 55px;
+    margin-top: -5px;
     background-color: $white;
     padding-top: 15px;
-    z-index: 9999;
+    z-index: 100;
 }
 
 .right {
