@@ -91,7 +91,6 @@ $icon-height: 1.2rem;
   }
 }
 
-/* Add this media query */
 @media (max-width: 576px) { /* This is the typical breakpoint for phones */
   .nav-link {
   color: red !important;
