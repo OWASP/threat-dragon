@@ -94,7 +94,7 @@
     "bootstrap": "^4.6.1",
     "browserstack-cypress-cli": "^1.26.2",
     "chromedriver": "^119.0.1",
-    "cypress": "13.6.4",
+    "cypress": "^13.7.3",
     "electron": "^26.3.0",
     "electron-builder": "^24.6.4",
     "electron-builder-notarize": "^1.5.1",
