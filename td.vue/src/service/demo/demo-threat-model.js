@@ -89,7 +89,7 @@ export default {
                                 {
                                     'status': 'Open',
                                     'severity': 'Medium',
-                                    'description': 'An attacker could obtain the DB credentials ans use them to make unauthorised queries.',
+                                    'description': 'An attacker could obtain the DB credentials and use them to make unauthorised queries.',
                                     'title': 'Credential theft',
                                     'type': 'Information disclosure',
                                     'mitigation': 'Use a firewall to restrict access to the DB to only the Background Worker IP address.'
@@ -134,7 +134,7 @@ export default {
                                     'severity': 'High',
                                     'title': 'Credentials should be encrypted',
                                     'type': 'Information disclosure',
-                                    'description': 'The Web Application Config stores credentials used  by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.',
+                                    'description': 'The Web Application Config stores credentials used by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.',
                                     'mitigation': 'The Message Queue credentials should be encrypted.'
                                 }
                             ],
