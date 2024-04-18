@@ -138,7 +138,7 @@ jobs:
 
   desktop_e2e_tests:
     name: Desktop e2e tests
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
@@ -172,10 +172,15 @@ jobs:
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
 
-      # works for macos-latest running locally but pipeline times out
-      # so until this is fixed, use only windows-latest
       - name: End to end tests
         run: npm run test:e2e:desktop
+
+      - name: Print logs on error
+        run: |
+          echo 'Print desktop wdio logs'
+          pwd
+          cat ./wdio-logs/*.log
+        if: ${{ failure() }}
 
   build_docker_image:
     name: Build docker image
