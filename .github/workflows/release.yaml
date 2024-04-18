@@ -145,7 +145,9 @@ jobs:
         run: npm run build:desktop -- --publish=never
 
       - name: End to end tests
-        run: npm run test:e2e:desktop
+        run: |
+          ln -s dist-desktop/linux-unpacked/threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
+          npm run test:e2e:desktop
 
       - name: Print logs on error
         run: |
