@@ -11,6 +11,7 @@ module.exports = defineConfig({
     e2e: {
         excludeSpecPattern: [ 'tests/e2e/specs/smokes/*.cy.js', 'tests/e2e/specs/docs.cy.js' ],
         supportFile: 'tests/e2e/support/e2e.js',
-        specPattern: [ 'tests/e2e/specs/**/*.cy.js' ]
+        specPattern: [ 'tests/e2e/specs/**/*.cy.js' ],
+        experimentalRunAllSpecs: true
     }
 });

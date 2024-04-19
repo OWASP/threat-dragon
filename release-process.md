@@ -36,6 +36,8 @@ docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.2.0
 docker tag threatdragon/owasp-threat-dragon:v2.2.0 owasp/threat-dragon:v2.2.0
 docker push owasp/threat-dragon:v2.2.0
 docker pull owasp/threat-dragon:v2.2.0
+docker tag owasp/threat-dragon:v2.2.0 owasp/threat-dragon:stable
+docker push owasp/threat-dragon:stable
 ```
 
 ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`

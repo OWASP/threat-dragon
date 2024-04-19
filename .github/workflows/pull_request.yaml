@@ -35,7 +35,7 @@ jobs:
 
       # do not use  **/*.md as this will include the third party packages
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v15.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
         with:
           config: '.markdownlint.yaml'
           globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
@@ -138,7 +138,7 @@ jobs:
 
   desktop_e2e_tests:
     name: Desktop e2e tests
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
@@ -147,8 +147,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      # ubuntu does not find this chrome driver
-      # so until this is fixed, use only windows-latest
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1.5.0
 
@@ -172,10 +170,19 @@ jobs:
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
 
-      # works for macos-latest running locally but pipeline times out
-      # so until this is fixed, use only windows-latest
       - name: End to end tests
-        run: npm run test:e2e:desktop
+        run: |
+          ln -s dist-desktop/linux-unpacked/threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
+          npm run test:e2e:desktop
+
+      - name: Print logs on error
+        run: |
+          echo 'Print desktop wdio logs'
+          pwd
+          cat ./wdio-logs/*.log
+          ls -hal ./dist-desktop/
+          ls -hal ./dist-desktop/linux-unpacked/
+        if: ${{ failure() }}
 
   build_docker_image:
     name: Build docker image
@@ -188,7 +195,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.2.0
+        uses: docker/setup-buildx-action@v3.3.0
         with:
           install: true
 
@@ -346,6 +353,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:3000'
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
+          allow_issue_writing: false
+          fail_action: true
           cmd_options: '-a'
 
   scan_image_with_trivy:

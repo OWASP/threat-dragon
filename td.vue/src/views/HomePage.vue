@@ -86,6 +86,9 @@ export default {
                     if (state.config.config.localEnabled) {
                         providers.local = allProviders.local;
                     }
+                } else {
+                    // default if no backend server running
+                    providers.local = allProviders.local;
                 }
                 return providers;
             },

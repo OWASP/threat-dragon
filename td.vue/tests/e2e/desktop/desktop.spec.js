@@ -1,5 +1,6 @@
-/* eslint-disable no-undef */
 // TODO: very basic tests, and there should be many more tests than this
+
+import { browser } from '@wdio/globals'
 
 describe('Desktop application', () => {
 
@@ -9,7 +10,7 @@ describe('Desktop application', () => {
             expect(title).toEqual('OWASP Threat Dragon');
         });
 
-        it.skip('should set the window size', async () => {
+        it('should set the window size', async () => {
             let rect = await browser.getWindowRect();
             expect(rect.width).toEqual(1400);
             expect(rect.height).toEqual(900);
