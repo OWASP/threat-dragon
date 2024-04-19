@@ -14,12 +14,12 @@ import { TrustBoundaryCurveStencil } from './trust-boundary-curve-stencil.js';
 Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
 
 Graph.registerNode('actor', ActorShape);
-Graph.registerNode('flow', Flow);
+Graph.registerEdge('flow', Flow);
 Graph.registerNode('process', ProcessShape);
 Graph.registerNode('store', StoreShape);
 Graph.registerNode('td-text-block', TextBlock);
 Graph.registerNode('trust-boundary-box', TrustBoundaryBox);
-Graph.registerNode('trust-boundary-curve', TrustBoundaryCurve);
+Graph.registerEdge('trust-boundary-curve', TrustBoundaryCurve);
 
 export default {
     ActorShape,
