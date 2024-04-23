@@ -2,7 +2,7 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <b-jumbotron class="text-center setdark" :class="{ 'dark-mode': currentTheme === 'dark' }">
                     <h4>
                         {{ $t('demo.select') }}
                     </h4>
@@ -18,6 +18,8 @@
                         href="javascript:void(0)"
                         @click="onModelClick(model)"
                         :data-model-name="model.name"
+                        class="setdark" 
+                        :class="{ 'dark-mode': currentTheme === 'dark' }"
                     >{{ model.name }}</b-list-group-item>
                 </b-list-group>
             </b-col>
@@ -25,10 +27,19 @@
     </b-container>
 </template>
 
+<style lang="scss" scoped>
+.dark .setdark{
+  background-color: $dark-card-bg;
+  color: $dark-text;
+  border-color: $dark-border;
+}
+</style>
+
 <script>
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import tmActions from '@/store/actions/threatmodel.js';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'SelectDemoModel',
@@ -51,6 +62,11 @@ export default {
             const params = Object.assign({}, this.$route.params, { threatmodel: model.name });
             this.$router.push({ name: 'localThreatModel' , params });
         }
+    },
+    computed: {
+        ...mapGetters({
+            themeClass: 'theme/currentTheme' // Accessing the 'currentTheme' getter from the 'theme' module
+        })
     }
 };
 
