@@ -185,8 +185,6 @@ jobs:
       - name: Setup Chrome
         id: setup-chrome
         uses: browser-actions/setup-chrome@v1.6.0
-        run: |
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4.0.1
@@ -210,6 +208,7 @@ jobs:
 
       - name: End to end tests
         run: |
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
           ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
           npm run test:e2e:desktop
 
