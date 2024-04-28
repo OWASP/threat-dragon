@@ -122,7 +122,8 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.5.0
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1.6.0
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4.0.1
@@ -146,7 +147,8 @@ jobs:
 
       - name: End to end tests
         run: |
-          ln -s dist-desktop/linux-unpacked/threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
+          ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
           npm run test:e2e:desktop
 
       - name: Print logs on error
