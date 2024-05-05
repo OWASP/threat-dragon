@@ -24,10 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -56,10 +56,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -88,10 +88,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -125,10 +125,10 @@ jobs:
         id: setup-chrome
         uses: browser-actions/setup-chrome@v1.6.0
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -169,10 +169,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -211,10 +211,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -265,10 +265,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -305,10 +305,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -393,10 +393,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.12.2
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.12.2'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
