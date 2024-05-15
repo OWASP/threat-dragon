@@ -1,6 +1,8 @@
 import {Bitbucket} from 'bitbucket';
 import env from '../env/Env.js';
 
+const repoRootDirectory = () => env.get().config.BITBUCKET_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
+
 export class BitbucketClientWrapper {
     static getClient(clientOptions){
         return new Bitbucket(clientOptions);
@@ -74,14 +76,14 @@ export const modelsAsync = async (branchInfo, accessToken) => {
     });
     const commitId = data.target.hash;
     const tree = await client.source.read({
-        path: 'ThreatDragonModels',
+        path: repoRootDirectory,
         workspace: workspace,
         repo_slug: branchInfo.repo,
         commit: commitId
     });
 
     tree.data.values.map((x) => {
-        x.name = x.path.replace('ThreatDragonModels/', '');
+        x.name = x.path.replace(`${repoRootDirectory()}/`, '');
         return x;
     });
     return [tree.data.values];
@@ -153,7 +155,7 @@ export const deleteAsync = async (modelInfo, accessToken) => {
 };
 
 const getRepoFullName = (info) => `${info.repo}`;
-const getModelPath = (modelInfo) => `ThreatDragonModels/${modelInfo.model}/${modelInfo.model}.json`;
+const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
 
 export default {
