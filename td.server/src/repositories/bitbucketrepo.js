@@ -76,7 +76,7 @@ export const modelsAsync = async (branchInfo, accessToken) => {
     });
     const commitId = data.target.hash;
     const tree = await client.source.read({
-        path: repoRootDirectory,
+        path: repoRootDirectory(),
         workspace: workspace,
         repo_slug: branchInfo.repo,
         commit: commitId
