@@ -2,6 +2,8 @@ import env from '../env/Env.js';
 import {Gitlab} from "@gitbeaker/rest";
 
 
+const repoRootDirectory = () => env.get().config.GITLAB_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
+
 export class GitlabClientWrapper {
     static getClient(clientOptions) {
         return new Gitlab(clientOptions);
@@ -62,7 +64,7 @@ export const branchesAsync = async (repoInfo, accessToken) => {
 };
 
 export const modelsAsync = async (branchInfo, accessToken) => {
-    const models = await getClient(accessToken).Repositories.allRepositoryTrees(getRepoFullName(branchInfo), {path: 'ThreatDragonModels', ref:branchInfo.branch });
+    const models = await getClient(accessToken).Repositories.allRepositoryTrees(getRepoFullName(branchInfo), {path: repoRootDirectory(), ref:branchInfo.branch });
     return [models];
 };
 
@@ -101,7 +103,7 @@ export const deleteAsync = (modelInfo, accessToken) => getClient(accessToken).Re
     );
 
 const getRepoFullName = (info) => `${info.organisation}/${info.repo}`;
-const getModelPath = (modelInfo) => `ThreatDragonModels/${modelInfo.model}/${modelInfo.model}.json`;
+const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
 
 export default {

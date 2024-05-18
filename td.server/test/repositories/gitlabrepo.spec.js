@@ -9,6 +9,7 @@ import {getClient, userAsync} from '../../src/repositories/gitlabrepo.js';
 
 describe('repositories/gitlabrepo.js', () => {
     const workspace = 'threat-workspace';
+    const repoPath = 'ThreatDragonModels'
 
     const info = {
         body: {
@@ -20,15 +21,15 @@ describe('repositories/gitlabrepo.js', () => {
         page: 'testPage',
         listBranches: { page: 'repoInfo.page', showExpanded: true }
         ,
-        branchInfo: { path: 'ThreatDragonModels', ref: 'main' } ,
+        branchInfo: { path: repoPath, ref: 'main' } ,
         readInfo: {
-            path: 'ThreatDragonModels',
+            path: repoPath,
             workspace: workspace,
             repo_slug: 'repoInfo.repo',
             commit: '123'
         },
         modelReadInfo: {
-            path: 'ThreatDragonModels/my model/my model.json',
+            path: `${repoPath}/my model/my model.json`,
             workspace: workspace,
             repo_slug: 'repoInfo.repo',
             commit: '123'
@@ -125,7 +126,7 @@ describe('repositories/gitlabrepo.js', () => {
         });
 
         it('creates the gitlab client', async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.getClient(accessToken);
             expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
         });
@@ -204,7 +205,7 @@ describe('repositories/gitlabrepo.js', () => {
         let branchInfo = {branch: "main", repo: "repo"};
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.modelsAsync(branchInfo, accessToken);
         });
 
@@ -221,7 +222,7 @@ describe('repositories/gitlabrepo.js', () => {
         let modelInfo = {page: info.listBranches.page, repo: "repo", organisation: "org", model: "model"}
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.modelAsync(modelInfo, accessToken);
         });
 
@@ -245,7 +246,7 @@ describe('repositories/gitlabrepo.js', () => {
         };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.createAsync(createAysncInfo, accessToken);
         });
 
@@ -278,7 +279,7 @@ describe('repositories/gitlabrepo.js', () => {
         };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.updateAsync(updateAysncInfo, accessToken);
         });
 

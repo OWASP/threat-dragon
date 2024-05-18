@@ -19,7 +19,8 @@ class GitlabEnv extends Env {
             { key: 'ENTERPRISE_PORT', required: false },
             { key: 'USE_SEARCH', required: false },
             { key: 'SEARCH_QUERY', required: false },
-            { key: 'REDIRECT_URI', required: false }
+            { key: 'REDIRECT_URI', required: false },
+            { key: 'REPO_ROOT_DIRECTORY', required: false }
         ];
     }
 }

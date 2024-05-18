@@ -1,6 +1,8 @@
 import env from '../env/Env.js';
 import github from 'octonode';
 
+const repoRootDirectory = () => env.get().config.GITHUB_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
+
 const getClient = (accessToken) => {
     const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
     if (enterpriseHostname) {
@@ -35,7 +37,7 @@ const branchesAsync = (repoInfo, accessToken) => {
 
 const modelsAsync = (branchInfo, accessToken) => getClient(accessToken).
     repo(getRepoFullName(branchInfo)).
-    contentsAsync('ThreatDragonModels', branchInfo.branch);
+    contentsAsync(repoRootDirectory(), branchInfo.branch);
 
 const modelAsync = (modelInfo, accessToken) => getClient(accessToken).
     repo(getRepoFullName(modelInfo)).
@@ -80,7 +82,7 @@ const deleteAsync = async (modelInfo, accessToken) => {
 };
 
 const getRepoFullName = (info) => `${info.organisation}/${info.repo}`;
-const getModelPath = (modelInfo) => `ThreatDragonModels/${modelInfo.model}/${modelInfo.model}.json`;
+const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
 
 export default {

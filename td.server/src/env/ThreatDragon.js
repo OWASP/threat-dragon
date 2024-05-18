@@ -16,7 +16,8 @@ class ThreatDragonEnv extends Env {
             { key: 'PORT', required: false, defaultValue: 3000 },
             { key: 'LOG_MAX_FILE_SIZE', required: false, defaultValue: 24 },
             { key: 'LOG_LEVEL', required: false, defaultValue: 'warn' },
-            { key: 'SERVER_API_PROTOCOL', required: false, defaultValue: 'https' }
+            { key: 'SERVER_API_PROTOCOL', required: false, defaultValue: 'https' },
+            { key: 'REPO_ROOT_DIRECTORY', required: false, defaultValue: 'ThreatDragonModels' }
         ];
     }
 }
