@@ -78,6 +78,15 @@ jobs:
       - name: Unit test
         run: npm run test:unit
 
+      - name: Create server SBOM
+        run: npm run make-sbom
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-server
+          path: './td.server/sbom.*'
+
   desktop_unit_tests:
     name: Desktop unit tests
     runs-on: ubuntu-22.04
@@ -106,7 +115,7 @@ jobs:
 
       - name: lint
         run: npm run lint
-  
+
       - name: Unit test
         run: npm run test:desktop
 
@@ -158,6 +167,12 @@ jobs:
           cat ./wdio-logs/*.log
         if: ${{ failure() }}
 
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-e2e-tests-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
@@ -199,6 +214,13 @@ jobs:
       - name: Print logs on error
         if: ${{ failure() }}
         run: find . -name "*.log" -exec cat '{}' \;
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-windows-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          if-no-files-found: error
 
   desktop_macos:
     name: MacOS installer
@@ -254,6 +276,13 @@ jobs:
         if: ${{ failure() }}
         run: find . -name "*.log" -exec cat '{}' \; -print
 
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-macos-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          if-no-files-found: error
+
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-22.04
@@ -293,6 +322,13 @@ jobs:
       - name: Print logs on error
         if: ${{ failure() }}
         run: find . -name "*.log" -exec cat '{}' \; -print
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-linux-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          if-no-files-found: error
 
   desktop_linux_snap:
     name: Linux snap
@@ -341,6 +377,13 @@ jobs:
         if: ${{ failure() }}
         run: find . -name "*.log" -exec cat '{}' \; -print
 
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-linux-snap-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          if-no-files-found: error
+
   dockerhub_release:
     name: Publish to dockerhub
     runs-on: ubuntu-22.04
@@ -371,7 +414,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+
       - name: Build and push to Docker Hub
         id: docker_build
         uses: docker/build-push-action@v5.3.0
@@ -385,56 +428,73 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
 
+      - name: fetch app SBOM
+        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
+        env:
+          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-container-image-app
+          path: './boms/*'
+          if-no-files-found: error
+
+  sbom_combiner:
+    name: SBOM combiner
+    runs-on: ubuntu-22.04
+    needs:
+      - server_unit_tests
+      - desktop_macos
+      - desktop_linux
+      - desktop_linux_snap
+      - desktop_windows
+      - dockerhub_release
+    steps:
+      - name: Fetch prepared SBOM artifacts
+        uses: actions/download-artifact@v4.1.7
+        with:
+          pattern: 'sboms-*'
+          merge-multiple: false
+          path: 'raw/'
+      - name: Fetch SBOMs
+        run: |
+          set -eux
+          mkdir -p sboms/threat-dragon-container-image/app/
+          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
+          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
+          cp raw/sboms-desktop-windows-site/bom.json    sboms/threat-dragon-desktop-windows-site-bom.json
+          cp raw/sboms-desktop-windows-site/bom.xml     sboms/threat-dragon-desktop-windows-site-bom.xml
+          cp raw/sboms-desktop-macos-site/bom.json      sboms/threat-dragon-desktop-macos-site-bom.json
+          cp raw/sboms-desktop-macos-site/bom.xml       sboms/threat-dragon-desktop-macos-site-bom.xml
+          cp raw/sboms-desktop-linux-site/bom.json      sboms/threat-dragon-desktop-linux-site-bom.json
+          cp raw/sboms-desktop-linux-site/bom.xml       sboms/threat-dragon-desktop-linux-site-bom.xml
+          cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
+          cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
+          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms
+          path: 'sboms/'
+
   webapp_release:
     name: Publish web application
     runs-on: ubuntu-22.04
-    needs: [desktop_macos, desktop_linux, desktop_windows]
+    needs:
+      - desktop_macos
+      - desktop_linux
+      - desktop_windows
+      - sbom_combiner
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Fetch prepared SBOM artifacts
+        uses: actions/download-artifact@v4.1.7
         with:
-          node-version: '18'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Prepare SBOM generation
-        run: mkdir ./sboms
-
-      - name: Create XML site SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.xml'
-
-      - name: Create JSON site SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.json'
-
-      - name: Create XML server SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.xml'
-
-      - name: Create JSON server SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.json'
+          name: 'sboms'
+          path: 'sboms/'
 
       - name: Prepare release notes
         run: |

@@ -72,6 +72,15 @@ jobs:
       - name: Unit test
         run: npm run test:unit
 
+      - name: Create server SBOM
+        run: npm run make-sbom
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-server
+          path: './td.server/sbom.*'
+
   site_unit_tests:
     name: Site unit tests
     runs-on: ubuntu-22.04
@@ -132,7 +141,7 @@ jobs:
 
       - name: lint
         run: npm run lint
-  
+
       - name: Unit test
         run: npm run test:desktop
 
@@ -186,6 +195,13 @@ jobs:
           ls -hal ./dist-desktop/linux-unpacked/
         if: ${{ failure() }}
 
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-desktop-e2e-test-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          if-no-files-found: error
+
   build_docker_image:
     name: Build docker image
     runs-on: ubuntu-22.04
@@ -214,7 +230,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v5.3.0
@@ -227,6 +243,18 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64
+
+      - name: fetch app SBOM
+        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
+        env:
+          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: sboms-container-image-app
+          path: './boms/*'
+          if-no-files-found: error
 
   e2e_smokes:
     name: Site e2e smokes
@@ -378,59 +406,31 @@ jobs:
           format: 'table'
           exit-code: 1
 
-  sbom_web:
-    name: SBOM web application
+  sbom_combiner:
+    name: SBOM combiner
     runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    needs:
+      - server_unit_tests
+      - desktop_e2e_tests
+      - build_docker_image
     steps:
-      - name: Check out
-        uses: actions/checkout@v4.1.1
-
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Fetch prepared SBOM artifacts
+        uses: actions/download-artifact@v4.1.7
         with:
-          node-version: '18'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Prepare SBOM generation
-        run: mkdir sboms
-
-      - name: Create XML site SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.xml'
-
-      - name: Create JSON site SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.vue/'
-          output: './sboms/threat-dragon-site-bom.json'
-
-      - name: Create XML server SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.xml'
-
-      - name: Create JSON server SBOM
-        uses: CycloneDX/gh-node-module-generatebom@v1.0.3
-        with:
-          path: './td.server/'
-          output: './sboms/threat-dragon-server-bom.json'
-
-      - name: Save SBOMs artifact
+          pattern: 'sboms-*'
+          merge-multiple: false
+          path: 'raw/'
+      - name: Fetch SBOMs
+        run: |
+          set -eux
+          mkdir -p sboms/threat-dragon-container-image/app/
+          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
+          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
+          cp raw/sboms-desktop-e2e-test-site/bom.json   sboms/threat-dragon-desktop-e2e-test-site-bom.json
+          cp raw/sboms-desktop-e2e-test-site/bom.xml   sboms/threat-dragon-desktop-e2e-test-site-bom.xml
+          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
+      - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0
         with:
-          name: threat-dragon-sboms
-          path: sboms
+          name: sboms
+          path: 'sboms/'
