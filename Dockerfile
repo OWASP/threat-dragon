@@ -29,6 +29,11 @@ RUN         npm clean-install --ignore-scripts
 RUN         cd td.server && npm clean-install
 RUN         cd td.vue && npm clean-install
 RUN         npm run build
+RUN         cd td.server && npm run make-sbom
+RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && \
+            cp td.server/sbom.xml         boms/threat-dragon-server-bom.xml  && \
+            cp td.vue/dist/.sbom/bom.json boms/threat-dragon-site-bom.json   && \
+            cp td.vue/dist/.sbom/bom.xml  boms/threat-dragon-site-bom.xml
 
 # Builds the docs
 FROM        imoshtokill/jekyll-bundler as build-docs
@@ -41,9 +46,10 @@ RUN         mkdir downloads
 RUN         bundle exec jekyll build -b docs/
 
 
-# Build the final, production image. 
+# Build the final, production image.
 FROM        base-node
 COPY        --from=build-docs /td.docs/_site /app/docs
+COPY        --from=build /app/boms /app/boms
 
 COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
 RUN         cd td.server && npm clean-install --omit dev --ignore-scripts

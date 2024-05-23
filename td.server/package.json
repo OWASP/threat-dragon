@@ -5,6 +5,9 @@
   "scripts": {
     "audit": "npm audit",
     "build": "npm-run-all clean:dist transpile",
+    "make-sbom": "npm-run-all -lp --aggregate-output make-sbom:\\*",
+    "make-sbom:xml": " cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML  --output-file=sbom.xml",
+    "make-sbom:json": "cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=JSON --output-file=sbom.json",
     "clean": "rimraf --glob *.log .nyc_output/ coverage/ dist/ node_modules/",
     "clean:dist": "rimraf dist",
     "dev": "nodemon dev.js --exec babel-node",
@@ -56,6 +59,7 @@
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/register": "^7.21.0",
+    "@cyclonedx/cyclonedx-npm": "^1.18.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.46.0",
