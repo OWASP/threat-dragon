@@ -11,17 +11,15 @@ export class GitlabClientWrapper {
 }
 
 export const getClient = (accessToken) => {
-
-
-    const enterpriseHostname = env.get().config.GITLAB_ENTERPRISE_HOSTNAME;
-    if (enterpriseHostname) {
-        throw new Error(`Gitlab Enterprise is not supported yet`);
-    }
-    const clientOptions = {
+    let clientOptions = {
         auth: {
             oauthToken: accessToken,
         },
     };
+    if (env.get().config.GITLAB_HOST) {
+        clientOptions.auth['host']=env.get().config.GITLAB_HOST
+    }
+
     return GitlabClientWrapper.getClient(clientOptions.auth);
 };
 

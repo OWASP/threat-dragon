@@ -20,14 +20,7 @@ const isConfigured = () => Boolean(env.get().config.GITLAB_CLIENT_ID);
  * @returns {String}
  */
 const getGitlabUrl = () => {
-    const enterpriseHostname = env.get().config.GITLAB_ENTERPRISE_HOSTNAME;
-    if(enterpriseHostname) {
-        const port = env.get().config.GITLAB_ENTERPRISE_PORT || '';
-        const protocol = env.get().config.GITLAB_ENTERPRISE_PROTOCOL || 'https';
-        const enterpriseUrl = `${protocol}://${enterpriseHostname}${port ? ':' + port : ''}`;
-        return enterpriseUrl;
-    }
-    return 'https://gitlab.com';
+    return env.get().config.GITLAB_HOST || 'https://gitlab.com';
 };
 
 /**
