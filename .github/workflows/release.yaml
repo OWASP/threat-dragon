@@ -427,6 +427,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64,linux/arm64
+          load: true
 
       - name: fetch app SBOM
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
