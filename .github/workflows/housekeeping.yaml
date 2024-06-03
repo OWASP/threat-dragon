@@ -12,7 +12,7 @@ env:
 jobs:
   chores:
     name: Tidy workflows
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       actions: write
 
@@ -32,7 +32,7 @@ jobs:
 
   stale:
     name: Tidy pull requests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       pull-requests: write
       issues: write
@@ -53,7 +53,7 @@ jobs:
 
   trivy:
     name: Scan with trivy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       security-events: write
@@ -79,7 +79,7 @@ jobs:
 
   codeql:
     name: Analyze with codeql
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       security-events: write
 
@@ -109,7 +109,7 @@ jobs:
 
   link_checker:
     name: Link checker
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout markdown

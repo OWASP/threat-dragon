@@ -16,7 +16,7 @@ env:
 jobs:
   site_unit_tests:
     name: Site unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -24,10 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -48,7 +48,7 @@ jobs:
 
   server_unit_tests:
     name: Server unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.server
@@ -56,10 +56,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -89,7 +89,7 @@ jobs:
 
   desktop_unit_tests:
     name: Desktop unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -97,10 +97,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -121,7 +121,7 @@ jobs:
 
   desktop_e2e_tests:
     name: Desktop e2e tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
@@ -134,10 +134,10 @@ jobs:
         id: setup-chrome
         uses: browser-actions/setup-chrome@v1.6.0
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -184,10 +184,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -233,10 +233,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -285,7 +285,7 @@ jobs:
 
   desktop_linux:
     name: Linux installers
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [desktop_e2e_tests]
     defaults:
       run:
@@ -294,10 +294,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -332,7 +332,7 @@ jobs:
 
   desktop_linux_snap:
     name: Linux snap
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [desktop_e2e_tests]
     defaults:
       run:
@@ -341,10 +341,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use node LTS 20.12.2
+      - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: '20.12.2'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -386,7 +386,7 @@ jobs:
 
   dockerhub_release:
     name: Publish to dockerhub
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout
@@ -443,7 +443,7 @@ jobs:
 
   sbom_combiner:
     name: SBOM combiner
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - server_unit_tests
       - desktop_macos
@@ -481,7 +481,7 @@ jobs:
 
   webapp_release:
     name: Publish web application
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - desktop_macos
       - desktop_linux
