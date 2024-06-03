@@ -1,4 +1,5 @@
 const path = require('path');
+const { CycloneDxWebpackPlugin } = require('@cyclonedx/webpack-plugin');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
@@ -96,6 +97,14 @@ module.exports = {
     },
     configureWebpack: {
         devtool: 'source-map',
+        plugins: [
+            new CycloneDxWebpackPlugin(
+                {
+                    outputLocation: '.sbom',
+                    specVersion: '1.5'
+                }
+            )
+        ],
         output: {
             hashFunction: 'xxhash64'
         }

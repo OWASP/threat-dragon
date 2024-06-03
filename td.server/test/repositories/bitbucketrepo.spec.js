@@ -9,6 +9,7 @@ import {getClient, userAsync} from '../../src/repositories/bitbucketrepo.js';
 
 describe('repositories/bitbucketrepo.js', () => {
     const workspace = 'threat-workspace';
+    const repoPath = 'ThreatDragonModels'
 
     const info = {
         body: {
@@ -30,13 +31,13 @@ describe('repositories/bitbucketrepo.js', () => {
             name: 'branch_name'
         },
         readInfo: {
-            path: 'ThreatDragonModels',
+            path: repoPath,
             workspace: workspace,
             repo_slug: 'repoInfo.repo',
             commit: '123'
         },
         modelReadInfo: {
-            path: 'ThreatDragonModels/my model/my model.json',
+            path: `${repoPath}/my model/my model.json`,
             workspace: workspace,
             repo_slug: 'repoInfo.repo',
             commit: '123'
@@ -183,7 +184,7 @@ describe('repositories/bitbucketrepo.js', () => {
         let branchInfo = {branch: info.branchInfo.name, repo: info.branchInfo.repo_slug};
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace, BITBUCKET_REPO_ROOT_DIRECTORY: repoPath}});
             sinon.stub(mockClient.source, 'read').returns(Promise.resolve({data: {values: [{path: 'ThreatDragonModels/model1'},
                         {path: 'ThreatDragonModels/model2'},
                         {path: 'ThreatDragonModels/model3'}]}}));
@@ -224,7 +225,7 @@ describe('repositories/bitbucketrepo.js', () => {
         let modelInfo = {branch: info.modelInfo.name, repo: info.modelInfo.repo_slug, model: info.modelInfo.model};
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace, BITBUCKET_REPO_ROOT_DIRECTORY: repoPath}});
             sinon.stub(mockClient.source, 'read').returns(Promise.resolve({data: "m34o1m"}));
             await threatModelRepository.modelAsync(modelInfo, accessToken);
         });
@@ -261,7 +262,7 @@ describe('repositories/bitbucketrepo.js', () => {
 
         };
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace, BITBUCKET_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.createAsync(createAysncInfo, accessToken);
         });
 
@@ -297,7 +298,7 @@ describe('repositories/bitbucketrepo.js', () => {
         };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_WORKSPACE: workspace, BITBUCKET_REPO_ROOT_DIRECTORY: repoPath}});
             await threatModelRepository.updateAsync(updateAysncInfo, accessToken);
         });
 

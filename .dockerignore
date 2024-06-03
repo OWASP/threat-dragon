@@ -16,3 +16,5 @@ utils/
 .vscode/
 */.vscode/
 */dist-desktop/
+sbom.*
+*/sbom.*
