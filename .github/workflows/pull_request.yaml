@@ -260,7 +260,7 @@ jobs:
   e2e_smokes:
     name: Site e2e smokes
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
     defaults:
       run:
         working-directory: td.vue
@@ -310,7 +310,7 @@ jobs:
   e2e_tests:
     name: Site e2e tests
     runs-on: ubuntu-24.04
-    needs: [e2e_smokes]
+    needs: e2e_smokes
     defaults:
       run:
         working-directory: td.vue
@@ -360,7 +360,7 @@ jobs:
   zap_scan_web:
     name: Site zap scan
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
     steps:
       - name: Run Threat Dragon
         run: |
@@ -391,7 +391,7 @@ jobs:
   scan_image_with_trivy:
     name: Scan with trivy
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
     permissions:
       contents: write
 

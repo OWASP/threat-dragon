@@ -176,7 +176,7 @@ jobs:
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -225,7 +225,7 @@ jobs:
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -286,7 +286,7 @@ jobs:
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-24.04
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -333,7 +333,7 @@ jobs:
   desktop_linux_snap:
     name: Linux snap
     runs-on: ubuntu-24.04
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue

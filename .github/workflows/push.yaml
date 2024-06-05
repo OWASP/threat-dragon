@@ -296,7 +296,7 @@ jobs:
   heroku_deploy:
     name: Upload to Heroku
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
 
     steps:
       - name: Pull docker image
@@ -323,7 +323,7 @@ jobs:
   browserstack_smoke_test:
     name: Browserstack smoke test
     runs-on: ubuntu-24.04
-    needs: [heroku_deploy]
+    needs: heroku_deploy
     defaults:
       run:
         working-directory: td.vue
@@ -368,7 +368,7 @@ jobs:
   e2e_smokes:
     name: Site e2e smokes
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
     defaults:
       run:
         working-directory: td.vue
@@ -419,7 +419,7 @@ jobs:
   e2e_tests:
     name: Site e2e tests
     runs-on: ubuntu-24.04
-    needs: [e2e_smokes]
+    needs: e2e_smokes
     defaults:
       run:
         working-directory: td.vue
@@ -470,7 +470,7 @@ jobs:
   zap_scan_web:
     name: Site zap scan
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
 
     steps:
       - name: Run Threat Dragon
@@ -502,7 +502,7 @@ jobs:
   scan_image_with_trivy:
     name: Scan with trivy
     runs-on: ubuntu-24.04
-    needs: [build_docker_image]
+    needs: build_docker_image
     permissions:
       contents: write
 
@@ -521,7 +521,7 @@ jobs:
   desktop_windows_test:
     name: Windows desktop build
     runs-on: windows-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -571,7 +571,7 @@ jobs:
   desktop_macos_test:
     name: MacOS desktop build
     runs-on: macos-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -631,7 +631,7 @@ jobs:
   desktop_linux_test:
     name: Linux desktop build
     runs-on: ubuntu-24.04
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -676,7 +676,7 @@ jobs:
   desktop_linux_snap_test:
     name: Linux snap build
     runs-on: ubuntu-24.04
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
