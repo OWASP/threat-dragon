@@ -13,64 +13,6 @@ env:
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
-  link_checker:
-    name: Link checker
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.10.0
-        with:
-          fail: true
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-  md_linter:
-    name: Lint markdown
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      # do not use  **/*.md as this will include the third party packages
-      - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
-        with:
-          config: '.markdownlint.yaml'
-          globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
-
-  codeql:
-    name: Analyze with codeql
-    runs-on: ubuntu-24.04
-    permissions:
-      security-events: write
-
-    strategy:
-      fail-fast: false
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.1.1
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
-        with:
-          languages: 'javascript'
-          config-file: ./.github/codeql/codeql-config.yml
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-
-      - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
-
-      - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v3.25.1
-
   server_unit_tests:
     name: Server unit tests
     runs-on: ubuntu-24.04
@@ -179,6 +121,35 @@ jobs:
       - name: Unit test
         run: npm run test:desktop
 
+  codeql:
+    name: Analyze with codeql
+    runs-on: ubuntu-24.04
+    needs: [server_unit_tests, site_unit_tests]
+    permissions:
+      security-events: write
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3.25.1
+        with:
+          languages: 'javascript'
+          config-file: ./.github/codeql/codeql-config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      - name: CodeQL autobuild
+        uses: github/codeql-action/autobuild@v3.25.1
+
+      - name: Perform vulnerability analysis
+        uses: github/codeql-action/analyze@v3.25.1
+
   desktop_e2e_tests:
     name: Desktop e2e tests
     runs-on: ubuntu-24.04
@@ -235,7 +206,7 @@ jobs:
           path: './td.vue/dist-desktop/bundled/.sbom/*'
 
   build_docker_image:
-    name: Build Latest docker
+    name: Build latest docker
     runs-on: ubuntu-24.04
     needs: [site_unit_tests, server_unit_tests]
     if: github.repository == 'OWASP/threat-dragon'
@@ -500,7 +471,7 @@ jobs:
           cmd_options: '-a'
 
   scan_image_with_trivy:
-    name: Scan with trivy
+    name: Scan image with trivy
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
@@ -519,7 +490,7 @@ jobs:
           exit-code: 1
 
   desktop_windows_test:
-    name: Windows desktop build
+    name: Windows desktop build test
     runs-on: windows-latest
     needs: desktop_e2e_tests
     defaults:
@@ -569,7 +540,7 @@ jobs:
           if-no-files-found: error
 
   desktop_macos_test:
-    name: MacOS desktop build
+    name: MacOS desktop build test
     runs-on: macos-latest
     needs: desktop_e2e_tests
     defaults:
@@ -629,7 +600,7 @@ jobs:
           if-no-files-found: error
 
   desktop_linux_test:
-    name: Linux desktop build
+    name: Linux desktop build test
     runs-on: ubuntu-24.04
     needs: desktop_e2e_tests
     defaults:
@@ -674,7 +645,7 @@ jobs:
           if-no-files-found: error
 
   desktop_linux_snap_test:
-    name: Linux snap build
+    name: Linux snap build test
     runs-on: ubuntu-24.04
     needs: desktop_e2e_tests
     defaults:
@@ -718,8 +689,8 @@ jobs:
           path: './td.vue/dist-desktop/bundled/.sbom/*'
           if-no-files-found: error
 
-  sbom_combiner:
-    name: SBOM combiner
+  sbom_combiner_test:
+    name: SBOM combiner test
     runs-on: ubuntu-24.04
     needs:
       - server_unit_tests

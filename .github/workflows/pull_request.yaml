@@ -12,34 +12,6 @@ env:
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
-  link_checker:
-    name: Link checker
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.10.0
-        with:
-          fail: true
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-  md_linter:
-    name: Lint markdown
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      # do not use  **/*.md as this will include the third party packages
-      - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
-        with:
-          config: '.markdownlint.yaml'
-          globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
-
   server_unit_tests:
     name: Server unit tests
     runs-on: ubuntu-24.04
@@ -185,6 +157,35 @@ jobs:
           ls -hal ./dist-desktop/
           ls -hal ./dist-desktop/linux-unpacked/
         if: ${{ failure() }}
+
+  codeql:
+    name: Analyze with codeql
+    runs-on: ubuntu-24.04
+    needs: [server_unit_tests, site_unit_tests]
+    permissions:
+      security-events: write
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3.25.1
+        with:
+          languages: 'javascript'
+          config-file: ./.github/codeql/codeql-config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      - name: CodeQL autobuild
+        uses: github/codeql-action/autobuild@v3.25.1
+
+      - name: Perform vulnerability analysis
+        uses: github/codeql-action/analyze@v3.25.1
 
   build_docker_image:
     name: Build docker image
