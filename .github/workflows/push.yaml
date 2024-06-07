@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
 
 env:
+  HEROKU_APP: threatdragon-v2
+  HEROKU_EMAIL: jon.gadsden@owasp.org
+  HEROKU_HEALTH: https://www.threatdragon.com/healthz
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
-  HEROKU_APP: threatdragon-v2
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -266,27 +268,18 @@ jobs:
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
+    runs-on: ubuntu-latest
     steps:
-      - name: Pull docker image
-        run: docker pull ${{ env.IMAGE_NAME }}
-
-      - name: Login to Heroku Registry
-        uses: docker/login-action@v3.2.0
+      - uses: actions/checkout@v4.1.1
+      - uses: akhileshns/heroku-deploy@v3.13.15
         with:
-          registry: registry.heroku.com
-          username: _
-          password: ${{ secrets.HEROKU_API_KEY }}
-
-      - name: Tag Heroku image
-        run: docker tag ${{ env.IMAGE_NAME }} registry.heroku.com/${{ env.HEROKU_APP }}/web
-
-      - name: Push to Heroku
-        run: docker push registry.heroku.com/${{ env.HEROKU_APP }}/web
-
-      - name: Deploy to Heroku
-        run: heroku container:release web --app ${{ env.HEROKU_APP }}
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ env.HEROKU_APP }}
+          heroku_email: ${{ env.HEROKU_EMAIL }}
+          healthcheck: ${{ env.HEROKU_HEALTH }}
+          checkstring: "OK"
+          rollbackonhealthcheckfailed: true
+          usedocker: true
 
   browserstack_smoke_test:
     name: Browserstack smoke test
@@ -324,14 +317,6 @@ jobs:
 
       - name: Run cross-browser smoke tests
         run: npm run test:e2e-smokes
-
-      - name: Rollback heroku on error
-        if: ${{ failure() }}
-        run: |
-          heroku rollback --app ${{ env.HEROKU_APP }}
-          heroku logs --source heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
   e2e_smokes:
     name: Site e2e smokes
