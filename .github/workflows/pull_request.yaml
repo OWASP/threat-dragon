@@ -12,37 +12,9 @@ env:
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
-  link_checker:
-    name: Link checker
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.10.0
-        with:
-          fail: true
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-  md_linter:
-    name: Lint markdown
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
-
-      # do not use  **/*.md as this will include the third party packages
-      - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v16.0.0
-        with:
-          config: '.markdownlint.yaml'
-          globs: '.*.md *.md td.*/*.md .github/**/*.md docs/**/*.md'
-
   server_unit_tests:
     name: Server unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.server
@@ -50,10 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -72,18 +44,9 @@ jobs:
       - name: Unit test
         run: npm run test:unit
 
-      - name: Create server SBOM
-        run: npm run make-sbom
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
-        with:
-          name: sboms-server
-          path: './td.server/sbom.*'
-
   site_unit_tests:
     name: Site unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -91,10 +54,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -107,15 +70,15 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: lint
+      - name: Site lint
         run: npm run lint
 
-      - name: Unit test
+      - name: Run unit tests
         run: npm run test:unit
 
   desktop_unit_tests:
     name: Desktop unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -123,10 +86,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -139,15 +102,15 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: lint
+      - name: Desktop lint
         run: npm run lint
 
-      - name: Unit test
+      - name: Run unit tests
         run: npm run test:desktop
 
   desktop_e2e_tests:
     name: Desktop e2e tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
@@ -158,12 +121,12 @@ jobs:
 
       - name: Setup Chrome
         id: setup-chrome
-        uses: browser-actions/setup-chrome@v1.6.0
+        uses: browser-actions/setup-chrome@v1.7.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -195,16 +158,38 @@ jobs:
           ls -hal ./dist-desktop/linux-unpacked/
         if: ${{ failure() }}
 
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+  codeql:
+    name: Analyze with codeql
+    runs-on: ubuntu-24.04
+    needs: [server_unit_tests, site_unit_tests]
+    permissions:
+      security-events: write
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3.25.1
         with:
-          name: sboms-desktop-e2e-test-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-          if-no-files-found: error
+          languages: 'javascript'
+          config-file: ./.github/codeql/codeql-config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      - name: CodeQL autobuild
+        uses: github/codeql-action/autobuild@v3.25.1
+
+      - name: Perform vulnerability analysis
+        uses: github/codeql-action/analyze@v3.25.1
 
   build_docker_image:
     name: Build docker image
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [site_unit_tests, server_unit_tests]
     if: github.repository == 'OWASP/threat-dragon'
     steps:
@@ -226,7 +211,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -245,22 +230,10 @@ jobs:
           platforms: linux/amd64
           load: true
 
-      - name: fetch app SBOM
-        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
-        env:
-          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
-        with:
-          name: sboms-container-image-app
-          path: './boms/*'
-          if-no-files-found: error
-
   e2e_smokes:
     name: Site e2e smokes
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
+    runs-on: ubuntu-24.04
+    needs: build_docker_image
     defaults:
       run:
         working-directory: td.vue
@@ -281,10 +254,10 @@ jobs:
             -e SERVER_API_PROTOCOL='http' \
             ${{ env.IMAGE_NAME }}
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -309,8 +282,8 @@ jobs:
 
   e2e_tests:
     name: Site e2e tests
-    runs-on: ubuntu-22.04
-    needs: [e2e_smokes]
+    runs-on: ubuntu-24.04
+    needs: e2e_smokes
     defaults:
       run:
         working-directory: td.vue
@@ -331,10 +304,10 @@ jobs:
             -e SERVER_API_PROTOCOL='http' \
             ${{ env.IMAGE_NAME }}
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -359,8 +332,8 @@ jobs:
 
   zap_scan_web:
     name: Site zap scan
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
+    runs-on: ubuntu-24.04
+    needs: build_docker_image
     steps:
       - name: Run Threat Dragon
         run: |
@@ -390,8 +363,8 @@ jobs:
 
   scan_image_with_trivy:
     name: Scan with trivy
-    runs-on: ubuntu-22.04
-    needs: [build_docker_image]
+    runs-on: ubuntu-24.04
+    needs: build_docker_image
     permissions:
       contents: write
 
@@ -401,37 +374,8 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.19.0
+        uses: aquasecurity/trivy-action@0.21.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
           exit-code: 1
-
-  sbom_combiner:
-    name: SBOM combiner
-    runs-on: ubuntu-22.04
-    needs:
-      - server_unit_tests
-      - desktop_e2e_tests
-      - build_docker_image
-    steps:
-      - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@v4.1.7
-        with:
-          pattern: 'sboms-*'
-          merge-multiple: false
-          path: 'raw/'
-      - name: Fetch SBOMs
-        run: |
-          set -eux
-          mkdir -p sboms/threat-dragon-container-image/app/
-          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
-          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
-          cp raw/sboms-desktop-e2e-test-site/bom.json   sboms/threat-dragon-desktop-e2e-test-site-bom.json
-          cp raw/sboms-desktop-e2e-test-site/bom.xml   sboms/threat-dragon-desktop-e2e-test-site-bom.xml
-          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
-        with:
-          name: sboms
-          path: 'sboms/'

@@ -1,6 +1,6 @@
 // TODO: very basic tests, and there should be many more tests than this
 
-import { browser } from '@wdio/globals'
+import { browser } from '@wdio/globals';
 
 describe('Desktop application', () => {
 

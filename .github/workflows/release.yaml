@@ -16,7 +16,7 @@ env:
 jobs:
   site_unit_tests:
     name: Site unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -24,10 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -48,7 +48,7 @@ jobs:
 
   server_unit_tests:
     name: Server unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.server
@@ -56,10 +56,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -89,7 +89,7 @@ jobs:
 
   desktop_unit_tests:
     name: Desktop unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: td.vue
@@ -97,10 +97,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -121,7 +121,7 @@ jobs:
 
   desktop_e2e_tests:
     name: Desktop e2e tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
@@ -132,12 +132,12 @@ jobs:
 
       - name: Setup Chrome
         id: setup-chrome
-        uses: browser-actions/setup-chrome@v1.6.0
+        uses: browser-actions/setup-chrome@v1.7.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -176,7 +176,7 @@ jobs:
   desktop_windows:
     name: Windows installer
     runs-on: windows-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -184,10 +184,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -225,7 +225,7 @@ jobs:
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: [desktop_e2e_tests]
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -233,10 +233,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -285,8 +285,8 @@ jobs:
 
   desktop_linux:
     name: Linux installers
-    runs-on: ubuntu-22.04
-    needs: [desktop_e2e_tests]
+    runs-on: ubuntu-24.04
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -294,10 +294,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -332,8 +332,8 @@ jobs:
 
   desktop_linux_snap:
     name: Linux snap
-    runs-on: ubuntu-22.04
-    needs: [desktop_e2e_tests]
+    runs-on: ubuntu-24.04
+    needs: desktop_e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -341,10 +341,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4.1.1
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
         with:
-          node-version: '18'
+          node-version: '20.14.0'
 
       - name: Cache NPM dir
         uses: actions/cache@v4.0.0
@@ -386,7 +386,7 @@ jobs:
 
   dockerhub_release:
     name: Publish to dockerhub
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests]
     steps:
       - name: Checkout
@@ -410,7 +410,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -443,7 +443,7 @@ jobs:
 
   sbom_combiner:
     name: SBOM combiner
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - server_unit_tests
       - desktop_macos
@@ -481,7 +481,7 @@ jobs:
 
   webapp_release:
     name: Publish web application
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - desktop_macos
       - desktop_linux

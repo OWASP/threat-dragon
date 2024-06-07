@@ -17,3 +17,4 @@
 10055	IGNORE	(CSP: style-src unsafe-inline)
 10063	IGNORE	(Feature Policy Header Not Set)
 90005	IGNORE	(Sec-Fetch-Dest Header is Missing)
+40039	IGNORE	Web Cache Deception

@@ -26,7 +26,7 @@ const config = {
     capabilities: [{
         browserName: 'chrome',
         'wdio:chromedriverOptions': {
-          binary: '/usr/bin/chromedriver'
+            binary: '/usr/bin/chromedriver'
         },
         'goog:chromeOptions': {
             // run chrome headless
