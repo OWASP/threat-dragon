@@ -139,12 +139,15 @@ jobs:
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
 
-      - name: End to end headless tests
-        uses: coactions/setup-xvfb@v1
+      - name: Temp fixup ofchrome
         run: |
           ${{ steps.setup-chrome.outputs.chrome-path }} --version
           ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
-          npm run test:e2e:desktop
+
+      - name: End to end headless tests
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: npm run test:e2e:desktop
 
       - name: Print logs on error
         run: |
