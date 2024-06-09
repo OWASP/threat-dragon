@@ -23,3 +23,8 @@ CVE-2023-28155
 # NPM IP Package v2.0.0 and <= v.1.1.8 allows execute arbitrary code via isPublic
 # not in td.vue or td.server
 CVE-2023-42282
+
+# https://avd.aquasec.com/nvd/cve-2024-4741
+# openssl: Use After Free with SSL_free_buffers
+# not in td.vue or td.server
+CVE-2024-4741

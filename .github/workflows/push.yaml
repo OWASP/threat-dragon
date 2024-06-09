@@ -265,7 +265,7 @@ jobs:
 
   heroku_deploy:
     name: Upload to Heroku
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04      # ubuntu-24.04 does not have heroku cli
     needs: build_docker_image
 
     steps:

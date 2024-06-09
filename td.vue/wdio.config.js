@@ -42,7 +42,7 @@ const config = {
     hostname: 'localhost',
     port: 9519,
     waitforTimeout: 30000,
-    connectionRetryCount: 3,
+    connectionRetryCount: 1,
     connectionRetryTimeout: 30000,
     // to redirect logs to files instead of console:
     outputDir: 'wdio-logs',
