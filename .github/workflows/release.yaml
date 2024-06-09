@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -52,6 +53,7 @@ jobs:
     defaults:
       run:
         working-directory: td.server
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -93,6 +95,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -126,6 +129,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -180,6 +184,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -229,6 +234,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -290,6 +296,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -337,6 +344,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -388,6 +396,7 @@ jobs:
     name: Publish to dockerhub
     runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -451,6 +460,7 @@ jobs:
       - desktop_linux_snap
       - desktop_windows
       - dockerhub_release
+
     steps:
       - name: Fetch prepared SBOM artifacts
         uses: actions/download-artifact@v4.1.7
@@ -487,6 +497,7 @@ jobs:
       - desktop_linux
       - desktop_windows
       - sbom_combiner
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1

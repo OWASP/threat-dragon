@@ -38,7 +38,7 @@ const config = {
         }
     }],
     logLevel: 'debug',
-    bail: 0,
+    bail: 1,
     hostname: 'localhost',
     port: 9519,
     waitforTimeout: 30000,

@@ -265,7 +265,7 @@ jobs:
 
   heroku_deploy:
     name: Upload to Heroku
-    runs-on: ubuntu-22.04      # ubuntu-24.04 does not have heroku cli
+    runs-on: ubuntu-22.04      # ubuntu-24.04 does not have heroku cli, yet
     needs: build_docker_image
 
     steps:
@@ -276,7 +276,6 @@ jobs:
           heroku_app_name: ${{ env.HEROKU_APP }}
           heroku_email: ${{ env.HEROKU_EMAIL }}
           healthcheck: ${{ env.HEROKU_HEALTH }}
-          checkstring: "OK"
           rollbackonhealthcheckfailed: true
           usedocker: true
 
