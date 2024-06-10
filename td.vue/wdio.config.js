@@ -24,18 +24,7 @@ const config = {
         ],
     ],
     capabilities: [{
-        browserName: 'chrome',
-        'wdio:chromedriverOptions': {
-            binary: '/usr/bin/chromedriver'
-        },
-        'goog:chromeOptions': {
-            // run chrome headless
-            args: ['--headless', '--disable-gpu']
-        },
-        'wdio:electronServiceOptions': {
-            // custom application args
-            appArgs: []
-        }
+        browserName: 'electron'
     }],
     logLevel: 'debug',
     bail: 1,

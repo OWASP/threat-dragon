@@ -123,10 +123,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Setup Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@v1.7.1
-
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
@@ -138,11 +134,6 @@ jobs:
       - name: Build application
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
-
-      - name: Temp fixup ofchrome
-        run: |
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
-          ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
 
       - name: End to end headless tests
         uses: coactions/setup-xvfb@v1
