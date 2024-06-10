@@ -134,41 +134,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Setup Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@v1.7.1
-
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
           node-version: '20.14.0'
 
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install packages
-        run: npm install
+        run: npm clean-install
 
       - name: Build application
         # test only so do not publish
         run: npm run build:desktop -- --publish=never
 
-      - name: End to end tests
-        run: |
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
-          ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
-          npm run test:e2e:desktop
+      - name: End to end headless tests
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: npm run test:e2e:desktop
 
       - name: Print logs on error
         run: |
           echo 'Print desktop wdio logs'
           pwd
           cat ./wdio-logs/*.log
+          ls -hal ./dist-desktop/
+          ls -hal ./dist-desktop/linux-unpacked/
         if: ${{ failure() }}
 
       - name: Save SBOM artifact
@@ -426,7 +415,7 @@ jobs:
 
       - name: Build and push to Docker Hub
         id: docker_build
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v5.4.0
         with:
           context: ./
           file: ./Dockerfile
