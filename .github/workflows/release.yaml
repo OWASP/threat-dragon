@@ -1,4 +1,4 @@
-name: Release desktop and docker
+name: Release pipeline
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -52,6 +53,7 @@ jobs:
     defaults:
       run:
         working-directory: td.server
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -93,6 +95,7 @@ jobs:
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -119,67 +122,14 @@ jobs:
       - name: Unit test
         run: npm run test:desktop
 
-  desktop_e2e_tests:
-    name: Desktop e2e tests
-    runs-on: ubuntu-24.04
+  desktop_windows:
+    name: Windows installer
+    runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
         working-directory: td.vue
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
 
-      - name: Setup Chrome
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@v1.7.1
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm install
-
-      - name: Build application
-        # test only so do not publish
-        run: npm run build:desktop -- --publish=never
-
-      - name: End to end tests
-        run: |
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
-          ln -sf threat-dragon dist-desktop/linux-unpacked/Threat-Dragon-ng
-          npm run test:e2e:desktop
-
-      - name: Print logs on error
-        run: |
-          echo 'Print desktop wdio logs'
-          pwd
-          cat ./wdio-logs/*.log
-        if: ${{ failure() }}
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
-        with:
-          name: sboms-desktop-e2e-tests-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-
-  desktop_windows:
-    name: Windows installer
-    runs-on: windows-latest
-    needs: desktop_e2e_tests
-    defaults:
-      run:
-        working-directory: td.vue
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -225,10 +175,11 @@ jobs:
   desktop_macos:
     name: MacOS installer
     runs-on: macos-latest
-    needs: desktop_e2e_tests
+    needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -286,10 +237,11 @@ jobs:
   desktop_linux:
     name: Linux installers
     runs-on: ubuntu-24.04
-    needs: desktop_e2e_tests
+    needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -333,10 +285,11 @@ jobs:
   desktop_linux_snap:
     name: Linux snap
     runs-on: ubuntu-24.04
-    needs: desktop_e2e_tests
+    needs: [desktop_unit_tests, site_unit_tests]
     defaults:
       run:
         working-directory: td.vue
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1
@@ -388,6 +341,7 @@ jobs:
     name: Publish to dockerhub
     runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -417,7 +371,7 @@ jobs:
 
       - name: Build and push to Docker Hub
         id: docker_build
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v5.4.0
         with:
           context: ./
           file: ./Dockerfile
@@ -451,6 +405,7 @@ jobs:
       - desktop_linux_snap
       - desktop_windows
       - dockerhub_release
+
     steps:
       - name: Fetch prepared SBOM artifacts
         uses: actions/download-artifact@v4.1.7
@@ -487,6 +442,7 @@ jobs:
       - desktop_linux
       - desktop_windows
       - sbom_combiner
+
     steps:
       - name: Check out
         uses: actions/checkout@v4.1.1

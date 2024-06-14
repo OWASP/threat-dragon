@@ -24,25 +24,14 @@ const config = {
         ],
     ],
     capabilities: [{
-        browserName: 'chrome',
-        'wdio:chromedriverOptions': {
-            binary: '/usr/bin/chromedriver'
-        },
-        'goog:chromeOptions': {
-            // run chrome headless
-            args: ['--headless', '--disable-gpu']
-        },
-        'wdio:electronServiceOptions': {
-            // custom application args
-            appArgs: []
-        }
+        browserName: 'electron'
     }],
     logLevel: 'debug',
-    bail: 0,
+    bail: 1,
     hostname: 'localhost',
     port: 9519,
     waitforTimeout: 30000,
-    connectionRetryCount: 3,
+    connectionRetryCount: 1,
     connectionRetryTimeout: 30000,
     // to redirect logs to files instead of console:
     outputDir: 'wdio-logs',
