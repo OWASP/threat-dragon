@@ -184,8 +184,7 @@ jobs:
       - name: Print logs on error
         run: |
           echo 'Print desktop wdio logs'
-          pwd
-          cat ./wdio-logs/*.log
+          pwd && cat ./wdio-logs/*.log
           ls -hal ./dist-desktop/
           ls -hal ./dist-desktop/linux-unpacked/
         if: ${{ failure() }}
