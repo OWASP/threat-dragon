@@ -3,28 +3,7 @@
 CVE-2018-25032
 CVE-2022-37434
 
-# https://avd.aquasec.com/nvd/cve-2022-25881
-# http-cache-semantics prior to 4.1.1
-# vulnerable to Regular Expression Denial of Service
-# by inspection, this vunerability is not exploitable here
-# CVE-2022-25881
-
-# https://avd.aquasec.com/nvd/cve-2022-25883
-# semver prior to version 7.5.2 vulnerable to Regular Expression DoS
-# not applicable to Threat Dragon       
-# CVE-2022-25883
-
 # https://avd.aquasec.com/nvd/cve-2023-28155
 # request version prior to 2.88.2
 # this vulnerability is for the build system, not run time, so ignore
-# CVE-2023-28155
-
-# https://avd.aquasec.com/nvd/2023/cve-2023-42282
-# NPM IP Package v2.0.0 and <= v.1.1.8 allows execute arbitrary code via isPublic
-# not in td.vue or td.server
-# CVE-2023-42282
-
-# https://avd.aquasec.com/nvd/cve-2024-4741
-# openssl: Use After Free with SSL_free_buffers
-# not in td.vue or td.server
-# CVE-2024-4741
+CVE-2023-28155
