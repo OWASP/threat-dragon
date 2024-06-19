@@ -228,7 +228,11 @@ export default {
         },
         updateThreat() {
             const threatRef = this.cellRef.data.threats.find(x => x.id === this.threat.id);
-
+            const objRef = this.cellRef.data;
+            if(!objRef.threatFrequency)
+                objRef.threatFrequency = threatModels.getFrequencyMapByElement(this.threat.modelType,this.cellRef.data.type);
+            objRef.threatFrequency[this.threat.type.toLowerCase()]++;
+            console.log(objRef);
             if (threatRef) {
                 threatRef.status = this.threat.status;
                 threatRef.severity = this.threat.severity;
