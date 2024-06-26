@@ -172,8 +172,8 @@ const getFrequencyMapByElement = (modelType,cellType) => {
             break;
         }
         break;
+    default: return null;
     }
-    console.log(freqMap);
     return freqMap;
 };
 

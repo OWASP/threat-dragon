@@ -11,13 +11,13 @@ export class GitlabClientWrapper {
 }
 
 export const getClient = (accessToken) => {
-    let clientOptions = {
+    const clientOptions = {
         auth: {
             oauthToken: accessToken,
         },
     };
     if (env.get().config.GITLAB_HOST) {
-        clientOptions.auth['host']=env.get().config.GITLAB_HOST
+        clientOptions.auth.host=env.get().config.GITLAB_HOST;
     }
 
     return GitlabClientWrapper.getClient(clientOptions.auth);
