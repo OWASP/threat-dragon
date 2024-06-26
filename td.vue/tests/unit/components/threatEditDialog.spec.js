@@ -24,7 +24,7 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     const getStore = () => new Vuex.Store({
-        state: { cell: { ref: { getData: jest.fn(), data: { threats: [ getThreatData() ]}}}},
+        state: { cell: { ref: { getData: jest.fn(), data: { threatFrequency:{availability: 0,confidentiality: 0,integrity: 0}, threats: [ getThreatData() ]}}}},
         actions: { CELL_DATA_UPDATED: () => {} }
     });
 
@@ -158,6 +158,7 @@ describe('components/ThreatEditDialog.vue', () => {
                 expect(mockStore.dispatch)
                     .toHaveBeenCalledWith('CELL_DATA_UPDATED', {
                         hasOpenThreats: false,
+                        threatFrequency:{availability: 0,confidentiality: 0,integrity: 0},
                         threats: []
                     });
             });
@@ -184,7 +185,8 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('updates the data', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith('CELL_DATA_UPDATED', { threats: [ getThreatData() ] });
+            expect(mockStore.dispatch).toHaveBeenNthCalledWith(1,'CELL_DATA_UPDATED',{threatFrequency:{availability: 0,confidentiality: 0,integrity: 0}, threats: [ getThreatData() ] });
+            expect(mockStore.dispatch).toHaveBeenNthCalledWith(2,'THREATMODEL_MODIFIED;');
         });
 
         it('updates the styles', () => {

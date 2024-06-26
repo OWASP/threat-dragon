@@ -19,9 +19,7 @@ const isConfigured = () => Boolean(env.get().config.GITLAB_CLIENT_ID);
  * Gets the Gitlab endpoint, which will be gitlab.com by default OR a custom endpoint for Gitlab enterprise scenarios
  * @returns {String}
  */
-const getGitlabUrl = () => {
-    return env.get().config.GITLAB_HOST || 'https://gitlab.com';
-};
+const getGitlabUrl = () => env.get().config.GITLAB_HOST || 'https://gitlab.com';
 
 /**
  * Gets the Gitlab OAuth Login URL
