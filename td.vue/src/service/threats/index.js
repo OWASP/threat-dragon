@@ -2,6 +2,9 @@ import { v4 } from 'uuid';
 
 import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
+import store from '@/store/index.js';
+
+
 
 const valuesToTranslations = {
     /* CIA */
@@ -47,47 +50,61 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
         modelType = 'STRIDE';
     }
     let title, type;
-
-    switch (modelType) {
-
-    case 'CIA':
-        title = tc('threats.generic.cia');
-        type = tc('threats.model.cia.confidentiality');
-        break;
-
-    case 'DIE':
-        title = tc('threats.generic.die');
-        type = tc('threats.model.die.distributed');
-        break;
-
-    case 'LINDDUN':
-        title = tc('threats.generic.linddun');
-        type = tc('threats.model.linddun.linkability');
-        break;
-
-    case 'PLOT4ai':
-        title = tc('threats.generic.plot4ai');
-        if (cellType === 'tm.Actor') {
-            type = tc('threats.model.plot4ai.accessibility');
-        } else {
-            type = tc('threats.model.plot4ai.techniqueProcesses');
-        }
-        break;
-
-    case 'STRIDE':
-        title = tc('threats.generic.stride');
-        if (cellType === 'tm.Actor' || cellType === 'tm.Process') {
-            type = tc('threats.model.stride.spoofing');
-        } else {
-            type = tc('threats.model.stride.tampering');
-        }
-        break;
-
-    default:
-        title = tc('threats.generic.default');
-        type = tc('threats.model.stride.spoofing');
-        break;
+    if(modelType.toLowerCase()==='generic') modelType='default';
+    title = tc(`threats.generic.${modelType.toLowerCase()}`);
+    const freqMap = store.get().state.cell?.ref?.data.threatFrequency;
+    if(freqMap){
+        let min =freqMap[Object.keys(freqMap)[0]],choice=Object.keys(freqMap)[0];
+        Object.keys(freqMap).forEach((k)=>{
+            if(freqMap[k]<min)
+            {
+                min = freqMap[k];
+                choice = k;
+            }
+        });
+        type = tc(`threats.model.${modelType.toLowerCase()}.${choice}`);
     }
+    else
+        switch (modelType) {
+
+        case 'CIA':
+            title = tc('threats.generic.cia');
+            type = tc('threats.model.cia.confidentiality');
+            break;
+
+        case 'DIE':
+            title = tc('threats.generic.die');
+            type = tc('threats.model.die.distributed');
+            break;
+
+        case 'LINDDUN':
+            title = tc('threats.generic.linddun');
+            type = tc('threats.model.linddun.linkability');
+            break;
+
+        case 'PLOT4ai':
+            title = tc('threats.generic.plot4ai');
+            if (cellType === 'tm.Actor') {
+                type = tc('threats.model.plot4ai.accessibility');
+            } else {
+                type = tc('threats.model.plot4ai.techniqueProcesses');
+            }
+            break;
+
+        case 'STRIDE':
+            title = tc('threats.generic.stride');
+            if (cellType === 'tm.Actor' || cellType === 'tm.Process') {
+                type = tc('threats.model.stride.spoofing');
+            } else {
+                type = tc('threats.model.stride.tampering');
+            }
+            break;
+
+        default:
+            title = tc('threats.generic.default');
+            type = tc('threats.model.stride.spoofing');
+            break;
+        }
 
     return {
         id: v4(),
