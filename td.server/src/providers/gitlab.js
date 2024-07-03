@@ -28,7 +28,7 @@ const getGitlabUrl = () => {
  * @returns {String}
  */
 const getOauthRedirectUrl = () => {
-    const scope = env.get().config.GITLAB_SCOPE || 'read_user,read_repository,write_repository,profile';
+    const scope = env.get().config.GITLAB_SCOPE || 'read_user read_repository write_repository profile';
     return `${getGitlabUrl()}/oauth/authorize?scope=${scope}&redirect_uri=${env.get().config.GITLAB_REDIRECT_URI}&response_type=code&client_id=${env.get().config.GITLAB_CLIENT_ID}`;
 };
 
