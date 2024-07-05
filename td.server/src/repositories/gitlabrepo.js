@@ -23,7 +23,7 @@ export const getClient = (accessToken) => {
     return GitlabClientWrapper.getClient(clientOptions.auth);
 };
 
-export const reposAsync = async (page, accessToken) => searchAsync(page, accessToken, undefined)
+export const reposAsync = (page, accessToken) => searchAsync(page, accessToken, undefined)
 
 export const getPagination = (paginationInfo, page) => {
     const pagination = {page, next: false, prev: false};
