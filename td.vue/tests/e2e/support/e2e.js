@@ -6,7 +6,5 @@ beforeEach(() => {
     cy.visit('/', {
         onBeforeLoad: (win) => win.sessionStorage.clear()
     });
-    cy.get('.Vue-Toastification__toast--warning').should('be.visible');
-    cy.get('.Vue-Toastification__close-button').click();
     cy.get('#local-login-btn').should('be.visible');
 });
