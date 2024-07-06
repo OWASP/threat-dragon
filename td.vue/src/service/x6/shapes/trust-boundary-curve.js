@@ -13,7 +13,7 @@ export const TrustBoundaryCurve = Shape.Edge.define({
     attrs: {
         line: {
             strokeWidth: 3,
-            strokeDasharray: '5 5',
+            strokeDasharray: '10 5',
             sourceMarker: null,
             targetMarker: null
         }
