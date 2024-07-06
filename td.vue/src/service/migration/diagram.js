@@ -1,9 +1,3 @@
-/**
- * @name diagram
- * @description Reads an existing v1 diagram to create components for the v2 UI
- * This is not for persistence, and is done on a diagram by diagram basis
- */
-
 import cells from './cells.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import graphFactory from '@/service/x6/graph/graph.js';
@@ -42,10 +36,10 @@ const upgradeAndDraw = (diagram, graph) => {
 
 const drawGraph = (diagram, graph) => {
     if (diagram.version && diagram.version.startsWith('2.')) {
-	    console.debug('open version 2.x diagram');
+        console.debug('open version 2.x diagram');
         graph.fromJSON(diagram);
     } else {
-	    console.debug('upgrade version 1.x diagram');
+        console.debug('upgrade version 1.x diagram');
         upgradeAndDraw(diagram, graph);
     }
     return graph;

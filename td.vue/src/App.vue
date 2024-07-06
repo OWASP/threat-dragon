@@ -35,7 +35,6 @@ export default {
     }),
     mounted() {
         this.$store.dispatch(LOADER_FINISHED);
-        this.$toast.warning(this.$t('nav.v2Warning'), { timeout: false });
     }
 };
 </script>
