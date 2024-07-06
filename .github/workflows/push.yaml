@@ -444,13 +444,6 @@ jobs:
 
       # Build Windows installer
       - name: Build Windows executable
-        # follow Comodo signing instructions
-        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
-        env:
-          # Windows signing certificate and password
-          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
-          CSC_LINK:  ${{ secrets.WINDOWS_CERT }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --windows --publish never
 
       - name: Print logs on error

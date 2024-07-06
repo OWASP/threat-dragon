@@ -40,7 +40,6 @@ module.exports = {
                 publish: {
                     provider: 'github'
                 },
-                afterSign: 'electron-builder-notarize',
                 mac: {
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
