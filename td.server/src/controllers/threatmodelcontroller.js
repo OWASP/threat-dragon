@@ -12,9 +12,9 @@ const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const page = req.query.page || 1;
     let reposResp;
     let repos;
-    if (env.get().config.GITHUB_USE_SEARCH === 'true') {
+    if (env.get().config.REPO_USE_SEARCH === 'true') {
         logger.debug('Using searchAsync');
-        const searchQuery = env.get().config.GITHUB_SEARCH_QUERY;
+        const searchQuery = env.get().config.REPO_SEARCH_QUERY;
         reposResp = await repository.searchAsync(page, req.provider.access_token, searchQuery);
         repos = reposResp[0].items;
     } else {

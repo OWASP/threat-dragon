@@ -23,14 +23,7 @@ export const getClient = (accessToken) => {
     return GitlabClientWrapper.getClient(clientOptions.auth);
 };
 
-export const reposAsync = async (page, accessToken) => {
-    const repos = await getClient(accessToken).Projects.all({page: page, membership: true, showExpanded: true});
-    repos.data.map((repo) => {
-        repo.full_name = repo.path_with_namespace;
-        return repo;
-    });
-    return [repos.data, null, getPagination(repos.paginationInfo)];
-};
+export const reposAsync = (page, accessToken) => searchAsync(page, accessToken, undefined)
 
 export const getPagination = (paginationInfo, page) => {
     const pagination = {page, next: false, prev: false};
@@ -43,7 +36,14 @@ export const getPagination = (paginationInfo, page) => {
     return pagination;
 };
 
-export const searchAsync = (page, accessToken, searchQuery) => getClient(accessToken).reposAsync({page: page, q: searchQuery});
+export const searchAsync = async (page, accessToken, searchQuery) => {
+    const repos = await getClient(accessToken).Projects.all({page: page, membership: true, showExpanded: true, search: searchQuery});
+    repos.data.map((repo) => {
+        repo.full_name = repo.path_with_namespace;
+        return repo;
+    });
+    return [repos.data, null, getPagination(repos.paginationInfo)];
+};
 
 export const userAsync = (accessToken) => getClient(accessToken).Users.showCurrentUser();
 
