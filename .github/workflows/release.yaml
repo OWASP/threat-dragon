@@ -212,8 +212,8 @@ jobs:
           # MacOS signing certificate and password, see electron.build/code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
+          # MacOS notarization, see electron.build/configuration/mac.html
+          # see also github.com/samuelmeuli/action-electron-builder#notarization
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
         run: npm run build:desktop -- --mac --publish always
@@ -364,8 +364,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push to Docker Hub
-        id: docker_build
+      - name: Build and push amd64 to Docker Hub
+        id: docker_build_amd64
         uses: docker/build-push-action@v6.3.0
         with:
           context: ./
@@ -373,9 +373,23 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64,linux/arm64
+          cache-from: type=local,src=/tmp/.buildx-amd64-cache
+          cache-to: type=local,dest=/tmp/.buildx-amd64-cache
+          platforms: linux/amd64
+          load: true
+
+      - name: Build and push arm64 to Docker Hub
+        id: docker_build_arm64
+        uses: docker/build-push-action@v6.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}-arm64
+          cache-from: type=local,src=/tmp/.buildx-arm64-cache
+          cache-to: type=local,dest=/tmp/.buildx-arm64-cache
+          platforms: linux/arm64
           load: true
 
       - name: fetch app SBOM
