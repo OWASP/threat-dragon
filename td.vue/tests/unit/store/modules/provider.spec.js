@@ -107,19 +107,6 @@ describe('store/modules/provider.js', () => {
             });
         });
 
-        describe('fetch', () => {
-            const providerNames = Object.keys(providerService.providerNames);
-
-            beforeEach(() => {
-                providerModule.mutations[PROVIDER_FETCH](providerModule.state, providerNames);
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the all array to the provided providers', () => {
-                expect(providerModule.state.all).toEqual(providerNames);
-            });
-        });
-
         describe('selected', () => {
             const provider = 'test';
             const providerUri = 'https://github.com';

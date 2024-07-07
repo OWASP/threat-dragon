@@ -123,14 +123,6 @@ describe('store/modules/branch.js', () => {
             });
         });
 
-        describe('fetch', () => {
-            const branches = [ 'foo', 'bar' ];
-
-            beforeEach(() => {
-                branchModule.mutations[BRANCH_FETCH](branchModule.state, branches);
-            });
-        });
-
         describe('selected', () => {
             const branch = 'test';
 

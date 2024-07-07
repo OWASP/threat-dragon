@@ -48,8 +48,8 @@ module.exports = {
                     entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
                     target: [
                         {
-                             target: "default",
-                             arch: ['x64', 'arm64']
+                            target: 'default',
+                            arch: ['x64', 'arm64']
                         }
                     ]
                 },
