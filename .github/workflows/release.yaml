@@ -11,6 +11,7 @@ env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: threatdragon/owasp-threat-dragon
+  API_PATH: ~/private_keys/AuthKey.p8
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -123,6 +124,7 @@ jobs:
         run: npm run test:desktop
 
   desktop_windows:
+    # Build and publish Windows installer to github Release Draft
     name: Windows installer
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
@@ -150,10 +152,7 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      # Build and publish Windows installer to github Release Draft
       - name: Publish Windows executable
-        # follow Comodo signing instructions
-        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
           # Windows signing certificate and password
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
@@ -173,10 +172,9 @@ jobs:
           if-no-files-found: error
 
   desktop_macos:
+    # Build and publish MacOS installer to github Release Draft
+    # the draft name uses version and is created if it does not already exist
     name: MacOS installer
-    # refer to:
-    # github.com/simonw/til/blob/main/electron/sign-notarize-electron-macos.md
-    # github.com/karaggeorge/electron-builder-notarize
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -203,28 +201,22 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      # Build and publish MacOS installer to github Release Draft
-      # the draft name uses version and is created if it does not already exist
       - name: Prepare for MacOS notarization
         # Import Apple API key for app notarization on macOS
-        # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+          echo '${{ secrets.API_KEY }}' > ${{ env.API_PATH }}
 
       - name: Publish MacOS disk image
         env:
-          # MacOS signing certificate and password
-          # see github.com/samuelmeuli/action-electron-builder#code-signing
-          # see www.electron.build/code-signing
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # MacOS signing certificate and password, see electron.build/code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          # github token is automatically provided to the action
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # MacOS notarization requires APPLE_API_KEY, APPLE_API_KEY_ID and APPLE_API_ISSUER
+          APPLE_API_KEY: ${{ env.API_PATH }}
+          APPLE_API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error

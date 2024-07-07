@@ -50,7 +50,6 @@ module.exports = {
                              arch: ['x64', 'arm64']
                         }
                     ]
-
                 },
                 win: {
                     icon: './src/icons/icon.ico',
