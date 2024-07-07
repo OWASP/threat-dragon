@@ -442,13 +442,8 @@ jobs:
       - name: Install packages
         run: npm install
 
-      # Build Windows installer
       - name: Build Windows executable
         run: npm run build:desktop -- --windows --publish never
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0
@@ -485,30 +480,10 @@ jobs:
       - name: Install packages
         run: npm install
 
-      - name: Prepare for MacOS notarization
-        # Import Apple API key for app notarization on macOS
-        # see github.com/samuelmeuli/action-electron-builder#notarization
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-
       - name: Build MacOS disk image
         env:
-          # MacOS signing certificate and password
-          # see github.com/samuelmeuli/action-electron-builder#code-signing
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-          CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          # github token is automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish never
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0

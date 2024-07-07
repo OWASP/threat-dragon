@@ -44,19 +44,20 @@ module.exports = {
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
                     hardenedRuntime: true,
-                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
-                    entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
-                    target: 'default'
+                    target: [
+                        {
+                             target: "default",
+                             arch: ['x64', 'arm64']
+                        }
+                    ]
+
                 },
                 win: {
                     icon: './src/icons/icon.ico',
                     target: [
                         {
                             target: 'nsis',
-                            arch: [
-                                'ia32',
-                                'x64'
-                            ]
+                            arch: ['ia32', 'x64']
                         }
                     ]
                 },
