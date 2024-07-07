@@ -44,6 +44,8 @@ module.exports = {
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
                     hardenedRuntime: true,
+                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
+                    entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
                     target: [
                         {
                              target: "default",

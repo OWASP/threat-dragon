@@ -11,7 +11,6 @@ env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: threatdragon/owasp-threat-dragon
-  API_PATH: ~/private_keys/AuthKey.p8
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -205,7 +204,7 @@ jobs:
         # Import Apple API key for app notarization on macOS
         run: |
           mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ${{ env.API_PATH }}
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
       - name: Publish MacOS disk image
         env:
@@ -213,10 +212,10 @@ jobs:
           # MacOS signing certificate and password, see electron.build/code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization requires APPLE_API_KEY, APPLE_API_KEY_ID and APPLE_API_ISSUER
-          APPLE_API_KEY: ${{ env.API_PATH }}
-          APPLE_API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
+          # MacOS notarization API IDs
+          # see github.com/samuelmeuli/action-electron-builder#notarization
+          API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error

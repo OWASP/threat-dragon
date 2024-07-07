@@ -52,34 +52,6 @@ describe('service/x6/stencil.js', () => {
         });
     });
 
-    // TODO skip this test until the search function is back in, issues #194 and #454
-    describe.skip('search', () => {
-        it('returns true for a matching shape regardless of case', () => {
-            expect(cfg.search({ shape: 'MYSHAPE' }, 'mys')).toEqual(true);
-        });
-
-        it('returns false for unmatched shapes', () => {
-            expect(cfg.search({ shape: 'MYSHAPE' }, 'myyyyshape')).toEqual(false);
-        });
-
-        it('returns true for matched labels regardless of case', () => {
-            expect(cfg.search({ shape: 'MYSHAPE', label: 'MYLABEL' }, 'myl')).toEqual(true);
-        });
-
-        it('returns false for unmatched labels and shapes', () => {
-            expect(cfg.search({ shape: 'MYSHAPE', label: 'MYLABEL' }, 'foobar')).toEqual(false);
-        });
-
-        it('has a placeholder', () => {
-            expect(cfg.placeholder).toEqual('Search');
-        });
-    
-        it('has notFoundText', () => {
-            expect(cfg.notFoundText).toContain('want to open an issue?');
-        });
-
-    });
-
     it('creates an instance of TrustBoundaryBox', () => {
         expect(shapes.TrustBoundaryBox).toHaveBeenCalledTimes(1);
     });
