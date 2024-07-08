@@ -150,9 +150,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v3.4.0
@@ -182,23 +179,9 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags:  ${{ env.IMAGE_NAME }}
-          cache-from: type=local,src=/tmp/.buildx-amd64-cache
-          cache-to: type=local,dest=/tmp/.buildx-amd64-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64
-          load: true
-
-      - name: Build and push arm64 to Docker Hub
-        id: docker_build_arm64
-        uses: docker/build-push-action@v6.3.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags:  ${{ env.IMAGE_NAME }}
-          cache-from: type=local,src=/tmp/.buildx-arm64-cache
-          cache-to: type=local,dest=/tmp/.buildx-arm64-cache
-          platforms: linux/arm64
           load: true
 
   e2e_smokes:
@@ -303,8 +286,8 @@ jobs:
           path: td.vue/tests/e2e/videos
         if: ${{ always() }}
 
-  zap_scan_web:
-    name: Site zap scan
+  zap_scan_web_app:
+    name: Local site zap scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 

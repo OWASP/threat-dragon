@@ -373,8 +373,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
-          cache-from: type=local,src=/tmp/.buildx-amd64-cache
-          cache-to: type=local,dest=/tmp/.buildx-amd64-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64
           load: true
 
@@ -387,8 +387,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}-arm64
-          cache-from: type=local,src=/tmp/.buildx-arm64-cache
-          cache-to: type=local,dest=/tmp/.buildx-arm64-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm64
           load: true
 

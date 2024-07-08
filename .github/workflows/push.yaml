@@ -194,8 +194,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags:  ${{ env.IMAGE_NAME }}
-          cache-from: type=local,src=/tmp/.buildx-amd64-cache
-          cache-to: type=local,dest=/tmp/.buildx-amd64-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64
           load: true
 
@@ -208,8 +208,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags:  ${{ env.IMAGE_NAME }}-arm64
-          cache-from: type=local,src=/tmp/.buildx-arm64-cache
-          cache-to: type=local,dest=/tmp/.buildx-arm64-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm64
           load: true
 
@@ -380,8 +380,8 @@ jobs:
           path: td.vue/tests/e2e/videos
         if: ${{ always() }}
 
-  zap_scan_web:
-    name: Site zap scan
+  zap_scan_web_app:
+    name: Local site zap scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
