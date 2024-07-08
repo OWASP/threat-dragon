@@ -118,10 +118,6 @@ describe('components/GraphButtons.vue', () => {
         expect(threatEditStub.methods.editThreat).toHaveBeenCalledWith('asdf','new');
     });
 
-    it('saves the threat model diagram', () => {
-        wrapper.vm.saved();
-    });
-
     it('disposes the graph', () => {
         wrapper.destroy();
         expect(diagramService.dispose).toHaveBeenCalled();

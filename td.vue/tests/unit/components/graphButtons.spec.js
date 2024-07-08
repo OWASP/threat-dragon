@@ -45,10 +45,6 @@ describe('components/GraphButtons.vue', () => {
             expect(btn.attributes('text')).toEqual('forms.save');
 
         });
-
-        it('emits the saved event', () => {
-            expect(wrapper.emitted().saved);
-        });
     });
 
     describe('close', () => {
@@ -59,10 +55,6 @@ describe('components/GraphButtons.vue', () => {
 
         it('has the save translation text', () => {
             expect(btn.attributes('text')).toEqual('forms.close');
-        });
-
-        it('emits the closed event', () => {
-            expect(wrapper.emitted().closed);
         });
     });
 

@@ -117,7 +117,7 @@ jobs:
         run: npm clean-install
 
       - name: lint
-        run: npm run lint
+        run: npm run lint:desktop
 
       - name: Unit test
         run: npm run test:desktop

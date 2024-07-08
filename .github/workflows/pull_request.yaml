@@ -106,7 +106,7 @@ jobs:
         run: npm clean-install
 
       - name: Desktop lint
-        run: npm run lint
+        run: npm run lint:desktop
 
       - name: Run unit tests
         run: npm run test:desktop
@@ -233,7 +233,7 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   e2e_tests:
     name: Site e2e tests
@@ -284,7 +284,7 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   zap_scan_web_app:
     name: Local site zap scan
