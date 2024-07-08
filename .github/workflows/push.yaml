@@ -118,7 +118,7 @@ jobs:
         run: npm clean-install
 
       - name: lint
-        run: npm run lint
+        run: npm run lint:desktop
 
       - name: Unit test
         run: npm run test:desktop
@@ -162,6 +162,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v3.4.0
@@ -182,8 +185,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        id: docker_build
+      # platform manifests not (yet) supported, so split out architectures
+      - name: Build and push amd64 to Docker Hub
+        id: docker_build_amd64
         uses: docker/build-push-action@v6.3.0
         with:
           context: ./
@@ -196,10 +200,24 @@ jobs:
           platforms: linux/amd64
           load: true
 
+      - name: Build and push arm64 to Docker Hub
+        id: docker_build_arm64
+        uses: docker/build-push-action@v6.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags:  ${{ env.IMAGE_NAME }}-arm64
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/arm64
+          load: true
+
       - name: fetch app SBOMs
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
         env:
-          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
+          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0
@@ -310,7 +328,7 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   e2e_tests:
     name: Site e2e tests
@@ -361,10 +379,10 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
-  zap_scan_web:
-    name: Site zap scan
+  zap_scan_web_app:
+    name: Local site zap scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
@@ -442,13 +460,8 @@ jobs:
       - name: Install packages
         run: npm install
 
-      # Build Windows installer
       - name: Build Windows executable
         run: npm run build:desktop -- --windows --publish never
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \;
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0
@@ -485,30 +498,10 @@ jobs:
       - name: Install packages
         run: npm install
 
-      - name: Prepare for MacOS notarization
-        # Import Apple API key for app notarization on macOS
-        # see github.com/samuelmeuli/action-electron-builder#notarization
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-
       - name: Build MacOS disk image
         env:
-          # MacOS signing certificate and password
-          # see github.com/samuelmeuli/action-electron-builder#code-signing
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-          CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          # github token is automatically provided to the action
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish never
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0

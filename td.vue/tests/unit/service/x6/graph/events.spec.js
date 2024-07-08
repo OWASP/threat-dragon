@@ -175,23 +175,6 @@ describe('service/x6/graph/events.js', () => {
             });
         });
 
-        describe.skip('a node without data', () => {
-            beforeEach(() => {
-                cell.convertToEdge = true;
-                cell.isNode.mockImplementation(() => true);
-                cell.constructor = { name: 'Store' };
-                cell.type = shapes.StoreShape.prototype.type;
-                if (cell.data) { delete cell.data; }
-                cell.setData.mockImplementation((data) => cell.data = data);
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
-                events.listen(graph);
-            });
-
-            it('does not add an edge', () => {
-                expect(graph.addEdge).not.toHaveBeenCalled();
-            });
-        });
-
         describe('trust boundary curve', () => {
             beforeEach(() => {
                 cell.convertToEdge = true;

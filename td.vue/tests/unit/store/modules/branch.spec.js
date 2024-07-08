@@ -123,19 +123,6 @@ describe('store/modules/branch.js', () => {
             });
         });
 
-        describe('fetch', () => {
-            const branches = [ 'foo', 'bar' ];
-
-            beforeEach(() => {
-                branchModule.mutations[BRANCH_FETCH](branchModule.state, branches);
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the all array to the provided branches', () => {
-                expect(branchModule.state.all).toEqual(branches);
-            });
-        });
-
         describe('selected', () => {
             const branch = 'test';
 

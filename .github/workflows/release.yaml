@@ -117,12 +117,13 @@ jobs:
         run: npm clean-install
 
       - name: lint
-        run: npm run lint
+        run: npm run lint:desktop
 
       - name: Unit test
         run: npm run test:desktop
 
   desktop_windows:
+    # Build and publish Windows installer to github Release Draft
     name: Windows installer
     runs-on: windows-latest
     needs: [desktop_unit_tests, site_unit_tests]
@@ -150,10 +151,7 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      # Build and publish Windows installer to github Release Draft
       - name: Publish Windows executable
-        # follow Comodo signing instructions
-        # comodosslstore.com/resources/comodo-code-signing-certificate-instructions
         env:
           # Windows signing certificate and password
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD}}
@@ -173,10 +171,9 @@ jobs:
           if-no-files-found: error
 
   desktop_macos:
+    # Build and publish MacOS installer to github Release Draft
+    # the draft name uses version and is created if it does not already exist
     name: MacOS installer
-    # refer to:
-    # github.com/simonw/til/blob/main/electron/sign-notarize-electron-macos.md
-    # github.com/karaggeorge/electron-builder-notarize
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests]
     defaults:
@@ -203,28 +200,22 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      # Build and publish MacOS installer to github Release Draft
-      # the draft name uses version and is created if it does not already exist
       - name: Prepare for MacOS notarization
         # Import Apple API key for app notarization on macOS
-        # see github.com/samuelmeuli/action-electron-builder#notarization
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
       - name: Publish MacOS disk image
         env:
-          # MacOS signing certificate and password
-          # see github.com/samuelmeuli/action-electron-builder#code-signing
-          # see www.electron.build/code-signing
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # MacOS signing certificate and password, see electron.build/code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization API IDs
-          # see github.com/samuelmeuli/action-electron-builder#notarization
+          # MacOS notarization, see electron.build/configuration/mac.html
+          # see also github.com/samuelmeuli/action-electron-builder#notarization
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          # github token is automatically provided to the action
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
@@ -373,8 +364,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push to Docker Hub
-        id: docker_build
+      # platform manifests not (yet) supported, so split out architectures
+      - name: Build and push amd64 to Docker Hub
+        id: docker_build_amd64
         uses: docker/build-push-action@v6.3.0
         with:
           context: ./
@@ -384,13 +376,27 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          load: true
+
+      - name: Build and push arm64 to Docker Hub
+        id: docker_build_arm64
+        uses: docker/build-push-action@v6.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}-arm64
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          platforms: linux/arm64
           load: true
 
       - name: fetch app SBOM
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
         env:
-          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
+          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0

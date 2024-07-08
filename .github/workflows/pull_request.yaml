@@ -106,7 +106,7 @@ jobs:
         run: npm clean-install
 
       - name: Desktop lint
-        run: npm run lint
+        run: npm run lint:desktop
 
       - name: Run unit tests
         run: npm run test:desktop
@@ -170,7 +170,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push amd64 to Docker Hub
         id: docker_build
         uses: docker/build-push-action@v6.3.0
         with:
@@ -233,7 +233,7 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   e2e_tests:
     name: Site e2e tests
@@ -284,10 +284,10 @@ jobs:
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
-        if: ${{ always() }}
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
-  zap_scan_web:
-    name: Site zap scan
+  zap_scan_web_app:
+    name: Local site zap scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 

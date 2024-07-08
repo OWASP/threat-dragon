@@ -4,7 +4,6 @@ import save from '@/service/save.js';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CREATE,
-    THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_DIAGRAM_SAVED,
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
@@ -133,15 +132,6 @@ describe('store/modules/threatmodel.js', () => {
                     });
                 });
             });
-        });
-
-        describe.skip('modifies the diagram', () => {
-	        it('sets the modified flag', () => {
-                const diagram = { foo: 'bar' };
-	            threatmodelModule.state.modified = false;
-	            threatmodelModule.mutations[THREATMODEL_DIAGRAM_MODIFIED](threatmodelModule.state, diagram);
-	            expect(threatmodelModule.state.modified).toEqual(true);
-	        });
         });
 
         it('commits the diagram updated action', () => {
@@ -351,28 +341,6 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('diagramSaved', () => {
-            let diagram;
-            beforeEach(() => {
-                threatmodelModule.state.data.detail = {
-                    diagrams: [
-                        { id: 1 },
-                        { id: 2}
-                    ]
-                };
-                threatmodelModule.state.selectedDiagram = { id: 2, foo: 'bar' };
-                diagram = { id: 2, foo: 'baz' };
-                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, diagram);
-            });
-
-            it('updates the selectedDiagram', () => {
-                expect(threatmodelModule.state.selectedDiagram).toEqual(diagram);
-            });
-
-            it('updates the diagrams array', () => {
-                expect(threatmodelModule.state.data.detail.diagrams[1]).toEqual(diagram);
-            });
-        });
 
         describe('diagramSelected', () => {
             let diagram;
@@ -404,18 +372,6 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-        describe.skip('fetch all', () => {
-            const models = [ 'foo', 'bar' ];
-
-            beforeEach(() => {
-                threatmodelModule.mutations[THREATMODEL_FETCH_ALL](threatmodelModule.state, models);
-            });
-
-            it('sets the all array to the provided models', () => {
-                expect(threatmodelModule.state.all).toEqual(models);
-            });
-        });
-
         describe('selected', () => {
             const model = 'test';
 
@@ -425,22 +381,6 @@ describe('store/modules/threatmodel.js', () => {
 
             it('sets the model prop', () => {
                 expect(threatmodelModule.state.data).toEqual(model);
-            });
-        });
-
-        describe.skip('contributors updated', () => {
-            const contribs = [ 'test1', 'test2' ];
-            beforeEach(() => {
-                threatmodelModule.state.data = {
-                    detail: {
-                        contributors: []
-                    }
-                };
-                threatmodelModule.mutations[THREATMODEL_CONTRIBUTORS_UPDATED](threatmodelModule.state, contribs);
-            });
-
-            it('sets the contributors', () => {
-                expect(threatmodelModule.state.data.detail.contributors).toEqual(contribs.map(x => ({ name: x })));
             });
         });
 

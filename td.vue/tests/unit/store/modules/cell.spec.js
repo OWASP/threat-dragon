@@ -54,19 +54,6 @@ describe('store/modules/cell.js', () => {
             });
         });
 
-        describe('selected with threats', () => {
-
-            beforeEach(() => {
-                cell.data.threats = [{ one: 'two' }];
-                cellModule.mutations[CELL_SELECTED](cellModule.state, cell);
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('sets the threats', () => {
-                expect(cellModule.state.threats).toEqual([{ one: 'two' }]);
-            });
-        });
-
         describe('unselected', () => {
             beforeEach(() => {
                 cellModule.state = { ref: cell };
@@ -75,26 +62,6 @@ describe('store/modules/cell.js', () => {
 
             it('clears the state', () => {
                 expect(cellModule.state.ref).toEqual(null);
-            });
-        });
-
-        describe('data updated with threats', () => {
-            const newThreats = [{ name: 'one' }, { name: 'two' }];
-            
-            beforeEach(() => {
-                cellModule.state = { ref: cell, threats: [] };
-                cellModule.state.ref.setData = jest.fn();
-                cellModule.mutations[CELL_DATA_UPDATED](cellModule.state, { threats: newThreats });
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('updates the data object', () => {
-                expect(cellModule.state.ref.setData).toHaveBeenCalledWith({ threats: newThreats });
-            });
-
-            // TODO skip test because it stumbles over Vue.set
-            it.skip('updates the threats', () => {
-                expect(cellModule.state.threats).toEqual(newThreats);
             });
         });
 
