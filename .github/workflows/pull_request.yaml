@@ -171,7 +171,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push amd64 to Docker Hub
-        id: docker_build_amd64
+        id: docker_build
         uses: docker/build-push-action@v6.3.0
         with:
           context: ./

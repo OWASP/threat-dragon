@@ -68,8 +68,14 @@ module.exports = {
                     icon: './src/icons/td-256.png',
                     synopsis: 'OWASP Threat Dragon',
                     target: [
-                        'AppImage',
-                        'snap',
+                        {
+                            target: 'AppImage',
+                            arch: ['arm64', 'x64']
+                        },
+                        {
+                            target: 'snap',
+                            arch: ['arm64', 'x64']
+                        },
                         'deb',
                         'rpm'
                     ]

@@ -185,6 +185,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # platform manifests not (yet) supported, so split out architectures
       - name: Build and push amd64 to Docker Hub
         id: docker_build_amd64
         uses: docker/build-push-action@v6.3.0
@@ -216,7 +217,7 @@ jobs:
       - name: fetch app SBOMs
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
         env:
-          IMAGE_ID: ${{ steps.docker_build.outputs.imageid }}
+          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.3.0
