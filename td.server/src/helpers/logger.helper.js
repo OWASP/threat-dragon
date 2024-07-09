@@ -74,7 +74,7 @@ class Logger {
         const resultString = JSON.stringify(complexObject, function(key, value) {
           if (typeof value === "object" && value !== null) {
             if (cache.indexOf(value) !== -1) {
-              // Circular reference found, discard key
+              // Circular reference found
               return "[Circular]";
             }
             cache.push(value);
