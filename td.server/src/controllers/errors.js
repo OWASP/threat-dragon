@@ -18,7 +18,7 @@ const sendError = (error, code, message, res, logger) => {
         message,
         details: error
     };
-    logger.debug(`Returning error to client: ${JSON.stringify(returnObj)}`);
+    logger.debug(`Returning error to client: ${logger.transformToString(returnObj)}`);
     return res.status(code).json(returnObj);
 };
 
