@@ -196,7 +196,7 @@ jobs:
           push: true
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           platforms: linux/amd64
           load: true
 
@@ -210,7 +210,7 @@ jobs:
           push: true
           tags:  ${{ env.IMAGE_NAME }}-arm64
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           platforms: linux/arm64
           load: true
 
@@ -225,6 +225,13 @@ jobs:
           name: sboms-container-image-app
           path: './boms/*'
           if-no-files-found: error
+
+      - # Temp fix for large cache bug
+        # https://github.com/docker/build-push-action/issues/252
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   heroku_deploy:
     name: Upload to Heroku

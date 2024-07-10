@@ -180,9 +180,16 @@ jobs:
           push: true
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           platforms: linux/amd64
           load: true
+
+      - # Temp fix for large cache bug
+        # https://github.com/docker/build-push-action/issues/252
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   e2e_smokes:
     name: Site e2e smokes
