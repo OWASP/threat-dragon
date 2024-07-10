@@ -31,7 +31,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -64,7 +64,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -106,7 +106,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -141,7 +141,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -190,7 +190,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -247,7 +247,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -295,7 +295,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -350,8 +350,8 @@ jobs:
         with:
           install: true
 
-      - name: Setup dockerx cache
-        uses: actions/cache@v4.0.0
+      - name: Cache Docker layers
+        uses: actions/cache@v4.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
