@@ -46,7 +46,7 @@ const branchesAsync = (fullRepoName, page = 1) => {
  */
 const modelsAsync = (fullRepoName, branch) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    const { encodedOrg, encodedRepo, encodedBranch } = encodeUrlComponents(org, repo, branch);
+    const [ encodedOrg, encodedRepo, encodedBranch ] = encodeUrlComponents(org, repo, branch);
     return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/models`);
 };
 
@@ -59,19 +59,19 @@ const modelsAsync = (fullRepoName, branch) => {
  */
 const modelAsync = (fullRepoName, branch, model) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    const { encodedOrg, encodedRepo, encodedBranch, encodedModel } = encodeUrlComponents(org, repo, branch, model);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModel ] = encodeUrlComponents(org, repo, branch, model);
     return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModel}/data`);
 };
 
 const createAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    const { encodedOrg, encodedRepo, encodedBranch, encodedModelName } = encodeUrlComponents(org, repo, branch, modelName);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
     return api.postAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/create`, threatModel);
 };
 
 const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    const { encodedOrg, encodedRepo, encodedBranch, encodedModelName } = encodeUrlComponents(org, repo, branch, modelName);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
     return api.putAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/update`, threatModel);
 };
 
