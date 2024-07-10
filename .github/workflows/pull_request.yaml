@@ -8,7 +8,7 @@ on:
 env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
-  IMAGE_NAME: "threatdragon/owasp-threat-dragon:PR-${{ github.event.number }}"
+  IMAGE_NAME: "pr-${{ github.event.number }}"
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
