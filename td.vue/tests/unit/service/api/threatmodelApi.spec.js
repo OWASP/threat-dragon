@@ -28,19 +28,19 @@ describe('service/threatmodelApi.js', () => {
     });
 
     describe('branchesAsync', () => {
-        const repo = 'owasp/threat-dragon';
+        const repo = 'owasp/with/deep/layers/threat-dragon';
 
         beforeEach(async () => {
             await threatmodelApi.branchesAsync(repo);
         });
 
         it('calls the branches endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/branches', {'params': {'page': 1}});
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp%2Fwith%2Fdeep%2Flayers/threat-dragon/branches', {'params': {'page': 1}});
         });
     });
 
     describe('modelsAsync', () => {
-        const repo = 'owasp/threat-dragon';
+        const repo = 'owasp/with/deep/layers/threat-dragon';
         const branch = 'feature/some-feature';
 
         beforeEach(async () => {
@@ -48,28 +48,28 @@ describe('service/threatmodelApi.js', () => {
         });
 
         it('calls the models endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/feature%2Fsome-feature/models');
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp%2Fwith%2Fdeep%2Flayers/threat-dragon/feature%2Fsome-feature/models');
         });
     });
 
     describe('modelAsync', () => {
-        const repo = 'owasp/threat-dragon';
-        const branch = 'main';
-        const model = 'test';
+        const repo = 'owasp/with/deep/layers/threat-dragon';
+        const branch = 'main&';
+        const model = 'test?';
 
         beforeEach(async () => {
             await threatmodelApi.modelAsync(repo, branch, model);
         });
 
         it('calls the model endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp/threat-dragon/main/test/data');
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/owasp%2Fwith%2Fdeep%2Flayers/threat-dragon/main%26/test%3F/data');
         });
     });
 
     describe('updateAsync', () => {
-        const repo = 'owasp/threat-dragon';
-        const branch = 'main';
-        const modelName = 'test';
+        const repo = 'owasp/with/deep/layers/threat-dragon';
+        const branch = 'main&';
+        const modelName = 'test?';
         const body = { foo: 'bar' };
 
         beforeEach(async () => {
@@ -78,7 +78,7 @@ describe('service/threatmodelApi.js', () => {
 
         it('calls the update endpoint', () => {
             expect(api.putAsync).toHaveBeenCalledWith(
-                '/api/threatmodel/owasp/threat-dragon/main/test/update',
+                '/api/threatmodel/owasp%2Fwith%2Fdeep%2Flayers/threat-dragon/main%26/test%3F/update',
                 body
             );
         });
