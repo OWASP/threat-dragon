@@ -32,7 +32,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -52,7 +52,7 @@ jobs:
         run: npm run make-sbom
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-server
           path: './td.server/sbom.*'
@@ -74,7 +74,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -107,7 +107,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -171,8 +171,8 @@ jobs:
         with:
           install: true
 
-      - name: Setup dockerx cache
-        uses: actions/cache@v4.0.0
+      - name: Cache Docker layers
+        uses: actions/cache@v4.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -186,7 +186,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # platform manifests not (yet) supported, so split out architectures
-      - name: Build and push amd64 to Docker Hub
+      - name: Build  for amd64 and push latest
         id: docker_build_amd64
         uses: docker/build-push-action@v6.3.0
         with:
@@ -196,11 +196,11 @@ jobs:
           push: true
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           platforms: linux/amd64
           load: true
 
-      - name: Build and push arm64 to Docker Hub
+      - name: Build for arm64 and push latest-arm64
         id: docker_build_arm64
         uses: docker/build-push-action@v6.3.0
         with:
@@ -210,7 +210,7 @@ jobs:
           push: true
           tags:  ${{ env.IMAGE_NAME }}-arm64
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           platforms: linux/arm64
           load: true
 
@@ -220,11 +220,18 @@ jobs:
           IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-container-image-app
           path: './boms/*'
           if-no-files-found: error
+
+      - # Temp fix for large cache bug
+        # https://github.com/docker/build-push-action/issues/252
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   heroku_deploy:
     name: Upload to Heroku
@@ -260,7 +267,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -310,7 +317,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -324,7 +331,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -361,7 +368,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -375,7 +382,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -450,7 +457,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -464,7 +471,7 @@ jobs:
         run: npm run build:desktop -- --windows --publish never
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-desktop-windows-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -488,7 +495,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -504,7 +511,7 @@ jobs:
         run: npm run build:desktop -- --mac --publish never
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -528,7 +535,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -549,7 +556,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-desktop-linux-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -573,7 +580,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -594,7 +601,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms-desktop-linux-snap-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -633,7 +640,7 @@ jobs:
           cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
           cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: sboms
           path: 'sboms/'

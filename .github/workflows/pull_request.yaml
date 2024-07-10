@@ -8,7 +8,7 @@ on:
 env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
-  IMAGE_NAME: "threatdragon/owasp-threat-dragon:PR-${{ github.event.number }}"
+  IMAGE_NAME: "pr-${{ github.event.number }}"
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -29,7 +29,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -62,7 +62,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -95,7 +95,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -156,33 +156,45 @@ jobs:
         with:
           install: true
 
-      - name: Setup dockerx cache
-        uses: actions/cache@v4.0.0
+      - name: Cache Docker layers
+        uses: actions/cache@v4.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3.2.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push amd64 to Docker Hub
+      - name: Build for amd64
         id: docker_build
         uses: docker/build-push-action@v6.3.0
         with:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: true
           tags:  ${{ env.IMAGE_NAME }}
+          outputs: type=docker,dest=/tmp/${{ env.IMAGE_NAME }}.tar
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           platforms: linux/amd64
           load: true
+
+      - name: Upload docker local image
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          path: /tmp/${{ env.IMAGE_NAME }}.tar
+
+      - name: Check docker local image
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
+          docker image ls -a 
+
+      - # Temp fix for large cache bug
+        # https://github.com/docker/build-push-action/issues/252
+        name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   e2e_smokes:
     name: Site e2e smokes
@@ -195,6 +207,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+
+      - name: Download docker local image
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          path: /tmp
+      
+      - name: Load docker local image
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Threat Dragon
         run: |
@@ -215,7 +237,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -229,7 +251,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -247,6 +269,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
+      - name: Download docker local image
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          path: /tmp
+      
+      - name: Load docker local image
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
+
       - name: Run Threat Dragon
         run: |
           docker run -d \
@@ -266,7 +298,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -280,7 +312,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -292,6 +324,16 @@ jobs:
     needs: build_docker_image
 
     steps:
+      - name: Download docker local image
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          path: /tmp
+      
+      - name: Load docker local image
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
+
       - name: Run Threat Dragon
         run: |
           docker run -d \
@@ -329,6 +371,16 @@ jobs:
       # Need .trivyignore
       - name: Checkout
         uses: actions/checkout@v4.1.1
+
+      - name: Download docker local image
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          path: /tmp
+      
+      - name: Load docker local image
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.23.0
