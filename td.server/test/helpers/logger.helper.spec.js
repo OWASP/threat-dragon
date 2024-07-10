@@ -82,4 +82,13 @@ describe('helpers/logger.helper.js', () => {
     it('throws an error for an unknown level', () => {
         expect(() => logger.fatal('fatal')).to.throw;
     });
+
+    it('stringifies complex objects', () => {
+        const complexObject = {a: 'a', b: { ba: 'ba', bb: 'bb'}};
+        let objectString = logger.transformToString(complexObject);
+        expect(objectString).to.equal('{"a":"a","b":{"ba":"ba","bb":"bb"}}');
+        complexObject.b.bb = complexObject.b
+        objectString = logger.transformToString(complexObject);
+        expect(objectString).to.equal('{"a":"a","b":{"ba":"ba","bb":"[Circular]"}}');
+    })
 });

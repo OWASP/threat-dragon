@@ -9,7 +9,7 @@ import tokenRepo from '../repositories/token.js';
 const logger = loggerHelper.get('controllers/auth.js');
 
 const login = (req, res) => {
-    logger.debug(`API login request: ${JSON.stringify(req)}`);
+    logger.debug(`API login request: ${logger.transformToString(req)}`);
 
     try {
         const provider = providers.get(req.params.provider);
@@ -20,7 +20,7 @@ const login = (req, res) => {
 };
 
 const oauthReturn = (req, res) => {
-    logger.debug(`API oauthReturn request: ${JSON.stringify(req)}`);
+    logger.debug(`API oauthReturn request: ${logger.transformToString(req)}`);
 
     let returnUrl = `/#/oauth-return?code=${req.query.code}`;
     if (env.get().config.NODE_ENV === 'development') {
@@ -30,7 +30,7 @@ const oauthReturn = (req, res) => {
 };
 
 const completeLogin = (req, res) => {
-    logger.debug(`API completeLogin request: ${JSON.stringify(req)}`);
+    logger.debug(`API completeLogin request: ${logger.transformToString(req)}`);
 
     try {
         const provider = providers.get(req.params.provider);
@@ -51,7 +51,7 @@ const completeLogin = (req, res) => {
 };
 
 const logout = (req, res) => responseWrapper.sendResponse(() => {
-    logger.debug(`API logout request: ${JSON.stringify(req)}`);
+    logger.debug(`API logout request: ${logger.transformToString(req)}`);
 
     try {
         const refreshToken = req.body.refreshToken;
@@ -71,7 +71,7 @@ const logout = (req, res) => responseWrapper.sendResponse(() => {
 }, req, res, logger);
 
 const refresh = (req, res) => {
-    logger.debug(`API refresh request: ${JSON.stringify(req)}`);
+    logger.debug(`API refresh request: ${logger.transformToString(req)}`);
 
     const tokenBody = tokenRepo.verify(req.body.refreshToken);
     if (!tokenBody) {

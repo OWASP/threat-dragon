@@ -69,6 +69,21 @@ class Logger {
         this.logger.log(level, message);
     }
 
+    transformToString (complexObject) {
+        const cache = [];
+        const resultString = JSON.stringify(complexObject, function(key, value) {
+          if (typeof value === "object" && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Circular reference found
+              return "[Circular]";
+            }
+            cache.push(value);
+          }
+          return value;
+        });
+        return resultString;
+    }
+
     log (level, message) { this.logger.log(level, this._formatMessage(this.service, message)); }
 
     silly (message) { this.logger.silly(this._formatMessage(this.service, message, 'silly')); }
