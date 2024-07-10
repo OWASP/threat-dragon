@@ -56,4 +56,18 @@ describe('env/ThreatDragon.js', () => {
             .required;
         expect(isRequired).to.be.false;
     });
+
+    it('has the optional property REPO_USE_SEARCH', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'REPO_USE_SEARCH')
+            .required;
+        expect(isRequired).to.be.false;
+    });
+
+    it('has the optional property REPO_SEARCH_QUERY', () => {
+        const isRequired = tdEnv.properties
+            .find(x => x.key === 'REPO_SEARCH_QUERY')
+            .required;
+        expect(isRequired).to.be.false;
+    });
 });
