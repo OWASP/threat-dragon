@@ -40,24 +40,25 @@ module.exports = {
                 publish: {
                     provider: 'github'
                 },
-                afterSign: 'electron-builder-notarize',
                 mac: {
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
                     hardenedRuntime: true,
                     entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
                     entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
-                    target: 'default'
+                    target: [
+                        {
+                            target: 'default',
+                            arch: ['x64', 'arm64']
+                        }
+                    ]
                 },
                 win: {
                     icon: './src/icons/icon.ico',
                     target: [
                         {
                             target: 'nsis',
-                            arch: [
-                                'ia32',
-                                'x64'
-                            ]
+                            arch: ['arm64', 'x64']
                         }
                     ]
                 },
@@ -67,8 +68,14 @@ module.exports = {
                     icon: './src/icons/td-256.png',
                     synopsis: 'OWASP Threat Dragon',
                     target: [
-                        'AppImage',
-                        'snap',
+                        {
+                            target: 'AppImage',
+                            arch: ['arm64', 'x64']
+                        },
+                        {
+                            target: 'snap',
+                            arch: ['arm64', 'x64']
+                        },
                         'deb',
                         'rpm'
                     ]

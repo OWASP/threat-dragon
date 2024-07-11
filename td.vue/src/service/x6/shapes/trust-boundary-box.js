@@ -14,8 +14,8 @@ export const TrustBoundaryBox = Shape.HeaderedRect.define({
         body: {
             rx: 10,
             ry: 10,
-            strokeDasharray: '5 5',
             strokeWidth: 3,
+            strokeDasharray: '10 5',
             fill: 'transparent',
             fillOpacity: 0
         },

@@ -13,6 +13,16 @@ describe('service/x6/shapes/trust-boundary-box.js', () => {
         expect(victim.constructor.name).toEqual('TrustBoundaryBox');
     });
 
+    describe('get victim attributes', () => {
+        it('sets the stroke dash array', () => {
+            expect(victim.attrs.body.strokeDasharray).toEqual('10 5');
+        });
+
+        it('sets the stroke width', () => {
+            expect(victim.attrs.body.strokeWidth).toEqual(3);
+        });
+    });
+
     describe('setName', () => {
         it('sets the name', () => {
             const name = 'tbbName';

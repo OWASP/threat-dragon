@@ -1,4 +1,7 @@
 import Ajv from 'ajv';
+import Vue from 'vue';
+import i18n from '@/i18n/index.js';
+
 import { schema } from './threat-model-schema';
 import { schema as schemaV2 } from './threat-model-schema.V2';
 import { schema as schemaOTM } from './open-threat-model-schema';
@@ -20,6 +23,7 @@ export const isValidSchema = (jsonFile) => {
     valid = validate(jsonFile);
     if (valid) {
         console.debug('Schema validate success for V1.x model');
+        Vue.$toast.warning(i18n.get().t('nav.v2Warning'), { timeout: false });
         return true;
     }
 

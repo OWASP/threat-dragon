@@ -27,7 +27,7 @@ export const TrustBoundaryCurveStencil = Shape.Empty.define({
             strokeWidth: 3,
             stroke: '#333333',
             fill: 'transparent',
-            strokeDasharray: '5 5',
+            strokeDasharray: '10 5',
             refD: 'M 30 20 C 70 20 70 100 110 100'
         },
         label: {

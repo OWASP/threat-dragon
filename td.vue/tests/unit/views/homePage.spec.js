@@ -86,45 +86,4 @@ describe('HomePage.vue', () => {
             });
         });
     });
-
-    describe.skip('desktop', () => {
-        // TODO: this needs to be reinstated
-        beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(BootstrapVue);
-            localVue.component('font-awesome-icon', FontAwesomeIcon);
-            mockStore = new Vuex.Store({
-                actions: {
-                    [AUTH_SET_LOCAL]: () => {},
-                    [PROVIDER_SELECTED]: () => {}
-                }
-            });
-            mockIsElectron = true;
-            jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: redirectUrl });
-            jest.spyOn(mockStore, 'dispatch');
-
-            // There may be a better way of doing this
-            // Source: https://remarkablemark.org/blog/2018/11/17/mock-window-location/
-            delete window.location;
-            window.location = { replace: jest.fn() };
-            router.push = jest.fn();
-
-            wrapper = shallowMount(HomePage, {
-                localVue,
-                isElectron: mockIsElectron,
-                store: mockStore,
-                mocks: {
-                    $t: key => key
-                }
-            });
-        });
-
-        describe('layout', () => {
-            it('has only the local session button', () => {
-                expect(wrapper.findAllComponents(TdProviderLoginButton)).toHaveLength(1);
-            });
-        });
-    });
-
 });

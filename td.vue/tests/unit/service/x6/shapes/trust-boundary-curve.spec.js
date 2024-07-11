@@ -12,13 +12,17 @@ describe('service/x6/shapes/trust-boundary-curve.js', () => {
         expect(victim.constructor.name).toEqual('TrustBoundaryCurve');
     });
 
-    describe('get edge victim', () => {
+    describe('get edge victim attributes', () => {
         it('uses the smooth connector', () => {
             expect(victim.connector).toEqual('smooth');
         });
 
         it('sets the stroke dash array', () => {
-            expect(victim.attrs.line.strokeDasharray).toEqual('5 5');
+            expect(victim.attrs.line.strokeDasharray).toEqual('10 5');
+        });
+
+        it('sets the stroke width', () => {
+            expect(victim.attrs.line.strokeWidth).toEqual(3);
         });
 
         it('does not have a source marker', () => {
