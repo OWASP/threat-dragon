@@ -121,30 +121,27 @@
             <template #modal-footer>
                 <div class="w-100">
                 <b-button
-                    v-if="!newThreat"
                     variant="danger"
-                    class="float-left"
-                    @click="confirmDelete()"
-                >
-                    {{ $t('forms.delete') }}
-                </b-button>
-                <b-button
-                    v-if="newThreat"
-                    variant="danger"
-                    class="float-left"
-                    @click="immediateDelete()"
-                >
-                    {{ $t('forms.remove') }}
-                </b-button>
-                 <b-button
-                    variant="secondary"
                     class="float-right"
-                    @click="updateThreat()"
+                    @click="acceptSuggestion()"
                 >
                     {{ $t('forms.apply') }}
                 </b-button>
                 <b-button
-                v-if="!newThreat"
+                variant="secondary"
+                class="float-left"
+                @click="previous()"
+                >
+                {{ $t('forms.previous') }}
+            </b-button>
+            <b-button
+                variant="danger"
+                class="float-left"
+                @click="next()"
+            >
+                {{ $t('forms.next') }}
+            </b-button>
+                <b-button
                 variant="secondary"
                 class="float-right mr-2"
                 @click="hideModal()"
@@ -157,29 +154,28 @@
     </div>
 </template>
 
-<script>
-import { mapState } from 'vuex';
 
-import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+<script>
+import {mapState} from 'vuex';
+import { createNewTypedThreat } from '@/service/threats/index.js';
+import { CELL_DATA_UPDATED} from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-
 export default {
-    name: 'TdThreatEditDialog',
+    name: 'TdThreatSuggest',
     computed: {
         ...mapState({
             cellRef: (state) => state.cell.ref,
+            modelType: (state) => state.threatmodel.selectedDiagram.diagramType,
             threatTop: (state) => state.threatmodel.data.detail.threatTop
         }),
-        threatTypes() {
-            if (!this.cellRef || !this.threat || !this.threat.modelType) {
+        threatTypes(){
+            if(!this.cellRef || !this.threat || !this.modelType)
                 return [];
-            }
-
             const res = [];
-            const threatTypes = threatModels.getThreatTypesByElement(this.threat.modelType, this.cellRef.data.type);
-            Object.keys(threatTypes).forEach((type) => {
+            const threattypes = threatModels.getThreatTypesByElement(this.modelType, this.cellRef.data.type);
+            Object.keys(threattypes).forEach((type)=>{
                 res.push(this.$t(type));
             }, this);
             return res;
@@ -198,100 +194,63 @@ export default {
                 { value: 'High', text: this.$t('threats.priority.high') }
             ];
         },
-        modalTitle() { return this.$t('threats.edit') + ' #' + this.number; }
+        modalTitle() { return this.$t('threats.newThreatByType') + ' #' + (this.threatTop+1); }
     },
     data() {
         return {
             threat: {},
-            modelTypes: [
-                'CIA',
-                'DIE',
-                'LINDDUN',
-                'PLOT4ai',
-                'STRIDE'
-            ],
-            number: 0
+            index:0
         };
     },
     methods: {
-        editThreat(threatId,state) {
-            const crnthreat = this.cellRef.data.threats.find(x => x.id === threatId);
-            this.threat = {...crnthreat};
-            if (!this.threat) {
-                // this should never happen with a valid threatId
-                console.warn('Trying to access a non-existent threatId: ' + threatId);
-            } else {
-                this.number = this.threat.number;
-                this.newThreat = state==='new';
-                this.$refs.editModal.show();
-            }
+        showModal() {
+            this.modalTitle;
+            this.threat = createNewTypedThreat(this.modelType,this.cellRef.data.type,this.threatTop+1);
+            this.$refs.editModal.show();
         },
-        updateThreat() {
-            const threatRef = this.cellRef.data.threats.find(x => x.id === this.threat.id);
-            if (threatRef) {
-                const objRef = this.cellRef.data;
-                if(!objRef.threatFrequency){
-                    const tmpfreq = threatModels.getFrequencyMapByElement(this.threat.modelType,this.cellRef.data.type);
-                    if(tmpfreq!==null)
-                        objRef.threatFrequency = tmpfreq;
-                }
-                if(objRef.threatFrequency){
-                    Object.keys(objRef.threatFrequency).forEach((k)=>{
-                        if(this.$t(`threats.model.${this.threat.modelType.toLowerCase()}.${k}`)===this.threat.type)
-                            objRef.threatFrequency[k]++;
-                    });
-                }
-                threatRef.status = this.threat.status;
-                threatRef.severity = this.threat.severity;
-                threatRef.title = this.threat.title;
-                threatRef.type = this.threat.type;
-                threatRef.description = this.threat.description;
-                threatRef.mitigation = this.threat.mitigation;
-                threatRef.modelType = this.threat.modelType;
-                threatRef.new = false;
-                threatRef.number = this.number;
-                threatRef.score = this.threat.score;
-                this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
-                this.$store.dispatch(tmActions.modified);
-                dataChanged.updateStyleAttrs(this.cellRef);
-            }
-            this.hideModal();
-        },
-        deleteThreat() {
-            if(!this.threat.new){
-                const threatMap = this.cellRef.data.threatFrequency;
-                Object.keys(threatMap).forEach((k)=>{
-                    if(this.$t(`threats.model.${this.threat.modelType.toLowerCase()}.${k}`)===this.threat.type)
-                        threatMap[k]--;
-                });
-            }
-            this.cellRef.data.threats = this.cellRef.data.threats.filter(x => x.id !== this.threat.id);
-            this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
-            this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
-            this.$store.dispatch(tmActions.modified);
-            dataChanged.updateStyleAttrs(this.cellRef);
-        },
-        hideModal() {
+        hideModal(){
+            this.threat={};
+            this.index=0;
             this.$refs.editModal.hide();
         },
-        async confirmDelete() {
-            const confirmed = await this.$bvModal.msgBoxConfirm(this.$t('threats.confirmDeleteMessage'), {
-                title: this.$t('threats.confirmDeleteTitle'),
-                okTitle: this.$t('forms.delete'),
-                cancelTitle: this.$t('forms.cancel'),
-                okVariant: 'danger'
-            });
-
-            if (!confirmed) { return; }
-
-            this.deleteThreat();
-            this.hideModal();
+        next(){
+            this.index++;
+            if(this.index>=this.threatTypes.length){
+                this.$refs.editModal.hide();
+                this.index=0;
+                return;
+            }
+            this.threat.type = this.threatTypes[this.index];
         },
-        async immediateDelete() {
-            this.deleteThreat();
-            this.hideModal();
+        acceptSuggestion(){
+            const objRef = this.cellRef.data;
+            if(!objRef.threatFrequency){
+                const tmpfreq = threatModels.getFrequencyMapByElement(this.threat.modelType,this.cellRef.data.type);
+                if(tmpfreq!==null)
+                    objRef.threatFrequency = tmpfreq;
+            }
+            if(objRef.threatFrequency){
+                Object.keys(objRef.threatFrequency).forEach((k)=>{
+                    if(this.$t(`threats.model.${this.modelType.toLowerCase()}.${k}`)===this.threat.type)
+                        objRef.threatFrequency[k]++;
+                });
+            }
+            this.threat.new=false;
+            this.cellRef.data.threats.push(this.threat);
+            this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
+            this.$store.dispatch(tmActions.update, {threatTop : this.threatTop+1});
+            this.$store.dispatch(tmActions.modified);
+            this.$store.dispatch(CELL_DATA_UPDATED,this.cellRef.data);
+            dataChanged.updateStyleAttrs(this.cellRef);
+            this.next();
+            
+        },
+        previous(){
+            if(this.index>0){
+                this.index--;
+                this.threat.type = this.threatTypes[this.index];
+            }
         }
     }
 };
-
 </script>

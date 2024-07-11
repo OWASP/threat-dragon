@@ -11,7 +11,6 @@
             <b-card header-tag="header">
                 <template #header>
                     {{ $t('threatmodel.threats') }}
-
                     <b-btn
                         :disabled="disableNewThreat"
                         @click="newThreat()"
@@ -52,11 +51,20 @@
                     </b-card-text>
                 </b-card-body>
             </b-card>
+            <a href="javascript:void(0)" v-if="!!cellRef" @click="AddThreatByType()" class="new-threat-by-type m-2">
+                <font-awesome-icon icon="plus"></font-awesome-icon>
+                {{ $t('threats.newThreatByType') }}
+            </a>
         </b-col>
     </b-row>
 </template>
 
 <style lang="scss" scoped>
+.new-threat-by-type {
+    color: $orange;
+    font-size: 16px;
+    padding: 15px;
+}
 .props-header {
     a {
         font-size: 12px;
@@ -120,6 +128,12 @@ export default {
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
             this.threatSelected(threat.id,'new');
+        },
+        AddThreatByType(){
+            this.$emit('threatSuggest','type');
+        },
+        AddThreatByContext(){
+            this.$emit('threatSuggest','context');
         }
     },
 };

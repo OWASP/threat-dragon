@@ -24,11 +24,12 @@
                 </b-row>
             </b-col>
         </b-row>
-        <td-graph-meta @threatSelected="threatSelected" />
+        <td-graph-meta @threatSelected="threatSelected" @threatSuggest="threatSuggest" />
 
         <div>
             <td-keyboard-shortcuts />
             <td-threat-edit-dialog ref="threatEditDialog" />
+            <td-threat-suggest-dialog ref="threatSuggestDialog" />
         </div>
     </div>
 </template>
@@ -46,6 +47,7 @@ import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
+import TdThreatSuggestDialog from './ThreatSuggestDialog.vue';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import diagramService from '@/service/migration/diagram.js';
@@ -58,7 +60,8 @@ export default {
         TdGraphButtons,
         TdGraphMeta,
         TdKeyboardShortcuts,
-        TdThreatEditDialog
+        TdThreatEditDialog,
+        TdThreatSuggestDialog
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
@@ -85,6 +88,9 @@ export default {
         },
         threatSelected(threatId,state) {
             this.$refs.threatEditDialog.editThreat(threatId,state);
+        },
+        threatSuggest(type){
+            this.$refs.threatSuggestDialog.showModal(type);
         },
         saved() {
             console.debug('Save diagram');

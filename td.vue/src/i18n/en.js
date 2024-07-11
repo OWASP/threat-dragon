@@ -253,7 +253,9 @@ const eng = {
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        search: 'Search'
+        search: 'Search',
+        next:'next',
+        previous:'previous'
     },
     threats: {
         model: {
