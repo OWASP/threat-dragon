@@ -16,7 +16,7 @@ const repos = (req, res) => responseWrapper.sendResponseAsync(async () => {
         logger.debug('Using searchAsync');
         const searchQuery = env.get().config.REPO_SEARCH_QUERY;
         reposResp = await repository.searchAsync(page, req.provider.access_token, searchQuery);
-        repos = reposResp[0].items;
+        repos = reposResp[0].items ?? reposResp[0];
     } else {
         logger.debug('Using reposAsync');
         reposResp = await repository.reposAsync(page, req.provider.access_token);

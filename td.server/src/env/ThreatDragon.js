@@ -17,7 +17,9 @@ class ThreatDragonEnv extends Env {
             { key: 'LOG_MAX_FILE_SIZE', required: false, defaultValue: 24 },
             { key: 'LOG_LEVEL', required: false, defaultValue: 'warn' },
             { key: 'SERVER_API_PROTOCOL', required: false, defaultValue: 'https' },
-            { key: 'REPO_ROOT_DIRECTORY', required: false, defaultValue: 'ThreatDragonModels' }
+            { key: 'REPO_ROOT_DIRECTORY', required: false, defaultValue: 'ThreatDragonModels' },
+            { key: 'REPO_USE_SEARCH', required: false, defaultValue: false },
+            { key: 'REPO_SEARCH_QUERY', required: false }
         ];
     }
 }
