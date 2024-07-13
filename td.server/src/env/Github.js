@@ -18,6 +18,8 @@ class GithubEnv extends Env {
             { key: 'ENTERPRISE_HOSTNAME', required: false },
             { key: 'ENTERPRISE_PORT', required: false, defaultValue: 443 },
             { key: 'ENTERPRISE_PROTOCOL', required: false, defaultValue: 'https' },
+            { key: 'USE_SEARCH', required: false, defaultValue: false },
+            { key: 'SEARCH_QUERY', required: false },
             { key: 'REPO_ROOT_DIRECTORY', required: false }
         ];
     }
