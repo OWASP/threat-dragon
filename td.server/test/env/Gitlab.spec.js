@@ -44,7 +44,7 @@ describe('env/Gitlab.js', () => {
     });
 
     it('has a default value for property SCOPE', () => {
-        const value = bitbucketEnv.properties
+        const value = gitlabEnv.properties
             .find(x => x.key === 'SCOPE')
             .defaultValue;
         expect(value).to.equal('read_user read_repository');
