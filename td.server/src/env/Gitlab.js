@@ -14,7 +14,7 @@ class GitlabEnv extends Env {
         return [
             { key: 'CLIENT_ID', required: false },
             { key: 'CLIENT_SECRET', required: false },
-            { key: 'SCOPE', required: false },
+            { key: 'SCOPE', required: false, defaultValue: 'read_user read_repository' },
             { key: 'HOST', required: false },
             { key: 'REDIRECT_URI', required: false },
             { key: 'REPO_ROOT_DIRECTORY', required: false }

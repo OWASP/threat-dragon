@@ -43,6 +43,13 @@ describe('env/Gitlab.js', () => {
         expect(isRequired).to.be.false;
     });
 
+    it('has a default value for property SCOPE', () => {
+        const value = bitbucketEnv.properties
+            .find(x => x.key === 'SCOPE')
+            .defaultValue;
+        expect(value).to.equal('read_user read_repository');
+    });
+
     it('has the optional property HOST', () => {
         const isRequired = gitlabEnv.properties
             .find(x => x.key === 'HOST')

@@ -47,7 +47,7 @@ describe('env/Bitbucket.js', () => {
         const value = bitbucketEnv.properties
             .find(x => x.key === 'SCOPE')
             .defaultValue;
-        expect(value).to.equal('public_repo');
+        expect(value).to.equal('repository:read');
     });
 
     it('has the optional property ENTERPRISE_HOSTNAME', () => {
