@@ -42,8 +42,8 @@ export const model = {
 };
 
 export function getMenuTemplate () {
-    return [
-        ...(isMacOS ? [{ role: 'appMenu' }] : []),
+    var menuTemplate = (isMacOS ? [{ role: 'appMenu' }] : []);
+    menuTemplate.push(
         {
             label: messages[language].desktop.file.heading,
             submenu: [
@@ -52,16 +52,6 @@ export function getMenuTemplate () {
                     click () {
                         openModelRequest('');
                     }
-                },
-                {
-                    label: messages[language].desktop.file.recentDocs,
-                    role: 'recentdocuments',
-                    submenu: [
-                        {
-                            label: messages[language].desktop.file.clearRecentDocs,
-                            role: 'clearrecentdocuments'
-                        }
-                    ]
                 },
                 {
                     label: messages[language].desktop.file.save,
@@ -166,7 +156,25 @@ export function getMenuTemplate () {
                 { role: 'about' }
             ]
         }
-    ];
+    );
+
+    if (isMacOS) {
+        // recent docs only for macos, see www.electronjs.org/docs/latest/api/menu-item#roles
+        menuTemplate[1].submenu.push(
+            {
+                label: messages[language].desktop.file.recentDocs,
+                role: 'recentdocuments',
+                submenu: [
+                    {
+                        label: messages[language].desktop.file.clearRecentDocs,
+                        role: 'clearrecentdocuments'
+                    }
+                ]
+            }
+        );
+    }
+
+    return menuTemplate;
 }
 
 // Open file system dialog and read file contents into model
