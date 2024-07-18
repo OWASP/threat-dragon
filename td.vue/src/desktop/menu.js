@@ -344,7 +344,8 @@ function savePDFReport (pdfPath) {
     var dialogOptions = {
         title: messages[language].forms.exportPdf,
         defaultPath: pdfPath,
-        filters: [{ name: 'PDF report', extensions: ['.pdf'] }, { name: 'All Files', extensions: ['*'] }]
+        properties: ['openFile'],
+        filters: [{ name: 'PDF report', extensions: ['pdf'] }, { name: 'All Files', extensions: ['*'] }]
     };
 
     dialog.showSaveDialog(dialogOptions).then(result => {
