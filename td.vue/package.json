@@ -153,6 +153,7 @@
     "node-notifier@<8.0.1": ">=8.0.1",
     "node-ipc": ">=11.1.0",
     "nth-check@<2.0.1": ">=2.0.1",
+    "@pm2/agent": ">=2.0.4",
     "postcss@<8.4.31": ">=8.4.31",
     "systeminformation@<5.21.8": ">=5.21.8",
     "tar@>=6.0.0 <6.1.9": ">=6.1.9",
@@ -163,6 +164,7 @@
     },
     "webpack@<5.0.0": ">=5.77.0",
     "webpack-dev-middleware": ">=5.3.4",
+    "ws": ">=7.5.10",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
   "main": "background.js",
