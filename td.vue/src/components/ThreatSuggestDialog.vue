@@ -206,6 +206,8 @@ export default {
         showModal() {
             this.modalTitle;
             this.threat = createNewTypedThreat(this.modelType,this.cellRef.data.type,this.threatTop+1);
+            this.index = 0;
+            this.threat.type = this.threatTypes[0];
             this.$refs.editModal.show();
         },
         hideModal(){
