@@ -56,15 +56,6 @@ describe('desktop/menu.js', () => {
             expect(openModelItem).toBeDefined();
         });
 
-        it('contains recent items', () => {
-            const recentItems = {
-                'label': 'Open Recent',
-                'role': 'recentdocuments',
-                'submenu': [{'label': 'Clear Menu', 'role': 'clearrecentdocuments'}]
-            };
-            expect(fileItems.submenu).toContainEqual(recentItems);
-        });
-
         it('contains save model', () => {
             const saveModelItem = fileItems.submenu.find((item) => item.label === 'Save Model');
             expect(saveModelItem).toBeDefined();

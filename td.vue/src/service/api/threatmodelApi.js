@@ -8,6 +8,10 @@ const extractRepoParts = (fullRepoName) => {
     return { org, repo };
 };
 
+const encodeUrlComponents = (... uriComponents) => {
+    return uriComponents.map(uriComponent => encodeURIComponent(uriComponent));
+};
+
 
 /**
  * Gets the organisation data configured for the express server
@@ -30,7 +34,8 @@ const reposAsync = (page = 1) => {
  */
 const branchesAsync = (fullRepoName, page = 1) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/branches`, { params: { page: page } });
+    const [ encodedOrg, encodedRepo ] = encodeUrlComponents(org, repo);
+    return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/branches`, { params: { page: page } });
 };
 
 /**
@@ -41,7 +46,8 @@ const branchesAsync = (fullRepoName, page = 1) => {
  */
 const modelsAsync = (fullRepoName, branch) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${encodeURIComponent(branch)}/models`);
+    const [ encodedOrg, encodedRepo, encodedBranch ] = encodeUrlComponents(org, repo, branch);
+    return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/models`);
 };
 
 /**
@@ -53,17 +59,20 @@ const modelsAsync = (fullRepoName, branch) => {
  */
 const modelAsync = (fullRepoName, branch, model) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.getAsync(`${resource}/${org}/${repo}/${branch}/${model}/data`);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModel ] = encodeUrlComponents(org, repo, branch, model);
+    return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModel}/data`);
 };
 
 const createAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.postAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/create`, threatModel);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
+    return api.postAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/create`, threatModel);
 };
 
 const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
-    return api.putAsync(`${resource}/${org}/${repo}/${branch}/${modelName}/update`, threatModel);
+    const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
+    return api.putAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/update`, threatModel);
 };
 
 export default {

@@ -4,11 +4,6 @@ import responseWrapper from "./responseWrapper";
 
 const logger = loggerHelper.get('controllers/configcontroller.js');
 
-/**
- * @param {Object} req
- * @param {Object} res
- * @returns {Object}
- */
 const config = (req, res) => responseWrapper.sendResponse(() => getConfig(), req, res, logger);
 
 export const getConfig = () => ({

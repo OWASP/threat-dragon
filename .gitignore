@@ -46,12 +46,43 @@
 
 # Express server
 !td.server
-!td.server/src/**/*.js
-!td.server/test/**/*.js
-!td.server/**/*.js
-!td.server/**/**/*.js
+!td.server/src/
+!td.server/src/*.js
+!td.server/src/config/
+!td.server/src/config/*.js
+!td.server/src/controllers/
+!td.server/src/controllers/*.js
+!td.server/src/env/
+!td.server/src/env/*.js
+!td.server/src/helpers/
+!td.server/src/helpers/*.js
+!td.server/src/providers/
+!td.server/src/providers/*.js
+!td.server/src/repositories/
+!td.server/src/repositories/*.js
+!td.server/test/
+!td.server/test/*.spec.js
+!td.server/test/config/
+!td.server/test/config/*.spec.js
+!td.server/test/controllers/
+!td.server/test/controllers/*.spec.js
+!td.server/test/env/
+!td.server/test/env/*.spec.js
+!td.server/test/helpers/
+!td.server/test/helpers/*.spec.js
+!td.server/test/mocks/
+!td.server/test/mocks/*mock*js
+!td.server/test/providers/
+!td.server/test/providers/*.spec.js
+!td.server/test/public/
+!td.server/test/public/*.ico
+!td.server/test/repositories/
+!td.server/test/repositories/*.spec.js
 !td.server/.babelrc
+!td.server/.eslintrc.js
 !td.server/README.md
+!td.server/dev.js
+!td.server/index.js
 !td.server/package.json
 !td.server/package-lock.json
 

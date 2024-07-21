@@ -82,6 +82,8 @@
                                     v-model="contributors"
                                     @input="onModifyModel()"
                                     variant="primary"
+                                    separator=",;"
+                                    tag-class="mx-2"
                                 ></b-form-tags>
                             </b-form-group>
                         </b-col>
