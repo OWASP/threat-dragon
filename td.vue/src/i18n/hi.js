@@ -253,7 +253,9 @@ const hin = {
         saveAs: 'इस रूप में सहेजें',
         saveModel: 'मॉडल सेव करें',
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
-        search: 'खोज'
+        search: 'खोज',
+        next: 'अगला',
+        previous: 'पहले का'
     },
     threats: {
         model: {

@@ -253,7 +253,9 @@ const deu = {
         saveAs: 'Speichern als',
         saveModel: 'Modell speichern',
         saveModelAs: 'Modell speichern als',
-        search: 'Suchen'
+        search: 'Suchen',
+        next: 'nächste',
+        previous: 'vorherige'
     },
     threats: {
         model: {

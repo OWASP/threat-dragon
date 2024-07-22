@@ -253,7 +253,9 @@ const ell = {
         saveAs: 'Αποθήκευση ως',
         saveModel: 'Αποθήκευση Μοντέλου',
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
-        search: 'Αναζήτηση'
+        search: 'Αναζήτηση',
+        next: 'Επόμενο',
+        previous: 'προηγούμενος'
     },
     threats: {
         model: {
