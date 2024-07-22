@@ -1,0 +1,74 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:05a6d8ea-3679-4f68-85a6-9cf7671db8be",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-07-22T12:10:00Z",
+    "component": {
+      "type": "threat-model",
+      "bom-ref": "6429cc70-f397-412a-8301-d79fb7f1d57d",
+      "name": "example-threat-model",
+      "group": "org.owasp.threat-dragon",
+      "description": "an example TMBOM threat model"
+    },
+    "lifecycles": [
+      {
+        "name": "definition",
+        "description": "an example custom lifecycle phase"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "framework",
+          "bom-ref": "8a908433-fec2-45a5-94ba-603dc7e1b69f",
+          "supplier": {
+            "name": "OWASP",
+            "url": [
+              "https://owasp.org/"
+            ]
+          },
+          "name": "pytm"
+        },
+        {
+          "type": "application",
+          "bom-ref": "98b2cfc1-d0eb-469d-b66f-c9e1a1786ff4",
+          "supplier": {
+            "name": "OWASP",
+            "url": [
+              "https://owasp.org/"
+            ]
+          },
+          "name": "threat-dragon"
+        }
+      ]
+    },
+    "authors": [
+	    {
+	      "bom-ref": "195f3d77-78b8-4e6c-9763-81c32c6977b1",
+	      "name": "Example Security Architects",
+	      "email": "security.architects@example.com"
+	    },
+	    {
+	      "bom-ref": "3c1d144a-0e7e-41bc-aae8-e7b795858c30",
+	      "name": "Example Dev Team",
+	      "email": "dev.team@example.com"
+	    }
+    ],
+    "licenses": [
+      {
+        "license": {
+	      "bom-ref": "53a95a81-c47b-4d84-9434-a262c1df78a8",
+	      "id": "MIT"
+        }
+      },
+      {
+        "license": {
+	      "bom-ref": "4e64f251-0816-4e71-86a9-fb698a46cb74",
+          "id": "Apache-2.0"
+        }
+      }
+    ]
+  }
+}
