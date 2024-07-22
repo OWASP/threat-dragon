@@ -253,7 +253,9 @@ const ms = {
         saveAs: 'Simpan Sebagai',
         saveModel: 'Simpan Model',
         saveModelAs: 'Simpan Model Sebagai',
-        search: 'Carian'
+        search: 'Carian',
+        next: 'seterusnya',
+        previous: 'sebelumnya'
     },
     threats: {
         model: {

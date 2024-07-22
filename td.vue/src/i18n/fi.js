@@ -253,7 +253,9 @@ const fin = {
         saveAs: 'Tallenna Nimellä',
         saveModel: 'Tallenna Uhkamalli',
         saveModelAs: 'Tallenna Uhkamalli Nimellä',
-        search: 'Etsi'
+        search: 'Etsi',
+        next: 'Seuraava',
+        previous: 'Edellinen'
     },
     threats: {
         model: {

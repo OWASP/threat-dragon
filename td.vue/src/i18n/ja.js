@@ -249,7 +249,9 @@ const jpn = {
         saveAs: '名前を付けて保存',
         saveModel: 'モデルを保存',
         saveModelAs: '名前を付けてモデルを保存',
-        search: '検索'
+        search: '検索',
+        next: '次',
+        previous: '前の'
     },
     threats: {
         model: {

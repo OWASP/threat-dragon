@@ -253,7 +253,9 @@ const id = {
         saveAs: 'Simpan Sebagai',
         saveModel: 'Simpan Model',
         saveModelAs: 'Simpan Model Sebagai',
-        search: 'Cari'
+        search: 'Cari',
+        next: 'Berikutnya',
+        previous: 'sebelumnya'
     },
     threats: {
         model: {

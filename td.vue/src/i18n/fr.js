@@ -253,7 +253,9 @@ const fra = {
         saveAs: 'Sauvergarder en tant que',
         saveModel: 'Sauvergarder le modèle',
         saveModelAs: 'Sauvergarder le modèle en tant que',
-        search: 'Rechercher'
+        search: 'Rechercher',
+        next: 'suivant',
+        previous: 'précédent'
     },
     threats: {
         model: {

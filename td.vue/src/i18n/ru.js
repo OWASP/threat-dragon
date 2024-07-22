@@ -253,7 +253,9 @@ const rus = {
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        search: 'Search'
+        search: 'Search',
+        next: 'Next',
+        previous: 'Previous'
     },
     threats: {
         model: {

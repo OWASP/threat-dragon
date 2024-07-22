@@ -253,7 +253,9 @@ const spa = {
         saveAs: 'Guardar como',
         saveModel: 'Guardar modelo',
         saveModelAs: 'Guardar modelo como',
-        search: 'Buscar'
+        search: 'Buscar',
+        next: 'próximo',
+        previous: 'Previo'
     },
     threats: {
         model: {

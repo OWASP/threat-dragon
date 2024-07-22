@@ -255,7 +255,9 @@ const ara = {
         saveAs: 'حفظ كـ',
         saveModel: 'حفظ النموذج',
         saveModelAs: 'حفظ النموذج كـ',
-        search: 'بحث'
+        search: 'بحث',
+        next: 'التالي',
+        previous: 'السابق'
     },
     threats: {
         model: {

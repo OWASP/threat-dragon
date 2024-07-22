@@ -253,7 +253,9 @@ const zho = {
         saveAs: '保存为',
         saveModel: '保存模型',
         saveModelAs: '模型保存为',
-        search: '搜索'
+        search: '搜索',
+        next: '下一个',
+        previous: '以前的'
     },
     threats: {
         model: {

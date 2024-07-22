@@ -253,7 +253,9 @@ const por = {
         saveAs: 'Save As',
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
-        search: 'Search'
+        search: 'Search',
+        next: 'próximo',
+        previous: 'anterior'
     },
     threats: {
         model: {
