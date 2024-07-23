@@ -1,16 +1,16 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:05a6d8ea-3679-4f68-85a6-9cf7671db8be",
+  "serialNumber": "urn:uuid:7c98e327-6fe1-4cf7-8095-89d660792923",
   "version": 1,
   "metadata": {
     "timestamp": "2024-07-22T12:10:00Z",
     "component": {
       "type": "application",
       "bom-ref": "6429cc70-f397-412a-8301-d79fb7f1d57d",
-      "name": "example-application",
+      "name": "Test project",
       "group": "org.owasp.cyclonedx",
-      "description": "an example threat model to demonstrate mapping from OTM to TMBOM"
+      "description": "This is a test project to demonstrate mapping from OTM to TMBOM"
     },
     "lifecycles": [
       {
@@ -37,8 +37,8 @@
     "authors": [
 	    {
 	      "bom-ref": "3c1d144a-0e7e-41bc-aae8-e7b795858c30",
-	      "name": "Example Dev Team",
-	      "email": "dev.team@example.com"
+	      "name": "John Doe",
+	      "email": "john.doe@example.com"
 	    }
     ],
     "licenses": [
@@ -49,5 +49,403 @@
         }
       }
     ]
-  }
+  },
+  "components": [
+    {
+      "type": "threat-model",
+      "bom-ref": "3e83e6e7-f465-43c1-a38b-6bc7eaa6df36",
+      "name": "Architecture Diagram",
+      "description": "example threat model provided by OTM project",
+      "properties": [
+        {
+          "name": "cdx:model:type",
+          "value": "diagram"
+        },
+        {
+          "name": "cdx:model:diagram:width",
+          "value": "1000"
+        },
+        {
+          "name": "cdx:model:diagram:height",
+          "value": "1100"
+        }
+      ],
+      "components": [
+        {
+          "type": "threat-model",
+          "bom-ref": "a24cf9da-89d3-44ee-ac08-cd7e102fb7bf",
+          "name": "Internet",
+          "description": "This is the internet trust zone",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            },
+            {
+              "name": "cdx:model:risk:trustRating",
+              "value": "20"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "internet-box-shape"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "600"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "440feb4d-e841-4f52-a8a8-e208e4515924",
+          "name": "private",
+          "description": "Private trustzone for protected components",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            },
+            {
+              "name": "cdx:model:risk:trustRating",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "private-box-shape"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "3ec7bd27-0c79-4908-adc4-1d3ae75ccfef",
+          "name": "Credit Card Data",
+          "description": "Credit card numbers used for payments in the platform",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "asset"
+            },
+            {
+              "name": "cdx:model:risk:description",
+              "value": "We have decided that the values are 100 for all attributes because this is highly sensitive information"
+            },
+            {
+              "name": "cdx:model:risk:privacy",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:confidentiality",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:integrity",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:availability",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:processedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "c1583bd9-4a02-4c0f-acc6-49b6b20a3dff",
+          "name": "Public Info",
+          "description": "Public information meant to be seen by any interested customer",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "asset"
+            },
+            {
+              "name": "cdx:model:risk:description",
+              "value": "Public information has zero confidentiality but it is quite important for it to be available and not changed by attackers"
+            },
+            {
+              "name": "cdx:model:risk:privacy",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:risk:confidentiality",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:risk:integrity",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:availability",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:processedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            },
+            {
+              "name": "cdx:model:storedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "c56348df-69fe-47c5-a94b-333351da5bc8",
+          "name": "Web Client",
+          "description": "It represent a connection from the internet to our ecosystem",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "actor"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "a24cf9da-89d3-44ee-ac08-cd7e102fb7bf"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "web-client-box"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "4915449c-3dff-46a3-a1ab-5de34ff15f67",
+          "name": "Web Service",
+          "description": "Runs our web application",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "server"
+            },
+            {
+              "name": "cdx:model:platform",
+              "value": "Tomcat"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "440feb4d-e841-4f52-a8a8-e208e4515924"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "web-service-box"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "86eccaff-e86c-4e32-9d4d-d36192cb91ea",
+          "name": "Customer Database",
+          "description": "Postgres database",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "datastore"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "440feb4d-e841-4f52-a8a8-e208e4515924"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "box-for-postgress-DB"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "200"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "64a01d41-8dd5-439a-bd79-e787aed53ac4",
+          "name": "webclient-to-webservice",
+          "description": "Bidirectional dataflow between webclient and webservice",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:isBidirectional",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "c56348df-69fe-47c5-a94b-333351da5bc8"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "83ab4384-4563-4251-901e-e34e6f6532e1",
+          "name": "cc-store-in-db",
+          "description": "Bidirectional dataflow between webservice and mongo",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:isBidirectional",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "86eccaff-e86c-4e32-9d4d-d36192cb91ea"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "tag1-df"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "tag2-df"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "3ec7bd27-0c79-4908-adc4-1d3ae75ccfef"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "threat-model",
+      "bom-ref": "c7607565-162e-4b34-b95e-4d6dc1d5a14f",
+      "name": "Application Code",
+      "description": "example of application code provided by OTM project",
+      "properties": [
+        {
+          "name": "cdx:model:type",
+          "value": "repository"
+        },
+        {
+          "name": "cdx:model:repository:url",
+          "value": "https://github.com/my-project"
+        }
+      ],
+      "components": [
+        {
+          "type": "threat-model",
+          "bom-ref": "e8991c85-d937-42ed-89bf-6fe47e2b1633",
+          "name": "Class CustomerDatabase",
+          "description": "Managages customer database",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "code"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "440feb4d-e841-4f52-a8a8-e208e4515924"
+            },
+            {
+              "name": "cdx:model:code:file",
+              "value": "src/main/otm-file/OTMClass.java"
+            },
+            {
+              "name": "cdx:model:code:line",
+              "value": "324"
+            },
+            {
+              "name": "cdx:model:code:snippet",
+              "value": "public void createOTM(String[] args) {Scanner reader = new Scanner(System.in); System.out.print(\"Enter a number: \"); int number = reader.nextInt() System.out.println(\"You entered: \" + number); }"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

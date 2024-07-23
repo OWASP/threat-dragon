@@ -137,7 +137,7 @@
               "value": "server"
             },
             {
-              "name": "cdx:model:OS",
+              "name": "cdx:model:platform",
               "value": "CloudOS"
             },
             {
@@ -157,7 +157,7 @@
               "value": "datastore"
             },
             {
-              "name": "cdx:model:OS",
+              "name": "cdx:model:platform",
               "value": "CentOS"
             },
             {
@@ -184,6 +184,10 @@
           "name": "cleanDBevery6hours",
           "description": "Lambda function component",
           "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "lambda"
+            },
             {
               "name": "cdx:model:hasAccessControl",
               "value": "true"
