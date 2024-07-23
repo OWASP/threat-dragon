@@ -1,0 +1,53 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:05a6d8ea-3679-4f68-85a6-9cf7671db8be",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-07-22T12:10:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "6429cc70-f397-412a-8301-d79fb7f1d57d",
+      "name": "example-application",
+      "group": "org.owasp.cyclonedx",
+      "description": "an example threat model to demonstrate mapping from OTM to TMBOM"
+    },
+    "lifecycles": [
+      {
+        "name": "migration",
+        "description": "another example custom lifecycle phase"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "bom-ref": "98b2cfc1-d0eb-469d-b66f-c9e1a1786ff4",
+          "name": "threat-dragon",
+          "supplier": {
+            "name": "OWASP",
+            "url": [
+              "https://owasp.org/"
+            ]
+          },
+          "version": "2.2.0"
+        }
+      ]
+    },
+    "authors": [
+	    {
+	      "bom-ref": "3c1d144a-0e7e-41bc-aae8-e7b795858c30",
+	      "name": "Example Dev Team",
+	      "email": "dev.team@example.com"
+	    }
+    ],
+    "licenses": [
+      {
+        "license": {
+	      "bom-ref": "4e64f251-0816-4e71-86a9-fb698a46cb74",
+          "id": "Apache-2.0"
+        }
+      }
+    ]
+  }
+}
