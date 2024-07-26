@@ -28,6 +28,8 @@ const limiter = rateLimit({
 const cspDirectives = {
     directives: {
         'default-src': [SELF],
+        'frame-ancestors': [NONE],
+        'form-action': [NONE],
         'script-src': [SELF],
         'style-src': [SELF],
         'img-src': [SELF],
