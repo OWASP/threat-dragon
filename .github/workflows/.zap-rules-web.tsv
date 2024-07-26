@@ -7,14 +7,3 @@
 10062	OUTOFSCOPE	.*_bom\..*
 10094	OUTOFSCOPE	.*_bom\..*
 10110	OUTOFSCOPE	.*jquery\.min\.js
-10003	IGNORE	(docs/assets/js/jquery.dataTables.min.js)
-10094	IGNORE	Base64 Disclosure
-10027	IGNORE	Information Disclosure - Suspicious Comments
-10096	IGNORE	Timestamp Disclosure - Unix
-10099	IGNORE	Source Code Disclosure - SQL
-10109	IGNORE	Modern Web Application
-10049	IGNORE	Non-Storable Content
-10055	IGNORE	(CSP: style-src unsafe-inline)
-10063	IGNORE	(Feature Policy Header Not Set)
-90005	IGNORE	(Sec-Fetch-Dest Header is Missing)
-40039	IGNORE	Web Cache Deception
