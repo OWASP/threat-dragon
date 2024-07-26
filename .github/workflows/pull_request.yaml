@@ -363,6 +363,7 @@ jobs:
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
           allow_issue_writing: false
           fail_action: true
+          artifact_name: zap-scan-report
           cmd_options: '-a'
 
   scan_image_with_trivy:

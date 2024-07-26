@@ -1,3 +1,5 @@
+import { expressCspHeader, NONE, SELF } from 'express-csp-header';
+
 import express from 'express';
 import path from 'path';
 import rateLimit from 'express-rate-limit';
@@ -23,6 +25,17 @@ const limiter = rateLimit({
     legacyHeaders: false // Disable the `X-RateLimit-*` headers
 });
 
+const cspDirectives = {
+    directives: {
+        'default-src': [SELF],
+        'script-src': [SELF],
+        'style-src': [SELF],
+        'img-src': [SELF],
+        'worker-src': [NONE],
+        'block-all-mixed-content': true
+    }
+};
+
 const create = () => {
     let logger;
 
@@ -46,6 +59,7 @@ const create = () => {
 
         // Force HTTPS in production
         app.use(https.middleware);
+        app.use(expressCspHeader(cspDirectives));
 
         // static content
         app.use('/public', express.static(siteDir));

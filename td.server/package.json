@@ -44,6 +44,7 @@
     "bitbucket": "^2.11.0",
     "dotenv": "^16.0.3",
     "express": "^4.19.2",
+    "express-csp-header": "^5.2.1",    
     "express-rate-limit": "^7.2.0",
     "helmet": "^6.0.1",
     "jsonwebtoken": "^9.0.0",
