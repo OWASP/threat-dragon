@@ -7,5 +7,6 @@
 10062	OUTOFSCOPE	.*_bom\..*
 10094	OUTOFSCOPE	.*_bom\..*
 10110	OUTOFSCOPE	.*jquery\.min\.js
-10063	IGNORE	(Feature Policy Header Not Set)
+10055	IGNORE	CSP: script-src unsafe-eval
+10063	IGNORE	Permissions Policy Header Not Set
 40039	IGNORE	Web Cache Deception
