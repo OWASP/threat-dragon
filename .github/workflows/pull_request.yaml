@@ -9,6 +9,7 @@ env:
   # threatdragon is the working area on docker hub so use this area
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: "pr-${{ github.event.number }}"
+  ZAP_FILE: "zap-scan-pr-${{ github.event.number }}"
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -155,7 +156,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.5.0
+        uses: docker/setup-buildx-action@v3.6.1
         with:
           install: true
 
@@ -363,7 +364,7 @@ jobs:
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
           allow_issue_writing: false
           fail_action: true
-          artifact_name: zap-scan-report
+          artifact_name: ${{ env.ZAP_FILE }}
           cmd_options: '-a'
 
   scan_image_with_trivy:
