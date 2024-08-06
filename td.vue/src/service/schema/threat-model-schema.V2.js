@@ -393,11 +393,11 @@ export const schema = {
                                                 'properties': {
                                                     'x': {
                                                         'description': 'The horizontal value of the curve point',
-                                                        'type': 'integer'
+                                                        'type': 'number'
                                                     },
                                                     'y': {
                                                         'description': 'The vertical value of the curve point',
-                                                        'type': 'integer'
+                                                        'type': 'number'
                                                     }
                                                 },
                                                 'required': [ 'x', 'y' ]
