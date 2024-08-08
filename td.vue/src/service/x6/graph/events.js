@@ -8,6 +8,10 @@ import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
 import shapes from '@/service/x6/shapes/index.js';
 
+const canvasResized = ({ width, height }) => {
+    console.debug('canvas resized to width ', width, ' height ', height);
+};
+
 const edgeConnected = ({ isNew, edge }) => {
     if (isNew) {
         edge.connector = 'smooth';
@@ -142,6 +146,7 @@ const nodeAddFlow = (graph) => ({ node }) => {
 };
 
 const listen = (graph) => {
+    graph.on('resize', canvasResized);
     graph.on('edge:connected', edgeConnected);
     graph.on('edge:dblclick', cellSelected);
     graph.on('edge:move', cellSelected);
@@ -157,6 +162,7 @@ const listen = (graph) => {
 };
 
 const removeListeners = (graph) => {
+    graph.off('resize', canvasResized);
     graph.off('edge:connected', edgeConnected);
     graph.off('edge:dblclick', cellSelected);
     graph.off('edge:move', cellSelected);

@@ -1,0 +1,712 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:d6284e9f-35ea-44a2-9d74-3e20c2abc574",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-07-22T12:10:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "6429cc70-f397-412a-8301-d79fb7f1d57d",
+      "name": "multi-example-application",
+      "group": "org.owasp.cyclonedx",
+      "description": "an example application to demonstrate multi-diagram TMBOMs"
+    },
+    "lifecycles": [
+      {
+        "name": "definition",
+        "description": "an example custom lifecycle phase"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "framework",
+          "bom-ref": "8a908433-fec2-45a5-94ba-603dc7e1b69f",
+          "name": "pytm",
+          "supplier": {
+            "name": "OWASP",
+            "url": [
+              "https://owasp.org/"
+            ]
+          },
+          "version": "1.3.1"
+        },
+        {
+          "type": "application",
+          "bom-ref": "98b2cfc1-d0eb-469d-b66f-c9e1a1786ff4",
+          "name": "threat-dragon",
+          "supplier": {
+            "name": "OWASP",
+            "url": [
+              "https://owasp.org/"
+            ]
+          },
+          "version": "2.2.0"
+        }
+      ]
+    },
+    "authors": [
+	    {
+	      "bom-ref": "195f3d77-78b8-4e6c-9763-81c32c6977b1",
+	      "name": "Example Security Architects",
+	      "email": "security.architects@example.com"
+	    },
+	    {
+	      "bom-ref": "3c1d144a-0e7e-41bc-aae8-e7b795858c30",
+	      "name": "Example Dev Team",
+	      "email": "dev.team@example.com"
+	    }
+    ],
+    "licenses": [
+      {
+        "license": {
+	      "bom-ref": "53a95a81-c47b-4d84-9434-a262c1df78a8",
+	      "id": "MIT"
+        }
+      },
+      {
+        "license": {
+	      "bom-ref": "4e64f251-0816-4e71-86a9-fb698a46cb74",
+          "id": "Apache-2.0"
+        }
+      }
+    ]
+  },
+  "compositions": [
+    {
+      "bom-ref": "59605a5f-8600-45cf-8a84-10f037bdfb07",
+      "aggregate": "complete",
+      "assemblies": [
+        "urn:cdx:a09f1474-d6db-4f36-a144-78157b5a6b62",
+        "urn:cdx:3e83e6e7-f465-43c1-a38b-6bc7eaa6df36"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "type": "threat-model",
+      "bom-ref": "a09f1474-d6db-4f36-a144-78157b5a6b62",
+      "name": "my test tm",
+      "description": "another test tm: example threat model provided by pytm project",
+      "properties": [
+        {
+          "name": "cdx:model:isOrdered",
+          "value": "true"
+        }
+      ],
+      "components": [
+        {
+          "type": "threat-model",
+          "bom-ref": "3728d893-ade1-4aeb-96b1-fce4f593c55b",
+          "name": "User/Web",
+          "description": "User/Web Boundary component",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "b3312697-2e9a-4bd4-8142-c191e87edbb6",
+          "name": "Web/DB",
+          "description": "Web/DB Boundary component",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "7afef226-750c-4a6c-8ae1-705983e00682",
+          "name": "User",
+          "description": "Actor component for a User",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "actor"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "3728d893-ade1-4aeb-96b1-fce4f593c55b"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "9f70fdae-ceeb-43c2-b223-361befb16aed",
+          "name": "Web Server",
+          "description": "Web Server component",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "server"
+            },
+            {
+              "name": "cdx:model:platform",
+              "value": "CloudOS"
+            },
+            {
+              "name": "cdx:model:isHardened",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "7d008c00-21c7-4d61-96ac-6d946894a31d",
+          "name": "SQL Database (*)",
+          "description": "SQL Database Datastore component",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "datastore"
+            },
+            {
+              "name": "cdx:model:platform",
+              "value": "CentOS"
+            },
+            {
+              "name": "cdx:model:isHardened",
+              "value": "false"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "b3312697-2e9a-4bd4-8142-c191e87edbb6"
+            },
+            {
+              "name": "cdx:model:datastore:isSql",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:inScope",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "1889fa4e-756e-434e-929c-cbd2cd0cd207",
+          "name": "cleanDBevery6hours",
+          "description": "Lambda function component",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "lambda"
+            },
+            {
+              "name": "cdx:model:hasAccessControl",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "b3312697-2e9a-4bd4-8142-c191e87edbb6"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "9efe43aa-6567-4a34-86ce-ecef7f6bb10e",
+          "name": "(&lambda;)Periodically cleans DB",
+          "description": "Dataflow from Lambda function to Database",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "1889fa4e-756e-434e-929c-cbd2cd0cd207"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "7d008c00-21c7-4d61-96ac-6d946894a31d"
+            },
+            {
+              "name": "cdx:model:dataflow:protocol",
+              "value": "SQL"
+            },
+            {
+              "name": "cdx:model:dataflow:port:destination",
+              "value": "3306"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "07d33d7b-9852-4fab-9b6b-654d802e1c6c",
+          "name": "User enters comments (*)",
+          "description": "Request dataflow from User to Web Server",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "7afef226-750c-4a6c-8ae1-705983e00682"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "9f70fdae-ceeb-43c2-b223-361befb16aed"
+            },
+            {
+              "name": "cdx:model:dataflow:protocol",
+              "value": "HTTP"
+            },
+            {
+              "name": "cdx:model:dataflow:port:destination",
+              "value": "80"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "Comments in HTML or Markdown"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "8b95b391-3c71-4eb5-a3d9-13d35d05c2c7",
+          "name": "Comments saved (*)",
+          "description": "Response dataflow from Web Server to User",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "9f70fdae-ceeb-43c2-b223-361befb16aed"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "7afef226-750c-4a6c-8ae1-705983e00682"
+            },
+            {
+              "name": "cdx:model:dataflow:protocol",
+              "value": "HTTP"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "Ack of saving or error message, in JSON"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "bc8fae5a-5fde-4e60-aa05-231e3df72536",
+          "name": "Insert query with comments",
+          "description": "Query dataflow from Web Server to SQL Database",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "9f70fdae-ceeb-43c2-b223-361befb16aed"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "7d008c00-21c7-4d61-96ac-6d946894a31d"
+            },
+            {
+              "name": "cdx:model:dataflow:protocol",
+              "value": "MySQL"
+            },
+            {
+              "name": "cdx:model:dataflow:port:destination",
+              "value": "3306"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "MySQL insert statement, all literals"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "20531b99-0a0d-472e-89c4-7031ddbf438c",
+          "name": "Comments contents",
+          "description": "Results dataflow from SQL Database to Web Server",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "7d008c00-21c7-4d61-96ac-6d946894a31d"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "9f70fdae-ceeb-43c2-b223-361befb16aed"
+            },
+            {
+              "name": "cdx:model:dataflow:protocol",
+              "value": "MySQL"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "Results of insert op"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "threat-model",
+      "bom-ref": "3e83e6e7-f465-43c1-a38b-6bc7eaa6df36",
+      "name": "Architecture Diagram",
+      "description": "example threat model provided by OTM project",
+      "properties": [
+        {
+          "name": "cdx:model:type",
+          "value": "diagram"
+        },
+        {
+          "name": "cdx:model:diagram:width",
+          "value": "1000"
+        },
+        {
+          "name": "cdx:model:diagram:height",
+          "value": "1100"
+        }
+      ],
+      "components": [
+        {
+          "type": "threat-model",
+          "bom-ref": "a24cf9da-89d3-44ee-ac08-cd7e102fb7bf",
+          "name": "Internet",
+          "description": "This is the internet trust zone",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            },
+            {
+              "name": "cdx:model:risk:trustRating",
+              "value": "20"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "internet-box-shape"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "600"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "440feb4d-e841-4f52-a8a8-e208e4515924",
+          "name": "private",
+          "description": "Private trustzone for protected components",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "boundary"
+            },
+            {
+              "name": "cdx:model:risk:trustRating",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "private-box-shape"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "3ec7bd27-0c79-4908-adc4-1d3ae75ccfef",
+          "name": "Credit Card Data",
+          "description": "Credit card numbers used for payments in the platform",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "asset"
+            },
+            {
+              "name": "cdx:model:risk:description",
+              "value": "We have decided that the values are 100 for all attributes because this is highly sensitive information"
+            },
+            {
+              "name": "cdx:model:risk:privacy",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:confidentiality",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:integrity",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:availability",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:processedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "c1583bd9-4a02-4c0f-acc6-49b6b20a3dff",
+          "name": "Public Info",
+          "description": "Public information meant to be seen by any interested customer",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "asset"
+            },
+            {
+              "name": "cdx:model:risk:description",
+              "value": "Public information has zero confidentiality but it is quite important for it to be available and not changed by attackers"
+            },
+            {
+              "name": "cdx:model:risk:privacy",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:risk:confidentiality",
+              "value": "0"
+            },
+            {
+              "name": "cdx:model:risk:integrity",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:risk:availability",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:processedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            },
+            {
+              "name": "cdx:model:storedBy",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "c56348df-69fe-47c5-a94b-333351da5bc8",
+          "name": "Web Client",
+          "description": "It represent a connection from the internet to our ecosystem",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "actor"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "a24cf9da-89d3-44ee-ac08-cd7e102fb7bf"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "web-client-box"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "4915449c-3dff-46a3-a1ab-5de34ff15f67",
+          "name": "Web Service",
+          "description": "Runs our web application",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "server"
+            },
+            {
+              "name": "cdx:model:platform",
+              "value": "Tomcat"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "440feb4d-e841-4f52-a8a8-e208e4515924"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "web-service-box"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "86eccaff-e86c-4e32-9d4d-d36192cb91ea",
+          "name": "Customer Database",
+          "description": "Postgres database",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "datastore"
+            },
+            {
+              "name": "cdx:model:inBoundary",
+              "value": "440feb4d-e841-4f52-a8a8-e208e4515924"
+            },
+            {
+              "name": "cdx:model:shape",
+              "value": "box-for-postgress-DB"
+            },
+            {
+              "name": "cdx:model:shape:width",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:height",
+              "value": "50"
+            },
+            {
+              "name": "cdx:model:shape:x",
+              "value": "200"
+            },
+            {
+              "name": "cdx:model:shape:y",
+              "value": "100"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "64a01d41-8dd5-439a-bd79-e787aed53ac4",
+          "name": "webclient-to-webservice",
+          "description": "Bidirectional dataflow between webclient and webservice",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:isBidirectional",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "c56348df-69fe-47c5-a94b-333351da5bc8"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            }
+          ]
+        },
+        {
+          "type": "threat-model",
+          "bom-ref": "83ab4384-4563-4251-901e-e34e6f6532e1",
+          "name": "cc-store-in-db",
+          "description": "Bidirectional dataflow between webservice and mongo",
+          "properties": [
+            {
+              "name": "cdx:model:type",
+              "value": "dataflow"
+            },
+            {
+              "name": "cdx:model:dataflow:isBidirectional",
+              "value": "true"
+            },
+            {
+              "name": "cdx:model:dataflow:source",
+              "value": "4915449c-3dff-46a3-a1ab-5de34ff15f67"
+            },
+            {
+              "name": "cdx:model:dataflow:destination",
+              "value": "86eccaff-e86c-4e32-9d4d-d36192cb91ea"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "tag1-df"
+            },
+            {
+              "name": "cdx:model:tag",
+              "value": "tag2-df"
+            },
+            {
+              "name": "cdx:model:dataflow:data",
+              "value": "3ec7bd27-0c79-4908-adc4-1d3ae75ccfef"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
