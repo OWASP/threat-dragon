@@ -182,6 +182,8 @@ export default {
             Object.keys(threatTypes).forEach((type) => {
                 res.push(this.$t(type));
             }, this);
+            if(!res.includes(this.threat.type))
+                res.push(this.threat.type);
             return res;
         },
         statuses() {
