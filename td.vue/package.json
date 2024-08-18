@@ -20,7 +20,7 @@
     "start:desktop": "vue-cli-service electron:serve",
     "start:serve": "pm2 --name td.vue start 'vue-cli-service serve'",
     "stop:serve": "pm2 delete td.vue",
-    "test": "vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/",
+    "test": "vue-cli-service test:unit",
     "test:desktop": "vue-cli-service test:unit --testMatch '**/unit/desktop/**/*.spec.js' --collectCoverageFrom 'src/desktop/**/*.js'",
     "test:e2e": "vue-cli-service test:e2e -C e2e.local.config.js",
     "test:e2e:desktop": "wdio run ./wdio.config.js",

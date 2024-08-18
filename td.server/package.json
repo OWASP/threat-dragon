@@ -40,7 +40,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@gitbeaker/rest": "^39.34.2",
-    "axios": "^1.6.0",
+    "axios": "^1.7.4",
     "bitbucket": "^2.11.0",
     "dotenv": "^16.0.3",
     "express": "^4.19.2",
