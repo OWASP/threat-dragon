@@ -5,6 +5,7 @@
 
 [![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg)](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml)
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
+[![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://www.owasp.org/projects)
 
 # OWASP Threat Dragon
 

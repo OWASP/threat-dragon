@@ -30,7 +30,7 @@
 
 # sample threat models
 !ThreatDragonModels
-!ThreatDragonModels/*.json
+!ThreatDragonModels/*model.json
 !ThreatDragonModels/test/
 !ThreatDragonModels/test/*.json
 
@@ -181,4 +181,3 @@
 # utility scripts
 !utils
 !utils/**/*
-
