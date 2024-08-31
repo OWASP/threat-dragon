@@ -90,6 +90,7 @@ jobs:
         with:
           name: sboms-server
           path: './td.server/sbom.*'
+          include-hidden-files: true
 
   desktop_unit_tests:
     name: Desktop unit tests
@@ -172,6 +173,7 @@ jobs:
         with:
           name: sboms-desktop-windows-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
           if-no-files-found: error
 
   desktop_macos:
@@ -232,6 +234,7 @@ jobs:
         with:
           name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
           if-no-files-found: error
 
   desktop_linux:
@@ -281,6 +284,7 @@ jobs:
         with:
           name: sboms-desktop-linux-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
           if-no-files-found: error
 
   desktop_linux_snap:
@@ -337,6 +341,7 @@ jobs:
         with:
           name: sboms-desktop-linux-snap-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
           if-no-files-found: error
 
   dockerhub_release:
@@ -411,6 +416,7 @@ jobs:
         with:
           name: sboms-container-image-app
           path: './boms/*'
+          include-hidden-files: true
           if-no-files-found: error
 
       - # Temp fix for large cache bug
@@ -458,6 +464,7 @@ jobs:
         with:
           name: sboms
           path: 'sboms/'
+          include-hidden-files: true
 
   webapp_release:
     name: Publish web application
