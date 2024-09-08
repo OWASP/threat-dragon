@@ -96,7 +96,7 @@
     "ansi-regex": "5.0.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.5.1",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^4.6.1",
     "browserstack-cypress-cli": "^1.26.2",
     "chromedriver": "^119.0.1",
     "cypress": "^13.7.3",
