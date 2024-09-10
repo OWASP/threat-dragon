@@ -10,6 +10,7 @@ class ThreatDragonEnv extends Env {
     }
 
     // if any  of the defaults are changed then ensure docs are updated in development/environment.md
+    // if the default PORT is changed then ensure the CI pipeline still works
     get properties () {
         return [
             { key: 'NODE_ENV', required: false, defaultValue:  'production'},

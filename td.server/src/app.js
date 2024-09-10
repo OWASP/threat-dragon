@@ -28,8 +28,8 @@ const create = () => {
 
     try {
         envConfig.tryLoadDotEnv();
-        // logging environment
-        loggerHelper.level(env.get().config.LOG_LEVEL || 'info');
+        // logging environment, env will always supply a value
+        loggerHelper.level(env.get().config.LOG_LEVEL);
         logger = loggerHelper.get('app.js');
 
         const app = expressHelper.getInstance();
@@ -57,8 +57,8 @@ const create = () => {
         // routes
         routes.config(app);
 
-        // if this default is changed then ensure docs are updated and CI pipeline still works
-        app.set('port', env.get().config.PORT || 3000);
+        // env will always supply a value for the PORT
+        app.set('port', env.get().config.PORT);
         logger.info('Express server listening on ' + app.get('port'));
 
         logger.info('OWASP Threat Dragon application started');
