@@ -35,7 +35,7 @@ describe('app.js main application', () => {
 
     describe('without errors', () => {
         beforeEach(() => {
-            process.env.NODE_ENV = 'foo';
+            process.env.NODE_ENV = 'production';
             sinon.stub(envConfig, 'tryLoadDotEnv');
             appFactory.create();
         });
@@ -80,7 +80,7 @@ describe('app.js main application', () => {
 
     describe('with default environment', () => {
         beforeEach(() => {
-            process.env.NODE_ENV = 'development';
+            process.env.ENV_FILE = 'none';
             sinon.stub(envConfig, 'tryLoadDotEnv');
             appFactory.create();
         });
@@ -96,7 +96,7 @@ describe('app.js main application', () => {
 
     describe('with development environment', () => {
         beforeEach(() => {
-            process.env.ENV_FILE = 'none';
+            process.env.NODE_ENV = 'development';
             sinon.stub(envConfig, 'tryLoadDotEnv');
             appFactory.create();
         });
@@ -111,7 +111,7 @@ describe('app.js main application', () => {
 
         beforeEach(() => {
             sinon.stub(envConfig, 'tryLoadDotEnv').throws(err);
-            process.env.NODE_ENV = 'foo';
+            process.env.NODE_ENV = 'production';
         });
 
         it('rethrows the error', () => {
