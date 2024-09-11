@@ -139,6 +139,7 @@
   "overrides": {
     "@achrinza/node-ipc": ">=10.1.11",
     "@babel/traverse": ">=7.23.2",
+    "body-parser": ">=1.20.3",
     "braces": ">=3.0.3",
     "debug@<3.1.0": ">=4.3.4",
     "electron-builder@<23.0.3": ">=23.0.3",
@@ -152,6 +153,7 @@
     "node-notifier@<8.0.1": ">=8.0.1",
     "node-ipc": ">=12.0.0",
     "nth-check@<2.0.1": ">=2.0.1",
+    "path-to-regexp@<1.0.0": "0.1.10",
     "postcss@<8.4.31": ">=8.4.31",
     "systeminformation@<5.21.8": ">=5.21.8",
     "tar@>=6.0.0 <6.1.9": ">=6.1.9",
