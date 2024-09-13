@@ -203,6 +203,10 @@ const jpn = {
             zoom: {
                 shortcut: '(コントロール/コマンド) + ホイール',
                 action: '拡大・縮小'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

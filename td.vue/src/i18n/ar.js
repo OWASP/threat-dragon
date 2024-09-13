@@ -207,6 +207,10 @@ const ara = {
             zoom: {
                 shortcut: '(ctrl/cmd) + عجلة الماوس',
                 action: 'تكبير/تصغير'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

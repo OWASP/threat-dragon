@@ -207,6 +207,10 @@ const fra = {
             zoom: {
                 shortcut: '(ctrl/cmd) + molette de souris',
                 action: 'Agrandir'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

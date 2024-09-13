@@ -49,6 +49,10 @@ export default {
                 {
                     shortcut: this.$t('threatmodel.shortcuts.zoom.shortcut'),
                     action: this.$t('threatmodel.shortcuts.zoom.action')
+                },
+                {
+                    shortcut: this.$t('threatmodel.shortcuts.save.shortcut'),
+                    action: this.$t('threatmodel.shortcuts.save.action')
                 }
             ]
         };

@@ -207,6 +207,10 @@ const por = {
             zoom: {
                 shortcut: '(ctrl/cmd) + rolagem do mouse',
                 action: 'Zoom'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

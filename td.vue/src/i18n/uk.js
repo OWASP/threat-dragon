@@ -207,6 +207,10 @@ const ukr = {
             zoom: {
                 shortcut: '(ctrl/cmd) + mousewheel',
                 action: 'Zoom'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
