@@ -207,6 +207,10 @@ const ell = {
             zoom: {
                 shortcut: '(ctrl/cmd) + τροχός κύλισης',
                 action: 'Εστίαση'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

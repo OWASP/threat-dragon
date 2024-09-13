@@ -207,6 +207,10 @@ const deu = {
             zoom: {
                 shortcut: '(Strg/cmd) + Mausrad',
                 action: 'Zoomen'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

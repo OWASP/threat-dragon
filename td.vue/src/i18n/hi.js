@@ -207,6 +207,10 @@ const hin = {
             zoom: {
                 shortcut: '(ctrl/cmd) + mousewheel',
                 action: 'ज़ूम'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

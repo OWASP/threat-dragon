@@ -207,6 +207,10 @@ const fin = {
             zoom: {
                 shortcut: '(ctrl/cmd) + rulla',
                 action: 'Suurennos'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

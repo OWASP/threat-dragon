@@ -207,6 +207,10 @@ const ms = {
             zoom: {
                 shortcut: '(ctrl/cmd) + roda tetikus',
                 action: 'Zum'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

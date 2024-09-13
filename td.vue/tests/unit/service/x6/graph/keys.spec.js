@@ -1,9 +1,12 @@
 import keys from '@/service/x6/graph/keys.js';
+import store from '@/store/index.js';
 
 describe('service/x6/graph/keys.js', () => {
-    let graph;
+    let graph, mockStore;
 
     beforeEach(() => {
+        mockStore = { dispatch: jest.fn() };
+        store.get = jest.fn().mockReturnValue(mockStore);
         graph = {
             removeCells: jest.fn(),
             getSelectedCells: jest.fn(),
@@ -156,7 +159,7 @@ describe('service/x6/graph/keys.js', () => {
             });
 
             it('binds the ctrl+v keys', () => {
-                expect(graph.bindKey).toHaveBeenLastCalledWith('ctrl+v', expect.any(Function));
+                expect(graph.bindKey).toHaveBeenCalledWith('ctrl+v', expect.any(Function));
             });
 
             it('does not paste the cells', () => {
@@ -193,6 +196,16 @@ describe('service/x6/graph/keys.js', () => {
             it('selects the cells', () => {
                 expect(graph.select).toHaveBeenCalledWith(cells);
             });
+        });
+    });
+
+    describe('save', () => {
+        beforeEach(() => {
+            keys.bind(graph);
+        });
+
+        it('binds to the delete key', () => {
+            expect(graph.bindKey).toHaveBeenLastCalledWith('ctrl+s', expect.any(Function));
         });
     });
 });

@@ -207,6 +207,10 @@ const id = {
             zoom: {
                 shortcut: '(ctrl/cmd) + roda mouse',
                 action: 'Perbesar/Perkecil'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

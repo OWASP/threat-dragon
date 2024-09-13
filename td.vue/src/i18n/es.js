@@ -207,6 +207,10 @@ const spa = {
             zoom: {
                 shortcut: '(ctrl/cmd) + rueda de desplazamiento del ratón',
                 action: 'Zoom'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {

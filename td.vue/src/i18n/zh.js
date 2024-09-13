@@ -207,6 +207,10 @@ const zho = {
             zoom: {
                 shortcut: '(ctrl/cmd) + 鼠标滚轮',
                 action: '缩放'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
