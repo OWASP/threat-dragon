@@ -273,7 +273,7 @@
             },
             "attrs": {
               "text": {
-                "text": "API keys"
+                "text": "Hashed API keys"
               },
               "topLine": {
                 "strokeWidth": 1.5,
@@ -290,7 +290,7 @@
             "zIndex": 9,
             "data": {
               "type": "tm.Store",
-              "name": "API keys",
+              "name": "Hashed API keys",
               "description": "Database containing hashed API keys for authentication purposes ",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -323,7 +323,7 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Retrieve Long URL",
+              "name": "Redirect User to URL",
               "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -334,69 +334,21 @@
               "protocol": "",
               "threats": []
             },
-            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
+            "id": "07f08d6d-e984-4d14-9d25-36ad24b230bd",
             "source": {
               "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
             },
             "target": {
-              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+              "cell": "2c0500fb-85fa-4497-908a-61b1ea2e09f4"
             },
             "vertices": [
               {
-                "x": 970,
-                "y": 320
+                "x": 930,
+                "y": 420
               }
             ],
             "labels": [
-              "Retrieve Long URL"
-            ]
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": ""
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Store URL Mapping",
-              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Redirect URL, Original URL",
-              "outOfScope": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": false,
-              "isEncrypted": false,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "id": "0bcd6bca-360b-4f4e-a505-187195135022",
-            "source": {
-              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
-            },
-            "target": {
-              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
-            },
-            "vertices": [
-              {
-                "x": 960,
-                "y": 150
-              }
-            ],
-            "labels": [
-              "Store URL Mapping"
+              "Redirect User to URL"
             ]
           },
           {
@@ -460,7 +412,7 @@
                   "name": "block"
                 },
                 "sourceMarker": {
-                  "name": "block"
+                  "name": ""
                 },
                 "strokeDasharray": null
               }
@@ -471,32 +423,80 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Redirect Request",
-              "description": "",
+              "name": "Retrieve Long URL",
+              "description": "DATA EXCHANGED: Short URL, Long URL",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
-              "isBidirectional": true,
+              "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
               "threats": []
             },
-            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
+            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
             "source": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            },
-            "target": {
               "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
             },
-            "labels": [
-              "Redirect Request"
-            ],
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
             "vertices": [
               {
-                "x": 640,
-                "y": 380
+                "x": 970,
+                "y": 320
               }
+            ],
+            "labels": [
+              "Retrieve Long URL"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Store URL Mapping",
+              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "id": "0bcd6bca-360b-4f4e-a505-187195135022",
+            "source": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 960,
+                "y": 150
+              }
+            ],
+            "labels": [
+              "Store URL Mapping"
             ]
           },
           {
@@ -556,7 +556,7 @@
                   "name": "block"
                 },
                 "sourceMarker": {
-                  "name": ""
+                  "name": "block"
                 },
                 "strokeDasharray": null
               }
@@ -567,26 +567,32 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Fetch API credentials",
-              "description": "",
+              "name": "Redirect Request",
+              "description": "DATA EXCHANGED: Short URL, Long URL",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
-              "isBidirectional": false,
+              "isBidirectional": true,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
               "threats": []
             },
-            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
             "source": {
               "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
             },
             "target": {
-              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
             },
             "labels": [
-              "Fetch API credentials"
+              "Redirect Request"
+            ],
+            "vertices": [
+              {
+                "x": 640,
+                "y": 380
+              }
             ]
           },
           {
@@ -609,8 +615,8 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Redirect User to URL",
-              "description": "",
+              "name": "Fetch API credentials",
+              "description": "DATA EXCHANGED: Hashed API key",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -620,21 +626,15 @@
               "protocol": "",
               "threats": []
             },
-            "id": "07f08d6d-e984-4d14-9d25-36ad24b230bd",
+            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
             "source": {
-              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
             },
             "target": {
-              "cell": "2c0500fb-85fa-4497-908a-61b1ea2e09f4"
+              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
             },
-            "vertices": [
-              {
-                "x": 930,
-                "y": 420
-              }
-            ],
             "labels": [
-              "Redirect User to URL"
+              "Fetch API credentials"
             ]
           }
         ]
