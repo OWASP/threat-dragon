@@ -179,7 +179,7 @@
             "data": {
               "type": "tm.Store",
               "name": "URLs database",
-              "description": "Data store containing the mappings between short URLs and their corresponding long URLs.",
+              "description": "Data store containing the mappings between short URLs and their corresponding long URLs.\n\nDATA STORED: Long URL, Short URL",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -251,7 +251,7 @@
             "data": {
               "type": "tm.Process",
               "name": "API Server",
-              "description": "",
+              "description": "The API Server is the central component of the URL Shortener Service. It manages all interactions with users and external services, handling requests for both shortening URLs and redirecting from short URLs to their original long URLs. ",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -291,7 +291,7 @@
             "data": {
               "type": "tm.Store",
               "name": "Hashed API keys",
-              "description": "Database containing hashed API keys for authentication purposes ",
+              "description": "Database containing hashed API keys for authentication purposes.\n\nDATA STORED: Hashed API Key",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -349,58 +349,6 @@
             ],
             "labels": [
               "Redirect User to URL"
-            ]
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": "block"
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "User Request",
-              "description": "The User sends a request to the API Server to shorten a long URL. This request may include an API key for authentication and the long URL that needs to be shortened.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
-              "outOfScope": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": true,
-              "isEncrypted": false,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
-            "source": {
-              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
-            },
-            "target": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            },
-            "labels": [
-              "User Request"
-            ],
-            "vertices": [
-              {
-                "x": 275,
-                "y": 310
-              },
-              {
-                "x": 370,
-                "y": 310
-              }
             ]
           },
           {
@@ -592,6 +540,58 @@
               {
                 "x": 640,
                 "y": 380
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "User Request",
+              "description": "The User sends a request to the API Server to shorten a long URL or to get the redirect URL.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "source": {
+              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+            },
+            "target": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "labels": [
+              "User Request"
+            ],
+            "vertices": [
+              {
+                "x": 275,
+                "y": 310
+              },
+              {
+                "x": 370,
+                "y": 310
               }
             ]
           },
