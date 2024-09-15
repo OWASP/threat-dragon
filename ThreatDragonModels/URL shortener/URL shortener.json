@@ -19,12 +19,12 @@
         "cells": [
           {
             "position": {
-              "x": 440,
-              "y": 79.99999999999997
+              "x": 410,
+              "y": 60
             },
             "size": {
-              "width": 530,
-              "height": 330
+              "width": 690,
+              "height": 370
             },
             "shape": "trust-boundary-box",
             "attrs": {
@@ -44,50 +44,16 @@
           },
           {
             "position": {
-              "x": 250,
-              "y": 130
+              "x": 190,
+              "y": 147
             },
             "size": {
-              "width": 112.5,
-              "height": 60
+              "width": 170,
+              "height": 90
             },
             "attrs": {
               "text": {
-                "text": "Human User"
-              },
-              "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
-                "strokeDasharray": "4 3"
-              }
-            },
-            "visible": true,
-            "shape": "actor",
-            "id": "800c9286-a24a-4c49-9cfc-e0b64064ddb5",
-            "zIndex": 1,
-            "data": {
-              "type": "tm.Actor",
-              "name": "Human User",
-              "description": "The end-user who interacts with the API to shorten URLs and resolve short URLs.",
-              "outOfScope": true,
-              "reasonOutOfScope": "Incoming requests outside of application scope",
-              "hasOpenThreats": false,
-              "providesAuthentication": false,
-              "threats": []
-            }
-          },
-          {
-            "position": {
-              "x": 250,
-              "y": 257
-            },
-            "size": {
-              "width": 112.5,
-              "height": 60
-            },
-            "attrs": {
-              "text": {
-                "text": "Service"
+                "text": "Human User / Service"
               },
               "body": {
                 "stroke": "#333333",
@@ -101,7 +67,7 @@
             "zIndex": 2,
             "data": {
               "type": "tm.Actor",
-              "name": "Service",
+              "name": "Human User / Service",
               "description": "External services that may interact with the API for bulk operations or integrations.",
               "outOfScope": true,
               "reasonOutOfScope": "Incoming requests outside of application scope",
@@ -112,8 +78,8 @@
           },
           {
             "position": {
-              "x": 685,
-              "y": 275
+              "x": 750,
+              "y": 290
             },
             "size": {
               "width": 100,
@@ -149,7 +115,7 @@
           },
           {
             "position": {
-              "x": 680,
+              "x": 745,
               "y": 120
             },
             "size": {
@@ -186,8 +152,8 @@
           },
           {
             "position": {
-              "x": 824.9999999999993,
-              "y": 214.99999999999997
+              "x": 934.9999999999993,
+              "y": 215
             },
             "size": {
               "width": 120,
@@ -227,8 +193,8 @@
           },
           {
             "position": {
-              "x": 828.7499999999993,
-              "y": 450
+              "x": 902.4999999999993,
+              "y": 470
             },
             "size": {
               "width": 112.5,
@@ -251,7 +217,7 @@
             "data": {
               "type": "tm.Actor",
               "name": "Original URL",
-              "description": "",
+              "description": "Destination server of the original URL",
               "outOfScope": true,
               "reasonOutOfScope": "Original URL not in scope of URL shortener application",
               "hasOpenThreats": false,
@@ -299,7 +265,7 @@
           {
             "position": {
               "x": 497,
-              "y": 130
+              "y": 100
             },
             "size": {
               "width": 120,
@@ -325,14 +291,14 @@
             "data": {
               "type": "tm.Store",
               "name": "API keys",
-              "description": "",
+              "description": "Database containing hashed API keys for authentication purposes ",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
-              "storesCredentials": false,
+              "storesCredentials": true,
               "storesInventory": false,
               "threats": []
             }
@@ -357,7 +323,7 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Data Flow",
+              "name": "Retrieve Long URL",
               "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -368,91 +334,22 @@
               "protocol": "",
               "threats": []
             },
-            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
             "source": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            },
-            "target": {
-              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
-            }
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": "block"
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Data Flow",
-              "description": "",
-              "outOfScope": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": true,
-              "isEncrypted": false,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "id": "e8d0a24f-858a-45bd-b447-06e07897128a",
-            "source": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            },
-            "target": {
-              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
-            }
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": "block"
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Data Flow",
-              "description": "",
-              "outOfScope": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": true,
-              "isEncrypted": false,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
-            "source": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            },
-            "target": {
               "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
-            }
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 970,
+                "y": 320
+              }
+            ],
+            "labels": [
+              "Retrieve Long URL"
+            ]
           },
           {
             "shape": "flow",
@@ -474,8 +371,8 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Data Flow",
-              "description": "",
+              "name": "Store URL Mapping",
+              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Redirect URL, Original URL",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -494,8 +391,63 @@
             },
             "vertices": [
               {
-                "x": 860,
-                "y": 175
+                "x": 960,
+                "y": 150
+              }
+            ],
+            "labels": [
+              "Store URL Mapping"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "User Request",
+              "description": "The User sends a request to the API Server to shorten a long URL. This request may include an API key for authentication and the long URL that needs to be shortened.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "source": {
+              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+            },
+            "target": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "labels": [
+              "User Request"
+            ],
+            "vertices": [
+              {
+                "x": 275,
+                "y": 310
+              },
+              {
+                "x": 370,
+                "y": 310
               }
             ]
           },
@@ -519,7 +471,7 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Data Flow",
+              "name": "Redirect Request",
               "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -530,13 +482,22 @@
               "protocol": "",
               "threats": []
             },
-            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
             "source": {
-              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
             },
             "target": {
-              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
-            }
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "labels": [
+              "Redirect Request"
+            ],
+            "vertices": [
+              {
+                "x": 640,
+                "y": 380
+              }
+            ]
           },
           {
             "shape": "flow",
@@ -558,7 +519,7 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Data Flow",
+              "name": "Shorten Request",
               "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -569,17 +530,20 @@
               "protocol": "",
               "threats": []
             },
-            "id": "80754eef-651d-43f2-85c6-9a1e6e6b6243",
+            "id": "e8d0a24f-858a-45bd-b447-06e07897128a",
             "source": {
-              "cell": "800c9286-a24a-4c49-9cfc-e0b64064ddb5"
-            },
-            "target": {
               "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
             },
+            "target": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "labels": [
+              "Shorten Request"
+            ],
             "vertices": [
               {
-                "x": 430,
-                "y": 160
+                "x": 710,
+                "y": 240
               }
             ]
           },
@@ -603,7 +567,49 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Data Flow",
+              "name": "Fetch API credentials",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
+            },
+            "labels": [
+              "Fetch API credentials"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect User to URL",
               "description": "",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -623,9 +629,12 @@
             },
             "vertices": [
               {
-                "x": 860,
-                "y": 370
+                "x": 930,
+                "y": 420
               }
+            ],
+            "labels": [
+              "Redirect User to URL"
             ]
           }
         ]
