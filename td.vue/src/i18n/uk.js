@@ -351,6 +351,7 @@ const ukr = {
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
             showEmpty: 'Show empty elements',
+            showAttributes: 'Show element attributes',
             showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',

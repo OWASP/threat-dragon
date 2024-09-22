@@ -352,6 +352,7 @@ const ms = {
             showMitigatedThreats: 'Tunjukkan ancaman yang ditangani',
             showModelDiagrams: 'Tunjukkan gambarajah model',
             showEmpty: 'Tunjukkan elemen kosong',
+            showAttributes: 'Show element attributes',
             showBranding: 'Logo Threat Dragon'
         },
         title: 'Laporan model ancaman untuk',

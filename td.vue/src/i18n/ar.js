@@ -353,6 +353,7 @@ const ara = {
             showMitigatedThreats: 'إظهار التهديدات المُخففة',
             showModelDiagrams: 'إظهار الرسوم التوضيحية للنموذج',
             showEmpty: 'إظهار العناصر الفارغة',
+            showAttributes: 'Show element attributes',
             showBranding: 'شعار تهديد التنين'
         },
         title: 'تقرير نموذج التهديد لـ',
