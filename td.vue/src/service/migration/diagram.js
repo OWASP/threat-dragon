@@ -42,7 +42,7 @@ const drawGraph = (diagram, graph) => {
         console.debug('upgrade version 1.x diagram');
         upgradeAndDraw(diagram, graph);
     }
-	console.debug('graph canvas width ', graph.width, ' height ', graph.height);
+    console.debug('graph canvas width ', graph.width, ' height ', graph.height);
     return graph;
 };
 
