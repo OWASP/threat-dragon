@@ -58,6 +58,17 @@
                                 >{{ $t('report.options.showBranding') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
+
+                        <b-col>
+                            <b-form-group
+                                label-cols="auto"
+                                id="attributes-group">
+                                <b-form-checkbox
+                                    id="show_attributes"
+                                    v-model="display.attributes"
+                                >{{ $t('report.options.showAttributes') }}</b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
                     </b-form-row>
                 </b-form>
             </b-col>

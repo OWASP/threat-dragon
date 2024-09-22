@@ -347,6 +347,7 @@ const jpn = {
             showMitigatedThreats: '解決済みの脅威を表示',
             showModelDiagrams: 'モデルの図面を表示',
             showEmpty: '空要素を表示',
+            showAttributes: 'Show element attributes',
             showBranding: 'Threat Dragonロゴ'
         },
         title: '脅威レポート',

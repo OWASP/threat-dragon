@@ -351,6 +351,7 @@ const zho = {
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
             showEmpty: '显示空元素',
+            showAttributes: 'Show element attributes',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',
