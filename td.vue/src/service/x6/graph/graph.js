@@ -12,7 +12,7 @@ const getReadOnlyConfig = (container) => ({
     history: {
         enabled: false
     },
-    autoResize: container
+    autoResize: true
 });
 
 const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container), {
@@ -70,7 +70,8 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         restricted: false,
         autoScroll: true,
         preserveAspectRatio: false,
-        allowReverse: true
+        allowReverse: true,
+        autoResize: true
     },
     mousewheel: {
         enabled: true,
@@ -91,9 +92,7 @@ const getEditConfig = (container) => Object.assign(getReadOnlyConfig(container),
         pannable: false, // disable because it interferes with rubberbanding, see panning above
         pageVisible: true,
         pageBreak: false
-    },
-    // container: container,  // still not able to auto-size, see https://x6.antv.vision/en/docs/api/graph/graph#autoresize
-    //autoResize: true        // note that this is inherited from getReadOnlyConfig
+    }
 });
 
 const getEditGraph = (container) => {
