@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -90,7 +90,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -127,7 +127,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.26.6
@@ -152,7 +152,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Set up Docker Buildx
         id: buildx
@@ -211,7 +211,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Download docker local image
         uses: actions/download-artifact@v4.1.8
@@ -273,7 +273,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Download docker local image
         uses: actions/download-artifact@v4.1.8
@@ -354,7 +354,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.10.0
@@ -377,7 +377,7 @@ jobs:
     steps:
       # Need .trivyignore
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Download docker local image
         uses: actions/download-artifact@v4.1.8
