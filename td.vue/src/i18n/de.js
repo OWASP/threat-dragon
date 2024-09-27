@@ -29,6 +29,10 @@ const deu = {
             displayName: 'Bitbucket',
             loginWith: 'Anmelden mit'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Anmelden mit'
+        },
         local: {
             displayName: 'Lokale Sitzung',
             loginWith: 'Anmelden an'

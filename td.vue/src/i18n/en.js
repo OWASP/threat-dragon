@@ -29,6 +29,10 @@ const eng = {
             displayName: 'Bitbucket',
             loginWith: 'Login with'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Login with'
+        },
         local: {
             displayName: 'Local Session',
             loginWith: 'Login to'

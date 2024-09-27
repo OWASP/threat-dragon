@@ -29,6 +29,10 @@ const fra = {
             displayName: 'Bitbucket',
             loginWith: 'Se connecter avec'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Se connecter avec'
+        },
         local: {
             displayName: 'une session locale',
             loginWith: 'Se connecter avec'

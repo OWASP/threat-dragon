@@ -29,6 +29,10 @@ const ell = {
             displayName: 'Bitbucket',
             loginWith: 'Είσοδος με'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Είσοδος με'
+        },
         local: {
             displayName: 'Τοπική Συνεδρία',
             loginWith: 'Είσοδος με'

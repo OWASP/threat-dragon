@@ -29,6 +29,10 @@ const ms = {
             displayName: 'Bitbucket',
             loginWith: 'Log masuk dengan'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Log masuk dengan'
+        },
         local: {
             displayName: 'Sesi Tempatan',
             loginWith: 'Log masuk ke'

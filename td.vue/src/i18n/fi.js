@@ -29,6 +29,10 @@ const fin = {
             displayName: 'Bitbucketissa',
             loginWith: 'Kirjaudu sisään'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Kirjaudu sisään'
+        },
         local: {
             displayName: 'paikallisesti',
             loginWith: 'Kirjaudu sisään'

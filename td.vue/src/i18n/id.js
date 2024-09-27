@@ -29,6 +29,10 @@ const id = {
             displayName: 'Bitbucket',
             loginWith: 'Masuk dengan'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Masuk dengan'
+        },
         local: {
             displayName: 'Sesi Lokal',
             loginWith: 'Masuk ke'
