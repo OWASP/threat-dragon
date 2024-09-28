@@ -40,11 +40,12 @@ describe('controllers/configcontroller.js', () => {
     describe("getConfig", () => {
 
         it("all true", () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', GITHUB_CLIENT_ID: '456',GITLAB_CLIENT_ID: '456'}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', GITHUB_CLIENT_ID: '456',GITLAB_CLIENT_ID: '456', GOOGLE_CLIENT_ID: '123'}});
             expect(getConfig()).to.deep.equal({
                 "bitbucketEnabled": true,
                 "githubEnabled": true,
                 "gitlabEnabled": true,
+                "googleEnabled": true,
                 "localEnabled": true,
             })
         })
@@ -54,6 +55,7 @@ describe('controllers/configcontroller.js', () => {
                 "bitbucketEnabled": true,
                 "githubEnabled": false,
                 "gitlabEnabled": false,
+                "googleEnabled": false,
                 "localEnabled": true,
             })
         })
@@ -63,6 +65,7 @@ describe('controllers/configcontroller.js', () => {
                 "bitbucketEnabled": false,
                 "githubEnabled": true,
                 "gitlabEnabled": false,
+                "googleEnabled": false,
                 "localEnabled": true,
             })
         })
@@ -72,6 +75,17 @@ describe('controllers/configcontroller.js', () => {
                 "bitbucketEnabled": false,
                 "githubEnabled": false,
                 "gitlabEnabled": true,
+                "googleEnabled": false,
+                "localEnabled": true,
+            })
+        })
+        it("google and local", () => {
+            sinon.stub(env, 'get').returns({config: {GOOGLE_CLIENT_ID: '123', }});
+            expect(getConfig()).to.deep.equal({
+                "bitbucketEnabled": false,
+                "githubEnabled": false,
+                "gitlabEnabled": false,
+                "googleEnabled": true,
                 "localEnabled": true,
             })
         })
@@ -81,6 +95,7 @@ describe('controllers/configcontroller.js', () => {
                 "bitbucketEnabled": false,
                 "githubEnabled": true,
                 "gitlabEnabled": false,
+                "googleEnabled": false,
                 "localEnabled": true,
             })
         })
@@ -90,6 +105,7 @@ describe('controllers/configcontroller.js', () => {
                 "bitbucketEnabled": false,
                 "githubEnabled": false,
                 "gitlabEnabled": false,
+                "googleEnabled": false,
                 "localEnabled": true,
             })
         })
