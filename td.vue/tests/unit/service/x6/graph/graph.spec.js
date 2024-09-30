@@ -36,7 +36,7 @@ describe('service/x6/graph/graph.js', () => {
 
         it('auto resizes', () => {
             expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: container })
+                expect.objectContaining({ autoResize: true })
             );
         });
 
@@ -69,7 +69,7 @@ describe('service/x6/graph/graph.js', () => {
 
         it('auto resizes', () => {
             expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: container })
+                expect.objectContaining({ autoResize: true })
             );
         });
 
@@ -150,7 +150,8 @@ describe('service/x6/graph/graph.js', () => {
                 restricted: false,
                 autoScroll: true,
                 preserveAspectRatio: false,
-                allowReverse: true
+                allowReverse: true,
+                autoResize: true
             });
         });
 
