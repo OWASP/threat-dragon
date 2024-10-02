@@ -57,6 +57,7 @@ jobs:
     permissions:
       contents: write
       security-events: write
+    if: ${{ ! always() }}
 
     steps:
       - name: Checkout repository
