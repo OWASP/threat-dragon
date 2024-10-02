@@ -14,8 +14,7 @@
                 <b-form>
                     <b-form-row>
                         <b-col>
-                            <b-form-group
-                                id="filter-group">
+                            <b-form-group id="filter-group">
                                 <b-form-input
                                     id="filter"
                                     v-model="filter"
@@ -27,25 +26,35 @@
                 </b-form>
             </b-col>
         </b-row>
+
         <b-row>
             <b-col md=6 offset=3>
                 <b-list-group>
                     <b-list-group-item
+                        v-if="showBackItem"
+                        href="javascript:void(0)"
+                        @click="onBackClick">
+                        ...
+                    </b-list-group-item>
+                    
+                    <b-list-group-item
                         v-if="items.length === 0 && !!emptyStateText"
                         @click="onEmptyStateClick"
                         href="javascript:void(0)">
-                            {{ emptyStateText }}
+                        {{ emptyStateText }}
                     </b-list-group-item>
 
                     <b-list-group-item
                         v-for="(item, idx) in displayedItems"
                         :key="idx"
                         href="javascript:void(0)"
-                        @click="onItemClick(item)"
-                    >{{ item }}</b-list-group-item>
+                        @click="onItemClick(item)">
+                        {{ isGoogleProvider ? item.name : item }}
+                    </b-list-group-item>
                 </b-list-group>
             </b-col>
         </b-row>
+        
         <b-row>
             <b-col md=6 offset=3>
                 <div class="pagination">
@@ -102,14 +111,32 @@ export default {
             required: false,
             type: Function,
             default: () => {}
+        },
+        showBackItem: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+        onBackClick: {
+            required: false,
+            type: Function,
+            default: () => {}
+        },
+        isGoogleProvider: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
     computed: {
         displayedItems: function () {
             if (!this.filter) { return this.items; }
-            return this.items.filter(x => x.toLowerCase().includes(this.filter.toLowerCase()));
+            if (this.$props.isGoogleProvider) {
+                return this.items.filter(x => x.name.toLowerCase().includes(this.filter.toLowerCase()));
+            } else {
+                return this.items.filter(x => x.toLowerCase().includes(this.filter.toLowerCase()));
+            }
         }
     }
 };
-
 </script>

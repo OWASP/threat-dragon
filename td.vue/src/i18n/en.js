@@ -85,6 +85,11 @@ const eng = {
         from: 'from the list below or',
         chooseRepo: 'choose another repo'
     },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Select a Threat Model from',
         from: 'from the list below, or choose another',

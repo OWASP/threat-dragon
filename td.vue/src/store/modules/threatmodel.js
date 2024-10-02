@@ -26,6 +26,8 @@ import {
 } from '@/store/actions/threatmodel.js';
 import save from '@/service/save.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
+import googleDriveApi from '../../service/api/googleDriveApi';
+import { FOLDER_SELECTED } from '../actions/folder';
 
 const state = {
     all: [],
@@ -55,6 +57,10 @@ const actions = {
                 // desktop version always saves locally
                 console.debug('Desktop create action');
                 await window.electronAPI.modelSave(state.data, state.fileName);
+            } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
+                const res = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
+                dispatch(FOLDER_SELECTED, res.data);
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
@@ -79,15 +85,22 @@ const actions = {
     [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
-        const resp = await threatmodelApi.modelAsync(
-            rootState.repo.selected,
-            rootState.branch.selected,
-            threatModel
-        );
+        let resp;
+        if (getProviderType(rootState.provider.selected) === providerTypes.google) {
+            resp = await googleDriveApi.modelAsync(
+                threatModel
+            );
+        } else {
+            resp = await threatmodelApi.modelAsync(
+                rootState.repo.selected,
+                rootState.branch.selected,
+                threatModel
+            );
+        }
         commit(THREATMODEL_FETCH, resp.data);
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
-        if (getProviderType(rootState.provider.selected) === providerTypes.local || getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+        if (getProviderType(rootState.provider.selected) === providerTypes.local || getProviderType(rootState.provider.selected) === providerTypes.desktop || getProviderType(rootState.provider.selected) === providerTypes.google) {
             commit(THREATMODEL_FETCH_ALL, demo.models);
         } else {
             const resp = await threatmodelApi.modelsAsync(
@@ -101,7 +114,7 @@ const actions = {
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.stash);
         console.debug('Restore threat model action');
-        if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop) {
+        if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop && getProviderType(rootState.provider.selected) !== providerTypes.google) {
             const originalTitle = (JSON.parse(state.stash)).summary.title;
             const resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,
@@ -127,6 +140,9 @@ const actions = {
                 // desktop version always saves locally
                 Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
                 await window.electronAPI.modelSave(state.data, state.fileName);
+            } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
+                await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
+                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
