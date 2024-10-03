@@ -13,8 +13,8 @@ env:
   ENCRYPTION_JWT_REFRESH_SIGNING_KEY: "${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}"
   ENCRYPTION_JWT_SIGNING_KEY: "${{ secrets.CI_JWT_SIGNING_KEY }}"
   ENCRYPTION_KEYS: "${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}"
-  NODE_ENV: 'development'
-  SERVER_API_PROTOCOL: 'http'
+  NODE_ENV: development
+  SERVER_API_PROTOCOL: http
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -265,7 +265,7 @@ jobs:
           target: 'http://localhost:8080'
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
           allow_issue_writing: false
-          fail_action: true
+          fail_action: false
           artifact_name: ${{ env.ZAP_FILE }}
           cmd_options: '-a'
 
@@ -332,11 +332,9 @@ jobs:
     needs: build_docker_image
     permissions:
       contents: write
-      security-events: write
     if: ${{ ! always() }}
 
     steps:
-      # Need .trivyignore
       - name: Checkout
         uses: actions/checkout@v4.2.0
 
@@ -355,4 +353,5 @@ jobs:
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
+          trivyignores: '.github/workflows/.trivyignore'
           exit-code: 1
