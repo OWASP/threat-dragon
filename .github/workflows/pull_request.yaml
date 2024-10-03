@@ -150,7 +150,7 @@ jobs:
         uses: github/codeql-action/analyze@v3.26.6
 
   e2e_smokes:
-    name: Site e2e smokes
+    name: Local site e2e smokes
     runs-on: ubuntu-24.04
     needs: [site_unit_tests, server_unit_tests]
 
@@ -191,7 +191,7 @@ jobs:
         if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   e2e_tests:
-    name: Site e2e tests
+    name: Local site e2e tests
     runs-on: ubuntu-24.04
     needs: e2e_smokes
 
@@ -229,6 +229,45 @@ jobs:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
         if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+
+  zap_scan_web_app:
+    name: Local site zap scan
+    runs-on: ubuntu-24.04
+    needs: e2e_tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.11.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: 'http://localhost:8080'
+          rules_file_name: '.github/workflows/.zap-rules-web.tsv'
+          allow_issue_writing: false
+          fail_action: true
+          artifact_name: ${{ env.ZAP_FILE }}
+          cmd_options: '-a'
 
   build_docker_image:
     name: Build docker image
@@ -286,45 +325,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  zap_scan_web_app:
-    name: Local site zap scan
-    runs-on: ubuntu-24.04
-    needs: build_docker_image
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.0
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Build and run locally
-        run: npm start
-
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.11.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target: 'http://localhost:8080'
-          rules_file_name: '.github/workflows/.zap-rules-web.tsv'
-          allow_issue_writing: false
-          fail_action: true
-          artifact_name: ${{ env.ZAP_FILE }}
-          cmd_options: '-a'
 
   scan_image_with_trivy:
     name: Scan with trivy
