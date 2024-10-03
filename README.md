@@ -3,6 +3,7 @@
   width="200" alt="Threat Dragon Logo"/>
 </p>
 
+[![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 [![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg?event=push)][build]
 [![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)](https://github.com/owasp/threat-dragon/releases/latest)
 [![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://www.owasp.org/projects)
@@ -18,8 +19,6 @@ that provides an intuitive and accessible way to model threats.
 Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
 It is an [OWASP Lab Project](https://owasp.org/www-project-threat-dragon/)
 and follows the values and principles of the [threat modeling manifesto][manifesto].
-
-[![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the [Apache 2.0 License][license].

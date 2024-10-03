@@ -421,7 +421,7 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.10.0
+        uses: zaproxy/action-full-scan@v0.11.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:3000'
