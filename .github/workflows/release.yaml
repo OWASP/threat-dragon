@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -101,7 +101,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -137,7 +137,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -188,7 +188,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -247,7 +247,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -297,7 +297,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -351,7 +351,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.2.0
@@ -380,7 +380,7 @@ jobs:
       # platform manifests not (yet) supported, so split out architectures
       - name: Build for amd64 and push to Docker Hub
         id: docker_build_amd64
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: ./
           file: ./Dockerfile
@@ -394,7 +394,7 @@ jobs:
 
       - name: Build for arm64 and push to Docker Hub
         id: docker_build_arm64
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: ./
           file: ./Dockerfile
@@ -477,7 +477,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Fetch prepared SBOM artifacts
         uses: actions/download-artifact@v4.1.8
