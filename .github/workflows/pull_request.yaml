@@ -293,37 +293,33 @@ jobs:
     needs: build_docker_image
 
     steps:
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ env.GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ env.GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ env.ENCRYPTION_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ env.ENCRYPTION_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ env.ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
       - name: Checkout
         uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: 'http://localhost:3000'
+          target: 'http://localhost:8080'
           rules_file_name: '.github/workflows/.zap-rules-web.tsv'
           allow_issue_writing: false
           fail_action: true
