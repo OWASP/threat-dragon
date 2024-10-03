@@ -123,7 +123,7 @@ jobs:
   codeql:
     name: Analyze with codeql
     runs-on: ubuntu-24.04
-    needs: [server_unit_tests, site_unit_tests]
+    needs: [server_unit_tests, site_unit_tests, desktop_unit_tests]
     permissions:
       security-events: write
 
@@ -149,10 +149,91 @@ jobs:
       - name: Perform vulnerability analysis
         uses: github/codeql-action/analyze@v3.26.6
 
+  e2e_smokes:
+    name: Site e2e smokes
+    runs-on: ubuntu-24.04
+    needs: [site_unit_tests, server_unit_tests]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: Run e2e tests
+        run: |
+          cd td.vue
+          npm run test:e2e-pr-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+
+  e2e_tests:
+    name: Site e2e tests
+    runs-on: ubuntu-24.04
+    needs: e2e_smokes
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: Run e2e tests
+        run: |
+          cd td.vue
+          npm run test:e2e-pr
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+
   build_docker_image:
     name: Build docker image
     runs-on: ubuntu-24.04
-    needs: [site_unit_tests, server_unit_tests]
+    needs: e2e_smokes
     if: github.repository == 'OWASP/threat-dragon'
 
     steps:
@@ -197,7 +278,7 @@ jobs:
       - name: Check docker local image
         run: |
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-          docker image ls -a 
+          docker image ls -a
 
       - # Temp fix for large cache bug
         # https://github.com/docker/build-push-action/issues/252
@@ -205,93 +286,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  e2e_smokes:
-    name: Site e2e smokes
-    runs-on: ubuntu-24.04
-    needs: build_docker_image
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.0
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.3
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Build and run locally
-        run: |
-          cd ..
-          npm start
-
-      - name: Run e2e tests
-        run: npm run test:e2e-pr-smokes
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-
-  e2e_tests:
-    name: Site e2e tests
-    runs-on: ubuntu-24.04
-    needs: e2e_smokes
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.0
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Build and run locally
-        run: |
-          cd ..
-          npm start
-
-      - name: Run e2e tests
-        run: npm run test:e2e-pr
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
 
   zap_scan_web_app:
     name: Local site zap scan
