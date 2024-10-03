@@ -6,10 +6,15 @@ on:
   workflow_dispatch:
 
 env:
-  # threatdragon is the working area on docker hub so use this area
-  # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: "pr-${{ github.event.number }}"
   ZAP_FILE: "zap-scan-pr-${{ github.event.number }}"
+  GITHUB_CLIENT_ID: "${{ secrets.CI_GITHUB_CLIENT_ID }}"
+  GITHUB_CLIENT_SECRET: "${{ secrets.CI_GITHUB_CLIENT_SECRET }}"
+  ENCRYPTION_JWT_REFRESH_SIGNING_KEY: "${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}"
+  ENCRYPTION_JWT_SIGNING_KEY: "${{ secrets.CI_JWT_SIGNING_KEY }}"
+  ENCRYPTION_KEYS: "${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}"
+  NODE_ENV: 'development'
+  SERVER_API_PROTOCOL: 'http'
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -213,29 +218,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.0
 
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
         with:
@@ -253,8 +235,13 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
+      - name: Build and run locally
+        run: |
+          cd ..
+          npm start
+
       - name: Run e2e tests
-        run: npm run test:e2e-ci-smokes
+        run: npm run test:e2e-pr-smokes
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v4.4.0
@@ -275,29 +262,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.0
 
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.2
         with:
@@ -314,8 +278,13 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
+      - name: Build and run locally
+        run: |
+          cd ..
+          npm start
+
       - name: Run e2e tests
-        run: npm run test:e2e-ci
+        run: npm run test:e2e-pr
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v4.4.0
@@ -344,11 +313,11 @@ jobs:
         run: |
           docker run -d \
             -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
+            -e GITHUB_CLIENT_ID='${{ env.GITHUB_CLIENT_ID }}' \
+            -e GITHUB_CLIENT_SECRET='${{ env.GITHUB_CLIENT_SECRET }}' \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ env.ENCRYPTION_JWT_REFRESH_SIGNING_KEY }}' \
+            -e ENCRYPTION_JWT_SIGNING_KEY='${{ env.ENCRYPTION_JWT_SIGNING_KEY }}' \
+            -e ENCRYPTION_KEYS='${{ env.ENCRYPTION_KEYS }}' \
             -e NODE_ENV='development' \
             -e SERVER_API_PROTOCOL='http' \
             ${{ env.IMAGE_NAME }}
