@@ -11,17 +11,17 @@ import { THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
 const del = (graph) => () => graph.removeCells(graph.getSelectedCells());
 
 const undo = (graph) => () => {
-    if (!graph.history.canUndo()) {
+    if (!graph.getPlugin('history').canUndo()) {
         return false;
     }
-    graph.history.undo();
+    graph.getPlugin('history').undo();
 };
 
 const redo = (graph) => () => {
-    if (!graph.history.canRedo()) {
+    if (!graph.getPlugin('history').canRedo()) {
         return false;
     }
-    graph.history.redo();
+    graph.getPlugin('history').redo();
 };
 
 const copy = (graph) => () => {
