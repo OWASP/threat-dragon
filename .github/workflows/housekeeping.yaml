@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: threatdragon/owasp-threat-dragon
+  IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -65,12 +65,13 @@ jobs:
         with:
           ref: main
 
-      - name: Run vulnerability scanner
+      - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          image-ref: '${{ env.IMAGE_NAME }}:latest'
+          image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
+          trivyignores: '.github/workflows/.trivyignore'
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
