@@ -80,13 +80,15 @@ export default {
             this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
             this.$store.dispatch(tmActions.notModified);
-            this.graph.history.on('change', () => {
+            this.graph.getPlugin('history').on('change', () => {
                 const updated = Object.assign({}, this.diagram);
                 updated.cells = this.graph.toJSON().cells;
                 this.$store.dispatch(tmActions.diagramModified, updated);
             });
         },
         threatSelected(threatId,state) {
+            debugger;
+            console.warn(this.graph.installedPlugins);
             this.$refs.threatEditDialog.editThreat(threatId,state);
         },
         threatSuggest(type){

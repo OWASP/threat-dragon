@@ -117,11 +117,6 @@ const cellUnselected = ({ cell }) => {
 };
 
 const cellDataChanged = ({ cell }) => {
-    if (cell.getData) {
-        console.debug('cell data changed for: ' + cell.getData().name);
-    } else {
-        console.debug('cell data changed');
-    }
     store.get().dispatch(CELL_SELECTED, cell);
     dataChanged.updateStyleAttrs(cell);
     store.get().dispatch(THREATMODEL_MODIFIED);
