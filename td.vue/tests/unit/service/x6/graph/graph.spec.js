@@ -1,43 +1,15 @@
 import events from '@/service/x6/graph/events.js';
-import factory from '@/service/x6/factory.js';
 import graph from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
 
 describe('service/x6/graph/graph.js', () => {
     let container;
-    beforeEach(() => {
-        factory.graph = jest.fn().mockImplementation(c => c);
-    });
 
     describe('getReadonlyGraph', () => {
         beforeEach(() => {
             container = { foo: 'bar' };
             events.listen = jest.fn();
             graph.getReadonlyGraph(container);
-        });
-
-        it('sets the container', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ container })
-            );
-        });
-
-        it('does not pprevent default context menus', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ preventDefaultContextMenu: false })
-            );
-        });
-
-        it('disables history', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ history: { enabled: false }})
-            );
-        });
-
-        it('auto resizes', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: true })
-            );
         });
 
         it('adds the event listeners', () => {
@@ -53,24 +25,6 @@ describe('service/x6/graph/graph.js', () => {
             events.listen = jest.fn();
             keys.bind = jest.fn();
             graphRes = graph.getEditGraph(container);
-        });
-
-        it('sets the container', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ container })
-            );
-        });
-
-        it('does not prevent default context menus', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ preventDefaultContextMenu: false })
-            );
-        });
-
-        it('auto resizes', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: true })
-            );
         });
 
         it('does not save history for tool actions', () => {

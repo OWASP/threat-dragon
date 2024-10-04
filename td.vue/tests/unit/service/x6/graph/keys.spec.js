@@ -10,10 +10,12 @@ describe('service/x6/graph/keys.js', () => {
         graph = {
             removeCells: jest.fn(),
             getSelectedCells: jest.fn(),
-            canUndo: jest.fn(),
-            undo: jest.fn(),
-            canRedo: jest.fn(),
-            redo: jest.fn(),
+            history: {
+                canUndo: jest.fn(),
+                undo: jest.fn(),
+                canRedo: jest.fn(),
+                redo: jest.fn()
+            },
             copy: jest.fn(),
             isClipboardEmpty: jest.fn(),
             paste: jest.fn(),
@@ -44,7 +46,7 @@ describe('service/x6/graph/keys.js', () => {
     describe('undo', () => {
         describe('canUndo is true', () => {
             beforeEach(() => {
-                graph.canUndo.mockImplementation(() => true);
+                graph.history.canUndo.mockImplementation(() => true);
                 keys.bind(graph);
             });
 
@@ -53,22 +55,22 @@ describe('service/x6/graph/keys.js', () => {
             });
 
             it('checks if it can undo', () => {
-                expect(graph.canUndo).toHaveBeenCalled();
+                expect(graph.history.canUndo).toHaveBeenCalled();
             });
 
             it('calls undo', () => {
-                expect(graph.undo).toHaveBeenCalled();
+                expect(graph.history.undo).toHaveBeenCalled();
             });
         });
 
         describe('canUndo is false', () => {
             beforeEach(() => {
-                graph.canUndo.mockImplementation(() => false);
+                graph.history.canUndo.mockImplementation(() => false);
                 keys.bind(graph);
             });
 
             it('does not call undo', () => {
-                expect(graph.undo).not.toHaveBeenCalled();
+                expect(graph.history.undo).not.toHaveBeenCalled();
             });
         });
     });
@@ -76,7 +78,7 @@ describe('service/x6/graph/keys.js', () => {
     describe('redo', () => {
         describe('canRedo is true', () => {
             beforeEach(() => {
-                graph.canRedo.mockImplementation(() => true);
+                graph.history.canRedo.mockImplementation(() => true);
                 keys.bind(graph);
             });
 
@@ -85,22 +87,22 @@ describe('service/x6/graph/keys.js', () => {
             });
 
             it('checks if it can redo', () => {
-                expect(graph.canRedo).toHaveBeenCalled();
+                expect(graph.history.canRedo).toHaveBeenCalled();
             });
 
             it('calls redo', () => {
-                expect(graph.redo).toHaveBeenCalled();
+                expect(graph.history.redo).toHaveBeenCalled();
             });
         });
 
         describe('canRedo is false', () => {
             beforeEach(() => {
-                graph.canRedo.mockImplementation(() => false);
+                graph.history.canRedo.mockImplementation(() => false);
                 keys.bind(graph);
             });
 
             it('does not call redo', () => {
-                expect(graph.redo).not.toHaveBeenCalled();
+                expect(graph.history.redo).not.toHaveBeenCalled();
             });
         });
     });

@@ -87,13 +87,13 @@ export default {
             return;
         },
         undo() {
-            if (this.graph.canUndo()) {
-                this.graph.undo();
+            if (this.graph.history.canUndo()) {
+                this.graph.history.undo();
             }
         },
         redo() {
-            if (this.graph.canRedo()) {
-                this.graph.redo();
+            if (this.graph.history.canRedo()) {
+                this.graph.history.redo();
             }
         },
         zoomIn() {

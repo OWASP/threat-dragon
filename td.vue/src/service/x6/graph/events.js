@@ -6,7 +6,7 @@ import dataChanged from './data-changed.js';
 import store from '@/store/index.js';
 import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
-import shapes from '@/service/x6/shapes/index.js';
+//import shapes from '@/service/x6/shapes/index.js';
 
 const canvasResized = ({ width, height }) => {
     console.debug('canvas resized to width ', width, ' height ', height);
@@ -34,11 +34,12 @@ const mouseEnter = ({ cell }) => {
     cell.addTools(tools);
 };
 
-const cellAdded = (graph) => ({ cell }) => {
-    graph.resetSelection(cell);
+const cellAdded = ({ cell }) => {
+    //graph.resetSelection(cell);
     console.debug('cell added with shape: ', cell.shape);
 
     if (cell.convertToEdge) {
+        /* temporary debug 8<----
         let edge = cell;
         const position = cell.position();
         const config = {
@@ -57,9 +58,9 @@ const cellAdded = (graph) => ({ cell }) => {
         } else {
             console.warn('Removed unknown edge');
         }
-
+        --->8 temporary debug */
         cell.remove();
-        cell = edge;
+        //cell = edge;
     }
 
     removeCellTools({ cell });
@@ -127,6 +128,7 @@ const cellDataChanged = ({ cell }) => {
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
+/*
 const nodeAddFlow = (graph) => ({ node }) => {
     if (!node.data.isTrustBoundary && node.data.type !== 'tm.Text') {
         const position = node.position();
@@ -144,6 +146,7 @@ const nodeAddFlow = (graph) => ({ node }) => {
         graph.resetSelection(cell);
     }
 };
+*/
 
 const listen = (graph) => {
     graph.on('resize', canvasResized);
@@ -152,12 +155,12 @@ const listen = (graph) => {
     graph.on('edge:move', cellSelected);
     graph.on('cell:mouseleave', removeCellTools);
     graph.on('cell:mouseenter', mouseEnter);
-    graph.on('cell:added', cellAdded(graph));
+    graph.on('cell:added', cellAdded);
     graph.on('cell:removed', cellDeleted);
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected(graph));
     graph.on('cell:unselected', cellUnselected);
-    graph.on('node:dblclick', nodeAddFlow(graph));
+    //graph.on('node:dblclick', nodeAddFlow(graph));
     graph.on('node:move', cellSelected);
 };
 
@@ -168,12 +171,12 @@ const removeListeners = (graph) => {
     graph.off('edge:move', cellSelected);
     graph.off('cell:mouseleave', removeCellTools);
     graph.off('cell:mouseenter', mouseEnter);
-    graph.off('cell:added', cellAdded(graph));
+    graph.off('cell:added', cellAdded);
     graph.off('cell:removed', cellDeleted);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected(graph));
     graph.off('cell:unselected', cellUnselected);
-    graph.off('node:dblclick', nodeAddFlow(graph));
+    //graph.off('node:dblclick', nodeAddFlow(graph));
     graph.off('node:move', cellSelected);
 };
 

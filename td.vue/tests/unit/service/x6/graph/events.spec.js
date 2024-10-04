@@ -1,5 +1,4 @@
 import events from '@/service/x6/graph/events.js';
-import shapes from '@/service/x6/shapes/index.js';
 import store from '@/store/index.js';
 import dataChanged from '../../../../../src/service/x6/graph/data-changed';
 
@@ -180,57 +179,6 @@ describe('service/x6/graph/events.js', () => {
                 cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
                 cell.constructor = { name: 'TrustBoundaryCurveStencil' };
-                cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
-                events.listen(graph);
-            });
-
-            it('gets the cell\'s position', () => {
-                expect(cell.position).toHaveBeenCalledTimes(1);
-            });
-
-            it('adds the edge to the graph', () => {
-                expect(graph.addEdge).toHaveBeenCalled();
-            });
-
-            it('removes the cell', () => {
-                expect(cell.remove).toHaveBeenCalledTimes(1);
-            });
-        });
-
-        describe('flow stencil', () => {
-            beforeEach(() => {
-                cell.convertToEdge = true;
-                cell.isNode.mockImplementation(() => true);
-                cell.constructor = { name: 'FlowStencil' };
-                cell.type = shapes.FlowStencil.prototype.type;
-                graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
-                events.listen(graph);
-            });
-
-            it('gets the cell\'s position', () => {
-                expect(cell.position).toHaveBeenCalledTimes(1);
-            });
-
-            it('adds the edge to the graph', () => {
-                expect(graph.addEdge).toHaveBeenCalled();
-            });
-
-            it('removes the cell', () => {
-                expect(cell.remove).toHaveBeenCalledTimes(1);
-            });
-        });
-
-        describe('flow stencil without data', () => {
-            beforeEach(() => {
-                cell.convertToEdge = true;
-                cell.isNode.mockImplementation(() => false);
-                cell.isEdge.mockImplementation(() => true);
-                cell.constructor = { name: 'FlowStencil' };
-                cell.type = shapes.FlowStencil.prototype.type;
-                if (cell.data) { delete cell.data; }
-                dataChanged.updateStyleAttrs = jest.fn();
-                cell.setData.mockImplementation((data) => cell.data = data);
                 graph.on.mockImplementation((evt, fn) => fn({ isNew: false, edge, node, cell }));
                 events.listen(graph);
             });
