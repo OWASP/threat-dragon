@@ -9,8 +9,8 @@ import { Transform } from '@antv/x6-plugin-transform';
 import events from './events.js';
 import keys from './keys.js';
 
-const getEditGraph = (container) => {
-    const graph = new Graph({
+const getEditGraph = (container, ctor = Graph) => {
+    const graph = new ctor({
         container: container,
         autoResize: container,
         connecting: {
@@ -37,12 +37,7 @@ const getEditGraph = (container) => {
         .use(
             new History({
                 enabled: true,
-                beforeAddCommand: (event, args) => {
-                    // Showing and hiding the tools on mouseover events
-                    // gets added to the history stack.
-                    // Ignore those events since that is not a "user" action
-                    return args.key !== 'tools';
-                }
+                beforeAddCommand: beforeAddCommand
             })
         )
         .use(
@@ -109,8 +104,8 @@ const getEditGraph = (container) => {
     return graph;
 };
 
-const getReadonlyGraph = (container) => {
-    const graph = new Graph({
+const getReadonlyGraph = (container, ctor = Graph) => {
+    const graph = new ctor({
         container: container,
         autoResize: container,
         preventDefaultContextMenu: false
@@ -124,6 +119,13 @@ const getReadonlyGraph = (container) => {
 
     events.listen(graph);
     return graph;
+};
+
+export const beforeAddCommand = (_event, args) => {
+    // Showing and hiding the tools on mouseover events
+    // gets added to the history stack.
+    // Ignore those events since that is not a "user" action
+    return args.key !== 'tools';
 };
 
 export default {
