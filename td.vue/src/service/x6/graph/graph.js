@@ -30,10 +30,10 @@ const getEditGraph = (container, ctor = Graph) => {
             enabled: true, // provides panning using shift key, as we have to disable scroller.pannable
             modifiers: ['shift']
         },
-		scaling: {
-		    min : 0.1 ,    // default value is 0.01
-		    max : 10 ,     // default value is 16
-		},
+        scaling: {
+            min : 0.1 ,    // default value is 0.01
+            max : 3.2 ,     // default value is 16
+        },
         preventDefaultContextMenu: false
     });
     graph

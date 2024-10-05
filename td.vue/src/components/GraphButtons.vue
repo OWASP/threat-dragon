@@ -97,10 +97,20 @@ export default {
             }
         },
         zoomIn() {
-            this.graph.zoom(0.2);
+            if (this.graph.zoom() < 1.0) {
+                this.graph.zoom(0.1);
+            } else {
+                this.graph.zoom(0.2);
+            }
+            console.debug('zoom to ' + this.graph.zoom());
         },
         zoomOut() {
-            this.graph.zoom(-0.2);
+            if (this.graph.zoom() < 1.0) {
+                this.graph.zoom(-0.1);
+            } else {
+                this.graph.zoom(-0.2);
+            }
+            console.debug('zoom to ' + this.graph.zoom());
         },
         deleteSelected() {
             this.graph.removeCells(this.graph.getSelectedCells());
