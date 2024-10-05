@@ -34,9 +34,9 @@ export default {
     methods: {
         init() {
             this.graph = diagramService.draw(this.$refs.diagram_container, this.diagram);
-            this.resizeGraph();
+            this.resize();
         },
-        resizeGraph() {
+        resize() {
             // Magic number warning... Needs more testing, this seems to work fine for firefox/chrome on linx,
             // but may be OS dependent and/or printer dependent
             const height = 700;
@@ -55,10 +55,10 @@ export default {
         this.init();
     },
     created() {
-        window.addEventListener('resize', debounce(this.resizeGraph, debounceTimeoutMs));
+        window.addEventListener('resize', debounce(this.resize, debounceTimeoutMs));
     },
     destroyed() {
-        window.removeEventListener('resize', this.resizeGraph);
+        window.removeEventListener('resize', this.resize);
         diagramService.dispose(this.graph);
     }
 };

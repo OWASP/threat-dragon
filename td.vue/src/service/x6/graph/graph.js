@@ -12,13 +12,13 @@ import keys from './keys.js';
 const getEditGraph = (container, ctor = Graph) => {
     const graph = new ctor({
         container: container,
-        autoResize: container,
+        autoResize: true,
         connecting: {
             allowNode: true,
             allowBlank: true
         },
         grid: {
-            size: 10,
+            size: 10,      // default value
             visible: true
         },
         mousewheel: {
@@ -27,9 +27,13 @@ const getEditGraph = (container, ctor = Graph) => {
             modifiers: ['ctrl', 'meta']
         },
         panning: {
-            enabled: true, // provides panning using shift key, as we have to disable scroller.pannable below
+            enabled: true, // provides panning using shift key, as we have to disable scroller.pannable
             modifiers: ['shift']
         },
+		scaling: {
+		    min : 0.1 ,    // default value is 0.01
+		    max : 10 ,     // default value is 16
+		},
         preventDefaultContextMenu: false
     });
     graph
@@ -50,7 +54,7 @@ const getEditGraph = (container, ctor = Graph) => {
             new Scroller({
                 enabled: true,
                 autoResize: true,
-                pannable: false, // disable because it interferes with rubberbanding, see panning above
+                pannable: false,            // disable because it interferes with rubberbanding in Selection config
                 pageVisible: true,
                 pageBreak: false
             })
@@ -64,8 +68,8 @@ const getEditGraph = (container, ctor = Graph) => {
                 rubberEdge: true,
                 multiple: true,
                 movable: true,
-                strict: true, // need strict select otherwise data flows select other elements
-                useCellGeometry: false, // disabled, otherwise multi-select does weird stuff
+                strict: true,              // need strict select otherwise data flows select other elements
+                useCellGeometry: false,    // disabled, otherwise multi-select does weird stuff
                 showNodeSelectionBox: false,
                 showEdgeSelectionBox: false,
                 selectNodeOnMoved: false,
@@ -87,8 +91,8 @@ const getEditGraph = (container, ctor = Graph) => {
                     enabled: true,
                     minWidth: 50,
                     minHeight: 50,
-                    maxWidth: Number.MAX_SAFE_INTEGER,
-                    maxHeight: Number.MAX_SAFE_INTEGER,
+                    maxWidth: Number.MAX_SAFE_INTEGER,   // probably needs a more sane value
+                    maxHeight: Number.MAX_SAFE_INTEGER,  // same goes for this
                     orthogonal: true,
                     restricted: false,
                     autoScroll: true,
@@ -107,7 +111,7 @@ const getEditGraph = (container, ctor = Graph) => {
 const getReadonlyGraph = (container, ctor = Graph) => {
     const graph = new ctor({
         container: container,
-        autoResize: container,
+        autoResize: true,
         preventDefaultContextMenu: false
     });
     graph
