@@ -272,10 +272,6 @@ describe('service/x6/graph/events.js', () => {
                 events.listen(graph);
             });
 
-            it('listens to the node double click event', () => {
-                expect(graph.on).toHaveBeenCalledWith('node:dblclick', expect.any(Function));
-            });
-
             it('listens to the node move event', () => {
                 expect(graph.on).toHaveBeenCalledWith('node:move', expect.any(Function));
             });
@@ -331,10 +327,6 @@ describe('service/x6/graph/events.js', () => {
 
         it('removes the cell:unselected listener again', () => {
             expect(graph.off).toHaveBeenCalledWith('cell:unselected', expect.anything());
-        });
-
-        it('removes the node:dblclick listener', () => {
-            expect(graph.off).toHaveBeenCalledWith('node:dblclick', expect.anything());
         });
 
         it('removes the node:move listener', () => {

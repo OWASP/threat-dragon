@@ -123,26 +123,6 @@ const cellDataChanged = ({ cell }) => {
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
-/*
-const nodeAddFlow = (graph) => ({ node }) => {
-    if (!node.data.isTrustBoundary && node.data.type !== 'tm.Text') {
-        const position = node.position();
-        const config = {
-            source: {
-                cell: node.id
-            },
-            target: {
-                x: position.x + 50,
-                y: position.y - 100
-            }
-        };
-        console.debug('add data flow to node id:' + node.id);
-        let cell = graph.addEdge(new shapes.Flow(config));
-        graph.resetSelection(cell);
-    }
-};
-*/
-
 const listen = (graph) => {
     graph.on('resize', canvasResized);
     graph.on('edge:connected', edgeConnected);
@@ -155,7 +135,6 @@ const listen = (graph) => {
     graph.on('cell:change:data', cellDataChanged);
     graph.on('cell:selected', cellSelected(graph));
     graph.on('cell:unselected', cellUnselected);
-    //graph.on('node:dblclick', nodeAddFlow(graph));
     graph.on('node:move', cellSelected);
 };
 
@@ -171,7 +150,6 @@ const removeListeners = (graph) => {
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected(graph));
     graph.off('cell:unselected', cellUnselected);
-    //graph.off('node:dblclick', nodeAddFlow(graph));
     graph.off('node:move', cellSelected);
 };
 
