@@ -18,7 +18,7 @@ const getEditGraph = (container, ctor = Graph) => {
             allowBlank: true
         },
         grid: {
-            size: 10,      // default value
+            size: 10,    // default value
             visible: true
         },
         mousewheel: {
@@ -31,8 +31,8 @@ const getEditGraph = (container, ctor = Graph) => {
             modifiers: ['shift']
         },
         scaling: {
-            min : 0.1 ,    // default value is 0.01
-            max : 3.2 ,     // default value is 16
+            min : 0.1,    // default value is 0.01
+            max : 3.2,    // default value is 16
         },
         preventDefaultContextMenu: false
     });
