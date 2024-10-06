@@ -3,6 +3,7 @@ import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
 import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Scroller } from '@antv/x6-plugin-scroller';
+import { Shape } from '@antv/x6';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
@@ -18,7 +19,7 @@ const getEditGraph = (container, ctor = Graph) => {
             allowBlank: true
         },
         grid: {
-            size: 10,    // default value
+            size: 10, // default value
             visible: true
         },
         mousewheel: {
@@ -28,15 +29,50 @@ const getEditGraph = (container, ctor = Graph) => {
         },
         panning: {
             enabled: true,
-            modifiers: ['shift'],    // provides panning using shift key, as we have to disable scroller.pannable
-            eventTypes: ['leftMouseDown', 'mouseWheelDown']    // either left button or mousewheel down provides panning
+            modifiers: ['shift'], // provides panning using shift key, as we have to disable scroller.pannable
+            eventTypes: ['leftMouseDown', 'mouseWheelDown'] // either left button or mousewheel down provides panning
         },
         scaling: {
             // mousewheel + ctrl/meta/command key zooms in and out
-            min : 0.1,    // default value is 0.01
-            max : 3.2,    // default value is 16
+            min: 0.1, // default value is 0.01
+            max: 3.2 // default value is 16
         },
-        preventDefaultContextMenu: false
+        preventDefaultContextMenu: false,
+
+        connecting: {
+            router: 'manhattan',
+            connector: {
+                name: 'rounded',
+                args: {
+                    radius: 8
+                }
+            },
+            anchor: 'center',
+            connectionPoint: 'anchor',
+            allowBlank: false,
+            snap: {
+                radius: 20
+            },
+            createEdge() {
+                return new Shape.Edge({
+                    attrs: {
+                        line: {
+                            stroke: '#A2B1C3',
+                            strokeWidth: 2,
+                            targetMarker: {
+                                name: 'block',
+                                width: 12,
+                                height: 8
+                            }
+                        }
+                    },
+                    zIndex: 0
+                });
+            },
+            validateConnection({ targetMagnet }) {
+                return !!targetMagnet;
+            }
+        }
     });
     graph
         .use(new Clipboard())
@@ -56,7 +92,7 @@ const getEditGraph = (container, ctor = Graph) => {
             new Scroller({
                 enabled: true,
                 autoResize: true,
-                pannable: false,            // disable because it interferes with rubberbanding in Selection config
+                pannable: false, // disable because it interferes with rubberbanding in Selection config
                 pageVisible: true,
                 pageBreak: false
             })
@@ -70,8 +106,8 @@ const getEditGraph = (container, ctor = Graph) => {
                 rubberEdge: true,
                 multiple: true,
                 movable: true,
-                strict: true,              // need strict select otherwise data flows select other elements
-                useCellGeometry: false,    // disabled, otherwise multi-select does weird stuff
+                strict: true, // need strict select otherwise data flows select other elements
+                useCellGeometry: false, // disabled, otherwise multi-select does weird stuff
                 showNodeSelectionBox: false,
                 showEdgeSelectionBox: false,
                 selectNodeOnMoved: false,
@@ -93,8 +129,8 @@ const getEditGraph = (container, ctor = Graph) => {
                     enabled: true,
                     minWidth: 50,
                     minHeight: 50,
-                    maxWidth: Number.MAX_SAFE_INTEGER,   // probably needs a more sane value
-                    maxHeight: Number.MAX_SAFE_INTEGER,  // same goes for this
+                    maxWidth: Number.MAX_SAFE_INTEGER, // probably needs a more sane value
+                    maxHeight: Number.MAX_SAFE_INTEGER, // same goes for this
                     orthogonal: true,
                     restricted: false,
                     autoScroll: true,
@@ -107,6 +143,7 @@ const getEditGraph = (container, ctor = Graph) => {
 
     events.listen(graph);
     keys.bind(graph);
+
     return graph;
 };
 
@@ -116,12 +153,11 @@ const getReadonlyGraph = (container, ctor = Graph) => {
         autoResize: true,
         preventDefaultContextMenu: false
     });
-    graph
-        .use(
-            new History({
-                enabled: false,
-            })
-        );
+    graph.use(
+        new History({
+            enabled: false
+        })
+    );
 
     events.listen(graph);
     return graph;
