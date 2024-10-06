@@ -27,10 +27,12 @@ const getEditGraph = (container, ctor = Graph) => {
             modifiers: ['ctrl', 'meta']
         },
         panning: {
-            enabled: true, // provides panning using shift key, as we have to disable scroller.pannable
-            modifiers: ['shift']
+            enabled: true,
+            modifiers: ['shift'],    // provides panning using shift key, as we have to disable scroller.pannable
+            eventTypes: ['leftMouseDown', 'mouseWheelDown']    // either left button or mousewheel down provides panning
         },
         scaling: {
+            // mousewheel + ctrl/meta/command key zooms in and out
             min : 0.1,    // default value is 0.01
             max : 3.2,    // default value is 16
         },
