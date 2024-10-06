@@ -32,12 +32,12 @@ export default {
                             },
                             'topLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             },
                             'bottomLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             }
                         },
@@ -85,12 +85,12 @@ export default {
                             },
                             'topLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             },
                             'bottomLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             }
                         },
@@ -148,13 +148,13 @@ export default {
                             },
                             'topLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
-                                'strokeDasharray': null
+                                'strokeWidth': 2.5,
+                                'strokeDasharray': "4 3"
                             },
                             'bottomLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
-                                'strokeDasharray': null
+                                'strokeWidth': 2.5,
+                                'strokeDasharray': "4 3"
                             }
                         },
                         'shape': 'store',
@@ -201,12 +201,12 @@ export default {
                             },
                             'topLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             },
                             'bottomLine': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             }
                         },
@@ -274,7 +274,7 @@ export default {
                             },
                             'body': {
                                 'stroke': 'red',
-                                'strokeWidth': 3,
+                                'strokeWidth': 2.5,
                                 'strokeDasharray': null
                             }
                         },
@@ -1109,7 +1109,7 @@ export default {
                 ],
                 'version': '2.0',
                 'title': 'Main Request Data Flow',
-                'descrition': 'Main Request Data Flow Description',
+                'description': 'Main Request Data Flow Description',
                 'thumbnail': './public/content/images/thumbnail.stride.jpg',
                 'diagramType': 'STRIDE',
                 'id': 0
