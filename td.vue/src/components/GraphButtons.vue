@@ -87,7 +87,7 @@ export default {
             return;
         },
         undo() {
-            if (this.graph.history.canUndo()) {
+            if (this.graph.getPlugin('history').canUndo()) {
                 this.graph.getPlugin('history').undo();
             }
         },
