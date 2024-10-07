@@ -1,4 +1,3 @@
-import { Graph } from '@antv/x6';
 import { Stencil } from '@antv/x6-plugin-stencil';
 import shapes from './shapes/index.js';
 import { tc } from '@/i18n/index.js';
@@ -43,7 +42,7 @@ const get = (target, container) => {
         new shapes.ProcessShape(),
         new shapes.StoreShape(),
         new shapes.ActorShape(),
-        new shapes.FlowStencil()
+        // new shapes.FlowStencil()
     ], 'components');
 
     stencil.load([

@@ -47,7 +47,7 @@
             :onBtnClick="closeDiagram"
             icon="times"
             :text="$t('forms.close')" />
-            
+
         <td-form-button
             :isPrimary="true"
             :onBtnClick="save"
@@ -87,7 +87,7 @@ export default {
             return;
         },
         undo() {
-            if (this.graph.getPlugin('history').canUndo()) {
+            if (this.graph.history.canUndo()) {
                 this.graph.getPlugin('history').undo();
             }
         },
