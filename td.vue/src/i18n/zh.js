@@ -29,6 +29,10 @@ const zho = {
             displayName: 'Bitbucket',
             loginWith: '登录'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: '登录'
+        },
         local: {
             displayName: '本地',
             loginWith: '登录'
