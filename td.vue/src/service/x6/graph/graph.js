@@ -14,10 +14,6 @@ const getEditGraph = (container, ctor = Graph) => {
     const graph = new ctor({
         container: container,
         autoResize: true,
-        connecting: {
-            allowNode: true,
-            allowBlank: true
-        },
         grid: {
             size: 10, // default value
             visible: true
@@ -38,9 +34,9 @@ const getEditGraph = (container, ctor = Graph) => {
             max: 3.2 // default value is 16
         },
         preventDefaultContextMenu: false,
-
         connecting: {
-            router: 'manhattan',
+            allowNode: true, // not strictly needed as this is the default
+            allowBlank: false,
             connector: {
                 name: 'rounded',
                 args: {
@@ -48,8 +44,7 @@ const getEditGraph = (container, ctor = Graph) => {
                 }
             },
             anchor: 'center',
-            connectionPoint: 'anchor',
-            allowBlank: false,
+            connectionPoint: 'boundary',
             snap: {
                 radius: 20
             },
