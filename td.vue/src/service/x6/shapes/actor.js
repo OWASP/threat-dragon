@@ -2,6 +2,8 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
+import { ports } from '../ports.js';
+
 const name = 'actor';
 
 // actor (rectangle, white background)
@@ -16,7 +18,8 @@ export const ActorShape = Shape.Rect.define({
             fill: 'transparent',
             magnet: false // needs to be disabled to grab whole shape
         }
-    }
+    },
+    ports: { ...ports }
 });
 
 ActorShape.prototype.type = 'tm.Actor';

@@ -1,4 +1,3 @@
-import factory from '@/service/x6/factory.js';
 import shapes from '@/service/x6/shapes/index.js';
 import stencil from '@/service/x6/stencil.js';
 
@@ -8,14 +7,6 @@ describe('service/x6/stencil.js', () => {
     beforeEach(() => {
         load = jest.fn();
         search = jest.fn();
-        factory.stencil = jest.fn().mockImplementation((config) => {
-            cfg = config;
-            return {
-                container,
-                load,
-                onSearch: search
-            };
-        });
         shapes.ActorShape = jest.fn();
         shapes.ProcessShape = jest.fn();
         shapes.StoreShape = jest.fn();
@@ -26,10 +17,6 @@ describe('service/x6/stencil.js', () => {
         target = { bar: 'baz' };
         
         stencil.get(target, container);
-    });
-
-    it('creates a new stencil', () => {
-        expect(factory.stencil).toHaveBeenCalledTimes(1);
     });
     
     it('has a title', () => {
@@ -72,15 +59,13 @@ describe('service/x6/stencil.js', () => {
         expect(load).toHaveBeenCalledWith([
             expect.any(shapes.ProcessShape),
             expect.any(shapes.StoreShape),
-            expect.any(shapes.ActorShape),
-            expect.any(shapes.FlowStencil)
+            expect.any(shapes.ActorShape)
         ], 'components');
     });
 
     it('loads the trust boundaries', () => {
         expect(load).toHaveBeenCalledWith([
-            expect.any(shapes.TrustBoundaryBox),
-            expect.any(shapes.TrustBoundaryCurveStencil)
+            expect.any(shapes.TrustBoundaryBox)
         ], 'boundaries');
     });
 

@@ -76,7 +76,7 @@ const propsByType = {
     'tm.Boundary': boundary,
     'tm.BoundaryBox': boundaryBox,
     'tm.Flow': flow,
-    'tm.FlowStencil': flow,
+    //'tm.FlowStencil': flow,
     'tm.Process': tmProcess,
     'tm.Store': store,
     'tm.Text': text

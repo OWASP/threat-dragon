@@ -5,7 +5,7 @@ import { tc } from '@/i18n/index.js';
 const name = 'trust-boundary-box';
 
 // trust boundary box (dotted line, gray opaque background)
-export const TrustBoundaryBox = Shape.HeaderedRect.define({
+export const TrustBoundaryBox = Shape.Rect.define({
     constructorName: name,
     width: 500,
     height: 400,

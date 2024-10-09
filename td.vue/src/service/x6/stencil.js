@@ -1,10 +1,10 @@
-import factory from './factory.js';
+import { Stencil } from '@antv/x6-plugin-stencil';
 import shapes from './shapes/index.js';
 import { tc } from '@/i18n/index.js';
 
 const getStencil = (target) => ({
     title: tc('threatmodel.stencil.entities'),
-    target,
+    target: target,
     collapsable: true,
     stencilGraphWidth: 500,
     groups: [
@@ -36,13 +36,13 @@ const getStencil = (target) => ({
 
 // the target is the graph or diagram
 const get = (target, container) => {
-    const stencil = factory.stencil(getStencil(target));
+    const stencil = new Stencil(getStencil(target));
 
     stencil.load([
         new shapes.ProcessShape(),
         new shapes.StoreShape(),
         new shapes.ActorShape(),
-        new shapes.FlowStencil()
+        // new shapes.FlowStencil()
     ], 'components');
 
     stencil.load([
@@ -50,7 +50,6 @@ const get = (target, container) => {
             width: 160,
             height: 75
         }),
-        new shapes.TrustBoundaryCurveStencil()
     ], 'boundaries');
 
     stencil.load([

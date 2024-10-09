@@ -2,6 +2,8 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
+import { ports } from '../ports.js';
+
 const name = 'text';
 
 // text block (rectangle, transparent)
@@ -18,7 +20,8 @@ export const TextBlock = Shape.Rect.define({
             fillOpacity: 0,
             strokeOpacity: 0
         }
-    }
+    },
+    ports: { ...ports }
 });
 
 TextBlock.prototype.type = 'tm.Text';
