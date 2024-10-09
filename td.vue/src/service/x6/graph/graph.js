@@ -34,7 +34,7 @@ const getEditGraph = (container, ctor = Graph) => {
         preventDefaultContextMenu: false,
         connecting: {
             allowNode: true, // not strictly needed as this is the default
-            allowBlank: false,
+            allowBlank: true,
             connector: {
                 name: 'rounded',
                 args: {
@@ -44,7 +44,7 @@ const getEditGraph = (container, ctor = Graph) => {
             anchor: 'center',
             connectionPoint: 'boundary',
             snap: {
-                radius: 20
+                radius: 50
             },
             createEdge() {
                 return new Shape.Edge({

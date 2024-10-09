@@ -6,13 +6,6 @@ import dataChanged from './data-changed.js';
 import store from '@/store/index.js';
 import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
 import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
-//import shapes from '@/service/x6/shapes/index.js';
-
-const showPorts = (ports, show) => {
-    for (let i = 0, len = ports.length; i < len; i += 1) {
-        ports[i].style.visibility = show ? 'visible' : 'hidden';
-    }
-};
 
 const canvasResized = ({ width, height }) => {
     console.debug('canvas resized to width ', width, ' height ', height);
@@ -28,24 +21,17 @@ const mouseLeave = ({ cell }) => {
     if (cell.hasTools()) {
         cell.removeTools();
     }
-    const container = document.getElementById('graph-container');
-    const ports = container.querySelectorAll('.x6-port-body');
-    showPorts(ports, false);
 };
 
 const mouseEnter = ({ cell }) => {
     const tools = ['boundary', 'button-remove'];
+	// both 'node-editor' and 'edge-editor' tools seem to drop the text very easily, so do not use (yet)
     if (!cell.isNode()) {
         tools.push('vertices');
         tools.push('source-arrowhead');
         tools.push('target-arrowhead');
     }
     cell.addTools(tools);
-
-    // Show the ports for connecting edges
-    const container = document.getElementById('graph-container');
-    const ports = container.querySelectorAll('.x6-port-body');
-    showPorts(ports, true);
 };
 
 const cellAdded = ({ cell }) => {
