@@ -1109,7 +1109,7 @@ export default {
                 ],
                 'version': '2.0',
                 'title': 'Main Request Data Flow',
-                'description': 'Main Request Data Flow Description',
+                'description': '',
                 'thumbnail': './public/content/images/thumbnail.stride.jpg',
                 'diagramType': 'STRIDE',
                 'id': 0

@@ -24,9 +24,7 @@ const getEditGraph = (container, ctor = Graph) => {
             modifiers: ['ctrl', 'meta']
         },
         panning: {
-            enabled: true,
-            modifiers: ['shift'], // provides panning using shift key, as we have to disable scroller.pannable
-            eventTypes: ['leftMouseDown', 'mouseWheelDown'] // either left button or mousewheel down provides panning
+            enabled: false // use Scroller plugin instead
         },
         scaling: {
             // mousewheel + ctrl/meta/command key zooms in and out
@@ -87,24 +85,27 @@ const getEditGraph = (container, ctor = Graph) => {
             new Scroller({
                 enabled: true,
                 autoResize: true,
-                pannable: false, // disable because it interferes with rubberbanding in Selection config
+                modifiers: ['shift'],
                 pageVisible: true,
-                pageBreak: false
+                pageBreak: false,
+                pannable:  true
             })
         )
         .use(
             new Selection({
                 enabled: true,
+                eventTypes: ['leftMouseDown', 'mouseWheelDown'],
+                movable: true,
+                multiple: true,
+                multipleSelectionModifiers: ['ctrl', 'meta'],
                 pointerEvents: 'auto',
                 rubberband: true,
                 rubberNode: true,
                 rubberEdge: true,
-                multiple: true,
-                movable: true,
                 strict: true, // need strict select otherwise data flows select other elements
                 useCellGeometry: false, // disabled, otherwise multi-select does weird stuff
-                showNodeSelectionBox: false,
-                showEdgeSelectionBox: false,
+                showNodeSelectionBox: true,
+                showEdgeSelectionBox: true,
                 selectNodeOnMoved: false,
                 selectEdgeOnMoved: false,
                 selectCellOnMoved: false,
@@ -121,16 +122,16 @@ const getEditGraph = (container, ctor = Graph) => {
         .use(
             new Transform({
                 resizing: {
+                    allowReverse: true,
+                    autoScroll: true,
                     enabled: true,
                     minWidth: 50,
                     minHeight: 50,
                     maxWidth: Number.MAX_SAFE_INTEGER, // probably needs a more sane value
                     maxHeight: Number.MAX_SAFE_INTEGER, // same goes for this
                     orthogonal: true,
-                    restricted: false,
-                    autoScroll: true,
                     preserveAspectRatio: true,
-                    allowReverse: true
+                    restricted: false
                 },
                 rotating: true
             })
