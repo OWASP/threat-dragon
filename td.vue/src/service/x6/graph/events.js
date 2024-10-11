@@ -21,10 +21,23 @@ const canvasResized = ({ width, height }) => {
     showPorts(false);
 };
 
-const edgeConnected = ({ isNew, edge }) => {
+const edgeConnected = (graph) => ({ isNew, edge }) => {
     if (isNew) {
         edge.connector = 'smooth';
+        replaceEdgeWithFlow(graph, edge);
     }
+};
+
+const replaceEdgeWithFlow = (graph, edge) => {
+    if (edge.constructor.name !== 'Edge') {
+        return;
+    }
+
+    const flow = shapes.Flow.fromEdge(edge);
+    graph.addEdge(flow);
+    edge.remove();
+    edge = flow;
+    edge.setLabels([edge.data.name]);
 };
 
 const mouseLeave = ({ cell }) => {
@@ -140,7 +153,7 @@ const cellDataChanged = ({ cell }) => {
 
 const listen = (graph) => {
     graph.on('resize', canvasResized);
-    graph.on('edge:connected', edgeConnected);
+    graph.on('edge:connected', edgeConnected(graph));
     graph.on('edge:dblclick', cellSelected);
     graph.on('edge:move', cellSelected);
     graph.on('cell:mouseleave', mouseLeave);

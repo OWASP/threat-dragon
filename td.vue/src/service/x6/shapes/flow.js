@@ -35,6 +35,14 @@ Flow.prototype.updateStyle = function (color, dash, strokeWidth, sourceMarker) {
     this.setAttrByPath('line/targetMarker/name', 'block');
 };
 
+Flow.fromEdge = function (edge) {
+    return new Flow({
+        source: edge.getSourceCell(),
+        target: edge.getTargetCell(),
+        data: edge.getData()
+    });
+};
+
 export default {
     Flow,
     name
