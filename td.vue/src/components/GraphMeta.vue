@@ -19,7 +19,7 @@
                         size="sm"
                         class="float-right"
                     >
-                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>    
+                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
                         {{ $t('threats.newThreat') }}
                     </b-btn>
                 </template>
@@ -104,6 +104,9 @@ export default {
         diagram: (state) => state.threatmodel.selectedDiagram,
         threatTop: (state) => state.threatmodel.data.detail.threatTop,
         disableNewThreat: function (state) {
+            if (!state.cell?.ref?.data) {
+                return true;
+            }
             return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
         }
     }),

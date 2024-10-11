@@ -41,13 +41,13 @@
             </b-col>
         </b-row>
 
-        <b-form v-if="!!cellRef">
+        <b-form v-if="!!cellRef && cellRef.data">
             <b-form-row>
                 <b-col md="6">
                     <b-form-group
                         id="name-group"
                         label-cols="auto"
-                        :label="cellRef.data.type === 'tm.Text' ? $t('threatmodel.properties.text') : $t('threatmodel.properties.name')"
+                        :label="cellRef.data?.type === 'tm.Text' ? $t('threatmodel.properties.text') : $t('threatmodel.properties.name')"
                         label-for="name">
                         <b-form-textarea
                             id="name"
@@ -71,7 +71,7 @@
                         ></b-form-textarea>
                     </b-form-group>
                 </b-col>
-                
+
                 <b-col v-if="!cellRef.data.isTrustBoundary && cellRef.data.type !== 'tm.Text' && cellRef.data.type !== 'tm.Flow'" md="6">
                     <b-form-group
                         label-cols="auto"
@@ -232,7 +232,7 @@
                         ></b-form-input>
                     </b-form-group>
                 </b-col>
-                
+
                 <b-col v-if="cellRef.data.type === 'tm.Flow'">
                     <b-form-group
                         label-cols="auto"
@@ -244,7 +244,7 @@
                         >{{ $t('threatmodel.properties.isEncrypted') }}</b-form-checkbox>
                     </b-form-group>
                 </b-col>
-                
+
                 <b-col v-if="cellRef.data.type === 'tm.Flow'">
                     <b-form-group
                         label-cols="auto"
