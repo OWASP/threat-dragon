@@ -53,28 +53,28 @@ const cellAdded =
             //graph.resetSelection(cell);
             console.debug('cell added with shape: ', cell.shape);
 
-            // if (cell.convertToEdge) {
-            //     let edge = cell;
-            //     const position = cell.position();
-            //     const config = {
-            //         source: position,
-            //         target: {
-            //             x: position.x + 100,
-            //             y: position.y + 100
-            //         },
-            //         data: cell.getData()
-            //     };
+            if (cell.convertToEdge) {
+                let edge = cell;
+                const position = cell.position();
+                const config = {
+                    source: position,
+                    target: {
+                        x: position.x + 100,
+                        y: position.y + 100
+                    },
+                    data: cell.getData()
+                };
 
-            //     if (cell.type === shapes.FlowStencil.prototype.type) {
-            //         edge = graph.addEdge(new shapes.Flow(config));
-            //     } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
-            //         edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
-            //     } else {
-            //         console.warn('Removed unknown edge');
-            //     }
-            //     cell.remove();
-            //cell = edge;
-            // }
+                if (cell.type === shapes.FlowStencil.prototype.type) {
+                    edge = graph.addEdge(new shapes.Flow(config));
+                } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
+                    edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
+                } else {
+                    console.warn('Removed unknown edge');
+                }
+                cell.remove();
+                cell = edge;
+            }
 
             mouseLeave({ cell });
 

@@ -42,7 +42,7 @@ const get = (target, container) => {
         new shapes.ProcessShape(),
         new shapes.StoreShape(),
         new shapes.ActorShape(),
-        // new shapes.FlowStencil()
+        new shapes.FlowStencil()
     ], 'components');
 
     stencil.load([
