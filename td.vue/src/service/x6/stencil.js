@@ -50,6 +50,7 @@ const get = (target, container) => {
             width: 160,
             height: 75
         }),
+        new shapes.TrustBoundaryCurveStencil()
     ], 'boundaries');
 
     stencil.load([
