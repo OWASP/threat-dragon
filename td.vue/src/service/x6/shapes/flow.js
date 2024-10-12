@@ -1,5 +1,6 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
 import defaultProperties from '@/service/entity/default-properties';
 
 const name = 'flow';
@@ -10,6 +11,7 @@ export const Flow = Shape.Edge.define({
     width: 200,
     height: 100,
     zIndex: 10,
+    label: tc('threatmodel.shapes.flow'),
     attrs: {
         line: {
             strokeWidth: 1.5,

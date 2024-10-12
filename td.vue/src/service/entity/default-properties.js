@@ -11,7 +11,7 @@ const actor = {
 
 const boundary = {
     type: 'tm.Boundary',
-    name: '',
+    name: 'Trust Boundary',
     description: '',
     isTrustBoundary: true
 };
