@@ -43,12 +43,10 @@ export default {
             const maxWidth = 1000;
             
             const width = this.$parent.$el.clientWidth;
-            this.graph.unfreeze();
             this.graph.resize(Math.min(width, maxWidth) - 50, height - 50);
             this.graph.scaleContentToFit({
                 padding: 3
             });
-            this.graph.freeze();
         }
     },
     mounted() {

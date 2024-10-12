@@ -152,7 +152,6 @@ const getReadonlyGraph = (container, ctor = Graph) => {
         })
     );
 
-    events.listen(graph);
     return graph;
 };
 
