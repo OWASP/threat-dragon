@@ -33,8 +33,11 @@ const getEditGraph = (container, ctor = Graph) => {
         },
         preventDefaultContextMenu: false,
         connecting: {
-            allowNode: true, // not strictly needed as this is the default
             allowBlank: true,
+            allowLoop: true, // loops do not make sense in a threat model diagram, but allow anyway
+            allowMulti: true, // multiple edges on the same node/port (default is false)
+            allowNode: true, // default to attaching edges to nodes
+            // allowPort: false, // attach edge anywhere on boundary, not just ports
             connector: {
                 name: 'rounded',
                 args: {
@@ -84,7 +87,6 @@ const getEditGraph = (container, ctor = Graph) => {
         .use(
             new Scroller({
                 enabled: true,
-                autoResize: true,
                 modifiers: ['shift'],
                 pageVisible: true,
                 pageBreak: false,
@@ -94,6 +96,7 @@ const getEditGraph = (container, ctor = Graph) => {
         .use(
             new Selection({
                 enabled: true,
+                content: null,
                 eventTypes: ['leftMouseDown', 'mouseWheelDown'],
                 movable: true,
                 multiple: true,
@@ -101,16 +104,10 @@ const getEditGraph = (container, ctor = Graph) => {
                 pointerEvents: 'auto',
                 rubberband: true,
                 rubberNode: true,
-                rubberEdge: true,
+                rubberEdge: true, // not documented in v2.x docs but needed for rubberbanding TB curves
                 strict: true, // need strict select otherwise data flows select other elements
-                useCellGeometry: false, // disabled, otherwise multi-select does weird stuff
                 showNodeSelectionBox: true,
-                showEdgeSelectionBox: true,
-                selectNodeOnMoved: false,
-                selectEdgeOnMoved: false,
-                selectCellOnMoved: false,
-                content: null,
-                handles: null
+                showEdgeSelectionBox: true
             })
         )
         .use(
@@ -122,16 +119,16 @@ const getEditGraph = (container, ctor = Graph) => {
         .use(
             new Transform({
                 resizing: {
+                    enabled: true,
                     allowReverse: true,
                     autoScroll: true,
-                    enabled: true,
                     minWidth: 50,
                     minHeight: 50,
                     maxWidth: Number.MAX_SAFE_INTEGER, // probably needs a more sane value
                     maxHeight: Number.MAX_SAFE_INTEGER, // same goes for this
                     orthogonal: true,
                     preserveAspectRatio: true,
-                    restricted: false
+                    restrict: false
                 },
                 rotating: true
             })
