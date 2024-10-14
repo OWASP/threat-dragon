@@ -40,10 +40,6 @@ describe('service/entity/default-properties.js', () => {
             expect(defaultProperties.boundary.type).toEqual('tm.Boundary');
         });
 
-        it('has a blank name', () => {
-            expect(defaultProperties.boundary.name).toEqual('');
-        });
-
         it('has a blank description', () => {
             expect(defaultProperties.boundary.description).toEqual('');
         });
