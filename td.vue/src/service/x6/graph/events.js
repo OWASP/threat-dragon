@@ -168,12 +168,12 @@ const listen = (graph) => {
 
 const removeListeners = (graph) => {
     graph.off('resize', canvasResized);
-    graph.off('edge:connected', edgeConnected);
+    graph.off('edge:connected', edgeConnected(graph));
     graph.off('edge:dblclick', cellSelected);
     graph.off('edge:move', cellSelected);
     graph.off('cell:mouseleave', mouseLeave);
     graph.off('cell:mouseenter', mouseEnter);
-    graph.off('cell:added', cellAdded);
+    graph.off('cell:added', cellAdded(graph));
     graph.off('cell:removed', cellDeleted);
     graph.off('cell:change:data', cellDataChanged);
     graph.off('cell:selected', cellSelected(graph));
