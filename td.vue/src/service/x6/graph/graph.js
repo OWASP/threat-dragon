@@ -144,7 +144,8 @@ const getReadonlyGraph = (container, ctor = Graph) => {
     const graph = new ctor({
         container: container,
         autoResize: true,
-        preventDefaultContextMenu: false
+        preventDefaultContextMenu: false,
+        interacting: false
     });
     graph.use(
         new History({
