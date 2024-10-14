@@ -149,12 +149,12 @@ export default {
                             'topLine': {
                                 'stroke': 'red',
                                 'strokeWidth': 2.5,
-                                'strokeDasharray': "4 3"
+                                'strokeDasharray': '4 3'
                             },
                             'bottomLine': {
                                 'stroke': 'red',
                                 'strokeWidth': 2.5,
-                                'strokeDasharray': "4 3"
+                                'strokeDasharray': '4 3'
                             }
                         },
                         'shape': 'store',

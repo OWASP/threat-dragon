@@ -130,13 +130,6 @@ describe('service/x6/graph/graph.js', () => {
             });
         });
 
-        it.skip('enables panning', () => {
-            expect(graphRes.panning).toEqual(expect.objectContaining({
-                enabled: true,
-                modifiers: ['shift']
-            }));
-        });
-
         it('enables connecting', () => {
             expect(graphRes.connecting).toEqual(expect.objectContaining({
                 allowNode: true,
