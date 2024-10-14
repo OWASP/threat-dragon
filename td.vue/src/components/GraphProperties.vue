@@ -47,13 +47,13 @@
                     <b-form-group
                         id="name-group"
                         label-cols="auto"
-                        :label="cellRef.data?.type === 'tm.Text' ? $t('threatmodel.properties.text') : $t('threatmodel.properties.name')"
+                        :label="cellRef.data && cellRef.data.type === 'tm.Text' ? $t('threatmodel.properties.text') : $t('threatmodel.properties.name')"
                         label-for="name">
                         <b-form-textarea
                             id="name"
                             v-model="cellRef.data.name"
                             @update="onChangeName()"
-                            :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"
+                            :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"graphPro
                         ></b-form-textarea>
                     </b-form-group>
                 </b-col>
