@@ -1,13 +1,6 @@
 {
     "browsers": [
-        {
-            "browser": "opera",
-            "os": "Windows 10",
-            "versions": [
-                "latest"
-            ]
-        },
-        {
+       {
             "browser": "firefox",
             "os": "Windows 10",
             "versions": [
@@ -29,29 +22,15 @@
             ]
         },
         {
-            "browser": "opera",
+            "browser": "firefox",
             "os": "OS X Monterey",
             "versions": [
                 "latest"
             ]
         },
         {
-            "browser": "firefox",
-            "os": "OS X Ventura",
-            "versions": [
-                "latest"
-            ]
-        },
-        {
-            "browser": "safari",
-            "os": "OS X Sonoma",
-            "versions": [
-                "latest"
-            ]
-        },
-        {
             "browser": "chrome",
-            "os": "OS X Sonoma",
+            "os": "OS X Ventura",
             "versions": [
                 "latest"
             ]
