@@ -9,14 +9,6 @@
             ]
         },
         {
-            "browser": "firefox",
-            "os": "Windows 10",
-            "versions": [
-                "latest",
-                "latest-1"
-            ]
-        },
-        {
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
@@ -25,7 +17,31 @@
             ]
         },
         {
+            "browser": "firefox",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "opera",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
             "browser": "chrome",
+            "os": "Windows 11",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "edge",
             "os": "Windows 11",
             "versions": [
                 "latest",
@@ -41,16 +57,8 @@
             ]
         },
         {
-            "browser": "chrome",
-            "os": "OS X Big Sur",
-            "versions": [
-                "latest",
-                "latest-1"
-            ]
-        },
-        {
-            "browser": "firefox",
-            "os": "OS X Big Sur",
+            "browser": "opera",
+            "os": "Windows 11",
             "versions": [
                 "latest",
                 "latest-1"
@@ -60,13 +68,89 @@
             "browser": "chrome",
             "os": "OS X Monterey",
             "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "safari",
+            "os": "OS X Monterey",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "OS X Monterey",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "opera",
+            "os": "OS X Monterey",
+            "versions": [
+                "latest"
+            ]
+        },
+        {
+            "browser": "chrome",
+            "os": "OS X Ventura",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "safari",
+            "os": "OS X Ventura",
+            "versions": [
                 "latest",
                 "latest-1"
             ]
         },
         {
             "browser": "firefox",
-            "os": "OS X Monterey",
+            "os": "OS X Ventura",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "opera",
+            "os": "OS X Ventura",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "chrome",
+            "os": "OS X Sonoma",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "safari",
+            "os": "OS X Sonoma",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "OS X Sonoma",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "opera",
+            "os": "OS X Sonoma",
             "versions": [
                 "latest",
                 "latest-1"
