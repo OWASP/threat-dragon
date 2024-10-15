@@ -16,12 +16,10 @@ export const TextBlock = Shape.Rect.define({
     attrs: {
         body: {
             fill: 'transparent',
-            magnet: false, // disabled because data flows not allowed to text box
             fillOpacity: 0,
             strokeOpacity: 0
         }
-    },
-    ports: { ...ports }
+    }
 });
 
 TextBlock.prototype.type = 'tm.Text';

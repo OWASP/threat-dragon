@@ -68,7 +68,7 @@ const store = {
 
 const text = {
     type: 'tm.Text',
-    name: 'Arbitrary Text'
+    name: 'Descriptive text'
 };
 
 const propsByType = {

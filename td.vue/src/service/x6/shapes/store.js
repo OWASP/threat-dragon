@@ -39,7 +39,7 @@ export const StoreShape = Shape.Rect.define({
         body: {
             fill: 'transparent',
             opacity: 0,
-            magnet: false // needs to be disabled to grab whole shape
+            fillOpacity: 0
         }
     },
     ports: { ...ports }

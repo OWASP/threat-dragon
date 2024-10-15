@@ -211,7 +211,7 @@ describe('service/entity/default-properties.js', () => {
         });
 
         it('defines name', () => {
-            expect(defaultProperties.text.name).toEqual('Arbitrary Text');
+            expect(defaultProperties.text.name).toEqual('Descriptive text');
         });
     });
 

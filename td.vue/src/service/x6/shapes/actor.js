@@ -16,7 +16,7 @@ export const ActorShape = Shape.Rect.define({
     attrs: {
         body: {
             fill: 'transparent',
-            magnet: false // needs to be disabled to grab whole shape
+            fillOpacity: 0
         }
     },
     ports: { ...ports }
