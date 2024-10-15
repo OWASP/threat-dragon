@@ -2,6 +2,8 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
+import { ports } from '../ports.js';
+
 const name = 'process';
 
 // process (circle, white background)
@@ -28,10 +30,10 @@ export const ProcessShape = Shape.Circle.define({
             refHeight: '110%'
         },
         body: {
-            fill: 'transparent',
-            magnet: false // needs to be disabled to grab whole shape
+            fill: 'transparent'
         }
-    }
+    },
+    ports: { ...ports }
 });
 
 ProcessShape.prototype.type = 'tm.Process';

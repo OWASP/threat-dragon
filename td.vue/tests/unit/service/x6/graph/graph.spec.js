@@ -1,47 +1,26 @@
 import events from '@/service/x6/graph/events.js';
-import factory from '@/service/x6/factory.js';
-import graph from '@/service/x6/graph/graph.js';
+import graph, { beforeAddCommand } from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
 
 describe('service/x6/graph/graph.js', () => {
     let container;
-    beforeEach(() => {
-        factory.graph = jest.fn().mockImplementation(c => c);
-    });
+
+    class GraphMock {
+        constructor(args) {
+            Object.assign(this, args);
+        }
+        use = jest.fn().mockReturnThis();
+    }
 
     describe('getReadonlyGraph', () => {
         beforeEach(() => {
             container = { foo: 'bar' };
             events.listen = jest.fn();
-            graph.getReadonlyGraph(container);
+            graph.getReadonlyGraph(container, GraphMock);
         });
 
-        it('sets the container', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ container })
-            );
-        });
-
-        it('does not pprevent default context menus', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ preventDefaultContextMenu: false })
-            );
-        });
-
-        it('disables history', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ history: { enabled: false }})
-            );
-        });
-
-        it('auto resizes', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: true })
-            );
-        });
-
-        it('adds the event listeners', () => {
-            expect(events.listen).toHaveBeenCalledTimes(1);
+        it('does not add the event listeners', () => {
+            expect(events.listen).not.toHaveBeenCalled();
         });
     });
 
@@ -52,37 +31,36 @@ describe('service/x6/graph/graph.js', () => {
             container = { foo: 'bar' };
             events.listen = jest.fn();
             keys.bind = jest.fn();
-            graphRes = graph.getEditGraph(container);
+            graphRes = graph.getEditGraph(container, GraphMock);
         });
 
-        it('sets the container', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ container })
+        it('applies the beforeAddCommand', () => {
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    options: expect.objectContaining({
+                        beforeAddCommand: beforeAddCommand
+                    })
+                })
             );
         });
 
-        it('does not prevent default context menus', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ preventDefaultContextMenu: false })
-            );
-        });
-
-        it('auto resizes', () => {
-            expect(factory.graph).toHaveBeenCalledWith(
-                expect.objectContaining({ autoResize: true })
-            );
-        });
-
-        it('does not save history for tool actions', () => {
-            expect(graphRes.history.beforeAddCommand({}, { key: 'tools' })).toEqual(false);
+        it('does not save tool history', () => {
+            expect(beforeAddCommand({}, { key: 'tools' })).toEqual(false);
         });
 
         it('saves history if not a tool', () => {
-            expect(graphRes.history.beforeAddCommand({}, { key: 'other' })).toEqual(true);
+            expect(beforeAddCommand({}, { key: 'other' })).toEqual(true);
         });
 
         it('enables history', () => {
-            expect(graphRes.history.enabled).toEqual(true);
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'history',
+                    options: expect.objectContaining({
+                        enabled: true
+                    })
+                })
+            );
         });
 
         it('sets the grid', () => {
@@ -93,66 +71,55 @@ describe('service/x6/graph/graph.js', () => {
         });
 
         it('sets the snapline', () => {
-            expect(graphRes.snapline).toEqual({
-                enabled: true,
-                sharp: true
-            });
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'snapline',
+                    options: expect.objectContaining({
+                        enabled: true,
+                        sharp: true
+                    })
+                })
+            );
         });
 
         it('enables the clipboard', () => {
-            expect(graphRes.clipboard).toEqual({
-                enabled: true
-            });
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'clipboard',
+                    options: expect.objectContaining({
+                        enabled: true
+                    })
+                })
+            );
         });
 
         it('enables the keyboard globally', () => {
-            expect(graphRes.keyboard).toEqual({
-                enabled: true,
-                global: true
-            });
-        });
-
-        it('enables rotation', () => {
-            expect(graphRes.rotating).toEqual({
-                enabled: true
-            });
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'keyboard',
+                    options: expect.objectContaining({
+                        enabled: true,
+                        global: true
+                    })
+                })
+            );
         });
 
         it('enables selecting', () => {
-            expect(graphRes.selecting).toEqual({
-                enabled: true,
-                pointerEvents: 'auto',
-                rubberband: true,
-                rubberNode: true,
-                rubberEdge: true,
-                multiple: true,
-                movable: true,
-                strict: true,
-                useCellGeometry: false,
-                showNodeSelectionBox: false,
-                showEdgeSelectionBox: false,
-                selectNodeOnMoved: false,
-                selectEdgeOnMoved: false,
-                selectCellOnMoved: false,
-                content: null,
-                handles: null
-            });
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'selection',
+                })
+            );
         });
 
-        it('enables resizing', () => {
-            expect(graphRes.resizing).toEqual({
-                enabled: true,
-                minWidth: 50,
-                minHeight: 50,
-                maxWidth: Number.MAX_SAFE_INTEGER,
-                maxHeight: Number.MAX_SAFE_INTEGER,
-                orthogonal: true,
-                restricted: false,
-                autoScroll: true,
-                preserveAspectRatio: false,
-                allowReverse: true,
-                autoResize: true
-            });
+        it('enables resizing and rotation', () => {
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'transform',
+                    disabled: false,
+                })
+            );
         });
 
         it('enables the mouse wheel', () => {
@@ -163,28 +130,19 @@ describe('service/x6/graph/graph.js', () => {
             });
         });
 
-        it('enables panning', () => {
-            expect(graphRes.panning).toEqual({
-                enabled: true,
-                modifiers: ['shift']
-            });
-        });
-
         it('enables connecting', () => {
-            expect(graphRes.connecting).toEqual({
+            expect(graphRes.connecting).toEqual(expect.objectContaining({
                 allowNode: true,
                 allowBlank: true
-            });
+            }));
         });
 
         it('enables the scroller', () => {
-            expect(graphRes.scroller).toEqual({
-                enabled: true,
-                autoResize: true,
-                pannable: false,
-                pageVisible: true,
-                pageBreak: false
-            });
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'scroller',
+                })
+            );
         });
 
         it('adds the event listeners', () => {

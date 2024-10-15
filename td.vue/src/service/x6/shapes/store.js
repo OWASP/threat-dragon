@@ -2,6 +2,8 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
+import { ports } from '../ports.js';
+
 const name = 'store';
 
 // store (parallel lines, white background)
@@ -37,9 +39,10 @@ export const StoreShape = Shape.Rect.define({
         body: {
             fill: 'transparent',
             opacity: 0,
-            magnet: false // needs to be disabled to grab whole shape
+            fillOpacity: 0
         }
-    }
+    },
+    ports: { ...ports }
 });
 
 StoreShape.prototype.type = 'tm.Store';
