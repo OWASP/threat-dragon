@@ -2,8 +2,6 @@ import { Shape } from '@antv/x6';
 
 import { tc } from '@/i18n/index.js';
 
-import { ports } from '../ports.js';
-
 const name = 'text';
 
 // text block (rectangle, transparent)
