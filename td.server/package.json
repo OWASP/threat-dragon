@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "scripts": {
     "audit": "npm audit",
@@ -43,7 +43,7 @@
     "axios": "^1.7.7",
     "bitbucket": "^2.11.0",
     "dotenv": "^16.0.3",
-    "express": "^4.20.0",
+    "express": "^4.21.1",
     "express-rate-limit": "^7.4.0",
     "googleapis": "^144.0.0",
     "helmet": "^6.0.1",
@@ -81,6 +81,7 @@
     "@pm2/agent": ">=2.0.4",
     "body-parser": ">=1.20.3",
     "braces": ">=3.0.3",
+    "cookie": ">=0.7.1",
     "debug@<3.1.0": ">=4.3.4",
     "follow-redirects": ">=1.15.6",
     "got": ">=11.8.5",
