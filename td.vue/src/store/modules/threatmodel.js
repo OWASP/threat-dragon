@@ -134,11 +134,9 @@ const actions = {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
                 save.local(state.data, `${state.data.summary.title}.json`);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
                 await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
