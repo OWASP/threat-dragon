@@ -332,7 +332,6 @@ jobs:
     needs: build_docker_image
     permissions:
       contents: write
-    if: ${{ ! always() }}
 
     steps:
       - name: Checkout
