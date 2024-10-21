@@ -3,6 +3,7 @@
         <div class="entity-title">
             {{ `${entity.data.name} (${dataType})` }}
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
+            <p v-if="outOfScope">{{ $t('threatmodel.properties.reasonOutOfScope') }}: {{ `${entity.data.reasonOutOfScope}` }}</p>
         </div>
         <p class="entity-description">{{ entity.data.description }}</p>
         <table class="table">

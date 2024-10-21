@@ -5,6 +5,7 @@
                 <h3 class="entity-title">
                     {{ `${entity.data.name} (${dataType})` }}
                     <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
+                    <p v-if="outOfScope">{{ $t('threatmodel.properties.reasonOutOfScope') }}: {{ `${entity.data.reasonOutOfScope}` }}</p>
                 </h3>
             </b-col>
         </b-row>
