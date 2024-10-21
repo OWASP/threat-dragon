@@ -16,10 +16,9 @@ import threatmodelController from '../controllers/threatmodelcontroller.js';
  */
 const unauthRoutes = (router) => {
     router.get('/', homeController.index);
+
     router.get('/healthz', healthcheck.healthz);
-
     router.get('/api/config', configController.config);
-
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
 
     router.get('/api/login/:provider', auth.login);

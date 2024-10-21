@@ -12,7 +12,6 @@ const encodeUrlComponents = (... uriComponents) => {
     return uriComponents.map(uriComponent => encodeURIComponent(uriComponent));
 };
 
-
 /**
  * Gets the organisation data configured for the express server
  * @returns {Promise}
@@ -77,10 +76,10 @@ const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
 
 export default {
     branchesAsync,
+    createAsync,
     modelAsync,
     modelsAsync,
     organisationAsync,
     reposAsync,
-    createAsync,
     updateAsync
 };

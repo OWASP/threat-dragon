@@ -57,7 +57,6 @@ jobs:
     permissions:
       contents: write
       security-events: write
-    if: ${{ ! always() }}
 
     steps:
       - name: Checkout repository
@@ -66,7 +65,7 @@ jobs:
           ref: main
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
