@@ -25,6 +25,10 @@ const jpn = {
             displayName: 'Bitbucketで',
             loginWith: 'ログイン'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'ログイン'
+        },
         local: {
             displayName: 'ローカルセッション',
             loginWith: 'ログイン'

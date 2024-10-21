@@ -29,6 +29,10 @@ const hin = {
             displayName: 'Bitbucket',
             loginWith: 'से लोगिन करें'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'से लोगिन करें'
+        },
         local: {
             displayName: 'स्थानीय सत्र',
             loginWith: 'से लोगिन करें'

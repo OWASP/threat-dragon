@@ -29,6 +29,10 @@ const spa = {
             displayName: 'Bitbucket',
             loginWith: 'Conectarse con'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Conectarse con'
+        },
         local: {
             displayName: 'Sesión Local',
             loginWith: 'Conectarse con'

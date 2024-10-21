@@ -6,10 +6,15 @@ on:
   workflow_dispatch:
 
 env:
-  # threatdragon is the working area on docker hub so use this area
-  # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: "pr-${{ github.event.number }}"
   ZAP_FILE: "zap-scan-pr-${{ github.event.number }}"
+  GITHUB_CLIENT_ID: "${{ secrets.CI_GITHUB_CLIENT_ID }}"
+  GITHUB_CLIENT_SECRET: "${{ secrets.CI_GITHUB_CLIENT_SECRET }}"
+  ENCRYPTION_JWT_REFRESH_SIGNING_KEY: "${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}"
+  ENCRYPTION_JWT_SIGNING_KEY: "${{ secrets.CI_JWT_SIGNING_KEY }}"
+  ENCRYPTION_KEYS: "${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}"
+  NODE_ENV: development
+  SERVER_API_PROTOCOL: http
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -22,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -30,7 +35,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -56,7 +61,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -64,7 +69,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -90,7 +95,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.0.3
@@ -98,7 +103,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -118,7 +123,7 @@ jobs:
   codeql:
     name: Analyze with codeql
     runs-on: ubuntu-24.04
-    needs: [server_unit_tests, site_unit_tests]
+    needs: [server_unit_tests, site_unit_tests, desktop_unit_tests]
     permissions:
       security-events: write
 
@@ -127,7 +132,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.26.6
@@ -144,24 +149,144 @@ jobs:
       - name: Perform vulnerability analysis
         uses: github/codeql-action/analyze@v3.26.6
 
+  e2e_smokes:
+    name: Local site e2e smokes
+    runs-on: ubuntu-24.04
+    needs: [site_unit_tests, server_unit_tests]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: Run e2e tests
+        run: |
+          cd td.vue
+          npm run test:e2e-pr-smokes
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+
+  e2e_tests:
+    name: Local site e2e tests
+    runs-on: ubuntu-24.04
+    needs: e2e_smokes
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: Run e2e tests
+        run: |
+          cd td.vue
+          npm run test:e2e-pr
+
+      - name: Upload e2e videos
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: e2e_vids.zip
+          path: td.vue/tests/e2e/videos
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+
+  zap_scan_web_app:
+    name: Local site zap scan
+    runs-on: ubuntu-24.04
+    needs: e2e_tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm start
+
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.11.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: 'http://localhost:8080'
+          rules_file_name: '.github/workflows/.zap-rules-web.tsv'
+          allow_issue_writing: false
+          fail_action: false
+          artifact_name: ${{ env.ZAP_FILE }}
+          cmd_options: '-a'
+
   build_docker_image:
     name: Build docker image
     runs-on: ubuntu-24.04
-    needs: [site_unit_tests, server_unit_tests]
+    needs: e2e_smokes
     if: github.repository == 'OWASP/threat-dragon'
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.6.1
+        uses: docker/setup-buildx-action@v3.7.0
         with:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.1
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -171,7 +296,7 @@ jobs:
 
       - name: Build for amd64
         id: docker_build
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: ./
           file: ./Dockerfile
@@ -192,7 +317,7 @@ jobs:
       - name: Check docker local image
         run: |
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-          docker image ls -a 
+          docker image ls -a
 
       - # Temp fix for large cache bug
         # https://github.com/docker/build-push-action/issues/252
@@ -200,172 +325,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  e2e_smokes:
-    name: Site e2e smokes
-    runs-on: ubuntu-24.04
-    needs: build_docker_image
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.3
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci-smokes
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-
-  e2e_tests:
-    name: Site e2e tests
-    runs-on: ubuntu-24.04
-    needs: e2e_smokes
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
-      - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '20.14.0'
-
-      - name: Cache NPM dir
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-
-  zap_scan_web_app:
-    name: Local site zap scan
-    runs-on: ubuntu-24.04
-    needs: build_docker_image
-
-    steps:
-      - name: Download docker local image
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          path: /tmp
-      
-      - name: Load docker local image
-        run: |
-          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.10.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target: 'http://localhost:3000'
-          rules_file_name: '.github/workflows/.zap-rules-web.tsv'
-          allow_issue_writing: false
-          fail_action: true
-          artifact_name: ${{ env.ZAP_FILE }}
-          cmd_options: '-a'
 
   scan_image_with_trivy:
     name: Scan with trivy
@@ -375,9 +334,8 @@ jobs:
       contents: write
 
     steps:
-      # Need .trivyignore
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Download docker local image
         uses: actions/download-artifact@v4.1.8
@@ -390,8 +348,9 @@ jobs:
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
+          trivyignores: '.github/workflows/.trivyignore'
           exit-code: 1

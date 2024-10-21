@@ -83,6 +83,9 @@ export default {
                     if (state.config.config.gitlabEnabled) {
                         providers.gitlab = allProviders.gitlab;
                     }
+                    if (state.config.config.googleEnabled) {
+                        providers.google = allProviders.google;
+                    }
                     if (state.config.config.localEnabled) {
                         providers.local = allProviders.local;
                     }

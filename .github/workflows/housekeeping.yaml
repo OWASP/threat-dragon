@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: threatdragon/owasp-threat-dragon
+  IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
@@ -60,16 +60,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
         with:
           ref: main
 
-      - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: '${{ env.IMAGE_NAME }}:latest'
+          image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
+          trivyignores: '.github/workflows/.trivyignore'
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
@@ -88,7 +89,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
         with:
           ref: main
 
@@ -113,10 +114,10 @@ jobs:
 
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.0
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v1.10.0
+        uses: lycheeverse/lychee-action@v2.0.2
         with:
           fail: true
         env:

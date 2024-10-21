@@ -29,6 +29,10 @@ const por = {
             displayName: 'Bitbucket',
             loginWith: 'Login com'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Login com'
+        },
         local: {
             displayName: 'Sessão Local',
             loginWith: 'Login com'

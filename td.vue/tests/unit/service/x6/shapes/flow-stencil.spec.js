@@ -34,3 +34,4 @@ describe('service/x6/shapes/flow-stencil.js', () => {
         });
     });
 });
+

@@ -29,6 +29,10 @@ const ara = {
             displayName: 'Bitbucket',
             loginWith: 'تسجيل الدخول باستخدام'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'تسجيل الدخول باستخدام'
+        },
         local: {
             displayName: 'جلسة محلية',
             loginWith: 'تسجيل الدخول إلى'

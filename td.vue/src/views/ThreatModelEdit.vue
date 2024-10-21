@@ -231,7 +231,7 @@ export default {
         },
         async onSaveClick(evt) {
             evt.preventDefault();
-            if (this.$route.name === 'gitThreatModelCreate') {
+            if (this.$route.name === 'gitThreatModelCreate' || this.$route.name === 'googleThreatModelCreate') {
                 await this.$store.dispatch(tmActions.create);
             } else {
                 await this.$store.dispatch(tmActions.saveModel);

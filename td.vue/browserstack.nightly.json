@@ -9,14 +9,6 @@
             ]
         },
         {
-            "browser": "firefox",
-            "os": "Windows 10",
-            "versions": [
-                "latest",
-                "latest-1"
-            ]
-        },
-        {
             "browser": "edge",
             "os": "Windows 10",
             "versions": [
@@ -25,7 +17,23 @@
             ]
         },
         {
+            "browser": "firefox",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
             "browser": "chrome",
+            "os": "Windows 11",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "edge",
             "os": "Windows 11",
             "versions": [
                 "latest",
@@ -42,7 +50,7 @@
         },
         {
             "browser": "chrome",
-            "os": "OS X Big Sur",
+            "os": "OS X Monterey",
             "versions": [
                 "latest",
                 "latest-1"
@@ -50,7 +58,7 @@
         },
         {
             "browser": "firefox",
-            "os": "OS X Big Sur",
+            "os": "OS X Monterey",
             "versions": [
                 "latest",
                 "latest-1"
@@ -58,7 +66,7 @@
         },
         {
             "browser": "chrome",
-            "os": "OS X Monterey",
+            "os": "OS X Ventura",
             "versions": [
                 "latest",
                 "latest-1"
@@ -66,7 +74,7 @@
         },
         {
             "browser": "firefox",
-            "os": "OS X Monterey",
+            "os": "OS X Ventura",
             "versions": [
                 "latest",
                 "latest-1"

@@ -7,7 +7,7 @@ import defaultProperties from '@/service/entity/default-properties.js';
 const name = 'flow-stencil';
 
 // stencil item for data flow (edge)
-export const FlowStencil = Shape.Empty.define({
+export const FlowStencil = Shape.Path.define({
     constructorName: name,
     width: 200,
     height: 100,
