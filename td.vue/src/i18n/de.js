@@ -355,7 +355,7 @@ const deu = {
             showMitigatedThreats: 'Abgeschwächte Bedrohungen anzeigen',
             showModelDiagrams: 'Modell Diagramme anzeigen',
             showEmpty: 'Leere Elemente anzeigen',
-            showAttributes: 'Show element attributes',
+            showProperties: 'Show element properties',
             showBranding: 'Threat Dragon Logo'
         },
         title: 'Bedrohungsmodell Bereicht für',

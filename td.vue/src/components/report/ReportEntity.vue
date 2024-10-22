@@ -3,15 +3,16 @@
         <b-row>
             <b-col>
                 <h3 class="entity-title">
-                    {{ `${entity.data.name.replace('\n', ' ')} (${dataType})` }}
+                    {{ `${entity.data.name.replaceAll('\n', ' ')} (${dataType})` }}
                     <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
-                    <p v-if="outOfScope">{{ $t('threatmodel.properties.reasonOutOfScope') }}: {{ `${entity.data.reasonOutOfScope}` }}</p>
                 </h3>
             </b-col>
         </b-row>
         <b-row>
             <b-col>
+                <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
                 <p class="entity-description">{{ entity.data.description }}</p>
+                <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>
         <b-row>
@@ -32,6 +33,18 @@
     width: 99%;
     white-space: pre-wrap;
 }
+
+.entity-title {
+    font-size: 24px;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.entity-description {
+    padding: 15px;
+    white-space: pre-wrap;
+}
 </style>
 
 <script>
@@ -45,10 +58,6 @@ export default {
             type: Boolean,
             default: false
         },
-        showAttributes: {
-            type: Boolean,
-            default: false
-        },
         showMitigated: {
             type: Boolean,
             default: true
@@ -56,6 +65,10 @@ export default {
         showOutOfScope: {
             type: Boolean,
             default: true
+        },
+        showProperties: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -80,6 +93,52 @@ export default {
 
                 };
             });
+        },
+        properties: function () {
+            let properties = '';
+            if (this.entity.data.bidirection) {
+                properties += this.$t('threatmodel.properties.bidirection')  + ', ';
+            }
+            if (this.entity.data.handlesCardPayment) {
+                properties += this.$t('threatmodel.properties.handlesCardPayment')  + ', ';
+            }
+            if (this.entity.data.handlesGoodsOrServices) {
+                properties += this.$t('threatmodel.properties.handlesGoodsOrServices')  + ', ';
+            }
+            if (this.entity.data.isALog) {
+                properties += this.$t('threatmodel.properties.isALog')  + ', ';
+            }
+            if (this.entity.data.isEncrypted) {
+                properties += this.$t('threatmodel.properties.isEncrypted')  + ', ';
+            }
+            if (this.entity.data.isSigned) {
+                properties += this.$t('threatmodel.properties.isSigned')  + ', ';
+            }
+            if (this.entity.data.isWebApplication) {
+                properties += this.$t('threatmodel.properties.isWebApplication')  + ', ';
+            }
+            if (this.entity.data.privilegeLevel) {
+                properties += this.$t('threatmodel.properties.privilegeLevel') + ': ' + this.entity.data.privilegeLevel + ', ';
+            }
+            if (this.entity.data.providesAuthentication) {
+                properties += this.$t('threatmodel.properties.providesAuthentication')  + ', ';
+            }
+            if (this.entity.data.protocol) {
+                properties += this.$t('threatmodel.properties.protocol') + ' (' + this.entity.data.protocol  + '), ';
+            }
+            if (this.entity.data.publicNetwork) {
+                properties += this.$t('threatmodel.properties.publicNetwork')  + ', ';
+            }
+            if (this.entity.data.storesCredentials) {
+                properties += this.$t('threatmodel.properties.storesCredentials')  + ', ';
+            }
+            if (this.entity.data.storesInventory) {
+                properties += this.$t('threatmodel.properties.storesInventory')  + ', ';
+            }
+            if (properties.length > 2) {
+                properties = properties.slice(0, -2);
+            }
+            return this.$t('threatmodel.properties.title') + ': ' + properties;
         }
     },
     methods: {

@@ -355,7 +355,7 @@ const hin = {
             showMitigatedThreats: 'कम किए गए खतरे दिखाएं',
             showModelDiagrams: 'मॉडल आरेख दिखाएं',
             showEmpty: 'खाली तत्व दिखाएं',
-            showAttributes: 'Show element attributes',
+            showProperties: 'Show element properties',
             showBranding: 'शो थ्रेट ड्रैगन ब्रांडिंग'
         },
         title: 'के लिए थ्रेट मॉडल रिपोर्ट',

@@ -355,7 +355,7 @@ const fin = {
             showMitigatedThreats: 'Näytä hallitut uhkat',
             showModelDiagrams: 'Näytä uhkamallin kaaviot',
             showEmpty: 'Näytä tyhjät elementit',
-            showAttributes: 'Show element attributes',
+            showProperties: 'Show element properties',
             showBranding: 'Threat Dragon logo'
         },
         title: 'Uhkamallinnus kohteelle',

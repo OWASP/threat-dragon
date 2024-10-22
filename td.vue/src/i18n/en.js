@@ -360,7 +360,7 @@ const eng = {
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
             showEmpty: 'Show empty elements',
-            showAttributes: 'Show element attributes',
+            showProperties: 'Show element properties',
             showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',

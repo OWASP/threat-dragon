@@ -62,11 +62,11 @@
                         <b-col>
                             <b-form-group
                                 label-cols="auto"
-                                id="attributes-group">
+                                id="properties-group">
                                 <b-form-checkbox
                                     id="show_attributes"
-                                    v-model="display.attributes"
-                                >{{ $t('report.options.showAttributes') }}</b-form-checkbox>
+                                    v-model="display.properties"
+                                >{{ $t('report.options.showProperties') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
@@ -123,7 +123,7 @@
                 v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
-                :showAttributes="display.attributes"
+                :showProperties="display.properties"
                 :showMitigated="display.mitigated"
                 :showOutOfScope="display.outOfScope"
                 :showDiagram="display.diagrams"
@@ -206,6 +206,7 @@ export default {
                 mitigated: true,
                 outOfScope: true,
                 empty: true,
+                properties: false,
                 branding: false
             },
             isElectron: isElectron()
@@ -217,9 +218,9 @@ export default {
             providerType: (state) => getProviderType(state.provider.selected),
             allThreats: function (state) {
                 return threatService.filter(state.threatmodel.data.detail.diagrams, {
-                    showAttributes: true,
                     showMitigated: true,
                     showOutOfScope: true,
+                    showProperties: false,
                     showEmpty: true
                 });
             }

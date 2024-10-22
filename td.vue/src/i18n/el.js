@@ -355,7 +355,7 @@ const ell = {
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
             showEmpty: 'Προβολή κενών στοιχείων',
-            showAttributes: 'Show element attributes',
+            showProperties: 'Show element properties',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
