@@ -3,7 +3,7 @@
         <b-row>
             <b-col>
                 <h3 class="entity-title">
-                    {{ `${entity.data.name} (${dataType})` }}
+                    {{ `${entity.data.name.replace('\n', ' ')} (${dataType})` }}
                     <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
                     <p v-if="outOfScope">{{ $t('threatmodel.properties.reasonOutOfScope') }}: {{ `${entity.data.reasonOutOfScope}` }}</p>
                 </h3>
@@ -45,11 +45,15 @@ export default {
             type: Boolean,
             default: false
         },
-        showOutOfScope: {
+        showAttributes: {
+            type: Boolean,
+            default: false
+        },
+        showMitigated: {
             type: Boolean,
             default: true
         },
-        showMitigated: {
+        showOutOfScope: {
             type: Boolean,
             default: true
         }
@@ -61,8 +65,8 @@ export default {
         },
         tableData: function () {
             return threatService.filterForDiagram(this.entity.data, {
-                showOutOfScope: this.showOutOfScope,
-                showMitigated: this.showMitigated
+                showMitigated: this.showMitigated,
+                showOutOfScope: this.showOutOfScope
             }).map((threat) => {
                 return {
                     [this.$t('threats.properties.number')]: threat.number,

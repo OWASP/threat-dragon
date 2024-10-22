@@ -25,8 +25,9 @@
                 <td-report-entity
                     :entity="entity"
                     :outOfScope="entity.data.outOfScope"
-                    :showOutOfScope="showOutOfScope"
+                    :showAttributes="showAttributes"
                     :showMitigated="showMitigated"
+                    :showOutOfScope="showOutOfScope"
                     :showEmpty="showEmpty"
                 ></td-report-entity>
             </b-row>
@@ -41,8 +42,9 @@
                 <td-print-report-entity
                     :entity="entity"
                     :outOfScope="entity.data.outOfScope"
-                    :showOutOfScope="showOutOfScope"
+                    :showAttributes="showAttributes"
                     :showMitigated="showMitigated"
+                    :showOutOfScope="showOutOfScope"
                     :showEmpty="showEmpty"
                 ></td-print-report-entity>
             </div>
@@ -69,6 +71,10 @@ export default {
         showDiagram: {
             type: Boolean,
             default: true
+        },
+        showAttributes: {
+            type: Boolean,
+            default: false
         },
         showMitigated: {
             type: Boolean,

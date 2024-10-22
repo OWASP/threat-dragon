@@ -123,8 +123,9 @@
                 v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
-                :showOutOfScope="display.outOfScope"
+                :showAttributes="display.attributes"
                 :showMitigated="display.mitigated"
+                :showOutOfScope="display.outOfScope"
                 :showDiagram="display.diagrams"
                 :showEmpty="display.empty"
             ></td-diagram-detail>
@@ -216,8 +217,9 @@ export default {
             providerType: (state) => getProviderType(state.provider.selected),
             allThreats: function (state) {
                 return threatService.filter(state.threatmodel.data.detail.diagrams, {
-                    showOutOfScope: true,
+                    showAttributes: true,
                     showMitigated: true,
+                    showOutOfScope: true,
                     showEmpty: true
                 });
             }

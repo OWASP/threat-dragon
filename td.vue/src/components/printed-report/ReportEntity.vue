@@ -1,7 +1,7 @@
 <template>
     <div class="report-box print-only">
         <div class="entity-title">
-            {{ `${entity.data.name} (${dataType})` }}
+            {{ `${entity.data.name.replace('\n', ' ')} (${dataType})` }}
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
             <p v-if="outOfScope">{{ $t('threatmodel.properties.reasonOutOfScope') }}: {{ `${entity.data.reasonOutOfScope}` }}</p>
         </div>
@@ -69,11 +69,15 @@ export default {
             type: Boolean,
             default: false
         },
-        showOutOfScope: {
+        showAttributes: {
+            type: Boolean,
+            default: false
+        },
+        showMitigated: {
             type: Boolean,
             default: true
         },
-        showMitigated: {
+        showOutOfScope: {
             type: Boolean,
             default: true
         }
@@ -85,8 +89,8 @@ export default {
         },
         threats: function () {
             return threatService.filterForDiagram(this.entity.data, {
-                showOutOfScope: this.showOutOfScope,
-                showMitigated: this.showMitigated
+                showMitigated: this.showMitigated,
+                showOutOfScope: this.showOutOfScope
             });
         },
     },
