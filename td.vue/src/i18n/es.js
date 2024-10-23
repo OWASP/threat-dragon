@@ -355,6 +355,7 @@ const spa = {
             showMitigatedThreats: 'Mostrar amenazas mitigadas',
             showModelDiagrams: 'Mostrar diagramas de modelo',
             showEmpty: 'Show empty elements',
+            showProperties: 'Show element properties',
             showBranding: 'Marca de Threat Dragon'
         },
         title: 'Reporte de modelo de amenaza para',

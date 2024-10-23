@@ -58,6 +58,17 @@
                                 >{{ $t('report.options.showBranding') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
+
+                        <b-col>
+                            <b-form-group
+                                label-cols="auto"
+                                id="properties-group">
+                                <b-form-checkbox
+                                    id="show_attributes"
+                                    v-model="display.properties"
+                                >{{ $t('report.options.showProperties') }}</b-form-checkbox>
+                            </b-form-group>
+                        </b-col>
                     </b-form-row>
                 </b-form>
             </b-col>
@@ -112,8 +123,9 @@
                 v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
-                :showOutOfScope="display.outOfScope"
+                :showProperties="display.properties"
                 :showMitigated="display.mitigated"
+                :showOutOfScope="display.outOfScope"
                 :showDiagram="display.diagrams"
                 :showEmpty="display.empty"
             ></td-diagram-detail>
@@ -194,6 +206,7 @@ export default {
                 mitigated: true,
                 outOfScope: true,
                 empty: true,
+                properties: false,
                 branding: false
             },
             isElectron: isElectron()
@@ -205,8 +218,9 @@ export default {
             providerType: (state) => getProviderType(state.provider.selected),
             allThreats: function (state) {
                 return threatService.filter(state.threatmodel.data.detail.diagrams, {
-                    showOutOfScope: true,
                     showMitigated: true,
+                    showOutOfScope: true,
+                    showProperties: false,
                     showEmpty: true
                 });
             }

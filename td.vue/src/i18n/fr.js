@@ -355,6 +355,7 @@ const fra = {
             showMitigatedThreats: 'Afficher les menaces mitigées',
             showModelDiagrams: 'Afficher les diagrammes du modèle',
             showEmpty: 'Show empty elements',
+            showProperties: 'Show element properties',
             showBranding: 'Icône de Threat Dragon'
         },
         title: 'Rapport sur le modèle de menace pour',

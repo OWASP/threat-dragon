@@ -355,6 +355,7 @@ const id = {
             showMitigatedThreats: 'Tampilkan ancaman yang diredam',
             showModelDiagrams: 'Tampilkan diagram model',
             showEmpty: 'Tampilkan elemen kosong',
+            showProperties: 'Show element properties',
             showBranding: 'Logo Threat Dragon'
         },
         title: 'Laporan model ancaman untuk',

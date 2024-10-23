@@ -57,40 +57,40 @@ describe('service/otm/OTMtoTD.js', () => {
         beforeEach(() => {
             mockOTM.otmVersion = '0.2.0';
             mockOTM.representations = [
-			    {
-			      'name': 'Architecture Diagram',
-			      'id': 'architecture-diagram',
-			      'type': 'diagram',
-			      'size': {
-			        'width': 1000,
-			        'height': 1100
-			      },
-			      'attributes': null
-			    },
-			    {
-			      'name': 'Application Code',
-			      'id': 'application-code',
-			      'type': 'code',
-			      'description': 'the Application Code description',
-			      'repository': {
-			        'url': 'https://github.com/my-project'
-			      },
-			      'attributes': null
-			    },
-			    {
-			      'name': 'Empty Diagram',
-			      'id': '578b5170-74f1-401d-a72f-c06ccc966ca0',
-			      'type': 'diagram',
-			      'description': 'a description of the Empty Diagram',
-			      'size': {
-			        'width': 500,
-			        'height': 300
-			      },
-			      'attributes': {
-			        'diagramType': 'LINDDUN'
-			      }
-			    }
-			  ];
+                {
+                    'name': 'Architecture Diagram',
+                    'id': 'architecture-diagram',
+                    'type': 'diagram',
+                    'size': {
+                        'width': 1000,
+                        'height': 1100
+                    },
+                    'attributes': null
+                },
+                {
+                    'name': 'Application Code',
+                    'id': 'application-code',
+                    'type': 'code',
+                    'description': 'the Application Code description',
+                    'repository': {
+                        'url': 'https://github.com/my-project'
+                    },
+                    'attributes': null
+                },
+                {
+                    'name': 'Empty Diagram',
+                    'id': '578b5170-74f1-401d-a72f-c06ccc966ca0',
+                    'type': 'diagram',
+                    'description': 'a description of the Empty Diagram',
+                    'size': {
+                        'width': 500,
+                        'height': 300
+                    },
+                    'attributes': {
+                        'diagramType': 'LINDDUN'
+                    }
+                }
+            ];
             tdModel = convertOTMtoTD(mockOTM);
         });
 
@@ -163,12 +163,12 @@ describe('service/otm/OTMtoTD.js', () => {
 
         it('preserves a non-diagram representation', () => {
             expect(tdModel.detail.representations[0]).toEqual({
-			      'name': 'Application Code',
-			      'id': 'application-code',
-			      'type': 'code',
-			      'description': 'the Application Code description',
-			      'repository': { 'url': 'https://github.com/my-project' },
-			      'attributes': null
+                'name': 'Application Code',
+                'id': 'application-code',
+                'type': 'code',
+                'description': 'the Application Code description',
+                'repository': { 'url': 'https://github.com/my-project' },
+                'attributes': null
             });
         });
 
