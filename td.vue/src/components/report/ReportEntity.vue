@@ -8,10 +8,14 @@
                 </h3>
             </b-col>
         </b-row>
+        <b-row v-if="outOfScope">
+            <b-col>
+                <p class="entity-description"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
+            </b-col>
+        </b-row>
         <b-row>
             <b-col>
-                <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
-                <p class="entity-description">{{ entity.data.description }}</p>
+                <p class="entity-description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
                 <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>

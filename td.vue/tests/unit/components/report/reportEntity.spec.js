@@ -71,7 +71,7 @@ describe('components/report/ReportEntity.vue', () => {
     
         it('displays the entity description', () => {
             expect(wrapper.find('.entity-description').text())
-                .toEqual(propsData.entity.data.description);
+                .toContain(propsData.entity.data.description);
         });
         
         it('has a table with the threats', () => {

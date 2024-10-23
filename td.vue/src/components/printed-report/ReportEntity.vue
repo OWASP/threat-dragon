@@ -5,7 +5,7 @@
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
         </div>
         <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
-        <p class="entity-description">{{ entity.data.description }}</p>
+        <p class="entity-description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
         <p class="entity-description" v-if="showProperties">{{ properties }}</p>
         <table class="table">
             <thead>
