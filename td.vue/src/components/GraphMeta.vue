@@ -51,13 +51,21 @@
                     </b-card-text>
                 </b-card-body>
             </b-card>
-            <a href="javascript:void(0)" v-if="!!cellRef" @click="AddThreatByType()" class="new-threat-by-type m-2">
-                <font-awesome-icon icon="plus"></font-awesome-icon>
-                {{ $t('threats.newThreatByType') }}
+            <a href="javascript:void(0)"
+                v-if="!disableNewThreat"
+                @click="AddThreatByType()"
+                class="new-threat-by-type m-2"
+            >
+                    <font-awesome-icon icon="plus"></font-awesome-icon>
+                    {{ $t('threats.newThreatByType') }}
             </a>
-            <a href="javascript:void(0)" v-if="!!cellRef" @click="AddThreatByContext()" class="new-threat-by-type m-2">
-                <font-awesome-icon icon="plus"></font-awesome-icon>
-                {{ $t('threats.newThreatByContext') }}
+            <a href="javascript:void(0)"
+                v-if="!disableNewThreat"
+                @click="AddThreatByContext()"
+                class="new-threat-by-type m-2"
+            >
+                    <font-awesome-icon icon="plus"></font-awesome-icon>
+                    {{ $t('threats.newThreatByContext') }}
             </a>
         </b-col>
     </b-row>
