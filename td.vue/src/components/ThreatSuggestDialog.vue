@@ -155,13 +155,13 @@
 
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 import { createNewTypedThreat } from '@/service/threats/index.js';
 import { CELL_DATA_UPDATED} from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-import {GetContextSuggestions} from '@/service/threats/oats/context-generator.js';
+import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
 export default {
     name: 'TdThreatSuggest',
     computed: {
@@ -194,7 +194,7 @@ export default {
                 { value: 'High', text: this.$t('threats.priority.high') }
             ];
         },
-        modalTitle() { return this.$t('threats.newThreatByType') + ' #' + (this.threatTop+1); }
+        modalTitle() { return this.$t('threats.newThreat') + ' #' + (this.threatTop + 1); }
     },
     data() {
         return {
@@ -207,19 +207,19 @@ export default {
     methods: {
         showModal(type) {
             this.index = 0;
-            const tmpThreat = createNewTypedThreat(this.modelType,this.cellRef.data.type,this.threatTop+1);
+            const tmpThreat = createNewTypedThreat(this.modelType, this.cellRef.data.type, this.threatTop + 1);
             this.types = [...this.threatTypes];
-            if(type=='type'){
-                this.threatTypes.map((t,ind)=>{
+            if (type == 'type') {
+                this.threatTypes.map((t, ind)=>{
                     console.log(t);
                     this.suggestions.push({...tmpThreat});
                     this.suggestions[ind].type=t;
                 });
             } else {
-                this.suggestions = GetContextSuggestions(this.cellRef.data,this.modelType).map((suggestion)=>{
+                this.suggestions = GetContextSuggestions(this.cellRef.data, this.modelType).map((suggestion) => {
                     tmpThreat.title = suggestion.title;
                     tmpThreat.type = this.$t(suggestion.type);
-                    if(!this.types.includes(tmpThreat.type)&&tmpThreat.type!=='')
+                    if(!this.types.includes(tmpThreat.type)&&tmpThreat.type !== '')
                         this.types.push(tmpThreat.type);
                     tmpThreat.description = suggestion.description;
                     tmpThreat.mitigation = suggestion.mitigation;
