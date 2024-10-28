@@ -152,7 +152,7 @@ There are some [developer notes][notes] to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
 
 The easiest way to get in contact with the Threat Dragon community is via the OWASP Slack
-[#project-threat-dragon](https://owasp.slack.com/messages/CURE8PQ68) project channel
+[#project-threat-dragon][td-slack] project channel
 (you may need to [subscribe](https://owasp.org/slack/invite) first).
 
 ### Vulnerability disclosure
@@ -180,3 +180,4 @@ Threat Dragon: _making threat modeling less threatening_
 [owasp]: https://www.owasp.org
 [project]: https://owasp.org/www-project-threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
+[td-slack]: https://owasp.slack.com/messages/CURE8PQ68
