@@ -1,4 +1,4 @@
-The steps used during the release process
+The steps used during the release process, including release candidates
 
 ## Release candidate
 
@@ -14,11 +14,12 @@ Changes that are agreed for the release should then be made available with a fur
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
-9. `git add --all; git status`
-10. `git commit -m"release version 2.3.0-RC1"`
-11. `git push`
-12. tag the release `git tag v2.3.0-RC1`
-13. `git push origin v2.3.0-RC1`
+9. ensure that the package-lock files are up to date using `npm install`
+10. `git add --all; git status`
+11. `git commit -m"release version 2.3.0-RC1"`
+12. `git push`
+13. tag the release `git tag v2.3.0-RC1`
+14. `git push origin v2.3.0-RC1`
 
 repeat as necessary for further release candidates.
 
@@ -39,11 +40,12 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
-9. `git add --all; git status`
-10. `git commit -m"release version 2.3.0"`
-11. `git push`
-12. tag the release `git tag v2.3.0`
-13. `git push origin v2.3.0`
+9. ensure that the package-lock files are up to date using `npm install`
+10. `git add --all; git status`
+11. `git commit -m"release version 2.3.0"`
+12. `git push`
+13. tag the release `git tag v2.3.0`
+14. `git push origin v2.3.0`
 
 The github release workflow then creates the draft release and the install images
 
