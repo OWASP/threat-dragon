@@ -211,10 +211,12 @@ jobs:
           # MacOS signing certificate and password, see electron.build/code-signing
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
           CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization, see electron.build/configuration/mac.html
-          # see also github.com/samuelmeuli/action-electron-builder#notarization
-          API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          # MacOS notarization:
+          # API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          # API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          APPLE_ID: ${{ secrets.APPPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPPLE_TEAM_ID }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
