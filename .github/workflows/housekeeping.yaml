@@ -52,11 +52,13 @@ jobs:
           close-pr-message: 'This PR was closed because it has been stalled for 28 days with no activity'
 
   trivy:
-    name: Scan with trivy
+    name: Scan with trivy (disabled)
     runs-on: ubuntu-24.04
     permissions:
       contents: write
       security-events: write
+    if: ${{ ! always() }}
+    # disable trivy until it can be reliably downloaded in the pipeline
 
     steps:
       - name: Checkout repository

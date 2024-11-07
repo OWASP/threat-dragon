@@ -327,11 +327,13 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   scan_image_with_trivy:
-    name: Scan with trivy
+    name: Scan with trivy (disabled)
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
       contents: write
+    if: ${{ ! always() }}
+    # disable trivy until it can be reliably downloaded in the pipeline
 
     steps:
       - name: Checkout
