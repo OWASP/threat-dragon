@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon",
   "productName": "Threat Dragon",
-  "version": "v2.3.0-RC1",
+  "version": "2.3.0",
   "private": true,
   "scripts": {
     "audit": "npm audit",
@@ -43,7 +43,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
-  "buildState": "-latest",
+  "buildState": "-RC2",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

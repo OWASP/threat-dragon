@@ -6,20 +6,23 @@ Before a release it is required that a release candidate version is created.
 This allows the Threat Dragon community to review and feedback on the proposed release.
 Changes that are agreed for the release should then be made available with a further release candidate.
 
+For example if RC1, but change for RC2 and so on :
+
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version, for example `"version": "2.3.0-RC1",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
-4. ensure `buildState` in `td.vue/package.json` is `-latest`
-5. update package lock files: `npm install`
-6. `npm run build`
-7. `npm test`
-8. `npm run test:vue`
-9. ensure that the package-lock files are up to date using `npm install`
-10. `git add --all; git status`
-11. `git commit -m"release version 2.3.0-RC1"`
-12. `git push`
-13. tag the release `git tag v2.3.0-RC1`
-14. `git push origin v2.3.0-RC1`
+3. update version, for example `"version": "2.3.0",`, in `td.vue/package.json`
+4. ensure `buildState` in `td.vue/package.json` is `-RC1`
+5. update version, for example `"version": "2.3.0-RC1",`, in `package.json` and `td.server/package.json`
+6. update package lock files: `npm install`
+7. `npm run build`
+8. `npm test`
+9. `npm run test:vue`
+10. ensure that the package-lock files are up to date using `npm install`
+11. `git add --all; git status`
+12. `git commit -m"release version 2.3.0-RC1"`
+13. `git push`
+14. tag the release `git tag v2.3.0-RC1`
+15. `git push origin v2.3.0-RC1`
 
 repeat as necessary for further release candidates.
 
@@ -34,7 +37,7 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version eg `"version": "2.3.0",`, in `package.json`, `td.site/package.json` and `td.server/package.json`
+3. update version eg `"version": "2.3.0",`, in `package.json`, `td.vue/package.json` and `td.server/package.json`
 4. update `buildState` in `td.vue/package.json` away from `-latest` to ''
 5. update package lock files: `npm install`
 6. `npm run build`

@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "v2.3.0-RC1",
+  "version": "2.3.0-RC2",
   "private": true,
   "scripts": {
     "audit": "npm audit",
