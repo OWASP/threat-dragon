@@ -174,6 +174,15 @@ jobs:
     name: MacOS installer
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests]
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # MacOS signing certificate and password, see electron.build/code-signing
+      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+      CSC_LINK:  ${{ secrets.MAC_CERTS }}
+      # MacOS notarization:
+      APPLE_ID: ${{ secrets.APPPLE_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPPLE_TEAM_ID }}
     defaults:
       run:
         working-directory: td.vue
@@ -199,24 +208,7 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      - name: Prepare for MacOS notarization
-        # Import Apple API key for app notarization on macOS
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-
       - name: Publish MacOS disk image
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # MacOS signing certificate and password, see electron.build/code-signing
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-          CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization:
-          # API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          # API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          APPLE_ID: ${{ secrets.APPPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPPLE_TEAM_ID }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
@@ -285,6 +277,9 @@ jobs:
     name: Linux snap
     runs-on: ubuntu-24.04
     needs: [desktop_unit_tests, site_unit_tests]
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     defaults:
       run:
         working-directory: td.vue
@@ -316,14 +311,10 @@ jobs:
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
       - name: Build Linux snap
         shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
 
       - name: Upload to Snap Store
         shell: bash
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
       - name: Print logs on error
