@@ -4,7 +4,8 @@ on:
   push:
     # only for version 2.x.x releases and release candidates
     tags:
-      - v2.?.?*
+      - v2.?.?
+      - v2.?.?-RC?
   workflow_dispatch:
 
 env:
@@ -176,13 +177,13 @@ jobs:
     needs: [desktop_unit_tests, site_unit_tests]
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # MacOS signing certificate and password, see electron.build/code-signing
+      # MacOS signing: certificate and password, see electron.build/code-signing
       CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
       CSC_LINK:  ${{ secrets.MAC_CERTS }}
       # MacOS notarization:
-      APPLE_ID: ${{ secrets.APPPLE_ID }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
       APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-      APPLE_TEAM_ID: ${{ secrets.APPPLE_TEAM_ID }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     defaults:
       run:
         working-directory: td.vue
