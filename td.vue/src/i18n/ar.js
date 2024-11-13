@@ -29,6 +29,10 @@ const ara = {
             displayName: 'Bitbucket',
             loginWith: 'تسجيل الدخول باستخدام'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'تسجيل الدخول باستخدام'
+        },
         local: {
             displayName: 'جلسة محلية',
             loginWith: 'تسجيل الدخول إلى'
@@ -207,6 +211,10 @@ const ara = {
             zoom: {
                 shortcut: '(ctrl/cmd) + عجلة الماوس',
                 action: 'تكبير/تصغير'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -349,6 +357,7 @@ const ara = {
             showMitigatedThreats: 'إظهار التهديدات المُخففة',
             showModelDiagrams: 'إظهار الرسوم التوضيحية للنموذج',
             showEmpty: 'إظهار العناصر الفارغة',
+            showProperties: 'Show element properties',
             showBranding: 'شعار تهديد التنين'
         },
         title: 'تقرير نموذج التهديد لـ',

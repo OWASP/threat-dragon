@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon",
-  "version": "2.2.0",
+  "version": "2.3.0-RC2",
   "private": true,
   "scripts": {
     "audit": "npm-run-all -c audit:server audit:site",
@@ -68,6 +68,8 @@
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
     "glob-parent@<5.1.2": ">=5.1.2",
-    "minimatch@<3.0.5": ">=3.0.5"
+    "micromatch": ">=4.0.8",
+    "minimatch@<3.0.5": ">=3.0.5",
+    "ws": ">=8.18.0"
   }
 }

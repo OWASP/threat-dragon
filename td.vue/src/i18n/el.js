@@ -29,6 +29,10 @@ const ell = {
             displayName: 'Bitbucket',
             loginWith: 'Είσοδος με'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Είσοδος με'
+        },
         local: {
             displayName: 'Τοπική Συνεδρία',
             loginWith: 'Είσοδος με'
@@ -207,6 +211,10 @@ const ell = {
             zoom: {
                 shortcut: '(ctrl/cmd) + τροχός κύλισης',
                 action: 'Εστίαση'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -347,6 +355,7 @@ const ell = {
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
             showEmpty: 'Προβολή κενών στοιχείων',
+            showProperties: 'Show element properties',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',

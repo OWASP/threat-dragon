@@ -7,7 +7,7 @@ import defaultProperties from '@/service/entity/default-properties.js';
 const name = 'trust-boundary-curve-stencil';
 
 // trust boundary curve (edge, dotted line, gray opaque background)
-export const TrustBoundaryCurveStencil = Shape.Empty.define({
+export const TrustBoundaryCurveStencil = Shape.Path.define({
     constructorName: name,
     width: 200,
     height: 100,

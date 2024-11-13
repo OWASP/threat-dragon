@@ -5,6 +5,7 @@ import { gitRoutes } from './git.js';
 import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
+import { googleRoutes } from './google.js';
 
 const routes = [
     {
@@ -29,7 +30,8 @@ const routes = [
     },
     ...desktopRoutes,
     ...gitRoutes,
-    ...localRoutes
+    ...localRoutes,
+    ...googleRoutes
 ];
 
 const get = () => {

@@ -29,6 +29,10 @@ const spa = {
             displayName: 'Bitbucket',
             loginWith: 'Conectarse con'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Conectarse con'
+        },
         local: {
             displayName: 'Sesión Local',
             loginWith: 'Conectarse con'
@@ -207,6 +211,10 @@ const spa = {
             zoom: {
                 shortcut: '(ctrl/cmd) + rueda de desplazamiento del ratón',
                 action: 'Zoom'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -347,6 +355,7 @@ const spa = {
             showMitigatedThreats: 'Mostrar amenazas mitigadas',
             showModelDiagrams: 'Mostrar diagramas de modelo',
             showEmpty: 'Show empty elements',
+            showProperties: 'Show element properties',
             showBranding: 'Marca de Threat Dragon'
         },
         title: 'Reporte de modelo de amenaza para',

@@ -4,6 +4,7 @@ import desktopProvider from './desktop.provider.js';
 import { providerTypes } from './providerTypes.js';
 import bitbucketProvider from '@/service/provider/bitbucket.provider';
 import gitlabProvider from '@/service/provider/gitlab.provider';
+import googleProvider from './google.provider.js';
 
 const providers = {
     desktop: {
@@ -33,6 +34,13 @@ const providers = {
         provider: bitbucketProvider,
         type: providerTypes.git,
         icon: ['fab', 'bitbucket']
+    },
+    google: {
+        key: 'google',
+        displayName: 'Google',
+        provider: googleProvider,
+        type: providerTypes.google,
+        icon: ['fab', 'google']
     },
     local: {
         key: 'local',

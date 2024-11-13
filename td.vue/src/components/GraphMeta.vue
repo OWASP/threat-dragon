@@ -19,7 +19,7 @@
                         size="sm"
                         class="float-right"
                     >
-                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>    
+                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
                         {{ $t('threats.newThreat') }}
                     </b-btn>
                 </template>
@@ -51,13 +51,21 @@
                     </b-card-text>
                 </b-card-body>
             </b-card>
-            <a href="javascript:void(0)" v-if="!!cellRef" @click="AddThreatByType()" class="new-threat-by-type m-2">
-                <font-awesome-icon icon="plus"></font-awesome-icon>
-                {{ $t('threats.newThreatByType') }}
+            <a href="javascript:void(0)"
+                v-if="!disableNewThreat"
+                @click="AddThreatByType()"
+                class="new-threat-by-type m-2"
+            >
+                    <font-awesome-icon icon="plus"></font-awesome-icon>
+                    {{ $t('threats.newThreatByType') }}
             </a>
-            <a href="javascript:void(0)" v-if="!!cellRef" @click="AddThreatByContext()" class="new-threat-by-type m-2">
-                <font-awesome-icon icon="plus"></font-awesome-icon>
-                {{ $t('threats.newThreatByContext') }}
+            <a href="javascript:void(0)"
+                v-if="!disableNewThreat"
+                @click="AddThreatByContext()"
+                class="new-threat-by-type m-2"
+            >
+                    <font-awesome-icon icon="plus"></font-awesome-icon>
+                    {{ $t('threats.newThreatByContext') }}
             </a>
         </b-col>
     </b-row>
@@ -104,6 +112,9 @@ export default {
         diagram: (state) => state.threatmodel.selectedDiagram,
         threatTop: (state) => state.threatmodel.data.detail.threatTop,
         disableNewThreat: function (state) {
+            if (!state.cell?.ref?.data) {
+                return true;
+            }
             return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
         }
     }),

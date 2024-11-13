@@ -29,8 +29,8 @@ const mutations = {
 
     [CONFIG_CLEAR]: (state) => clearState(state),
 
-    [CONFIG_LOADED]: (state, { config}) => {
-        console.log('LOADED ' + config);
+    [CONFIG_LOADED]: (state, { config }) => {
+        console.log('LOADED  config');
         state.config = config;
     }
 };

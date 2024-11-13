@@ -11,7 +11,7 @@ const actor = {
 
 const boundary = {
     type: 'tm.Boundary',
-    name: '',
+    name: 'Trust Boundary',
     description: '',
     isTrustBoundary: true
 };
@@ -68,7 +68,7 @@ const store = {
 
 const text = {
     type: 'tm.Text',
-    name: 'Arbitrary Text'
+    name: 'Descriptive text'
 };
 
 const propsByType = {

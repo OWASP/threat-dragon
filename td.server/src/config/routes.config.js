@@ -3,6 +3,7 @@ import express from 'express';
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
 import configController from "../controllers/configcontroller";
+import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
@@ -15,10 +16,9 @@ import threatmodelController from '../controllers/threatmodelcontroller.js';
  */
 const unauthRoutes = (router) => {
     router.get('/', homeController.index);
+
     router.get('/healthz', healthcheck.healthz);
-
     router.get('/api/config', configController.config);
-
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
 
     router.get('/api/login/:provider', auth.login);
@@ -47,6 +47,12 @@ const routes = (router) => {
 
     router.post('/api/threatmodel/:organisation/:repo/:branch/:model/create', threatmodelController.create);
     router.put('/api/threatmodel/:organisation/:repo/:branch/:model/update', threatmodelController.update);
+
+    // Google Drive routes
+    router.get('/api/googleproviderthreatmodel/folders', googleProviderThreatmodelController.folders);
+    router.post('/api/googleproviderthreatmodel/:folder/create', googleProviderThreatmodelController.create);
+    router.put('/api/googleproviderthreatmodel/:file/update', googleProviderThreatmodelController.update);
+    router.get('/api/googleproviderthreatmodel/:file/data', googleProviderThreatmodelController.model);
 };
 
 const config = (app) => {

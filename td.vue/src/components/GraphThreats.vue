@@ -3,7 +3,8 @@
         <b-card-text>
             <b-row>
                 <b-col>
-                    <a href="javascript:void(0)" @click="threatSelected()">#{{ number }} {{ title || 'Unknown Threat' }}</a>
+                    <a href="javascript:void(0)" @click="threatSelected()" v-if="!!number">#{{ number }} {{ title || 'Unknown Threat' }}</a>
+                    <a href="javascript:void(0)" @click="threatSelected()" v-else>{{ title || 'Unknown Threat' }}</a>
                 </b-col>
             </b-row>
             <b-row>

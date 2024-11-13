@@ -29,6 +29,10 @@ const por = {
             displayName: 'Bitbucket',
             loginWith: 'Login com'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Login com'
+        },
         local: {
             displayName: 'Sessão Local',
             loginWith: 'Login com'
@@ -207,6 +211,10 @@ const por = {
             zoom: {
                 shortcut: '(ctrl/cmd) + rolagem do mouse',
                 action: 'Zoom'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -347,6 +355,7 @@ const por = {
             showMitigatedThreats: 'Show mitigated threats',
             showModelDiagrams: 'Show model diagrams',
             showEmpty: 'Show empty elements',
+            showProperties: 'Show element properties',
             showBranding: 'Threat Dragon logo'
         },
         title: 'Relatório do modelo de ameaças para',

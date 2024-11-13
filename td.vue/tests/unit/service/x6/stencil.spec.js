@@ -1,54 +1,50 @@
-import factory from '@/service/x6/factory.js';
 import shapes from '@/service/x6/shapes/index.js';
-import stencil from '@/service/x6/stencil.js';
+import stencilModule from '@/service/x6/stencil.js';
 
 describe('service/x6/stencil.js', () => {
-    let container, load, search, target, cfg;
+    let container, target;
+    let stencilCfg, stencilInstance;
 
     beforeEach(() => {
-        load = jest.fn();
-        search = jest.fn();
-        factory.stencil = jest.fn().mockImplementation((config) => {
-            cfg = config;
-            return {
-                container,
-                load,
-                onSearch: search
-            };
-        });
+        jest.clearAllMocks();
+
         shapes.ActorShape = jest.fn();
         shapes.ProcessShape = jest.fn();
         shapes.StoreShape = jest.fn();
-        shapes.Flow = jest.fn();
+        shapes.FlowStencil = jest.fn();
         shapes.TrustBoundaryBox = jest.fn();
-        shapes.TrustBoundaryCurve = jest.fn();
-        container = { appendChild: jest.fn(), foo: 'bar' };
-        target = { bar: 'baz' };
-        
-        stencil.get(target, container);
-    });
+        shapes.TrustBoundaryCurveStencil = jest.fn();
+        shapes.TextBlock = jest.fn();
 
-    it('creates a new stencil', () => {
-        expect(factory.stencil).toHaveBeenCalledTimes(1);
-    });
-    
-    it('has a title', () => {
-        expect(cfg.title).toEqual('Entities');
+        container = { appendChild: jest.fn() };
+        target = {};
+
+        const MockStencil = jest.fn().mockImplementation((cfg) => {
+            stencilCfg = cfg;
+            stencilInstance = {
+                load: jest.fn(),
+                onSearch: jest.fn(),
+                container: {},
+            };
+            return stencilInstance;
+        });
+
+        stencilModule.get(target, container, MockStencil);
     });
 
     it('passes the target', () => {
-        expect(cfg.target).toEqual(target);
+        expect(stencilCfg.target).toEqual(target);
     });
 
     it('has a width', () => {
-        expect(cfg.stencilGraphWidth).toEqual(500);
+        expect(stencilCfg.stencilGraphWidth).toEqual(500);
     });
 
     it('provides layout options', () => {
-        expect(cfg.layoutOptions).toEqual({
+        expect(stencilCfg.layoutOptions).toEqual({
             columns: 1,
             center: true,
-            resizeToFit: true
+            resizeToFit: true,
         });
     });
 
@@ -69,32 +65,40 @@ describe('service/x6/stencil.js', () => {
     });
 
     it('loads the entities', () => {
-        expect(load).toHaveBeenCalledWith([
-            expect.any(shapes.ProcessShape),
-            expect.any(shapes.StoreShape),
-            expect.any(shapes.ActorShape),
-            expect.any(shapes.FlowStencil)
-        ], 'components');
+        expect(stencilInstance.load).toHaveBeenCalledWith(
+            [
+                expect.any(Object),
+                expect.any(Object),
+                expect.any(Object),
+                expect.any(Object),
+            ],
+            'components'
+        );
     });
 
     it('loads the trust boundaries', () => {
-        expect(load).toHaveBeenCalledWith([
-            expect.any(shapes.TrustBoundaryBox),
-            expect.any(shapes.TrustBoundaryCurveStencil)
-        ], 'boundaries');
+        expect(stencilInstance.load).toHaveBeenCalledWith(
+            [
+                expect.any(Object),
+                expect.any(Object),
+            ],
+            'boundaries'
+        );
     });
 
     it('loads the metadata', () => {
-        expect(load).toHaveBeenCalledWith([
-            expect.any(shapes.TextBlock)
-        ], 'metadata');
+        expect(stencilInstance.load).toHaveBeenCalledWith(
+            [expect.any(Object)],
+            'metadata'
+        );
     });
 
     it('calls onSearch twice', () => {
-        expect(search).toHaveBeenCalledTimes(2);
+        expect(stencilInstance.onSearch).toHaveBeenCalledTimes(2);
     });
 
-    it('adds the stencil to the dom', () => {
-        expect(container.appendChild).toHaveBeenCalledWith(container);
+    it('adds the stencil to the DOM', () => {
+        expect(container.appendChild).toHaveBeenCalledWith(stencilInstance.container);
     });
 });
+

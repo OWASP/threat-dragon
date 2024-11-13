@@ -20,12 +20,13 @@ describe('components/GraphButtons.vue', () => {
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);
-        
+
         graphMock = {
             toJSON: jest.fn().mockReturnValue({ cells: [] }),
             history: {
                 on: jest.fn()
-            }
+            },
+            getPlugin: jest.fn().mockReturnValue({ on: jest.fn() })
         };
         routerMock = { push: jest.fn(), params: {} };
         diagramService.edit = jest.fn().mockReturnValue(graphMock);
@@ -55,7 +56,8 @@ describe('components/GraphButtons.vue', () => {
                 }
             },
             actions: {
-                [tmActions.diagramSaved]: () => {}
+                [tmActions.diagramSaved]: () => {},
+                [tmActions.notModified]: () => {},
             }
         });
         jest.spyOn(storeMock, 'dispatch');

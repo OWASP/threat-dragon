@@ -10,6 +10,7 @@ import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 import configcontroller from "../../src/controllers/configcontroller";
+import googleProviderThreatmodelController from '../../src/controllers/googleProviderThreatmodelController.js';
 
 describe('config/routes.config.js routes', () => {
     let mockApp;
@@ -143,6 +144,37 @@ describe('config/routes.config.js routes', () => {
             );
         });
     });
+
+    describe('google provider threat models', () => {
+        it('routes GET /api/googleproviderthreatmodel/folders', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/googleproviderthreatmodel/folders',
+                googleProviderThreatmodelController.folders
+            );
+        });
+    
+        it('routes POST /api/googleproviderthreatmodel/:folder/create', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/googleproviderthreatmodel/:folder/create',
+                googleProviderThreatmodelController.create
+            );
+        });
+    
+        it('routes PUT /api/googleproviderthreatmodel/:file/update', () => {
+            expect(mockRouter.put).to.have.been.calledWith(
+                '/api/googleproviderthreatmodel/:file/update',
+                googleProviderThreatmodelController.update
+            );
+        });
+    
+        it('routes GET /api/googleproviderthreatmodel/:file/data', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/googleproviderthreatmodel/:file/data',
+                googleProviderThreatmodelController.model
+            );
+        });
+    });
+    
 
     it('adds bearer token middleware', () => {
         expect(mockRouter.use).to.have.been.calledWith(bearer.middleware);

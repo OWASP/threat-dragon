@@ -29,6 +29,10 @@ const zho = {
             displayName: 'Bitbucket',
             loginWith: '登录'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: '登录'
+        },
         local: {
             displayName: '本地',
             loginWith: '登录'
@@ -207,6 +211,10 @@ const zho = {
             zoom: {
                 shortcut: '(ctrl/cmd) + 鼠标滚轮',
                 action: '缩放'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -347,6 +355,7 @@ const zho = {
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
             showEmpty: '显示空元素',
+            showProperties: 'Show element properties',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',

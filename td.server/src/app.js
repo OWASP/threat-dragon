@@ -28,15 +28,16 @@ const create = () => {
 
     try {
         envConfig.tryLoadDotEnv();
-        // logging environment
-        loggerHelper.level(env.get().config.LOG_LEVEL || 'info');
+        // logging environment, env will always supply a value
+        loggerHelper.level(env.get().config.LOG_LEVEL);
         logger = loggerHelper.get('app.js');
 
         const app = expressHelper.getInstance();
         app.set('trust proxy', true);
         // rate limiting only for production environemnts, otherwise automated e2e tests fail
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV === 'production') {
             app.use(limiter);
+            logger.info('Apply rate limiting in production environments');
         } else {
             logger.warn('Rate limiting disabled for development environments');
         }
@@ -57,8 +58,8 @@ const create = () => {
         // routes
         routes.config(app);
 
-        // if this default is changed then ensure docs are updated and CI pipeline still works
-        app.set('port', env.get().config.PORT || 3000);
+        // env will always supply a value for the PORT
+        app.set('port', env.get().config.PORT);
         logger.info('Express server listening on ' + app.get('port'));
 
         logger.info('OWASP Threat Dragon application started');

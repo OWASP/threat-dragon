@@ -29,6 +29,10 @@ const ms = {
             displayName: 'Bitbucket',
             loginWith: 'Log masuk dengan'
         },
+        google: {
+            displayName: 'Google',
+            loginWith: 'Log masuk dengan'
+        },
         local: {
             displayName: 'Sesi Tempatan',
             loginWith: 'Log masuk ke'
@@ -207,6 +211,10 @@ const ms = {
             zoom: {
                 shortcut: '(ctrl/cmd) + roda tetikus',
                 action: 'Zum'
+            },
+            save: {
+                shortcut: '(ctrl/cmd) + s',
+                action: 'Save'
             }
         },
         stencil: {
@@ -348,6 +356,7 @@ const ms = {
             showMitigatedThreats: 'Tunjukkan ancaman yang ditangani',
             showModelDiagrams: 'Tunjukkan gambarajah model',
             showEmpty: 'Tunjukkan elemen kosong',
+            showProperties: 'Show element properties',
             showBranding: 'Logo Threat Dragon'
         },
         title: 'Laporan model ancaman untuk',
