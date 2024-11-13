@@ -158,7 +158,7 @@ jobs:
         run: npm clean-install
 
       - name: Build Windows executable
-        # signing has to be done later with hardware key
+        # code signing done later using Extended Verification (EV) with a hardware key
         run: npm run build:desktop -- --windows --publish never
 
       - name: Save SBOM artifact
@@ -180,7 +180,7 @@ jobs:
       # MacOS signing: certificate and password, see electron.build/code-signing
       CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
       CSC_LINK:  ${{ secrets.MAC_CERTS }}
-      # MacOS notarization:
+      # MacOS notarization: see github.com/electron/notarize#readme
       APPLE_ID: ${{ secrets.APPLE_ID }}
       APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}

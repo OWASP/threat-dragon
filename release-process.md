@@ -133,9 +133,10 @@ and any other relevant channels
 ### Manually notarize / staple for MacOS images
 
 It used to be that [altool][altool] could be used to notarize the MacOS `.dmg` files in the pipeline.
-As of early 2024 this is no longer available and [notarytool][notarize] must be used in a secure environment.
-Used in [the pipeline][notarytool], it can also be done/checked manually:
+As of early 2024 this is no longer available and [notarytool][notarytool] must be used in a secure environment.
+The secrets for both signing and notarization can be checked by running it manually from the command line:
 
+- provide the [code signing certs for MacOS][certs]
 - Download both x86 and arm64 images for the MacOS installer (`*.dmg`)
 - ensure that the apple developer [environment is set up][notarize]
 - notarize and staple, for example with version 2.3.0:
@@ -158,6 +159,7 @@ Token used in the Threat Dragon pipeline as 'SNAPCRAFT_TOKEN', use command to re
 
 [altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
 [area]: https://github.com/OWASP/threat-dragon/releases
+[certs]: https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
 [heroku]: https://id.heroku.com/login
 [herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 [herokudash]: https://dashboard.heroku.com/apps
