@@ -18,10 +18,22 @@
                         variant="primary"
                         size="sm"
                         class="float-right"
+                        :style="{ marginRight: '10px' }"
                     >
                         <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
                         {{ $t('threats.newThreat') }}
                     </b-btn>
+
+                    <b-btn class="float-right mr-2"
+                        @click="LLMSessionCreated()"
+                        v-if="!!cellRef"
+                        variant="primary"
+                        size="sm"
+                        :disabled="disableNewThreat"
+                    > 
+                        {{ $t('forms.threatModelComponent') }}
+                    </b-btn>
+
                 </template>
                 <b-card-body>
                     <b-card-text v-if="!!cellRef">
@@ -132,6 +144,9 @@ export default {
         threatSelected(threatId,state) {
             console.debug('selected threat ID: ' + threatId);
             this.$emit('threatSelected', threatId,state);
+        },
+        LLMSessionCreated() {
+            this.$emit('LLMSessionCreated', "component");
         },
         newThreat() {
             const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);

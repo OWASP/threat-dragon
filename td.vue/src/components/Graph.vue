@@ -10,7 +10,7 @@
                         <h3 class="td-graph-title">{{ diagram.title }}</h3>
                     </b-col>
                     <b-col align="right">
-                        <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" />
+                        <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" @LLMSessionCreated="LLMSessionCreated" />
                     </b-col>
                 </b-row>
                 <b-row>
@@ -24,11 +24,11 @@
                 </b-row>
             </b-col>
         </b-row>
-        <td-graph-meta @threatSelected="threatSelected" @threatSuggest="threatSuggest" />
-
+        <td-graph-meta @threatSelected="threatSelected" @LLMSessionCreated="LLMSessionCreated" @threatSuggest="threatSuggest" />
         <div>
             <td-keyboard-shortcuts />
             <td-threat-edit-dialog ref="threatEditDialog" />
+            <td-llm-session ref="llmSession" />
             <td-threat-suggest-dialog ref="threatSuggestDialog" />
         </div>
     </div>
@@ -44,6 +44,7 @@
 import { mapState } from 'vuex';
 
 import TdGraphButtons from '@/components/GraphButtons.vue';
+import TdLlmSession from '@/components/LlmSession.vue'
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
@@ -61,6 +62,7 @@ export default {
         TdGraphMeta,
         TdKeyboardShortcuts,
         TdThreatEditDialog,
+        TdLlmSession
         TdThreatSuggestDialog
     },
     computed: mapState({
@@ -89,6 +91,8 @@ export default {
         threatSelected(threatId,state) {
             this.$refs.threatEditDialog.editThreat(threatId,state);
         },
+        LLMSessionCreated(type) {
+            this.$refs.llmSession.prepareSession(type, this.graph);
         threatSuggest(type){
             this.$refs.threatSuggestDialog.showModal(type);
         },

@@ -1,11 +1,10 @@
-import express from 'express';
-
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
 import configController from "../controllers/configcontroller";
 import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
+import llmService from '../llm/llmService.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 
 /**
@@ -25,6 +24,8 @@ const unauthRoutes = (router) => {
     router.get('/api/logout', auth.logout);
     router.get('/api/oauth/return', auth.oauthReturn);
     router.get('/api/oauth/:provider', auth.completeLogin);
+
+    router.post('/api/threatmodel/generate/threats', llmService.generateThreats);
 };
 
 /**
