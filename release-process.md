@@ -10,8 +10,8 @@ For example if RC1, but change for RC2 and so on :
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version, for example `"version": "2.3.0",`, in `td.vue/package.json`
-4. ensure `buildState` in `td.vue/package.json` is `-RC1`
+3. update version, for example `"version": "2.3.0-RC1",`, in `td.vue/package.json`
+4. ensure `buildState` in `td.vue/package.json` is empty ``
 5. update version, for example `"version": "2.3.0-RC1",`, in `package.json` and `td.server/package.json`
 6. update package lock files: `npm install`
 7. `npm run build`
