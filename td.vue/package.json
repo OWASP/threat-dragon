@@ -2,6 +2,7 @@
   "name": "threat-dragon",
   "productName": "Threat Dragon",
   "version": "2.3.0-RC2",
+  "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
     "audit": "npm audit",

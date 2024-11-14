@@ -41,7 +41,6 @@ module.exports = {
                     provider: 'github'
                 },
                 mac: {
-                    appId: 'org.owasp.threatdragon',
                     category: 'public.app-category.developer-tools',
                     icon: './src/icons/icon.icns',
                     hardenedRuntime: true,
