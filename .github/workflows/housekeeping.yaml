@@ -57,8 +57,6 @@ jobs:
     permissions:
       contents: write
       security-events: write
-    if: ${{ ! always() }}
-    # disable trivy until it can be reliably downloaded in the pipeline
 
     steps:
       - name: Checkout repository
