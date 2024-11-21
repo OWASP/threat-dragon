@@ -432,21 +432,19 @@ jobs:
           cmd_options: '-a'
 
   scan_image_with_trivy:
-    name: Scan image with trivy (disabled)
+    name: Scan image with Trivy
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
       contents: write
       security-events: write
-    if: ${{ ! always() }}
-    # disable trivy until it can be reliably downloaded in the pipeline
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.0
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'

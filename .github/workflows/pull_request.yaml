@@ -327,30 +327,28 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   scan_image_with_trivy:
-    name: Scan with trivy (disabled)
+    name: Scan with Trivy
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
       contents: write
-    if: ${{ ! always() }}
-    # disable trivy until it can be reliably downloaded in the pipeline
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.0
 
-      - name: Download docker local image
+      - name: Retrieve local docker image
         uses: actions/download-artifact@v4.1.8
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp
       
-      - name: Load docker local image
+      - name: Load local docker image
         run: |
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
