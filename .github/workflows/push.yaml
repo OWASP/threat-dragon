@@ -432,7 +432,7 @@ jobs:
           cmd_options: '-a'
 
   scan_image_with_trivy:
-    name: Scan image with trivy (disabled)
+    name: Scan image with Trivy
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
