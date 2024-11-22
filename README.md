@@ -76,8 +76,7 @@ please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/
 
 ### Building version 2.x
 
-Install [git](https://git-scm.com/downloads) and [node.js](https://nodejs.org/en/download/)
-which includes the node package manager npm
+Install [git](https://git-scm.com/downloads) and [node.js][download] which includes the node package manager npm
 
 Clone the repository using: `git clone https://github.com/owasp/threat-dragon.git`
 
@@ -172,6 +171,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
 [bitbucket]: https://owasp.org/www-project-threat-dragon/docs-2/bitbucket-repo/
+[download]: https://nodejs.org/en/download/package-manager
 [github]: https://owasp.org/www-project-threat-dragon/docs-2/github-repo/
 [gitlab]: https://owasp.org/www-project-threat-dragon/docs-2/gitlab-repo/
 [license]: https://github.com/OWASP/threat-dragon/blob/v2.2.0/license.txt

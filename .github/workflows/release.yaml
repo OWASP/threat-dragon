@@ -4,7 +4,8 @@ on:
   push:
     # only for version 2.x.x releases and release candidates
     tags:
-      - v2.?.?*
+      - v2.?.?
+      - v2.?.?-RC?
   workflow_dispatch:
 
 env:
@@ -157,7 +158,7 @@ jobs:
         run: npm clean-install
 
       - name: Build Windows executable
-        # signing has to be done later with hardware key
+        # code signing done later using Extended Verification (EV) with a hardware key
         run: npm run build:desktop -- --windows --publish never
 
       - name: Save SBOM artifact
@@ -174,6 +175,15 @@ jobs:
     name: MacOS installer
     runs-on: macos-latest
     needs: [desktop_unit_tests, site_unit_tests]
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # MacOS signing: certificate and password, see electron.build/code-signing
+      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+      CSC_LINK:  ${{ secrets.MAC_CERTS }}
+      # MacOS notarization: see github.com/electron/notarize#readme
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     defaults:
       run:
         working-directory: td.vue
@@ -199,24 +209,7 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      - name: Prepare for MacOS notarization
-        # Import Apple API key for app notarization on macOS
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-
       - name: Publish MacOS disk image
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # MacOS signing certificate and password, see electron.build/code-signing
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-          CSC_LINK:  ${{ secrets.MAC_CERTS }}
-          # MacOS notarization:
-          # API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          # API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          APPLE_ID: ${{ secrets.APPPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPPLE_TEAM_ID }}
         run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
@@ -285,6 +278,9 @@ jobs:
     name: Linux snap
     runs-on: ubuntu-24.04
     needs: [desktop_unit_tests, site_unit_tests]
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     defaults:
       run:
         working-directory: td.vue
@@ -316,14 +312,10 @@ jobs:
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
       - name: Build Linux snap
         shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build:desktop -- --linux snap
 
       - name: Upload to Snap Store
         shell: bash
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
       - name: Print logs on error
@@ -486,7 +478,7 @@ jobs:
           tar -czvf threat-dragon-sboms.zip sboms
 
       - name: Create release notes
-        uses: softprops/action-gh-release@v2.0.4
+        uses: softprops/action-gh-release@v2.1.0
         with:
           draft: true
           name: "${releaseVersion:1}"
