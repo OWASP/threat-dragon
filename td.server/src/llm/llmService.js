@@ -113,5 +113,6 @@ const generateThreats = (req, res) => responseWrapper.sendResponseAsync(async ()
 }, req, res, logger);
 
 export default {
-    generateThreats
+    generateThreats,
+    prepareLLMPrompt
 };

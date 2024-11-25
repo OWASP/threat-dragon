@@ -132,7 +132,7 @@ export default {
             }
         },
         generateThreats() {
-            this.$emit('LLMSessionCreated', "diagram");
+            this.$emit('LLMSessionCreated', 'diagram');
         }
     }
 };

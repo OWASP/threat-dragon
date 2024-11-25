@@ -267,10 +267,10 @@ const eng = {
         saveModel: 'Save Model',
         saveModelAs: 'Save Model As',
         search: 'Search',
-        threatModelAll: "Generate threats with LLM",
-        threatModelDiagram: "Generate threats with LLM",
-        threatModelComponent: "Generate threats with LLM",
-        startSession: "Start session",
+        threatModelAll: 'Generate threats with LLM',
+        threatModelDiagram: 'Generate threats with LLM',
+        threatModelComponent: 'Generate threats with LLM',
+        startSession: 'Start session',
         next:'Next',
         previous:'Previous'
     },
@@ -395,13 +395,13 @@ const eng = {
     llm: {
         context: 'Additional context for LLM',
         models: {
-            openai: "OpenAI",
-            gemini: "Gemini",
-            llama: "Llama"
+            openai: 'OpenAI',
+            gemini: 'Gemini',
+            llama: 'Llama'
         },
-        provider: "LLM Provider",
+        provider: 'LLM Provider',
         properties: {
-            number: "Number of threats"
+            number: 'Number of threats'
         }
 
     }

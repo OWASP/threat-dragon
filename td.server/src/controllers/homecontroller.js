@@ -1,9 +1,11 @@
+import { fileURLToPath } from 'url';
 import loggerHelper from '../helpers/logger.helper.js';
 import path from 'path';
-
 import { upDir } from '../helpers/path.helper.js';
 
 const logger = loggerHelper.get('controllers/homecontroller.js');
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 /**
  * The path to the index.html file

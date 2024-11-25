@@ -146,7 +146,7 @@ export default {
             this.$emit('threatSelected', threatId,state);
         },
         LLMSessionCreated() {
-            this.$emit('LLMSessionCreated', "component");
+            this.$emit('LLMSessionCreated', 'component');
         },
         newThreat() {
             const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);

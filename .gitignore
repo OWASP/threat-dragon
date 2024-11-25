@@ -33,6 +33,8 @@
 !ThreatDragonModels/*model.json
 !ThreatDragonModels/test/
 !ThreatDragonModels/test/*.json
+!ThreatDragonModels/URL shortener/
+!ThreatDragonModels/URL shortener/*.json
 
 # documentation site
 !docs

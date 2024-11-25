@@ -4,7 +4,6 @@
             v-if="!!session"
             id="llm-session"
             size="lg"
-            ok-variant="primary"
             header-bg-variant="primary"
             header-text-variant="light"
             :title="getModalTitle()"
@@ -88,7 +87,8 @@
 
             <template #modal-footer>
                 <div class="w-100">
-                    <b-button  
+                    <b-button
+                        id="startSessionButton"
                         variant="danger"
                         class="float-right"
                         v-if="!isProcessing"    
@@ -97,6 +97,7 @@
                         {{ $t('forms.startSession') }}
                     </b-button>
                     <b-button
+                        id="cancelSessionButton"
                         variant="secondary"
                         class="float-right mr-2"
                         v-if="!isProcessing"    
@@ -105,6 +106,7 @@
                         {{ $t('forms.cancel') }}
                     </b-button>
                     <b-button
+                        id="closeSessionButton"
                         variant="danger"
                         class="float-right mr-2"
                         v-if="isProcessing"    
@@ -124,9 +126,8 @@ import { mapState } from 'vuex';
 import { createLlmThreats } from '@/service/threats/genthreats.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import { CELL_DATA_UPDATED, CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
-import { THREATMODEL_DIAGRAM_MODIFIED, THREATMODEL_DIAGRAM_SELECTED, THREATMODEL_UPDATE, THREATMODEL_DIAGRAM_APPLIED, THREATMODEL_MODIFIED, THREATMODEL_DIAGRAM_SAVED} from '@/store/actions/threatmodel.js';
+import { THREATMODEL_DIAGRAM_MODIFIED, THREATMODEL_UPDATE, THREATMODEL_DIAGRAM_APPLIED, THREATMODEL_MODIFIED} from '@/store/actions/threatmodel.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
-import diagramService from '@/service/migration/diagram.js';
 
 export default {
     name: 'TdLlmSession',
@@ -153,9 +154,9 @@ export default {
     data() {
         return {
             session: {
-                provider: "openai",
+                provider: 'openai',
                 count: 5,
-                context: "",
+                context: '',
             },
             progress: 0,               // Track percentage progress
             progressStatus: '',        // Status message
@@ -177,11 +178,11 @@ export default {
             var result = [];
             for (var id in obj) {
                 try {
-                if (typeof(obj[id]) == "function") {
-                    result.push(id + ": " + obj[id].toString());
-                }
+                    if (typeof(obj[id]) == 'function') {
+                        result.push(id + ': ' + obj[id].toString());
+                    }
                 } catch (err) {
-                result.push(id + ": inaccessible");
+                    result.push(id + ': inaccessible');
                 }
             }
             return result;
@@ -199,12 +200,16 @@ export default {
                     this.$store.dispatch(THREATMODEL_UPDATE, { threatTop: this.threatTop+1 });
                 });
             }
+            else if (response.status == 401) {
+                let error_msg = 'You must be authenticated to access the LLM API';
+                this.printErrorMessage(error_msg);
+            }
             else if (response.status == 403) {
-                let error_msg = "Request to LLM API failed (403 Forbidden)";
+                let error_msg = 'Request to LLM API failed (403 Forbidden)';
                 this.printErrorMessage(error_msg);
             }
             else {
-                let error_msg = "Threat generation failed for this component";
+                let error_msg = 'Threat generation failed for this component';
                 this.printErrorMessage(error_msg);
             }
         },
@@ -220,7 +225,7 @@ export default {
                 this.$store.dispatch(LOADER_STARTED);
                 this.handleResponse(response, this.cellRef);
                 if (response.status != 200) {
-                    throw new Error("Threat generation failed for this component");
+                    throw new Error('Threat generation failed for this component');
                 }
 
                 // UPDATE PROGRESS
@@ -238,12 +243,14 @@ export default {
                 
 
                 // Finish successfully
-                this.progressStatus = "Threat modeling session finished!";
-                Vue.$toast.success("Threats generated successfully");
+                this.progressStatus = 'Threat modeling session finished!';
+                Vue.$toast.success('Threats generated successfully');
             }
             catch (error) {
                 console.error(error);
-                this.progressStatus = "Error in threat modeling session.";
+                this.progressStatus = 'Error in threat modeling session.';
+                this.progress = 100;
+                this.$store.dispatch(LOADER_FINISHED);
             }
         },
         async threatsForDiagram() {
@@ -255,13 +262,13 @@ export default {
 
                 // ITERATE OVER ALL DIAGRAM'S CELLS
                 const cellPromises = this.graph.getCells().map(async (cell) => {
-                    if (cell.data.type != "tm.Boundary" && cell.data.outOfScope == false) {
+                    if (cell.data.type != 'tm.Boundary' && cell.data.outOfScope == false) {
                         // GET AND HANDLE RESPONSE
                         let response = await createLlmThreats(this.threatmodel, this.diagram, cell, this.threatTop + 1, this.session);
                         this.$store.dispatch(LOADER_STARTED);
                         this.handleResponse(response, cell);
                         if (response.status != 200) {
-                            throw new Error("Threat generation failed for this diagram");
+                            throw new Error('Threat generation failed for this diagram');
                         }
 
                         // UPDATE CELL DATA AND STYLES
@@ -285,81 +292,13 @@ export default {
                 this.$store.dispatch(THREATMODEL_MODIFIED);
 
                 // Finish successfully
-                this.progressStatus = "Threat modeling session finished!";
-                Vue.$toast.success("Threats generated successfully");
+                this.progressStatus = 'Threat modeling session finished!';
+                Vue.$toast.success('Threats generated successfully');
             }
             catch (error) {
-                this.progressStatus = "Error in threat modeling session.";
-                console.error(error);
-            }
-        },
-        async threatsForThreatModel() {
-            Vue.$toast.info("Generating threats for the entire threat model is not yet supported");
-            this.progressStatus = "This mode is not yet supported.";
-            return 0;
-            try {
-                // ITERATE OVER ALL DIAGRAMS
-                this.cells_processed = 0;
-                this.cells_total = this.threatmodel.detail.diagrams.length;
-                this.progressStatus = `Processing ${this.cells_total} diagram(s)...`;
-                const diagramPromises = this.threatmodel.detail.diagrams.map(async (diagram) => {
-                    try {
-                        // CREATE GRAPH INSTANCE HERE FOR EACH DIAGRAM
-                        let graph = diagramService.edit(this.$refs.graph_container, diagram);
-
-                        // SELECT DIAGRAM AS ACTIVE
-                        this.$store.dispatch(THREATMODEL_DIAGRAM_SELECTED, diagram);
-
-                        // ITERATE OVER ALL DIAGRAM'S CELLS
-                        const cellPromises = graph.getCells().map(async (cell) => {
-                            if (cell.data.type != "tm.Boundary" && cell.data.outOfScope == false) {
-                                // GET AND HANDLE RESPONSE
-                                let response = await createLlmThreats(this.threatmodel, diagram, cell, this.threatTop + 1, this.session);
-                                this.$store.dispatch(LOADER_STARTED);
-                                this.handleResponse(response, cell);
-                                if (response.status != 200) {
-                                    throw new Error("Threat generation failed for this threat model");
-                                }
-
-                                // UPDATE CELL DATA AND STYLES
-                                this.$store.dispatch(CELL_SELECTED, cell);
-                                this.$store.dispatch(CELL_DATA_UPDATED, cell.data);
-                                dataChanged.updateStyleAttrs(cell);
-                                this.$store.dispatch(CELL_UNSELECTED);
-                            }
-                        });
-
-                        // Wait for all promises to complete
-                        await Promise.all(cellPromises);
-
-
-                        // THREAT DIAGRAM MODIFIED
-                        this.$store.dispatch(THREATMODEL_DIAGRAM_MODIFIED, diagram);
-                        this.$store.dispatch(THREATMODEL_DIAGRAM_APPLIED);
-                        this.$store.dispatch(THREATMODEL_DIAGRAM_SAVED, diagram);
-                        this.$store.dispatch(THREATMODEL_STASH);
-
-                        // Update progress
-                        this.cells_processed += 1;
-                        this.progress = Math.floor(((this.cells_processed) / this.cells_total) * 100) + "%";
-                    }
-                    catch (error) {
-                        throw error;
-                    }
-                });
-
-                // Wait for all promises to complete
-                await Promise.all(diagramPromises);
-
-                // UPDATE THREAT MODEL
-                this.$store.dispatch(THREATMODEL_MODIFIED);
-
-                // Finish successfully
-                this.progressStatus = "Threat modeling session finished!";
-                Vue.$toast.success("Threats generated successfully");
-            }
-            catch (error) {
-                this.progressStatus = "Error in threat modeling session.";
+                this.progressStatus = 'Error in threat modeling session.';
+                this.progress = 100;
+                this.$store.dispatch(LOADER_FINISHED);
                 console.error(error);
             }
         },
@@ -367,17 +306,14 @@ export default {
             // SHOW LOADER
             this.$store.dispatch(LOADER_STARTED);
             this.isProcessing = true;
-            this.progressStatus = "Starting session...";
+            this.progressStatus = 'Starting session...';
             
             // PROCESS REQUEST DEPENDING ON SESSION TYPE
-            if (this.session.type == "component") {
+            if (this.session.type == 'component') {
                 await this.threatsForComponent();
             }
-            else if (this.session.type == "diagram") {
+            else if (this.session.type == 'diagram') {
                 await this.threatsForDiagram();
-            }
-            else if (this.session.type == "threat-model") {
-                await this.threatsForThreatModel();
             }
 
             // HIDE LOADER
@@ -388,6 +324,8 @@ export default {
             this.isProcessing = false;
             this.progressStatus = '';
             this.progress = 0;
+            this.$store.dispatch(LOADER_FINISHED);
+            
         },
         showModal() {
             this.isProcessing = false;

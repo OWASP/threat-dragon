@@ -1,0 +1,2032 @@
+{
+  "version": "2.2.0",
+  "summary": {
+    "title": "URL shortener",
+    "owner": "Grzegorz Kmita",
+    "description": "The URL Shortener Service aims to provide a simple and efficient way for users to convert long URLs into short, easily shareable URLs. The service ensures functionality, reliability, and security while interacting with users and handling their data.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "URL Shortener Service Architecture",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.2.0",
+        "cells": [
+          {
+            "position": {
+              "x": 410,
+              "y": 60
+            },
+            "size": {
+              "width": 690,
+              "height": 370
+            },
+            "attrs": {
+              "headerText": {
+                "text": "URL Shortener Service"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "b830597f-432f-4c75-a688-8722ce7f1585",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "URL Shortener Service",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 190,
+              "y": 147
+            },
+            "size": {
+              "width": 170,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Human User / Service"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "777e657c-5ab5-40fe-ba09-a8a7de2600de"
+                },
+                {
+                  "group": "right",
+                  "id": "6d556567-cf0c-42f7-bb76-37308eda080d"
+                },
+                {
+                  "group": "bottom",
+                  "id": "13cd2bea-4ccd-4836-b0ed-77f4256256bd"
+                },
+                {
+                  "group": "left",
+                  "id": "2b7de89a-b02d-45af-b5dd-650751345ae3"
+                }
+              ]
+            },
+            "id": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Human User / Service",
+              "description": "External services that may interact with the API for bulk operations or integrations.",
+              "outOfScope": true,
+              "reasonOutOfScope": "Incoming requests outside of application scope",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 750,
+              "y": 290
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Redirect URL"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 4,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "2246ba9e-d600-44fe-9b08-53b1af584b53"
+                },
+                {
+                  "group": "right",
+                  "id": "3b7d81d4-e431-487c-a541-239db52332c9"
+                },
+                {
+                  "group": "bottom",
+                  "id": "129907f1-7dc0-47ab-b194-75349fca69c9"
+                },
+                {
+                  "group": "left",
+                  "id": "ca35f0d4-6bc4-4056-8945-6c1a7de3c76e"
+                }
+              ]
+            },
+            "id": "602a3f85-c6bc-48db-9230-9cb402fdc6f0",
+            "data": {
+              "type": "tm.Process",
+              "name": "Redirect URL",
+              "description": "Enables users to resolve short URLs and be redirected to the corresponding long URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "760183a0-cc71-4af7-a5c5-bb3ebdcc01e2",
+                  "title": "URL Spoofing Attack",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "An attacker may craft malicious URLs that appear legitimate to users, potentially redirecting them to phishing sites or downloading malware.",
+                  "mitigation": "Implement strict URL validation and offer clear indication of the redirection before it occurs. Use HTTPS for all connections.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": 9
+                },
+                {
+                  "id": "16488b4a-d830-430b-a63d-196e046e4738",
+                  "title": "Denial of Service via URL Redirect",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Denial of service",
+                  "description": "An attacker could flood the redirect service with requests for redirection, consuming bandwidth and CPU resources, causing legitimate requests to be delayed or denied.",
+                  "mitigation": "Implement rate limiting and CAPTCHA for unusually high traffic to the redirect endpoint.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": 8
+                },
+                {
+                  "id": "33325e55-6eec-4466-a8fd-a08481f81625",
+                  "title": "Data Tampering in URL Mapping Database",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An unauthorized user could potentially tamper with the URL mappings in the database, redirecting users to a different URL than originally intended.",
+                  "mitigation": "Ensure that access to the URL mapping database is tightly controlled and logged, and implement database integrity checks.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": 7
+                },
+                {
+                  "id": "f00c5408-aaf8-4443-bb79-c18cbf9e0ebc",
+                  "title": "Information Disclosure through URL Query",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Sensitive information might be exposed through the redirection process, particularly if there is poor logging of redirection requests which include full URLs.",
+                  "mitigation": "Log only necessary information, and sanitize logs to remove URLs or sensitive user-identifying information.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": 6
+                },
+                {
+                  "id": "ca75a6d1-fed4-4a27-80e7-9960cbd50aa9",
+                  "title": "Susceptibility to Open Redirect Vulnerability",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "description": "Attackers might exploit open redirect vulnerabilities to redirect users from the original service to malicious sites, bypassing security measures that rely on domain-based whitelists.",
+                  "mitigation": "Validate all redirections against a list of approved domains, and implement a user confirmation step for redirects going to unrecognized domains.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": 7
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 745,
+              "y": 120
+            },
+            "size": {
+              "width": 110,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Shorten URL"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "96a6eb31-0289-48eb-991f-d1db2251eefa"
+                },
+                {
+                  "group": "right",
+                  "id": "782d5b07-7d17-4018-8939-62c0d61af307"
+                },
+                {
+                  "group": "bottom",
+                  "id": "9c4b7e09-5494-4e10-ae53-e8d7e82289b8"
+                },
+                {
+                  "group": "left",
+                  "id": "d6d13c8d-b624-4d59-af62-a68ea5eb217c"
+                }
+              ]
+            },
+            "id": "1f9260a0-bd64-49d7-a839-58e5e43948dc",
+            "data": {
+              "type": "tm.Process",
+              "name": "Shorten URL",
+              "description": "Allows users to submit long URLs and receive shortened URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "10c84c67-9e29-4b0f-9c17-a0cc07c013fd",
+                  "title": "Malicious URL Injection",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker may submit malicious URLs to the service, leading to users being redirected to harmful websites.",
+                  "mitigation": "Implement URL validation checks and URL reputation services to block known malicious sites.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": 8
+                },
+                {
+                  "id": "1010750e-3ee9-4732-8988-4bbe6f24692e",
+                  "title": "URL Database Breach",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Unauthorized access to the URLs database could lead to exposure of all stored mappings between short and long URLs.",
+                  "mitigation": "Ensure database access is restricted using strong authentication and encryption of sensitive data.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": 9
+                },
+                {
+                  "id": "9ec4b41a-de25-4acc-adae-00d6d9e8b55b",
+                  "title": "Excessive URL Shortening Requests",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker could flood the API with URL shortening requests, causing resource exhaustion.",
+                  "mitigation": "Implement rate limiting and monitoring to detect and block excessive requests from a single source.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": 7
+                },
+                {
+                  "id": "0d2a0d65-48e4-4740-b71c-91b59c371e15",
+                  "title": "Short URL Guessing Attack",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "An attacker could try to guess short URLs to reveal mapped long URLs.",
+                  "mitigation": "Increase the complexity and length of generated short URLs to reduce the likelihood of guessing.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": 6
+                },
+                {
+                  "id": "4e19c187-e8b7-4aed-b6cf-51a53c55965e",
+                  "title": "Request Forgery",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "An attacker might forge requests to the URL shortening service on behalf of legitimate users to manipulate URL mappings.",
+                  "mitigation": "Use CSRF tokens and ensure that API requests are authenticated using secure tokens.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": 5
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 934.9999999999993,
+              "y": 215
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "URLs database"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 6,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "4a0666ad-7a51-4ff7-8139-47eeb3b69979"
+                },
+                {
+                  "group": "right",
+                  "id": "256aa41b-bafe-4858-833f-febc57589535"
+                },
+                {
+                  "group": "bottom",
+                  "id": "042399b3-d4bb-4026-89a6-57602d017d31"
+                },
+                {
+                  "group": "left",
+                  "id": "1e0ff407-b4fc-48b0-8929-f40faea56cb7"
+                }
+              ]
+            },
+            "id": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c",
+            "data": {
+              "type": "tm.Store",
+              "name": "URLs database",
+              "description": "Data store containing the mappings between short URLs and their corresponding long URLs.\n\nDATA STORED: Long URL, Short URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "032e2175-d78c-4339-b9f2-389a69ab450f",
+                  "title": "Unauthorized Access to URLs Database",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "An attacker could gain unauthorized access to the URLs database and retrieve or modify URL mappings.",
+                  "mitigation": "Implement strong authentication and access controls, such as role-based access control, to limit who can access and modify the database.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "9"
+                },
+                {
+                  "id": "8a7e0ed6-6a7d-4aaa-ad54-f602a3c342c6",
+                  "title": "Data Tampering in URL Mappings",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker might alter the URL mappings in the database, leading users to malicious websites.",
+                  "mitigation": "Use data integrity checks and secure logging to detect changes. Implementing encryption for data at rest can prevent unauthorized alterations.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "8"
+                },
+                {
+                  "id": "92a94717-5e3b-4232-bd2e-883c92c7efa1",
+                  "title": "Information Disclosure through Insufficient Encryption",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "The lack of encryption might lead to potential exposure of sensitive data during storage or transmission.",
+                  "mitigation": "Ensure data encryption both at rest and in transit using strong encryption standards.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "133d074f-2798-4fc7-91d6-e1be414ef762",
+                  "title": "Denial of Service via Database Flooding",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker could flood the database with excessive requests, leading to performance degradation or service downtime.",
+                  "mitigation": "Implement rate limiting on the APIs and use database protections like connection pooling and throttling.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "81859096-70c7-4571-a62d-602fe52d9319",
+                  "title": "Lack of Audit Logs for URL Operations",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Repudiation",
+                  "description": "Without logging, malicious activities going unnoticed and post-incident analysis might be hampered.",
+                  "mitigation": "Enable comprehensive logging that captures all access and modification events in the database for auditing purposes.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "5"
+                }
+              ]
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
+            }
+          },
+          {
+            "position": {
+              "x": 902.4999999999993,
+              "y": 470
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Original URL"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 7,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "ca02fa0c-2d23-46ce-ab96-9de5a9f69c39"
+                },
+                {
+                  "group": "right",
+                  "id": "c5d04dc5-51ed-41f3-92d3-dba99244198e"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c49a57ba-3bab-4880-8e3f-ab953710e8d7"
+                },
+                {
+                  "group": "left",
+                  "id": "953dd115-0a6c-4a0b-adcc-fd73583c7eed"
+                }
+              ]
+            },
+            "id": "2c0500fb-85fa-4497-908a-61b1ea2e09f4",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Original URL",
+              "description": "Destination server of the original URL",
+              "outOfScope": true,
+              "reasonOutOfScope": "Original URL not in scope of URL shortener application",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 507,
+              "y": 237
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "API Server"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 8,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "20836867-09d6-4785-ac3d-e37ff4055fd1"
+                },
+                {
+                  "group": "right",
+                  "id": "6a3b097e-fd0b-40c1-9a96-a02fb03f7580"
+                },
+                {
+                  "group": "bottom",
+                  "id": "e5e37bde-8bb4-46a6-90bf-5931cbfb2f6e"
+                },
+                {
+                  "group": "left",
+                  "id": "ee0f06f4-996a-47e0-82b1-8d156b71b9cb"
+                }
+              ]
+            },
+            "id": "23c4d6cc-6e67-47cd-855d-610b8e390d5f",
+            "data": {
+              "type": "tm.Process",
+              "name": "API Server",
+              "description": "The API Server is the central component of the URL Shortener Service. It manages all interactions with users and external services, handling requests for both shortening URLs and redirecting from short URLs to their original long URLs. ",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "05b59b94-0a31-4866-920d-9867f559590e",
+                  "title": "Spoofing of API Requests",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "An attacker could utilize a stolen or guessed API key to impersonate a legitimate user and interact with the API Server.",
+                  "mitigation": "Implement strong authentication mechanisms such as OAuth and regularly rotate API keys. Use IP whitelisting and monitor unusual activity.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": 8
+                },
+                {
+                  "id": "484232fa-7d51-4a07-ac7d-e7d74d5053c2",
+                  "title": "Tampering with URL Entries",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An unauthorized user could alter stored data, potentially redirecting short URLs to malicious websites.",
+                  "mitigation": "Use digital signatures to verify integrity of URL mappings and implement strict authorization checks for all update operations.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": 9
+                },
+                {
+                  "id": "7a499108-fb7d-448b-ba3f-df521e3edd35",
+                  "title": "Denial of Service through Malicious Requests",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "High volumes of requests from an attacker might overwhelm the API Server, rendering the URL shortener service unavailable.",
+                  "mitigation": "Implement rate limiting, CAPTCHA for users, and IP blacklisting for known malicious actors.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": 7
+                },
+                {
+                  "id": "daacae04-fe65-4980-af40-0a4906ca5f73",
+                  "title": "Information Disclosure via Sensitive Logging",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Sensitive data such as API keys could be stored in logs, allowing unauthorized access if logs are not handled securely.",
+                  "mitigation": "Ensure that logs do not capture sensitive information and implement access controls and encryption for log files.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": 6
+                },
+                {
+                  "id": "708e9581-16da-4a31-b985-eaadb6cc94db",
+                  "title": "Unencrypted Data in Transit",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Data exchanged between the API Server and clients can be intercepted if not adequately encrypted, leading to information disclosure.",
+                  "mitigation": "Enforce HTTPS/TLS for all data transmissions and use secure protocols for API communication.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": 9
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 497,
+              "y": 100
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Hashed API keys"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 9,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "a00f39a6-ed24-43ec-9096-d4466ac01fc2"
+                },
+                {
+                  "group": "right",
+                  "id": "3045fbbb-8478-45d5-a3df-90b7202a517f"
+                },
+                {
+                  "group": "bottom",
+                  "id": "b462421b-b14a-4eb7-a163-941852d787c0"
+                },
+                {
+                  "group": "left",
+                  "id": "ea2849ea-9f4a-4348-8afc-ca7fb162ee33"
+                }
+              ]
+            },
+            "id": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a",
+            "data": {
+              "type": "tm.Store",
+              "name": "Hashed API keys",
+              "description": "Database containing hashed API keys for authentication purposes.\n\nDATA STORED: Hashed API Key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": true,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "904533df-f10a-474c-a420-4c4b6d43c10d",
+                  "title": "Tampering with Hashed API Keys",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker may gain access to the database and tamper with the stored hashed API keys, either by modifying them to gain unauthorized access or to cause disruption in authentication.",
+                  "mitigation": "Implement strict access controls and logging on the database. Use a secure hash function and salted hashes to strengthen the API keys' confidentiality.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "8"
+                },
+                {
+                  "id": "59feadf8-428d-4e7f-9191-eae053902ca6",
+                  "title": "Unauthorized Access to Hashed API Keys",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "If the database is not properly secured, unauthorized users may gain access to the hashed API keys, potentially leading to unauthorized actions on the API server.",
+                  "mitigation": "Ensure that the database has strong access control measures. Use database encryption to protect stored hashed API keys.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "9"
+                },
+                {
+                  "id": "f362a45c-b381-4f57-8e80-24049ff9eecc",
+                  "title": "Information Disclosure of API Keys through Database",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Sensitive API keys might be exposed if the database holding them is improperly secured or exposed to unauthorized entities.",
+                  "mitigation": "Encrypt data at rest and in transit. Implement role-based access controls to limit exposure risk.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "74cf0e0d-c2cb-4b73-a8b8-c08d91b3fc2b",
+                  "title": "Denial of Service on Authentication Interface",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker could flood the API server with requests, causing overload and potential failure to serve legitimate users.",
+                  "mitigation": "Implement rate limiting on the API server and use redundant systems to handle excessive load scenarios.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "659f5848-b478-45e8-a710-2db50ac79ec4",
+                  "title": "Insufficient Validation of API Keys",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "description": "Without proper validation, an attacker could exploit weak points in the authentication process to gain unauthorized access.",
+                  "mitigation": "Ensure that all API keys undergo strict validation and checks before granting access. Regularly audit authentication mechanisms.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "7"
+                }
+              ]
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect User to URL",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "a57eae0b-ede8-4b6c-978b-fb391646a218",
+                  "title": "URL Manipulation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker manipulates the short URL to redirect users to a malicious long URL.",
+                  "mitigation": "Implement strong validation checks on short URLs before performing any redirection.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "9"
+                },
+                {
+                  "id": "5e2ce0ba-2e68-42d6-8695-7fe555855bb0",
+                  "title": "Phishing Through URL Shortener",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "Attackers use the service to create short URLs that disguise malicious phishing links.",
+                  "mitigation": "Deploy automated systems to detect and block commonly recognized patterns of phishing URLs.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "8"
+                },
+                {
+                  "id": "fe67397f-1d9c-4752-b1d1-e13d94327e9c",
+                  "title": "Brute Force Access to Short URLs",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "An attacker guesses short URL combinations to access sensitive or private links.",
+                  "mitigation": "Implement rate limiting and monitoring of access attempts to identify and stop brute force attacks.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "ca75dd38-aa03-45c2-8b00-74aedecf653c",
+                  "title": "Insufficient Transport Layer Protection",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "The URL shortening service performs redirection without proper encryption, risking interception.",
+                  "mitigation": "Use HTTPS for all connections to prevent eavesdropping and data interception.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "8"
+                },
+                {
+                  "id": "3f05a5e1-6ca0-48a8-a763-21e766b4dd64",
+                  "title": "Denial of Service via Excessive Redirection Requests",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker initiates a large number of requests to short URLs, overwhelming the service.",
+                  "mitigation": "Implement rate limiting and automated threat detection to prevent and mitigate DOS attacks.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "6"
+                }
+              ]
+            },
+            "labels": [
+              "Redirect User to URL"
+            ],
+            "id": "07f08d6d-e984-4d14-9d25-36ad24b230bd",
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "cell": "2c0500fb-85fa-4497-908a-61b1ea2e09f4"
+            },
+            "vertices": [
+              {
+                "x": 930,
+                "y": 420
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Retrieve Long URL",
+              "description": "DATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "7315092d-137a-465f-9851-b4f6f175846e",
+                  "title": "Unencrypted Data Transmission",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "The transmission of the Short URL and Long URL is not encrypted, which could lead to interception by an attacker, potentially exposing sensitive data.",
+                  "mitigation": "Implement TLS/SSL encryption for all data transmitted over the network.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "8"
+                },
+                {
+                  "id": "707c2b99-7693-4eb3-89aa-192682a56ef6",
+                  "title": "Lack of Input Validation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Malicious actors can exploit the lack of input validation when a Short URL is submitted, potentially leading to unexpected system behavior or directory traversal attacks.",
+                  "mitigation": "Implement robust input validation and sanitization for all incoming data.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "7"
+                },
+                {
+                  "id": "83cb060c-28ff-40a5-b808-97e1f7869eee",
+                  "title": "Susceptible to URL Manipulation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "The mapping from Short URL to Long URL can be manipulated to redirect users to malicious sites.",
+                  "mitigation": "Include mechanisms to verify the authenticity and integrity of URL mappings.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "9"
+                },
+                {
+                  "id": "ac542259-9ea5-44fd-9ca5-321002ed1fd7",
+                  "title": "Excessive Load on Database",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "High-volume requests to retrieve long URLs could overload the URLs database, causing performance degradation.",
+                  "mitigation": "Implement rate limiting and caching strategies to reduce strain on the database.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "a9d917c7-a618-4ad7-9f23-ead97db7b36f",
+                  "title": "Unauthorized Access to URL Mappings",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "Attackers may gain unauthorized access to the URLs database, revealing the mappings between Short URLs and their corresponding Long URLs.",
+                  "mitigation": "Ensure proper authentication and authorization for access to the database.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "9"
+                }
+              ]
+            },
+            "labels": [
+              "Retrieve Long URL"
+            ],
+            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 970,
+                "y": 320
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Store URL Mapping",
+              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "0ced744e-5928-4bb8-9fc5-25ff3ededbb6",
+                  "title": "Data Tampering in URL Mapping",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker could manipulate the data exchange between the API Server and the URL Database to alter short URL mappings, redirecting to malicious sites.",
+                  "mitigation": "Implement strong end-to-end encryption between the API Server and the URL Database to prevent tampering. Employ data integrity checks and logging to detect anomalies.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "8"
+                },
+                {
+                  "id": "dee049a5-623d-4b42-a055-da8b57aabb64",
+                  "title": "Unauthorized Access to URL Database",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "Inadequate authentication and authorization mechanisms could allow unauthorized actors to access the URL Database and retrieve or modify stored URL mappings.",
+                  "mitigation": "Use robust authentication (e.g., OAuth, JWT) and access control mechanisms to ensure only authorized entities can access the database.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "9"
+                },
+                {
+                  "id": "1277f454-fb8e-4c20-a2b1-cf43165435df",
+                  "title": "Information Leakage Through URL Mapping",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "The transmission of unencrypted data between components might allow attackers to intercept and capture URL mapping data, leading to information disclosure.",
+                  "mitigation": "Encrypt all data in transit using TLS to prevent interception and eavesdropping.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "4a178f49-68f2-4621-ae73-9318852342fa",
+                  "title": "Denial of Service (DoS) via Malicious Requests",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker could overload the API Server with excessive URL shortening requests, leading to a denial of service for legitimate users.",
+                  "mitigation": "Implement rate limiting and request throttling mechanisms to prevent abuse. Monitor traffic patterns for anomalies.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "18acd8cb-72d6-47d8-a34a-ec0a85be738d",
+                  "title": "URL Redirection to Malicious Sites",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Without proper validation and monitoring, the service could be used to create short URLs that redirect to malicious websites, posing a security risk to end users.",
+                  "mitigation": "Implement URL filtering and validation to prevent the shortening of URLs known to be malicious. Regularly update a database of known malicious URLs.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "7"
+                }
+              ]
+            },
+            "labels": [
+              "Store URL Mapping"
+            ],
+            "id": "0bcd6bca-360b-4f4e-a505-187195135022",
+            "source": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 960,
+                "y": 150
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Shorten Request",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "970f2b21-a55f-48c6-9e88-0e1485a71265",
+                  "title": "Man-in-the-Middle Attack",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "An attacker intercepts communication between the client and the API server to access sensitive information or alter the request parameters.",
+                  "mitigation": "Implement HTTPS to ensure data is encrypted in transit, protecting against interception.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "9"
+                },
+                {
+                  "id": "7d64095b-dba3-4986-99aa-fc2a82b3544d",
+                  "title": "URL Manipulation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "Unauthorized alteration of a URL shortening request by tampering with parameters to redirect users to malicious sites.",
+                  "mitigation": "Validate all input and encode URLs to prevent parameter manipulation.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "8"
+                },
+                {
+                  "id": "bff256bd-fd06-4f83-a9c2-e814d2030b0b",
+                  "title": "Denial of Service via Request Flooding",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker floods the API with a high volume of shortening requests, overwhelming the service and causing it to be unresponsive to legitimate users.",
+                  "mitigation": "Implement rate limiting and IP filtering to block excessive requests from a single source.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "6147229d-a8a0-48a4-abf2-dbecf40db019",
+                  "title": "Lack of Request Integrity",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Without integrity validation, requests could be altered in transit, leading to unwanted or malicious alterations.",
+                  "mitigation": "Incorporate HMAC (Hash-based Message Authentication Code) to ensure request integrity.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "12fb7fb0-d430-419b-aadd-bf49abc7f561",
+                  "title": "Repudiation of Actions",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Repudiation",
+                  "description": "Users could deny having submitted a URL shortening request, leading to accountability issues.",
+                  "mitigation": "Implement robust logging with timestamps and user identifiers to maintain traceability of actions.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "5"
+                }
+              ]
+            },
+            "labels": [
+              "Shorten Request"
+            ],
+            "id": "e8d0a24f-858a-45bd-b447-06e07897128a",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "vertices": [
+              {
+                "x": 710,
+                "y": 240
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect Request",
+              "description": "DATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "ac994b05-d31f-49f4-a9cf-fde5308593ab",
+                  "title": "Unencrypted Data Flow Exposure",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "The data exchanged between components in the 'Redirect Request' flow is not encrypted, introducing a risk of interception by unauthorized parties.",
+                  "mitigation": "Implement TLS/SSL encryption for all data exchanges to prevent unauthorized access to sensitive information.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": 9
+                },
+                {
+                  "id": "49c4753c-760d-41b1-8603-7e1b4bdcfd67",
+                  "title": "Man-in-the-Middle Attack",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker could intercept and modify data in the 'Redirect Request' flow if the data transmission is not secure.",
+                  "mitigation": "Use strong mutual TLS/SSL to authenticate both the API Server and the client, and encrypt data in transit.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": 8
+                },
+                {
+                  "id": "03163142-797a-48e0-ae1f-6deee06dabe6",
+                  "title": "URL Redirection Manipulation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker could manipulate the redirection process to redirect users to malicious or unwanted URLs.",
+                  "mitigation": "Validate short URLs against a whitelist of expected URLs and ensure integrity checks are in place.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": 7
+                },
+                {
+                  "id": "bf95d8f7-4245-4890-bbf0-a9174b0c4b6e",
+                  "title": "Replay Attack on Redirect Request",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "An attacker captures the traffic and replays a valid redirection request to perform unauthorized actions.",
+                  "mitigation": "Implement nonces or timestamps to ensure that each request is unique and has a time limit.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": 6
+                },
+                {
+                  "id": "7772167f-5b66-43d5-ac3c-5abe06addd0f",
+                  "title": "Excessive Requests Overloading API",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Denial of service",
+                  "description": "The API server might become overwhelmed by excessive redirect requests, possibly leading to degraded performance or service unavailability.",
+                  "mitigation": "Implement rate limiting and request throttling to manage and control the number of requests processed by the API Server.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": 8
+                }
+              ]
+            },
+            "labels": [
+              "Redirect Request"
+            ],
+            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "vertices": [
+              {
+                "x": 640,
+                "y": 380
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "User Request",
+              "description": "The User sends a request to the API Server to shorten a long URL or to get the redirect URL.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "39ff2cf4-ad5a-4bb4-b8a9-92449a8a1222",
+                  "title": "Man-in-the-Middle Attack",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "Since the data exchange between the User and the API Server is not encrypted, there is a risk of a man-in-the-middle (MitM) attack where an attacker could intercept or alter the data (including long URLs, short URLs, and API keys) being transmitted.",
+                  "mitigation": "Implement HTTPS to ensure the data is encrypted in transit, preventing interception or tampering by unauthorized entities.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": 9
+                },
+                {
+                  "id": "15ad14f0-d226-4378-97e0-a01ba9f9d09c",
+                  "title": "Insufficient Authentication",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Without a defined protocol or authentication mechanism in the 'User Request' flow, unauthorized users might gain access to the API Server using guessed or stolen API keys.",
+                  "mitigation": "Implement a robust authentication mechanism such as OAuth 2.0 to ensure only authorized users can access the API.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": 7
+                },
+                {
+                  "id": "320bc4c8-6f9f-4daa-9ba8-9236c865008c",
+                  "title": "Rate Limiting Bypass",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "If there are no rate limits on incoming requests, attackers might flood the server with requests, affecting its availability and performance.",
+                  "mitigation": "Implement rate limiting on API requests to prevent abuse and ensure fair usage by all users.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": 8
+                },
+                {
+                  "id": "886133f0-0117-4c86-ac4e-b57d356076b5",
+                  "title": "Exposed Sensitive Data",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "API keys, if intercepted, can be misused to perform unauthorized actions through the API.",
+                  "mitigation": "Encrypt all sensitive data both in transit and at rest and implement API key rotation and expiration policies.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": 9
+                },
+                {
+                  "id": "12fcbd43-25be-45a1-80a1-683f057de69e",
+                  "title": "Request Forgery",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "description": "If protective measures against CSRF (Cross-Site Request Forgery) are not implemented, an attacker could trick users into unknowingly firing requests to the API Server.",
+                  "mitigation": "Implement antiforgery tokens and validate them on the server to ensure requests are genuine and made by the user.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": 6
+                }
+              ]
+            },
+            "labels": [
+              "User Request"
+            ],
+            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "source": {
+              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+            },
+            "target": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "vertices": [
+              {
+                "x": 275,
+                "y": 310
+              },
+              {
+                "x": 370,
+                "y": 310
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fetch API credentials",
+              "description": "DATA EXCHANGED: Hashed API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "bc69bede-d6ea-4346-bb3c-fb27913b4038",
+                  "title": "Unauthorized Access to Hashed API Keys",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "An attacker may exploit weak access controls to gain unauthorized access to the database storing hashed API keys.",
+                  "mitigation": "Implement strict access controls and regularly audit access logs to the database storing hashed API keys.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 1,
+                  "score": "9"
+                },
+                {
+                  "id": "d9580caa-6790-43e7-ad42-4447df0e8e75",
+                  "title": "Transmission of Unencrypted Hashed API Keys",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Hashed API keys are exchanged without encryption, potentially allowing an attacker to read and intercept the API keys during transmission.",
+                  "mitigation": "Use encrypted communication channels such as TLS to secure the transmission of API keys.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 2,
+                  "score": "8"
+                },
+                {
+                  "id": "4e2d3cf6-51c6-47b3-a028-ed3f2871b536",
+                  "title": "API Credential Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker might tamper with API key transmission to replace it with their own malicious keys, elevating their access privileges.",
+                  "mitigation": "Implement message integrity checks, such as HMAC, to detect tampering of API key transmissions.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 3,
+                  "score": "7"
+                },
+                {
+                  "id": "bdbf3dda-4e27-47ff-ab9c-1304f6a43245",
+                  "title": "Replay Attacks on Hashed API Key",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Elevation of privilege",
+                  "description": "An attacker captures API key transmission and replays it to gain unauthorized access or execute actions as legitimate users.",
+                  "mitigation": "Implement nonce or timestamp-based tokens along with the API key to prevent replay attacks.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 4,
+                  "score": "6"
+                },
+                {
+                  "id": "7f42660f-3f06-4209-97e7-189ad52bc73b",
+                  "title": "Inadequate Logging of API Key Fetches",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Repudiation",
+                  "description": "Failures to log API key fetch operations sufficiently may prevent detection of malicious activities or unauthorized access attempts on the server.",
+                  "mitigation": "Ensure comprehensive logging of all API key fetch operations and regularly review logs for anomalies.",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 5,
+                  "score": "4"
+                }
+              ]
+            },
+            "labels": [
+              "Fetch API credentials"
+            ],
+            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
+            }
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 60
+  }
+}

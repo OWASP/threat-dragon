@@ -3,8 +3,8 @@ import EncryptionEnv from '../env/Encryption.js';
 import env from '../env/Env.js';
 import GithubEnv from '../env/Github.js';
 import GitlabEnv from "../env/Gitlab";
-import LLMEnv from '../env/LLM.js';
 import GoogleEnv from '../env/Google.js';
+import LLMEnv from '../env/LLM.js';
 import ThreatDragonEnv from '../env/ThreatDragon.js';
 
 const tryLoadDotEnv = () => {
