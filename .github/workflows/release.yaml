@@ -181,9 +181,11 @@ jobs:
       CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
       CSC_LINK:  ${{ secrets.MAC_CERTS }}
       # MacOS notarization: see github.com/electron/notarize#readme
-      APPLE_ID: ${{ secrets.APPLE_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      API_KEY_ID: ${{ secrets.API_KEY_ID }}
+      API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+      # APPLE_ID: ${{ secrets.APPLE_ID }}
+      # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     defaults:
       run:
         working-directory: td.vue
@@ -216,7 +218,7 @@ jobs:
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
       - name: Publish MacOS disk image
-        run: npm run build:desktop -- --mac --publish never
+        run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
         if: ${{ failure() }}
