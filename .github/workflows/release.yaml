@@ -210,7 +210,7 @@ jobs:
         run: npm clean-install
 
       - name: Publish MacOS disk image
-        run: npm run build:desktop -- --mac --publish always
+        run: npm run build:desktop -- --mac --publish never
 
       - name: Print logs on error
         if: ${{ failure() }}
