@@ -181,9 +181,11 @@ jobs:
       CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
       CSC_LINK:  ${{ secrets.MAC_CERTS }}
       # MacOS notarization: see github.com/electron/notarize#readme
-      APPLE_ID: ${{ secrets.APPLE_ID }}
-      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      API_KEY_ID: ${{ secrets.API_KEY_ID }}
+      API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+      # APPLE_ID: ${{ secrets.APPLE_ID }}
+      # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     defaults:
       run:
         working-directory: td.vue
@@ -208,6 +210,12 @@ jobs:
 
       - name: Install clean packages
         run: npm clean-install
+
+      - name: Prepare for MacOS notarization
+        # Import Apple API key to support signing of app
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
       - name: Publish MacOS disk image
         run: npm run build:desktop -- --mac --publish always
@@ -366,7 +374,7 @@ jobs:
       # platform manifests not (yet) supported, so split out architectures
       - name: Build for amd64 and push to Docker Hub
         id: docker_build_amd64
-        uses: docker/build-push-action@v6.9.0
+        uses: docker/build-push-action@v6.10.0
         with:
           context: ./
           file: ./Dockerfile
@@ -380,7 +388,7 @@ jobs:
 
       - name: Build for arm64 and push to Docker Hub
         id: docker_build_arm64
-        uses: docker/build-push-action@v6.9.0
+        uses: docker/build-push-action@v6.10.0
         with:
           context: ./
           file: ./Dockerfile

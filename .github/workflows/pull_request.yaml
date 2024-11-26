@@ -259,7 +259,7 @@ jobs:
         run: npm start
 
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.11.0
+        uses: zaproxy/action-full-scan@v0.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:8080'
@@ -296,7 +296,7 @@ jobs:
 
       - name: Build for amd64
         id: docker_build
-        uses: docker/build-push-action@v6.9.0
+        uses: docker/build-push-action@v6.10.0
         with:
           context: ./
           file: ./Dockerfile
