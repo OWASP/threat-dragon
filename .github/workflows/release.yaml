@@ -209,6 +209,12 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
+      - name: Prepare for MacOS notarization
+        # Import Apple API key to support signing of app
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+
       - name: Publish MacOS disk image
         run: npm run build:desktop -- --mac --publish never
 
