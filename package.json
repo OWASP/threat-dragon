@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon",
-  "version": "2.3.0-RC2",
+  "version": "2.3.0-RC3",
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {

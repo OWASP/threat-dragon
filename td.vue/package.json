@@ -1,7 +1,7 @@
 {
   "name": "threat-dragon",
   "productName": "Threat Dragon",
-  "version": "2.3.0-RC2",
+  "version": "2.3.0-RC3",
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
@@ -44,7 +44,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
-  "buildState": "-RC2",
+  "buildState": "",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

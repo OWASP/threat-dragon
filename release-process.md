@@ -11,7 +11,7 @@ For example if RC1, but change for RC2 and so on :
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
 3. update version, for example `"version": "2.3.0-RC1",`, in `td.vue/package.json`
-4. ensure `buildState` in `td.vue/package.json` is empty ``
+4. ensure `buildState` in `td.vue/package.json` is "" (empty)
 5. update version, for example `"version": "2.3.0-RC1",`, in `package.json` and `td.server/package.json`
 6. update package lock files: `npm install`
 7. `npm run build`
@@ -38,7 +38,7 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
 3. update version eg `"version": "2.3.0",`, in `package.json`, `td.vue/package.json` and `td.server/package.json`
-4. update `buildState` in `td.vue/package.json` away from `-latest` to ''
+4. update `buildState` in `td.vue/package.json` away from `-latest` to "" (empty)
 5. update package lock files: `npm install`
 6. `npm run build`
 7. `npm test`
@@ -128,7 +128,18 @@ Promote the release from draft to public once everything is in place
 Update the [releases tab][releases] and the [info pane][td-info] on the OWASP Threat Dragon project pages.
 
 Finally ensure Threat Dragon announces the new release on the [OWASP Threat Dragon][td-slack] slack channel
-and any other relevant channels
+and any other relevant channels such as [Blue Sky](https://bsky.app/profile/threatdragon.bsky.social)
+
+### Tidy up
+
+Reset the build state to 'latest'; this is displayed on the demo site:
+
+1. update `buildState` in `td.vue/package.json` away from "" to `-latest`
+2. update package lock files: `npm install`
+3. ensure that the package-lock files are up to date using `npm install`
+4. `git add --all; git status`
+5. `git commit -m"set latest build version"`
+6. `git push`
 
 ### Manually notarize / staple for MacOS images
 
