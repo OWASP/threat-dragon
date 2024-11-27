@@ -19,7 +19,7 @@ For example if RC1, but change for RC2 and so on :
 9. `npm run test:vue`
 10. ensure that the package-lock files are up to date using `npm install`
 11. `git add --all; git status`
-12. `git commit -m"release version 2.3.0-RC1"`
+12. `git commit -m"release candidate 2.3.0-RC1"`
 13. `git push`
 14. tag the release `git tag v2.3.0-RC1`
 15. `git push origin v2.3.0-RC1`

@@ -1,8 +1,8 @@
 name: Release pipeline
 
+# only for version 2.x.x releases, and release candidates
 on:
   push:
-    # only for version 2.x.x releases and release candidates
     tags:
       - v2.?.?
       - v2.?.?-RC?
