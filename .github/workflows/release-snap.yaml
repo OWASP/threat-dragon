@@ -1,0 +1,61 @@
+name: Release to Snap
+
+on:
+  workflow_dispatch:
+
+# for security reasons the github actions are pinned to specific release versions
+jobs:
+  desktop_linux_snap:
+    name: Linux snap
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install clean packages
+        run: |
+          sudo snap install snapcraft --classic
+          npm clean-install
+
+      # Build the snap, but do not use inbuilt publish
+      # Snaps do not publish, even with snapcraft installed, so use Snap Store
+      - name: Build Linux snap
+        shell: bash
+        run: npm run build:desktop -- --linux snap
+
+      - name: Upload to Snap Store
+        shell: bash
+        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: sboms-desktop-linux-snap-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error
