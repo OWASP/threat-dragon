@@ -1,12 +1,13 @@
-10110	OUTOFSCOPE	.*vendor.*\.js
-10110	OUTOFSCOPE	.*graph-test.*\.js
+10062	OUTOFSCOPE	.*_bom\..*
+10094	OUTOFSCOPE	.*_bom\..*
 10099	OUTOFSCOPE	.*vendor.*\.js
 10099	OUTOFSCOPE	.*diagram-edit.*\.js
 10099	OUTOFSCOPE	.*app.*\.js
+10110	OUTOFSCOPE	.*vendor.*\.js
+10110	OUTOFSCOPE	.*graph-test.*\.js
 10110	OUTOFSCOPE	.*diagram-edit.*\.js
-10062	OUTOFSCOPE	.*_bom\..*
-10094	OUTOFSCOPE	.*_bom\..*
 10110	OUTOFSCOPE	.*jquery\.min\.js
+10003	IGNORE	Javascript libraries handled by dependabot
 10055	IGNORE	CSP: script-src unsafe-eval
 10063	IGNORE	Permissions Policy Header Not Set
 40039	IGNORE	Web Cache Deception

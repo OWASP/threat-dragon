@@ -1,0 +1,49 @@
+name: Windows release
+
+on:
+  workflow_dispatch:
+
+# for security reasons the github actions are pinned to specific release versions
+jobs:
+
+  desktop_windows:
+    name: Windows installer
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.1.1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Windows executable
+        # code signing done later using Extended Verification (EV) with a hardware key
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish always
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: sboms-desktop-windows-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error

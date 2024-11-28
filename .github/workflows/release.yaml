@@ -4,8 +4,7 @@ name: Release pipeline
 on:
   push:
     tags:
-      - v2.?.?
-      - v2.?.?-RC?
+      - v2.?.*
   workflow_dispatch:
 
 env:
@@ -159,7 +158,9 @@ jobs:
 
       - name: Build Windows executable
         # code signing done later using Extended Verification (EV) with a hardware key
-        run: npm run build:desktop -- --windows --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --windows --publish always
 
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.4.0
