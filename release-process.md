@@ -54,16 +54,21 @@ The github release workflow then creates the draft release and the install image
 
 ### Publish docker image
 
+Ensure the tag now exists on the [Threat Dragon Docker hub]tddock].
+
 1. once tagged, the github workflow pushes the docker image to docker hub
-2. check using `docker pull threatdragon/owasp-threat-dragon:v2.3.0`
-3. Test using the command to run a detached container:
+2. pull image for an X86 platform using `docker pull threatdragon/owasp-threat-dragon:v2.3.0`
+3. pull image for an ARM platform using `docker pull threatdragon/owasp-threat-dragon:v2.3.0-arm64`
+4. Test using the command to run a detached container:
     `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.3.0`
-4. Ideally test this release on Windows, linux and MacOS using `http://localhost:8080/#/`
+5. Test the ARM container as well:
+    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.3.0-arm64`
+6. Ideally test these releases on Windows, linux and MacOS using `http://localhost:8080/#/`
 
-If the image tests correctly, promote the docker image
-from dockerhub `threatdragon/` to dockerhub `OWASP/threat-dragon/v2.3.0`.
+If the image tests correctly, promote the docker image from dockerhub `threatdragon/`
+to dockerhub `OWASP/threat-dragon/v2.3.0` and `OWASP/threat-dragon/v2.3.0-arm64`.
 
-There is _no going back_ on this last step, so it is deliberately left as a manual task:
+There is _no going back_ on these steps, so they are deliberately left as manual tasks:
 
 ```text
 docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.3.0
@@ -72,9 +77,12 @@ docker push owasp/threat-dragon:v2.3.0
 docker pull owasp/threat-dragon:v2.3.0
 docker tag owasp/threat-dragon:v2.3.0 owasp/threat-dragon:stable
 docker push owasp/threat-dragon:stable
+docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.3.0-arm64
+docker tag threatdragon/owasp-threat-dragon:v2.3.0-arm64 owasp/threat-dragon:v2.3.0-arm64
+docker push owasp/threat-dragon:v2.3.0-arm64
 ```
 
-ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r/owasp/threat-dragon/tags`
+ensure the tag now exists within the [OWASP Docker hub][owaspdock].
 
 ### Check demo site
 
@@ -90,14 +98,14 @@ ensure the tag now exists within the OWASP Docker hub: `https://hub.docker.com/r
 - Create SHA512 `checksum*.yml` files:
 
  ```text
-grep sha512 latest-linux.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' >> checksum-linux.yml
+grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
+    hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
 grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' >> checksum.yml
+    hexdump -ve '1/1 "%.2x"' > checksum.yml
 grep sha512 latest-mac.yml | head -n 3 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' >> checksum-mac.yml
+    hexdump -ve '1/1 "%.2x"' > checksum-mac.yml
 grep sha512 latest-mac.yml | head -n 4 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' >> checksum-mac-arm64.yml
+    hexdump -ve '1/1 "%.2x"' > checksum-mac-arm64.yml
 ```
 
 - Confirm SHA512 with:
@@ -109,7 +117,72 @@ echo "$(cat checksum-mac-arm64.yml) Threat-Dragon-ng-2.3.0-arm64.dmg" | sha512su
 echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.3.0.exe" | sha512sum --check
 ```
 
-- upload `checksum*.yml` files
+Upload `checksum*.yml` files to the draft release.
+
+### Manually notarize / staple for MacOS images
+
+It used to be that [altool][altool] could be used to notarize the MacOS `.dmg` files in the pipeline.
+As of early 2024 this is no longer available and [notarytool][notarytool] must be used in a secure environment.
+The secrets for both signing and notarization can be checked by running it manually from the command line:
+
+- provide the [code signing certs for MacOS][certs]
+- Download both x86 and arm64 files for the MacOS installer (`*.dmg` and `*.zip`)
+- ensure that the apple developer [environment is set up][notarize]
+- notarize and staple the `.dmg` file, for example with arm64 version 2.3.0:
+  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.3.0-arm64.dmg`
+  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.3.0-arm64.dmg`
+- similarly for the x86 image `Threat-Dragon-ng-2.3.0.dmg`
+- notarize the application in the`.zip` file, for example with arm64 version 2.3.0:
+  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.3.0-arm64-mac.zip`
+  - unzip the file to obtainn the application directory `Threat-Dragon-ng.app`
+  - check notarization worked with: `spctl -a -v Threat-Dragon-ng.app`
+  - staple the applications with: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
+  - zip the application directory to get `Threat-Dragon-ng.zip`
+  - rename `Threat-Dragon-ng.zip` to `Threat-Dragon-ng-2.3.0-arm64-mac.zip`
+- similarly for the x86 application `Threat-Dragon-ng-2.3.0-mac.zip`
+
+Fix up the checksums in `latest-mac.yml` using values using script:
+
+```text
+echo -n "  - url: Threat-Dragon-ng-2.3.0-mac.zip\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.3.0-mac.zip | openssl base64 -A
+echo -n "\n    size: "
+ls -l Threat-Dragon-ng-2.3.0-mac.zip | cut -d " " -f 7
+echo -n "\n  - url: Threat-Dragon-ng-2.3.0-arm64-mac.zip\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.3.0-arm64-mac.zip | openssl base64 -A
+echo -n "\n    size: "
+ls -l Threat-Dragon-ng-2.3.0-arm64-mac.zip | cut -d " " -f 7
+echo -n "\n  - url: Threat-Dragon-ng-2.3.0.dmg\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.3.0.dmg | openssl base64 -A
+echo -n "\n    size: "
+ls -l Threat-Dragon-ng-2.3.0.dmg | cut -d " " -f 7
+echo -n "\n  - url: Threat-Dragon-ng-2.3.0-arm64.dmg\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.3.0-arm64.dmg | openssl base64 -A
+echo -n "\n    size: "
+ls -l Threat-Dragon-ng-2.3.0-arm64.dmg | cut -d " " -f 7
+```
+
+Create the checksum files:
+
+- `sha512sum Threat-Dragon-ng-2.3.0.dmg | cut -d " " -f 1 > checksum-mac.yml`
+- `sha512sum Threat-Dragon-ng-2.3.0-arm64.dmg | cut -d " " -f 1 > checksum-mac-arm64.yml`
+
+upload files into the new release
+
+### Check Snap images
+
+Ensure that Threat Dragon is updated on [Snapcraft][snapcraft].
+This is also accessible using [Ubuntu One][ubuntu], check the release is current on the [dashboard][snapdash].
+
+Token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
+Use commands to refresh creds:
+
+* `snapcraft login`
+* `snapcraft export-login --snaps threat-dragon --channels stable`
+
+The snapcraft username is 'threat-dragon' and it has an Ubuntu One password.
 
 ### Update release notes
 
@@ -141,33 +214,6 @@ Reset the build state to 'latest'; this is displayed on the demo site:
 5. `git commit -m"set latest build version"`
 6. `git push`
 
-### Manually notarize / staple for MacOS images
-
-It used to be that [altool][altool] could be used to notarize the MacOS `.dmg` files in the pipeline.
-As of early 2024 this is no longer available and [notarytool][notarytool] must be used in a secure environment.
-The secrets for both signing and notarization can be checked by running it manually from the command line:
-
-- provide the [code signing certs for MacOS][certs]
-- Download both x86 and arm64 images for the MacOS installer (`*.dmg`)
-- ensure that the apple developer [environment is set up][notarize]
-- notarize and staple, for example with version 2.3.0:
-  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.3.0-arm64.dmg`
-  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.3.0-arm64.dmg`
-- similarly for the x86 image `Threat-Dragon-ng-2.3.0.dmg`
-
-### Manually check Snap images
-
-https://snapcraft.io/install/threat-dragon/arch
-https://login.ubuntu.com/
-
-Full name: Threat Dragon
-username: threat-dragon
-`snapcraft login` using email: jon.gadsden@owasp.org and Ubuntu One password?
-
-Token used in the Threat Dragon pipeline as 'SNAPCRAFT_TOKEN', use command to refresh creds:
-`snapcraft export-login --snaps threat-dragon --channels stable`
-
 [altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
 [area]: https://github.com/OWASP/threat-dragon/releases
 [certs]: https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
@@ -176,6 +222,10 @@ Token used in the Threat Dragon pipeline as 'SNAPCRAFT_TOKEN', use command to re
 [herokudash]: https://dashboard.heroku.com/apps
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
 [notarytool]: https://www.electron.build/app-builder-lib.interface.macconfiguration#notarize
+[owaspdock]: https://hub.docker.com/r/owasp/threat-dragon/tags
 [releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
+[snapcraft]: https://snapcraft.io/install/threat-dragon/arch
+[snapdash]: https://snapcraft.io/threat-dragon/releases
 [td-info]: https://github.com/OWASP/www-project-threat-dragon/blob/main/info.md
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
+[ubuntu]: https://login.ubuntu.com/
