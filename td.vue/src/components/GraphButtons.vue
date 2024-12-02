@@ -54,6 +54,12 @@
             icon="save"
             :text="$t('forms.save')" />
 
+        <!-- New Return Button -->
+        <td-form-button
+            :onBtnClick="goToHome"
+            icon="arrow-left"
+            :text="$t('forms.return')" />
+
     </b-btn-group>
 </template>
 
@@ -123,6 +129,9 @@ export default {
                 this.graph.showGrid();
                 this.gridShowing = true;
             }
+        },
+        goToHome() {
+            this.$router.push('/'); // Navigate to the home route
         }
     }
 };

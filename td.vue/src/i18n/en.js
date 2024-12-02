@@ -243,6 +243,7 @@ const eng = {
     forms: {
         apply: 'Apply',
         cancel: 'Cancel',
+        return: "Return to Home",
         close: 'Close',
         closeModel: 'Close Model',
         delete: 'Delete',
