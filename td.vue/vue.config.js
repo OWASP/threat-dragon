@@ -60,6 +60,9 @@ module.exports = {
                             target: 'nsis',
                             arch: ['arm64', 'x64']
                         }
+                    ],
+                    publisherName: [
+                        'Open Source Developer, Antony Jonathan Gadsden'
                     ]
                 },
                 linux: {
