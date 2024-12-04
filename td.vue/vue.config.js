@@ -62,7 +62,7 @@ module.exports = {
                         }
                     ],
                     rfc3161TimeStampServer: 'http://timestamp.acs.microsoft.com',
-                    signingHashAlgorithms: ['SHA256'],
+                    signingHashAlgorithms: ['sha256'],
                     publisherName: [
                         'Open Source Developer, Antony Jonathan Gadsden'
                     ]

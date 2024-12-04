@@ -37,6 +37,7 @@ jobs:
       - name: Build Windows executable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: electron-builder
           # code signing using Extended Verification (EV) open source certificate
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_OSS_CERT_PASSWORD}}
           CSC_LINK:  ${{ secrets.WINDOWS_OSS_CERT }}
