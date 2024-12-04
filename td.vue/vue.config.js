@@ -61,6 +61,9 @@ module.exports = {
                             arch: ['arm64', 'x64']
                         }
                     ],
+                    FileDigest: 'SHA256',
+                    TimestampRfc3161: 'http://timestamp.acs.microsoft.com',
+                    TimestampDigest: 'SHA256',
                     publisherName: [
                         'Open Source Developer, Antony Jonathan Gadsden'
                     ]
