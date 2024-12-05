@@ -182,7 +182,20 @@ Use commands to refresh creds:
 * `snapcraft login`
 * `snapcraft export-login --snaps threat-dragon --channels stable`
 
-The snapcraft username is 'threat-dragon' and it has an Ubuntu One password.
+The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
+
+### Code signing Windows installer
+
+If the certificate needs to be provided in Base64 :
+
+```text
+openssl pkcs12 -export -in WINDOWS_OSS_CERT.pem -nokeys -out WINDOWS_OSS_CERT.p12 -passout pass:<password>
+openssl pkcs12 -info -in  WINDOWS_OSS_CERT.p12 -passin pass:<password>
+base64 -i WINDOWS_OSS_CERT.p12 -o WINDOWS_OSS_CERT.p12.b64
+```
+
+The use of the pipeline for code signing is not practical for this open source project
+because of the need for a private key in the keychain, so use the certificate issuer's utilities.
 
 ### Update release notes
 
