@@ -91,33 +91,32 @@ ensure the tag now exists within the [OWASP Docker hub][owaspdock].
 3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
 4. Ensure no rollback shown in [dashboard][herokudash]
 
-### Check desktop downloads
+### Checksum for Linux desktop AppImage
 
-- Download desktop AppImage for Linux and installers for MacOS `.dmg` and Windows `.exe`
-- Download the `latest*.yml` auto-update checksum files
-- Create SHA512 `checksum*.yml` files:
+Download desktop AppImage for Linux and the `latest-linux.yml` auto-update checksum file.
+
+Create SHA512 `checksum-linux.yml` file:
 
  ```text
 grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
     hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
-grep sha512 latest.yml | head -n 2 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' > checksum.yml
-grep sha512 latest-mac.yml | head -n 3 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' > checksum-mac.yml
-grep sha512 latest-mac.yml | head -n 4 | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' > checksum-mac-arm64.yml
+echo -n " Threat-Dragon-ng-2.3.0.AppImage" >> checksum-linux.yml
 ```
 
-- Confirm SHA512 with:
+Check correct using: `cat checksum-linux.yml | sha512sum --check`
 
-```text
-echo "$(cat checksum-linux.yml) Threat-Dragon-ng-2.3.0.AppImage" | sha512sum --check
-echo "$(cat checksum-mac.yml) Threat-Dragon-ng-2.3.0.dmg" | sha512sum --check
-echo "$(cat checksum-mac-arm64.yml) Threat-Dragon-ng-2.3.0-arm64.dmg" | sha512sum --check
-echo "$(cat checksum.yml) Threat-Dragon-ng-Setup-2.3.0.exe" | sha512sum --check
-```
+### Check Snap images
 
-Upload `checksum*.yml` files to the draft release.
+Ensure that Threat Dragon is updated on [Snapcraft][snapcraft].
+This is also accessible using [Ubuntu One][ubuntu], check the release is current on the [dashboard][snapdash].
+
+Token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
+Use commands to refresh creds:
+
+* `snapcraft login`
+* `snapcraft export-login --snaps threat-dragon --channels stable`
+
+The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
 
 ### Manually notarize / staple for MacOS images
 
@@ -143,7 +142,7 @@ The secrets for both signing and notarization can be checked by running it manua
   - rename `Threat-Dragon-ng.zip` to `Threat-Dragon-ng-2.3.0-arm64-mac.zip`
 - similarly for the x86 application `Threat-Dragon-ng-2.3.0-mac.zip`
 
-Fix up the checksums in `latest-mac.yml` using values using script:
+Fix up the checksums in `latest-mac.yml` values using script:
 
 ```text
 echo -n "  - url: Threat-Dragon-ng-2.3.0-mac.zip\n    sha512: "
@@ -166,25 +165,12 @@ ls -l Threat-Dragon-ng-2.3.0-arm64.dmg | cut -d " " -f 7
 
 Create the checksum files:
 
-- `sha512sum Threat-Dragon-ng-2.3.0.dmg | cut -d " " -f 1 > checksum-mac.yml`
-- `sha512sum Threat-Dragon-ng-2.3.0-arm64.dmg | cut -d " " -f 1 > checksum-mac-arm64.yml`
+- `sha512sum Threat-Dragon-ng-2.3.0.dmg > checksum-mac.yml`
+- `sha512sum Threat-Dragon-ng-2.3.0-arm64.dmg > checksum-mac-arm64.yml`
 
 upload files into the new release
 
-### Check Snap images
-
-Ensure that Threat Dragon is updated on [Snapcraft][snapcraft].
-This is also accessible using [Ubuntu One][ubuntu], check the release is current on the [dashboard][snapdash].
-
-Token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
-Use commands to refresh creds:
-
-* `snapcraft login`
-* `snapcraft export-login --snaps threat-dragon --channels stable`
-
-The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
-
-### Code signing Windows installer
+### Code sign Windows installer
 
 If the certificate needs to be provided in Base64 :
 
@@ -197,6 +183,25 @@ base64 -i WINDOWS_OSS_CERT.p12 -o WINDOWS_OSS_CERT.p12.b64
 The use of the pipeline for code signing is not practical for this open source project
 because of the need for a private key in the keychain, so use the certificate issuer's utilities.
 
+Once signed create the checksum file: `sha512sum Threat-Dragon-ng-Setup-2.3.0.exe > checksum.yml`
+
+Fix up the file `latest.yml` with value given by:
+
+- `openssl dgst -binary -sha512 Threat-Dragon-ng-Setup-2.3.0.unsigned.exe | openssl base64 -A`
+
+### Confirm desktop checksums
+
+Confirm SHA512 with:
+
+```text
+cat checksum-linux.yml | sha512sum --check
+cat checksum.yml | sha512sum --check
+cat checksum-mac.yml | sha512sum --check
+cat checksum-mac-arm64.yml | sha512sum --check
+```
+
+Upload `checksum*.yml` files to the draft release.
+
 ### Update release notes
 
 Before adding text to the draft release, click on 'Generate Release Notes' button from the edit window.
@@ -207,7 +212,7 @@ Then update the release notes for the draft in the [Threat Dragon release area][
 using the release notes using markdown provided by `.release-note-template.md` as a template,
 making sure to revise `2.x.x` to the correct version number such as `2.3.0`
 
-Promote the release from draft to public once everything is in place
+Once everything is in place promote the release from 'draft' to 'public' and 'latest'
 
 ### Announce
 
