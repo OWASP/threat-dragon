@@ -645,7 +645,7 @@ jobs:
       - build_docker_image
     steps:
       - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4.1.8
         with:
           pattern: 'sboms-*'
           merge-multiple: false
