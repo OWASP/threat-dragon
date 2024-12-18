@@ -344,9 +344,11 @@ const fra = {
             mitigated: 'Mitigé'
         },
         priority: {
+            tba: 'à venir',
             low: 'Faible',
             medium: 'Moyen',
-            high: 'Élevé'
+            high: 'Élevé',
+            critical: 'Critique'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const fra = {
             total: 'Menaces Totales',
             mitigated: 'Menaces Totales Mitigées',
             notMitigated: 'Menaces Totales Non-Mitigées',
+            openCritical:'Ouvert / Critique Priorité',
             openHigh: 'Ouvert / Haute Priorité',
             openMedium: 'Ouvert / Moyenne Priorité',
             openLow: 'Ouvert / Faible Priorité',
+            openTba: 'Ouvert / Priorité à déterminer',
             openUnknown: 'Ouvert / Priorité Inconnue'
         }
     },

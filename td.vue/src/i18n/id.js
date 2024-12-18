@@ -344,9 +344,11 @@ const id = {
             mitigated: 'Diredam'
         },
         priority: {
+            tba: 'TBA',
             low: 'Rendah',
             medium: 'Sedang',
-            high: 'Tinggi'
+            high: 'Tinggi',
+            critical: 'Kritis'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const id = {
             total: 'Total Ancaman',
             mitigated: 'Total Diredam',
             notMitigated: 'Belum Diredam',
+            openCritical: 'Terbuka / Prioritas Kritis',
             openHigh: 'Terbuka / Prioritas Tinggi',
             openMedium: 'Terbuka / Prioritas Sedang',
             openLow: 'Terbuka / Prioritas Rendah',
+            openTba: 'Terbuka / Prioritas TBA',
             openUnknown: 'Terbuka / Prioritas Tidak Diketahui'
         }
     },

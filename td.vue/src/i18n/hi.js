@@ -344,9 +344,11 @@ const hin = {
             mitigated: 'शमन'
         },
         priority: {
+            tba: 'टीबीए',
             low: 'कम',
             medium: 'मध्यम',
-            high: 'ऊँचा'
+            high: 'ऊँचा',
+            critical: 'गंभीर'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const hin = {
             total: 'कुल खतरे',
             mitigated: 'कुल शमन',
             notMitigated: 'कम नहीं किया गया',
+            openCritical: 'ओपन / महत्वपूर्ण प्राथमिकता',
             openHigh: 'ओपन / हाई प्रायोरिटी',
             openMedium: 'ओपन / मीडियम प्रायोरिटी',
             openLow: 'ओपन / लो प्रायोरिटी',
+            openTba: 'ओपन / टीबीए प्राथमिकता',
             openUnknown: 'खुला / अज्ञात प्राथमिकता'
         }
     },

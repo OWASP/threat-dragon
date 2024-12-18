@@ -20,8 +20,8 @@ describe('service/threats/index.js', () => {
             expect(threat.status).toEqual('Open');
         });
 
-        it('has a medium severity', () => {
-            expect(threat.severity).toEqual('Medium');
+        it('has a TBA severity', () => {
+            expect(threat.severity).toEqual('TBA');
         });
 
         it('has a defined type', () => {

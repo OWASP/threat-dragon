@@ -45,9 +45,11 @@ export default {
                 { name: this.$t('report.threatStats.total'), value: this.total },
                 { name: this.$t('report.threatStats.mitigated'), value: this.mitigated },
                 { name: this.$t('report.threatStats.notMitigated'), value: this.notMitigated },
+                { name: this.$t('report.threatStats.openCritical'), value: this.openCritical },
                 { name: this.$t('report.threatStats.openHigh'), value: this.openHigh },
                 { name: this.$t('report.threatStats.openMedium'), value: this.openMedium },
                 { name: this.$t('report.threatStats.openLow'), value: this.openLow },
+                { name: this.$t('report.threatStats.openTba'), value: this.openTba },
                 { name: this.$t('report.threatStats.openUnknown'), value: this.openUnknown }
             ];
         },
@@ -64,6 +66,11 @@ export default {
                 .filter(threat => threat.status.toLowerCase() !== 'mitigated')
                 .length;
         },
+        openCritical: function () {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity.toLowerCase() === 'critical')
+                .length;
+        },
         openHigh: function () {
             return this.getOpenThreats()
                 .filter(threat => threat.severity.toLowerCase() === 'high')
@@ -77,6 +84,11 @@ export default {
         openLow: function() {
             return this.getOpenThreats()
                 .filter(threat => threat.severity.toLowerCase() === 'low')
+                .length;
+        },
+        openTba: function() {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity.toLowerCase() === 'tba')
                 .length;
         },
         openUnknown: function() {

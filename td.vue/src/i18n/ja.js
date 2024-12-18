@@ -340,9 +340,11 @@ const jpn = {
             mitigated: '解決済み'
         },
         priority: {
+            tba: '未定',
             low: '低',
             medium: '中',
-            high: '高'
+            high: '高',
+            critical: '致命的'
         }
     },
     report: {
@@ -363,9 +365,11 @@ const jpn = {
             total: '脅威総数',
             mitigated: '対策済みの脅威',
             notMitigated: '未対策の脅威',
+            openCritical: '未対応 / 最優先事項',
             openHigh: '未対応 / 高優先度',
             openMedium: '未対応 / 中優先度',
             openLow: '未対応 / 低優先度',
+            openTba: '未対応 / 優先度は未定',
             openUnknown: '未対応 / 優先度不明'
         }
     },

@@ -346,9 +346,11 @@ const ara = {
             mitigated: 'تم التخفيف'
         },
         priority: {
+            tba: 'سيتم الإعلان عنها لاحقا',
             low: 'منخفض',
             medium: 'متوسط',
-            high: 'عالي'
+            high: 'عالي',
+            critical: 'شديد الأهمية'
         }
     },
     report: {
@@ -369,9 +371,11 @@ const ara = {
             total: 'إجمالي التهديدات',
             mitigated: 'الإجمالي المُخفف',
             notMitigated: 'الإجمالي غير المُخفف',
+            openCritical: 'مفتوح / الأولوية الحرجة',
             openHigh: 'مفتوح / أولوية عالية',
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
+            openTba: 'مفتوح / الأولوية في TBA',
             openUnknown: 'مفتوح / أولوية غير معروفة'
         }
     },

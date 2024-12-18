@@ -345,9 +345,11 @@ const ms = {
             mitigated: 'Ditangani'
         },
         priority: {
+            tba: 'TBA',
             low: 'Rendah',
             medium: 'Sederhana',
-            high: 'Tinggi'
+            high: 'Tinggi',
+            critical: 'kritikal'
         }
     },
     report: {
@@ -368,9 +370,11 @@ const ms = {
             total: 'Jumlah Ancaman',
             mitigated: 'Jumlah Ditangani',
             notMitigated: 'Belum Ditangani',
+            openCritical: 'Buka / Keutamaan Kritikal',
             openHigh: 'Buka / Keutamaan Tinggi',
             openMedium: 'Buka / Keutamaan Sederhana',
             openLow: 'Buka / Keutamaan Rendah',
+            openTba: 'Buka / Keutamaan TBA',
             openUnknown: 'Buka / Keutamaan Tidak Diketahui'
         }
     },

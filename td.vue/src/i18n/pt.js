@@ -344,9 +344,11 @@ const por = {
             mitigated: 'Mitigated'
         },
         priority: {
+            tba: 'TBA',
             low: 'Low',
             medium: 'Medium',
-            high: 'High'
+            high: 'High',
+            critical: 'Critical'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const por = {
             total: 'Ameaças totais',
             mitigated: 'Total Mitigado',
             notMitigated : 'Não atenuado',
+            openCritical : 'Abrir / Crítica Prioridade',
             openHigh : 'Abrir / Alta Prioridade',
             openMedium : 'Abrir / Prioridade Média',
             openLow : 'Abrir / Baixa Prioridade',
+            openTba : 'Abrir / TBA Prioridade',
             openUnknown : 'Prioridade Aberta / Desconhecida'
         }
     },
