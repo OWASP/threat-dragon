@@ -54,7 +54,7 @@ jobs:
         run: npm run make-sbom
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-server
           path: './td.server/sbom.*'
@@ -226,7 +226,7 @@ jobs:
           IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-container-image-app
           path: './boms/*'
@@ -340,7 +340,7 @@ jobs:
         run: npm run test:e2e-ci-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -392,7 +392,7 @@ jobs:
         run: npm run test:e2e-ci
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -490,7 +490,7 @@ jobs:
         run: npm run build:desktop -- --windows --publish never
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-desktop-windows-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -532,7 +532,7 @@ jobs:
         run: npm run build:desktop -- --mac --publish never
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -579,7 +579,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-desktop-linux-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -626,7 +626,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms-desktop-linux-snap-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -666,7 +666,7 @@ jobs:
           cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
           cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: sboms
           path: 'sboms/'
