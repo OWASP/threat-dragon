@@ -349,9 +349,11 @@ const eng = {
             mitigated: 'Mitigated'
         },
         priority: {
+            tba: 'TBA',
             low: 'Low',
             medium: 'Medium',
-            high: 'High'
+            high: 'High',
+            critical: 'Critical'
         }
     },
     report: {
@@ -372,9 +374,11 @@ const eng = {
             total: 'Total Threats',
             mitigated: 'Total Mitigated',
             notMitigated: 'Not Mitigated',
+            openCritical: 'Open / Critical Priority',
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',
             openLow: 'Open / Low Priority',
+            openTba: 'Open / TBA Priority',
             openUnknown: 'Open / Unknown Priority'
         }
     },

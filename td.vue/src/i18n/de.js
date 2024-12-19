@@ -344,9 +344,11 @@ const deu = {
             mitigated: 'Abgeschwächt'
         },
         priority: {
+            tba: '',
             low: 'Niedrig',
             medium: 'Mittel',
-            high: 'Hoch'
+            high: 'Hoch',
+            critical: 'Kritisch'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const deu = {
             total: 'Bedrohungen insgesamt',
             mitigated: 'Bedrohungen abgeschwächt',
             notMitigated: 'Nicht abgeschwächt',
+            openCritical: 'Offen / Kritische Priorität',
             openHigh: 'Offen / Hohe Priorität',
             openMedium: 'Offen / Mittlere Priorität',
             openLow: 'Offen / Niedrige Priorität',
+            openTba: 'Offen / TBA-Priorität',
             openUnknown: 'Offen / Unbekannte Priorität'
         }
     },

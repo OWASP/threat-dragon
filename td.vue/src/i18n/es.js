@@ -344,9 +344,11 @@ const spa = {
             mitigated: 'Mitigado'
         },
         priority: {
+            tba: 'Por confirmar',
             low: 'Baja',
             medium: 'Media',
-            high: 'Alta'
+            high: 'Alta',
+            critical: 'Crítica'
         }
     },
     report: {
@@ -367,9 +369,11 @@ const spa = {
             total: 'Total amenazas ',
             mitigated: 'Total amenazas mitigadas',
             notMitigated: 'No Mitigadas',
+            openCritical: 'Abierto / Crítica Prioridad',
             openHigh: 'Abierto / Alta Prioridad',
             openMedium: 'Abierto / Prioridad Media',
             openLow: 'Abierto / Baja Prioridad',
+            openTba: 'Abierto / Por confirmar Prioridad',
             openUnknown: 'Abierto / Prioridad Desconocida'
         }
     },
