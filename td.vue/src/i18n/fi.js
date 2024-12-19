@@ -369,7 +369,7 @@ const fin = {
             total: 'Uhkia yhteensä',
             mitigated: 'Hallittuja uhkia',
             notMitigated: 'Hallitsemattomia uhkia',
-           openCritica: 'Avoin / Kriittinen tärkeys', 
+            openCritical: 'Avoin / Kriittinen tärkeys', 
             openHigh: 'Avoin / Korkea tärkeys',
             openMedium: 'Avoin / Keskitason tärkeys',
             openLow: 'Avoin / Alhainen tärkeys',
