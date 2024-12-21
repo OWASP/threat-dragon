@@ -121,7 +121,7 @@ The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
 ### Manually notarize / staple for MacOS images
 
 It used to be that [altool][altool] could be used to notarize the MacOS `.dmg` files in the pipeline.
-As of early 2024 this is no longer available and [notarytool][notarytool] must be used in a secure environment.
+As of early 2024 this is no longer available and notarytool must be used in a secure environment.
 The secrets for both signing and notarization can be checked by running it manually from the command line:
 
 - provide the [code signing certs for MacOS][certs]
@@ -248,7 +248,6 @@ Reset the build state to 'latest'; this is displayed on the demo site:
 [herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 [herokudash]: https://dashboard.heroku.com/apps
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
-[notarytool]: https://www.electron.build/app-builder-lib.interface.macconfiguration#notarize
 [owaspdock]: https://hub.docker.com/r/owasp/threat-dragon/tags
 [releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
 [snapcraft]: https://snapcraft.io/install/threat-dragon/arch
