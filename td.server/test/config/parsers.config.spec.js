@@ -15,14 +15,15 @@ describe('config/parsers.config.js request parser', () => {
     it('should parse the json in the request body', (done) => {
         const id = 'id';
         const collection = ['1', '2', '3'];
-        const nested = {n1: '1', n2: '2'};
+        const nested = {n1: '1', n3: '2'};
         const body = {id: id, collection: collection, nested: nested};
         const bodyText = JSON.stringify(body);
         
         app.post('/', function(req, res) {
             expect(req.body).to.deep.eq(body);
-            res.status(200);
-            res.send('result');
+            res.status(200)
+              .set('Content-Type', 'text/plain; charset=utf-8')
+              .send('result');
         });
         
         request(app)
@@ -45,8 +46,9 @@ describe('config/parsers.config.js request parser', () => {
             expect(req.body.collection[2]).to.eq(collection[2]);
             expect(req.body.nested.n1).to.eq(nested.n1);
             expect(req.body.nested.n2).to.eq(nested.n2);
-            res.status(200);
-            res.send('result');
+            res.status(200)
+              .set('Content-Type', 'text/plain; charset=utf-8')
+              .send('result');
         });
 
         request(app)
