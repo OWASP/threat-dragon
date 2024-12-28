@@ -184,7 +184,7 @@ jobs:
           npm run test:e2e-pr-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -224,7 +224,7 @@ jobs:
           npm run test:e2e-pr
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -309,7 +309,7 @@ jobs:
           load: true
 
       - name: Upload docker local image
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp/${{ env.IMAGE_NAME }}.tar
