@@ -488,7 +488,7 @@ jobs:
           tar -czvf threat-dragon-sboms.zip sboms
 
       - name: Create release notes
-        uses: softprops/action-gh-release@v2.1.0
+        uses: softprops/action-gh-release@v2.2.0
         with:
           draft: true
           name: "${releaseVersion:1}"
