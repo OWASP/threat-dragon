@@ -376,7 +376,7 @@ jobs:
       # platform manifests not (yet) supported, so split out architectures
       - name: Build for amd64 and push to Docker Hub
         id: docker_build_amd64
-        uses: docker/build-push-action@v6.10.0
+        uses: docker/build-push-action@v6.11.0
         with:
           context: ./
           file: ./Dockerfile
@@ -390,7 +390,7 @@ jobs:
 
       - name: Build for arm64 and push to Docker Hub
         id: docker_build_arm64
-        uses: docker/build-push-action@v6.10.0
+        uses: docker/build-push-action@v6.11.0
         with:
           context: ./
           file: ./Dockerfile
