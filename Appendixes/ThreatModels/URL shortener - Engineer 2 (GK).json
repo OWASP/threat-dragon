@@ -1,8 +1,8 @@
 {
-  "version": "2.2.0",
+  "version": "2.3.0",
   "summary": {
-    "title": "URL shortener (Grzegorz Kmita)",
-    "owner": "Grzegorz Kmita",
+    "title": "URL shortener (Engineer 2)",
+    "owner": "Engineer 2",
     "description": "The URL Shortener Service aims to provide a simple and efficient way for users to convert long URLs into short, easily shareable URLs. The service ensures functionality, reliability, and security while interacting with users and handling their data.",
     "id": 0
   },

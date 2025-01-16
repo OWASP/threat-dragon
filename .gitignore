@@ -36,6 +36,15 @@
 !ThreatDragonModels/URL*
 !ThreatDragonModels/URL*/*.json
 
+# appendixes
+!Appendixes
+!Appendixes/BaseDiagram
+!Appendixes/Reports
+!Appendixes/ThreatModels
+!Appendixes/BaseDiagram/*
+!Appendixes/Reports/*
+!Appendixes/ThreatModels/*
+
 # documentation site
 !docs
 !docs/Gemfile

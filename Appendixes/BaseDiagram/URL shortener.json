@@ -1,7 +1,7 @@
 {
   "version": "2.2.0",
   "summary": {
-    "title": "URL shortener (Marcin Krawiec)",
+    "title": "URL shortener",
     "owner": "",
     "description": "The URL Shortener Service aims to provide a simple and efficient way for users to convert long URLs into short, easily shareable URLs. The service ensures functionality, reliability, and security while interacting with users and handling their data.",
     "id": 0
@@ -164,13 +164,11 @@
                 "text": "URL Mappings Database"
               },
               "topLine": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               },
               "bottomLine": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -184,53 +182,13 @@
               "description": "Data store containing the mappings between short URLs and their corresponding long URLs.\n\nDATA STORED: Long URL, Short URL, UserID, CreationDate",
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
               "storesCredentials": false,
               "storesInventory": false,
-              "threats": [
-                {
-                  "id": "05870dc9-0238-46d6-9f7f-356ba2ccf2f7",
-                  "title": "Injection of malitious links as target URLs",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Tampering",
-                  "description": "A malitious actor could inject malitious links as target URLs directly to database if the API Server auth is bypassed",
-                  "mitigation": "Implement additional integrity checks in Database by introducing new field with entry's hash. ",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 15,
-                  "score": ""
-                },
-                {
-                  "id": "13081612-95c2-4bc6-a434-23f80a722d5b",
-                  "title": "User's can modify other user's database entries ",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Tampering",
-                  "description": "Other user's keys can be used to manage other user's records without RBAC in place. ",
-                  "mitigation": "Implement Role-Based Access Control (RBAC) and Least Privilege by limitting API key permissions to only the necessary actions for the specific client or service.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 16,
-                  "score": ""
-                },
-                {
-                  "id": "08f9abc9-fefb-48d0-9df5-061800a8cfdd",
-                  "title": "No database access Logging in place",
-                  "status": "Open",
-                  "severity": "Low",
-                  "type": "Repudiation",
-                  "description": "Lack of the informations about how, when and who modified database entry. ",
-                  "mitigation": "Enable Database Access Logging",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 28,
-                  "score": ""
-                }
-              ]
+              "threats": []
             }
           },
           {
@@ -281,8 +239,8 @@
                 "text": "API Server"
               },
               "body": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -296,117 +254,12 @@
               "description": "The API Server is the central component of the URL Shortener Service. It manages all interactions with users and external services, handling requests for both shortening URLs and redirecting from short URLs to their original long URLs. ",
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "handlesCardPayment": false,
               "handlesGoodsOrServices": false,
               "isWebApplication": false,
               "privilegeLevel": "",
-              "threats": [
-                {
-                  "id": "768bed9f-46a0-45e2-8274-e81a39d7d257",
-                  "title": "Server overload from a high volume of requests",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Server is prone to DoS and DDoS attacks if malitious actor decides to send large number of requests to API Server",
-                  "mitigation": "Implement rate limiting and thorttling on the API to limit the number of requests per minute. Use firewalls and DDoS protection mechanisms like IP Whitelisting and Geo-Restrictions. ",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 20,
-                  "score": ""
-                },
-                {
-                  "id": "5855e886-4848-4474-b503-4f987e98d642",
-                  "title": "Injection and Data Corruption",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Tampering",
-                  "description": "Malitious actor can send unexpected or harmful data in API requests. When an API accepts data without validating its structure and format, malformed or incorrect data can end up in the database, leading to data integrity issues.",
-                  "mitigation": "Implement request body validation sanitization and format checks to accept only valid data.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 21,
-                  "score": ""
-                },
-                {
-                  "id": "4a44abbc-8717-4989-a51a-43af009b726d",
-                  "title": "Server Errors due to Invalid Data",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Denial of service",
-                  "description": "Unvalidated or improperly formatted data can cause exceptions or errors when processed by the server. Attackers could send requests with extremely large or deeply nested payloads, consuming excessive server resources during parsing or processing.",
-                  "mitigation": "Implementing request body validations, sanitizations, limits.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 22,
-                  "score": ""
-                },
-                {
-                  "id": "70520ef3-bed2-48a9-907f-7c4507521d96",
-                  "title": "Bruteforce",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Spoofing",
-                  "description": "Attackers could attempt to guess the API Key by sending multiple requests to an API Server. ",
-                  "mitigation": "Ensure that API keys are sufficiently long and difficult to guess. Implement Rate Limiting and Throttling",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 23,
-                  "score": ""
-                },
-                {
-                  "id": "594cb38e-8357-4b27-9f8d-5f99a1c510bb",
-                  "title": "API Key stored insecurily on client side",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Spoofing",
-                  "description": "If the API Key is not stored securily on the client side it can be prone to leackage and utilization by malitious actors to gain access to the system. ",
-                  "mitigation": "Issue short-lived access tokens instead of long-lasting API keys. Use OAuth2.0 and JWTs that expire after a short period. This reduces the window of time during which a compromised token can be used. Attackers will need to continually re-obtain new tokens, which can be difficult if proper authentication mechanisms are in place. Implement Role-Based Access Control (RBAC) and Least Privilege. Ensure you can quickly revoke or rotate API keys/tokens if they are suspected to be compromised.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 24,
-                  "score": ""
-                },
-                {
-                  "id": "53e97aac-f730-4c49-919f-8f3095ae97f7",
-                  "title": "API Key Leakage in transit",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Spoofing",
-                  "description": "A MITM attack can be executed to retrieve the value of API Key if the data encryption in transit is not implemented",
-                  "mitigation": "Ensure data in transit encryption by implementing TLS.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 25,
-                  "score": ""
-                },
-                {
-                  "id": "e35ebddd-af1f-40c1-973e-4398ff38cb57",
-                  "title": "Lack of request logging",
-                  "status": "Open",
-                  "severity": "Low",
-                  "type": "Repudiation",
-                  "description": "Users may deny performing certain operations (e.g., creating a redirect)",
-                  "mitigation": "Log all operations related to users, such as creating and deleting URLs, and verify operations.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 26,
-                  "score": ""
-                },
-                {
-                  "id": "fd52d1ec-367d-486c-b21f-eaade87fb2d3",
-                  "title": "Attacker can read all resources",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "By lack of RBAC attacker can manage all database entries using the single API Key",
-                  "mitigation": "Implement Role-Based Access Control (RBAC) and Least Privilege",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 27,
-                  "score": ""
-                }
-              ]
+              "threats": []
             }
           },
           {
@@ -423,13 +276,11 @@
                 "text": "Hashed API keys"
               },
               "topLine": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               },
               "bottomLine": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -443,53 +294,13 @@
               "description": "Database containing hashed API keys for authentication purposes.\n\nDATA STORED: Hashed API Key, UserID",
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
               "storesCredentials": true,
               "storesInventory": false,
-              "threats": [
-                {
-                  "id": "514bdf74-7f63-40e7-a711-793b427a736d",
-                  "title": "No database access Logging in place",
-                  "status": "Open",
-                  "severity": "Low",
-                  "type": "Repudiation",
-                  "description": "Lack of the informations about how, when and who modified database entry. ",
-                  "mitigation": "Enable Database Access Logging",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 29,
-                  "score": ""
-                },
-                {
-                  "id": "378c2ac3-e71e-45f4-bc21-263d6e946e2e",
-                  "title": "Database data could leak due to misconfiguration",
-                  "status": "Open",
-                  "severity": "Low",
-                  "type": "Tampering",
-                  "description": "If database instance or its auth is misconfigured hashed API Keys could leak",
-                  "mitigation": "Encrypt API keys and other sensitive data in the database. Ensure that database access is restricted to authorized components/users only. ",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 31,
-                  "score": ""
-                },
-                {
-                  "id": "7cabe452-0db3-47da-a3dc-b63b879996f0",
-                  "title": "Hash collisions due to weak function",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Information disclosure",
-                  "description": "If a weak hashing function (e.g., MD5 or SHA-1) is used, an attacker could potentially generate collisions or alter data without detection. Weak hashing functions are more vulnerable to bruteforce or rainbow table attacks, which allow attackers to more easily reverse or guess the hashed values of API Keys.",
-                  "mitigation": "Replace weak hash functions like MD5 or SHA-1 with stronger, modern alternatives, such as SHA-256 or SHA-3.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 32,
-                  "score": ""
-                }
-              ]
+              "threats": []
             }
           },
           {
@@ -832,6 +643,6 @@
     ],
     "diagramTop": 1,
     "reviewer": "",
-    "threatTop": 32
+    "threatTop": 0
   }
 }

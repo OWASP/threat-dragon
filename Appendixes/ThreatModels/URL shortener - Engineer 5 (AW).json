@@ -1,0 +1,1644 @@
+{
+  "version": "2.3.0",
+  "summary": {
+    "title": "URL shortener (Engineer 5)",
+    "owner": "Engineer 5",
+    "description": "The URL Shortener Service aims to provide a simple and efficient way for users to convert long URLs into short, easily shareable URLs. The service ensures functionality, reliability, and security while interacting with users and handling their data.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "URL Shortener Service Architecture",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.2.0",
+        "cells": [
+          {
+            "position": {
+              "x": 410,
+              "y": 60
+            },
+            "size": {
+              "width": 690,
+              "height": 370
+            },
+            "attrs": {
+              "headerText": {
+                "text": "URL Shortener Service"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "b830597f-432f-4c75-a688-8722ce7f1585",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "URL Shortener Service",
+              "description": "URL Shortener Service trust boundary",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 190,
+              "y": 147
+            },
+            "size": {
+              "width": 170,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Human User / Service"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "69fdbc18-e862-400d-bb7d-79d660593925"
+                },
+                {
+                  "group": "right",
+                  "id": "07cb03e6-658e-4523-a131-97672eebc201"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c54c0a70-895c-4fb7-a7ef-94cd7c89c546"
+                },
+                {
+                  "group": "left",
+                  "id": "3ce198f6-820b-4a3a-827a-1a245cbbe8a2"
+                }
+              ]
+            },
+            "id": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Human User / Service",
+              "description": "External services or human users may interact with the API for bulk operations or integrations.",
+              "outOfScope": false,
+              "reasonOutOfScope": "Incoming requests outside of application scope",
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threats": [
+                {
+                  "id": "ffbfa011-aa4e-4a14-97e4-aee7d04f3949",
+                  "title": "General Spoofing: Impersonation",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "An attacker impersonates a user account",
+                  "mitigation": "Proposed action: Mitigate\n\nSystem description states that users authenticate against the service. Service should implement measures to assure users are correctly authenticated and authorised. It should be specified if different roles are needed and if permissions should be applied on a resource level (e.g. roles for only resolving short URLs, roles allowed resolving only particular URLs, etc.)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                },
+                {
+                  "id": "db36d13a-b270-4912-bcce-ebc98e2bdfc6",
+                  "title": "General Repudiation: Abusive Activity",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Repudiation",
+                  "description": "A user denies abusive activity",
+                  "mitigation": "Proposed action: Accept the risk\n\nThis action is probably not very valuable, but still some minimal non repudiation assurances could be implemented. Review if the service provides enough evidence (e.g. access logs) which could help identify offensive users.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 4,
+                "repudiation": 4
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 750,
+              "y": 290
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Redirect URL"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 4,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "ef7411b7-9362-495d-afbe-da4b9a259f48"
+                },
+                {
+                  "group": "right",
+                  "id": "76b55e8c-aaca-438d-bee1-4f33fe782aa6"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bcffb956-f27a-4de9-b1d3-0603c5547e2b"
+                },
+                {
+                  "group": "left",
+                  "id": "0a5fce7b-826c-474a-aa5b-2eead6b04737"
+                }
+              ]
+            },
+            "id": "602a3f85-c6bc-48db-9230-9cb402fdc6f0",
+            "data": {
+              "type": "tm.Process",
+              "name": "Redirect URL",
+              "description": "Enables users to resolve short URLs and be redirected to the corresponding long URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "2c3d64ed-3d52-4dff-a247-daa96e079ec8",
+                  "title": "Spoofing: Malicious Redirection By Impersonation",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Spoofing",
+                  "description": "An attacker spoofs redirection API in order to point users to bogus URLs",
+                  "mitigation": "This should be already covered by mitigations provided for the \"API Server\" block.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 19,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 5,
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 745,
+              "y": 120
+            },
+            "size": {
+              "width": 110,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Shorten URL"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "cff4bf5f-b488-47a9-a292-9d80c20752f1"
+                },
+                {
+                  "group": "right",
+                  "id": "811410e1-7e26-49cc-a7be-1084921fc8ac"
+                },
+                {
+                  "group": "bottom",
+                  "id": "27f2368e-7c47-4a62-889a-2562218fbe73"
+                },
+                {
+                  "group": "left",
+                  "id": "cd054538-056a-48ab-ba9e-a60ce3f000b4"
+                }
+              ]
+            },
+            "id": "1f9260a0-bd64-49d7-a839-58e5e43948dc",
+            "data": {
+              "type": "tm.Process",
+              "name": "Shorten URL",
+              "description": "Allows users to submit long URLs and receive shortened URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "e43d97b2-abd3-4428-adc9-c2bd00ec7e13",
+                  "title": "Tampering: Overwriting Existing Data",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An authenticated attacker or user tries overwriting an existing URL mapping",
+                  "mitigation": "Proposed action: Mitigate\n\nOverwriting an existing mapping should not be allowed. If it's a requirement, then only limited roles should be able to do that, and the changes should be only done in incremental manner, so that the database retains historical destinations (which contributes to non-repudiation evidence).\n\nIt might be helpful to notify users that they're being redirected to a new address and only stop a given notification if they wish for it to stop (e.g. \"Don't show this warning again\" checkbox).",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 16,
+                  "score": ""
+                },
+                {
+                  "id": "293614aa-a972-4866-83cb-c15c222ed5e8",
+                  "title": "Tampering: Potential Nondeterminism",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Tampering",
+                  "description": "An attacker provides conflicting data in bulk requests",
+                  "mitigation": "Proposed action: Mitigate\n\nTwo cases:\n1. Some roles are allowed to specify short ids. If bulk request contains clashing definitions, the request should be rejected.\n2. Usual shorten operations should only accept long URL parameter and return randomised short URLs. This way clashes are not possible.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 33,
+                  "score": ""
+                },
+                {
+                  "id": "d36969ee-8c03-47b9-8564-cd1e5959032c",
+                  "title": "Spoofing: Typosquatting",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "An attacker crafts requests to produce short URLs similar to already existing ones, with an intention to lure legitimate users to bogus destinations.",
+                  "mitigation": "Proposed action: Mitigate\n\nUsers (or not all of them) should not be able to specify resulting short URLs. The system should generate cryptographically random identifiers, which must not be consecutive or easy to predict during generation time, so that risk of typos is diminished.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 36,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 1,
+                "tampering": 7,
+                "repudiation": 0,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 934.9999999999993,
+              "y": 215
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "URL Mappings Database"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 6,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "fef5f44b-114d-409d-bcd4-1fbde134a6c4"
+                },
+                {
+                  "group": "right",
+                  "id": "3e50ee1c-415d-4c42-92c0-9e8508ea4dc7"
+                },
+                {
+                  "group": "bottom",
+                  "id": "833118b5-4965-4871-9cc8-4f2cb0795eed"
+                },
+                {
+                  "group": "left",
+                  "id": "dcb3ee21-e4a9-4e55-bfaf-18939d0b99b5"
+                }
+              ]
+            },
+            "id": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c",
+            "data": {
+              "type": "tm.Store",
+              "name": "URL Mappings Database",
+              "description": "Data store containing the mappings between short URLs and their corresponding long URLs.\n\nDATA STORED: Long URL, Short URL, UserID, CreationDate",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "d637ad76-f561-48fa-8e6d-ea6f5b4bafe4",
+                  "title": "Tampering: Malicious Redirection By Permanent Change",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "An attacker modifies destination URL(s)",
+                  "mitigation": "Proposed action: Mitigate\n\nDatabase access should be protected to specific roles. Additionally data should be structured in a way, so that (if possible) no role can modify and existing mapping while losing the old value permanently. Every entry might be cryptographically \"chained\", so that each row contains a hash of itself and hash of the previous row. This way integrity of whole database is assured to reasonable extent. The first row might contain a secret value, so that full history rewrite is not possible without knowing it.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 7,
+                  "score": ""
+                },
+                {
+                  "id": "20f9fdab-afee-4fac-b10d-fbebeedba4fb",
+                  "title": "General DoS: Data Deletion",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker removes existing mappings",
+                  "mitigation": "Proposed action: Mitigate\n\nDepending on how the data is structured it might be possible to disallow any role from removing existing rows. Vandalism can be mitigated by backups, to a certain extent.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 8,
+                  "score": ""
+                },
+                {
+                  "id": "96ed3d5a-03cd-48de-aa4f-8a76a4d2daa9",
+                  "title": "Information Disclosure: User Activity Analysis",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "description": "An attacker learns identities of users who created particular mappings",
+                  "mitigation": "Proposed action: Mitigate or Accept the risk\n\nAside from securing DB access, it's probably unnecessary to keep submitting user ids in plaintext. Maybe computing hashes/keys to track owners/submitters internally would be sufficient?\n\nIf URL themselves are not very sensitive or revealing interesting info in any way, then possibly the risk is minimal and can be accepted without much mitigation (that is, apart from regular access control on the DB).",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 10,
+                  "score": ""
+                },
+                {
+                  "id": "ffb74f77-0236-43db-9dbd-99cc8b09c990",
+                  "title": "General DoS",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Denial of service",
+                  "description": "An attacker floods database with excessive number of operations, or operations that are computationally expensive",
+                  "mitigation": "Proposed action: Mitigate\n\nDatabase should not be publicly accessible. Consider implementing rate limiting mechanisms, limiting allowed operations, etc.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 24,
+                  "score": ""
+                },
+                {
+                  "id": "2674a280-a81c-41b6-a1da-02d144b1914c",
+                  "title": "General Repudiation: DB Operations",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Repudiation",
+                  "description": "An attacker denies an action performed directly on the database",
+                  "mitigation": "Proposed action: Mitigate\n\n\"Unusual\" DB operations, including admin access, should be logged. Logs/evidence should be stored long enough to be able to reason about a potential incident",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 28,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 4,
+                "repudiation": 6,
+                "informationDisclosure": 7,
+                "denialOfService": 8
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 902.4999999999993,
+              "y": 470
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Original URL"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 7,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "2c0e67b2-198f-4122-b5b6-a44faf45a012"
+                },
+                {
+                  "group": "right",
+                  "id": "bc4812c6-1d52-4bc8-bbb5-66dd161f72ad"
+                },
+                {
+                  "group": "bottom",
+                  "id": "7ae8fecf-af2f-4f1b-9ae5-e11f98eb36a2"
+                },
+                {
+                  "group": "left",
+                  "id": "473e0a3e-785f-47e6-9249-a4a4bab13434"
+                }
+              ]
+            },
+            "id": "2c0500fb-85fa-4497-908a-61b1ea2e09f4",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Original URL",
+              "description": "Destination server of the original URL",
+              "outOfScope": true,
+              "reasonOutOfScope": "Original URL not in scope of URL shortener application",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 507,
+              "y": 237
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "API Server"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 8,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "c53da418-51ce-431f-affa-6b71038319f1"
+                },
+                {
+                  "group": "right",
+                  "id": "af2d7cfc-145f-48b8-aeb1-34309eb317a2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "98a48184-d518-4c1a-a5db-d1bd8ab5b2ce"
+                },
+                {
+                  "group": "left",
+                  "id": "da746a84-3f74-49a5-9104-fca904997bbb"
+                }
+              ]
+            },
+            "id": "23c4d6cc-6e67-47cd-855d-610b8e390d5f",
+            "data": {
+              "type": "tm.Process",
+              "name": "API Server",
+              "description": "The API Server is the central component of the URL Shortener Service. It manages all interactions with users and external services, handling requests for both shortening URLs and redirecting from short URLs to their original long URLs. ",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "82b4096d-4d3b-41d5-a73d-8f5d36e5b34c",
+                  "title": "Spoofing: Credentials Capture and Activity Analysis",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Spoofing",
+                  "description": "An attacker spins up a malicious URL Shortener service in order to capture user credentials and/or analyse users' activity",
+                  "mitigation": "Proposed action: Mitigate\n\nService should be authenticated with a TLS certificate, so that users are sure to connect to the right thing. Minimal recommended TLS version is 1.2",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 11,
+                  "score": ""
+                },
+                {
+                  "id": "e122af8d-60c6-4d3c-9eed-6b33e121d777",
+                  "title": "General Expansion of Privilege: Injection",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "An attacker crafts a malicious input in order to perform a database injection attack",
+                  "mitigation": "Proposed action: Mitigate\n\nReview and implement adequate user input validation mechanisms. Assume that user input is not trusted.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 12,
+                  "score": ""
+                },
+                {
+                  "id": "f725bea4-9a34-47a0-b9f0-fbd5265ba117",
+                  "title": "General DoS",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Denial of service",
+                  "description": "An attacker floods service with excessive number of requests, or requests that are computationally expensive",
+                  "mitigation": "Proposed action: Mitigate\n\nIntroduce suitable mechanisms like rate limiting, WAF, etc. Circuit breaker might be useful if there's a concern of affecting subsequent systems (like databases). Consider allowing only subset of DB operations and enforce parameter validation, so that it's harder for the attacker to craft computationally expensive parameters.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 13,
+                  "score": ""
+                },
+                {
+                  "id": "721fdcf6-4d6c-4d7f-87fd-000faec53523",
+                  "title": "General Expansion of Privilege: System Process Takeover",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Elevation of privilege",
+                  "description": "An attacker takes over the system process in order to abuse its overall operation",
+                  "mitigation": "Proposed action: Mitigate or Avoid\n\nMitigate: Assure OS/platform is secured and up-to-date. Limit administrative access to internal network only, or\n\nAvoid: Consider using cloud managed (serverless?) services in order to make the attack area smaller.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 26,
+                  "score": ""
+                },
+                {
+                  "id": "347924ee-4b70-4e49-917a-edb14e2b72b8",
+                  "title": "General Repudiation: Admin",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Repudiation",
+                  "description": "An attacker or a malicious insider denies performing an administrative operation",
+                  "mitigation": "Proposed action: Mitigate\n\nKeep track of sign ins and operations performed on the system, if applicable.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 27,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 5,
+                "tampering": 1,
+                "repudiation": 5,
+                "informationDisclosure": 0,
+                "denialOfService": 4,
+                "elevationOfPrivilege": 9
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 497,
+              "y": 100
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Hashed API keys"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 9,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "8327a83b-64ed-4948-b17a-34312611c379"
+                },
+                {
+                  "group": "right",
+                  "id": "f4725526-f1e7-4b30-9a07-8dfb54d11d53"
+                },
+                {
+                  "group": "bottom",
+                  "id": "a8032115-115c-457f-a47b-e322d9d3973b"
+                },
+                {
+                  "group": "left",
+                  "id": "07852455-3032-4dfe-8630-4b3a0622c047"
+                }
+              ]
+            },
+            "id": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a",
+            "data": {
+              "type": "tm.Store",
+              "name": "Hashed API keys",
+              "description": "Database containing hashed API keys for authentication purposes.\n\nDATA STORED: Hashed API Key, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": true,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "fc298aa7-8d40-4fd9-938f-ca4e9570d9f1",
+                  "title": "Information Disclosure: Offline Cryptanalysis",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Attacker captures hashes from the database in order to analyse/break them offline.",
+                  "mitigation": "Proposed action: Mitigate or Transfer\n\nDatabase should not be publicly accessible. Access should require mutual authentication, preferably with usage of private keys/certificates. Only specific roles should be allowed access.\n\nIn order to make offline cryptanalysis hard, \"hashes\" should be results of key derivation function suitable for usage with passwords, like Argon2 or scrypt. Avoid using hashing algorithms (e.g. SHA family).\n\nOR\n\nIt might be better to not implement this in the service itself and rather use external sign in provider (e.g. OAuth2.0 based) provided by your cloud provider or your organisation.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                },
+                {
+                  "id": "225f2dff-340e-4d45-8668-5277b4d48b76",
+                  "title": "Tampering: Authorisation Mechanism Abuse",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker modifies or inserts their own entry in order to create working authorised credentials.",
+                  "mitigation": "Proposed action: Mitigate or Transfer\n\nProtect DB access by only allowing specific roles to add entries. \"Hashes\" may not be dependent only on user input. Consider including a 'pepper' value (this might be supported by the algorithm like Argon2 natively).\n\nOR\n\nSwitch to external sign in provider.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 18,
+                  "score": ""
+                },
+                {
+                  "id": "004edbf9-eb5f-446b-974b-8b2063dcc157",
+                  "title": "General Repudiation: DB Operations",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Repudiation",
+                  "description": "An attacker denies an action performed directly on the database",
+                  "mitigation": "Proposed action: Mitigate\n\n\"Unusual\" DB operations, including admin access, should be logged. Logs/evidence should be stored long enough to be able to reason about a potential incident",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 20,
+                  "score": ""
+                },
+                {
+                  "id": "209cd0bc-7145-44e0-9f8a-662b7f3efe23",
+                  "title": "General DoS",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Denial of service",
+                  "description": "An attacker floods database with excessive number of operations, or operations that are computationally expensive",
+                  "mitigation": "Proposed action: Mitigate\n\nDatabase should not be publicly accessible. Accept only specific operations from the role used by the service.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 22,
+                  "score": ""
+                },
+                {
+                  "id": "f6cdb833-03e4-4eba-bf1c-6c5c8c78a447",
+                  "title": "DoS: Authorisation Data Deletion",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "An attacker removes legitimate data in order to lock users out",
+                  "mitigation": "Proposed action: Mitigate or Transfer\n\nDeletion should only be allowed for admin roles. Backups might not be recommended, as they would increase Information Disclosure risk. It would be preferable if users can reprovision their access, if the process allows for doing it easily and reliably (i.e. another system could be used as a root of trust)\n\nOR\n\nMake it an external sign in provider problem :)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 25,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 4,
+                "repudiation": 4,
+                "informationDisclosure": 4,
+                "denialOfService": 8
+              }
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Store URL Mapping",
+              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Store URL Mapping"
+            ],
+            "id": "0bcd6bca-360b-4f4e-a505-187195135022",
+            "source": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 960,
+                "y": 150
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Shorten Request",
+              "description": "The user submits a long URL to the API for shortening.\n\nDATA EXCHANGED: Short URL, Long URL, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Shorten Request"
+            ],
+            "id": "e8d0a24f-858a-45bd-b447-06e07897128a",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "vertices": [
+              {
+                "x": 710,
+                "y": 240
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect Request",
+              "description": "The user submits a short URL to the API and gets redirected to the original Long URL.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Redirect Request"
+            ],
+            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "vertices": [
+              {
+                "x": 640,
+                "y": 380
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect User to URL",
+              "description": "The user is redirected to the Long URL.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "7e6a7be0-c87a-4329-a0d2-cb36194ddc89",
+                  "title": "Information Disclosure: User Activity Analysis",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "An attacker eavesdrops on which URLs are visited by users",
+                  "mitigation": "Server response probably isn't asynchronous, so this should already be covered by enabling TLS, as explained on \"User Request\" data flow.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 31,
+                  "score": ""
+                },
+                {
+                  "id": "9d28878f-198c-4fd0-a69e-335a42e242e7",
+                  "title": "Tampering: Malicious Redirection By Modifying Response",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Tampering",
+                  "description": "An attacker modifies responses emitted by the service in order to redirect users to bogus URLs",
+                  "mitigation": "Server response probably isn't asynchronous, so this should already be covered by enabling TLS, as explained on \"User Request\" data flow.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 32,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 6,
+                "informationDisclosure": 4,
+                "denialOfService": 0
+              }
+            },
+            "labels": [
+              "Redirect User to URL"
+            ],
+            "id": "07f08d6d-e984-4d14-9d25-36ad24b230bd",
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "x": 950,
+              "y": 470
+            },
+            "vertices": [
+              {
+                "x": 880,
+                "y": 390
+              },
+              {
+                "x": 930,
+                "y": 420
+              },
+              {
+                "x": 950,
+                "y": 450
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fetch API credentials",
+              "description": "Hashed API keys are pulled to authenticate the user before performing any operation.\n\nDATA EXCHANGED: Hashed API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Fetch API credentials"
+            ],
+            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "User Request",
+              "description": "The User sends a request to the API Server to shorten a long URL or to get the redirect URL.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "846daeba-26c3-47bb-a76d-cd395ad98cac",
+                  "title": "General Tampering: MITM",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Tampering",
+                  "description": "An attacker modifies data sent out by the client in order to create a link directed to a different URL.",
+                  "mitigation": "Proposed action: Mitigate\n\nClients should connect via HTTPS. Minimal recommended TLS version is 1.2.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 3,
+                  "score": ""
+                },
+                {
+                  "id": "868ce70b-5f58-406a-b5c1-1027f67ec430",
+                  "title": "General Information Disclosure: Credentials Capture via MITM",
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "description": "An attacker captures credentials from user's request\n\nNote: The payload itself (URLs) probably isn't too sensitive, but any risk action concerning credentials will likely apply to payload as well.",
+                  "mitigation": "Proposed action: Mitigate\n\nClients should connect via HTTPS. Minimal recommended TLS version is 1.2.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 5,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 4,
+                "informationDisclosure": 6,
+                "denialOfService": 0
+              }
+            },
+            "labels": [
+              "User Request"
+            ],
+            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "source": {
+              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+            },
+            "target": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "vertices": [
+              {
+                "x": 275,
+                "y": 310
+              },
+              {
+                "x": 370,
+                "y": 310
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Retrieve Long URL",
+              "description": "Long URL mapping is pulled from the database in order to redirect user.\n\nDATA EXCHANGED: Short URL, Long URL, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Retrieve Long URL"
+            ],
+            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 970,
+                "y": 320
+              }
+            ]
+          },
+          {
+            "position": {
+              "x": 80,
+              "y": 490
+            },
+            "size": {
+              "width": 360,
+              "height": 191.99999999999983
+            },
+            "attrs": {
+              "text": {
+                "text": "A few notes:\n\n1. I included the user it TM scope, because\nSpoofing and Repudiation are valid\nconcerns applying to an External Entity.\n\n2. I skipped specifying threats for Data Flows inside\nthe trust boundary. They would be quite\nrepetitive, so let's just assume HTTPS is in use.\n\n3. I would rather depict API Server/Shorten URL/Redirect URL\nblocks as a single Process block, or maybe include\nthe latter two under \"URL Shortener\" block.\n\n4. Since not much is said about mitigations that are alredy\nin place, I conjured some potential ones in form of\n(mostly) ideas on how certain problems should be approached.\nThere are some cautions about popular misconceptions\nas well.\n\n5. Risk decisions are hinted at in the remediations mostly\njust because I believe it would be beneficial for some\nfunctionality to be dropped or transferred, but that\nmight probably be a bit of an extrapolation of the\nexercise rules."
+              }
+            },
+            "visible": true,
+            "shape": "td-text-block",
+            "id": "41cee4b6-0fac-4118-b457-829642f445a8",
+            "zIndex": 11,
+            "data": {
+              "type": "tm.Text",
+              "name": "A few notes:\n\n1. I included the user it TM scope, because\nSpoofing and Repudiation are valid\nconcerns applying to an External Entity.\n\n2. I skipped specifying threats for Data Flows inside\nthe trust boundary. They would be quite\nrepetitive, so let's just assume HTTPS is in use.\n\n3. I would rather depict API Server/Shorten URL/Redirect URL\nblocks as a single Process block, or maybe include\nthe latter two under \"URL Shortener\" block.\n\n4. Since not much is said about mitigations that are alredy\nin place, I conjured some potential ones in form of\n(mostly) ideas on how certain problems should be approached.\nThere are some cautions about popular misconceptions\nas well.\n\n5. Risk decisions are hinted at in the remediations mostly\njust because I believe it would be beneficial for some\nfunctionality to be dropped or transferred, but that\nmight probably be a bit of an extrapolation of the\nexercise rules.",
+              "hasOpenThreats": false
+            }
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 36
+  }
+}

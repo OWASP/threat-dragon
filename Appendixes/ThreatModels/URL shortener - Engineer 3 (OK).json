@@ -1,0 +1,1485 @@
+{
+  "version": "2.3.0",
+  "summary": {
+    "title": "URL shortener (Engineer 3)",
+    "owner": "Engineer 3",
+    "description": "The URL Shortener Service aims to provide a simple and efficient way for users to convert long URLs into short, easily shareable URLs. The service ensures functionality, reliability, and security while interacting with users and handling their data.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "URL Shortener Service Architecture",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.2.0",
+        "cells": [
+          {
+            "position": {
+              "x": 410,
+              "y": 60
+            },
+            "size": {
+              "width": 690,
+              "height": 370
+            },
+            "shape": "trust-boundary-box",
+            "attrs": {
+              "headerText": {
+                "text": "URL Shortener Service"
+              }
+            },
+            "zIndex": -1,
+            "id": "b830597f-432f-4c75-a688-8722ce7f1585",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "URL Shortener Service",
+              "description": "URL Shortener Service trust boundary",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 190,
+              "y": 147
+            },
+            "size": {
+              "width": 170,
+              "height": 90
+            },
+            "attrs": {
+              "text": {
+                "text": "Human User / Service"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 2,
+            "id": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Human User / Service",
+              "description": "External services or human users may interact with the API for bulk operations or integrations.",
+              "outOfScope": true,
+              "reasonOutOfScope": "Incoming requests outside of application scope",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 750,
+              "y": 290
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Redirect URL"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 4,
+            "id": "602a3f85-c6bc-48db-9230-9cb402fdc6f0",
+            "data": {
+              "type": "tm.Process",
+              "name": "Redirect URL",
+              "description": "Enables users to resolve short URLs and be redirected to the corresponding long URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "6d1bff6c-a49c-4d71-93b0-c2914684fac3",
+                  "title": "Flooding",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "A service receives a rapid and vast number of requests and as a result becomes unusable/unavailable to the legitimate users and/or services. As the service doesn't limit the number of possible requests and/or doesn't handle throughput appropriately, an attacker can cause resource exhaustion that may result in system being unresponsive to authorized actors.\nRelated attacks: Denial of Service, Distributed Denial of Service",
+                  "mitigation": "A threat can be mitigated by implementing such mechanism as rate limiting. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 157,
+                  "score": ""
+                },
+                {
+                  "id": "691beaa5-3f5f-4079-9396-724d9e367ba4",
+                  "title": "Cache Poisoning",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker may attempt to manipulate or inject incorrect data into caching mechanisms (e.g., DNS or HTTP caches) to redirect users to malicious sites instead of the intended long URLs.",
+                  "mitigation": "A threat can be mitigated by implementing cache validation techniques, such as using cache integrity checks and ensuring that only trusted sources can update cache entries. Additionally, using secure protocols like HTTPS can help prevent cache poisoning.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 56,
+                  "score": ""
+                },
+                {
+                  "id": "f4c2bdb2-2ce9-4645-af39-ac1784a940eb",
+                  "title": "Cross-Site Scripting",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker might inject malicious scripts into the short URL service, which are then executed when users are redirected. This could lead to unauthorized actions or data being stolen from the user's session.",
+                  "mitigation": "A threat can be mitigated by implementing strict input validation and output encoding to prevent the injection of malicious scripts. Additionally, employing Content Security Policy (CSP) headers can help restrict the sources from which scripts can be loaded.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 57,
+                  "score": ""
+                },
+                {
+                  "id": "f1368c57-4df9-4d55-b92b-17ef33fa048a",
+                  "title": "URL Enumeration",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "An attacker might attempt to discover valid short URLs through automated guessing or brute force methods, potentially leading to unauthorized access to sensitive URLs or information.",
+                  "mitigation": "A threat can be mitigated by using sufficiently long and random identifiers for short URLs, making them difficult to predict. Implementing rate limiting and monitoring for unusual access patterns can also help detect and prevent enumeration attempts.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 60,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 745,
+              "y": 120
+            },
+            "size": {
+              "width": 110,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Shorten URL"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "1f9260a0-bd64-49d7-a839-58e5e43948dc",
+            "data": {
+              "type": "tm.Process",
+              "name": "Shorten URL",
+              "description": "Allows users to submit long URLs and receive shortened URLs via a dedicated API.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "6d1bff6c-a49c-4d71-93b0-c2914684fac3",
+                  "title": "Flooding",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "A service receives a rapid and vast number of requests and as a result becomes unusable/unavailable to the legitimate users and/or services. As the service doesn't limit the number of possible requests and/or doesn't handle throughput appropriately, an attacker can cause resource exhaustion that may result in system being unresponsive to authorized actors.\nRelated attacks: Denial of Service, Distributed Denial of Service",
+                  "mitigation": "A threat can be mitigated by implementing such mechanism as rate limiting. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 157,
+                  "score": ""
+                },
+                {
+                  "id": "6f67228a-7c9a-4d60-be88-c381dcf6b42a",
+                  "title": "Malicious URL Submission",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker could submit malicious or harmful long URLs with the intent of spreading malware or conducting phishing attacks through the shortened URLs.",
+                  "mitigation": "A threat can be mitigated by implementing URL filtering and validation mechanisms that check submitted URLs against known malicious URL databases. Additionally, employing a content scanning service can help detect and block harmful URLs before they are shortened.\nExcessive Resource Consumption",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 61,
+                  "score": ""
+                },
+                {
+                  "id": "16b96cc8-fa82-49e5-839b-6050b08b04b0",
+                  "title": "Sensitive Information Exposure",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Users might accidentally submit URLs containing sensitive information (e.g., session tokens, user IDs), which could be exposed if not properly handled.",
+                  "mitigation": "A threat can be mitigated by educating users on best practices for URL submission and implementing mechanisms to detect and redact sensitive information from URLs before storing or sharing them. Additionally, encrypting stored URLs can help protect sensitive data from unauthorized access.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 63,
+                  "score": ""
+                },
+                {
+                  "id": "ed77ec8e-6d9f-4506-b901-eaf75dfe789b",
+                  "title": "URL Collision",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A poorly designed URL shortening algorithm might generate the same short URL for different long URLs, leading to incorrect redirection and potential data integrity issues.",
+                  "mitigation": "A threat can be mitigated by using a robust algorithm that generates unique and collision-resistant short URLs. Employing a hash-based method with a sufficiently large keyspace can reduce the likelihood of collisions.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 64,
+                  "score": ""
+                },
+                {
+                  "id": "c783bd3b-15e2-4b4d-b5c0-7fb926cbc7e4",
+                  "title": "SQL Injection",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker may attempt to exploit vulnerabilities in the API by injecting malicious SQL code through the URL submission process, potentially compromising the database.",
+                  "mitigation": "A threat can be mitigated by using parameterized queries and prepared statements to interact with the database, thus preventing injection attacks. Regular security audits and code reviews can also help identify and remediate vulnerabilities.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 65,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 934.9999999999993,
+              "y": 215
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "URL Mappings Database"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 6,
+            "id": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c",
+            "data": {
+              "type": "tm.Store",
+              "name": "URL Mappings Database",
+              "description": "Data store containing the mappings between short URLs and their corresponding long URLs.\n\nDATA STORED: Long URL, Short URL, UserID, CreationDate",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": false,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "2a1ab3b8-ccec-4968-9c1d-f73afe09299a",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat is mitigated by using secure storage mechanisms: secure hashing algorithms.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 50,
+                  "score": ""
+                },
+                {
+                  "id": "08a5db5e-3310-4f34-8d17-b0bde13bf236",
+                  "title": "Deletion/Removal of data",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Data is deleted by an actor (authorized or unauthorized) and is hence not available to other authorized users. This may include, but is not limited to, clearing caches, removing stored files, whole databases, secrets, projects, artifacts, stacks. If the service doesn't have a backup system in place, deleted data might be irreversibly lost.",
+                  "mitigation": "A threat can be mitigated by restricting access to the database and implementing mechanism such as database replication, to be able to operate in case of data removal. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 51,
+                  "score": ""
+                },
+                {
+                  "id": "aef38b41-ed41-49f6-aa3b-ff109a5aa1b6",
+                  "title": "Insider Threat",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Employees or individuals with access to the data store might misuse their privileges to steal, alter, or delete data, either intentionally or through negligence.",
+                  "mitigation": "Threat can be mitigated by implementing proper authorization mechanism and data replication so system would be able to operate in case of  data altering or data removal. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 52,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 902.4999999999993,
+              "y": 470
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Original URL"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 7,
+            "id": "2c0500fb-85fa-4497-908a-61b1ea2e09f4",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Original URL",
+              "description": "Destination server of the original URL",
+              "outOfScope": true,
+              "reasonOutOfScope": "Original URL not in scope of URL shortener application",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 507,
+              "y": 237
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "API Server"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 8,
+            "id": "23c4d6cc-6e67-47cd-855d-610b8e390d5f",
+            "data": {
+              "type": "tm.Process",
+              "name": "API Server",
+              "description": "The API Server is the central component of the URL Shortener Service. It manages all interactions with users and external services, handling requests for both shortening URLs and redirecting from short URLs to their original long URLs. ",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "6d1bff6c-a49c-4d71-93b0-c2914684fac3",
+                  "title": "Flooding",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Denial of service",
+                  "description": "A service receives a rapid and vast number of requests and as a result becomes unusable/unavailable to the legitimate users and/or services. As the service doesn't limit the number of possible requests and/or doesn't handle throughput appropriately, an attacker can cause resource exhaustion that may result in system being unresponsive to authorized actors.\nRelated attacks: Denial of Service, Distributed Denial of Service",
+                  "mitigation": "A threat can be mitigated by implementing such mechanism as rate limiting. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 157,
+                  "score": ""
+                },
+                {
+                  "id": "16ab6d34-add5-4458-9e2d-6df73b0a508b",
+                  "title": "Unauthorized Access",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Attackers may attempt to gain unauthorized access to the API Server to exploit its functionality, potentially creating, modifying, or deleting URL mappings without permission. This could lead to the creation of malicious short URLs or tampering with existing ones.",
+                  "mitigation": "A threat is mitigated  using API keys and enforcing access controls to ensure only authorized users can access and modify data.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 53,
+                  "score": ""
+                },
+                {
+                  "id": "1a474cff-8eb6-4b3e-aa4f-46a940136217",
+                  "title": "URL Manipulation",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": " An attacker might manipulate short URLs to redirect users to malicious sites or alter the destination URL after it has been created.",
+                  "mitigation": "A threat can be mitigated by implementing validation and integrity checks on URLs to ensure that they have not been altered. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 54,
+                  "score": ""
+                },
+                {
+                  "id": "a734b4ec-551f-4fca-9f10-79528b252eb2",
+                  "title": "Insufficient Logging and Monitoring",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Repudiation",
+                  "description": "Provide a description for this threatWithout proper logging and monitoring, malicious activities might go undetected, and it could be difficult to trace actions back to specific users or events.",
+                  "mitigation": "A threat can be mitigated by ensuring comprehensive logging of all API interactions and user activities, coupled with active monitoring and alerting systems to detect and respond to suspicious behavior promptly.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 55,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 497,
+              "y": 100
+            },
+            "size": {
+              "width": 120,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Hashed API keys"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 9,
+            "id": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a",
+            "data": {
+              "type": "tm.Store",
+              "name": "Hashed API keys",
+              "description": "Database containing hashed API keys for authentication purposes.\n\nDATA STORED: Hashed API Key, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isALog": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "storesCredentials": true,
+              "storesInventory": false,
+              "threats": [
+                {
+                  "id": "f1b1b3b4-1b3b-4b3b-8b3b-1b3b3b3b3b3b",
+                  "title": "Insecure storage of credentials",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "The service stores sensitive information in an insecure manner, making it easier for an attacker to access and exploit the data. This can include storing credentials in plaintext, using weak encryption, or not using encryption at all.",
+                  "mitigation": "A threat is mitigated by using secure storage mechanisms: secure hashing algorithms.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 40,
+                  "score": ""
+                },
+                {
+                  "id": "e5732a26-efb8-4b7b-8ff3-d31f37ef736c",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat is mitigated by using secure storage mechanisms: secure hashing algorithms.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 41,
+                  "score": ""
+                },
+                {
+                  "id": "049fa20d-300c-4bbf-8ef0-03b2b6eb36d6",
+                  "title": "Deletion/Removal of data",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Data is deleted by an actor (authorized or unauthorized) and is hence not available to other authorized users. This may include, but is not limited to, clearing caches, removing stored files, whole databases, secrets, projects, artifacts, stacks. If the service doesn't have a backup system in place, deleted data might be irreversibly lost.",
+                  "mitigation": "A threat can be mitigated by restricting access to the database and implementing mechanism such as database replication, to be able to operate in case of data removal. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 42,
+                  "score": ""
+                },
+                {
+                  "id": "f03376ac-79f2-463c-9bf1-8f3ea051bf0c",
+                  "title": "Drop encryption level",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "It is possible for an attacker to intentionally lower the encryption level, which in turn enables a successful attack against the encrypted data. This can involve an attacker forcing a communications channel to use clear text instead of strongly encrypted data. As a result, the malicious user could read the channel by sniffing, instead of going through the extra effort of trying to decrypt the data using brute force techniques.\nRelated attacks: Traffic sniffing, Data tampering, Communication channel manipulation",
+                  "mitigation": "A threat can be mitigated by implementing proper authorization mechanism. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 44,
+                  "score": ""
+                },
+                {
+                  "id": "bf5a5ca6-1b02-4020-9a9a-fac18d3974f5",
+                  "title": "Insider Threat",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Employees or individuals with access to the data store might misuse their privileges to steal, alter, or delete data, either intentionally or through negligence.",
+                  "mitigation": "Threat can be mitigated by implementing proper authorization mechanism and data replication so system would be able to operate in case of  data altering or data removal. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 48,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "User Request",
+              "description": "The User sends a request to the API Server to shorten a long URL or to get the redirect URL.\n\nDATA EXCHANGED: Long URL, Short URL, API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "21bf819f-890f-44d9-88d8-04207dddaf5b",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                },
+                {
+                  "id": "b466d8d5-a6b4-4956-b5e9-cb3ab3869afa",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 11,
+                  "score": ""
+                },
+                {
+                  "id": "7a06bf4c-cf47-4f1e-9cb9-d1f12cad2445",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 18,
+                  "score": ""
+                },
+                {
+                  "id": "566caa34-98d7-41fe-a205-67a7c5aff86c",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 25,
+                  "score": ""
+                },
+                {
+                  "id": "551dd2c1-350a-4e14-a631-1fe08ddd7d09",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 32,
+                  "score": ""
+                },
+                {
+                  "id": "3ba46810-5e6b-4b4a-b212-2654e218259a",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 39,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "d6f0c600-c203-43af-80a3-3f9efb740b3e",
+            "labels": [
+              "User Request"
+            ],
+            "source": {
+              "cell": "3ebe0ef2-2820-4e4d-8eb4-184714e6cf67"
+            },
+            "target": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "vertices": [
+              {
+                "x": 275,
+                "y": 310
+              },
+              {
+                "x": 370,
+                "y": 310
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fetch API credentials",
+              "description": "Hashed API keys are pulled to authenticate the user before performing any operation.\n\nDATA EXCHANGED: Hashed API key",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "57e5a417-f675-4898-95b5-eb04cf313b6a",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                },
+                {
+                  "id": "072cf1a0-8370-4176-9533-9d9a04d350ba",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 12,
+                  "score": ""
+                },
+                {
+                  "id": "45bf024c-63e9-4a80-a294-d1585c135807",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 20,
+                  "score": ""
+                },
+                {
+                  "id": "4cc90086-7c74-4c3b-a9be-35f80e06b3d6",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 26,
+                  "score": ""
+                },
+                {
+                  "id": "2c58307c-1f5e-41e1-81c6-6e355f75a3b7",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 33,
+                  "score": ""
+                },
+                {
+                  "id": "d924de79-f728-4c1e-95c2-fdd716589cf4",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 40,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "64b5c059-2c27-49ef-84e8-7e8ee050931f",
+            "labels": [
+              "Fetch API credentials"
+            ],
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "dd3ca2fb-9929-4ad2-bd6d-ec06b824924a"
+            },
+            "vertices": [
+              {
+                "x": 562,
+                "y": 220
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Shorten Request",
+              "description": "The user submits a long URL to the API for shortening.\n\nDATA EXCHANGED: Short URL, Long URL, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "482a6304-19b0-4f9f-99f0-2014eb264ce5",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 3,
+                  "score": ""
+                },
+                {
+                  "id": "7efdf529-4502-43c3-93f6-ce9ae0dd82b7",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 13,
+                  "score": ""
+                },
+                {
+                  "id": "bf7e026d-47c7-42bd-a5ee-dfed4f170380",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 21,
+                  "score": ""
+                },
+                {
+                  "id": "b341bc20-6f20-4b04-b85c-308daa1c13b3",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 28,
+                  "score": ""
+                },
+                {
+                  "id": "49c07e96-b3a7-4442-bc5b-beed07ca2f62",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 34,
+                  "score": ""
+                },
+                {
+                  "id": "6d3a44b7-cb1e-4a9a-96a5-2f1cdebb0ff0",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 42,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "e8d0a24f-858a-45bd-b447-06e07897128a",
+            "labels": [
+              "Shorten Request"
+            ],
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "vertices": [
+              {
+                "x": 710,
+                "y": 240
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect Request",
+              "description": "The user submits a short URL to the API and gets redirected to the original Long URL.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "c79c3b28-1441-451d-b25f-7ff30287cfa2",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 5,
+                  "score": ""
+                },
+                {
+                  "id": "b0e5ae21-ab96-4dfd-99da-193df542d814",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 14,
+                  "score": ""
+                },
+                {
+                  "id": "36d45f36-f21e-4a81-9bf6-407a247dd761",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 19,
+                  "score": ""
+                },
+                {
+                  "id": "6972189e-8d1c-48bf-9a45-947282864a3e",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 27,
+                  "score": ""
+                },
+                {
+                  "id": "0103f2ab-5c89-4851-b09a-01c9b57a1ccf",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 35,
+                  "score": ""
+                },
+                {
+                  "id": "853a6720-358c-4dfa-8351-ba160e6f9441",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 41,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "c01e0e5d-2f52-4b05-a659-58b854fb8b54",
+            "labels": [
+              "Redirect Request"
+            ],
+            "source": {
+              "cell": "23c4d6cc-6e67-47cd-855d-610b8e390d5f"
+            },
+            "target": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "vertices": [
+              {
+                "x": 640,
+                "y": 380
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Store URL Mapping",
+              "description": "The API Server processes the request for shortening a URL, generates a short URL, and stores the mapping between the short URL and the long URL in the URL Database.\n\nDATA EXCHANGED: Short URL, Long URL",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "57d42548-9ccd-496f-a597-d384e6755dfc",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 8,
+                  "score": ""
+                },
+                {
+                  "id": "c420817f-55fe-4378-b983-ae0f2ea6471e",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 15,
+                  "score": ""
+                },
+                {
+                  "id": "fe535200-c00d-4a54-b36a-f75ebaa85bf1",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 24,
+                  "score": ""
+                },
+                {
+                  "id": "cdd1838f-30b9-4706-ba62-4be635591db6",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 29,
+                  "score": ""
+                },
+                {
+                  "id": "007e797f-475f-47bf-b328-260aa88a71bf",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 38,
+                  "score": ""
+                },
+                {
+                  "id": "0080d2a0-257e-4e17-bb52-d11fd5c71ee5",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 43,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "0bcd6bca-360b-4f4e-a505-187195135022",
+            "labels": [
+              "Store URL Mapping"
+            ],
+            "source": {
+              "cell": "1f9260a0-bd64-49d7-a839-58e5e43948dc"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 960,
+                "y": 150
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Redirect User to URL",
+              "description": "The user is redirected to the Long URL.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "60b284e1-5b69-4885-8ced-0eab5462878a",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                },
+                {
+                  "id": "f7b23e49-a113-483b-b4da-f07a792b9ce7",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 17,
+                  "score": ""
+                },
+                {
+                  "id": "fa4afb1f-f788-43b9-8561-408ff997daed",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 22,
+                  "score": ""
+                },
+                {
+                  "id": "1139a2ed-5e43-4181-a5bd-cef6783ce357",
+                  "title": "Parameter Tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 31,
+                  "score": ""
+                },
+                {
+                  "id": "2f2e1260-08e5-451d-97bc-bf1a0cc2fed7",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 36,
+                  "score": ""
+                },
+                {
+                  "id": "5d742735-394a-4978-bc0e-f66232af46da",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 45,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "07f08d6d-e984-4d14-9d25-36ad24b230bd",
+            "labels": [
+              "Redirect User to URL"
+            ],
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "x": 950,
+              "y": 470
+            },
+            "vertices": [
+              {
+                "x": 930,
+                "y": 420
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Retrieve Long URL",
+              "description": "Long URL mapping is pulled from the database in order to redirect user.\n\nDATA EXCHANGED: Short URL, Long URL, UserID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "7b26f146-2035-40bb-bd4c-fb5a74a6699f",
+                  "title": "Traffic sniffing",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "A malicious actor can intercept traffic between a service and another actor (human or machine). The attacker is able to read the content of the communication because the channel is not encrypted and/or is encrypted using weak encryption algorithms.\\nRelated attacks: Man in the Middle, Adversary in the Middle.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 7,
+                  "score": ""
+                },
+                {
+                  "id": "5ec3ed07-cc88-421c-8bce-fc804bc006c4",
+                  "title": "Exploit of weak TLS algorithm",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "*Added because using TLS was suggested as remediation for threat \"Traffic sniffing\"*\nA service protects data as it traverses through the network, but because it uses weak TLS algorithm, an attacker can gain access to the supposed secure communication channel and data that is being transmitted. \nVulnerable/weak TLS algorithms include versions: TLS 1.0, TLS 1.1, TLS 1.2",
+                  "mitigation": "A threat can be mitigated by using secure version of TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 16,
+                  "score": ""
+                },
+                {
+                  "id": "47d84fb8-752e-4eab-87ba-d7e6b31087bf",
+                  "title": "Data tampering (at rest/in transit)",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Information stored in the service and/or transmitted over the network can be changed by an unauthorized actor. This can be possible because there is no encryption of the data transmitted over the network and/or stored in the service or broken/weak cryptographic algorithm is being used. This can also include a scenario where authorized actor with malicious intent can manipulate data without being detected, as there is no integrity protection for the data implemented.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 23,
+                  "score": ""
+                },
+                {
+                  "id": "cb809718-40d5-4cda-92d1-f58dacc66324",
+                  "title": "Parameter tampering",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "An attacker is able to modify parameters over a trusted boundary. If there is no parameter validation and the channel is unencrypted, an attacker can tamper with the parameters being exchanged in the request or path.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 30,
+                  "score": ""
+                },
+                {
+                  "id": "1dbe081d-904e-4654-945a-30f80be4d265",
+                  "title": "Manipulation of communication channel",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "A malicious actor is able to manipulate the communication mechanism to impersonate other users, gain access to sensitive information, or carry out additional attacks. This threat targets the flawed assumptions about the mechanism used, incorrect protocol implementations, or the utilization of vulnerable protocols. It can also include manipulating a setting or parameter on the communications channel.\nRelated attack: Traffic sniffing",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 37,
+                  "score": ""
+                },
+                {
+                  "id": "91ba4ea4-2146-4de5-8775-eb04f56c3da3",
+                  "title": "Retransmission of network traffic",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threatAn attacker is able to sniff network traffic and replay and/or delay sending the correct data without detection in order to cause unexpected behavior or perform unauthorized actions. \nRelated attacks: Replayed request attack.",
+                  "mitigation": "A threat can be mitigated by using an encryption algorithm such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 44,
+                  "score": ""
+                }
+              ]
+            },
+            "id": "23e310de-2c36-4478-85d2-4999137f6df3",
+            "labels": [
+              "Retrieve Long URL"
+            ],
+            "source": {
+              "cell": "602a3f85-c6bc-48db-9230-9cb402fdc6f0"
+            },
+            "target": {
+              "cell": "afe966da-e79b-4415-8c3b-c8b7f3bfdb1c"
+            },
+            "vertices": [
+              {
+                "x": 970,
+                "y": 320
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 65
+  }
+}
