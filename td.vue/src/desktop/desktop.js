@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain, nativeTheme } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -62,6 +62,33 @@ async function createWindow () {
         // Load the index.html when not in development mode
         mainWindow.loadURL('app://./index.html');
     }
+}
+
+// Dark Mode IPC Handlers
+function setupDarkModeHandlers() {
+    // Toggle Dark Mode
+    ipcMain.handle('dark-mode:toggle', () => {
+        if (nativeTheme.shouldUseDarkColors) {
+            nativeTheme.themeSource = 'light';
+        } else {
+            nativeTheme.themeSource = 'dark';
+        }
+        return nativeTheme.shouldUseDarkColors;
+    });
+
+    // Set System Dark Mode
+    ipcMain.handle('dark-mode:system', () => {
+        nativeTheme.themeSource = 'system';
+        return nativeTheme.shouldUseDarkColors;
+    });
+
+    // Get Current Theme
+    ipcMain.handle('dark-mode:get', () => {
+        return {
+            shouldUseDarkColors: nativeTheme.shouldUseDarkColors,
+            themeSource: nativeTheme.themeSource
+        };
+    });
 }
 
 // Quit when all windows are closed.
