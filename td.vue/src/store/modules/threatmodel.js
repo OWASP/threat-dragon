@@ -127,9 +127,11 @@ const actions = {
     },
     [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
         console.debug('Save threat model action');
-        // Identify if threat model is in OTM format and if so, convert dragon to OTM format
+        // Identify if threat model is in OTM format
         if (Object.hasOwn(state.data, 'otmVersion')) {
+            //  convert dragon to OTM format not yet available
             Vue.$toast.warning('Saving in Open Threat Model format not yet supported');
+            // continue to saving in dragon format
         }
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
