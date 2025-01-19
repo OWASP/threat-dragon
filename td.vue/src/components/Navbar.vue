@@ -14,6 +14,12 @@
       </b-navbar-nav>
       
       <b-navbar-nav class="ml-auto">
+        <b-nav-item>
+          <b-button size="sm" variant="outline-light" @click="toggleDarkMode">Toggle Dark Mode</b-button>
+        </b-nav-item>
+        <b-nav-item>
+          <b-button size="sm" variant="outline-light" @click="setSystemTheme">System Theme</b-button>
+        </b-nav-item>
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
@@ -128,6 +134,23 @@ export default {
         ])
     },
     methods: {
+        async toggleDarkMode() {
+            if (window.darkMode) {
+                const isDark = await window.darkMode.toggle();
+                document.body.className = isDark ? 'dark' : 'light';
+            } else {
+                console.error('Dark mode API is not available.');
+            }
+        },
+        async setSystemTheme() {
+            if (window.darkMode) {
+                await window.darkMode.system();
+                const theme = await window.darkMode.get();
+                document.body.className = theme.shouldUseDarkColors ? 'dark' : 'light';
+            } else {
+                console.error('Dark mode API is not available.');
+            }
+        },
         onLogOut(evt) {
             evt.preventDefault();
             this.$store.dispatch(LOGOUT);
