@@ -11,3 +11,4 @@
 10055	IGNORE	CSP: script-src unsafe-eval
 10063	IGNORE	Permissions Policy Header Not Set
 40039	IGNORE	Web Cache Deception
+90004	IGNORE	Set the Cross-Origin-Opener-Policy header
