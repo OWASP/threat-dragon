@@ -15,10 +15,10 @@
       
       <b-navbar-nav class="ml-auto">
         <b-nav-item>
-          <b-button size="sm" variant="outline-light" @click="toggleDarkMode">Toggle Dark Mode</b-button>
+          <b-button size="sm" variant="outline-light" @click="handleToggleDarkMode">Toggle Dark Mode</b-button>
         </b-nav-item>
         <b-nav-item>
-          <b-button size="sm" variant="outline-light" @click="setSystemTheme">System Theme</b-button>
+          <b-button size="sm" variant="outline-light" @click="handleSetSystemTheme">System Theme</b-button>
         </b-nav-item>
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
@@ -119,7 +119,7 @@ $icon-height: 1.2rem;
 
 <script>
 import { mapGetters } from 'vuex';
-
+import { toggleDarkMode, setSystemTheme } from '../plugins/dark-mode';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
@@ -134,22 +134,11 @@ export default {
         ])
     },
     methods: {
-        async toggleDarkMode() {
-            if (window.darkMode) {
-                const isDark = await window.darkMode.toggle();
-                document.body.className = isDark ? 'dark' : 'light';
-            } else {
-                console.error('Dark mode API is not available.');
-            }
+        async handleToggleDarkMode() {
+            await toggleDarkMode(); // Call the utility function
         },
-        async setSystemTheme() {
-            if (window.darkMode) {
-                await window.darkMode.system();
-                const theme = await window.darkMode.get();
-                document.body.className = theme.shouldUseDarkColors ? 'dark' : 'light';
-            } else {
-                console.error('Dark mode API is not available.');
-            }
+        async handleSetSystemTheme() {
+            await setSystemTheme(); // Call the utility function
         },
         onLogOut(evt) {
             evt.preventDefault();
