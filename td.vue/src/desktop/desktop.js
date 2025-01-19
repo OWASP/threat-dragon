@@ -1,5 +1,6 @@
-'use strict';
 
+'use strict';
+console.log('desktop.js is loaded');
 import { app, protocol, BrowserWindow, Menu, ipcMain, nativeTheme } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
@@ -129,6 +130,9 @@ app.on('ready', async () => {
         }
     }
 
+    // Setup Dark Mode Handlers
+    setupDarkModeHandlers();
+    // Existing IPC Handlers
     ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
