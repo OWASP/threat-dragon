@@ -36,17 +36,15 @@
                             </a>
                         </h6>
                     </template>
-                    <h6 v-if=diagram.description class="diagram-description-text">
-                        <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
-                            {{ diagram.description }}
-                        </a>
-                    </h6>
-                    <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
+                    <a href="javascript:void(0)" @click="editDiagram(diagram)">
                         <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
                             :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
                             :alt="diagram.title" />
                     </a>
+                    <h6 v-if=diagram.description class="diagram-description-text">
+                        {{ diagram.description }}
+                    </h6>
                 </b-card>
             </b-col>
         </b-row>
