@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, dialog } from 'electron';
+import { app, dialog, BrowserWindow } from 'electron';
 import path from 'path';
 import logger from './logger.js';
 import { isMacOS } from './utils.js';
@@ -154,18 +154,18 @@ export function getMenuTemplate() {
                 },
                 { type: 'separator' },
                 {
-                    label: 'about Electron',  // New "About Electron" label
+                    label: 'about Electron', // New "About Electron" label
                     click: () => {
                         const aboutWin = new BrowserWindow({
                             width: 300,
                             height: 200,
                             modal: true,
-                            parent: win,
-                            resizable: false
+                            parent: mainWindow, // Use mainWindow as the parent if applicable
+                            resizable: false,
                         });
-                        aboutWin.loadFile('about.html');  // Load the 'about.html' file in the modal
+                        aboutWin.loadFile('about.html'); // Load the 'about.html' file in the modal
                     },
-                    ...(process.platform === 'darwin' && { role: 'about' }) // Only add 'role: about' for macOS
+                    ...(process.platform === 'darwin' && { role: 'about' }), // Only add 'role: about' for macOS
                 },
 
                 { role: 'about' }
