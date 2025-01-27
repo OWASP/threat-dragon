@@ -3,3 +3,21 @@ body.dark {
     background-color: $dark-bg;
     color: $dark-text;
 }
+
+/* Dark mode overrides for Jumbotron when body has .dark */
+body.dark .jumbotron,
+body.dark .b-jumbotron {
+  background-color: $dark-but-lighter-bg !important;  // from your colors.scss: e.g. #121212
+  color: $dark-text !important;          // e.g. #e0e0e0
+  // If a border or other styling is needed:
+  border: 1px solid $dark-border !important;
+}
+
+body.dark .jumbotron a,
+body.dark .b-jumbotron a {
+  color: $orange !important;             // or any accent color
+}
+
+body.dark .td-cupcake {
+  filter: invert(1);
+}
