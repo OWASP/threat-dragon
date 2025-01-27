@@ -22,10 +22,10 @@ export const getClient = (accessToken) => {
     return BitbucketClientWrapper.getClient(clientOptions);
 };
 
-export const reposAsync = async (page, accessToken) => {
+export const reposAsync = async (page, accessToken, searchQuerys = []) => {
     //Migrated
     const workspace = env.get().config.BITBUCKET_WORKSPACE;
-    const repos = await getClient(accessToken).repositories.list({workspace: workspace, page: page, pagelen: 10});
+    const repos = await getClient(accessToken).repositories.list({workspace: workspace, page: page, pagelen: 10, q: searchQuerys.join(' AND ')});
 
     const responseRepos = repos.data.values.map((x) => {
         const newX = {};
@@ -41,10 +41,10 @@ const hasNextPage = (response) => response.data.next !== undefined && response.d
 const hasPreviousPage = (response) => response.data.previous !== undefined && response.data.previous !== null;
 
 //Migrate searchAsync required
-const searchAsync = (page, accessToken, searchQuery) => getClient(accessToken).search().
+const searchAsync = (page, accessToken, searchQuerys) => getClient(accessToken).search().
 reposAsync({
     page: page,
-    q: searchQuery
+    q: searchQuerys
 });
 
 export const userAsync = (accessToken) => getClient(accessToken).users.getAuthedUser();

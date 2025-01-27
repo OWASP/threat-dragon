@@ -26,10 +26,10 @@ const state = {
 
 const actions = {
     [REPOSITORY_CLEAR]: ({ commit }) => commit(REPOSITORY_CLEAR),
-    [REPOSITORY_FETCH]: async ({ commit, dispatch }, page=1) => {
+    [REPOSITORY_FETCH]: async ({ commit, dispatch }, {page, searchQuery}) => {
         dispatch(REPOSITORY_CLEAR);
-        const resp = await threatmodelApi.reposAsync(page);
-        commit(REPOSITORY_FETCH, { 
+        const resp = await threatmodelApi.reposAsync(page, searchQuery);
+        commit(REPOSITORY_FETCH, {
             'repos': resp.data.repos,
             'page': resp.data.pagination.page,
             'pageNext': resp.data.pagination.next,
