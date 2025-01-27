@@ -20,8 +20,8 @@ const getClient = (accessToken) => {
 const reposAsync = (page, accessToken) => getClient(accessToken).me().
 reposAsync(page);
 
-const searchAsync = (page, accessToken, searchQuery) => getClient(accessToken).search().
-    reposAsync({ page: page, q: searchQuery });
+const searchAsync = (page, accessToken, searchQuerys= []) => getClient(accessToken).search().
+    reposAsync({ page: page, q: searchQuerys });
 
 const userAsync = async (accessToken) => {
 

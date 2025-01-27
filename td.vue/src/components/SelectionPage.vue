@@ -17,7 +17,7 @@
                             <b-form-group id="filter-group">
                                 <b-form-input
                                     id="filter"
-                                    v-model="filter"
+                                    v-model="localFilter"
                                     :placeholder="$t('forms.search')"
                                 ></b-form-input>
                             </b-form-group>
@@ -36,7 +36,7 @@
                         @click="onBackClick">
                         ...
                     </b-list-group-item>
-                    
+
                     <b-list-group-item
                         v-if="items.length === 0 && !!emptyStateText"
                         @click="onEmptyStateClick"
@@ -54,17 +54,17 @@
                 </b-list-group>
             </b-col>
         </b-row>
-        
+
         <b-row>
             <b-col md=6 offset=3>
                 <div class="pagination">
                     <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
-                    <button class="btn" data-toggle="buttons" disabled="true">{{pageRef}}</button>
+                    <button class="btn" data-toggle="buttons" :disabled="true">{{pageRef}}</button>
                     <button @click="paginate(++pageRef)" :disabled="!pageNext">Next</button>
                 </div>
             </b-col>
         </b-row>
-    </b-container>    
+    </b-container>
 </template>
 
 <script>
@@ -72,11 +72,24 @@ export default {
     name: 'TdSelectionPage',
     data() {
         return {
-            filter: '',
-            pageRef: this.page
+            pageRef: this.page,
+            localFilter: this.filter
         };
     },
+    watch: {
+        filter(newFilter) {
+            this.localFilter = newFilter;
+        },
+        localFilter(newFilter) {
+            this.$emit('update:filter', newFilter);
+        }
+    },
     props: {
+        filter: {
+            required: false,
+            type: String,
+            default: ''
+        },
         items: {
             required: true
         },

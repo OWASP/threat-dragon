@@ -22,13 +22,16 @@ const organisationAsync = () => api.getAsync(`${resource}/organisation`);
  * Gets the repos for the given user
  * @returns {Promise}
  */
-const reposAsync = (page = 1) => {
-    return api.getAsync(`${resource}/repos`, { params: { page: page } });
+const reposAsync = (page = 1, searchQuery = '') => {
+    return api.getAsync(`${resource}/repos`, {
+        params: { page: page, searchQuery: searchQuery },
+    });
 };
 
 /**
  * Gets the branches for the given repository
  * @param {String} fullRepoName
+ * @param {Number} page
  * @returns {Promise}
  */
 const branchesAsync = (fullRepoName, page = 1) => {

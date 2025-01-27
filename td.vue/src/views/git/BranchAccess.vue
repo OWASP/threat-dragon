@@ -6,7 +6,7 @@
         :pagePrev="pagePrev"
         :onItemClick="onBranchClick"
         :paginate="paginate">
-        
+
         {{ $t('branch.select') }}
         <!-- Fixme: The href should get the configured hostname from env -->
         <a
@@ -42,7 +42,7 @@ export default {
         providerType: (state) => getProviderType(state.provider.selected),
         providerUri: (state) => state.provider.providerUri,
         repoName: (state) => state.repo.selected,
-        page: (state) => state.branch.page,
+        page: (state) => Number(state.branch.page),
         pageNext: (state) => state.branch.pageNext,
         pagePrev: (state) => state.branch.pagePrev
     }),
@@ -50,7 +50,7 @@ export default {
         if (this.provider !== this.$route.params.provider) {
             this.$store.dispatch(providerActions.selected, this.$route.params.provider);
         }
-        
+
         if (this.repoName !== this.$route.params.repository) {
             this.$store.dispatch(repoActions.selected, this.$route.params.repository);
         }
