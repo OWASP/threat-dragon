@@ -83,7 +83,14 @@ const spa = {
     branch: {
         select: 'Seleccione un branch',
         from: 'de la lista a continuación o',
-        chooseRepo: 'elija otro repositorio'
+        chooseRepo: 'elija otro repositorio',
+        addNew: 'o añadir una nueva rama',
+        nameRequired: 'El nombre de la rama es obligatorio',
+        nameExists: 'El nombre de la rama ya existe',
+        refBranch: 'Rama de referencia',
+        add: 'Añadir rama',
+        cancel: 'Cancelar',
+        name: 'Nombre de la sucursal',
     },
     threatmodelSelect: {
         select: 'Seleccione un modelo de amenazas (threat model) ',

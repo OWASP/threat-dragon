@@ -79,7 +79,15 @@ const jpn = {
     branch: {
         select: '次のものから',
         from: 'ブランチ名を選択してください',
-        chooseRepo: 'リポジトリの切り替え'
+        chooseRepo: 'リポジトリの切り替え',
+        or: 'または',
+        addNew: '新しいブランチを追加します。',
+        nameRequired: 'ブランチ名が必要です。',
+        nameExists: 'ブランチ名が既に存在します。',
+        refBranch: 'リファレンスブランチ',
+        add: 'ブランチを追加する\n',
+        cancel: '取り消し',
+        name: 'ブランチ名',
     },
     threatmodelSelect: {
         select: '次のものから',

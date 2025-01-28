@@ -19,6 +19,13 @@
         <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">
             {{ $t('branch.chooseRepo') }}
         </a>
+        {{ $t('branch.or') }}
+        <a href="javascript:void(0)" id="new-threat-model" @click="showNewBranchDialog = !showNewBranchDialog">{{ $t('branch.addNew') }}</a>
+
+        <add-branch-modal
+            v-if="showNewBranchDialog"
+            :branches="branches"
+            @close-add-branch-dialog="showNewBranchDialog = !showNewBranchDialog"/>
     </td-selection-page>
 </template>
 
@@ -30,11 +37,18 @@ import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
+import AddBranchModal from '@/views/git/AddBranchDialog.vue';
 
 export default {
     name: 'BranchAccess',
     components: {
+        AddBranchModal,
         TdSelectionPage
+    },
+    data() {
+        return {
+            showNewBranchDialog: false,
+        };
     },
     computed: mapState({
         branches: (state) => state.branch.all,
@@ -44,7 +58,7 @@ export default {
         repoName: (state) => state.repo.selected,
         page: (state) => Number(state.branch.page),
         pageNext: (state) => state.branch.pageNext,
-        pagePrev: (state) => state.branch.pagePrev
+        pagePrev: (state) => state.branch.pagePrev,
     }),
     mounted() {
         if (this.provider !== this.$route.params.provider) {
@@ -74,7 +88,7 @@ export default {
         },
         paginate(page) {
             this.$store.dispatch(branchActions.fetch, page);
-        }
+        },
     }
 };
 </script>

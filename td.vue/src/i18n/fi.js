@@ -83,7 +83,15 @@ const fin = {
     branch: {
         select: 'Valitse haara',
         from: 'alla olevista, tai',
-        chooseRepo: 'valitse toinen arkisto'
+        chooseRepo: 'valitse toinen arkisto',
+        or: 'or',
+        addNew: 'lisätä uusi haara',
+        nameRequired: 'Haaran nimi vaaditaan',
+        nameExists: 'Haara on jo olemassa',
+        refBranch: 'Viitehaara',
+        add: 'Lisää haara',
+        cancel: 'Peruuta',
+        name: 'Sivuliikkeen nimi',
     },
     threatmodelSelect: {
         select: 'Valitse uhkamalli kohteesta',
@@ -369,7 +377,7 @@ const fin = {
             total: 'Uhkia yhteensä',
             mitigated: 'Hallittuja uhkia',
             notMitigated: 'Hallitsemattomia uhkia',
-            openCritical: 'Avoin / Kriittinen tärkeys', 
+            openCritical: 'Avoin / Kriittinen tärkeys',
             openHigh: 'Avoin / Korkea tärkeys',
             openMedium: 'Avoin / Keskitason tärkeys',
             openLow: 'Avoin / Alhainen tärkeys',

@@ -83,7 +83,15 @@ const por = {
     branch: {
         select: 'Selecionar uma branch',
         from: 'da lista abaixo ou',
-        chooseRepo: 'escolher outro repositório'
+        chooseRepo: 'escolher outro repositório',
+        or: 'ou',
+        addNew: 'adicionar um novo branch',
+        nameRequired: 'Nome da branch é obrigatório',
+        nameExists: 'Nome da branch já existe',
+        refBranch: 'Branch de referência',
+        add: 'Adicionar branch',
+        cancel: 'Cancelar',
+        name: 'Nome da branch',
     },
     threatmodelSelect: {
         select: 'Selecion a Threat Model from',

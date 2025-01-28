@@ -100,11 +100,18 @@ export const deleteAsync = (modelInfo, accessToken) => getClient(accessToken).Re
         'Deleted by OWASP Threat Dragon',
     );
 
+export const createBranchAsync = (repoInfo, accessToken) => {
+    const client = getClient(accessToken);
+    const repo = getRepoFullName(repoInfo);
+    return client.Branches.create(repo, repoInfo.branch, repoInfo.ref);
+};
+
 const getRepoFullName = (info) => `${info.organisation}/${info.repo}`;
 const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
 
 export default {
+    createBranchAsync,
     branchesAsync,
     createAsync,
     deleteAsync,
@@ -113,5 +120,5 @@ export default {
     reposAsync,
     searchAsync,
     updateAsync,
-    userAsync
+    userAsync,
 };

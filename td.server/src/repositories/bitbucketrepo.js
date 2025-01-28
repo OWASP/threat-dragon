@@ -154,9 +154,27 @@ export const deleteAsync = async (modelInfo, accessToken) => {
     throw new Error(`Bitbucket deleteAsync is not implemented yet`);
 };
 
+export const createBranchAsync = (repoInfo, accessToken) => {
+    const workspace = env.get().config.BITBUCKET_WORKSPACE;
+
+    const client = getClient(accessToken);
+    const repo = getRepoFullName(repoInfo);
+    return client.refs.createBranch({
+        _body: {
+            name: repoInfo.branch,
+            target: {
+                hash: repoInfo.ref
+            }
+        },
+        repo_slug: repo,
+        workspace: workspace
+    });
+};
+
 const getRepoFullName = (info) => `${info.repo}`;
 const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
+
 
 export default {
     branchesAsync,
@@ -168,5 +186,6 @@ export default {
     searchAsync,
     updateAsync,
     userAsync,
-    getClient
+    getClient,
+    createBranchAsync
 };

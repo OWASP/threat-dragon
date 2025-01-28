@@ -65,16 +65,45 @@ const modelAsync = (fullRepoName, branch, model) => {
     return api.getAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModel}/data`);
 };
 
+/**
+ * create Model
+ * @param fullRepoName
+ * @param branch
+ * @param modelName
+ * @param threatModel
+ * @returns {Promise<*>}
+ */
 const createAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
     const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
     return api.postAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/create`, threatModel);
 };
 
+/**
+ * Updates the given model
+ * @param fullRepoName
+ * @param branch
+ * @param modelName
+ * @param threatModel
+ * @returns {Promise<*>}
+ */
 const updateAsync = (fullRepoName, branch, modelName, threatModel) => {
     const { org, repo } = extractRepoParts(fullRepoName);
     const [ encodedOrg, encodedRepo, encodedBranch, encodedModelName ] = encodeUrlComponents(org, repo, branch, modelName);
     return api.putAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranch}/${encodedModelName}/update`, threatModel);
+};
+
+/**
+ * Creates a new branch on the given repository
+ * @param fullRepoName
+ * @param branchName
+ * @param refBranch - the branch to base the new branch on
+ * @returns {Promise<*>}
+ */
+const createBranchAsync = (fullRepoName, branchName, refBranch) => {
+    const { org, repo } = extractRepoParts(fullRepoName);
+    const [ encodedOrg, encodedRepo, encodedBranchName, encodedRefBranch ] = encodeUrlComponents(org, repo, branchName, refBranch);
+    return api.postAsync(`${resource}/${encodedOrg}/${encodedRepo}/${encodedBranchName}/createBranch`, { refBranch: encodedRefBranch });
 };
 
 export default {
@@ -84,5 +113,6 @@ export default {
     modelsAsync,
     organisationAsync,
     reposAsync,
-    updateAsync
+    updateAsync,
+    createBranchAsync
 };

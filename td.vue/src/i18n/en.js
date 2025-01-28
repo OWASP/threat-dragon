@@ -83,7 +83,15 @@ const eng = {
     branch: {
         select: 'Select a branch from',
         from: 'from the list below or',
-        chooseRepo: 'choose another repo'
+        chooseRepo: 'choose another repo',
+        or: 'or',
+        addNew: 'add a new branch',
+        refBranch: 'Reference branch',
+        nameRequired: 'Branch name is required',
+        nameExists: 'Branch name already exists',
+        add: 'add branch',
+        cancel: 'Cancel',
+        name: 'branch name',
     },
     folder: {
         select: 'Select a',

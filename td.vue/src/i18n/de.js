@@ -83,7 +83,15 @@ const deu = {
     branch: {
         select: 'Wähle einen Branch aus', //in line with Github wording https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository
         from: 'aus folgender Liste aus',
-        chooseRepo: 'ein anderes Repository auswählen'
+        chooseRepo: 'ein anderes Repository auswählen',
+        or: 'oder',
+        addNew: 'füge einen neuen Branch hinzu',
+        nameRequired: 'Branch Name ist erforderlich',
+        nameExists: 'Branch Name existiert bereits',
+        refBranch: 'Referenz Branch',
+        add: 'Branch hinzufügen',
+        cancel: 'Abbrechen',
+        name: 'Branch Name'
     },
     threatmodelSelect: {
         select: 'Ein Bedrohungsmodell auswählen aus',
