@@ -72,5 +72,8 @@
     "micromatch": ">=4.0.8",
     "minimatch@<3.0.5": ">=3.0.5",
     "ws": ">=8.18.0"
+  },
+  "dependencies": {
+    "electron-about-window": "^1.15.2"
   }
 }

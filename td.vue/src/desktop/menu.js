@@ -1,9 +1,40 @@
 'use strict';
 
-import { app, dialog, BrowserWindow } from 'electron';
+import { app, dialog, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import logger from './logger.js';
 import { isMacOS } from './utils.js';
+
+
+
+
+function openAboutWindow({ app, BrowserWindow, ipcMain }) {
+    const aboutWindow = new BrowserWindow({
+        width: 400,
+        height: 300,
+        resizable: false,
+        title: 'About',
+        modal: true,
+        parent: BrowserWindow.getFocusedWindow(), // Open as a modal window
+        show: false,
+    });
+
+    aboutWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(`
+        <h1>About</h1>
+        <p>${app.getName()}</p>
+        <p>App version: ${app.getVersion()}</p>
+        
+    `));
+
+    aboutWindow.once('ready-to-show', () => {
+        aboutWindow.show();
+    });
+
+    ipcMain.on('close-about', () => {
+        aboutWindow.close();
+    });
+}
+
 
 const { shell } = require('electron');
 const fs = require('fs');
@@ -153,89 +184,22 @@ export function getMenuTemplate() {
                     }
                 },
                 { type: 'separator' },
-                {
-                    label: 'About', // "About Electron" label
-                    click: () => {
-                        if (process.platform !== 'darwin') { // Check for non-macOS systems
-                            const aboutWin = new BrowserWindow({
-                                width: 800,
-                                height: 700,
-                                modal: true,
-                                parent: mainWindow, // Use mainWindow as the parent if applicable
-                                resizable: false,
-                                webPreferences: {
-                                    nodeIntegration: true, // Optional, if you need node integration
-                                }
+                process.platform === 'darwin'
+                    ? { role: 'about' } // Use native "About" role for macOS
+                    : {
+                        label: 'About', // For non mac os
+                        click: () => {
+                            openAboutWindow({
+                                app,
+                                BrowserWindow,
+                                ipcMain,
                             });
-
-                            // Set the content directly within the BrowserWindow
-                            const aboutContent = `
-                                <html>
-                                    <head>
-                                        <title>About Threat Dragon</title>
-                                        <style>
-                                            body {
-                                                font-family: Arial, sans-serif;
-                                                padding: 20px;
-                                                background-color: #f4f4f9;
-                                                color: #333;
-                                            }
-                                            h1 {
-                                                color: #2d3a4f;
-                                            }
-                                            p {
-                                                color: #666;
-                                                line-height: 1.6;
-                                            }
-                                            a {
-                                                color: #007bff;
-                                                text-decoration: none;
-                                            }
-                                            a:hover {
-                                                text-decoration: underline;
-                                            }
-                                        </style>
-                                    </head>
-                                    <body>
-                                        <h1>About Threat Dragon</h1>
-                                        <p>Threat Dragon is an open-source threat modeling tool developed by OWASP (Open Web Application Security Project). It allows you to design and analyze your application’s security by identifying potential threats and vulnerabilities.</p>
-                                        <p>It is available as a desktop application that works across multiple platforms, helping you create threat models that can be shared and collaborated upon. This tool is designed for developers and security professionals to visualize their system architecture and the threats that could potentially affect it.</p>
-                                        <h2>Features</h2>
-                                        <ul>
-                                            <li>Drag-and-drop interface for building threat models.</li>
-                                            <li>Automatic threat analysis and risk scoring.</li>
-                                            <li>Integration with other security tools and frameworks.</li>
-                                            <li>Export models to various formats (PDF, HTML, JSON).</li>
-                                            <li>Collaborative features for team-based threat modeling.</li>
-                                        </ul>
-                                        <h2>Learn More</h2>
-                                        <p>For more information, visit the official <a href="https://owasp.org/www-project-threat-dragon/">OWASP Threat Dragon Project Page</a>.</p>
-                                        <p>Visit our <a href="https://github.com/owasp/threat-dragon/">GitHub repository</a> for source code, bug reports, and contributing guidelines.</p>
-                                        <p>If you encounter any issues or have suggestions, feel free to <a href="https://github.com/owasp/threat-dragon/issues">submit an issue</a> or create a <a href="https://github.com/owasp/threat-dragon/pulls">pull request</a>.</p>
-                                    </body>
-                                </html>
-                            `;
-
-                            // Load the content directly into the window
-                            aboutWin.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(aboutContent));
-
-                            // Optional: Open DevTools to debug
-                            aboutWin.webContents.openDevTools();
-
-                            // Optional: Log load success
-                            aboutWin.webContents.on('did-finish-load', () => {
-                                console.log('About page content loaded');
-                            });
-                        }
-                    },
-                    ...(process.platform === 'darwin' && { role: 'about' }) // Only add 'role: about' for macOS
-                }
-                ,
-
-                // { role: 'about' }
+                        },
+                    }
             ]
         }
     );
+
 
     if (isMacOS) {
         // recent docs only for macos, see www.electronjs.org/docs/latest/api/menu-item#roles
