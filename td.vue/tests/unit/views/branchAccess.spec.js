@@ -6,6 +6,7 @@ import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
+import AddBranchDialog from '@/components/AddBranchDialog.vue';
 
 
 describe('views/BranchAccess.vue', () => {
@@ -80,7 +81,7 @@ describe('views/BranchAccess.vue', () => {
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
         });
-        
+
         it('fetches the branches', () => {
             getLocalVue({
                 params: {
@@ -176,6 +177,23 @@ describe('views/BranchAccess.vue', () => {
         it('navigates to the new page', () => {
             routeParams.branch = testBranch;
             expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitNewThreatModel', params: routeParams });
+        });
+    });
+
+    describe('open add branch dialog', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            wrapper.vm.toggleNewBranchDialog();
+        });
+
+        it('sets the dialog to open', () => {
+            expect(wrapper.vm.showNewBranchDialog).toEqual(true);
+            expect(wrapper.findComponent(AddBranchDialog).exists()).toEqual(true);
         });
     });
 });

@@ -20,12 +20,12 @@
             {{ $t('branch.chooseRepo') }}
         </a>
         {{ $t('branch.or') }}
-        <a href="javascript:void(0)" id="new-threat-model" @click="showNewBranchDialog = !showNewBranchDialog">{{ $t('branch.addNew') }}</a>
+        <a href="javascript:void(0)" id="new-branch" @click="toggleNewBranchDialog()">{{ $t('branch.addNew') }}</a>
 
         <add-branch-modal
             v-if="showNewBranchDialog"
             :branches="branches"
-            @close-add-branch-dialog="showNewBranchDialog = !showNewBranchDialog"/>
+            @close-add-branch-dialog="toggleNewBranchDialog()"/>
     </td-selection-page>
 </template>
 
@@ -37,7 +37,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
-import AddBranchModal from '@/views/git/AddBranchDialog.vue';
+import AddBranchModal from '@/components/AddBranchDialog.vue';
 
 export default {
     name: 'BranchAccess',
@@ -89,6 +89,9 @@ export default {
         paginate(page) {
             this.$store.dispatch(branchActions.fetch, page);
         },
+        toggleNewBranchDialog(){
+            this.showNewBranchDialog = !this.showNewBranchDialog;
+        }
     }
 };
 </script>

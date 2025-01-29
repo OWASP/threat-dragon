@@ -9,6 +9,7 @@
         visible
         centered
         @hide="closeAddBranchDialog"
+        hide-footer
     >
         <form @submit.prevent="addBranch">
             <b-row>
@@ -33,15 +34,25 @@
             <b-row>
                 <b-col lg="12" class="pb-2">
                     <b-form-group id="input-group-2" :label="$t('branch.refBranch')" label-for="refBranch">
-                        <b-form-select id="refBranch" v-model="refBranch" :options="branches" size="md" required/>
+                        <b-form-select id="refBranch" v-model="refBranch" :options="branches" size="md"
+                                       required/>
                     </b-form-group>
                 </b-col>
             </b-row>
         </form>
-        <template #modal-footer>
-            <b-button variant="primary" type="submit" @click="addBranch">{{ $t('branch.add') }}</b-button>
-            <b-button variant="secondary" @click="closeAddBranchDialog">{{ $t('branch.cancel') }}</b-button>
-        </template>
+        <hr/>
+        <div class="d-flex justify-content-end">
+            <b-overlay
+                :show="wait"
+                variant="light"
+                blur="true"
+                opacity="0.8"
+                spinner-small
+            >
+                <b-button variant="primary" type="submit" @click="addBranch" class="m-1">{{ $t('branch.add') }}</b-button>
+            </b-overlay>
+            <b-button variant="secondary" @click="closeAddBranchDialog" class="m-1">{{ $t('branch.cancel') }}</b-button>
+        </div>
     </b-modal>
 </template>
 <script>
@@ -59,6 +70,7 @@ export default {
             modalTitle: this.$t('branch.addNew'),
             branchNameError: '',
             isError: null,
+            wait: false
         };
     },
     mounted() {
@@ -87,14 +99,25 @@ export default {
                 this.isError = true;
             }
         },
-        addBranch() {
+        async addBranch() {
+            this.wait = true;
             this.validate();
             if (!this.isError) {
+                this.wait = false;
                 return;
             }
             this.$store.dispatch(branchActions.create, {branchName: this.newBranchName, refBranch: this.refBranch});
+            // sometimes the branch is not immediately available, so we wait for it (only for 30 seconds)
+            for (let i = 0; i < 30; i++) {
+                await this.$store.dispatch(branchActions.fetch, 1);
+                if (this.branches.includes(this.newBranchName)) {
+                    break;
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+
+            this.wait = false;
             this.closeAddBranchDialog();
-            this.$store.dispatch(branchActions.fetch, 1);
         }
     }
 };
