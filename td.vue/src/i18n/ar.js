@@ -85,6 +85,7 @@ const ara = {
         from: 'من القائمة أدناه أو',
         or: 'أو',
         chooseRepo: 'اختيار مستودع آخر',
+        protectedBranch: 'فرع محمي',
         nameRequired: 'اسم الفرع مطلوب',
         nameExists: 'اسم الفرع موجود بالفعل',
         refBranch: 'الفرع المرجعي',

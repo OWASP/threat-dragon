@@ -25,7 +25,7 @@
         <add-branch-modal
             v-if="showNewBranchDialog"
             :branches="branches"
-            @close-add-branch-dialog="toggleNewBranchDialog()"/>
+            @close-dialog="toggleNewBranchDialog()"/>
     </td-selection-page>
 </template>
 
@@ -51,7 +51,16 @@ export default {
         };
     },
     computed: mapState({
-        branches: (state) => state.branch.all,
+        branches: (state) => state.branch.all.map((branch) => {
+            if(branch['protected']){
+                return {
+                    value: branch.name,
+                    icon: 'lock',
+                    iconTooltip: 'branch.protectedBranch',
+                };
+            }
+            return branch.name;
+        }),
         provider: (state) => state.provider.selected,
         providerType: (state) => getProviderType(state.provider.selected),
         providerUri: (state) => state.provider.providerUri,

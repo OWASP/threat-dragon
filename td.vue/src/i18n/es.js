@@ -85,6 +85,7 @@ const spa = {
         from: 'de la lista a continuación o',
         chooseRepo: 'elija otro repositorio',
         addNew: 'o añadir una nueva rama',
+        protectedBranch: 'Rama protegida',
         nameRequired: 'El nombre de la rama es obligatorio',
         nameExists: 'El nombre de la rama ya existe',
         refBranch: 'Rama de referencia',

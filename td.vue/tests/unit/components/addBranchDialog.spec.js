@@ -12,10 +12,10 @@ describe('components/AddBranchDialog.vue', () => {
 
     describe('with data', () => {
         const branches = ['main', 'develop', 'feature'];
-        let closeAddBranchDialog;
+        let closeDialog;
 
         beforeEach(() => {
-            closeAddBranchDialog = jest.fn();
+            closeDialog = jest.fn();
             wrapper = shallowMount(AddBranchDialog, {
                 localVue,
                 propsData: {
@@ -25,7 +25,7 @@ describe('components/AddBranchDialog.vue', () => {
                     $t: key => key
                 }
             });
-            wrapper.vm.closeAddBranchDialog = closeAddBranchDialog;
+            wrapper.vm.closeDialog = closeDialog;
         });
 
         it('displays the modal', () => {
@@ -48,14 +48,14 @@ describe('components/AddBranchDialog.vue', () => {
             expect(wrapper.findAllComponents(BButton).at(1).text()).toBe('branch.cancel');
         });
 
-        it('calls closeAddBranchDialog on cancel button click', async () => {
+        it('calls closeDialog on cancel button click', async () => {
             await wrapper.findAllComponents(BButton).at(1).trigger('click');
-            expect(closeAddBranchDialog).toHaveBeenCalled();
+            expect(closeDialog).toHaveBeenCalled();
         });
     });
 
     describe('validation', () => {
-        const branches = ['main', 'develop', 'feature'];
+        const branches = ['develop', 'feature', 'main'];
 
         beforeEach(() => {
             wrapper = shallowMount(AddBranchDialog, {
@@ -89,13 +89,14 @@ describe('components/AddBranchDialog.vue', () => {
     });
 
     describe('addBranch', () => {
-        let closeAddBranchDialog, dispatch;
+        let closeDialog, dispatch;
 
         beforeEach(() => {
             const branches = ['main', 'develop', 'feature'];
-            closeAddBranchDialog = jest.fn();
+            closeDialog = jest.fn();
             dispatch = jest.fn((branchActions, {branchName}) => {
-                branches.push(branchName);
+                if(branchActions === 'BRANCH_CREATE')
+                    branches.push(branchName);
             });
             wrapper = shallowMount(AddBranchDialog, {
                 localVue,
@@ -107,21 +108,26 @@ describe('components/AddBranchDialog.vue', () => {
                     $store: {
                         dispatch
                     }
+                },
+                data() {
+                    return {
+                        newBranchName:  'new-branch',
+                        refBranch: 'main'
+                    };
                 }
             });
-            wrapper.vm.closeAddBranchDialog = closeAddBranchDialog;
+            wrapper.vm.closeDialog = closeDialog;
         });
 
         it('dispatches the create action with correct payload', async () => {
-            await wrapper.setData({ newBranchName: 'new-branch', refBranch: 'main' });
             await wrapper.vm.addBranch();
+            expect(wrapper.vm.branches).toContain('new-branch');
         });
 
         it('closes the dialog after adding the branch', async () => {
-            const newBranchName = 'new-branch';
-            await wrapper.setData({ newBranchName, refBranch: 'main'});
+            await wrapper.setData({ newBranchName: 'new-branch', refBranch: 'main'});
             await wrapper.vm.addBranch();
-            expect(closeAddBranchDialog).toHaveBeenCalled();
+            expect(closeDialog).toHaveBeenCalled();
         });
     });
 });

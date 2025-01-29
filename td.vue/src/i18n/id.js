@@ -86,6 +86,7 @@ const id = {
         chooseRepo: 'pilih repo lain',
         or: 'atau',
         addNew: 'tambahkan cabang baru',
+        protectedBranch: 'Cabang dilindungi',
         nameRequired: 'Nama cabang diperlukan',
         nameExists: 'Nama cabang sudah ada',
         refBranch: 'Cabang Referensi',

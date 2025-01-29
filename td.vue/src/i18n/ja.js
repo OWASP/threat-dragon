@@ -82,6 +82,7 @@ const jpn = {
         chooseRepo: 'リポジトリの切り替え',
         or: 'または',
         addNew: '新しいブランチを追加します。',
+        protectedBranch: '保護されたブランチ',
         nameRequired: 'ブランチ名が必要です。',
         nameExists: 'ブランチ名が既に存在します。',
         refBranch: 'リファレンスブランチ',

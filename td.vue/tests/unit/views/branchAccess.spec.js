@@ -43,7 +43,7 @@ describe('views/BranchAccess.vue', () => {
             },
             branch: {
                 selected: 'someBranch',
-                all: ['b1', 'b2', 'b3'],
+                all: [{ name: 'b1', protected: true }, { name: 'b2', protected: false }, { name: 'b3', protected: false }],
                 page: 1,
                 pageNext: true,
                 pagePrev: false
@@ -53,7 +53,7 @@ describe('views/BranchAccess.vue', () => {
             }
         },
         actions: {
-            [BRANCH_FETCH]: () => { },
+            [BRANCH_FETCH]: () =>  Promise.resolve(getMockStore().state.branch.all),
             [BRANCH_SELECTED]: () => { },
             [PROVIDER_SELECTED]: () => { },
             [REPOSITORY_CLEAR]: () => { },
@@ -90,6 +90,14 @@ describe('views/BranchAccess.vue', () => {
                 }
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_FETCH, 1);
+            expect(wrapper.vm.branches).toEqual([
+                {
+                    value: 'b1',
+                    icon: 'lock',
+                    iconTooltip: 'branch.protectedBranch'
+                },
+                'b2','b3'
+            ]);
         });
     });
 

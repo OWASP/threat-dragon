@@ -86,6 +86,7 @@ const zho = {
         chooseRepo: '选择另一个源',
         or: '或者',
         addNew: '添加新分支',
+        protectedBranch: '受保护的分支',
         nameRequired: '分支名称是必需的',
         nameExists: '分支名称已存在',
         refBranch: '参考分支',

@@ -86,6 +86,7 @@ const fra = {
         chooseRepo: 'choisir un autre projet',
         or: 'ou',
         addNew: 'ajouter une nouvelle branche',
+        protectedBranch: 'Branche protégée',
         nameRequired: 'Le nom de la branche est requis',
         nameExists: 'Le nom de la branche existe déjà',
         refBranch: 'branche de référence',

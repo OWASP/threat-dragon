@@ -86,6 +86,7 @@ const por = {
         chooseRepo: 'escolher outro repositório',
         or: 'ou',
         addNew: 'adicionar um novo branch',
+        protectedBranch: 'Branch protegida',
         nameRequired: 'Nome da branch é obrigatório',
         nameExists: 'Nome da branch já existe',
         refBranch: 'Branch de referência',

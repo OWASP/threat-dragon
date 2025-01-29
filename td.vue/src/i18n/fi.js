@@ -86,6 +86,7 @@ const fin = {
         chooseRepo: 'valitse toinen arkisto',
         or: 'or',
         addNew: 'lisätä uusi haara',
+        protectedBranch: 'Suojattu haara',
         nameRequired: 'Haaran nimi vaaditaan',
         nameExists: 'Haara on jo olemassa',
         refBranch: 'Viitehaara',

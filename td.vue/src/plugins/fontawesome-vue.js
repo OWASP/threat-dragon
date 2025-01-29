@@ -31,10 +31,10 @@ import {
     faPrint,
     faProjectDiagram,
     faDiagramProject,
+    faLock
 } from '@fortawesome/free-solid-svg-icons';
 
 import {faBitbucket, faGithub, faGitlab, faVuejs, faGoogle, faGoogleDrive} from '@fortawesome/free-brands-svg-icons';
-
 // Add icons to the library for use
 library.add(
     faSignOutAlt,
@@ -69,7 +69,8 @@ library.add(
     faProjectDiagram,
     faDiagramProject,
     faGoogle,
-    faGoogleDrive
+    faGoogleDrive,
+    faLock
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

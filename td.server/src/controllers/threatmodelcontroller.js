@@ -54,7 +54,11 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const headers = branchesResp[1];
     const pageLinks = branchesResp[2];
 
-    const branchNames = branches.map((x) => x.name);
+    const branchNames = branches.map((x) => ({
+        name: x.name,
+        // Protected branches are not so easy to determine from the API on Bitbucket
+        protected: x.protected||false
+    }));
 
     const pagination = getPagination(headers, pageLinks, repoInfo.page);
 

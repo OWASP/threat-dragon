@@ -86,6 +86,7 @@ const rus = {
         chooseRepo: 'choose another repo',
         or: 'or',
         addNew: 'add a new branch',
+        protectedBranch: 'Protected branch',
         nameRequired: 'Branch name is required',
         nameExists: 'Branch name already exists',
         refBranch: 'Reference branch',

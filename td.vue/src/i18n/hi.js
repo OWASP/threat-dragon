@@ -86,6 +86,7 @@ const hin = {
         chooseRepo: 'एक और रेपो चुनें',
         or: 'या',
         addNew: 'नई शाखा जोड़ें',
+        protectedBranch: 'संरक्षित शाखा',
         nameRequired: 'एक नाम आवश्यक है',
         nameExists: 'एक शाखा इस नाम से पहले ही मौजूद है',
         refBranch: 'आधार शाखा',

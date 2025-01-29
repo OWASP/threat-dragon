@@ -86,6 +86,7 @@ const deu = {
         chooseRepo: 'ein anderes Repository auswählen',
         or: 'oder',
         addNew: 'füge einen neuen Branch hinzu',
+        protectedBranch: 'Geschützter Branch',
         nameRequired: 'Branch Name ist erforderlich',
         nameExists: 'Branch Name existiert bereits',
         refBranch: 'Referenz Branch',

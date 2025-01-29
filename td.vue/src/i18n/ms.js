@@ -86,6 +86,7 @@ const ms = {
         chooseRepo: 'pilih repo lain',
         or: 'atau',
         addNew: 'tambah cawangan baru',
+        protectedBranch: 'Cawangan Dilindungi',
         nameRequired: 'Nama cawangan diperlukan',
         nameExists: 'Nama cawangan sudah wujud',
         refBranch: 'Cawangan Rujukan',
