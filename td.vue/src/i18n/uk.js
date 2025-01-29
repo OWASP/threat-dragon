@@ -83,7 +83,16 @@ const ukr = {
     branch: {
         select: 'Select a branch from',
         from: 'from the list below or',
-        chooseRepo: 'choose another repo'
+        chooseRepo: 'choose another repo',
+        or: 'or',
+        addNew: 'add a new branch',
+        protectedBranch: 'Protected branch',
+        nameRequired: 'Branch name is required',
+        nameExists: 'Branch name already exists',
+        refBranch: 'Reference branch',
+        add: 'add branch',
+        cancel: 'Cancel',
+        name: 'branch name',
     },
     threatmodelSelect: {
         select: 'Select a Threat Model from',

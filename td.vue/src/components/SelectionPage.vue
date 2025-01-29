@@ -49,7 +49,16 @@
                         :key="idx"
                         href="javascript:void(0)"
                         @click="onItemClick(item)">
-                        {{ isGoogleProvider ? item.name : item }}
+                        <span v-if="typeof item === 'string'">{{ item }}</span>
+                        <span v-else class="d-flex justify-content-between align-items-center">
+                            {{ item.value }}
+                            <font-awesome-icon
+                                v-if="item.icon"
+                                :icon="item.icon"
+                                v-b-tooltip.hover
+                                :title="$t(item.iconTooltip) || ''"
+                            ></font-awesome-icon>
+                        </span>
                     </b-list-group-item>
                 </b-list-group>
             </b-col>
@@ -59,7 +68,7 @@
             <b-col md=6 offset=3>
                 <div class="pagination">
                     <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
-                    <button class="btn" data-toggle="buttons" :disabled="true">{{pageRef}}</button>
+                    <button class="btn" data-toggle="buttons" :disabled="true">{{ pageRef }}</button>
                     <button @click="paginate(++pageRef)" :disabled="!pageNext">Next</button>
                 </div>
             </b-col>
@@ -91,7 +100,15 @@ export default {
             default: ''
         },
         items: {
-            required: true
+            required: true,
+            type: Array,
+            validator: (value) => {
+                return value.every((item) => {
+                    return typeof item === 'string' || (item.value && typeof item.value === 'string')
+                        && (!item.icon || typeof item.icon === 'string')
+                        && (!item.iconTooltip || (typeof item.iconTooltip === 'string' && item.icon));
+                });
+            }
         },
         page: {
             required: false,
@@ -123,7 +140,8 @@ export default {
         onEmptyStateClick: {
             required: false,
             type: Function,
-            default: () => {}
+            default: () => {
+            }
         },
         showBackItem: {
             required: false,
@@ -133,7 +151,8 @@ export default {
         onBackClick: {
             required: false,
             type: Function,
-            default: () => {}
+            default: () => {
+            }
         },
         isGoogleProvider: {
             required: false,
@@ -143,11 +162,14 @@ export default {
     },
     computed: {
         displayedItems: function () {
-            if (!this.filter) { return this.items; }
+            if (!this.filter) {
+                return this.items;
+            }
             if (this.$props.isGoogleProvider) {
                 return this.items.filter(x => x.name.toLowerCase().includes(this.filter.toLowerCase()));
             } else {
-                return this.items.filter(x => x.toLowerCase().includes(this.filter.toLowerCase()));
+                console.log(this.items);
+                return this.items.filter(x => (x.value || x).toLowerCase().includes(this.filter.toLowerCase()));
             }
         }
     }

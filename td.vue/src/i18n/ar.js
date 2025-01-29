@@ -83,7 +83,16 @@ const ara = {
     branch: {
         select: 'حدد فرعًا من',
         from: 'من القائمة أدناه أو',
-        chooseRepo: 'اختيار مستودع آخر'
+        or: 'أو',
+        chooseRepo: 'اختيار مستودع آخر',
+        protectedBranch: 'فرع محمي',
+        nameRequired: 'اسم الفرع مطلوب',
+        nameExists: 'اسم الفرع موجود بالفعل',
+        refBranch: 'الفرع المرجعي',
+        addNew: 'إضافة فرع جديد',
+        add: 'إضافة فرع',
+        cancel: 'إلغاء',
+        name: 'اسم الفرع',
     },
     threatmodelSelect: {
         select: 'حدد نموذج تهديد من',

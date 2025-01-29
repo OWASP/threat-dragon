@@ -54,7 +54,11 @@ const branches = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const headers = branchesResp[1];
     const pageLinks = branchesResp[2];
 
-    const branchNames = branches.map((x) => x.name);
+    const branchNames = branches.map((x) => ({
+        name: x.name,
+        // Protected branches are not so easy to determine from the API on Bitbucket
+        protected: x.protected||false
+    }));
 
     const pagination = getPagination(headers, pageLinks, repoInfo.page);
 
@@ -212,6 +216,26 @@ const organisation = (req, res) => {
     return res.status(200).send(organisation);
 };
 
+const createBranch = async (req, res) => {
+    const repository = repositories.get();
+
+    const branchInfo = {
+        organisation: req.params.organisation,
+        repo: req.params.repo,
+        branch: req.params.branch,
+        ref: req.body.refBranch
+    };
+    logger.debug(`API createBranch request: ${logger.transformToString(req)}`);
+
+    try {
+        const createBranchResp = await repository.createBranchAsync(branchInfo, req.provider.access_token);
+        return res.status(201).send(createBranchResp);
+    } catch (err) {
+        logger.error(err);
+        return serverError('Error creating branch', res, logger);
+    }
+};
+
 export default {
     branches,
     create,
@@ -220,5 +244,6 @@ export default {
     models,
     organisation,
     repos,
-    update
+    update,
+    createBranch
 };

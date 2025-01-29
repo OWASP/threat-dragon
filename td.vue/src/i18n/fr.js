@@ -83,7 +83,16 @@ const fra = {
     branch: {
         select: 'Sélectionnez une branche parmi',
         from: 'parmi la liste ci-dessous ou',
-        chooseRepo: 'choisir un autre projet'
+        chooseRepo: 'choisir un autre projet',
+        or: 'ou',
+        addNew: 'ajouter une nouvelle branche',
+        protectedBranch: 'Branche protégée',
+        nameRequired: 'Le nom de la branche est requis',
+        nameExists: 'Le nom de la branche existe déjà',
+        refBranch: 'branche de référence',
+        add: 'Ajouter une branche',
+        cancel: 'Annuler',
+        name: 'Nom de la branche',
     },
     threatmodelSelect: {
         select: 'Sélectionnez un modèle de menace parmi',

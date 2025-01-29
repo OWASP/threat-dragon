@@ -12,7 +12,11 @@ describe('components/SelectionPage.vue', () => {
     });
 
     describe('with data', () => {
-        const items = [ 'one', 'two', 'three', 'four' ];
+        const items = [ 'one', 'two', 'three', 'four', ({
+            value: 'five',
+            icon: 'lock',
+            iconTooltip: 'foobar',
+        }) ];
         let onItemClick;
 
         beforeEach(() => {
@@ -41,7 +45,7 @@ describe('components/SelectionPage.vue', () => {
         it('displays the items', () => {
             expect(wrapper.findAllComponents(BListGroupItem).at(1).text()).toEqual(items[1]);
         });
-        
+
         it('filters items based on the search bar', async () => {
             await wrapper.setData({ filter: 'FOUR' });
             expect(wrapper.findComponent(BListGroupItem).text()).toEqual('four');
@@ -50,6 +54,12 @@ describe('components/SelectionPage.vue', () => {
         it('calls the action on click', async () => {
             await wrapper.findComponent(BListGroupItem).trigger('click');
             expect(onItemClick).toHaveBeenCalledTimes(1);
+        });
+
+        it('display the icon only on the last item', () => {
+            expect(wrapper.findAllComponents(BListGroupItem).at(3).find('b-icon-stub').exists()).toBeFalsy();
+            expect(wrapper.findAllComponents(BListGroupItem).at(3).find('span').text()).toEqual(items[3]);
+            expect(wrapper.findAllComponents(BListGroupItem).at(4).html()).toMatch(`<font-awesome-icon icon="${items[4].icon}" title="${items[4].iconTooltip}"></font-awesome-icon>`);
         });
     });
 
@@ -73,7 +83,7 @@ describe('components/SelectionPage.vue', () => {
                 }
             });
         });
-        
+
         it('shows the empty state', () => {
             expect(wrapper.findComponent(BListGroupItem).text()).toEqual(emptyStateText);
         });

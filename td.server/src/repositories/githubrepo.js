@@ -81,6 +81,14 @@ const deleteAsync = async (modelInfo, accessToken) => {
         );
 };
 
+const createBranchAsync = async (repoInfo, accessToken) => {
+    const client = getClient(accessToken);
+    const repo = getRepoFullName(repoInfo);
+    const resp = await client.repo(repo).refAsync(`heads/${repoInfo.ref}`);
+    const sha = resp[0].object.sha;
+    return client.repo(repo).createRefAsync(`refs/heads/${repoInfo.branch}`, sha);
+};
+
 const getRepoFullName = (info) => `${info.organisation}/${info.repo}`;
 const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
@@ -94,5 +102,6 @@ export default {
     reposAsync,
     searchAsync,
     updateAsync,
-    userAsync
+    userAsync,
+    createBranchAsync
 };

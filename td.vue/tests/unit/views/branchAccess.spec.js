@@ -6,6 +6,7 @@ import { BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
+import AddBranchDialog from '@/components/AddBranchDialog.vue';
 
 
 describe('views/BranchAccess.vue', () => {
@@ -42,7 +43,7 @@ describe('views/BranchAccess.vue', () => {
             },
             branch: {
                 selected: 'someBranch',
-                all: ['b1', 'b2', 'b3'],
+                all: [{ name: 'b1', protected: true }, { name: 'b2', protected: false }, { name: 'b3', protected: false }],
                 page: 1,
                 pageNext: true,
                 pagePrev: false
@@ -52,7 +53,7 @@ describe('views/BranchAccess.vue', () => {
             }
         },
         actions: {
-            [BRANCH_FETCH]: () => { },
+            [BRANCH_FETCH]: () =>  Promise.resolve(getMockStore().state.branch.all),
             [BRANCH_SELECTED]: () => { },
             [PROVIDER_SELECTED]: () => { },
             [REPOSITORY_CLEAR]: () => { },
@@ -80,7 +81,7 @@ describe('views/BranchAccess.vue', () => {
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
         });
-        
+
         it('fetches the branches', () => {
             getLocalVue({
                 params: {
@@ -89,6 +90,14 @@ describe('views/BranchAccess.vue', () => {
                 }
             });
             expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_FETCH, 1);
+            expect(wrapper.vm.branches).toEqual([
+                {
+                    value: 'b1',
+                    icon: 'lock',
+                    iconTooltip: 'branch.protectedBranch'
+                },
+                'b2','b3'
+            ]);
         });
     });
 
@@ -176,6 +185,23 @@ describe('views/BranchAccess.vue', () => {
         it('navigates to the new page', () => {
             routeParams.branch = testBranch;
             expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitNewThreatModel', params: routeParams });
+        });
+    });
+
+    describe('open add branch dialog', () => {
+        beforeEach(() => {
+            getLocalVue({
+                params: {
+                    provider: mockStore.state.provider.selected,
+                    repository: mockStore.state.repo.selected
+                }
+            });
+            wrapper.vm.toggleNewBranchDialog();
+        });
+
+        it('sets the dialog to open', () => {
+            expect(wrapper.vm.showNewBranchDialog).toEqual(true);
+            expect(wrapper.findComponent(AddBranchDialog).exists()).toEqual(true);
         });
     });
 });

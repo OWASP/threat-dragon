@@ -83,7 +83,16 @@ const id = {
     branch: {
         select: 'Pilih cabang dari',
         from: 'dari daftar di bawah atau',
-        chooseRepo: 'pilih repo lain'
+        chooseRepo: 'pilih repo lain',
+        or: 'atau',
+        addNew: 'tambahkan cabang baru',
+        protectedBranch: 'Cabang dilindungi',
+        nameRequired: 'Nama cabang diperlukan',
+        nameExists: 'Nama cabang sudah ada',
+        refBranch: 'Cabang Referensi',
+        add: 'Tambah cabang',
+        cancel: 'Batal',
+        name: 'Nama Cabang',
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',

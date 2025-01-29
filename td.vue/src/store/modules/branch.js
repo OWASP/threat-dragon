@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import {
     BRANCH_CLEAR,
+    BRANCH_CREATE,
     BRANCH_FETCH,
     BRANCH_SELECTED
 } from '../actions/branch.js';
@@ -28,14 +29,18 @@ const actions = {
     [BRANCH_FETCH]: async ({ commit, dispatch, rootState }, page = 1) => {
         dispatch(BRANCH_CLEAR);
         const resp = await threatmodelApi.branchesAsync(rootState.repo.selected, page);
-        commit(BRANCH_FETCH, { 
+        commit(BRANCH_FETCH, {
             'branches': resp.data.branches,
             'page': resp.data.pagination.page,
             'pageNext': resp.data.pagination.next,
             'pagePrev': resp.data.pagination.prev
         });
     },
-    [BRANCH_SELECTED]: ({ commit }, branch) => commit(BRANCH_SELECTED, branch)
+    [BRANCH_SELECTED]: ({ commit }, branch) => commit(BRANCH_SELECTED, branch),
+    [BRANCH_CREATE]: async ({ dispatch, rootState }, {branchName, refBranch}) => {
+        await threatmodelApi.createBranchAsync(rootState.repo.selected, branchName, refBranch);
+        await dispatch(BRANCH_FETCH);
+    }
 };
 
 const mutations = {

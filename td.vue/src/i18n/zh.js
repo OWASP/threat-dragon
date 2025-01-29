@@ -83,7 +83,16 @@ const zho = {
     branch: {
         select: '选择一个分支',
         from: '从下面列表或',
-        chooseRepo: '选择另一个源'
+        chooseRepo: '选择另一个源',
+        or: '或者',
+        addNew: '添加新分支',
+        protectedBranch: '受保护的分支',
+        nameRequired: '分支名称是必需的',
+        nameExists: '分支名称已存在',
+        refBranch: '参考分支',
+        add: '添加分支',
+        cancel: '取消',
+        name: '分支名称',
     },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',

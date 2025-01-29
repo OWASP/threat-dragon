@@ -83,7 +83,16 @@ const ms = {
     branch: {
         select: 'Pilih cawangan dari',
         from: 'dari senarai di bawah atau',
-        chooseRepo: 'pilih repo lain'
+        chooseRepo: 'pilih repo lain',
+        or: 'atau',
+        addNew: 'tambah cawangan baru',
+        protectedBranch: 'Cawangan Dilindungi',
+        nameRequired: 'Nama cawangan diperlukan',
+        nameExists: 'Nama cawangan sudah wujud',
+        refBranch: 'Cawangan Rujukan',
+        add: 'tambah cawangan',
+        cancel: 'Batal',
+        nama: 'nama cawangan',
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',

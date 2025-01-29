@@ -83,7 +83,16 @@ const hin = {
     branch: {
         select: 'से एक शाखा का चयन करें',
         from: 'नीचे दी गई सूची से या',
-        chooseRepo: 'एक और रेपो चुनें'
+        chooseRepo: 'एक और रेपो चुनें',
+        or: 'या',
+        addNew: 'नई शाखा जोड़ें',
+        protectedBranch: 'संरक्षित शाखा',
+        nameRequired: 'एक नाम आवश्यक है',
+        nameExists: 'एक शाखा इस नाम से पहले ही मौजूद है',
+        refBranch: 'आधार शाखा',
+        add: 'शाखा जोडे',
+        cancel: 'रद्द करें',
+        name: 'शाखा का नाम',
     },
     threatmodelSelect: {
         select: 'से एक थ्रेट मॉडल का चयन करें',
