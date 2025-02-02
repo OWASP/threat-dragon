@@ -95,6 +95,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
+import { v4 } from 'uuid';
 export default {
     name: 'TdThreatSuggest',
     computed: {
@@ -184,6 +185,8 @@ export default {
         },
         acceptSuggestion() {
             const objRef = this.cellRef.data;
+            this.threat.number = this.threatTop + 1;
+            this.threat.id = v4();
             if (!objRef.threatFrequency) {
                 const tmpfreq = threatModels.getFrequencyMapByElement(this.threat.modelType, this.cellRef.data.type);
                 if (tmpfreq !== null)
