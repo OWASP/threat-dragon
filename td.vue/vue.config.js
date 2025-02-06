@@ -1,23 +1,60 @@
 const path = require('path');
 const { CycloneDxWebpackPlugin } = require('@cyclonedx/webpack-plugin');
+const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.PORT || '3000';
+const appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
+
+// Check if TLS credentials are available in the environment file
+const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_TLS_HOSTNAME;
+let port;
+// Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
+const devServerConfig = hasTlsCredentials
+    ? {
+        https: {
+            key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
+            cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
+        },
+        port: process.env.APP_PORT,
+        proxy: {
+            '^/api': {
+                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                ws: true, // Proxy WebSocket connections
+                changeOrigin: true,
+            },
+        },
+        allowedHosts: [appHostname],
+    }
+    : {
+        client: {
+            webSocketURL: {
+                protocol: 'wss', // Use secure WebSocket protocol
+                hostname: appHostname,
+                port: 443, // HTTPS port
+            },
+        },
+        port: 8080,
+        proxy: {
+            '^/api': {
+                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                ws: true, // Proxy WebSocket connections
+                changeOrigin: true,
+            },
+        },
+        allowedHosts: [appHostname],
+    };
+port = devServerConfig.port;
+
+console.log(`Running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
+
 
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
     productionSourceMap: false,
-    devServer: {
-        proxy: {
-            '^/api': {
-                target: serverApiProtocol + '://localhost:' + serverApiPort,
-                ws: true,
-                changeOrigin: true
-            }
-        }
-    },
+    devServer: devServerConfig,
     lintOnSave: false,
     pluginOptions: {
         'style-resources-loader': {
