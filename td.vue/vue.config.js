@@ -5,6 +5,7 @@ const fs = require('fs');
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.PORT || '3000';
+const PORT = process.env.APP_PORT || '8080';
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
@@ -18,7 +19,7 @@ const devServerConfig = hasTlsCredentials
             key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
             cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
         },
-        port: process.env.APP_PORT,
+        port: PORT,
         proxy: {
             '^/api': {
                 target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
