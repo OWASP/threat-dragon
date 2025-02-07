@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { BootstrapVue, BDropdown } from 'bootstrap-vue';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -231,6 +231,31 @@ describe('components/GraphButtons.vue', () => {
                     expect(graph.showGrid).toHaveBeenCalledTimes(1);
                 });
             });
+        });
+    });
+
+    describe('export', () => {
+        beforeEach(() => {
+            btn = wrapper
+                .findAllComponents(BDropdown)
+                .filter((x) => x.attributes('id') === 'export-graph-btn')
+                .at(0);
+        });
+
+        it('has the export translation text', () => {
+            expect(btn.attributes('text')).toEqual('forms.export');
+        });
+
+        it('has a dropdown item for PNG', () => {
+            expect(btn.find('#export-graph-png').exists()).toBe(true);
+        });
+
+        it('has a dropdown item for JPEG', () => {
+            expect(btn.find('#export-graph-jpeg').exists()).toBe(true);
+        });
+
+        it('has a dropdown item for SVG', () => {
+            expect(btn.find('#export-graph-svg').exists()).toBe(true);
         });
     });
 });
