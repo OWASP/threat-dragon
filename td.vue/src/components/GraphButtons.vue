@@ -43,6 +43,18 @@
             :title="$t('threatmodel.buttons.toggleGrid')"
             text="" />
 
+        <b-dropdown right :text="$t('forms.export')">
+            <b-dropdown-item @click="exportPNG">
+                PNG
+            </b-dropdown-item>
+            <b-dropdown-item @click="exportJPEG">
+                JPEG
+            </b-dropdown-item>
+            <b-dropdown-item @click="exportSVG">
+                SVG
+            </b-dropdown-item>
+        </b-dropdown>
+
         <td-form-button
             :onBtnClick="closeDiagram"
             icon="times"
@@ -58,6 +70,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -65,6 +79,9 @@ export default {
     components: {
         TdFormButton
     },
+    computed: mapState({
+        diagram: (state) => state.threatmodel.selectedDiagram,
+    }),
     data() {
         return {
             gridShowing: true
@@ -123,6 +140,19 @@ export default {
                 this.graph.showGrid();
                 this.gridShowing = true;
             }
+        },
+        exportPNG() {
+            this.graph.exportPNG(`${this.diagram.title}.png`, {
+                padding: 50
+            });
+        },
+        exportJPEG() {
+            this.graph.exportJPEG(`${this.diagram.title}.jpeg`, {
+                padding: 50
+            });
+        },
+        exportSVG() {
+            this.graph.exportSVG(`${this.diagram.title}.svg`);
         }
     }
 };
