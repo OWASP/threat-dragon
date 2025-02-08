@@ -1,3 +1,5 @@
+import { Export } from '@antv/x6-plugin-export';
+
 import events from '@/service/x6/graph/events.js';
 import graph, { beforeAddCommand } from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
@@ -151,6 +153,10 @@ describe('service/x6/graph/graph.js', () => {
 
         it('adds the key bindings', () => {
             expect(keys.bind).toHaveBeenCalledTimes(1);
+        });
+
+        it('uses the export plugin', () => {
+            expect(graphRes.use).toHaveBeenCalledWith(new Export());
         });
     });
 });

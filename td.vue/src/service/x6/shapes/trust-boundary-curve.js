@@ -18,7 +18,11 @@ export const TrustBoundaryCurve = Shape.Edge.define({
             strokeDasharray: '10 5',
             sourceMarker: null,
             targetMarker: null
-        }
+        },
+        rect: {
+            fill: 'none',
+            stroke: 'none'
+        },
     },
     connector: 'smooth',
     data: defaultProperties.boundary
