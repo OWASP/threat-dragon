@@ -7,3 +7,8 @@ CVE-2022-37434
 # request version prior to 2.88.2
 # this vulnerability is for the build system, not run time, so ignore
 CVE-2023-28155
+
+# https://avd.aquasec.com/nvd/cve-2024-9143 
+# alpine 3.20.3 is pulling in a Low priority vuln for libcrypto3 version 3.3.2-r2,
+# ignore for now until alpine is updated
+CVE-2024-9143
