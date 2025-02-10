@@ -4,7 +4,7 @@ import { tc } from '@/i18n/index.js';
 
 const name = 'trust-boundary-box';
 
-// trust boundary box (dotted line, gray opaque background)
+// trust boundary box (dotted line, transparent background)
 export const TrustBoundaryBox = Shape.Rect.define({
     constructorName: name,
     width: 500,
@@ -19,32 +19,20 @@ export const TrustBoundaryBox = Shape.Rect.define({
             fill: 'transparent',
             fillOpacity: 0
         },
-        headerText: {
+        label: {
             text: tc('threatmodel.shapes.trustBoundary'),
-            fill: '#333',
-            strokeWidth: 0
-        },
-        header: {
-            rx: 10,
-            ry: 10,
-            strokeWidth: 0,
-            fillOpacity: 0
+            textAnchor : 'bottom',
+            textVerticalAnchor : 'top',
+            refX: '15%',
+            refY: '12'
         }
     }
 });
 
-TrustBoundaryBox.prototype.setLabel = function (label) {
-    this.setAttrByPath('headerText/text', label);
-};
-
-TrustBoundaryBox.prototype.getLabel = function () {
-    return this.getAttrByPath('headerText/text');
-};
-
 TrustBoundaryBox.prototype.type = 'tm.BoundaryBox';
 
 TrustBoundaryBox.prototype.setName = function (name) {
-    this.setAttrByPath('headerText/text', name);
+    this.setAttrByPath('label/text', name);
 };
 
 TrustBoundaryBox.prototype.updateStyle = function () {};

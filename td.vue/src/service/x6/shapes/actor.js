@@ -6,7 +6,7 @@ import { ports } from '../ports.js';
 
 const name = 'actor';
 
-// actor (rectangle, white background)
+// actor (rectangle, transparent background)
 export const ActorShape = Shape.Rect.define({
     constructorName: name,
     width: 150,
