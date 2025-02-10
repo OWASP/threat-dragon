@@ -1,6 +1,6 @@
 <template>
     <div class="locale-changer">
-        <b-dropdown right :text="locale" variant="primary">
+        <b-dropdown right :text="getLanguageName(locale)" variant="primary">
             <div class="px-2 py-2">
                 <input type="text" v-model="searchQuery" class="form-control" placeholder="Search language..." @click.stop
                     @input="filterLocales" />
@@ -29,6 +29,7 @@ export default {
         };
     },
     created() {
+        // Initialize filteredLocales with all available locales
         this.filteredLocales = [...this.$i18n.availableLocales]; 
     },
     computed: {
@@ -101,7 +102,7 @@ export default {
             case 'hin':
                 return 'हिंदी'; // Hindi
             case 'id':
-                return 'Bahasa Indonesia'; // Indonesia 
+                return 'Bahasa Indonesia'; // Indonesia
             case 'jpn':
                 return '日本語'; // Japanese
             case 'ms':
