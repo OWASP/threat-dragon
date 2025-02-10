@@ -92,7 +92,7 @@ export default {
                 case 'ell':
                     return 'Ελληνικά'; // Greek
                 case 'eng':
-                    return 'English';
+                    return 'eng';
                 case 'spa':
                     return 'Español'; // Spanish
                 case 'fin':
