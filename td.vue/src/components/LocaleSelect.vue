@@ -1,6 +1,6 @@
 <template>
     <div class="locale-changer">
-        <b-dropdown right :text="getLanguageName(locale)" variant="primary">
+        <b-dropdown right :text="locale" variant="primary">
             <div class="px-2 py-2">
                 <input type="text" v-model="searchQuery" class="form-control" placeholder="Search language..." @click.stop
                     @input="filterLocales" />
@@ -26,11 +26,10 @@ export default {
         return {
             searchQuery: '',
             filteredLocales: []
-        }
+        };
     },
     created() {
-        // Initialize filteredLocales with all available locales
-        this.filteredLocales = this.$i18n.availableLocales;
+        this.filteredLocales = [...this.$i18n.availableLocales]; 
     },
     computed: {
         ...mapState({
@@ -85,34 +84,34 @@ export default {
         },
         getLanguageName(locale) {
             switch (locale) {
-                case 'ara':
-                    return 'العربية'; // Arabic
-                case 'deu':
-                    return 'Deutsch'; // German
-                case 'ell':
-                    return 'Ελληνικά'; // Greek
-                case 'eng':
-                    return 'eng';
-                case 'spa':
-                    return 'Español'; // Spanish
-                case 'fin':
-                    return 'Suomi'; // Finnish
-                case 'fra':
-                    return 'Français'; // French
-                case 'hin':
-                    return 'हिंदी'; // Hindi
-                case 'id':
-                    return 'Bahasa Indonesia'; // Indonesia 
-                case 'jpn':
-                    return '日本語'; // Japanese
-                case 'ms':
-                    return 'Malay'; // Malay
-                case 'por':
-                    return 'Português'; // Portuguese
-                case 'zho':
-                    return '中文'; // Chinese
-                default:
-                    return locale;
+            case 'ara':
+                return 'العربية'; // Arabic
+            case 'deu':
+                return 'Deutsch'; // German
+            case 'ell':
+                return 'Ελληνικά'; // Greek
+            case 'eng':
+                return 'English';
+            case 'spa':
+                return 'Español'; // Spanish
+            case 'fin':
+                return 'Suomi'; // Finnish
+            case 'fra':
+                return 'Français'; // French
+            case 'hin':
+                return 'हिंदी'; // Hindi
+            case 'id':
+                return 'Bahasa Indonesia'; // Indonesia 
+            case 'jpn':
+                return '日本語'; // Japanese
+            case 'ms':
+                return 'Malay'; // Malay
+            case 'por':
+                return 'Português'; // Portuguese
+            case 'zho':
+                return '中文'; // Chinese
+            default:
+                return locale;
             }
         },
         getSearchableText(name) {
