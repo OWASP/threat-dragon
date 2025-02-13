@@ -127,7 +127,7 @@ const getEditGraph = (container, ctor = Graph) => {
                     maxWidth: Number.MAX_SAFE_INTEGER, // probably needs a more sane value
                     maxHeight: Number.MAX_SAFE_INTEGER, // same goes for this
                     orthogonal: true,
-                    preserveAspectRatio: true,
+                    preserveAspectRatio: false,
                     restrict: false
                 },
                 rotating: true
