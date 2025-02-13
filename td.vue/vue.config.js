@@ -30,13 +30,7 @@ const devServerConfig = hasTlsCredentials
         allowedHosts: [appHostname],
     }
     : {
-        client: {
-            webSocketURL: {
-                protocol: 'wss', // Use secure WebSocket protocol
-                hostname: appHostname,
-                port: 443, // HTTPS port
-            },
-        },
+        // note that client webSocketURL config has been removed, as it was incompatible with desktop version
         port: 8080,
         proxy: {
             '^/api': {
