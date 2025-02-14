@@ -258,6 +258,7 @@ const eng = {
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
         edit: 'Edit',
+        export: 'Export',
         exportAs: 'Export Model As',
         exportHtml: 'HTML Report',
         exportPdf: 'PDF Report',

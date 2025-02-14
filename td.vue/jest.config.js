@@ -22,7 +22,7 @@ module.exports = async () => {
         resetMocks: true,
         restoreMocks: true,
         transformIgnorePatterns: [
-            '<rootDir>/node_modules/(?!lodash-es|axios)'
+            '<rootDir>/node_modules/(?!lodash-es|axios|passive-events-support)'
         ]
     };
 };

@@ -42,7 +42,7 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('displays the current locale', () => {
-            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('eng');
+            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('English');
         });
 
         it('has an option for eng', () => {

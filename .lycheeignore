@@ -19,3 +19,6 @@ github.com/OWASP/threat-dragon/archive/
 
 # ignore LINDDUN site because it occasionally times out
 https://www.linddun.org/
+
+# Too many redirects: error following redirect for docker tags
+https://hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon/tags
