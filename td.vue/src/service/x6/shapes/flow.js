@@ -11,7 +11,6 @@ export const Flow = Shape.Edge.define({
     width: 200,
     height: 100,
     zIndex: 10,
-    label: tc('threatmodel.shapes.flow'),
     attrs: {
         line: {
             strokeWidth: 1.5,
@@ -23,6 +22,41 @@ export const Flow = Shape.Edge.define({
             stroke: 'none'
         },
     },
+    labels: [
+        {
+            markup: [
+                {
+                    tagName: 'ellipse',
+                    selector: 'labelBody',
+                },
+                {
+                    tagName: 'text',
+                    selector: 'labelText',
+                },
+            ],
+            attrs: {
+                labelText: {
+                    text: tc('threatmodel.shapes.flow'),
+                    textAnchor: 'middle',
+                    textVerticalAnchor: 'middle',
+                },
+                labelBody: {
+                    ref: 'labelText',
+                    refRx: '50%',
+                    refRy: '60%',
+                    fill: '#fff',
+                    strokeWidth: 0,
+                },
+            },
+            position: {
+                distance: 0.6,
+                args: {
+                    keepGradient: true,
+                    ensureLegibility: true,
+                }
+            },
+        },
+    ],
     connector: 'smooth',
     data: defaultProperties.flow
 });
