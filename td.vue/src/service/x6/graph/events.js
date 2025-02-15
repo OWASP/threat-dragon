@@ -24,20 +24,18 @@ const canvasResized = ({ width, height }) => {
 const edgeConnected = (graph) => ({ isNew, edge }) => {
     if (isNew) {
         edge.connector = 'smooth';
-        replaceEdgeWithFlow(graph, edge);
-    }
-};
 
-const replaceEdgeWithFlow = (graph, edge) => {
-    if (edge.constructor.name !== 'Edge') {
-        return;
-    }
+        if (edge.constructor.name === 'Edge') {
+            console.debug('edge connected');
+            const flow = shapes.Flow.fromEdge(edge);
+            graph.addEdge(flow);
+            edge.remove();
+            edge = flow;
+        } else {
+            console.warn('Unexpected constructor name');
+        }
 
-    const flow = shapes.Flow.fromEdge(edge);
-    graph.addEdge(flow);
-    edge.remove();
-    edge = flow;
-    edge.setLabels([edge.data.name]);
+    }
 };
 
 const mouseLeave = ({ cell }) => {
@@ -66,6 +64,7 @@ const cellAdded =
             //graph.resetSelection(cell);
             console.debug('cell added with shape: ', cell.shape);
 
+            // Flow and trust boundary stencil need to be converted
             if (cell.convertToEdge) {
                 let edge = cell;
                 const position = cell.position();
@@ -136,7 +135,7 @@ const cellSelected =
             store.get().dispatch(CELL_SELECTED, cell);
             dataChanged.updateProperties(cell);
             dataChanged.updateStyleAttrs(cell);
-            dataChanged.upgradeProperties(cell);
+            dataChanged.setType(cell);
         };
 
 const cellUnselected = ({ cell }) => {

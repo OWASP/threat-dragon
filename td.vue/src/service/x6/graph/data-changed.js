@@ -78,24 +78,23 @@ const updateName = (cell) => {
 const updateProperties = (cell) => {
     if (cell) {
         if (cell.data) {
-            console.debug('Update properties for cell: ' + cell.getData().name);
+            console.debug('Updated properties for cell: ' + cell.getData().name);
         } else {
             if (cell.isEdge()) {
                 cell.type = defaultProperties.flow.type;
                 console.debug('Edge cell given type: ' + cell.type);
             }
             cell.setData(defaultProperties.getByType(cell.type));
-            console.debug('Setting properties for cell: ' + cell.getData().name);
+            console.debug('Default properties for cell: ' + cell.getData().name);
         }
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
         store.get().dispatch(THREATMODEL_MODIFIED);
     } else {
-        console.debug('No cell data to update');
+        console.warn('No cell found to update properties');
     }
 };
 
-// future modifications to the list of properties applied to cells that may not have them
-const upgradeProperties = (cell) => {
+const setType = (cell) => {
     // fundamentally the shape is the only constant identifier
     switch (cell.shape) {
 	    case 'actor':
@@ -129,5 +128,5 @@ export default {
     updateName,
     updateStyleAttrs,
     updateProperties,
-    upgradeProperties
+    setType
 };
