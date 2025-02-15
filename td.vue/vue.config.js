@@ -10,7 +10,7 @@ const appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
 // Check if TLS credentials are available in the environment file
-const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_TLS_HOSTNAME;
+const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
 let port;
 // Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
 const devServerConfig = hasTlsCredentials
