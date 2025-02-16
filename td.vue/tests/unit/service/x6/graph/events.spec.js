@@ -84,11 +84,6 @@ describe('service/x6/graph/events.js', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:connected', expect.any(Function));
             });
 
-            it('adds the smooth connector to the edge', () => {
-                graph.evts['edge:connected']({ isNew: true, edge, node, cell });
-                expect(edge.connector).toEqual('smooth');
-            });
-
             it('replaces the edge with flow', () => {
                 graph.evts['edge:connected']({ isNew: true, edge, node, cell });
                 expect(graph.addEdge).toHaveBeenCalled();

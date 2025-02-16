@@ -68,9 +68,8 @@ const updateStyleAttrs = (cell) => {
 
 const updateName = (cell) => {
     if (!cell || !cell.setName || !cell.getData) {
-        console.debug('Name update ignored for empty cell');
+        console.warn('No cell found to update name');
     } else {
-        // console.debug('Update name for cell: ' + cell.getData().name);
         cell.setName(cell.getData().name);
     }
 };

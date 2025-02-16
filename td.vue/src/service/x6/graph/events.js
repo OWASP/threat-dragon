@@ -23,8 +23,6 @@ const canvasResized = ({ width, height }) => {
 
 const edgeConnected = (graph) => ({ isNew, edge }) => {
     if (isNew) {
-        edge.connector = 'smooth';
-
         if (edge.constructor.name === 'Edge') {
             console.debug('edge connected');
             const flow = shapes.Flow.fromEdge(edge);
@@ -34,7 +32,6 @@ const edgeConnected = (graph) => ({ isNew, edge }) => {
         } else {
             console.warn('Unexpected constructor name');
         }
-
     }
 };
 
