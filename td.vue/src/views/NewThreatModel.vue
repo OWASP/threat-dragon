@@ -18,19 +18,29 @@ export default {
     mounted() {
         this.$store.dispatch(tmActions.clear);
         const newTm = {
-            version: this.version,
-            summary: {
-                title: 'New Threat Model',
-                owner: '',
-                description: '',
-                id: 0
+            'version': '2.3.0',
+            'summary': {
+                'title': 'New Threat Model',
+                'owner': '',
+                'description': '',
+                'id': 0
             },
-            detail: {
-                contributors: [],
-                diagrams: [],
-                diagramTop: 0,
-                reviewer: '',
-                threatTop: 0
+            'detail': {
+                'contributors': [],
+                'diagrams': [
+                    {
+                        'id': 0,
+                        'title': 'New STRIDE diagram',
+                        'diagramType': 'STRIDE',
+                        'placeholder': 'New STRIDE diagram description',
+                        'thumbnail': './public/content/images/thumbnail.stride.jpg',
+                        'version': '2.3.0',
+                        'cells': []
+                    }
+                ],
+                'diagramTop': 0,
+                'reviewer': '',
+                'threatTop': 0
             }
         };
 

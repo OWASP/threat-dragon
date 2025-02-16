@@ -1,5 +1,5 @@
-export default{
-    'version': '2.0.0',
+export default {
+    'version': '2.3.0',
     'summary': {
         'title': 'New Threat Model',
         'owner': '',
@@ -8,7 +8,17 @@ export default{
     },
     'detail': {
         'contributors': [],
-        'diagrams': [],
+        'diagrams': [
+            {
+                'id': 0,
+                'title': 'New STRIDE diagram',
+                'diagramType': 'STRIDE',
+                'placeholder': 'New STRIDE diagram description',
+                'thumbnail': './public/content/images/thumbnail.stride.jpg',
+                'version': '2.3.0',
+                'cells': []
+            }
+        ],
         'diagramTop': 0,
         'reviewer': '',
         'threatTop': 0
