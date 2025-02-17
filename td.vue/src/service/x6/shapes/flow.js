@@ -79,12 +79,14 @@ Flow.prototype.updateStyle = function(color, dash, strokeWidth, sourceMarker) {
     this.setAttrByPath('line/targetMarker/name', 'block');
 };
 
-// called when flow (edge) is connected to target node, not from source node
+// a new edge (not flow) is created by AntV/X6 from an existing node port
+// and then needs to be converted to a Flow
 Flow.fromEdge = function(edge) {
     return new Flow({
         source: edge.getSourceCell(),
         target: edge.getTargetCell(),
-        data: edge.getData()
+        data: edge.getData(),
+        vertices: edge.getVertices()
     });
 };
 

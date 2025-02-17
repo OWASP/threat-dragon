@@ -21,6 +21,12 @@ const canvasResized = ({ width, height }) => {
     showPorts(false);
 };
 
+const edgeChangeVertices = () => ({ edge }) => {
+    if (edge.constructor.name === 'Edge') {
+        console.debug('vertex for unformatted edge/flow');
+    }
+};
+
 const edgeConnected = (graph) => ({ isNew, edge }) => {
     if (isNew) {
         if (edge.constructor.name === 'Edge') {
@@ -31,6 +37,10 @@ const edgeConnected = (graph) => ({ isNew, edge }) => {
             edge = flow;
         } else {
             console.warn('Unexpected constructor name');
+        }
+    } else {
+        if (edge.constructor.name === 'Edge') {
+            console.debug('connected unformatted edge/flow');
         }
     }
 };
@@ -62,7 +72,7 @@ const cellAdded =
             // ensure selection of other components is removed
             graph.resetSelection();
 
-            // Flow and trust boundary stencil need to be converted
+            // Flow and trust boundary stencils need to be converted
             if (cell.convertToEdge) {
                 let edge = cell;
                 const position = cell.position();
@@ -96,6 +106,10 @@ const cellAdded =
             store.get().dispatch(CELL_SELECTED, cell);
             dataChanged.updateProperties(cell);
             dataChanged.updateStyleAttrs(cell);
+
+            if (cell.shape === 'edge') {
+                console.debug('added new edge (flow parent)');
+            }
 
             // do not select new data flows or trust boundaries: it surprises the user
             if (cell.shape !== 'path'
@@ -138,6 +152,10 @@ const cellSelected =
                 console.debug('cell selected with no name');
             }
 
+            if (cell.shape === 'edge') {
+                console.debug('selected unformatted edge/flow');
+            }
+
             store.get().dispatch(CELL_SELECTED, cell);
             dataChanged.updateProperties(cell);
             dataChanged.updateStyleAttrs(cell);
@@ -158,6 +176,7 @@ const cellDataChanged = ({ cell }) => {
 
 const listen = (graph) => {
     graph.on('resize', canvasResized);
+    graph.on('edge:change:vertices', edgeChangeVertices(graph));
     graph.on('edge:connected', edgeConnected(graph));
     graph.on('edge:dblclick', cellSelected);
     graph.on('edge:move', cellSelected);
@@ -173,6 +192,7 @@ const listen = (graph) => {
 
 const removeListeners = (graph) => {
     graph.off('resize', canvasResized);
+    graph.off('edge:change:vertices', edgeChangeVertices(graph));
     graph.off('edge:connected', edgeConnected(graph));
     graph.off('edge:dblclick', cellSelected);
     graph.off('edge:move', cellSelected);
