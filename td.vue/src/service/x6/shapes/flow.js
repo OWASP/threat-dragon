@@ -83,8 +83,8 @@ Flow.prototype.updateStyle = function(color, dash, strokeWidth, sourceMarker) {
 // and then needs to be converted to a Flow
 Flow.fromEdge = function(edge) {
     return new Flow({
-        source: edge.getSourceCell(),
-        target: edge.getTargetCell(),
+        source: edge.getSource(),
+        target: edge.getTarget(),
         data: edge.getData(),
         vertices: edge.getVertices()
     });

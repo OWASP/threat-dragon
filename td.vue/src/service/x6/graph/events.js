@@ -27,21 +27,13 @@ const edgeChangeVertices = () => ({ edge }) => {
     }
 };
 
-const edgeConnected = (graph) => ({ isNew, edge }) => {
-    if (isNew) {
-        if (edge.constructor.name === 'Edge') {
-            console.debug('edge connected');
-            const flow = shapes.Flow.fromEdge(edge);
-            graph.addEdge(flow);
-            edge.remove();
-            edge = flow;
-        } else {
-            console.warn('Unexpected constructor name');
-        }
-    } else {
-        if (edge.constructor.name === 'Edge') {
-            console.debug('connected unformatted edge/flow');
-        }
+const edgeConnected = (graph) => ({ edge }) => {
+    if (edge.constructor.name === 'Edge') {
+        console.debug('connected unformatted edge/flow');
+        const flow = shapes.Flow.fromEdge(edge);
+        graph.addEdge(flow);
+        edge.remove();
+        edge = flow;
     }
 };
 
@@ -126,7 +118,7 @@ const cellDeleted = () => {
 };
 
 const cellSelected =
-    () =>
+    (graph) =>
         ({ cell }) => {
             // try and get the cell name
             if (cell.data) {
@@ -154,6 +146,10 @@ const cellSelected =
 
             if (cell.shape === 'edge') {
                 console.debug('selected unformatted edge/flow');
+                const flow = shapes.Flow.fromEdge(cell);
+                graph.addEdge(flow);
+                cell.remove();
+                cell = flow;
             }
 
             store.get().dispatch(CELL_SELECTED, cell);
