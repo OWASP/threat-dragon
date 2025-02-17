@@ -58,8 +58,9 @@ const mouseEnter = ({ cell }) => {
 const cellAdded =
     (graph) =>
         ({ cell }) => {
-            //graph.resetSelection(cell);
             console.debug('cell added with shape: ', cell.shape);
+            // ensure selection of other components is removed
+            graph.resetSelection();
 
             // Flow and trust boundary stencil need to be converted
             if (cell.convertToEdge) {
@@ -79,7 +80,7 @@ const cellAdded =
                 } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
                     edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
                 } else {
-                    console.warn('Removed unknown edge');
+                    console.warn('Unknown edge stencil');
                 }
                 cell.remove();
                 cell = edge;
@@ -95,6 +96,14 @@ const cellAdded =
             store.get().dispatch(CELL_SELECTED, cell);
             dataChanged.updateProperties(cell);
             dataChanged.updateStyleAttrs(cell);
+
+            // do not select new data flows or trust boundaries: it surprises the user
+            if (cell.shape !== 'path'
+                && cell.shape !== 'edge'
+                && cell.shape !== 'flow'
+                && cell.shape !== 'trust-boundary-curve') {
+                graph.select(cell);
+            }
         };
 
 const cellDeleted = () => {
