@@ -20,6 +20,10 @@ export const FlowStencil = Shape.Path.define({
         {
             tagName: 'text',
             selector: 'label'
+        },
+        {
+            tagName: 'rect',
+            selector: 'customBoundary'
         }
     ],
     attrs: {
@@ -28,6 +32,11 @@ export const FlowStencil = Shape.Path.define({
             stroke: '#333333',
             fill: 'transparent',
             refD: 'M 30 20 C 70 20 70 100 110 100'
+        },
+        customBoundary: {
+            opacity: 0,
+            width: 150,
+            height: 80,
         },
         label: {
             text: tc('threatmodel.shapes.flowStencil'),

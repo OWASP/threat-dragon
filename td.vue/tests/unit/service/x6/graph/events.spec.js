@@ -16,8 +16,9 @@ describe('service/x6/graph/events.js', () => {
             evts: {},
             off: jest.fn(),
             on: function(evt, cb) { this.evts[evt] = cb; },
+            addEdge: jest.fn(),
             resetSelection: jest.fn(),
-            addEdge: jest.fn()
+            select: jest.fn()
         };
         jest.spyOn(graph, 'on');
         cell = {
@@ -82,11 +83,6 @@ describe('service/x6/graph/events.js', () => {
         describe('new edge', () => {
             it('listens to the event', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:connected', expect.any(Function));
-            });
-
-            it('adds the smooth connector to the edge', () => {
-                graph.evts['edge:connected']({ isNew: true, edge, node, cell });
-                expect(edge.connector).toEqual('smooth');
             });
 
             it('replaces the edge with flow', () => {
@@ -182,8 +178,9 @@ describe('service/x6/graph/events.js', () => {
             events.listen(graph);
         });
 
-        describe('not a trust boundary curve', () => {
+        describe('not a flow or trust boundary curve', () => {
             beforeEach(() => {
+                cell.shape = 'actor';
                 cell.isNode.mockImplementation(() => true);
                 cell.convertToEdge = false;
             });
@@ -196,10 +193,16 @@ describe('service/x6/graph/events.js', () => {
                 graph.evts['cell:added']({ cell });
                 expect(graph.addEdge).not.toHaveBeenCalled();
             });
+
+            it('selects the cell', () => {
+                graph.evts['cell:added']({ cell });
+                expect(graph.select).toHaveBeenCalled();
+            });
         });
 
         describe('trust boundary curve', () => {
             beforeEach(() => {
+                cell.shape = 'path';
                 cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
                 cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
@@ -219,6 +222,11 @@ describe('service/x6/graph/events.js', () => {
                 graph.evts['cell:added']({ cell });
                 expect(cell.remove).toHaveBeenCalledTimes(1);
             });
+
+            it('does not select the cell', () => {
+                graph.evts['cell:added']({ cell });
+                expect(graph.select).not.toHaveBeenCalled();
+            });
         });
 
         describe('unknown edge', () => {
@@ -230,7 +238,7 @@ describe('service/x6/graph/events.js', () => {
 
             it('warns about unknown edge', () => {
                 graph.evts['cell:added']({ cell });
-                expect(console.warn).toHaveBeenCalledWith('Removed unknown edge');
+                expect(console.warn).toHaveBeenCalledWith('Unknown edge stencil');
             });
         });
     });

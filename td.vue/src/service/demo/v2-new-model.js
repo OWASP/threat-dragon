@@ -1,5 +1,5 @@
-export default{
-    'version': '2.0.0',
+export default {
+    'version': '2.3.0',
     'summary': {
         'title': 'New Threat Model',
         'owner': '',
