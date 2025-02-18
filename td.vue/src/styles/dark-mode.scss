@@ -1,0 +1,103 @@
+/* Dark Mode Styles */
+body.dark {
+    background-color: $dark-bg;
+    color: $dark-text;
+}
+
+/* Dark mode overrides for Jumbotron when body has .dark */
+body.dark .jumbotron,
+body.dark .b-jumbotron {
+  background-color: $dark-but-lighter-bg !important;  // from your colors.scss: e.g. #121212
+  color: $dark-text !important;          // e.g. #e0e0e0
+  // If a border or other styling is needed:
+  border: 1px solid $dark-border !important;
+}
+
+body.dark .jumbotron a,
+body.dark .b-jumbotron a {
+  color: $orange !important;             // or any accent color
+}
+
+body.dark .td-cupcake {
+  filter: invert(1);
+}
+
+body.dark .b-form-textarea,
+body.dark .form-control {
+  background-color: $dark-but-lighter-bg !important; /* or your chosen dark color */
+  color: $dark-text !important;
+  border-color: $dark-border !important;
+}
+
+/* For <b-card> */
+body.dark .card {
+  background-color: $dark-but-lighter-bg !important; /* or your chosen dark color */
+  color: $dark-text !important;
+  border-color: $dark-border !important;
+}
+
+body.dark .dropdown-menu {
+  background-color: $dark-but-lighter-bg !important;  /* Dark background */
+  color: $dark-text !important;            /* Light text */
+  border: 1px solid $dark-border !important; /* Optional border */
+}
+
+body.dark .dropdown-item {
+  color: $dark-text !important;
+}
+
+/* Optional hover/focus states */
+body.dark .dropdown-item:hover,
+body.dark .dropdown-item:focus {
+  background-color: $dark-hover-bg !important;
+  color: $dark-hover-text !important;
+}
+
+body.dark .modal-content{
+  background-color: $dark-bg !important; /* or your preferred dark color */
+  color: $dark-text !important;
+}
+
+body.dark .list-group-item {
+  background-color: $dark-but-lighter-bg !important;
+  color: $dark-text !important;
+  border-color: $dark-border !important; /* optional border override */
+}
+
+/* If you want a hover effect: */
+body.dark .list-group-item:hover {
+  background-color: $dark-bg !important;
+}
+
+body.dark .td-report-options {
+  background-color: $dark-but-lighter-bg !important;
+  color: $dark-text !important;
+}
+
+// body.dark .td-report-section {
+//   background-color: $dark-but-lighter-bg !important;
+//   color: cyan !important;
+// }
+
+body.dark .table {
+  background-color: $dark-bg !important;
+  color: $dark-text !important;
+}
+
+/* This ensures text inside td-diagram-detail is light on a dark background */
+body.dark .x6-graph-svg {
+  filter: invert(1);
+}
+
+body.dark .diagram-header-text a{
+  color: $dark-text !important;
+}
+
+body.dark .diagram-description-text a{
+  color: $dark-text !important;
+}
+
+body.dark .x6-widget-stencil {
+  background-color: $dark-bg !important;
+  color: $dark-text !important;
+}

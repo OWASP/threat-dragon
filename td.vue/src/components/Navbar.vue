@@ -15,6 +15,12 @@
       
       <b-navbar-nav class="ml-auto">
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
+        <b-nav-item>
+          <b-button size="sm" variant="outline-light" @click="handleToggleDarkMode">Toggle Dark Mode</b-button>
+        </b-nav-item>
+        <b-nav-item>
+          <b-button size="sm" variant="outline-light" @click="handleSetSystemTheme">System Theme</b-button>
+        </b-nav-item>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
@@ -114,6 +120,7 @@ $icon-height: 1.2rem;
 <script>
 import { mapGetters } from 'vuex';
 
+import { toggleDarkMode, setSystemTheme } from '../plugins/dark-mode';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
@@ -128,6 +135,12 @@ export default {
         ])
     },
     methods: {
+        async handleToggleDarkMode() {
+            await toggleDarkMode(); // Call the utility function
+        },
+        async handleSetSystemTheme() {
+            await setSystemTheme(); // Call the utility function
+        },
         onLogOut(evt) {
             evt.preventDefault();
             this.$store.dispatch(LOGOUT);

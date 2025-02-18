@@ -1,9 +1,17 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron');
 
 if (process.env.IS_TEST === 'true') {
     require('wdio-electron-service/preload');
 }
 
+// Expose Dark Mode API to the renderer process
+contextBridge.exposeInMainWorld('darkMode', {
+    toggle: () => ipcRenderer.invoke('dark-mode:toggle'),
+    system: () => ipcRenderer.invoke('dark-mode:system'),
+    get: () => ipcRenderer.invoke('dark-mode:get'),
+});
+
+// Expose Electron API methods to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     appClose: () => ipcRenderer.send('close-app'),
