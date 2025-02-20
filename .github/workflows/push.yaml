@@ -247,7 +247,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.2.0
-      - uses: akhileshns/heroku-deploy@v3.13.15
+      - uses: akhileshns/heroku-deploy@v3.14.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ env.HEROKU_APP }}
