@@ -50,14 +50,68 @@ describe('views/demo/SelectDemoModel.vue', () => {
 	    ).toEqual(true);
     });
 
-	it('displays the Three Tier Web Application', () => {
+    it('displays the Cryptocurrency Wallet demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Cryptocurrency Wallet')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Generic CMS demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Generic CMS')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the IoT Device demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'IoT Device')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Online Game demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Online Game')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Payments Processing Platform demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Payments Processing Platform')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Renting Car Startup demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Renting Car Startup')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Three Tier Web Application demo model', () => {
 	    expect(
 	        wrapper.findAllComponents(BListGroupItem)
 	            .filter(x => x.text() === 'Three Tier Web Application')
 	            .at(0)
 	            .exists()
 	    ).toEqual(true);
-	});
+    });
 
     it('displays the New Blank Model', () => {
 	    expect(

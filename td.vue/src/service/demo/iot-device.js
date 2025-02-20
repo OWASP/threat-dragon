@@ -1,21 +1,31 @@
 export default {
-    'version': '2.3.0',
+    'version': '2.4.0',
     'summary': {
-        'title': 'New Blank Model',
-        'owner': '',
-        'description': '',
+        'title': 'Internet of Things (IoT) Device',
+        'owner': 'A development team',
+        'description': 'This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/iot-device',
         'id': 0
     },
     'detail': {
-        'contributors': [],
+        'contributors': [
+		    {
+		        'name': 'development engineers'
+		    },
+		    {
+		        'name': 'product managers'
+		    },
+		    {
+		        'name': 'security architects'
+		    }
+        ],
         'diagrams': [
             {
                 'id': 0,
-                'title': 'New STRIDE diagram',
+                'title': 'IoT Device STRIDE diagram',
                 'diagramType': 'STRIDE',
                 'placeholder': 'New STRIDE diagram description',
                 'thumbnail': './public/content/images/thumbnail.stride.jpg',
-                'version': '2.3.0',
+                'version': '2.4.0',
                 'cells': [
                     {
                         'position': {
@@ -28,7 +38,7 @@ export default {
                         },
                         'attrs': {
                             'text': {
-                                'text': 'A new blank model template'
+                                'text': 'Demo threat model for an IoT Device\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/iot-device'
                             }
                         },
                         'visible': true,
@@ -37,7 +47,7 @@ export default {
                         'zIndex': 1,
                         'data': {
                             'type': 'tm.Text',
-                            'name': 'A new blank model template',
+                            'name': 'Demo threat model for an IoT Device\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/iot-device',
                             'hasOpenThreats': false
                         }
                     }
@@ -45,7 +55,7 @@ export default {
             }
         ],
         'diagramTop': 0,
-        'reviewer': '',
+        'reviewer': 'A security architect',
         'threatTop': 0
     }
 };
