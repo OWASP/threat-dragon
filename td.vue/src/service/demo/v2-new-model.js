@@ -1,7 +1,7 @@
 export default {
     'version': '2.3.0',
     'summary': {
-        'title': 'New Threat Model',
+        'title': 'New Blank Model',
         'owner': '',
         'description': '',
         'id': 0
