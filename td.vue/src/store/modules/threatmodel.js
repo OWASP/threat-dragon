@@ -199,7 +199,9 @@ const mutations = {
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         console.debug('Threatmodel diagram saved: ' + diagram.id + ' at index: ' + idx);
+        // beware: this will trigger a redraw of the diagram - possibly to the wrong canvas size
         Vue.set(state, 'selectedDiagram', diagram);
+        // beware ^^
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
         stashThreatModel(state, state.data);
