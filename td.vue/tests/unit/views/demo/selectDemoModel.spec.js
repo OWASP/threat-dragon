@@ -41,15 +41,33 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(wrapper.findComponent(BJumbotron).text()).toEqual('demo.select');
     });
 
-    it('displays the demo threat model', () => {
-        expect(
-            wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0)
-                .exists()
-        ).toEqual(true);
+    it('displays the Demo Threat Model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Demo Threat Model')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
     });
-    
+
+	it('displays the Three Tier Web Application', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Three Tier Web Application')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+	});
+
+    it('displays the New Blank Model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'New Blank Model')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
     it('clears the threatmodels', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
     });
