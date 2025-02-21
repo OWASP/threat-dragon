@@ -7,7 +7,7 @@ export const schema = {
         'version': {
             'description': 'Threat Dragon version used in the model',
             'type': 'string',
-            'maxLength': 5
+            'maxLength': 10
         },
         'summary': {
             'description': 'Threat model project meta-data',
@@ -85,7 +85,7 @@ export const schema = {
                             'version': {
                                 'description': 'Threat Dragon version used in the diagram',
                                 'type': 'string',
-                                'maxLength': 5
+                                'maxLength': 10
                             },
                             'cells': {
                                 'description': 'The individual diagram components',
