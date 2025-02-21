@@ -2,7 +2,7 @@ import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import demoThreatModel from '@/service/demo/demo-threat-model.js';
+import demoThreatModel from '@/service/demo/v2-threat-model.js';
 import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
 
 describe('views/demo/SelectDemoModel.vue', () => {
@@ -41,15 +41,51 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(wrapper.findComponent(BJumbotron).text()).toEqual('demo.select');
     });
 
-    it('displays the demo threat model', () => {
-        expect(
-            wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0)
-                .exists()
-        ).toEqual(true);
+    it('displays the Demo Threat Model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Demo Threat Model')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
     });
-    
+
+    it('displays the Cryptocurrency Wallet demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Cryptocurrency Wallet')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Renting Car Startup demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Renting Car Startup')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the Three Tier Web Application demo model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'Three Tier Web Application')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
+    it('displays the New Blank Model', () => {
+	    expect(
+	        wrapper.findAllComponents(BListGroupItem)
+	            .filter(x => x.text() === 'New Blank Model')
+	            .at(0)
+	            .exists()
+	    ).toEqual(true);
+    });
+
     it('clears the threatmodels', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
     });
