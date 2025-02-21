@@ -246,7 +246,7 @@ export const schema = {
                                                     'type': 'boolean'
                                                 }
                                             },
-                                            'required': [ 'description', 'hasOpenThreats', 'name', 'type' ]
+                                            'required': [ 'hasOpenThreats', 'name', 'type' ]
                                         },
                                         'id': {
                                             'description': 'The component unique identifier (UUID)',
