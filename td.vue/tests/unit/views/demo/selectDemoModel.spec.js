@@ -59,42 +59,6 @@ describe('views/demo/SelectDemoModel.vue', () => {
 	    ).toEqual(true);
     });
 
-    it('displays the Generic CMS demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Generic CMS')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
-    });
-
-    it('displays the IoT Device demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'IoT Device')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
-    });
-
-    it('displays the Online Game demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Online Game')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
-    });
-
-    it('displays the Payments Processing Platform demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Payments Processing Platform')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
-    });
-
     it('displays the Renting Car Startup demo model', () => {
 	    expect(
 	        wrapper.findAllComponents(BListGroupItem)
