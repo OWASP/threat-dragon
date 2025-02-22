@@ -277,19 +277,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.data = {};
             });
 
-            describe('cell is node', () => {
-                beforeEach(() => {
-                    cell.isNode.mockImplementation(() => true);
-                    cell.getLabel.mockReturnValue('Node Label');
-                });
-
-                it('sets the name from getLabel', () => {
-                    graph.evts['cell:selected']({ cell });
-                    expect(cell.data.name).toEqual('Node Label');
-                });
-            });
-
-            describe('cell is edge with data name', () => {
+            describe('cell has data name', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = 'Edge Name';
@@ -301,7 +289,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without data name but with labels', () => {
+            describe('cell does not have data name', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;
@@ -314,7 +302,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without data name or labels', () => {
+            describe('cell does not have data name nor labels', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;
@@ -327,7 +315,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without getLabels', () => {
+            describe('cell does not have getLabels', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;

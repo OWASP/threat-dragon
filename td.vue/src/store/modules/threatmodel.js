@@ -199,7 +199,7 @@ const mutations = {
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         console.debug('Threatmodel diagram saved: ' + diagram.id + ' at index: ' + idx);
-        // beware: this will trigger a redraw of the diagram - possibly to the wrong canvas size
+        // beware: this will trigger a redraw of the diagram, ?possibly to the wrong canvas size?
         Vue.set(state, 'selectedDiagram', diagram);
         // beware ^^
         Vue.set(state.data.detail.diagrams, idx, diagram);
@@ -218,9 +218,6 @@ const mutations = {
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
     [THREATMODEL_MODIFIED]: (state) => {
-        if (state.modified === false) {
-            console.debug('model now modified');
-        }
         state.modified = true;
     },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => {
@@ -232,13 +229,9 @@ const mutations = {
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
-        console.debug('Threatmodel stashed');
         Vue.set(state, 'stash', JSON.stringify(state.data));
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
-        if (state.modified === true) {
-            console.debug('model now unmodified');
-        }
         state.modified = false;
     },
     [THREATMODEL_UPDATE]: (state, update) => {
