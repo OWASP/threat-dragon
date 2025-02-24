@@ -25,6 +25,7 @@
 !cupcake/png/*.png
 !cupcake/png/*.gif
 !example.env
+!minimal.env
 !package.json
 !package-lock.json
 

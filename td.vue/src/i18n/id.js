@@ -1,4 +1,4 @@
-const id = {
+const ind = {
     auth: {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
@@ -398,4 +398,4 @@ const id = {
     }
 };
 
-export default id;
+export default ind;
