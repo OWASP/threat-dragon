@@ -142,7 +142,6 @@ const actions = {
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
                 await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
@@ -150,10 +149,10 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
+            Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName, { timeout: 1000 });
         } catch (ex) {
             console.error('Failed to save threat model!');
             console.error(ex);
