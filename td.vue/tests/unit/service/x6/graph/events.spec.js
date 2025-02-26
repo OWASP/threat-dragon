@@ -35,7 +35,8 @@ describe('service/x6/graph/events.js', () => {
             data: {},
             id: 'foobar',
             position: jest.fn().mockReturnValue({ x: 1, y: 2 }),
-            setLabels: jest.fn()
+            setLabels: jest.fn(),
+            setName: jest.fn()
         };
         cell.getData.mockImplementation(() => ({ name: 'test' }));
         node = {
@@ -44,13 +45,12 @@ describe('service/x6/graph/events.js', () => {
         edge = {
             remove: jest.fn(),
             data: { name: 'edgeName' },
-            setLabels: jest.fn(),
             constructor: { name: 'Edge' }
         };
 
         // Mock shapes
         shapes.Flow = {
-            fromEdge: jest.fn().mockReturnValue({ data: { name: 'flowName' }, setLabels: jest.fn() })
+            fromEdge: jest.fn().mockReturnValue({ data: { name: 'flowName' }, setLabels: jest.fn(), setName: jest.fn() })
         };
 
         // Set up DOM

@@ -1,6 +1,5 @@
 import { Shape } from '@antv/x6';
 
-import { tc } from '@/i18n/index.js';
 import defaultProperties from '@/service/entity/default-properties';
 
 const name = 'trust-boundary-curve';
@@ -18,7 +17,7 @@ const defaultLabel = [
         ],
         attrs: {
             labelText: {
-                text: tc('threatmodel.shapes.trustBoundary'),
+                text: '',
                 textAnchor: 'middle',
                 textVerticalAnchor: 'middle',
             },
