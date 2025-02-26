@@ -34,6 +34,7 @@ const edgeConnected = (graph) => ({ edge }) => {
         graph.addEdge(flow);
         edge.remove();
         edge = flow;
+        edge.setName(edge.data.name);
     }
 };
 
@@ -84,6 +85,7 @@ const cellAdded = (graph) => ({ cell }) => {
         }
         cell.remove();
         cell = edge;
+        cell.setName(cell.data.name);
     }
 
     mouseLeave({ cell });
@@ -141,6 +143,7 @@ const cellSelected = (graph) => ({ cell }) => {
         graph.addEdge(flow);
         cell.remove();
         cell = flow;
+        cell.setName(cell.data.name);
     }
 
     store.get().dispatch(CELL_SELECTED, cell);
