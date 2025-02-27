@@ -32,6 +32,7 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
     updated.diagramType = diagram.diagramType;
+    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
     store.get().dispatch(tmActions.diagramSaved, updated);
     store.get().dispatch(tmActions.stash);
     store.get().dispatch(tmActions.notModified);
@@ -43,7 +44,6 @@ const drawGraph = (diagram, graph) => {
         console.debug('open diagram version: ' + diagram.version);
         diagram.version = appVersion;
         graph.fromJSON(diagram);
-        graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
     } else {
         console.debug('upgrade version 1.x diagram');
         upgradeAndDraw(diagram, graph);
