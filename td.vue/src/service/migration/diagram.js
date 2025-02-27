@@ -32,7 +32,6 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
     updated.diagramType = diagram.diagramType;
-    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
     store.get().dispatch(tmActions.diagramSaved, updated);
     store.get().dispatch(tmActions.stash);
     store.get().dispatch(tmActions.notModified);
