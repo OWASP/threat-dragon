@@ -68,7 +68,6 @@ TrustBoundaryCurve.prototype.setName = function (name) {
     this.setLabels([name]); // not a good look, but forces an Edge redraw
     let labels = defaultLabel;
     labels[0].attrs.labelText.text = name;
-    this.setLabels(labels);
 };
 
 TrustBoundaryCurve.prototype.updateStyle = function () {};

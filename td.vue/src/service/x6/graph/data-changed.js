@@ -43,6 +43,9 @@ const updateStyleAttrs = (cell) => {
         cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
         store.get().dispatch(THREATMODEL_MODIFIED);
+        if (cell.data.name) {
+            updateName(cell);
+        }
     }
 
     let { color, strokeDasharray, strokeWidth, sourceMarker } = styles.default;
