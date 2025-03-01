@@ -4,7 +4,7 @@ const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
-const serverApiPort = process.env.PORT || '3000';
+const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
 const PORT = process.env.APP_PORT || '8080';
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
