@@ -127,8 +127,6 @@ const cellSelected = (graph) => ({ cell }) => {
             if (labels.length && labels[0].attrs.label) {
                 cell.data.name = labels[0].attrs.label.text;
                 console.debug('Cell selected with label: ' + cell.data.name);
-            } else {
-                console.warn('Cell selected with no label');
             }
         } else {
             console.warn('Cell selected with no name');
