@@ -67,7 +67,7 @@ The github release workflow then creates the draft release and the install image
 
 ### Publish docker image
 
-Ensure the tag now exists on the [Threat Dragon Docker hub]tddock].
+Ensure the tag now exists within the [Threat Dragon Docker hub][td-dock].
 
 1. once tagged, the github workflow pushes the docker image to docker hub
 2. pull image for an X86 platform using `docker pull threatdragon/owasp-threat-dragon:v2.4.0`
@@ -95,7 +95,7 @@ docker tag threatdragon/owasp-threat-dragon:v2.4.0-arm64 owasp/threat-dragon:v2.
 docker push owasp/threat-dragon:v2.4.0-arm64
 ```
 
-ensure the tag now exists within the [OWASP Docker hub][owaspdock].
+ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
 
 ### Check demo site
 
@@ -261,10 +261,11 @@ Revert the build state back to 'latest'; this build state is displayed on the de
 [herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 [herokudash]: https://dashboard.heroku.com/apps
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
-[owaspdock]: https://hub.docker.com/r/owasp/threat-dragon/tags
+[owasp-dock]: https://hub.docker.com/r/owasp/threat-dragon/tags
 [releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
 [snapcraft]: https://snapcraft.io/install/threat-dragon/arch
 [snapdash]: https://snapcraft.io/threat-dragon/releases
+[td-dock]: https://hub.docker.com/r/threatdragon/owasp-threat-dragon/tags
 [td-info]: https://github.com/OWASP/www-project-threat-dragon/blob/main/info.md
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
 [ubuntu]: https://login.ubuntu.com/
