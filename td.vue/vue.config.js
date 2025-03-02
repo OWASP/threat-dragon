@@ -5,7 +5,7 @@ const fs = require('fs');
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
-const PORT = process.env.APP_PORT || '8080';
+const appPort = process.env.APP_PORT || '8080';
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
@@ -19,7 +19,7 @@ const devServerConfig = hasTlsCredentials
             key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
             cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
         },
-        port: PORT,
+        port: appPort,
         proxy: {
             '^/api': {
                 target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
@@ -31,7 +31,7 @@ const devServerConfig = hasTlsCredentials
     }
     : {
         // note that client webSocketURL config has been removed, as it was incompatible with desktop version
-        port: 8080,
+        port: appPort,
         proxy: {
             '^/api': {
                 target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
