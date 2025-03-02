@@ -31,7 +31,20 @@ The github release workflow will then create the release candidate along with th
 Ensure the release candidate is announced on the [OWASP Threat Dragon][td-slack] slack channel
 and any other relevant channels
 
-## Tag the release
+Reset the build state to 'latest'; this is displayed on the demo site:
+
+1. revert `buildState` in `td.vue/package.json` back to `-latest`
+2. revert version, for example `"version": "2.3.0",`, in `td.vue/package.json`,
+    in `package.json` and `td.server/package.json`
+3. ensure that the package-lock files are up to date using `npm install`
+4. `git add --all; git status`
+5. `git commit -m"set build version back to latest"`
+6. `git push`
+
+
+## Create the release
+
+### Tag the release
 
 After the releases candidate has been agreed by the Threat Dragon community, a release version can be prepared:
 
@@ -233,12 +246,12 @@ and any other relevant channels such as [Blue Sky](https://bsky.app/profile/thre
 
 ### Tidy up
 
-Reset the build state to 'latest'; this is displayed on the demo site:
+Revert the build state back to 'latest'; this build state is displayed on the demo site:
 
-1. update `buildState` in `td.vue/package.json` away from "" to `-latest`
+1. update `buildState` in `td.vue/package.json` from "" to `-latest`
 2. ensure that the package-lock files are up to date using `npm install`
 3. `git add --all; git status`
-4. `git commit -m"set latest build version"`
+4. `git commit -m"set build version to latest"`
 5. `git push`
 
 [altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
