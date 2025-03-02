@@ -3,6 +3,8 @@ const { CycloneDxWebpackPlugin } = require('@cyclonedx/webpack-plugin');
 const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
+
+// Read environment variables, specify defaults if critical values not provided
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
 const appPort = process.env.APP_PORT || '8080';
@@ -11,14 +13,25 @@ console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + server
 
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
-let port;
-// Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
-const devServerConfig = hasTlsCredentials
-    ? {
-        https: {
+
+// Configure dev server to use HTTPS if TLS configuration is valid, otherwise use HTTP
+let httpsConfig = {};
+if (hasTlsCredentials) {
+    try {
+        httpsConfig = {
             key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
             cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
-        },
+        };
+    } catch (error) {
+        console.error('Error reading TLS credential files:', error);
+        process.exit(1); // Exit the process if TLS credentials cannot be read
+    }
+}
+
+let port;
+const devServerConfig = hasTlsCredentials
+    ? {
+        https: httpsConfig,
         port: appPort,
         proxy: {
             '^/api': {
@@ -43,7 +56,7 @@ const devServerConfig = hasTlsCredentials
     };
 port = devServerConfig.port;
 
-console.log(`Running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
+console.log(`App server running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
 
 
 module.exports = {
