@@ -14,6 +14,7 @@ class ThreatDragonEnv extends Env {
     get properties () {
         return [
             { key: 'NODE_ENV', required: false, defaultValue:  'production'},
+            { key: 'SERVER_API_PORT', required: false, defaultValue: '' },
             { key: 'PORT', required: false, defaultValue: 3000 },
             { key: 'LOG_MAX_FILE_SIZE', required: false, defaultValue: 24 },
             { key: 'LOG_LEVEL', required: false, defaultValue: 'warn' },
