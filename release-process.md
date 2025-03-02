@@ -68,10 +68,11 @@ The github release workflow then creates the draft release and the install image
 ### Publish docker image
 
 Ensure the tag now exists within the [Threat Dragon Docker hub][td-dock].
+Do this after logging into an active Docker account using `docker login` from the CLI and running Docker Desktop.
 
 1. once tagged, the github workflow pushes the docker image to docker hub
-2. pull image for an X86 platform using `docker pull threatdragon/owasp-threat-dragon:v2.4.0`
-3. pull image for an ARM platform using `docker pull threatdragon/owasp-threat-dragon:v2.4.0-arm64`
+2. pull image for an X86 platform using `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.0`
+3. pull image for an ARM platform using `docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.0-arm64`
 4. Test using the command to run a detached container:
     `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.4.0`
 5. Test the ARM container as well:
@@ -88,11 +89,15 @@ docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.0
 docker tag threatdragon/owasp-threat-dragon:v2.4.0 owasp/threat-dragon:v2.4.0
 docker push owasp/threat-dragon:v2.4.0
 docker pull owasp/threat-dragon:v2.4.0
+
 docker tag owasp/threat-dragon:v2.4.0 owasp/threat-dragon:stable
 docker push owasp/threat-dragon:stable
+docker pull owasp/threat-dragon:stable
+
 docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.0-arm64
 docker tag threatdragon/owasp-threat-dragon:v2.4.0-arm64 owasp/threat-dragon:v2.4.0-arm64
 docker push owasp/threat-dragon:v2.4.0-arm64
+docker pull owasp/threat-dragon:v2.4.0-arm64
 ```
 
 ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
@@ -106,17 +111,17 @@ ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
 
 ### Checksum for Linux desktop AppImage
 
-Download desktop AppImage for Linux and the `latest-linux.yml` auto-update checksum file.
+Download desktop AppImage for Linux `Threat-Dragon-ng-2.4.0.AppImage` and the `latest-linux.yml` auto-update checksum file.
 
 Create SHA512 `checksum-linux.yml` file:
 
- ```text
+ ```bash
 grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
     hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
 echo -n " Threat-Dragon-ng-2.4.0.AppImage" >> checksum-linux.yml
 ```
 
-Check correct using: `cat checksum-linux.yml | sha512sum --check`
+Check correct using: `sha512sum --check checksum-linux.yml` and upload to release area
 
 ### Check Snap images
 
@@ -127,7 +132,7 @@ Token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this h
 Use commands to refresh creds:
 
 * `snapcraft login`
-* `snapcraft export-login --snaps threat-dragon --channels stable`
+* `snapcraft export-login --snaps threat-dragon --channels edge,latest,stable -` (note the dash for print to stdout)
 
 The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
 
@@ -140,36 +145,49 @@ The secrets for both signing and notarization can be checked by running it manua
 - provide the [code signing certs for MacOS][certs]
 - Download both x86 and arm64 files for the MacOS installer (`*.dmg` and `*.zip`)
 - ensure that the apple developer [environment is set up][notarize]
-- notarize and staple the `.dmg` file, for example with arm64 version 2.4.0:
+- notarize and staple the `Threat-Dragon-ng-2.x.x-arm64.dmg` file for arm64, using version 2.4.0 as an example:
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
     `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-arm64.dmg`
   - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.0-arm64.dmg`
-- similarly for the x86 image `Threat-Dragon-ng-2.4.0.dmg`
-- notarize the application in the`.zip` file, for example with arm64 version 2.4.0:
+- similarly for the x86 image `Threat-Dragon-ng-2.x.x.dmg` :
+  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0.dmg`
+  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.0.dmg`
+- notarize the application in both`.zip` files, for example using version 2.4.0:
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
     `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-arm64-mac.zip`
-  - unzip the file to obtainn the application directory `Threat-Dragon-ng.app`
-  - check notarization worked with: `spctl -a -v Threat-Dragon-ng.app`
-  - staple the applications with: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
-  - zip the application directory to get `Threat-Dragon-ng.zip`
-  - rename `Threat-Dragon-ng.zip` to `Threat-Dragon-ng-2.4.0-arm64-mac.zip`
-- similarly for the x86 application `Threat-Dragon-ng-2.4.0-mac.zip`
+  - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
+  - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
+  - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
+  - zip the application directory to get: `Threat-Dragon-ng.zip`
+  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.0-arm64-mac.zip`
+- similarly for the x86 application `zip` file :
+  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-mac.zip`
+  - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
+  - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
+  - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
+  - zip the application directory to get: `Threat-Dragon-ng.zip`
+  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.0-mac.zip`
 
 Fix up the checksums in `latest-mac.yml` values using script:
 
-```text
+```bash
 echo -n "  - url: Threat-Dragon-ng-2.4.0-mac.zip\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-mac.zip | openssl base64 -A
 echo -n "\n    size: "
 ls -l Threat-Dragon-ng-2.4.0-mac.zip | cut -d " " -f 7
+
 echo -n "\n  - url: Threat-Dragon-ng-2.4.0-arm64-mac.zip\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-arm64-mac.zip | openssl base64 -A
 echo -n "\n    size: "
 ls -l Threat-Dragon-ng-2.4.0-arm64-mac.zip | cut -d " " -f 7
+
 echo -n "\n  - url: Threat-Dragon-ng-2.4.0.dmg\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0.dmg | openssl base64 -A
 echo -n "\n    size: "
 ls -l Threat-Dragon-ng-2.4.0.dmg | cut -d " " -f 7
+
 echo -n "\n  - url: Threat-Dragon-ng-2.4.0-arm64.dmg\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-arm64.dmg | openssl base64 -A
 echo -n "\n    size: "
@@ -181,7 +199,8 @@ Create the checksum files:
 - `sha512sum Threat-Dragon-ng-2.4.0.dmg > checksum-mac.yml`
 - `sha512sum Threat-Dragon-ng-2.4.0-arm64.dmg > checksum-mac-arm64.yml`
 
-upload files into the new release
+Upload files into the new release.
+Note that the original files of the same name need to be removed first.
 
 ### Code sign Windows installer
 
@@ -212,15 +231,18 @@ Fix up the file `latest.yml` with the correct size and the SHA256 value given by
 
 - `openssl dgst -binary -sha512 Threat-Dragon-ng-Setup-2.4.0.exe | openssl base64 -A`
 
+Upload files `Threat-Dragon-ng-Setup-2.4.0.exe`, `checksum.yml` and `latest.yml` into the new release.
+Note that the original files of the same name need to be removed first.
+
 ### Confirm desktop checksums
 
 Confirm SHA512 with:
 
 ```text
-cat checksum-linux.yml | sha512sum --check
-cat checksum.yml | sha512sum --check
-cat checksum-mac.yml | sha512sum --check
-cat checksum-mac-arm64.yml | sha512sum --check
+sha512sum --check checksum-linux.yml
+sha512sum --check checksum.yml
+sha512sum --check checksum-mac.yml
+sha512sum --check checksum-mac-arm64.yml
 ```
 
 Upload `checksum*.yml` files to the draft release.
