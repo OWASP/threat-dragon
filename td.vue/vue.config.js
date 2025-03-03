@@ -28,7 +28,6 @@ if (hasTlsCredentials) {
     }
 }
 
-let port;
 const devServerConfig = hasTlsCredentials
     ? {
         https: httpsConfig,
@@ -54,9 +53,8 @@ const devServerConfig = hasTlsCredentials
         },
         allowedHosts: [appHostname],
     };
-port = devServerConfig.port;
 
-console.log(`App server running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
+console.log(`App server running on ${hasTlsCredentials ? `HTTPS (Port ${devServerConfig.port})` : `HTTP (Port ${devServerConfig.port})`}`);
 
 
 module.exports = {
