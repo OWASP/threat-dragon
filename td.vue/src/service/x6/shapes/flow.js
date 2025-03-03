@@ -1,5 +1,6 @@
 import { Shape } from '@antv/x6';
 
+import { tc } from '@/i18n/index.js';
 import defaultProperties from '@/service/entity/default-properties';
 
 const name = 'flow';
@@ -10,52 +11,14 @@ export const Flow = Shape.Edge.define({
     width: 200,
     height: 100,
     zIndex: 10,
+    label: tc('threatmodel.shapes.flow'),
     attrs: {
         line: {
             strokeWidth: 1.5,
             sourceMarker: null,
             targetMarker: 'block'
-        },
-        rect: {
-            fill: 'none',
-            stroke: 'none'
-        },
+        }
     },
-    labels: [
-	    {
-	        markup: [
-	            {
-	                tagName: 'ellipse',
-	                selector: 'labelBody',
-	            },
-	            {
-	                tagName: 'text',
-	                selector: 'labelText',
-	            },
-	        ],
-	        attrs: {
-	            labelText: {
-	                text: '',
-	                textAnchor: 'middle',
-	                textVerticalAnchor: 'middle',
-	            },
-	            labelBody: {
-	                ref: 'labelText',
-	                refRx: '50%',
-	                refRy: '60%',
-	                fill: '#fff',
-	                strokeWidth: 0,
-	            },
-	        },
-	        position: {
-	            distance: 0.5,
-	            args: {
-	                keepGradient: true,
-	                ensureLegibility: true,
-	            }
-	        },
-	    }
-    ],
     connector: 'smooth',
     data: defaultProperties.flow
 });
@@ -63,11 +26,7 @@ export const Flow = Shape.Edge.define({
 Flow.prototype.type = 'tm.Flow';
 
 Flow.prototype.setName = function(name) {
-    let newLabel = 	this.getLabels();
-    this.setLabels([name]); // updates the label as it is being written
-    newLabel[0].attrs.labelText.text = name;
-    // set the label so that it can be grabbed and also has white space
-    this.setLabels(newLabel);
+    this.setLabels([name]);
 };
 
 Flow.prototype.updateStyle = function(color, dash, strokeWidth, sourceMarker) {
