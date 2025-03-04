@@ -1,7 +1,5 @@
 import { Shape } from '@antv/x6';
 
-import { tc } from '@/i18n/index.js';
-
 const name = 'trust-boundary-box';
 
 // trust boundary box (dotted line, transparent background)
@@ -20,7 +18,7 @@ export const TrustBoundaryBox = Shape.Rect.define({
             fillOpacity: 0
         },
         label: {
-            text: tc('threatmodel.shapes.trustBoundary'),
+            text: '',
             textAnchor : 'bottom',
             textVerticalAnchor : 'top',
             refX: '15%',
