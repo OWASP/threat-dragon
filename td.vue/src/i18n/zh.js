@@ -353,7 +353,7 @@ const zho = {
             mitigated: '缓解'
         },
         priority: {
-            tba: '待定',
+            tbd: '待定',
             low: '低',
             medium: '中',
             high: '高',
@@ -382,7 +382,7 @@ const zho = {
             openHigh: '未解决/高优先级',
             openMedium: '未解决/中优先级',
             openLow: '未解决/低优先级',
-            openTba: '未解决/待定优先级',
+            openTbd: '未解决/待定优先级',
             openUnknown: '未解决/未知优先级'
         }
     },

@@ -353,7 +353,7 @@ const fra = {
             mitigated: 'Mitigé'
         },
         priority: {
-            tba: 'à venir',
+            tbd: 'à venir',
             low: 'Faible',
             medium: 'Moyen',
             high: 'Élevé',
@@ -382,7 +382,7 @@ const fra = {
             openHigh: 'Ouvert / Haute Priorité',
             openMedium: 'Ouvert / Moyenne Priorité',
             openLow: 'Ouvert / Faible Priorité',
-            openTba: 'Ouvert / Priorité à déterminer',
+            openTbd: 'Ouvert / Priorité à déterminer',
             openUnknown: 'Ouvert / Priorité Inconnue'
         }
     },

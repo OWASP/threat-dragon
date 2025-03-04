@@ -352,7 +352,7 @@ const spa = {
             mitigated: 'Mitigado'
         },
         priority: {
-            tba: 'Por confirmar',
+            tbd: 'Por confirmar',
             low: 'Baja',
             medium: 'Media',
             high: 'Alta',
@@ -381,7 +381,7 @@ const spa = {
             openHigh: 'Abierto / Alta Prioridad',
             openMedium: 'Abierto / Prioridad Media',
             openLow: 'Abierto / Baja Prioridad',
-            openTba: 'Abierto / Por confirmar Prioridad',
+            openTbd: 'Abierto / Por confirmar Prioridad',
             openUnknown: 'Abierto / Prioridad Desconocida'
         }
     },

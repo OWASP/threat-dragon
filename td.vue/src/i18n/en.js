@@ -359,7 +359,7 @@ const eng = {
             mitigated: 'Mitigated'
         },
         priority: {
-            tba: 'TBA',
+            tbd: 'TBD',
             low: 'Low',
             medium: 'Medium',
             high: 'High',
@@ -388,7 +388,7 @@ const eng = {
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',
             openLow: 'Open / Low Priority',
-            openTba: 'Open / TBA Priority',
+            openTbd: 'Open / TBD Priority',
             openUnknown: 'Open / Unknown Priority'
         }
     },

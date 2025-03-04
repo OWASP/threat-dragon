@@ -349,7 +349,7 @@ const jpn = {
             mitigated: '解決済み'
         },
         priority: {
-            tba: '未定',
+            tbd: '未定',
             low: '低',
             medium: '中',
             high: '高',
@@ -378,7 +378,7 @@ const jpn = {
             openHigh: '未対応 / 高優先度',
             openMedium: '未対応 / 中優先度',
             openLow: '未対応 / 低優先度',
-            openTba: '未対応 / 優先度は未定',
+            openTbd: '未対応 / 優先度は未定',
             openUnknown: '未対応 / 優先度不明'
         }
     },

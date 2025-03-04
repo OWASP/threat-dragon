@@ -353,7 +353,7 @@ const fin = {
             mitigated: 'Hallittu'
         },
         priority: {
-            tba: 'TBA',
+            tbd: 'TBD',
             low: 'Alhainen',
             medium: 'Keskitaso',
             high: 'Korkea',
@@ -382,7 +382,7 @@ const fin = {
             openHigh: 'Avoin / Korkea tärkeys',
             openMedium: 'Avoin / Keskitason tärkeys',
             openLow: 'Avoin / Alhainen tärkeys',
-            openTba: 'Avoin / TBA tärkeys',
+            openTbd: 'Avoin / TBD tärkeys',
             openUnknown: 'Avoin / Tuntematon tärkeys'
         }
     },

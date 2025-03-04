@@ -353,7 +353,7 @@ const hin = {
             mitigated: 'शमन'
         },
         priority: {
-            tba: 'टीबीए',
+            tbd: 'टीबीए',
             low: 'कम',
             medium: 'मध्यम',
             high: 'ऊँचा',
@@ -382,7 +382,7 @@ const hin = {
             openHigh: 'ओपन / हाई प्रायोरिटी',
             openMedium: 'ओपन / मीडियम प्रायोरिटी',
             openLow: 'ओपन / लो प्रायोरिटी',
-            openTba: 'ओपन / टीबीए प्राथमिकता',
+            openTbd: 'ओपन / टीबीए प्राथमिकता',
             openUnknown: 'खुला / अज्ञात प्राथमिकता'
         }
     },

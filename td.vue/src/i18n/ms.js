@@ -354,7 +354,7 @@ const ms = {
             mitigated: 'Ditangani'
         },
         priority: {
-            tba: 'TBA',
+            tbd: 'TBD',
             low: 'Rendah',
             medium: 'Sederhana',
             high: 'Tinggi',
@@ -383,7 +383,7 @@ const ms = {
             openHigh: 'Buka / Keutamaan Tinggi',
             openMedium: 'Buka / Keutamaan Sederhana',
             openLow: 'Buka / Keutamaan Rendah',
-            openTba: 'Buka / Keutamaan TBA',
+            openTbd: 'Buka / Keutamaan TBD',
             openUnknown: 'Buka / Keutamaan Tidak Diketahui'
         }
     },
