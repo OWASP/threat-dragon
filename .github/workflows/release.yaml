@@ -326,7 +326,9 @@ jobs:
 
       - name: Upload to Snap Store
         shell: bash
-        run: snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
+        run: |
+          ls -l dist-desktop/threat-dragon*.snap
+          snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
 
       - name: Print logs on error
         if: ${{ failure() }}
