@@ -36,20 +36,6 @@ describe('env/ThreatDragon.js', () => {
         expect(value).to.equal('production');
     });
 
-    it('has the optional property SERVER_API_PORT', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'SERVER_API_PORT')
-            .required;
-        expect(isRequired).to.be.false;
-    });
-
-    it('has a default value for property SERVER_API_PORT', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'SERVER_API_PORT')
-            .defaultValue;
-        expect(value).to.equal('');
-    });
-
     it('has the optional property PORT', () => {
         const isRequired = tdEnv.properties
             .find(x => x.key === 'PORT')
