@@ -10,19 +10,19 @@ For example if RC1, but change for RC2 and so on :
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version, for example `"version": "2.4.0-RC1",`, in `td.vue/package.json`
+3. update version, for example `"version": "2.4.1-RC1",`, in `td.vue/package.json`
 4. ensure `buildState` in `td.vue/package.json` is "" (empty)
-5. update version, for example `"version": "2.4.0-RC1",`, in `package.json` and `td.server/package.json`
+5. update version, for example `"version": "2.4.1-RC1",`, in `package.json` and `td.server/package.json`
 6. update package lock files: `npm install`
 7. `npm run build`
 8. `npm test`
 9. `npm run test:vue`
 10. ensure that the package-lock files are up to date using `npm install`
 11. `git add --all; git status`
-12. `git commit -m"release candidate 2.4.0-RC1"`
+12. `git commit -m"release candidate 2.4.1-RC1"`
 13. `git push`
-14. tag the release `git tag v2.4.0-RC1`
-15. `git push origin v2.4.0-RC1`
+14. tag the release `git tag v2.4.1-RC1`
+15. `git push origin v2.4.1-RC1`
 
 repeat as necessary for further release candidates.
 
@@ -50,7 +50,7 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
-3. update version eg `"version": "2.4.0",`, in `package.json`, `td.vue/package.json` and `td.server/package.json`
+3. update version eg `"version": "2.4.1",`, in `package.json`, `td.vue/package.json` and `td.server/package.json`
 4. update `buildState` in `td.vue/package.json` away from `-latest` to "" (empty)
 5. update package lock files: `npm install`
 6. `npm run build`
@@ -58,10 +58,10 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 8. `npm run test:vue`
 9. ensure that the package-lock files are up to date using `npm install`
 10. `git add --all; git status`
-11. `git commit -m"release version 2.4.0"`
+11. `git commit -m"release version 2.4.1"`
 12. `git push`
-13. tag the release `git tag v2.4.0`
-14. `git push origin v2.4.0`
+13. tag the release `git tag v2.4.1`
+14. `git push origin v2.4.1`
 
 The github release workflow then creates the draft release and the install images
 
@@ -71,33 +71,33 @@ Ensure the tag now exists within the [Threat Dragon Docker hub][td-dock].
 Do this after logging into an active Docker account using `docker login` from the CLI and running Docker Desktop.
 
 1. once tagged, the github workflow pushes the docker image to docker hub
-2. pull image for an X86 platform using `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.0`
-3. pull image for an ARM platform using `docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.0-arm64`
+2. pull image for an X86 platform using `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.1`
+3. pull image for an ARM platform using `docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.1-arm64`
 4. Test using the command to run a detached container:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.4.0`
+    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.4.1`
 5. Test the ARM container as well:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.4.0-arm64`
+    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.4.1-arm64`
 6. Ideally test these releases on Windows, linux and MacOS using `http://localhost:8080/#/`
 
 If the image tests correctly, promote the docker image from dockerhub `threatdragon/`
-to dockerhub `OWASP/threat-dragon/v2.4.0` and `OWASP/threat-dragon/v2.4.0-arm64`.
+to dockerhub `OWASP/threat-dragon/v2.4.1` and `OWASP/threat-dragon/v2.4.1-arm64`.
 
 There is _no going back_ on these steps, so they are deliberately left as manual tasks:
 
 ```text
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.0
-docker tag threatdragon/owasp-threat-dragon:v2.4.0 owasp/threat-dragon:v2.4.0
-docker push owasp/threat-dragon:v2.4.0
-docker pull owasp/threat-dragon:v2.4.0
+docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.4.1
+docker tag threatdragon/owasp-threat-dragon:v2.4.1 owasp/threat-dragon:v2.4.1
+docker push owasp/threat-dragon:v2.4.1
+docker pull owasp/threat-dragon:v2.4.1
 
-docker tag owasp/threat-dragon:v2.4.0 owasp/threat-dragon:stable
+docker tag owasp/threat-dragon:v2.4.1 owasp/threat-dragon:stable
 docker push owasp/threat-dragon:stable
 docker pull owasp/threat-dragon:stable
 
-docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.0-arm64
-docker tag threatdragon/owasp-threat-dragon:v2.4.0-arm64 owasp/threat-dragon:v2.4.0-arm64
-docker push owasp/threat-dragon:v2.4.0-arm64
-docker pull owasp/threat-dragon:v2.4.0-arm64
+docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.4.1-arm64
+docker tag threatdragon/owasp-threat-dragon:v2.4.1-arm64 owasp/threat-dragon:v2.4.1-arm64
+docker push owasp/threat-dragon:v2.4.1-arm64
+docker pull owasp/threat-dragon:v2.4.1-arm64
 ```
 
 ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
@@ -111,14 +111,14 @@ ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
 
 ### Checksum for Linux desktop AppImage
 
-Download desktop AppImage for Linux `Threat-Dragon-ng-2.4.0.AppImage` and the `latest-linux.yml` auto-update checksum file.
+Download desktop AppImage for Linux `Threat-Dragon-ng-2.4.1.AppImage` and the `latest-linux.yml` auto-update checksum file.
 
 Create SHA512 `checksum-linux.yml` file:
 
  ```bash
 grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
     hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
-echo -n " Threat-Dragon-ng-2.4.0.AppImage" >> checksum-linux.yml
+echo -n " Threat-Dragon-ng-2.4.1.AppImage" >> checksum-linux.yml
 ```
 
 Check correct using: `sha512sum --check checksum-linux.yml` and upload to release area
@@ -145,59 +145,59 @@ The secrets for both signing and notarization can be checked by running it manua
 - provide the [code signing certs for MacOS][certs]
 - Download both x86 and arm64 files for the MacOS installer (`*.dmg` and `*.zip`)
 - ensure that the apple developer [environment is set up][notarize]
-- notarize and staple the `Threat-Dragon-ng-2.x.x-arm64.dmg` file for arm64, using version 2.4.0 as an example:
+- notarize and staple the `Threat-Dragon-ng-2.x.x-arm64.dmg` file for arm64, using version 2.4.1 as an example:
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-arm64.dmg`
-  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.0-arm64.dmg`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.1-arm64.dmg`
+  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.1-arm64.dmg`
 - similarly for the x86 image `Threat-Dragon-ng-2.x.x.dmg` :
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0.dmg`
-  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.0.dmg`
-- notarize the application in both`.zip` files, for example using version 2.4.0:
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.1.dmg`
+  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.4.1.dmg`
+- notarize the application in both`.zip` files, for example using version 2.4.1:
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-arm64-mac.zip`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.1-arm64-mac.zip`
   - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
   - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
   - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
   - zip the application directory to get: `Threat-Dragon-ng.zip`
-  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.0-arm64-mac.zip`
+  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.1-arm64-mac.zip`
 - similarly for the x86 application `zip` file :
   - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.0-mac.zip`
+    `--password <password> --verbose --wait Threat-Dragon-ng-2.4.1-mac.zip`
   - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
   - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
   - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
   - zip the application directory to get: `Threat-Dragon-ng.zip`
-  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.0-mac.zip`
+  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.4.1-mac.zip`
 
 Fix up the checksums in `latest-mac.yml` values using script:
 
 ```bash
-echo -n "  - url: Threat-Dragon-ng-2.4.0-mac.zip\n    sha512: "
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-mac.zip | openssl base64 -A
+echo -n "  - url: Threat-Dragon-ng-2.4.1-mac.zip\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-mac.zip | openssl base64 -A
 echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.0-mac.zip | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-mac.zip | cut -d " " -f 7
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.0-arm64-mac.zip\n    sha512: "
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-arm64-mac.zip | openssl base64 -A
+echo -n "\n  - url: Threat-Dragon-ng-2.4.1-arm64-mac.zip\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-arm64-mac.zip | openssl base64 -A
 echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.0-arm64-mac.zip | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-arm64-mac.zip | cut -d " " -f 7
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.0.dmg\n    sha512: "
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0.dmg | openssl base64 -A
+echo -n "\n  - url: Threat-Dragon-ng-2.4.1.dmg\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1.dmg | openssl base64 -A
 echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.0.dmg | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1.dmg | cut -d " " -f 7
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.0-arm64.dmg\n    sha512: "
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.0-arm64.dmg | openssl base64 -A
+echo -n "\n  - url: Threat-Dragon-ng-2.4.1-arm64.dmg\n    sha512: "
+openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-arm64.dmg | openssl base64 -A
 echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.0-arm64.dmg | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-arm64.dmg | cut -d " " -f 7
 ```
 
 Create the checksum files:
 
-- `sha512sum Threat-Dragon-ng-2.4.0.dmg > checksum-mac.yml`
-- `sha512sum Threat-Dragon-ng-2.4.0-arm64.dmg > checksum-mac-arm64.yml`
+- `sha512sum Threat-Dragon-ng-2.4.1.dmg > checksum-mac.yml`
+- `sha512sum Threat-Dragon-ng-2.4.1-arm64.dmg > checksum-mac-arm64.yml`
 
 Upload files into the new release.
 Note that the original files of the same name need to be removed first.
@@ -223,15 +223,15 @@ The latest certificate is provided using Certum's Open Source certificate:
 4. ensure Powershell has the `signtool` utility installed from Windows SDK
 5. right click the icon in the desktop tray to select ‘Connect to SimplySign’
 6. gain a thumbprint from desktop tray icon, Manage certificates → Certificate list → Details → Thumbprint
-7. `signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v "Threat-Dragon-ng-Setup-2.4.0.exe" `
+7. `signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v "Threat-Dragon-ng-Setup-2.4.1.exe" `
 
-Once signed create the checksum file: `sha512sum Threat-Dragon-ng-Setup-2.4.0.exe > checksum.yml`
+Once signed create the checksum file: `sha512sum Threat-Dragon-ng-Setup-2.4.1.exe > checksum.yml`
 
 Fix up the file `latest.yml` with the correct size and the SHA256 value given by:
 
-- `openssl dgst -binary -sha512 Threat-Dragon-ng-Setup-2.4.0.exe | openssl base64 -A`
+- `openssl dgst -binary -sha512 Threat-Dragon-ng-Setup-2.4.1.exe | openssl base64 -A`
 
-Upload files `Threat-Dragon-ng-Setup-2.4.0.exe`, `checksum.yml` and `latest.yml` into the new release.
+Upload files `Threat-Dragon-ng-Setup-2.4.1.exe`, `checksum.yml` and `latest.yml` into the new release.
 Note that the original files of the same name need to be removed first.
 
 ### Confirm desktop checksums
@@ -255,7 +255,7 @@ Edit the 'What's Changed' to filter out any chores.
 
 Then update the release notes for the draft in the [Threat Dragon release area][area]
 using the release notes using markdown provided by `.release-note-template.md` as a template,
-making sure to revise `2.x.x` to the correct version number such as `2.4.0`
+making sure to revise `2.x.x` to the correct version number such as `2.4.1`
 
 Once everything is in place promote the release from 'draft' to 'public' and 'latest'
 
