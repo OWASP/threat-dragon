@@ -121,14 +121,18 @@ grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
 echo -n " Threat-Dragon-ng-2.4.1.AppImage" >> checksum-linux.yml
 ```
 
-Check correct using: `sha512sum --check checksum-linux.yml` and upload to release area
+Check correct using: `sha512sum --check checksum-linux.yml`
+and upload `checksum-linux.yml` file to the release area.
 
 ### Check Snap images
 
-Ensure that Threat Dragon is updated on [Snapcraft][snapcraft].
-This is also accessible using [Ubuntu One][ubuntu], check the release is current on the [dashboard][snapdash].
+Ensure that Threat Dragon is updated on [Snapcraft][snapcraft],
+also accessible using [Ubuntu One][ubuntu].
 
-Token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
+Check the release is current on the [dashboard][snapdash],
+if necessary use the dashboard to promote the latest release to 'stable'.
+
+The token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
 Use commands to refresh creds:
 
 * `snapcraft login`
@@ -173,25 +177,17 @@ The secrets for both signing and notarization can be checked by running it manua
 Fix up the checksums in `latest-mac.yml` values using script:
 
 ```bash
-echo -n "  - url: Threat-Dragon-ng-2.4.1-mac.zip\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-mac.zip | openssl base64 -A
-echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.1-mac.zip | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-mac.zip
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.1-arm64-mac.zip\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-arm64-mac.zip | openssl base64 -A
-echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.1-arm64-mac.zip | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-arm64-mac.zip
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.1.dmg\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1.dmg | openssl base64 -A
-echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.1.dmg | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1.dmg
 
-echo -n "\n  - url: Threat-Dragon-ng-2.4.1-arm64.dmg\n    sha512: "
 openssl dgst -binary -sha512 Threat-Dragon-ng-2.4.1-arm64.dmg | openssl base64 -A
-echo -n "\n    size: "
-ls -l Threat-Dragon-ng-2.4.1-arm64.dmg | cut -d " " -f 7
+ls -l Threat-Dragon-ng-2.4.1-arm64.dmg 
 ```
 
 Create the checksum files:
@@ -199,7 +195,16 @@ Create the checksum files:
 - `sha512sum Threat-Dragon-ng-2.4.1.dmg > checksum-mac.yml`
 - `sha512sum Threat-Dragon-ng-2.4.1-arm64.dmg > checksum-mac-arm64.yml`
 
-Upload files into the new release.
+Upload files into the new release:
+
+- `Threat-Dragon-ng-2.4.1-mac.zip`
+- `Threat-Dragon-ng-2.4.1-arm64-mac.zip`
+- `Threat-Dragon-ng-2.4.1.dmg`
+- `Threat-Dragon-ng-2.4.1-arm64.dmg`
+- `checksum-mac.yml`
+- `checksum-mac-arm64.yml`
+- `latest-mac.yml`
+
 Note that the original files of the same name need to be removed first.
 
 ### Code sign Windows installer

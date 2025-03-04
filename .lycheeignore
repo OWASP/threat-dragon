@@ -22,6 +22,3 @@ https://www.linddun.org/
 
 # Too many redirects: error following redirect for docker tags
 https://hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon/tags
-
-# this may not be available for drafts
-https://github.com/OWASP/threat-dragon/compare

@@ -44,7 +44,7 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
-  "buildState": "",
+  "buildState": "-latest",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
