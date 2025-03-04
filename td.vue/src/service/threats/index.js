@@ -110,7 +110,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
         id: v4(),
         title,
         status: 'Open',
-        severity: 'TBA',
+        severity: 'TBD',
         type,
         description: tc('threats.description'),
         mitigation: tc('threats.mitigation'),

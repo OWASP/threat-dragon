@@ -353,7 +353,7 @@ const por = {
             mitigated: 'Mitigated'
         },
         priority: {
-            tba: 'TBA',
+            tbd: 'TBD',
             low: 'Low',
             medium: 'Medium',
             high: 'High',
@@ -382,7 +382,7 @@ const por = {
             openHigh : 'Abrir / Alta Prioridade',
             openMedium : 'Abrir / Prioridade Média',
             openLow : 'Abrir / Baixa Prioridade',
-            openTba : 'Abrir / TBA Prioridade',
+            openTbd : 'Abrir / TBD Prioridade',
             openUnknown : 'Prioridade Aberta / Desconhecida'
         }
     },

@@ -353,7 +353,7 @@ const deu = {
             mitigated: 'Abgeschwächt'
         },
         priority: {
-            tba: '',
+            tbd: '',
             low: 'Niedrig',
             medium: 'Mittel',
             high: 'Hoch',
@@ -382,7 +382,7 @@ const deu = {
             openHigh: 'Offen / Hohe Priorität',
             openMedium: 'Offen / Mittlere Priorität',
             openLow: 'Offen / Niedrige Priorität',
-            openTba: 'Offen / TBA-Priorität',
+            openTbd: 'Offen / TBD-Priorität',
             openUnknown: 'Offen / Unbekannte Priorität'
         }
     },

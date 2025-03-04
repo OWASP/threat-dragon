@@ -353,7 +353,7 @@ const ind = {
             mitigated: 'Diredam'
         },
         priority: {
-            tba: 'TBA',
+            tbd: 'TBD',
             low: 'Rendah',
             medium: 'Sedang',
             high: 'Tinggi',
@@ -382,7 +382,7 @@ const ind = {
             openHigh: 'Terbuka / Prioritas Tinggi',
             openMedium: 'Terbuka / Prioritas Sedang',
             openLow: 'Terbuka / Prioritas Rendah',
-            openTba: 'Terbuka / Prioritas TBA',
+            openTbd: 'Terbuka / Prioritas TBD',
             openUnknown: 'Terbuka / Prioritas Tidak Diketahui'
         }
     },
