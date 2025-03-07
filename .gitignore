@@ -125,6 +125,7 @@
 !td.vue/src/service/api/*.js
 !td.vue/src/service/demo/
 !td.vue/src/service/demo/*.js
+!td.vue/src/service/demo/*.json
 !td.vue/src/service/entity/
 !td.vue/src/service/entity/*.js
 !td.vue/src/service/migration/
