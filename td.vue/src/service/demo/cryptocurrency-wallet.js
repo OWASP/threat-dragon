@@ -1,5 +1,5 @@
 export default {
-    'version': '2.4.0',
+    'version': '2.3.0',
     'summary': {
         'title': 'Cryptocurrency Wallet',
         'owner': 'A development team',
@@ -25,7 +25,7 @@ export default {
                 'diagramType': 'CIA',
                 'placeholder': 'New CIA diagram description',
                 'thumbnail': './public/content/images/thumbnail.cia.jpg',
-                'version': '2.4.0',
+                'version': '2.3.0',
                 'cells': [
                     {
                         'position': {
@@ -43,8 +43,8 @@ export default {
                         },
                         'visible': true,
                         'shape': 'trust-boundary-box',
-                        'id': '3145b6c6-ca4d-467f-9403-ac3dfcb1f3b7',
                         'zIndex': -1,
+                        'id': '3145b6c6-ca4d-467f-9403-ac3dfcb1f3b7',
                         'data': {
                             'type': 'tm.BoundaryBox',
                             'description': '',
@@ -94,6 +94,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'actor',
+                        'zIndex': 2,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -177,7 +178,6 @@ export default {
                             ]
                         },
                         'id': '5d8ae00f-c733-45ca-94e2-bb8396b28740',
-                        'zIndex': 2,
                         'data': {
                             'type': 'tm.Actor',
                             'name': 'Actor',
@@ -210,6 +210,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 3,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -293,7 +294,6 @@ export default {
                             ]
                         },
                         'id': 'ddd7882f-e3d2-404a-aacd-593e5c0792dd',
-                        'zIndex': 3,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'GUI',
@@ -329,6 +329,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 4,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -412,7 +413,6 @@ export default {
                             ]
                         },
                         'id': '4be7fe20-8ae5-450f-aac4-78f94e73de76',
-                        'zIndex': 4,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'wallet',
@@ -448,6 +448,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 5,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -531,7 +532,6 @@ export default {
                             ]
                         },
                         'id': '474d7a5e-e8de-443d-9c22-36fdf8eb0843',
-                        'zIndex': 5,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Daemon',
@@ -1195,74 +1195,6 @@ export default {
                             'port': '0d9330b1-3d69-4ff9-8958-070477cc5e4c'
                         },
                         'vertices': []
-                    },
-                    {
-                        'shape': 'trust-boundary-curve',
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
-                            {
-                                'markup': [
-                                    {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
-                                    },
-                                    {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
-                                    }
-                                ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Internet',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
-                                    },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
-                                    }
-                                },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
-                                    }
-                                }
-                            }
-                        ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Boundary',
-                            'name': 'Internet',
-                            'description': '',
-                            'isTrustBoundary': true,
-                            'hasOpenThreats': false
-                        },
-                        'id': '359fe142-a818-4445-839e-c1820a42c5cf',
-                        'source': {
-                            'x': 820,
-                            'y': -30
-                        },
-                        'target': {
-                            'x': 620,
-                            'y': 940
-                        },
-                        'vertices': [
-                            {
-                                'x': 780,
-                                'y': 400
-                            },
-                            {
-                                'x': 750,
-                                'y': 750
-                            }
-                        ]
                     },
                     {
                         'shape': 'flow',
@@ -1968,6 +1900,74 @@ export default {
                         ]
                     },
                     {
+                        'shape': 'trust-boundary-curve',
+                        'width': 200,
+                        'height': 100,
+                        'zIndex': 10,
+                        'labels': [
+                            {
+                                'markup': [
+                                    {
+                                        'tagName': 'ellipse',
+                                        'selector': 'labelBody'
+                                    },
+                                    {
+                                        'tagName': 'text',
+                                        'selector': 'labelText'
+                                    }
+                                ],
+                                'attrs': {
+                                    'labelText': {
+                                        'text': 'Internet',
+                                        'textAnchor': 'middle',
+                                        'textVerticalAnchor': 'middle'
+                                    },
+                                    'labelBody': {
+                                        'ref': 'labelText',
+                                        'refRx': '50%',
+                                        'refRy': '60%',
+                                        'fill': '#fff',
+                                        'strokeWidth': 0
+                                    }
+                                },
+                                'position': {
+                                    'distance': 0.5,
+                                    'args': {
+                                        'keepGradient': true,
+                                        'ensureLegibility': true
+                                    }
+                                }
+                            }
+                        ],
+                        'connector': 'smooth',
+                        'data': {
+                            'type': 'tm.Boundary',
+                            'name': 'Internet',
+                            'description': '',
+                            'isTrustBoundary': true,
+                            'hasOpenThreats': false
+                        },
+                        'id': '359fe142-a818-4445-839e-c1820a42c5cf',
+                        'source': {
+                            'x': 820,
+                            'y': 40
+                        },
+                        'target': {
+                            'x': 620,
+                            'y': 940
+                        },
+                        'vertices': [
+                            {
+                                'x': 780,
+                                'y': 400
+                            },
+                            {
+                                'x': 750,
+                                'y': 750
+                            }
+                        ]
+                    },
+                    {
                         'position': {
                             'x': 315,
                             'y': 517
@@ -1988,6 +1988,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 11,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2071,7 +2072,6 @@ export default {
                             ]
                         },
                         'id': 'd451d00f-7f93-4b8e-99f4-469aaddb271b',
-                        'zIndex': 11,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Browser',
@@ -2107,6 +2107,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 12,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2190,7 +2191,6 @@ export default {
                             ]
                         },
                         'id': '3c8c5cb4-4973-454c-b561-3a1f1c737f6a',
-                        'zIndex': 12,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Mobile App',
@@ -2226,6 +2226,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 13,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2309,7 +2310,6 @@ export default {
                             ]
                         },
                         'id': '8d84ce52-50f9-467e-b7dd-732b1f3e9c4c',
-                        'zIndex': 13,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Trading Bot',
@@ -2345,6 +2345,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 14,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2428,7 +2429,6 @@ export default {
                             ]
                         },
                         'id': '3ed55b75-758d-4c2e-9381-67297b81349e',
-                        'zIndex': 14,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'ElectrumX',
@@ -2464,6 +2464,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'actor',
+                        'zIndex': 15,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2547,7 +2548,6 @@ export default {
                             ]
                         },
                         'id': '3258392b-4882-4566-8b62-5813702f27b6',
-                        'zIndex': 15,
                         'data': {
                             'type': 'tm.Actor',
                             'name': 'Blockchain',
@@ -2580,6 +2580,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 16,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2663,7 +2664,6 @@ export default {
                             ]
                         },
                         'id': '9b88cf3a-5bf8-42da-b7a3-5756a7412304',
-                        'zIndex': 16,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Exchange\nWeb Site',
@@ -2699,6 +2699,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 17,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2782,7 +2783,6 @@ export default {
                             ]
                         },
                         'id': 'abf79300-add9-47ff-bb5f-1559aebba405',
-                        'zIndex': 17,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Exchange\nBackend',
@@ -2818,6 +2818,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 18,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -2901,7 +2902,6 @@ export default {
                             ]
                         },
                         'id': '253870a2-b372-4419-95d0-5b05640e9723',
-                        'zIndex': 18,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Exchange\nAPI',
@@ -2940,6 +2940,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'store',
+                        'zIndex': 19,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -3023,7 +3024,6 @@ export default {
                             ]
                         },
                         'id': 'c8b51733-6465-4a45-aeee-b4c38d2fcf2c',
-                        'zIndex': 19,
                         'data': {
                             'type': 'tm.Store',
                             'name': 'MongoDB',
@@ -3063,6 +3063,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'store',
+                        'zIndex': 20,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -3146,7 +3147,6 @@ export default {
                             ]
                         },
                         'id': '7017429a-1f3e-412d-88ab-567afc096207',
-                        'zIndex': 20,
                         'data': {
                             'type': 'tm.Store',
                             'name': 'MySQL\nuser & config',
@@ -3183,6 +3183,7 @@ export default {
                         },
                         'visible': true,
                         'shape': 'process',
+                        'zIndex': 21,
                         'ports': {
                             'groups': {
                                 'top': {
@@ -3266,7 +3267,6 @@ export default {
                             ]
                         },
                         'id': '08b3cbf4-fe41-437b-9401-44f16f79d273',
-                        'zIndex': 21,
                         'data': {
                             'type': 'tm.Process',
                             'name': 'Blockchain\nIntegration',
