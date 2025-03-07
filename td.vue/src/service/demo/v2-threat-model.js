@@ -19,8 +19,8 @@ export default {
                 'cells': [
                     {
                         'position': {
-                            'x': 565,
-                            'y': 414
+                            'x': 685,
+                            'y': 420
                         },
                         'size': {
                             'width': 160,
@@ -437,7 +437,7 @@ export default {
                     },
                     {
                         'position': {
-                            'x': 502,
+                            'x': 600,
                             'y': 13
                         },
                         'size': {
@@ -593,7 +593,7 @@ export default {
                     },
                     {
                         'position': {
-                            'x': 560,
+                            'x': 685,
                             'y': 180
                         },
                         'size': {
@@ -730,7 +730,7 @@ export default {
                     },
                     {
                         'position': {
-                            'x': 210,
+                            'x': 220,
                             'y': 180
                         },
                         'size': {
@@ -846,8 +846,8 @@ export default {
                     },
                     {
                         'position': {
-                            'x': 40,
-                            'y': 29
+                            'x': 10,
+                            'y': 30
                         },
                         'size': {
                             'width': 160,
@@ -960,240 +960,6 @@ export default {
                             'hasOpenThreats': false,
                             'providesAuthentication': false
                         }
-                    },
-                    {
-                        'shape': 'trust-boundary-curve',
-                        'attrs': {
-                            'line': {
-                                'targetMarker': '',
-                                'sourceMarker': ''
-                            }
-                        },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
-                            {
-                                'markup': [
-                                    {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
-                                    },
-                                    {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
-                                    }
-                                ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': '',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
-                                    },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
-                                    },
-                                    'text': {
-                                        'text': ''
-                                    }
-                                },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
-                                    }
-                                }
-                            }
-                        ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Boundary',
-                            'name': '',
-                            'description': '',
-                            'isTrustBoundary': true,
-                            'hasOpenThreats': false
-                        },
-                        'id': '0adc088b-ebb1-46be-af7b-36112c60c419',
-                        'source': {
-                            'x': 80,
-                            'y': 220
-                        },
-                        'target': {
-                            'x': 295,
-                            'y': 51
-                        },
-                        'vertices': [
-                            {
-                                'x': 276,
-                                'y': 149
-                            }
-                        ]
-                    },
-                    {
-                        'shape': 'trust-boundary-curve',
-                        'attrs': {
-                            'line': {
-                                'targetMarker': '',
-                                'sourceMarker': ''
-                            }
-                        },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
-                            {
-                                'markup': [
-                                    {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
-                                    },
-                                    {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
-                                    }
-                                ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': '',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
-                                    },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
-                                    },
-                                    'text': {
-                                        'text': ''
-                                    }
-                                },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
-                                    }
-                                }
-                            }
-                        ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Boundary',
-                            'name': '',
-                            'description': '',
-                            'isTrustBoundary': true,
-                            'hasOpenThreats': false
-                        },
-                        'id': '6767506f-3d7f-4a5f-bbe2-ea03689d30fc',
-                        'source': {
-                            'x': 350,
-                            'y': 10
-                        },
-                        'target': {
-                            'x': 663,
-                            'y': 156
-                        },
-                        'vertices': [
-                            {
-                                'x': 333,
-                                'y': 117
-                            },
-                            {
-                                'x': 432,
-                                'y': 180
-                            }
-                        ]
-                    },
-                    {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'strokeWidth': 1,
-                                'targetMarker': {
-                                    'name': 'block'
-                                },
-                                'strokeDasharray': null
-                            }
-                        },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
-                            {
-                                'markup': [
-                                    {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
-                                    },
-                                    {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
-                                    }
-                                ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Web Request (HTTP/S)',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
-                                    },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
-                                    }
-                                },
-                                'position': 0.5
-                            }
-                        ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': 'Web Request',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': false,
-                            'isEncrypted': true,
-                            'isPublicNetwork': true,
-                            'protocol': 'HTTP/S',
-                            'threats': [
-                                {
-                                    'status': 'Mitigated',
-                                    'severity': 'High',
-                                    'title': 'Data flow should use HTTP/S',
-                                    'type': 'Information disclosure',
-                                    'description': 'These requests are made over the public internet and could be intercepted by an attacker.',
-                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
-                                    'modelType': 'STRIDE',
-                                    'id': '79cbaf10-e5a2-4fd6-9818-7f180a113938'
-                                }
-                            ],
-                            'isTrustBoundary': false
-                        },
-                        'id': '2d84bfae-f1ed-49e5-8542-10a02f4a1c57',
-                        'source': {
-                            'cell': 'b394f9f7-07ca-42bc-b616-ad77c6fbfcce'
-                        },
-                        'target': {
-                            'cell': '0d9909ea-1398-4898-be81-cf1c808324dc'
-                        },
-                        'vertices': [
-                            {
-                                'x': 245,
-                                'y': 112
-                            }
-                        ]
                     },
                     {
                         'shape': 'flow',
@@ -1356,8 +1122,8 @@ export default {
                         },
                         'vertices': [
                             {
-                                'x': 544,
-                                'y': 127
+                                'x': 630,
+                                'y': 130
                             }
                         ]
                     },
@@ -1445,87 +1211,6 @@ export default {
                         ]
                     },
                     {
-                        'shape': 'trust-boundary-curve',
-                        'attrs': {
-                            'line': {
-                                'targetMarker': '',
-                                'sourceMarker': ''
-                            }
-                        },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
-                            {
-                                'markup': [
-                                    {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
-                                    },
-                                    {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
-                                    }
-                                ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': '',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
-                                    },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
-                                    },
-                                    'text': {
-                                        'text': ''
-                                    }
-                                },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
-                                    }
-                                }
-                            }
-                        ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Boundary',
-                            'name': '',
-                            'description': '',
-                            'isTrustBoundary': true,
-                            'hasOpenThreats': false
-                        },
-                        'id': '4a7911c8-2493-46cc-960f-1b248b176d15',
-                        'source': {
-                            'x': 241,
-                            'y': 444
-                        },
-                        'target': {
-                            'x': 526,
-                            'y': 465
-                        },
-                        'vertices': [
-                            {
-                                'x': 333,
-                                'y': 288
-                            },
-                            {
-                                'x': 488,
-                                'y': 267
-                            },
-                            {
-                                'x': 552,
-                                'y': 339
-                            }
-                        ]
-                    },
-                    {
                         'shape': 'flow',
                         'attrs': {
                             'line': {
@@ -1604,8 +1289,8 @@ export default {
                         },
                         'vertices': [
                             {
-                                'x': 111,
-                                'y': 175
+                                'x': 90,
+                                'y': 170
                             }
                         ]
                     },
@@ -1750,8 +1435,8 @@ export default {
                         },
                         'vertices': [
                             {
-                                'x': 664,
-                                'y': 320
+                                'x': 810,
+                                'y': 310
                             }
                         ]
                     },
@@ -1906,9 +1591,11 @@ export default {
                         'attrs': {
                             'line': {
                                 'stroke': '#333333',
-                                'strokeWidth': 1,
                                 'targetMarker': {
                                     'name': 'block'
+                                },
+                                'sourceMarker': {
+                                    'name': ''
                                 },
                                 'strokeDasharray': null
                             }
@@ -1942,7 +1629,13 @@ export default {
                                         'strokeWidth': 0
                                     }
                                 },
-                                'position': 0.5
+                                'position': {
+                                    'distance': 0.5,
+                                    'args': {
+                                        'keepGradient': true,
+                                        'ensureLegibility': true
+                                    }
+                                }
                             }
                         ],
                         'connector': 'smooth',
@@ -1969,8 +1662,332 @@ export default {
                         },
                         'vertices': [
                             {
-                                'x': 552,
-                                'y': 382
+                                'x': 560,
+                                'y': 400
+                            }
+                        ]
+                    },
+                    {
+                        'shape': 'trust-boundary-curve',
+                        'attrs': {
+                            'line': {
+                                'targetMarker': '',
+                                'sourceMarker': ''
+                            }
+                        },
+                        'width': 200,
+                        'height': 100,
+                        'zIndex': 10,
+                        'labels': [
+                            {
+                                'markup': [
+                                    {
+                                        'tagName': 'ellipse',
+                                        'selector': 'labelBody'
+                                    },
+                                    {
+                                        'tagName': 'text',
+                                        'selector': 'labelText'
+                                    }
+                                ],
+                                'attrs': {
+                                    'labelText': {
+                                        'text': '',
+                                        'textAnchor': 'middle',
+                                        'textVerticalAnchor': 'middle'
+                                    },
+                                    'labelBody': {
+                                        'ref': 'labelText',
+                                        'refRx': '50%',
+                                        'refRy': '60%',
+                                        'fill': '#fff',
+                                        'strokeWidth': 0
+                                    },
+                                    'text': {
+                                        'text': ''
+                                    }
+                                },
+                                'position': {
+                                    'distance': 0.5,
+                                    'args': {
+                                        'keepGradient': true,
+                                        'ensureLegibility': true
+                                    }
+                                }
+                            }
+                        ],
+                        'connector': 'smooth',
+                        'data': {
+                            'type': 'tm.Boundary',
+                            'name': '',
+                            'description': '',
+                            'isTrustBoundary': true,
+                            'hasOpenThreats': false
+                        },
+                        'id': '6767506f-3d7f-4a5f-bbe2-ea03689d30fc',
+                        'source': {
+                            'x': 350,
+                            'y': 10
+                        },
+                        'target': {
+                            'x': 810,
+                            'y': 150
+                        },
+                        'vertices': [
+                            {
+                                'x': 333,
+                                'y': 117
+                            },
+                            {
+                                'x': 432,
+                                'y': 180
+                            }
+                        ]
+                    },
+                    {
+                        'shape': 'trust-boundary-curve',
+                        'attrs': {
+                            'line': {
+                                'targetMarker': '',
+                                'sourceMarker': ''
+                            }
+                        },
+                        'width': 200,
+                        'height': 100,
+                        'zIndex': 10,
+                        'labels': [
+                            {
+                                'markup': [
+                                    {
+                                        'tagName': 'ellipse',
+                                        'selector': 'labelBody'
+                                    },
+                                    {
+                                        'tagName': 'text',
+                                        'selector': 'labelText'
+                                    }
+                                ],
+                                'attrs': {
+                                    'labelText': {
+                                        'text': '',
+                                        'textAnchor': 'middle',
+                                        'textVerticalAnchor': 'middle'
+                                    },
+                                    'labelBody': {
+                                        'ref': 'labelText',
+                                        'refRx': '50%',
+                                        'refRy': '60%',
+                                        'fill': '#fff',
+                                        'strokeWidth': 0
+                                    },
+                                    'text': {
+                                        'text': ''
+                                    }
+                                },
+                                'position': {
+                                    'distance': 0.5,
+                                    'args': {
+                                        'keepGradient': true,
+                                        'ensureLegibility': true
+                                    }
+                                }
+                            }
+                        ],
+                        'connector': 'smooth',
+                        'data': {
+                            'type': 'tm.Boundary',
+                            'name': '',
+                            'description': '',
+                            'isTrustBoundary': true,
+                            'hasOpenThreats': false
+                        },
+                        'id': '4a7911c8-2493-46cc-960f-1b248b176d15',
+                        'source': {
+                            'x': 230,
+                            'y': 520
+                        },
+                        'target': {
+                            'x': 660,
+                            'y': 510
+                        },
+                        'vertices': [
+                            {
+                                'x': 320,
+                                'y': 280
+                            },
+                            {
+                                'x': 590,
+                                'y': 250
+                            },
+                            {
+                                'x': 660,
+                                'y': 350
+                            }
+                        ]
+                    },
+                    {
+                        'shape': 'trust-boundary-curve',
+                        'attrs': {
+                            'line': {
+                                'targetMarker': '',
+                                'sourceMarker': ''
+                            }
+                        },
+                        'width': 200,
+                        'height': 100,
+                        'zIndex': 10,
+                        'labels': [
+                            {
+                                'markup': [
+                                    {
+                                        'tagName': 'ellipse',
+                                        'selector': 'labelBody'
+                                    },
+                                    {
+                                        'tagName': 'text',
+                                        'selector': 'labelText'
+                                    }
+                                ],
+                                'attrs': {
+                                    'labelText': {
+                                        'text': '',
+                                        'textAnchor': 'middle',
+                                        'textVerticalAnchor': 'middle'
+                                    },
+                                    'labelBody': {
+                                        'ref': 'labelText',
+                                        'refRx': '50%',
+                                        'refRy': '60%',
+                                        'fill': '#fff',
+                                        'strokeWidth': 0
+                                    },
+                                    'text': {
+                                        'text': ''
+                                    }
+                                },
+                                'position': {
+                                    'distance': 0.5,
+                                    'args': {
+                                        'keepGradient': true,
+                                        'ensureLegibility': true
+                                    }
+                                }
+                            }
+                        ],
+                        'connector': 'smooth',
+                        'data': {
+                            'type': 'tm.Boundary',
+                            'name': '',
+                            'description': '',
+                            'isTrustBoundary': true,
+                            'hasOpenThreats': false
+                        },
+                        'id': '0adc088b-ebb1-46be-af7b-36112c60c419',
+                        'source': {
+                            'x': 40,
+                            'y': 240
+                        },
+                        'target': {
+                            'x': 290,
+                            'y': 10
+                        },
+                        'vertices': [
+                            {
+                                'x': 276,
+                                'y': 149
+                            }
+                        ]
+                    },
+                    {
+                        'shape': 'flow',
+                        'attrs': {
+                            'line': {
+                                'stroke': '#333333',
+                                'strokeWidth': 1,
+                                'targetMarker': {
+                                    'name': 'block'
+                                },
+                                'strokeDasharray': null
+                            }
+                        },
+                        'width': 200,
+                        'height': 100,
+                        'zIndex': 10,
+                        'labels': [
+                            {
+                                'markup': [
+                                    {
+                                        'tagName': 'ellipse',
+                                        'selector': 'labelBody'
+                                    },
+                                    {
+                                        'tagName': 'text',
+                                        'selector': 'labelText'
+                                    }
+                                ],
+                                'attrs': {
+                                    'labelText': {
+                                        'text': 'Web Request (HTTP/S)',
+                                        'textAnchor': 'middle',
+                                        'textVerticalAnchor': 'middle'
+                                    },
+                                    'labelBody': {
+                                        'ref': 'labelText',
+                                        'refRx': '50%',
+                                        'refRy': '60%',
+                                        'fill': '#fff',
+                                        'strokeWidth': 0
+                                    }
+                                },
+                                'position': 0.5
+                            }
+                        ],
+                        'connector': 'smooth',
+                        'data': {
+                            'type': 'tm.Flow',
+                            'name': 'Web Request',
+                            'description': '',
+                            'outOfScope': false,
+                            'reasonOutOfScope': '',
+                            'hasOpenThreats': false,
+                            'isBidirectional': false,
+                            'isEncrypted': true,
+                            'isPublicNetwork': true,
+                            'protocol': 'HTTP/S',
+                            'threats': [
+                                {
+                                    'status': 'Mitigated',
+                                    'severity': 'High',
+                                    'title': 'Data flow should use HTTP/S',
+                                    'type': 'Information disclosure',
+                                    'description': 'These requests are made over the public internet and could be intercepted by an attacker.',
+                                    'mitigation': 'The requests should require HTTP/S. This will provide confidentiality and integrity. HTTP should not be supported.',
+                                    'modelType': 'STRIDE',
+                                    'id': '79cbaf10-e5a2-4fd6-9818-7f180a113938'
+                                }
+                            ],
+                            'isTrustBoundary': false
+                        },
+                        'id': '2d84bfae-f1ed-49e5-8542-10a02f4a1c57',
+                        'source': {
+                            'x': 180,
+                            'y': 70
+                        },
+                        'target': {
+                            'cell': '0d9909ea-1398-4898-be81-cf1c808324dc'
+                        },
+                        'vertices': [
+                            {
+                                'x': 190,
+                                'y': 80
+                            },
+                            {
+                                'x': 190,
+                                'y': 110
+                            },
+                            {
+                                'x': 210,
+                                'y': 130
                             }
                         ]
                     },
@@ -1990,8 +2007,8 @@ export default {
                         },
                         'visible': true,
                         'shape': 'td-text-block',
-                        'id': '4fee5fea-0c82-4ea5-a925-7c6d3257101e',
                         'zIndex': 11,
+                        'id': '4fee5fea-0c82-4ea5-a925-7c6d3257101e',
                         'data': {
                             'type': 'tm.Text',
                             'name': 'A Demo Threat Model\nshowing an example web application,\nwith a queue-decoupled background process',
@@ -1999,7 +2016,7 @@ export default {
                         }
                     }
                 ],
-                'version': '2.4.0',
+                'version': '2.3.0',
                 'title': 'Main Request Data Flow',
                 'description': '',
                 'thumbnail': './public/content/images/thumbnail.stride.jpg',
@@ -2011,5 +2028,5 @@ export default {
         'reviewer': 'Jane Smith',
         'threatTop': 0
     },
-    'version': '2.4.0'
+    'version': '2.3.0'
 };
