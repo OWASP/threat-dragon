@@ -1,12 +1,19 @@
 # Contributing to OWASP Threat Dragon
 
-Threat Dragon is a community project, and we are always delighted to welcome new contributors!
+Threat Dragon is a community project and new contributors are always welcome
 
 When contributing:
 
 * see if there is [already an issue](https://github.com/OWASP/threat-dragon/issues) for what you want to do
-* follow our [Code of Conduct](code_of_conduct.md)
 * get started by following the [developer notes](https://owasp.org/www-project-threat-dragon/docs-2/local-development/)
+* keep the test coverage high with unit tests and functional tests
+
+## Ground rules
+
+* follow our [Code of Conduct](code_of_conduct.md)
+* ensure that [unit tests][unit] have been extended or created for any code changes
+* if the contribution changes the functionality then ensure that the [functional tests][e2e] are created or modified
+* the use of generative AI is not prohibited but must be declared in the pull request
 
 ## Got a Question or Problem?
 
@@ -48,3 +55,10 @@ and include as much information as you can so that we can fully understand your 
 
 There is always lots of coding to be done! Threat Dragon welcomes contributions and issues:
 [TD github repo](https://github.com/OWASP/threat-dragon/issues)
+
+----
+
+Threat Dragon: _making threat modeling less threatening_
+
+[e2e]: https://owasp.org/www-project-threat-dragon/docs-2/e2e/
+[unit]: https://owasp.org/www-project-threat-dragon/docs-2/unit/
