@@ -24,7 +24,7 @@ under the terms of the [Apache 2.0 License][license].
 
 ## Try Threat Dragon
 
-Access the latest version of Threat Dragon on [the demo website](https://www.threatdragon.com/#/)
+Access the latest version of Threat Dragon on [the demo website][demo]
 and refer to the [documentation pages](https://owasp.org/www-project-threat-dragon/docs-2/).
 
 Also well worth watching the video provided by the
@@ -171,6 +171,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
 [bitbucket]: https://owasp.org/www-project-threat-dragon/docs-2/bitbucket-repo/
+[demo]: https://www.threatdragon.com/#/
 [download]: https://nodejs.org/en/download/package-manager
 [github]: https://owasp.org/www-project-threat-dragon/docs-2/github-repo/
 [gitlab]: https://owasp.org/www-project-threat-dragon/docs-2/gitlab-repo/
