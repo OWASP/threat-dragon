@@ -18,5 +18,5 @@ If this closes an existing issue then add "closes #xxxx", where xxxx is the issu
 <!-- Add here any other information that may be of help to the reviewer -->
 
 Thanks for submitting a pull request!
-Please make sure you follow our [Code of Conduct](code_of_conduct.md)
-and our [contributing guidelines](contributing.md)
+Please make sure you follow our [Code of Conduct](../code_of_conduct.md)
+and our [contributing guidelines](../contributing.md)
