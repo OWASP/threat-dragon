@@ -6,7 +6,8 @@ import loggerHelper from 'helpers/logger.helper.js';
 const logger = loggerHelper.get('healthcheck.js');
 const http = require('http');
 
-const req = (env.get().config.SERVER_API_PROTOCOL || 'https') + '://localhost:' + (env.get().config.PORT || '3000') + '/healthz';
+const serverApiPort = env.get().config.SERVER_API_PORT || env.get().config.PORT || 3000;
+const req = (env.get().config.SERVER_API_PROTOCOL || 'https') + '://localhost:' + serverApiPort + '/healthz';
 
 http.get(req, (res) => {
     const { statusCode } = res;
