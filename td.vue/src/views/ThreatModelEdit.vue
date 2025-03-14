@@ -6,7 +6,6 @@
                 id="parent-card"
             >
                 <b-form @submit="onSubmit">
-
                     <b-form-row>
                         <b-col>
                             <b-form-group
@@ -23,7 +22,6 @@
                             </b-form-group>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col md=6>
                             <b-form-group
@@ -38,7 +36,6 @@
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
-
                         <b-col md=6>
                             <b-form-group
                                 id="reviewer-group"
@@ -53,7 +50,6 @@
                             </b-form-group>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col>
                             <b-form-group
@@ -69,7 +65,6 @@
                             </b-form-group>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col>
                             <b-form-group
@@ -88,13 +83,11 @@
                             </b-form-group>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col>
                             <h5>{{ $t('threatmodel.diagram.diagrams') }}</h5>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col md=8
                             v-for="(diagram, idx) in model.detail.diagrams"
@@ -135,7 +128,6 @@
                             </b-input-group>
                         </b-col>
                     </b-form-row>
-
                     <b-form-row>
                         <b-col md=6>
                             <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
@@ -147,7 +139,7 @@
 
                     <b-form-row>
                         <b-col class="text-right mt-5">
-                            <b-btn-group>
+                            <BButtonGroup>
                                 <td-form-button
                                     id="td-save-btn"
                                     :isPrimary="true"
@@ -164,7 +156,7 @@
                                     :onBtnClick="onCloseClick"
                                     icon="times"
                                     :text="$t('forms.close')" />
-                            </b-btn-group>
+                            </BButtonGroup>
                         </b-col>
                     </b-form-row>
 
@@ -176,26 +168,21 @@
 
 <style lang="scss" scoped>
 .add-diagram-link {
-    color: $orange;
+    color: var(--orange);
     font-size: 14px;
 }
-
 .remove-diagram-btn {
     font-size: 12px;
 }
-
 .select-diagram-type {
     font-size: 12px;
 }
 </style>
-
 <script>
 import { mapState } from 'vuex';
-
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-
 export default {
     name: 'ThreatModelEdit',
     components: {
@@ -236,8 +223,6 @@ export default {
             } else {
                 await this.$store.dispatch(tmActions.saveModel);
             }
-            // stop the save button from leaving the threat model edit view
-            // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
             evt.preventDefault();
@@ -269,53 +254,47 @@ export default {
             let placeholder;
             let thumbnail;
             switch (type) {
-
-	            case 'CIA':
-	                thumbnail = './public/content/images/thumbnail.cia.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
-	                break;
-
-	            case 'DIE':
-	                thumbnail = './public/content/images/thumbnail.die.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.die.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.die.defaultDescription');
-	                break;
-
-	            case 'LINDDUN':
-	                thumbnail = './public/content/images/thumbnail.linddun.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
-	                break;
-
-	            case 'PLOT4ai':
-	                thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
-	                break;
-
-	            case 'STRIDE':
-	                thumbnail = './public/content/images/thumbnail.stride.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
-	                break;
-
-	            default:
-	                thumbnail = './public/content/images/thumbnail.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
-	                type = this.$t('threatmodel.diagram.generic.select');
+                case 'CIA':
+                    thumbnail = './public/content/images/thumbnail.cia.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
+                    break;
+                case 'DIE':
+                    thumbnail = './public/content/images/thumbnail.die.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.die.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.die.defaultDescription');
+                    break;
+                case 'LINDDUN':
+                    thumbnail = './public/content/images/thumbnail.linddun.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
+                    break;
+                case 'PLOT4ai':
+                    thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
+                    break;
+                case 'STRIDE':
+                    thumbnail = './public/content/images/thumbnail.stride.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
+                    break;
+                default:
+                    thumbnail = './public/content/images/thumbnail.jpg';
+                    defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
+                    placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
+                    type = this.$t('threatmodel.diagram.generic.select');
             }
             this.model.detail.diagrams[idx].diagramType = type;
             this.model.detail.diagrams[idx].placeholder = placeholder;
             this.model.detail.diagrams[idx].thumbnail = thumbnail;
-            // if the diagram title is still default, then change it to the new default title
-            if (this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.die.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.plot4ai.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
-                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
+            if (
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.cia.defaultTitle') ||
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.die.defaultTitle') ||
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.linddun.defaultTitle') ||
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.plot4ai.defaultTitle') ||
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle') ||
+                this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
             ) {
                 this.model.detail.diagrams[idx].title = defaultTitle;
             }
@@ -329,7 +308,7 @@ export default {
             this.$store.dispatch(tmActions.modified);
         },
         async restoreAsync() {
-            if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
+            if (!this.$store.getters.modelChanged || (await this.getConfirmModal())) {
                 await this.$store.dispatch(tmActions.diagramClosed);
                 this.$store.dispatch(tmActions.restore);
                 this.$store.dispatch(tmActions.notModified);
@@ -349,5 +328,4 @@ export default {
         }
     }
 };
-
 </script>

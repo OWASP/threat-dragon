@@ -1,29 +1,18 @@
 import axios from 'axios';
-import Vue from 'vue';
-
+import { useToast } from 'vue-toast-notification';
 import { AUTH_SET_JWT } from '@/store/actions/auth.js';
 import i18n from '@/i18n/index.js';
 import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
 import router from '@/router/index.js';
-import storeFactory from '@/store/index.js';
+import store from '@/store/index.js'; // Direct import
 
-let cachedClient = null;
-
-const get = () => {
-    if (cachedClient === null) {
-        cachedClient = createClient();
-    }
-
-    return cachedClient;
-};
+const toast = useToast();
 
 const createClient = () => {
     const client = axios.create();
     client.defaults.headers.common.Accept = 'application/json';
     client.defaults.headers.post['Content-Type'] = 'application/json';
-
     client.interceptors.request.use((config) => {
-        const store = storeFactory.get();
         store.dispatch(LOADER_STARTED);
 
         if (store.state.auth.jwt) {
@@ -32,22 +21,17 @@ const createClient = () => {
 
         return config;
     }, (err) => {
-        console.error(err);
-        const store = storeFactory.get();
+        console.error("Request error:",err);
         store.dispatch(LOADER_FINISHED);
         return Promise.reject(err);
     });
 
-    // Any status within 2xx lies here
     client.interceptors.response.use((resp) => {
-        const store = storeFactory.get();
         store.dispatch(LOADER_FINISHED);
         return resp;
     }, async (err) => {
-        const store = storeFactory.get();
-
         const logAndExit = () => {
-            console.error(err);
+            console.error("Request error:",err);
             store.dispatch(LOADER_FINISHED);
             return Promise.reject(err);
         };
@@ -61,9 +45,6 @@ const createClient = () => {
             return logAndExit();
         }
 
-        // Do not use this axios instance for the refresh token
-        // Should this request fail and we use the same instance,
-        // we could be stuck in an infinite loop
         try {
             const response = await axios.post('/api/token/refresh', { refreshToken });
             const tokens = response.data.data;
@@ -75,8 +56,8 @@ const createClient = () => {
         } catch (retryError) {
             console.warn('Error retrying after refresh token update');
             console.warn(retryError);
-            Vue.$toast.info(i18n.get().t('auth.sessionExpired'));
-            router.get().push({ name: 'HomePage' });
+            toast.info(i18n.t('auth.sessionExpired'));
+            router.push({ name: 'HomePage' });
             return await logAndExit();
         }
     });
@@ -85,6 +66,6 @@ const createClient = () => {
 };
 
 export default {
-    createClient, // exposed for testing only
-    get
+    createClient,
+    get: createClient // Adjusted to return the client directly
 };

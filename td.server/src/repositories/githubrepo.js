@@ -1,95 +1,121 @@
 import env from '../env/Env.js';
-import github from 'octonode';
+import fetch from 'node-fetch';
 
 const repoRootDirectory = () => env.get().config.GITHUB_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
 
-const getClient = (accessToken) => {
+const getBaseUrl = () => {
     const enterpriseHostname = env.get().config.GITHUB_ENTERPRISE_HOSTNAME;
     if (enterpriseHostname) {
         const port = env.get().config.GITHUB_ENTERPRISE_PORT;
-        const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL;
-        const enterpriseOpts = { hostname: `${enterpriseHostname}/api/v3` };
-        if (port) { enterpriseOpts.port = parseInt(port, 10); }
-        if (protocol) { enterpriseOpts.protocol = protocol; }
-
-        return github.client(accessToken, enterpriseOpts);
+        const protocol = env.get().config.GITHUB_ENTERPRISE_PROTOCOL || 'https';
+        return `${protocol}://${enterpriseHostname}${port ? `:${port}` : ''}/api/v3`;
     }
-    return github.client(accessToken);
+    return 'https://api.github.com';
 };
 
-const reposAsync = (page, accessToken) => getClient(accessToken).me().
-reposAsync(page);
+const fetchGitHub = async (path, accessToken, options = {}) => {
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}${path}`, {
+        ...options,
+        headers: {
+            'Authorization': `token ${accessToken}`,
+            'Accept': 'application/vnd.github.v3+json',
+            ...options.headers
+        }
+    });
 
-const searchAsync = (page, accessToken, searchQuerys= []) => getClient(accessToken).search().
-    reposAsync({ page: page, q: searchQuerys });
+    if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.statusText}`);
+    }
+
+    return response.json();
+};
+
+const reposAsync = async (page, accessToken) => {
+    return fetchGitHub('/user/repos', accessToken, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/vnd.github.v3+json'
+        }
+    });
+};
+
+const searchAsync = async (page, accessToken, searchQuery) => {
+    const data = await fetchGitHub(`/search/repositories?q=${encodeURIComponent(searchQuery)}&page=${page}`, accessToken);
+    return data.items;
+};
 
 const userAsync = async (accessToken) => {
-
-    const resp = await getClient(accessToken).me().
-infoAsync();
-    return resp[0];
+    return fetchGitHub('/user', accessToken);
 };
 
-const branchesAsync = (repoInfo, accessToken) => {
-    const client = getClient(accessToken);
-    return client.repo(getRepoFullName(repoInfo)).branchesAsync(repoInfo.page);
+const branchesAsync = async (repoInfo, accessToken) => {
+    return fetchGitHub(`/repos/${repoInfo.organisation}/${repoInfo.repo}/branches?page=${repoInfo.page}`, accessToken);
 };
 
-const modelsAsync = (branchInfo, accessToken) => getClient(accessToken).
-    repo(getRepoFullName(branchInfo)).
-    contentsAsync(repoRootDirectory(), branchInfo.branch);
-
-const modelAsync = (modelInfo, accessToken) => getClient(accessToken).
-    repo(getRepoFullName(modelInfo)).
-    contentsAsync(getModelPath(modelInfo), modelInfo.branch);
-
-const createAsync = (modelInfo, accessToken) => getClient(accessToken).
-    repo(getRepoFullName(modelInfo)).
-    createContentsAsync(
-        getModelPath(modelInfo),
-        'Created by OWASP Threat Dragon',
-        getModelContent(modelInfo),
-        modelInfo.branch
+const modelsAsync = async (branchInfo, accessToken) => {
+    return fetchGitHub(
+        `/repos/${branchInfo.organisation}/${branchInfo.repo}/contents/${repoRootDirectory()}?ref=${branchInfo.branch}`,
+        accessToken
     );
+};
+
+const modelAsync = async (modelInfo, accessToken) => {
+    const data = await fetchGitHub(
+        `/repos/${modelInfo.organisation}/${modelInfo.repo}/contents/${getModelPath(modelInfo)}?ref=${modelInfo.branch}`,
+        accessToken
+    );
+    return [data];
+};
+
+const createAsync = async (modelInfo, accessToken) => {
+    return fetchGitHub(
+        `/repos/${modelInfo.organisation}/${modelInfo.repo}/contents/${getModelPath(modelInfo)}`,
+        accessToken,
+        {
+            method: 'PUT',
+            body: JSON.stringify({
+                message: 'Created by OWASP Threat Dragon',
+                content: Buffer.from(getModelContent(modelInfo)).toString('base64'),
+                branch: modelInfo.branch
+            })
+        }
+    );
+};
 
 const updateAsync = async (modelInfo, accessToken) => {
     const original = await modelAsync(modelInfo, accessToken);
-    const repo = getRepoFullName(modelInfo);
-    const path = getModelPath(modelInfo);
-    const modelContent = getModelContent(modelInfo);
-
-    return getClient(accessToken).
-        repo(repo).
-        updateContentsAsync(
-            path,
-            'Updated by OWASP Threat Dragon',
-            modelContent,
-            original[0].sha,
-            modelInfo.branch
-        );
+    return fetchGitHub(
+        `/repos/${modelInfo.organisation}/${modelInfo.repo}/contents/${getModelPath(modelInfo)}`,
+        accessToken,
+        {
+            method: 'PUT',
+            body: JSON.stringify({
+                message: 'Updated by OWASP Threat Dragon',
+                content: Buffer.from(getModelContent(modelInfo)).toString('base64'),
+                sha: original[0].sha,
+                branch: modelInfo.branch
+            })
+        }
+    );
 };
 
 const deleteAsync = async (modelInfo, accessToken) => {
     const content = await modelAsync(modelInfo, accessToken);
-    return getClient(accessToken).
-        repo(getRepoFullName(modelInfo)).
-        deleteContentsAsync(
-            getModelPath(modelInfo),
-            'Deleted by OWASP Threat Dragon',
-            content[0].sha,
-            modelInfo.branch
-        );
+    return fetchGitHub(
+        `/repos/${modelInfo.organisation}/${modelInfo.repo}/contents/${getModelPath(modelInfo)}`,
+        accessToken,
+        {
+            method: 'DELETE',
+            body: JSON.stringify({
+                message: 'Deleted by OWASP Threat Dragon',
+                sha: content[0].sha,
+                branch: modelInfo.branch
+            })
+        }
+    );
 };
 
-const createBranchAsync = async (repoInfo, accessToken) => {
-    const client = getClient(accessToken);
-    const repo = getRepoFullName(repoInfo);
-    const resp = await client.repo(repo).refAsync(`heads/${repoInfo.ref}`);
-    const sha = resp[0].object.sha;
-    return client.repo(repo).createRefAsync(`refs/heads/${repoInfo.branch}`, sha);
-};
-
-const getRepoFullName = (info) => `${info.organisation}/${info.repo}`;
 const getModelPath = (modelInfo) => `${repoRootDirectory()}/${modelInfo.model}/${modelInfo.model}.json`;
 const getModelContent = (modelInfo) => JSON.stringify(modelInfo.body, null, '  ');
 
@@ -102,6 +128,5 @@ export default {
     reposAsync,
     searchAsync,
     updateAsync,
-    userAsync,
-    createBranchAsync
+    userAsync
 };

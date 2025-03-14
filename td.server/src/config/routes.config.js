@@ -24,7 +24,7 @@ const unauthRoutes = (router) => {
     router.get('/api/login/:provider', auth.login);
     router.get('/api/logout', auth.logout);
     router.get('/api/oauth/return', auth.oauthReturn);
-    router.get('/api/oauth/:provider', auth.completeLogin);
+    router.post('/api/oauth/:provider/completeLogin', auth.completeLogin);
 };
 
 /**

@@ -2,15 +2,20 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron :header="$t('dashboard.welcome.title')">
+                <b-container class="text-center p-4 bg-light rounded shadow-sm">
+                    <h4>
+                        {{ $t("dashboard.welcome.title") }}
+                    </h4>
                     <p>
-                        {{ $t('dashboard.welcome.description') }}
+                        {{ $t("dashboard.welcome.description") }}
                     </p>
-                </b-jumbotron>
+                </b-container>
             </b-col>
         </b-row>
-        <b-row >
-            <td-dashboard-action class="dashboard-action"
+
+        <b-row>
+            <td-dashboard-action
+                class="dashboard-action"
                 v-for="(action, idx) in actions"
                 :key="idx"
                 :to="action.to"
@@ -24,29 +29,25 @@
 
 <style lang="scss" scoped>
 .action-icon {
-    color: $orange;
+    color: var(--orange); /* Updated to use CSS custom property */
     margin-bottom: 15px;
 }
-
 .dashboard-action {
     padding-bottom: 2rem;
 }
-
 </style>
 
 <script>
-import { mapState } from 'vuex';
-
-import TdDashboardAction from '@/components/DashboardAction.vue';
-import { getDashboardActions } from '@/service/provider/providers.js';
-
+import { mapState } from "vuex";
+import TdDashboardAction from "@/components/DashboardAction.vue";
+import { getDashboardActions } from "@/service/provider/providers.js";
 export default {
-    name: 'MainDashboard',
+    name: "MainDashboard",
     components: {
-        TdDashboardAction
+        TdDashboardAction,
     },
     computed: mapState({
-        actions: (state) => getDashboardActions(state.provider.selected)
-    })
+        actions: (state) => getDashboardActions(state.provider.selected),
+    }),
 };
 </script>

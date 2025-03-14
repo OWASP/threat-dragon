@@ -2,11 +2,11 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+               <div class="jumbotron text-center">
                     <h4>
                         {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>
@@ -62,6 +62,7 @@ import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import { isValidSchema } from '@/service/schema/ajv';
+import { BRow, BCol, BForm, BFormGroup, BFormTextarea, BButtonGroup } from 'bootstrap-vue-next';
 
 // only search for text files
 const pickerFileOptions = {

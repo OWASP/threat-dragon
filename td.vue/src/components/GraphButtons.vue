@@ -1,5 +1,5 @@
 <template>
-    <b-btn-group>
+   <BButtonGroup>
         <td-form-button
             :onBtnClick="deleteSelected"
             icon="trash"
@@ -66,7 +66,7 @@
             icon="save"
             :text="$t('forms.save')" />
 
-    </b-btn-group>
+    </BButtonGroup>
 </template>
 
 <script>

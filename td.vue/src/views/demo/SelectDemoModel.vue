@@ -2,11 +2,11 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+               <div class="jumbotron text-center">
                     <h4>
                         {{ $t('demo.select') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>

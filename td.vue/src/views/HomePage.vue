@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
+        <div class="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
@@ -11,7 +11,7 @@
                     <b-img class="td-cupcake"
                            id="home-td-logo"
                            :alt="$t('home.imgAlt')"
-                           src="@/assets/threatdragon_logo_image.svg"
+                           :src="require('@/assets/threatdragon_logo_image.svg')"
                     />
                 </b-col>
                 <b-col md="8">
@@ -31,26 +31,37 @@
                     </b-row>
                 </b-col>
             </b-row>
-        </b-jumbotron>
+        </div>
     </b-container>
 </template>
 
 <style lang="scss" scoped>
+/* Recreating BootstrapVue's b-jumbotron styling */
+.welcome-jumbotron {
+    background-color: #f8f9fa; /* Light grey background like BootstrapVue jumbotron */
+    padding: 3rem 2rem; /* Increase padding to match BootstrapVue */
+    border-radius: 0.3rem; /* Add rounded corners */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Light shadow */
+    margin-bottom: 1.5rem; /* Space below jumbotron */
+    text-align: center; /* Ensure text alignment */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* Additional existing styles */
 .login-btn-icon {
     display: block;
 }
-
+.td-cupcake {
+    width: 100%;
+    max-width: 480px; /* Ensure image size matches */
+    margin: 40px auto; /* Center image */
+}
 .td-description {
     font-size: 20px;
-    margin-right: 20px;
-    margin-left: 170px;
-}
-
-.td-cupcake {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
+    max-width: 80%;
+    margin: 10px auto; /* Ensure description stays centered */
 }
 </style>
 
@@ -60,7 +71,6 @@ import isElectron from 'is-electron';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 import configActions from '@/store/actions/config.js';
 import {mapState} from 'vuex';
-
 export default {
     name: 'HomePage',
     computed:

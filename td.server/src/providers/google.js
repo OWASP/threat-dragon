@@ -4,6 +4,7 @@
  */
 import axios from 'axios';
 import env from '../env/Env.js';
+import jwtHelper from '../helpers/jwt.helper.js';
 
 const name = 'google';
 
@@ -18,7 +19,8 @@ const isConfigured = () => Boolean(env.get().config.GOOGLE_CLIENT_ID);
  * @returns {String}
  */
 const getOauthRedirectUrl = () => {
-    const scope = env.get().config.GOOGLE_SCOPE || 'openid email profile';
+    const scope = 'openid email profile https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.readonly';
+
     const redirectUri = env.get().config.GOOGLE_REDIRECT_URI;
     return `https://accounts.google.com/o/oauth2/auth?response_type=code&scope=${scope}&client_id=${env.get().config.GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 };
@@ -42,35 +44,37 @@ const getOauthReturnUrl = (code) => {
  * @returns {String} jwt
  */
 const completeLoginAsync = async (code) => {
-    const url = `https://oauth2.googleapis.com/token`;
-    const body = {
-        client_id: env.get().config.GOOGLE_CLIENT_ID,
-        client_secret: env.get().config.GOOGLE_CLIENT_SECRET,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: env.get().config.GOOGLE_REDIRECT_URI
-    };
-    const options = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    };
+ 
+        const url = `https://oauth2.googleapis.com/token`;
+        const body = {
+            client_id: env.get().config.GOOGLE_CLIENT_ID,
+            client_secret: env.get().config.GOOGLE_CLIENT_SECRET,
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: env.get().config.GOOGLE_REDIRECT_URI
+        };
+        const options = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
 
-    const providerResp = await axios.post(url, new URLSearchParams(body), options);
+        // 
+        const providerResp = await axios.post(url, new URLSearchParams(body), options);
 
-    const tokenInfoUrl = `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${providerResp.data.access_token}`;
-    const userInfo = await axios.get(tokenInfoUrl);
-
-    const user = {
-        username: userInfo.data.name,
-        email: userInfo.data.email,
-        picture: userInfo.data.picture
-    };
-
-    return {
-        user,
-        opts: providerResp.data
-    };
+        const tokenInfoUrl = `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${providerResp.data.access_token}`;
+        const userInfo = await axios.get(tokenInfoUrl);
+    
+        const user = {
+            username: userInfo.data.name,
+            email: userInfo.data.email,
+            picture: userInfo.data.picture
+        };
+    
+        return {
+            user,
+            opts: providerResp.data
+        };
 };
 
 export default {

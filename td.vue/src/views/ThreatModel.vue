@@ -5,7 +5,6 @@
                 <td-threat-model-summary-card />
             </b-col>
         </b-row>
-
         <!-- Description -->
         <b-row class="mb-4">
             <b-col>
@@ -19,7 +18,6 @@
                 </b-card>
             </b-col>
         </b-row>
-
         <!-- Diagrams -->
         <b-row class="mb-4">
             <b-col
@@ -36,21 +34,23 @@
                             </a>
                         </h6>
                     </template>
-                    <a href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
+                    <h6 v-if="diagram.description" class="diagram-description-text">
+                        <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
+                            {{ diagram.description }}
+                        </a>
+                    </h6>
+                    <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
+                        <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
-                            :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
+                            :src="getThumbnailUrl(diagram)"
                             :alt="diagram.title" />
                     </a>
-                    <h6 v-if=diagram.description class="diagram-description-text">
-                        {{ diagram.description }}
-                    </h6>
                 </b-card>
             </b-col>
         </b-row>
         <b-row>
             <b-col class="text-right">
-                <b-btn-group>
+                <BButtonGroup>
                     <td-form-button
                         id="td-edit-btn"
                         :isPrimary="true"
@@ -67,39 +67,35 @@
                         :onBtnClick="onCloseClick"
                         icon="times"
                         :text="$t('forms.closeModel')" />
-                </b-btn-group>
+                </BButtonGroup>
             </b-col>
         </b-row>
     </div>
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors; /* Import the SCSS file with color variables */
 .tm-card {
     font-size: 14px;
     white-space: pre-wrap;
 }
 .diagram-header-text a {
-    color: $black;
+    color: colors.$black;
 }
-
 .diagram-description-text a {
-    color: $black;
+    color: colors.$black;
 }
-
 .td-diagram-thumb {
     max-width: 200px;
     max-height: 160px;
 }
 </style>
-
 <script>
 import { mapState } from 'vuex';
-
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-
 export default {
     name: 'ThreatModel',
     components: {
@@ -127,9 +123,9 @@ export default {
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {
-                return '../assets/thumbnail.jpg';
+                return require('@/assets/thumbnail.jpg');
             }
-            return `../assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`;
+            return require(`@/assets/thumbnail.${diagram.diagramType.toLowerCase()}.jpg`);
         },
         editDiagram(diagram) {
             this.$store.dispatch(tmActions.diagramSelected, diagram);
@@ -138,13 +134,11 @@ export default {
         }
     },
     mounted() {
-        // make sure we are compatible with version 1.x and early 2.x
         let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
         let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
         let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         console.debug('updates: ' + JSON.stringify(update));
         this.$store.dispatch(tmActions.update, update);
-        // if a diagram has just been closed, the history insists on marking the model as modified
         this.$store.dispatch(tmActions.notModified);
     }
 };

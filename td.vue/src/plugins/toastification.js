@@ -1,8 +1,11 @@
-import Vue from 'vue';
 import Toast, { POSITION } from 'vue-toastification';
-
 import 'vue-toastification/dist/index.css';
 
-Vue.use(Toast, {
-    position: POSITION.BOTTOM_LEFT
-});
+// Export the plugin with options
+export const toastificationPlugin = {
+    install(app) {
+        app.use(Toast, {
+            position: POSITION.BOTTOM_LEFT
+        });
+    },
+};

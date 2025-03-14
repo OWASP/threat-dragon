@@ -16,8 +16,8 @@ const getBearerToken = (authHeader) => {
         return null;
     }
 
-    if (authHeader.indexOf('Bearer ') === -1) {
-        logger.warn('Bearer token key word not found in auth header');
+    if (!authHeader.startsWith('Bearer ')) {
+        logger.warn('Bearer token keyword not found in auth header');
         return null;
     }
 
@@ -25,17 +25,25 @@ const getBearerToken = (authHeader) => {
 };
 
 const middleware = (req, res, next) => {
-    const token = getBearerToken(req.headers.authorization);
+    console.log("Middleware invoked...");
 
+    const token = getBearerToken(req.headers.authorization);
     if (!token) {
-        logger.warn(`Bearer token not found for resource that requires authentication: ${req.url}`);
+        logger.warn(`Bearer token not found for resource requiring authentication: ${req.url}`);
         return errors.unauthorized(res, logger);
     }
 
     try {
+        console.log("Verifying token...");
         const { provider, user } = jwt.verifyToken(token);
+
+        if (!provider || !user) {
+            throw new Error("Decoded JWT is missing required fields (provider/user)");
+        }
+
         req.provider = provider;
         req.user = user;
+
         return next();
     } catch (e) {
         if (e.name === 'TokenExpiredError') {

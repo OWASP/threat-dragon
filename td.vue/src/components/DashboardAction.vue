@@ -1,7 +1,7 @@
 <template>    
     <b-col lg>
     <router-link :to="to" class="action-pane-link">
-        <b-jumbotron class="text-center action-pane">
+        <b-container class="text-center action-pane p-4 bg-light rounded shadow-sm">
                 <font-awesome-icon
                 :icon="[iconPreface, icon]"
                 size="4x"
@@ -9,12 +9,13 @@
                 ></font-awesome-icon>
             <br />
             {{ $t(`dashboard.actions.${description}`) }}
-        </b-jumbotron>
+        </b-container>
             </router-link>
     </b-col>
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss';
 .action-icon {
     color: $orange;
     margin-bottom: 15px;

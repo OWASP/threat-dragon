@@ -49,30 +49,25 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors; /* Import SCSS variables */
 .threat-card {
     font-size: 14px;
 }
-
 .threat-title {
     margin-bottom: 5px;
 }
-
 .threat-icon {
     margin: 2px;
 }
-
 .green-icon {
-    color: $green;
+    color: colors.$green; /* Use SCSS variable */
 }
-
 .red-icon {
-    color: $red;
+    color: colors.$red; /* Use SCSS variable */
 }
-
 .yellow-icon {
-    color: $yellow;
+    color: colors.$yellow; /* Use SCSS variable */
 }
-
 </style>
 
 <script>
@@ -91,9 +86,8 @@ export default {
     },
     methods: {
         threatSelected() {
-            this.$emit('threatSelected', this.id,'old');
+            this.$emit('threatSelected', this.id, 'old');
         }
     }
 };
-
 </script>

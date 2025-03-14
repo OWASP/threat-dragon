@@ -12,8 +12,10 @@ const login = (req, res) => {
     logger.debug(`API login request: ${logger.transformToString(req)}`);
 
     try {
+        
         const provider = providers.get(req.params.provider);
         return responseWrapper.sendResponse(() => provider.getOauthRedirectUrl(), req, res, logger);
+       
     } catch (err) {
         return errors.badRequest(err.message, res, logger);
     }
@@ -21,13 +23,15 @@ const login = (req, res) => {
 
 const oauthReturn = (req, res) => {
     logger.debug(`API oauthReturn request: ${logger.transformToString(req)}`);
-
-    let returnUrl = `/#/oauth-return?code=${req.query.code}`;
+    console.log("01")
+    const provider = 'google';
+    let returnUrl = `/oauth-return?code=${req.query.code}&provider=${provider}`;
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
     }
-    return res.redirect(returnUrl);
+    return res.redirect( returnUrl);
 };
+
 
 const completeLogin = (req, res) => {
     logger.debug(`API completeLogin request: ${logger.transformToString(req)}`);
@@ -37,7 +41,7 @@ const completeLogin = (req, res) => {
 
         // Errors in here will return as server errors as opposed to bad requests
         return responseWrapper.sendResponseAsync(async () => {
-            const { user, opts } = await provider.completeLoginAsync(req.query.code);
+            const { user, opts } = await provider.completeLoginAsync(req.body.code);
             const { accessToken, refreshToken } = await jwtHelper.createAsync(provider.name, opts, user);
             tokenRepo.add(refreshToken);
             return {

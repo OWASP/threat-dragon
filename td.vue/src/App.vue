@@ -10,12 +10,13 @@
 </template>
 
 <style lang="scss">
+@use '@/styles/sizes.scss' as sizes;
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
 
 #app {
   font-size: 20px;
   line-height: 1.42857143;
-  margin-top: ($header-height + 15px);
+  margin-top: (sizes.$header-height + 15px);
 }
 </style>
 
@@ -28,13 +29,13 @@ import TdNavbar from '@/components/Navbar.vue';
 export default {
     name: 'TdApp',
     components: {
-        TdNavbar
+        TdNavbar,
     },
     computed: mapState({
         isLoading: (state) => state.loader.loading
     }),
     mounted() {
         this.$store.dispatch(LOADER_FINISHED);
-    }
+    },
 };
 </script>

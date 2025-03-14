@@ -1,5 +1,5 @@
 <template>
-    <b-btn
+    <BButton
         :id="`${provider.key}-login-btn`"
         class="m-1"
         variant="secondary"
@@ -15,7 +15,7 @@
         <span>
             {{ $t('providers.' + provider.key + '.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
         </span>
-    </b-btn>
+    </BButton>
 </template>
 
 <style lang="scss" scoped>

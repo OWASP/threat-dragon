@@ -11,7 +11,7 @@
             <b-card header-tag="header">
                 <template #header>
                     {{ $t('threatmodel.threats') }}
-                    <b-btn
+                    <BButton
                         :disabled="disableNewThreat"
                         @click="newThreat()"
                         v-if="!!cellRef"
@@ -21,7 +21,7 @@
                     >
                         <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
                         {{ $t('threats.newThreat') }}
-                    </b-btn>
+                    </BButton>
                 </template>
                 <b-card-body>
                     <b-card-text v-if="!!cellRef">
@@ -40,7 +40,7 @@
                                     :type="threat.type"
                                     :mitigation="threat.mitigation"
                                     :modelType="threat.modelType"
-                                    :number=threat.number
+                                    :number="threat.number"
                                     @threatSelected="threatSelected" />
                             </b-col>
                         </b-row>
@@ -72,6 +72,7 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss';
 .new-threat-by-type {
     color: $orange;
     font-size: 16px;

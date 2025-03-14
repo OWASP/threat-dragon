@@ -5,7 +5,6 @@ import { PROVIDER_CLEAR } from '../actions/provider.js';
 import providers from '../../service/provider/providers.js';
 import { REPOSITORY_CLEAR } from '../actions/repository.js';
 import { THREATMODEL_CLEAR } from '../actions/threatmodel.js';
-
 export const clearState = (state) => {
     state.jwt = '';
     state.refreshToken = '';
@@ -13,13 +12,12 @@ export const clearState = (state) => {
     state.user = {};
 };
 
-const state = {
+export const state = {
     jwt: '',
     refreshToken: '',
     jwtBody: {},
     user: {}
 };
-
 const actions = {
     [AUTH_CLEAR]: ({ commit }) => commit(AUTH_CLEAR),
     [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens),
@@ -39,11 +37,15 @@ const actions = {
         dispatch(THREATMODEL_CLEAR);
     }
 };
-
 const mutations = {
     [AUTH_CLEAR]: (state) => clearState(state),
     [AUTH_SET_JWT]: (state, tokens) => {
         try {
+            if (!tokens || !tokens.accessToken || !tokens.refreshToken) {
+                console.error('Invalid tokens received');
+                return;
+            }
+
             const { accessToken, refreshToken } = tokens;
             const tokenBody = accessToken.split('.')[1];
             const decodedBody = window.atob(tokenBody);
@@ -63,11 +65,9 @@ const mutations = {
         };
     }
 };
-
 const getters = {
     username: (state) => state.user.username || ''
 };
-
 export default {
     state,
     actions,
