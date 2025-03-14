@@ -30,9 +30,6 @@ const actions = {
         if (!folderId) commit(FOLDER_CLEAR);
         const pageToken = state.pageTokens[page - 1] || '';
         const resp = await googleDriveApi.folderAsync(folderId, pageToken);
-
-        console.log("Fetched folders response:", resp.data);
-
         if (!resp.data || !Array.isArray(resp.data.folders)) {
             console.error("Invalid folder data:", resp.data);
             return;

@@ -36,7 +36,6 @@
     "email": "jon.gadsden@owasp.org",
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
-  "resolutions": {},
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@gitbeaker/rest": "^39.34.2",

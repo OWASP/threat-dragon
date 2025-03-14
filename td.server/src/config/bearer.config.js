@@ -25,7 +25,6 @@ const getBearerToken = (authHeader) => {
 };
 
 const middleware = (req, res, next) => {
-    console.log("Middleware invoked...");
 
     const token = getBearerToken(req.headers.authorization);
     if (!token) {
@@ -34,12 +33,7 @@ const middleware = (req, res, next) => {
     }
 
     try {
-        console.log("Verifying token...");
         const { provider, user } = jwt.verifyToken(token);
-
-        if (!provider || !user) {
-            throw new Error("Decoded JWT is missing required fields (provider/user)");
-        }
 
         req.provider = provider;
         req.user = user;

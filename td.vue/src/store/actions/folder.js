@@ -7,7 +7,6 @@ export const FOLDER_NAVIGATE_BACK = 'FOLDER_NAVIGATE_BACK';
 
 const actions = {
     [FOLDER_FETCH]: async ({ commit }, { page, folderId, accessToken }) => {
-        console.log('Action - Access Token:', accessToken); // Add this line
         try {
             const response = await googleDriveApi.folderAsync(folderId, page, accessToken);
             commit('SET_FOLDERS', response.folders);

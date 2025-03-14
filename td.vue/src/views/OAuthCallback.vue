@@ -1,4 +1,3 @@
-<!-- OAuthCallback.vue -->
 <template>
   <div>Processing OAuth callback...</div>
 </template>
@@ -18,10 +17,10 @@ export default {
         onMounted(async () => {
             console.log('OAuthCallback.vue mounted');
             const code = new URLSearchParams(window.location.search).get('code');
-            const provider = new URLSearchParams(window.location.search).get('provider'); // Assumes provider is passed in the query
+            const provider = store.state.provider.selected; // Retrieve provider from Vuex
 
             if (!provider) {
-                console.error('Missing provider in the query parameters.');
+                console.error('Missing provider in Vuex store.');
                 router.push({ name: 'HomePage' });
                 return;
             }
@@ -32,13 +31,13 @@ export default {
                     const response = await loginAPI.completeLoginAsync(provider, code);
 
                     // Dispatch the AUTH_SET_JWT action to set the tokens in the store
-                    store.dispatch('AUTH_SET_JWT', response); // Use the correct action name
+                    store.dispatch('AUTH_SET_JWT', response); 
 
                     // Redirect to a secure page or dashboard
                     router.push({ name: 'MainDashboard' });
                 } catch (error) {
                     console.error('Error completing login:', error);
-                    // Handle error (e.g., show an error message)
+                    // Handle error
                 }
             } else {
                 console.error('Authorization code not found.');

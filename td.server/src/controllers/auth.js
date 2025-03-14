@@ -23,9 +23,7 @@ const login = (req, res) => {
 
 const oauthReturn = (req, res) => {
     logger.debug(`API oauthReturn request: ${logger.transformToString(req)}`);
-    console.log("01")
-    const provider = 'google';
-    let returnUrl = `/oauth-return?code=${req.query.code}&provider=${provider}`;
+    let returnUrl = `/oauth-return?code=${req.query.code}`;
     if (env.get().config.NODE_ENV === 'development') {
         returnUrl = `http://localhost:8080${returnUrl}`;
     }
