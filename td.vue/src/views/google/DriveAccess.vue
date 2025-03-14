@@ -5,7 +5,7 @@ const clientId = process.env.VUE_APP_GOOGLE_CLIENT_ID;
 const scope = "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.readonly";
 let accessToken = ref(null);
 let tokenScopes = ref([]);
-// added google picker api
+// added google picker api, yet needs to be handled properly
 const loadPickerAPI = () => {
   gapi.load("picker", { callback: createPicker });
 };
@@ -18,7 +18,7 @@ const handleAuth = () => {
         console.error("OAuth Error:", response);
         return;
       }
-      accessToken.value = response.access_token; // Store correct token
+      accessToken.value = response.access_token;
       tokenScopes.value = response.scope ? response.scope.split(" ") : [];
       createPicker();
     },
@@ -37,11 +37,11 @@ const createPicker = () => {
 };
 const pickerCallback = async (data) => {
   if (data.action === google.picker.Action.PICKED) {
-    const file = data.docs[0]; // Get the selected file
+    const file = data.docs[0];
     if (file.mimeType === "application/json") {
       try {
-        const fileContent = await fetchFileContent(file.id); // Fetch content
-        sendToBackend(file.id, fileContent); // Send to backend
+        const fileContent = await fetchFileContent(file.id);t
+        sendToBackend(file.id, fileContent);
       } catch (error) {
         console.error("Error fetching file content:", error);
       }
@@ -60,7 +60,7 @@ const fetchFileContent = async (fileId) => {
     }
   );
   if (!response.ok) throw new Error("Failed to fetch file content");
-  return await response.text(); // Returns file content as string
+  return await response.text();
 };
 const sendToBackend = async (fileId, fileContent) => {
   if (!accessToken.value) {
@@ -72,7 +72,7 @@ const sendToBackend = async (fileId, fileContent) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken.value}` // Ensure the token is sent
+        "Authorization": `Bearer ${accessToken.value}`
       },
       body: JSON.stringify({ fileId, fileContent }),
     });
