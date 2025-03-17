@@ -47,7 +47,10 @@ export default {
         TdDashboardAction,
     },
     computed: mapState({
-        actions: (state) => getDashboardActions(state.provider.selected),
+        actions: (state) => {
+        const providerKey = state.provider.selected;
+        return getDashboardActions(providerKey);
+    },
     }),
 };
 </script>
