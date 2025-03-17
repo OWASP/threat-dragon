@@ -3,7 +3,7 @@
         <b-row class="no-print td-report-options sticky">
             <b-col>
                 <b-form>
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group label-cols="auto" id="model-group">
                                 <b-form-checkbox
@@ -57,7 +57,7 @@
                                 >{{ $t('report.options.showProperties') }}</b-form-checkbox>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
                 </b-form>
             </b-col>
 

@@ -8,14 +8,14 @@
         <!-- Description -->
         <b-row class="mb-4">
             <b-col>
-                <b-card
+                <BCard
                     :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
                             <p id="tm_description">{{ model.summary.description }}</p>
                         </b-col>
                     </b-row>
-                </b-card>
+                </BCard>
             </b-col>
         </b-row>
         <!-- Diagrams -->
@@ -26,7 +26,7 @@
                 v-for="(diagram, idx) in model.detail.diagrams"
                 :key="idx"
             >
-                <b-card>
+                <BCard>
                     <template #header>
                         <h6 class="diagram-header-text">
                             <a href="javascript:void(0)" @click="editDiagram(diagram)" class="diagram-edit">
@@ -40,12 +40,12 @@
                         </a>
                     </h6>
                     <a v-else href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <b-img-lazy
+                        <BImg
                             class="m-auto d-block td-diagram-thumb"
                             :src="getThumbnailUrl(diagram)"
                             :alt="diagram.title" />
                     </a>
-                </b-card>
+                </BCard>
             </b-col>
         </b-row>
         <b-row>
