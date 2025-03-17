@@ -48,7 +48,7 @@ export default {
     },
     computed: mapState({
         actions: (state) => {
-        const providerKey = state.provider.selected;
+        const providerKey = state.provider.selected || "local";
         return getDashboardActions(providerKey);
     },
     }),
