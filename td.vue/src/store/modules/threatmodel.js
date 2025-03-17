@@ -205,15 +205,26 @@ const mutations = {
         stashThreatModel(state, state.data);
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
-        Vue.set(state, 'selectedDiagram', diagram);
+        if (!state.data) state.data = {};
+        if (!state.data.detail) state.data.detail = {};
+        if (!Array.isArray(state.data.detail.diagrams)) state.data.detail.diagrams = [];
+    
+        state.selectedDiagram = diagram; 
         state.modifiedDiagram = diagram;
+    
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram selected for edits: ' + diagram.id + ' at index: ' + idx);
+        console.debug(`Threatmodel diagram selected for edits: ${diagram.id} at index: ${idx}`);
     },
+    
     [THREATMODEL_FETCH]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
+        if (!state.all || !Array.isArray(state.all)) {
+            state.all = [];
+        }
         state.all.length = 0;
-        models.forEach((model, idx) => Vue.set(state.all, idx, model));
+        models.forEach((model, idx) => {
+            state.all[idx] = { ...model };
+        });
     },
     [THREATMODEL_MODIFIED]: (state) => {
         state.modified = true;
@@ -227,26 +238,32 @@ const mutations = {
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
-        Vue.set(state, 'stash', JSON.stringify(state.data));
+        state.stash = JSON.stringify(state.data);
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
         state.modified = false;
     },
     [THREATMODEL_UPDATE]: (state, update) => {
+        if (!state.data) state.data = {};
+        if (!state.data.detail) state.data.detail = {}; // Ensure `detail` exists
+    
         if (update.version) {
-            Vue.set(state.data, 'version', update.version);
+            state.data.version = update.version; // Direct assignment
         }
         if (update.diagramTop) {
-            Vue.set(state.data.detail, 'diagramTop', update.diagramTop);
+            state.data.detail.diagramTop = update.diagramTop;
         }
         if (update.threatTop) {
-            Vue.set(state.data.detail, 'threatTop', update.threatTop);
+            state.data.detail.threatTop = update.threatTop;
         }
         if (update.fileName) {
-            Vue.set(state, 'fileName', update.fileName);
+            state.fileName = update.fileName;
         }
         console.debug('Threatmodel update: ' + JSON.stringify(update));
     }
+    
+    
+    
 };
 
 const getters = {
