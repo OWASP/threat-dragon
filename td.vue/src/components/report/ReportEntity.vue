@@ -117,8 +117,6 @@ export default {
                 showOutOfScope: this.showOutOfScope,
             });
 
-            console.log("Threat data:", threats); // Debugging log
-
             return Array.isArray(threats)
                 ? threats.map((threat) => ({
                       [this.$t("threats.properties.number")]: threat.number,
