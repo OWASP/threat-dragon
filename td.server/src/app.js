@@ -58,8 +58,9 @@ const create = () => {
         // routes
         routes.config(app);
 
-        // env will always supply a value for the PORT
-        app.set('port', env.get().config.PORT);
+        // Get port from environment, or use default value of 3000
+        const serverApiPort = env.get().config.SERVER_API_PORT || env.get().config.PORT || 3000;
+        app.set('port', serverApiPort);
         logger.info('Express server listening on ' + app.get('port'));
 
         logger.info('OWASP Threat Dragon application started');
