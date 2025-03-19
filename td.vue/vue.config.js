@@ -17,9 +17,12 @@ let configuredAppPort;
 // Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
 const devServerConfig = hasTlsCredentials
     ? {
-        https: {
-            key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
-            cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
+        server: {
+            type: 'https',
+            options: {
+                key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
+                cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
+            }
         },
         port: appPort,
         proxy: {
