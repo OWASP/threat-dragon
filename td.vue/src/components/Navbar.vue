@@ -26,6 +26,7 @@
         <b-nav-item
           to="/tos"
           id="nav-tos"
+          v-if="googleEnabled"
         >
           <font-awesome-icon
             icon="file-contract"
@@ -36,6 +37,7 @@
         <b-nav-item
           to="/privacy"
           id="nav-privacy"
+          v-if="googleEnabled"
         >
           <font-awesome-icon
             icon="shield-alt"
@@ -132,7 +134,7 @@ $icon-height: 1.2rem;
 </style>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 export default {
@@ -142,6 +144,12 @@ export default {
   },
   computed: {
     ...mapGetters(['username']),
+    ...mapState({
+      config: state => state.config.config
+    }),
+    googleEnabled() {
+      return this.config && this.config.googleEnabled;
+    }
   },
   methods: {
     onLogOut(evt) {

@@ -8,7 +8,7 @@
             </b-row>
             <b-row>
                 <b-col md="12">
-                    <div class="td-description mt-5" v-html="$t('privacy.content')"></div>
+                    <div class="td-description mt-5 text-left" v-html="$t('privacy.content')"></div>
                 </b-col>
             </b-row>
         </div>
@@ -33,6 +33,18 @@
     font-size: 20px;
     max-width: 80%;
     margin: 10px auto; /* Ensure description stays centered */
+}
+
+/* Custom styling for lists in the content */
+.td-description ul {
+    display: table;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.td-description h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
 }
 </style>
 
