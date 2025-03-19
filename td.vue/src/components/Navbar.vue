@@ -24,6 +24,26 @@
           ></font-awesome-icon>
         </b-nav-item>
         <b-nav-item
+          to="/tos"
+          id="nav-tos"
+        >
+          <font-awesome-icon
+            icon="file-contract"
+            class="td-fa-nav"
+            v-tooltip.hover :title="$t('nav.tos')"
+          ></font-awesome-icon>
+        </b-nav-item>
+        <b-nav-item
+          to="/privacy"
+          id="nav-privacy"
+        >
+          <font-awesome-icon
+            icon="shield-alt"
+            class="td-fa-nav"
+            v-tooltip.hover :title="$t('nav.privacy')"
+          ></font-awesome-icon>
+        </b-nav-item>
+        <b-nav-item
           href="https://owasp.org/www-project-threat-dragon/docs-2/"
           target="_blank"
           rel="noopener noreferrer"

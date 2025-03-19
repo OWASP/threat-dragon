@@ -5,7 +5,17 @@ const eng = {
     nav: {
         v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Logged in as',
-        logOut: 'Log out'
+        logOut: 'Log out',
+        tos: 'Terms of Service',
+        privacy: 'Privacy Policy'
+    },
+    tos: {
+        title: 'Terms of Service',
+        content: 'TBD'
+    },
+    privacy: {
+        title: 'Privacy Policy',
+        content: 'TBD'
     },
     home: {
         title: 'OWASP Threat Dragon',

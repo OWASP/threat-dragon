@@ -5,6 +5,8 @@ import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
 import OAuthCallback from '../views/OAuthCallback.vue';
+import ToSPage from '../views/ToSPage.vue';
+import PrivacyPage from '../views/PrivacyPage.vue';
 
 const routes = [
     {
@@ -22,7 +24,16 @@ const routes = [
         name: 'MainDashboard',
         component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue')
     },
-    
+    {
+        path: '/tos',
+        name: 'ToSPage',
+        component: ToSPage
+    },
+    {
+        path: '/privacy',
+        name: 'PrivacyPage',
+        component: PrivacyPage
+    },
     {
         path: '/demo/select',
         name: 'DemoSelect',
