@@ -27,7 +27,7 @@ const devServerConfig = hasTlsCredentials
         port: appPort,
         proxy: {
             '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                target: `http://localhost:${serverApiPort}`, // Backend server
                 ws: true, // Proxy WebSocket connections
                 changeOrigin: true,
             },
@@ -39,7 +39,7 @@ const devServerConfig = hasTlsCredentials
         port: appPort,
         proxy: {
             '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                target: `http://localhost:${serverApiPort}`, // Backend server
                 ws: true, // Proxy WebSocket connections
                 changeOrigin: true,
             },
@@ -48,7 +48,7 @@ const devServerConfig = hasTlsCredentials
     };
 
 configuredAppPort = devServerConfig.port;
-console.log(`Vue app running on ${hasTlsCredentials ? `HTTPS (Port ${configuredAppPort})` : `HTTP (Port ${configuredAppPort})`}`);
+console.log(`Vue app is configured to run on ${hasTlsCredentials ? `HTTPS (Port ${configuredAppPort})` : `HTTP (Port ${configuredAppPort})`}`);
 
 
 module.exports = {
