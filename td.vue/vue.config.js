@@ -51,8 +51,6 @@ const devServerConfig = hasTlsCredentials
 configuredAppPort = devServerConfig.port;
 console.log(`Vue app is configured to run on ${hasTlsCredentials ? `HTTPS (Port ${configuredAppPort})` : `HTTP (Port ${configuredAppPort})`}`);
 
-// Print the full devServerConfig object
-console.log('Vue app configuration:', JSON.stringify(devServerConfig, null, 2));
 
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
