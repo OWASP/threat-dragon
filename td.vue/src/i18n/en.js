@@ -11,11 +11,83 @@ const eng = {
     },
     tos: {
         title: 'Terms of Service',
-        content: 'TBD'
+        content: `<h2>Terms of Service</h2>
+<p>Welcome to OWASP Threat Dragon. By using our application, you agree to these Terms of Service.</p>
+
+<h2>1. Acceptance of Terms</h2>
+<p>By accessing and using OWASP Threat Dragon, you accept and agree to be bound by the terms and provisions of this agreement.</p>
+
+<h2>2. Description of Service</h2>
+<p>OWASP Threat Dragon is a free, open-source threat modeling tool that helps you create threat model diagrams and identify threats to your system.</p>
+
+<h2>3. License and Restrictions</h2>
+<p>OWASP Threat Dragon is released under the Apache 2.0 License. You are free to:</p>
+<ul>
+  <li>Use the application for personal or commercial purposes</li>
+  <li>Modify the application</li>
+  <li>Distribute the application</li>
+</ul>
+<p>Subject to the terms and conditions of the Apache 2.0 License.</p>
+
+<h2>4. User Responsibilities</h2>
+<p>You are responsible for:</p>
+<ul>
+  <li>All activity that occurs under your account</li>
+  <li>Maintaining the confidentiality of your account information</li>
+  <li>The content of your threat models</li>
+</ul>
+
+<h2>5. No Warranty</h2>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</p>
+
+<h2>6. Limitation of Liability</h2>
+<p>IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<h2>7. Modifications to Terms</h2>
+<p>We reserve the right to modify these Terms at any time. Your continued use of the application after such modifications constitutes your acceptance of the modified terms.</p>
+
+<h2>8. Governing Law</h2>
+<p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which OWASP operates, without regard to its conflict of law provisions.</p>
+
+<h2>9. Contact</h2>
+<p>If you have any questions about these Terms, please contact us through the OWASP Threat Dragon GitHub repository.</p>
+
+<p>Last updated: March 19, 2025</p>`
     },
     privacy: {
         title: 'Privacy Policy',
-        content: 'TBD'
+        content: `<h2>Overview</h2>
+<p>OWASP Threat Dragon is committed to protecting your privacy. This application is designed to respect your data and keep you in control.</p>
+
+<h2>Data Collection</h2>
+<p>Threat Dragon does not:</p>
+<ul>
+  <li>Track or collect personal information</li>
+  <li>Store user behavior data</li>
+  <li>Utilize cookies or tracking technologies</li>
+  <li>Sell or share any user information</li>
+</ul>
+
+<h2>Authentication</h2>
+<p>When using Google authentication, we only receive basic profile information necessary for authentication purposes. This information is not stored on our servers or shared with any third parties.</p>
+
+<h2>Your Threat Models</h2>
+<ul>
+  <li>All threat model data created within the application remains under your control</li>
+  <li>Your data is only stored locally or in repositories that you explicitly authorize</li>
+  <li>We have no access to your threat model content</li>
+</ul>
+
+<h2>Data Security</h2>
+<p>We implement appropriate security measures to ensure the safety of any data that passes through our systems, although we do not retain this data.</p>
+
+<h2>Changes to This Policy</h2>
+<p>We may update this privacy policy from time to time. Any changes will be posted on this page.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this Privacy Policy, please contact us through the OWASP Threat Dragon GitHub repository.</p>
+
+<p>Last updated: March 19, 2025</p>`
     },
     home: {
         title: 'OWASP Threat Dragon',

@@ -8,9 +8,7 @@
             </b-row>
             <b-row>
                 <b-col md="12">
-                    <p class="td-description mt-5">
-                        {{ $t("tos.content") }}
-                    </p>
+                    <div class="td-description mt-5" v-html="$t('tos.content')"></div>
                 </b-col>
             </b-row>
         </div>
