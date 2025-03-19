@@ -4,7 +4,7 @@ import { ref, onMounted } from "vue";
 // Ensure environment variables are defined
 const apiKey = process.env.VUE_APP_GOOGLE_API_KEY || '';
 const clientId = process.env.VUE_APP_GOOGLE_CLIENT_ID || '';
-const scope = "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.readonly";
+const scope = "https://www.googleapis.com/auth/drive.file";
 
 let accessToken = ref(null);
 let tokenScopes = ref([]);
@@ -45,7 +45,7 @@ const createPicker = () => {
     console.error("Cannot create picker - missing requirements");
     return;
   }
-  
+
   const picker = new google.picker.PickerBuilder()
     .addView(google.picker.ViewId.DOCS)
     .setOAuthToken(accessToken.value)
@@ -59,7 +59,7 @@ const pickerCallback = async (data) => {
   if (!data || !data.action || !google.picker || data.action !== google.picker.Action.PICKED) {
     return;
   }
-  
+
   const file = data.docs[0];
   if (file && file.mimeType === "application/json") {
     try {
@@ -116,7 +116,7 @@ onMounted(() => {
   script.src = "https://apis.google.com/js/api.js";
   script.onload = loadPickerAPI;
   document.body.appendChild(script);
-  
+
   const gisScript = document.createElement("script");
   gisScript.src = "https://accounts.google.com/gsi/client";
   document.body.appendChild(gisScript);

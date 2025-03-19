@@ -6,18 +6,16 @@ class GoogleEnv extends Env {
     }
 
     get prefix () {
-        return 'GOOGLE_';
+//        return 'GOOGLE_';
+        return '';
     }
 
     // Note that the actual env var will be prepended with GOOGLE_
     get properties () {
         return [
-            { key: 'CLIENT_ID', required: false },
-            { key: 'CLIENT_SECRET', required: false },
-            { key: 'SCOPE', required: false, defaultValue: 'openid email profile' },
-            { key: 'REDIRECT_URI', required: false, defaultValue: 'http://localhost:3000/api/oauth/return' },
-            { key: 'TOKEN_URL', required: false, defaultValue: 'https://oauth2.googleapis.com/token' },
-            { key: 'USER_INFO_URL', required: false, defaultValue: 'https://www.googleapis.com/oauth2/v1/userinfo' }
+            { key: 'VUE_APP_GOOGLE_CLIENT_ID', required: false },
+            { key: 'GOOGLE_CLIENT_SECRET', required: false },
+            { key: 'GOOGLE_REDIRECT_URI', required: false, defaultValue: 'http://localhost:3000/api/oauth/return' },
         ];
     }
 }
