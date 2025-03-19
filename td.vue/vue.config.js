@@ -5,13 +5,15 @@ const fs = require('fs');
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
-const PORT = process.env.APP_PORT || '8080';
+const appPort = process.env.APP_PORT || '8080';
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
+const proxyHostname = process.env.PROXY_HOSTNAME || appHostname;
+
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
-let port;
+let configuredAppPort;
 // Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
 const devServerConfig = hasTlsCredentials
     ? {
@@ -19,7 +21,7 @@ const devServerConfig = hasTlsCredentials
             key: fs.readFileSync(process.env.APP_TLS_KEY_PATH),
             cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
         },
-        port: PORT,
+        port: appPort,
         proxy: {
             '^/api': {
                 target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
@@ -27,11 +29,11 @@ const devServerConfig = hasTlsCredentials
                 changeOrigin: true,
             },
         },
-        allowedHosts: [appHostname],
+        allowedHosts: [appHostname, proxyHostname],
     }
     : {
         // note that client webSocketURL config has been removed, as it was incompatible with desktop version
-        port: 8080,
+        port: appPort,
         proxy: {
             '^/api': {
                 target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
@@ -39,11 +41,11 @@ const devServerConfig = hasTlsCredentials
                 changeOrigin: true,
             },
         },
-        allowedHosts: [appHostname],
+        allowedHosts: [appHostname, proxyHostname],
     };
-port = devServerConfig.port;
 
-console.log(`Running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
+configuredAppPort = devServerConfig.port;
+console.log(`Vue app running on ${hasTlsCredentials ? `HTTPS (Port ${configuredAppPort})` : `HTTP (Port ${configuredAppPort})`}`);
 
 
 module.exports = {

@@ -19,7 +19,7 @@ app.use(i18nFactory.get()); // i18n (Internationalization)
 app.use(bootstrapVue); // BootstrapVueNext plugin
 app.use(fontAwesome); // FontAwesome plugin
 app.use(GoogleSignInPlugin, {
-  clientId: 'put your client i here through env',
+  clientId: process.env.GOOGLE_CLIENT_ID,
 });
 app.use(ToastPlugin);
 app.directive('tooltip', Tooltip);
