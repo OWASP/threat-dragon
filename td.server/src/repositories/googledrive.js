@@ -2,7 +2,7 @@ import env from '../env/Env.js';
 import { google } from 'googleapis';
 
 const getClient = (accessToken) => {
-    const oauth2Client = new google.auth.OAuth2(env.get().config.GOOGLE_CLIENT_ID, env.get().config.GOOGLE_CLIENT_SECRET, env.get().config.GOOGLE_REDIRECT_URI);
+    const oauth2Client = new google.auth.OAuth2(env.get().config.VUE_APP_GOOGLE_CLIENT_ID, env.get().config.GOOGLE_CLIENT_SECRET, env.get().config.GOOGLE_REDIRECT_URI);
     oauth2Client.setCredentials({ access_token: accessToken });
     return oauth2Client;
 };

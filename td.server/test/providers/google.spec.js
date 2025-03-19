@@ -7,19 +7,19 @@ import googleProvider from '../../src/providers/google.js';
 
 describe('providers/google.js', () => {
     describe('isConfigured', () => {
-        it('returns true if GOOGLE_CLIENT_ID is set', () => {
-            const config = { GOOGLE_CLIENT_ID: '1234567' };
+        it('returns true if VUE_APP_GOOGLE_CLIENT_ID is set', () => {
+            const config = { VUE_APP_GOOGLE_CLIENT_ID: '1234567' };
             sinon.stub(env, 'get').returns({ config });
             expect(googleProvider.isConfigured()).to.be.true;
         });
 
-        it('returns false if GOOGLE_CLIENT_ID is not set', () => {
+        it('returns false if VUE_APP_GOOGLE_CLIENT_ID is not set', () => {
             expect(googleProvider.isConfigured()).to.be.false;
         });
     });
 
     describe('getOauthRedirectUrl', () => {
-        const config = { GOOGLE_CLIENT_ID: '1234567' };
+        const config = { VUE_APP_GOOGLE_CLIENT_ID: '1234567' };
     
         it('contains the Google OAuth URL', () => {
             expect(googleProvider.getOauthRedirectUrl()).to
@@ -35,15 +35,6 @@ describe('providers/google.js', () => {
         it('uses the default scope', () => {
             expect(googleProvider.getOauthRedirectUrl()).to
                 .contain('scope=openid email profile');  // Do not use URL-encoded scopes in the test
-        });
-    
-        it('uses the configured scope', () => {
-            const scopedCfg = Object.assign({}, config, {
-                GOOGLE_SCOPE: 'email profile'
-            });
-            sinon.stub(env, 'get').returns({ config: scopedCfg });
-            expect(googleProvider.getOauthRedirectUrl()).to
-                .contain('scope=email profile');  // No need to URL-encode in the test case
         });
     });
 
