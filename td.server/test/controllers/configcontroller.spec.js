@@ -40,7 +40,7 @@ describe('controllers/configcontroller.js', () => {
     describe("getConfig", () => {
 
         it("all true", () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', GITHUB_CLIENT_ID: '456',GITLAB_CLIENT_ID: '456', VUE_APP_GOOGLE_CLIENT_ID: '123'}});
+            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', GITHUB_CLIENT_ID: '456',GITLAB_CLIENT_ID: '456', GOOGLE_CLIENT_ID: '123'}});
             expect(getConfig()).to.deep.equal({
                 "bitbucketEnabled": true,
                 "githubEnabled": true,
@@ -80,7 +80,7 @@ describe('controllers/configcontroller.js', () => {
             })
         })
         it("google and local", () => {
-            sinon.stub(env, 'get').returns({config: {VUE_APP_GOOGLE_CLIENT_ID: '123', }});
+            sinon.stub(env, 'get').returns({config: {GOOGLE_CLIENT_ID: '123', }});
             expect(getConfig()).to.deep.equal({
                 "bitbucketEnabled": false,
                 "githubEnabled": false,

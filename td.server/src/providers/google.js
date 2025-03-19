@@ -12,7 +12,7 @@ const name = 'google';
  * Determines if the Google provider is configured
  * @returns {Boolean}
  */
-const isConfigured = () => Boolean(env.get().config.VUE_APP_GOOGLE_CLIENT_ID);
+const isConfigured = () => Boolean(env.get().config.GOOGLE_CLIENT_ID);
 
 /**
  * Gets the Google OAuth Login URL
@@ -20,7 +20,6 @@ const isConfigured = () => Boolean(env.get().config.VUE_APP_GOOGLE_CLIENT_ID);
  */
 const getOauthRedirectUrl = () => {
     const scope = 'openid email profile https://www.googleapis.com/auth/drive.file';
-    const clientId = env.get().config.VUE_APP_GOOGLE_CLIENT_ID;
     const redirectUri = env.get().config.GOOGLE_REDIRECT_URI;
     return `https://accounts.google.com/o/oauth2/auth?response_type=code&scope=${scope}&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 };
@@ -47,7 +46,7 @@ const completeLoginAsync = async (code) => {
  
         const url = `https://oauth2.googleapis.com/token`;
         const body = {
-            client_id: env.get().config.VUE_APP_GOOGLE_CLIENT_ID,
+            client_id: env.get().config.GOOGLE_CLIENT_ID,
             client_secret: env.get().config.GOOGLE_CLIENT_SECRET,
             code,
             grant_type: 'authorization_code',
