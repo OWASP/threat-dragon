@@ -9,7 +9,8 @@ const appPort = process.env.APP_PORT || '8080';
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
 const proxyHostname = process.env.PROXY_HOSTNAME || appHostname;
 
-console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
+console.log('Server configured to listen on port: ' + serverApiPort);
+console.log('Server configured to perform health checks using: ' + serverApiProtocol);
 
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
@@ -50,6 +51,8 @@ const devServerConfig = hasTlsCredentials
 configuredAppPort = devServerConfig.port;
 console.log(`Vue app is configured to run on ${hasTlsCredentials ? `HTTPS (Port ${configuredAppPort})` : `HTTP (Port ${configuredAppPort})`}`);
 
+// Print the full devServerConfig object
+console.log('Vue app configuration:', JSON.stringify(devServerConfig, null, 2));
 
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? '/public' : '/',
