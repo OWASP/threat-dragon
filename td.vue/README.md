@@ -1,4 +1,4 @@
-# OWASP Threat Dragon Site
+## OWASP Threat Dragon Site
 
 This is a Vue project that serves as the front end of the OWASP Threat Dragon website project,
 and also provides the electron desktop project
@@ -63,7 +63,7 @@ You do not need to import anything in your components or pages, they are globall
 
 ## Bootstrap
 
-This project uses [bootstrap-vue](https://bootstrap-vue.org/docs), and it is available globally as well.
+This project uses [bootstrap-vue](https://www.npmjs.com/package/bootstrap-vue), and it is available globally as well.
 
 ## Adding providers
 
@@ -76,6 +76,6 @@ This will need the following:
 
 ## Local Storage
 
-[vuex-persist](https://github.com/championswimmer/vuex-persist) is used to save stores (state)
-from vuex to session storage. By default, all stores are persisted to session storage.
+[vuex-persist](https://github.com/championswimmer/vuex-persist) is used to save stores / state from vuex to session storage.
+By default, all stores are persisted to session storage.
 This is configured in [vuex-persist](src/plugins/vuex-persist.js).
