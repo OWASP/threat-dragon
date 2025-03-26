@@ -4,16 +4,26 @@ const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 
-// Read environment variables, specify defaults if critical values not provided
-const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
-const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
-const appPort = process.env.APP_PORT || '8080';
-const appHostname = process.env.APP_HOSTNAME || 'localhost';
-console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
-
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
 
+// Read environment variables controlling the webpack dev server configuration
+// Use defaults if critical values are not provided
+// serverApiProtocol determines whether the API server will health check using https or http
+// If explicitly specified in environment (such as behind an HTTPS load balancer), use explicit value
+// If not specified, use https if enabled on the Vue application, or http otherwise
+const serverApiProtocol = process.env.SERVER_API_PROTOCOL || hasTlsCredentials ? 'https':'http';
+const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
+const appPort = process.env.APP_PORT || '8080';
+const appHostname = process.env.APP_HOSTNAME || 'localhost';
+// proxyHostname allows optional specification of the load balancer/proxy hostname
+// This is useful when the load balancer listens on https AND the application is listening on https
+// or when the API server resolves the local hostname to the load balancer/proxy IP (e.g. Heroku)
+const proxyHostname = process.env.PROXY_HOSTNAME || appHostname;
+console.log('API server listening on port: ' + serverApiPort);
+console.log('Health check API proxy endpoint: ' + serverApiProtocol + '://' + proxyHostname + ':' + appPort + '/healthz');
+
+// "dev server" refers to the webpack dev server that serves the Vue application
 // Configure dev server to use HTTPS if TLS configuration is valid, otherwise use HTTP
 let httpsConfig = {};
 if (hasTlsCredentials) {
@@ -34,24 +44,24 @@ const devServerConfig = hasTlsCredentials
         port: appPort,
         proxy: {
             '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                target: `http://localhost:${serverApiPort}`, // Backend server
                 ws: true, // Proxy WebSocket connections
                 changeOrigin: true,
             },
         },
-        allowedHosts: [appHostname],
+        allowedHosts: [appHostname, proxyHostname],
     }
     : {
         // note that client webSocketURL config has been removed, as it was incompatible with desktop version
         port: appPort,
         proxy: {
             '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
+                target: `http://localhost:${serverApiPort}`, // Backend server
                 ws: true, // Proxy WebSocket connections
                 changeOrigin: true,
             },
         },
-        allowedHosts: [appHostname],
+        allowedHosts: [appHostname, proxyHostname],
     };
 
 console.log(`App server running on ${hasTlsCredentials ? `HTTPS (Port ${devServerConfig.port})` : `HTTP (Port ${devServerConfig.port})`}`);

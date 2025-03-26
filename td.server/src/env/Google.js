@@ -14,7 +14,6 @@ class GoogleEnv extends Env {
         return [
             { key: 'CLIENT_ID', required: false },
             { key: 'CLIENT_SECRET', required: false },
-            { key: 'SCOPE', required: false, defaultValue: 'openid email profile' },
             { key: 'REDIRECT_URI', required: false, defaultValue: 'http://localhost:3000/api/oauth/return' },
             { key: 'TOKEN_URL', required: false, defaultValue: 'https://oauth2.googleapis.com/token' },
             { key: 'USER_INFO_URL', required: false, defaultValue: 'https://www.googleapis.com/oauth2/v1/userinfo' }

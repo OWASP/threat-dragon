@@ -18,7 +18,7 @@ const isConfigured = () => Boolean(env.get().config.GOOGLE_CLIENT_ID);
  * @returns {String}
  */
 const getOauthRedirectUrl = () => {
-    const scope = env.get().config.GOOGLE_SCOPE || 'openid email profile';
+    const scope = 'openid email profile';
     const redirectUri = env.get().config.GOOGLE_REDIRECT_URI;
     return `https://accounts.google.com/o/oauth2/auth?response_type=code&scope=${scope}&client_id=${env.get().config.GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 };

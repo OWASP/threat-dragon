@@ -59,7 +59,7 @@ const create = () => {
         routes.config(app);
 
         // get port for the Express server to listen on
-        const serverApiPort = parseInt(env.get().SERVER_API_PORT || env.get().PORT || '3000', 10);
+        const serverApiPort = parseInt(env.get().SERVER_API_PORT || env.get().PORT || '3000');
         app.set('port', serverApiPort);
         logger.info('Express server listening on ' + app.get('port'));
 
