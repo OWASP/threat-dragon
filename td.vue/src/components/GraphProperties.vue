@@ -242,6 +242,22 @@
             >
           </b-form-group>
         </b-col>
+
+        <!-- Auto properties -->
+        <b-col 
+            v-if="cellRef.data.type in properties"
+            v-for="prop in properties[cellRef.data.type]" 
+            :key="`${cellRef.data.type}_${prop.key}`">
+          <b-form-group label-cols="auto" :id="`${prop.key}-group`">
+            <component
+              :is="propertyTypeComponents[prop.type]"
+              :id="prop.key"
+              v-model="cellRef.data[prop.key]"
+              @change="onChangeProperties()"
+              >{{ $t(`threatmodel.properties.${prop.key}`) }}</component>
+          </b-form-group>
+        </b-col>
+
       </b-form-row>
     </b-form>
   </div>
@@ -259,6 +275,23 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 
 export default {
     name: 'TdGraphProperties',
+    data: () => ({
+        properties: {
+            'tm.Agent': [
+                { key: 'pQueryRewriting', type: 'bool' },
+                { key: 'pPromptTemplate', type: 'bool' },
+                { key: 'pAttachInstruction', type: 'bool' },
+                { key: 'pOutputSafetyFilter', type: 'bool' },
+                { key: 'pModifiesMemory', type: 'bool' },
+            ],
+            'tm.Flow': [
+                { key: 'pRawUserData', type: 'bool' },
+            ]
+        },
+        propertyTypeComponents: {
+            bool: 'b-form-checkbox'
+        }
+    }),
     computed: mapState({
         cellRef: (state) => state.cell.ref
     }),

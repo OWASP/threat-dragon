@@ -1,3 +1,18 @@
+const flow = {
+    type: 'tm.Flow',
+    name: 'Data Flow',
+    description: '',
+    outOfScope: false,
+    reasonOutOfScope: '',
+    hasOpenThreats: false,
+    isBidirectional: false,
+    isEncrypted: false,
+    isPublicNetwork: false,
+    protocol: '',
+    pRawUserData: false,
+    threats: []
+};
+
 const actor = {
     type: 'tm.Actor',
     name: 'Actor',
@@ -6,7 +21,76 @@ const actor = {
     reasonOutOfScope: '',
     hasOpenThreats: false,
     providesAuthentication: false,
-    threats: []
+    threats: [],
+    isTrusted: false
+};
+
+const tmProcess = {
+    type: 'tm.Process',
+    name: 'Process',
+    description: '',
+    outOfScope: false,
+    reasonOutOfScope: '',
+    hasOpenThreats: false,
+    handlesCardPayment: false,
+    handlesGoodsOrServices: false,
+    isWebApplication: false,
+    privilegeLevel: '',
+    threats: [],
+    isTrusted: false
+};
+
+const store = {
+    type: 'tm.Store',
+    name: 'Store',
+    description: '',
+    outOfScope: false,
+    reasonOutOfScope: '',
+    hasOpenThreats: false,
+    isALog: false,
+    isEncrypted: false,
+    isSigned: false,
+    storesCredentials: false,
+    storesInventory: false,
+    threats: [],
+    isTrusted: false
+};
+
+const agent = {
+    type: 'tm.Agent',
+    name: 'Agent',
+    description: '',
+    outOfScope: false,
+    reasonOutOfScope: '',
+    hasOpenThreats: false,
+    pQueryRewriting: false,
+    pPromptTemplate: false,
+    pAttachInstruction: false,
+    pOutputSafetyFilter: false,
+    pModifiesMemory: false,
+    threats: [],
+    isTrusted: false
+};
+
+const tool = {
+    type: 'tm.Tool',
+    name: 'Tool',
+    description: '',
+    outOfScope: false,
+    reasonOutOfScope: '',
+    hasOpenThreats: false,
+    pRequiresElevatedPrivileges: false,
+    threats: [],
+    isTrusted: false
+};
+
+
+
+
+
+const text = {
+    type: 'tm.Text',
+    name: 'Descriptive text'
 };
 
 const boundary = {
@@ -23,56 +107,10 @@ const boundaryBox = {
     isTrustBoundary: true
 };
 
-const flow = {
-    type: 'tm.Flow',
-    name: 'Data Flow',
-    description: '',
-    outOfScope: false,
-    reasonOutOfScope: '',
-    hasOpenThreats: false,
-    isBidirectional: false,
-    isEncrypted: false,
-    isPublicNetwork: false,
-    protocol: '',
-    threats: []
-};
-
-const tmProcess = {
-    type: 'tm.Process',
-    name: 'Process',
-    description: '',
-    outOfScope: false,
-    reasonOutOfScope: '',
-    hasOpenThreats: false,
-    handlesCardPayment: false,
-    handlesGoodsOrServices: false,
-    isWebApplication: false,
-    privilegeLevel: '',
-    threats: []
-};
-
-const store = {
-    type: 'tm.Store',
-    name: 'Store',
-    description: '',
-    outOfScope: false,
-    reasonOutOfScope: '',
-    hasOpenThreats: false,
-    isALog: false,
-    isEncrypted: false,
-    isSigned: false,
-    storesCredentials: false,
-    storesInventory: false,
-    threats: []
-};
-
-const text = {
-    type: 'tm.Text',
-    name: 'Descriptive text'
-};
-
 const propsByType = {
     'tm.Actor': actor,
+    'tm.Agent': agent,
+    'tm.Tool': tool,
     'tm.Boundary': boundary,
     'tm.BoundaryBox': boundaryBox,
     'tm.Flow': flow,
@@ -91,6 +129,7 @@ const getByType = (type) => {
 
 export default {
     actor,
+    agent,
     boundary,
     boundaryBox,
     flow,

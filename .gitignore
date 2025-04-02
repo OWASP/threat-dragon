@@ -94,6 +94,7 @@
 !td.vue/**/*.scss
 !td.vue/public/
 !td.vue/public/*
+!td.vue/public/**
 !td.vue/src/
 !td.vue/src/*.js
 !td.vue/src/*.vue
@@ -141,6 +142,9 @@
 !td.vue/src/service/threats/models/*.js
 !td.vue/src/service/threats/oats/
 !td.vue/src/service/threats/oats/*.js
+!td.vue/src/service/threats/analyzer/
+!td.vue/src/service/threats/analyzer/*.js
+!td.vue/src/service/threats/analyzer/*.json
 !td.vue/src/service/x6/
 !td.vue/src/service/x6/*.js
 !td.vue/src/service/x6/graph/

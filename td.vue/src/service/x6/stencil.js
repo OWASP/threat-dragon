@@ -1,6 +1,7 @@
 import shapes from './shapes/index.js';
 import { tc } from '@/i18n/index.js';
 import { Stencil as DefaultStencil } from '@antv/x6-plugin-stencil';
+import { ToolShape } from './shapes/agent-tool.js';
 
 const getStencilConfig = (target) => ({
     title: tc('threatmodel.stencil.entities'),
@@ -42,6 +43,8 @@ const get = (target, container, StencilClass = DefaultStencil) => {
             new shapes.ProcessShape(),
             new shapes.StoreShape(),
             new shapes.ActorShape(),
+            new shapes.AgentShape(),
+            new ToolShape(),
             new shapes.FlowStencil(),
         ],
         'components'

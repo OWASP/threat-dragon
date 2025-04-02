@@ -181,10 +181,17 @@ const eng = {
             protocol: 'Protocol',
             publicNetwork: 'Public Network',
             storesCredentials: 'Stores Credentials',
-            storesInventory: 'Stores Inventory'
+            storesInventory: 'Stores Inventory',
+            pQueryRewriting: 'Query Rewriting',
+            pPromptTemplate: 'Prompt Template',
+            pAttachInstruction: 'Attach Instruction',
+            pOutputSafetyFilter: 'Output Safety Filter',
+            pModifiesMemory: 'Modifies Memory',
+            pRawUserData: 'Raw User Data',
         },
         buttons: {
             delete: 'Delete selected',
+            generateThreats: 'Generate threats',
             redo: 'Redo edit',
             shortcuts: 'Keyboard shortcuts',
             toggleGrid: 'Toggle grid',
@@ -241,6 +248,8 @@ const eng = {
         },
         shapes: {
             actor: 'Actor',
+            agent: 'Agent',
+            tool: 'Tool',
             flow: 'Data Flow',
             flowStencil: 'Data Flow',
             process: 'Process',

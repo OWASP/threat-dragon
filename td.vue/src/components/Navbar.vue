@@ -22,6 +22,7 @@
             v-b-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
         </b-nav-item>
+
         <b-nav-item
           href="https://owasp.org/www-project-threat-dragon/docs-2/"
           target="_blank"
@@ -136,7 +137,8 @@ export default {
                     throw error;
                 }
             });
-        }
+        },
+
     }
 };
 </script>

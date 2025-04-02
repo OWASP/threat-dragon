@@ -1,0 +1,1197 @@
+[
+    {
+        "id": "TM-001",
+        "name": "Process sends raw user data to agent without query rewriting",
+        "description": "A process sends raw user data to an agent that does not perform query rewriting.",
+        "risks": "Agent may incorrectly process or misuse unsanitized input, enabling spoofing or tampering.",
+        "mitigations": "Enforce query rewriting or input validation in the agent.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pQueryRewriting": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {
+                      "pRawUserData": true
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-002",
+        "name": "Agent lacks query rewriting",
+        "description": "Agent receives input from a process without performing query rewriting.",
+        "risks": "Unsanitized input may lead to prompt injection or unintended behavior.",
+        "mitigations": "Implement strict query rewriting or input sanitization.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pQueryRewriting": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-003",
+        "name": "Agent provides responses without output safety filtering",
+        "description": "Agent returns responses without applying output safety filters.",
+        "risks": "May result in harmful, biased, or inappropriate output.",
+        "mitigations": "Integrate a robust output filtering mechanism.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pOutputSafetyFilter": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-004",
+        "name": "Agent receives data over unencrypted flow",
+        "description": "Sensitive context data is sent to the agent over an unencrypted connection.",
+        "risks": "Data may be intercepted or modified in transit.",
+        "mitigations": "Enforce encryption (e.g., TLS) on all communication channels.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Store",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {
+                      "isEncrypted": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-005",
+        "name": "Agent receives context from unsigned data store",
+        "description": "Agent consumes context data from a store that does not sign its outputs.",
+        "risks": "Malicious data could be injected without detection.",
+        "mitigations": "Digitally sign data and validate integrity before usage.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Store",
+                "props": {
+                  "isSigned": false
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-006",
+        "name": "Agent operates without prompt templating",
+        "description": "Agent does not use a structured prompt template when interacting with the LLM.",
+        "risks": "Inconsistent behavior or unintentional prompt injection.",
+        "mitigations": "Use standardized prompt templates to reduce variability.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pPromptTemplate": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-007",
+        "name": "Agent lacks instruction attachment to queries",
+        "description": "Agent does not attach usage or safety instructions to the model prompt.",
+        "risks": "Model may respond in unintended or unsafe ways.",
+        "mitigations": "Always attach clear instruction sets to each prompt.",
+        "strideType": "Spoofing",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pAttachInstruction": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-008",
+        "name": "Agent uses data from public network without trust enforcement",
+        "description": "Agent communicates with external sources over public networks without verifying trust.",
+        "risks": "Data may be spoofed or manipulated in transit.",
+        "mitigations": "Enforce TLS and mutual authentication for all external communications.",
+        "strideType": "Spoofing",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {
+                      "isPublicNetwork": true,
+                      "isTrusted": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-101",
+        "name": "Store provides unsigned data to Agent",
+        "description": "The data store provides data to an agent without digital signature.",
+        "risks": "Data can be tampered with in transit or at rest without detection.",
+        "mitigations": "Ensure all data is signed and signatures are verified.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "isSigned": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-102",
+        "name": "Store does not encrypt context sent to Agent",
+        "description": "The store transmits sensitive context to the agent without encryption.",
+        "risks": "Data may be intercepted during transmission.",
+        "mitigations": "Enable encryption for all outgoing data flows.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "isEncrypted": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {
+                      "isEncrypted": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-103",
+        "name": "Store exposes credentials to Agent without verification",
+        "description": "The store releases stored credentials without ensuring the agent is authorized.",
+        "risks": "Credentials could be leaked or misused by unauthorized agents.",
+        "mitigations": "Implement access control and authentication checks.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "storesCredentials": true
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {
+                  "isTrusted": false
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-104",
+        "name": "Store provides outdated or poisoned data to Agent",
+        "description": "The store lacks version control or validation, and the agent consumes incorrect data.",
+        "risks": "Leads to hallucinations or incorrect model responses.",
+        "mitigations": "Add data validation and freshness checks.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "isALog": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-105",
+        "name": "Store lacks authentication before providing data to Agent",
+        "description": "The store does not authenticate the agent before sharing sensitive information.",
+        "risks": "An unauthorized agent may retrieve sensitive context.",
+        "mitigations": "Implement mutual authentication mechanisms.",
+        "strideType": "Spoofing",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "isTrusted": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {
+                  "providesAuthentication": false
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-106",
+        "name": "Store sends data to Agent over public network",
+        "description": "The store sends context to an agent using a flow marked as public.",
+        "risks": "Data may be exposed or modified by third parties.",
+        "mitigations": "Avoid using public networks or apply strong encryption.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {
+                      "isPublicNetwork": true
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-107",
+        "name": "Store feeds overly broad data to Agent",
+        "description": "The store sends excessive or unnecessary data to the agent.",
+        "risks": "Unneeded exposure increases attack surface and data leakage.",
+        "mitigations": "Filter and minimize context before sharing.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-108",
+        "name": "Store fails to log access by Agent",
+        "description": "No audit trail is recorded when the agent accesses data from the store.",
+        "risks": "Undetected misuse or compromise.",
+        "mitigations": "Enable logging and monitoring of all data accesses.",
+        "strideType": "Repudiation",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "isALog": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-109",
+        "name": "Store lacks redundancy for critical context used by Agent",
+        "description": "Single point of failure in the store causes agent malfunction when context is unavailable.",
+        "risks": "Agent unable to function or serve users correctly.",
+        "mitigations": "Introduce backup storage and failover mechanisms.",
+        "strideType": "Denial of Service",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {
+              "storesInventory": true
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-110",
+        "name": "Store sends data to Agent without validating schema",
+        "description": "The store sends inconsistent or unstructured data to the agent.",
+        "risks": "May lead to LLM errors or incorrect interpretations.",
+        "mitigations": "Enforce schema validation before sending data.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Store",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-201",
+        "name": "Backend sends data to Agent without verifying input integrity",
+        "description": "Backend sends user input to the agent without verifying if it's tampered or malformed.",
+        "risks": "Prompt injection, unsafe execution, or biased responses.",
+        "mitigations": "Validate and sanitize all input data before forwarding.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-202",
+        "name": "Backend receives agent responses without output validation",
+        "description": "Backend accepts and uses agent responses without validating or post-processing.",
+        "risks": "Malicious or harmful responses could reach the user.",
+        "mitigations": "Apply output filtering and safety checks.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {
+                  "pOutputSafetyFilter": false
+                },
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-203",
+        "name": "Backend communicates with Agent without encryption",
+        "description": "Data exchanged between backend and agent is sent over unencrypted channels.",
+        "risks": "Eavesdropping, data manipulation in transit.",
+        "mitigations": "Use TLS or equivalent encryption protocols.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "any",
+                    "props": {
+                      "isEncrypted": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-204",
+        "name": "Backend accepts unsafe input from public network and passes to Agent",
+        "description": "Backend accepts unfiltered user input from a public network and forwards it to the agent.",
+        "risks": "Input may be spoofed or malicious.",
+        "mitigations": "Authenticate sources and sanitize data.",
+        "strideType": "Spoofing",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              },
+              {
+                "nodeType": "tm.Actor",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {
+                      "isPublicNetwork": true
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-205",
+        "name": "Backend fails to enforce role-based access before agent interaction",
+        "description": "The backend allows all users to trigger agent queries, regardless of role.",
+        "risks": "Unauthorized access to sensitive functions or data.",
+        "mitigations": "Implement role-based access control before querying agent.",
+        "strideType": "Elevation of Privilege",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {
+              "privilegeLevel": ""
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-206",
+        "name": "Backend over-exposes context to Agent",
+        "description": "Backend provides the agent with full user context without redaction.",
+        "risks": "Potential exposure of personal data or PII.",
+        "mitigations": "Apply data minimization and context redaction.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-207",
+        "name": "Backend sends improperly formatted input to Agent",
+        "description": "Input passed to the agent is missing required formatting or schema.",
+        "risks": "May result in unpredictable or incorrect behavior.",
+        "mitigations": "Implement strict input formatting standards.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {
+                  "pPromptTemplate": false
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-208",
+        "name": "Backend does not log queries to Agent",
+        "description": "Lack of logging means agent requests and outputs are not traceable.",
+        "risks": "Limits incident response and accountability.",
+        "mitigations": "Log all queries and responses securely.",
+        "strideType": "Repudiation",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {
+              "hasOpenThreats": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-209",
+        "name": "Backend exposes internal errors from Agent to user",
+        "description": "Error messages or stack traces are not filtered before being shown to the end-user.",
+        "risks": "Reveals sensitive system information that aids attackers.",
+        "mitigations": "Use generic error messages and log internal errors privately.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {
+              "isWebApplication": true
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-210",
+        "name": "Backend sends redundant queries to Agent causing overload",
+        "description": "The backend does not rate-limit or de-duplicate queries sent to the agent.",
+        "risks": "Service degradation, latency, or denial of service.",
+        "mitigations": "Implement query throttling and caching.",
+        "strideType": "Denial of Service",
+        "conditions": [
+          {
+            "nodeType": "tm.Process",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Agent",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-009",
+        "name": "Agent handles context without access control",
+        "description": "Agent receives context data without verifying requester’s access rights.",
+        "risks": "Unauthorized access to sensitive or personal data.",
+        "mitigations": "Apply strict access control and identity verification.",
+        "strideType": "Information Disclosure",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Store",
+                "props": {
+                  "storesCredentials": true
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-010",
+        "name": "Agent receives unverified context injection from backend",
+        "description": "Backend sends context to the agent without verifying its origin or integrity.",
+        "risks": "Context could be maliciously crafted to mislead the model.",
+        "mitigations": "Validate and sanitize context before processing.",
+        "strideType": "Tampering",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {},
+            "neighbours": [
+              {
+                "nodeType": "tm.Process",
+                "props": {},
+                "flows": [
+                  {
+                    "direction": "from",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "TM-011",
+        "name": "Agent does not require elevated privileges but accesses sensitive data",
+        "description": "Agent is not configured with elevated privileges but accesses or processes sensitive information.",
+        "risks": "Privilege escalation or data misuse.",
+        "mitigations": "Review privilege configurations and enforce least privilege principle.",
+        "strideType": "Elevation of Privilege",
+        "conditions": [
+          {
+            "nodeType": "tm.Agent",
+            "props": {
+              "pRequiresElevatedPrivileges": false
+            },
+            "neighbours": [
+              {
+                "nodeType": "tm.Store",
+                "props": {
+                  "storesCredentials": true
+                },
+                "flows": [
+                  {
+                    "direction": "to",
+                    "props": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+          "id": "AG-MM-006",
+          "name": "Uncontrolled Context Growth",
+          "description": "Backend repeatedly sends long queries to the agent without limiting memory usage, leading to unsafe degradation of internal context.",
+          "risks": "Loss of system instructions, unstable outputs, denial of service.",
+          "mitigations": "Enforce context window limits, use structured prompt templates, implement memory reset logic.",
+          "strideType": "Denial of Service",
+          "conditions": [
+            {
+              "nodeType": "tm.Agent",
+              "props": {
+                "pPromptTemplate": false
+              },
+              "neighbours": [
+                {
+                  "nodeType": "tm.Process",
+                  "props": {},
+                  "flows": [
+                    {
+                      "direction": "from",
+                      "props": {}
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+    {
+      "id": "AG-001",
+      "name": "Compromised Agents",
+      "description": "Malicious AI agents designed to perform harmful actions, infiltrating the ecosystem by posing as legitimate services.",
+      "risks": "Execution of harmful actions within the ecosystem by trusted-looking malicious agents.",
+      "mitigations": "Require strong authentication for agents. Implement trust score thresholds for access.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Process",
+              "props": {},
+              "flows": [
+                {
+                  "direction": "any",
+                  "props": {
+                    "outOfScope": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-002",
+      "name": "Excessive Agent Permissions",
+      "description": "Agent has more privileges than necessary, which may be exploited to access or modify sensitive data.",
+      "risks": "Unauthorized data access, data tampering, or privilege escalation.",
+      "mitigations": "Apply least privilege principle. Regularly audit agent permissions.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {
+            "providesAuthentication": true
+          },
+          "neighbours": [
+            {
+              "nodeType": "tm.Store",
+              "props": {
+                "storesCredentials": true
+              },
+              "flows": [
+                {
+                  "direction": "to",
+                  "props": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-003",
+      "name": "Unverified Agent Output",
+      "description": "Agent generates output that is used without validation, enabling injection or manipulation attacks.",
+      "risks": "Injection into downstream systems or logic manipulation.",
+      "mitigations": "Sanitize and validate all agent-generated outputs before use.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Process",
+              "props": {},
+              "flows": [
+                {
+                  "direction": "from",
+                  "props": {
+                    "validated": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-004",
+      "name": "Data Disclosure via External Communication",
+      "description": "Agent communicates with external systems without encryption, exposing sensitive data.",
+      "risks": "Eavesdropping and data theft during transmission.",
+      "mitigations": "Enforce encryption and endpoint verification for external flows.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Process",
+              "props": {
+                "outOfScope": true
+              },
+              "flows": [
+                {
+                  "direction": "any",
+                  "props": {
+                    "isEncrypted": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-005",
+      "name": "Unauthenticated Tool Usage",
+      "description": "Agent uses a tool that does not enforce authentication, allowing misuse or unauthorized access.",
+      "risks": "Malicious agents may exploit tools without validation, leading to security breaches.",
+      "mitigations": "Require tools to provide authentication and enforce agent identity verification.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Tool",
+              "props": {
+                "providesAuthentication": false
+              },
+              "flows": [
+                {
+                  "direction": "any",
+                  "props": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-006",
+      "name": "Agent Writes to Unsigned Logs",
+      "description": "Agent sends data to a log that is not signed, risking undetected tampering.",
+      "risks": "Log manipulation, loss of integrity and traceability.",
+      "mitigations": "Sign log storage. Use tamper-evident mechanisms.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Store",
+              "props": {
+                "isALog": true,
+                "isSigned": false
+              },
+              "flows": [
+                {
+                  "direction": "to",
+                  "props": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-007",
+      "name": "Agent Reads Unencrypted Sensitive Store",
+      "description": "Agent accesses sensitive store that is not encrypted, risking data leakage.",
+      "risks": "Data exposure and regulatory non-compliance.",
+      "mitigations": "Encrypt all stores containing sensitive data.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Store",
+              "props": {
+                "storesCredentials": true,
+                "isEncrypted": false
+              },
+              "flows": [
+                {
+                  "direction": "from",
+                  "props": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-008",
+      "name": "Public API Abuse by Agent",
+      "description": "Agent communicates with public APIs without constraints, enabling unintended or malicious operations.",
+      "risks": "Service disruption, unauthorized actions, or data leakage.",
+      "mitigations": "Implement strict rate limiting, scope, and input filtering.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Process",
+              "props": {
+                "isWebApplication": true,
+                "outOfScope": true
+              },
+              "flows": [
+                {
+                  "direction": "to",
+                  "props": {
+                    "isPublicNetwork": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-009",
+      "name": "Agent Sends Data Without Encryption",
+      "description": "Agent sends data over an unencrypted channel, allowing eavesdropping and tampering.",
+      "risks": "Man-in-the-middle attacks, loss of data confidentiality.",
+      "mitigations": "Always enforce encryption on data flows.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Process",
+              "props": {},
+              "flows": [
+                {
+                  "direction": "to",
+                  "props": {
+                    "isEncrypted": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AG-010",
+      "name": "Agent Interacts With External Actor Without Validation",
+      "description": "Agent receives input from actor without verifying source authenticity.",
+      "risks": "Spoofing, injection, or unexpected agent behavior.",
+      "mitigations": "Authenticate and validate actor inputs before processing.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Actor",
+              "props": {
+                "providesAuthentication": false
+              },
+              "flows": [
+                {
+                  "direction": "from",
+                  "props": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  
