@@ -18,13 +18,36 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-# title: Threat Dragon version 2.0 Documantation
+title: Threat Dragon version 2.0 Documentation
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
+# note that icons are loaded from
+# https://github.com/lreading/owasp-td-jekyll/tree/main/assets/webfonts
+
+brand: OWASP Threat Dragon Documentation
+faviconUrl: /assets/images/favicon.ico
+logo_src: assets/images/threatdragon_logo_image.svg
+
+header_links:
+  - text: Try the web app
+    fa_class: fa fa-flask
+    target: _blank
+    url: https://www.threatdragon.com/#/
+
+  - text: Desktop app download
+    fa_class: fa fa-cloud-download-alt
+    target: _blank
+    url: https://github.com/OWASP/threat-dragon/releases
+
+  - text: Visit us on GitHub
+    fa_class: fab fa-github
+    target: _blank
+    url: https://github.com/OWASP/threat-dragon
+
 # Build settings
-theme: minima
+theme: owasp-td-jekyll
 
 # Exclude from processing.
 # The following items will not be processed, by default.

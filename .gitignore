@@ -13,6 +13,7 @@
 !.lycheeignore
 !.trivyignore
 !.markdownlint.yaml
+!CNAME
 
 # docker files
 !.dockerignore
