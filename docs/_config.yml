@@ -46,6 +46,29 @@ header_links:
     target: _blank
     url: https://github.com/OWASP/threat-dragon
 
+nav:
+  categories:
+    - name: Home
+      groups:
+        - name: About
+          fa_class: fas fa-info-circle
+        - name: Install
+          fa_class: fas fa-power-off
+        - name: Configure
+          fa_class: fas fa-cog
+    - name: Usage
+      groups:
+        - name: Modeling
+          fa_class: fas fa-pencil-alt
+    - name: Open Source
+      groups:
+        - name: Development
+          fa_class: fas fa-code
+        - name: Testing
+          fa_class: fas fa-heartbeat
+        - name: Trust
+          fa_class: fas fa-shield-alt
+
 # Build settings
 theme: owasp-td-jekyll
 

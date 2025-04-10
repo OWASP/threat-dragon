@@ -37,14 +37,28 @@
 !ThreatDragonModels/test/*.json
 
 # documentation site
-!docs
+!docs/
 !docs/Gemfile
-!docs/Gemfile.lock
 !docs/*.md
 !docs/*.yml
 !docs/*.html
-!docs/_layouts/
-!docs/_layouts/*.html
+!docs/home/
+!docs/home/*.md
+!docs/testing/
+!docs/testing/*.md
+!docs/configure/
+!docs/configure/*.md
+!docs/install/
+!docs/install/*.md
+!docs/trust/
+!docs/trust/*.md
+!docs/development/
+!docs/development/*.md
+!docs/usage/
+!docs/usage/*.md
+!docs/assets/
+!docs/assets/images
+!docs/assets/images/*.png
 
 # Express server
 !td.server
