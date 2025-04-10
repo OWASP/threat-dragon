@@ -39,7 +39,7 @@ RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && 
 # it would be good to swap out imoshtokill/jekyll-bundler and use jekyll/minimal instead
 FROM        imoshtokill/jekyll-bundler AS build-docs
 WORKDIR     /td.docs
-COPY        ./docs/Gemfile* ./
+COPY        ./docs/Gemfile ./
 RUN         bundle install
 COPY        ./docs .
 RUN         mkdir _data
