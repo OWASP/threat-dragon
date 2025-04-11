@@ -13,6 +13,3 @@ CVE-2023-28155
 # ignore for now until alpine is updated
 CVE-2024-9143
 
-# Ignore secret detection for `bitbucket.html`
-SECRET:bitbucket.html
-
