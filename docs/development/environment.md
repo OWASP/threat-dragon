@@ -11,7 +11,7 @@ group: Development
 Environment variables are used to configure the Threat Dragon web application.
 The desktop version of Threat Dragon does not need these variables.
 
-Refer to the various [environment variables]({{ '/docs-2/install-environment/' | relative_url }})
+Refer to the various [environment variables](/install-environment/)
 that are available to configure the web application.
 
 A minimal set of environment variables, that will provide local file access, is:

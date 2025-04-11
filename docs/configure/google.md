@@ -13,7 +13,7 @@ if Google Drive access is required then some configuration is needed
 for the necessary environment variables.
 The Google Drive specific environment variables are listed at the [end of this page](#google-drive-environment-variables),
 other variables are described in
-the [installation instructions]({{ '/docs-2/install-environment/#environment-variables-reference' | relative_url }}).
+the [installation instructions](/install-environment/#environment-variables-reference).
 
 ## Google Drive access
 
@@ -116,7 +116,7 @@ owasp/threat-dragon:stable
 Note that values for the keys need to be replaced with the values obtained in the previous sections,
 and also note the use of quotation marks.
 
-![Google Drive button]({{ '/docs-2/assets/images/google-drive-button.png' | relative_url }}){: .image-right }
+![Google Drive button](/assets/images/google-drive-button.png){: .float-right }
 
 If the server container starts up correctly then navigate to `http://localhost:8080/#/` to get the main page.
 With a `GOOGLE_CLIENT_ID` set then the 'Login with Google' button is made visible.

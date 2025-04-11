@@ -13,6 +13,8 @@
 !.lycheeignore
 !.trivyignore
 !.markdownlint.yaml
+!.wordlist.txt
+!.spellcheck.yaml
 !CNAME
 
 # docker files

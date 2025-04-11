@@ -1,6 +1,6 @@
 ## Threat Dragon documentation
 
-This docs directory provides the documentation site at https://www.threatdragon.com/docs/
+This docs directory provides the documentation site at `https://www.threatdragon.com/docs/`
 
 The [owasp-td-jekyll](https://github.com/lreading/owasp-td-jekyll) theme provides
 the header bar for the documentation site (such as flask, cloud etc).
@@ -16,7 +16,7 @@ Note that MacOS users are advised to use chruby instead of the system ruby.
 * Install/update bundle: `npm add --location=global bundle`
 * Install jekyll, webrick etc: `bundle update`
 * Run the docs server: `bundle exec jekyll serve`
-* Navigate in a browser to server address: http://127.0.0.1:4000/
+* Navigate in a browser to server address: `http://127.0.0.1:4000/`
 
 ### Check for updates
 

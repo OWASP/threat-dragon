@@ -15,7 +15,7 @@ front and back ends which is not part of the unit and end-to-end tests.
 
 The web application express server can be run locally using command `npm run start:server` from the top level directory.
 The server will need access to environment variables as shown in
-[environment setup]({{ '/docs-2/install-environment/' | relative_url }}).
+[environment setup](/install-environment/).
 
 When running locally it may be that HTTPS certificates are not present,
 so consider using these environment variables that use HTTP:

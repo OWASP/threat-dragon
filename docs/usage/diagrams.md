@@ -8,7 +8,7 @@ group: Modeling
 
 ## Diagrams
 
-Once you have [created or opened]({{ '/docs-2/getting-started/' | relative_url }})
+Once you have [created or opened](/getting-started/)
 a threat model file the next step is to edit the threat model diagrams.
 Click on the diagram you wish to edit and you will be taken to the diagram editor.
 
@@ -17,7 +17,7 @@ Click on the diagram you wish to edit and you will be taken to the diagram edito
 Add model elements to your diagram by dragging a component from the stencil on the left side of the diagram editor.
 Once added they can be selected by clicking them to see their properties and threats and dragged around the diagram.
 
-![Components image]({{ '/docs-2/assets/images/components.png' | relative_url }}){: .image-left }
+![Components image](/assets/images/components.png){: .float-left }
 
 The diagram elements are by convention identified by their shape:
 
@@ -32,7 +32,7 @@ restrictive, but it is still possible to add any type of threat to any component
 
 To delete an element, first select it and then click on the red icon in the element's top left corner:
 
-![element delete tool]({{ '/docs-2/assets/images/delete.png' | relative_url }}){: .image-right }
+![element delete tool](/assets/images/delete.png){: .float-right }
 
 These components can be resized and can be dragged to change the aspect ratio.
 Multiple components can be selected using a mouse control-click or by dragging a selection box.
@@ -48,7 +48,7 @@ Once selected you can edit its properties and add threats to it.
 
 Data flows and trust boundaries can be deleted by clicking the red icon that appears after it has been selected.
 
-![flow remove tool]({{ '/docs-2/assets/images/deleteflow.png' | relative_url }})
+![flow remove tool](/assets/images/deleteflow.png)
 
 The data flow defaults to unidirectional and can be changed to bidirectional by editing the properties.
 To connect the end of a data flow to a diagram element drag one of its ends onto the element.
@@ -67,7 +67,7 @@ Selection of the data flow and trust boundary curve elements is done by either:
 * Hover over an end of the curve and click on an arrow head
 * If the element label is present then clicking on that will select the element
 
-![select data flow]({{ '/docs-2/assets/images/select-dataflow.png' | relative_url }})
+![select data flow](/assets/images/select-dataflow.png)
 
 Once selected the dataflow or trust boundary curve will be highlighted, similar to other diagram elements.
 
@@ -78,7 +78,7 @@ The element properties will then be shown on the lower left side of the diagram 
 
 The properties vary according to the diagram element type.
 
-![data flow properties]({{ '/docs-2/assets/images/dataflow-properties.png' | relative_url }})
+![data flow properties](/assets/images/dataflow-properties.png)
 
 For example the data flow has properties :
 
@@ -103,7 +103,7 @@ a reason why elements have been marked out of scope.
 
 Out of scope elements are indicated in diagrams with dashed lines:
 
-![out of scope elements with dashed lines]({{ '/docs-2/assets/images/scope.png' | relative_url }})
+![out of scope elements with dashed lines](/assets/images/scope.png)
 
 Threat generation is disabled for elements that are out of scope.
 
@@ -112,7 +112,7 @@ Threat generation is disabled for elements that are out of scope.
 Processes, data stores, actors and data flows that have open (unmitigated) threats
 are highlighted in red so that you know where to focus your attention:
 
-![elements with open threats are red]({{ '/docs-2/assets/images/openthreats.png' | relative_url }})
+![elements with open threats are red](/assets/images/openthreats.png)
 
 Note that threat boundary boxes and curves can not have threats associated with them.
 
@@ -120,7 +120,7 @@ Note that threat boundary boxes and curves can not have threats associated with 
 
 The toolbar on the diagram editing page supports some general diagramming features:
 
-![Toolbar image]({{ '/docs-2/assets/images/toolbar.png' | relative_url }})
+![Toolbar image](/assets/images/toolbar.png)
 
 * Delete the selected element(s)
 * Configure the keyboard shortcuts from the defaults
@@ -130,7 +130,7 @@ The toolbar on the diagram editing page supports some general diagramming featur
 * Close the diagram and return to the threat model details view
 * Save the threat model
 
-![Export diagram image]({{ '/docs-2/assets/images/export.png' | relative_url }})
+![Export diagram image](/assets/images/export.png)
 
 The toolbar can be used to export the diagram in various image file formats; JPEG, SVG and PNG.
 

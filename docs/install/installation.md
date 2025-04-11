@@ -15,10 +15,10 @@ a desktop application and a web application.
 
 The web application can be run locally or from a server, and is downloaded from the [Threat Dragon repo][releases].
 There is some configuration necessary, so see the
-[install instructions]({{ '/docs-2/install-webapp/' | relative_url }}) for configuring the application.
+[install instructions](/install-webapp/) for configuring the application.
 
 The web application is also provided in a Docker image, and this is provided by [dockerhub][docker].
-Follow the Docker [instructions]({{ '/docs-2/install-docker/' | relative_url }})
+Follow the Docker [instructions](/install-docker/)
 to download, configure and run a Docker container.
 
 ### Desktop application
@@ -32,7 +32,7 @@ Various installers can be downloaded from the Threat Dragon [releases area][rele
 * Package `.rpm` for Red Hat Linux, AIX, CentOS, Fedora
 * Package `.deb` for debian based Linux such as Ubuntu, Trisqel and Debian itself
 
-See the desktop [install instructions]({{ '/docs-2/install-desktop/' | relative_url }}).
+See the desktop [install instructions](/install-desktop/).
 
 ----
 

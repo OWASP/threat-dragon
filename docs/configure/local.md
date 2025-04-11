@@ -12,7 +12,7 @@ group: Configure
 The threat models can be stored on the file system local to the client / browser,
 and some configuration of environment variables is needed to do this.
 These environment variables are described in
-the [installation instructions]({{ '/docs-2/install-environment/#environment-variables-reference' | relative_url }}).
+the [installation instructions](/install-environment/#environment-variables-reference).
 
 ## Local file access
 

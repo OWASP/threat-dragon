@@ -12,10 +12,10 @@ group: Trust
 
 The automated security scans of Threat Dragon are run on every commit:
 
-* [Dependency management]({{ '/docs-2/dependencies/' | relative_url }})
-* [SAST]({{ '/docs-2/sast/' | relative_url }})
-* [DAST]({{ '/docs-2/dast/' | relative_url }})
-* [Container scanning]({{ '/docs-2/container/' | relative_url }})
+* [Dependency management](/dependencies/)
+* [SAST](/sast/)
+* [DAST](/dast/)
+* [Container scanning](/container/)
 
 ### Incident Response
 

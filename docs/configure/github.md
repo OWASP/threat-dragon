@@ -13,7 +13,7 @@ if Github repository access is required then some configuration is needed
 for the necessary environment variables.
 The Github specific environment variables are listed at the [end of this page](#github-environment-variables),
 other variables are described in
-the [installation instructions]({{ '/docs-2/install-environment/#environment-variables-reference' | relative_url }}).
+the [installation instructions](/install-environment/#environment-variables-reference).
 
 ## Github repository access
 
@@ -82,7 +82,7 @@ they are merely for illustrative purposes.
 
 Example of registering a new OAuth application:
 
-![New GitHub OAuth Application]({{ '/docs-2/assets/images/github-oauth-app.png' | relative_url }})
+![New GitHub OAuth Application](/assets/images/github-oauth-app.png)
 
 ### Run from command line
 
@@ -119,7 +119,7 @@ owasp/threat-dragon:stable
 Note that values for the keys need to be replaced with the values obtained in the previous sections,
 and also note the use of quotation marks.
 
-![Github button]({{ '/docs-2/assets/images/login.png' | relative_url }}){: .image-right }
+![Github button](/assets/images/login.png){: .float-right }
 
 If the server container starts up correctly then navigate to `http://localhost:8080/#/` to get the main page.
 With a `GITHUB_CLIENT_ID` set then the 'Login with GitHub' button is made visible.
@@ -138,11 +138,11 @@ Please see docs/development/environment.md for more information
 From the main Threat Dragon page click on the 'Login with GitHub' button.
 If you are not logged in already then GitHub will prompt for the user account credentials before allowing access to the repo:
 
-![Sign in to GitHub]({{ '/docs-2/assets/images/github-sign-in.png' | relative_url }})
+![Sign in to GitHub](/assets/images/github-sign-in.png)
 
 Once you are logged in then github will ask if the Threat Dragon GitHub OAuth Application is allowed to access the repo:
 
-![Authorize GitHub OAuth Application]({{ '/docs-2/assets/images/github-authorize.png' | relative_url }})
+![Authorize GitHub OAuth Application](/assets/images/github-authorize.png)
 
 If access is permitted then the main Threat Dragon page is displayed and threat models can be
 read from and written to the user's public repositories.
