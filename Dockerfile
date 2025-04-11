@@ -35,15 +35,17 @@ RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && 
             cp td.vue/dist/.sbom/bom.json boms/threat-dragon-site-bom.json   && \
             cp td.vue/dist/.sbom/bom.xml  boms/threat-dragon-site-bom.xml
 
-# Builds the docs
-# it would be good to swap out imoshtokill/jekyll-bundler and use jekyll/minimal instead
-FROM        imoshtokill/jekyll-bundler AS build-docs
+
+FROM        ruby:3.2-slim-bullseye AS build-docs
+RUN         apt-get update \
+            && apt-get install -y --no-install-recommends \
+            build-essential \
+            && rm -rf /var/lib/apt/lists/*
 WORKDIR     /td.docs
-COPY        ./docs/Gemfile ./
+COPY        docs/Gemfile Gemfile
+COPY        docs/Gemfile.lock Gemfile.lock
 RUN         bundle install
-COPY        ./docs .
-RUN         mkdir _data
-RUN         mkdir downloads
+COPY        docs/ .
 RUN         bundle exec jekyll build -b docs/
 
 
