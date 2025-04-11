@@ -41,6 +41,7 @@
 # documentation site
 !docs/
 !docs/Gemfile
+!docs/Gemfile.lock
 !docs/*.md
 !docs/*.yml
 !docs/*.html
