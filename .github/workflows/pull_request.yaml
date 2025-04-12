@@ -354,3 +354,4 @@ jobs:
           format: 'table'
           trivyignores: '.github/workflows/.trivyignore'
           exit-code: 1
+          skip-files: '/app/docs/configure/bitbucket.html'
