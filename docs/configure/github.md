@@ -82,7 +82,7 @@ they are merely for illustrative purposes.
 
 Example of registering a new OAuth application:
 
-![New GitHub OAuth Application](/assets/images/github-oauth-app.png)
+![New GitHub OAuth Application]({{ '/assets/images/github-oauth-app.png' | relative_url }})
 
 ### Run from command line
 
@@ -119,7 +119,7 @@ owasp/threat-dragon:stable
 Note that values for the keys need to be replaced with the values obtained in the previous sections,
 and also note the use of quotation marks.
 
-![Github button](/assets/images/login.png){: .float-right }
+![Github button]({{ '/assets/images/login.png' | relative_url }}){: .float-right }
 
 If the server container starts up correctly then navigate to `http://localhost:8080/#/` to get the main page.
 With a `GITHUB_CLIENT_ID` set then the 'Login with GitHub' button is made visible.
@@ -138,11 +138,11 @@ Please see docs/development/environment.md for more information
 From the main Threat Dragon page click on the 'Login with GitHub' button.
 If you are not logged in already then GitHub will prompt for the user account credentials before allowing access to the repo:
 
-![Sign in to GitHub](/assets/images/github-sign-in.png)
+![Sign in to GitHub]({{ '/assets/images/github-sign-in.png' | relative_url }})
 
 Once you are logged in then github will ask if the Threat Dragon GitHub OAuth Application is allowed to access the repo:
 
-![Authorize GitHub OAuth Application](/assets/images/github-authorize.png)
+![Authorize GitHub OAuth Application]({{ '/assets/images/github-authorize.png' | relative_url }})
 
 If access is permitted then the main Threat Dragon page is displayed and threat models can be
 read from and written to the user's public repositories.

@@ -13,7 +13,7 @@ if Bitbucket repository access is required then some configuration is needed
 of the necessary environment variables.
 The Bitbucket specific environment variables are listed at the [end of this page](#bitbucket-environment-variables),
 other variables are described in
-the [installation instructions](/install-environment/#environment-variables-reference).
+the [installation instructions]({{ '/configure/configure.html/#environment-variables-reference' }}).
 
 ## Bitbucket repository access
 
@@ -94,11 +94,11 @@ they are merely for illustrative purposes.
 
 Example of registering a new OAuth consumer:
 
-![New Bitbucket OAuth consumer](/assets/images/bitbucket-oauth-consumer.png)
+![New Bitbucket OAuth consumer]({{ '/assets/images/bitbucket-oauth-consumer.png' | relative_url }})
 
 And providing a set of minimal permissions for the OAuth consumer:
 
-![Bitbucket OAuth permissions](/assets/images/bitbucket-oauth-permissions.png)
+![Bitbucket OAuth permissions]({{ '/assets/images/bitbucket-oauth-permissions.png' | relative_url }})
 
 #### Run from command line
 
@@ -137,7 +137,7 @@ owasp/threat-dragon:stable
 Note that values for the keys need to be replaced with the values obtained in the previous sections,
 and also note the use of quotation marks.
 
-![Bitbucket button](/assets/images/bitbucket-button.png){: .float-right }
+![Bitbucket button]({{ '/assets/images/bitbucket-button.png' | relative_url }}){: .float-right }
 
 If the server container starts up correctly then navigate to `http://localhost:8080/#/` to get the main page.
 With a `BITBUCKET_CLIENT_ID` set then the 'Login with Bitbucket' button is made visible.
@@ -159,7 +159,7 @@ before allowing access to the workspace.
 
 Once you are logged in then Bitbucket will ask if the Threat Dragon OAuth consumer is allowed to access the repo:
 
-![Authorize Bitbucket OAuth consumer](/assets/images/bitbucket-authorize.png)
+![Authorize Bitbucket OAuth consumer]({{ '/assets/images/bitbucket-authorize.png' | relative_url }})
 
 If access is permitted then the main Threat Dragon page is displayed and threat models can be
 read from and written to the user's public repositories.

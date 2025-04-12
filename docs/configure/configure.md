@@ -27,12 +27,12 @@ These are the quick steps to running a demo of the Threat Dragon web application
 This will provide a __demo__ web application configured to store models
 only in the file system local to the client/browser.
 
-![Quick start demo](/assets/images/quick-demo.png)
+![Quick start demo]({{ '/assets/images/quick-demo.png' | relative_url }})
 
 ## Environment configuration
 
 In practice Threat Dragon should be properly secured and configured, see the instructions to
-[configure local access](/local-file/) for an example.
+[configure local access]({{ 'local-file/' }}) for an example.
 
 The web application can be configured for various repository / drive access:
 
@@ -210,14 +210,14 @@ A JWT is used as the refresh token because it is tamper resistant and provides u
 
 Refer to the step by step guide pages for setting the environment variables specific for these technologies:
 
-- [Google Drive](/google-drive/) and
-    [specific variables](/google-drive/#google-drive-environment-variables)
-- [GitHub repository](/github-repo/) and
-    [specific variables](/github-repo/#github-environment-variables)
-- [Bitbucket repository](/bitbucket-repo/)and
-    [specific variables](/bitbucket-repo/#bitbucket-environment-variables)
-- [GitLab repository](/gitlab-repo/) and
-    [specific variables](/gitlab-repo/#gitlab-environment-variables)
+- [Google Drive]({{ '/configure/google.html' }}) and
+    [specific variables]({{ '/configure/google.html/#google-drive-environment-variables' }})
+- [GitHub repository]({{ '/configure/github.html' | relative_url }}) and
+    [specific variables]({{ '/configure/github.html/#github-environment-variables' | relative_url }})
+- [Bitbucket repository]({{ '/configure/bitbucket.html' | relative_url }})and
+    [specific variables]({{ '/configure/bitbucket.html/#bitbucket-environment-variables' | relative_url }})
+- [GitLab repository]({{ '/configure/gitlab.html' | relative_url }}) and
+    [specific variables]({{ '/configure/gitlab.html/#gitlab-environment-variables' | relative_url }})
 
 ----
 

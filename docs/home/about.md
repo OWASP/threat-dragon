@@ -6,7 +6,7 @@ path: /about
 group: About
 ---
 
-![cupcake logo](/assets/images/cupcake-128x128.png){: .float-left}
+![cupcake logo]({{ '/assets/images/cupcake-128x128.png' | relative_url }}){: .float-left}
 
 ## About
 
