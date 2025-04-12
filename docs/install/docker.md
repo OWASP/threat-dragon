@@ -20,8 +20,8 @@ For example to download the latest stable release from the OWASP dockerhub :
 
 `docker pull owasp/threat-dragon:stable`
 
-There are step-by-step instructions for [Bitbucket](/bitbucket-repo/),
-[GitLab](/gitlab-repo/), and [github](/github-repo/)
+There are step-by-step instructions for [Bitbucket]({{ '/configure/bitbucket.html' | relative_url }}),
+[GitLab]({{ '/configure/gitlab.html' | relative_url }}) and [github]({{ '/configure/github.html' | relative_url }})
 access which explain the configuration needed to provide the environment variables for the docker container.
 
 'Stable' is built for OS linux and architectures amd64 (X86) and arm64 (Apple silicon).
@@ -56,7 +56,7 @@ Note that a tag 'local' has been used here, but it could be (almost) anything su
 
 ### Environment variables
 
-See the [environment](/install-environment/) page
+See the [environment]({{ '/configure/configure.html | relative_url }}) page
 for details on what environment variables are expected.
 
 Threat Dragon supports [dotenv](https://github.com/motdotla/dotenv),

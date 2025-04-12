@@ -13,7 +13,7 @@ if Bitbucket repository access is required then some configuration is needed
 of the necessary environment variables.
 The Bitbucket specific environment variables are listed at the [end of this page](#bitbucket-environment-variables),
 other variables are described in
-the [installation instructions]({{ '/configure/configure.html/#environment-variables-reference' }}).
+the [installation instructions]({{ '/configure/configure.html#environment-variables-reference' | relative_url }}).
 
 ## Bitbucket repository access
 

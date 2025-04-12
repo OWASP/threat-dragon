@@ -13,7 +13,7 @@ if Github repository access is required then some configuration is needed
 for the necessary environment variables.
 The Github specific environment variables are listed at the [end of this page](#github-environment-variables),
 other variables are described in
-the [installation instructions](/install-environment/#environment-variables-reference).
+the [installation instructions]({{ '/configure/configure.html#environment-variables-reference' | relative_url }}).
 
 ## Github repository access
 

@@ -8,7 +8,7 @@ group: Modeling
 
 ## Diagrams
 
-Once you have [created or opened](/getting-started/)
+Once you have [created or opened]({{ '/usage/getting-started.html' | relative_url }})
 a threat model file the next step is to edit the threat model diagrams.
 Click on the diagram you wish to edit and you will be taken to the diagram editor.
 

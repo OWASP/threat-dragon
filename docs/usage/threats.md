@@ -53,7 +53,7 @@ Here N/A stands for Not Applicable and TBD for To Be Defined (or Determined)
 
 ## Threat categories
 
-The threat model can have [different types of threats](/threat-categories/)
+The threat model can have [different types of threats]({{ '/usage/threat-categories.html' | relative_url }})
 added to it according to the diagram type.
 Currently the supported types are STRIDE, LINDDUN, CIA, CIA-DIE and PLOT4ai;
 these are configured as part of the diagram attributes when editing the model.
@@ -61,7 +61,7 @@ A 'Generic' type is provided so that you can select any type of threat from any 
 
 ## Threats by element type
 
-Referring to the [threats by element tables](/threat-categories/),
+Referring to the [threats by element tables]({{ '/usage/threat-categories.html#threats-by-element' | relative_url }}),
 it is useful to cycle through all the categories of threat for a given component.
 These categories can then be considered in turn and accepted if found useful.
 

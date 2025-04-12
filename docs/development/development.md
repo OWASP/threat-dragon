@@ -9,7 +9,7 @@ group: Development
 ## Getting started
 
 1. Clone the repository: `git clone https://github.com/OWASP/threat-dragon.git`
-2. Configure your [environment](/install-environment/)
+2. Configure your [environment]({{ '/configure/configure.html | relative_url }})
 3. Run `npm run dev:server`
 4. In another terminal, run `npm run dev:vue`
 5. Open [localhost:8080](http://localhost:8080/) in a browser

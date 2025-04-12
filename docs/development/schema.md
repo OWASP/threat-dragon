@@ -8,12 +8,12 @@ group: Development
 
 ## Threat Model Schema
 
-The original [version 1.x schema]({{ '/assets/schemas/owasp.threat-dragon.schema.V1.json' }})
+The original [version 1.x schema]({{ '/assets/schemas/owasp.threat-dragon.schema.V1.json' | relative_url }})
 for Threat Dragon models conforms to [JSON Schema](https://json-schema.org/).
 
 There were some changes, mainly in the diagram component properties for version 2 Threat Dragon
 threat models, and so there is a
-[different schema]({{ '/assets/schemas/owasp.threat-dragon.schema.V2.json' }})
+[different schema]({{ '/assets/schemas/owasp.threat-dragon.schema.V2.json' | relative_url }})
 for these threat models - also conforming to JSON Schema.
 
 Threat Dragon will check a threat model against the schema when it is loading and warn if there is a problem,

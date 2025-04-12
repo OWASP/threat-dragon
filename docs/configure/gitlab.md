@@ -13,11 +13,11 @@ if GitLab repository access is required then some configuration is needed
 for the necessary environment variables.
 The GitLab specific environment variables are listed at the [end of this page](#gitlab-environment-variables),
 other variables are described in
-the [installation instructions](/install-environment/#environment-variables-reference).
+the [installation instructions]({{ '/configure/configure.html#environment-variables-reference' | relative_url }}).
 
 ## GitLab repository access
 
-Most of steps are the same as the [GitHub configuration](/github-repo/)
+Most of steps are the same as the [GitHub configuration]({{ '/configure/github.html' | relative_url }})
 but there are some parts that are different:
 
 1. Web App GitLab Access
@@ -71,7 +71,7 @@ they are merely for illustrative purposes.
 
 If Threat Dragon is successfully configured for GitLab access then the 'Login with GitLab' button is made visible.
 
-Refer to the [the GitHub configuration](/github-repo/) guide for
+Refer to the [the GitHub configuration]({{ '/configure/github.html' | relative_url }}) guide for
 a similar example of setting up Github step by step.
 
 ### GitLab environment variables

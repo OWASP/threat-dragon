@@ -12,7 +12,7 @@ Pull requests, feature requests, bug reports and feedback of any kind are very w
 [contributors](https://github.com/OWASP/threat-dragon/blob/main/contributing.md).
 
 We are trying to keep the test coverage relatively high, so please try to update tests in any PRs.
-There are some [developer notes](/local-development/)
+There are some [developer notes]({{ '/development/development.html' | relative_url }})
 to help you get started with this project.
 
 ### Quick start

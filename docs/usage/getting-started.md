@@ -92,7 +92,7 @@ and replace it with one at the new file path and file name.
 This does not apply to the desktop variant.
 
 Congratulations! You have got the basics done. Next step ...
-mapping out your system [in a diagram](/diagrams/).
+mapping out your system [in a diagram]({{ '/usage/diagrams.html' | relative_url }}).
 
 ## Loading a sample model
 
