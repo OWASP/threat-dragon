@@ -24,7 +24,7 @@ in which case click on 'Login with Github' for example.
 To create a new threat model access the welcome page and start a new model by
 clicking on the **plus** area of the Welcome page.
 
-![New model image]({{ '/assets/images/newmodel.png' | relative_url }}){: .float-left }
+![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-left }
 
 You will then be presented with a list of your repositories.
 Pick the one where you want to store your new model.
@@ -48,7 +48,7 @@ To get started with your threat model select the **plus** area of the Welcome pa
 or use the pull down menu 'File -> New Model'.
 You are then asked to save the model file; this ensures the model can be saved.
 
-![New model image]({{ '/assets/images/newmodel.png' | relative_url }}){: .float-left }
+![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-left }
 
 You will then be taken straight to the threat model edit page where you
 can enter general information about your model.
@@ -68,7 +68,7 @@ Click on the **Edit** button to start editing the threat model details.
 You can add new contributors by entering their name and clicking on the 'Add' in the tag box.
 You can also add the contributor by entering their name and hitting the 'enter' or ',' or ';' keys.
 
-![Add Contributor image]({{ '/assets/images/addcontributors.png' | relative_url }}){: .float-right }
+![Add Contributor image]({{ '/assets/images/add-contributor.png' | relative_url }}){: .float-right }
 
 Add some diagrams to your model by clicking on 'Add a new diagram ...'
 
@@ -96,7 +96,7 @@ mapping out your system [in a diagram]({{ '/usage/diagrams.html' | relative_url 
 
 ## Loading a sample model
 
-![Sample model image]({{ '/assets/images/samplemodel.png' | relative_url }}){: .float-left }
+![Sample model image]({{ '/assets/images/sample-model.png' | relative_url }}){: .float-left }
 
 If you are wondering how to start you can explore some sample threat models.
 On the welcome page you can open an example model by clicking on the **sample model** area on the Welcome page.
@@ -108,7 +108,7 @@ diagrams, model details and threats as examples.
 
 ### Web application
 
-![Github model image]({{ '/assets/images/opengithubmodel.png' | relative_url }}){: .float-left }
+![Github model image]({{ '/assets/images/open-github-model.png' | relative_url }}){: .float-left }
 
 If you have a repository that already has threat models, you can open them by
 clicking on the **open** area on the Welcome page.
@@ -130,7 +130,7 @@ The demo models should give you some ideas on how to get started with your own m
 
 ### Desktop application
 
-![Open model image]({{ '/assets/images/openmodel.png' | relative_url }}){: .float-left }
+![Open model image]({{ '/assets/images/open-model.png' | relative_url }}){: .float-left }
 
 If you have an existing model file saved locally, you can open it by clicking on
 the **open** area on the Welcome page.
@@ -158,7 +158,7 @@ On the desktop variant of Threat Dragon you can **Print** the report or save it 
 Using the web variant, you can **Print** the report to a printer.
 Most browsers will also allow you to save the report as a PDF from this print dialog.
 
-![Report buttons image]({{ '/assets/images/reportbuttons.png' | relative_url }})
+![Report buttons image]({{ '/assets/images/report-buttons.png' | relative_url }})
 
 ----
 

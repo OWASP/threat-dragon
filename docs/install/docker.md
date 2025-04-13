@@ -56,7 +56,7 @@ Note that a tag 'local' has been used here, but it could be (almost) anything su
 
 ### Environment variables
 
-See the [environment]({{ '/configure/configure.html | relative_url }}) page
+See the [environment]({{ '/configure/configure.html' | relative_url }}) page
 for details on what environment variables are expected.
 
 Threat Dragon supports [dotenv](https://github.com/motdotla/dotenv),

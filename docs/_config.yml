@@ -27,7 +27,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # https://github.com/lreading/owasp-td-jekyll/tree/main/assets/webfonts
 
 brand: OWASP Threat Dragon Documentation
-faviconUrl: /assets/images/favicon.ico
+faviconUrl: assets/icons/threatdragon.ico
 logo_src: assets/images/threatdragon_logo_image.svg
 
 header_links:
