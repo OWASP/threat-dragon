@@ -14,7 +14,7 @@ Getting started with [Threat Dragon](http://owasp.org/www-project-threat-dragon)
 
 ### Using the Web application
 
-![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-left }
+![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-right }
 
 The Threat Dragon web applications stores its threat models on your local drive and, depending on configuration,
 it can also store the models in a source code repository such as GitHub.
@@ -24,7 +24,7 @@ in which case click on 'Login with Github' for example.
 To create a new threat model access the welcome page and start a new model by
 clicking on the **plus** area of the Welcome page.
 
-![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-left }
+![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-right }
 
 You will then be presented with a list of your repositories.
 Pick the one where you want to store your new model.
@@ -39,7 +39,7 @@ The name that you provide for the model will be used as the file name within the
 
 ### Using the Desktop application
 
-![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-left }
+![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-right }
 
 The Threat Dragon desktop variant stores its threat models on your local filesystem only,
 so click on 'Start Threat Dragon' to access the Welcome screen.
@@ -48,7 +48,7 @@ To get started with your threat model select the **plus** area of the Welcome pa
 or use the pull down menu 'File -> New Model'.
 You are then asked to save the model file; this ensures the model can be saved.
 
-![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-left }
+![New model image]({{ '/assets/images/new-model.png' | relative_url }}){: .float-right }
 
 You will then be taken straight to the threat model edit page where you
 can enter general information about your model.
@@ -96,7 +96,7 @@ mapping out your system [in a diagram]({{ '/usage/diagrams.html' | relative_url 
 
 ## Loading a sample model
 
-![Sample model image]({{ '/assets/images/sample-model.png' | relative_url }}){: .float-left }
+![Sample model image]({{ '/assets/images/sample-model.png' | relative_url }}){: .float-right }
 
 If you are wondering how to start you can explore some sample threat models.
 On the welcome page you can open an example model by clicking on the **sample model** area on the Welcome page.
@@ -108,14 +108,14 @@ diagrams, model details and threats as examples.
 
 ### Web application
 
-![Github model image]({{ '/assets/images/open-github-model.png' | relative_url }}){: .float-left }
+![Github model image]({{ '/assets/images/open-github-model.png' | relative_url }}){: .float-right }
 
 If you have a repository that already has threat models, you can open them by
 clicking on the **open** area on the Welcome page.
 
 You will be able to select a repository and branch, and then presented with a list of models to make your selection.
 
-![Directory image]({{ '/assets/images/directory.png' | relative_url }}){: .float-left }
+![Directory image]({{ '/assets/images/directory.png' | relative_url }})
 
 Note that Threat Dragon is fairly strict on where the threat models can be stored.
 The threat models must be under a parent directory called 'ThreatDragonModels'
@@ -130,7 +130,7 @@ The demo models should give you some ideas on how to get started with your own m
 
 ### Desktop application
 
-![Open model image]({{ '/assets/images/open-model.png' | relative_url }}){: .float-left }
+![Open model image]({{ '/assets/images/open-model.png' | relative_url }}){: .float-right }
 
 If you have an existing model file saved locally, you can open it by clicking on
 the **open** area on the Welcome page.
