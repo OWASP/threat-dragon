@@ -17,7 +17,7 @@ Click on the diagram you wish to edit and you will be taken to the diagram edito
 Add model elements to your diagram by dragging a component from the stencil on the left side of the diagram editor.
 Once added they can be selected by clicking them to see their properties and threats and dragged around the diagram.
 
-![Components image]({{ '/assets/images/components.png' | relative_url }}){: .float-left }
+![Components image]({{ '/assets/images/components.png' | relative_url }}){: .float-right }
 
 The diagram elements are by convention identified by their shape:
 
@@ -32,7 +32,7 @@ restrictive, but it is still possible to add any type of threat to any component
 
 To delete an element, first select it and then click on the red icon in the element's top left corner:
 
-![element delete tool]({{ '/assets/images/delete.png' | relative_url }}){: .float-right }
+![element delete]({{ '/assets/images/delete.png' | relative_url }})
 
 These components can be resized and can be dragged to change the aspect ratio.
 Multiple components can be selected using a mouse control-click or by dragging a selection box.
@@ -48,7 +48,7 @@ Once selected you can edit its properties and add threats to it.
 
 Data flows and trust boundaries can be deleted by clicking the red icon that appears after it has been selected.
 
-![flow remove tool]({{ '/assets/images/deleteflow.png' | relative_url }})
+![flow remove tool]({{ '/assets/images/delete-flow.png' | relative_url }})
 
 The data flow defaults to unidirectional and can be changed to bidirectional by editing the properties.
 To connect the end of a data flow to a diagram element drag one of its ends onto the element.
@@ -112,7 +112,7 @@ Threat generation is disabled for elements that are out of scope.
 Processes, data stores, actors and data flows that have open (unmitigated) threats
 are highlighted in red so that you know where to focus your attention:
 
-![elements with open threats are red]({{ '/assets/images/openthreats.png' | relative_url }})
+![elements with open threats are red]({{ '/assets/images/open-threats.png' | relative_url }})
 
 Note that threat boundary boxes and curves can not have threats associated with them.
 

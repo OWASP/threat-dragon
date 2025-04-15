@@ -62,6 +62,8 @@
 !docs/usage/
 !docs/usage/*.md
 !docs/assets/
+!docs/assets/icons
+!docs/assets/icons/*.ico
 !docs/assets/images
 !docs/assets/images/*.png
 !docs/assets/schemas

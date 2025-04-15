@@ -42,7 +42,7 @@ According to what variables are defined, access is provided to repository types:
 
 and also the client's local file system.
 
-See the [environment]({{ '/configure/configure.html | relative_url }}) page
+See the [environment]({{ '/configure/configure.html' | relative_url }}) page
 for details on configuring your environment variables.
 
 ### Running the application
