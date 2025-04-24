@@ -108,6 +108,8 @@ ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
 2. Login to [Heroku][heroku]
 3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
 4. Ensure no rollback shown in [dashboard][herokudash]
+5. Observe correct version running for the [Heroku app][herokuapp]
+6. Check correct version for the [demo site][demo]
 
 ### Checksum for Linux desktop AppImage
 
@@ -284,7 +286,9 @@ Revert the build state back to 'latest'; this build state is displayed on the de
 [altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
 [area]: https://github.com/OWASP/threat-dragon/releases
 [certs]: https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
+[demo]: https://www.threatdragon.com/#/
 [heroku]: https://id.heroku.com/login
+[herokuapp]: https://threatdragon-v2.herokuapp.com/#/
 [herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 [herokudash]: https://dashboard.heroku.com/apps
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues

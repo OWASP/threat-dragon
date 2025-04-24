@@ -116,7 +116,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.help.docs,
                     click: async () => {
-                        await shell.openExternal('https://owasp.org/www-project-threat-dragon/docs-2/');
+                        await shell.openExternal('https://www.threatdragon.com/docs/');
                     }
                 },
                 {

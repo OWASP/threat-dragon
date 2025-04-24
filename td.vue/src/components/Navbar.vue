@@ -24,7 +24,7 @@
         </b-nav-item>
 
         <b-nav-item
-          href="https://owasp.org/www-project-threat-dragon/docs-2/"
+          href="https://www.threatdragon.com/docs/"
           target="_blank"
           rel="noopener noreferrer"
           id="nav-docs"

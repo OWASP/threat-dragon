@@ -185,10 +185,9 @@ const mutations = {
     },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
         if (diagram && Object.keys(state.modifiedDiagram).length !== 0) {
-            const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-            console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+            // const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+            // console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
             state.modifiedDiagram = diagram;
-            // console.debug('Threatmodel diagram modified diagram: ' + JSON.stringify(state.modifiedDiagram));
             if (state.modified === false) {
                 console.debug('model (diagram) now modified');
                 state.modified = true;

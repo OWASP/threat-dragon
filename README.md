@@ -24,8 +24,7 @@ under the terms of the [Apache 2.0 License][license].
 
 ## Try Threat Dragon
 
-Access the latest version of Threat Dragon on [the demo website](https://www.threatdragon.com/#/)
-and refer to the [documentation pages](https://owasp.org/www-project-threat-dragon/docs-2/).
+Access the latest version of Threat Dragon on [the demo website][demo] and refer to the [documentation pages][docs].
 
 Also well worth watching the video provided by the
 [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series.
@@ -62,7 +61,7 @@ The [desktop versions](https://github.com/OWASP/threat-dragon/releases) of Threa
 stores the threat model files on the local filesystem and do not access external repositories.
 You can [download installers](https://github.com/OWASP/threat-dragon/releases) for Windows, MacOS and Linux.
 
-End user help is available for both the latest [version 2.x](https://owasp.org/www-project-threat-dragon/docs-2/)
+End user help is available for both the latest [version 2.x][docs]
 and the previous [version 1.x](https://owasp.org/www-project-threat-dragon/docs-1/).
 
 ### Version 1.x maintenance mode
@@ -88,8 +87,7 @@ Install from the top directory of the project using : `npm install`
 ### Environment variables for web application
 
 The web application variant of Threat Dragon requires some environment variables;
-follow [the documentation](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
-on how to set these variables.
+follow [the documentation][config] on how to set these variables.
 
 If access to external repositories is required, such as Bitbucket / GitHub  / GitLab,
 then you need to go to your to the repository account and register the application.
@@ -130,8 +128,7 @@ Assuming that you are using http port 8080 and accessing Threat Dragon on `http:
 ### Docker (local build)
 
 To run Threat Dragon in a docker container that has been built locally,
-first configure your [environment using dotenv](https://owasp.org/www-project-threat-dragon/docs-2/install-environment/)
-and run from the top directory of the project:
+first configure your [environment using dotenv][config] and run from the top directory of the project:
 
 - `docker build -t owasp-threat-dragon:dev .`
 - `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
@@ -170,13 +167,16 @@ For secure disclosure, please see the [security policy](security.md).
 Threat Dragon: _making threat modeling less threatening_
 
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
-[bitbucket]: https://owasp.org/www-project-threat-dragon/docs-2/bitbucket-repo/
+[bitbucket]: https://www.threatdragon.com/docs/configure/bitbucket.html
+[demo]: https://www.threatdragon.com/#/
+[docs]: https://www.threatdragon.com/docs/
 [download]: https://nodejs.org/en/download/package-manager
-[github]: https://owasp.org/www-project-threat-dragon/docs-2/github-repo/
-[gitlab]: https://owasp.org/www-project-threat-dragon/docs-2/gitlab-repo/
+[config]: https://www.threatdragon.com/docs/configure/configure.html
+[github]: https://www.threatdragon.com/docs/configure/github.html
+[gitlab]: https://www.threatdragon.com/docs/configure/gitlab.html
 [license]: https://github.com/OWASP/threat-dragon/blob/v2.2.0/license.txt
 [manifesto]: https://www.threatmodelingmanifesto.org/
-[notes]: https://owasp.org/www-project-threat-dragon/docs-2/local-development/
+[notes]: https://www.threatdragon.com/docs/development/development.html
 [owasp]: https://www.owasp.org
 [project]: https://owasp.org/www-project-threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
