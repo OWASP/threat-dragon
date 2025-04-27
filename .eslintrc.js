@@ -31,7 +31,7 @@ module.exports = {
         'node_modules/',
         'dist/',
         'dist-electron/',
-        'td.vue/dist-desktop/bundled/',
+        'td.vue/dist-desktop/',
         '*.config.js',
         'babel.config.js',
         'archive/**',

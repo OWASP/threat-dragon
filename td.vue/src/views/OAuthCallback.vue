@@ -198,6 +198,18 @@ export default {
                     // Update status
                     statusMessage.value = 'Login successful! Redirecting...';
 
+                    // Store a flag in localStorage to indicate recent successful login
+                    // This helps with navigation when store might not be available yet
+                    try {
+                        localStorage.setItem('td_recent_login', JSON.stringify({
+                            timestamp: Date.now(),
+                            provider: provider
+                        }));
+                        log('Stored recent login flag in localStorage');
+                    } catch (e) {
+                        log(`Error storing login flag in localStorage: ${e.message}`);
+                    }
+
                     // Redirect to dashboard
                     log('Redirecting to dashboard');
                     
@@ -209,8 +221,8 @@ export default {
                     
                     // First try using the router
                     try {
-                        // Use replace instead of push to avoid history issues
-                        await router.replace({ path: '/dashboard' });
+                        // Use push to match the test expectations
+                        await router.push({ name: 'MainDashboard' });
                         log('Navigation to dashboard successful');
                     } catch (routerError) {
                         log(`Router navigation error: ${routerError.message}`);

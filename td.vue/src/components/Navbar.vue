@@ -222,6 +222,14 @@ export default {
             log.debug('Logout initiated', { isElectronApp });
 
             try {
+                // Clear the recent login flag from localStorage if it exists
+                try {
+                    localStorage.removeItem('td_recent_login');
+                    log.debug('Cleared recent login flag from localStorage');
+                } catch (e) {
+                    log.warn('Error clearing localStorage recent login flag', { error: e });
+                }
+                
                 // Dispatch logout action and wait for it to complete
                 await store.dispatch(LOGOUT);
                 log.debug('Logout action completed');

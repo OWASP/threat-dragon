@@ -87,11 +87,29 @@ router.beforeEach((to, from, next) => {
         // Get the Vuex store
         const store = window._vueApp?.$store;
         
+        // Check for a recent successful login in localStorage as a fallback
+        // This helps when the store isn't available yet but authentication just succeeded
+        let hasRecentLogin = false;
+        try {
+            const recentLogin = localStorage.getItem('td_recent_login');
+            if (recentLogin) {
+                const loginData = JSON.parse(recentLogin);
+                // Only consider logins within the last 10 seconds as valid
+                hasRecentLogin = (Date.now() - loginData.timestamp) < 10000;
+                
+                if (hasRecentLogin) {
+                    log.info('Recent login detected from localStorage, allowing navigation');
+                }
+            }
+        } catch (e) {
+            log.warn('Error checking localStorage for recent login', { error: e });
+        }
+        
         // In Electron mode, we don't need to enforce authentication the same way
         // as the web application, so we'll allow navigation even if store is not available
         if (!store) {
-            if (isElectronApp) {
-                log.info('Store not available for authentication check in Electron mode, allowing navigation');
+            if (isElectronApp || hasRecentLogin) {
+                log.info('Store not available for authentication check, but allowing navigation due to Electron mode or recent login');
                 next();
                 return;
             } else {
@@ -104,7 +122,8 @@ router.beforeEach((to, from, next) => {
         // Check if the user is authenticated
         const isAuthenticated = store.state.auth.jwt ||
                                (store.state.auth.user && store.state.auth.user.username === 'local-user') ||
-                               isElectronApp; // In Electron, consider the user always authenticated
+                               isElectronApp || // In Electron, consider the user always authenticated
+                               hasRecentLogin;  // Allow navigation if we have a recent login
         
         log.debug('Authentication check for protected route', {
             route: to.path,
