@@ -16,18 +16,18 @@ const log = logger.getLogger('i18n');
 import ara from './ar.js';
 import deu from './de.js';
 import ell from './el.js';
-import ind from './id.js'; // Indonesian
+import ind from './id.js';
 import eng from './en.js';
 import fin from './fi.js';
 import fra from './fr.js';
-import heb from './he.js'; // Hebrew
+import heb from './he.js';
 import hin from './hi.js';
 import jpn from './ja.js';
 import msa from './ms.js';
 import por from './pt.js';
 import rus from './ru.js';
 import spa from './es.js';
-import tha from './th.js'; // Thai
+import tha from './th.js';
 import ukr from './uk.js';
 import zho from './zh.js';
 

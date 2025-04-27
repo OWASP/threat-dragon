@@ -21,17 +21,19 @@ import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
 import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
+// hide HEB for now: import heb from '@/i18n/he.js';
 import hin from '@/i18n/hi.js';
 import ind from '@/i18n/id.js';
 import jpn from '@/i18n/ja.js';
-import ms from '@/i18n/ms.js';
+import msa from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
 // hide RUS & UKR for now: import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
+import tha from '@/i18n/th.js';
 // hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, ms, por, spa, zho };
+const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, msa, por, spa, tha, zho }; // heb, rus, ukr
 const languages = [
     'ara',
     'deu',
@@ -42,9 +44,10 @@ const languages = [
     'hin',
     'ind',
     'jpn',
-    'ms',
+    'msa',
     'por',
     'spa',
+    'tha',
     'zho'
 ];
 const defaultLanguage = 'eng';
@@ -133,13 +136,7 @@ export function getMenuTemplate() {
                 {
                     label: messages[language].desktop.help.docs,
                     click: async () => {
-<<<<<<< HEAD
                         await shell.openExternal('https://www.threatdragon.com/docs/');
-=======
-                        await shell.openExternal(
-                            'https://owasp.org/www-project-threat-dragon/docs-2/'
-                        );
->>>>>>> vue3
                     }
                 },
                 {
