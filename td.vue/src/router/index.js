@@ -94,15 +94,30 @@ router.beforeEach((to, from, next) => {
             const recentLogin = localStorage.getItem('td_recent_login');
             if (recentLogin) {
                 const loginData = JSON.parse(recentLogin);
-                // Only consider logins within the last 10 seconds as valid
-                hasRecentLogin = (Date.now() - loginData.timestamp) < 10000;
+                // Only consider logins within the last 30 seconds as valid
+                // Increased from 10 seconds to handle longer processing times
+                hasRecentLogin = (Date.now() - loginData.timestamp) < 30000;
                 
                 if (hasRecentLogin) {
                     log.info('Recent login detected from localStorage, allowing navigation');
                 }
             }
+            
+            // Also check for active JWT in localStorage as another fallback
+            const authToken = localStorage.getItem('td_auth_token');
+            if (authToken && !hasRecentLogin) {
+                try {
+                    const tokenData = JSON.parse(authToken);
+                    if (tokenData && tokenData.accessToken) {
+                        hasRecentLogin = true;
+                        log.info('Valid auth token found in localStorage, allowing navigation');
+                    }
+                } catch (tokenError) {
+                    log.warn('Error parsing auth token from localStorage', { error: tokenError });
+                }
+            }
         } catch (e) {
-            log.warn('Error checking localStorage for recent login', { error: e });
+            log.warn('Error checking localStorage for authentication data', { error: e });
         }
         
         // In Electron mode, we don't need to enforce authentication the same way

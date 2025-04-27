@@ -222,12 +222,13 @@ export default {
             log.debug('Logout initiated', { isElectronApp });
 
             try {
-                // Clear the recent login flag from localStorage if it exists
+                // Clear all authentication-related data from localStorage
                 try {
                     localStorage.removeItem('td_recent_login');
-                    log.debug('Cleared recent login flag from localStorage');
+                    localStorage.removeItem('td_auth_token');
+                    log.debug('Cleared authentication data from localStorage');
                 } catch (e) {
-                    log.warn('Error clearing localStorage recent login flag', { error: e });
+                    log.warn('Error clearing localStorage authentication data', { error: e });
                 }
                 
                 // Dispatch logout action and wait for it to complete

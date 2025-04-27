@@ -206,8 +206,16 @@ export default {
                             provider: provider
                         }));
                         log('Stored recent login flag in localStorage');
+                        
+                        // Also store the auth token in localStorage as a fallback
+                        // This provides a more persistent authentication state
+                        localStorage.setItem('td_auth_token', JSON.stringify({
+                            accessToken: response.accessToken,
+                            timestamp: Date.now()
+                        }));
+                        log('Stored auth token in localStorage for fallback authentication');
                     } catch (e) {
-                        log(`Error storing login flag in localStorage: ${e.message}`);
+                        log(`Error storing authentication data in localStorage: ${e.message}`);
                     }
 
                     // Redirect to dashboard
