@@ -23,51 +23,39 @@ describe('env/Gitlab.js', () => {
     });
 
     it('has the optional property CLIENT_ID', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'CLIENT_ID')
-            .required;
+        const isRequired = gitlabEnv.properties.find((x) => x.key === 'CLIENT_ID').required;
         expect(isRequired).to.be.false;
     });
 
     it('has the optional property CLIENT_SECRET', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'CLIENT_SECRET')
-            .required;
+        const isRequired = gitlabEnv.properties.find((x) => x.key === 'CLIENT_SECRET').required;
         expect(isRequired).to.be.false;
     });
 
     it('has the optional property SCOPE', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'SCOPE')
-            .required;
+        const isRequired = gitlabEnv.properties.find((x) => x.key === 'SCOPE').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property SCOPE', () => {
-        const value = gitlabEnv.properties
-            .find(x => x.key === 'SCOPE')
-            .defaultValue;
-        expect(value).to.equal('read_user read_repository');
+        const value = gitlabEnv.properties.find((x) => x.key === 'SCOPE').defaultValue;
+        expect(value).to.equal('read_user write_repository profile read_api api');
     });
 
     it('has the optional property HOST', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'HOST')
-            .required;
+        const isRequired = gitlabEnv.properties.find((x) => x.key === 'HOST').required;
         expect(isRequired).to.be.false;
     });
 
     it('has the optional property REDIRECT_URI', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'REDIRECT_URI')
-            .required;
+        const isRequired = gitlabEnv.properties.find((x) => x.key === 'REDIRECT_URI').required;
         expect(isRequired).to.be.false;
     });
 
     it('has the optional property REPO_ROOT_DIRECTORY', () => {
-        const isRequired = gitlabEnv.properties
-            .find(x => x.key === 'REPO_ROOT_DIRECTORY')
-            .required;
+        const isRequired = gitlabEnv.properties.find(
+            (x) => x.key === 'REPO_ROOT_DIRECTORY'
+        ).required;
         expect(isRequired).to.be.false;
     });
 });

@@ -1,53 +1,57 @@
 <template>
     <div>
+        <local-file-picker ref="localFilePicker" @file-selected="onFileSelected" />
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="jumbotron text-center">
                     <h4>
-                        {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
+                        {{ $t('forms.open') }} /
+                        {{ $t('dashboard.actions.importExisting') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=8 offset=2>
+            <b-col md="8" offset="2">
                 <b-form>
-                    <b-form-row>
+                    <b-row>
                         <b-col @drop.prevent="onDropFile" @dragenter.prevent @dragover.prevent>
-                            <b-form-group
-                                id="json-input-group"
-                                label-for="json-input">
+                            <b-form-group id="json-input-group" label-for="json-input">
                                 <b-form-textarea
                                     id="json-input"
                                     v-model="tmJson"
                                     :placeholder="prompt"
                                     rows="16"
-                                ></b-form-textarea>
+                                />
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
                 </b-form>
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=4 offset=2  class="text-left">
-                <b-btn-group>
+            <b-col md="4" offset="2" class="text-left">
+                <BButtonGroup>
                     <td-form-button
                         id="td-open-btn"
-                        :onBtnClick="onOpenClick"
+                        :on-btn-click="onOpenClick"
                         icon="folder-open"
-                        :text="$t('forms.open')" />
-                </b-btn-group>
+                        :text="$t('forms.open')"
+                    />
+                </BButtonGroup>
+                <!-- Correctly closed -->
             </b-col>
-            <b-col md=4 class="text-right">
-                <b-btn-group>
+            <b-col md="4" class="text-right">
+                <BButtonGroup>
                     <td-form-button
                         id="td-import-btn"
-                        :isPrimary="true"
-                        :onBtnClick="onImportClick"
+                        :is-primary="true"
+                        :on-btn-click="onImportClick"
                         icon="file-import"
-                        :text="$t('forms.import')" />
-                </b-btn-group>
+                        :text="$t('forms.import')"
+                    />
+                </BButtonGroup>
+                <!-- Correctly closed -->
             </b-col>
         </b-row>
     </div>
@@ -60,8 +64,14 @@ import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
+import LocalFilePicker from '@/components/LocalFilePicker.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import { isValidSchema } from '@/service/schema/ajv';
+import logger from '@/utils/logger.js';
+
+// Create a context-specific logger
+const log = logger.getLogger('views:ImportModel');
+// Components imported automatically via bootstrap-vue-next plugin
 
 // only search for text files
 const pickerFileOptions = {
@@ -79,31 +89,41 @@ const pickerFileOptions = {
 export default {
     name: 'ImportModel',
     components: {
-        TdFormButton
-    },
-    computed: {
-        ...mapState({
-            providerType: (state) => getProviderType(state.provider.selected)
-        }),
-        prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
+        TdFormButton,
+        LocalFilePicker
     },
     data() {
         return {
             tmJson: ''
         };
     },
+    computed: {
+        ...mapState({
+            providerType: (state) => getProviderType(state.provider.selected)
+        }),
+        prompt() {
+            return (
+                '{ ' +
+                this.$t('threatmodel.dragAndDrop') +
+                this.$t('threatmodel.jsonPaste') +
+                ' ... }'
+            );
+        }
+    },
     methods: {
         onDropFile(event) {
             if (event.dataTransfer.files.length === 1) {
-                let file = event.dataTransfer.files[0];
+                const file = event.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
-                        .then(text => {
+                        .then((text) => {
                             this.tmJson = text;
-                            this.$store.dispatch(tmActions.update, { fileName: file.name });
+                            this.$store.dispatch(tmActions.update, {
+                                fileName: file.name
+                            });
                             this.onImportClick(file.name);
                         })
-                        .catch(e => this.$toast.error(e));
+                        .catch((e) => this.$toast.error(e));
                 } else {
                     this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
                 }
@@ -112,40 +132,95 @@ export default {
             }
         },
         async onOpenClick() {
-            if ('showOpenFilePicker' in window) {
-                // Chrome and Edge browsers return an array of file handles
-                try {
-                    const [handle] = await window.showOpenFilePicker(pickerFileOptions);
-                    let file = await handle.getFile();
-                    if (file.name.endsWith('.json')) {
-                        this.tmJson = await file.text();
-                        this.$store.dispatch(tmActions.update, { fileName: file.name });
-                        this.onImportClick(file.name);
-                    } else {
-                        this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+            try {
+                // For all users, use the native file picker if available
+                if ('showOpenFilePicker' in window) {
+                    try {
+                        const [handle] = await window.showOpenFilePicker(pickerFileOptions);
+                        const file = await handle.getFile();
+                        if (file.name.endsWith('.json')) {
+                            this.tmJson = await file.text();
+                            this.$store.dispatch(tmActions.update, {
+                                fileName: file.name
+                            });
+                            this.onImportClick(file.name);
+                        } else {
+                            this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+                        }
+                    } catch (e) {
+                        // If the user cancels the file picker, don't show an error
+                        if (e.name !== 'AbortError') {
+                            this.$toast.warning(this.$t('threatmodel.errors.open'));
+                            log.warn(e);
+                        }
                     }
-                } catch (e) {
-                    // any error is most likely due to the picker being cancelled, which is benign so just warn
-                    this.$toast.warning(this.$t('threatmodel.errors.open'));
-                    console.warn(e);
+                } else {
+                    // For browsers that don't support the File System Access API,
+                    // use a traditional file input element
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+
+                    input.onchange = async (event) => {
+                        const file = event.target.files[0];
+                        if (file) {
+                            if (file.name.endsWith('.json')) {
+                                try {
+                                    const text = await file.text();
+                                    this.tmJson = text;
+                                    this.$store.dispatch(tmActions.update, {
+                                        fileName: file.name
+                                    });
+                                    this.onImportClick(file.name);
+                                } catch (e) {
+                                    this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
+                                    log.error(e);
+                                }
+                            } else {
+                                this.$toast.error(this.$t('threatmodel.errors.onlyJsonAllowed'));
+                            }
+                        }
+                    };
+
+                    // Trigger the file input click
+                    input.click();
                 }
-            } else {
-                this.$toast.error('File picker is not yet supported on this browser: use Paste or Drag and Drop');
+            } catch (e) {
+                this.$toast.warning(this.$t('threatmodel.errors.open'));
+                log.warn(e);
+            }
+        },
+
+        // Handle file selected from our custom file picker
+        onFileSelected(fileData) {
+            if (fileData && fileData.content) {
+                this.tmJson = fileData.content;
+                this.$store.dispatch(tmActions.update, {
+                    fileName: fileData.name
+                });
+                this.onImportClick(fileData.name);
             }
         },
         onImportClick(fileName) {
             let jsonModel;
+            // check for empty input
+            if (!this.tmJson || this.tmJson.trim() === '') {
+                this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
+                log.error('Empty JSON input');
+                return;
+            }
+
             // check for JSON syntax errors, schema errors come later
             try {
                 jsonModel = JSON.parse(this.tmJson);
             } catch (e) {
                 this.$toast.error(this.$t('threatmodel.errors.invalidJson'));
-                console.error(e);
+                log.error(e);
                 return;
             }
 
             // check for schema errors
-            if(!isValidSchema(jsonModel)){
+            if (!isValidSchema(jsonModel)) {
                 this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
             }
 
@@ -169,15 +244,22 @@ export default {
                     threatmodel: jsonModel.summary.title
                 });
             } catch (e) {
-                this.$toast.error(this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
-                console.error(e);
+                this.$toast.error(
+                    this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message
+                );
+                log.error(e);
                 return;
             }
 
-            this.$router.push({ name: `${this.providerType}ThreatModel`, params });
+            // Only include the threatmodel parameter for routing
+            // Other parameters like provider and folder are handled by the route configuration
+            this.$router.push({
+                name: `${this.providerType}ThreatModel`,
+                params: {
+                    threatmodel: params.threatmodel
+                }
+            });
         }
     }
-
 };
-
 </script>

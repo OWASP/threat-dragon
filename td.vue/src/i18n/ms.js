@@ -1,16 +1,18 @@
-const ms = {
+const msa = {
     auth: {
         sessionExpired: 'Sesi anda telah tamat. Sila log masuk semula untuk meneruskan.'
     },
     nav: {
-        v2Warning: 'Model ancaman versi 2.0 tidak sesuai dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0',
+        v2Warning:
+            'Model ancaman versi 2.0 tidak sesuai dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0',
         loggedInAs: 'Log masuk sebagai',
         logOut: 'Log keluar'
     },
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo Threat Dragon',
-        description: 'OWASP Threat Dragon adalah aplikasi percuma, sumber terbuka, lintas platform untuk mencipta model ancaman. Gunakannya untuk melukis gambarajah pemodelan ancaman dan mengenal pasti ancaman bagi sistem anda. Dengan penekanan pada kelenturan dan kesederhanaan, ia mudah diakses untuk semua jenis pengguna.'
+        description:
+            'OWASP Threat Dragon adalah aplikasi percuma, sumber terbuka, lintas platform untuk mencipta model ancaman. Gunakannya untuk melukis gambarajah pemodelan ancaman dan mengenal pasti ancaman bagi sistem anda. Dengan penekanan pada kelenturan dan kesederhanaan, ia mudah diakses untuk semua jenis pengguna.'
     },
     providers: {
         desktop: {
@@ -36,12 +38,25 @@ const ms = {
         local: {
             displayName: 'Sesi Tempatan',
             loginWith: 'Log masuk ke'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Buka',
+            description: 'Pilih fail model ancaman atau folder destinasi dari Google Drive',
+            saveThreatModel: 'Simpan Model Ancaman ke Google Drive',
+            saveDescription: 'Pilih folder di Google Drive untuk menyimpan model ancaman anda',
+            fileName: 'Nama Fail',
+            fileNamePlaceholder: 'Masukkan nama untuk fail anda',
+            selectFolder: 'Pilih folder di Google Drive',
+            selectFile: 'Pilih fail dari Google Drive',
+            selectThreatModel: 'Pilih Model Ancaman dari Google Drive'
         }
     },
     dashboard: {
         welcome: {
             title: 'Selamat Datang!',
-            description: 'Anda bersedia untuk memulakan membuat rekabentuk aplikasi anda lebih selamat. Anda boleh membuka model ancaman sedia ada atau membuat yang baru dengan memilih salah satu pilihan di bawah. '
+            description:
+                'Anda bersedia untuk memulakan membuat rekabentuk aplikasi anda lebih selamat. Anda boleh membuka model ancaman sedia ada atau membuat yang baru dengan memilih salah satu pilihan di bawah. '
         },
         actions: {
             openExisting: 'Buka model ancaman sedia ada',
@@ -92,7 +107,12 @@ const ms = {
         refBranch: 'Cawangan Rujukan',
         add: 'tambah cawangan',
         cancel: 'Batal',
-        nama: 'nama cawangan',
+        name: 'nama cawangan'
+    },
+    folder: {
+        select: 'Pilih',
+        from: 'folder dari senarai di bawah',
+        noneFound: 'Folder ini kosong. Anda boleh mencipta model ancaman baharu di sini.'
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
@@ -106,9 +126,7 @@ const ms = {
         contributors: 'Penyumbang',
         contributorsPlaceholder: 'Mulakan menaip untuk menambah penyumbang',
         description: 'Penerangan sistem peringkat tinggi',
-        dragAndDrop: 'Seret dan lepaskan atau ',
-        editing: 'Penyuntingan',
-        jsonPaste: 'Letakkan fail JSON model ancaman di sini atau tampal kandungannya:',
+        dragAndDrop: 'Seret dan lepaskan atau ',        jsonPaste: 'Letakkan fail JSON model ancaman di sini atau tampal kandungannya:',
         owner: 'Pemilik',
         reviewer: 'Pemeriksa',
         title: 'Tajuk',
@@ -178,14 +196,15 @@ const ms = {
             storesCredentials: 'Simpan Kredensial',
             storesInventory: 'Simpan Inventori'
         },
-        buttons: {
+        controlButtons: {
             delete: 'Padam yang dipilih',
             redo: 'Buat semula suntingan',
             shortcuts: 'Pintasan papan kekunci',
             toggleGrid: 'Togel grid',
             undo: 'Buat asal semula suntingan',
             zoomIn: 'Zum masuk',
-            zoomOut: 'Zum keluar'
+            zoomOut: 'Zum keluar',
+            save: 'Simpan'
         },
         shortcuts: {
             title: 'Pintasan',
@@ -223,7 +242,7 @@ const ms = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Simpan'
             }
         },
         stencil: {
@@ -272,7 +291,8 @@ const ms = {
         saveModelAs: 'Simpan Model Sebagai',
         search: 'Carian',
         next: 'seterusnya',
-        previous: 'sebelumnya'
+        previous: 'sebelumnya',
+        requiredField: 'Medan yang diperlukan'
     },
     threats: {
         model: {
@@ -367,7 +387,7 @@ const ms = {
             showMitigatedThreats: 'Tunjukkan ancaman yang ditangani',
             showModelDiagrams: 'Tunjukkan gambarajah model',
             showEmpty: 'Tunjukkan elemen kosong',
-            showProperties: 'Show element properties',
+            showProperties: 'Tunjukkan ciri-ciri elemen',
             showBranding: 'Logo Threat Dragon'
         },
         title: 'Laporan model ancaman untuk',
@@ -386,17 +406,7 @@ const ms = {
             openTbd: 'Buka / Keutamaan TBD',
             openUnknown: 'Buka / Keutamaan Tidak Diketahui'
         }
-    },
-    upgrade: {
-        modal: {
-            header: 'Kemas kini Model Ancaman',
-            welcome: 'Selamat datang ke versi 2 OWASP Threat Dragon!',
-            p1: 'Versi 2 menggunakan pustaka lukisan yang berbeza, yang akan mengubah cara sebahagian daripada model ancaman anda disimpan. Walaupun kebanyakan gambarajah akan kelihatan sama seperti versi sebelumnya Threat Dragon, terdapat kes di mana mereka mungkin perlu diselaraskan sedikit.',
-            p2: 'Selepas menutup modal ini, anda akan melihat bagaimana setiap gambarajah dalam model ini dipaparkan dalam format versi 2. Sila buat nota gambarajah mana yang perlu anda selaraskan. Ini adalah peningkatan satu kali, dan anda tidak seharusnya melihat mesej ini lagi selepas menyimpan model ini.'
-        },
-        instructions: 'Hebat! Mari bawa anda ke model anda.',
-        continue: 'Teruskan ke Model Ancaman'
     }
 };
 
-export default ms;
+export default msa;

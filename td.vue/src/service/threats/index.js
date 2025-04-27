@@ -4,7 +4,13 @@ import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
 import store from '@/store/index.js';
 
-
+// Handle the possibility that store might not have get() method in some contexts
+const getStore = () => {
+    if (typeof store.get === 'function') {
+        return store.get();
+    }
+    return store;
+};
 
 const valuesToTranslations = {
     /* CIA */
@@ -24,16 +30,16 @@ const valuesToTranslations = {
     Unawareness: 'threats.model.linddun.unawareness',
     'Non-compliance': 'threats.model.linddun.nonCompliance',
     /**
- * PLOT4ai is intentionally not added here.
- *
- * The current structure doesn´t allow frameworks to have categories with the same name. This is a problem for plot4ai & linddun,
- * because they share two categories with the same name. This functionality is only used in the migration flow from v1->v2
- * and v1 simply didn't store the modelType with the threat - this can therefor not be fixed.
- * The migration-flow has been partially fixed in such a way that the modelType is derived from the diagramType, but it's not certain
- * that this will alway be set, which is why this code is still here.
- * However, since this mapping object seems to be used only for migration and plot4ai didn't exist in version 1,
- * it should not be a problem that plot4ai is not added here
- */
+     * PLOT4ai is intentionally not added here.
+     *
+     * The current structure doesn´t allow frameworks to have categories with the same name. This is a problem for plot4ai & linddun,
+     * because they share two categories with the same name. This functionality is only used in the migration flow from v1->v2
+     * and v1 simply didn't store the modelType with the threat - this can therefor not be fixed.
+     * The migration-flow has been partially fixed in such a way that the modelType is derived from the diagramType, but it's not certain
+     * that this will alway be set, which is why this code is still here.
+     * However, since this mapping object seems to be used only for migration and plot4ai didn't exist in version 1,
+     * it should not be a problem that plot4ai is not added here
+     */
     /* STRIDE */
     Spoofing: 'threats.model.stride.spoofing',
     Tampering: 'threats.model.stride.tampering',
@@ -45,28 +51,28 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewTypedThreat = function (modelType, cellType,number) {
+export const createNewTypedThreat = function (modelType, cellType, number) {
     if (!modelType) {
         modelType = 'STRIDE';
     }
     let title, type;
-    if(modelType.toLowerCase()==='generic') modelType='default';
+    if (modelType.toLowerCase() === 'generic') modelType = 'default';
     title = tc(`threats.generic.${modelType.toLowerCase()}`);
-    const freqMap = store.get().state.cell?.ref?.data.threatFrequency;
-    if(freqMap){
-        let min =freqMap[Object.keys(freqMap)[0]],choice=Object.keys(freqMap)[0];
-        Object.keys(freqMap).forEach((k)=>{
-            if(freqMap[k]<min)
-            {
+    const storeInstance = getStore();
+    // Use optional chaining to safely access properties that might be undefined in the test environment
+    const freqMap = storeInstance?.state?.cell?.ref?.data?.threatFrequency;
+    if (freqMap) {
+        let min = freqMap[Object.keys(freqMap)[0]],
+            choice = Object.keys(freqMap)[0];
+        Object.keys(freqMap).forEach((k) => {
+            if (freqMap[k] < min) {
                 min = freqMap[k];
                 choice = k;
             }
         });
         type = tc(`threats.model.${modelType.toLowerCase()}.${choice}`);
-    }
-    else
+    } else
         switch (modelType) {
-
         case 'CIA':
             title = tc('threats.generic.cia');
             type = tc('threats.model.cia.confidentiality');
@@ -121,16 +127,18 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
     };
 };
 
-const hasOpenThreats = (data) => !!data && !!data.threats &&
-    data.threats.filter(x => x.status.toLowerCase() === 'open').length > 0;
+const hasOpenThreats = (data) =>
+    !!data &&
+    !!data.threats &&
+    data.threats.filter((x) => x.status.toLowerCase() === 'open').length > 0;
 
 const filter = (diagrams, filters) => {
     return diagrams
-        .flatMap(x => x.cells)
-        .filter(x => !!x.data && !!x.data.threats)
-        .flatMap(x => x.data.threats)
-        .filter(x => filterForDiagram(x, filters))
-        .filter(x => !!x);
+        .flatMap((x) => x.cells)
+        .filter((x) => !!x.data && !!x.data.threats)
+        .flatMap((x) => x.data.threats)
+        .filter((x) => filterForDiagram(x, filters))
+        .filter((x) => !!x);
 };
 
 const filterForDiagram = (data, filters) => {
@@ -142,7 +150,9 @@ const filterForDiagram = (data, filters) => {
         return [];
     }
 
-    return data.threats.filter(x => filters.showMitigated || x.status.toLowerCase() !== 'mitigated');
+    return data.threats.filter(
+        (x) => filters.showMitigated || x.status.toLowerCase() !== 'mitigated'
+    );
 };
 
 export default {

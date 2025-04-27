@@ -2,399 +2,505 @@ const rus = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
+    operator: {
+        heading: 'Оператор',
+        operatedby: 'Этот веб-сайт и экземпляр OWASP Threat Dragon управляется:',
+        name: `${process.env.VUE_APP_OPERATOR_NAME || 'оператором этого веб-сайта'}`,
+        contact: 'Контакт: ' + (process.env.VUE_APP_OPERATOR_CONTACT ? process.env.VUE_APP_OPERATOR_CONTACT.replace('@', ' [at] ') : '(контактная информация не предоставлена)'),
+    },
+    tos: {
+        title: 'Условия использования',
+        lastUpdated: '4 апреля 2025',
+        introduction: 'Добро пожаловать в наш экземпляр OWASP Threat Dragon. Эти Условия использования ("Условия") регулируют ваш доступ и использование этого веб-сайта, который является экземпляром веб-приложения с открытым исходным кодом, предоставляемого оператором, указанным выше ("Оператор").',
+        sections: [
+            {
+                heading: '1. Принятие условий',
+                content: 'Получая доступ и используя этот веб-сайт, вы принимаете и соглашаетесь соблюдать положения настоящего соглашения. Если вы не согласны с этими условиями, пожалуйста, не используйте этот веб-сайт.'
+            },
+            {
+                heading: '2. Использование веб-сайта',
+                content: 'Вы можете использовать веб-сайт только в законных целях. Вы соглашаетесь не злоупотреблять, не нарушать или не пытаться получить несанкционированный доступ к веб-сайту или его базовым системам.'
+            },
+            {
+                heading: '3. Отсутствие гарантий',
+                content: 'Веб-сайт предоставляется "как есть" без каких-либо гарантий, явных или подразумеваемых, включая, но не ограничиваясь, пригодность для определенной цели, доступность или точность. Мы не гарантируем бесперебойную или безошибочную работу.'
+            },
+            {
+                heading: '4. Ограничение ответственности',
+                content: 'В максимальной степени, разрешенной законом, Оператор не несет ответственности за любые прямые, косвенные, случайные или косвенные убытки, возникающие в результате использования или невозможности использования веб-сайта.'
+            },
+            {
+                heading: '5. Программное обеспечение с открытым исходным кодом',
+                content: 'Этот веб-сайт работает на программном обеспечении OWASP Threat Dragon, исходный код которого доступен по адресу https://www.github.com/OWASP/threat-dragon. Ваше использование программного обеспечения регулируется условиями его лицензии с открытым исходным кодом. Мы не несем ответственности за само программное обеспечение, только за работу этого экземпляра. Оператор этого веб-сайта не связан с OWASP.'
+            },
+            {
+                heading: '6. Изменения условий',
+                content: 'Оператор может обновлять эти Условия в любое время. Продолжение использования веб-сайта после изменений означает принятие обновленных Условий.'
+            },
+            {
+                heading: '7. Прекращение',
+                content: 'Оператор оставляет за собой право приостановить или прекратить доступ к веб-сайту по своему усмотрению, без уведомления, по любой причине.'
+            },
+            {
+                heading: '8. Применимое право',
+                content: 'Настоящие Условия регулируются законами юрисдикции, в которой находится штаб-квартира Оператора (в случае организации) или проживает (в случае физического лица), без учета принципов коллизионного права.'
+            }
+        ],
+        contact: 'Если у вас есть вопросы об этих Условиях, пожалуйста, свяжитесь с оператором.'
+    },
+    privacy: {
+        title: 'Политика конфиденциальности',
+        lastUpdated: '4 апреля 2025',
+        introduction: 'Оператор этого веб-сайта стремится защитить вашу конфиденциальность. Эта Политика конфиденциальности объясняет, как обрабатывается ваша информация.',
+        sections: [
+            {
+                heading: 'Минимальное использование данных для операций',
+                content: 'Оператор не собирает, не хранит и не обрабатывает персональные данные пользователей для отслеживания, профилирования или передачи третьим лицам. Временные журналы, которые могут включать IP-адреса или имена пользователей, создаются исключительно для операционных и отладочных целей. Эти журналы удаляются в течение короткого периода времени и не сохраняются и не используются за пределами этих ограниченных целей.'
+            },
+            {
+                heading: 'Соблюдение законодательства',
+                content: 'Оператор будет раскрывать информацию только в случаях, предусмотренных законом, например, в ответ на действительный правительственный приказ или повестку. В таких случаях Оператор будет соблюдать применимые юридические обязательства.'
+            },
+            {
+                heading: 'Изменения в этой политике',
+                content: 'Оператор может время от времени обновлять эту Политику конфиденциальности. Любые изменения будут опубликованы на этой странице с обновленной датой "Последнее обновление".'
+            },
+            {
+                heading: 'Свяжитесь с нами',
+                content: 'Если у вас есть вопросы об этой Политике конфиденциальности, пожалуйста, свяжитесь с оператором.'
+            }
+        ]
+    },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
-        loggedInAs: 'Logged in as',
-        logOut: 'Log out'
+        v2Warning:
+            'Модели угроз версии 2.0 не совместимы с моделями Threat Dragon версии 1.x. Импортированные модели версии 1.x будут обновлены до схемы версии 2.0',
+        loggedInAs: 'Вы вошли как',
+        logOut: 'Выйти',
+        tos: 'Условия использования',
+        privacy: 'Политика конфиденциальности'
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.'
+        imgAlt: 'Логотип Threat Dragon',
+        description:
+            'OWASP Threat Dragon - это бесплатное, с открытым исходным кодом, кроссплатформенное приложение для создания моделей угроз. Используйте его для рисования диаграмм моделирования угроз и для выявления угроз для вашей системы. С акцентом на гибкость и простоту, оно легко доступно для всех типов пользователей.'
     },
     providers: {
         desktop: {
             displayName: 'Threat Dragon',
-            loginWith: 'Start'
+            loginWith: 'Начать'
         },
         github: {
             displayName: 'GitHub',
-            loginWith: 'Login with'
+            loginWith: 'Войти с помощью'
         },
         gitlab: {
             displayName: 'GitLab',
-            loginWith: 'Login with'
+            loginWith: 'Войти с помощью'
         },
         bitbucket: {
             displayName: 'Bitbucket',
-            loginWith: 'Login with'
+            loginWith: 'Войти с помощью'
         },
         google: {
             displayName: 'Google',
-            loginWith: 'Login with'
+            loginWith: 'Войти с помощью'
         },
         local: {
-            displayName: 'Local Session',
-            loginWith: 'Login to'
+            displayName: 'Локальная сессия',
+            loginWith: 'Войти в'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Открыть',
+            description: 'Выберите файл модели угроз или целевую папку из Google Drive',
+            saveThreatModel: 'Сохранить модель угроз в Google Drive',
+            saveDescription: 'Выберите папку в Google Drive для сохранения вашей модели угроз',
+            fileName: 'Имя файла',
+            fileNamePlaceholder: 'Введите имя для вашего файла',
+            selectFolder: 'Выберите папку в Google Drive',
+            selectFile: 'Выберите файл из Google Drive',
+            selectThreatModel: 'Выберите модель угроз из Google Drive'
         }
     },
     dashboard: {
         welcome: {
-            title: 'Welcome!',
-            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
+            title: 'Добро пожаловать!',
+            description:
+                'Вы готовы начать делать дизайн вашего приложения более безопасным. Вы можете открыть существующую модель угроз или создать новую, выбрав один из вариантов ниже.'
         },
         actions: {
-            openExisting: 'Open an existing threat model',
-            createNew: 'Create a new, empty threat model',
-            readDemo: 'Explore a sample threat model',
-            importExisting: 'Import a threat model via JSON'
+            openExisting: 'Открыть существующую модель угроз',
+            createNew: 'Создать новую, пустую модель угроз',
+            readDemo: 'Изучить пример модели угроз',
+            importExisting: 'Импортировать модель угроз через JSON'
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'Выберите демонстрационную модель угроз из списка ниже'
     },
     desktop: {
         file: {
-            heading: 'File',
-            clearRecentDocs: 'Clear Menu',
-            close: 'Close Model',
-            closeWindow: 'Close Window',
-            new: 'New Model',
-            open: 'Open Model',
-            recentDocs: 'Open Recent',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: 'Файл',
+            clearRecentDocs: 'Очистить меню',
+            close: 'Закрыть модель',
+            closeWindow: 'Закрыть окно',
+            new: 'Новая модель',
+            open: 'Открыть модель',
+            recentDocs: 'Открыть недавние',
+            save: 'Сохранить модель',
+            saveAs: 'Сохранить модель как'
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            heading: 'Помощь',
+            docs: 'Документация',
+            visit: 'Посетите нас на OWASP',
+            sheets: 'Шпаргалки OWASP',
+            github: 'Посетите нас на GitHub',
+            submit: 'Отправить проблему',
+            check: 'Проверить обновления...'
         }
     },
     repository: {
-        select: 'Select a',
-        from: 'repository from the list below',
-        noneFound: 'No repositories found. To get started, create a new repository on'
+        select: 'Выберите',
+        from: 'репозиторий из списка ниже',
+        noneFound: 'Репозитории не найдены. Чтобы начать, создайте новый репозиторий на'
     },
     branch: {
-        select: 'Select a branch from',
-        from: 'from the list below or',
-        chooseRepo: 'choose another repo',
-        or: 'or',
-        addNew: 'add a new branch',
-        protectedBranch: 'Protected branch',
-        nameRequired: 'Branch name is required',
-        nameExists: 'Branch name already exists',
-        refBranch: 'Reference branch',
-        add: 'add branch',
-        cancel: 'Cancel',
-        name: 'branch name',
+        select: 'Выберите ветку из',
+        from: 'из списка ниже или',
+        chooseRepo: 'выберите другой репозиторий',
+        or: 'или',
+        addNew: 'добавьте новую ветку',
+        protectedBranch: 'Защищенная ветка',
+        nameRequired: 'Имя ветки обязательно',
+        nameExists: 'Имя ветки уже существует',
+        refBranch: 'Ссылочная ветка',
+        add: 'добавить ветку',
+        cancel: 'Отмена',
+        name: 'имя ветки'
+    },
+    folder: {
+        select: 'Выберите',
+        from: 'папку из списка ниже',
+        noneFound: 'Эта папка пуста. Вы можете создать новую модель угроз здесь.'
     },
     threatmodelSelect: {
-        select: 'Select a Threat Model from',
-        from: 'from the list below, or choose another',
-        branch: 'branch',
-        or: 'or',
-        repo: 'repo',
-        newThreatModel: 'Create a New Threat Model'
+        select: 'Выберите модель угроз из',
+        from: 'из списка ниже, или выберите другую',
+        branch: 'ветку',
+        or: 'или',
+        repo: 'репозиторий',
+        newThreatModel: 'Создать новую модель угроз'
     },
     threatmodel: {
-        contributors: 'Contributors',
-        contributorsPlaceholder: 'Start typing to add a contributor',
-        description: 'High level system description',
-        dragAndDrop: 'Drag and drop or ',
-        editing: 'Editing',
-        jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        owner: 'Owner',
-        reviewer: 'Reviewer',
-        title: 'Title',
-        diagram: {
-            diagrams: 'Diagrams',
-            addNewDiagram: 'Add a new diagram...',
+        contributors: 'Участники',
+        contributorsPlaceholder: 'Начните вводить, чтобы добавить участника',
+        description: 'Описание системы высокого уровня',
+        dragAndDrop: 'Перетащите или ',
+        jsonPaste: 'Перетащите файл JSON модели угроз или вставьте его содержимое здесь:',
+        owner: 'Владелец',
+        reviewer: 'Рецензент',
+        title: 'Заголовок',
+        new: {
+            title: 'Создать новую модель угроз',
+            description: 'Введите информацию о вашей новой модели угроз'
+        },
+        placeholder: {
+            title: 'Название модели угроз',
+            owner: 'Имя владельца или команды',
+            description: 'Введите описание системы высокого уровня',
+            reviewer: 'Имя рецензента'
+        },        diagram: {
+            diagrams: 'Диаграммы',
+            addNewDiagram: 'Добавить новую диаграмму...',
             generic: {
-                defaultTitle: 'New generic diagram',
-                defaultDescription: 'New generic diagram description',
-                select: 'Generic'
+                defaultTitle: 'Новая общая диаграмма',
+                defaultDescription: 'Описание новой общей диаграммы',
+                select: 'Общая'
             },
             stride: {
-                defaultTitle: 'New STRIDE diagram',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultTitle: 'Новая диаграмма STRIDE',
+                defaultDescription: 'Описание новой диаграммы STRIDE',
                 select: 'STRIDE'
             },
             linddun: {
-                defaultTitle: 'New LINDDUN diagram',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'Новая диаграмма LINDDUN',
+                defaultDescription: 'Описание новой диаграммы LINDDUN',
                 select: 'LINDDUN'
             },
             plot4ai: {
-                defaultTitle: 'New PLOT4ai diagram',
-                defaultDescription: 'New PLOT4ai diagram description',
+                defaultTitle: 'Новая диаграмма PLOT4ai',
+                defaultDescription: 'Описание новой диаграммы PLOT4ai',
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultTitle: 'Новая диаграмма DIE',
+                defaultDescription: 'Описание новой диаграммы DIE',
                 select: 'DIE'
             },
             cia: {
-                defaultTitle: 'New CIA diagram',
-                defaultDescription: 'New CIA diagram description',
+                defaultTitle: 'Новая диаграмма CIA',
+                defaultDescription: 'Описание новой диаграммы CIA',
                 select: 'CIA'
             }
         },
-        threats: 'Threats',
+        threats: 'Угрозы',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'Invalid JSON. Please check your model and try again.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            dropSingleFileOnly: 'Для перетаскивания требуется один файл.',
+            invalidJson: 'Недопустимый JSON. Пожалуйста, проверьте вашу модель и попробуйте снова.',
+            onlyJsonAllowed: 'Поддерживаются только файлы с расширением .json.',
+            open: 'Ошибка при открытии этой модели угроз. Проверьте консоль разработчика для получения дополнительной информации',
+            save: 'Ошибка при сохранении модели угроз. Проверьте консоль разработчика для получения дополнительной информации',
+            googleDriveSave:
+                'Ошибка при сохранении в Google Drive. Убедитесь, что у вас есть необходимые разрешения.'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'Модель угроз успешно открыта',
+        saved: 'Модель угроз успешно сохранена',
         properties: {
-            title: 'Properties',
-            emptyState: 'Select an element on the graph to edit',
-            name: 'Name',
-            text: 'Text',
-            description: 'Description',
-            outOfScope: 'Out of Scope',
-            bidirection: 'Bidirectional',
-            reasonOutOfScope: 'Reason for out of scope',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
-            isALog: 'Is a Log',
-            isEncrypted: 'Encrypted',
-            isSigned: 'Signed',
-            isWebApplication: 'Web Application',
-            privilegeLevel: 'Privilege Level',
-            providesAuthentication: 'Provides Authentication',
-            protocol: 'Protocol',
-            publicNetwork: 'Public Network',
-            storesCredentials: 'Stores Credentials',
-            storesInventory: 'Stores Inventory'
+            title: 'Свойства',
+            emptyState: 'Выберите элемент на графике для редактирования',
+            name: 'Имя',
+            text: 'Текст',
+            description: 'Описание',
+            outOfScope: 'Вне области',
+            bidirection: 'Двунаправленный',
+            reasonOutOfScope: 'Причина нахождения вне области',
+            handlesCardPayment: 'Карточный платеж',
+            handlesGoodsOrServices: 'Товары или услуги',
+            isALog: 'Является журналом',
+            isEncrypted: 'Зашифровано',
+            isSigned: 'Подписано',
+            isWebApplication: 'Веб-приложение',
+            privilegeLevel: 'Уровень привилегий',
+            providesAuthentication: 'Предоставляет аутентификацию',
+            protocol: 'Протокол',
+            publicNetwork: 'Публичная сеть',
+            storesCredentials: 'Хранит учетные данные',
+            storesInventory: 'Хранит инвентарь'
         },
-        buttons: {
-            delete: 'Delete selected',
-            redo: 'Redo edit',
-            shortcuts: 'Keyboard shortcuts',
-            toggleGrid: 'Toggle grid',
-            undo: 'Undo edit',
-            zoomIn: 'Zoom in',
-            zoomOut: 'Zoom out'
+        controlButtons: {
+            delete: 'Удалить выбранное',
+            redo: 'Повторить редактирование',
+            shortcuts: 'Сочетания клавиш',
+            toggleGrid: 'Переключить сетку',
+            undo: 'Отменить редактирование',
+            zoomIn: 'Увеличить',
+            zoomOut: 'Уменьшить',
+            save: 'Сохранить'
         },
         shortcuts: {
-            title: 'Shortcuts',
+            title: 'Сочетания клавиш',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copy'
+                action: 'Копировать'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Paste'
+                action: 'Вставить'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Undo'
+                action: 'Отменить'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Redo'
+                action: 'Повторить'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Delete'
+                action: 'Удалить'
             },
             pan: {
-                shortcut: 'shift + left-click (hold/drag)',
-                action: 'Pan'
+                shortcut: 'shift + левый клик (удерживать/перетаскивать)',
+                action: 'Панорамирование'
             },
             multiSelect: {
-                shortcut: 'left-click on empty space and drag',
-                action: 'Multi-select'
+                shortcut: 'левый клик на пустом месте и перетаскивание',
+                action: 'Множественный выбор'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + mousewheel',
-                action: 'Zoom'
+                shortcut: '(ctrl/cmd) + колесо мыши',
+                action: 'Масштабирование'
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Сохранить'
             }
         },
         stencil: {
-            boundaries: 'Boundaries',
-            components: 'Components',
-            entities: 'Entities',
-            metadata: 'Metadata',
-            search: 'Search',
-            notFound: 'We don\'t have that yet, want to open an issue? :)'
+            title: 'Формы',
+            boundaries: 'Границы',
+            components: 'Компоненты',
+            entities: 'Сущности',
+            metadata: 'Метаданные',
+            search: 'Поиск форм',
+            notFound: 'У нас этого еще нет, хотите открыть проблему? :)'
         },
         shapes: {
-            actor: 'Actor',
-            flow: 'Data Flow',
-            flowStencil: 'Data Flow',
-            process: 'Process',
-            store: 'Store',
-            text: 'Descriptive text',
-            trustBoundary: 'Trust Boundary'
+            actor: 'Актер',
+            flow: 'Поток данных',
+            flowStencil: 'Поток данных',
+            process: 'Процесс',
+            store: 'Хранилище',
+            text: 'Описательный текст',
+            trustBoundary: 'Граница доверия'
         }
     },
     forms: {
-        apply: 'Apply',
-        cancel: 'Cancel',
-        close: 'Close',
-        closeModel: 'Close Model',
-        delete: 'Delete',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Edit',
-        exportAs: 'Export Model As',
-        exportHtml: 'HTML Report',
-        exportPdf: 'PDF Report',
-        exportTd: 'Original (Threat Dragon)',
+        apply: 'Применить',
+        cancel: 'Отмена',
+        close: 'Закрыть',
+        closeModel: 'Закрыть модель',
+        create: 'Создать',
+        delete: 'Удалить',
+        discardTitle: 'Отменить изменения?',
+        discardMessage: 'Вы уверены, что хотите отменить свои изменения?',
+        edit: 'Редактировать',
+        export: 'Экспорт',
+        exportAs: 'Экспортировать модель как',
+        exportHtml: 'HTML отчет',
+        exportPdf: 'PDF отчет',
+        exportTd: 'Оригинал (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
-        import: 'Import',
+        exportFormats: {
+            png: 'PNG',
+            jpeg: 'JPEG',
+            svg: 'SVG'
+        },
+        import: 'Импорт',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
-        reload: 'Reload',
-        remove: 'Remove',
-        report: 'Report',
-        save: 'Save',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        search: 'Search',
-        next: 'Next',
-        previous: 'Previous'
+        open: 'Открыть',
+        openModel: 'Открыть модель',
+        print: 'Печать',
+        reload: 'Перезагрузить',
+        remove: 'Удалить',
+        report: 'Отчет',
+        save: 'Сохранить',
+        saveAs: 'Сохранить как',
+        saveModel: 'Сохранить модель',
+        saveModelAs: 'Сохранить модель как',
+        search: 'Поиск',
+        next: 'Следующий',
+        previous: 'Предыдущий',
+        requiredField: 'Обязательное поле'
     },
     threats: {
         model: {
             cia: {
                 header: '--- CIA ---',
-                confidentiality: 'Confidentiality',
-                integrity: 'Integrity',
-                availability: 'Availability'
+                confidentiality: 'Конфиденциальность',
+                integrity: 'Целостность',
+                availability: 'Доступность'
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'Распределенность',
+                immutable: 'Неизменность',
+                ephemeral: 'Эфемерность'
             },
             linddun: {
                 header: '--- LINDDUN ---',
-                linkability: 'Linkability',
-                identifiability: 'Identifiability',
-                nonRepudiation: 'Non-repudiation',
-                detectability: 'Detectability',
-                disclosureOfInformation: 'Disclosure of information',
-                unawareness: 'Unawareness',
-                nonCompliance: 'Non-compliance'
+                linkability: 'Связываемость',
+                identifiability: 'Идентифицируемость',
+                nonRepudiation: 'Неотказуемость',
+                detectability: 'Обнаруживаемость',
+                disclosureOfInformation: 'Раскрытие информации',
+                unawareness: 'Неосведомленность',
+                nonCompliance: 'Несоответствие'
             },
             plot4ai: {
                 header: '--- PLOT4ai ---',
-                techniqueProcesses: 'Technique & Processes',
-                accessibility: 'Accessibility',
-                identifiabilityLinkability: 'Identifiability & Linkability',
-                security: 'Security',
-                safety: 'Safety',
-                unawareness: 'Unawareness',
-                ethicsHumanRights: 'Ethics & Human Rights',
-                nonCompliance: 'Non-compliance'
+                techniqueProcesses: 'Техника и процессы',
+                accessibility: 'Доступность',
+                identifiabilityLinkability: 'Идентифицируемость и связываемость',
+                security: 'Безопасность',
+                safety: 'Надежность',
+                unawareness: 'Неосведомленность',
+                ethicsHumanRights: 'Этика и права человека',
+                nonCompliance: 'Несоответствие'
             },
             stride: {
                 header: '--- STRIDE ---',
-                spoofing: 'Spoofing',
-                tampering: 'Tampering',
-                repudiation: 'Repudiation',
-                informationDisclosure: 'Information disclosure',
-                denialOfService: 'Denial of service',
-                elevationOfPrivilege: 'Elevation of privilege'
+                spoofing: 'Подмена',
+                tampering: 'Искажение',
+                repudiation: 'Отказ от авторства',
+                informationDisclosure: 'Раскрытие информации',
+                denialOfService: 'Отказ в обслуживании',
+                elevationOfPrivilege: 'Повышение привилегий'
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            die: 'New DIE threat',
-            linddun: 'New LINDDUN threat',
-            plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            default: 'Новая общая угроза',
+            cia: 'Новая угроза CIA',
+            die: 'Новая угроза DIE',
+            linddun: 'Новая угроза LINDDUN',
+            plot4ai: 'Новая угроза PLOT4ai',
+            stride: 'Новая угроза STRIDE'
         },
-        edit: 'Edit Threat',
-        confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide remediation for this threat or a reason if status is N/A',
-        newThreat: 'New Threat',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        new: 'Новая угроза',
+        edit: 'Редактировать угрозу',
+        confirmDeleteTitle: 'Подтвердить удаление',
+        confirmDeleteMessage: 'Вы уверены, что хотите удалить эту угрозу?',
+        description: 'Предоставьте описание для этой угрозы',
+        emptyThreat: 'Выберите элемент на графике, чтобы добавить угрозу',
+        mitigation: 'Предоставьте меры по устранению этой угрозы или причину, если статус N/A',
+        newThreat: 'Новая угроза',
+        newThreatByType: 'Новая угроза по типу',
+        newThreatByContext: 'Новая угроза по контексту',
         properties: {
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type',
-            number: 'Number',
-            priority: 'Priority',
-            score: 'Score',
-            status: 'Status',
-            title: 'Title',
-            type: 'Type'
+            description: 'Описание',
+            mitigation: 'Меры по устранению',
+            modelType: 'Тип модели',
+            number: 'Номер',
+            priority: 'Приоритет',
+            score: 'Оценка',
+            status: 'Статус',
+            title: 'Заголовок',
+            type: 'Тип'
         },
         status: {
-            notApplicable: 'N/A',
-            open: 'Open',
-            mitigated: 'Mitigated'
+            notApplicable: 'Н/Д',
+            open: 'Открыто',
+            mitigated: 'Устранено'
         },
         priority: {
-            tbd: 'TBD',
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High',
-            critical: 'Critical'
+            tbd: 'Не определено',
+            low: 'Низкий',
+            medium: 'Средний',
+            high: 'Высокий',
+            critical: 'Критический'
         }
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showEmpty: 'Show empty elements',
-            showProperties: 'Show element properties',
-            showBranding: 'Threat Dragon logo'
+            showOutOfScope: 'Показать элементы вне области',
+            showMitigatedThreats: 'Показать устраненные угрозы',
+            showModelDiagrams: 'Показать диаграммы модели',
+            showEmpty: 'Показать пустые элементы',
+            showProperties: 'Показать свойства элементов',
+            showBranding: 'Логотип Threat Dragon'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'Отчет по модели угроз для',
+        dateGenerated: 'Дата создания',
+        executiveSummary: 'Краткое содержание',
+        notProvided: 'Не предоставлено',
+        summary: 'Сводка',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openCritical: 'Open / Critical Priority',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openTbd: 'Open / TBD Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'Всего угроз',
+            mitigated: 'Всего устранено',
+            notMitigated: 'Не устранено',
+            openCritical: 'Открыто / Критический приоритет',
+            openHigh: 'Открыто / Высокий приоритет',
+            openMedium: 'Открыто / Средний приоритет',
+            openLow: 'Открыто / Низкий приоритет',
+            openTbd: 'Открыто / Неопределенный приоритет',
+            openUnknown: 'Открыто / Неизвестный приоритет'
         }
     },
-    upgrade: {
-        modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
-        },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+    pagination: {
+        previous: 'Предыдущий',
+        next: 'Следующий'
     }
 };
 

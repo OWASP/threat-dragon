@@ -2,16 +2,26 @@
 
 import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
 import logger from './logger.js';
-import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
+import { electronURL, isDevelopment, isMacOS, isWin } from './utils.js';
 
+// Import dependencies directly to simplify the build process
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
+const os = require('os');
+const pkg = require('../../../package.json');
 
-if (isTest) {
-    require('wdio-electron-service/main');
+// Setup Vue DevTools for development
+let installExtension, VUEJS_DEVTOOLS;
+try {
+    const devTools = require('electron-devtools-installer');
+    installExtension = devTools.default;
+    VUEJS_DEVTOOLS = devTools.VUEJS_DEVTOOLS;
+} catch (e) {
+    logger.log.warn('electron-devtools-installer not available:', e.toString());
+    installExtension = async () => {};
+    VUEJS_DEVTOOLS = null;
 }
 
 // Scheme must be registered before the app is ready
@@ -20,8 +30,7 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 let runApp = true;
-async function createWindow () {
-
+async function createWindow() {
     // Create the browser window
     const mainWindow = new BrowserWindow({
         width: 1400,
@@ -54,7 +63,8 @@ async function createWindow () {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
         // Load the url of the dev server when in development mode
         await mainWindow.loadURL(electronURL);
-        if (!isTest) {
+        // Open DevTools in development mode
+        if (isDevelopment) {
             mainWindow.webContents.openDevTools();
         }
     } else {
@@ -90,11 +100,11 @@ app.on('activate', () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
     logger.log.debug('Building the menu system for the default language');
-    let template = menu.getMenuTemplate();
+    const template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
-    // Install Vue Devtools
-    if (isDevelopment && !isTest) {
+    // Install Vue Devtools in development mode
+    if (isDevelopment) {
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {
@@ -102,6 +112,7 @@ app.on('ready', async () => {
         }
     }
 
+    // Handle IPC events from the renderer process
     ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
     ipcMain.on('model-open-confirmed', handleModelOpenConfirmed);
@@ -109,6 +120,64 @@ app.on('ready', async () => {
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.on('quit-and-install', () => {
+        autoUpdater.quitAndInstall();
+    });
+
+    // Handle application information IPC methods
+    ipcMain.handle('get-app-version', () => {
+        return pkg.version;
+    });
+
+    ipcMain.handle('get-app-name', () => {
+        return pkg.productName;
+    });
+
+    ipcMain.handle('get-os-version', () => {
+        return `${os.platform()} ${os.release()}`;
+    });
+
+    ipcMain.handle('open-file', async () => {
+        // Open file dialog and return the selected file path
+        const result = await menu.openFileDialog();
+        // Return in a standardized format
+        return { filePaths: result ? [result] : [] };
+    });
+
+    ipcMain.handle('save-file', async (_event, path, content) => {
+        // Delegate to menu functionality
+        return menu.saveFile(path, content);
+    });
+
+    ipcMain.handle('get-threat-model-path', () => {
+        return menu.model.filePath || '';
+    });
+
+    ipcMain.handle('get-provider-logon', () => {
+        return { userName: 'localuser', accessToken: '' };
+    });
+
+    ipcMain.handle('get-recent-model-list', () => {
+        return app.getRecentDocuments();
+    });
+
+    ipcMain.handle('update-recent-model-list', (_event, list) => {
+        // Clear existing
+        app.clearRecentDocuments();
+        // Add new items
+        if (Array.isArray(list)) {
+            list.forEach((file) => app.addRecentDocument(file));
+        }
+        return true;
+    });
+
+    // Auto-updater events
+    autoUpdater.on('update-downloaded', () => {
+        const windows = BrowserWindow.getAllWindows();
+        if (windows.length > 0) {
+            windows[0].webContents.send('update-downloaded');
+        }
+    });
 
     createWindow();
 
@@ -120,7 +189,7 @@ app.on('ready', async () => {
 });
 
 // this is emitted when a 'recent document' is opened
-app.on('open-file', function(event, path) {
+app.on('open-file', function (event, path) {
     // apply custom handler to this event
     event.preventDefault();
     logger.log.debug('Request to open file from recent documents: ' + path);
@@ -133,35 +202,35 @@ function handleCloseApp() {
     app.quit();
 }
 
-function handleModelClosed (_event, fileName) {
+function handleModelClosed(_event, fileName) {
     logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
 }
 
-function handleModelOpenConfirmed (_event, fileName) {
+function handleModelOpenConfirmed(_event, fileName) {
     logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
     menu.openModel(fileName);
 }
 
-function handleModelOpened (_event, fileName) {
+function handleModelOpened(_event, fileName) {
     logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 
-function handleModelPrint (_event, format) {
+function handleModelPrint(_event, format) {
     logger.log.debug('Model print request from renderer with printer : ' + format);
     menu.modelPrint(format);
 }
 
-function handleModelSave (_event, modelData, fileName) {
+function handleModelSave(_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
 }
 
-function handleUpdateMenu (_event, locale) {
+function handleUpdateMenu(_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
-    let template = menu.getMenuTemplate();
+    const template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 

@@ -1,7 +1,21 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { config } from '@vue/test-utils';
 
 import TdExecutiveSummary from '@/components/printed-report/ExecutiveSummary.vue';
+import { createWrapper } from '../../setup/test-utils';
 
+// Disable Vue warnings for the tests
+config.global.config.warnHandler = () => null;
+
+/**
+ * Vue 3 Migration Tests for ExecutiveSummary.vue
+ * 
+ * Changes from Vue 2:
+ * - Using createWrapper helper for consistent test setup
+ * - Added props validation tests for better component API testing
+ * - Enhanced DOM element selection with more reliable selectors
+ * - Added direct testing of computed properties
+ * - Improved test organization with descriptive test groups
+ */
 describe('components/printed-report/ExecutiveSummary.vue', () => {
     let propsData, wrapper;
 
@@ -17,81 +31,155 @@ describe('components/printed-report/ExecutiveSummary.vue', () => {
         ]
     });
 
+    // Setup function to create wrapper with consistent configuration
     const setup = (data) => {
-        const localVue = createLocalVue();
-        wrapper = shallowMount(TdExecutiveSummary, {
-            localVue,
-            propsData: {
+        wrapper = createWrapper(TdExecutiveSummary, {
+            props: {
                 summary: data.summary,
                 threats: data.threats
             },
-            mocks: {
-                $t: t => t
-            }
+            shallow: true
         });
     };
 
-    beforeEach(() => {
-        propsData = getData();
-        setup(propsData);
+    describe('Component Props', () => {
+        beforeEach(() => {
+            propsData = getData();
+            setup(propsData);
+        });
+
+        it('has the correct props defined', () => {
+            // Verify summary prop structure
+            expect(TdExecutiveSummary.props.summary).toBeDefined();
+            expect(TdExecutiveSummary.props.summary.type).toBe(String);
+            expect(TdExecutiveSummary.props.summary.required).toBe(false);
+            
+            // Verify threats prop structure
+            expect(TdExecutiveSummary.props.threats).toBeDefined();
+            expect(TdExecutiveSummary.props.threats.type).toBe(Array);
+            expect(TdExecutiveSummary.props.threats.required).toBe(true);
+        });
     });
 
-    it('displays the executive summary title', () => {
-        expect(wrapper.find('.page-title').text())
-            .toEqual('report.executiveSummary');
+    describe('Component Structure', () => {
+        beforeEach(() => {
+            propsData = getData();
+            setup(propsData);
+        });
+
+        it('displays the executive summary title', () => {
+            const titleElement = wrapper.find('.page-title');
+            expect(titleElement.exists()).toBe(true);
+            expect(titleElement.text()).toEqual('report.executiveSummary');
+        });
+
+        it('displays the description title', () => {
+            const descriptionElement = wrapper.find('.td-description');
+            expect(descriptionElement.exists()).toBe(true);
+            expect(descriptionElement.text()).toEqual('threatmodel.description');
+        });
+
+        it('displays the summary', () => {
+            const summaryElement = wrapper.find('.td-summary');
+            expect(summaryElement.exists()).toBe(true);
+            expect(summaryElement.text()).toEqual(propsData.summary);
+        });
+
+        it('displays the report summary subtitle', () => {
+            const reportSummaryElement = wrapper.find('.td-report-summary');
+            expect(reportSummaryElement.exists()).toBe(true);
+            expect(reportSummaryElement.text()).toEqual('report.summary');
+        });
     });
 
-    it('displays the description title', () => {
-        expect(wrapper.find('.td-description').text())
-            .toEqual('threatmodel.description');
+    describe('Component Methods', () => {
+        beforeEach(() => {
+            propsData = getData();
+            setup(propsData);
+        });
+
+        it('gets only the open threats', () => {
+            // Test the method directly
+            const openThreats = wrapper.vm.getOpenThreats();
+            expect(openThreats).toHaveLength(4);
+            expect(openThreats.every(threat => threat.status === 'Open')).toBe(true);
+        });
     });
 
-    it('displays the summary', () => {
-        expect(wrapper.find('.td-summary').text())
-            .toEqual(propsData.summary);
-    });
+    describe('Computed Properties', () => {
+        beforeEach(() => {
+            propsData = getData();
+            setup(propsData);
+        });
 
-    it('displays the report summary subtitle', () => {
-        expect(wrapper.find('.td-report-summary').text())
-            .toEqual('report.summary');
-    });
+        it('calculates the total threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.total).toBe(6);
+            
+            // Also verify DOM element
+            const totalElement = wrapper.find('.td-summary-total');
+            expect(totalElement.exists()).toBe(true);
+            expect(totalElement.text()).toBe('6');
+        });
 
-    it('gets only the open threats', () => {
-        expect(wrapper.vm.getOpenThreats()).toHaveLength(4);
-    });
+        it('calculates the mitigated threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.mitigated).toBe(1);
+            
+            // Also verify DOM element
+            const mitigatedElement = wrapper.find('.td-summary-mitigated');
+            expect(mitigatedElement.exists()).toBe(true);
+            expect(mitigatedElement.text()).toBe('1');
+        });
 
-    it('counts the total threats', () => {
-        expect(wrapper.find('.td-summary-total').text())
-            .toEqual('6');
-    });
+        it('calculates the unmitigated threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.notMitigated).toBe(5);
+            
+            // Also verify DOM element
+            const notMitigatedElement = wrapper.find('.td-summary-not-mitigated');
+            expect(notMitigatedElement.exists()).toBe(true);
+            expect(notMitigatedElement.text()).toBe('5');
+        });
 
-    it('counts the mitigated threats', () => {
-        expect(wrapper.find('.td-summary-mitigated').text())
-            .toEqual('1');
-    });
+        it('calculates the open high severity threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.openHigh).toBe(1);
+            
+            // Also verify DOM element
+            const openHighElement = wrapper.find('.td-summary-open-high');
+            expect(openHighElement.exists()).toBe(true);
+            expect(openHighElement.text()).toBe('1');
+        });
 
-    it('counts the unmitigated threats', () => {
-        expect(wrapper.find('.td-summary-not-mitigated').text())
-            .toEqual('5');
-    });
+        it('calculates the open medium severity threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.openMedium).toBe(1);
+            
+            // Also verify DOM element
+            const openMediumElement = wrapper.find('.td-summary-open-medium');
+            expect(openMediumElement.exists()).toBe(true);
+            expect(openMediumElement.text()).toBe('1');
+        });
 
-    it('counts the open high severity threats', () => {
-        expect(wrapper.find('.td-summary-open-high').text())
-            .toEqual('1');
-    });
+        it('calculates the open low severity threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.openLow).toBe(1);
+            
+            // Also verify DOM element
+            const openLowElement = wrapper.find('.td-summary-open-low');
+            expect(openLowElement.exists()).toBe(true);
+            expect(openLowElement.text()).toBe('1');
+        });
 
-    it('counts the open medium severity threats', () => {
-        expect(wrapper.find('.td-summary-open-medium').text())
-            .toEqual('1');
-    });
-
-    it('counts the open low severity threats', () => {
-        expect(wrapper.find('.td-summary-open-low').text())
-            .toEqual('1');
-    });
-
-    it('counts the open unknown severity threats', () => {
-        expect(wrapper.find('.td-summary-open-unknown').text())
-            .toEqual('1');
+        it('calculates the open unknown severity threats correctly', () => {
+            // Test computed property directly
+            expect(wrapper.vm.openUnknown).toBe(1);
+            
+            // Also verify DOM element
+            const openUnknownElement = wrapper.find('.td-summary-open-unknown');
+            expect(openUnknownElement.exists()).toBe(true);
+            expect(openUnknownElement.text()).toBe('1');
+        });
     });
 });

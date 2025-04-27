@@ -9,8 +9,6 @@ const name = 'flow-stencil';
 // stencil item for data flow (edge)
 export const FlowStencil = Shape.Path.define({
     constructorName: name,
-    width: 200,
-    height: 100,
     zIndex: 10,
     markup: [
         {
@@ -36,7 +34,7 @@ export const FlowStencil = Shape.Path.define({
         customBoundary: {
             opacity: 0,
             width: 150,
-            height: 80,
+            height: 75
         },
         label: {
             text: tc('threatmodel.shapes.flowStencil'),

@@ -15,9 +15,7 @@ import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
 describe('desktop/menu.js', () => {
-
     describe('Desktop menu', () => {
-
         const menuItems = menu.getMenuTemplate();
 
         it('returns a dropdown menu', () => {
@@ -26,28 +24,26 @@ describe('desktop/menu.js', () => {
         });
 
         it('contains the Edit menu', () => {
-            const editMenu = {'role': 'editMenu'};
+            const editMenu = { role: 'editMenu' };
             expect(menuItems).toContainEqual(editMenu);
         });
 
         it('contains the View menu', () => {
-            const viewMenu = {'role': 'viewMenu'};
+            const viewMenu = { role: 'viewMenu' };
             expect(menuItems).toContainEqual(viewMenu);
         });
 
         it('contains the Window menu', () => {
-            const windowMenu = {'role': 'windowMenu'};
+            const windowMenu = { role: 'windowMenu' };
             expect(menuItems).toContainEqual(windowMenu);
         });
-
     });
 
     describe('Desktop File menu', () => {
-
         const fileItems = menu.getMenuTemplate().find((item) => item.label === 'File');
 
         it('contains the Close role', () => {
-            const closeRole = {'label': 'Close Window', 'role': 'close'};
+            const closeRole = { label: 'Close Window', role: 'close' };
             expect(fileItems.submenu).toContainEqual(closeRole);
         });
 
@@ -62,7 +58,9 @@ describe('desktop/menu.js', () => {
         });
 
         it('contains save model as', () => {
-            const saveModelAsItem = fileItems.submenu.find((item) => item.label === 'Save Model As');
+            const saveModelAsItem = fileItems.submenu.find(
+                (item) => item.label === 'Save Model As'
+            );
             expect(saveModelAsItem).toBeDefined();
         });
 
@@ -75,11 +73,9 @@ describe('desktop/menu.js', () => {
             const closeModelItem = fileItems.submenu.find((item) => item.label === 'Close Model');
             expect(closeModelItem).toBeDefined();
         });
-
     });
 
     describe('Desktop Help menu', () => {
-
         const helpItems = menu.getMenuTemplate().find((item) => item.label === 'Help');
 
         it('contains Documentation', () => {
@@ -108,19 +104,18 @@ describe('desktop/menu.js', () => {
         });
 
         it('contains Check Updates', () => {
-            const helpItem = helpItems.submenu.find((item) => item.label === 'Check for updates ...');
+            const helpItem = helpItems.submenu.find(
+                (item) => item.label === 'Check for updates ...'
+            );
             expect(helpItem).toBeDefined();
         });
-
     });
 
     describe('Desktop menu functions', () => {
-
-        const mockData = { 'title': 'test title' };
-        var mockFilename = 'test name';
+        const mockData = { title: 'test title' };
+        let mockFilename = 'test name';
 
         describe('Server actions', () => {
-
             beforeEach(() => {
                 model.fileDirectory = 'test directory';
                 model.filePath = 'test path';
@@ -129,13 +124,23 @@ describe('desktop/menu.js', () => {
 
             it('openModel() should send open-model to renderer with file path', () => {
                 // TODO: click on the server menu item for openModel()
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).not.toBeDefined();
             });
 
             it('saveModel() should send save-model-request to renderer with a file path', () => {
                 // TODO: click on the server menu item for saveModel()
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).not.toBeDefined();
             });
 
@@ -147,7 +152,12 @@ describe('desktop/menu.js', () => {
 
             it('newModel() should send new-model-request to renderer with file name', () => {
                 // TODO: click on the server menu item for newModel()
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).not.toBeDefined();
             });
 
@@ -159,14 +169,17 @@ describe('desktop/menu.js', () => {
 
             it('closeModel() should send close-model-request to renderer with name from file path', () => {
                 // TODO: click on the server menu item for closeModel()
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).not.toBeDefined();
             });
-
         });
 
         describe('Renderer actions', () => {
-
             beforeEach(() => {
                 model.fileDirectory = 'test directory';
                 model.filePath = 'test path';
@@ -184,7 +197,9 @@ describe('desktop/menu.js', () => {
 
             it('modelOpened() should open a model', () => {
                 menu.modelOpened();
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
+                expect(model).toEqual(
+                    expect.objectContaining({ fileDirectory: 'test directory', filePath: '' })
+                );
                 expect(model.isOpen).toBeTruthy();
             });
 
@@ -192,14 +207,24 @@ describe('desktop/menu.js', () => {
                 model.isOpen = true;
                 // TODO: mock the fs
                 // menu.modelSave(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).toBe(true);
             });
 
             it('modelSave()should not save a closed model with a file path', () => {
                 model.isOpen = false;
                 menu.modelSave(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: 'test path'
+                    })
+                );
                 expect(model.isOpen).toBe(false);
             });
 
@@ -207,7 +232,9 @@ describe('desktop/menu.js', () => {
                 model.filePath = '';
                 // TODO: mock the fs
                 // menu.modelSavd(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
+                expect(model).toEqual(
+                    expect.objectContaining({ fileDirectory: 'test directory', filePath: '' })
+                );
                 expect(true).toBe(true);
             });
 
@@ -216,7 +243,9 @@ describe('desktop/menu.js', () => {
                 mockFilename = '';
                 // TODO: mock the fs
                 // menu.modelSave(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
+                expect(model).toEqual(
+                    expect.objectContaining({ fileDirectory: 'test directory', filePath: '' })
+                );
                 expect(true).toBe(true);
             });
 
@@ -224,14 +253,17 @@ describe('desktop/menu.js', () => {
                 model.filePath = undefined;
                 // TODO: mock the fs
                 // menu.modelSave(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: undefined}) );
+                expect(model).toEqual(
+                    expect.objectContaining({
+                        fileDirectory: 'test directory',
+                        filePath: undefined
+                    })
+                );
                 expect(true).toBe(true);
             });
-
         });
 
         describe('Server utilities', () => {
-
             beforeEach(() => {
                 model.fileDirectory = 'test directory';
                 model.filePath = 'test path';
@@ -245,11 +277,9 @@ describe('desktop/menu.js', () => {
                 //expect(model).toEqual( expect.objectContaining({fileDirectory: 'another/file/', filePath: 'path'}) );
                 expect(model.isOpen).toEqual(true);
             });
-
         });
 
         describe('Locale selection', () => {
-
             afterAll(() => {
                 menu.setLocale('default');
             });
@@ -261,96 +291,123 @@ describe('desktop/menu.js', () => {
 
             it('should provide default translation for unrecognised locale', () => {
                 menu.setLocale('unrecognised');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === eng.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === eng.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Arabic', () => {
                 menu.setLocale('ara');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ara.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === ara.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for German', () => {
                 menu.setLocale('deu');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === deu.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === deu.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Greek (Modern)', () => {
                 menu.setLocale('ell');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ell.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === ell.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for English', () => {
                 menu.setLocale('eng');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === eng.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === eng.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Bahasa Indonesia', () => {
                 menu.setLocale('ind');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ind.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === ind.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Malay', () => {
                 menu.setLocale('ms');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ms.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === ms.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Finnish', () => {
                 menu.setLocale('fin');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === fin.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === fin.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for French', () => {
                 menu.setLocale('fra');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === fra.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === fra.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Hindi', () => {
                 menu.setLocale('hin');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === hin.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === hin.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Portuguese', () => {
                 menu.setLocale('por');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === por.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === por.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Russian', () => {
                 menu.setLocale('rus');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === rus.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === rus.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Spanish (Castilian)', () => {
                 menu.setLocale('spa');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === spa.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === spa.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Ukrainian', () => {
                 menu.setLocale('ukr');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ukr.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === ukr.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
             it('should provide translation for Chinese', () => {
                 menu.setLocale('zho');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === zho.desktop.help.heading);
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === zho.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
-
         });
-
     });
-
 });

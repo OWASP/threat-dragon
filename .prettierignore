@@ -1,0 +1,10 @@
+**/*.vue
+node_modules/
+dist/
+dist-electron/
+coverage/
+tests/e2e/screenshots/
+tests/e2e/videos/
+tests/e2e/reports/
+td.vue/cypress/
+*.js.html

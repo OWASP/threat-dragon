@@ -1,22 +1,26 @@
+// Mock X6 and X6 Stencil plugin
 jest.mock('@antv/x6', () => {
-    class Stencil {
-        constructor(config) {
-            this.config = config;
-        }
-    }
     class Graph {
         constructor(config) {
             this.config = config;
         }
     }
-    const Addon = { Stencil };
+    return { Graph };
+});
 
-    return { Addon, Graph };
+jest.mock('@antv/x6-plugin-stencil', () => {
+    class Stencil {
+        constructor(config) {
+            this.config = config;
+        }
+    }
+    return { Stencil };
 });
 
 import factory from '@/service/x6/factory.js';
 const { graph, stencil } = factory;
-const { Addon, Graph } = require('@antv/x6');
+const { Graph } = require('@antv/x6');
+const { Stencil } = require('@antv/x6-plugin-stencil');
 
 describe('Module Exports', () => {
     describe('graph function', () => {
@@ -30,11 +34,11 @@ describe('Module Exports', () => {
     });
 
     describe('stencil function', () => {
-        it('should create a new Addon.Stencil instance with the provided config', () => {
+        it('should create a new Stencil instance with the provided config', () => {
             const config = { target: 'stencil-container' };
             const stencilInstance = stencil(config);
 
-            expect(stencilInstance).toBeInstanceOf(Addon.Stencil);
+            expect(stencilInstance).toBeInstanceOf(Stencil);
             expect(stencilInstance.config).toBe(config);
         });
     });

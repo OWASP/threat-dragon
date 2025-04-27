@@ -29,7 +29,8 @@ const sendError = (error, code, message, res, logger) => {
  * @param {*} logger
  * @returns {Object}
  */
-export const serverError = (error, res, logger) => sendError(error, 500, 'Internal Server Error', res, logger);
+export const serverError = (error, res, logger) =>
+    sendError(error, 500, 'Internal Server Error', res, logger);
 
 /**
  * Returns a 404 status / error
@@ -55,7 +56,8 @@ export const badRequest = (error, res, logger) => sendError(error, 400, 'Bad Req
  * @param {*} logger
  * @returns {Object}
  */
-export const unauthorized = (res, logger) => sendError('You must login to continue', 401, 'Unauthorized', res, logger);
+export const unauthorized = (res, logger) =>
+    sendError('You must login to continue', 401, 'Unauthorized', res, logger);
 
 /**
  * Returns a 403 status / error

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
+const _sinon = sinon;
 
 import { getMockResponse } from '../mocks/express.mocks.js';
 import healthcheck from '../../src/controllers/healthz.js';

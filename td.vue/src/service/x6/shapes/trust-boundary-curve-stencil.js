@@ -9,8 +9,6 @@ const name = 'trust-boundary-curve-stencil';
 // trust boundary curve (edge, dotted line, gray opaque background)
 export const TrustBoundaryCurveStencil = Shape.Path.define({
     constructorName: name,
-    width: 200,
-    height: 100,
     zIndex: 10,
     markup: [
         {
@@ -37,12 +35,22 @@ export const TrustBoundaryCurveStencil = Shape.Path.define({
         customBoundary: {
             opacity: 0,
             width: 150,
-            height: 80,
+            height: 75
         },
         label: {
             text: tc('threatmodel.shapes.trustBoundary'),
             fill: '#333',
-            textVerticalAnchor: 'middle'
+            textVerticalAnchor: 'middle',
+            textWrap: {
+                width: 60, // Maximum width before wrapping
+                height: 40, // Maximum height
+                ellipsis: true // Show ellipsis when text overflows
+            },
+            fontSize: 14,
+            refX: 0.5, // Center horizontally
+            refY: 0.5, // Center vertically
+            refX2: 0, // No additional offset
+            refY2: 0  // No additional offset
         }
     },
     data: defaultProperties.boundary

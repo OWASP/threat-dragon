@@ -26,7 +26,7 @@ describe('service/api.js', () => {
         });
 
         it('calls client.get', () => {
-            expect(mockClient.get).toHaveBeenCalledWith(url, query);
+            expect(mockClient.get).toHaveBeenCalledWith(url, { params: query });
         });
 
         it('returns the data', () => {

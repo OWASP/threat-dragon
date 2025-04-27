@@ -13,7 +13,7 @@ describe('config/env.config.js environment configuration', () => {
         hydrate: () => {}
     };
 
-    beforeEach(function() {
+    beforeEach(function () {
         sinon.stub(env, 'get').returns(mockEnv);
         sinon.spy(mockEnv, 'addProvider');
         sinon.spy(mockEnv, 'hydrate');
@@ -22,18 +22,19 @@ describe('config/env.config.js environment configuration', () => {
 
     describe('tryLoadDotEnv', () => {
         it('adds a github provider', () => {
-            expect(mockEnv.addProvider).to.have.been
-            .calledWith(sinon.match.instanceOf(GithubEnv));
+            expect(mockEnv.addProvider).to.have.been.calledWith(sinon.match.instanceOf(GithubEnv));
         });
 
         it('adds the encryption provider', () => {
-            expect(mockEnv.addProvider).to.have.been
-            .calledWith(sinon.match.instanceOf(EncryptionEnv));
+            expect(mockEnv.addProvider).to.have.been.calledWith(
+                sinon.match.instanceOf(EncryptionEnv)
+            );
         });
 
         it('adds the threat dragon provider', () => {
-            expect(mockEnv.addProvider).to.have.been
-            .calledWith(sinon.match.instanceOf(ThreatDragonEnv));
+            expect(mockEnv.addProvider).to.have.been.calledWith(
+                sinon.match.instanceOf(ThreatDragonEnv)
+            );
         });
 
         it('hydrates the config', () => {

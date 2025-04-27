@@ -1,22 +1,13 @@
 <template>
-    <b-btn
-        @click="onBtnClick"
+    <BButton
         :class="{ 'td-primary-btn': isPrimary, 'td-default-btn': !isPrimary }"
         :variant="isPrimary ? 'primary' : 'secondary'"
+        @click="onBtnClick"
     >
-        <font-awesome-icon
-            v-if="icon"
-            :icon="[iconPreface, icon]"
-        ></font-awesome-icon>
+        <font-awesome-icon v-if="icon" :icon="[iconPreface, icon]" />
         {{ text }}
-    </b-btn>
+    </BButton>
 </template>
-
-<style lang="scss" scoped>
-button {
-    font-size: 14px;
-}
-</style>
 
 <script>
 export default {
@@ -28,7 +19,8 @@ export default {
         },
         icon: {
             type: String,
-            required: false
+            required: false,
+            default: ''
         },
         iconPreface: {
             type: String,
@@ -47,3 +39,9 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+    button {
+        font-size: 14px;
+    }
+</style>

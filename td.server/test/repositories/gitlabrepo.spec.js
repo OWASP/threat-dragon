@@ -1,11 +1,13 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-
 
 import env from '../../src/env/Env.js';
 import * as threatModelRepository from '../../src/repositories/gitlabrepo.js';
-import {GitlabClientWrapper} from "../../src/repositories/gitlabrepo.js";
-import {getClient, userAsync} from '../../src/repositories/gitlabrepo.js';
+import { GitlabClientWrapper } from '../../src/repositories/gitlabrepo.js';
+import {
+    getClient as _getClient,
+    userAsync as _userAsync
+} from '../../src/repositories/gitlabrepo.js';
 
 describe('repositories/gitlabrepo.js', () => {
     const workspace = 'threat-workspace';
@@ -20,7 +22,7 @@ describe('repositories/gitlabrepo.js', () => {
         branch: 'testBranch',
         organisation: 'test org',
         page: 'testPage',
-        listBranches: { page: 'repoInfo.page', showExpanded: true },        
+        listBranches: { page: 'repoInfo.page', showExpanded: true },
         branchInfo: { path: repoPath, ref: 'main' },
         readInfo: {
             path: repoPath,
@@ -43,111 +45,109 @@ describe('repositories/gitlabrepo.js', () => {
             repo_slug: 'repoInfo.repo',
             name: 'branch_name',
             model: 'my model',
-            data: "abc",
+            data: 'abc',
             body: {
                 content: 'test content',
                 id: 1
             }
-        },
-
+        }
     };
     const accessToken = 'access token';
 
     const mockClient = {
         Users: {
-            showCurrentUser: sinon.stub().returns(Promise.resolve({data: {}}))
+            showCurrentUser: sinon.stub().returns(Promise.resolve({ data: {} }))
         },
         Projects: {
-            all: sinon.stub().returns(Promise.resolve({
-                    data:
-                        [
-                            {path_with_namespace: 'Threat-Workspace/Repo1'},
-                            {path_with_namespace: 'Threat-Workspace/Repo2'},
-                            {path_with_namespace: 'Threat-Workspace/Repo3'},
-],
-                    paginationInfo: {next: null, previous: null}
-                }
-            )),
-            getBranch: sinon.stub().returns(Promise.resolve({data: {target: {hash: info.readInfo.commit}}})),
-            listBranches: sinon.stub().returns(Promise.resolve({data: {values: []}})),
+            all: sinon.stub().returns(
+                Promise.resolve({
+                    data: [
+                        { path_with_namespace: 'Threat-Workspace/Repo1' },
+                        { path_with_namespace: 'Threat-Workspace/Repo2' },
+                        { path_with_namespace: 'Threat-Workspace/Repo3' }
+                    ],
+                    paginationInfo: { next: null, previous: null }
+                })
+            ),
+            getBranch: sinon
+                .stub()
+                .returns(Promise.resolve({ data: { target: { hash: info.readInfo.commit } } })),
+            listBranches: sinon.stub().returns(Promise.resolve({ data: { values: [] } }))
         },
         Branches: {
-            all: sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: 3, previous: 1}
-
-            })),
-            create: sinon.stub().returns(Promise.resolve({
-
-            })),
+            all: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: 3, previous: 1 }
+                })
+            ),
+            create: sinon.stub().returns(Promise.resolve({}))
         },
-        Repositories : {
-            allRepositoryTrees : sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: 3, previous: 1}
-
-            })),
+        Repositories: {
+            allRepositoryTrees: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: 3, previous: 1 }
+                })
+            )
         },
         RepositoryFiles: {
-            show : sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: null, previous: null}
-
-            })),
-            create : sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: null, previous: null}
-
-            })),
-            edit : sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: null, previous: null}
-
-            })),
-            remove : sinon.stub().returns(Promise.resolve({
-                data: [],
-                paginationInfo: {next: null, previous: null}
-
-            })),
-        },
-
+            show: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: null, previous: null }
+                })
+            ),
+            create: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: null, previous: null }
+                })
+            ),
+            edit: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: null, previous: null }
+                })
+            ),
+            remove: sinon.stub().returns(
+                Promise.resolve({
+                    data: [],
+                    paginationInfo: { next: null, previous: null }
+                })
+            )
+        }
     };
 
     const clientOptions = {
         auth: {
-            oauthToken: accessToken,
-        },
+            oauthToken: accessToken
+        }
     };
-
 
     beforeEach(() => {
         sinon.stub(GitlabClientWrapper, 'getClient').returns(mockClient);
     });
 
     describe('getClient', () => {
-        beforeEach(async () => {
-
-        });
+        beforeEach(async () => {});
 
         it('creates the gitlab client', async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
+            sinon.stub(env, 'get').returns({
+                config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+            });
             await threatModelRepository.getClient(accessToken);
             expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
         });
-
     });
 
     describe('userAsync', () => {
-        beforeEach(async () => {
-
-
-        });
+        beforeEach(async () => {});
 
         it('creates the gitlab client', () => {
-             threatModelRepository.userAsync(accessToken);
-            sinon.stub(env, 'get').returns({config: {}});
+            threatModelRepository.userAsync(accessToken);
+            sinon.stub(env, 'get').returns({ config: {} });
             expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
-
         });
     });
 
@@ -173,9 +173,9 @@ describe('repositories/gitlabrepo.js', () => {
 
         // Setup the transformed data
         const transformedReposData = [
-            {full_name: 'Threat-Workspace/Repo1', path_with_namespace: 'Threat-Workspace/Repo1'},
-            {full_name: 'Threat-Workspace/Repo2', path_with_namespace: 'Threat-Workspace/Repo2'},
-            {full_name: 'Threat-Workspace/Repo3', path_with_namespace: 'Threat-Workspace/Repo3'},
+            { full_name: 'Threat-Workspace/Repo1', path_with_namespace: 'Threat-Workspace/Repo1' },
+            { full_name: 'Threat-Workspace/Repo2', path_with_namespace: 'Threat-Workspace/Repo2' },
+            { full_name: 'Threat-Workspace/Repo3', path_with_namespace: 'Threat-Workspace/Repo3' }
         ];
 
         it('transforms the repos data correctly', async () => {
@@ -185,13 +185,12 @@ describe('repositories/gitlabrepo.js', () => {
             // Check that the returned data is transformed correctly
             expect(repos).to.deep.equal(transformedReposData);
         });
-
     });
 
     describe('branchesAsync', () => {
-        const repoInfo = {page: info.listBranches.page, repo: "repo", organisation: "org"};
+        const repoInfo = { page: info.listBranches.page, repo: 'repo', organisation: 'org' };
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({ config: { GITLAB_WORKSPACE: workspace } });
             await threatModelRepository.branchesAsync(repoInfo, accessToken);
         });
 
@@ -200,33 +199,78 @@ describe('repositories/gitlabrepo.js', () => {
         });
 
         it('gets the repo', () => {
-            expect(mockClient.Branches.all).to.have.been.calledWith("org/repo", info.listBranches);
+            expect(mockClient.Branches.all).to.have.been.calledWith('org/repo', info.listBranches);
         });
-
     });
 
     describe('modelsAsync', () => {
-        const branchInfo = {branch: "main", repo: "repo"};
+        describe('when directory exists and contains models', () => {
+            const branchInfo = { branch: 'main', repo: 'repo' };
 
-        beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
-            await threatModelRepository.modelsAsync(branchInfo, accessToken);
+            beforeEach(async () => {
+                sinon.stub(env, 'get').returns({
+                    config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+                });
+                await threatModelRepository.modelsAsync(branchInfo, accessToken);
+            });
+
+            it('creates the client', () => {
+                expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
+            });
+
+            it('should get the branch contents', () => {
+                expect(mockClient.Repositories.allRepositoryTrees).to.have.been.calledWith(
+                    'undefined/repo',
+                    info.branchInfo
+                );
+            });
         });
 
-        it('creates the client', () => {
-            expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
+        describe('when directory does not exist', () => {
+            const branchInfo = { branch: 'main', repo: 'repo' };
+
+            beforeEach(() => {
+                sinon.stub(env, 'get').returns({
+                    config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+                });
+                mockClient.Repositories.allRepositoryTrees.rejects(new Error('Not Found'));
+            });
+
+            it('should return an empty array when directory is not found', async () => {
+                const [models] = await threatModelRepository.modelsAsync(branchInfo, accessToken);
+                expect(models).to.be.an('array').that.is.empty;
+            });
         });
 
-        it('should get the branch contents', () => {
-            expect(mockClient.Repositories.allRepositoryTrees).to.have.been.calledWith("undefined/repo", info.branchInfo);
+        describe('when response is not an array', () => {
+            const branchInfo = { branch: 'main', repo: 'repo' };
+
+            beforeEach(() => {
+                sinon.stub(env, 'get').returns({
+                    config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+                });
+                mockClient.Repositories.allRepositoryTrees.returns(Promise.resolve('not an array'));
+            });
+
+            it('should return an empty array when response is not an array', async () => {
+                const [models] = await threatModelRepository.modelsAsync(branchInfo, accessToken);
+                expect(models).to.be.an('array').that.is.empty;
+            });
         });
     });
 
     describe('modelAsync', () => {
-        const modelInfo = {page: info.listBranches.page, repo: "repo", organisation: "org", model: "model"};
+        const modelInfo = {
+            page: info.listBranches.page,
+            repo: 'repo',
+            organisation: 'org',
+            model: 'model'
+        };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
+            sinon.stub(env, 'get').returns({
+                config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+            });
             await threatModelRepository.modelAsync(modelInfo, accessToken);
         });
 
@@ -235,9 +279,11 @@ describe('repositories/gitlabrepo.js', () => {
         });
 
         it('should get the contents', () => {
-            expect(mockClient.RepositoryFiles.show).to.have.been.calledWith("org/repo", "ThreatDragonModels/model/model.json");
+            expect(mockClient.RepositoryFiles.show).to.have.been.calledWith(
+                'org/repo',
+                'ThreatDragonModels/model/model.json'
+            );
         });
-
     });
 
     describe('createAsync', () => {
@@ -246,11 +292,13 @@ describe('repositories/gitlabrepo.js', () => {
             repo: info.createAsync.repo_slug,
             model: info.createAsync.model,
             body: info.createAsync.body,
-            organisation: "org"
+            organisation: 'org'
         };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
+            sinon.stub(env, 'get').returns({
+                config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+            });
             await threatModelRepository.createAsync(createAysncInfo, accessToken);
         });
 
@@ -258,69 +306,65 @@ describe('repositories/gitlabrepo.js', () => {
             expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
         });
 
-
         it('create the file', () => {
             expect(mockClient.RepositoryFiles.create).to.have.been.calledWith(
-                "org/repoInfo.repo",
-                "ThreatDragonModels/my model/my model.json",
-                "branch_name",
-                "{\n  \"content\": \"test content\",\n  \"id\": 1\n}",
-                "Created by OWASP Threat Dragon",
-
-        );
+                'org/repoInfo.repo',
+                'ThreatDragonModels/my model/my model.json',
+                'branch_name',
+                '{\n  "content": "test content",\n  "id": 1\n}',
+                'Created by OWASP Threat Dragon'
+            );
         });
     });
 
     describe('updateAsync', () => {
-
         const updateAysncInfo = {
             branch: info.createAsync.name,
             repo: info.createAsync.repo_slug,
             model: info.createAsync.model,
             body: info.createAsync.body,
-            organisation: "org"
-
+            organisation: 'org'
         };
 
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath}});
+            sinon.stub(env, 'get').returns({
+                config: { GITLAB_WORKSPACE: workspace, GITLAB_REPO_ROOT_DIRECTORY: repoPath }
+            });
             await threatModelRepository.updateAsync(updateAysncInfo, accessToken);
         });
-
 
         it('creates the client', () => {
             expect(GitlabClientWrapper.getClient).to.have.been.calledWith(clientOptions.auth);
         });
 
-
         it('update the file', () => {
             expect(mockClient.RepositoryFiles.edit).to.have.been.calledWith(
-                "org/repoInfo.repo",
-                "ThreatDragonModels/my model/my model.json",
-                "branch_name",
-                "{\n  \"content\": \"test content\",\n  \"id\": 1\n}",
-                "Updated by OWASP Threat Dragon",
-
+                'org/repoInfo.repo',
+                'ThreatDragonModels/my model/my model.json',
+                'branch_name',
+                '{\n  "content": "test content",\n  "id": 1\n}',
+                'Updated by OWASP Threat Dragon'
             );
         });
     });
 
-
     describe('deleteAsync', () => {
-
         it('throws an error', async () => {
             expect(threatModelRepository.deleteAsync(info, accessToken)).to.eventually.throw();
         });
-
     });
 
     describe('create branch', () => {
         beforeEach(async () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_WORKSPACE: workspace}});
+            sinon.stub(env, 'get').returns({ config: { GITLAB_WORKSPACE: workspace } });
             await threatModelRepository.createBranchAsync(info, accessToken);
         });
         it('create a new branch', () => {
-            expect(mockClient.Branches.create).to.have.been.calledWith(`${info.organisation}/${info.repo}`, info.branch, info.ref);
+            expect(mockClient.Branches.create).to.have.been.calledWith(
+                `${info.organisation}/${info.repo}`,
+                info.branch,
+                info.ref
+            );
         });
     });
 });

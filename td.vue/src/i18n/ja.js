@@ -2,23 +2,37 @@ const jpn = {
     auth: {
         sessionExpired: 'セッションの有効期限が切れました。再ログインしてください。'
     },
+    operator: {
+        heading: '運営者',
+        operatedby: 'このウェブサイトとOWASP Threat Dragonのインスタンスは以下によって運営されています：',
+        name: `${process.env.VUE_APP_OPERATOR_NAME || 'このウェブサイトの運営者'}`,
+        contact: '連絡先: ' + (process.env.VUE_APP_OPERATOR_CONTACT ? process.env.VUE_APP_OPERATOR_CONTACT.replace('@', ' [at] ') : '(連絡先情報は提供されていません)'),
+    },
     nav: {
-        v2Warning: 'バージョン2.0の脅威モデルは、Threat Dragonバージョン1.xとの互換性を保っていません。バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。',
+        v2Warning:
+            'バージョン2.0の脅威モデルは、Threat Dragonバージョン1.xとの互換性を保っていません。バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。',
         loggedInAs: 'ユーザー名',
-        logOut: 'ログアウト'
+        logOut: 'ログアウト',
+        tos: '利用規約',
+        privacy: 'プライバシーポリシー'
     },
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragonロゴ',
-        description: 'OWASP Threat Dragonは無償で、脅威モデリングのソフトです。オープンソースで複数のプラットホームに対応しています。Threat Dragonで脅威モデルを作成することによって、システムに対する脅威が明確になります。重視が多様性と使い勝手に置かれているので、簡単に利用できます。'
+        description:
+            'OWASP Threat Dragonは無料でオープンソース、クロスプラットフォームの脅威モデリングアプリケーションです。脅威モデリング図を描いてシステムの脅威を特定するために使用します。柔軟性とシンプルさを重視しており、あらゆるタイプのユーザーが簡単にアクセスできます。'
     },
     providers: {
         desktop: {
-            displayName: '開始',
-            loginWith: 'Threat Dragon'
+            displayName: 'Threat Dragon',
+            loginWith: '開始'
         },
         github: {
             displayName: 'GitHubで',
+            loginWith: 'ログイン'
+        },
+        gitlab: {
+            displayName: 'GitLabで',
             loginWith: 'ログイン'
         },
         bitbucket: {
@@ -32,12 +46,25 @@ const jpn = {
         local: {
             displayName: 'ローカルセッション',
             loginWith: 'ログイン'
+        },
+        googleDrive: {
+            displayName: 'Googleドライブ',
+            loginWith: '開く',
+            description: 'GoogleドライブからモデルファイルまたはフォルダーDriveを選択してください',
+            saveThreatModel: 'Googleドライブに脅威モデルを保存',
+            saveDescription: '脅威モデルを保存するGoogleドライブのフォルダを選択してください',
+            fileName: 'ファイル名',
+            fileNamePlaceholder: 'ファイル名を入力してください',
+            selectFolder: 'Googleドライブのフォルダを選択',
+            selectFile: 'Googleドライブのファイルを選択',
+            selectThreatModel: 'Googleドライブから脅威モデルを選択'
         }
     },
     dashboard: {
         welcome: {
             title: 'ようこそ！',
-            description: 'システムの設計をもっとセキュアにしましょう。既存の脅威モデルを開くか、次の選択肢から一つを選んで新しい脅威モデルを作成できます。'
+            description:
+                'システムの設計をもっとセキュアにしましょう。既存の脅威モデルを開くか、次の選択肢から一つを選んで新しい脅威モデルを作成できます。'
         },
         actions: {
             openExisting: '既存の脅威モデルを開く',
@@ -88,7 +115,12 @@ const jpn = {
         refBranch: 'リファレンスブランチ',
         add: 'ブランチを追加する\n',
         cancel: '取り消し',
-        name: 'ブランチ名',
+        name: 'ブランチ名'
+    },
+    folder: {
+        select: '次のものから',
+        from: 'フォルダを選択してください',
+        noneFound: 'このフォルダは空です。ここに新しい脅威モデルを作成できます。'
     },
     threatmodelSelect: {
         select: '次のものから',
@@ -102,12 +134,20 @@ const jpn = {
         contributors: '貢献者',
         contributorsPlaceholder: '貢献した方の名前',
         description: 'システム概要',
-        dragAndDrop: 'ドラッグ・アンド・ドロップで脅威モデルを指定するか、',
-        editing: '編集',
-        jsonPaste: 'JSONファイルの内容をここに貼り付けてください',
+        dragAndDrop: 'ドラッグ・アンド・ドロップで脅威モデルを指定するか、',        jsonPaste: 'JSONファイルの内容をここに貼り付けてください',
         owner: 'オーナー',
         reviewer: '検証者',
         title: 'タイトル',
+        new: {
+            title: '新しい脅威モデルを作成',
+            description: '新しい脅威モデルに関する情報を入力してください'
+        },
+        placeholder: {
+            title: '脅威モデルのタイトル',
+            owner: 'オーナー名またはチーム',
+            description: 'モデリングするシステムの概要を入力してください',
+            reviewer: '検証者名'
+        },
         diagram: {
             diagrams: '図面',
             addNewDiagram: '新しい図面を追加...',
@@ -145,10 +185,13 @@ const jpn = {
         threats: '脅威',
         errors: {
             dropSingleFileOnly: '単一のファイルをドロップしてください。',
-            invalidJson: 'ファイルのJSONフォーマットに対応していません。モデルを確認したうえ、もう一度試してみてください。',
+            invalidJson:
+                'ファイルのJSONフォーマットに対応していません。モデルを確認したうえ、もう一度試してみてください。',
             onlyJsonAllowed: '拡張子.jsonのファイルのみに対応しています。',
             open: '脅威モデルを開く時にエラーが発生しました。開発者コンソールを確認してください。',
-            save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。'
+            save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。',
+            googleDriveSave:
+                'Googleドライブへの保存中にエラーが発生しました。適切な権限があることを確認してください。'
         },
         opened: '脅威モデルを読み込みました。',
         saved: '脅威モデルを書き込みました。',
@@ -174,14 +217,15 @@ const jpn = {
             storesCredentials: '認証情報を保管している',
             storesInventory: '登録簿を保管している'
         },
-        buttons: {
+        controlButtons: {
             delete: '選択を削除',
             redo: '繰り返す',
             shortcuts: 'キーボードショートカット',
             toggleGrid: 'グリッドの表示',
             undo: '戻す',
             zoomIn: '拡大',
-            zoomOut: '縮小'
+            zoomOut: '縮小',
+            save: '保存'
         },
         shortcuts: {
             title: 'キーボードショートカット',
@@ -219,7 +263,7 @@ const jpn = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: '保存'
             }
         },
         stencil: {
@@ -249,11 +293,17 @@ const jpn = {
         discardTitle: '変更を破棄',
         discardMessage: '変更を本当に破棄しますか？',
         edit: '編集',
+        export: 'エクスポート',
         exportAs: '次としてエキスポート',
         exportHtml: 'HTMLとして保存',
         exportPdf: 'PDFとして保存',
         exportTd: 'オリジナル(Threat Dragon)',
         exportOtm: '脅威モデル(OTM)を開く',
+        exportFormats: {
+            png: 'PNG',
+            jpeg: 'JPEG',
+            svg: 'SVG'
+        },
         import: 'インポート',
         ok: 'OK',
         open: '開く',
@@ -268,7 +318,8 @@ const jpn = {
         saveModelAs: '名前を付けてモデルを保存',
         search: '検索',
         next: '次',
-        previous: '前の'
+        previous: '前の',
+        requiredField: '必須フィールド'
     },
     threats: {
         model: {
@@ -278,13 +329,15 @@ const jpn = {
                 integrity: '完全性',
                 availability: '可用性'
             },
-            die: { // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
+            die: {
+                // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
                 header: '--- DIE ---',
                 distributed: '分散化',
                 immutable: '不変',
                 ephemeral: '一時的'
             },
-            linddun: { // No Japanese sources for LINDDUN; using English terms
+            linddun: {
+                // No Japanese sources for LINDDUN; using English terms
                 header: '--- LINDDUN ---',
                 linkability: 'Linkability',
                 identifiability: 'Identifiability',
@@ -294,7 +347,8 @@ const jpn = {
                 unawareness: 'Unawareness',
                 nonCompliance: 'Non-compliance'
             },
-            plot4ai: { // No Japanese sources for PLOT4ai; using English terms
+            plot4ai: {
+                // No Japanese sources for PLOT4ai; using English terms
                 header: '--- PLOT4ai ---',
                 techniqueProcesses: 'Technique & Processes',
                 accessibility: 'Accessibility',
@@ -305,7 +359,8 @@ const jpn = {
                 ethicsHumanRights: 'Ethics & Human Rights',
                 nonCompliance: 'Non-Compliance'
             },
-            stride: { // Source: https://learn.microsoft.com/ja-jp/azure/security/develop/threat-modeling-tool-threats
+            stride: {
+                // Source: https://learn.microsoft.com/ja-jp/azure/security/develop/threat-modeling-tool-threats
                 header: '--- STRIDE ---',
                 spoofing: 'なりすまし',
                 tampering: '改竄',
@@ -362,7 +417,7 @@ const jpn = {
             showMitigatedThreats: '解決済みの脅威を表示',
             showModelDiagrams: 'モデルの図面を表示',
             showEmpty: '空要素を表示',
-            showProperties: 'Show element properties',
+            showProperties: '要素のプロパティを表示',
             showBranding: 'Threat Dragonロゴ'
         },
         title: '脅威レポート',
@@ -382,15 +437,9 @@ const jpn = {
             openUnknown: '未対応 / 優先度不明'
         }
     },
-    upgrade: {
-        modal: {
-            header: '脅威モデルを更新',
-            welcome: 'OWASP Threat Dragonバージョン2へようこそ！',
-            p1: 'バージョン2が使用している表示ライブラリが変わったため、脅威モデルのデータフォーマットに変更がありました。表示には以前と変わりがないが、場合によって図面を修正する必要があります。',
-            p2: 'モデルを閉じると、バージョン2のフォーマットでの表示が映ります。図面を修正する必要があるか確認してください。一旦保存したら再び修正する必要がないので、このメッセージは今後表示されません。'
-        },
-        instructions: '素晴らしい！モデルに進みましょう。',
-        continue: '脅威モデルへ進む'
+    pagination: {
+        previous: '前へ',
+        next: '次へ'
     }
 };
 

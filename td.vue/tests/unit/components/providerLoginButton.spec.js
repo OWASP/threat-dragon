@@ -1,103 +1,172 @@
-import { BButton, BootstrapVue } from 'bootstrap-vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { nextTick } from 'vue';
+import { createWrapper } from '../setup/test-utils.js';
 
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+import { providerNames as _providerNames } from '@/service/provider/providers.js';
+
+// Mock the loginApi module
+jest.mock('@/service/api/loginApi.js', () => ({
+    loginAsync: jest.fn()
+}));
+
+// Mock the provider names to ensure consistent behavior
+jest.mock('@/service/provider/providers.js', () => ({
+    providerNames: {
+        local: 'local',
+        desktop: 'desktop',
+        github: 'github'
+    }
+}));
 
 describe('components/ProviderLoginButton.vue', () => {
+    // Factory functions for reusable test data
     const getProvider = () => ({
         key: 'github',
         displayName: 'GitHub',
         provider: {},
         icon: ['fab', 'github']
     });
-    const getMockStore = () => ({
-        actions: {
-            [AUTH_SET_LOCAL]: () => {},
-            [PROVIDER_SELECTED]: () => {}
-        }
+    
+    const getMockDispatch = () => jest.fn().mockImplementation(async (_action) => {
+        // Return a resolved promise to simulate async behavior
+        return Promise.resolve();
     });
 
+    let wrapper, dispatchMock, provider, routerMock;
+
+    // Vue 3 Migration: Setup function to create the component with different providers
     const mountWithProvider = () => {
-        localVue = createLocalVue();
-        localVue.use(BootstrapVue);
-        localVue.component('font-awesome-icon', FontAwesomeIcon);
-        localVue.use(Vuex);
-        
         routerMock = { push: jest.fn() };
-        mockStore = new Vuex.Store(getMockStore());
-
-        jest.spyOn(mockStore, 'dispatch');
-
-        wrapper = shallowMount(TdProviderLoginButton, {
-            localVue,
-            propsData: {
+        dispatchMock = getMockDispatch();
+        
+        // Mock window.location.href using a simpler approach
+        const originalHref = window.location.href;
+        Object.defineProperty(window, 'location', {
+            writable: true,
+            value: { href: originalHref }
+        });
+        
+        // Vue 3 Migration: Using createWrapper with improved stubs
+        wrapper = createWrapper(TdProviderLoginButton, {
+            props: {
                 provider
+            },
+            shallow: false,
+            stubs: {
+                // Vue 3 Migration: Custom stub for font-awesome-icon
+                'font-awesome-icon': {
+                    template: '<div class="fa-stub" :data-icon="icon.join(\',\')"><slot /></div>',
+                    props: ['icon', 'size', 'color']
+                },
+                // Properly stub BButton to make it render as a real button
+                'BButton': {
+                    template: '<button :id="id" :class="classNames" :variant="variant" @click="$emit(\'click\')"><slot /></button>',
+                    props: ['id', 'variant', 'class'],
+                    computed: {
+                        classNames() {
+                            return ['btn', 'm-1', 'btn-' + (this.variant || 'secondary')];
+                        }
+                    }
+                }
             },
             mocks: {
                 $router: routerMock,
-                $t: key => key
-            },
-            store: mockStore
+                $store: {
+                    dispatch: dispatchMock
+                }
+            }
         });
+
+        return { dispatchMock, routerMock };
     };
 
-    let wrapper, localVue, mockStore, provider, routerMock;
-
-    describe('components', () => {
-        describe('local session', () => {
-            beforeEach(async () => {
-                provider = getProvider();
-                provider.key = 'local';
-                mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
-            });
-
-            it('reads the provider value', () => {
-                expect(wrapper.props().provider).toEqual(provider);
-            });
-    
-            it('uses a bootstrap button', () => {
-                expect(wrapper.findComponent(BButton).exists()).toEqual(true);
-            });
-    
-            it('uses a font awesome icon', () => {
-                expect(wrapper.findComponent(FontAwesomeIcon).exists()).toEqual(true);
-            });
-
-            it('dipatches the provider selected event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
-            });
-
-            it('dispatches the set local event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(AUTH_SET_LOCAL);
-            });
-
-            it('navigates to the dashboard', () => {
-                expect(routerMock.push).toHaveBeenCalledWith('/dashboard');
-            });
+    // Vue 3 Migration: Organize tests by provider type
+    describe('Component structure', () => {
+        beforeEach(() => {
+            provider = getProvider();
+            mountWithProvider();
         });
 
-        describe('other provider', () => {
-            beforeEach(async () => {
-                provider = getProvider();
-                jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: '' });
-                mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
-            });
+        it('renders a button with correct attributes', () => {
+            // Vue 3 Migration: Test component rendering with proper CSS class and attribute testing
+            const button = wrapper.find('button');
+            expect(button.exists()).toBe(true);
+            expect(button.classes()).toContain('m-1');
+            expect(button.attributes('id')).toBe(`${provider.key}-login-btn`);
+        });
 
-            it('dipatches the provider selected event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
-            });
+        it('renders the font awesome icon with correct props', () => {
+            // Vue 3 Migration: Testing custom font-awesome-icon stub
+            const icon = wrapper.find('.fa-stub');
+            expect(icon.exists()).toBe(true);
+            expect(icon.attributes('data-icon')).toBe(provider.icon.join(','));
+        });
 
-            it('calls the login api', () => {
-                expect(loginApi.loginAsync).toHaveBeenCalledWith(provider.key);
-            });
+        it('displays translated provider text', () => {
+            // Vue 3 Migration: Testing the component's i18n text rendering
+            const buttonText = wrapper.text();
+            // Since $t is mocked to return the key, we can check for the keys
+            expect(buttonText).toContain(`providers.${provider.key}.loginWith`);
+            expect(buttonText).toContain(`providers.${provider.key}.displayName`);
         });
     });
 
+    describe('Local provider', () => {
+        beforeEach(async () => {
+            provider = getProvider();
+            provider.key = 'local';
+            mountWithProvider();
+            
+            // Vue 3 Migration: Find and click the button directly
+            await wrapper.find('button').trigger('click');
+            await nextTick();
+        });
+
+        it('dispatches provider selection with correct key', () => {
+            expect(dispatchMock).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
+        });
+
+        it('dispatches AUTH_SET_LOCAL for local provider', () => {
+            expect(dispatchMock).toHaveBeenCalledWith(AUTH_SET_LOCAL);
+        });
+
+        it('navigates to dashboard', () => {
+            expect(routerMock.push).toHaveBeenCalledWith('/dashboard');
+        });
+    });
+
+    describe('External provider (GitHub)', () => {
+        beforeEach(async () => {
+            provider = getProvider();
+            // Mock the loginApi to return a URL
+            loginApi.loginAsync.mockResolvedValue({ data: 'https://example.com/auth' });
+            mountWithProvider();
+            
+            // Vue 3 Migration: Find and click the button directly
+            await wrapper.find('button').trigger('click');
+            await nextTick();
+        });
+
+        it('dispatches provider selection with correct key', () => {
+            expect(dispatchMock).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
+        });
+
+        it('calls loginAsync with provider key', () => {
+            expect(loginApi.loginAsync).toHaveBeenCalledWith(provider.key);
+        });
+
+        it('redirects to the URL returned from login API', () => {
+            // This test now doesn't rely on spying but checks window.location.href directly
+            expect(window.location.href).toBe('https://example.com/auth');
+        });
+    });
+
+    // Vue 3 Migration: Clean up after all tests
+    afterAll(() => {
+        // Restore window.location
+        jest.restoreAllMocks();
+    });
 });

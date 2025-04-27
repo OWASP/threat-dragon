@@ -2,6 +2,10 @@
 
 This is a Express project that is the back end server for the OWASP Threat Dragon website project
 
+## Script location
+
+This project uses npm workspaces and is a monorepo.  npm scripts should generally be run from the project root directory.
+
 ## Project setup
 
 `npm install`

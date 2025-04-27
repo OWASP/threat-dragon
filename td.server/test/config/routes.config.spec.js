@@ -9,7 +9,7 @@ import homeController from '../../src/controllers/homecontroller.js';
 import { getMockApp } from '../mocks/express.mocks.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
-import configcontroller from "../../src/controllers/configcontroller";
+import configcontroller from '../../src/controllers/configcontroller.js';
 import googleProviderThreatmodelController from '../../src/controllers/googleProviderThreatmodelController.js';
 
 describe('config/routes.config.js routes', () => {
@@ -39,10 +39,7 @@ describe('config/routes.config.js routes', () => {
 
     describe('Main application entry point and health check', () => {
         it('routes GET /', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/',
-                homeController.index
-            );
+            expect(mockRouter.get).to.have.been.calledWith('/', homeController.index);
         });
 
         it('routes GET /healthz', () => {
@@ -56,33 +53,24 @@ describe('config/routes.config.js routes', () => {
 
     describe('login/logout', () => {
         it('routes GET /api/login/:provider', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/api/login/:provider',
-                auth.login
-            );
+            expect(mockRouter.get).to.have.been.calledWith('/api/login/:provider', auth.login);
         });
 
         it('routes POST /api/logout', () => {
-            expect(mockRouter.post).to.have.been.calledWith(
-                '/api/logout',
-                auth.logout
-            );
+            expect(mockRouter.post).to.have.been.calledWith('/api/logout', auth.logout);
         });
     });
 
     describe('github sign in', () => {
-        it('routes GET /api/oauth/provider', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/api/oauth/:provider',
+        it('routes POST /api/oauth/provider/completeLogin', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/oauth/:provider/completeLogin',
                 auth.completeLogin
             );
         });
 
         it('routes GET /api/oauth/return', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
-                '/api/oauth/return',
-                auth.oauthReturn
-            );
+            expect(mockRouter.get).to.have.been.calledWith('/api/oauth/return', auth.oauthReturn);
         });
     });
 
@@ -152,29 +140,28 @@ describe('config/routes.config.js routes', () => {
                 googleProviderThreatmodelController.folders
             );
         });
-    
+
         it('routes POST /api/googleproviderthreatmodel/:folder/create', () => {
             expect(mockRouter.post).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:folder/create',
                 googleProviderThreatmodelController.create
             );
         });
-    
+
         it('routes PUT /api/googleproviderthreatmodel/:file/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:file/update',
                 googleProviderThreatmodelController.update
             );
         });
-    
-        it('routes GET /api/googleproviderthreatmodel/:file/data', () => {
-            expect(mockRouter.get).to.have.been.calledWith(
+
+        it('routes POST /api/googleproviderthreatmodel/:file/data', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:file/data',
                 googleProviderThreatmodelController.model
             );
         });
     });
-    
 
     it('adds bearer token middleware', () => {
         expect(mockRouter.use).to.have.been.calledWith(bearer.middleware);

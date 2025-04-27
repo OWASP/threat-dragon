@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -31,10 +30,19 @@ import {
     faPrint,
     faProjectDiagram,
     faDiagramProject,
-    faLock
+    faLock,
+    faFileContract,
+    faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import {faBitbucket, faGithub, faGitlab, faVuejs, faGoogle, faGoogleDrive} from '@fortawesome/free-brands-svg-icons';
+import {
+    faBitbucket,
+    faGithub,
+    faGitlab,
+    faVuejs,
+    faGoogle,
+    faGoogleDrive
+} from '@fortawesome/free-brands-svg-icons';
 // Add icons to the library for use
 library.add(
     faSignOutAlt,
@@ -70,7 +78,14 @@ library.add(
     faDiagramProject,
     faGoogle,
     faGoogleDrive,
-    faLock
+    faLock,
+    faFileContract,
+    faShieldAlt
 );
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+export default {
+    install(app) {
+        // Register the FontAwesomeIcon component globally
+        app.component('FontAwesomeIcon', FontAwesomeIcon);
+    }
+};

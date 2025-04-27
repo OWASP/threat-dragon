@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import {
     FOLDER_CLEAR,
     FOLDER_FETCH,
@@ -6,9 +5,13 @@ import {
     FOLDER_NAVIGATE_BACK
 } from '../actions/folder.js';
 import googleDriveApi from '../../service/api/googleDriveApi.js';
+import logger from '../../utils/logger.js';
+
+// Create a logger instance for this module
+const log = logger.getLogger('store:folder');
 
 export const clearState = (state) => {
-    state.all.length = 0;
+    state.all = [];
     state.selected = 'root';
     state.page = 1;
     state.pageTokens = [''];
@@ -16,7 +19,6 @@ export const clearState = (state) => {
     state.pagePrev = false;
     state.parentId = '';
 };
-
 const state = {
     all: [],
     selected: 'root',
@@ -28,23 +30,31 @@ const state = {
 };
 
 const actions = {
-    [FOLDER_CLEAR]: ({ commit }) => commit(FOLDER_CLEAR),
-    [FOLDER_FETCH]: async ({ commit }, { folderId = '', page = 1 } = {}) => {
+    async [FOLDER_FETCH]({ commit, state }, { folderId = '', page = 1 } = {}) {
         if (!folderId) commit(FOLDER_CLEAR);
-        const pageToken = state.pageTokens[page - 1] || '';
-        const resp = await googleDriveApi.folderAsync(folderId, pageToken);
+        try {
+            const pageToken = state.pageTokens[page - 1] || '';
+            // Using the updated googleDriveApi that doesn't require an access token parameter
+            const resp = await googleDriveApi.folderAsync(folderId, pageToken);
+            if (!resp.data || !Array.isArray(resp.data.folders)) {
+                log.error('Invalid folder data:', { data: resp.data });
+                return;
+            }
 
-        if (resp.data.pagination.nextPageToken && !state.pageTokens[page]) {
-            state.pageTokens[page] = resp.data.pagination.nextPageToken;
+            if (resp.data.pagination.nextPageToken && !state.pageTokens[page]) {
+                state.pageTokens[page] = resp.data.pagination.nextPageToken;
+            }
+
+            commit(FOLDER_FETCH, {
+                folders: resp.data.folders,
+                page,
+                pageNext: !!resp.data.pagination.nextPageToken,
+                pagePrev: page > 1,
+                parentId: resp.data.parentId
+            });
+        } catch (error) {
+            log.error('Error fetching folders:', { error });
         }
-
-        commit(FOLDER_FETCH, {
-            'folders': resp.data.folders,
-            'page': page,
-            'pageNext': !!resp.data.pagination.nextPageToken,
-            'pagePrev': page > 1,
-            'parentId': resp.data.parentId
-        });
     },
     [FOLDER_SELECTED]: ({ commit, dispatch }, folder) => {
         commit(FOLDER_SELECTED, folder.id);
@@ -60,24 +70,21 @@ const actions = {
 
 const mutations = {
     [FOLDER_CLEAR]: (state) => clearState(state),
-    [FOLDER_FETCH]: (state, { folders, page, pageNext, pagePrev, parentId, }) => {
-        state.all.length = 0;
-        folders.forEach((folder, idx) => Vue.set(state.all, idx, folder));
+    [FOLDER_FETCH]: (state, { folders, page, pageNext, pagePrev, parentId }) => {
+        state.all = [...folders];
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;
         state.parentId = parentId;
     },
-    [FOLDER_SELECTED]: (state, folder) => {
-        state.selected = folder;
+    [FOLDER_SELECTED]: (state, folderId) => {
+        state.selected = folderId;
     }
 };
 
-const getters = {};
-
 export default {
+    namespaced: true,
     state,
     actions,
-    mutations,
-    getters
+    mutations
 };

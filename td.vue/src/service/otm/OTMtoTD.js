@@ -1,8 +1,13 @@
 const buildVersion = require('../../../package.json').version;
+import logger from '../../utils/logger.js';
+
+// Create a logger instance for this module
+const log = logger.getLogger('service:otm:OTMtoTD');
 
 const convertSummary = (jsonModel) => {
-    const noteText = 'Note that support for Open Threat Model is experimental and subject to large scale changes.\n';
-    let summary = new Object();
+    const noteText =
+        'Note that support for Open Threat Model is experimental and subject to large scale changes.\n';
+    const summary = new Object();
 
     if (jsonModel.project) {
         summary.title = jsonModel.project.name;
@@ -10,7 +15,7 @@ const convertSummary = (jsonModel) => {
         summary.ownerContact = jsonModel.project.ownerContact;
         summary.description = noteText + jsonModel.project.description;
         summary.id = jsonModel.project.id;
-    
+
         // both attributes and tags are not used yet by TD, but need to be preserved if present
         if (jsonModel.project.attributes) {
             summary.attributes = JSON.parse(JSON.stringify(jsonModel.project.attributes));
@@ -24,10 +29,10 @@ const convertSummary = (jsonModel) => {
 };
 
 const getDiagramType = (representation) => {
-    let diagram = new Object();
+    const diagram = new Object();
 
     if (representation.attributes && representation.attributes.diagramType) {
-        switch(representation.attributes.diagramType) {
+        switch (representation.attributes.diagramType) {
         case 'CIA':
             diagram.diagramType = 'CIA';
             diagram.thumbnail = './public/content/images/thumbnail.cia.jpg';
@@ -67,7 +72,7 @@ const getDiagramType = (representation) => {
 };
 
 const convertDetail = (jsonModel) => {
-    let detail = new Object();
+    const detail = new Object();
     detail.contributors = [];
     detail.diagrams = [];
     detail.diagramTop = 0;
@@ -77,10 +82,10 @@ const convertDetail = (jsonModel) => {
 
     if (jsonModel.representations) {
         let diagramID = 0;
-        jsonModel.representations.forEach(function(representation) {
+        jsonModel.representations.forEach(function (representation) {
             if (representation.type === 'diagram') {
                 // threat dragon only knows about diagrams
-                let diagram = getDiagramType(representation);
+                const diagram = getDiagramType(representation);
                 diagram.cells = [];
                 diagram.version = buildVersion;
                 diagram.id = diagramID++;
@@ -102,14 +107,14 @@ const convertDetail = (jsonModel) => {
 };
 
 export const convert = function (jsonModel) {
-    let dragonModel = new Object();
+    const dragonModel = new Object();
 
     dragonModel.version = buildVersion;
     dragonModel.otmVersion = jsonModel.otmVersion;
     dragonModel.summary = convertSummary(jsonModel);
     dragonModel.detail = convertDetail(jsonModel);
 
-    console.log(dragonModel);
+    log.debug('Converted OTM model to TD format:', { dragonModel });
     /*
     jsonModel.components.forEach(function(comp) {
         var cell = new Object();

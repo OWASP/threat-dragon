@@ -2,7 +2,7 @@ import { providerTypes } from './providerTypes.js';
 
 const providerType = providerTypes.git;
 
-const getDashboardActions = () => ([
+const getDashboardActions = () => [
     {
         to: `/${providerType}/gitlab/repository`,
         key: 'openExisting',
@@ -19,7 +19,7 @@ const getDashboardActions = () => ([
         key: 'readDemo',
         icon: 'cloud-download-alt'
     }
-]);
+];
 
 export default {
     getDashboardActions

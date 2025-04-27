@@ -7,7 +7,8 @@ describe('editing threat models', () => {
         });
 
         it('can edit the title', () => {
-            cy.get('#title').clear().type('new name');
+            cy.get('#title').clear();
+            cy.get('#title').type('new name');
             cy.contains('Editing: new name');
         });
 
@@ -69,7 +70,8 @@ describe('editing threat models', () => {
 
             describe('after editing', () => {
                 beforeEach(() => {
-                    cy.get('#title').clear().type(newName);
+                    cy.get('#title').clear();
+                    cy.get('#title').type(newName);
                     cy.contains(`Editing: ${newName}`);
                     cy.get('#td-close-btn').click();
                 });
@@ -96,7 +98,8 @@ describe('editing threat models', () => {
 
             describe('with changed data', () => {
                 beforeEach(() => {
-                    cy.get('#title').clear().type(newName);
+                    cy.get('#title').clear();
+                    cy.get('#title').type(newName);
                     cy.contains(`Editing: ${newName}`);
                     cy.get('#td-reload-btn').click();
                 });
@@ -116,7 +119,8 @@ describe('editing threat models', () => {
         describe.skip('save', () => {
             // TODO: Write better tests after implementation details of saving locally are determined
             it('returns to the threat model view', () => {
-                cy.get('#title').clear().type(newName);
+                cy.get('#title').clear();
+                cy.get('#title').type(newName);
                 cy.contains(`Editing: ${newName}`);
                 cy.get('#td-save-btn').click();
                 cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model');

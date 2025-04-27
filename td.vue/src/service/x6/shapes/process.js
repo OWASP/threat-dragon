@@ -30,7 +30,7 @@ export const ProcessShape = Shape.Circle.define({
             refHeight: '110%'
         },
         body: {
-            fill: 'transparent'
+            fill: 'transparent' /* Restore JS fill */
         }
     },
     ports: { ...ports }
