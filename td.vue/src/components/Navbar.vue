@@ -76,7 +76,7 @@
 <script>
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import { LOGOUT, AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { LOGOUT, AUTH_SET_JWT, AUTH_CLEAR } from '@/store/actions/auth.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import { useI18n } from '@/i18n';
 import TdLocaleSelect from './LocaleSelect.vue';
@@ -215,31 +215,72 @@ export default {
             // This works in both production and tests
             evt.preventDefault();
 
-            // Dispatch logout action and wait for it to complete
-            await store.dispatch(LOGOUT);
+            // Check if we're in Electron mode
+            const isElectronApp = typeof window !== 'undefined' &&
+                (window.electronAPI?.isElectron || window.isElectronMode);
 
-            log.debug('Logout action completed, now navigating to home page');
+            log.debug('Logout initiated', { isElectronApp });
 
-            // Always navigate to home page after logout
-            // Try multiple approaches to ensure navigation works
             try {
+                // Dispatch logout action and wait for it to complete
+                await store.dispatch(LOGOUT);
+                log.debug('Logout action completed');
+
+                // Special handling for Electron app
+                if (isElectronApp) {
+                    log.debug('Electron app detected, using direct approach for Electron');
+                    
+                    try {
+                        // For Electron, we'll use a more direct approach
+                        // First, clear the auth state
+                        store.commit(AUTH_CLEAR);
+                        
+                        // Then force a hard reload of the application
+                        log.debug('Forcing hard reload of the application');
+                        
+                        // Use setTimeout to ensure the state is cleared before reload
+                        setTimeout(() => {
+                            // Try to use the Electron API if available
+                            if (window.electronAPI) {
+                                log.debug('Using electronAPI for navigation');
+                                // Use IPC to tell the main process to reload the window
+                                window.electronAPI.send('reload-window');
+                            } else {
+                                // Fallback to location.reload with forceReload=true
+                                log.debug('Using location.reload(true) for hard reload');
+                                window.location.reload(true);
+                            }
+                        }, 100);
+                    } catch (error) {
+                        log.error('Error during Electron logout', { error });
+                        // Last resort fallback
+                        window.location.reload(true);
+                    }
+                    return;
+                }
+
+                // For web app, try multiple approaches to ensure navigation works
+                log.debug('Navigating to home page after logout');
+                
                 // First try using the Vue Router instance from the component
                 if (getCurrentInstance() && getCurrentInstance().proxy.$router) {
-                    log.debug('Navigating to home page after logout (component router)');
-                    getCurrentInstance().proxy.$router.push('/').catch((error) => {
-                        if (error.name !== 'NavigationDuplicated') {
-                            log.warn('Navigation error:', { error });
+                    log.debug('Using component router for navigation');
+                    try {
+                        await getCurrentInstance().proxy.$router.push('/');
+                    } catch (routerError) {
+                        if (routerError.name !== 'NavigationDuplicated') {
+                            log.warn('Navigation error:', { error: routerError });
                             // Try alternative navigation method
                             window.location.href = '/';
                         }
-                    });
+                    }
                 } else {
                     // Fallback to direct location change if router is not available
-                    log.debug('Navigating to home page after logout (location change)');
+                    log.debug('Router not available, using location.href');
                     window.location.href = '/';
                 }
             } catch (error) {
-                log.error('Error during logout navigation:', { error });
+                log.error('Error during logout process:', { error });
                 // Final fallback
                 window.location.href = '/';
             }

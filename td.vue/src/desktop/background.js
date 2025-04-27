@@ -192,10 +192,37 @@ function createWindow() {
                 nodeIntegration: false,
                 contextIsolation: true,
                 preload: path.resolve(__dirname, 'simple-preload.js'),
-                webSecurity: false, // For local development
-                allowRunningInsecureContent: true, // Only for development
-                devTools: true // Always enable DevTools
+                webSecurity: true, // Enable web security
+                allowRunningInsecureContent: false, // Disable insecure content
+                devTools: true, // Always enable DevTools
+                // Set a secure Content Security Policy
+                additionalArguments: [
+                    `--js-flags=--max-old-space-size=4096`,
+                    `--disable-site-isolation-trials`,
+                    `--disable-features=OutOfBlinkCors`,
+                    `--disable-web-security=false`
+                ]
             }
+        });
+        
+        // Set Content Security Policy
+        mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+            callback({
+                responseHeaders: {
+                    ...details.responseHeaders,
+                    'Content-Security-Policy': [
+                        "default-src 'self'; " +
+                        "script-src 'self' 'unsafe-eval' 'unsafe-inline' 'unsafe-hashes'; " +
+                        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+                        "img-src 'self' data:; " +
+                        "connect-src 'self'; " +
+                        "font-src 'self' https://fonts.gstatic.com; " +
+                        "object-src 'none'; " +
+                        "media-src 'self'; " +
+                        "child-src 'self';"
+                    ]
+                }
+            });
         });
 
         electronLog.info('Browser window created, setting up event handlers');
@@ -401,6 +428,35 @@ function setupIPC() {
     // Handle IPC events from renderer to main
     ipcMain.on('app-close', () => {
         app.quit();
+    });
+    
+    // Handle reload-window request from renderer
+    ipcMain.on('reload-window', () => {
+        electronLog.info('Reload window request received from renderer');
+        if (mainWindow) {
+            try {
+                // First clear any cached data
+                mainWindow.webContents.session.clearCache();
+                
+                // Then reload the window
+                electronLog.info('Reloading main window');
+                const indexPath = path.join(__dirname, 'index.html');
+                const startUrl = url.format({
+                    pathname: indexPath,
+                    protocol: 'file:',
+                    slashes: true
+                });
+                
+                // Load the start URL
+                mainWindow.loadURL(startUrl);
+            } catch (error) {
+                electronLog.error('Error reloading window:', error);
+                // Fallback to simple reload
+                mainWindow.reload();
+            }
+        } else {
+            electronLog.warn('Reload window request received but no window exists');
+        }
     });
 
     // Handle threat model save operations

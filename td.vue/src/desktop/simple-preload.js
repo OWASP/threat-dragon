@@ -1,17 +1,67 @@
 // preload.js
 const { contextBridge, ipcRenderer } = require('electron');
 
-// Try to load passive events support for use in renderer process
-try {
-    const passiveEventsSupport = require('passive-events-support/dist/main.js');
-    if (passiveEventsSupport && typeof passiveEventsSupport.configure === 'function') {
-        passiveEventsSupport.configure({
-            strict: false,
-            capture: false
-        });
+// Instead of directly requiring the passive-events-support module,
+// we'll implement a simplified version of the functionality
+// This avoids webpack parsing issues with the module
+const setupPassiveSupport = () => {
+    try {
+        // Check if passive event listeners are supported
+        let passiveSupported = false;
+        try {
+            const options = {
+                get passive() {
+                    passiveSupported = true;
+                    return true;
+                }
+            };
+            
+            // Test passive listener support
+            window.addEventListener('test', null, options);
+            window.removeEventListener('test', null, options);
+        } catch (err) {
+            passiveSupported = false;
+        }
+        
+        // List of events that should use passive listeners when possible
+        const passiveEvents = [
+            'touchstart', 'touchmove', 'touchenter', 'touchend', 'touchleave',
+            'wheel', 'mousewheel'
+        ];
+        
+        // Only proceed if we need to patch and we're in a browser environment
+        if (passiveSupported && typeof window !== 'undefined' && window.EventTarget) {
+            // Store the original addEventListener
+            const originalAddEventListener = EventTarget.prototype.addEventListener;
+            
+            // Override addEventListener
+            EventTarget.prototype.addEventListener = function(type, listener, options) {
+                // If this is a passive-eligible event and no explicit passive option was provided
+                if (passiveEvents.includes(type) && (!options || options.passive === undefined)) {
+                    // Check if the listener uses preventDefault
+                    const listenerStr = listener.toString();
+                    const usesPreventDefault = listenerStr.includes('preventDefault');
+                    
+                    // Set passive option based on preventDefault usage
+                    const newOptions = typeof options === 'object' ? { ...options } : {};
+                    newOptions.passive = !usesPreventDefault;
+                    
+                    // Call original with new options
+                    originalAddEventListener.call(this, type, listener, newOptions);
+                } else {
+                    // Call original with unchanged arguments
+                    originalAddEventListener.call(this, type, listener, options);
+                }
+            };
+        }
+    } catch (err) {
+        console.warn('Failed to setup passive event support:', err.message);
     }
-} catch (err) {
-    console.warn('Failed to load passive-events-support:', err.message);
+};
+
+// Setup passive event support when the window is available
+if (typeof window !== 'undefined') {
+    setupPassiveSupport();
 }
 
 // Expose protected methods that allow the renderer process to use
@@ -29,6 +79,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     modelSave: (modelData, fileName) => ipcRenderer.send('model-save', modelData, fileName),
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
     quitAndInstall: () => ipcRenderer.send('quit-and-install'),
+    // Add reload-window message for logout functionality
+    send: (channel, ...args) => {
+        // Only allow specific channels for security
+        const allowedChannels = ['reload-window'];
+        if (allowedChannels.includes(channel)) {
+            ipcRenderer.send(channel, ...args);
+        }
+    },
 
     // Main to renderer process (receiving)
     onCloseAppRequest: (callback) => ipcRenderer.on('close-app-request', callback),

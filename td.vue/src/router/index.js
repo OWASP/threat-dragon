@@ -80,21 +80,35 @@ router.beforeEach((to, from, next) => {
 
     // Check if the route requires authentication
     if (to.matched.some(record => record.meta.requiresAuth)) {
+        // Check if we're in Electron mode
+        const isElectronApp = typeof window !== 'undefined' &&
+            (window.electronAPI?.isElectron || window.isElectronMode);
+        
         // Get the Vuex store
         const store = window._vueApp?.$store;
         
+        // In Electron mode, we don't need to enforce authentication the same way
+        // as the web application, so we'll allow navigation even if store is not available
         if (!store) {
-            log.error('Store not available for authentication check');
-            next('/');
-            return;
+            if (isElectronApp) {
+                log.info('Store not available for authentication check in Electron mode, allowing navigation');
+                next();
+                return;
+            } else {
+                log.error('Store not available for authentication check');
+                next('/');
+                return;
+            }
         }
         
         // Check if the user is authenticated
         const isAuthenticated = store.state.auth.jwt ||
-                               (store.state.auth.user && store.state.auth.user.username === 'local-user');
+                               (store.state.auth.user && store.state.auth.user.username === 'local-user') ||
+                               isElectronApp; // In Electron, consider the user always authenticated
         
         log.debug('Authentication check for protected route', {
             route: to.path,
+            isElectronApp,
             isAuthenticated: Boolean(isAuthenticated),
             hasJwt: Boolean(store.state.auth.jwt),
             hasUser: Boolean(store.state.auth.user),
