@@ -259,25 +259,25 @@ export default {
                     return;
                 }
 
-                // For web app, try multiple approaches to ensure navigation works
+                // For web app, ensure navigation to home page after logout
                 log.debug('Navigating to home page after logout');
                 
                 // First try using the Vue Router instance from the component
                 if (getCurrentInstance() && getCurrentInstance().proxy.$router) {
                     log.debug('Using component router for navigation');
                     try {
-                        await getCurrentInstance().proxy.$router.push('/');
+                        // Force navigation to home page with replace to avoid history issues
+                        await getCurrentInstance().proxy.$router.replace({ path: '/' });
+                        log.debug('Navigation to home page successful');
                     } catch (routerError) {
-                        if (routerError.name !== 'NavigationDuplicated') {
-                            log.warn('Navigation error:', { error: routerError });
-                            // Try alternative navigation method
-                            window.location.href = '/';
-                        }
+                        log.warn('Navigation error:', { error: routerError });
+                        // Force a hard reload to the home page
+                        window.location.replace('/');
                     }
                 } else {
                     // Fallback to direct location change if router is not available
-                    log.debug('Router not available, using location.href');
-                    window.location.href = '/';
+                    log.debug('Router not available, using location.replace');
+                    window.location.replace('/');
                 }
             } catch (error) {
                 log.error('Error during logout process:', { error });

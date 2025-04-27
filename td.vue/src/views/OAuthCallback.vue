@@ -200,7 +200,15 @@ export default {
 
                     // Redirect to dashboard
                     log('Redirecting to dashboard');
-                    router.push({ name: 'MainDashboard' });
+                    // First try using the router
+                    try {
+                        await router.push({ name: 'MainDashboard' });
+                        log('Navigation to dashboard successful');
+                    } catch (routerError) {
+                        log(`Router navigation error: ${routerError.message}`);
+                        // Fallback to direct URL navigation
+                        window.location.href = '/dashboard';
+                    }
 
                     // Small delay for visual feedback
                     setTimeout(() => {}, 1000);
