@@ -200,14 +200,22 @@ export default {
 
                     // Redirect to dashboard
                     log('Redirecting to dashboard');
+                    
+                    // Clear the redirect flag if it was set
+                    const shouldRedirect = window._redirectToDashboardAfterAuth;
+                    if (shouldRedirect) {
+                        window._redirectToDashboardAfterAuth = false;
+                    }
+                    
                     // First try using the router
                     try {
-                        await router.push({ name: 'MainDashboard' });
+                        // Use replace instead of push to avoid history issues
+                        await router.replace({ path: '/dashboard' });
                         log('Navigation to dashboard successful');
                     } catch (routerError) {
                         log(`Router navigation error: ${routerError.message}`);
-                        // Fallback to direct URL navigation
-                        window.location.href = '/dashboard';
+                        // Fallback to direct URL navigation with replace
+                        window.location.replace('/dashboard');
                     }
 
                     // Small delay for visual feedback

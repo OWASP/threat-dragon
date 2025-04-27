@@ -122,6 +122,13 @@ router.beforeEach((to, from, next) => {
             return;
         }
     }
+    
+    // Special handling for OAuth callback - redirect to dashboard after successful login
+    if (to.name === 'OAuthCallback' && from.path === '/') {
+        log.info('OAuth callback detected, will redirect to dashboard after processing');
+        // Continue with the callback, but set a flag to redirect after processing
+        window._redirectToDashboardAfterAuth = true;
+    }
 
     // If this is a demo selection page, preserve provider state
     if (to.name === 'DemoSelect') {
