@@ -27,7 +27,8 @@ const routes = [
         path: '/dashboard',
         name: 'MainDashboard',
         component: () =>
-            import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue')
+            import(/* webpackChunkName: "main-dashboard" */ '../views/MainDashboard.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/tos',
@@ -76,6 +77,37 @@ router.beforeEach((to, from, next) => {
         name: to.name,
         path: to.path
     });
+
+    // Check if the route requires authentication
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // Get the Vuex store
+        const store = window._vueApp?.$store;
+        
+        if (!store) {
+            log.error('Store not available for authentication check');
+            next('/');
+            return;
+        }
+        
+        // Check if the user is authenticated
+        const isAuthenticated = store.state.auth.jwt ||
+                               (store.state.auth.user && store.state.auth.user.username === 'local-user');
+        
+        log.debug('Authentication check for protected route', {
+            route: to.path,
+            isAuthenticated: Boolean(isAuthenticated),
+            hasJwt: Boolean(store.state.auth.jwt),
+            hasUser: Boolean(store.state.auth.user),
+            username: store.state.auth.user?.username || 'none'
+        });
+        
+        if (!isAuthenticated) {
+            // If not authenticated, redirect to home page
+            log.warn('Unauthenticated access attempt to protected route', { route: to.path });
+            next('/');
+            return;
+        }
+    }
 
     // If this is a demo selection page, preserve provider state
     if (to.name === 'DemoSelect') {

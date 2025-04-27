@@ -8,14 +8,14 @@ export const googleRoutes = [
         name: `${providerType}Folder`,
         component: () =>
             import(/* webpackChunkName: "folder-access" */ '../views/google/DriveAccess.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/new',
         name: `${providerType}New`,
         component: () =>
             import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/save',
@@ -31,27 +31,27 @@ export const googleRoutes = [
                 threatModel 
             };
         },
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/:threatmodel',
         name: `${providerType}ThreatModel`,
         component: () => import(/* webpackChunkName: "threatmodel" */ '../views/ThreatModel.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/new',
         name: `${providerType}NewThreatModel`,
         component: () =>
             import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/:threatmodel/create',
         name: `${providerType}ThreatModelCreate`,
         component: () =>
             import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/:threatmodel/edit',
@@ -59,18 +59,18 @@ export const googleRoutes = [
         component: () =>
             import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue'),
         props: true,
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/:threatmodel/edit/:diagram',
         name: `${providerType}DiagramEdit`,
         component: () => import(/* webpackChunkName: "diagram-edit" */ '../views/DiagramEdit.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     },
     {
         path: '/drive/:folder/:threatmodel/report',
         name: `${providerType}Report`,
         component: () => import(/* webpackChunkName: "report-model" */ '../views/ReportModel.vue'),
-        meta: { provider: 'google' }
+        meta: { provider: 'google', requiresAuth: true }
     }
 ];
