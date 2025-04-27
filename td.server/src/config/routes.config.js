@@ -1,9 +1,12 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
-import configController from "../controllers/configcontroller";
+import configController from '../controllers/configcontroller.js';
+import loggerHelper from '../helpers/logger.helper.js';
 import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
+import googleTokenController from '../controllers/googleTokenController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
@@ -40,24 +43,71 @@ const routes = (router) => {
     router.get('/api/threatmodel/repos', threatmodelController.repos);
     router.get('/api/threatmodel/:organisation/:repo/branches', threatmodelController.branches);
     router.get('/api/threatmodel/:organisation/:repo/:branch/models', threatmodelController.models);
-    router.get('/api/threatmodel/:organisation/:repo/:branch/:model/data', threatmodelController.model);
+    router.get(
+        '/api/threatmodel/:organisation/:repo/:branch/:model/data',
+        threatmodelController.model
+    );
 
-    router.post('/api/threatmodel/:organisation/:repo/:branch/createBranch', threatmodelController.createBranch);
+    router.post(
+        '/api/threatmodel/:organisation/:repo/:branch/createBranch',
+        threatmodelController.createBranch
+    );
 
     // removed because of security denial of service concerns (denial of models)
     //router.delete('/api/threatmodel/:organisation/:repo/:branch/:model', threatmodelController.deleteModel);
 
-    router.post('/api/threatmodel/:organisation/:repo/:branch/:model/create', threatmodelController.create);
-    router.put('/api/threatmodel/:organisation/:repo/:branch/:model/update', threatmodelController.update);
+    router.post(
+        '/api/threatmodel/:organisation/:repo/:branch/:model/create',
+        threatmodelController.create
+    );
+    router.put(
+        '/api/threatmodel/:organisation/:repo/:branch/:model/update',
+        threatmodelController.update
+    );
 
     // Google Drive routes
-    router.get('/api/googleproviderthreatmodel/folders', googleProviderThreatmodelController.folders);
-    router.post('/api/googleproviderthreatmodel/:folder/create', googleProviderThreatmodelController.create);
-    router.put('/api/googleproviderthreatmodel/:file/update', googleProviderThreatmodelController.update);
-    router.get('/api/googleproviderthreatmodel/:file/data', googleProviderThreatmodelController.model);
+    router.get(
+        '/api/googleproviderthreatmodel/folders',
+        googleProviderThreatmodelController.folders
+    );
+    router.post(
+        '/api/googleproviderthreatmodel/:folder/create',
+        googleProviderThreatmodelController.create
+    );
+    router.put(
+        '/api/googleproviderthreatmodel/:file/update',
+        googleProviderThreatmodelController.update
+    );
+    router.post(
+        '/api/googleproviderthreatmodel/:file/data',
+        googleProviderThreatmodelController.model
+    );
 };
 
 const config = (app) => {
+    // Create a completely unique path for Google token access
+    // This custom path is unlikely to conflict with any other routes
+    const tokenLimiter = rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 20, // limit each IP to 20 requests per windowMs
+        message: 'Too many token requests, please try again later',
+        trustProxy: false // Disable the trustProxy validation warning
+    });
+
+    // Define a single consistent route for Google token access
+    app.get(
+        '/api/google-token',
+        bearer.middleware,
+        tokenLimiter,
+        googleTokenController.getGoogleToken
+    );
+
+    // Log route for debugging with logger
+    const logger = loggerHelper.get('config/routes.config.js');
+    logger.info('Registered Google token route:');
+    logger.info('- /api/google-token');
+
+    // Then configure the normal router
     const router = express.Router();
     unauthRoutes(router);
 

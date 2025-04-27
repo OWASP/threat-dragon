@@ -2,7 +2,7 @@ import { providerTypes } from './providerTypes.js';
 
 const providerType = providerTypes.desktop;
 
-const getDashboardActions = () => ([
+const getDashboardActions = () => [
     {
         to: `/${providerType}/threatmodel/import`,
         key: 'openExisting',
@@ -18,7 +18,7 @@ const getDashboardActions = () => ([
         key: 'readDemo',
         icon: 'cloud-download-alt'
     }
-]);
+];
 
 export default {
     getDashboardActions

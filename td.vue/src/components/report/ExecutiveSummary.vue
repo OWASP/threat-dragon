@@ -3,19 +3,29 @@
         <b-row>
             <b-col>
                 <b-card :header="$t('report.executiveSummary')">
-                    <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
-                    <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
+                    <h3 class="td-description-title">
+                        {{ $t('threatmodel.description') }}
+                    </h3>
+                    <p class="td-summary">
+                        {{ summary || $t('report.notProvided') }}
+                    </p>
 
-                    <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
+                    <h3 class="td-report-summary">
+                        {{ $t('report.summary') }}
+                    </h3>
                     <BTableSimple striped responsive>
                         <BThead>
                             <BTr>
-                                <BTh v-for="(value, key) in tableRows[0]" :key="key">{{ key }}</BTh>
+                                <BTh v-for="(value, key) in tableRows[0]" :key="key">
+                                    {{ key }}
+                                </BTh>
                             </BTr>
                         </BThead>
                         <BTbody>
                             <BTr v-for="(row, index) in tableRows" :key="index">
-                                <BTd v-for="(value, key) in row" :key="key">{{ value }}</BTd>
+                                <BTd v-for="(value, key) in row" :key="key">
+                                    {{ value }}
+                                </BTd>
                             </BTr>
                         </BTbody>
                     </BTableSimple>
@@ -25,19 +35,14 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.td-summary {
-    white-space: pre-wrap;
-}
-</style>
-
 <script>
 export default {
     name: 'TdExecutiveSummary',
     props: {
         summary: {
             type: String,
-            required: false
+            required: false,
+            default: ''
         },
         threats: {
             type: Array,
@@ -62,33 +67,47 @@ export default {
             return this.threats.length;
         },
         mitigated: function () {
-            return this.threats.filter(threat => threat.status.toLowerCase() === 'mitigated').length;
+            return this.threats.filter((threat) => threat.status.toLowerCase() === 'mitigated')
+                .length;
         },
         notMitigated: function () {
-            return this.threats.filter(threat => threat.status.toLowerCase() !== 'mitigated').length;
+            return this.threats.filter((threat) => threat.status.toLowerCase() !== 'mitigated')
+                .length;
         },
         openCritical: function () {
-            return this.getOpenThreats().filter(threat => threat.severity.toLowerCase() === 'critical').length;
+            return this.getOpenThreats().filter(
+                (threat) => threat.severity.toLowerCase() === 'critical'
+            ).length;
         },
         openHigh: function () {
-            return this.getOpenThreats().filter(threat => threat.severity.toLowerCase() === 'high').length;
+            return this.getOpenThreats().filter(
+                (threat) => threat.severity.toLowerCase() === 'high'
+            ).length;
         },
         openMedium: function () {
-            return this.getOpenThreats().filter(threat => threat.severity.toLowerCase() === 'medium').length;
+            return this.getOpenThreats().filter(
+                (threat) => threat.severity.toLowerCase() === 'medium'
+            ).length;
         },
         openLow: function () {
-            return this.getOpenThreats().filter(threat => threat.severity.toLowerCase() === 'low').length;
+            return this.getOpenThreats().filter(
+                (threat) => threat.severity.toLowerCase() === 'low'
+            ).length;
         },
         openTbd: function () {
-            return this.getOpenThreats().filter(threat => threat.severity.toLowerCase() === 'tbd').length;
+            return this.getOpenThreats().filter(
+                (threat) => threat.severity.toLowerCase() === 'tbd'
+            ).length;
         },
         openUnknown: function () {
-            return this.getOpenThreats().filter(threat => !threat.severity).length;
+            return this.getOpenThreats().filter((threat) => !threat.severity).length;
         }
     },
     methods: {
         getOpenThreats() {
-            return this.threats.filter(threat => threat.status && threat.status.toLowerCase() === 'open');
+            return this.threats.filter(
+                (threat) => threat.status && threat.status.toLowerCase() === 'open'
+            );
         },
         getDataTestId(item) {
             return {
@@ -98,3 +117,9 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+    .td-summary {
+        white-space: pre-wrap;
+    }
+</style>

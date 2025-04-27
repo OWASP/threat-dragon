@@ -1,10 +1,10 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
-import configController, {getConfig} from '../../src/controllers/configcontroller.js';
-import {getMockRequest, getMockResponse} from '../mocks/express.mocks.js';
-import responseWrapper from "../../src/controllers/responseWrapper";
+import configController, { getConfig } from '../../src/controllers/configcontroller.js';
+import { getMockRequest, getMockResponse } from '../mocks/express.mocks.js';
+import responseWrapper from '../../src/controllers/responseWrapper.js';
 
 describe('controllers/configcontroller.js', () => {
     let mockRequest, mockResponse;
@@ -29,7 +29,6 @@ describe('controllers/configcontroller.js', () => {
             };
             sinon.stub(env, 'get').returns(mockEnv);
             configController.config(mockRequest, mockResponse);
-
         });
 
         it('should send the home page file', async () => {
@@ -37,77 +36,85 @@ describe('controllers/configcontroller.js', () => {
         });
     });
 
-    describe("getConfig", () => {
-
-        it("all true", () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', GITHUB_CLIENT_ID: '456',GITLAB_CLIENT_ID: '456', GOOGLE_CLIENT_ID: '123'}});
+    describe('getConfig', () => {
+        it('all true', () => {
+            sinon.stub(env, 'get').returns({
+                config: {
+                    BITBUCKET_CLIENT_ID: '123',
+                    GITHUB_CLIENT_ID: '456',
+                    GITLAB_CLIENT_ID: '456',
+                    GOOGLE_CLIENT_ID: '123'
+                }
+            });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": true,
-                "githubEnabled": true,
-                "gitlabEnabled": true,
-                "googleEnabled": true,
-                "localEnabled": true,
-            })
-        })
-        it("bitbucket and local", () => {
-            sinon.stub(env, 'get').returns({config: {BITBUCKET_CLIENT_ID: '123', }});
+                bitbucketEnabled: true,
+                githubEnabled: true,
+                gitlabEnabled: true,
+                googleEnabled: true,
+                localEnabled: true
+            });
+        });
+        it('bitbucket and local', () => {
+            sinon.stub(env, 'get').returns({ config: { BITBUCKET_CLIENT_ID: '123' } });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": true,
-                "githubEnabled": false,
-                "gitlabEnabled": false,
-                "googleEnabled": false,
-                "localEnabled": true,
-            })
-        })
-        it("github and local", () => {
-            sinon.stub(env, 'get').returns({config: {GITHUB_CLIENT_ID: '123', }});
+                bitbucketEnabled: true,
+                githubEnabled: false,
+                gitlabEnabled: false,
+                googleEnabled: false,
+                localEnabled: true
+            });
+        });
+        it('github and local', () => {
+            sinon.stub(env, 'get').returns({ config: { GITHUB_CLIENT_ID: '123' } });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": false,
-                "githubEnabled": true,
-                "gitlabEnabled": false,
-                "googleEnabled": false,
-                "localEnabled": true,
-            })
-        })
-        it("gitlab and local", () => {
-            sinon.stub(env, 'get').returns({config: {GITLAB_CLIENT_ID: '123', }});
+                bitbucketEnabled: false,
+                githubEnabled: true,
+                gitlabEnabled: false,
+                googleEnabled: false,
+                localEnabled: true
+            });
+        });
+        it('gitlab and local', () => {
+            sinon.stub(env, 'get').returns({ config: { GITLAB_CLIENT_ID: '123' } });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": false,
-                "githubEnabled": false,
-                "gitlabEnabled": true,
-                "googleEnabled": false,
-                "localEnabled": true,
-            })
-        })
-        it("google and local", () => {
-            sinon.stub(env, 'get').returns({config: {GOOGLE_CLIENT_ID: '123', }});
+                bitbucketEnabled: false,
+                githubEnabled: false,
+                gitlabEnabled: true,
+                googleEnabled: false,
+                localEnabled: true
+            });
+        });
+        it('google and local', () => {
+            sinon.stub(env, 'get').returns({ config: { GOOGLE_CLIENT_ID: '123' } });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": false,
-                "githubEnabled": false,
-                "gitlabEnabled": false,
-                "googleEnabled": true,
-                "localEnabled": true,
-            })
-        })
-        it("github and bitbucket null and local", () => {
-            sinon.stub(env, 'get').returns({config: {GITHUB_CLIENT_ID: '123', BITBUCKET_CLIENT_ID: null}});
+                bitbucketEnabled: false,
+                githubEnabled: false,
+                gitlabEnabled: false,
+                googleEnabled: true,
+                localEnabled: true
+            });
+        });
+        it('github and bitbucket null and local', () => {
+            sinon
+                .stub(env, 'get')
+                .returns({ config: { GITHUB_CLIENT_ID: '123', BITBUCKET_CLIENT_ID: null } });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": false,
-                "githubEnabled": true,
-                "gitlabEnabled": false,
-                "googleEnabled": false,
-                "localEnabled": true,
-            })
-        })
-        it("local only", () => {
-            sinon.stub(env, 'get').returns({config: { }});
+                bitbucketEnabled: false,
+                githubEnabled: true,
+                gitlabEnabled: false,
+                googleEnabled: false,
+                localEnabled: true
+            });
+        });
+        it('local only', () => {
+            sinon.stub(env, 'get').returns({ config: {} });
             expect(getConfig()).to.deep.equal({
-                "bitbucketEnabled": false,
-                "githubEnabled": false,
-                "gitlabEnabled": false,
-                "googleEnabled": false,
-                "localEnabled": true,
-            })
-        })
+                bitbucketEnabled: false,
+                githubEnabled: false,
+                gitlabEnabled: false,
+                googleEnabled: false,
+                localEnabled: true
+            });
+        });
     });
 });

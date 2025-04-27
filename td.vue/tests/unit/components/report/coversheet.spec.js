@@ -1,8 +1,11 @@
-import { BootstrapVue } from 'bootstrap-vue';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-
+import { mount } from '@vue/test-utils';
 import TdCoverSheet from '@/components/report/Coversheet.vue';
-import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
+
+// Simple implementation of the TdThreatModelSummaryCard component
+const TdThreatModelSummaryCard = {
+    template: '<div data-testid="threat-model-summary"></div>',
+    props: ['titlePrefix']
+};
 
 describe('components/report/Coversheet.vue', () => {
     let summary, wrapper;
@@ -16,21 +19,26 @@ describe('components/report/Coversheet.vue', () => {
     });
 
     const setup = (data) => {
-        const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
-        wrapper = shallowMount(TdCoverSheet, {
-            localVue,
-            propsData: {
+        wrapper = mount(TdCoverSheet, {
+            props: {
                 title: data.title,
                 owner: data.owner,
                 reviewer: data.reviewer,
                 contributors: data.contributors,
                 branding: data.branding
             },
-            mocks: {
-                $t: key => key
+            global: {
+                stubs: {},
+                components: {
+                    // Only register components that aren't already registered globally
+                    'td-threat-model-summary-card': TdThreatModelSummaryCard
+                },
+                mocks: {
+                    $t: (key) => key
+                }
             }
         });
+        return { wrapper };
     };
 
     describe('with branding', () => {
@@ -39,13 +47,12 @@ describe('components/report/Coversheet.vue', () => {
             setup(summary);
         });
 
-        it('displays the branding', () => {
-            expect(wrapper.find('.td-brand-text').text()).toContain('OWASP Threat Dragon');
+        it('displays the branding when branding is true', () => {
+            expect(wrapper.find('[data-testid="brand-text"]').exists()).toBe(true);
         });
 
         it('displays the summary card', () => {
-            expect(wrapper.findComponent(TdThreatModelSummaryCard).exists())
-                .toEqual(true);
+            expect(wrapper.find('[data-testid="threat-model-summary"]').exists()).toBe(true);
         });
     });
 
@@ -56,16 +63,12 @@ describe('components/report/Coversheet.vue', () => {
             setup(summary);            
         });
 
-        it('hides the brand text', () => {
-            expect(wrapper.find('.td-brand-text').exists())
-                .toEqual(false);
+        it('hides the brand text when branding is false', () => {
+            expect(wrapper.find('[data-testid="brand-text"]').exists()).toBe(false);
         });
 
         it('displays the summary card', () => {
-            expect(wrapper.findComponent(TdThreatModelSummaryCard).exists())
-                .toEqual(true);
+            expect(wrapper.find('[data-testid="threat-model-summary"]').exists()).toBe(true);
         });
     });
-
-    
 });

@@ -10,7 +10,7 @@ describe('routes/local.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/local/:threatmodel');
+            expect(route.path).toEqual('/models/:threatmodel');
         });
 
         it('uses the ThreatModel view as a lazily loaded component', async () => {
@@ -28,7 +28,7 @@ describe('routes/local.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/local/:threatmodel/edit');
+            expect(route.path).toEqual('/models/:threatmodel/edit');
         });
 
         it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
@@ -46,7 +46,7 @@ describe('routes/local.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/local/:threatmodel/edit/:diagram');
+            expect(route.path).toEqual('/models/:threatmodel/edit/:diagram');
         });
 
         it('uses the DiagramEdit view as a lazily loaded component', async () => {
@@ -101,7 +101,7 @@ describe('routes/local.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/local/:threatmodel/report');
+            expect(route.path).toEqual('/models/:threatmodel/report');
         });
 
         it('uses the ReportModel view as a lazily loaded component', async () => {
@@ -109,5 +109,5 @@ describe('routes/local.js', () => {
             expect(cmp.default.name).toEqual('ReportModel');
         });
     });
-    
+
 });

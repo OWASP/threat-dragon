@@ -11,7 +11,8 @@ export const desktopRoutes = [
     {
         path: `/${providerType}/:threatmodel/edit`,
         name: `${providerType}ThreatModelEdit`,
-        component: () => import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
+        component: () =>
+            import(/* webpackChunkName: "threatmodel-edit" */ '../views/ThreatModelEdit.vue')
     },
     {
         path: `/${providerType}/:threatmodel/edit/:diagram`,
@@ -21,12 +22,14 @@ export const desktopRoutes = [
     {
         path: `/${providerType}/threatmodel/import`,
         name: `${providerType}ThreatModelImport`,
-        component: () => import(/* webpackChunkName: "threatmodel-import" */ '../views/ImportModel.vue')
+        component: () =>
+            import(/* webpackChunkName: "threatmodel-import" */ '../views/ImportModel.vue')
     },
     {
         path: `/${providerType}/threatmodel/new`,
         name: `${providerType}NewThreatModel`,
-        component: () => import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
+        component: () =>
+            import(/* webpackChunkName: "new-threatmodel" */ '../views/NewThreatModel.vue')
     },
     {
         path: `/${providerType}/:threatmodel/report`,

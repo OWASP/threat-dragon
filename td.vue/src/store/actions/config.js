@@ -5,5 +5,5 @@ export const CONFIG_LOADED = 'CONFIG_LOADED';
 export default {
     clear: CONFIG_CLEAR,
     fetch: CONFIG_FETCH,
-    loaded: CONFIG_LOADED,
+    loaded: CONFIG_LOADED
 };

@@ -1,7 +1,11 @@
-# OWASP Threat Dragon Site
+## OWASP Threat Dragon Site
 
 This is a Vue project that serves as the front end of the OWASP Threat Dragon website project,
 and also provides the electron desktop project
+
+## Script location
+
+This project uses npm workspaces and is a monorepo.  npm scripts should generally be run from the project root directory.
 
 ## Project setup
 
@@ -63,7 +67,7 @@ You do not need to import anything in your components or pages, they are globall
 
 ## Bootstrap
 
-This project uses [bootstrap-vue](https://bootstrap-vue.org/docs), and it is available globally as well.
+This project uses [bootstrap-vue](https://www.npmjs.com/package/bootstrap-vue), and it is available globally as well.
 
 ## Adding providers
 
@@ -76,6 +80,48 @@ This will need the following:
 
 ## Local Storage
 
-[vuex-persist](https://github.com/championswimmer/vuex-persist) is used to save stores (state)
-from vuex to session storage. By default, all stores are persisted to session storage.
+[vuex-persist](https://github.com/championswimmer/vuex-persist) is used to save stores / state from vuex to session storage.
+By default, all stores are persisted to session storage.
 This is configured in [vuex-persist](src/plugins/vuex-persist.js).
+
+## Deployment Notes
+
+### CSS MIME Type Configuration
+
+**IMPORTANT**: When deploying to remote servers, ensure your web server is correctly configured to serve CSS files with the appropriate MIME type to prevent "Refused to apply style" errors. Without this configuration, styling will be broken.
+
+- **Apache**: Add to `.htaccess`: 
+  ```
+  AddType text/css .css
+  ```
+
+- **Nginx**: Add to server config: 
+  ```
+  types {
+    text/css css;
+  }
+  ```
+
+- **Express**: Ensure proper static file serving: 
+  ```javascript
+  app.use(express.static('public', { 
+    setHeaders: (res, path) => { 
+      if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css'); 
+    } 
+  }));
+  ```
+
+### Provider Route Parameters
+
+The application uses different routing patterns for different storage providers. When using providers like Google Drive, ensure all required parameters are present in the URL:
+
+- **Google Drive**: Requires `folder` parameter for all authenticated routes
+- **Local/Demo**: Uses a simpler route pattern without provider-specific parameters
+
+## Known Issues and Future Improvements
+
+### Vue I18n Legacy API Mode
+
+Vue I18n v11 warns about using the Legacy API mode in the console. To fully fix this warning, the application components need to be migrated from Options API (`$t()`) to Composition API (`useI18n()`) style. This is a significant change that would require updating all Vue components.
+
+The i18n configuration has been updated to use `legacy: false`, but the components still need to be updated to use the Composition API pattern.

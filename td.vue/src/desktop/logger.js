@@ -10,7 +10,9 @@ if (isDevelopment) {
     if (isMacOS) {
         console.log('** Redirecting console to log ~/Library/Logs/Threat\\ Dragon/main.log');
     } else if (isWin) {
-        console.log('** Redirecting console to log AppData\\Roaming\\Threat/ Dragon\\logs\\main.log');
+        console.log(
+            '** Redirecting console to log AppData\\Roaming\\Threat/ Dragon\\logs\\main.log'
+        );
     } else {
         console.log('** Redirecting console to log ~/.config/Threat\\ Dragon/logs/main.log');
     }

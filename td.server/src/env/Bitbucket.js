@@ -1,20 +1,20 @@
 import { Env } from './Env.js';
 
 class BitbucketEnv extends Env {
-    constructor () {
+    constructor() {
         super('Bitbucket');
     }
 
-    get prefix () {
+    get prefix() {
         return 'BITBUCKET_';
     }
 
     // Note that the actual env var will be prepended with BITBUCKET_
-    get properties () {
+    get properties() {
         return [
             { key: 'CLIENT_ID', required: false },
             { key: 'CLIENT_SECRET', required: false },
-            { key: 'SCOPE', required: false, defaultValue: 'repository:read' },
+            { key: 'SCOPE', required: false, defaultValue: 'repository:write' },
             { key: 'ENTERPRISE_HOSTNAME', required: false },
             { key: 'ENTERPRISE_PORT', required: false, defaultValue: 443 },
             { key: 'ENTERPRISE_PROTOCOL', required: false, defaultValue: 'https' },

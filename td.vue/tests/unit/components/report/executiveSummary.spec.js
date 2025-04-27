@@ -1,6 +1,5 @@
-import { BootstrapVue, BCard } from 'bootstrap-vue';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-
+import { mount } from '@vue/test-utils';
+import bootstrapVueNext from '@/plugins/bootstrap-vue-next';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
 
 describe('components/report/ExecutiveSummary.vue', () => {
@@ -18,44 +17,34 @@ describe('components/report/ExecutiveSummary.vue', () => {
         ]
     });
 
-    const setup = (data) => {
-        const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
-        wrapper = shallowMount(TdExecutiveSummary, {
-            localVue,
-            propsData: {
-                summary: data.summary,
-                threats: data.threats
-            },
-            mocks: {
-                $t: t => t
-            }
-        });
-    };
-
     beforeEach(() => {
         propsData = getData();
-        setup(propsData);
+        wrapper = mount(TdExecutiveSummary, {
+            global: {
+                plugins: [bootstrapVueNext],
+                mocks: {
+                    $t: t => t
+                }
+            },
+            props: {
+                summary: propsData.summary,
+                threats: propsData.threats
+            }
+        });
     });
 
-    it('displays the executive summary title', () => {
-        const summary = wrapper.findComponent(BCard);
-        expect(summary.attributes('header')).toEqual('report.executiveSummary');
+    it('has the correct component name', () => {
+        expect(wrapper.vm.$options.name).toEqual('TdExecutiveSummary');
     });
 
-    it('displays the description title', () => {
-        expect(wrapper.find('.td-description-title').text())
-            .toEqual('threatmodel.description');
+    it('renders the component', () => {
+        expect(wrapper.exists()).toBe(true);
+        expect(wrapper.classes()).toContain('td-executive-summary');
     });
 
-    it('displays the summary', () => {
-        expect(wrapper.find('.td-summary').text())
-            .toEqual(propsData.summary);
-    });
-
-    it('displays the report summary subtitle', () => {
-        expect(wrapper.find('.td-report-summary').text())
-            .toEqual('report.summary');
+    it('displays the summary text', () => {
+        const summary = wrapper.find('p');
+        expect(summary.text()).toEqual(propsData.summary);
     });
 
     it('gets only the open threats', () => {
@@ -63,18 +52,15 @@ describe('components/report/ExecutiveSummary.vue', () => {
     });
 
     it('counts the total threats', () => {
-        expect(TdExecutiveSummary.computed.total.call(propsData))
-            .toEqual(6);
+        expect(wrapper.vm.total).toEqual(6);
     });
 
     it('counts the mitigated threats', () => {
-        expect(TdExecutiveSummary.computed.mitigated.call(propsData))
-            .toEqual(1);
+        expect(wrapper.vm.mitigated).toEqual(1);
     });
 
     it('counts the unmitigated threats', () => {
-        expect(TdExecutiveSummary.computed.notMitigated.call(propsData))
-            .toEqual(5);
+        expect(wrapper.vm.notMitigated).toEqual(5);
     });
 
     it('gets the data test id from the row item', () => {

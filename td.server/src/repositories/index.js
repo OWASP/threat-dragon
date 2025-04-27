@@ -1,7 +1,10 @@
-import bitbucketrepo from "./bitbucketrepo";
-import githubrepo from "./githubrepo";
-import gitlabrepo from "./gitlabrepo";
-import googledrive from "./googledrive";
+import bitbucketrepo from './bitbucketrepo.js';
+import githubrepo from './githubrepo.js';
+import gitlabrepo from './gitlabrepo.js';
+import googledrive from './googledrive.js';
+import loggerHelper from '../helpers/logger.helper.js';
+
+const logger = loggerHelper.get('repositories/index.js');
 
 /**
  * An immutable object containing all
@@ -15,12 +18,28 @@ const all = Object.freeze({
     googledrive
 });
 
-let selection = 'bitbucketrepo';
+// Default to github as it's the most commonly used
+let selection = 'githubrepo';
 
 const get = () => getSpecific(selection);
 
 const set = (name) => {
-    selection = name;
+    if (!name) {
+        console.warn('Attempted to set repository selection to empty value');
+        return;
+    }
+
+    // Ensure the repo name ends with 'repo'
+    const repoName = name.endsWith('repo') ? name : `${name}repo`;
+
+    // Verify this is a valid repository before setting
+    if (!all[repoName.toLowerCase()]) {
+        console.warn(`Attempted to set unknown repository: ${repoName}`);
+        return;
+    }
+
+    logger.info(`Setting repository selection to: ${repoName}`);
+    selection = repoName.toLowerCase();
 };
 
 /**

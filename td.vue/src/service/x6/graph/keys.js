@@ -7,7 +7,6 @@ import store from '@/store/index.js';
 
 import { THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
 
-
 const del = (graph) => () => graph.removeCells(graph.getSelectedCells());
 
 const undo = (graph) => () => {

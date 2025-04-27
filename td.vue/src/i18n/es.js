@@ -2,15 +2,25 @@ const spa = {
     auth: {
         sessionExpired: 'Su sesión ha expirado. Por favor inicie una nueva sesión para continuar.'
     },
+    operator: {
+        heading: 'Operador',
+        operatedby: 'Este sitio web y esta instancia de OWASP Threat Dragon son operados por:',
+        name: `${process.env.VUE_APP_OPERATOR_NAME || 'el operador de este sitio web'}`,
+        contact: 'Contacto: ' + (process.env.VUE_APP_OPERATOR_CONTACT ? process.env.VUE_APP_OPERATOR_CONTACT.replace('@', ' [at] ') : '(información de contacto no proporcionada)'),
+    },
     nav: {
-        v2Warning: 'Los modelos de amenazas(threat models) version 2.0 no son compatibles con los modelos de amenazas(threat model) de Threat Dragon versión 1.x. Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0',
+        v2Warning:
+            'Los modelos de amenazas(threat models) version 2.0 no son compatibles con los modelos de amenazas(threat model) de Threat Dragon versión 1.x. Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0',
         loggedInAs: 'Conectado como',
-        logOut: 'Log out'
+        logOut: 'Log out',
+        tos: 'Términos de Servicio',
+        privacy: 'Política de Privacidad'
     },
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo de Threat Dragon',
-        description: 'Threat Dragon es una herramienta de modelado de amenazas de código abierto de OWASP. Se puede utilizar como aplicación desktop para Windows, MacOS y Linux o como una aplicación web. La aplicación de desktop es excelente si desea probarla sin otorgar acceso a sus repositorios de GitHub. Sin embargo, si elige la versión web, podrá liberar el increíble poder de GitHub en sus modelos de amenazas (threat models). Por supuesto, para hacer esto, deberá iniciar sesión en GitHub y permitir el acceso al repositorio de interés'
+        description:
+            'OWASP Threat Dragon es una aplicación gratuita, de código abierto y multiplataforma para crear modelos de amenazas. Úsela para dibujar diagramas de modelado de amenazas e identificar amenazas para su sistema. Con énfasis en la flexibilidad y simplicidad, es fácilmente accesible para todo tipo de usuarios.'
     },
     providers: {
         desktop: {
@@ -36,12 +46,27 @@ const spa = {
         local: {
             displayName: 'Sesión Local',
             loginWith: 'Conectarse con'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Abrir',
+            description:
+                'Seleccione un archivo de modelo de amenazas o carpeta de destino desde Google Drive',
+            saveThreatModel: 'Guardar Modelo de Amenazas en Google Drive',
+            saveDescription:
+                'Seleccione una carpeta en Google Drive para guardar su modelo de amenazas',
+            fileName: 'Nombre del Archivo',
+            fileNamePlaceholder: 'Ingrese un nombre para su archivo',
+            selectFolder: 'Seleccione una carpeta en Google Drive',
+            selectFile: 'Seleccione un archivo de Google Drive',
+            selectThreatModel: 'Seleccione un Modelo de Amenaza de Google Drive'
         }
     },
     dashboard: {
         welcome: {
             title: '¡Le damos la bienvenida! ¡Estamos encantados de tenerlo aquí!',
-            description: 'Con OWASP Threat Dragon tendrá los mecanismos para hacer que los diseños de sus aplicaciones sean más seguros. Puedes abrir un modelo de amenaza (threat model) existente o crear un modelo desde cero. Simplemente elija una de las siguientes opciones.'
+            description:
+                'Con OWASP Threat Dragon tendrá los mecanismos para hacer que los diseños de sus aplicaciones sean más seguros. Puedes abrir un modelo de amenaza (threat model) existente o crear un modelo desde cero. Simplemente elija una de las siguientes opciones.'
         },
         actions: {
             openExisting: 'Abrir un modelo de amenazas (threat model) existente',
@@ -91,7 +116,12 @@ const spa = {
         refBranch: 'Rama de referencia',
         add: 'Añadir rama',
         cancel: 'Cancelar',
-        name: 'Nombre de la sucursal',
+        name: 'Nombre de la sucursal'
+    },
+    folder: {
+        select: 'Seleccione una',
+        from: 'carpeta de la lista a continuación',
+        noneFound: 'Esta carpeta está vacía. Puede crear un nuevo modelo de amenazas aquí.'
     },
     threatmodelSelect: {
         select: 'Seleccione un modelo de amenazas (threat model) ',
@@ -106,11 +136,20 @@ const spa = {
         contributorsPlaceholder: 'Agregar un nuevo colaborador',
         description: 'Descripción de alto nivel del sistema (high level system)',
         dragAndDrop: 'Arrastre y suelte o ',
-        editing: 'Edición',
         jsonPaste: 'Arrastre el archivo JSON de su modelo de amenazas o pegue el texto aquí',
         owner: 'Propietario',
         reviewer: 'Revisor',
         title: 'Título',
+        new: {
+            title: 'Crear Nuevo Modelo de Amenazas',
+            description: 'Ingrese información sobre su nuevo modelo de amenazas'
+        },
+        placeholder: {
+            title: 'Título del Modelo de Amenazas',
+            owner: 'Nombre del Propietario o Equipo',
+            description: 'Ingrese una descripción de alto nivel del sistema que se está modelando',
+            reviewer: 'Nombre del Revisor'
+        },
         diagram: {
             diagrams: 'Diagramas',
             addNewDiagram: 'Agregar un nuevo diagrama...',
@@ -151,7 +190,9 @@ const spa = {
             invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez.',
             onlyJsonAllowed: 'Solamente archivos con extensión .json son soportados.',
             open: 'Error al abrir el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.',
-            save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
+            save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.',
+            googleDriveSave:
+                'Error al guardar en Google Drive. Asegúrese de tener los permisos adecuados.'
         },
         opened: 'El modelo de amenazas se abrió con éxito',
         saved: 'El modelo de amenazas se guardó con éxito',
@@ -177,14 +218,15 @@ const spa = {
             storesCredentials: 'Almacena Credenciales',
             storesInventory: 'Stores Inventory'
         },
-        buttons: {
+        controlButtons: {
             delete: 'Eliminar seleccionado',
             redo: 'Rehacer edición',
             shortcuts: 'Atajos de teclado',
             toggleGrid: 'Alternar cuadrícula',
             undo: 'Deshacer Edición',
             zoomIn: 'Ampliar zoom',
-            zoomOut: 'Reducir zoom'
+            zoomOut: 'Reducir zoom',
+            save: 'Guardar'
         },
         shortcuts: {
             title: 'Atajos',
@@ -213,7 +255,8 @@ const spa = {
                 action: 'Moverse por toda la imagen del diagrama'
             },
             multiSelect: {
-                shortcut: 'hacer clic en el botón izquierdo del ratón en el espacio vacío y arrastrar',
+                shortcut:
+                    'hacer clic en el botón izquierdo del ratón en el espacio vacío y arrastrar',
                 action: 'Selección múltiple'
             },
             zoom: {
@@ -222,10 +265,11 @@ const spa = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Guardar'
             }
         },
         stencil: {
+            title: 'Formas',
             boundaries: 'Límites',
             components: 'Componentes',
             entities: 'Entidades',
@@ -252,16 +296,22 @@ const spa = {
         discardTitle: '¿Descartar los cambios?',
         discardMessage: '¿Está seguro de descartar sus cambios?',
         edit: 'Editar',
-        exportAs: 'Export Model As',
+        export: 'Exportar',
+        exportAs: 'Exportar Modelo Como',
         exportHtml: 'Reporte HTML',
         exportPdf: 'Reporte PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
+        exportFormats: {
+            png: 'PNG',
+            jpeg: 'JPEG',
+            svg: 'SVG'
+        },
         import: 'Importar',
         ok: 'OK',
         open: 'Abrir',
         openModel: 'Abrir modelo',
-        print: 'Print',
+        print: 'Imprimir',
         reload: 'Recargar',
         remove: 'Eliminar',
         report: 'Reporte',
@@ -271,7 +321,8 @@ const spa = {
         saveModelAs: 'Guardar modelo como',
         search: 'Buscar',
         next: 'próximo',
-        previous: 'Previo'
+        previous: 'Previo',
+        requiredField: 'Campo obligatorio'
     },
     threats: {
         model: {
@@ -364,8 +415,8 @@ const spa = {
             showOutOfScope: 'Mostrar elementos fuera de contexto',
             showMitigatedThreats: 'Mostrar amenazas mitigadas',
             showModelDiagrams: 'Mostrar diagramas de modelo',
-            showEmpty: 'Show empty elements',
-            showProperties: 'Show element properties',
+            showEmpty: 'Mostrar elementos vacíos',
+            showProperties: 'Mostrar propiedades de elementos',
             showBranding: 'Marca de Threat Dragon'
         },
         title: 'Reporte de modelo de amenaza para',
@@ -385,15 +436,9 @@ const spa = {
             openUnknown: 'Abierto / Prioridad Desconocida'
         }
     },
-    upgrade: {
-        modal: {
-            header: 'Actualización del modelo de amenazas',
-            welcome: 'Bienvenido a la versión 2 de OWASP Threat Dragon!',
-            p1: 'La versión 2 utiliza una librería de gráficos diferente, la cual cambiará la forma en que las partes de sus modelos de amenazas son guardadas. Mientras la mayoría de los diagramas se verán igual que en las versiones previas de Threat Dragon, habrá casos donde éstos necesitarán ser ligeramente ajustados.',
-            p2: 'Después de cerrar este diálogo, usted podrá ver cómo cada diagrama en este modelo ha sido transformado en el formato de la versión 2. Por favor tome nota de todos los diagramas que pudieran necesitar ajustes. Esta es una actualización única, y usted no verá este mensaje otra vez después de guardar este modelo.'
-        },
-        instructions: '¡Genial! Vayamos a su modelo.',
-        continue: 'Continuar'
+    pagination: {
+        previous: 'Previo',
+        next: 'próximo'
     }
 };
 

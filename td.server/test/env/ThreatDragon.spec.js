@@ -23,107 +23,77 @@ describe('env/ThreatDragon.js', () => {
     });
 
     it('has the optional property NODE_ENV', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'NODE_ENV')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'NODE_ENV').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property NODE_ENV', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'NODE_ENV')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'NODE_ENV').defaultValue;
         expect(value).to.equal('production');
     });
 
     it('has the optional property PORT', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'PORT')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'PORT').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property PORT', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'PORT')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'PORT').defaultValue;
         expect(value).to.equal(3000);
     });
 
     it('has the optional property LOG_MAX_FILE_SIZE', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'LOG_MAX_FILE_SIZE')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'LOG_MAX_FILE_SIZE').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property LOG_MAX_FILE_SIZE', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'LOG_MAX_FILE_SIZE')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'LOG_MAX_FILE_SIZE').defaultValue;
         expect(value).to.equal(24);
     });
 
     it('has the required property LOG_LEVEL', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'LOG_LEVEL')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'LOG_LEVEL').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property LOG_LEVEL', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'LOG_LEVEL')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'LOG_LEVEL').defaultValue;
         expect(value).to.equal('warn');
     });
 
     it('has the optional property SERVER_API_PROTOCOL', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'SERVER_API_PROTOCOL')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'SERVER_API_PROTOCOL').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property SERVER_API_PROTOCOL', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'SERVER_API_PROTOCOL')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'SERVER_API_PROTOCOL').defaultValue;
         expect(value).to.equal('https');
     });
 
     it('has the optional property REPO_ROOT_DIRECTORY', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'REPO_ROOT_DIRECTORY')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'REPO_ROOT_DIRECTORY').required;
         expect(isRequired).to.be.false;
     });
 
-    it('has a default value for property REPO_ROOT_DIRECTORY', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'REPO_ROOT_DIRECTORY')
-            .defaultValue;
-        expect(value).to.equal('ThreatDragonModels');
+    it('has no default value for property REPO_ROOT_DIRECTORY', () => {
+        const property = tdEnv.properties.find((x) => x.key === 'REPO_ROOT_DIRECTORY');
+        expect(property.defaultValue).to.be.undefined;
     });
 
     it('has the optional property REPO_USE_SEARCH', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'REPO_USE_SEARCH')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'REPO_USE_SEARCH').required;
         expect(isRequired).to.be.false;
     });
 
     it('has a default value for property REPO_USE_SEARCH', () => {
-        const value = tdEnv.properties
-            .find(x => x.key === 'REPO_USE_SEARCH')
-            .defaultValue;
+        const value = tdEnv.properties.find((x) => x.key === 'REPO_USE_SEARCH').defaultValue;
         expect(value).to.be.false;
     });
 
     it('has the optional property REPO_SEARCH_QUERY', () => {
-        const isRequired = tdEnv.properties
-            .find(x => x.key === 'REPO_SEARCH_QUERY')
-            .required;
+        const isRequired = tdEnv.properties.find((x) => x.key === 'REPO_SEARCH_QUERY').required;
         expect(isRequired).to.be.false;
     });
 });

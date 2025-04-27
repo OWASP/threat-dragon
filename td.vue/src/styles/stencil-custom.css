@@ -1,0 +1,24 @@
+/* Custom styles for stencil components */
+
+/* Add ID and name to stencil search field via CSS */
+.x6-widget-stencil-search input.x6-widget-stencil-search-text {
+    /* This adds the attributes via CSS content property */
+    content: attr(id) attr(name);
+}
+
+/* Ensure the stencil search field is properly styled */
+.x6-widget-stencil-search input.x6-widget-stencil-search-text {
+    width: 100%;
+    height: 30px;
+    padding: 0 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* Improve stencil container styling */
+.td-stencil-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}

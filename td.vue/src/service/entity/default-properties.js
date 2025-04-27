@@ -83,7 +83,7 @@ const propsByType = {
 };
 
 const getByType = (type) => {
-    if (!Object.keys(propsByType).some(x => x === type)) {
+    if (!Object.keys(propsByType).some((x) => x === type)) {
         throw new Error(`Unknown entity: ${type}`);
     }
     return propsByType[type];

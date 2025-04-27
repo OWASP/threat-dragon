@@ -23,23 +23,21 @@ describe('env/Encryption.js', () => {
     });
 
     it('has the required property KEYS', () => {
-        const isRequired = encryptionEnv.properties
-            .find(x => x.key === 'KEYS')
-            .required;
+        const isRequired = encryptionEnv.properties.find((x) => x.key === 'KEYS').required;
         expect(isRequired).to.be.true;
     });
 
     it('has the required property JWT_SIGNING_KEY', () => {
-        const isRequired = encryptionEnv.properties
-            .find(x => x.key === 'JWT_SIGNING_KEY')
-            .required;
+        const isRequired = encryptionEnv.properties.find(
+            (x) => x.key === 'JWT_SIGNING_KEY'
+        ).required;
         expect(isRequired).to.be.true;
     });
 
     it('has the required property JWT_REFRESH_SIGNING_KEY', () => {
-        const isRequired = encryptionEnv.properties
-            .find(x => x.key === 'JWT_REFRESH_SIGNING_KEY')
-            .required;
+        const isRequired = encryptionEnv.properties.find(
+            (x) => x.key === 'JWT_REFRESH_SIGNING_KEY'
+        ).required;
         expect(isRequired).to.be.true;
     });
 });

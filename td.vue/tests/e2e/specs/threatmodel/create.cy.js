@@ -6,7 +6,8 @@ describe('create a new threat model', () => {
     });
 
     it('can edit the title', () => {
-        cy.get('#title').clear().type('new name');
+        cy.get('#title').clear();
+        cy.get('#title').type('new name');
         cy.contains('Editing: new name');
     });
 

@@ -18,8 +18,11 @@ describe('config/https.config.js', () => {
         describe('upgrading an insecure request', () => {
             beforeEach(() => {
                 res.secure = false;
-                sinon.stub(env, 'get').returns({ config: { SERVER_API_PROTOCOL: 'https' }});
-                req.get.returns('http');
+                sinon
+                    .stub(env, 'get')
+                    .returns({ config: { NODE_ENV: 'production', SERVER_API_PROTOCOL: 'https' } });
+                req.get.withArgs('x-forwarded-proto').returns('http');
+                req.get.withArgs('host').returns('example.com');
                 httpsConfig.middleware(req, res, next);
             });
 
@@ -35,8 +38,10 @@ describe('config/https.config.js', () => {
         describe('allowing a secure request to continue', () => {
             beforeEach(() => {
                 res.secure = true;
-                sinon.stub(env, 'get').returns({ config: { SERVER_API_PROTOCOL: 'https' }});
-                req.get.returns('https');
+                sinon
+                    .stub(env, 'get')
+                    .returns({ config: { NODE_ENV: 'production', SERVER_API_PROTOCOL: 'https' } });
+                req.get.withArgs('x-forwarded-proto').returns('https');
                 httpsConfig.middleware(req, res, next);
             });
 
@@ -53,7 +58,7 @@ describe('config/https.config.js', () => {
     describe('development', () => {
         beforeEach(() => {
             res.secure = false;
-            sinon.stub(env, 'get').returns({ config: { NODE_ENV: 'development' }});
+            sinon.stub(env, 'get').returns({ config: { NODE_ENV: 'development' } });
             httpsConfig.middleware(req, res, next);
         });
 

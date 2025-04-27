@@ -1,16 +1,27 @@
 const fin = {
     auth: {
-        sessionExpired: 'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
+        sessionExpired:
+            'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
+    },
+    operator: {
+        heading: 'Operaattori',
+        operatedby: 'Tätä verkkosivustoa ja OWASP Threat Dragon -instanssia ylläpitää:',
+        name: `${process.env.VUE_APP_OPERATOR_NAME || 'tämän verkkosivuston ylläpitäjä'}`,
+        contact: 'Yhteystiedot: ' + (process.env.VUE_APP_OPERATOR_CONTACT ? process.env.VUE_APP_OPERATOR_CONTACT.replace('@', ' [at] ') : '(yhteystietoja ei ole annettu)'),
     },
     nav: {
-        v2Warning: 'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
+        v2Warning:
+            'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
         loggedInAs: 'Kirjautunut käyttäjänä',
-        logOut: 'Log out'
+        logOut: 'Log out',
+        tos: 'Käyttöehdot',
+        privacy: 'Tietosuojakäytäntö'
     },
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon on ilmainen avoimen lähdekoodin alustariippumaton sovellus uhkamallintamiseen. Voit piirtää sovelluksella uhkamallinnuskaavioita ja tunnistaa järjestelmän uhkia. Erilaiset käyttäjät voivat helposti lähestyä sovellusta, koska se on yksinkertainen ja joustava.'
+        description:
+            'OWASP Threat Dragon on ilmainen avoimen lähdekoodin alustariippumaton sovellus uhkamallintamiseen. Voit piirtää sovelluksella uhkamallinnuskaavioita ja tunnistaa järjestelmän uhkia. Erilaiset käyttäjät voivat helposti lähestyä sovellusta, koska se on yksinkertainen ja joustava.'
     },
     providers: {
         desktop: {
@@ -36,12 +47,25 @@ const fin = {
         local: {
             displayName: 'paikallisesti',
             loginWith: 'Kirjaudu sisään'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Avaa',
+            description: 'Valitse uhkamallin tiedosto tai kohdekansio Google Drivestä',
+            saveThreatModel: 'Tallenna uhkamalli Google Driveen',
+            saveDescription: 'Valitse kansio Google Drivestä uhkamallisi tallentamiseksi',
+            fileName: 'Tiedostonimi',
+            fileNamePlaceholder: 'Anna tiedostollesi nimi',
+            selectFolder: 'Valitse kansio Google Drivestä',
+            selectFile: 'Valitse tiedosto Google Drivestä',
+            selectThreatModel: 'Valitse uhkamalli Google Drivestä'
         }
     },
     dashboard: {
         welcome: {
             title: 'Tervetuloa!',
-            description: 'Voit nyt aloittaa järjestelmäsi suunnittelun. Voit avaita olemassa olevan uhkamallin tai tehdä uuden valitsemalla jonkin seuraavista vaihtoehdoista. '
+            description:
+                'Voit nyt aloittaa järjestelmäsi suunnittelun. Voit avaita olemassa olevan uhkamallin tai tehdä uuden valitsemalla jonkin seuraavista vaihtoehdoista. '
         },
         actions: {
             openExisting: 'Avaa olemassa oleva uhkamalli',
@@ -92,13 +116,18 @@ const fin = {
         refBranch: 'Viitehaara',
         add: 'Lisää haara',
         cancel: 'Peruuta',
-        name: 'Sivuliikkeen nimi',
+        name: 'Sivuliikkeen nimi'
+    },
+    folder: {
+        select: 'Valitse',
+        from: 'kansio alla olevista',
+        noneFound: 'Tämä kansio on tyhjä. Voit luoda uuden uhkamallin tähän.'
     },
     threatmodelSelect: {
         select: 'Valitse uhkamalli kohteesta',
         from: 'alla olevasta listasta, tai valitse toinen',
         branch: 'haara',
-        or: 'or',
+        or: 'tai',
         repo: 'arkisto',
         newThreatModel: 'Tee uusi uhkamalli'
     },
@@ -107,7 +136,6 @@ const fin = {
         contributorsPlaceholder: 'Kirjoita lisätäksesi uuden osallistujan',
         description: 'Ylätason kuvaus järjestelmästä',
         dragAndDrop: 'Raahaa ',
-        editing: 'Muokkaus',
         jsonPaste: 'uhkamallin JSON-tiedosto tai leikkaa & liimaa sen sisältö tähän',
         owner: 'Omistaja',
         reviewer: 'Katselmoija',
@@ -149,7 +177,8 @@ const fin = {
         threats: 'Uhat',
         errors: {
             dropSingleFileOnly: 'Voit pudottaa vain yhden tiedoston.',
-            invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen.',
+            invalidJson:
+                'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen.',
             onlyJsonAllowed: 'Sovellus tukee vain .json -päätteisiä tiedostoja.',
             open: 'Virhe uhkamallin lukemisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.',
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
@@ -178,14 +207,15 @@ const fin = {
             storesCredentials: 'Tallentaa tunnistetietoja',
             storesInventory: 'Stores Inventory'
         },
-        buttons: {
+        controlButtons: {
             delete: 'Poista valitut',
             redo: 'Muokkaa uudestaan',
             shortcuts: 'Pikavalinnat',
             toggleGrid: 'Ruudukko',
             undo: 'Kumoa muokkaus',
             zoomIn: 'Lähennä',
-            zoomOut: 'Loitonna'
+            zoomOut: 'Loitonna',
+            save: 'Tallenna'
         },
         shortcuts: {
             title: 'Pikavalinnat',
@@ -223,7 +253,7 @@ const fin = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Tallenna'
             }
         },
         stencil: {
@@ -253,11 +283,17 @@ const fin = {
         discardTitle: 'Menetä muutokset?',
         discardMessage: 'Oletko varma, että haluat menettää muutokset?',
         edit: 'Muokkaa',
-        exportAs: 'Export Model As',
+        export: 'Vie',
+        exportAs: 'Vie malli muodossa',
         exportHtml: 'Raportti HTML',
         exportPdf: 'Raportti PDF',
         exportTd: 'Original (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
+        exportFormats: {
+            png: 'PNG',
+            jpeg: 'JPEG',
+            svg: 'SVG'
+        },
         import: 'Tuo',
         ok: 'OK',
         open: 'Avaa',
@@ -272,15 +308,16 @@ const fin = {
         saveModelAs: 'Tallenna Uhkamalli Nimellä',
         search: 'Etsi',
         next: 'Seuraava',
-        previous: 'Edellinen'
+        previous: 'Edellinen',
+        requiredField: 'Pakollinen kenttä'
     },
     threats: {
         model: {
             cia: {
                 header: '--- CIA ---',
-                confidentiality: 'Confidentiality',
-                integrity: 'Integrity',
-                availability: 'Availability'
+                confidentiality: 'Luottamuksellisuus',
+                integrity: 'Eheys',
+                availability: 'Saatavuus'
             },
             die: {
                 header: '--- DIE ---',
@@ -366,7 +403,7 @@ const fin = {
             showMitigatedThreats: 'Näytä hallitut uhkat',
             showModelDiagrams: 'Näytä uhkamallin kaaviot',
             showEmpty: 'Näytä tyhjät elementit',
-            showProperties: 'Show element properties',
+            showProperties: 'Näytä elementin ominaisuudet',
             showBranding: 'Threat Dragon logo'
         },
         title: 'Uhkamallinnus kohteelle',
@@ -386,15 +423,9 @@ const fin = {
             openUnknown: 'Avoin / Tuntematon tärkeys'
         }
     },
-    upgrade: {
-        modal: {
-            header: 'Uhkamallin päivitys',
-            welcome: 'Tervetuloa versioon 2 OWASP Threat Dragon -työkalusta!',
-            p1: 'Versio 2 käyttää erilaista piirustuskirjastoa, mikä muuttaa uhkamallien osien tallennustapaa. Vaikka useimmat kaaviot näyttävät samalta kuin Threat Dragonin aiemmissa versioissa, joissakin tapauksissa niitä on ehkä hieman muutettava.',
-            p2: 'Suljettuasi tämän ilmoituksen näet, miten tämän mallin kukin kaavio esitetään versio 2 -muodossa. Merkitse muistiin kaikki kaaviot, joita saatat joutua muokkaamaan. Tämä on kertaluonteinen päivitys, eikä tätä viestiä pitäisi enää tulla mallin tallentamisen jälkeen.'
-        },
-        instructions: 'Hienoa! Jatketaan uhkamallin pariin.',
-        continue: 'Jatka uhkamalliin'
+    pagination: {
+        previous: 'Edellinen',
+        next: 'Seuraava'
     }
 };
 

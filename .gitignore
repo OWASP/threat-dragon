@@ -1,6 +1,28 @@
 # uses allow-list, so ignore everything
 *
 
+# SBOM output files (explicitly ignored)
+sbom.json
+sbom.xml
+
+# Claude related files
+CLAUDE.md
+
+# Logs and environment files
+*.log
+.env
+.env.*
+!.env.example
+!example.env
+!minimal.env
+
+# Dependencies and build outputs
+node_modules/
+dist/
+dist-desktop/
+.vite_cache/
+coverage/
+
 # allow github, workflows and templates
 !.github/
 !.github/*.yaml
@@ -13,6 +35,9 @@
 !.lycheeignore
 !.trivyignore
 !.markdownlint.yaml
+!.eslintrc.js
+!.prettierrc
+!.prettierignore
 
 # docker files
 !.dockerignore
@@ -80,7 +105,6 @@
 !td.server/test/repositories/
 !td.server/test/repositories/*.spec.js
 !td.server/.babelrc
-!td.server/.eslintrc.js
 !td.server/README.md
 !td.server/dev.js
 !td.server/index.js
@@ -102,12 +126,15 @@
 !td.vue/src/assets/*.jpg
 !td.vue/src/assets/schema/
 !td.vue/src/assets/schema/*.js
+!td.vue/src/assets/css/*.css
 !td.vue/src/components/
 !td.vue/src/components/*.vue
 !td.vue/src/components/printed-report/
 !td.vue/src/components/printed-report/*.vue
 !td.vue/src/components/report/
 !td.vue/src/components/report/*.vue
+!td.vue/src/composables/
+!td.vue/src/composables/*.js
 !td.vue/src/desktop/
 !td.vue/src/desktop/*.html
 !td.vue/src/desktop/*.js
@@ -157,6 +184,7 @@
 !td.vue/src/styles/
 !td.vue/src/styles/*.css
 !td.vue/src/styles/*.scss
+!td.vue/src/utils/*.js
 !td.vue/src/views/
 !td.vue/src/views/*.vue
 !td.vue/src/views/demo/
@@ -170,6 +198,7 @@
 !td.vue/tests/e2e/*.js
 !td.vue/tests/e2e/desktop/
 !td.vue/tests/e2e/desktop/*.spec.js
+!td.vue/tests/e2e/desktop/*.cy.js
 !td.vue/tests/e2e/fixtures/
 !td.vue/tests/e2e/fixtures/*.json
 !td.vue/tests/e2e/specs/
@@ -222,6 +251,8 @@
 !td.vue/tests/unit/service/x6/graph/*.spec.js
 !td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/service/x6/shapes/*.spec.js
+!td.vue/tests/unit/setup/
+!td.vue/tests/unit/setup/*.js
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/actions/*.spec.js
 !td.vue/tests/unit/store/modules/
@@ -230,6 +261,8 @@
 !td.vue/tests/unit/views/*.spec.js
 !td.vue/tests/unit/views/demo/
 !td.vue/tests/unit/views/demo/*.spec.js
+!td.vue/tests/unit/views/google/
+!td.vue/tests/unit/views/google/*.spec.js
 !td.vue/package.json
 !td.vue/package-lock.json
 !td.vue/.browserslistrc

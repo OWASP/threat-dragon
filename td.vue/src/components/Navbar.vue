@@ -1,166 +1,336 @@
 <template>
-  <b-navbar toggleable="lg" fixed="top" id="navbar">
-    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
-      <b-img :src="require('@/assets/threatdragon_logo_image.svg')" class="td-brand-img" alt="Threat Dragon Logo" />
-      Threat Dragon v{{ this.$store.state.packageBuildVersion }}{{ this.$store.state.packageBuildState }}
-    </b-navbar-brand>
+    <b-navbar id="navbar" toggleable="lg" fixed="top">
+        <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
+            <b-img
+                :src="require('@/assets/threatdragon_logo_image.svg')"
+                class="td-brand-img"
+                alt="Threat Dragon Logo"
+            />
+            Threat Dragon v{{ packageBuildVersion
+            }}{{ packageBuildState }}
+        </b-navbar-brand>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item>
-          <td-locale-select />
-        </b-nav-item>
-      </b-navbar-nav>
+        <b-navbar-toggle target="nav-collapse" />
+        <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav>
+                <b-nav-item>
+                    <td-locale-select />
+                </b-nav-item>
+            </b-navbar-nav>
 
-      <!-- Ensure alignment to the right -->
-      <b-navbar-nav class="ms-auto d-flex align-items-center justify-content-end">
-        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs') }} {{ username }}</b-nav-text>
-        <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
-          <font-awesome-icon
-            icon="sign-out-alt"
-            class="td-fa-nav"
-            v-tooltip.hover :title="$t('nav.logOut')"
-          ></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item
-          to="/tos"
-          id="nav-tos"
-          v-if="googleEnabled"
-        >
-          <font-awesome-icon
-            icon="file-contract"
-            class="td-fa-nav"
-            v-tooltip.hover :title="$t('nav.tos')"
-          ></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item
-          to="/privacy"
-          id="nav-privacy"
-          v-if="googleEnabled"
-        >
-          <font-awesome-icon
-            icon="shield-alt"
-            class="td-fa-nav"
-            v-tooltip.hover :title="$t('nav.privacy')"
-          ></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item
-          href="https://owasp.org/www-project-threat-dragon/docs-2/"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-docs"
-        >
-          <font-awesome-icon
-            icon="question-circle"
-            class="td-fa-nav"
-            v-tooltip.hover :title="$t('desktop.help.docs')"
-          ></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item
-          href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-tm-cheat-sheet"
-        >
-          <font-awesome-icon
-            icon="gift"
-            class="td-fa-nav"
-            v-tooltip.hover :title="$t('desktop.help.sheets')"
-          ></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item
-          href="https://owasp.org/www-project-threat-dragon/"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-owasp-td"
-        >
-          <b-img 
-            :src="require('@/assets/owasp.svg')"
-            class="td-fa-nav td-owasp-logo" 
-            :title="$t('desktop.help.visit')"
-          />
-        </b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+            <!-- Ensure alignment to the right -->
+            <b-navbar-nav class="ms-auto d-flex align-items-center justify-content-end">
+                <b-nav-text v-show="username" class="logged-in-as">
+                    ({{ providerDisplayName }}) {{ username }}
+                </b-nav-text>
+                <b-nav-item v-show="username" id="nav-sign-out" @click="onLogOut">
+                    <font-awesome-icon
+                        v-tooltip.hover
+                        icon="sign-out-alt"
+                        class="td-fa-nav"
+                        :title="t('nav.logOut')"
+                    />
+                </b-nav-item>
+                <b-nav-item
+                    id="nav-docs"
+                    href="https://owasp.org/www-project-threat-dragon/docs-2/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <font-awesome-icon
+                        v-tooltip.hover
+                        icon="question-circle"
+                        class="td-fa-nav"
+                        :title="t('desktop.help.docs')"
+                    />
+                </b-nav-item>
+                <b-nav-item
+                    id="nav-tm-cheat-sheet"
+                    href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <font-awesome-icon
+                        v-tooltip.hover
+                        icon="gift"
+                        class="td-fa-nav"
+                        :title="t('desktop.help.sheets')"
+                    />
+                </b-nav-item>
+                <b-nav-item
+                    id="nav-owasp-td"
+                    href="https://owasp.org/www-project-threat-dragon/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <b-img
+                        :src="require('@/assets/owasp.svg')"
+                        class="td-fa-nav td-owasp-logo"
+                        :title="t('desktop.help.visit')"
+                    />
+                </b-nav-item>
+            </b-navbar-nav>
+        </b-collapse>
+    </b-navbar>
 </template>
+
+<script>
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+import { LOGOUT, AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { useI18n } from '@/i18n';
+import TdLocaleSelect from './LocaleSelect.vue';
+import { getDisplayName } from '@/service/provider/providers.js';
+import logger from '@/utils/logger.js';
+
+// Create a logger instance for this component
+const log = logger.getLogger('components:Navbar');
+
+export default {
+    name: 'TdNavbar',
+    components: {
+        TdLocaleSelect
+    },
+    setup() {
+        const store = useStore();
+        const { t } = useI18n();
+        const isAuthRestored = ref(false);
+        const fallbackUsername = ref('');
+
+        // Use computed to get values from the store
+        const storeUsername = computed(() => store.getters.username);
+        const storeActualUsername = computed(() => store.getters.actualUsername);
+        const packageBuildVersion = computed(() => store.state.packageBuildVersion);
+        const packageBuildState = computed(() => store.state.packageBuildState);
+        const config = computed(() => store.state.config.config);
+
+        // Enhanced username computed property with fallback mechanism
+        const username = computed(() => {
+            // If we have a username in the store, use it
+            if (storeUsername.value) {
+                return storeUsername.value;
+            }
+            
+            // If we have a fallback username, use it
+            if (fallbackUsername.value) {
+                return fallbackUsername.value;
+            }
+            
+            // Otherwise, return empty string
+            return '';
+        });
+
+        // Get the provider display name for the navbar
+        const selectedProvider = computed(() => store.state.provider.selected || 'local');
+        const providerDisplayName = computed(() => {
+            try {
+                return getDisplayName(selectedProvider.value);
+            } catch (err) {
+                log.warn('Error getting provider display name:', { error: err });
+                return selectedProvider.value;
+            }
+        });
+
+        const googleEnabled = computed(() =>
+            config.value && config.value.googleEnabled && !store.getters.isElectronMode
+        );
+        
+        // Function to restore auth state from session storage
+        const restoreAuthState = async () => {
+            // If we've already tried to restore auth state, don't try again
+            if (isAuthRestored.value) {
+                return;
+            }
+            
+            // Mark that we've tried to restore auth state
+            isAuthRestored.value = true;
+            
+            // If we already have a username in the store, no need to restore
+            if (storeUsername.value) {
+                return;
+            }
+            
+            log.debug('No username in store, checking session storage');
+            
+            // Try to get auth state from sessionStorage as fallback
+            try {
+                const sessionState = sessionStorage.getItem('td.vuex');
+                if (sessionState) {
+                    const state = JSON.parse(sessionState);
+                    
+                    // Check if we have auth data in session storage
+                    if (state.auth && state.auth.user && state.auth.user.username) {
+                        log.info('Found username in session storage:', {
+                            username: state.auth.user.username,
+                            actual_username: state.auth.user.actual_username || 'not available'
+                        });
+                        
+                        // Set fallback username
+                        fallbackUsername.value = state.auth.user.username;
+                        
+                        // If we have a provider in session storage, restore it too
+                        if (state.provider && state.provider.selected) {
+                            log.info('Restoring provider from session storage:', {
+                                provider: state.provider.selected
+                            });
+                            
+                            // Dispatch action to select provider
+                            try {
+                                await store.dispatch(PROVIDER_SELECTED, state.provider.selected);
+                                log.info('Provider restored successfully');
+                            } catch (err) {
+                                log.error('Error restoring provider:', { error: err });
+                            }
+                        }
+                        
+                        // If we have JWT data, restore it
+                        if (state.auth.jwt && state.auth.refreshToken) {
+                            log.info('Restoring JWT from session storage');
+                            
+                            // Dispatch action to set JWT
+                            try {
+                                await store.dispatch(AUTH_SET_JWT, {
+                                    accessToken: state.auth.jwt,
+                                    refreshToken: state.auth.refreshToken
+                                });
+                                log.info('JWT restored successfully');
+                            } catch (err) {
+                                log.error('Error restoring JWT:', { error: err });
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                log.error('Error accessing session storage:', { error: err });
+            }
+        };
+        
+        // Check auth state on component mount
+        onMounted(() => {
+            restoreAuthState();
+        });
+
+        // Method to handle logout
+        const onLogOut = async (evt) => {
+            // This works in both production and tests
+            evt.preventDefault();
+
+            // Dispatch logout action and wait for it to complete
+            await store.dispatch(LOGOUT);
+
+            log.debug('Logout action completed, now navigating to home page');
+
+            // Always navigate to home page after logout
+            // Try multiple approaches to ensure navigation works
+            try {
+                // First try using the Vue Router instance from the component
+                if (getCurrentInstance() && getCurrentInstance().proxy.$router) {
+                    log.debug('Navigating to home page after logout (component router)');
+                    getCurrentInstance().proxy.$router.push('/').catch((error) => {
+                        if (error.name !== 'NavigationDuplicated') {
+                            log.warn('Navigation error:', { error });
+                            // Try alternative navigation method
+                            window.location.href = '/';
+                        }
+                    });
+                } else {
+                    // Fallback to direct location change if router is not available
+                    log.debug('Navigating to home page after logout (location change)');
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                log.error('Error during logout navigation:', { error });
+                // Final fallback
+                window.location.href = '/';
+            }
+        };
+
+        // Equivalent of mounted lifecycle hook
+        const setupNavbarToggle = () => {
+            // Wait for component to mount
+            setTimeout(() => {
+                const toggle = document.querySelector('.navbar-toggler');
+                if (toggle) {
+                    toggle.addEventListener('click', () => {
+                        const target = document.getElementById('nav-collapse');
+                        if (target) {
+                            target.classList.toggle('show');
+                        }
+                    });
+                }
+            }, 0);
+        };
+        setupNavbarToggle();
+
+        // Return everything needed in the template
+        return {
+            t,
+            username,
+            storeActualUsername, // Make actual username available to the template
+            packageBuildVersion,
+            packageBuildState,
+            googleEnabled,
+            providerDisplayName,
+            onLogOut,
+            restoreAuthState
+        };
+    }
+};
+</script>
 
 <style lang="scss" scoped>
 @use '@/styles/sizes.scss' as sizes;
 @use '@/styles/colors.scss' as colors;
 $icon-height: 1.2rem;
+
 .navbar {
-  background-color: colors.$orange;
-  border-color: colors.$orange-alt;
-  height: sizes.$header-height + 10;
-  font-size: 15px;
+    background-color: colors.$orange;
+    border-color: colors.$orange-alt;
+    height: sizes.$header-height + 10;
+    font-size: 15px;
 }
+
 .nav-link,
 .logged-in-as {
-  color: colors.$white !important;
+    color: colors.$white !important;
 }
+
 .logged-in-as {
-  margin-right: 10px;
+    margin-right: 10px;
 }
+
 .td-fa-nav {
-  font-size: $icon-height;
-  max-height: $icon-height;
-  margin: 0 5px 0 5px;
+    font-size: $icon-height;
+    max-height: $icon-height;
+    margin: 0 5px 0 5px;
 }
+
 .td-brand {
-  color: colors.$white !important;
-  .td-brand-img {
-    max-height: (sizes.$header-height - 10);
-  }
+    color: colors.$white !important;
+
+    .td-brand-img {
+        max-height: (sizes.$header-height - 10);
+    }
 }
+
 @media (max-width: 576px) {
-  .nav-link {
-    color: colors.$red !important;
-  }
-  .logged-in-as {
-    background-color: colors.$orange;
-    border-radius: 5px;
-    padding: 10px;
-  }
+    .nav-link {
+        color: colors.$red !important;
+    }
+
+    .logged-in-as {
+        background-color: colors.$orange;
+        border-radius: 5px;
+        padding: 10px;
+    }
 }
+
 @media (max-width: 576px) {
-  .td-owasp-logo {
-    background-color: colors.$red;
-    border-radius: 50%;
-    padding: 5px;
-  }
+    .td-owasp-logo {
+        background-color: colors.$red;
+        border-radius: 50%;
+        padding: 5px;
+    }
 }
 </style>
-
-<script>
-import { mapGetters, mapState } from 'vuex';
-import { LOGOUT } from '@/store/actions/auth.js';
-import TdLocaleSelect from './LocaleSelect.vue';
-export default {
-  name: 'TdNavbar',
-  components: {
-    TdLocaleSelect,
-  },
-  computed: {
-    ...mapGetters(['username']),
-    ...mapState({
-      config: state => state.config.config
-    }),
-    googleEnabled() {
-      return this.config && this.config.googleEnabled;
-    }
-  },
-  methods: {
-    onLogOut(evt) {
-      evt.preventDefault();
-      this.$store.dispatch(LOGOUT);
-      this.$router.push('/').catch((error) => {
-        if (error.name != 'NavigationDuplicated') {
-          throw error;
-        }
-      });
-    },
-  },
-};
-</script>

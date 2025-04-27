@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
+const _sinon = sinon;
 
 import error from '../../src/controllers/errors.js';
 import { getMockResponse } from '../mocks/express.mocks.js';
@@ -157,6 +158,4 @@ describe('controllers/error.js', () => {
             expect(res).to.deep.equal(mockResponse);
         });
     });
-
-
 });

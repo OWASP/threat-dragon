@@ -20,21 +20,22 @@ describe('providers/google.js', () => {
 
     describe('getOauthRedirectUrl', () => {
         const config = { GOOGLE_CLIENT_ID: '1234567' };
-    
+
         it('contains the Google OAuth URL', () => {
-            expect(googleProvider.getOauthRedirectUrl()).to
-                .contain('https://accounts.google.com/o/oauth2/auth');
+            expect(googleProvider.getOauthRedirectUrl()).to.contain(
+                'https://accounts.google.com/o/oauth2/auth'
+            );
         });
-    
+
         it('adds the client_id', () => {
             sinon.stub(env, 'get').returns({ config });
-            expect(googleProvider.getOauthRedirectUrl()).to
-                .contain(`client_id=${config.GOOGLE_CLIENT_ID}`);
+            expect(googleProvider.getOauthRedirectUrl()).to.contain(
+                `client_id=${config.GOOGLE_CLIENT_ID}`
+            );
         });
-    
+
         it('uses the default scope', () => {
-            expect(googleProvider.getOauthRedirectUrl()).to
-                .contain('scope=openid email profile');  // Do not use URL-encoded scopes in the test
+            expect(googleProvider.getOauthRedirectUrl()).to.contain('scope=openid email profile'); // Do not use URL-encoded scopes in the test
         });
     });
 
@@ -51,13 +52,12 @@ describe('providers/google.js', () => {
             });
 
             it('gives a relative url when not in development mode', () => {
-                const idx = googleProvider.getOauthReturnUrl(code).indexOf('/#/oauth-return');
+                const idx = googleProvider.getOauthReturnUrl(code).indexOf('/oauth-return');
                 expect(idx).to.eq(0);
             });
 
             it('adds the code as a query param', () => {
-                expect(googleProvider.getOauthReturnUrl(code)).to
-                    .contain(`code=${code}`);
+                expect(googleProvider.getOauthReturnUrl(code)).to.contain(`code=${code}`);
             });
         });
 
@@ -86,8 +86,14 @@ describe('providers/google.js', () => {
         const code = 'mycode';
 
         beforeEach(async () => {
-            sinon.stub(axios, 'post').resolves({ data: { access_token: '' }});
-            sinon.stub(axios, 'get').resolves({ data: { name: 'John Doe', email: 'john.doe@example.com', picture: 'https://example.com/pic.jpg' }});
+            sinon.stub(axios, 'post').resolves({ data: { access_token: 'test-token' } });
+            sinon.stub(axios, 'get').resolves({
+                data: {
+                    name: 'John Doe',
+                    email: 'john.doe@example.com',
+                    picture: 'https://example.com/pic.jpg'
+                }
+            });
             sinon.stub(env, 'get').returns({ config });
 
             await googleProvider.completeLoginAsync(code);
@@ -113,7 +119,7 @@ describe('providers/google.js', () => {
 
         it('fetches the user info from Google', () => {
             expect(axios.get).to.have.been.calledWith(
-                `https://www.googleapis.com/oauth2/v1/userinfo?access_token=`
+                `https://www.googleapis.com/oauth2/v1/userinfo?access_token=test-token`
             );
         });
     });

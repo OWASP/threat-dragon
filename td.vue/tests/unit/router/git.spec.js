@@ -10,7 +10,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/repository');
+            expect(route.path).toEqual('/git/github/repository');
         });
 
         it('uses the RepositoryAccess view as a lazily loaded component', async () => {
@@ -28,7 +28,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/branch');
+            expect(route.path).toEqual('/git/github/:repository/branch');
         });
 
         it('uses the BranchAccess view as a lazily loaded component', async () => {
@@ -46,7 +46,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/threatmodels');
+            expect(route.path).toEqual('/git/github/:repository/:branch/threatmodels');
         });
 
         it('uses the ThreatModelSelect view as a lazily loaded component', async () => {
@@ -64,7 +64,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/new');
+            expect(route.path).toEqual('/git/github/:repository/:branch/new');
         });
 
         it('uses the NewThreatModel view as a lazily loaded component', async () => {
@@ -82,7 +82,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel');
+            expect(route.path).toEqual('/git/github/:repository/:branch/:threatmodel');
         });
 
         it('uses the ThreatModel view as a lazily loaded component', async () => {
@@ -100,7 +100,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit');
+            expect(route.path).toEqual('/git/github/:repository/:branch/:threatmodel/edit');
         });
 
         it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
@@ -118,7 +118,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/edit/:diagram');
+            expect(route.path).toEqual('/git/github/:repository/:branch/:threatmodel/edit/:diagram');
         });
 
         it('uses the DiagramEdit view as a lazily loaded component', async () => {
@@ -136,7 +136,7 @@ describe('routes/git.js', () => {
         });
 
         it('uses the expected path', () => {
-            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/report');
+            expect(route.path).toEqual('/git/github/:repository/:branch/:threatmodel/report');
         });
 
         it('uses the ReportModel view as a lazily loaded component', async () => {

@@ -21,12 +21,60 @@ describe('service/loginApi.js', () => {
     });
 
     describe('completeLoginAsync', () => {
-        beforeEach(async () => {
-            await loginApi.completeLoginAsync(provider, code);
+        beforeEach(() => {
+            console.log = jest.fn();
+            console.error = jest.fn();
+            
+            api.postAsync.mockResolvedValue({
+                data: {
+                    accessToken: 'test-access-token',
+                    refreshToken: 'test-refresh-token'
+                }
+            });
         });
-
-        it('calls the complete login endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith(`/api/oauth/${provider}?code=${code}`);
+        
+        it('calls the complete login endpoint with valid code', async () => {
+            await loginApi.completeLoginAsync(provider, code);
+            expect(api.postAsync).toHaveBeenCalledWith(`/api/oauth/${provider}/completeLogin`, { code });
+        });
+        
+        it('throws error when code is missing', async () => {
+            await expect(loginApi.completeLoginAsync(provider, null))
+                .rejects.toThrow('No authorization code provided');
+        });
+        
+        it('validates response format and throws error for invalid responses', async () => {
+            // Mock invalid response (missing tokens)
+            api.postAsync.mockResolvedValue({ data: {} });
+            
+            await expect(loginApi.completeLoginAsync(provider, code))
+                .rejects.toThrow('Invalid server response format');
+        });
+        
+        it('handles API errors', async () => {
+            const testError = new Error('API error');
+            api.postAsync.mockRejectedValue(testError);
+            
+            await expect(loginApi.completeLoginAsync(provider, code))
+                .rejects.toThrow('API error');
+                
+            expect(console.error).toHaveBeenCalled();
+        });
+        
+        it('logs securely without exposing tokens', async () => {
+            await loginApi.completeLoginAsync(provider, code);
+            
+            // Check that no log contains the actual code or tokens
+            const allCalls = console.log.mock.calls.flat();
+            // Filter to only include string messages
+            const stringLogs = allCalls.filter(logMsg => typeof logMsg === 'string');
+            const sensitiveData = [code, 'test-access-token', 'test-refresh-token'];
+            
+            sensitiveData.forEach(data => {
+                stringLogs.forEach(logMsg => {
+                    expect(logMsg).not.toContain(data);
+                });
+            });
         });
     });
 

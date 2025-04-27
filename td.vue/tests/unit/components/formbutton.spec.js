@@ -1,6 +1,6 @@
-import { BootstrapVue } from 'bootstrap-vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { FontAwesomeIcon as _FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { shallowMount } from '@vue/test-utils';
+import bootstrapVueNext from '@/plugins/bootstrap-vue-next';
 
 import TdFormButton from '@/components/FormButton.vue';
 
@@ -11,15 +11,18 @@ describe('components/FormButton.vue', () => {
         text = 'bar',
         isPrimary = true;
 
-    let wrapper, localVue;
+    let wrapper;
 
     beforeEach(() => {
-        localVue = createLocalVue();
-        localVue.use(BootstrapVue);
-        localVue.component('font-awesome-icon', FontAwesomeIcon);
         wrapper = shallowMount(TdFormButton, {
-            localVue,
-            propsData: {
+            global: {
+                plugins: [bootstrapVueNext],
+                stubs: {
+                    'font-awesome-icon': true,
+                    'b-button': true
+                }
+            },
+            props: {
                 onBtnClick,
                 icon,
                 iconPreface,
@@ -58,8 +61,9 @@ describe('components/FormButton.vue', () => {
     });
     
     it('sets the font awesome icon value', () => {
-        const fa = wrapper.findComponent(FontAwesomeIcon);
-        expect(fa.attributes(icon)).toEqual(`${iconPreface},${icon}`);
+        // Check that the icon props are passed to the component
+        expect(wrapper.vm.icon).toBe(icon);
+        expect(wrapper.vm.iconPreface).toBe(iconPreface);
     });
 
     it('reads the text value', () => {

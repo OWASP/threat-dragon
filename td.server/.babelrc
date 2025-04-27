@@ -3,7 +3,11 @@
         [
             "@babel/preset-env",
             {
-                "shippedProposals": true
+                "shippedProposals": true,
+                "targets": {
+                    "node": "current"
+                },
+                "modules": false
             }]
     ],
     "plugins": [

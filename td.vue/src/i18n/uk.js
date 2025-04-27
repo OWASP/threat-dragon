@@ -2,399 +2,495 @@ const ukr = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
+    operator: {
+        heading: 'Оператор',
+        operatedby: 'Цей веб-сайт та екземпляр OWASP Threat Dragon керується:',
+        name: `${process.env.VUE_APP_OPERATOR_NAME || 'оператором цього веб-сайту'}`,
+        contact: 'Контакт: ' + (process.env.VUE_APP_OPERATOR_CONTACT ? process.env.VUE_APP_OPERATOR_CONTACT.replace('@', ' [at] ') : '(контактна інформація не надана)'),
+    },
+    tos: {
+        title: 'Умови використання',
+        lastUpdated: '4 квітня 2025',
+        introduction: 'Ласкаво просимо до нашого екземпляру OWASP Threat Dragon. Ці Умови використання ("Умови") регулюють ваш доступ та використання цього веб-сайту, який є екземпляром веб-додатку з відкритим кодом, що надається оператором, зазначеним вище ("Оператор").',
+        sections: [
+            {
+                heading: '1. Прийняття умов',
+                content: 'Отримуючи доступ та використовуючи цей веб-сайт, ви приймаєте та погоджуєтеся дотримуватися положень цієї угоди. Якщо ви не згодні з цими умовами, будь ласка, не використовуйте цей веб-сайт.'
+            },
+            {
+                heading: '2. Використання веб-сайту',
+                content: 'Ви можете використовувати веб-сайт лише в законних цілях. Ви погоджуєтеся не зловживати, не порушувати або не намагатися отримати несанкціонований доступ до веб-сайту або його базових систем.'
+            },
+            {
+                heading: '3. Відсутність гарантій',
+                content: 'Веб-сайт надається "як є" без будь-яких гарантій, явних або неявних, включаючи, але не обмежуючись, придатність для певної мети, доступність або точність. Ми не гарантуємо безперебійну або безпомилкову роботу.'
+            },
+            {
+                heading: '4. Обмеження відповідальності',
+                content: 'У максимальній мірі, дозволеній законом, Оператор не несе відповідальності за будь-які прямі, непрямі, випадкові або непрямі збитки, що виникають в результаті використання або неможливості використання веб-сайту.'
+            },
+            {
+                heading: '5. Програмне забезпечення з відкритим кодом',
+                content: 'Цей веб-сайт працює на програмному забезпеченні OWASP Threat Dragon, вихідний код якого доступний за адресою https://www.github.com/OWASP/threat-dragon. Ваше використання програмного забезпечення регулюється умовами його ліцензії з відкритим кодом. Ми не несемо відповідальності за саме програмне забезпечення, лише за роботу цього екземпляра. Оператор цього веб-сайту не пов\'язаний з OWASP.'
+            },
+            {
+                heading: '6. Зміни умов',
+                content: 'Оператор може оновлювати ці Умови в будь-який час. Продовження використання веб-сайту після змін означає прийняття оновлених Умов.'
+            },
+            {
+                heading: '7. Припинення',
+                content: 'Оператор залишає за собою право призупинити або припинити доступ до веб-сайту на свій розсуд, без повідомлення, з будь-якої причини.'
+            },
+            {
+                heading: '8. Застосовне право',
+                content: 'Ці Умови регулюються законами юрисдикції, в якій знаходиться штаб-квартира Оператора (у випадку організації) або проживає (у випадку фізичної особи), без урахування принципів колізійного права.'
+            }
+        ],
+        contact: 'Якщо у вас є питання щодо цих Умов, будь ласка, зв\'яжіться з оператором.'
+    },
+    privacy: {
+        title: 'Політика конфіденційності',
+        lastUpdated: '4 квітня 2025',
+        introduction: 'Оператор цього веб-сайту прагне захистити вашу конфіденційність. Ця Політика конфіденційності пояснює, як обробляється ваша інформація.',
+        sections: [
+            {
+                heading: 'Мінімальне використання даних для операцій',
+                content: 'Оператор не збирає, не зберігає та не обробляє персональні дані користувачів для відстеження, профілювання або передачі третім особам. Тимчасові журнали, які можуть включати IP-адреси або імена користувачів, створюються виключно для операційних та налагоджувальних цілей. Ці журнали видаляються протягом короткого періоду часу і не зберігаються та не використовуються за межами цих обмежених цілей.'
+            },
+            {
+                heading: 'Дотримання законодавства',
+                content: 'Оператор розкриватиме інформацію лише у випадках, передбачених законом, наприклад, у відповідь на дійсний урядовий наказ або повістку. У таких випадках Оператор дотримуватиметься застосовних юридичних зобов\'язань.'
+            },
+            {
+                heading: 'Зміни в цій політиці',
+                content: 'Оператор може час від часу оновлювати цю Політику конфіденційності. Будь-які зміни будуть опубліковані на цій сторінці з оновленою датою "Останнє оновлення".'
+            },
+            {
+                heading: 'Зв\'яжіться з нами',
+                content: 'Якщо у вас є питання щодо цієї Політики конфіденційності, будь ласка, зв\'яжіться з оператором.'
+            }
+        ]
+    },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
-        loggedInAs: 'Logged in as',
-        logOut: 'Log out'
+        v2Warning:
+            'Моделі загроз версії 2.0 не сумісні з моделями Threat Dragon версії 1.x. Імпортовані моделі версії 1.x будуть оновлені до схеми версії 2.0',
+        loggedInAs: 'Ви увійшли як',
+        logOut: 'Вийти',
+        tos: 'Умови використання',
+        privacy: 'Політика конфіденційності'
     },
     home: {
         title: 'OWASP Threat Dragon',
-        imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.'
+        imgAlt: 'Логотип Threat Dragon',
+        description:
+            'OWASP Threat Dragon - це безкоштовний, з відкритим кодом, кросплатформний додаток для створення моделей загроз. Використовуйте його для малювання діаграм моделювання загроз та для виявлення загроз для вашої системи. З акцентом на гнучкість та простоту, він легко доступний для всіх типів користувачів.'
     },
     providers: {
         desktop: {
             displayName: 'Threat Dragon',
-            loginWith: 'Start'
+            loginWith: 'Почати'
         },
         github: {
             displayName: 'GitHub',
-            loginWith: 'Login with'
+            loginWith: 'Увійти за допомогою'
         },
         gitlab: {
             displayName: 'GitLab',
-            loginWith: 'Login with'
+            loginWith: 'Увійти за допомогою'
         },
         bitbucket: {
             displayName: 'Bitbucket',
-            loginWith: 'Login with'
+            loginWith: 'Увійти за допомогою'
         },
         google: {
             displayName: 'Google',
-            loginWith: 'Login with'
+            loginWith: 'Увійти за допомогою'
         },
         local: {
-            displayName: 'Local Session',
-            loginWith: 'Login to'
+            displayName: 'Локальна сесія',
+            loginWith: 'Увійти в'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Відкрити',
+            description: 'Виберіть файл моделі загроз або цільову папку з Google Drive',
+            saveThreatModel: 'Зберегти модель загроз у Google Drive',
+            saveDescription: 'Виберіть папку в Google Drive для збереження вашої моделі загроз',
+            fileName: 'Ім\'я файлу',
+            fileNamePlaceholder: 'Введіть ім\'я для вашого файлу',
+            selectFolder: 'Виберіть папку в Google Drive',
+            selectFile: 'Виберіть файл з Google Drive',
+            selectThreatModel: 'Виберіть модель загроз з Google Drive'
         }
     },
     dashboard: {
         welcome: {
-            title: 'Welcome!',
-            description: 'You\'re ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. '
+            title: 'Ласкаво просимо!',
+            description:
+                'Ви готові почати робити дизайн вашого додатку більш безпечним. Ви можете відкрити існуючу модель загроз або створити нову, вибравши один із варіантів нижче.'
         },
         actions: {
-            openExisting: 'Open an existing threat model',
-            createNew: 'Create a new, empty threat model',
-            readDemo: 'Explore a sample threat model',
-            importExisting: 'Import a threat model via JSON'
+            openExisting: 'Відкрити існуючу модель загроз',
+            createNew: 'Створити нову, порожню модель загроз',
+            readDemo: 'Вивчити приклад моделі загроз',
+            importExisting: 'Імпортувати модель загроз через JSON'
         }
     },
     demo: {
-        select: 'Select a demo threat model from the list below'
+        select: 'Виберіть демонстраційну модель загроз зі списку нижче'
     },
     desktop: {
         file: {
-            heading: 'File',
-            clearRecentDocs: 'Clear Menu',
-            close: 'Close Model',
-            closeWindow: 'Close Window',
-            new: 'New Model',
-            open: 'Open Model',
-            recentDocs: 'Open Recent',
-            save: 'Save Model',
-            saveAs: 'Save Model As'
+            heading: 'Файл',
+            clearRecentDocs: 'Очистити меню',
+            close: 'Закрити модель',
+            closeWindow: 'Закрити вікно',
+            new: 'Нова модель',
+            open: 'Відкрити модель',
+            recentDocs: 'Відкрити нещодавні',
+            save: 'Зберегти модель',
+            saveAs: 'Зберегти модель як'
         },
         help: {
-            heading: 'Help',
-            docs: 'Documentation',
-            visit: 'Visit us at OWASP',
-            sheets: 'OWASP Cheat Sheets',
-            github: 'Visit us on GitHub',
-            submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            heading: 'Допомога',
+            docs: 'Документація',
+            visit: 'Відвідайте нас на OWASP',
+            sheets: 'Шпаргалки OWASP',
+            github: 'Відвідайте нас на GitHub',
+            submit: 'Надіслати проблему',
+            check: 'Перевірити оновлення...'
         }
     },
     repository: {
-        select: 'Select a',
-        from: 'repository from the list below',
-        noneFound: 'No repositories found. To get started, create a new repository on'
+        select: 'Виберіть',
+        from: 'репозиторій зі списку нижче',
+        noneFound: 'Репозиторії не знайдено. Щоб почати, створіть новий репозиторій на'
     },
     branch: {
-        select: 'Select a branch from',
-        from: 'from the list below or',
-        chooseRepo: 'choose another repo',
-        or: 'or',
-        addNew: 'add a new branch',
-        protectedBranch: 'Protected branch',
-        nameRequired: 'Branch name is required',
-        nameExists: 'Branch name already exists',
-        refBranch: 'Reference branch',
-        add: 'add branch',
-        cancel: 'Cancel',
-        name: 'branch name',
+        select: 'Виберіть гілку з',
+        from: 'зі списку нижче або',
+        chooseRepo: 'виберіть інший репозиторій',
+        or: 'або',
+        addNew: 'додайте нову гілку',
+        protectedBranch: 'Захищена гілка',
+        nameRequired: 'Ім\'я гілки обов\'язкове',
+        nameExists: 'Ім\'я гілки вже існує',
+        refBranch: 'Посилальна гілка',
+        add: 'додати гілку',
+        cancel: 'Скасувати',
+        name: 'ім\'я гілки'
+    },
+    folder: {
+        select: 'Виберіть',
+        from: 'папку зі списку нижче',
+        noneFound: 'Ця папка порожня. Ви можете створити нову модель загроз тут.'
     },
     threatmodelSelect: {
-        select: 'Select a Threat Model from',
-        from: 'from the list below, or choose another',
-        branch: 'branch',
-        or: 'or',
-        repo: 'repo',
-        newThreatModel: 'Create a New Threat Model'
+        select: 'Виберіть модель загроз з',
+        from: 'зі списку нижче, або виберіть іншу',
+        branch: 'гілку',
+        or: 'або',
+        repo: 'репозиторій',
+        newThreatModel: 'Створити нову модель загроз'
     },
     threatmodel: {
-        contributors: 'Contributors',
-        contributorsPlaceholder: 'Start typing to add a contributor',
-        description: 'High level system description',
-        dragAndDrop: 'Drag and drop or ',
-        editing: 'Editing',
-        jsonPaste: 'Drop a threat model JSON file or paste its content here:',
-        owner: 'Owner',
-        reviewer: 'Reviewer',
-        title: 'Title',
+        contributors: 'Учасники',
+        contributorsPlaceholder: 'Почніть вводити, щоб додати учасника',
+        description: 'Опис системи високого рівня',
+        dragAndDrop: 'Перетягніть або ',
+        jsonPaste: 'Перетягніть файл JSON моделі загроз або вставте його вміст тут:',
+        owner: 'Власник',
+        reviewer: 'Рецензент',
+        title: 'Заголовок',
         diagram: {
-            diagrams: 'Diagrams',
-            addNewDiagram: 'Add a new diagram...',
+            diagrams: 'Діаграми',
+            addNewDiagram: 'Додати нову діаграму...',
             generic: {
-                defaultTitle: 'New generic diagram',
-                defaultDescription: 'New generic diagram description',
-                select: 'Generic'
+                defaultTitle: 'Нова загальна діаграма',
+                defaultDescription: 'Опис нової загальної діаграми',
+                select: 'Загальна'
             },
             stride: {
-                defaultTitle: 'New STRIDE diagram',
-                defaultDescription: 'New STRIDE diagram description',
+                defaultTitle: 'Нова діаграма STRIDE',
+                defaultDescription: 'Опис нової діаграми STRIDE',
                 select: 'STRIDE'
             },
             linddun: {
-                defaultTitle: 'New LINDDUN diagram',
-                defaultDescription: 'New LINDDUN diagram description',
+                defaultTitle: 'Нова діаграма LINDDUN',
+                defaultDescription: 'Опис нової діаграми LINDDUN',
                 select: 'LINDDUN'
             },
             plot4ai: {
-                defaultTitle: 'New PLOT4ai diagram',
-                defaultDescription: 'New PLOT4ai diagram description',
+                defaultTitle: 'Нова діаграма PLOT4ai',
+                defaultDescription: 'Опис нової діаграми PLOT4ai',
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
+                defaultTitle: 'Нова діаграма DIE',
+                defaultDescription: 'Опис нової діаграми DIE',
                 select: 'DIE'
             },
             cia: {
-                defaultTitle: 'New CIA diagram',
-                defaultDescription: 'New CIA diagram description',
+                defaultTitle: 'Нова діаграма CIA',
+                defaultDescription: 'Опис нової діаграми CIA',
                 select: 'CIA'
             }
         },
-        threats: 'Threats',
+        threats: 'Загрози',
         errors: {
-            dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'Invalid JSON. Please check your model and try again.',
-            onlyJsonAllowed: 'Only files that end with .json are supported.',
-            open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            dropSingleFileOnly: 'Для перетягування потрібен один файл.',
+            invalidJson: 'Недійсний JSON. Будь ласка, перевірте вашу модель і спробуйте знову.',
+            onlyJsonAllowed: 'Підтримуються лише файли з розширенням .json.',
+            open: 'Помилка відкриття цієї моделі загроз. Перевірте консоль розробника для отримання додаткової інформації',
+            save: 'Помилка збереження моделі загроз. Перевірте консоль розробника для отримання додаткової інформації',
+            googleDriveSave: 'Помилка збереження в Google Drive. Переконайтеся, що у вас є відповідні дозволи.'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        opened: 'Модель загроз успішно відкрита',
+        saved: 'Модель загроз успішно збережена',
         properties: {
-            title: 'Properties',
-            emptyState: 'Select an element on the graph to edit',
-            name: 'Name',
-            text: 'Text',
-            description: 'Description',
-            outOfScope: 'Out of Scope',
-            bidirection: 'Bidirectional',
-            reasonOutOfScope: 'Reason for out of scope',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
-            isALog: 'Is a Log',
-            isEncrypted: 'Encrypted',
-            isSigned: 'Signed',
-            isWebApplication: 'Web Application',
-            privilegeLevel: 'Privilege Level',
-            providesAuthentication: 'Provides Authentication',
-            protocol: 'Protocol',
-            publicNetwork: 'Public Network',
-            storesCredentials: 'Stores Credentials',
-            storesInventory: 'Stores Inventory'
+            title: 'Властивості',
+            emptyState: 'Виберіть елемент на графіку для редагування',
+            name: 'Ім\'я',
+            text: 'Текст',
+            description: 'Опис',
+            outOfScope: 'Поза областю',
+            bidirection: 'Двонаправлений',
+            reasonOutOfScope: 'Причина знаходження поза областю',
+            handlesCardPayment: 'Картковий платіж',
+            handlesGoodsOrServices: 'Товари або послуги',
+            isALog: 'Є журналом',
+            isEncrypted: 'Зашифровано',
+            isSigned: 'Підписано',
+            isWebApplication: 'Веб-додаток',
+            privilegeLevel: 'Рівень привілеїв',
+            providesAuthentication: 'Надає автентифікацію',
+            protocol: 'Протокол',
+            publicNetwork: 'Публічна мережа',
+            storesCredentials: 'Зберігає облікові дані',
+            storesInventory: 'Зберігає інвентар'
         },
-        buttons: {
-            delete: 'Delete selected',
-            redo: 'Redo edit',
-            shortcuts: 'Keyboard shortcuts',
-            toggleGrid: 'Toggle grid',
-            undo: 'Undo edit',
-            zoomIn: 'Zoom in',
-            zoomOut: 'Zoom out'
+        controlButtons: {
+            delete: 'Видалити вибране',
+            redo: 'Повторити редагування',
+            shortcuts: 'Комбінації клавіш',
+            toggleGrid: 'Переключити сітку',
+            undo: 'Скасувати редагування',
+            zoomIn: 'Збільшити',
+            zoomOut: 'Зменшити',
+            save: 'Зберегти'
         },
         shortcuts: {
-            title: 'Shortcuts',
+            title: 'Комбінації клавіш',
             copy: {
                 shortcut: '(ctrl/cmd) + c',
-                action: 'Copy'
+                action: 'Копіювати'
             },
             paste: {
                 shortcut: '(ctrl/cmd) + v',
-                action: 'Paste'
+                action: 'Вставити'
             },
             undo: {
                 shortcut: '(ctrl/cmd) + z',
-                action: 'Undo'
+                action: 'Скасувати'
             },
             redo: {
                 shortcut: '(ctrl/cmd) + y',
-                action: 'Redo'
+                action: 'Повторити'
             },
             delete: {
                 shortcut: 'del',
-                action: 'Delete'
+                action: 'Видалити'
             },
             pan: {
-                shortcut: 'shift + left-click (hold/drag)',
-                action: 'Pan'
+                shortcut: 'shift + лівий клік (утримувати/перетягувати)',
+                action: 'Панорамування'
             },
             multiSelect: {
-                shortcut: 'left-click on empty space and drag',
-                action: 'Multi-select'
+                shortcut: 'лівий клік на порожньому місці і перетягування',
+                action: 'Множинний вибір'
             },
             zoom: {
-                shortcut: '(ctrl/cmd) + mousewheel',
-                action: 'Zoom'
+                shortcut: '(ctrl/cmd) + колесо миші',
+                action: 'Масштабування'
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Зберегти'
             }
         },
         stencil: {
-            boundaries: 'Boundaries',
-            components: 'Components',
-            entities: 'Entities',
-            metadata: 'Metadata',
-            search: 'Search',
-            notFound: 'We don\'t have that yet, want to open an issue? :)'
+            title: 'Форми',
+            boundaries: 'Межі',
+            components: 'Компоненти',
+            entities: 'Сутності',
+            metadata: 'Метадані',
+            search: 'Пошук форм',
+            notFound: 'У нас цього ще немає, хочете відкрити проблему? :)'
         },
         shapes: {
-            actor: 'Actor',
-            flow: 'Data Flow',
-            flowStencil: 'Data Flow',
-            process: 'Process',
-            store: 'Store',
-            text: 'Descriptive text',
-            trustBoundary: 'Trust Boundary'
+            actor: 'Актор',
+            flow: 'Потік даних',
+            flowStencil: 'Потік даних',
+            process: 'Процес',
+            store: 'Сховище',
+            text: 'Описовий текст',
+            trustBoundary: 'Межа довіри'
         }
     },
     forms: {
-        apply: 'Apply',
-        cancel: 'Cancel',
-        close: 'Close',
-        closeModel: 'Close Model',
-        delete: 'Delete',
-        discardTitle: 'Discard Changes?',
-        discardMessage: 'Are you sure you want to discard your changes?',
-        edit: 'Edit',
-        exportAs: 'Export Model As',
-        exportHtml: 'HTML Report',
-        exportPdf: 'PDF Report',
-        exportTd: 'Original (Threat Dragon)',
+        apply: 'Застосувати',
+        cancel: 'Скасувати',
+        close: 'Закрити',
+        closeModel: 'Закрити модель',
+        create: 'Створити',
+        delete: 'Видалити',
+        discardTitle: 'Скасувати зміни?',
+        discardMessage: 'Ви впевнені, що хочете скасувати свої зміни?',
+        edit: 'Редагувати',
+        export: 'Експорт',
+        exportAs: 'Експортувати модель як',
+        exportHtml: 'HTML звіт',
+        exportPdf: 'PDF звіт',
+        exportTd: 'Оригінал (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
-        import: 'Import',
+        exportFormats: {
+            png: 'PNG',
+            jpeg: 'JPEG',
+            svg: 'SVG'
+        },
+        import: 'Імпорт',
         ok: 'OK',
-        open: 'Open',
-        openModel: 'Open Model',
-        print: 'Print',
-        reload: 'Reload',
-        remove: 'Remove',
-        report: 'Report',
-        save: 'Save',
-        saveAs: 'Save As',
-        saveModel: 'Save Model',
-        saveModelAs: 'Save Model As',
-        search: 'Search',
-        next:'Next',
-        previous:'Previous'
+        open: 'Відкрити',
+        openModel: 'Відкрити модель',
+        print: 'Друк',
+        reload: 'Перезавантажити',
+        remove: 'Видалити',
+        report: 'Звіт',
+        save: 'Зберегти',
+        saveAs: 'Зберегти як',
+        saveModel: 'Зберегти модель',
+        saveModelAs: 'Зберегти модель як',
+        search: 'Пошук',
+        next: 'Наступний',
+        previous: 'Попередній',
+        requiredField: 'Обов\'язкове поле'
     },
     threats: {
         model: {
             cia: {
                 header: '--- CIA ---',
-                confidentiality: 'Confidentiality',
-                integrity: 'Integrity',
-                availability: 'Availability'
+                confidentiality: 'Конфіденційність',
+                integrity: 'Цілісність',
+                availability: 'Доступність'
             },
             die: {
                 header: '--- DIE ---',
-                distributed: 'Distributed',
-                immutable: 'Immutable',
-                ephemeral: 'Ephemeral'
+                distributed: 'Розподіленість',
+                immutable: 'Незмінність',
+                ephemeral: 'Ефемерність'
             },
             linddun: {
                 header: '--- LINDDUN ---',
-                linkability: 'Linkability',
-                identifiability: 'Identifiability',
-                nonRepudiation: 'Non-repudiation',
-                detectability: 'Detectability',
-                disclosureOfInformation: 'Disclosure of information',
-                unawareness: 'Unawareness',
-                nonCompliance: 'Non-compliance'
+                linkability: 'Зв\'язуваність',
+                identifiability: 'Ідентифікованість',
+                nonRepudiation: 'Незаперечність',
+                detectability: 'Виявленість',
+                disclosureOfInformation: 'Розкриття інформації',
+                unawareness: 'Необізнаність',
+                nonCompliance: 'Невідповідність'
             },
             plot4ai: {
                 header: '--- PLOT4ai ---',
-                techniqueProcesses: 'Technique & Processes',
-                accessibility: 'Accessibility',
-                identifiabilityLinkability: 'Identifiability & Linkability',
-                security: 'Security',
-                safety: 'Safety',
-                unawareness: 'Unawareness',
-                ethicsHumanRights: 'Ethics & Human Rights',
-                nonCompliance: 'Non-compliance'
+                techniqueProcesses: 'Техніка і процеси',
+                accessibility: 'Доступність',
+                identifiabilityLinkability: 'Ідентифікованість і зв\'язуваність',
+                security: 'Безпека',
+                safety: 'Надійність',
+                unawareness: 'Необізнаність',
+                ethicsHumanRights: 'Етика і права людини',
+                nonCompliance: 'Невідповідність'
             },
             stride: {
                 header: '--- STRIDE ---',
-                spoofing: 'Spoofing',
-                tampering: 'Tampering',
-                repudiation: 'Repudiation',
-                informationDisclosure: 'Information disclosure',
-                denialOfService: 'Denial of service',
-                elevationOfPrivilege: 'Elevation of privilege'
+                spoofing: 'Підміна',
+                tampering: 'Підробка',
+                repudiation: 'Відмова від авторства',
+                informationDisclosure: 'Розкриття інформації',
+                denialOfService: 'Відмова в обслуговуванні',
+                elevationOfPrivilege: 'Підвищення привілеїв'
             }
         },
         generic: {
-            default: 'New generic threat',
-            cia: 'New CIA threat',
-            die: 'New DIE threat',
-            linddun: 'New LINDDUN threat',
-            plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            default: 'Нова загальна загроза',
+            cia: 'Нова загроза CIA',
+            die: 'Нова загроза DIE',
+            linddun: 'Нова загроза LINDDUN',
+            plot4ai: 'Нова загроза PLOT4ai',
+            stride: 'Нова загроза STRIDE'
         },
-        edit: 'Edit Threat',
-        confirmDeleteTitle: 'Confirm Delete',
-        confirmDeleteMessage: 'Are you sure you really want to delete this threat?',
-        description: 'Provide a description for this threat',
-        emptyThreat: 'Select an element on the graph to add a threat',
-        mitigation: 'Provide remediation for this threat or a reason if status is N/A',
-        newThreat: 'New Threat',
-        newThreatByType: 'New Threat by Type',
-        newThreatByContext: 'New Threat by Context',
+        new: 'Нова загроза',
+        edit: 'Редагувати загрозу',
+        confirmDeleteTitle: 'Підтвердити видалення',
+        confirmDeleteMessage: 'Ви впевнені, що дійсно хочете видалити цю загрозу?',
+        description: 'Надайте опис для цієї загрози',
+        emptyThreat: 'Виберіть елемент на графіку, щоб додати загрозу',
+        mitigation: 'Надайте заходи щодо усунення цієї загрози або причину, якщо статус N/A',
+        newThreat: 'Нова загроза',
+        newThreatByType: 'Нова загроза за типом',
+        newThreatByContext: 'Нова загроза за контекстом',
         properties: {
-            description: 'Description',
-            mitigation: 'Mitigations',
-            modelType: 'Model Type',
-            number: 'Number',
-            priority: 'Priority',
-            score: 'Score',
-            status: 'Status',
-            title: 'Title',
-            type: 'Type'
+            description: 'Опис',
+            mitigation: 'Заходи щодо усунення',
+            modelType: 'Тип моделі',
+            number: 'Номер',
+            priority: 'Пріоритет',
+            score: 'Оцінка',
+            status: 'Статус',
+            title: 'Заголовок',
+            type: 'Тип'
         },
         status: {
-            notApplicable: 'N/A',
-            open: 'Open',
-            mitigated: 'Mitigated'
+            notApplicable: 'Н/Д',
+            open: 'Відкрито',
+            mitigated: 'Усунено'
         },
         priority: {
-            tbd: 'TBD',
-            low: 'Low',
-            medium: 'Medium',
-            high: 'High',
-            critical: 'Critical'
+            tbd: 'Не визначено',
+            low: 'Низький',
+            medium: 'Середній',
+            high: 'Високий',
+            critical: 'Критичний'
         }
     },
     report: {
         options: {
-            showOutOfScope: 'Show out of scope elements',
-            showMitigatedThreats: 'Show mitigated threats',
-            showModelDiagrams: 'Show model diagrams',
-            showEmpty: 'Show empty elements',
-            showProperties: 'Show element properties',
-            showBranding: 'Threat Dragon logo'
+            showOutOfScope: 'Показати елементи поза областю',
+            showMitigatedThreats: 'Показати усунені загрози',
+            showModelDiagrams: 'Показати діаграми моделі',
+            showEmpty: 'Показати порожні елементи',
+            showProperties: 'Показати властивості елементів',
+            showBranding: 'Логотип Threat Dragon'
         },
-        title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
-        executiveSummary: 'Executive Summary',
-        notProvided: 'Not provided',
-        summary: 'Summary',
+        title: 'Звіт моделі загроз для',
+        dateGenerated: 'Дата створення',
+        executiveSummary: 'Короткий зміст',
+        notProvided: 'Не надано',
+        summary: 'Підсумок',
         threatStats: {
-            total: 'Total Threats',
-            mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openCritical: 'Open / Critical Priority',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openTbd: 'Open / TBD Priority',
-            openUnknown: 'Open / Unknown Priority'
+            total: 'Всього загроз',
+            mitigated: 'Всього усунено',
+            notMitigated: 'Не усунено',
+            openCritical: 'Відкрито / Критичний пріоритет',
+            openHigh: 'Відкрито / Високий пріоритет',
+            openMedium: 'Відкрито / Середній пріоритет',
+            openLow: 'Відкрито / Низький пріоритет',
+            openTbd: 'Відкрито / Невизначений пріоритет',
+            openUnknown: 'Відкрито / Невідомий пріоритет'
         }
     },
-    upgrade: {
-        modal: {
-            header: 'Threatmodel Update',
-            welcome: 'Welcome to version 2 of OWASP Threat Dragon!',
-            p1: 'Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.',
-            p2: 'After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model.'
-        },
-        instructions: 'Great! Let\'s get you to your model.',
-        continue: 'Continue to Threat Model'
+    pagination: {
+        previous: 'Попередній',
+        next: 'Наступний'
     }
 };
 

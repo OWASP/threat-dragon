@@ -22,7 +22,7 @@ describe('config/bearer.config.js', () => {
         const provider = { foo: 'bar' };
         const verifyResult = {
             provider: {
-                'foobar': provider
+                foobar: provider
             },
             user: {
                 username: 'whatever'
@@ -54,7 +54,7 @@ describe('config/bearer.config.js', () => {
             bearer.middleware(req, res, next);
         });
 
-        ('returns an unauthorized response', () => {
+        it('returns an unauthorized response', () => {
             expect(errors.unauthorized).to.have.been.calledWith(res);
         });
     });
@@ -64,7 +64,7 @@ describe('config/bearer.config.js', () => {
             bearer.middleware(req, res, next);
         });
 
-        ('returns an unauthorized response', () => {
+        it('returns an unauthorized response', () => {
             expect(errors.unauthorized).to.have.been.calledWith(res);
         });
     });
@@ -75,7 +75,7 @@ describe('config/bearer.config.js', () => {
             sinon.stub(jwt, 'verifyToken').throws('Invalid JWT');
             bearer.middleware(req, res, next);
         });
-        
+
         it('returns a badRequest response', () => {
             expect(errors.badRequest).to.have.been.calledWith('Invalid JWT', res);
         });

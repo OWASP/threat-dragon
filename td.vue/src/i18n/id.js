@@ -3,14 +3,16 @@ const ind = {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
     nav: {
-        v2Warning: 'Model ancaman Versi 2.0 tidak kompatibel ke belakang dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0',
+        v2Warning:
+            'Model ancaman Versi 2.0 tidak kompatibel ke belakang dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0',
         loggedInAs: 'Masuk sebagai',
         logOut: 'Keluar'
     },
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo Threat Dragon',
-        description: 'OWASP Threat Dragon adalah aplikasi gratis, sumber terbuka, lintas-platform untuk membuat model ancaman. Gunakan untuk menggambar diagram pemodelan ancaman dan mengidentifikasi ancaman untuk sistem Anda. Dengan penekanan pada fleksibilitas dan kesederhanaan, mudah diakses untuk semua jenis pengguna.'
+        description:
+            'OWASP Threat Dragon adalah aplikasi gratis, sumber terbuka, lintas-platform untuk membuat model ancaman. Gunakan untuk menggambar diagram pemodelan ancaman dan mengidentifikasi ancaman untuk sistem Anda. Dengan penekanan pada fleksibilitas dan kesederhanaan, mudah diakses untuk semua jenis pengguna.'
     },
     providers: {
         desktop: {
@@ -36,12 +38,25 @@ const ind = {
         local: {
             displayName: 'Sesi Lokal',
             loginWith: 'Masuk ke'
+        },
+        googleDrive: {
+            displayName: 'Google Drive',
+            loginWith: 'Buka',
+            description: 'Pilih file model ancaman atau folder tujuan dari Google Drive',
+            saveThreatModel: 'Simpan Model Ancaman ke Google Drive',
+            saveDescription: 'Pilih folder di Google Drive untuk menyimpan model ancaman Anda',
+            fileName: 'Nama File',
+            fileNamePlaceholder: 'Masukkan nama untuk file Anda',
+            selectFolder: 'Pilih folder di Google Drive',
+            selectFile: 'Pilih file dari Google Drive',
+            selectThreatModel: 'Pilih Model Ancaman dari Google Drive'
         }
     },
     dashboard: {
         welcome: {
             title: 'Selamat datang!',
-            description: 'Anda siap untuk memulai membuat desain aplikasi Anda lebih aman. Anda dapat membuka model ancaman yang ada atau membuat yang baru dengan memilih salah satu opsi di bawah.'
+            description:
+                'Anda siap untuk memulai membuat desain aplikasi Anda lebih aman. Anda dapat membuka model ancaman yang ada atau membuat yang baru dengan memilih salah satu opsi di bawah.'
         },
         actions: {
             openExisting: 'Buka model ancaman yang ada',
@@ -92,7 +107,12 @@ const ind = {
         refBranch: 'Cabang Referensi',
         add: 'Tambah cabang',
         cancel: 'Batal',
-        name: 'Nama Cabang',
+        name: 'Nama Cabang'
+    },
+    folder: {
+        select: 'Pilih',
+        from: 'folder dari daftar di bawah',
+        noneFound: 'Folder ini kosong. Anda dapat membuat model ancaman baru di sini.'
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
@@ -106,9 +126,7 @@ const ind = {
         contributors: 'Kontributor',
         contributorsPlaceholder: 'Mulai mengetik untuk menambahkan kontributor',
         description: 'Deskripsi sistem tingkat tinggi',
-        dragAndDrop: 'Seret dan lepas atau ',
-        editing: 'Mengedit',
-        jsonPaste: 'Letakkan file JSON model ancaman di sini atau tempelkan isinya di sini:',
+        dragAndDrop: 'Seret dan lepas atau ',        jsonPaste: 'Letakkan file JSON model ancaman di sini atau tempelkan isinya di sini:',
         owner: 'Pemilik',
         reviewer: 'Pemeriksa',
         title: 'Judul',
@@ -178,14 +196,15 @@ const ind = {
             storesCredentials: 'Menyimpan Kredensial',
             storesInventory: 'Menyimpan Persediaan'
         },
-        buttons: {
+        controlButtons: {
             delete: 'Hapus yang dipilih',
             redo: 'Lakukan lagi',
             shortcuts: 'Pintasan keyboard',
             toggleGrid: 'Aktifkan grid',
             undo: 'Batalkan lagi',
             zoomIn: 'Perbesar',
-            zoomOut: 'Perkecil'
+            zoomOut: 'Perkecil',
+            save: 'Simpan'
         },
         shortcuts: {
             title: 'Pintasan',
@@ -223,7 +242,7 @@ const ind = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Simpan'
             }
         },
         stencil: {
@@ -272,7 +291,8 @@ const ind = {
         saveModelAs: 'Simpan Model Sebagai',
         search: 'Cari',
         next: 'Berikutnya',
-        previous: 'sebelumnya'
+        previous: 'sebelumnya',
+        requiredField: 'Bidang yang harus diisi'
     },
     threats: {
         model: {
@@ -366,7 +386,7 @@ const ind = {
             showMitigatedThreats: 'Tampilkan ancaman yang diredam',
             showModelDiagrams: 'Tampilkan diagram model',
             showEmpty: 'Tampilkan elemen kosong',
-            showProperties: 'Show element properties',
+            showProperties: 'Tampilkan properti elemen',
             showBranding: 'Logo Threat Dragon'
         },
         title: 'Laporan model ancaman untuk',
@@ -385,16 +405,6 @@ const ind = {
             openTbd: 'Terbuka / Prioritas TBD',
             openUnknown: 'Terbuka / Prioritas Tidak Diketahui'
         }
-    },
-    upgrade: {
-        modal: {
-            header: 'Pembaruan Model Ancaman',
-            welcome: 'Selamat datang di versi 2 OWASP Threat Dragon!',
-            p1: 'Versi 2 menggunakan perpustakaan gambar yang berbeda, yang akan mengubah cara bagian dari model ancaman Anda disimpan. Meskipun sebagian besar diagram akan terlihat sama seperti di versi Threat Dragon sebelumnya, ada kasus di mana mereka mungkin perlu disesuaikan sedikit.',
-            p2: 'Setelah menutup modal ini, Anda akan melihat bagaimana setiap diagram dalam model ini dirender dalam format versi 2. Harap perhatikan setiap diagram yang mungkin perlu Anda sesuaikan. Ini adalah peningkatan satu kali, dan Anda tidak akan melihat pesan ini lagi setelah menyimpan model ini.'
-        },
-        instructions: 'Bagus! Mari kita bawa Anda ke model Anda.',
-        continue: 'Lanjut ke Model Ancaman'
     }
 };
 

@@ -95,8 +95,7 @@ const encryptPromise = (plainText) => {
     const key = getPrimaryKey();
     logger.debug('Encrypting plaintext');
 
-    return cryptoPromise.randomBytes(16).
-        then((iv) => encryptData(plainText, key, iv));
+    return cryptoPromise.randomBytes(16).then((iv) => encryptData(plainText, key, iv));
 };
 
 /**
@@ -106,11 +105,61 @@ const encryptPromise = (plainText) => {
  * @returns {String}
  */
 const decrypt = (encryptedData) => {
-    const iv = Buffer.from(encryptedData.iv, keyEncoding);
-    const key = getKeyById(encryptedData.keyId);
-    logger.debug('Decrypting ciphertext');
+    try {
+        if (!encryptedData) {
+            logger.error('No encrypted data provided for decryption');
+            throw new Error('No encrypted data provided');
+        }
 
-    return decryptData(encryptedData.data, key, iv);
+        if (!encryptedData.iv) {
+            logger.error('Missing initialization vector (IV) in encrypted data');
+            throw new Error('Missing initialization vector (IV)');
+        }
+
+        if (!encryptedData.data) {
+            logger.error('Missing data in encrypted data object');
+            throw new Error('Missing encrypted data');
+        }
+
+        // Handle missing keyId by using the primary key (for backward compatibility)
+        let key;
+        if (!encryptedData.keyId && encryptedData.keyId !== 0) {
+            logger.warn('Missing key ID in encrypted data, using primary key');
+            key = getPrimaryKey();
+        } else {
+            logger.debug(`Decrypting data with key ID: ${encryptedData.keyId}`);
+            key = getKeyById(encryptedData.keyId);
+        }
+
+        const iv = Buffer.from(encryptedData.iv, keyEncoding);
+
+        try {
+            return decryptData(encryptedData.data, key, iv);
+        } catch (decryptError) {
+            logger.error(`Error in decryption process: ${decryptError.message}`);
+            logger.error(`Error stack: ${decryptError.stack}`);
+
+            // If decryption fails with the specified key, try with the primary key as fallback
+            if (encryptedData.keyId && encryptedData.keyId !== 0) {
+                logger.warn(
+                    `Decryption failed with key ID ${encryptedData.keyId}, trying primary key as fallback`
+                );
+                try {
+                    const primaryKey = getPrimaryKey();
+                    return decryptData(encryptedData.data, primaryKey, iv);
+                } catch (fallbackError) {
+                    logger.error(`Fallback decryption also failed: ${fallbackError.message}`);
+                    throw new Error(`Decryption failed with all available keys`);
+                }
+            }
+
+            throw new Error(`Decryption failed: ${decryptError.message}`);
+        }
+    } catch (error) {
+        logger.error(`Encryption error: ${error.message}`);
+        logger.error(`Error stack: ${error.stack}`);
+        throw error;
+    }
 };
 
 export default {

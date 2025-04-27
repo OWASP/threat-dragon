@@ -1,0 +1,389 @@
+/**
+ * Threat Dragon Stencil Theme
+ * 
+ * This CSS file provides a custom theme for the X6 stencil component used in Threat Dragon.
+ * It's designed to improve visibility and usability of the stencil elements while maintaining
+ * a consistent style with the rest of the application.
+ */
+
+/* ================= STENCIL CONTAINER VARIABLES ================= */
+:root {
+  --td-stencil-bg-color: #f5f5f5;
+  --td-stencil-title-bg: #ededed;
+  --td-stencil-border-color: #eee;
+  --td-stencil-title-color: #666;
+  --td-stencil-title-hover-color: #444;
+  --td-stencil-title-height: 32px;
+  --td-stencil-item-height: 80px;
+  --td-stencil-group-min-height: 100px;
+  --td-stencil-padding: 8px;
+  --td-stencil-font-size: 14px;
+  --td-stencil-z-index: 10; /* Reduced back to 10 to avoid interfering with other UI elements */
+  --td-stencil-collapsed-height: 32px;
+}
+
+/* ================= MAIN STENCIL CONTAINER ================= */
+.td-stencil-theme .x6-widget-stencil {
+    width: 100%;
+    max-width: 100%;
+    visibility: visible;
+    display: block;
+    overflow: visible; /* Revert to visible */ /* Ensure content is not clipped */
+    background-color: var(--td-stencil-bg-color); /* Keep basic theme */
+    color: var(--td-stencil-title-color); /* Keep basic theme */
+    position: relative; /* Ensure proper positioning */
+    /* min-height: 500px; /* Removed: Let parent container height dictate size */
+}
+
+/* ================= STENCIL GROUPS ================= */
+.td-stencil-theme .x6-widget-stencil-group {
+  visibility: visible;
+  display: block;
+  height: auto; /* Force auto height with */
+  max-height: fit-content; /* Force height to fit content */
+  width: 100%; /* Keep width */
+  padding: 0; /* Force no padding */
+  overflow: visible; /* Revert to visible */
+  margin: 0; /* Force no margin */
+  box-sizing: content-box; /* Ensure padding doesn't add to height */
+}
+
+/* Add a new rule for the td-stencil-container class */
+.td-stencil-container .x6-widget-stencil-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Collapsed groups */
+.td-stencil-theme .x6-widget-stencil-group.collapsed {
+  min-height: unset;
+  max-height: var(--td-stencil-collapsed-height);
+  padding-bottom: 0;
+  height: var(--td-stencil-collapsed-height);
+  overflow: hidden;
+}
+
+/* Group content container */
+.td-stencil-theme .x6-widget-stencil-group-content {
+  visibility: visible;
+  display: block; /* Use block display */
+  opacity: 1;
+  height: auto; /* Allow auto height */
+  width: 100%;
+  padding: 0; /* No padding */
+  margin: 0; /* No margin */
+  box-sizing: border-box; /* Include padding in dimensions */
+  position: relative; /* Ensure proper positioning context */
+  /* overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Override any max-height set by JavaScript */
+.td-stencil-theme .x6-widget-stencil-group[data-name="components"] .x6-widget-stencil-group-content {
+  max-height: 350px !important; /* Force max-height for components group: 4 * 100px */
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="boundaries"] .x6-widget-stencil-group-content {
+  max-height: 200px !important; /* Force max-height for boundaries group: 2 * 100px */
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="metadata"] .x6-widget-stencil-group-content {
+  max-height: 100px !important; /* Force max-height for metadata group */
+}
+
+/* Add a new rule for the td-stencil-container class */
+.td-stencil-container .x6-widget-stencil-group-content {
+  display: block; /* Use block instead of flex */
+  position: relative; /* Ensure proper positioning context */
+  min-height: 200px; /* Minimum height */
+  /* max-height is now set dynamically in JavaScript based on shape count */
+  /* overflow-y: auto; /* Enable scrolling if needed */
+}
+
+/* Specific heights for different group contents */
+.td-stencil-container .x6-widget-stencil-group[data-name="components"] .x6-widget-stencil-group-content {
+  min-height: 350px; /* Match the graph height: 4 * 100px */
+  height: auto; /* Allow auto height */
+}
+
+.td-stencil-container .x6-widget-stencil-group[data-name="boundaries"] .x6-widget-stencil-group-content {
+  min-height: 200px; /* Match the graph height: 2 * 100px */
+  height: auto; /* Allow auto height */
+}
+
+.td-stencil-container .x6-widget-stencil-group[data-name="metadata"] .x6-widget-stencil-group-content {
+  min-height: 100px; /* Match the graph height */
+  height: auto; /* Allow auto height */
+}
+
+/* Hide content in collapsed groups */
+.td-stencil-theme .x6-widget-stencil-group.collapsed .x6-widget-stencil-group-content {
+  display: none;
+}
+
+/* ================= GROUP TITLES ================= */
+.td-stencil-theme .x6-widget-stencil-group-title {
+  visibility: visible;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  height: var(--td-stencil-title-height);
+  padding: 0 var(--td-stencil-padding) 0 32px;
+  line-height: 20px;
+  font-size: var(--td-stencil-font-size);
+  background-color: var(--td-stencil-title-bg);
+  border-bottom: 1px solid var(--td-stencil-border-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  /* position: relative; /* Removed */
+}
+
+/* Collapsible title styling */
+.td-stencil-theme .x6-widget-stencil-group.collapsable > .x6-widget-stencil-group-title {
+  cursor: pointer;
+}
+
+.td-stencil-theme .x6-widget-stencil-group.collapsable > .x6-widget-stencil-group-title:hover {
+  color: var(--td-stencil-title-hover-color);
+}
+
+/* Expand/collapse button styling */
+.td-stencil-theme .x6-widget-stencil-group.collapsable > .x6-widget-stencil-group-title::before {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  border: none;
+  content: ' ';
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+
+.td-stencil-theme .x6-widget-stencil-group.collapsable > .x6-widget-stencil-group-title:hover::before {
+  opacity: 0.8;
+}
+
+/* ================= STENCIL CONTAINER & CHILDREN ORDER ================= */
+.td-stencil-theme .x6-widget-stencil {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure container takes full height */
+}
+
+.td-stencil-theme .x6-widget-stencil-title {
+  order: 1; /* Title comes first */
+  padding: 5px; /* Add some padding */
+  background-color: var(--td-stencil-title-background); /* Use theme variable */
+  color: var(--td-stencil-title-color); /* Use theme variable */
+  font-weight: bold;
+  text-align: center;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.td-stencil-theme .x6-widget-stencil-content {
+  order: 2; /* Content comes second */
+  flex-grow: 1; /* Allow content to take remaining space */
+  flex-shrink: 1;
+  /* overflow-y: auto /*; /* Force scrolling if content overflows */
+  /* max-height: none; /* Remove max-height constraint */
+  }
+
+/* Ensure each group's content is scrollable independently */
+.td-stencil-theme .x6-widget-stencil-group:not(.collapsed) .x6-widget-stencil-group-content {
+  overflow-y: auto;
+  height: auto;
+  min-height: 150px;
+  /* max-height: 300px; */
+}
+
+/* ================= STENCIL ITEMS ================= */
+.td-stencil-theme .x6-widget-stencil-item {
+  width: 100%;
+  height: auto; /* Force auto height */
+  min-height: unset; /* Reset min-height without setting to 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0; /* Add minimal vertical padding */
+  margin: 2px auto; /* Add minimal vertical margin */
+  position: relative;
+  overflow: visible;
+  box-sizing: content-box; /* Ensure padding doesn't add to height */
+}
+
+/* ================= GRAPH ELEMENTS IN STENCIL ================= */
+.td-stencil-theme .x6-graph {
+  width: 100%;
+  /* Calculate height based on components: 4 components * 100px */
+  height: 350px; /* Fixed height for components group: 4*100px */
+  margin: 0 auto;
+  position: relative;
+  z-index: 10; /* Fixed z-index to avoid interfering with other UI elements */
+  background: transparent; /* Keep transparent background */
+  visibility: visible;
+  opacity: 1;
+  min-height: 350px; /* Ensure minimum height matches calculated height */
+  max-height: none; /* Remove any max-height constraints */
+  display: block; /* Use block display instead of flex */
+  overflow: visible; /* Ensure content is not clipped */
+}
+
+/* Specific heights for different groups based on component count */
+.td-stencil-theme .x6-widget-stencil-group[data-name="components"] .x6-graph {
+  height: 350px; /* 4 components * 100px */
+  min-height: 350px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="boundaries"] .x6-graph {
+  height: 200px; /* 2 components * 100px */
+  min-height: 200px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="metadata"] .x6-graph {
+  height: 100px; /* 1 component * 100px */
+  min-height: 100px;
+}
+/* SVG elements */
+.td-stencil-theme .x6-graph svg.x6-graph-svg {
+    visibility: visible;
+    opacity: 1;
+    z-index: 10; /* Fixed z-index to avoid interfering with other UI elements */
+    pointer-events: auto;
+    width: 100%;
+    height: 100%; /* Match parent height exactly */
+    display: block; /* Keep block */
+    position: relative;
+    min-height: inherit; /* Inherit min-height from parent */
+    max-height: none; /* Remove any max-height constraints */
+  }
+
+/* Ensure the SVG viewport matches the SVG size */
+.td-stencil-theme .x6-graph-svg-viewport {
+    width: 100%;
+    height: 100%;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Specific heights for SVG viewport in different groups */
+.td-stencil-theme .x6-widget-stencil-group[data-name="components"] .x6-graph-svg-viewport {
+    height: 350px; /* Match the graph height: 4 * 100px */
+    min-height: 350px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="boundaries"] .x6-graph-svg-viewport {
+    height: 200px; /* Match the graph height: 2 * 100px */
+    min-height: 200px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="metadata"] .x6-graph-svg-viewport {
+    height: 100px; /* Match the graph height */
+    min-height: 100px;
+}
+
+/* Ensure grid has the same height as the graph */
+.td-stencil-theme .x6-graph-grid {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+}
+
+/* Specific heights for SVG in different groups */
+.td-stencil-theme .x6-widget-stencil-group[data-name="components"] .x6-graph svg.x6-graph-svg {
+    height: 350px; /* Match the graph height: 4 * 100px */
+    min-height: 350px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="boundaries"] .x6-graph svg.x6-graph-svg {
+    height: 200px; /* Match the graph height: 2 * 100px */
+    min-height: 200px;
+}
+
+.td-stencil-theme .x6-widget-stencil-group[data-name="metadata"] .x6-graph svg.x6-graph-svg {
+    height: 100px; /* Match the graph height */
+    min-height: 100px;
+}
+
+
+/* Shape elements */
+.td-stencil-theme .x6-node {
+    visibility: visible;
+    display: block;
+    opacity: 1;
+    transform-origin: center center;
+    z-index: 10; /* Fixed z-index to avoid interfering with other UI elements */
+    position: relative; /* Ensure proper positioning */
+    max-width: 100%; /* Fix typo: was 100 without % */
+    max-height: 100%; /* Fix typo: was 100 without % */
+  }
+
+/* Force stencil items to be visible */
+.td-stencil-theme .x6-widget-stencil-item {
+    /* min-height: 80px; /* Removed fixed min-height */
+    position: relative;
+    overflow: visible; /* Keep this for the item container? */
+    /* background-color: rgba(255, 255, 255, 0.1); /* Removed debug background */
+  }
+
+/* SVG child elements */
+.td-stencil-theme svg path,
+.td-stencil-theme svg rect,
+.td-stencil-theme svg circle,
+.td-stencil-theme svg text {
+    /* background-color: transparent; /* Removed override */
+    visibility: visible;
+    display: block;
+    opacity: 1;
+    pointer-events: auto; /* Keep pointer-events override */
+  }
+  
+  /* Explicitly set fill for common shapes within nodes to avoid black boxes */
+  .td-stencil-theme .x6-node path,
+  .td-stencil-theme .x6-node rect,
+  .td-stencil-theme .x6-node circle {
+      fill: transparent;
+      /* stroke: none; /* Let stroke be default or defined by shape */
+  }
+
+  /* Ensure text fill is not affected */
+  .td-stencil-theme .x6-node text {
+      fill: currentColor;
+      /* stroke: none; /* Let stroke be default */
+  }
+  
+  
+  /* ================= STENCIL SEARCH ================= */
+.td-stencil-theme .x6-widget-stencil-search {
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0 auto; /* Explicitly set bottom margin to 0 */
+  visibility: visible;
+  display: block;
+}
+
+.td-stencil-theme .x6-widget-stencil-search input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: var(--td-stencil-font-size);
+  border: 1px solid var(--td-stencil-border-color);
+  border-radius: 12px;
+  outline: 0;
+  text-align: center;
+}
+
+/* ================= NOT FOUND STATE ================= */
+.td-stencil-theme.not-found::after {
+  color: #808080;
+  font-weight: 600;
+  font-size: var(--td-stencil-font-size);
+  background: transparent;
+}

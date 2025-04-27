@@ -1,16 +1,20 @@
-import Vuex from 'vuex';
+import { createStore as _createStore } from 'vuex';
+import defaultStore, { store } from '@/store/index.js';
 
-import storeFactory from '@/store/index.js';
-
-describe('store.get()/index.js', () => {
-    let store;
-
-    beforeEach(() => {
-        store = storeFactory.get();
+describe('store/index.js', () => {
+    it('exports both a factory and direct store', () => {
+        // Factory pattern should have get method
+        expect(defaultStore.get).toBeInstanceOf(Function);
+        // Direct store should be available
+        expect(store).toBeDefined();
     });
 
-    it('is a vuex store', () => {
-        expect(store).toBeInstanceOf(Vuex.Store);
+    it('is a vuex store created with createStore', () => {
+        // In Vue 3, the store is created with createStore and doesn't have a prototype to check
+        // We can validate it has the expected store methods
+        expect(store.commit).toBeInstanceOf(Function);
+        expect(store.dispatch).toBeInstanceOf(Function);
+        expect(store.getters).toBeInstanceOf(Object);
     });
 
     it('defines the auth module', () => {
