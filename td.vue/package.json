@@ -6,7 +6,7 @@
   "private": true,
   "main": "background.js",
   "scripts": {
-    "audit:vue": "npm audit --production || echo 'Vulnerabilities found - review required' && exit 0",
+    "audit:vue": "npm audit --omit=dev || echo 'Vulnerabilities found - review required' && exit 0",
     "build:site": "VUE_APP_WEB_ONLY=true vue-cli-service build --no-unsafe-inline",
     "build:web": "VUE_APP_WEB_ONLY=true vue-cli-service build --no-unsafe-inline",
     "build:desktop": "PYTHON_PATH=python3 NODE_ENV=production vue-cli-service electron:build",
@@ -117,6 +117,7 @@
     "electron": "^25.8.4",
     "electron-builder": "^25.0.0",
     "electron-devtools-installer": "^3.2.0",
+    "eslint": "^9.25.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-vue": "^10.0.0",
     "jest": "^27.5.1",

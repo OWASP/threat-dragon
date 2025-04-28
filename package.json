@@ -4,7 +4,6 @@
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
-    "analyze-deps": "dependency-cruiser --include-only '^(src|td.vue|td.server)' --output-type dot . | dot -T svg > dependency-graph.svg",
     "audit": "npm-run-all -p \"audit:*\" || exit 0",
     "audit:server": "npm run audit:server --workspace=threat-dragon-server || exit 0",
     "audit:vue": "npm run audit:vue --workspace=threat-dragon-vue || exit 0",

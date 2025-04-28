@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "audit:server": "npm audit --production || echo 'Vulnerabilities found - review required' && exit 0",
+    "audit:server": "npm audit --omit=dev || echo 'Vulnerabilities found - review required' && exit 0",
     "build:server": "npm-run-all clean:server transpile",
     "make-sbom:server": "npm-run-all -lp --aggregate-output make-sbom:xml:server make-sbom:json:server",
     "make-sbom:xml:server": "npm --loglevel=error exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML  --output-file=sbom.xml",
@@ -57,6 +57,7 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.2",
     "dotenv-flow": "^4.1.0",
+    "eslint": "^9.25.1",
     "nock": "^14.0.2",
     "sinon": "^10.0.0",
     "sinon-chai": "^3.7.0",
