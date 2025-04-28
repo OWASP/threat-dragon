@@ -7,7 +7,7 @@ module.exports = {
         jest: true
     },
     plugins: ['vue', 'prettier'],
-    extends: ['eslint:recommended', 'plugin:vue/essential', 'eslint-config-prettier'],
+    extends: ['eslint:recommended', 'plugin:vue/essential', 'prettier'],
     globals: {
         __static: 'readonly',
         vi: 'readonly',
