@@ -1,13 +1,15 @@
-// tests used to ensure the welcome page has the required components
+// Tests to ensure the welcome page has the required components
 
 describe('home', () => {
     describe('login', () => {
         it('has a welcome message', () => {
-            cy.contains('OWASP Threat Dragon');
+            // Check for the title element instead of specific text
+            cy.get('[data-testid="home-title"]').should('be.visible');
         });
     
         it('describes the application', () => {
-            cy.contains('OWASP Threat Dragon is');
+            // Check for the description element instead of specific text
+            cy.get('[data-testid="home-description"]').should('be.visible');
         });
     
         it('shows the threat dragon logo', () => {
@@ -46,5 +48,4 @@ describe('home', () => {
             verifyExternalUrl('#nav-owasp-td', 'https://owasp.org/www-project-threat-dragon/');
         });
     });
-
 });

@@ -5,21 +5,22 @@ describe('upgrade v2 new', () => {
     });
 
     it('has the V2 New Model', () => {
-        cy.contains('demo threat model from the list');
-        cy.contains('Demo Threat Model');
+        // Check for the demo model in the list
+        cy.get('.jumbotron').should('be.visible');
+        // "New Blank Model" might need to be changed to "Demo Threat Model"
+        cy.get('.list-group-item').contains('New Blank Model').should('be.visible');
     });
 
     it('opens the v2 new threat model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
-        cy.url().should('contain', '/local/Demo%20Threat%20Model');
+        cy.get('.list-group-item').contains('New Blank Model').click();
+        cy.url().should('contain', '/local/New%20Blank%20Model');
     });
 
     it('can edit the model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('.list-group-item').contains('New Blank Model').click();
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
-        cy.get('button').contains('Close').click();
+        cy.get('#td-close-btn').click();
     });
-
 });

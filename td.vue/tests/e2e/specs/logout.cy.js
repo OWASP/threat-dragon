@@ -1,7 +1,9 @@
 describe('logout', () => {
     beforeEach(() => {
         cy.get('#local-login-btn').click();
-        cy.contains('Logged in as local-user');
+        // Check for the logged-in-as element with the username
+        cy.get('.logged-in-as').should('be.visible');
+        cy.get('.logged-in-as').should('contain', 'Local Session');
         cy.get('#nav-sign-out').click();
     });
 

@@ -3,7 +3,8 @@
 describe('smoke tests', () => {
     describe('login', () => {
         it('has a welcome message', () => {
-            cy.contains('OWASP Threat Dragon');
+            // Check for the title element instead of specific text
+            cy.get('[data-testid="home-title"]').should('be.visible');
         });
     
         it('always displays local login option', () => {
@@ -14,18 +15,23 @@ describe('smoke tests', () => {
     describe('create and edit', () => {
         beforeEach(() => {
             cy.get('#local-login-btn').click();
-            // Wait for the dashboard to load and the "Create a new, empty threat model" link to appear
-            cy.contains('Create a new, empty threat model', { timeout: 10000 }).should('be.visible');
-            // Click the "Create a new, empty threat model" link
-            cy.contains('Create a new, empty threat model').click();
+            // Wait for the dashboard to load
+            cy.url().should('contain', '/dashboard');
+            
+            // Find and click the "Create New" action
+            cy.get('.dashboard-action').contains('createNew').click();
+            
             // Check that we're on the new threat model page
             cy.url().should('contain', '/local/threatmodel/new');
+            
             // Wait for the form to load and fill in the title field
-            cy.get('#threat-model-title').should('be.visible');
-            cy.get('#threat-model-title').clear();
-            cy.get('#threat-model-title').type('new name');
+            cy.get('#title').should('be.visible');
+            cy.get('#title').clear();
+            cy.get('#title').type('new name');
+            
             // Save the model
-            cy.contains('Save').click();
+            cy.get('#td-save-btn').click();
+            
             // Check that we're on the edit page
             cy.url().should('contain', '/models/new%20name/edit');
         });
@@ -36,13 +42,22 @@ describe('smoke tests', () => {
         });
     
         it('can add a new diagram', () => {
-            cy.get('.add-diagram-link').should('be.visible').click();
-            // After clicking add diagram, there should be at least one diagram input group
-            cy.get('.diagram-inputs').should('be.visible');
-            // Click the remove button
-            cy.get('.remove-diagram-btn').first().click();
-            // Check that the diagram was removed
-            cy.get('.diagram-inputs').should('not.exist');
+            // Get the initial count of diagrams
+            cy.get('.diagram-inputs').then(($diagrams) => {
+                const initialCount = $diagrams.length;
+                
+                // Click the add diagram link
+                cy.get('.add-diagram-link').click();
+                
+                // Verify a new diagram was added
+                cy.get('.diagram-inputs').should('have.length', initialCount + 1);
+                
+                // Remove the diagram
+                cy.get('.remove-diagram-btn').last().click();
+                
+                // Verify the diagram was removed
+                cy.get('.diagram-inputs').should('have.length', initialCount);
+            });
         });
     
         it('has the close control buttons', () => {

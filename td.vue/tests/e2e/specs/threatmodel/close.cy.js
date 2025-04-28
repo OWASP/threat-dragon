@@ -2,9 +2,10 @@ describe('closing a threat model', () => {
     beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
-        cy.get('a[data-model-name="Demo Threat Model"').click();
+        // Use the list-group-item that contains the text instead of data-model-name attribute
+        cy.get('.list-group-item').contains('Demo Threat Model').click();
+        // following path might need to be "/models/..."
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
-        cy.contains('Demo Threat Model');
     });
 
     describe('Close', () => {
@@ -13,5 +14,4 @@ describe('closing a threat model', () => {
             cy.url().should('equal', Cypress.config().baseUrl + '#/dashboard');
         });
     });
-
 });

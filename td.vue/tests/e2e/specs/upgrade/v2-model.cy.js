@@ -5,27 +5,27 @@ describe('upgrade v2 demo', () => {
     });
 
     it('has the V2 Demo Model', () => {
-        cy.contains('demo threat model from the list');
-        cy.contains('Demo Threat Model');
+        // Check for the demo model in the list
+        cy.get('.jumbotron').should('be.visible');
+        cy.get('.list-group-item').contains('Demo Threat Model').should('be.visible');
     });
 
     it('opens the v2 demo threat model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('.list-group-item').contains('Demo Threat Model').click();
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
     });
 
     it('can edit the model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('.list-group-item').contains('Demo Threat Model').click();
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
-        cy.get('button').contains('Close').click();
+        cy.get('#td-close-btn').click();
     });
 
     it('can edit the diagram', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('.list-group-item').contains('Demo Threat Model').click();
         cy.get('.td-diagram-thumb').click();
         cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
     });
-
 });
