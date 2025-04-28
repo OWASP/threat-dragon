@@ -6,6 +6,7 @@
   "private": true,
   "main": "background.js",
   "scripts": {
+    "preinstall": "npm config set engine-strict false",
     "audit:vue": "npm audit --omit=dev || echo 'Vulnerabilities found - review required' && exit 0",
     "build:site": "VUE_APP_WEB_ONLY=true npx vue-cli-service build --no-unsafe-inline",
     "build:web": "VUE_APP_WEB_ONLY=true npx vue-cli-service build --no-unsafe-inline",
@@ -164,10 +165,18 @@
     "minimatch@<3.0.5": ">=3.0.5",
     "rimraf": "^3.0.2",
     "tar-fs": ">=3.0.8",
-    "@vue/vue3-jest": "27.0.0"
+    "@vue/vue3-jest": "27.0.0",
+    "ajv-keywords": {
+      "ajv": "^8.17.1"
+    },
+    "friendly-errors-webpack-plugin": {
+      "webpack": "^5.97.1"
+    }
   },
   "resolutions": {
-    "ansi-regex": "5.0.1"
+    "ansi-regex": "5.0.1",
+    "ajv-keywords/ajv": "^8.17.1",
+    "friendly-errors-webpack-plugin/webpack": "^5.97.1"
   },
   "electronBuilder": {
     "appId": "org.owasp.threatdragon",
