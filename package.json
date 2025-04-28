@@ -141,10 +141,12 @@
     "yorkie": "npm:husky@^7.0.0"
   },
   "dependencies": {
-    "dmg-builder": "^25.0.0",
-    "dmg-license": "^1.0.11",
     "dotenv": "^16.4.7",
     "http-errors": "^2.0.0"
+  },
+  "optionalDependencies": {
+    "dmg-builder": "^25.0.0",
+    "dmg-license": "^1.0.11"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
