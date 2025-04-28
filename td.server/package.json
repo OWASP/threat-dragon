@@ -12,6 +12,7 @@
     "clean:server": "rimraf --glob *.log .nyc_output/ coverage/ dist/ node_modules/",
     "dev:server": "nodemon dev.js --exec babel-node",
     "dev:server:pm2": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
+    "lint": "cd .. && npm run lint:server",
     "lint:server": "cd .. && npm run lint:server",
     "lint:ci": "cd .. && eslint --ext .js td.server/src --max-warnings 100",
     "lint:fix:server": "cd .. && npm run lint:fix:server",

@@ -24,7 +24,7 @@
     "dev:server": "npm run dev:server --workspace=threat-dragon-server",
     "dev:server:pm2": "npm run dev:server:pm2 --workspace=threat-dragon-server",
     "dev:site": "npm run dev:site --workspace=threat-dragon-vue",
-    "lint": "eslint --ext .js,.vue .",
+    "lint": "npm-run-all lint:server lint:vue lint:desktop",
     "lint:desktop": "eslint --ext .js td.vue/src/desktop td.vue/tests/unit/desktop",
     "lint:fix": "eslint --ext .js,.vue . --fix || true",
     "lint:fix:desktop": "eslint --ext .js td.vue/src/desktop td.vue/tests/unit/desktop --fix",
