@@ -11,7 +11,7 @@
     "build:desktop": "npm run build:desktop --workspace=threat-dragon-vue",
     "build:desktop:full": "npm run build:desktop:full --workspace=threat-dragon-vue",
     "build:desktop:simple": "npm run build:desktop:simple --workspace=threat-dragon-vue",
-    "build:server": "cd td.server && npm run build:server",
+    "build:server": "cd td.server && npm install && npm run build:server",
     "build:site": "npm run build:site --workspace=threat-dragon-vue",
     "clean": "npm-run-all -p \"clean:*\"",
     "clean:files": "rimraf node_modules/ sbom.json sbom.xml",

@@ -20,10 +20,10 @@
     "start:server": "npm run start:server:pm2",
     "start:server:pm2": "NODE_ENV=production pm2 --name td.server start 'node index.js'",
     "stop:server": "pm2 delete td.server",
-    "transpile": "node ./node_modules/@babel/cli/bin/babel.js ./src --out-dir dist",
-    "test:server": "NODE_ENV=test nyc ./node_modules/.bin/mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
-    "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary ./node_modules/.bin/mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
-    "test:external-apis": "NODE_ENV=test USE_REAL_APIS=true nyc --reporter=lcov --reporter=text-summary ./node_modules/.bin/mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js"
+    "transpile": "npx babel ./src --out-dir dist",
+    "test:server": "NODE_ENV=test npx nyc npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test npx nyc --reporter=lcov --reporter=text-summary npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
+    "test:external-apis": "NODE_ENV=test USE_REAL_APIS=true npx nyc --reporter=lcov --reporter=text-summary npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
