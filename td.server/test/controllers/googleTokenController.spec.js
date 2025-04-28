@@ -4,7 +4,7 @@ import googleTokenController from '../../src/controllers/googleTokenController.j
 import {
     createAuthMiddlewareMock as _createAuthMiddlewareMock,
     createMockProvider
-} from '../helpers/auth.js';
+} from '../../test/helpers/auth.js';
 
 describe('controllers/googleTokenController.js', () => {
     let req, res, _next;
