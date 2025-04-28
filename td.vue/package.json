@@ -86,6 +86,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@popperjs/core": "^2.11.8",
     "ajv": "^8.17.1",
+    "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
     "bootstrap-vue-next": "^0.26.30",
     "electron-log": "^5.2.4",
