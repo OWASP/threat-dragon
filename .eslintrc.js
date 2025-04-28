@@ -4,10 +4,10 @@ module.exports = {
         node: true,
         browser: true,
         es2022: true,
-        'vue/setup-compiler-macros': true,
         jest: true
     },
-    extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
+    plugins: ['vue', 'prettier'],
+    extends: ['eslint:recommended', 'plugin:vue/essential', 'prettier'],
     globals: {
         __static: 'readonly',
         vi: 'readonly',
@@ -22,11 +22,11 @@ module.exports = {
         expect: 'readonly',
         Component: 'readonly'
     },
+    parser: 'vue-eslint-parser',
     parserOptions: {
         ecmaVersion: 2022,
         sourceType: 'module'
     },
-    plugins: ['vue', 'prettier'],
     ignorePatterns: [
         'node_modules/',
         'dist/',
@@ -185,7 +185,6 @@ module.exports = {
 
                 // Vue Recommended Rules (Minimizing Arbitrary Choices)
                 'vue/attributes-order': 'warn',
-                'vue/component-tags-order': 'warn',
                 'vue/no-lone-template': 'warn',
                 'vue/no-multiple-slot-args': 'warn',
                 'vue/no-v-html': 'warn',
