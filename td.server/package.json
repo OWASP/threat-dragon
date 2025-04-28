@@ -21,9 +21,9 @@
     "start:server:pm2": "NODE_ENV=production pm2 --name td.server start 'node index.js'",
     "stop:server": "pm2 delete td.server",
     "transpile": "babel ./src --out-dir dist",
-    "test:server": "NODE_ENV=test nyc mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
-    "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
-    "test:external-apis": "NODE_ENV=test USE_REAL_APIS=true nyc --reporter=lcov --reporter=text-summary mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js"
+    "test:server": "NODE_ENV=test nyc npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js",
+    "test:external-apis": "NODE_ENV=test USE_REAL_APIS=true nyc --reporter=lcov --reporter=text-summary npx mocha --config .mocharc.json test/*.spec.js test/**/*.spec.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
