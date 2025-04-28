@@ -12,7 +12,7 @@ describe('config/parsers.config.js request parser', () => {
         parsers.config(app);
     });
 
-    it('should parse the json in the request body', (done) => {
+    it('should parse the json in the request body', async () => {
         const id = 'id';
         const collection = ['1', '2', '3'];
         const nested = { n1: '1', n2: '2' };
@@ -25,15 +25,14 @@ describe('config/parsers.config.js request parser', () => {
             res.send('result');
         });
 
-        request(app)
+        await request(app)
             .post('/')
             .set('Content-Type', 'application/json')
             .send(bodyText)
-            .expect(200)
-            .end(done);
+            .expect(200);
     });
 
-    it('should parse a url encoded body', (done) => {
+    it('should parse a url encoded body', async () => {
         const id = 'id';
         const collection = ['1', '2', '3'];
         const nested = { n1: '1', n2: '2' };
@@ -49,6 +48,6 @@ describe('config/parsers.config.js request parser', () => {
             res.send('result');
         });
 
-        request(app).post('/').type('form').send(body).expect(200).end(done);
+        await request(app).post('/').type('form').send(body).expect(200);
     });
 });

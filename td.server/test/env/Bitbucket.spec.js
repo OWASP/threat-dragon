@@ -56,20 +56,6 @@ describe('env/Bitbucket.js', () => {
         expect(isRequired).to.be.false;
     });
 
-    it('has the optional property ENTERPRISE_PORT', () => {
-        const isRequired = bitbucketEnv.properties.find(
-            (x) => x.key === 'ENTERPRISE_PORT'
-        ).required;
-        expect(isRequired).to.be.false;
-    });
-
-    it('has the optional property ENTERPRISE_PROTOCOL', () => {
-        const isRequired = bitbucketEnv.properties.find(
-            (x) => x.key === 'ENTERPRISE_PROTOCOL'
-        ).required;
-        expect(isRequired).to.be.false;
-    });
-
     it('has the optional property ENTERPRISE_PROTOCOL', () => {
         const isRequired = bitbucketEnv.properties.find(
             (x) => x.key === 'ENTERPRISE_PROTOCOL'

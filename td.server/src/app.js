@@ -15,8 +15,10 @@ import { upDir } from './helpers/path.helper.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const siteDir = path.join(__dirname, upDir, upDir, 'dist');
-const docsDir = path.join(__dirname, upDir, upDir, 'docs');
+// Use local dist directory within td.server instead of going up to root project
+const siteDir = path.join(__dirname, upDir, 'dist');
+// For docs, we'll use a local docs directory or fallback to the root project
+const docsDir = path.join(__dirname, upDir, 'docs');
 
 // Note: main rate limiter is configured and applied below
 // Helper function to configure rate limiting
