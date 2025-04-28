@@ -5,9 +5,6 @@
 sbom.json
 sbom.xml
 
-# Claude related files
-CLAUDE.md
-
 # Logs and environment files
 *.log
 .env
@@ -39,7 +36,6 @@ coverage/
 !.spellcheck.yaml
 !CNAME
 !.eslintrc.js
-!td.server/.mocharc.json
 
 # docker files
 !.dockerignore
@@ -134,6 +130,10 @@ coverage/
 !td.server/index.js
 !td.server/package.json
 !td.server/package-lock.json
+!td.server/.mocharc.json
+!td.server/.eslintrc.cjs
+!td.server/babel.config.mjs
+!td.server/dev.mjs
 
 # Vue front end
 !td.vue
@@ -294,7 +294,3 @@ coverage/
 !td.vue/README.md
 !td.vue/browserstack.nightly.json
 !td.vue/browserstack.smokes.json
-
-# utility scripts
-!utils
-!utils/**/*
