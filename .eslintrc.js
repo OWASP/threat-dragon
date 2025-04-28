@@ -34,7 +34,7 @@ module.exports = {
         'td.vue/dist-desktop/',
         '*.config.js',
         'babel.config.js',
-        'archive/**',
+        'context/**',
         'td.vue/tests/unit/setup/vue3-test-template.js',
         'td.vue/tests/unit/setup/bootstrap-vue-next.js'
     ],

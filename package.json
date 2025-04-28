@@ -110,7 +110,7 @@
     "cross-spawn": "^7.0.3",
     "dependency-cruiser": "^13.1.5",
     "eslint": "^8.57.1",
-    "eslint-plugin-cypress": "^2.15.2",
+    "eslint-plugin-cypress": "^3.6.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-node": "^11.1.0",
