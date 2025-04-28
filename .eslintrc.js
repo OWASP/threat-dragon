@@ -6,8 +6,8 @@ module.exports = {
         es2022: true,
         jest: true
     },
-    plugins: ['vue', 'prettier'],
-    extends: ['eslint:recommended', 'plugin:vue/essential', 'prettier'],
+    plugins: ['vue'],
+    extends: ['eslint:recommended', 'plugin:vue/essential'],
     globals: {
         __static: 'readonly',
         vi: 'readonly',
@@ -49,7 +49,6 @@ module.exports = {
         indent: ['warn', 4],
         'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
         'linebreak-style': ['warn', 'unix'],
-        'prettier/prettier': 'warn',
 
         // Performance-related rules
         'prefer-const': 'warn',
