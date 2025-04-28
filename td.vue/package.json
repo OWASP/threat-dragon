@@ -108,7 +108,7 @@
     "@electron/notarize": "^2.3.2",
     "@pm2/agent": ">=2.0.4",
     "@vue/cli-plugin-babel": "~5.0.8",
-    "@vue/cli-plugin-unit-jest": "~5.0.8",
+    "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-service": "~5.0.8",
     "@vue/test-utils": "^2.4.6",
     "copy-webpack-plugin": "^13.0.0",

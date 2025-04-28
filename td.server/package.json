@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "audit:server": "npm audit --production || echo 'Vulnerabilities found - review required' && exit 0",
-    "build:server": "npm-run-all clean:dist transpile",
+    "build:server": "npm-run-all clean:server transpile",
     "make-sbom:server": "npm-run-all -lp --aggregate-output make-sbom:xml:server make-sbom:json:server",
     "make-sbom:xml:server": "npm --loglevel=error exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML  --output-file=sbom.xml",
     "make-sbom:json:server": "npm --loglevel=error exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=JSON --output-file=sbom.json",
