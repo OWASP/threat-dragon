@@ -1,11 +1,47 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import googleTokenController from '../../src/controllers/googleTokenController.js';
-import {
-    createAuthMiddlewareMock as _createAuthMiddlewareMock,
-    createMockProvider
-} from '../../test/helpers/auth.js';
 
+// Inline helper functions instead of importing from auth.js
+function createMockProvider(name = 'github') {
+    const providers = {
+        github: {
+            name: 'github',
+            access_token: 'test-github-token',
+            refresh_token: 'test-github-refresh'
+        },
+        gitlab: {
+            name: 'gitlab',
+            access_token: 'test-gitlab-token',
+            refresh_token: 'test-gitlab-refresh'
+        },
+        google: {
+            name: 'google',
+            access_token: 'test-google-token',
+            refresh_token: 'test-google-refresh'
+        }
+    };
+
+    return providers[name] || providers.github;
+}
+/*
+function createAuthMiddlewareMock(user = null) {
+    const defaultUser = {
+        id: 'test-user-id',
+        username: 'testuser',
+        provider: {
+            name: 'github',
+            access_token: 'test-github-token'
+        }
+    };
+
+    return (req, res, next) => {
+        req.user = user || defaultUser;
+        req.provider = req.user.provider;
+        next();
+    };
+}
+*/
 describe('controllers/googleTokenController.js', () => {
     let req, res, _next;
 

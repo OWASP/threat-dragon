@@ -115,6 +115,7 @@ coverage/
 !td.server/test/env/*.spec.js
 !td.server/test/helpers/
 !td.server/test/helpers/*.spec.js
+!td.server/test/helpers/*.js
 !td.server/test/mocks/
 !td.server/test/mocks/*mock*js
 !td.server/test/providers/
