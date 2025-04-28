@@ -39,8 +39,7 @@ coverage/
 !.spellcheck.yaml
 !CNAME
 !.eslintrc.js
-!.prettierrc
-!.prettierignore
+!td.server/.mocharc.json
 
 # docker files
 !.dockerignore
