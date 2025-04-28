@@ -10,7 +10,6 @@
     "make-sbom:xml:server": "npm --loglevel=error exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML  --output-file=sbom.xml",
     "make-sbom:json:server": "npm --loglevel=error exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=JSON --output-file=sbom.json",
     "clean:server": "rimraf --glob *.log .nyc_output/ coverage/ dist/ node_modules/",
-    "clean:dist": "rimraf dist",
     "dev:server": "nodemon dev.js --exec babel-node",
     "dev:server:pm2": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
     "lint:server": "cd .. && npm run lint:server",
