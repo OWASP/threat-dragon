@@ -53,6 +53,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@babel/register": "^7.25.9",
     "better-sqlite3": "^11.9.1",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.2",
