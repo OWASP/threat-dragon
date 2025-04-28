@@ -5,12 +5,14 @@ import ell from '@/i18n/el.js';
 import eng from '@/i18n/en.js';
 import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
+import heb from '@/i18n/he.js';
 import hin from '@/i18n/hi.js';
 import ind from '@/i18n/id.js';
-import ms from '@/i18n/ms.js';
+import msa from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
 import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
+import tha from '@/i18n/th.js';
 import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
@@ -338,10 +340,10 @@ describe('desktop/menu.js', () => {
             });
 
             it('should provide translation for Malay', () => {
-                menu.setLocale('ms');
+                menu.setLocale('msa');
                 const helpItems = menu
                     .getMenuTemplate()
-                    .find((item) => item.label === ms.desktop.help.heading);
+                    .find((item) => item.label === msa.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
@@ -358,6 +360,14 @@ describe('desktop/menu.js', () => {
                 const helpItems = menu
                     .getMenuTemplate()
                     .find((item) => item.label === fra.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for Hebrew', () => {
+                menu.setLocale('heb');
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === heb.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
@@ -390,6 +400,14 @@ describe('desktop/menu.js', () => {
                 const helpItems = menu
                     .getMenuTemplate()
                     .find((item) => item.label === spa.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for Thai', () => {
+                menu.setLocale('tha');
+                const helpItems = menu
+                    .getMenuTemplate()
+                    .find((item) => item.label === tha.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
