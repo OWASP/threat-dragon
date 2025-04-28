@@ -120,11 +120,38 @@ router.beforeEach((to, from, next) => {
             log.warn('Error checking localStorage for authentication data', { error: e });
         }
         
-        // In Electron mode, we don't need to enforce authentication the same way
+        // In Electron mode or for local provider, we don't need to enforce authentication the same way
         // as the web application, so we'll allow navigation even if store is not available
         if (!store) {
-            if (isElectronApp || hasRecentLogin) {
-                log.info('Store not available for authentication check, but allowing navigation due to Electron mode or recent login');
+            // Check if this is a local provider route
+            const isLocalRoute = to.path.startsWith('/local/') ||
+                                (to.meta.provider === 'local') ||
+                                (to.name && to.name.startsWith('local'));
+                
+            if (isElectronApp || hasRecentLogin || isLocalRoute) {
+                log.info('Store not available for authentication check, but allowing navigation due to Electron mode, recent login, or local provider');
+                
+                // For local routes, store login info in localStorage to help with future navigation
+                if (isLocalRoute) {
+                    try {
+                        // Store a recent login record for local provider
+                        localStorage.setItem('td_recent_login', JSON.stringify({
+                            timestamp: Date.now(),
+                            provider: 'local'
+                        }));
+                        
+                        // Also store a basic auth token for local provider
+                        localStorage.setItem('td_auth_token', JSON.stringify({
+                            accessToken: 'local-session-token',
+                            provider: 'local'
+                        }));
+                        
+                        log.info('Created local authentication records in localStorage');
+                    } catch (e) {
+                        log.warn('Error storing local authentication data in localStorage', { error: e });
+                    }
+                }
+                
                 next();
                 return;
             } else {

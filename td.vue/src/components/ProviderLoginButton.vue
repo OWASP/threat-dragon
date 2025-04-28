@@ -54,7 +54,29 @@ export default {
                 this.provider.key === providerNames.local ||
                 this.provider.key === providerNames.desktop
             ) {
+                // Set local authentication in the store
                 this.$store.dispatch(AUTH_SET_LOCAL);
+                
+                // Store authentication data in localStorage for router fallback
+                try {
+                    // Store a recent login record
+                    localStorage.setItem('td_recent_login', JSON.stringify({
+                        timestamp: Date.now(),
+                        provider: this.provider.key
+                    }));
+                    
+                    // Also store a basic auth token
+                    localStorage.setItem('td_auth_token', JSON.stringify({
+                        accessToken: 'local-session-token',
+                        provider: this.provider.key
+                    }));
+                    
+                    log.info('Created local authentication records in localStorage');
+                } catch (e) {
+                    log.warn('Error storing local authentication data in localStorage', { error: e });
+                }
+                
+                // Navigate to dashboard
                 return this.$router.push('/dashboard');
             }
 
