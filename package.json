@@ -5,9 +5,8 @@
   "private": true,
   "scripts": {
     "preinstall": "npm config set engine-strict false && npm config set legacy-peer-deps true && npm config set strict-peer-deps false && npm config set fund false && npm config set prefer-offline true",
-    "install:all": "npm install && cd td.vue && npm install && cd ../td.server && npm install && cd ..",
-    "ci:all": "npm ci && cd td.vue && npm ci && cd ../td.server && npm ci && cd ..",
-    "regenerate-locks": "npm run clean:lock && npm run install:all",
+    "install:all": "npm install --omit=optional && cd td.vue && npm install --omit=optional && cd ../td.server && npm install --omit=optional && cd ..",
+    "ci:all": "npm ci --omit=optional && cd td.vue && npm ci --omit=optional && cd ../td.server && npm ci --omit=optional && cd ..",
     "audit": "npm-run-all -p \"audit:*\" || exit 0",
     "audit:server": "cd td.server && npm run audit:server || exit 0",
     "audit:vue": "cd td.vue && npm run audit:vue",
@@ -15,7 +14,7 @@
     "build:desktop": "cd td.vue && npm run build:desktop",
     "build:desktop:full": "cd td.vue && npm run build:desktop:full",
     "build:desktop:simple": "cd td.vue && npm run build:desktop:simple",
-    "build:server": "cd td.server && npm install && npm run build:server",
+    "build:server": "cd td.server && npm run build:server",
     "build:site": "cd td.vue && npm run build:site",
     "clean": "npm-run-all -p \"clean:*\"",
     "clean:files": "rimraf node_modules/ sbom.json sbom.xml",
@@ -166,9 +165,6 @@
     "http-errors": "^2.0.0"
   },
   "optionalDependencies": {
-    "dmg-builder": "^25.1.8",
-    "dmg-license": "^1.0.11",
-    "electron-builder-squirrel-windows": "^25.1.8"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
@@ -181,14 +177,24 @@
     "tar-fs": ">=3.0.8",
     "@vue/vue3-jest": "27.0.0",
     "@typescript-eslint/visitor-keys": "^4.33.0",
-    "dmg-license": {
-      "os": ["darwin"]
-    },
+    "app-builder-lib": "^25.1.8",
     "dmg-builder": {
+      "version": "^25.1.8",
       "os": ["darwin", "win32"]
     },
     "electron-builder-squirrel-windows": {
+      "version": "^25.1.8",
       "os": ["win32"]
+    },
+    "dmg-license": {
+      "os": ["darwin"]
+    },
+    "electron-builder": {
+      "optionalDependencies": {
+        "dmg-license": "^1.0.11",
+        "dmg-builder": "^25.1.8",
+        "electron-builder-squirrel-windows": "^25.1.8"
+      }
     }
   },
   "resolutions": {
