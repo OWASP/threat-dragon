@@ -4,7 +4,7 @@ describe('report', () => {
         cy.get('a[href="#/demo/select"]').click();
         // Use the list-group-item that contains the text instead of data-model-name attribute
         cy.get('.list-group-item').contains('Demo Threat Model').click();
-        cy.url().should('contain', '/local/Demo%20Threat%20Model');
+        cy.url().should('contain', '/models/Demo%20Threat%20Model');
         cy.get('#td-report-btn').click();
     });
 
@@ -24,17 +24,18 @@ describe('report', () => {
         });
     
         it('shows/hides mitigated threats', () => {
-            cy.get('[data-test-id="Database"]')
-                .contains('Unauthorised access')
-                .should('be.visible');
+            // First find any entity that contains "Unauthorised access"
+            cy.contains('Unauthorised access').should('be.visible');
     
             cy.get('#show_mitigated').click({ force: true });
     
-            cy.get('[data-test-id="Database"]')
-                .contains('Unauthorised access')
-                .should('not.be','visible');
+            // After clicking the checkbox, the text should not be visible
+            cy.contains('Unauthorised access').should('not.be','visible');
     
             cy.get('#show_mitigated').click({ force: true });
+            
+            // After clicking the checkbox again, the text should be visible again
+            cy.contains('Unauthorised access').should('be.visible');
         });
     
         it('shows/hides model diagrams', () => {

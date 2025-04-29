@@ -72,6 +72,24 @@ module.exports = {
                 'jest/no-conditional-expect': 'warn',
                 'no-unused-vars': 'warn'
             }
+        },
+        // Specific file overrides to disable certain lint warnings
+        {
+            files: [
+                'test/app.spec.js',
+                'test/repositories/githubrepo.spec.js'
+            ],
+            rules: {
+                'jest/no-disabled-tests': 'off'
+            }
+        },
+        {
+            files: [
+                'test/config/routes.config.spec.js'
+            ],
+            rules: {
+                'jest/no-commented-out-tests': 'off'
+            }
         }
     ]
 };

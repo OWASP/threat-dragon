@@ -11,6 +11,6 @@ module.exports = defineConfig({
         excludeSpecPattern: 'tests/e2e/specs/smokes/*.cy.js',
         supportFile: 'tests/e2e/support/e2e.js',
         specPattern: 'tests/e2e/specs/**/*.cy.js',
-        baseUrl: 'http://localhost:3000/'
+        baseUrl: 'http://localhost:8080/?e2e=true'
     }
 });

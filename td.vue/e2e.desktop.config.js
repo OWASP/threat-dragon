@@ -44,7 +44,7 @@ module.exports = defineConfig({
     },
     specPattern: 'tests/e2e/desktop/**/*.cy.js',
     supportFile: 'tests/e2e/support/desktop.js',
-    baseUrl: 'http://localhost:8080', // Use local dev server for testing
+    baseUrl: 'http://localhost:8080/?e2e=true', // Use local dev server for testing
     // Can use 'app://./index.html' when testing actual Electron app
     experimentalInteractiveRunEvents: true,
     experimentalStudio: true,

@@ -22,7 +22,7 @@
                             </BTr>
                         </BThead>
                         <BTbody>
-                            <BTr v-for="(row, index) in tableRows" :key="index">
+                            <BTr v-for="(row, index) in tableRows" :key="index" :data-test-id="row.name">
                                 <BTd v-for="(value, key) in row" :key="key">
                                     {{ value }}
                                 </BTd>

@@ -13,7 +13,7 @@ describe('upgrade v2 new', () => {
 
     it('opens the v2 new threat model', () => {
         cy.get('.list-group-item').contains('New Blank Model').click();
-        cy.url().should('contain', '/local/New%20Blank%20Model');
+        cy.url().should('contain', '/models/New%20Blank%20Model');
     });
 
     it('can edit the model', () => {

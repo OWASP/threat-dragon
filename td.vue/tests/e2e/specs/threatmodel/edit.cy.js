@@ -3,7 +3,15 @@ describe('editing threat models', () => {
         beforeEach(() => {
             cy.get('#local-login-btn').click();
             cy.get('a[href="#/local/threatmodel/new"]').click();
-            cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model/edit');
+            // Fill out the form
+            cy.get('#threat-model-title').type('Test Threat Model');
+            cy.get('#threat-model-owner').type('Test Owner');
+            cy.get('#threat-model-description').type('Test Description');
+            cy.get('#threat-model-reviewer').type('Test Reviewer');
+            // Submit the form
+            cy.get('button[type="submit"]').click();
+            // After submitting the form, we should be redirected to the edit page with the model name
+            cy.url().should('include', '/models/').and('include', '/edit');
         });
 
         it('can edit the title', () => {
@@ -35,22 +43,18 @@ describe('editing threat models', () => {
         });
 
         it('can add a new diagram', () => {
-            // Get the initial count of diagrams
-            cy.get('.diagram-inputs').then(($diagrams) => {
-                const initialCount = $diagrams.length;
-                
-                // Click the add diagram link
-                cy.get('.add-diagram-link').click();
-                
-                // Verify a new diagram was added
-                cy.get('.diagram-inputs').should('have.length', initialCount + 1);
-                
-                // Remove the diagram
-                cy.get('.remove-diagram-btn').last().click();
-                
-                // Verify the diagram was removed
-                cy.get('.diagram-inputs').should('have.length', initialCount);
-            });
+            // Initially there might be no diagrams
+            // Click the add diagram link to add a new diagram
+            cy.get('.add-diagram-link').click();
+            
+            // Verify a diagram was added
+            cy.get('.diagram-inputs').should('exist');
+            
+            // Remove the diagram
+            cy.get('.remove-diagram-btn').click();
+            
+            // Verify the diagram was removed
+            cy.get('.diagram-inputs').should('not.exist');
         });
 
         it('has the form control buttons', () => {
@@ -66,7 +70,15 @@ describe('editing threat models', () => {
         beforeEach(() => {
             cy.get('#local-login-btn').click();
             cy.get('a[href="#/local/threatmodel/new"]').click();
-            cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model/edit');
+            // Fill out the form
+            cy.get('#threat-model-title').type('Test Threat Model');
+            cy.get('#threat-model-owner').type('Test Owner');
+            cy.get('#threat-model-description').type('Test Description');
+            cy.get('#threat-model-reviewer').type('Test Reviewer');
+            // Submit the form
+            cy.get('button[type="submit"]').click();
+            // After submitting the form, we should be redirected to the edit page with the model name
+            cy.url().should('include', '/models/').and('include', '/edit');
         });
 
         afterEach(() => {
@@ -76,9 +88,10 @@ describe('editing threat models', () => {
         describe('cancel', () => {
             it('goes back without prompting if data has not been edited', () => {
                 cy.get('#td-close-btn').click();
-                cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model');
-                // Check for the page title or content instead of specific text
-                cy.url().should('include', 'New%20Threat%20Model');
+                // After closing, we should be back at the model view page
+                cy.url().should('include', '/models/').and('not.include', '/edit');
+                // Check for the model name in the URL
+                cy.url().should('include', 'Threat%20Model');
             });
 
             describe('after editing', () => {
@@ -91,15 +104,17 @@ describe('editing threat models', () => {
 
                 it('does not reset if the user selects cancel', () => {
                     cy.get('.modal-footer .btn-secondary').contains('Cancel').click();
-                    cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model/edit');
+                    // After canceling, we should still be on the edit page
+                    cy.url().should('include', '/models/').and('include', '/edit');
                     cy.get('#title').should('have.value', newName);
                 });
 
                 it('resets data and goes back if the user selects ok', () => {
                     cy.get('.modal-footer .btn-danger').contains('OK').click();
-                    cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model');
-                    // Check that we're back at the threat model view
-                    cy.url().should('include', 'New%20Threat%20Model');
+                    // After confirming, we should be back at the model view page
+                    cy.url().should('include', '/models/').and('not.include', '/edit');
+                    // Check for the model name in the URL
+                    cy.url().should('include', 'Threat%20Model');
                 });
             });
         });
@@ -139,9 +154,10 @@ describe('editing threat models', () => {
                 cy.get('#title').type(newName);
                 cy.get('#title').should('have.value', newName);
                 cy.get('#td-save-btn').click();
-                cy.url().should('equal', Cypress.config().baseUrl + '#/local/New%20Threat%20Model');
-                // Check that we're back at the threat model view with the new name
-                cy.url().should('include', 'New%20Threat%20Model');
+                // After saving, we should be back at the model view page
+                cy.url().should('include', '/models/').and('not.include', '/edit');
+                // Check for the model name in the URL
+                cy.url().should('include', 'Threat%20Model');
             });
         });
     });

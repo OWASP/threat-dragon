@@ -1,5 +1,5 @@
 <template>
-    <div class="td-threat-data no-print">
+    <div class="td-threat-data no-print" :data-test-id="dataType">
         <b-row>
             <b-col>
                 <h3 class="entity-title">

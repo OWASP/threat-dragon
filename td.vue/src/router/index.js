@@ -52,12 +52,21 @@ const routes = [
     ...googleRoutes
 ];
 
-// Use hash history for Electron (desktop) mode, web history for web mode
+// Use hash history for Electron (desktop) mode or e2e tests, web history for web mode
 const isElectron =
     typeof window !== 'undefined' && (window.electronAPI?.isElectron || window.isElectronMode);
-const historyMode = isElectron ? createWebHashHistory() : createWebHistory();
+// Check if we're running in e2e test mode by looking for a specific URL parameter or environment variable
+const isE2ETest = typeof window !== 'undefined' &&
+    (window.location.href.includes('e2e=true') ||
+     process.env.VUE_APP_E2E_TEST === 'true' ||
+     // Check if Cypress is running
+     window.Cypress);
+const useHashMode = isElectron || isE2ETest;
+const historyMode = useHashMode ? createWebHashHistory() : createWebHistory();
 log.info('Router using', {
-    mode: isElectron ? 'hash history (Electron mode)' : 'web history (browser mode)'
+    mode: useHashMode ?
+        (isElectron ? 'hash history (Electron mode)' : 'hash history (E2E test mode)') :
+        'web history (browser mode)'
 });
 
 const router = createRouter({

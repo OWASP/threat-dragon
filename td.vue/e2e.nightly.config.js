@@ -18,6 +18,6 @@ module.exports = defineConfig({
     e2e: {
         supportFile: 'tests/e2e/support/e2e.js',
         specPattern: [ 'tests/e2e/specs/home.cy.js', 'tests/e2e/specs/docs.cy.js' ],
-        baseUrl: 'https://www.threatdragon.com/'
+        baseUrl: 'https://www.threatdragon.com/?e2e=true'
     }
 });
