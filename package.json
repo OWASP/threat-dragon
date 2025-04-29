@@ -159,8 +159,6 @@
     "yorkie": "npm:husky@^7.0.0"
   },
   "dependencies": {
-    "dmg-builder": "^26.0.12",
-    "dmg-license": "^1.0.11",
     "dotenv": "^16.4.7",
     "eslint-plugin-es-x": "^8.6.1",
     "eslint-plugin-n": "^17.17.0",
@@ -168,9 +166,9 @@
     "http-errors": "^2.0.0"
   },
   "optionalDependencies": {
-    "dmg-builder-darwin": "npm:dmg-builder@^25.0.0",
-    "dmg-license-darwin": "npm:dmg-license@^1.0.11",
-    "electron-builder-squirrel-windows": "^26.0.12"
+    "dmg-builder": "^25.1.8",
+    "dmg-license": "^1.0.11",
+    "electron-builder-squirrel-windows": "^25.1.8"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
@@ -182,7 +180,16 @@
     "rimraf": "^3.0.2",
     "tar-fs": ">=3.0.8",
     "@vue/vue3-jest": "27.0.0",
-    "@typescript-eslint/visitor-keys": "^4.33.0"
+    "@typescript-eslint/visitor-keys": "^4.33.0",
+    "dmg-license": {
+      "os": ["darwin"]
+    },
+    "dmg-builder": {
+      "os": ["darwin", "win32"]
+    },
+    "electron-builder-squirrel-windows": {
+      "os": ["win32"]
+    }
   },
   "resolutions": {
     "ansi-regex": "5.0.1",

@@ -91,8 +91,6 @@
     "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
     "bootstrap-vue-next": "^0.26.30",
-    "dmg-builder": "^26.0.12",
-    "dmg-license": "^1.0.11",
     "dotenv": "^16.4.7",
     "electron-log": "^5.2.4",
     "electron-updater": "^6.3.9",
@@ -218,7 +216,16 @@
     "glob-parent": "5.1.2",
     "is-glob": "4.0.3",
     "path-dirname": "1.0.2",
-    "@typescript-eslint/visitor-keys": "^4.33.0"
+    "@typescript-eslint/visitor-keys": "^4.33.0",
+    "dmg-license": {
+      "os": ["darwin"]
+    },
+    "dmg-builder": {
+      "os": ["darwin", "win32"]
+    },
+    "electron-builder-squirrel-windows": {
+      "os": ["win32"]
+    }
   },
   "resolutions": {
     "ansi-regex": "5.0.1",
@@ -230,7 +237,9 @@
     "path-dirname": "1.0.2"
   },
   "optionalDependencies": {
-    "electron-builder-squirrel-windows": "^26.0.12",
+    "dmg-builder": "^25.1.8",
+    "dmg-license": "^1.0.11",
+    "electron-builder-squirrel-windows": "^25.1.8",
     "eslint-plugin-es-x": "7.8.0",
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-promise": "6.6.0"
