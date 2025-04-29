@@ -300,3 +300,4 @@ coverage/
 !td.vue/README.md
 !td.vue/browserstack.nightly.json
 !td.vue/browserstack.smokes.json
+PACKAGE-LOCK-FIX.md
