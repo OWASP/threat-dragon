@@ -15,18 +15,18 @@ import { createWrapper } from '../setup/test-utils'; // Use our helper
 
 // Vue 2 store creation:
 const storeVue2 = new Vuex.Store({
-  state: { /* ... */ },
-  getters: { /* ... */ },
-  actions: { /* ... */ },
-  mutations: { /* ... */ }
+    state: { /* ... */ },
+    getters: { /* ... */ },
+    actions: { /* ... */ },
+    mutations: { /* ... */ }
 });
 
 // Vue 3 store creation:
 const storeVue3 = createStore({
-  state: { /* ... */ },
-  getters: { /* ... */ },
-  actions: { /* ... */ },
-  mutations: { /* ... */ }
+    state: { /* ... */ },
+    getters: { /* ... */ },
+    actions: { /* ... */ },
+    mutations: { /* ... */ }
 });
 
 // Vue 2 test setup:
@@ -35,42 +35,42 @@ localVue.use(Vuex);
 localVue.use(BootstrapVue);
 
 const wrapperVue2 = shallowMount(Component, {
-  localVue,
-  store: storeVue2,
-  mocks: {
-    $t: key => key
-  },
-  stubs: {
+    localVue,
+    store: storeVue2,
+    mocks: {
+        $t: key => key
+    },
+    stubs: {
     // ...
-  }
+    }
 });
 
 // Vue 3 test setup:
 const wrapperVue3 = createWrapper(Component, {
-  store: storeVue3,
-  mocks: {
-    $t: key => key
-  },
-  stubs: {
+    store: storeVue3,
+    mocks: {
+        $t: key => key
+    },
+    stubs: {
     // ...
-  },
-  shallow: true // Use shallowMount
+    },
+    shallow: true // Use shallowMount
 });
 
 // Vue 2 component lookups:
-const buttonVue2 = wrapperVue2.findComponent(BButton);
+const _buttonVue2 = wrapperVue2.findComponent(BButton);
 
 // Vue 3 component lookups:
-const buttonVue3 = wrapperVue3.find('button'); // Prefer DOM selectors over components
+const _buttonVue3 = wrapperVue3.find('button'); // Prefer DOM selectors over components
 // Or for custom components:
-const customComponentVue3 = wrapperVue3.findComponent({ name: 'custom-component' });
+const _customComponentVue3 = wrapperVue3.findComponent({ name: 'custom-component' });
 
 // Vue 2 bootstrap-vue plugin methods:
 wrapperVue2.vm.$bvModal.msgBoxConfirm('Are you sure?');
 
 // Vue 3 mock these directly:
 wrapperVue3.vm.$bvModal = {
-  msgBoxConfirm: jest.fn().mockResolvedValue(true)
+    msgBoxConfirm: jest.fn().mockResolvedValue(true)
 };
 
 /**

@@ -98,7 +98,7 @@ module.exports = {
                         'path',
                         'os',
                         'url'
-                    ])
+                    ]);
                 },
                 builderOptions: {
                     // Configure DMG builder to use Python from PATH
@@ -111,21 +111,21 @@ module.exports = {
                         output: 'dist-desktop'
                     },
                     files: [
-                        "**/*",
-                        "!**/node_modules/.bin",
-                        "!**/node_modules/.cache",
-                        "!**/__tests__/**",
-                        "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
-                        "!.editorconfig",
-                        "!**/._*",
-                        "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.gitignore,.gitattributes}",
-                        "!**/*.{cmd,yml,yaml,md,markdown}"
+                        '**/*',
+                        '!**/node_modules/.bin',
+                        '!**/node_modules/.cache',
+                        '!**/__tests__/**',
+                        '!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}',
+                        '!.editorconfig',
+                        '!**/._*',
+                        '!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.gitignore,.gitattributes}',
+                        '!**/*.{cmd,yml,yaml,md,markdown}'
                     ],
                     extraMetadata: {
-                        main: "background.js"
+                        main: 'background.js'
                     },
                     extraResources: [
-                        "license.txt"
+                        'license.txt'
                     ],
                     publish: {
                         provider: 'github'
@@ -253,8 +253,8 @@ module.exports = {
             
             // Use mock implementations for web-only dependencies
             config.resolve.alias
-                .set('vue3-google-signin', path.resolve(__dirname, 'src/plugins/desktop-auth.js'))
-                // Add aliases for any other web-only dependencies that need to be mocked
+                .set('vue3-google-signin', path.resolve(__dirname, 'src/plugins/desktop-auth.js'));
+            // Add aliases for any other web-only dependencies that need to be mocked
         }
     },
     configureWebpack: {

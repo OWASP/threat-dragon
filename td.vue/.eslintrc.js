@@ -23,6 +23,17 @@ module.exports = {
         expect: 'readonly',
         Component: 'readonly'
     },
+    ignorePatterns: [
+        'node_modules/',
+        'dist/',
+        'dist-electron/',
+        'dist-desktop/',
+        '*.config.js',
+        'babel.config.js',
+        'context/**',
+        'td.vue/tests/unit/setup/vue3-test-template.js',
+        'td.vue/tests/unit/setup/bootstrap-vue-next.js'
+    ],
     parser: 'vue-eslint-parser',
     parserOptions: {
         ecmaVersion: 2022,
@@ -54,5 +65,26 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    // Add overrides for test files
+    overrides: [
+        {
+            files: ['tests/**/*.js', 'tests/**/*.cy.js', 'tests/**/*.spec.js'],
+            env: {
+                jest: true,
+                'cypress/globals': true
+            },
+            plugins: ['cypress'],
+            globals: {
+                cy: 'readonly',
+                Cypress: 'readonly',
+                expect: 'readonly',
+                assert: 'readonly',
+                chai: 'readonly'
+            },
+            rules: {
+                'no-undef': 'off' // Turn off no-undef for test files
+            }
+        }
+    ]
 };

@@ -140,6 +140,10 @@ coverage/
 !td.vue
 !td.vue/**/*.vue
 !td.vue/*config.js
+!td.vue/build-desktop.js
+!td.vue/check-logs.js
+!td.vue/entitlements.mac.inherit.plist
+!td.vue/index.html
 !td.vue/**/*.scss
 !td.vue/public/
 !td.vue/public/*
