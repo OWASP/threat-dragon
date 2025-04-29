@@ -228,7 +228,6 @@
     "path-dirname": "1.0.2"
   },
   "optionalDependencies": {
-    "dmg-license": "^1.0.11",
     "electron-builder-squirrel-windows": "^26.0.12",
     "eslint-plugin-es-x": "7.8.0",
     "eslint-plugin-n": "16.6.2",
