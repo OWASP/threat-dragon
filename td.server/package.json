@@ -10,6 +10,7 @@
     "make-sbom:xml:server": "npm exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML  --output-file=sbom.xml",
     "make-sbom:json:server": "npm exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=JSON --output-file=sbom.json",
     "clean:server": "rimraf --glob *.log .nyc_output/ coverage/ dist/",
+    "clean:lock": "npm run clean:server && rimraf package-lock.json",
     "dev:server": "nodemon dev.js --exec babel-node",
     "dev:server:pm2": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
     "lint": "eslint --ext .js src",
@@ -96,7 +97,8 @@
     "minimatch": "^3.1.2",
     "minimatch@<3.0.5": ">=3.0.5",
     "rimraf": "^3.0.2",
-    "tar-fs": ">=3.0.8"
+    "tar-fs": ">=3.0.8",
+    "@typescript-eslint/visitor-keys": "^4.33.0"
   },
   "resolutions": {
     "ansi-regex": "5.0.1"

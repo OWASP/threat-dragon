@@ -26,7 +26,7 @@ Obtain the code from the latest [releases area][releases] in the form of either
 a `.zip` file or a `.tar.gz` file.
 
 Extract the source tree for Threat Dragon from the archive file and
-install the application dependencies using npm (or pnpm if that is installed) :
+install the application dependencies using npm:
 
 `npm install`
 

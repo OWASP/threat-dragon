@@ -5,6 +5,9 @@
   "private": true,
   "scripts": {
     "preinstall": "npm config set engine-strict false && npm config set legacy-peer-deps true && npm config set strict-peer-deps false && npm config set fund false && npm config set prefer-offline true",
+    "install:all": "npm install && cd td.vue && npm install && cd ../td.server && npm install && cd ..",
+    "ci:all": "npm ci && cd td.vue && npm ci && cd ../td.server && npm ci && cd ..",
+    "regenerate-locks": "npm run clean:lock && npm run install:all",
     "audit": "npm-run-all -p \"audit:*\" || exit 0",
     "audit:server": "cd td.server && npm run audit:server || exit 0",
     "audit:vue": "cd td.vue && npm run audit:vue",
@@ -18,6 +21,10 @@
     "clean:files": "rimraf node_modules/ sbom.json sbom.xml",
     "clean:server": "cd td.server && npm run clean:server",
     "clean:vue": "cd td.vue && npm run clean:vue",
+    "clean:lock": "npm-run-all -p \"clean:lock:*\"",
+    "clean:lock:root": "npm run clean:files && rimraf package-lock.json",
+    "clean:lock:server": "cd td.server && npm run clean:lock",
+    "clean:lock:vue": "cd td.vue && npm run clean:lock",
     "cypress:open": "cd td.vue && npm run cypress:open",
     "cypress:update": "cd td.vue && npm run cypress:update",
     "dev": "npm-run-all --parallel dev:site dev:server:pm2",
@@ -152,6 +159,7 @@
     "yorkie": "npm:husky@^7.0.0"
   },
   "dependencies": {
+    "dmg-license": "^1.0.11",
     "dotenv": "^16.4.7",
     "eslint-plugin-es-x": "^8.6.1",
     "eslint-plugin-n": "^17.17.0",
@@ -172,11 +180,11 @@
     "minimatch@<3.0.5": ">=3.0.5",
     "rimraf": "^3.0.2",
     "tar-fs": ">=3.0.8",
-    "@vue/vue3-jest": "27.0.0"
+    "@vue/vue3-jest": "27.0.0",
+    "@typescript-eslint/visitor-keys": "^4.33.0"
   },
   "resolutions": {
     "ansi-regex": "5.0.1",
     "jest": "27.5.1"
-  },
-  "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808"
+  }
 }

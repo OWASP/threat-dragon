@@ -28,6 +28,7 @@
     "make-sbom:xml:vue": "npm exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=XML --output-file=sbom.xml",
     "make-sbom:json:vue": "npm exec -- cyclonedx-npm --omit=dev --ignore-npm-errors --spec-version=1.5 --output-format=JSON --output-file=sbom.json",
     "clean:vue": "rimraf coverage/ cypress/ dist/ dist-desktop/ node_modules/ tests/e2e/videos/ tests/e2e/reports/ tests/e2e/screenshots/ log/ results/ sbom.json sbom.xml",
+    "clean:lock": "npm run clean:vue && rimraf package-lock.json",
     "cypress:open": "cypress open",
     "cypress:update": "npx update-browserslist-db@latest",
     "dev:site": "VUE_APP_WEB_ONLY=true npx vue-cli-service serve",
@@ -214,7 +215,8 @@
     "ansi-regex": "5.0.1",
     "glob-parent": "5.1.2",
     "is-glob": "4.0.3",
-    "path-dirname": "1.0.2"
+    "path-dirname": "1.0.2",
+    "@typescript-eslint/visitor-keys": "^4.33.0"
   },
   "resolutions": {
     "ansi-regex": "5.0.1",

@@ -36,6 +36,7 @@ coverage/
 !.spellcheck.yaml
 !CNAME
 !.eslintrc.js
+!electron-builder-config.js
 
 # docker files
 !.dockerignore
