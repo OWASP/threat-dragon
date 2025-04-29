@@ -159,6 +159,8 @@
     "yorkie": "npm:husky@^7.0.0"
   },
   "dependencies": {
+    "dmg-builder": "^26.0.12",
+    "dmg-license": "^1.0.11",
     "dotenv": "^16.4.7",
     "eslint-plugin-es-x": "^8.6.1",
     "eslint-plugin-n": "^17.17.0",
