@@ -58,6 +58,9 @@
     "stop:site": "cd td.vue && npm run stop:site",
     "test": "npm-run-all test:vue test:server",
     "test:desktop": "cd td.vue && npm run test:desktop",
+    "test:server": "cd td.server && npm run test:unit",
+    "test:site": "cd td.vue && npm run test:unit",
+    "test:vue": "cd td.vue && npm run test:unit",
     "test:e2e": "npx vue-cli-service test:e2e -C e2e.local.config.js",
     "test:e2e:desktop": "npx vue-cli-service test:e2e -C e2e.desktop.config.js",
     "test:e2e:local": "npx vue-cli-service test:e2e -C e2e.local.config.js --url http://localhost:8080/",
@@ -68,10 +71,7 @@
     "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C e2e.smokes.local.config.js --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
-    "test:unit": "npx vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/",
-    "test:server": "cd td.server && npm run test:unit",
-    "test:site": "cd td.vue && npm run test:unit",
-    "test:vue": "cd td.vue && npm run test:unit"
+    "test:unit": "npx vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/"
   },
   "keywords": [
     "threat dragon",
@@ -123,6 +123,9 @@
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-vue": "^10.0.0",
+    "eslint-scope": "^8.3.0",
+    "eslint-visitor-keys": "^4.2.0",
+    "espree": "^10.3.0",
     "got": "^11.8.5",
     "html-webpack-plugin": "^5.6.3",
     "is-mergeable-object": "^1.1.1",
@@ -139,7 +142,8 @@
     "rimraf": "^3.0.2",
     "sass": "^1.85.1",
     "sass-loader": "^16.0.5",
-    "semver": "^7.5.4",
+    "semver": "^7.7.1",
+    "typescript": "^5.8.3",
     "update-notifier": "^6.0.2",
     "vue-cli-service": "^5.0.10",
     "vue-eslint-parser": "^10.1.3",
@@ -148,11 +152,15 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
+    "eslint-plugin-es-x": "^8.6.1",
+    "eslint-plugin-n": "^17.17.0",
+    "eslint-plugin-promise": "^7.2.1",
     "http-errors": "^2.0.0"
   },
   "optionalDependencies": {
     "dmg-builder-darwin": "npm:dmg-builder@^25.0.0",
-    "dmg-license-darwin": "npm:dmg-license@^1.0.11"
+    "dmg-license-darwin": "npm:dmg-license@^1.0.11",
+    "electron-builder-squirrel-windows": "^26.0.12"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
