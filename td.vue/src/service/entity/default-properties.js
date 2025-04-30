@@ -10,7 +10,10 @@ const flow = {
     isPublicNetwork: false,
     protocol: '',
     pRawUserData: false,
-    threats: []
+    threats: [],
+    "isFunctionCall": false,
+    "isHighFrequency": false,
+    "resultsAreValidated": true
 };
 
 const actor = {
@@ -37,7 +40,10 @@ const tmProcess = {
     isWebApplication: false,
     privilegeLevel: '',
     threats: [],
-    isTrusted: false
+    isTrusted: false,
+    "hasShortTermMemory": false,
+    "hasLongTermMemory": false,
+    "executesGeneratedCode": false
 };
 
 const store = {
@@ -53,7 +59,8 @@ const store = {
     storesCredentials: false,
     storesInventory: false,
     threats: [],
-    isTrusted: false
+    isTrusted: false,
+    "isSharedContext": false
 };
 
 const agent = {
@@ -69,7 +76,11 @@ const agent = {
     pOutputSafetyFilter: false,
     pModifiesMemory: false,
     threats: [],
-    isTrusted: false
+    isTrusted: false,
+    "hasShortTermMemory": false,
+    "hasLongTermMemory": false,
+    "trustScore": 50,
+    "isRogue": false
 };
 
 const tool = {
@@ -81,7 +92,10 @@ const tool = {
     hasOpenThreats: false,
     pRequiresElevatedPrivileges: false,
     threats: [],
-    isTrusted: false
+    isTrusted: false,
+    "isExternal": false,
+    "isDangerous": false,
+    "requiresElevatedPrivileges": false
 };
 
 
