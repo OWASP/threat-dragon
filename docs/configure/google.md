@@ -76,7 +76,7 @@ The client ID and secret can then used for the configuration :
 - `GOOGLE_CLIENT_ID=01234567890123456789`
 - `GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456`
 
-Clearly these values shown here are _not to be used_ for a real application,
+Clearly the secrets shown here are _not to be used_ for a real application,
 they are merely for illustrative purposes.
 
 ### Run from command line
