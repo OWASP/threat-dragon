@@ -5,6 +5,9 @@
 !.env.example
 !example.env
 !minimal.env
+!.npmrc
+!td.server/.npmrc
+!td.vue/.npmrc
 
 # allow github, workflows and templates
 !.github/
