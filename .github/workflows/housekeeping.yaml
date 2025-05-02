@@ -1,8 +1,8 @@
 name: Housekeeping
 on:
-  # Run daily at 7:00
+  # Run daily at 6:45
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '45 6 * * *'
   workflow_dispatch:
 
 env:
@@ -119,6 +119,9 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2.4.0
         with:
+          args: >-
+            --no-progress
+            --max-retries 2
           fail: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
