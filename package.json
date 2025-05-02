@@ -161,21 +161,7 @@
     "rimraf": "^3.0.2",
     "tar-fs": ">=3.0.8",
     "@vue/vue3-jest": "27.0.0",
-    "@typescript-eslint/visitor-keys": "^4.33.0",
-    "app-builder-lib": "^25.1.8",
-    "dmg-builder": {
-      "version": "^25.1.8",
-      "os": ["darwin", "win32"]
-    },
-    "electron-builder-squirrel-windows": {
-      "version": "^25.1.8",
-      "os": ["win32"]
-    },
-    "dmg-license": {
-      "os": ["darwin"]
-    },
-    "electron-builder": {
-    }
+    "@typescript-eslint/visitor-keys": "^4.33.0"
   },
   "resolutions": {
     "ansi-regex": "5.0.1",

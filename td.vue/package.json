@@ -141,7 +141,6 @@
     "crc32-stream": "4.0.3",
     "cypress": "^14.2.1",
     "dependency-cruiser": "^13.1.5",
-    "dmg-license": "^1.0.11",
     "electron": "^25.8.4",
     "electron-builder": "^25.0.0",
     "electron-devtools-installer": "^3.2.0",
