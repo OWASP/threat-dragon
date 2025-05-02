@@ -36,3 +36,8 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 # HTTP server toolkit
 gem "webrick", "~> 1.9"
+
+# Add these gems to fix Ruby 3.4+ compatibility issues
+gem "csv"
+gem "logger"
+gem "base64"
