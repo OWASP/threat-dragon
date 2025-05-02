@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "preinstall": "npm config set legacy-peer-deps true",
-    "install:all": "npm install --omit=optional && cd td.vue && npm install --omit=optional && cd ../td.server && npm install --omit=optional && cd ..",
-    "ci:all": "npm ci --omit=optional && cd td.vue && npm ci --omit=optional && cd ../td.server && npm ci --omit=optional && cd ..",
+    "install:all": "npm install && cd td.vue && npm install && cd ../td.server && npm install && cd ..",
+    "ci:all": "npm ci && cd td.vue && npm ci && cd ../td.server && npm ci && cd ..",
     "audit": "npm-run-all -p \"audit:*\" || exit 0",
     "audit:server": "cd td.server && npm run audit:server || exit 0",
     "audit:vue": "cd td.vue && npm run audit:vue",

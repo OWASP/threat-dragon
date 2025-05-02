@@ -55,7 +55,7 @@ COPY        --from=build-docs /td.docs/_site /app/docs
 COPY        --from=build /app/boms /app/boms
 
 COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
-RUN         cd td.server && npm clean-install --omit dev --ignore-scripts
+RUN         cd td.server && npm clean-install --omit=dev --ignore-scripts
 COPY        --from=build /app/td.server/dist ./td.server/dist
 COPY        --from=build /app/td.vue/dist ./dist
 COPY        ./td.server/index.js ./td.server/index.js
