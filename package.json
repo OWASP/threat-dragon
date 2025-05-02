@@ -78,7 +78,7 @@
     "test:e2e-smokes": "cd td.vue && npm --legacy-peer-deps run test:e2e-smokes",
     "test:e2e-smokes:local": "cd td.vue && npm --legacy-peer-deps run test:e2e-smokes:local",
     "test:e2e-nightly": "cd td.vue && npm --legacy-peer-deps run test:e2e-nightly",
-    "test:unit": "npx vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/"
+    "test:unit": "npm install @vue/cli-plugin-babel && npx vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/"
   },
   "keywords": [
     "threat dragon",
