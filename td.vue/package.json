@@ -6,7 +6,7 @@
   "private": true,
   "main": "background.js",
   "scripts": {
-    "preinstall": "npm config set engine-strict false && npm config set legacy-peer-deps true && npm config set strict-peer-deps false && npm config set fund false && npm config set prefer-offline true",
+    "preinstall": "npm config set legacy-peer-deps true",
     "audit:vue": "npm audit --omit=dev || echo 'Vulnerabilities found - review required' && exit 0",
     "build:site": "VUE_APP_WEB_ONLY=true npx vue-cli-service build --no-unsafe-inline",
     "build:web": "VUE_APP_WEB_ONLY=true npx vue-cli-service build --no-unsafe-inline",

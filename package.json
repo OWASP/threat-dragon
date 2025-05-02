@@ -4,7 +4,7 @@
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
-    "preinstall": "npm config set engine-strict false && npm config set legacy-peer-deps true && npm config set strict-peer-deps false && npm config set fund false && npm config set prefer-offline true",
+    "preinstall": "npm config set legacy-peer-deps true",
     "install:all": "npm install --omit=optional && cd td.vue && npm install --omit=optional && cd ../td.server && npm install --omit=optional && cd ..",
     "ci:all": "npm ci --omit=optional && cd td.vue && npm ci --omit=optional && cd ../td.server && npm ci --omit=optional && cd ..",
     "audit": "npm-run-all -p \"audit:*\" || exit 0",
