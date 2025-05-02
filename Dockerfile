@@ -25,9 +25,9 @@ COPY        ./td.vue/src/ ./td.vue/src/
 COPY        ./td.vue/public/ ./td.vue/public/
 COPY        ./td.vue/*.config.js ./td.vue/
 
-RUN         npm clean-install --ignore-scripts
-RUN         cd td.server && npm clean-install
-RUN         cd td.vue && npm clean-install
+RUN         npm install --ignore-scripts
+RUN         cd td.server && npm install
+RUN         cd td.vue && npm install
 RUN         npm run build
 RUN         cd td.server && npm run make-sbom
 RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && \
@@ -55,7 +55,7 @@ COPY        --from=build-docs /td.docs/_site /app/docs
 COPY        --from=build /app/boms /app/boms
 
 COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
-RUN         cd td.server && npm clean-install --omit=dev --ignore-scripts
+RUN         cd td.server && npm install --omit=dev --ignore-scripts
 COPY        --from=build /app/td.server/dist ./td.server/dist
 COPY        --from=build /app/td.vue/dist ./dist
 COPY        ./td.server/index.js ./td.server/index.js
