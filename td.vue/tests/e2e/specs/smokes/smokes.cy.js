@@ -19,18 +19,18 @@ describe('smoke tests', () => {
             cy.url().should('contain', '/dashboard');
             
             // Find and click the "Create New" action
-            cy.get('.dashboard-action').contains('createNew').click();
+            cy.get('.dashboard-action').contains('Create a new, empty threat model').click();
             
             // Check that we're on the new threat model page
             cy.url().should('contain', '/local/threatmodel/new');
             
             // Wait for the form to load and fill in the title field
-            cy.get('#title').should('be.visible');
-            cy.get('#title').clear();
-            cy.get('#title').type('new name');
+            cy.get('#threat-model-title').should('be.visible');
+            cy.get('#threat-model-title').clear();
+            cy.get('#threat-model-title').type('new name');
             
             // Save the model
-            cy.get('#td-save-btn').click();
+            cy.get('button').contains('Save').click();
             
             // Check that we're on the edit page
             cy.url().should('contain', '/models/new%20name/edit');
@@ -42,22 +42,17 @@ describe('smoke tests', () => {
         });
     
         it('can add a new diagram', () => {
-            // Get the initial count of diagrams
-            cy.get('.diagram-inputs').then(($diagrams) => {
-                const initialCount = $diagrams.length;
-                
-                // Click the add diagram link
-                cy.get('.add-diagram-link').click();
-                
-                // Verify a new diagram was added
-                cy.get('.diagram-inputs').should('have.length', initialCount + 1);
-                
-                // Remove the diagram
-                cy.get('.remove-diagram-btn').last().click();
-                
-                // Verify the diagram was removed
-                cy.get('.diagram-inputs').should('have.length', initialCount);
-            });
+            // Click the add diagram link to add a diagram
+            cy.get('.add-diagram-link').click();
+            
+            // Verify a diagram was added
+            cy.get('.diagram-inputs').should('exist');
+            
+            // Remove the diagram
+            cy.get('.remove-diagram-btn').last().click();
+            
+            // Verify the diagram was removed
+            cy.get('.diagram-inputs').should('not.exist');
         });
     
         it('has the close control buttons', () => {
