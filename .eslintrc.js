@@ -6,8 +6,8 @@ module.exports = {
         es2022: true,
         jest: true
     },
-    plugins: ['vue'],
-    extends: ['eslint:recommended', 'plugin:vue/essential'],
+    plugins: [],
+    extends: ['eslint:recommended'],
     globals: {
         __static: 'readonly',
         vi: 'readonly',
@@ -22,7 +22,6 @@ module.exports = {
         expect: 'readonly',
         Component: 'readonly'
     },
-    parser: 'vue-eslint-parser',
     parserOptions: {
         ecmaVersion: 2022,
         sourceType: 'module'
@@ -54,20 +53,6 @@ module.exports = {
         'prefer-const': 'warn',
         'no-var': 'warn',
 
-        // Vue specific rules
-        'vue/no-unused-components': 'warn',
-        'vue/html-indent': ['error', 4],
-        'vue/max-attributes-per-line': [
-            'warn',
-            {
-                singleline: {
-                    max: 3
-                },
-                multiline: {
-                    max: 1
-                }
-            }
-        ]
     },
     overrides: [
         // Server specific overrides
@@ -91,6 +76,8 @@ module.exports = {
                 browser: true
             },
             plugins: ['vue'],
+            parser: 'vue-eslint-parser',
+            extends: ['eslint:recommended', 'plugin:vue/essential'],
             rules: {
                 // Vue Essential Rules (Error Prevention)
                 'vue/no-arrow-functions-in-watch': 'error',

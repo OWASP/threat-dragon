@@ -1,11 +1,7 @@
 ## OWASP Threat Dragon Site
 
 This is a Vue project that serves as the front end of the OWASP Threat Dragon website project,
-and also provides the electron desktop project
-
-## Script location
-
-This project uses npm workspaces and is a monorepo.  npm scripts should generally be run from the project root directory.
+and also provides the electron desktop project.
 
 ## Project setup
 
@@ -13,31 +9,31 @@ This project uses npm workspaces and is a monorepo.  npm scripts should generall
 
 ### Compiles and hot-reloads for development
 
-`npm run serve`
+`npm run dev:site` or from the root directory: `npm run dev`
 
 ### Compiles and minifies for production
 
-`npm run build`
+`npm run build:site` or from the root directory: `npm run build`
 
 ### Builds the desktop application
 
-`npm run electron:build`
+`npm run build:desktop` or from the root directory: `npm run build:desktop`
 
 ### Runs the desktop application for development
 
-`npm run electron:serve`
+`npm run start:desktop:dev` or from the root directory: `npm run start:desktop`
 
 Clean the distribution with
 
-`npm run clean`
+`npm run clean:vue` or from the root directory: `npm run clean`
 
 ### Run unit tests
 
-`npm test`
+`npm run test:vue` or from the root directory: `npm test`
 
 For continuous testing:
 
-`npm run test:unit -- --watch`
+`npm run test:vue -- --watch` or from the root directory: `npm run test:vue -- --watch`
 
 Jest coverage will only show coverage for files containing executable javascript.
 This means that vue components without any JS logic will not be included in the coverage report.
@@ -46,11 +42,19 @@ or you know of another way of getting better coverage for `.vue` files, please o
 
 ### Run e2e tests
 
-`npm run test:e2e`
+`npm run test:e2e` or from the root directory: `npm run test:e2e`
+
+For local e2e testing:
+
+`npm run test:e2e:local` or from the root directory: `npm run test:e2e:local`
 
 ### Lints and fixes files
 
-`npm run lint`
+`npm run lint` or from the root directory: `npm run lint:vue`
+
+To fix linting issues:
+
+`npm run lint:fix:vue` or from the root directory: `npm run lint:fix:vue`
 
 ## Styles
 
@@ -72,7 +76,7 @@ This project uses [bootstrap-vue](https://www.npmjs.com/package/bootstrap-vue), 
 ## Adding providers
 
 Add a new service named <provider>.provider.js in `src/service/provider`.
-See [github.provider.js](src/service/provider/github.provider.js) as an example.
+See the existing provider implementations in the `src/service/provider` directory as examples.
 This will need the following:
 
 - `dashboardActions`: An array of objects that describe the actions a user can take from the dashboard
@@ -125,3 +129,16 @@ The application uses different routing patterns for different storage providers.
 Vue I18n v11 warns about using the Legacy API mode in the console. To fully fix this warning, the application components need to be migrated from Options API (`$t()`) to Composition API (`useI18n()`) style. This is a significant change that would require updating all Vue components.
 
 The i18n configuration has been updated to use `legacy: false`, but the components still need to be updated to use the Composition API pattern.
+
+### Electron Desktop Application
+
+The desktop application is built using Electron. There are two build methods available:
+
+1. Full build: `npm run build:desktop:full` - Builds the site and then packages it as a desktop application
+2. Simple build: `npm run build:desktop:simple` - Builds a simplified version for development testing
+
+To package the desktop application for different platforms:
+
+- Windows: `npm run package:desktop:win`
+- macOS: `npm run package:desktop:mac`
+- Linux: `npm run package:desktop:linux`

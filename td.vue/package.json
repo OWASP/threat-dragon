@@ -141,6 +141,7 @@
     "crc32-stream": "4.0.3",
     "cypress": "^14.2.1",
     "dependency-cruiser": "^13.1.5",
+    "dmg-license": "^1.0.11",
     "electron": "^25.8.4",
     "electron-builder": "^25.0.0",
     "electron-devtools-installer": "^3.2.0",
@@ -148,9 +149,12 @@
     "eslint-compat-utils": "0.5.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-cypress": "^3.6.0",
+    "eslint-plugin-es-x": "7.8.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-n": "16.6.2",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "6.6.0",
     "eslint-plugin-vue": "^10.0.0",
     "eslint-scope": "^8.3.0",
     "eslint-visitor-keys": "^4.2.0",
@@ -190,10 +194,7 @@
     "vue-eslint-parser": "^10.1.3",
     "vue-loader": "^17.0.0",
     "webpack": "^5.97.1",
-    "zip-stream": "4.1.1",
-    "eslint-plugin-es-x": "7.8.0",
-    "eslint-plugin-n": "16.6.2",
-    "eslint-plugin-promise": "6.6.0"
+    "zip-stream": "4.1.1"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
@@ -223,17 +224,23 @@
     "app-builder-lib": "^25.1.8",
     "dmg-builder": {
       "version": "^25.1.8",
-      "os": ["darwin", "win32"]
+      "os": [
+        "darwin",
+        "win32"
+      ]
     },
     "electron-builder-squirrel-windows": {
       "version": "^25.1.8",
-      "os": ["win32"]
+      "os": [
+        "win32"
+      ]
     },
     "dmg-license": {
-      "os": ["darwin"]
+      "os": [
+        "darwin"
+      ]
     },
-    "electron-builder": {
-    }
+    "electron-builder": {}
   },
   "resolutions": {
     "ansi-regex": "5.0.1",
@@ -245,8 +252,8 @@
     "path-dirname": "1.0.2"
   },
   "optionalDependencies": {
-    "dmg-license": "^1.0.11",
     "dmg-builder": "^25.1.8",
+    "dmg-license": "^1.0.11",
     "electron-builder-squirrel-windows": "^25.1.8"
   },
   "electronBuilder": {

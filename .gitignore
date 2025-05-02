@@ -1,24 +1,10 @@
 # uses allow-list, so ignore everything
 *
 
-# SBOM output files (explicitly ignored)
-sbom.json
-sbom.xml
-
 # Logs and environment files
-*.log
-.env
-.env.*
 !.env.example
 !example.env
 !minimal.env
-
-# Dependencies and build outputs
-node_modules/
-dist/
-dist-desktop/
-.vite_cache/
-coverage/
 
 # allow github, workflows and templates
 !.github/
@@ -36,7 +22,6 @@ coverage/
 !.spellcheck.yaml
 !CNAME
 !.eslintrc.js
-!electron-builder-config.js
 
 # docker files
 !.dockerignore
@@ -139,6 +124,15 @@ coverage/
 
 # Vue front end
 !td.vue
+!td.vue/.eslintrc.js
+!td.vue/electron-builder-config.js
+!td.vue/package.json
+!td.vue/package-lock.json
+!td.vue/.browserslistrc
+!td.vue/.editorconfig
+!td.vue/README.md
+!td.vue/browserstack.nightly.json
+!td.vue/browserstack.smokes.json
 !td.vue/**/*.vue
 !td.vue/*config.js
 !td.vue/jest.e2e.config.js
@@ -294,11 +288,3 @@ coverage/
 !td.vue/tests/unit/views/demo/*.spec.js
 !td.vue/tests/unit/views/google/
 !td.vue/tests/unit/views/google/*.spec.js
-!td.vue/package.json
-!td.vue/package-lock.json
-!td.vue/.browserslistrc
-!td.vue/.editorconfig
-!td.vue/README.md
-!td.vue/browserstack.nightly.json
-!td.vue/browserstack.smokes.json
-PACKAGE-LOCK-FIX.md

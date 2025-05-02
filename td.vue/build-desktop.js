@@ -28,28 +28,63 @@ function isModuleInstalled(moduleName) {
     }
 }
 
+// Function to try installing a package
+function tryInstallPackage(packageName) {
+    console.log(`Attempting to install ${packageName}...`);
+    try {
+        // Install the package as a dev dependency to ensure it's in the right location
+        execSync(`npm install --save-dev ${packageName}`, { stdio: 'inherit' });
+        console.log(`Successfully installed ${packageName}`);
+        return true;
+    } catch (error) {
+        console.warn(`Warning: Failed to install ${packageName}. Continuing anyway.`);
+        console.warn(`Error details: ${error.message}`);
+        return false;
+    }
+}
+
 // Platform-specific checks
-let buildCommand = 'vue-cli-service electron:build';
+let buildCommand = 'npx vue-cli-service electron:build';
 
 // Add platform-specific flags
 if (platform === 'darwin') {
     // macOS - check for dmg-license
     if (!isModuleInstalled('dmg-license')) {
-        console.warn('Warning: dmg-license is not installed. DMG packaging might fail.');
-    // Still proceed with the build, but it might fail at the DMG packaging step
+        console.warn('Warning: dmg-license is not installed. Attempting to install it...');
+        tryInstallPackage('dmg-license');
     }
+    
+    // Check for dmg-builder
+    if (!isModuleInstalled('dmg-builder')) {
+        console.warn('Warning: dmg-builder is not installed. Attempting to install it...');
+        tryInstallPackage('dmg-builder');
+    }
+    
     buildCommand += ' --mac';
 } else if (platform === 'win32') {
     // Windows - check for electron-builder-squirrel-windows
     if (!isModuleInstalled('electron-builder-squirrel-windows')) {
-        console.warn('Warning: electron-builder-squirrel-windows is not installed. Squirrel packaging might fail.');
-    // Still proceed with the build, but it might fail at the Squirrel packaging step
+        console.warn('Warning: electron-builder-squirrel-windows is not installed. Attempting to install it...');
+        tryInstallPackage('electron-builder-squirrel-windows');
     }
     buildCommand += ' --win';
 } else if (platform === 'linux') {
     // Linux - no specific dependencies to check
     buildCommand += ' --linux';
 }
+
+// Check for other common optional dependencies
+const optionalDependencies = [
+    'app-builder-bin',
+    'app-builder-lib'
+];
+
+optionalDependencies.forEach(dep => {
+    if (!isModuleInstalled(dep)) {
+        console.warn(`Warning: ${dep} is not installed. Attempting to install it...`);
+        tryInstallPackage(dep);
+    }
+});
 
 // Fix Python compatibility issue if needed
 const corePyPath = path.join(__dirname, 'node_modules/vue-cli-plugin-electron-builder/node_modules/dmg-builder/vendor/dmgbuild/core.py');
