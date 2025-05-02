@@ -193,10 +193,7 @@
     "zip-stream": "4.1.1",
     "eslint-plugin-es-x": "7.8.0",
     "eslint-plugin-n": "16.6.2",
-    "eslint-plugin-promise": "6.6.0",
-    "dmg-license": "^1.0.11",
-    "dmg-builder": "^25.1.8",
-    "electron-builder-squirrel-windows": "^25.1.8"
+    "eslint-plugin-promise": "6.6.0"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
@@ -248,6 +245,9 @@
     "path-dirname": "1.0.2"
   },
   "optionalDependencies": {
+    "dmg-license": "^1.0.11",
+    "dmg-builder": "^25.1.8",
+    "electron-builder-squirrel-windows": "^25.1.8"
   },
   "electronBuilder": {
     "appId": "org.owasp.threatdragon",

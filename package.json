@@ -158,16 +158,16 @@
     "yorkie": "npm:husky@^7.0.0",
     "eslint-plugin-es-x": "^8.6.1",
     "eslint-plugin-n": "^17.17.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "dmg-license": "^1.0.11",
-    "dmg-builder": "^25.1.8",
-    "electron-builder-squirrel-windows": "^25.1.8"
+    "eslint-plugin-promise": "^7.2.1"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
     "http-errors": "^2.0.0"
   },
   "optionalDependencies": {
+    "dmg-license": "^1.0.11",
+    "dmg-builder": "^25.1.8",
+    "electron-builder-squirrel-windows": "^25.1.8"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
