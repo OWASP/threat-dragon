@@ -116,6 +116,9 @@ jobs:
           args: >-
             --no-progress
             --max-retries 1
+            'docs/**/*.md'
+            'docs/*.md'
+            '*.md'
           fail: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
