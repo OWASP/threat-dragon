@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       actions: write
-
     steps:
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.6
@@ -36,7 +35,6 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-
     steps:
       - name: Tidy stale PRs and issues
         uses: actions/stale@v9
@@ -57,7 +55,6 @@ jobs:
     permissions:
       contents: write
       security-events: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
@@ -83,10 +80,8 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       security-events: write
-
     strategy:
       fail-fast: false
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
@@ -111,7 +106,6 @@ jobs:
   link_checker:
     name: Link checker
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.2.0

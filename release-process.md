@@ -41,7 +41,6 @@ Reset the build state to 'latest'; this is displayed on the demo site:
 5. `git commit -m"set build version back to latest"`
 6. `git push`
 
-
 ## Create the release
 
 ### Tag the release
@@ -137,8 +136,8 @@ if necessary use the dashboard to promote the latest release to 'stable'.
 The token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
 Use commands to refresh creds:
 
-* `snapcraft login`
-* `snapcraft export-login --snaps threat-dragon --channels edge,latest,stable -` (note the dash for print to stdout)
+- `snapcraft login`
+- `snapcraft export-login --snaps threat-dragon --channels edge,latest,stable -` (note the dash for print to stdout)
 
 The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
 
@@ -224,13 +223,13 @@ because of the need for a private key in the keychain, so use the certificate is
 
 The latest certificate is provided using Certum's Open Source certificate:
 
-1. install [proCertum SmartSign + SimplySign Desktop for personal computers](https://support.certum.eu/en/software/procertum-smartsign/)
-2. use as a general reference Certum’s [Code Signing in the Cloud](https://files.certum.eu/documents/manual_en/CS-Code_Signing_in_the_Cloud_Signtool_jarsigner_signing.pdf)
+1. install [proCertum SmartSign + SimplySign Desktop for personal computers][smartsign]
+2. use as a general reference Certum’s [Code Signing in the Cloud][certum]
 3. download the unsigned windows installer file
 4. ensure Powershell has the `signtool` utility installed from Windows SDK
 5. right click the icon in the desktop tray to select ‘Connect to SimplySign’
 6. gain a thumbprint from desktop tray icon, Manage certificates → Certificate list → Details → Thumbprint
-7. `signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v "Threat-Dragon-ng-Setup-2.4.1.exe" `
+7. `signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v "Threat-Dragon-ng-Setup-2.4.1.exe"`
 
 Once signed create the checksum file: `sha512sum Threat-Dragon-ng-Setup-2.4.1.exe > checksum.yml`
 
@@ -286,6 +285,7 @@ Revert the build state back to 'latest'; this build state is displayed on the de
 [altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
 [area]: https://github.com/OWASP/threat-dragon/releases
 [certs]: https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
+[certum]: https://files.certum.eu/documents/manual_en/CS-Code_Signing_in_the_Cloud_Signtool_jarsigner_signing.pdf
 [demo]: https://www.threatdragon.com/#/
 [heroku]: https://id.heroku.com/login
 [herokuapp]: https://threatdragon-v2.herokuapp.com/#/
@@ -294,6 +294,7 @@ Revert the build state back to 'latest'; this build state is displayed on the de
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
 [owasp-dock]: https://hub.docker.com/r/owasp/threat-dragon/tags
 [releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
+[smartsign]: https://support.certum.eu/en/software/procertum-smartsign/
 [snapcraft]: https://snapcraft.io/install/threat-dragon/arch
 [snapdash]: https://snapcraft.io/threat-dragon/releases
 [td-dock]: https://hub.docker.com/r/threatdragon/owasp-threat-dragon/tags

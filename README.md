@@ -5,7 +5,7 @@
 
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 [![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg?event=push)][build]
-[![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)](https://github.com/owasp/threat-dragon/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)][latest]
 [![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://www.owasp.org/projects)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)](https://www.bestpractices.dev/projects/9266)
 
@@ -139,7 +139,7 @@ Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ### Contributing
 
-[![GitHub contributors](https://img.shields.io/github/contributors/owasp/threat-dragon.svg)](https://github.com/OWASP/threat-dragon/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/owasp/threat-dragon.svg)][contributors]
 
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome,
 please refer to the page for [contributors](contributing.md).
@@ -168,12 +168,14 @@ Threat Dragon: _making threat modeling less threatening_
 
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
 [bitbucket]: https://www.threatdragon.com/docs/configure/bitbucket.html
+[contributors]: https://github.com/OWASP/threat-dragon/graphs/contributors
 [demo]: https://www.threatdragon.com/#/
 [docs]: https://www.threatdragon.com/docs/
 [download]: https://nodejs.org/en/download/package-manager
 [config]: https://www.threatdragon.com/docs/configure/configure.html
 [github]: https://www.threatdragon.com/docs/configure/github.html
 [gitlab]: https://www.threatdragon.com/docs/configure/gitlab.html
+[latest]: https://github.com/owasp/threat-dragon/releases/latest
 [license]: https://github.com/OWASP/threat-dragon/blob/v2.2.0/license.txt
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [notes]: https://www.threatdragon.com/docs/development/development.html
