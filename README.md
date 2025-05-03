@@ -148,8 +148,9 @@ There are some [developer notes][notes] to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
 
 The easiest way to get in contact with the Threat Dragon community is via the OWASP Slack
-[#project-threat-dragon][td-slack] project channel
-(you may need to [subscribe](https://owasp.org/slack/invite) first).
+[#project-threat-dragon][td-slack] project channel (you may [need to subscribe] first).
+
+You can follow the Threat Dragon on [Bluesky][bluesky].
 
 ### Vulnerability disclosure
 
@@ -166,6 +167,7 @@ For secure disclosure, please see the [security policy](security.md).
 
 Threat Dragon: _making threat modeling less threatening_
 
+[bluesky]: https://bsky.app/profile/threatdragon.bsky.social
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
 [bitbucket]: https://www.threatdragon.com/docs/configure/bitbucket.html
 [contributors]: https://github.com/OWASP/threat-dragon/graphs/contributors
@@ -182,4 +184,5 @@ Threat Dragon: _making threat modeling less threatening_
 [owasp]: https://www.owasp.org
 [project]: https://owasp.org/www-project-threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
+[subscribe]: https://owasp.org/slack/invite
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
