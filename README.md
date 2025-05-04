@@ -5,7 +5,7 @@
 
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 [![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg?event=push)][build]
-[![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)](https://github.com/owasp/threat-dragon/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)][latest]
 [![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://www.owasp.org/projects)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)](https://www.bestpractices.dev/projects/9266)
 
@@ -139,7 +139,7 @@ Using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
 
 ### Contributing
 
-[![GitHub contributors](https://img.shields.io/github/contributors/owasp/threat-dragon.svg)](https://github.com/OWASP/threat-dragon/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/owasp/threat-dragon.svg)][contributors]
 
 Pull requests, feature requests, bug reports and feedback of any kind are very welcome,
 please refer to the page for [contributors](contributing.md).
@@ -148,8 +148,9 @@ There are some [developer notes][notes] to help get started with this project.
 We are trying to keep the test coverage relatively high so include tests in your pull requests.
 
 The easiest way to get in contact with the Threat Dragon community is via the OWASP Slack
-[#project-threat-dragon][td-slack] project channel
-(you may need to [subscribe](https://owasp.org/slack/invite) first).
+[#project-threat-dragon][td-slack] project channel (you may [need to subscribe][subscribe] first).
+
+You can follow the Threat Dragon on [Bluesky][bluesky].
 
 ### Vulnerability disclosure
 
@@ -166,18 +167,22 @@ For secure disclosure, please see the [security policy](security.md).
 
 Threat Dragon: _making threat modeling less threatening_
 
+[bluesky]: https://bsky.app/profile/threatdragon.bsky.social
 [build]: https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml
 [bitbucket]: https://www.threatdragon.com/docs/configure/bitbucket.html
+[contributors]: https://github.com/OWASP/threat-dragon/graphs/contributors
 [demo]: https://www.threatdragon.com/#/
 [docs]: https://www.threatdragon.com/docs/
 [download]: https://nodejs.org/en/download/package-manager
 [config]: https://www.threatdragon.com/docs/configure/configure.html
 [github]: https://www.threatdragon.com/docs/configure/github.html
 [gitlab]: https://www.threatdragon.com/docs/configure/gitlab.html
+[latest]: https://github.com/owasp/threat-dragon/releases/latest
 [license]: https://github.com/OWASP/threat-dragon/blob/v2.2.0/license.txt
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [notes]: https://www.threatdragon.com/docs/development/development.html
 [owasp]: https://www.owasp.org
 [project]: https://owasp.org/www-project-threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
+[subscribe]: https://owasp.org/slack/invite
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
