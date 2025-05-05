@@ -72,7 +72,11 @@ const spa = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Visítenos en GitHub',
             submit: 'Abrir nuevo issue',
-            check: 'Buscar actualizaciones ...'
+            check: 'Buscar actualizaciones ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

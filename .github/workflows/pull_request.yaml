@@ -49,6 +49,7 @@ jobs:
           args: >-
             --no-progress
             --max-retries 1
+            --retry-wait-time 10
             'docs/**/*.md'
             'docs/*.md'
             '*.md'

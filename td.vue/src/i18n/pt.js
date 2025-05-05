@@ -72,7 +72,11 @@ const por = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Visit us on GitHub',
             submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            check: 'Check for updates ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

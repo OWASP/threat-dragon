@@ -72,7 +72,11 @@ const zho = {
             sheets: 'OWASP备忘录',
             github: 'GitHub项目页面',
             submit: '提交Issue',
-            check: '检查更新...'
+            check: '检查更新...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

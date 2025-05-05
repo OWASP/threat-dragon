@@ -21,6 +21,10 @@ const jpn = {
             displayName: 'GitHubで',
             loginWith: 'ログイン'
         },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Login with'
+        },
         bitbucket: {
             displayName: 'Bitbucketで',
             loginWith: 'ログイン'
@@ -68,7 +72,11 @@ const jpn = {
             sheets: 'OWASP Cheat Sheets',
             github: 'GitHubリポジトリ',
             submit: '問題を報告',
-            check: '更新を確認...'
+            check: '更新を確認...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

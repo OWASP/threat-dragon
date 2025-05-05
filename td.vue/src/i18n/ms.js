@@ -72,7 +72,11 @@ const ms = {
             sheets: 'Lembaran Panduan OWASP',
             github: 'Lawati kami di GitHub',
             submit: 'Hantar Isu',
-            check: 'Semak kemas kini ...'
+            check: 'Semak kemas kini ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

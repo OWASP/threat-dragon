@@ -72,7 +72,11 @@ const ell = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Επισκεφθείτε μας στο GitHub',
             submit: 'Υποβάλετε ένα πρόβλημα',
-            check: 'Έλεγχος για ενημερώσεις ...'
+            check: 'Έλεγχος για ενημερώσεις ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
