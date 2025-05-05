@@ -112,6 +112,10 @@ describe('desktop/menu.js', () => {
             expect(helpItem).toBeDefined();
         });
 
+        it('contains About', () => {
+            const helpItem = helpItems.submenu.find((item) => item.label === 'About');
+            expect(helpItem).toBeDefined();
+        });
     });
 
     describe('Desktop menu functions', () => {

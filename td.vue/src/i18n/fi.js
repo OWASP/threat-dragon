@@ -72,7 +72,11 @@ const fin = {
             sheets: 'OWASP:n lunttilaput',
             github: 'Vieraile OWASP:n githubissa',
             submit: 'Ilmoita ongelmasta',
-            check: 'Tarkist päivitykset ...'
+            check: 'Tarkist päivitykset ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

@@ -72,7 +72,11 @@ const deu = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Besuchen Sie uns auf GitHub',
             submit: 'Ein Problem melden',
-            check: 'Nach Updates suchen ...'
+            check: 'Nach Updates suchen ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

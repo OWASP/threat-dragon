@@ -72,7 +72,11 @@ const ara = {
             sheets: 'أوراق الغش OWASP',
             github: 'زيارتنا على GitHub',
             submit: 'تقديم مشكلة',
-            check: 'التحقق من وجود تحديثات ...'
+            check: 'التحقق من وجود تحديثات ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

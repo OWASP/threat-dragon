@@ -72,7 +72,11 @@ const fra = {
             sheets: 'OWASP Aide-mémoire',
             github: 'Visitez-nous sur GitHub',
             submit: 'Soumettre un problème',
-            check: 'Vérifier les mises à jour ...'
+            check: 'Vérifier les mises à jour ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {

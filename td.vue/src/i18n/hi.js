@@ -72,7 +72,11 @@ const hin = {
             sheets: 'OWASP चीट शीट्स',
             github: 'GitHub पर हमसे मिलें',
             submit: 'कोई समस्या सबमिट करें',
-            check: 'अपडेट के लिए जांचें ...'
+            check: 'अपडेट के लिए जांचें ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
