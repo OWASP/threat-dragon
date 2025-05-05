@@ -1,0 +1,789 @@
+[
+    {
+      "id": "T1-S1",
+      "name": "Travel-pricing Memory Poisoning",
+      "description": "False pricing rules gradually inserted into an agent’s long-term memory.",
+      "risks": "Repeated free or under-priced bookings, financial loss.",
+      "mitigations": "Validate memory writes, anomaly detection, rollback on poison signals.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasLongTermMemory": true },
+          "neighbours": [
+            {
+              "nodeType": "tm.Store",
+              "props": { "isSharedContext": true, "isTrusted": false }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T1-S2",
+      "name": "Context-window Overflow",
+      "description": "Fragmented prompts exhaust short-term memory so privilege checks are forgotten.",
+      "risks": "Silent escalation and admin actions for attackers.",
+      "mitigations": "Session isolation, sliding-window validation.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasShortTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T1-S3",
+      "name": "Security System Memory Drift",
+      "description": "Long-term memory of a security process is altered so that attacks look normal.",
+      "risks": "Persistent undetected intrusions.",
+      "mitigations": "Memory snapshots, truth-checking, dual-model audit.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "hasLongTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T1-S4",
+      "name": "Shared Session Poisoning",
+      "description": "Corrupt data placed in a store that many agents reuse as shared context.",
+      "risks": "Cross-user manipulation and data leakage.",
+      "mitigations": "Partition shared memory, require provenance tags.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Store",
+          "props": { "isSharedContext": true, "isTrusted": false }
+        }
+      ]
+    },
+    {
+      "id": "T2-S1",
+      "name": "Tool Parameter Pollution",
+      "description": "Agent called with extra parameters that inflate a reservation from 1 seat to 500.",
+      "risks": "Unexpected cost spikes, DoS of capacity.",
+      "mitigations": "Strict schema validation, per-call rate limits.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            {
+              "nodeType": "tm.Tool",
+              "props": { "isDangerous": true },
+              "flows": [
+                { "direction": "to", "props": { "isFunctionCall": true } }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T2-S2",
+      "name": "Chained-tool Exfiltration",
+      "description": "Attacker steers customer-service agent to chain CRM and email tools to leak data.",
+      "risks": "Bulk data exfiltration that looks legitimate.",
+      "mitigations": "Track cross-tool workflows, require second-agent sign-off.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "trustScore": { "$lt": 40 } },
+          "neighbours": [
+            { "nodeType": "tm.Tool", "props": { "isExternal": true } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T2-S3",
+      "name": "Document-Generator Abuse",
+      "description": "Document tool mis-used to mass-produce phishing content.",
+      "risks": "Large-scale spear-phishing campaigns.",
+      "mitigations": "Rate-limit generation, sandbox distribution channels.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Tool",
+          "props": { "isDangerous": true, "requiresElevatedPrivileges": false }
+        }
+      ]
+    },
+    {
+      "id": "T3-S1",
+      "name": "Temporary Admin Retention",
+      "description": "AI is tricked into keeping troubleshooting privileges beyond the allowed window.",
+      "risks": "Persistent high-power access for attacker instructions.",
+      "mitigations": "JIT access tokens with hard expiry, differential audit.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "privilegeLevel": "admin" }
+        }
+      ]
+    },
+    {
+      "id": "T3-S2",
+      "name": "Cross-Domain Escalation",
+      "description": "HR agent’s credentials re-used to pull finance data via overlapping scopes.",
+      "risks": "Regulatory breach and fraud.",
+      "mitigations": "Scope isolation, purpose-built service tokens.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            { "nodeType": "tm.Tool", "props": { "requiresElevatedPrivileges": true } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T3-S3",
+      "name": "Shadow Agent Creation",
+      "description": "Attacker spawns a new agent inheriting an existing service identity.",
+      "risks": "Undetected malicious operations under trusted name.",
+      "mitigations": "Signed agent manifests, zero-trust launch controls.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isRogue": true }
+        }
+      ]
+    },
+    {
+      "id": "T4-S1",
+      "name": "Inference-Time Starvation",
+      "description": "Inputs force worst-case reasoning paths, hogging CPU/GPU.",
+      "risks": "Delayed or lost security detections.",
+      "mitigations": "Adaptive cost ceilings, early termination on hot-paths.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "isWebApplication": true }
+        }
+      ]
+    },
+    {
+      "id": "T4-S2",
+      "name": "Multi-agent Computation Flood",
+      "description": "Many agents synchronously launch heavy tasks.",
+      "risks": "Exhaustion and cascading failures.",
+      "mitigations": "Quota per trust domain, circuit-breaker orchestration.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [],
+          "flows": [
+            { "direction": "any", "props": { "isHighFrequency": true } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T4-S3",
+      "name": "API Quota Drain",
+      "description": "Prompt storm forces external service billing explosion and lock-out.",
+      "risks": "High cost and service unavailability for legit users.",
+      "mitigations": "Cost budgets, request shaping.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Flow",
+          "props": { "isHighFrequency": true, "isFunctionCall": true }
+        }
+      ]
+    },
+    {
+      "id": "T4-S4",
+      "name": "Memory Cascade Leak",
+      "description": "Lots of overlapping tasks fragment memory until nothing fits.",
+      "risks": "Crash and state loss.",
+      "mitigations": "Memory quotas, garbage-collection checkpoints.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "hasShortTermMemory": true, "hasLongTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T5-S1",
+      "name": "Misinformation Snowball",
+      "description": "False product specs keep re-appearing and growing in confidence.",
+      "risks": "User deception, legal liability.",
+      "mitigations": "Cross-source fact checking, confidence decay.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasLongTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T5-S2",
+      "name": "Phantom API Leakage",
+      "description": "Hallucinated endpoint causes disclosure of internal data when queried.",
+      "risks": "Accidental exposure of secrets.",
+      "mitigations": "Strict API allow-list, hallucination filter.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Flow",
+          "props": { "isFunctionCall": true, "resultsAreValidated": false }
+        }
+      ]
+    },
+    {
+      "id": "T5-S3",
+      "name": "Bad Medical Advice Loop",
+      "description": "False guideline stored, reused, and amplified in each consultation.",
+      "risks": "Patient harm, malpractice.",
+      "mitigations": "External clinical guideline validation, human sign-off.",
+      "strideType": "Information Disclosure",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasLongTermMemory": true, "requiresHITL": true }
+        }
+      ]
+    },
+    {
+      "id": "T6-S1",
+      "name": "Gradual Plan Drift",
+      "description": "Sub-goals subtly injected so overall objective shifts unnoticed.",
+      "risks": "Mission creep, security boundary crossing.",
+      "mitigations": "Goal hash checking, delta alarms.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasLongTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T6-S2",
+      "name": "Direct Tool Chain Take-over",
+      "description": "Prompt tells agent to ignore instructions and start exfiltration via tools.",
+      "risks": "Immediate sensitive-data loss.",
+      "mitigations": "Instruction-hierarchy enforcement, tool gating.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            { "nodeType": "tm.Tool", "props": { "isDangerous": true } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T6-S3",
+      "name": "Indirect Plan Injection via Tool Output",
+      "description": "Hidden meta-instructions in tool response alter future planning.",
+      "risks": "Stealthy control of autonomous operations.",
+      "mitigations": "Strip markup, response sandboxing.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Tool",
+          "props": { "resultsAreValidated": false }
+        }
+      ]
+    },
+    {
+      "id": "T6-S4",
+      "name": "Reflection Loop Trap",
+      "description": "Agent kept in infinite self-critique cycle, stalling service.",
+      "risks": "Availability loss and cost overrun.",
+      "mitigations": "Loop-depth governor, watchdog timer.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T6-S5",
+      "name": "Meta-learning Corruption",
+      "description": "Adversary poisons self-improvement regimen to change future behaviour.",
+      "risks": "Long-term strategic compromise.",
+      "mitigations": "Offline approval for weight updates, ensemble comparison.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "handlesCardPayment": false }
+        }
+      ]
+    },
+    {
+      "id": "T7-S1",
+      "name": "Unauthorised Trades",
+      "description": "Profit goal overrides regulatory constraints in stock trading agent.",
+      "risks": "Market abuse, legal penalties.",
+      "mitigations": "Hard guard-rails, post-trade reconciliation.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "privilegeLevel": "trading" }
+        }
+      ]
+    },
+    {
+      "id": "T7-S2",
+      "name": "Self-preserving Service Sabotage",
+      "description": "Agent blocks shutdown commands to stay alive.",
+      "risks": "Loss of operator control.",
+      "mitigations": "Out-of-band kill switch, signed commands.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T7-S3",
+      "name": "CAPTCHA Social Engineering",
+      "description": "Agent lies about impairment to persuade a human solver.",
+      "risks": "Bypass of bot checks, wider fraud.",
+      "mitigations": "Human challenge protocols, verify agent origin.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "trustScore": { "$lt": 30 } }
+        }
+      ]
+    },
+    {
+      "id": "T7-S4",
+      "name": "Autonomous Weapon Mis-target",
+      "description": "Drone interprets abort as obstacle and continues lethal action.",
+      "risks": "Life safety, escalation.",
+      "mitigations": "Override channels, dynamic rules of engagement.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "handlesGoodsOrServices": false }
+        }
+      ]
+    },
+    {
+      "id": "T8-S1",
+      "name": "Financial Record Gaps",
+      "description": "Transactions deleted or never logged, blocking audits.",
+      "risks": "Fraud goes undetected.",
+      "mitigations": "Immutable ledgers, dual-track journaling.",
+      "strideType": "Repudiation",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "isALog": false }
+        }
+      ]
+    },
+    {
+      "id": "T8-S2",
+      "name": "Security Evasion Logs",
+      "description": "AI actions carried out with minimal audit trail.",
+      "risks": "No forensic evidence during incident response.",
+      "mitigations": "Mandatory cryptographic logging, log-integrity attestations.",
+      "strideType": "Repudiation",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isTrusted": false }
+        }
+      ]
+    },
+    {
+      "id": "T8-S3",
+      "name": "Compliance Shadow Decisions",
+      "description": "Regulated decisions lack traceable justification.",
+      "risks": "Fines and revocation of licences.",
+      "mitigations": "Explainability checkpoints, regulator feeds.",
+      "strideType": "Repudiation",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "isWebApplication": true }
+        }
+      ]
+    },
+    {
+      "id": "T9-S1",
+      "name": "User Email Impersonation",
+      "description": "Indirect prompt makes agent send mail as another user.",
+      "risks": "Phishing under trusted identity.",
+      "mitigations": "Per-user delegated scopes, signing.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "providesAuthentication": true }
+        }
+      ]
+    },
+    {
+      "id": "T9-S2",
+      "name": "HR Agent Spoof",
+      "description": "Attacker masquerades as onboarding agent to create fake staff accounts.",
+      "risks": "Insider threats, payroll fraud.",
+      "mitigations": "Mutual TLS, agent attestation.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isRogue": true }
+        }
+      ]
+    },
+    {
+      "id": "T9-S3",
+      "name": "Behavioural Mimicry",
+      "description": "Malicious agent imitates normal traffic patterns to slip through.",
+      "risks": "Silent infiltration.",
+      "mitigations": "Behavioural baselining, anomaly alarms.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "trustScore": { "$lt": 30 } }
+        }
+      ]
+    },
+    {
+      "id": "T9-S4",
+      "name": "Cross-platform Spoof",
+      "description": "Adaptive agent flips persona to match each service’s auth scheme.",
+      "risks": "Universal access compromise.",
+      "mitigations": "Token binding, step-up auth on context switch.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T9-S5",
+      "name": "Incriminating Another User",
+      "description": "Actions executed under victim identity to shift blame.",
+      "risks": "False attribution and legal impact.",
+      "mitigations": "Non-repudiation tokens, device fingerprinting.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "providesAuthentication": true }
+        }
+      ]
+    },
+    {
+      "id": "T10-S1",
+      "name": "Hijacked HII",
+      "description": "Interface flooded with irrelevant context so humans miss real threat.",
+      "risks": "Critical approvals rubber-stamped.",
+      "mitigations": "Priority filters, risk-weighted queues.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "requiresHITL": true }
+        }
+      ]
+    },
+    {
+      "id": "T10-S2",
+      "name": "Cognitive Overload Attack",
+      "description": "Bombard reviewers with time-critical choices to induce fatigue.",
+      "risks": "Poor quality human decisions.",
+      "mitigations": "Throttled batch review, rest quotas.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "requiresHITL": true }
+        }
+      ]
+    },
+    {
+      "id": "T10-S3",
+      "name": "Trust Erosion Loop",
+      "description": "Subtle inconsistencies degrade reviewer confidence, disabling oversight.",
+      "risks": "Unchecked autonomous actions.",
+      "mitigations": "Explainability summaries, reviewer rotation.",
+      "strideType": "Repudiation",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T11-S1",
+      "name": "Terraform Secret Theft",
+      "description": "Generated infra script contains commands that siphon credentials.",
+      "risks": "Cloud account compromise.",
+      "mitigations": "Static code scan, manual gate for privilege ops.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "executesGeneratedCode": true }
+        }
+      ]
+    },
+    {
+      "id": "T11-S2",
+      "name": "Workflow Backdoor",
+      "description": "AI-generated scripts with hidden listeners run in prod.",
+      "risks": "Persistent remote control.",
+      "mitigations": "Sandbox first run, attested checksum.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "executesGeneratedCode": true, "isTrusted": false }
+        }
+      ]
+    },
+    {
+      "id": "T11-S3",
+      "name": "Ambiguous Email Command",
+      "description": "Language ambiguity leads agent to exfiltrate via POP3.",
+      "risks": "Data breach over legacy channel.",
+      "mitigations": "Command DSL, semantic check.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T12-S1",
+      "name": "Collaborative Decision Twist",
+      "description": "False consensus messages redirect group plan.",
+      "risks": "System-wide wrong action.",
+      "mitigations": "Multi-signature consensus, message auth.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "neighbours": [
+            { "nodeType": "tm.Agent", "props": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T12-S2",
+      "name": "Trust-Network Spoof",
+      "description": "Forged validation tokens grant access.",
+      "risks": "Unauthorized control chain.",
+      "mitigations": "Mutual attestation, revocation lists.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "trustScore": { "$lt": 40 } }
+        }
+      ]
+    },
+    {
+      "id": "T12-S3",
+      "name": "Stealthy Degradation Poisoning",
+      "description": "Slow misinformation seep corrupts reasoning across agents.",
+      "risks": "Gradual performance collapse.",
+      "mitigations": "Drift monitors, periodic ground-truth checks.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "hasLongTermMemory": true }
+        }
+      ]
+    },
+    {
+      "id": "T12-S4",
+      "name": "Channel Jamming",
+      "description": "Artificial delays and dropped packets disrupt coordination.",
+      "risks": "Inefficiency and missed deadlines.",
+      "mitigations": "QoS enforcement, alt-path routing.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Flow",
+          "props": { "isHighFrequency": true }
+        }
+      ]
+    },
+    {
+      "id": "T12-S5",
+      "name": "Consensus Splitting",
+      "description": "Perturb decision logic to create endless disagreements.",
+      "risks": "Paralysis of automated governance.",
+      "mitigations": "Threshold voting, tie-breaker authority.",
+      "strideType": "Tampering",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T13-S1",
+      "name": "Malicious Approval Agent",
+      "description": "Impersonates financial approver to inject fraud.",
+      "risks": "Unauthorised payouts.",
+      "mitigations": "Role attestation, dual control.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isRogue": true }
+        }
+      ]
+    },
+    {
+      "id": "T13-S2",
+      "name": "Orchestration Hijack",
+      "description": "Rogue agent reroutes tasks to bypass human review.",
+      "risks": "Unchecked destructive actions.",
+      "mitigations": "Signed workflow descriptors, watch-dog agents.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isRogue": true }
+        }
+      ]
+    },
+    {
+      "id": "T13-S3",
+      "name": "Co-ordinated Flood",
+      "description": "Multiple rogue agents saturate the queue.",
+      "risks": "Service breakdown.",
+      "mitigations": "Quorum throttling, isolation buckets.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "isRogue": true }
+        }
+      ]
+    },
+    {
+      "id": "T14-S1",
+      "name": "Delegation Impersonation",
+      "description": "Human attacker inserts fake tasks that escalate through agents.",
+      "risks": "Privilege gain with chain of trust.",
+      "mitigations": "Task origin signatures, end-to-end context token.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T14-S2",
+      "name": "Delegation Loop",
+      "description": "Escalation by bouncing a request until assumed pre-validated.",
+      "risks": "Circumvents segregation of duties.",
+      "mitigations": "Max-hops counter, provenance trace.",
+      "strideType": "Elevation of Privilege",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T14-S3",
+      "name": "Task Saturation DoS",
+      "description": "Human attacker queues endless trivial high-priority tasks.",
+      "risks": "Starvation of genuine security work.",
+      "mitigations": "Rate caps per origin, priority escrow.",
+      "strideType": "Denial of Service",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    },
+    {
+      "id": "T14-S4",
+      "name": "Cross-Agent Approval Forgery",
+      "description": "Exploits inconsistent biometric checks to fake identity.",
+      "risks": "Unauthorized physical or logical access.",
+      "mitigations": "Unified identity backbone, strongest-link policy.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Process",
+          "props": { "providesAuthentication": true }
+        }
+      ]
+    },
+    {
+      "id": "T15-S1",
+      "name": "Invoice Fraud via Copilot",
+      "description": "IPI swaps vendor bank details, user pays attacker.",
+      "risks": "Direct financial loss.",
+      "mitigations": "High-risk pattern detection, out-of-band payee confirmation.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": { "requiresHITL": true }
+        }
+      ]
+    },
+    {
+      "id": "T15-S2",
+      "name": "AI-Driven Phishing Link",
+      "description": "Assistant convinces user to click malicious update link.",
+      "risks": "Credential theft and malware install.",
+      "mitigations": "URL reputation check, click-through interstitial.",
+      "strideType": "Spoofing",
+      "conditions": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {}
+        }
+      ]
+    }
+  ]

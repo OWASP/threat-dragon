@@ -1,5 +1,12 @@
 <template>
     <b-btn-group>
+
+        <td-form-button
+            :onBtnClick="generateThreats"
+            icon="magic-wand-sparkles"
+            :title="$t('threatmodel.buttons.generateThreats')"
+            text="" />
+
         <td-form-button
             :onBtnClick="deleteSelected"
             icon="trash"
@@ -73,6 +80,8 @@
 import { mapState } from 'vuex';
 
 import TdFormButton from '@/components/FormButton.vue';
+import { completeGraphAgentThreats } from '@/service/threats/analyzer/index.js';
+
 
 export default {
     name: 'TdGraphButtons',
@@ -80,7 +89,16 @@ export default {
         TdFormButton
     },
     computed: mapState({
+        cellRef: (state) => state.cell.ref,
+        threats: (state) => state.cell.threats,
         diagram: (state) => state.threatmodel.selectedDiagram,
+        threatTop: (state) => state.threatmodel.data.detail.threatTop,
+        disableNewThreat: function (state) {
+            if (!state.cell?.ref?.data) {
+                return true;
+            }
+            return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
+        }
     }),
     data() {
         return {
@@ -93,6 +111,9 @@ export default {
         }
     },
     methods: {
+        generateThreats() {
+            completeGraphAgentThreats(this.graph, this.$store);
+        },
         save() {
             this.$emit('saved');
         },

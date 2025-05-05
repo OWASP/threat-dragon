@@ -1,6 +1,7 @@
 import { Graph } from '@antv/x6';
 
 import { ActorShape } from './actor.js';
+import { AgentShape } from './agent.js';
 import { Flow } from './flow.js';
 import { FlowStencil } from './flow-stencil.js';
 import { ProcessShape } from './process.js';
@@ -14,6 +15,7 @@ import { TrustBoundaryCurveStencil } from './trust-boundary-curve-stencil.js';
 Graph.registerNode('trust-broundary-curve', TrustBoundaryCurve);
 
 Graph.registerNode('actor', ActorShape);
+Graph.registerNode('agent', AgentShape);
 Graph.registerEdge('flow', Flow);
 Graph.registerNode('process', ProcessShape);
 Graph.registerNode('store', StoreShape);
@@ -23,6 +25,7 @@ Graph.registerEdge('trust-boundary-curve', TrustBoundaryCurve);
 
 export default {
     ActorShape,
+    AgentShape,
     Flow,
     FlowStencil,
     ProcessShape,
