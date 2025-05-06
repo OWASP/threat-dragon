@@ -92,26 +92,22 @@ This is configured in [vuex-persist](src/plugins/vuex-persist.js).
 
 ### CSS MIME Type Configuration
 
-**IMPORTANT**: When deploying to remote servers, ensure your web server is correctly configured to serve CSS files with
-the appropriate MIME type to prevent "Refused to apply style" errors. Without this configuration, styling will be broken.
+**IMPORTANT**: When deploying to remote servers, ensure your web server is correctly configured to serve CSS files with the appropriate MIME type to prevent "Refused to apply style" errors. Without this configuration, styling will be broken.
 
-- **Apache**: Add to `.htaccess`:
-
-```apache
+- **Apache**: Add to `.htaccess`: 
+  ```
   AddType text/css .css
   ```
 
-- **Nginx**: Add to server config:
-
-```nginx
+- **Nginx**: Add to server config: 
+  ```
   types {
     text/css css;
   }
   ```
 
-- **Express**: Ensure proper static file serving:
-
-```javascript
+- **Express**: Ensure proper static file serving: 
+  ```javascript
   app.use(express.static('public', { 
     setHeaders: (res, path) => { 
       if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css'); 
@@ -121,8 +117,7 @@ the appropriate MIME type to prevent "Refused to apply style" errors. Without th
 
 ### Provider Route Parameters
 
-The application uses different routing patterns for different storage providers. When using providers like Google Drive,
-ensure all required parameters are present in the URL:
+The application uses different routing patterns for different storage providers. When using providers like Google Drive, ensure all required parameters are present in the URL:
 
 - **Google Drive**: Requires `folder` parameter for all authenticated routes
 - **Local/Demo**: Uses a simpler route pattern without provider-specific parameters
@@ -131,12 +126,9 @@ ensure all required parameters are present in the URL:
 
 ### Vue I18n Legacy API Mode
 
-Vue I18n v11 warns about using the Legacy API mode in the console. To fully fix this warning, the application components
-need to be migrated from Options API (`$t()`) to Composition API (`useI18n()`) style. This is a significant change that
-would require updating all Vue components.
+Vue I18n v11 warns about using the Legacy API mode in the console. To fully fix this warning, the application components need to be migrated from Options API (`$t()`) to Composition API (`useI18n()`) style. This is a significant change that would require updating all Vue components.
 
-The i18n configuration has been updated to use `legacy: false`, but the components still need to be updated to use the
-Composition API pattern.
+The i18n configuration has been updated to use `legacy: false`, but the components still need to be updated to use the Composition API pattern.
 
 ### Electron Desktop Application
 

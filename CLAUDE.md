@@ -4,8 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This project is a threat modeling tool that enables the creation of data flow diagrams and then associating threats
-with components on those diagrams, and facilitates saving and loading threat model files.
+This project is a threat modeling tool that enables the creation of data flow diagrams and then associating threats with components on those diagrams, and facilitates saving and loading threat model files.
 
 The app is in a monorepo; it has two main components:
 
@@ -70,7 +69,5 @@ The app uses the open source AntV/X6 package for diagramming functionality.
 - If a test case is no longer applicable, ask the user what to do
 - The test defines the desired functionality. When re-engineering test cases, try to preserve the original intent.
 - Prefer built-in functionality of the existing frameworks and packages, over adding new packages
-- When making the same kind of change to many files or components, frequently stop to ensure that build and test
-  are not breaking.
-- If you ever want to look at a version of the application state before we made any changes, you can
-  always look at the repo at [OWASP Threat Dragon](https://github.com/OWASP/threat-dragon)
+- When making the same kind of change to many files or components, frequently stop to ensure that build and test are not breaking.
+- If you ever want to look at a version of the application state before we made any changes, you can always look at the repo at https://www.github.com/OWASP/threat-dragon
