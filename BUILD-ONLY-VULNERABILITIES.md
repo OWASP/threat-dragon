@@ -56,13 +56,16 @@ These vulnerabilities exist in development dependencies and don't affect product
 
 ## Current Status
 
-A `npm audit --production` check confirms that **no vulnerabilities exist in production dependencies**. The vulnerabilities listed above only affect the build process, development environment, or SBOM generation.
+A `npm audit --production` check confirms that **no vulnerabilities exist in production dependencies**.
+The vulnerabilities listed above only affect the build process, development environment, or SBOM generation.
 
 ## Recommendation
 
-These vulnerabilities should be tracked and updated when practical, but they don't represent immediate security risks to production deployments or end users. They may be addressed as part of regular dependency maintenance.
+These vulnerabilities should be tracked and updated when practical, but they don't represent immediate security risks
+to production deployments or end users. They may be addressed as part of regular dependency maintenance.
 
-Regular audits should be performed to ensure no build-only vulnerabilities become production vulnerabilities due to changes in dependency relationships.
+Regular audits should be performed to ensure no build-only vulnerabilities become production vulnerabilities due to
+changes in dependency relationships.
 
 ## Mitigation with Package Overrides
 
