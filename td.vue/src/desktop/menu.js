@@ -35,25 +35,6 @@ import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
 const messages = { ara, deu, ell, eng, fin, fra, heb, hin, ind, jpn, msa, por, rus, spa, tha, ukr, zho };
-const languages = [
-    'ara',
-    'deu',
-    'ell',
-    'eng',
-    'fin',
-    'fra',
-    'heb',
-    'hin',
-    'ind',
-    'jpn',
-    'msa',
-    'por',
-    'rus',
-    'spa',
-    'tha',
-    'ukr',
-    'zho'
-];
 
 const defaultLanguage = 'eng';
 let language = defaultLanguage;
@@ -466,7 +447,7 @@ function showAboutBox () {
     dialog.showMessageBoxSync(dialogOptions);
 }
 
-// the renderer has closeed / cleared out the model
+// the renderer has closed / cleared out the model
 export const modelClosed = () => {
     model.filePath = '';
     model.isOpen = false;
@@ -511,7 +492,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
-    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'ms', 'por', 'spa', 'zho' ];
+    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'heb', 'hin', 'ind', 'jpn', 'msa', 'por', 'rus', 'spa', 'tha', 'ukr', 'zho' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 
