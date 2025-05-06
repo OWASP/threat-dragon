@@ -26,7 +26,8 @@ npm run test:e2e:desktop
 
 ## Mocked Electron APIs
 
-The tests mock Electron's IPC bridge using `cy.stub()`. These mocks allow testing Electron-specific functionality even when running in a regular browser. Key mocked APIs include:
+The tests mock Electron's IPC bridge using `cy.stub()`. These mocks allow testing Electron-specific functionality
+even when running in a regular browser. Key mocked APIs include:
 
 - File operations (open/save)
 - App information
