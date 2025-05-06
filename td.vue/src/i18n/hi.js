@@ -89,8 +89,8 @@ const hin = {
             submit: 'कोई समस्या सबमिट करें',
             check: 'अपडेट के लिए जांचें ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'के बारे में',
+                version: 'संस्करण'
             }
         }
     },

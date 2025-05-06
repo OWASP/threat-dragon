@@ -89,8 +89,8 @@ const msa = {
             submit: 'Hantar Isu',
             check: 'Semak kemas kini ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Tentang',
+                version: 'Versi'
             }
         }
     },

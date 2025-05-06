@@ -89,8 +89,8 @@ const ind = {
             submit: 'Kirim Isu',
             check: 'Periksa pembaruan ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Tentang',
+                version: 'Versi'
             }
         }
     },

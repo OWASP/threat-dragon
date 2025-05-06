@@ -95,7 +95,11 @@ const heb = {
             sheets: 'דפי עזר של OWASP',
             github: 'בקר אותנו ב-GitHub',
             submit: 'דווח על בעיה',
-            check: 'בדוק עדכונים...'
+            check: 'בדוק עדכונים...',
+            about: {
+                about: 'אודות',
+                version: 'גרסה'
+            }
         }
     },
     repository: {

@@ -94,8 +94,8 @@ const ell = {
             submit: 'Υποβάλετε ένα πρόβλημα',
             check: 'Έλεγχος για ενημερώσεις ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Σχετικά',
+                version: 'Έκδοση'
             }
         }
     },

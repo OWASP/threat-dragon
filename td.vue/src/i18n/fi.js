@@ -98,8 +98,8 @@ const fin = {
             submit: 'Ilmoita ongelmasta',
             check: 'Tarkist päivitykset ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Tietoja',
+                version: 'Versio'
             }
         }
     },

@@ -160,8 +160,8 @@ const zho = {
             submit: '提交Issue',
             check: '检查更新...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: '关于',
+                version: '版本'
             }
         }
     },

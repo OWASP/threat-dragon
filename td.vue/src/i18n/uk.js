@@ -158,7 +158,11 @@ const ukr = {
             sheets: 'Шпаргалки OWASP',
             github: 'Відвідайте нас на GitHub',
             submit: 'Надіслати проблему',
-            check: 'Перевірити оновлення...'
+            check: 'Перевірити оновлення...',
+            about: {
+                about: 'Про програму',
+                version: 'Версія'
+            }
         }
     },
     repository: {

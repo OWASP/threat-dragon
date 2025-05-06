@@ -99,8 +99,8 @@ const spa = {
             submit: 'Abrir nuevo issue',
             check: 'Buscar actualizaciones ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Acerca de',
+                version: 'Versión'
             }
         }
     },

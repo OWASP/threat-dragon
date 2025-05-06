@@ -159,8 +159,8 @@ const ara = {
             submit: 'تقديم مشكلة',
             check: 'التحقق من وجود تحديثات ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'حول',
+                version: 'الإصدار'
             }
         }
     },

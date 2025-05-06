@@ -162,7 +162,7 @@ const fra = {
             submit: 'Soumettre un problème',
             check: 'Vérifier les mises à jour ...',
             about: {
-                about: 'About',
+                about: 'À propos',
                 version: 'Version'
             }
         }

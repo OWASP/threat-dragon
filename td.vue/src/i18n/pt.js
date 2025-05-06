@@ -159,7 +159,11 @@ const por = {
             sheets: 'Folhas de Dicas OWASP',
             github: 'Visite-nos no GitHub',
             submit: 'Enviar um Problema',
-            check: 'Verificar atualizações ...'
+            check: 'Verificar atualizações ...',
+            about: {
+                about: 'Sobre',
+                version: 'Versão'
+            }
         }
     },
     repository: {

@@ -155,7 +155,11 @@ const tha = {
             sheets: 'แผ่นสรุป OWASP',
             github: 'เยี่ยมชมเราบน GitHub',
             submit: 'ส่งปัญหา',
-            check: 'ตรวจสอบการอัปเดต...'
+            check: 'ตรวจสอบการอัปเดต...',
+            about: {
+                about: 'เกี่ยวกับ',
+                version: 'เวอร์ชัน'
+            }
         }
     },
     repository: {

@@ -162,7 +162,7 @@ const deu = {
             submit: 'Ein Problem melden',
             check: 'Nach Updates suchen ...',
             about: {
-                about: 'About',
+                about: 'Über',
                 version: 'Version'
             }
         }

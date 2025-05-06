@@ -97,8 +97,8 @@ const jpn = {
             submit: '問題を報告',
             check: '更新を確認...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'アプリについて',
+                version: 'バージョン'
             }
         }
     },
