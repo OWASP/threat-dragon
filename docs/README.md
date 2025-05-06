@@ -7,10 +7,9 @@ the header bar for the documentation site (such as flask, cloud etc).
 
 ### Running Locally
 
-If you do not already have Jekyll or Ruby installed,
-see [Jekyll's Guide](https://jekyllrb.com/docs/installation/).
+If you do not already have Jekyll or Ruby installed, see [Jekyll's Guide](https://jekyllrb.com/docs/installation/).
 
-Note that MacOS users are advised to use chruby instead of the system ruby.
+MacOS users should use chruby instead of the system ruby:
 
 * From a terminal navigate to this `docs` directory
 * Install/update bundle: `npm add --location=global bundle`

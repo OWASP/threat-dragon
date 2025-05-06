@@ -77,7 +77,7 @@ The GitHub OAuth Application is now ready for use by the Threat Dragon server wi
 - `GITHUB_CLIENT_ID='deadbeef0123456789ab'`
 - `GITHUB_CLIENT_SECRET='deadbeef0123456789abcdef01234567deadbeef'`
 
-Clearly these values shown here are _not to be used_ for a real application,
+Clearly the secrets shown here are _not to be used_ for a real application,
 they are merely for illustrative purposes.
 
 Example of registering a new OAuth application:
