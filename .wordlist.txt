@@ -13,6 +13,7 @@ Backend
 Bahasa
 bitbucket
 Bitbucket
+Bluesky
 BrowserStack
 CentOS
 chai

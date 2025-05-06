@@ -1,8 +1,8 @@
 name: Housekeeping
 on:
-  # Run daily at 7:00
+  # Run daily at 6:45
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '45 6 * * *'
   workflow_dispatch:
 
 env:
@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       actions: write
-
     steps:
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.6
@@ -36,20 +35,19 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-
     steps:
       - name: Tidy stale PRs and issues
         uses: actions/stale@v9
         with:
-          days-before-issue-stale: 190
+          days-before-issue-stale: 183
           days-before-issue-close: -1
-          stale-issue-message: 'This issue is stale because it has been open for more than 6 months with no activity'
+          stale-issue-message: 'This issue is stale because it has been open for 6 months with no activity'
           stale-issue-label: stale
           remove-issue-stale-when-updated: true
-          days-before-pr-stale: 21
+          days-before-pr-stale: 42
           days-before-pr-close: 7
-          stale-pr-message: 'This PR is stale because it has been open 21 days with no activity. Remove stale label, or add a comment, otherwise it will be closed in 7 days'
-          close-pr-message: 'This PR was closed because it has been stalled for 28 days with no activity'
+          stale-pr-message: 'This PR is stale because it has been open 42 days with no activity. Remove stale label, or add a comment, otherwise it will be closed in 7 days'
+          close-pr-message: 'This PR was closed because it has been stalled for 8 weeks with no activity'
 
   trivy:
     name: Scan with Trivy
@@ -57,7 +55,6 @@ jobs:
     permissions:
       contents: write
       security-events: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
@@ -83,10 +80,8 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       security-events: write
-
     strategy:
       fail-fast: false
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
@@ -111,7 +106,6 @@ jobs:
   link_checker:
     name: Link checker
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.2.0
@@ -119,6 +113,13 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2.4.0
         with:
+          args: >-
+            --no-progress
+            --max-retries 1
+            --retry-wait-time 10
+            'docs/**/*.md'
+            'docs/*.md'
+            '*.md'
           fail: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -10,6 +10,7 @@ const app = electron.app;
 const dialog = electron.dialog;
 const shell = electron.shell;
 const fs = require('fs');
+const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
 let mainWindow;
@@ -53,6 +54,7 @@ const languages = [
     'ukr',
     'zho'
 ];
+
 const defaultLanguage = 'eng';
 let language = defaultLanguage;
 
@@ -180,7 +182,12 @@ export function getMenuTemplate() {
                     }
                 },
                 { type: 'separator' },
-                { role: 'about' }
+                {
+                    label: messages[language].desktop.help.about.about,
+                    click () {
+                        showAboutBox();
+                    }
+                }
             ]
         }
     );
@@ -448,6 +455,17 @@ function savePDFReport(pdfPath) {
         });
 }
 
+function showAboutBox () {
+    var dialogOptions = {
+        type: 'info',
+        title: messages[language].desktop.help.about.about + ' ' + messages[language].home.title,
+        icon: '../assets/threatdragon_logo_solid_image.svg',
+        message: messages[language].home.title,
+        detail: messages[language].desktop.help.about.version + ' ' + buildVersion
+    };
+    dialog.showMessageBoxSync(dialogOptions);
+}
+
 // the renderer has closeed / cleared out the model
 export const modelClosed = () => {
     model.filePath = '';
@@ -493,6 +511,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
+    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'ms', 'por', 'spa', 'zho' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 

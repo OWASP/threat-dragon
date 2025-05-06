@@ -89,7 +89,7 @@ The Bitbucket OAuth consumer is now ready for use by the Threat Dragon server wi
 - `BITBUCKET_CLIENT_ID='deadbeef0123456789ab'`
 - `BITBUCKET_CLIENT_SECRET='deadbeef0123456789abcdefdeadbeef'`
 
-Clearly these values shown here are _not to be used_ for a real application,
+Clearly the secrets shown here are _not to be used_ for a real application,
 they are merely for illustrative purposes.
 
 Example of registering a new OAuth consumer:

@@ -87,7 +87,11 @@ const ind = {
             sheets: 'Lembaran Curang OWASP',
             github: 'Kunjungi kami di GitHub',
             submit: 'Kirim Isu',
-            check: 'Periksa pembaruan ...'
+            check: 'Periksa pembaruan ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
