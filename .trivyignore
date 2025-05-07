@@ -1,0 +1,6 @@
+# High and Critical vulnerabilities to ignore
+# Critical
+CVE-2023-45853  # zlib1g: integer overflow and resultant heap-based buffer overflow in zipOpenNewFileInZip4_6
+
+# High
+CVE-2023-31484  # perl-base: CPAN.pm does not verify TLS certificates when downloading distributions over HTTPS
