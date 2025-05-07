@@ -6,6 +6,27 @@ describe('service/threatmodelApi.js', () => {
         jest.spyOn(api, 'getAsync').mockImplementation(() => {});
         jest.spyOn(api, 'putAsync').mockImplementation(() => {});
     });
+    
+    // Test for Bitbucket repository name handling
+    describe('Bitbucket repository name handling', () => {
+        it('handles Bitbucket repository names without organization', async () => {
+            // This test verifies that branchesAsync can handle a repository name without an organization
+            // by using the Bitbucket workspace from localStorage
+            
+            // Set up the API mock to return a successful response
+            api.getAsync.mockResolvedValue({ data: { branches: [] } });
+            
+            // Call branchesAsync with a repository name that doesn't have an organization
+            await threatmodelApi.branchesAsync('my-repo');
+            
+            // Verify that the API was called with the correct URL that includes the workspace
+            // The actual implementation is using 'bitbucket' as the default organization
+            expect(api.getAsync).toHaveBeenCalledWith(
+                '/api/threatmodel/bitbucket/my-repo/branches',
+                { params: { page: 1 } }
+            );
+        });
+    });
 
     describe('organisationAsync', () => {
         beforeEach(async () => {

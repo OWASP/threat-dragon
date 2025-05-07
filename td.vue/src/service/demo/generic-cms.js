@@ -1,1085 +1,1086 @@
 export default {
-    'version': '2.3.0',
-    'summary': {
-        'title': 'Generic Content Management System (CMS)',
-        'owner': 'A development team',
-        'description': 'This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms',
-        'id': 0
+    version: '2.3.0',
+    summary: {
+        title: 'Generic Content Management System (CMS)',
+        owner: 'A development team',
+        description:
+            'This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms',
+        id: 0
     },
-    'detail': {
-        'contributors': [
+    detail: {
+        contributors: [
             {
-                'name': 'development engineers'
+                name: 'development engineers'
             },
             {
-                'name': 'product managers'
+                name: 'product managers'
             },
             {
-                'name': 'security architects'
+                name: 'security architects'
             }
         ],
-        'diagrams': [
+        diagrams: [
             {
-                'id': 0,
-                'title': 'Generic CMS',
-                'diagramType': 'STRIDE',
-                'placeholder': 'New STRIDE diagram description',
-                'thumbnail': './public/content/images/thumbnail.stride.jpg',
-                'version': '2.3.0',
-                'cells': [
+                id: 0,
+                title: 'Generic CMS',
+                diagramType: 'STRIDE',
+                placeholder: 'New STRIDE diagram description',
+                thumbnail: './public/content/images/thumbnail.stride.jpg',
+                version: '2.3.0',
+                cells: [
                     {
-                        'position': {
-                            'x': 280,
-                            'y': 200
+                        position: {
+                            x: 280,
+                            y: 200
                         },
-                        'size': {
-                            'width': 370,
-                            'height': 380
+                        size: {
+                            width: 370,
+                            height: 380
                         },
-                        'attrs': {
-                            'label': {
-                                'text': 'Internet'
+                        attrs: {
+                            label: {
+                                text: 'Internet'
                             }
                         },
-                        'visible': true,
-                        'shape': 'trust-boundary-box',
-                        'id': '5dfe8ce8-7c53-491a-b511-6127704a297c',
-                        'zIndex': -1,
-                        'data': {
-                            'type': 'tm.BoundaryBox',
-                            'name': 'Internet',
-                            'description': '',
-                            'isTrustBoundary': true,
-                            'hasOpenThreats': false
+                        visible: true,
+                        shape: 'trust-boundary-box',
+                        id: '5dfe8ce8-7c53-491a-b511-6127704a297c',
+                        zIndex: -1,
+                        data: {
+                            type: 'tm.BoundaryBox',
+                            name: 'Internet',
+                            description: '',
+                            isTrustBoundary: true,
+                            hasOpenThreats: false
                         }
                     },
                     {
-                        'position': {
-                            'x': 190,
-                            'y': 10
+                        position: {
+                            x: 190,
+                            y: 10
                         },
-                        'size': {
-                            'width': 190,
-                            'height': 60
+                        size: {
+                            width: 190,
+                            height: 60
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'Generic threat model for a Content Management System (CMS)\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms'
+                        attrs: {
+                            text: {
+                                text: 'Generic threat model for a Content Management System (CMS)\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms'
                             }
                         },
-                        'visible': true,
-                        'shape': 'td-text-block',
-                        'zIndex': 1,
-                        'id': 'f3ba6ded-7614-456e-b6b8-76d9f227e9de',
-                        'data': {
-                            'type': 'tm.Text',
-                            'name': 'Generic threat model for a Content Management System (CMS)\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms',
-                            'hasOpenThreats': false
+                        visible: true,
+                        shape: 'td-text-block',
+                        zIndex: 1,
+                        id: 'f3ba6ded-7614-456e-b6b8-76d9f227e9de',
+                        data: {
+                            type: 'tm.Text',
+                            name: 'Generic threat model for a Content Management System (CMS)\nprovided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/generic-cms',
+                            hasOpenThreats: false
                         }
                     },
                     {
-                        'position': {
-                            'x': 57.5,
-                            'y': 375
+                        position: {
+                            x: 57.5,
+                            y: 375
                         },
-                        'size': {
-                            'width': 112.5,
-                            'height': 60
+                        size: {
+                            width: 112.5,
+                            height: 60
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'Admin'
+                        attrs: {
+                            text: {
+                                text: 'Admin'
                             },
-                            'body': {
-                                'stroke': '#333333',
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            body: {
+                                stroke: '#333333',
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             }
                         },
-                        'visible': true,
-                        'shape': 'actor',
-                        'ports': {
-                            'groups': {
-                                'top': {
-                                    'position': 'top',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                        visible: true,
+                        shape: 'actor',
+                        ports: {
+                            groups: {
+                                top: {
+                                    position: 'top',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'right': {
-                                    'position': 'right',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                right: {
+                                    position: 'right',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'bottom': {
-                                    'position': 'bottom',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                bottom: {
+                                    position: 'bottom',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'left': {
-                                    'position': 'left',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                left: {
+                                    position: 'left',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 }
                             },
-                            'items': [
+                            items: [
                                 {
-                                    'group': 'top',
-                                    'id': '7f00dc0d-2c98-42d4-9f90-e058e46d4196'
+                                    group: 'top',
+                                    id: '7f00dc0d-2c98-42d4-9f90-e058e46d4196'
                                 },
                                 {
-                                    'group': 'right',
-                                    'id': '9e0efe60-fd49-44e3-876e-0abe473ce99f'
+                                    group: 'right',
+                                    id: '9e0efe60-fd49-44e3-876e-0abe473ce99f'
                                 },
                                 {
-                                    'group': 'bottom',
-                                    'id': '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
+                                    group: 'bottom',
+                                    id: '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
                                 },
                                 {
-                                    'group': 'left',
-                                    'id': '04924016-340d-470f-9c5c-4ee798d714b3'
+                                    group: 'left',
+                                    id: '04924016-340d-470f-9c5c-4ee798d714b3'
                                 }
                             ]
                         },
-                        'id': 'f1c572a9-0dc6-4aec-a1be-3e05ae30e110',
-                        'zIndex': 2,
-                        'data': {
-                            'type': 'tm.Actor',
-                            'name': 'Admin',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'providesAuthentication': false,
-                            'threats': []
+                        id: 'f1c572a9-0dc6-4aec-a1be-3e05ae30e110',
+                        zIndex: 2,
+                        data: {
+                            type: 'tm.Actor',
+                            name: 'Admin',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            providesAuthentication: false,
+                            threats: []
                         }
                     },
                     {
-                        'position': {
-                            'x': 403,
-                            'y': 460
+                        position: {
+                            x: 403,
+                            y: 460
                         },
-                        'size': {
-                            'width': 120,
-                            'height': 60
+                        size: {
+                            width: 120,
+                            height: 60
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'Databse'
+                        attrs: {
+                            text: {
+                                text: 'Databse'
                             },
-                            'topLine': {
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            topLine: {
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             },
-                            'bottomLine': {
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            bottomLine: {
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             }
                         },
-                        'visible': true,
-                        'shape': 'store',
-                        'ports': {
-                            'groups': {
-                                'top': {
-                                    'position': 'top',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                        visible: true,
+                        shape: 'store',
+                        ports: {
+                            groups: {
+                                top: {
+                                    position: 'top',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'right': {
-                                    'position': 'right',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                right: {
+                                    position: 'right',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'bottom': {
-                                    'position': 'bottom',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                bottom: {
+                                    position: 'bottom',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'left': {
-                                    'position': 'left',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                left: {
+                                    position: 'left',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 }
                             },
-                            'items': [
+                            items: [
                                 {
-                                    'group': 'top',
-                                    'id': 'b8d84dec-946b-4d45-ad1e-ccb13462c67b'
+                                    group: 'top',
+                                    id: 'b8d84dec-946b-4d45-ad1e-ccb13462c67b'
                                 },
                                 {
-                                    'group': 'right',
-                                    'id': '3e75f48a-de69-4e79-bfcf-b7c6c166367e'
+                                    group: 'right',
+                                    id: '3e75f48a-de69-4e79-bfcf-b7c6c166367e'
                                 },
                                 {
-                                    'group': 'bottom',
-                                    'id': '893a6f08-66a5-42aa-bcdc-9542788f1d9f'
+                                    group: 'bottom',
+                                    id: '893a6f08-66a5-42aa-bcdc-9542788f1d9f'
                                 },
                                 {
-                                    'group': 'left',
-                                    'id': 'fb84f09d-1c0d-427e-848a-a9e4b7e5b9e5'
+                                    group: 'left',
+                                    id: 'fb84f09d-1c0d-427e-848a-a9e4b7e5b9e5'
                                 }
                             ]
                         },
-                        'id': 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
-                        'zIndex': 3,
-                        'data': {
-                            'type': 'tm.Store',
-                            'name': 'Databse',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isALog': false,
-                            'isEncrypted': false,
-                            'isSigned': false,
-                            'storesCredentials': false,
-                            'storesInventory': false,
-                            'threats': []
+                        id: 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
+                        zIndex: 3,
+                        data: {
+                            type: 'tm.Store',
+                            name: 'Databse',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isALog: false,
+                            isEncrypted: false,
+                            isSigned: false,
+                            storesCredentials: false,
+                            storesInventory: false,
+                            threats: []
                         }
                     },
                     {
-                        'position': {
-                            'x': 430,
-                            'y': 250
+                        position: {
+                            x: 430,
+                            y: 250
                         },
-                        'size': {
-                            'width': 90,
-                            'height': 90
+                        size: {
+                            width: 90,
+                            height: 90
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'Web server'
+                        attrs: {
+                            text: {
+                                text: 'Web server'
                             },
-                            'body': {
-                                'stroke': '#333333',
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            body: {
+                                stroke: '#333333',
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             }
                         },
-                        'visible': true,
-                        'shape': 'process',
-                        'ports': {
-                            'groups': {
-                                'top': {
-                                    'position': 'top',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                        visible: true,
+                        shape: 'process',
+                        ports: {
+                            groups: {
+                                top: {
+                                    position: 'top',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'right': {
-                                    'position': 'right',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                right: {
+                                    position: 'right',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'bottom': {
-                                    'position': 'bottom',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                bottom: {
+                                    position: 'bottom',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'left': {
-                                    'position': 'left',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                left: {
+                                    position: 'left',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 }
                             },
-                            'items': [
+                            items: [
                                 {
-                                    'group': 'top',
-                                    'id': '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
+                                    group: 'top',
+                                    id: '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
                                 },
                                 {
-                                    'group': 'right',
-                                    'id': '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
+                                    group: 'right',
+                                    id: '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
                                 },
                                 {
-                                    'group': 'bottom',
-                                    'id': 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
+                                    group: 'bottom',
+                                    id: 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
                                 },
                                 {
-                                    'group': 'left',
-                                    'id': 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
+                                    group: 'left',
+                                    id: 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
                                 }
                             ]
                         },
-                        'id': '8bee0586-5f1e-454c-8d8c-de52d3942781',
-                        'zIndex': 4,
-                        'data': {
-                            'type': 'tm.Process',
-                            'name': 'Web server',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'handlesCardPayment': false,
-                            'handlesGoodsOrServices': false,
-                            'isWebApplication': false,
-                            'privilegeLevel': '',
-                            'threats': []
+                        id: '8bee0586-5f1e-454c-8d8c-de52d3942781',
+                        zIndex: 4,
+                        data: {
+                            type: 'tm.Process',
+                            name: 'Web server',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            handlesCardPayment: false,
+                            handlesGoodsOrServices: false,
+                            isWebApplication: false,
+                            privilegeLevel: '',
+                            threats: []
                         }
                     },
                     {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'targetMarker': {
-                                    'name': 'block'
+                        shape: 'flow',
+                        attrs: {
+                            line: {
+                                stroke: '#333333',
+                                targetMarker: {
+                                    name: 'block'
                                 },
-                                'sourceMarker': {
-                                    'name': 'block'
+                                sourceMarker: {
+                                    name: 'block'
                                 },
-                                'strokeDasharray': null
+                                strokeDasharray: null
                             }
                         },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
+                        width: 200,
+                        height: 100,
+                        zIndex: 10,
+                        labels: [
                             {
-                                'markup': [
+                                markup: [
                                     {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
+                                        tagName: 'ellipse',
+                                        selector: 'labelBody'
                                     },
                                     {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
+                                        tagName: 'text',
+                                        selector: 'labelText'
                                     }
                                 ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Push to Bucket',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
+                                attrs: {
+                                    labelText: {
+                                        text: 'Push to Bucket',
+                                        textAnchor: 'middle',
+                                        textVerticalAnchor: 'middle'
                                     },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
+                                    labelBody: {
+                                        ref: 'labelText',
+                                        refRx: '50%',
+                                        refRy: '60%',
+                                        fill: '#fff',
+                                        strokeWidth: 0
                                     }
                                 },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
+                                position: {
+                                    distance: 0.5,
+                                    args: {
+                                        keepGradient: true,
+                                        ensureLegibility: true
                                     }
                                 }
                             }
                         ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': 'Unsecured mySQL\nconnection',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': true,
-                            'isEncrypted': false,
-                            'isPublicNetwork': false,
-                            'protocol': '',
-                            'threats': []
+                        connector: 'smooth',
+                        data: {
+                            type: 'tm.Flow',
+                            name: 'Unsecured mySQL\nconnection',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isBidirectional: true,
+                            isEncrypted: false,
+                            isPublicNetwork: false,
+                            protocol: '',
+                            threats: []
                         },
-                        'id': '907cbfa7-6990-4c1d-ad51-1433ada94549',
-                        'source': {
-                            'cell': 'f1c572a9-0dc6-4aec-a1be-3e05ae30e110',
-                            'port': '9e0efe60-fd49-44e3-876e-0abe473ce99f'
+                        id: '907cbfa7-6990-4c1d-ad51-1433ada94549',
+                        source: {
+                            cell: 'f1c572a9-0dc6-4aec-a1be-3e05ae30e110',
+                            port: '9e0efe60-fd49-44e3-876e-0abe473ce99f'
                         },
-                        'target': {
-                            'cell': 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
-                            'port': 'fb84f09d-1c0d-427e-848a-a9e4b7e5b9e5'
+                        target: {
+                            cell: 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
+                            port: 'fb84f09d-1c0d-427e-848a-a9e4b7e5b9e5'
                         },
-                        'vertices': [
+                        vertices: [
                             {
-                                'x': 230,
-                                'y': 410
+                                x: 230,
+                                y: 410
                             }
                         ]
                     },
                     {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'targetMarker': {
-                                    'name': 'block'
+                        shape: 'flow',
+                        attrs: {
+                            line: {
+                                stroke: '#333333',
+                                targetMarker: {
+                                    name: 'block'
                                 },
-                                'sourceMarker': {
-                                    'name': ''
+                                sourceMarker: {
+                                    name: ''
                                 },
-                                'strokeDasharray': null
+                                strokeDasharray: null
                             }
                         },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
+                        width: 200,
+                        height: 100,
+                        zIndex: 10,
+                        labels: [
                             {
-                                'markup': [
+                                markup: [
                                     {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
+                                        tagName: 'ellipse',
+                                        selector: 'labelBody'
                                     },
                                     {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
+                                        tagName: 'text',
+                                        selector: 'labelText'
                                     }
                                 ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Push to Bucket',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
+                                attrs: {
+                                    labelText: {
+                                        text: 'Push to Bucket',
+                                        textAnchor: 'middle',
+                                        textVerticalAnchor: 'middle'
                                     },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
+                                    labelBody: {
+                                        ref: 'labelText',
+                                        refRx: '50%',
+                                        refRy: '60%',
+                                        fill: '#fff',
+                                        strokeWidth: 0
                                     }
                                 },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
+                                position: {
+                                    distance: 0.5,
+                                    args: {
+                                        keepGradient: true,
+                                        ensureLegibility: true
                                     }
                                 }
                             }
                         ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': 'HTTP',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': false,
-                            'isEncrypted': false,
-                            'isPublicNetwork': false,
-                            'protocol': 'HTTP',
-                            'threats': []
+                        connector: 'smooth',
+                        data: {
+                            type: 'tm.Flow',
+                            name: 'HTTP',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isBidirectional: false,
+                            isEncrypted: false,
+                            isPublicNetwork: false,
+                            protocol: 'HTTP',
+                            threats: []
                         },
-                        'id': '9257aa54-936d-4612-8878-12c52d51e6d0',
-                        'source': {
-                            'cell': 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
-                            'port': '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
+                        id: '9257aa54-936d-4612-8878-12c52d51e6d0',
+                        source: {
+                            cell: 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
+                            port: '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
                         },
-                        'target': {
-                            'cell': '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
-                            'port': '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
+                        target: {
+                            cell: '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
+                            port: '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
                         },
-                        'vertices': [
+                        vertices: [
                             {
-                                'x': 840,
-                                'y': 250
+                                x: 840,
+                                y: 250
                             }
                         ]
                     },
                     {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'targetMarker': {
-                                    'name': 'block'
+                        shape: 'flow',
+                        attrs: {
+                            line: {
+                                stroke: '#333333',
+                                targetMarker: {
+                                    name: 'block'
                                 },
-                                'sourceMarker': {
-                                    'name': ''
+                                sourceMarker: {
+                                    name: ''
                                 },
-                                'strokeDasharray': null
+                                strokeDasharray: null
                             }
                         },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
+                        width: 200,
+                        height: 100,
+                        zIndex: 10,
+                        labels: [
                             {
-                                'markup': [
+                                markup: [
                                     {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
+                                        tagName: 'ellipse',
+                                        selector: 'labelBody'
                                     },
                                     {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
+                                        tagName: 'text',
+                                        selector: 'labelText'
                                     }
                                 ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Push to Bucket',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
+                                attrs: {
+                                    labelText: {
+                                        text: 'Push to Bucket',
+                                        textAnchor: 'middle',
+                                        textVerticalAnchor: 'middle'
                                     },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
+                                    labelBody: {
+                                        ref: 'labelText',
+                                        refRx: '50%',
+                                        refRy: '60%',
+                                        fill: '#fff',
+                                        strokeWidth: 0
                                     }
                                 },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
+                                position: {
+                                    distance: 0.5,
+                                    args: {
+                                        keepGradient: true,
+                                        ensureLegibility: true
                                     }
                                 }
                             }
                         ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': 'HTTPS',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': false,
-                            'isEncrypted': false,
-                            'isPublicNetwork': false,
-                            'protocol': 'HTTPS',
-                            'threats': []
+                        connector: 'smooth',
+                        data: {
+                            type: 'tm.Flow',
+                            name: 'HTTPS',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isBidirectional: false,
+                            isEncrypted: false,
+                            isPublicNetwork: false,
+                            protocol: 'HTTPS',
+                            threats: []
                         },
-                        'id': '52ba5641-5a40-48c6-a92a-7b6973b9ea33',
-                        'source': {
-                            'cell': 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
-                            'port': '04924016-340d-470f-9c5c-4ee798d714b3'
+                        id: '52ba5641-5a40-48c6-a92a-7b6973b9ea33',
+                        source: {
+                            cell: 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
+                            port: '04924016-340d-470f-9c5c-4ee798d714b3'
                         },
-                        'target': {
-                            'cell': '8bee0586-5f1e-454c-8d8c-de52d3942781',
-                            'port': '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
+                        target: {
+                            cell: '8bee0586-5f1e-454c-8d8c-de52d3942781',
+                            port: '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
                         },
-                        'vertices': [
+                        vertices: [
                             {
-                                'x': 520,
-                                'y': 140
+                                x: 520,
+                                y: 140
                             }
                         ]
                     },
                     {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'targetMarker': {
-                                    'name': 'block'
+                        shape: 'flow',
+                        attrs: {
+                            line: {
+                                stroke: '#333333',
+                                targetMarker: {
+                                    name: 'block'
                                 },
-                                'sourceMarker': {
-                                    'name': ''
+                                sourceMarker: {
+                                    name: ''
                                 },
-                                'strokeDasharray': null
+                                strokeDasharray: null
                             }
                         },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
+                        width: 200,
+                        height: 100,
+                        zIndex: 10,
+                        labels: [
                             {
-                                'markup': [
+                                markup: [
                                     {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
+                                        tagName: 'ellipse',
+                                        selector: 'labelBody'
                                     },
                                     {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
+                                        tagName: 'text',
+                                        selector: 'labelText'
                                     }
                                 ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Push to Bucket',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
+                                attrs: {
+                                    labelText: {
+                                        text: 'Push to Bucket',
+                                        textAnchor: 'middle',
+                                        textVerticalAnchor: 'middle'
                                     },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
+                                    labelBody: {
+                                        ref: 'labelText',
+                                        refRx: '50%',
+                                        refRy: '60%',
+                                        fill: '#fff',
+                                        strokeWidth: 0
                                     }
                                 },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
+                                position: {
+                                    distance: 0.5,
+                                    args: {
+                                        keepGradient: true,
+                                        ensureLegibility: true
                                     }
                                 }
                             }
                         ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': 'Push to Bucket',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': false,
-                            'isEncrypted': false,
-                            'isPublicNetwork': false,
-                            'protocol': '',
-                            'threats': []
+                        connector: 'smooth',
+                        data: {
+                            type: 'tm.Flow',
+                            name: 'Push to Bucket',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isBidirectional: false,
+                            isEncrypted: false,
+                            isPublicNetwork: false,
+                            protocol: '',
+                            threats: []
                         },
-                        'id': '86a3b74b-01ef-47d4-9af9-e8bd6775e6f9',
-                        'source': {
-                            'cell': '8bee0586-5f1e-454c-8d8c-de52d3942781',
-                            'port': '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
+                        id: '86a3b74b-01ef-47d4-9af9-e8bd6775e6f9',
+                        source: {
+                            cell: '8bee0586-5f1e-454c-8d8c-de52d3942781',
+                            port: '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
                         },
-                        'target': {
-                            'cell': '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
-                            'port': 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
+                        target: {
+                            cell: '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
+                            port: 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
                         },
-                        'vertices': [
+                        vertices: [
                             {
-                                'x': 710,
-                                'y': 430
+                                x: 710,
+                                y: 430
                             }
                         ]
                     },
                     {
-                        'shape': 'flow',
-                        'attrs': {
-                            'line': {
-                                'stroke': '#333333',
-                                'targetMarker': {
-                                    'name': 'block'
+                        shape: 'flow',
+                        attrs: {
+                            line: {
+                                stroke: '#333333',
+                                targetMarker: {
+                                    name: 'block'
                                 },
-                                'sourceMarker': {
-                                    'name': ''
+                                sourceMarker: {
+                                    name: ''
                                 },
-                                'strokeDasharray': null
+                                strokeDasharray: null
                             }
                         },
-                        'width': 200,
-                        'height': 100,
-                        'zIndex': 10,
-                        'labels': [
+                        width: 200,
+                        height: 100,
+                        zIndex: 10,
+                        labels: [
                             {
-                                'markup': [
+                                markup: [
                                     {
-                                        'tagName': 'ellipse',
-                                        'selector': 'labelBody'
+                                        tagName: 'ellipse',
+                                        selector: 'labelBody'
                                     },
                                     {
-                                        'tagName': 'text',
-                                        'selector': 'labelText'
+                                        tagName: 'text',
+                                        selector: 'labelText'
                                     }
                                 ],
-                                'attrs': {
-                                    'labelText': {
-                                        'text': 'Push to Bucket',
-                                        'textAnchor': 'middle',
-                                        'textVerticalAnchor': 'middle'
+                                attrs: {
+                                    labelText: {
+                                        text: 'Push to Bucket',
+                                        textAnchor: 'middle',
+                                        textVerticalAnchor: 'middle'
                                     },
-                                    'labelBody': {
-                                        'ref': 'labelText',
-                                        'refRx': '50%',
-                                        'refRy': '60%',
-                                        'fill': '#fff',
-                                        'strokeWidth': 0
+                                    labelBody: {
+                                        ref: 'labelText',
+                                        refRx: '50%',
+                                        refRy: '60%',
+                                        fill: '#fff',
+                                        strokeWidth: 0
                                     }
                                 },
-                                'position': {
-                                    'distance': 0.5,
-                                    'args': {
-                                        'keepGradient': true,
-                                        'ensureLegibility': true
+                                position: {
+                                    distance: 0.5,
+                                    args: {
+                                        keepGradient: true,
+                                        ensureLegibility: true
                                     }
                                 }
                             }
                         ],
-                        'connector': 'smooth',
-                        'data': {
-                            'type': 'tm.Flow',
-                            'name': '',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'isBidirectional': false,
-                            'isEncrypted': false,
-                            'isPublicNetwork': false,
-                            'protocol': '',
-                            'threats': []
+                        connector: 'smooth',
+                        data: {
+                            type: 'tm.Flow',
+                            name: '',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            isBidirectional: false,
+                            isEncrypted: false,
+                            isPublicNetwork: false,
+                            protocol: '',
+                            threats: []
                         },
-                        'id': '5c2fb61f-5fac-4860-8e48-86d1101889da',
-                        'source': {
-                            'cell': '8bee0586-5f1e-454c-8d8c-de52d3942781',
-                            'port': 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
+                        id: '5c2fb61f-5fac-4860-8e48-86d1101889da',
+                        source: {
+                            cell: '8bee0586-5f1e-454c-8d8c-de52d3942781',
+                            port: 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
                         },
-                        'target': {
-                            'cell': 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
-                            'port': 'b8d84dec-946b-4d45-ad1e-ccb13462c67b'
+                        target: {
+                            cell: 'ea6f644e-74ca-4812-b506-6b9c4b5db27e',
+                            port: 'b8d84dec-946b-4d45-ad1e-ccb13462c67b'
                         },
-                        'vertices': []
+                        vertices: []
                     },
                     {
-                        'position': {
-                            'x': 760,
-                            'y': 435
+                        position: {
+                            x: 760,
+                            y: 435
                         },
-                        'size': {
-                            'width': 110,
-                            'height': 110
+                        size: {
+                            width: 110,
+                            height: 110
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'CDN network'
+                        attrs: {
+                            text: {
+                                text: 'CDN network'
                             },
-                            'body': {
-                                'stroke': '#333333',
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            body: {
+                                stroke: '#333333',
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             }
                         },
-                        'visible': true,
-                        'shape': 'process',
-                        'ports': {
-                            'groups': {
-                                'top': {
-                                    'position': 'top',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                        visible: true,
+                        shape: 'process',
+                        ports: {
+                            groups: {
+                                top: {
+                                    position: 'top',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'right': {
-                                    'position': 'right',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                right: {
+                                    position: 'right',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'bottom': {
-                                    'position': 'bottom',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                bottom: {
+                                    position: 'bottom',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'left': {
-                                    'position': 'left',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                left: {
+                                    position: 'left',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 }
                             },
-                            'items': [
+                            items: [
                                 {
-                                    'group': 'top',
-                                    'id': '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
+                                    group: 'top',
+                                    id: '6a6d31d7-2dbf-49d1-ac98-5abeb46faa82'
                                 },
                                 {
-                                    'group': 'right',
-                                    'id': '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
+                                    group: 'right',
+                                    id: '52db3984-6452-4cfb-bc9f-9f3981c5d16d'
                                 },
                                 {
-                                    'group': 'bottom',
-                                    'id': 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
+                                    group: 'bottom',
+                                    id: 'f9019b61-5a2d-4d61-a8c2-8cba0251817f'
                                 },
                                 {
-                                    'group': 'left',
-                                    'id': 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
+                                    group: 'left',
+                                    id: 'df490d9f-0e2c-4e1b-92ab-1e71e1de5086'
                                 }
                             ]
                         },
-                        'id': '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
-                        'zIndex': 11,
-                        'data': {
-                            'type': 'tm.Process',
-                            'name': 'CDN network',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'handlesCardPayment': false,
-                            'handlesGoodsOrServices': false,
-                            'isWebApplication': false,
-                            'privilegeLevel': '',
-                            'threats': []
+                        id: '271c61ff-61ce-47fe-9ca2-51dafa727fb5',
+                        zIndex: 11,
+                        data: {
+                            type: 'tm.Process',
+                            name: 'CDN network',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            handlesCardPayment: false,
+                            handlesGoodsOrServices: false,
+                            isWebApplication: false,
+                            privilegeLevel: '',
+                            threats: []
                         }
                     },
                     {
-                        'position': {
-                            'x': 758,
-                            'y': 70
+                        position: {
+                            x: 758,
+                            y: 70
                         },
-                        'size': {
-                            'width': 112.5,
-                            'height': 60
+                        size: {
+                            width: 112.5,
+                            height: 60
                         },
-                        'attrs': {
-                            'text': {
-                                'text': 'Generic /\nPrivilege user'
+                        attrs: {
+                            text: {
+                                text: 'Generic /\nPrivilege user'
                             },
-                            'body': {
-                                'stroke': '#333333',
-                                'strokeWidth': 1.5,
-                                'strokeDasharray': null
+                            body: {
+                                stroke: '#333333',
+                                strokeWidth: 1.5,
+                                strokeDasharray: null
                             }
                         },
-                        'visible': true,
-                        'shape': 'actor',
-                        'ports': {
-                            'groups': {
-                                'top': {
-                                    'position': 'top',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                        visible: true,
+                        shape: 'actor',
+                        ports: {
+                            groups: {
+                                top: {
+                                    position: 'top',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'right': {
-                                    'position': 'right',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                right: {
+                                    position: 'right',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'bottom': {
-                                    'position': 'bottom',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                bottom: {
+                                    position: 'bottom',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 },
-                                'left': {
-                                    'position': 'left',
-                                    'attrs': {
-                                        'circle': {
-                                            'r': 4,
-                                            'magnet': true,
-                                            'stroke': '#5F95FF',
-                                            'strokeWidth': 1,
-                                            'fill': '#fff',
-                                            'style': {
-                                                'visibility': 'hidden'
+                                left: {
+                                    position: 'left',
+                                    attrs: {
+                                        circle: {
+                                            r: 4,
+                                            magnet: true,
+                                            stroke: '#5F95FF',
+                                            strokeWidth: 1,
+                                            fill: '#fff',
+                                            style: {
+                                                visibility: 'hidden'
                                             }
                                         }
                                     }
                                 }
                             },
-                            'items': [
+                            items: [
                                 {
-                                    'group': 'top',
-                                    'id': '7f00dc0d-2c98-42d4-9f90-e058e46d4196'
+                                    group: 'top',
+                                    id: '7f00dc0d-2c98-42d4-9f90-e058e46d4196'
                                 },
                                 {
-                                    'group': 'right',
-                                    'id': '9e0efe60-fd49-44e3-876e-0abe473ce99f'
+                                    group: 'right',
+                                    id: '9e0efe60-fd49-44e3-876e-0abe473ce99f'
                                 },
                                 {
-                                    'group': 'bottom',
-                                    'id': '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
+                                    group: 'bottom',
+                                    id: '4990b5fb-3cf8-4be9-9bd1-6443e4965134'
                                 },
                                 {
-                                    'group': 'left',
-                                    'id': '04924016-340d-470f-9c5c-4ee798d714b3'
+                                    group: 'left',
+                                    id: '04924016-340d-470f-9c5c-4ee798d714b3'
                                 }
                             ]
                         },
-                        'id': 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
-                        'zIndex': 12,
-                        'data': {
-                            'type': 'tm.Actor',
-                            'name': 'Generic /\nPrivilege user',
-                            'description': '',
-                            'outOfScope': false,
-                            'reasonOutOfScope': '',
-                            'hasOpenThreats': false,
-                            'providesAuthentication': false,
-                            'threats': []
+                        id: 'c6bdd6cf-cb9b-40f6-8bbd-891b83f10ef4',
+                        zIndex: 12,
+                        data: {
+                            type: 'tm.Actor',
+                            name: 'Generic /\nPrivilege user',
+                            description: '',
+                            outOfScope: false,
+                            reasonOutOfScope: '',
+                            hasOpenThreats: false,
+                            providesAuthentication: false,
+                            threats: []
                         }
                     }
                 ]
             }
         ],
-        'diagramTop': 0,
-        'reviewer': 'A security architect',
-        'threatTop': 0
+        diagramTop: 0,
+        reviewer: 'A security architect',
+        threatTop: 0
     }
 };

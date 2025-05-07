@@ -1,28 +1,28 @@
 export const convert = function (data) {
     const jsonData = JSON.stringify(data, null, 2);
 
-    var dragonData = JSON.parse(jsonData);
+    const dragonData = JSON.parse(jsonData);
 
-    var otm = new Object();
+    const otm = new Object();
     otm.otmVersion = '0.2.0';
     otm.project = new Object();
     otm.project.id = dragonData.summary.id;
     otm.project.name = dragonData.summary.title;
 
-    var diagram = dragonData.detail.diagrams[0];
+    const diagram = dragonData.detail.diagrams[0];
 
     otm.trustZones = [];
     otm.components = [];
     otm.dataflows = [];
-    diagram.cells.forEach(function(cell) {
+    diagram.cells.forEach(function (cell) {
         if (cell.data.type == 'tm.Boundary') {
-            var zone = new Object();
+            const zone = new Object();
             zone.id = cell.id;
             zone.name = cell.data.name;
             zone.type = cell.shape;
 
             zone.attributes = [];
-            var attr = new Object();
+            const attr = new Object();
             attr.sourceX = cell.source.x;
             attr.sourceY = cell.source.y;
             attr.targetX = cell.target.x;
@@ -31,9 +31,9 @@ export const convert = function (data) {
             zone.attributes.push(attr);
 
             zone.representations = [];
-            var counter = 1;
-            cell.vertices.forEach(function(vert) {
-                var rep = new Object();
+            let counter = 1;
+            cell.vertices.forEach(function (vert) {
+                const rep = new Object();
                 rep.id = counter;
                 rep.name = 'vertices';
                 rep.position = new Object();
@@ -49,22 +49,21 @@ export const convert = function (data) {
             otm.trustZones.push(zone);
         }
         if (cell.data.type == 'tm.Store') {
-            var store = new Object();
+            const store = new Object();
             store.id = cell.id;
             store.name = cell.data.name;
             store.type = cell.shape;
 
             store.threats = [];
 
-            if (Object.hasOwn(cell.data, 'threats'))
-            {
-                cell.data.threats.forEach(function(threat) {
-                    var tr = new Object();
+            if (Object.hasOwn(cell.data, 'threats')) {
+                cell.data.threats.forEach(function (threat) {
+                    const tr = new Object();
                     tr.id = store.id + store.threats.length;
                     tr.name = threat.title;
                     tr.description = threat.description;
                     tr.attributes = [];
-                    var att = new Object();
+                    const att = new Object();
                     att.status = threat.status;
                     att.severity = threat.severity;
                     att.mitigation = threat.mitigation;
@@ -77,7 +76,7 @@ export const convert = function (data) {
             }
 
             store.representations = [];
-            var storeRep = new Object();
+            const storeRep = new Object();
             storeRep.id = cell.id;
             storeRep.name = cell.data.type;
             storeRep.position = new Object();
@@ -91,22 +90,21 @@ export const convert = function (data) {
             otm.components.push(store);
         }
         if (cell.data.type == 'tm.Actor') {
-            var actor = new Object();
+            const actor = new Object();
             actor.id = cell.id;
             actor.name = cell.data.name;
             actor.type = cell.shape;
 
             actor.threats = [];
 
-            if (Object.hasOwn(cell, 'threats'))
-            {
-                cell.data.threats.forEach(function(threat) {
-                    var tr = new Object();
+            if (Object.hasOwn(cell, 'threats')) {
+                cell.data.threats.forEach(function (threat) {
+                    const tr = new Object();
                     tr.id = actor.id + actor.threats.length;
                     tr.name = threat.title;
                     tr.description = threat.description;
                     tr.attributes = [];
-                    var att = new Object();
+                    const att = new Object();
                     att.status = threat.status;
                     att.severity = threat.severity;
                     att.mitigation = threat.mitigation;
@@ -119,7 +117,7 @@ export const convert = function (data) {
             }
 
             actor.representations = [];
-            var actorRep = new Object();
+            const actorRep = new Object();
             actorRep.id = cell.id;
             actorRep.name = cell.data.type;
             actorRep.position = new Object();
@@ -133,22 +131,21 @@ export const convert = function (data) {
             otm.components.push(actor);
         }
         if (cell.data.type == 'tm.Process') {
-            var process = new Object();
+            const process = new Object();
             process.id = cell.id;
             process.name = cell.data.name;
             process.type = cell.shape;
 
             process.threats = [];
 
-            if (Object.hasOwn(cell.data, 'threats'))
-            {
-                cell.data.threats.forEach(function(threat) {
-                    var tr = new Object();
+            if (Object.hasOwn(cell.data, 'threats')) {
+                cell.data.threats.forEach(function (threat) {
+                    const tr = new Object();
                     tr.id = process.id + process.threats.length;
                     tr.name = threat.title;
                     tr.description = threat.description;
                     tr.attributes = [];
-                    var att = new Object();
+                    const att = new Object();
                     att.status = threat.status;
                     att.severity = threat.severity;
                     att.mitigation = threat.mitigation;
@@ -160,7 +157,7 @@ export const convert = function (data) {
             }
 
             process.representations = [];
-            var processRep = new Object();
+            const processRep = new Object();
             processRep.id = cell.id;
             processRep.name = cell.data.type;
             processRep.position = new Object();
@@ -174,7 +171,7 @@ export const convert = function (data) {
             otm.components.push(process);
         }
         if (cell.data.type == 'tm.Flow') {
-            var flow = new Object();
+            const flow = new Object();
             flow.id = cell.id;
             flow.type = cell.shape;
             flow.name = cell.data.name;
@@ -182,22 +179,21 @@ export const convert = function (data) {
             flow.destination = cell.target.cell;
 
             flow.attributes = [];
-            var attFlow = new Object();
+            const attFlow = new Object();
             attFlow.verticesX = cell.vertices[0].x;
             attFlow.verticesY = cell.vertices[0].y;
             flow.attributes.push(attFlow);
 
             flow.threats = [];
 
-            if (Object.hasOwn(cell.data, 'threats'))
-            {
-                cell.data.threats.forEach(function(threat) {
-                    var tr = new Object();
+            if (Object.hasOwn(cell.data, 'threats')) {
+                cell.data.threats.forEach(function (threat) {
+                    const tr = new Object();
                     tr.id = flow.id + flow.threats.length;
                     tr.name = threat.title;
                     tr.description = threat.description;
                     tr.attributes = [];
-                    var att = new Object();
+                    const att = new Object();
                     att.status = threat.status;
                     att.severity = threat.severity;
                     att.mitigation = threat.mitigation;
@@ -209,7 +205,7 @@ export const convert = function (data) {
             }
 
             flow.representations = [];
-            var flowRep = new Object();
+            const flowRep = new Object();
             flowRep.id = cell.id;
             flowRep.name = cell.data.type;
             flow.representations.push(flowRep);

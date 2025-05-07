@@ -1,8 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron');
 
-if (process.env.IS_TEST === 'true') {
-    require('wdio-electron-service/preload');
-}
+// No more WebdriverIO dependency
+// if (process.env.IS_TEST === 'true') {
+//     require('wdio-electron-service/preload');
+// }
 
 contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
@@ -21,5 +22,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onOpenModel: (callback) => ipcRenderer.on('open-model', callback),
     onOpenModelRequest: (callback) => ipcRenderer.on('open-model-request', callback),
     onPrintModelRequest: (callback) => ipcRenderer.on('print-model-request', callback),
-    onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback)
+    onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback),
+    
+    // Additional APIs for testing with Cypress
+    getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+    getAppName: () => ipcRenderer.invoke('get-app-name'),
+    getOsVersion: () => ipcRenderer.invoke('get-os-version'),
+    openFile: () => ipcRenderer.invoke('open-file'),
+    saveFile: (path, content) => ipcRenderer.invoke('save-file', path, content),
+    getThreatModelPath: () => ipcRenderer.invoke('get-threat-model-path'),
+    getProviderLogon: () => ipcRenderer.invoke('get-provider-logon'),
+    getRecentModelList: () => ipcRenderer.invoke('get-recent-model-list'),
+    updateRecentModelList: (list) => ipcRenderer.invoke('update-recent-model-list', list),
+    onUpdateDownloaded: (callback) => ipcRenderer.on('update-downloaded', callback),
+    quitAndInstall: () => ipcRenderer.send('quit-and-install')
 });

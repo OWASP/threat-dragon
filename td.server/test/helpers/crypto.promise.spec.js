@@ -7,8 +7,12 @@ import cryptoPromise from '../../src/helpers/crypto.promise.js';
 describe('helpers/crypto.promise.js', () => {
     describe('randomBytes', () => {
         const rand = 'asdfasdfasdf';
-        const reject = (num, cb) => { cb('some error'); };
-        const resolve = (num, cb) => { cb(null, rand); };
+        const reject = (num, cb) => {
+            cb('some error');
+        };
+        const resolve = (num, cb) => {
+            cb(null, rand);
+        };
 
         it('returns a promise', () => {
             expect(cryptoPromise.randomBytes()).to.be.a('Promise');

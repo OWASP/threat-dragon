@@ -23,19 +23,20 @@ describe('providers/gitlab.js', () => {
         const config = { GITLAB_CLIENT_ID: '1234567' };
 
         it('contains the gitlab login oauth url', () => {
-            expect(gitlabProvider.getOauthRedirectUrl()).to
-                .contain('https://gitlab.com/oauth/authorize');
+            expect(gitlabProvider.getOauthRedirectUrl()).to.contain(
+                'https://gitlab.com/oauth/authorize'
+            );
         });
 
         it('adds the client_id', () => {
             sinon.stub(env, 'get').returns({ config });
-            expect(gitlabProvider.getOauthRedirectUrl()).to
-                .contain(`client_id=${config.GITLAB_CLIENT_ID}`);
+            expect(gitlabProvider.getOauthRedirectUrl()).to.contain(
+                `client_id=${config.GITLAB_CLIENT_ID}`
+            );
         });
 
         it('uses the default scope', () => {
-            expect(gitlabProvider.getOauthRedirectUrl()).to
-                .contain('');
+            expect(gitlabProvider.getOauthRedirectUrl()).to.contain('');
         });
 
         it('uses the configured scope', () => {
@@ -43,8 +44,7 @@ describe('providers/gitlab.js', () => {
                 GITLAB_SCOPE: 'repo'
             });
             sinon.stub(env, 'get').returns({ config: scopedCfg });
-            expect(gitlabProvider.getOauthRedirectUrl()).to
-                .contain('scope=repo');
+            expect(gitlabProvider.getOauthRedirectUrl()).to.contain('scope=repo');
         });
     });
 
@@ -61,13 +61,12 @@ describe('providers/gitlab.js', () => {
             });
 
             it('gives a relative url when not in development mode', () => {
-                const idx = gitlabProvider.getOauthReturnUrl(code).indexOf('/#/oauth-return');
+                const idx = gitlabProvider.getOauthReturnUrl(code).indexOf('/oauth-return');
                 expect(idx).to.eq(0);
             });
 
             it('adds the code as a query param', () => {
-                expect(gitlabProvider.getOauthReturnUrl(code)).to
-                    .contain(`code=${code}`);
+                expect(gitlabProvider.getOauthReturnUrl(code)).to.contain(`code=${code}`);
             });
         });
 
@@ -96,7 +95,7 @@ describe('providers/gitlab.js', () => {
         const code = 'mycode';
 
         beforeEach(async () => {
-            sinon.stub(axios, 'post').resolves({ data: { access_token: '' }});
+            sinon.stub(axios, 'post').resolves({ data: { access_token: 'test-access-token' } });
             sinon.stub(env, 'get').returns({ config });
             sinon.stub(repo, 'userAsync').resolves({});
 
@@ -111,15 +110,11 @@ describe('providers/gitlab.js', () => {
                 redirect_uri: config.GITLAB_REDIRECT_URI,
                 code: code
             };
-            expect(axios.post).to.have.been.calledWith(
-                'https://gitlab.com/oauth/token',
-                data,
-                {
-                    headers: {
-                        'accept': 'application/json',
-                    }
+            expect(axios.post).to.have.been.calledWith('https://gitlab.com/oauth/token', data, {
+                headers: {
+                    accept: 'application/json'
                 }
-            );
+            });
         });
 
         it('gets the user info from the repo', () => {

@@ -7,7 +7,7 @@ import { ports } from '../ports.js';
 const name = 'store';
 
 // store (parallel lines, white background)
-export const StoreShape = Shape.Rect.define({
+export const StoreShape = Shape.Path.define({
     constructorName: name,
     width: 150,
     height: 75,

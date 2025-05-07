@@ -218,7 +218,7 @@ describe('service/entity/default-properties.js', () => {
     describe('getByType', () => {
         it('throws an error for an unknown type', () => {
             expect(() => defaultProperties.getByType('fake'))
-                .toThrowError('Unknown entity: fake');
+                .toThrow('Unknown entity: fake');
         });
 
         it('gets actor', () => {

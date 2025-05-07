@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import env from '../../src/env/Env.js';
 import githubProvider from '../../src/providers/github.js';
-import repo from '../../src/repositories/githubrepo.js';
+import repositories from '../../src/repositories/index.js';
 
 describe('providers/github.js', () => {
     describe('isConfigured', () => {
@@ -23,19 +23,20 @@ describe('providers/github.js', () => {
         const config = { GITHUB_CLIENT_ID: '1234567' };
 
         it('contains the github login oauth url', () => {
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain('https://github.com/login/oauth/authorize');
+            expect(githubProvider.getOauthRedirectUrl()).to.contain(
+                'https://github.com/login/oauth/authorize'
+            );
         });
 
         it('adds the client_id', () => {
             sinon.stub(env, 'get').returns({ config });
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain(`client_id=${config.GITHUB_CLIENT_ID}`);
+            expect(githubProvider.getOauthRedirectUrl()).to.contain(
+                `client_id=${config.GITHUB_CLIENT_ID}`
+            );
         });
 
         it('uses the default scope', () => {
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain('scope=public_repo');
+            expect(githubProvider.getOauthRedirectUrl()).to.contain('scope=public_repo');
         });
 
         it('uses the configured scope', () => {
@@ -43,8 +44,7 @@ describe('providers/github.js', () => {
                 GITHUB_SCOPE: 'repo'
             });
             sinon.stub(env, 'get').returns({ config: scopedCfg });
-            expect(githubProvider.getOauthRedirectUrl()).to
-                .contain('scope=repo');
+            expect(githubProvider.getOauthRedirectUrl()).to.contain('scope=repo');
         });
     });
 
@@ -61,13 +61,12 @@ describe('providers/github.js', () => {
             });
 
             it('gives a relative url when not in development mode', () => {
-                const idx = githubProvider.getOauthReturnUrl(code).indexOf('/#/oauth-return');
+                const idx = githubProvider.getOauthReturnUrl(code).indexOf('/oauth-return');
                 expect(idx).to.eq(0);
             });
 
             it('adds the code as a query param', () => {
-                expect(githubProvider.getOauthReturnUrl(code)).to
-                    .contain(`code=${code}`);
+                expect(githubProvider.getOauthReturnUrl(code)).to.contain(`code=${code}`);
             });
         });
 
@@ -95,9 +94,12 @@ describe('providers/github.js', () => {
         const code = 'mycode';
 
         beforeEach(async () => {
-            sinon.stub(axios, 'post').resolves({ data: { access_token: '' }});
+            sinon.stub(axios, 'post').resolves({ data: { access_token: 'test-access-token' } });
+            sinon
+                .stub(axios, 'get')
+                .resolves({ data: { login: 'test-user', email: 'test@example.com' } });
             sinon.stub(env, 'get').returns({ config });
-            sinon.stub(repo, 'userAsync').resolves({});
+            sinon.stub(repositories, 'set').returns({});
 
             await githubProvider.completeLoginAsync(code);
         });
@@ -108,7 +110,8 @@ describe('providers/github.js', () => {
                 {
                     client_id: config.GITHUB_CLIENT_ID,
                     client_secret: config.GITHUB_CLIENT_SECRET,
-                    code
+                    code,
+                    redirect_uri: undefined
                 },
                 {
                     headers: {
@@ -118,8 +121,13 @@ describe('providers/github.js', () => {
             );
         });
 
-        it('gets the user info from the repo', () => {
-            expect(repo.userAsync).to.have.been.calledOnce;
+        it('gets the user info from GitHub API', () => {
+            expect(axios.get).to.have.been.calledWith('https://api.github.com/user', {
+                headers: {
+                    Authorization: 'token test-access-token',
+                    Accept: 'application/vnd.github.v3+json'
+                }
+            });
         });
     });
 });

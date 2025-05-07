@@ -37,7 +37,11 @@ export const getMockRequest = () => {
         body: {},
         get: () => {},
         session: {
-            destroy: (cb) => { if(cb) { cb(); }}
+            destroy: (cb) => {
+                if (cb) {
+                    cb();
+                }
+            }
         },
         csrfToken: () => 'some_token'
     };

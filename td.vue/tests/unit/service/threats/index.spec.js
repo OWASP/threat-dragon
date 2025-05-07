@@ -1,3 +1,66 @@
+// Mock the store imports with a simple factory function
+jest.mock('@/store/index.js', () => {
+    const dispatch = jest.fn();
+    const state = {
+        cell: {
+            ref: {
+                data: {
+                    threatFrequency: {}
+                }
+            }
+        }
+    };
+    
+    return {
+        __esModule: true,
+        default: { 
+            get: jest.fn().mockReturnValue({
+                state,
+                dispatch
+            })
+        },
+        store: {
+            state,
+            dispatch
+        }
+    };
+});
+
+// Mock the i18n module
+jest.mock('@/i18n/index.js', () => {
+    return {
+        __esModule: true,
+        tc: (key) => {
+            // Return hardcoded values for specific keys to make tests pass
+            const translations = {
+                'threats.generic.stride': 'New STRIDE threat',
+                'threats.model.stride.tampering': 'Tampering',
+                'threats.model.stride.spoofing': 'Spoofing',
+                'threats.generic.linddun': 'New LINDDUN threat',
+                'threats.model.linddun.linkability': 'Linkability',
+                'threats.generic.plot4ai': 'New PLOT4ai threat',
+                'threats.model.plot4ai.techniqueProcesses': 'Technique & Processes',
+                'threats.generic.cia': 'New CIA threat',
+                'threats.model.cia.confidentiality': 'Confidentiality',
+                'threats.generic.die': 'New DIE threat',
+                'threats.model.die.distributed': 'Distributed',
+                'threats.description': 'A description of the threat goes here.',
+                'threats.mitigation': 'How to address the threat goes here.'
+            };
+            
+            return translations[key] || key;
+        },
+        default: {
+            get: () => ({
+                global: {
+                    t: (key) => key
+                }
+            })
+        }
+    };
+});
+
+// Then import the modules to test
 import threats, { createNewTypedThreat } from '@/service/threats/index.js';
 
 describe('service/threats/index.js', () => {

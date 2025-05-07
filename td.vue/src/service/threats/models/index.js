@@ -5,8 +5,8 @@ import plot4ai from './plot4ai.js';
 import stride from './stride.js';
 
 const swapKeyValuePairs = (obj) => {
-    let swappedObj = {};
-    for (let key in obj) {
+    const swappedObj = {};
+    for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
             swappedObj[obj[key]] = key;
         }
@@ -16,39 +16,44 @@ const swapKeyValuePairs = (obj) => {
 /**
  * below, we're swapping the key-value pairs, because the current objects might have keys that are the same
  * (in fact, linddun and plot4ai share two keys / categories)
- * Because we're doing this, we will also swap the return object from getThreatTypesByElement(), to be consistent 
+ * Because we're doing this, we will also swap the return object from getThreatTypesByElement(), to be consistent
  */
 const generic = Object.assign(
     Object.assign({ 'threats.model.stride.header': 'strideHeader' }, swapKeyValuePairs(stride.all)),
     Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
     Object.assign({ 'threats.model.die.header': 'dieHeader' }, swapKeyValuePairs(die)),
-    Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
-    Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
+    Object.assign(
+        { 'threats.model.linddun.header': 'linddunHeader' },
+        swapKeyValuePairs(linddun.all)
+    ),
+    Object.assign(
+        { 'threats.model.plot4ai.header': 'plot4aiHeader' },
+        swapKeyValuePairs(plot4ai.all)
+    )
 );
-
 
 const getByTranslationValue = (translation) => {
     if (!translation) {
         return '';
     }
 
-    if (Object.values(cia).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(cia).find((x) => x.toLowerCase() === translation.toLowerCase())) {
         return 'CIA';
     }
 
-    if (Object.values(die).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(die).find((x) => x.toLowerCase() === translation.toLowerCase())) {
         return 'DIE';
     }
 
-    if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(linddun.all).find((x) => x.toLowerCase() === translation.toLowerCase())) {
         return 'LINDDUN';
     }
 
-    if (Object.values(plot4ai.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(plot4ai.all).find((x) => x.toLowerCase() === translation.toLowerCase())) {
         return 'PLOT4ai';
     }
 
-    if (Object.values(stride.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(stride.all).find((x) => x.toLowerCase() === translation.toLowerCase())) {
         return 'STRIDE';
     }
 
@@ -59,16 +64,15 @@ const getThreatTypesByElement = (modelType, cellType) => {
     let types;
 
     switch (modelType.toUpperCase()) {
-
-    case 'CIA' :
+    case 'CIA':
         types = cia;
         break;
 
-    case 'DIE' :
+    case 'DIE':
         types = die;
         break;
 
-    case 'LINDDUN' :
+    case 'LINDDUN':
         if (cellType === 'tm.Actor') {
             types = linddun.actor;
         } else {
@@ -76,36 +80,36 @@ const getThreatTypesByElement = (modelType, cellType) => {
         }
         break;
 
-    case 'PLOT4AI' :
+    case 'PLOT4AI':
         switch (cellType) {
-        case 'tm.Actor' :
+        case 'tm.Actor':
             types = plot4ai.actor;
             break;
-        case 'tm.Process' :
+        case 'tm.Process':
             types = plot4ai.process;
             break;
-        case 'tm.Store' :
+        case 'tm.Store':
             types = plot4ai.store;
             break;
-        case 'tm.Flow' :
+        case 'tm.Flow':
         default:
             types = plot4ai.flow;
             break;
         }
         break;
 
-    case 'STRIDE' :
+    case 'STRIDE':
         switch (cellType) {
-        case 'tm.Actor' :
+        case 'tm.Actor':
             types = stride.actor;
             break;
-        case 'tm.Process' :
+        case 'tm.Process':
             types = stride.process;
             break;
-        case 'tm.Store' :
+        case 'tm.Store':
             types = stride.store;
             break;
-        case 'tm.Flow' :
+        case 'tm.Flow':
         default:
             types = stride.flow;
             break;
@@ -122,57 +126,76 @@ const getThreatTypesByElement = (modelType, cellType) => {
     return swapKeyValuePairs(types);
 };
 
-const getFrequencyMapByElement = (modelType,cellType) => {
-    let freqMap={};
-    switch(modelType.toUpperCase()){
+const getFrequencyMapByElement = (modelType, cellType) => {
+    let freqMap = {};
+    switch (modelType.toUpperCase()) {
     case 'CIA':
-        freqMap = {confidentiality: 0,integrity: 0,availability:0};
+        freqMap = { confidentiality: 0, integrity: 0, availability: 0 };
         break;
     case 'DIE':
-        freqMap = {distributed: 0,immutable: 0,ephemeral: 0};
+        freqMap = { distributed: 0, immutable: 0, ephemeral: 0 };
         break;
     case 'LINDDUN':
-        if(cellType==='tm.Actor')
-            freqMap = {linkability: 0,identifiability: 0,unawareness: 0};
-        else{
-            Object.keys(linddun.default).map((k)=>{freqMap[k]=0;});
+        if (cellType === 'tm.Actor')
+            freqMap = { linkability: 0, identifiability: 0, unawareness: 0 };
+        else {
+            Object.keys(linddun.default).map((k) => {
+                freqMap[k] = 0;
+            });
         }
         break;
     case 'PLOT4AI':
-        switch(cellType){
-        case 'tm.Actor' :
-            Object.keys(plot4ai.actor).map((k)=>{freqMap[k]=0;});
+        switch (cellType) {
+        case 'tm.Actor':
+            Object.keys(plot4ai.actor).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Process' :
-            Object.keys(plot4ai.process).map((k)=>{freqMap[k]=0;});
+        case 'tm.Process':
+            Object.keys(plot4ai.process).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Store' :
-            Object.keys(plot4ai.store).map((k)=>{freqMap[k]=0;});
+        case 'tm.Store':
+            Object.keys(plot4ai.store).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Flow' :
+        case 'tm.Flow':
         default:
-            Object.keys(plot4ai.flow).map((k)=>{freqMap[k]=0;});
+            Object.keys(plot4ai.flow).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
         }
         break;
     case 'STRIDE':
-        switch(cellType){
-        case 'tm.Actor' :
-            Object.keys(stride.actor).map((k)=>{freqMap[k]=0;});
+        switch (cellType) {
+        case 'tm.Actor':
+            Object.keys(stride.actor).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Process' :
-            Object.keys(stride.process).map((k)=>{freqMap[k]=0;});
+        case 'tm.Process':
+            Object.keys(stride.process).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Store' :
-            Object.keys(stride.store).map((k)=>{freqMap[k]=0;});
+        case 'tm.Store':
+            Object.keys(stride.store).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
-        case 'tm.Flow' :
+        case 'tm.Flow':
         default:
-            Object.keys(stride.flow).map((k)=>{freqMap[k]=0;});
+            Object.keys(stride.flow).map((k) => {
+                freqMap[k] = 0;
+            });
             break;
         }
         break;
-    default: return null;
+    default:
+        return null;
     }
     return freqMap;
 };

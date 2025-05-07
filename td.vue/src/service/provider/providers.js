@@ -42,6 +42,13 @@ const providers = {
         type: providerTypes.google,
         icon: ['fab', 'google']
     },
+    googleDrive: {
+        key: 'googleDrive',
+        displayName: 'Google Drive',
+        provider: googleProvider,
+        type: providerTypes.google,
+        icon: ['fab', 'google-drive']
+    },
     local: {
         key: 'local',
         displayName: 'Local Session',
@@ -57,7 +64,7 @@ export const allProviders = (() => {
 
 export const providerNames = (() => {
     const _providers = {};
-    Object.keys(providers).forEach(key => _providers[key] = providers[key].key);
+    Object.keys(providers).forEach((key) => (_providers[key] = providers[key].key));
     return Object.freeze(_providers);
 })();
 

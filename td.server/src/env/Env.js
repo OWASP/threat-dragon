@@ -1,8 +1,12 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { upDir } from '../helpers/path.helper.js';
+import loggerHelper from '../helpers/logger.helper.js';
+
+const logger = loggerHelper.get('env.js');
 
 export class Env {
     /* eslint no-console: 0 */
@@ -12,7 +16,9 @@ export class Env {
      * @constructor
      * @param {string} name
      */
-    constructor (name) {
+    constructor(name) {
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
         this._providers = [];
         this._defaultEnvFilePath = path.join(__dirname, upDir, upDir, upDir, '.env');
         this._config = {};
@@ -23,7 +29,7 @@ export class Env {
      * Gets the configuration
      * @returns {Object}
      */
-    get config () {
+    get config() {
         return Object.freeze({ ...this._config });
     }
 
@@ -33,9 +39,10 @@ export class Env {
      *  GITHUB_CLIENT_ID => { key: 'CLIENT_ID', required: true }
      * @returns {Object[]}
      */
-    get properties () {
-        const errorMessage = 'When creating a new Env configuration class, you must override the getter for properties.  See GithubEnv for an example.';
-        console.error(errorMessage);
+    get properties() {
+        const errorMessage =
+            'When creating a new Env configuration class, you must override the getter for properties.  See GithubEnv for an example.';
+        logger.error(errorMessage);
         throw new Error(errorMessage);
     }
 
@@ -44,9 +51,10 @@ export class Env {
      * For example:
      * GITHUB_CLIENT_ID => "GITHUB_"
      */
-    get prefix () {
-        const errorMessage = 'When creating a new Env configuration class, you must override the getter for prefix.  See GithubEnv for an example.';
-        console.error(errorMessage);
+    get prefix() {
+        const errorMessage =
+            'When creating a new Env configuration class, you must override the getter for prefix.  See GithubEnv for an example.';
+        logger.error(errorMessage);
         throw new Error(errorMessage);
     }
 
@@ -54,7 +62,7 @@ export class Env {
      * Initializes the configuration
      * This should be called during application startup
      */
-    hydrate () {
+    hydrate() {
         this._tryLoadDotEnv();
         for (let i = 0; i < this._providers.length; i++) {
             Object.assign(this._config, this._providers[i]._loadConfig());
@@ -68,19 +76,17 @@ export class Env {
      * @param {string} basePropertyName
      * @returns {string|null}
      */
-    tryReadFromFile (basePropertyName) {
+    tryReadFromFile(basePropertyName) {
         const propertyName = `${basePropertyName}_FILE`;
         if (process.env[propertyName]) {
             const filePath = process.env[propertyName];
             if (!fs.existsSync(filePath)) {
                 const errorMessage = `${propertyName} was set, but file ${filePath} does not exist.`;
-                console.error(errorMessage);
+                logger.error(errorMessage);
                 throw new Error(errorMessage);
             }
 
-            return fs.readFileSync(filePath).
-                toString('utf8').
-                trim();
+            return fs.readFileSync(filePath).toString('utf8').trim();
         }
 
         return null;
@@ -89,14 +95,14 @@ export class Env {
     /**
      * Loads all of the configuration.  This will error if required properties are missing
      */
-    _loadConfig () {
+    _loadConfig() {
         const config = {};
         this.properties.forEach(({ key, required, defaultValue }) => {
             const prop = `${this.prefix}${key}`;
             const value = process.env[prop] || this.tryReadFromFile(prop) || defaultValue;
             if (!value && required) {
                 const errMsg = `${prop} is a required property, Threat Dragon server cannot start without it. Refer to development/environment.md for more information`;
-                console.error(errMsg);
+                logger.error(errMsg);
                 throw new Error(errMsg);
             }
             config[prop] = value;
@@ -108,22 +114,22 @@ export class Env {
      * Adds a provider to use for env configuration
      * @param {Env} provider
      */
-    addProvider (provider) {
+    addProvider(provider) {
         this._providers.push(provider);
     }
 
     /**
      * Attempts to load the configuration from a dotenv file
      */
-    _tryLoadDotEnv () {
+    _tryLoadDotEnv() {
         const envFilePath = process.env.ENV_FILE || this._defaultEnvFilePath;
         if (fs.existsSync(envFilePath)) {
             dotenv.config({
                 path: envFilePath
             });
-            console.log(`Using config file: ${envFilePath}`);
+            logger.info(`Using config file: ${envFilePath}`);
         } else {
-            console.log('Unable to find .env file, falling back to environment variables');
+            logger.info('Unable to find .env file, falling back to environment variables');
         }
     }
 }

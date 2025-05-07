@@ -1,4 +1,4 @@
-import crypto, { createDecipheriv } from 'crypto';
+import crypto, { createDecipheriv as _createDecipheriv } from 'crypto';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
@@ -10,8 +10,7 @@ describe('helpers/encryption.helper.js', () => {
     const plainText = 'test plain text';
     const encryptedText = 'encrypted';
     const randomIv = 'test random iv';
-    const encryptionKeys = 
-    [
+    const encryptionKeys = [
         {
             isPrimary: true,
             id: 0,
@@ -56,7 +55,7 @@ describe('helpers/encryption.helper.js', () => {
             };
             sinon.stub(env, 'get').returns(mockEnv);
         });
-    
+
         it('should detect an invalid primary key error and throw', () => {
             expect(() => encryptionHelper.encryptPromise('test plain text')).to.throw();
         });
@@ -80,9 +79,9 @@ describe('helpers/encryption.helper.js', () => {
             };
             expect(() => encryptionHelper.decrypt(encryptedData)).to.throw();
         });
-        
+
         it('should decrypt with the specified key and iv', () => {
-            const encryptionKey = encryptionKeys.find(x => x.id === 1);
+            const encryptionKey = encryptionKeys.find((x) => x.id === 1);
             const encryptedData = {
                 keyId: encryptionKey.id,
                 iv: 'test iv',
@@ -97,7 +96,7 @@ describe('helpers/encryption.helper.js', () => {
                 Buffer.from(encryptedData.iv, 'ascii')
             );
         });
-        
+
         it('should decrypt the ciphertext', () => {
             const encryptedData = {
                 keyId: 1,
@@ -110,13 +109,13 @@ describe('helpers/encryption.helper.js', () => {
 
             expect(encryptionHelper.decrypt(encryptedData)).to.eq(plainText);
         });
-        
+
         it('should encrypt with the primary key with a random iv', async () => {
-            const encryptionKey = encryptionKeys.find(x => x.isPrimary);
+            const encryptionKey = encryptionKeys.find((x) => x.isPrimary);
 
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns('');
-            
+
             await encryptionHelper.encryptPromise(plainText);
             expect(crypto.createCipheriv).to.have.been.calledWith(
                 'aes256',
@@ -124,26 +123,22 @@ describe('helpers/encryption.helper.js', () => {
                 randomIv
             );
         });
-        
+
         it('should attach the key id and IV to the encrypted data', async () => {
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns('');
 
             await encryptionHelper.encryptPromise(plainText);
-            expect(mockCreateCipheriv.update).to.have.been.calledWith(
-                plainText,
-                'ascii',
-                'base64'
-            );
+            expect(mockCreateCipheriv.update).to.have.been.calledWith(plainText, 'ascii', 'base64');
         });
-        
+
         it('should encrypt the data', async () => {
-            const encryptionKey = encryptionKeys.find(x => x.isPrimary);
+            const encryptionKey = encryptionKeys.find((x) => x.isPrimary);
             sinon.stub(mockCreateCipheriv, 'update').returns('');
             sinon.stub(mockCreateCipheriv, 'final').returns(encryptedText);
 
             const res = await encryptionHelper.encryptPromise(plainText);
-            expect(res).to.deep.equal({ 
+            expect(res).to.deep.equal({
                 keyId: encryptionKey.id,
                 iv: randomIv,
                 data: encryptedText

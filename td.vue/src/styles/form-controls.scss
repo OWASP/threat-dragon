@@ -1,0 +1,28 @@
+/**
+ * Global styles for form controls
+ */
+
+// Disabled form controls
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #343a40 !important;
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+  border-color: #495057 !important;
+}
+
+// Specifically target textareas
+textarea.form-control:disabled {
+  color: #adb5bd !important;
+}
+
+// Disabled checkboxes and radio buttons
+.form-check-input:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.form-check-input:disabled ~ .form-check-label {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}

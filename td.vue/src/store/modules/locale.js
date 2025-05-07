@@ -14,7 +14,7 @@ const mutations = {
     }
 };
 
-const getters = { };
+const getters = {};
 
 export default {
     state,

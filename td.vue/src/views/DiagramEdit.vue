@@ -17,5 +17,4 @@ export default {
         TdGraph
     }
 };
-
 </script>

@@ -1,0 +1,13 @@
+{
+  "node-option": [
+    "experimental-specifier-resolution=node",
+    "loader=@babel/register"
+  ],
+  "require": "@babel/register",
+  "recursive": true,
+  "timeout": 5000,
+  "ui": "bdd",
+  "extension": ["js"],
+  "package": "./package.json",
+  "ignore": ["node_modules"]
+}

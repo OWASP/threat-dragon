@@ -1,10 +1,12 @@
-import Vue from 'vue';
-
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers';
-import i18n from '@/i18n/index.js';
+import { tc } from '@/i18n/index.js';
 import { providerTypes } from '@/service/provider/providerTypes';
+import logger from '@/utils/logger.js';
+
+// Create a context-specific logger
+const log = logger.getLogger('store:threatmodel');
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
@@ -27,40 +29,151 @@ import {
 import save from '@/service/save.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 import googleDriveApi from '../../service/api/googleDriveApi';
-import { FOLDER_SELECTED } from '../actions/folder';
+// import { FOLDER_SELECTED } from '../actions/folder';
 
 const state = {
     all: [],
     data: {},
     fileName: '',
+    fileId: '', // Add fileId to track the Google Drive file ID
     stash: '',
     modified: false,
     modifiedDiagram: {},
     selectedDiagram: {}
 };
 
+// Initialize a safe toast service
+const toast = {
+    success: (message, options) => {
+        if (typeof window !== 'undefined' && window.$toast) {
+            window.$toast.success(message, options);
+        } else {
+            log.info('Success', { message });
+        }
+    },
+    error: (message, options) => {
+        if (typeof window !== 'undefined' && window.$toast) {
+            window.$toast.error(message, options);
+        } else {
+            log.error('Error', { message });
+        }
+    },
+    warning: (message, options) => {
+        if (typeof window !== 'undefined' && window.$toast) {
+            window.$toast.warning(message, options);
+        } else {
+            log.warn('Warning', { message });
+        }
+    },
+    info: (message, options) => {
+        if (typeof window !== 'undefined' && window.$toast) {
+            window.$toast.info(message, options);
+        } else {
+            log.info('Info', { message });
+        }
+    }
+};
+
+// Helper function for safe translations
+const t = (key) => {
+    try {
+        return tc(key) || key;
+    } catch (err) {
+        log.warn('Translation error for key', { key, error: err });
+        return key;
+    }
+};
+
+// Helper to deep clone a threat model without using JSON stringify/parse
+// This maintains the structure of diagrams better than JSON serialization
+const deepClone = (threatModel) => {
+    if (!threatModel) return threatModel;
+
+    // Create a new object with the same properties
+    const clone = { ...threatModel };
+
+    // Deep clone the nested objects
+    if (clone.summary) clone.summary = { ...clone.summary };
+
+    if (clone.detail) {
+        clone.detail = { ...clone.detail };
+
+        // Special handling for diagrams
+        if (Array.isArray(clone.detail.diagrams)) {
+            clone.detail.diagrams = clone.detail.diagrams.map((diagram) => {
+                const diagramClone = { ...diagram };
+                // Ensure cells is always an array even if it's missing or null
+                diagramClone.cells = Array.isArray(diagram.cells) ? [...diagram.cells] : [];
+                return diagramClone;
+            });
+        }
+
+        // Make sure contributors is an array
+        if (Array.isArray(clone.detail.contributors)) {
+            clone.detail.contributors = clone.detail.contributors.map((c) => ({ ...c }));
+        }
+    }
+
+    return clone;
+};
+
 const stashThreatModel = (theState, threatModel) => {
-    console.debug('Stash threat model');
-    theState.data = threatModel;
+    log.debug('Stash threat model');
+    // Create a deep clone of the threat model
+    theState.data = deepClone(threatModel);
+    // Still use JSON for the stash to maintain backward compatibility
     theState.stash = JSON.stringify(threatModel);
 };
 
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
-    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
+    [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) =>
+        commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
+                try {
+                    // Wait for the save operation to complete before proceeding
+                    await save.local(state.data, `${state.data.summary.title}.json`);
+                } catch (err) {
+                    log.error('Error saving file locally', { error: err });
+                    toast.error(t('threatmodel.errors.save'));
+                    return; // Exit early if save fails
+                }
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
-                console.debug('Desktop create action');
+                log.debug('Desktop create action');
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-                const res = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
-                dispatch(FOLDER_SELECTED, res.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                log.debug('Google Drive create action', { folder: rootState.folder.selected });
+                try {
+                    const fileName = `${state.data.summary.title}.json`;
+                    log.debug('Creating file', { fileName });
+
+                    const res = await googleDriveApi.createAsync(
+                        rootState.folder.selected,
+                        state.data,
+                        fileName
+                    );
+
+                    log.debug('File created successfully', { result: res.data });
+
+                    if (res.data && res.data.id) {
+                        // Save the file ID in the state for future saves
+                        commit(THREATMODEL_UPDATE, {
+                            fileName: fileName,
+                            fileId: res.data.id
+                        });
+                        log.debug('Updated state with fileId', { fileId: res.data.id });
+                    }
+
+                    toast.success(t('threatmodel.saved') + ' : ' + fileName);
+                } catch (err) {
+                    log.error('Error creating file in Google Drive', { error: err });
+                    toast.error(t('threatmodel.errors.googleDriveSave'));
+                    throw err;
+                }
             } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
@@ -68,39 +181,78 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                toast.success(t('threatmodel.saved') + ' : ' + state.fileName);
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
         } catch (ex) {
-            console.error('Failed to save new threat model!');
-            console.error(ex);
-            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+            log.error('Failed to save new threat model', { error: ex });
+            toast.error(t('threatmodel.errors.save'));
         }
     },
     [THREATMODEL_DIAGRAM_APPLIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_APPLIED),
     [THREATMODEL_DIAGRAM_CLOSED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_CLOSED),
-    [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
-    [THREATMODEL_DIAGRAM_SAVED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SAVED, diagram),
-    [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
+    [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) =>
+        commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
+    [THREATMODEL_DIAGRAM_SAVED]: ({ commit }, diagram) =>
+        commit(THREATMODEL_DIAGRAM_SAVED, diagram),
+    [THREATMODEL_DIAGRAM_SELECTED]: ({ commit }, diagram) =>
+        commit(THREATMODEL_DIAGRAM_SELECTED, diagram),
     [THREATMODEL_FETCH]: async ({ commit, dispatch, rootState }, threatModel) => {
         dispatch(THREATMODEL_CLEAR);
         let resp;
-        if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-            resp = await googleDriveApi.modelAsync(
-                threatModel
-            );
-        } else {
-            resp = await threatmodelApi.modelAsync(
-                rootState.repo.selected,
-                rootState.branch.selected,
-                threatModel
-            );
+        try {
+            if (getProviderType(rootState.provider.selected) === providerTypes.google) {
+                log.debug('Fetching Google Drive model', { id: threatModel });
+                resp = await googleDriveApi.modelAsync(threatModel);
+                // Store the fileId for future updates
+                commit(THREATMODEL_UPDATE, { fileId: threatModel });
+            } else {
+                resp = await threatmodelApi.modelAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    threatModel
+                );
+            }
+            commit(THREATMODEL_FETCH, resp.data);
+        } catch (error) {
+            log.error('Error fetching threat model', { error, threatModel });
+            
+            // Check if this is our custom error for invalid threat model format
+            if (error.response && error.response.data) {
+                const errorData = error.response.data;
+                
+                switch (errorData.code) {
+                case 'INVALID_THREAT_MODEL_FORMAT':
+                    toast.error(t('threatmodel.errors.invalidFormat'));
+                    break;
+                case 'INVALID_JSON_FORMAT':
+                    toast.error(t('threatmodel.errors.invalidJson'));
+                    break;
+                case 'FILE_NOT_FOUND':
+                    toast.error(t('threatmodel.errors.fileNotFound'));
+                    break;
+                case 'UNEXPECTED_RESPONSE_FORMAT':
+                    toast.error(t('threatmodel.errors.unexpectedFormat'));
+                    break;
+                default:
+                    toast.error(t('threatmodel.errors.fetch'));
+                    break;
+                }
+            } else {
+                toast.error(t('threatmodel.errors.fetch'));
+            }
+            
+            // Rethrow the error to be handled by the component
+            throw error;
         }
-        commit(THREATMODEL_FETCH, resp.data);
     },
     [THREATMODEL_FETCH_ALL]: async ({ commit, rootState }) => {
-        if (getProviderType(rootState.provider.selected) === providerTypes.local || getProviderType(rootState.provider.selected) === providerTypes.desktop || getProviderType(rootState.provider.selected) === providerTypes.google) {
+        if (
+            getProviderType(rootState.provider.selected) === providerTypes.local ||
+            getProviderType(rootState.provider.selected) === providerTypes.desktop ||
+            getProviderType(rootState.provider.selected) === providerTypes.google
+        ) {
             commit(THREATMODEL_FETCH_ALL, demo.models);
         } else {
             const resp = await threatmodelApi.modelsAsync(
@@ -112,36 +264,105 @@ const actions = {
     },
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
-        let originalModel = JSON.parse(state.stash);
-        console.debug('Restore threat model action');
-        if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop && getProviderType(rootState.provider.selected) !== providerTypes.google) {
-            const originalTitle = (JSON.parse(state.stash)).summary.title;
-            const resp = await threatmodelApi.modelAsync(
-                rootState.repo.selected,
-                rootState.branch.selected,
-                originalTitle
-            );
-            originalModel = resp.data;
+        log.debug('Restore threat model action');
+        let originalModel;
+
+        try {
+            // Parse the stash but ensure we properly recreate the structure
+            const parsedModel = JSON.parse(state.stash);
+            originalModel = deepClone(parsedModel);
+
+            if (
+                getProviderType(rootState.provider.selected) !== providerTypes.local &&
+                getProviderType(rootState.provider.selected) !== providerTypes.desktop &&
+                getProviderType(rootState.provider.selected) !== providerTypes.google
+            ) {
+                const originalTitle = parsedModel.summary.title;
+                const resp = await threatmodelApi.modelAsync(
+                    rootState.repo.selected,
+                    rootState.branch.selected,
+                    originalTitle
+                );
+                originalModel = deepClone(resp.data);
+            }
+        } catch (err) {
+            log.error('Error restoring threat model', { error: err });
+            originalModel = deepClone(state.data); // Use current data as fallback
         }
+
         commit(THREATMODEL_RESTORE, originalModel);
     },
     [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
-        console.debug('Save threat model action');
+        log.debug('Save threat model action');
         // Identify if threat model is in OTM format
         if (Object.hasOwn(state.data, 'otmVersion')) {
             //  convert dragon to OTM format not yet available
-            Vue.$toast.warning('Saving in Open Threat Model format not yet supported');
+            toast.warning('Saving in Open Threat Model format not yet supported');
             // continue to saving in dragon format
         }
         try {
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
+                try {
+                    // Wait for the save operation to complete before showing success toast
+                    await save.local(state.data, `${state.data.summary.title}.json`);
+                } catch (err) {
+                    log.error('Error saving file locally', { error: err });
+                    toast.error(t('threatmodel.errors.save'));
+                    return; // Exit early if save fails
+                }
             } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
                 // desktop version always saves locally
-                await window.electronAPI.modelSave(state.data, state.fileName);
+                log.debug('Desktop save action');
+
+                try {
+                    // Use our deep clone function instead of JSON stringify/parse
+                    // This preserves the structure better for diagram editing
+                    const cleanData = deepClone(state.data);
+
+                    // For the actual save to file, we need to convert to JSON string
+                    const jsonData = JSON.stringify(cleanData, null, 2);
+
+                    // Set a filename if we don't have one
+                    const fileName =
+                        state.fileName || `${state.data.summary.title || 'threat-model'}.json`;
+
+                    // For saving to disk, we'll use the JSON string directly
+                    const result = await window.electronAPI.saveFile(jsonData, fileName);
+                    log.debug('Save completed successfully', { result });
+
+                    // Update the state after successful save
+                    if (result && state.fileName !== result) {
+                        commit(THREATMODEL_UPDATE, { fileName: result });
+                    } else if (state.fileName !== fileName) {
+                        commit(THREATMODEL_UPDATE, { fileName });
+                    }
+                } catch (saveError) {
+                    log.error('Error in desktop save', { error: saveError });
+                    throw saveError;
+                }
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-                await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
+                // For Google Drive we need to use the fileId from the state rather than folder.selected
+                log.debug('Google Drive save', {
+                    fileId: state.fileId,
+                    provider: rootState.provider.selected
+                });
+
+                if (!state.fileId) {
+                    log.error('No file ID found in state for Google Drive save');
+                    toast.error(t('threatmodel.errors.googleDriveSave'));
+                    throw new Error('No file ID found for Google Drive save');
+                }
+
+                try {
+                    log.debug('Attempting to update file', { fileId: state.fileId });
+                    await googleDriveApi.updateAsync(state.fileId, state.data);
+                    log.debug('Google Drive update successful');
+                } catch (err) {
+                    log.error('Error during Google Drive update', { error: err });
+                    toast.error(t('threatmodel.errors.googleDriveSave'));
+                    throw err;
+                }
             } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
@@ -152,11 +373,10 @@ const actions = {
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
-            Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName, { timeout: 1000 });
+            toast.success(t('threatmodel.saved') + ' : ' + state.fileName, { timeout: 1000 });
         } catch (ex) {
-            console.error('Failed to save threat model!');
-            console.error(ex);
-            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+            log.error('Failed to save threat model', { error: ex });
+            toast.error(t('threatmodel.errors.save'));
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
@@ -169,83 +389,112 @@ const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
         state.data.detail.contributors.length = 0;
-        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
+        // Replace Vue.set with direct array assignment for Vue 3 reactivity
+        state.data.detail.contributors = contributors.map((name) => ({ name }));
     },
     [THREATMODEL_DIAGRAM_APPLIED]: (state) => {
         if (Object.keys(state.modifiedDiagram).length !== 0) {
-            const idx = state.data.detail.diagrams.findIndex(x => x.id === state.modifiedDiagram.id);
-            console.debug('Threatmodel modified diagram applied : ' + state.modifiedDiagram.id + ' at index: ' + idx);
+            const idx = state.data.detail.diagrams.findIndex(
+                (x) => x.id === state.modifiedDiagram.id
+            );
+            log.debug('Threatmodel modified diagram applied', {
+                id: state.modifiedDiagram.id,
+                index: idx
+            });
             state.data.detail.diagrams[idx] = state.modifiedDiagram;
         }
     },
     [THREATMODEL_DIAGRAM_CLOSED]: (state) => {
         state.modified = false;
         state.modifiedDiagram = {};
-        console.debug('Threatmodel diagram closed to edits');
+        log.debug('Threatmodel diagram closed to edits');
     },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
         if (diagram && Object.keys(state.modifiedDiagram).length !== 0) {
             // const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-            // console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+            // log.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
             state.modifiedDiagram = diagram;
             if (state.modified === false) {
-                console.debug('model (diagram) now modified');
+                log.debug('model (diagram) now modified');
                 state.modified = true;
             }
         }
     },
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
-        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram saved: ' + diagram.id + ' at index: ' + idx);
+        const idx = state.data.detail.diagrams.findIndex((x) => x.id === diagram.id);
+        log.debug('Threatmodel diagram saved', { id: diagram.id, index: idx });
         // beware: this will trigger a redraw of the diagram, ?possibly to the wrong canvas size?
-        Vue.set(state, 'selectedDiagram', diagram);
+        state.selectedDiagram = diagram;
         // beware ^^
-        Vue.set(state.data.detail.diagrams, idx, diagram);
-        Vue.set(state.data, 'version', diagram.version);
+        state.data.detail.diagrams[idx] = diagram;
+        state.data.version = diagram.version;
         stashThreatModel(state, state.data);
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
-        Vue.set(state, 'selectedDiagram', diagram);
-        state.modifiedDiagram = diagram;
-        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram selected for edits: ' + diagram.id + ' at index: ' + idx);
+        if (!state.data) state.data = {};
+        if (!state.data.detail) state.data.detail = {};
+        if (!Array.isArray(state.data.detail.diagrams)) state.data.detail.diagrams = [];
+
+        // Make sure cells exists and is an array
+        const diagramClone = deepClone(diagram);
+        if (!Array.isArray(diagramClone.cells)) {
+            diagramClone.cells = [];
+        }
+
+        state.selectedDiagram = diagramClone;
+        state.modifiedDiagram = diagramClone;
+
+        const idx = state.data.detail.diagrams.findIndex((x) => x.id === diagram.id);
+        log.debug('Threatmodel diagram selected for edits', { id: diagram.id, index: idx });
     },
+
     [THREATMODEL_FETCH]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
+        if (!state.all || !Array.isArray(state.all)) {
+            state.all = [];
+        }
         state.all.length = 0;
-        models.forEach((model, idx) => Vue.set(state.all, idx, model));
+        models.forEach((model, idx) => {
+            state.all[idx] = { ...model };
+        });
     },
     [THREATMODEL_MODIFIED]: (state) => {
         state.modified = true;
     },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => {
-        console.debug('Threatmodel restored');
+        log.debug('Threatmodel restored');
         stashThreatModel(state, originalThreatModel);
     },
     [THREATMODEL_SELECTED]: (state, threatModel) => {
-        console.debug('Threatmodel selected');
+        log.debug('Threatmodel selected');
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
-        Vue.set(state, 'stash', JSON.stringify(state.data));
+        state.stash = JSON.stringify(state.data);
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
         state.modified = false;
     },
     [THREATMODEL_UPDATE]: (state, update) => {
+        if (!state.data) state.data = {};
+        if (!state.data.detail) state.data.detail = {}; // Ensure `detail` exists
+
         if (update.version) {
-            Vue.set(state.data, 'version', update.version);
+            state.data.version = update.version; // Direct assignment
         }
         if (update.diagramTop) {
-            Vue.set(state.data.detail, 'diagramTop', update.diagramTop);
+            state.data.detail.diagramTop = update.diagramTop;
         }
         if (update.threatTop) {
-            Vue.set(state.data.detail, 'threatTop', update.threatTop);
+            state.data.detail.threatTop = update.threatTop;
         }
         if (update.fileName) {
-            Vue.set(state, 'fileName', update.fileName);
+            state.fileName = update.fileName;
         }
-        console.debug('Threatmodel update: ' + JSON.stringify(update));
+        if (update.fileId) {
+            state.fileId = update.fileId;
+        }
+        log.debug('Threatmodel update', { update });
     }
 };
 
@@ -255,17 +504,19 @@ const getters = {
         if (state.data && state.data.detail && state.data.detail.contributors) {
             contribs = state.data.detail.contributors;
         }
-        return contribs.map(x => x.name);
+        return contribs.map((x) => x.name);
     },
     modelChanged: (state) => {
-        console.debug('model modified: ' + state.modified);
+        log.debug('model modified', { modified: state.modified });
         return state.modified;
     },
-    isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
+    isV1Model: (state) =>
+        Object.keys(state.data).length > 0 &&
+        (state.data.version == null || state.data.version.startsWith('1.'))
 };
 
 export const clearState = (state) => {
-    console.debug('Threatmodel cleared');
+    log.debug('Threatmodel cleared');
     state.all.length = 0;
     state.data = {};
     state.stash = '';
@@ -277,6 +528,7 @@ export const clearState = (state) => {
         window.electronAPI.modelClosed(state.fileName);
     }
     state.fileName = '';
+    state.fileId = ''; // Clear the file ID when clearing the state
 };
 
 export default {

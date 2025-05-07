@@ -18,7 +18,7 @@ describe('service/providers.js', () => {
         it('prevents mutations', () => {
             expect(() => {
                 providers.providerNames.github = 'foobar';
-            }).toThrowError('Cannot assign to read only property');
+            }).toThrow('Cannot assign to read only property');
         });
     });
 
@@ -46,7 +46,7 @@ describe('service/providers.js', () => {
         it('prevents mutations', () => {
             expect(() => {
                 providers.allProviders.github = { foo: 'bar' };
-            }).toThrowError('Cannot assign to read only property');
+            }).toThrow('Cannot assign to read only property');
         });
     });
 
@@ -55,7 +55,7 @@ describe('service/providers.js', () => {
             const provider = 'fake';
             expect(() => {
                 providers.getDashboardActions(provider);
-            }).toThrowError(`Unknown provider: ${provider}`);
+            }).toThrow(`Unknown provider: ${provider}`);
         });
 
         it('gets the github provider dashboard actions', () => {
@@ -72,7 +72,7 @@ describe('service/providers.js', () => {
             localProvider.getDashboardActions = jest.fn();
             expect(() => {
                 providers.getDashboardActions(providers.providerNames.local);
-            }).toThrowError(`No dashboard actions configured`);
+            }).toThrow(`No dashboard actions configured`);
         });
     });
 

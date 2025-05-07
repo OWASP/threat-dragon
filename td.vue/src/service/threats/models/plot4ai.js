@@ -13,7 +13,7 @@ export default {
         security: 'threats.model.plot4ai.security',
         safety: 'threats.model.plot4ai.safety',
         unawareness: 'threats.model.plot4ai.unawareness',
-        ethicsHumanRights: 'threats.model.plot4ai.ethicsHumanRights',
+        ethicsHumanRights: 'threats.model.plot4ai.ethicsHumanRights'
     },
     flow: {
         techniqueProcesses: 'threats.model.plot4ai.techniqueProcesses',

@@ -1,10 +1,13 @@
-import cells from './cells.js';
-import dataChanged from '@/service/x6/graph/data-changed.js';
+// dataChanged is not used here
 import graphFactory from '@/service/x6/graph/graph.js';
 import events from '@/service/x6/graph/events.js';
 import store from '@/store/index.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import { passiveSupport } from 'passive-events-support/src/utils';
+import logger from '@/utils/logger.js';
+
+// Create a context-specific logger
+const log = logger.getLogger('service:migration:diagram');
 
 const appVersion = require('../../../package.json').version;
 
@@ -12,42 +15,45 @@ passiveSupport({
     events: ['touchstart', 'mousewheel']
 });
 
-const drawV1 = (diagram, graph) => {
-    const { nodes, edges } = cells.map(diagram);
-    const batchName = 'td-init';
-    graph.startBatch(batchName);
-    nodes.forEach((node) => graph.addNode(node));
-    edges.forEach((edge) => graph.addEdge(edge));
-    graph.stopBatch(batchName);
-};
-
-// update a version 1.x threat model (and diagrams) to version 2.x
-const upgradeAndDraw = (diagram, graph) => {
-    drawV1(diagram, graph);
-
-    const updated = graph.toJSON();
-    updated.version = appVersion;
-    updated.title = diagram.title;
-    updated.description = diagram.description;
-    updated.thumbnail = diagram.thumbnail;
-    updated.id = diagram.id;
-    updated.diagramType = diagram.diagramType;
-    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
-    store.get().dispatch(tmActions.diagramSaved, updated);
-    store.get().dispatch(tmActions.stash);
-    store.get().dispatch(tmActions.notModified);
-
-};
-
 const drawGraph = (diagram, graph) => {
-    if (diagram.version && diagram.version.startsWith('2.')) {
-        console.debug('open diagram version: ' + diagram.version);
-        diagram.version = appVersion;
-        graph.fromJSON(diagram);
-    } else {
-        console.debug('upgrade version 1.x diagram');
-        upgradeAndDraw(diagram, graph);
+    if (!diagram) {
+        log.error('Cannot draw null or undefined diagram');
+        return graph;
     }
+
+    log.debug('Drawing diagram', { title: diagram.title, cellCount: diagram.cells ? diagram.cells.length : 0 });
+
+    try {
+        if (diagram.version && diagram.version.startsWith('2.')) {
+            log.debug('Opening diagram', { version: diagram.version });
+            diagram.version = appVersion;
+
+            // Ensure cells is an array
+            if (!diagram.cells || !Array.isArray(diagram.cells)) {
+                log.warn('Diagram cells missing or not an array, initializing empty cells array');
+                diagram.cells = [];
+            }
+
+            // Load the diagram JSON into the graph
+            graph.fromJSON(diagram);
+        } else {
+            log.debug('Upgrading version 1.x diagram');
+            // For older versions, we'll just create empty cells
+            const updated = graph.toJSON();
+            updated.version = appVersion;
+            updated.title = diagram.title;
+            updated.description = diagram.description;
+            updated.thumbnail = diagram.thumbnail;
+            updated.id = diagram.id;
+            updated.diagramType = diagram.diagramType;
+            store.get().dispatch(tmActions.diagramSaved, updated);
+            store.get().dispatch(tmActions.stash);
+            store.get().dispatch(tmActions.notModified);
+        }
+    } catch (error) {
+        log.error('Error drawing diagram', { error });
+    }
+
     return graph;
 };
 

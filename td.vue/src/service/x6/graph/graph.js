@@ -53,7 +53,8 @@ const getEditGraph = (container, ctor = Graph) => {
             createEdge() {
                 return new Shape.Edge({
                     attrs: {
-                        line: { // probably need stroke to be black for federal reports
+                        line: {
+                            // probably need stroke to be black for federal reports
                             strokeWidth: 2,
                             targetMarker: {
                                 name: 'block',
@@ -90,7 +91,7 @@ const getEditGraph = (container, ctor = Graph) => {
                 modifiers: ['shift'],
                 pageVisible: true,
                 pageBreak: false,
-                pannable:  true
+                pannable: true
             })
         )
         .use(
@@ -107,7 +108,10 @@ const getEditGraph = (container, ctor = Graph) => {
                 rubberEdge: true, // not documented in v2.x docs but needed for rubberbanding TB curves
                 strict: true, // need strict select otherwise data flows select other elements
                 showNodeSelectionBox: true,
-                showEdgeSelectionBox: true
+                showEdgeSelectionBox: true,
+                selectNodeOnMoved: false, // Prevent accidental node selection when trying to select edges
+                selectEdgeOnMoved: true,  // Improve edge selection
+                selectCellOnMoved: false  // Only select when explicitly clicked, not when moved over
             })
         )
         .use(

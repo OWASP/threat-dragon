@@ -1,4 +1,5 @@
 import { Shape } from '@antv/x6';
+import { tc } from '@/i18n/index.js';
 
 const name = 'trust-boundary-box';
 
@@ -18,11 +19,17 @@ export const TrustBoundaryBox = Shape.Rect.define({
             fillOpacity: 0
         },
         label: {
-            text: '',
-            textAnchor : 'bottom',
-            textVerticalAnchor : 'top',
-            refX: '15%',
-            refY: '12'
+            text: tc('threatmodel.shapes.trustBoundary'),
+            textAnchor: 'middle',
+            textVerticalAnchor: 'middle',
+            refX: 0.5, // Center horizontally
+            refY: 20, // Position from top
+            textWrap: {
+                width: -45, // 90% of width (negative means percentage of width)
+                height: 40, // Maximum height
+                ellipsis: true // Show ellipsis when text overflows
+            },
+            fontSize: 14 // Increased font size to match other shapes
         }
     }
 });
@@ -33,7 +40,7 @@ TrustBoundaryBox.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);
 };
 
-TrustBoundaryBox.prototype.updateStyle = function () {};
+TrustBoundaryBox.prototype.updateStyle = function () { };
 
 export default {
     name,

@@ -1,7 +1,27 @@
-var appFactory = require('./dist/app.js');
+// Use dynamic import for ESM compatibility
+const importAppFactory = async () => {
+    try {
+        const appFactory = await import('./dist/app.js');
+        return appFactory.default;
+    } catch (err) {
+        console.error('Failed to import app factory:', err);
+        process.exit(1);
+    }
+};
 
-var app = appFactory.default.create();
+// Self-executing async function to run the server
+(async () => {
+    const appFactory = await importAppFactory();
+    const app = appFactory.create();
 
-var server = app.listen(app.get('port'), function() {
-    console.log('Express server listening at ' + server.address().address + ' on port ' +  server.address().port);
-});
+    const server = app.listen(app.get('port'), function () {
+        const address = server.address();
+        if (address) {
+            console.log(
+                'Express server listening at ' + address.address + ' on port ' + address.port
+            );
+        } else {
+            console.log('Express server listening on port ' + app.get('port'));
+        }
+    });
+})();

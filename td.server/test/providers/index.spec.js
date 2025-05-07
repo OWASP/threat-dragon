@@ -9,7 +9,9 @@ import google from '../../src/providers/google.js';
 describe('providers/index.js', () => {
     describe('all', () => {
         it('is an immutable object', () => {
-            expect(() => { providers.all.foo = 'bar'; }).to.throw();
+            expect(() => {
+                providers.all.foo = 'bar';
+            }).to.throw();
         });
 
         it('has the github provider', () => {

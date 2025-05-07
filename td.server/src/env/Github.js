@@ -1,16 +1,16 @@
 import { Env } from './Env.js';
 
 class GithubEnv extends Env {
-    constructor () {
+    constructor() {
         super('Github');
     }
 
-    get prefix () {
+    get prefix() {
         return 'GITHUB_';
     }
 
     // Note that the actual env var will be prepended with GITHUB_
-    get properties () {
+    get properties() {
         return [
             { key: 'CLIENT_ID', required: false },
             { key: 'CLIENT_SECRET', required: false },

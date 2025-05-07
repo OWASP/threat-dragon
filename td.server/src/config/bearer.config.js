@@ -16,8 +16,8 @@ const getBearerToken = (authHeader) => {
         return null;
     }
 
-    if (authHeader.indexOf('Bearer ') === -1) {
-        logger.warn('Bearer token key word not found in auth header');
+    if (!authHeader.startsWith('Bearer ')) {
+        logger.warn('Bearer token keyword not found in auth header');
         return null;
     }
 
@@ -25,26 +25,77 @@ const getBearerToken = (authHeader) => {
 };
 
 const middleware = (req, res, next) => {
-    const token = getBearerToken(req.headers.authorization);
+    logger.debug(`Bearer token middleware processing request for: ${req.url}`);
 
+    const token = getBearerToken(req.headers.authorization);
     if (!token) {
-        logger.warn(`Bearer token not found for resource that requires authentication: ${req.url}`);
+        logger.warn(`Bearer token not found for resource requiring authentication: ${req.url}`);
+        // Add audit logging for missing token
+        logger.audit(
+            `Authorization failure: No bearer token provided for protected resource ${
+                req.url
+            } from IP ${req.ip || 'unknown'}`
+        );
         return errors.unauthorized(res, logger);
     }
 
     try {
-        const { provider, user } = jwt.verifyToken(token);
-        req.provider = provider;
-        req.user = user;
-        return next();
-    } catch (e) {
-        if (e.name === 'TokenExpiredError') {
-            logger.audit('Expired JWT encountered');
+        logger.debug('Verifying JWT token');
+        const decodedData = jwt.verifyToken(token);
+
+        if (!decodedData) {
+            logger.warn('JWT verification returned no data');
+            // Add audit logging for invalid token
+            logger.audit(
+                `Authorization failure: JWT verification failed for request to ${req.url} from IP ${
+                    req.ip || 'unknown'
+                }`
+            );
             return errors.unauthorized(res, logger);
         }
 
-        logger.audit('Error decoding JWT');
+        const { provider, user } = decodedData;
+
+        // Debug provider info
+        logger.debug(
+            `Provider from JWT: ${JSON.stringify({
+                exists: Boolean(provider),
+                name: provider?.name || 'unknown',
+                hasAccessToken: provider && Boolean(provider.access_token)
+            })}`
+        );
+
+        req.provider = provider;
+        req.user = user;
+
+        // Add audit logging for successful authorization
+        logger.audit(
+            `Authorization success: User ${user?.username || 'unknown'} authorized for ${
+                req.url
+            } from IP ${req.ip || 'unknown'}`
+        );
+
+        return next();
+    } catch (e) {
+        if (e.name === 'TokenExpiredError') {
+            logger.error('Expired JWT encountered');
+            // Add audit logging for expired token
+            logger.audit(
+                `Authorization failure: Expired JWT token for request to ${req.url} from IP ${
+                    req.ip || 'unknown'
+                }`
+            );
+            return errors.unauthorized(res, logger);
+        }
+
+        logger.error('Error decoding JWT');
         logger.error(e);
+        // Add audit logging for invalid JWT
+        logger.audit(
+            `Authorization failure: Invalid JWT format or signature for request to ${
+                req.url
+            } from IP ${req.ip || 'unknown'}: ${e.message}`
+        );
         return errors.badRequest('Invalid JWT', res, logger);
     }
 };

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="OWASP Threat Dragon - a free, open source threat modeling tool">
+    <link rel="icon" href="/favicon.ico">
+    <title>OWASP Threat Dragon</title>
+    <!-- Preload critical assets -->
+    <link rel="modulepreload" href="/src/main.js">
+    <link rel="modulepreload" href="/src/App.vue">
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('Global error caught:', e.error || e.message);
+        document.getElementById('error-container').textContent = 'Error: ' + (e.error?.message || e.message || 'Unknown');
+        document.getElementById('error-container').style.display = 'block';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+        document.getElementById('error-container').textContent = 'Promise Error: ' + (e.reason?.message || e.reason || 'Unknown');
+        document.getElementById('error-container').style.display = 'block';
+      });
+
+      // Debug window exposing console logs in UI for mobile browsers
+      window.debugLogs = [];
+      const originalConsole = {
+        log: console.log,
+        error: console.error,
+        warn: console.warn
+      };
+      
+      // Override console methods
+      console.log = function() {
+        window.debugLogs.push(['log', Array.from(arguments).join(' ')]);
+        originalConsole.log.apply(console, arguments);
+        updateDebugDisplay();
+      };
+      
+      console.error = function() {
+        window.debugLogs.push(['error', Array.from(arguments).join(' ')]);
+        originalConsole.error.apply(console, arguments);
+        updateDebugDisplay();
+      };
+      
+      console.warn = function() {
+        window.debugLogs.push(['warn', Array.from(arguments).join(' ')]);
+        originalConsole.warn.apply(console, arguments);
+        updateDebugDisplay();
+      };
+      
+      function updateDebugDisplay() {
+        setTimeout(() => {
+          const debugDisplay = document.getElementById('debug-log');
+          if (debugDisplay) {
+            debugDisplay.innerHTML = window.debugLogs
+              .map(([type, msg]) => `<div class="${type}">${type}: ${msg}</div>`)
+              .join('');
+          }
+        }, 0);
+      }
+    </script>
+    <style>
+      #debug-log {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: #f5f5f5;
+        font-family: monospace;
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        height: 300px;
+        background-color: rgba(255, 255, 255, 0.95);
+      }
+      #debug-log .error { color: red; font-weight: bold; }
+      #debug-log .warn { color: orange; }
+      #debug-log .log { color: black; }
+    </style>
+    <style>
+      #error-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ffdddd;
+        color: #aa0000;
+        padding: 20px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        z-index: 10000;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but OWASP Threat Dragon doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="error-container"></div>
+    <div id="app">
+      <!-- Show loading spinner until app is mounted -->
+      <div id="initial-loading">
+        <div class="spinner"></div>
+        <p>Loading Threat Dragon...</p>
+        <div style="margin-top: 30px; font-size: 14px; text-align: center;">
+          If the application doesn't load, try the 
+          <a href="/diagnostic.html" style="color: #3498db; text-decoration: underline;">diagnostic page</a>
+        </div>
+      </div>
+    </div>
+    <div id="debug-log"></div>
+    <style>
+      #initial-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        position: relative;
+      }
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #3498db;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    <!-- Diagnostic script to help identify issues -->
+    <script>
+      // This will run immediately and report basic environment information
+      console.log('Diagnostic: Browser environment check started');
+      console.log('Diagnostic: User Agent: ' + navigator.userAgent);
+      console.log('Diagnostic: Window size: ' + window.innerWidth + 'x' + window.innerHeight);
+      console.log('Diagnostic: URL: ' + window.location.href);
+      
+      // Check for basic browser features needed by the app
+      console.log('Diagnostic: Checking for required browser features...');
+      console.log('Diagnostic: fetch API available: ' + (typeof fetch !== 'undefined'));
+      console.log('Diagnostic: Promise available: ' + (typeof Promise !== 'undefined'));
+      console.log('Diagnostic: localStorage available: ' + (typeof localStorage !== 'undefined'));
+      console.log('Diagnostic: sessionStorage available: ' + (typeof sessionStorage !== 'undefined'));
+      
+      // Create a simple UI element to show loading progress
+      const debugStatus = document.createElement('div');
+      debugStatus.id = 'debug-status';
+      debugStatus.style.position = 'fixed';
+      debugStatus.style.top = '10px';
+      debugStatus.style.right = '10px';
+      debugStatus.style.padding = '5px 10px';
+      debugStatus.style.background = 'rgba(0,0,0,0.7)';
+      debugStatus.style.color = 'white';
+      debugStatus.style.fontFamily = 'monospace';
+      debugStatus.style.fontSize = '12px';
+      debugStatus.style.borderRadius = '4px';
+      debugStatus.style.zIndex = '99999';
+      debugStatus.textContent = 'Loading main.js...';
+      document.body.appendChild(debugStatus);
+      
+      // Update status when main.js starts loading
+      console.log('Diagnostic: About to load main.js');
+    </script>
+    
+    <script type="module" src="/src/main.js"></script>
+    
+    <!-- Fallback script in case main.js fails to load -->
+    <script>
+      // Set a timeout to check if app has loaded
+      setTimeout(() => {
+        const app = document.getElementById('app');
+        const loading = document.getElementById('initial-loading');
+        const debugStatus = document.getElementById('debug-status');
+        
+        // If loading spinner is still visible after 5 seconds, something is wrong
+        if (loading && loading.style.display !== 'none' && app.childElementCount === 1) {
+          console.error('Diagnostic: Application failed to initialize within 5 seconds');
+          debugStatus.textContent = 'Error: App failed to load';
+          debugStatus.style.background = 'rgba(255,0,0,0.7)';
+          
+          // Add emergency content to help diagnose
+          const errorInfo = document.createElement('div');
+          errorInfo.style.position = 'fixed';
+          errorInfo.style.top = '50%';
+          errorInfo.style.left = '50%';
+          errorInfo.style.transform = 'translate(-50%, -50%)';
+          errorInfo.style.padding = '20px';
+          errorInfo.style.background = 'white';
+          errorInfo.style.border = '1px solid red';
+          errorInfo.style.zIndex = '99999';
+          errorInfo.innerHTML = `
+            <h2>Application Failed to Load</h2>
+            <p>The Threat Dragon application did not initialize properly.</p>
+            <p>Check the browser console (F12) for errors.</p>
+            <button id="show-debug" style="padding: 5px 10px; margin-top: 10px;">Show Debug Log</button>
+          `;
+          document.body.appendChild(errorInfo);
+          
+          document.getElementById('show-debug').addEventListener('click', () => {
+            const debugLog = document.getElementById('debug-log');
+            if (debugLog) {
+              debugLog.style.display = debugLog.style.display === 'none' ? 'block' : 'none';
+            }
+          });
+        } else {
+          debugStatus.textContent = 'App loaded successfully';
+          debugStatus.style.background = 'rgba(0,128,0,0.7)';
+        }
+      }, 5000);
+    </script>
+  </body>
+</html>

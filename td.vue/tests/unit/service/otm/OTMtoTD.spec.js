@@ -2,7 +2,7 @@ import { convert as convertOTMtoTD } from '@/service/otm/OTMtoTD';
 
 describe('service/otm/OTMtoTD.js', () => {
     let tdModel;
-    let mockOTM = new Object();
+    const mockOTM = new Object();
 
     describe('convert OTM project', () => {
         beforeEach(() => {

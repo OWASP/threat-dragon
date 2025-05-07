@@ -1,5 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-
+import { shallowMount } from '@vue/test-utils';
 import TdReportEntity from '@/components/printed-report/ReportEntity.vue';
 
 describe('components/printed-report/ReportEntity.vue', () => {
@@ -38,16 +37,20 @@ describe('components/printed-report/ReportEntity.vue', () => {
         }
     });
 
+    /**
+     * Vue 3 Migration: Updated to use Vue Test Utils 2.x patterns
+     * Removed createLocalVue() in favor of global config
+     */
     const setup = (data) => {
-        const localVue = createLocalVue();
         wrapper = shallowMount(TdReportEntity, {
-            localVue,
-            propsData: {
+            props: {
                 outOfScope: data.outOfScope,
                 entity: data.entity
             },
-            mocks: {
-                $t: t => t
+            global: {
+                mocks: {
+                    $t: t => t
+                }
             }
         });
     };
@@ -57,10 +60,18 @@ describe('components/printed-report/ReportEntity.vue', () => {
         setup(propsData);
     });
 
+    /**
+     * Vue 3 Migration: Updated how we check for table cell content
+     * In Vue 3 Test Utils, we need a different approach to filter the elements
+     */
     const tableHasCellWithText = (expectedText) => {
-        return wrapper.findAll('td')
-            .filter(x => x.text().toLowerCase() === expectedText.toLowerCase())
-            .exists();
+        const cells = wrapper.findAll('td');
+        for (let i = 0; i < cells.length; i++) {
+            if (cells[i].text().toLowerCase() === expectedText.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
     };
 
     it('converts things to camel case', () => {
@@ -78,66 +89,66 @@ describe('components/printed-report/ReportEntity.vue', () => {
     });
 
     it('shows the first threat', () => {
-        expect(tableHasCellWithText('1')).toEqual(true);
+        expect(tableHasCellWithText('1')).toBe(true);
     });
 
     it('shows the second threat', () => {
-        expect(tableHasCellWithText('2')).toEqual(true);
+        expect(tableHasCellWithText('2')).toBe(true);
     });
 
     it('shows the first threat title', () => {
-        expect(tableHasCellWithText('t1')).toEqual(true);
+        expect(tableHasCellWithText('t1')).toBe(true);
     });
 
     it('shows the second threat title', () => {
-        expect(tableHasCellWithText('t2')).toEqual(true);
+        expect(tableHasCellWithText('t2')).toBe(true);
     });
 
     it('shows the high severity', () => {
-        expect(tableHasCellWithText('High')).toEqual(true);
+        expect(tableHasCellWithText('High')).toBe(true);
     });
 
     it('shows the medium severity', () => {
-        expect(tableHasCellWithText('Medium')).toEqual(true);
+        expect(tableHasCellWithText('Medium')).toBe(true);
     });
 
     it('shows the first score', () => {
-        expect(tableHasCellWithText('10')).toEqual(true);
+        expect(tableHasCellWithText('10')).toBe(true);
     });
 
     it('shows the second score', () => {
-        expect(tableHasCellWithText('20')).toEqual(true);
+        expect(tableHasCellWithText('20')).toBe(true);
     });
 
     it('shows the open status', () => {
-        expect(tableHasCellWithText('Open')).toEqual(true);
+        expect(tableHasCellWithText('Open')).toBe(true);
     });
 
     it('shows the mitigated status', () => {
-        expect(tableHasCellWithText('Mitigated')).toEqual(true);
+        expect(tableHasCellWithText('Mitigated')).toBe(true);
     });
 
     it('shows the first type', () => {
-        expect(tableHasCellWithText('type1')).toEqual(true);
+        expect(tableHasCellWithText('type1')).toBe(true);
     });
 
     it('shows the second type', () => {
-        expect(tableHasCellWithText('type2')).toEqual(true);
+        expect(tableHasCellWithText('type2')).toBe(true);
     });
 
     it('shows the threat description for t1', () => {
-        expect(tableHasCellWithText('Threat 1')).toEqual(true);
+        expect(tableHasCellWithText('Threat 1')).toBe(true);
     });
 
     it('shows the threat description for t2', () => {
-        expect(tableHasCellWithText('Threat 2')).toEqual(true);
+        expect(tableHasCellWithText('Threat 2')).toBe(true);
     });
 
     it('shows the threat mitigation for t1', () => {
-        expect(tableHasCellWithText('We did things')).toEqual(true);
+        expect(tableHasCellWithText('We did things')).toBe(true);
     });
 
     it('shows the threat mitigation for t2', () => {
-        expect(tableHasCellWithText('We did other things')).toEqual(true);
+        expect(tableHasCellWithText('We did other things')).toBe(true);
     });
 });
