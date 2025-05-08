@@ -21,6 +21,7 @@ jobs:
   md_linter:
     name: Lint docs
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.2.0
@@ -39,6 +40,7 @@ jobs:
   link_checker:
     name: Link checker
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.2.0
@@ -60,6 +62,7 @@ jobs:
   spell_checker:
     name: Check spelling
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout markdown
         uses: actions/checkout@v4.2.0
@@ -199,6 +202,40 @@ jobs:
 
       - name: Perform vulnerability analysis
         uses: github/codeql-action/analyze@v3.28.1
+
+  desktop_smokes:
+    name: Desktop e2e smoke tests
+    runs-on: macos-latest
+    needs: [site_unit_tests, desktop_unit_tests]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.2.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install packages
+        run: npm clean-install
+
+      - name: Build desktop app
+        run: npm run build:desktop -- --mac --publish never
+
+      - name: Run tests
+        run: |
+          cd td.vue
+          npm run test:e2e-smokes:desktop
 
   e2e_smokes:
     name: Local site e2e smokes
