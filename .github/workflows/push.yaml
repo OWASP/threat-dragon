@@ -490,6 +490,8 @@ jobs:
         run: |
           cd td.vue
           npm run test:e2e-smokes:desktop
+        # disable for now, until dependencies can be corrected
+        if: false
 
   desktop_windows_test:
     name: Windows desktop build test
