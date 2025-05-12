@@ -745,4 +745,73 @@
       ]
     }
   ]
+  },{
+    "id": "TM-T12-S1",
+    "name": "Collaborative Decision Manipulation",
+    "description": "An attacker injects misleading information into agent communications, gradually influencing decision-making and steering multi-agent systems toward misaligned objectives.\n\nAgent Communication Poisoning occurs when attackers manipulate inter-agent communication channels to inject false information, misdirect decision-making, and corrupt shared knowledge within multi-agent AI systems. Unlike isolated AI attacks, this threat exploits the complexity of distributed AI collaboration, leading to cascading misinformation, systemic failures, and compromised decision integrity across interconnected agents. Like Memory Poisoning, this threat goes beyond the static data poisoning defined in LLM04:2025 - Data and Model Poisoning or the embeddings poisoning in RAG covered by LLM08:2025 - Vector and Embedding Weaknesses and targets transient and dynamic data",
+    "mitigations": "🛡Step 1: Secure AI-to-AI Communication Channels (Proactive)\n● Require message authentication & encryption for all inter-agent communications.\n● Deploy agent trust scoring to evaluate reliability of multi-agent transactions.\n● Use consensus verification before executing high-risk AI operations.\n● Require multiple agent approvals for workflow-critical decisions.\n● Implement task segmentation to prevent an attacker from escalating privileges across multiple\ninterconnected AI agents.\n● Establish multi-agent validation protocols to prevent single-agent attacks.\n● Require distributed multi-agent consensus verification before executing high-risk system\nmodifications.\n● Use rate limiting & agent-specific execution quotas to prevent flooding attacks.\n● Limit agent cross-communication based on functional roles. Prevent agents from unnecessarily\ninteracting outside of predefined operational scope to minimize attack surface.\n🚨Step 2: Detect & Block Rogue Agents (Reactive)\n● Deploy real-time detection models to flag rogue agent behaviors. Identify AI agents acting outside\npredefined security policies.\n● Isolate detected rogue agents to prevent further actions. Immediately restrict network and system\naccess for flagged agents.\n● Revoke privileges of AI agents exhibiting suspicious behavior. Temporarily downgrade permissions\nuntil the anomaly is reviewed.\nOWASP.org\nPage 37\n● Enforce dynamic response actions for rogue agents. Automatically disable unauthorized AI agent\nprocesses to contain threats.\n● Track rogue agent reappearance attempts. Detect cases where rogue AI agents that were\npreviously blocked or disabled attempt to rejoin the network under a different identity.\n🕵Step 3: Enforce Multi-Agent Trust & Decision Security (Detective)\n● Monitor agent interactions for unexpected role changes & task assignments. Detect unauthorized\nprivilege escalations or abnormal task delegation.\n● Monitor for anomalous inter-agent interactions. Log agent-to-agent communications and detect\nrequests outside normal behavior.\n● Detect deviations from trust scores and agent reliability. Flag AI agents with sudden trust score\ndrops due to repeated validation failures or unauthorized actions.\n● Track decision approval discrepancies. Detect cases where denied actions are later approved by\ndifferent agents and flag repeated overrides.\n● Monitor agent execution rates for abuse patterns. Track excessive system modifications, privilege\nescalations, or unusually high-volume operations.\n● Monitor agent decision consistency across similar cases. Detect AI agents making contradictory\ndecisions in similar scenarios, which may indicate manipulation or adversarial influence.",
+    "strideType": "Tampering",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": { 
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "to|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T12-S2",
+    "name": "Trust Network Exploitation",
+    "description": "By forging false consensus messages and exploiting authentication weaknesses, an attacker manipulates inter-agent validation mechanisms, causing unauthorized access and deceptive behaviors.\n\nAgent Communication Poisoning occurs when attackers manipulate inter-agent communication channels to inject false information, misdirect decision-making, and corrupt shared knowledge within multi-agent AI systems. Unlike isolated AI attacks, this threat exploits the complexity of distributed AI collaboration, leading to cascading misinformation, systemic failures, and compromised decision integrity across interconnected agents. Like Memory Poisoning, this threat goes beyond the static data poisoning defined in LLM04:2025 - Data and Model Poisoning or the embeddings poisoning in RAG covered by LLM08:2025 - Vector and Embedding Weaknesses and targets transient and dynamic data",
+    "mitigations": "🛡Step 1: Secure AI-to-AI Communication Channels (Proactive)\n● Require message authentication & encryption for all inter-agent communications.\n● Deploy agent trust scoring to evaluate reliability of multi-agent transactions.\n● Use consensus verification before executing high-risk AI operations.\n● Require multiple agent approvals for workflow-critical decisions.\n● Implement task segmentation to prevent an attacker from escalating privileges across multiple\ninterconnected AI agents.\n● Establish multi-agent validation protocols to prevent single-agent attacks.\n● Require distributed multi-agent consensus verification before executing high-risk system\nmodifications.\n● Use rate limiting & agent-specific execution quotas to prevent flooding attacks.\n● Limit agent cross-communication based on functional roles. Prevent agents from unnecessarily\ninteracting outside of predefined operational scope to minimize attack surface.\n🚨Step 2: Detect & Block Rogue Agents (Reactive)\n● Deploy real-time detection models to flag rogue agent behaviors. Identify AI agents acting outside\npredefined security policies.\n● Isolate detected rogue agents to prevent further actions. Immediately restrict network and system\naccess for flagged agents.\n● Revoke privileges of AI agents exhibiting suspicious behavior. Temporarily downgrade permissions\nuntil the anomaly is reviewed.\nOWASP.org\nPage 37\n● Enforce dynamic response actions for rogue agents. Automatically disable unauthorized AI agent\nprocesses to contain threats.\n● Track rogue agent reappearance attempts. Detect cases where rogue AI agents that were\npreviously blocked or disabled attempt to rejoin the network under a different identity.\n🕵Step 3: Enforce Multi-Agent Trust & Decision Security (Detective)\n● Monitor agent interactions for unexpected role changes & task assignments. Detect unauthorized\nprivilege escalations or abnormal task delegation.\n● Monitor for anomalous inter-agent interactions. Log agent-to-agent communications and detect\nrequests outside normal behavior.\n● Detect deviations from trust scores and agent reliability. Flag AI agents with sudden trust score\ndrops due to repeated validation failures or unauthorized actions.\n● Track decision approval discrepancies. Detect cases where denied actions are later approved by\ndifferent agents and flag repeated overrides.\n● Monitor agent execution rates for abuse patterns. Track excessive system modifications, privilege\nescalations, or unusually high-volume operations.\n● Monitor agent decision consistency across similar cases. Detect AI agents making contradictory\ndecisions in similar scenarios, which may indicate manipulation or adversarial influence.",
+    "strideType": "Tampering",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": { "isTrusted": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {"isTrusted": true},
+          "flows": [ { "direction": "to|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T12-S3",
+    "name": "Misinformation Injection & Cascade Poisoning",
+    "description": "An attacker strategically plants false data into the multi-agent network, either as a stealthy degradation attack that slowly corrupts reasoning or as a rapid misinformation cascade that spreads false knowledge across agents.\n\nAgent Communication Poisoning occurs when attackers manipulate inter-agent communication channels to inject false information, misdirect decision-making, and corrupt shared knowledge within multi-agent AI systems. Unlike isolated AI attacks, this threat exploits the complexity of distributed AI collaboration, leading to cascading misinformation, systemic failures, and compromised decision integrity across interconnected agents. Like Memory Poisoning, this threat goes beyond the static data poisoning defined in LLM04:2025 - Data and Model Poisoning or the embeddings poisoning in RAG covered by LLM08:2025 - Vector and Embedding Weaknesses and targets transient and dynamic data",
+    "mitigations": "🛡Step 1: Secure AI-to-AI Communication Channels (Proactive)\n● Require message authentication & encryption for all inter-agent communications.\n● Deploy agent trust scoring to evaluate reliability of multi-agent transactions.\n● Use consensus verification before executing high-risk AI operations.\n● Require multiple agent approvals for workflow-critical decisions.\n● Implement task segmentation to prevent an attacker from escalating privileges across multiple\ninterconnected AI agents.\n● Establish multi-agent validation protocols to prevent single-agent attacks.\n● Require distributed multi-agent consensus verification before executing high-risk system\nmodifications.\n● Use rate limiting & agent-specific execution quotas to prevent flooding attacks.\n● Limit agent cross-communication based on functional roles. Prevent agents from unnecessarily\ninteracting outside of predefined operational scope to minimize attack surface.\n🚨Step 2: Detect & Block Rogue Agents (Reactive)\n● Deploy real-time detection models to flag rogue agent behaviors. Identify AI agents acting outside\npredefined security policies.\n● Isolate detected rogue agents to prevent further actions. Immediately restrict network and system\naccess for flagged agents.\n● Revoke privileges of AI agents exhibiting suspicious behavior. Temporarily downgrade permissions\nuntil the anomaly is reviewed.\nOWASP.org\nPage 37\n● Enforce dynamic response actions for rogue agents. Automatically disable unauthorized AI agent\nprocesses to contain threats.\n● Track rogue agent reappearance attempts. Detect cases where rogue AI agents that were\npreviously blocked or disabled attempt to rejoin the network under a different identity.\n🕵Step 3: Enforce Multi-Agent Trust & Decision Security (Detective)\n● Monitor agent interactions for unexpected role changes & task assignments. Detect unauthorized\nprivilege escalations or abnormal task delegation.\n● Monitor for anomalous inter-agent interactions. Log agent-to-agent communications and detect\nrequests outside normal behavior.\n● Detect deviations from trust scores and agent reliability. Flag AI agents with sudden trust score\ndrops due to repeated validation failures or unauthorized actions.\n● Track decision approval discrepancies. Detect cases where denied actions are later approved by\ndifferent agents and flag repeated overrides.\n● Monitor agent execution rates for abuse patterns. Track excessive system modifications, privilege\nescalations, or unusually high-volume operations.\n● Monitor agent decision consistency across similar cases. Detect AI agents making contradictory\ndecisions in similar scenarios, which may indicate manipulation or adversarial influence.",
+    "strideType": "Tampering",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": { 
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "to|any", "props":{} }
+  ]
+        },
+        {
+          "nodeType": "tm.Store",
+          "props": {"isLongTermAgentMemory":true},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
   }]
