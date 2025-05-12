@@ -562,4 +562,19 @@
       }]
     }]
   }]
+  },{
+    "id": "TM-T11-S1",
+    "name": "Unexpected RCE and Code Attacks",
+    "description": "Unexpected RCE and Code Attacks occur when attackers exploit AI-generated code execution in agentic applications, leading to unsafe code generation, privilege escalation, or direct system compromise. Unlike the existing LLM01:2025 - Prompt Injection and LLM05:2025 - Insecure Output Handling, agentic AI with function-calling capabilities and tool integrations can be directly manipulated to execute unauthorized commands, exfiltrate data, or bypass security controls, making it a critical attack vector in AI-driven automation and service integrations.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
+    "strideType": "Elevation of Privilege",
+    "conditions": [
+    {
+      "nodeType": "tm.Tool",
+      "props": {
+  "executesAgentGeneratedCode": true
+  },
+      "neighbours": []
+    }
+  ]
   }]

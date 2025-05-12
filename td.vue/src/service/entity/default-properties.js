@@ -92,6 +92,7 @@ const tool = {
     "requiresAdmin": false,
     "isResourceIntensive": false,
     "hasQuota": false,
+    "executesAgentGeneratedCode":  false,
 };
 
 

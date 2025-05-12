@@ -293,6 +293,7 @@ export default {
                 { key: 'requiresAdmin', type: 'bool' },
                 { key: 'isResourceIntensive', type: 'bool' },
                 { key: 'hasQuota', type: 'bool' },
+                { key: 'executesAgentGeneratedCode', type: 'bool' },
             ],
             'tm.Flow': [
                 { key: 'hasUserPrompt', type: 'bool' },
