@@ -286,6 +286,8 @@ export default {
                 { key: 'inheritsPrivileges', type: 'bool' },
                 { key: 'usesAuth', type: 'bool' },
                 { key: 'usesBehavioralAuth', type: 'bool' },
+                { key: 'isSecurity', type: 'bool' },
+                { key: 'isAuthenticator', type: 'bool' },
             ],
             'tm.Tool': [
                 { key: 'isDangerous', type: 'bool' },

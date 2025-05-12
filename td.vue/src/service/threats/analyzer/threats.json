@@ -814,4 +814,46 @@
       ]
     }
   ]
+  },{
+    "id": "TM-T14-S1",
+    "name": "Coordinated Privilege Escalation via Multi-Agent Impersonation",
+    "description": "An attacker infiltrates a security monitoring system by compromising identity verification and access control agents, making one AI falsely authenticate another to gain unauthorized access.\n\nHuman Attacks on Multi-Agent Systems occur when adversaries exploit inter-agent delegation, trust relationships, and task dependencies to bypass security controls, escalate privileges, or disrupt workflows. By injecting deceptive tasks, rerouting priorities, or overwhelming agents with excessive assignments, attackers can manipulate AI-driven decision-making in ways that are difficult to trace and mitigate, leading to systemic failures or unauthorized operations.",
+    "mitigations": "🛡Step 1: Secure AI-to-AI Communication Channels (Proactive)\n● Require message authentication & encryption for all inter-agent communications.\n● Deploy agent trust scoring to evaluate reliability of multi-agent transactions.\n● Use consensus verification before executing high-risk AI operations.\n● Require multiple agent approvals for workflow-critical decisions.\n● Implement task segmentation to prevent an attacker from escalating privileges across multiple\ninterconnected AI agents.\n● Establish multi-agent validation protocols to prevent single-agent attacks.\n● Require distributed multi-agent consensus verification before executing high-risk system\nmodifications.\n● Use rate limiting & agent-specific execution quotas to prevent flooding attacks.\n● Limit agent cross-communication based on functional roles. Prevent agents from unnecessarily\ninteracting outside of predefined operational scope to minimize attack surface.\n🚨Step 2: Detect & Block Rogue Agents (Reactive)\n● Deploy real-time detection models to flag rogue agent behaviors. Identify AI agents acting outside\npredefined security policies.\n● Isolate detected rogue agents to prevent further actions. Immediately restrict network and system\naccess for flagged agents.\n● Revoke privileges of AI agents exhibiting suspicious behavior. Temporarily downgrade permissions\nuntil the anomaly is reviewed.\nOWASP.org\nPage 37\n● Enforce dynamic response actions for rogue agents. Automatically disable unauthorized AI agent\nprocesses to contain threats.\n● Track rogue agent reappearance attempts. Detect cases where rogue AI agents that were\npreviously blocked or disabled attempt to rejoin the network under a different identity.\n🕵Step 3: Enforce Multi-Agent Trust & Decision Security (Detective)\n● Monitor agent interactions for unexpected role changes & task assignments. Detect unauthorized\nprivilege escalations or abnormal task delegation.\n● Monitor for anomalous inter-agent interactions. Log agent-to-agent communications and detect\nrequests outside normal behavior.\n● Detect deviations from trust scores and agent reliability. Flag AI agents with sudden trust score\ndrops due to repeated validation failures or unauthorized actions.\n● Track decision approval discrepancies. Detect cases where denied actions are later approved by\ndifferent agents and flag repeated overrides.\n● Monitor agent execution rates for abuse patterns. Track excessive system modifications, privilege\nescalations, or unusually high-volume operations.\n● Monitor agent decision consistency across similar cases. Detect AI agents making contradictory\ndecisions in similar scenarios, which may indicate manipulation or adversarial influence.",
+    "strideType": "Spoofing",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": { "isAuthenticator": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T14-S3",
+    "name": "Denial-of-Service via Agent Task Saturation",
+    "description": "An attacker overwhelms multi-agent systems with continuous high-priority tasks, preventing security agents from processing real threats\n\nHuman Attacks on Multi-Agent Systems occur when adversaries exploit inter-agent delegation, trust relationships, and task dependencies to bypass security controls, escalate privileges, or disrupt workflows. By injecting deceptive tasks, rerouting priorities, or overwhelming agents with excessive assignments, attackers can manipulate AI-driven decision-making in ways that are difficult to trace and mitigate, leading to systemic failures or unauthorized operations.",
+    "mitigations": "🛡Step 1: Secure AI-to-AI Communication Channels (Proactive)\n● Require message authentication & encryption for all inter-agent communications.\n● Deploy agent trust scoring to evaluate reliability of multi-agent transactions.\n● Use consensus verification before executing high-risk AI operations.\n● Require multiple agent approvals for workflow-critical decisions.\n● Implement task segmentation to prevent an attacker from escalating privileges across multiple\ninterconnected AI agents.\n● Establish multi-agent validation protocols to prevent single-agent attacks.\n● Require distributed multi-agent consensus verification before executing high-risk system\nmodifications.\n● Use rate limiting & agent-specific execution quotas to prevent flooding attacks.\n● Limit agent cross-communication based on functional roles. Prevent agents from unnecessarily\ninteracting outside of predefined operational scope to minimize attack surface.\n🚨Step 2: Detect & Block Rogue Agents (Reactive)\n● Deploy real-time detection models to flag rogue agent behaviors. Identify AI agents acting outside\npredefined security policies.\n● Isolate detected rogue agents to prevent further actions. Immediately restrict network and system\naccess for flagged agents.\n● Revoke privileges of AI agents exhibiting suspicious behavior. Temporarily downgrade permissions\nuntil the anomaly is reviewed.\nOWASP.org\nPage 37\n● Enforce dynamic response actions for rogue agents. Automatically disable unauthorized AI agent\nprocesses to contain threats.\n● Track rogue agent reappearance attempts. Detect cases where rogue AI agents that were\npreviously blocked or disabled attempt to rejoin the network under a different identity.\n🕵Step 3: Enforce Multi-Agent Trust & Decision Security (Detective)\n● Monitor agent interactions for unexpected role changes & task assignments. Detect unauthorized\nprivilege escalations or abnormal task delegation.\n● Monitor for anomalous inter-agent interactions. Log agent-to-agent communications and detect\nrequests outside normal behavior.\n● Detect deviations from trust scores and agent reliability. Flag AI agents with sudden trust score\ndrops due to repeated validation failures or unauthorized actions.\n● Track decision approval discrepancies. Detect cases where denied actions are later approved by\ndifferent agents and flag repeated overrides.\n● Monitor agent execution rates for abuse patterns. Track excessive system modifications, privilege\nescalations, or unusually high-volume operations.\n● Monitor agent decision consistency across similar cases. Detect AI agents making contradictory\ndecisions in similar scenarios, which may indicate manipulation or adversarial influence.",
+    "strideType": "Denial of Service",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": { "isSecurity": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [
+  ]
+        }
+      ]
+    }
+  ]
   }]

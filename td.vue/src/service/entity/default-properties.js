@@ -77,6 +77,8 @@ const agent = {
     "inheritsPrivileges": false,
     "usesAuth": false,
     "usesBehavioralAuth": false,
+    "isSecurity": false,
+    "isAuthenticator": false,
 };
 
 const tool = {
