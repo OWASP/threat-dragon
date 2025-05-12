@@ -184,6 +184,7 @@ const rus = {
         },
         buttons: {
             delete: 'Delete selected',
+            generateThreats: 'Generate threats',
             redo: 'Redo edit',
             shortcuts: 'Keyboard shortcuts',
             toggleGrid: 'Toggle grid',
@@ -240,6 +241,8 @@ const rus = {
         },
         shapes: {
             actor: 'Actor',
+            agent: 'Agent',
+            tool: 'Tool',
             flow: 'Data Flow',
             flowStencil: 'Data Flow',
             process: 'Process',
