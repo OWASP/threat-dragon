@@ -577,4 +577,67 @@
       "neighbours": []
     }
   ]
+  },{
+    "id": "TM-T9-S1",
+    "name": "User Impersonation",
+    "description": "An attacker injects indirect prompts into an AI agent with privileges, tricking it into malicious actions on behalf of a legitimate user.\n\nIdentity Spoofing and Impersonation is a critical threat in AI agents where attackers exploit authentication mechanisms to impersonate AI agents, human users, or external services, gaining unauthorized access and executing harmful actions while remaining undetected. This is particularly dangerous in trust-based multi-agent environments, where attackers manipulate authentication processes, exploit identity inheritance, or bypass verification controls to act under a false identity.",
+    "mitigations": "🛡Step 1: Implement Secure AI Authentication Mechanisms (Proactive)\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Detect & Block AI Impersonation Attempts (Detective)\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Spoofing",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": {
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Store",
+          "props": { "isLongTermAgentMemory": true },
+          "flows": [ { "direction": "from", "props":{} }
+  ]
+        }
+      ]
+    },{
+      "nodeType": "tm.Agent",
+      "props": {
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Tool",
+          "props": {},
+          "flows": [ { "direction": "from", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T9-S2",
+    "name": "Agent Identity Spoofing",
+    "description": "An attacker compromises an agent, exploiting its permissions.\n\nIdentity Spoofing and Impersonation is a critical threat in AI agents where attackers exploit authentication mechanisms to impersonate AI agents, human users, or external services, gaining unauthorized access and executing harmful actions while remaining undetected. This is particularly dangerous in trust-based multi-agent environments, where attackers manipulate authentication processes, exploit identity inheritance, or bypass verification controls to act under a false identity.",
+    "mitigations": "🛡Step 1: Implement Secure AI Authentication Mechanisms (Proactive)\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Detect & Block AI Impersonation Attempts (Detective)\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Spoofing",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": {
+  "usesAuth": true
+  },
+      "neighbours": []
+    }
+  ]
+  },{
+    "id": "TM-T9-S3",
+    "name": "Behavioral Mimicry Attack",
+    "description": "A rogue AI agent mimics the interaction style and decision- making of a legitimate system agent, gaining unauthorized access while appearing as a trusted entity.\n\nIdentity Spoofing and Impersonation is a critical threat in AI agents where attackers exploit authentication mechanisms to impersonate AI agents, human users, or external services, gaining unauthorized access and executing harmful actions while remaining undetected. This is particularly dangerous in trust-based multi-agent environments, where attackers manipulate authentication processes, exploit identity inheritance, or bypass verification controls to act under a false identity.",
+    "mitigations": "🛡Step 1: Implement Secure AI Authentication Mechanisms (Proactive)\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Detect & Block AI Impersonation Attempts (Detective)\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Spoofing",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": {
+  "usesBehavioralAuth": true
+  },
+      "neighbours": []
+    }
+  ]
   }]

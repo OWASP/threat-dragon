@@ -74,6 +74,8 @@ const agent = {
     "hasMultiDomainAccess": false,
     "canBeRegisteredByUser": false,
     "inheritsPrivileges": false,
+    "usesAuth": false,
+    "usesBehavioralAuth": false,
 };
 
 const tool = {

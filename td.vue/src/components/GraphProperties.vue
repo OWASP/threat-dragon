@@ -284,6 +284,8 @@ export default {
                 { key: 'hasMultiDomainAccess', type: 'bool' },
                 { key: 'canBeRegisteredByUser', type: 'bool' },
                 { key: 'inheritsPrivileges', type: 'bool' },
+                { key: 'usesAuth', type: 'bool' },
+                { key: 'usesBehavioralAuth', type: 'bool' },
             ],
             'tm.Tool': [
                 { key: 'isDangerous', type: 'bool' },
