@@ -12,6 +12,7 @@ const flow = {
     pRawUserData: false,
     threats: [],
     "hasUserPrompt": false,
+    "mayContainMedia": false,
 };
 
 const actor = {
@@ -69,6 +70,10 @@ const agent = {
     isTrusted: false,
     "hasConstraints": false,
     "hasLogging": false,
+    "hasDynamicAdminPrivileges": false,
+    "hasMultiDomainAccess": false,
+    "canBeRegisteredByUser": false,
+    "inheritsPrivileges": false,
 };
 
 const tool = {
@@ -84,6 +89,9 @@ const tool = {
     "isApi": false,
     "usingParameters": false,
     "isAutomated": false,
+    "requiresAdmin": false,
+    "isResourceIntensive": false,
+    "hasQuota": false,
 };
 
 

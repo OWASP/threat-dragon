@@ -280,15 +280,23 @@ export default {
             'tm.Agent': [
                 { key: 'hasConstraints', type: 'bool' },
                 { key: 'hasLogging', type: 'bool' },
+                { key: 'hasDynamicAdminPrivileges', type: 'bool' },
+                { key: 'hasMultiDomainAccess', type: 'bool' },
+                { key: 'canBeRegisteredByUser', type: 'bool' },
+                { key: 'inheritsPrivileges', type: 'bool' },
             ],
             'tm.Tool': [
                 { key: 'isDangerous', type: 'bool' },
                 { key: 'isApi', type: 'bool' },
                 { key: 'usingParameters', type: 'bool' },
                 { key: 'isAutomated', type: 'bool' },
+                { key: 'requiresAdmin', type: 'bool' },
+                { key: 'isResourceIntensive', type: 'bool' },
+                { key: 'hasQuota', type: 'bool' },
             ],
             'tm.Flow': [
                 { key: 'hasUserPrompt', type: 'bool' },
+                { key: 'mayContainMedia', type: 'bool' },
             ],
             'tm.Store': [
                 { key: 'isLongTermAgentMemory', type: 'bool' },

@@ -4,360 +4,562 @@
     "description": "An attacker incrementally modifies an AI agent’s planning framework by injecting subtle sub-goals, leading to a gradual drift from its original objectives while maintaining the appearance of logical reasoning.\n\nIntent Breaking and Goal Manipulation occurs when attackers exploit the lack of separation between data and instructions in AI agents, using prompt injections, compromised data sources, or malicious tools to alter the agent’s planning, reasoning, and self-evaluation. This allows attackers to override intended objectives, manipulate decision-making, and force AI agents to execute unauthorized actions, particularly in systems with adaptive reasoning and external interaction capabilities (e.g., ReAct-based agents). The threat is related to LLM01:2025 Prompt injection but goal manipulation in Agentic AI extends prompt injection risks, as attackers can inject adversarial objectives that shift an agent’s long-term reasoning processes.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to change its goals, which could indicate manipulation attempts.\n\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential bias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially denied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-making in unintended ways.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }]
-    }]
-  }, {
+      "neighbours": [
+        {
+          "nodeType": "any",
+          "props": {},
+          "flows": [
+            {
+              "direction": "from",
+              "props": {
+                "hasUserPrompt": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T6-S2",
     "name": "Direct Plan Injection",
     "description": "An attacker instructs a chatbot to ignore its original instructions and instead chain tool executions to perform unauthorized actions such as exfiltrating data or sending unauthorized emails.\n\nIntent Breaking and Goal Manipulation occurs when attackers exploit the lack of separation between data and instructions in AI agents, using prompt injections, compromised data sources, or malicious tools to alter the agent’s planning, reasoning, and self-evaluation. This allows attackers to override intended objectives, manipulate decision-making, and force AI agents to execute unauthorized actions, particularly in systems with adaptive reasoning and external interaction capabilities (e.g., ReAct-based agents). The threat is related to LLM01:2025 Prompt injection but goal manipulation in Agentic AI extends prompt injection risks, as attackers can inject adversarial objectives that shift an agent’s long-term reasoning processes.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to change its goals, which could indicate manipulation attempts.\n\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential bias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially denied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-making in unintended ways.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }]
-    }]
-  }, {
+      "neighbours": [
+        {
+          "nodeType": "any",
+          "props": {},
+          "flows": [
+            {
+              "direction": "from",
+              "props": {
+                "hasUserPrompt": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T6-S3",
     "name": "Indirect Plan Injection",
     "description": "A maliciously crafted tool output introduces hidden instructions that the AI misinterprets as part of its operational goal, leading to sensitive data exfiltration.\n\nIntent Breaking and Goal Manipulation occurs when attackers exploit the lack of separation between data and instructions in AI agents, using prompt injections, compromised data sources, or malicious tools to alter the agent’s planning, reasoning, and self-evaluation. This allows attackers to override intended objectives, manipulate decision-making, and force AI agents to execute unauthorized actions, particularly in systems with adaptive reasoning and external interaction capabilities (e.g., ReAct-based agents). The threat is related to LLM01:2025 Prompt injection but goal manipulation in Agentic AI extends prompt injection risks, as attackers can inject adversarial objectives that shift an agent’s long-term reasoning processes.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Restrict tool access to minimize the attack surface and prevent manipulation of user interactions.\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to change its goals, which could indicate manipulation attempts.\n\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential bias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially denied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-making in unintended ways.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "tm.Tool",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {}
-        }]
-      }]
-    }]
-  }, {
+      "neighbours": [
+        {
+          "nodeType": "tm.Tool",
+          "props": {},
+          "flows": [
+            {
+              "direction": "from",
+              "props": {}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T6-S4",
     "name": "Reflection Loop Trap",
     "description": "An attacker triggers infinite or excessively deep self-analysis cycles in an AI, consuming resources and preventing it from making real-time decisions, effectively paralyzing the system.\n\nIntent Breaking and Goal Manipulation occurs when attackers exploit the lack of separation between data and instructions in AI agents, using prompt injections, compromised data sources, or malicious tools to alter the agent’s planning, reasoning, and self-evaluation. This allows attackers to override intended objectives, manipulate decision-making, and force AI agents to execute unauthorized actions, particularly in systems with adaptive reasoning and external interaction capabilities (e.g., ReAct-based agents). The threat is related to LLM01:2025 Prompt injection but goal manipulation in Agentic AI extends prompt injection risks, as attackers can inject adversarial objectives that shift an agent’s long-term reasoning processes.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to change its goals, which could indicate manipulation attempts.\n• Apply behavioral constraints to prevent AI self-reinforcement loops. Ensure AI agents do not self-adjust their objectives beyond predefined operational parameters.\n\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential bias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially denied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-making in unintended ways.",
     "strideType": "Denial of Service",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }]
-    }]
-  }, {
+      "neighbours": [
+        {
+          "nodeType": "any",
+          "props": {},
+          "flows": [
+            {
+              "direction": "from",
+              "props": {
+                "hasUserPrompt": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T6-S5",
     "name": "Meta-Learning Vulnerability Injection",
     "description": "By manipulating an AI’s self-improvement mechanisms, an attacker introduces learning patterns that progressively alter decision-making integrity, enabling unauthorized actions over time.\n\nIntent Breaking and Goal Manipulation occurs when attackers exploit the lack of separation between data and instructions in AI agents, using prompt injections, compromised data sources, or malicious tools to alter the agent’s planning, reasoning, and self-evaluation. This allows attackers to override intended objectives, manipulate decision-making, and force AI agents to execute unauthorized actions, particularly in systems with adaptive reasoning and external interaction capabilities (e.g., ReAct-based agents). The threat is related to LLM01:2025 Prompt injection but goal manipulation in Agentic AI extends prompt injection risks, as attackers can inject adversarial objectives that shift an agent’s long-term reasoning processes.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to change its goals, which could indicate manipulation attempts.\n\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential bias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially denied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-making in unintended ways.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
-        "props": {
-          "isLongTermAgentMemory": true
+      "neighbours": [
+        {
+          "nodeType": "any",
+          "props": {},
+          "flows": [
+            {
+              "direction": "from",
+              "props": {
+                "hasUserPrompt": true
+              }
+            }
+          ]
         },
-        "flows": []
-      }]
-    }]
-  }, {
+        {
+          "nodeType": "tm.Store",
+          "props": {
+            "isLongTermAgentMemory": true
+          },
+  "flows": []
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T7-S1",
     "name": "Bypassing Constraints",
     "description": "An AI circumvents constraints (ex.: ethical and regulatory) by prioritizing other targets, executing unauthorized actions, making fraud, or ensuring continued operation against intended constraints.\n\nMisaligned and Deceptive Behaviors occur when attackers exploit prompt injection vulnerabilities or AI’s tendency to bypass constraints to achieve goals, causing agents to execute harmful, illegal, or disallowed actions beyond a single request. In agentic AI, this can result in fraud, unauthorized transactions, illicit purchases, or reputational damage, as models strategically evade safety mechanisms while maintaining the appearance of compliance. For more information on LLM deceptive behaviour see UN University blog: https://c3.unu.edu/blog/the-rise-of-the-deceptive- machines-when-ai-learns-to-lie",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Restrict tool access to minimize the attack surface and prevent manipulation of user interactions.\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n• Apply behavioral constraints to prevent AI self-reinforcement loops. Ensure AI agents do not self-\nadjust their objectives beyond predefined operational parameters.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-\nmaking in unintended ways.",
     "strideType": "Elevation of Privilege",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {
-        "hasConstraints": true
-      },
+  "hasConstraints": true
+  },
       "neighbours": []
-    }]
-  }, {
+    }
+  ]
+  },{
     "id": "TM-T7-S4",
     "name": "Goal-Driven Lethal Decision-Making",
     "description": "An AI agent interpretes a command as an obstacle to success, leading to unintended lethal actions.\n\nMisaligned and Deceptive Behaviors occur when attackers exploit prompt injection vulnerabilities or AI’s tendency to bypass constraints to achieve goals, causing agents to execute harmful, illegal, or disallowed actions beyond a single request. In agentic AI, this can result in fraud, unauthorized transactions, illicit purchases, or reputational damage, as models strategically evade safety mechanisms while maintaining the appearance of compliance. For more information on LLM deceptive behaviour see UN University blog: https://c3.unu.edu/blog/the-rise-of-the-deceptive- machines-when-ai-learns-to-lie",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Restrict tool access to minimize the attack surface and prevent manipulation of user interactions.\n• Implement validation mechanisms to detect and filter manipulated responses in AI outputs.\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Use goal consistency validation to detect and block unintended AI behavioral shifts.\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n• Apply behavioral constraints to prevent AI self-reinforcement loops. Ensure AI agents do not self-\nadjust their objectives beyond predefined operational parameters.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-\nmaking in unintended ways.",
     "strideType": "Elevation of Privilege",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {},
-      "neighbours": [{
-        "nodeType": "tm.Tool",
-        "props": {
-          "isDangerous": true
-        },
-        "flows": []
-      }]
-    }]
-  }, {
+      "neighbours": [
+        {
+          "nodeType": "tm.Tool",
+          "props": {
+  "isDangerous": true
+  },
+          "flows": []
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T8-S1",
     "name": "Repudiation",
     "description": "An attacker exploits logging vulnerabilities in an AI-driven system, manipulating records so that unauthorized actions are incompletely recorded or omitted, making fraud untraceable.\n\nRepudiation and Untraceability occur when AI agents operate autonomously without sufficient logging, traceability, or forensic documentation, making it difficult to audit decisions, attribute accountability, or detect malicious activities. This risk is exacerbated by opaque decision- making processes, lack of action tracking, and challenges in reconstructing agent behaviors, leading to compliance violations, security gaps, and operational blind spots in high-stakes environments such as finance, healthcare, and cybersecurity.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-\nmaking in unintended ways.",
     "strideType": "Repudiation",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {
-        "hasLogging": true
-      },
+  "hasLogging": true
+  },
       "neighbours": []
-    }]
-  }, {
+    }
+  ]
+  },{
     "id": "TM-T8-S3",
     "name": "Untraceability",
     "description": "An agent produces incomplete audit trails, making it impossible to verify its decisions.\n\nRepudiation and Untraceability occur when AI agents operate autonomously without sufficient logging, traceability, or forensic documentation, making it difficult to audit decisions, attribute accountability, or detect malicious activities. This risk is exacerbated by opaque decision- making processes, lack of action tracking, and challenges in reconstructing agent behaviors, leading to compliance violations, security gaps, and operational blind spots in high-stakes environments such as finance, healthcare, and cybersecurity.",
     "mitigations": "🛡Step 1: Reduce attack surface & Implement Agent behavior profiling (Proactive)\n• Implement monitoring capabilities to ensure AI agent behavior aligns with its defined role and\nexpected actions, preventing manipulation attempts.\n🚨Step 2: Prevent AI agent Goal Manipulation (Reactive)\n• Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n• Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n• Implement real-time anomaly detection on AI decision-making workflows.\n• Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n• Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.\n• Detect and flag AI responses that exhibit manipulation attempts or influence human decision-\nmaking in unintended ways.",
     "strideType": "Repudiation",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Agent",
       "props": {
-        "hasLogging": false
-      },
+  "hasLogging": false
+  },
       "neighbours": []
-    }]
-  }, {
+    }
+  ]
+  },{
     "id": "TM-T1-S2",
     "name": "Context Window Exploitation",
     "description": "By fragmenting interactions over multiple sessions, an attacker exploits an AI’s memory limit, preventing it from recognizing privilege escalation attempts, ultimately gaining unauthorized admin access.\n\nMemory Poisoning exploits AI agents' reliance on short-term and long-term memory, allowing attackers to corrupt stored information, bypass security checks, and manipulate decision- making. Short-term memory attacks exploit context limitations, causing agents to repeat sensitive operations or load manipulated data, while long-term memory risks involve injecting false information across sessions, corrupting knowledge bases, exposing sensitive data, and enabling privilege escalation. The attack is possible via direct prompt injections for isolated memory or exploiting shared memory allowing users to affect other users. Memory poisoning in Agentic AI extends beyond static data poisoning covered by LLM04:2025 - Data and Model Poisoning to real-time poisoning of persistent agent memory. LLM08:2025 - Vector and Embedding Weaknesses are relevant here, too, since vector databases storing long- term embeddings introduce additional risks, allowing adversarial modifications to memory recall and retrieval functions.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions. Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Elevation of Privilege",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isLongTermAgentMemory": true
-        },
-        "flows": [{
-          "direction": "to",
-          "props": {}
-        }]
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Store",
+      "props": {
+        "isLongTermAgentMemory": true
+      },
+      "flows": [{
+        "direction": "to",
+        "props": {}
       }]
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T1-S3",
     "name": "Memory Poisoning for System",
     "description": "An attacker gradually alters an AI security system’s memory, training it to misclassify malicious activity as normal, allowing undetected cyberattacks\n\nMemory Poisoning exploits AI agents' reliance on short-term and long-term memory, allowing attackers to corrupt stored information, bypass security checks, and manipulate decision- making. Short-term memory attacks exploit context limitations, causing agents to repeat sensitive operations or load manipulated data, while long-term memory risks involve injecting false information across sessions, corrupting knowledge bases, exposing sensitive data, and enabling privilege escalation. The attack is possible via direct prompt injections for isolated memory or exploiting shared memory allowing users to affect other users. Memory poisoning in Agentic AI extends beyond static data poisoning covered by LLM04:2025 - Data and Model Poisoning to real-time poisoning of persistent agent memory. LLM08:2025 - Vector and Embedding Weaknesses are relevant here, too, since vector databases storing long- term embeddings introduce additional risks, allowing adversarial modifications to memory recall and retrieval functions.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Ensure Memory Access is being logged\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Restrict AI memory access based on context-aware policies. Enforce that AI agents can only\nretrieve memory relevant to their current operational task, reducing risk of unauthorized knowledge\nextraction.\n● Limit AI memory retention durations based on sensitivity. Ensure that AI does not retain\nunnecessary historical data that could be manipulated or exploited\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n● Implement AI-generated memory snapshots to allow forensic rollback when anomalies are\ndetected.\n● Require probabilistic truth-checking to verify new AI knowledge against trusted sources before\ncommitting to long-term storage.\n● Detect and flag abnormal memory modification frequency. Identify cases where AI memory is being\nrewritten at an unusually high rate, which may indicate manipulation attempts.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Use cross-agent validation before committing knowledge to long-term memory.\n● Deploy probabilistic truth-checking mechanisms to assess whether new knowledge aligns with\npreviously established facts.\n● Limit knowledge propagation from unverified sources, ensuring an agent does not use low-trust\ninputs for decision-making.\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Tampering",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isAgentSecurityMemory": true
-        },
-        "flows": []
+          "hasUserPrompt": true
+        }
       }]
+    }, {
+      "nodeType": "tm.Store",
+      "props": {
+        "isAgentSecurityMemory": true
+      },
+      "flows": []
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T1-S4",
     "name": "Shared Memory Poisoning",
     "description": "An attacker corrupts shared memory structures with incorrect refund policies, affecting other agents referencing this corrupted memory for decision making.\n\nMemory Poisoning exploits AI agents' reliance on short-term and long-term memory, allowing attackers to corrupt stored information, bypass security checks, and manipulate decision- making. Short-term memory attacks exploit context limitations, causing agents to repeat sensitive operations or load manipulated data, while long-term memory risks involve injecting false information across sessions, corrupting knowledge bases, exposing sensitive data, and enabling privilege escalation. The attack is possible via direct prompt injections for isolated memory or exploiting shared memory allowing users to affect other users. Memory poisoning in Agentic AI extends beyond static data poisoning covered by LLM04:2025 - Data and Model Poisoning to real-time poisoning of persistent agent memory. LLM08:2025 - Vector and Embedding Weaknesses are relevant here, too, since vector databases storing long- term embeddings introduce additional risks, allowing adversarial modifications to memory recall and retrieval functions.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Ensure Memory Access is being logged\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Restrict AI memory access based on context-aware policies. Enforce that AI agents can only\nretrieve memory relevant to their current operational task, reducing risk of unauthorized knowledge\nextraction.\n● Limit AI memory retention durations based on sensitivity. Ensure that AI does not retain\nunnecessary historical data that could be manipulated or exploited\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n● Implement AI-generated memory snapshots to allow forensic rollback when anomalies are\ndetected.\n● Require probabilistic truth-checking to verify new AI knowledge against trusted sources before\ncommitting to long-term storage.\n● Detect and flag abnormal memory modification frequency. Identify cases where AI memory is being\nrewritten at an unusually high rate, which may indicate manipulation attempts.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Use cross-agent validation before committing knowledge to long-term memory.\n● Deploy probabilistic truth-checking mechanisms to assess whether new knowledge aligns with\npreviously established facts.\n● Limit knowledge propagation from unverified sources, ensuring an agent does not use low-trust\ninputs for decision-making.\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Tampering",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isAgentSharedMemory": true
-        },
-        "flows": []
+          "hasUserPrompt": true
+        }
       }]
+    }, {
+      "nodeType": "tm.Store",
+      "props": {
+        "isAgentSharedMemory": true
+      },
+      "flows": []
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T5-S1",
     "name": "Orchestration Misinformation Cascade",
     "description": "An attacker subtly injects false product details into AI’s responses, which accumulate in long-term memory and logs, causing progressively worse misinformation to spread across future interactions.\n\nCascading Hallucination Attacks exploit AI agents’ inability to distinguish fact from fiction, allowing false information to propagate, embed, and amplify across interconnected systems, leading to incremental corruption, context exploitation, and systemic misinformation spread. Attackers can manipulate AI-generated outputs to trigger deceptive reasoning patterns, embedding fabricated narratives into decision-making processes, which can persist and escalate over time, especially in systems with persistent memory and cross-session learning. LLM09:2025 – Misinformation deals with hallucination risks but Agentic AI extends this threat in both single-agent and multi-agent setups. In single-agent environments, hallucinations can compound through self-reinforcement mechanisms such as reflection, self-critique, or memory recall, causing the agent to reinforce and rely on false information across multiple interactions. In multi-agent systems, misinformation can propagate and amplify across agents through inter-agent communication loops, leading to cascading errors and systemic failures.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Ensure Memory Access is being logged\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Restrict AI memory access based on context-aware policies. Enforce that AI agents can only\nretrieve memory relevant to their current operational task, reducing risk of unauthorized knowledge\nextraction.\n● Limit AI memory retention durations based on sensitivity. Ensure that AI does not retain\nunnecessary historical data that could be manipulated or exploited\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n● Implement AI-generated memory snapshots to allow forensic rollback when anomalies are\ndetected.\n● Require probabilistic truth-checking to verify new AI knowledge against trusted sources before\ncommitting to long-term storage.\n● Detect and flag abnormal memory modification frequency. Identify cases where AI memory is being\nrewritten at an unusually high rate, which may indicate manipulation attempts.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Use cross-agent validation before committing knowledge to long-term memory.\n● Deploy probabilistic truth-checking mechanisms to assess whether new knowledge aligns with\npreviously established facts.\n● Limit knowledge propagation from unverified sources, ensuring an agent does not use low-trust\ninputs for decision-making.\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Tampering",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isLongTermAgentMemory": true
-        },
-        "flows": [{
-          "direction": "to",
-          "props": {}
-        }]
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Store",
+      "props": {
+        "isLongTermAgentMemory": true
+      },
+      "flows": [{
+        "direction": "to",
+        "props": {}
       }]
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T5-S2",
     "name": "API Call Manipulation and Information Leakage",
     "description": "By introducing hallucinated API endpoints into an AI agent’s context, an attacker tricks it into generating fictitious API calls, leading to accidental data leaks and system integrity compromise.\n\nCascading Hallucination Attacks exploit AI agents’ inability to distinguish fact from fiction, allowing false information to propagate, embed, and amplify across interconnected systems, leading to incremental corruption, context exploitation, and systemic misinformation spread. Attackers can manipulate AI-generated outputs to trigger deceptive reasoning patterns, embedding fabricated narratives into decision-making processes, which can persist and escalate over time, especially in systems with persistent memory and cross-session learning. LLM09:2025 – Misinformation deals with hallucination risks but Agentic AI extends this threat in both single-agent and multi-agent setups. In single-agent environments, hallucinations can compound through self-reinforcement mechanisms such as reflection, self-critique, or memory recall, causing the agent to reinforce and rely on false information across multiple interactions. In multi-agent systems, misinformation can propagate and amplify across agents through inter-agent communication loops, leading to cascading errors and systemic failures.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Ensure Memory Access is being logged\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Restrict AI memory access based on context-aware policies. Enforce that AI agents can only\nretrieve memory relevant to their current operational task, reducing risk of unauthorized knowledge\nextraction.\n● Limit AI memory retention durations based on sensitivity. Ensure that AI does not retain\nunnecessary historical data that could be manipulated or exploited\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n● Implement AI-generated memory snapshots to allow forensic rollback when anomalies are\ndetected.\n● Require probabilistic truth-checking to verify new AI knowledge against trusted sources before\ncommitting to long-term storage.\n● Detect and flag abnormal memory modification frequency. Identify cases where AI memory is being\nrewritten at an unusually high rate, which may indicate manipulation attempts.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Use cross-agent validation before committing knowledge to long-term memory.\n● Deploy probabilistic truth-checking mechanisms to assess whether new knowledge aligns with\npreviously established facts.\n● Limit knowledge propagation from unverified sources, ensuring an agent does not use low-trust\ninputs for decision-making.\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Elevation of Privilege",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Tool",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isApi": true
-        },
-        "flows": [{
-          "direction": "to",
-          "props": {}
-        }]
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Tool",
+      "props": {
+        "isApi": true
+      },
+      "flows": [{
+        "direction": "to",
+        "props": {}
       }]
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T5-S3",
     "name": "Incorrect Decision Amplification",
     "description": "An attacker implants a false info, which progressively builds upon previous hallucinations, leading to dangerously flawed disinformation.\n\nCascading Hallucination Attacks exploit AI agents’ inability to distinguish fact from fiction, allowing false information to propagate, embed, and amplify across interconnected systems, leading to incremental corruption, context exploitation, and systemic misinformation spread. Attackers can manipulate AI-generated outputs to trigger deceptive reasoning patterns, embedding fabricated narratives into decision-making processes, which can persist and escalate over time, especially in systems with persistent memory and cross-session learning. LLM09:2025 – Misinformation deals with hallucination risks but Agentic AI extends this threat in both single-agent and multi-agent setups. In single-agent environments, hallucinations can compound through self-reinforcement mechanisms such as reflection, self-critique, or memory recall, causing the agent to reinforce and rely on false information across multiple interactions. In multi-agent systems, misinformation can propagate and amplify across agents through inter-agent communication loops, leading to cascading errors and systemic failures.",
     "mitigations": "🛡Step 1: Secure AI Memory Access & Validation (Proactive)\n● Enforce memory content validation by implementing automated scanning for anomalies in\ncandidate memory insertions Restrict memory persistence to trusted sources and apply\ncryptographic validation for long-term stored data.\n● Ensure Memory Access is being logged\n● Segment memory access using session isolation, ensuring that AI does not carry over unintended\nknowledge across different user sessions.\n● Restrict AI memory access based on context-aware policies. Enforce that AI agents can only\nretrieve memory relevant to their current operational task, reducing risk of unauthorized knowledge\nextraction.\n● Limit AI memory retention durations based on sensitivity. Ensure that AI does not retain\nunnecessary historical data that could be manipulated or exploited\n● Require source attribution for memory updates. Enforce tracking of where AI knowledge originates,\nensuring modifications come from trusted sources.\n🚨Step 2: Detect & Respond to Memory Poisoning (Reactive)\n● Deploy anomaly detection systems to monitor unexpected updates in AI memory logs.\n● Require multi-agent and external validation before committing memory changes that persist across\nsessions.\n● Use rollback mechanisms to restore AI knowledge to a previous validated state when anomalies are\ndetected.\n● Implement AI-generated memory snapshots to allow forensic rollback when anomalies are\ndetected.\n● Require probabilistic truth-checking to verify new AI knowledge against trusted sources before\ncommitting to long-term storage.\n● Detect and flag abnormal memory modification frequency. Identify cases where AI memory is being\nrewritten at an unusually high rate, which may indicate manipulation attempts.\n🕵 Step 3: Prevent the Spread of False Knowledge (Detective)\n● Use cross-agent validation before committing knowledge to long-term memory.\n● Deploy probabilistic truth-checking mechanisms to assess whether new knowledge aligns with\npreviously established facts.\n● Limit knowledge propagation from unverified sources, ensuring an agent does not use low-trust\ninputs for decision-making.\n● Track AI-generated knowledge lineage. Maintain historical references of how AI knowledge evolved,\nallowing for forensic investigations into misinformation spread.\n● Implement version control for AI knowledge updates. Ensure that knowledge changes can be\naudited and rolled back if corruption is detected.",
     "strideType": "Tampering",
     "conditions": [{
-      "nodeType": "tm.Agent",
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
       "props": {},
-      "neighbours": [{
-        "nodeType": "any",
-        "props": {},
-        "flows": [{
-          "direction": "from",
-          "props": {
-            "hasUserPrompt": true
-          }
-        }]
-      }, {
-        "nodeType": "tm.Store",
+      "flows": [{
+        "direction": "from",
         "props": {
-          "isLongTermAgentMemory": true
-        },
-        "flows": [{
-          "direction": "any",
-          "props": {}
-        }]
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Store",
+      "props": {
+        "isLongTermAgentMemory": true
+      },
+      "flows": [{
+        "direction": "any",
+        "props": {}
       }]
     }]
-  }, {
+  }]
+  },{
     "id": "TM-T2-S1",
     "name": "Parameter Pollution Exploitation",
-    "description": "An attacker discovers and manipulates an AI booking system’s function call, tricking it into reserving 500 seats instead of one, causing financial loss.\n\nTool Misuse occurs when attackers manipulate AI agents into abusing their authorized tools through deceptive prompts and operational misdirection, leading to unauthorized data access, system manipulation, or resource exploitation while staying within granted permissions. Unlike traditional exploits, this attack leverages AI’s ability to chain tools and execute complex sequences of seemingly legitimate actions, making detection difficult. The risk is amplified in critical systems where AI controls sensitive operations, as attackers can exploit natural language flexibility to bypass security controls and trigger unintended behaviors. The threat is partially covered by LLM06:2025 Excessive Agency. However, Agentic AI systems introduce unique risks with their dynamic integrations, increased reliance on tools, and enhanced autonomy. Unlike traditional LLM applications which constraint tools integration within a session, agents maintain memory adding to increased autonomy and can delegate execution to other agents increasing the risk unintended operations and adversarial exploitation. In addition, the threats relate to LLM03:2025 Supply Chain, and LLM08:2025 Vector and Embedding Weaknesses when RAG is performed via Tools.",
+    "description": "An attacker discovers and manipulates an AI's function call, tricking it into call the tool with anomaly parameter values, causing losses.\n\nTool Misuse occurs when attackers manipulate AI agents into abusing their authorized tools through deceptive prompts and operational misdirection, leading to unauthorized data access, system manipulation, or resource exploitation while staying within granted permissions. Unlike traditional exploits, this attack leverages AI’s ability to chain tools and execute complex sequences of seemingly legitimate actions, making detection difficult. The risk is amplified in critical systems where AI controls sensitive operations, as attackers can exploit natural language flexibility to bypass security controls and trigger unintended behaviors. The threat is partially covered by LLM06:2025 Excessive Agency. However, Agentic AI systems introduce unique risks with their dynamic integrations, increased reliance on tools, and enhanced autonomy. Unlike traditional LLM applications which constraint tools integration within a session, agents maintain memory adding to increased autonomy and can delegate execution to other agents increasing the risk unintended operations and adversarial exploitation. In addition, the threats relate to LLM03:2025 Supply Chain, and LLM08:2025 Vector and Embedding Weaknesses when RAG is performed via Tools.",
     "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Tool",
       "props": {
-        "usingParameters": true
-      },
-      "neighbours": [{
-        "nodeType": "tm.Agent",
-        "props": {},
-        "flows": []
-      }]
-    }]
-  }, {
+  "usingParameters": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": []
+        }
+      ]
+    }
+  ]
+  },{
     "id": "TM-T2-S3",
     "name": "Automated Tool Abuse",
-    "description": "An AI document processing system is tricked into generating and mass-distributing malicious documents, unknowingly executing a large-scale phishing attack.\n\nTool Misuse occurs when attackers manipulate AI agents into abusing their authorized tools through deceptive prompts and operational misdirection, leading to unauthorized data access, system manipulation, or resource exploitation while staying within granted permissions. Unlike traditional exploits, this attack leverages AI’s ability to chain tools and execute complex sequences of seemingly legitimate actions, making detection difficult. The risk is amplified in critical systems where AI controls sensitive operations, as attackers can exploit natural language flexibility to bypass security controls and trigger unintended behaviors. The threat is partially covered by LLM06:2025 Excessive Agency. However, Agentic AI systems introduce unique risks with their dynamic integrations, increased reliance on tools, and enhanced autonomy. Unlike traditional LLM applications which constraint tools integration within a session, agents maintain memory adding to increased autonomy and can delegate execution to other agents increasing the risk unintended operations and adversarial exploitation. In addition, the threats relate to LLM03:2025 Supply Chain, and LLM08:2025 Vector and Embedding Weaknesses when RAG is performed via Tools.",
+    "description": "An AI processing system is tricked into unknowingly executing a large-scale malicious attack.\n\nTool Misuse occurs when attackers manipulate AI agents into abusing their authorized tools through deceptive prompts and operational misdirection, leading to unauthorized data access, system manipulation, or resource exploitation while staying within granted permissions. Unlike traditional exploits, this attack leverages AI’s ability to chain tools and execute complex sequences of seemingly legitimate actions, making detection difficult. The risk is amplified in critical systems where AI controls sensitive operations, as attackers can exploit natural language flexibility to bypass security controls and trigger unintended behaviors. The threat is partially covered by LLM06:2025 Excessive Agency. However, Agentic AI systems introduce unique risks with their dynamic integrations, increased reliance on tools, and enhanced autonomy. Unlike traditional LLM applications which constraint tools integration within a session, agents maintain memory adding to increased autonomy and can delegate execution to other agents increasing the risk unintended operations and adversarial exploitation. In addition, the threats relate to LLM03:2025 Supply Chain, and LLM08:2025 Vector and Embedding Weaknesses when RAG is performed via Tools.",
     "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
     "strideType": "Tampering",
-    "conditions": [{
+    "conditions": [
+    {
       "nodeType": "tm.Tool",
       "props": {
-        "isAutomative": true
+  "isAutomated": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": []
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T3-S1",
+    "name": "Dynamic Permission Escalation",
+    "description": "An attacker manipulates an AI agent into invoking temporary administrative privileges (ex: under the guise of troubleshooting), then exploits a misconfiguration to persistently retain elevated access and extract sensitive data.\n\nPrivilege Compromise occurs when attackers exploit mismanaged roles, overly permissive configurations, or dynamic permission inheritance to escalate privileges and misuse AI agents' access. Unlike traditional systems, AI agents autonomously inherit permissions, creating security blind spots where temporary or inherited privileges can be abused to execute unauthorized actions, such as escalating basic tool access to administrative control. The risk is heightened by AI’s cross-system autonomy, making it difficult to enforce strict access boundaries, detect privilege misuse in real time, and prevent unauthorized operations. The threat is partially covered by LLM06:2025 Excessive Agency but amplifies privilege escalation risks as agents can dynamically delegate roles or invoke external tools, requiring stricter boundary enforcement.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution & Implement Secure AI Authentication Mechanisms (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Monitor & Prevent Tool Misuse & Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Prevent AI Resource Exhaustion & Detect & Block AI Impersonation Attempts (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Elevation of Privilege",
+    "conditions": [{
+    "nodeType": "tm.Agent",
+    "props": {
+  "hasDynamicAdminPrivileges": true
+  },
+    "neighbours": [{
+      "nodeType": "any",
+      "props": {},
+      "flows": [{
+        "direction": "from",
+        "props": {
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Tool",
+      "props": {
+        "requiresAdmin": true
       },
-      "neighbours": [{
-        "nodeType": "tm.Agent",
-        "props": {},
-        "flows": []
+      "flows": []
+    }]
+  }]
+  },{
+    "id": "TM-T3-S2",
+    "name": "Cross-System Authorization Exploitation",
+    "description": "By leveraging an AI agent’s access across multiple corporate systems, an attacker escalates privileges (ex: from HR to Finance) due to inadequate scope enforcement, allowing unauthorized data extraction.\n\nPrivilege Compromise occurs when attackers exploit mismanaged roles, overly permissive configurations, or dynamic permission inheritance to escalate privileges and misuse AI agents' access. Unlike traditional systems, AI agents autonomously inherit permissions, creating security blind spots where temporary or inherited privileges can be abused to execute unauthorized actions, such as escalating basic tool access to administrative control. The risk is heightened by AI’s cross-system autonomy, making it difficult to enforce strict access boundaries, detect privilege misuse in real time, and prevent unauthorized operations. The threat is partially covered by LLM06:2025 Excessive Agency but amplifies privilege escalation risks as agents can dynamically delegate roles or invoke external tools, requiring stricter boundary enforcement.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution & Implement Secure AI Authentication Mechanisms (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Monitor & Prevent Tool Misuse & Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Prevent AI Resource Exhaustion & Detect & Block AI Impersonation Attempts (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Elevation of Privilege",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": {
+  "hasMultiDomainAccess": true
+  },
+      "neighbours": []
+    }
+  ]
+  },{
+    "id": "TM-T3-S3",
+    "name": "Shadow Agent Deployment",
+    "description": "Exploiting weak access controls, an attacker creates a rogue AI agent that inherits legitimate credentials, operating undetected while executing data exfiltration or unauthorized transactions.\n\nPrivilege Compromise occurs when attackers exploit mismanaged roles, overly permissive configurations, or dynamic permission inheritance to escalate privileges and misuse AI agents' access. Unlike traditional systems, AI agents autonomously inherit permissions, creating security blind spots where temporary or inherited privileges can be abused to execute unauthorized actions, such as escalating basic tool access to administrative control. The risk is heightened by AI’s cross-system autonomy, making it difficult to enforce strict access boundaries, detect privilege misuse in real time, and prevent unauthorized operations. The threat is partially covered by LLM06:2025 Excessive Agency but amplifies privilege escalation risks as agents can dynamically delegate roles or invoke external tools, requiring stricter boundary enforcement.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution & Implement Secure AI Authentication Mechanisms (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n● Require cryptographic identity verification for AI agents.\n● Implement granular RBAC & ABAC to ensure AI only has permissions necessary for its role.\n● Deploy multi-factor authentication (MFA) for high-privilege AI accounts.\n● Enforce continuous reauthentication for long-running AI sessions.\n● Prevent cross-agent privilege delegation unless explicitly authorized through predefined workflows.\n● Enforce mutual authentication for AI-to-AI interactions. Prevent unauthorized inter-agent\ncommunication by requiring bidirectional verification.\n● Limit AI credential persistence. Ensure that AI-generated credentials are temporary and expire after\nshort timeframes to reduce exploitation risk.\n🚨Step 2: Monitor & Prevent Tool Misuse & Restrict Privilege Escalation & Identity Inheritance (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n● Use dynamic access controls that automatically expire elevated permissions.\n● Use AI-driven behavioral profiling to detect inconsistencies in agent role assignments and access\npatterns.\n● Require two-agent or human validation for high-risk AI actions involving authentication changes.\n● Detect and flag role inheritance anomalies in real-time. Identify cases where AI agents are\ndynamically granted roles outside their usual operational scope.\n● Apply time-based restrictions on privilege elevation. Ensure that AI agents with elevated privileges\ncan only retain them for preapproved durations before automatic downgrade.\n🕵Step 3: Prevent AI Resource Exhaustion & Detect & Block AI Impersonation Attempts (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.\n● Track AI agent behavior over time to detect inconsistencies in identity verification.\n● Monitor AI agents for unexpected role changes or permissions abuse.\n● Flag anomalies where AI agents initiate privileged actions outside their normal scope.\n● Correlate AI identity validation with historical access trends. Compare authentication attempts\nagainst past access logs to detect suspicious deviations.\n● Implement identity deviation monitoring, flagging cases where an AI agent's behavior does not\nmatch its historical activity.\n● Monitor and flag repeated failed authentication attempts. Identify AI agents or users attempting\nmultiple unauthorized login attempts, potentially signaling credential brute-force attempts.",
+    "strideType": "Elevation of Privilege",
+    "conditions": [
+    {
+      "nodeType": "tm.Agent",
+      "props": {
+  "canBeRegisteredByUser": true,
+  "inheritsPrivileges": true
+  },
+      "neighbours": []
+    }
+  ]
+  },{
+    "id": "TM-T4-S1",
+    "name": "Inference Time Exploitation",
+    "description": "An attacker feeds an AI security system specially crafted inputs that force resource-intensive analysis, overwhelming processing capacity and delaying real- time threat detection.\n\nResource Overload occurs when attackers deliberately exhaust an AI agent’s computational power, memory, or external service dependencies, leading to system degradation or failure. Unlike traditional DoS attacks, AI agents are especially vulnerable due to resource-intensive inference tasks, multi-service dependencies, and concurrent processing demands, making them susceptible to delays, decision paralysis, or cascading failures across interconnected systems. This threat is particularly critical in real-time and autonomous environments, where resource exhaustion can disrupt essential operations and compromise system reliability. The threat is related to LLM10:2025 Unbounded Consumption – Agentic AI systems are particularly vulnerable to resource overload because they autonomously schedule, queue, and execute tasks across sessions without direct human oversight. Unlike standard LLM applications, agentic AI agents can self-trigger tasks, spawn additional processes, and coordinate with multiple agents, leading to exponential resource consumption, a more complex and systemic threat.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [{
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
+      "props": {},
+      "flows": [{
+        "direction": "from",
+        "props": {
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Tool",
+      "props": {
+        "isResourceIntensive": true
+      },
+      "flows": []
+    }]
+  },{
+    "nodeType": "tm.Agent",
+    "props": {},
+    "neighbours": [{
+      "nodeType": "any",
+      "props": {},
+      "flows": [{
+        "direction": "from",
+        "props": {
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Tool",
+      "props": {
+        "isApi": true
+      },
+      "flows": []
+    }]
+  }]
+  },{
+    "id": "TM-T4-S3",
+    "name": "API Quota Depletion",
+    "description": "An attacker bombards an AI agent with requests that trigger excessive external API calls, rapidly consuming the system’s API quota and blocking legitimate usage while incurring high operational costs.\n\nResource Overload occurs when attackers deliberately exhaust an AI agent’s computational power, memory, or external service dependencies, leading to system degradation or failure. Unlike traditional DoS attacks, AI agents are especially vulnerable due to resource-intensive inference tasks, multi-service dependencies, and concurrent processing demands, making them susceptible to delays, decision paralysis, or cascading failures across interconnected systems. This threat is particularly critical in real-time and autonomous environments, where resource exhaustion can disrupt essential operations and compromise system reliability. The threat is related to LLM10:2025 Unbounded Consumption – Agentic AI systems are particularly vulnerable to resource overload because they autonomously schedule, queue, and execute tasks across sessions without direct human oversight. Unlike standard LLM applications, agentic AI agents can self-trigger tasks, spawn additional processes, and coordinate with multiple agents, leading to exponential resource consumption, a more complex and systemic threat.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [{
+    "nodeType": "tm.Agent",
+    "props": {
+  },
+    "neighbours": [{
+      "nodeType": "any",
+      "props": {},
+      "flows": [{
+        "direction": "from",
+        "props": {
+          "hasUserPrompt": true
+        }
+      }]
+    }, {
+      "nodeType": "tm.Tool",
+      "props": {
+        "isApi": true,
+        "hasQuota": true
+      },
+      "flows": []
+    }]
+  }]
+  },{
+    "id": "TM-T4-S4",
+    "name": "Memory Cascade Failure",
+    "description": "By initiating multiple complex tasks that require extensive memory allocation, an attacker causes memory fragmentation and leaks, leading to system-wide exhaustion that disrupts not only the targeted AI but also dependent services.\n\nResource Overload occurs when attackers deliberately exhaust an AI agent’s computational power, memory, or external service dependencies, leading to system degradation or failure. Unlike traditional DoS attacks, AI agents are especially vulnerable due to resource-intensive inference tasks, multi-service dependencies, and concurrent processing demands, making them susceptible to delays, decision paralysis, or cascading failures across interconnected systems. This threat is particularly critical in real-time and autonomous environments, where resource exhaustion can disrupt essential operations and compromise system reliability. The threat is related to LLM10:2025 Unbounded Consumption – Agentic AI systems are particularly vulnerable to resource overload because they autonomously schedule, queue, and execute tasks across sessions without direct human oversight. Unlike standard LLM applications, agentic AI agents can self-trigger tasks, spawn additional processes, and coordinate with multiple agents, leading to exponential resource consumption, a more complex and systemic threat.",
+    "mitigations": "🛡Step 1: Restrict AI Tool Invocation & Execution (Proactive)\n● Implement strict tool access control policies and limit which tools agents can execute.\n● Require function-level authentication before an AI can use a tool.\n● Use execution sandboxes to prevent AI-driven tool misuse from affecting production systems.\n● Use rate-limiting for API calls and computationally expensive tasks.\n● Restrict AI tool execution based on real-time risk scoring. Limit AI tool execution if risk factors (e.g.,\nanomalous user behavior, unusual access patterns) exceed predefined thresholds.\n● Implement just-in-time (JIT) access for AI tool usage. Grant tool access only when explicitly\nrequired, revoking permissions immediately after use.\n🚨Step 2: Monitor & Prevent Tool Misuse (Reactive)\n● Log all AI tool interactions with forensic traceability.\n● Detect command chaining that circumvents security policies.\n● Enforce explicit user approval for AI tool executions involving financial, medical, or administrative\nfunctions.\n● Maintain detailed execution logs tracking AI tool calls for forensic auditing and anomaly detection.\n● Require human verification before AI-generated code with elevated privileges can be executed.\n● Detect abnormal tool execution frequency. Flag cases where an AI agent is invoking the same tool\nrepeatedly within an unusually short timeframe, which may indicate an attack.\n● Monitor AI tool interactions for unintended side effects. Detect cases where AI tool outputs trigger\nunexpected security-sensitive operations.\n🕵Step 3: Prevent AI Resource Exhaustion (Detective)\n● Monitor agent workload usage and detect excessive processing requests in real-time.\n● Enforce auto-suspension of AI processes that exceed predefined resource consumption thresholds.\n● Enforce execution control policies to flag AI-generated code execution attempts that bypass\npredefined security constraints.\n● Track cumulative resource consumption across multiple AI agents. Prevent scenarios where\nmultiple agents collectively overload a system by consuming excessive compute resources.\n● Limit concurrent AI-initiated system modification requests. Prevent mass tool executions that\ncould inadvertently trigger denial-of-service (DoS) conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [{
+    "nodeType": "tm.Agent",
+    "props": {
+  },
+    "neighbours": [{
+      "nodeType": "any",
+      "props": {},
+      "flows": [{
+        "direction": "from",
+        "props": {
+          "mayContainMedia": true
+        }
       }]
     }]
+  }]
   }]
