@@ -40,6 +40,7 @@ const tmProcess = {
     privilegeLevel: '',
     threats: [],
     isTrusted: false,
+    "usesHII": false,
 };
 
 const store = {

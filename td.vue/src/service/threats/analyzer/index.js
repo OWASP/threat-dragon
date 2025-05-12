@@ -31,11 +31,13 @@ function _isThreatApplicableToCell(cell, threat, {graph}) {
         return Object.entries(props).every(([key, value]) => data[key] === value);
     }
     function _checkDirection(direction, edge, neighbourCell) {
-        if (direction === 'any') return true;
-        console.log({edge, neighbourCell})
-        if (direction === 'to') return edge.target.cell === neighbourCell.id;
-        if (direction === 'from') return edge.source.cell === neighbourCell.id;
-        return false;
+        const directions = direction.split('|');
+        return directions.some(direction => {
+            if (direction === 'any') return true;
+            if (direction === 'to') return edge.target.cell === neighbourCell.id;
+            if (direction === 'from') return edge.source.cell === neighbourCell.id;
+            return false; 
+        });
     }
     function _checkFlows(flows, cell, neighbourCell, {graph}) {
         const commonEdges = _getCommonEdges(cell, neighbourCell, {graph});

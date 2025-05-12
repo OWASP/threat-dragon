@@ -303,6 +303,9 @@ export default {
             ],
             'tm.Store': [
                 { key: 'isLongTermAgentMemory', type: 'bool' },
+            ],
+            'tm.Process': [
+                { key: 'usesHII', type: 'bool' },
             ]
         },
         propertyTypeComponents: {

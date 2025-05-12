@@ -640,4 +640,67 @@
       "neighbours": []
     }
   ]
+  },{
+    "id": "TM-T10-S1",
+    "name": "Human Intervention Interface (HII) Manipulation",
+    "description": "An attacker compromises the human-AI interaction layer by introducing artificial decision contexts, obscuring critical information, and manipulating perception, making effective oversight difficult.\n\nOverwhelming Human-in-the-Loop (HITL) occurs when attackers exploit human oversight dependencies in multi-agent AI systems, overwhelming users with excessive intervention requests, decision fatigue, or cognitive overload. This vulnerability arises in scalable AI architectures, where human capacity cannot keep up with multi-agent operations, leading to rushed approvals, reduced scrutiny, and systemic decision failures.",
+    "mitigations": "🛡Step 1: Optimize HITL Workflows & Reduce Decision Fatigue (Proactive)\n● Use AI trust scoring to prioritize HITL review queues based on risk level.\n● Automate low-risk approvals while requiring human oversight for high-impact tasks.\n● Limit AI-generated notifications to prevent cognitive overload.\n● Implement frequency thresholds to limit excessive AI-generated notifications, requests, and\napprovals to prevent decision fatigue.\n● Require dual-agent verification before an AI can modify its own operational goals.\n● Implement AI-assisted explanation summaries for human reviewers. Provide clear, concise AI\ndecision explanations to help reviewers make faster, more informed decisions.\no Utilizing mechanistic explainability frameworks can help scale this effort. For more\ninformation see https://arxiv.org/html/2404.14082v1\n● Apply adaptive workload distribution across human reviewers. Balance AI review tasks dynamically\nto prevent decision fatigue for individual reviewers.\n🚨Step 2: Identify AI-Induced Human Manipulation (Reactive)\n● Use goal consistency validation to detect and block unintended AI behavioral shifts.\n● Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n● Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n● Implement real-time anomaly detection on AI decision-making workflows.\n● Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n● Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [
+    {
+      "nodeType": "tm.Process",
+      "props": { "usesHII": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T10-S2",
+    "name": "Cognitive Overload and Decision Bypass",
+    "description": "By overwhelming human reviewers with excessive tasks, artificial time pressures, and complex decision scenarios, attackers induce decision fatigue, leading to rushed approvals and security bypasses.\n\nOverwhelming Human-in-the-Loop (HITL) occurs when attackers exploit human oversight dependencies in multi-agent AI systems, overwhelming users with excessive intervention requests, decision fatigue, or cognitive overload. This vulnerability arises in scalable AI architectures, where human capacity cannot keep up with multi-agent operations, leading to rushed approvals, reduced scrutiny, and systemic decision failures.",
+    "mitigations": "🛡Step 1: Optimize HITL Workflows & Reduce Decision Fatigue (Proactive)\n● Use AI trust scoring to prioritize HITL review queues based on risk level.\n● Automate low-risk approvals while requiring human oversight for high-impact tasks.\n● Limit AI-generated notifications to prevent cognitive overload.\n● Implement frequency thresholds to limit excessive AI-generated notifications, requests, and\napprovals to prevent decision fatigue.\n● Require dual-agent verification before an AI can modify its own operational goals.\n● Implement AI-assisted explanation summaries for human reviewers. Provide clear, concise AI\ndecision explanations to help reviewers make faster, more informed decisions.\no Utilizing mechanistic explainability frameworks can help scale this effort. For more\ninformation see https://arxiv.org/html/2404.14082v1\n● Apply adaptive workload distribution across human reviewers. Balance AI review tasks dynamically\nto prevent decision fatigue for individual reviewers.\n🚨Step 2: Identify AI-Induced Human Manipulation (Reactive)\n● Use goal consistency validation to detect and block unintended AI behavioral shifts.\n● Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n● Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n● Implement real-time anomaly detection on AI decision-making workflows.\n● Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n● Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [
+    {
+      "nodeType": "tm.Process",
+      "props": { "usesHII": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T10-S3",
+    "name": "Trust Mechanism Subversion",
+    "description": "An attacker gradually introduces inconsistencies and manipulates AI-human interactions to degrade human trust, creating uncertainty in decision validation and reducing system oversight effectiveness.\n\nOverwhelming Human-in-the-Loop (HITL) occurs when attackers exploit human oversight dependencies in multi-agent AI systems, overwhelming users with excessive intervention requests, decision fatigue, or cognitive overload. This vulnerability arises in scalable AI architectures, where human capacity cannot keep up with multi-agent operations, leading to rushed approvals, reduced scrutiny, and systemic decision failures.",
+    "mitigations": "🛡Step 1: Optimize HITL Workflows & Reduce Decision Fatigue (Proactive)\n● Use AI trust scoring to prioritize HITL review queues based on risk level.\n● Automate low-risk approvals while requiring human oversight for high-impact tasks.\n● Limit AI-generated notifications to prevent cognitive overload.\n● Implement frequency thresholds to limit excessive AI-generated notifications, requests, and\napprovals to prevent decision fatigue.\n● Require dual-agent verification before an AI can modify its own operational goals.\n● Implement AI-assisted explanation summaries for human reviewers. Provide clear, concise AI\ndecision explanations to help reviewers make faster, more informed decisions.\no Utilizing mechanistic explainability frameworks can help scale this effort. For more\ninformation see https://arxiv.org/html/2404.14082v1\n● Apply adaptive workload distribution across human reviewers. Balance AI review tasks dynamically\nto prevent decision fatigue for individual reviewers.\n🚨Step 2: Identify AI-Induced Human Manipulation (Reactive)\n● Use goal consistency validation to detect and block unintended AI behavioral shifts.\n● Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n● Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n● Implement real-time anomaly detection on AI decision-making workflows.\n● Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n● Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.",
+    "strideType": "Denial of Service",
+    "conditions": [
+    {
+      "nodeType": "tm.Process",
+      "props": { "usesHII": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
   }]
