@@ -278,14 +278,20 @@ export default {
     data: () => ({
         properties: {
             'tm.Agent': [
-                { key: 'pQueryRewriting', type: 'bool' },
-                { key: 'pPromptTemplate', type: 'bool' },
-                { key: 'pAttachInstruction', type: 'bool' },
-                { key: 'pOutputSafetyFilter', type: 'bool' },
-                { key: 'pModifiesMemory', type: 'bool' },
+                { key: 'hasConstraints', type: 'bool' },
+                { key: 'hasLogging', type: 'bool' },
+            ],
+            'tm.Tool': [
+                { key: 'isDangerous', type: 'bool' },
+                { key: 'isApi', type: 'bool' },
+                { key: 'usingParameters', type: 'bool' },
+                { key: 'isAutomated', type: 'bool' },
             ],
             'tm.Flow': [
-                { key: 'pRawUserData', type: 'bool' },
+                { key: 'hasUserPrompt', type: 'bool' },
+            ],
+            'tm.Store': [
+                { key: 'isLongTermAgentMemory', type: 'bool' },
             ]
         },
         propertyTypeComponents: {

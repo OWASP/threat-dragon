@@ -11,9 +11,7 @@ const flow = {
     protocol: '',
     pRawUserData: false,
     threats: [],
-    "isFunctionCall": false,
-    "isHighFrequency": false,
-    "resultsAreValidated": true
+    "hasUserPrompt": false,
 };
 
 const actor = {
@@ -41,9 +39,6 @@ const tmProcess = {
     privilegeLevel: '',
     threats: [],
     isTrusted: false,
-    "hasShortTermMemory": false,
-    "hasLongTermMemory": false,
-    "executesGeneratedCode": false
 };
 
 const store = {
@@ -60,7 +55,7 @@ const store = {
     storesInventory: false,
     threats: [],
     isTrusted: false,
-    "isSharedContext": false
+    "isLongTermAgentMemory": false
 };
 
 const agent = {
@@ -70,17 +65,10 @@ const agent = {
     outOfScope: false,
     reasonOutOfScope: '',
     hasOpenThreats: false,
-    pQueryRewriting: false,
-    pPromptTemplate: false,
-    pAttachInstruction: false,
-    pOutputSafetyFilter: false,
-    pModifiesMemory: false,
     threats: [],
     isTrusted: false,
-    "hasShortTermMemory": false,
-    "hasLongTermMemory": false,
-    "trustScore": 50,
-    "isRogue": false
+    "hasConstraints": false,
+    "hasLogging": false,
 };
 
 const tool = {
@@ -90,12 +78,12 @@ const tool = {
     outOfScope: false,
     reasonOutOfScope: '',
     hasOpenThreats: false,
-    pRequiresElevatedPrivileges: false,
     threats: [],
     isTrusted: false,
-    "isExternal": false,
     "isDangerous": false,
-    "requiresElevatedPrivileges": false
+    "isApi": false,
+    "usingParameters": false,
+    "isAutomated": false,
 };
 
 
