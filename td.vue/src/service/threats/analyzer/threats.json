@@ -703,4 +703,46 @@
       ]
     }
   ]
+  },{
+    "id": "TM-T15-S1",
+    "name": "AI-Powered Invoice Fraud",
+    "description": "An attacker exploits Indirect Prompt Injection (IPI) to manipulate an A-agentI, replacing legitimate data with the attacker’s. The user, trusting the AI’s response, unknowingly processes a fraudulent data.\n\nAttackers exploit user trust in AI agents to influence human decision-making without users realizing they are being misled. In compromised AI systems, adversaries manipulate the AI to coerce users into harmful actions, such as processing fraudulent transactions, clicking phishing links, or spreading misinformation. The implicit trust in AI responses reduces scepticism, making this an effective method for social engineering through AI.",
+    "mitigations": "🛡Step 1: Optimize HITL Workflows & Reduce Decision Fatigue (Proactive)\n● Use AI trust scoring to prioritize HITL review queues based on risk level.\n● Automate low-risk approvals while requiring human oversight for high-impact tasks.\n● Limit AI-generated notifications to prevent cognitive overload.\n● Implement frequency thresholds to limit excessive AI-generated notifications, requests, and\napprovals to prevent decision fatigue.\n● Require dual-agent verification before an AI can modify its own operational goals.\n● Implement AI-assisted explanation summaries for human reviewers. Provide clear, concise AI\ndecision explanations to help reviewers make faster, more informed decisions.\no Utilizing mechanistic explainability frameworks can help scale this effort. For more\ninformation see https://arxiv.org/html/2404.14082v1\n● Apply adaptive workload distribution across human reviewers. Balance AI review tasks dynamically\nto prevent decision fatigue for individual reviewers.\n🚨Step 2: Identify AI-Induced Human Manipulation (Reactive)\n● Use goal consistency validation to detect and block unintended AI behavioral shifts.\n● Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n● Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n● Implement real-time anomaly detection on AI decision-making workflows.\n● Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n● Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.",
+    "strideType": "Tampering",
+    "conditions": [
+    {
+      "nodeType": "tm.Process",
+      "props": { "usesHII": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
+  },{
+    "id": "TM-T15-S2",
+    "name": "AI-Driven Phishing Attack",
+    "description": "An attacker compromises an AI assistant to generate a deceptive message (e.g., instructing the user to click a malicious link disguised as a security update).\n\nAttackers exploit user trust in AI agents to influence human decision-making without users realizing they are being misled. In compromised AI systems, adversaries manipulate the AI to coerce users into harmful actions, such as processing fraudulent transactions, clicking phishing links, or spreading misinformation. The implicit trust in AI responses reduces scepticism, making this an effective method for social engineering through AI.",
+    "mitigations": "🛡Step 1: Optimize HITL Workflows & Reduce Decision Fatigue (Proactive)\n● Use AI trust scoring to prioritize HITL review queues based on risk level.\n● Automate low-risk approvals while requiring human oversight for high-impact tasks.\n● Limit AI-generated notifications to prevent cognitive overload.\n● Implement frequency thresholds to limit excessive AI-generated notifications, requests, and\napprovals to prevent decision fatigue.\n● Require dual-agent verification before an AI can modify its own operational goals.\n● Implement AI-assisted explanation summaries for human reviewers. Provide clear, concise AI\ndecision explanations to help reviewers make faster, more informed decisions.\no Utilizing mechanistic explainability frameworks can help scale this effort. For more\ninformation see https://arxiv.org/html/2404.14082v1\n● Apply adaptive workload distribution across human reviewers. Balance AI review tasks dynamically\nto prevent decision fatigue for individual reviewers.\n🚨Step 2: Identify AI-Induced Human Manipulation (Reactive)\n● Use goal consistency validation to detect and block unintended AI behavioral shifts.\n● Track goal modification request frequency per AI agent. Detect if an AI repeatedly attempts to\nchange its goals, which could indicate manipulation attempts.\n🕵Step 3: Strengthen AI Decision Traceability & Logging (Detective)\n● Enforce cryptographic logging and immutable audit trails to prevent log tampering.\n● Implement real-time anomaly detection on AI decision-making workflows.\n● Monitor and log human overrides of AI recommendations, analyzing reviewer patterns for potential\nbias or AI misalignment.\n● Detect and flag decision reversals in high-risk workflows, where AI-generated outputs are initially\ndenied but later approved under suspicious conditions.",
+    "strideType": "Tampering",
+    "conditions": [
+    {
+      "nodeType": "tm.Process",
+      "props": { "usesHII": true
+  },
+      "neighbours": [
+        {
+          "nodeType": "tm.Agent",
+          "props": {},
+          "flows": [ { "direction": "from|any", "props":{} }
+  ]
+        }
+      ]
+    }
+  ]
   }]
