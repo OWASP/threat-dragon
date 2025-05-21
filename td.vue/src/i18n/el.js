@@ -74,8 +74,8 @@ const ell = {
             submit: 'Υποβάλετε ένα πρόβλημα',
             check: 'Έλεγχος για ενημερώσεις ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Σχετικά',
+                version: 'Έκδοση'
             }
         }
     },
@@ -122,7 +122,7 @@ const ell = {
             generic: {
                 defaultTitle: 'Νέο γενικό διάγραμμα',
                 defaultDescription: 'Περιγραφή νέου γενικού διαγράμματος',
-                select: 'Generic'
+                select: 'Γενικό'
             },
             stride: {
                 defaultTitle: 'Νέο διάγραμμα STRIDE',
@@ -169,12 +169,12 @@ const ell = {
             outOfScope: 'Εκτός πεδίου εφαρμογής',
             bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
+            handlesCardPayment: 'Πληρωμή κάρτας',
+            handlesGoodsOrServices: 'Αγαθά ή Υπηρεσίες',
             isALog: 'Είναι αρχείο καταγραφής',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
-            isWebApplication: 'Web Application',
+            isWebApplication: 'Web Εφαρμογή',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             providesAuthentication: 'Παρέχει αυθεντικοποίηση',
             protocol: 'Πρωτόκολλο',
@@ -227,7 +227,7 @@ const ell = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Αποθήκευση'
             }
         },
         stencil: {
@@ -257,11 +257,11 @@ const ell = {
         discardTitle: 'Απόρριψη αλλαγών;',
         discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
         edit: 'Επεξεργασία',
-        exportAs: 'Export Model As',
+        exportAs: 'Εξαγωγή Μοντέλου Ως',
         exportHtml: 'Αναφορά HTML',
         exportPdf: 'Αναφορά PDF',
         exportTd: 'Original (Threat Dragon)',
-        exportOtm: 'Open Threat Model (OTM)',
+        exportOtm: 'Άνοιγμα Μοντέλου Απειλών (OTM)',
         import: 'Εισαγωγή',
         ok: 'OK',
         open: 'Άνοιγμα',
@@ -370,7 +370,7 @@ const ell = {
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
             showEmpty: 'Προβολή κενών στοιχείων',
-            showProperties: 'Show element properties',
+            showProperties: 'Εμφάνιση ιδιοτήτων στοιχείου',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
