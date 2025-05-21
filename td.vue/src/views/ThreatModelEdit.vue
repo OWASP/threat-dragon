@@ -96,7 +96,7 @@
                     </b-form-row>
 
                     <b-form-row>
-                        <b-col md=8
+                        <b-col md=10
                             v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
                         >
@@ -127,6 +127,10 @@
                                     class="td-diagram-description"
                                 ></b-form-input>
                                 <b-input-group-append>
+                                    <b-button variant="primary" class="td-duplicate-diagram" @click="onDuplicateDiagramClick(idx)">
+                                        <font-awesome-icon icon="clone"></font-awesome-icon>
+                                        {{ $t('forms.duplicate') }}
+                                    </b-button>
                                     <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
@@ -323,6 +327,13 @@ export default {
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
+            this.$store.dispatch(tmActions.modified);
+        },
+        onDuplicateDiagramClick(idx) {
+            let newDiagram = this.model.detail.diagrams[idx];
+            newDiagram.id = this.diagramTop;
+            this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
+            this.model.detail.diagrams.push(newDiagram);
             this.$store.dispatch(tmActions.modified);
         },
         onModifyModel() {
