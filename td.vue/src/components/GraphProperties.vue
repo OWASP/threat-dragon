@@ -242,6 +242,22 @@
             >
           </b-form-group>
         </b-col>
+
+        <!-- Auto properties -->
+        <b-col 
+            v-if="cellRef.data.type in properties"
+            v-for="prop in properties[cellRef.data.type]" 
+            :key="`${cellRef.data.type}_${prop.key}`">
+          <b-form-group label-cols="auto" :id="`${prop.key}-group`">
+            <component
+              :is="propertyTypeComponents[prop.type]"
+              :id="prop.key"
+              v-model="cellRef.data[prop.key]"
+              @change="onChangeProperties()"
+              >{{ $t(`threatmodel.properties.${prop.key}`) }}</component>
+          </b-form-group>
+        </b-col>
+
       </b-form-row>
     </b-form>
   </div>
@@ -259,6 +275,45 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 
 export default {
     name: 'TdGraphProperties',
+    data: () => ({
+        properties: {
+            'tm.Agent': [
+                { key: 'hasConstraints', type: 'bool' },
+                { key: 'hasLogging', type: 'bool' },
+                { key: 'hasDynamicAdminPrivileges', type: 'bool' },
+                { key: 'hasMultiDomainAccess', type: 'bool' },
+                { key: 'canBeRegisteredByUser', type: 'bool' },
+                { key: 'inheritsPrivileges', type: 'bool' },
+                { key: 'usesAuth', type: 'bool' },
+                { key: 'usesBehavioralAuth', type: 'bool' },
+                { key: 'isSecurity', type: 'bool' },
+                { key: 'isAuthenticator', type: 'bool' },
+            ],
+            'tm.Tool': [
+                { key: 'isDangerous', type: 'bool' },
+                { key: 'isApi', type: 'bool' },
+                { key: 'usingParameters', type: 'bool' },
+                { key: 'isAutomated', type: 'bool' },
+                { key: 'requiresAdmin', type: 'bool' },
+                { key: 'isResourceIntensive', type: 'bool' },
+                { key: 'hasQuota', type: 'bool' },
+                { key: 'executesAgentGeneratedCode', type: 'bool' },
+            ],
+            'tm.Flow': [
+                { key: 'hasUserPrompt', type: 'bool' },
+                { key: 'mayContainMedia', type: 'bool' },
+            ],
+            'tm.Store': [
+                { key: 'isLongTermAgentMemory', type: 'bool' },
+            ],
+            'tm.Process': [
+                { key: 'usesHII', type: 'bool' },
+            ]
+        },
+        propertyTypeComponents: {
+            bool: 'b-form-checkbox'
+        }
+    }),
     computed: mapState({
         cellRef: (state) => state.cell.ref
     }),
