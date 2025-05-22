@@ -74,8 +74,8 @@ const ell = {
             submit: 'Υποβάλετε ένα πρόβλημα',
             check: 'Έλεγχος για ενημερώσεις ...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: 'Σχετικά',
+                version: 'Έκδοση'
             }
         }
     },
@@ -98,6 +98,11 @@ const ell = {
         cancel: 'Ακύρωση',
         name: 'Όνομα υποκαταστήματος',
     },
+    folder: {
+        select: 'Επιλέξτε ένα',
+        from: 'φάκελο από την παρακάτω λίστα',
+        noneFound: 'Αυτός ο φάκελος είναι κενός, μπορείτε να δημιουργήσετε ένα νέο μοντέλο απειλών εδώ.'
+    },
     threatmodelSelect: {
         select: 'Επιλέξτε ένα μοντέλο απειλών από',
         from: 'από την παρακάτω λίστα, ή επιλέξτε ένα άλλο',
@@ -110,7 +115,7 @@ const ell = {
         contributors: 'Συνεισφέροντες',
         contributorsPlaceholder: 'Προσθήκη ενός νέου συνεισφέροντος',
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
-        dragAndDrop: 'Drag and drop or ',
+        dragAndDrop: 'Μεταφορά & απόθεση ή ',
         editing: 'Υπό επεξεργασία',
         jsonPaste: 'Κάντε επικόλληση (Paste) του JSON από το μοντέλο απειλών σας εδώ',
         owner: 'Ιδιοκτήτης',
@@ -122,7 +127,7 @@ const ell = {
             generic: {
                 defaultTitle: 'Νέο γενικό διάγραμμα',
                 defaultDescription: 'Περιγραφή νέου γενικού διαγράμματος',
-                select: 'Generic'
+                select: 'Γενικό'
             },
             stride: {
                 defaultTitle: 'Νέο διάγραμμα STRIDE',
@@ -169,12 +174,12 @@ const ell = {
             outOfScope: 'Εκτός πεδίου εφαρμογής',
             bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
+            handlesCardPayment: 'Πληρωμή κάρτας',
+            handlesGoodsOrServices: 'Αγαθά ή υπηρεσίες',
             isALog: 'Είναι αρχείο καταγραφής',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
-            isWebApplication: 'Web Application',
+            isWebApplication: 'Web Εφαρμογή',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             providesAuthentication: 'Παρέχει αυθεντικοποίηση',
             protocol: 'Πρωτόκολλο',
@@ -227,7 +232,7 @@ const ell = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Αποθήκευση'
             }
         },
         stencil: {
@@ -258,11 +263,11 @@ const ell = {
         discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
         duplicate: 'Διπλασιάζω',
         edit: 'Επεξεργασία',
-        export: 'Εξάγω',
-        exportAs: 'Export Model As',
+        export: 'Εξαγωγή',
+        exportAs: 'Εξαγωγή Μοντέλου Ως',
         exportHtml: 'Αναφορά HTML',
         exportPdf: 'Αναφορά PDF',
-        exportTd: 'Original (Threat Dragon)',
+        exportTd: 'Πρωτότυπο (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Εισαγωγή',
         ok: 'OK',
@@ -363,7 +368,7 @@ const ell = {
             low: 'Χαμηλή',
             medium: 'Μεσαία',
             high: 'Υψηλή',
-            critical: 'Κρίσιμος'
+            critical: 'Κρίσιμη'
         }
     },
     report: {
@@ -372,7 +377,7 @@ const ell = {
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
             showEmpty: 'Προβολή κενών στοιχείων',
-            showProperties: 'Show element properties',
+            showProperties: 'Προβολή ιδιοτήτων στοιχείου',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
