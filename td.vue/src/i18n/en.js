@@ -261,6 +261,7 @@ const eng = {
         delete: 'Delete',
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
+        duplicate: 'Duplicate',
         edit: 'Edit',
         export: 'Export',
         exportAs: 'Export Model As',
