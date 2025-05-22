@@ -261,7 +261,7 @@ const ell = {
         delete: 'Διαγραφή',
         discardTitle: 'Απόρριψη αλλαγών;',
         discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
-        duplicate: 'Διπλασιάζω',
+        duplicate: 'Διπλότυπη',
         edit: 'Επεξεργασία',
         export: 'Εξαγωγή',
         exportAs: 'Εξαγωγή Μοντέλου Ως',
