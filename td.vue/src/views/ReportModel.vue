@@ -145,6 +145,7 @@
 </style>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
 
 .td-branding {
     padding-left: 50px;
@@ -166,7 +167,7 @@
     position: sticky;
     top: 55px;
     margin-top: -5px;
-    background-color: $white;
+    background-color: colors.$white;
     padding-top: 15px;
     z-index: 100;
 }

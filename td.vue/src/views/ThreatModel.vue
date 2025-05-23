@@ -74,16 +74,17 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
 .tm-card {
     font-size: 14px;
     white-space: pre-wrap;
 }
 .diagram-header-text a {
-    color: $black;
+    color: colors.$black;
 }
 
 .diagram-description-text a {
-    color: $black;
+    color: colors.$black;
 }
 
 .td-diagram-thumb {

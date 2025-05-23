@@ -49,6 +49,7 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
 .threat-card {
     font-size: 14px;
 }
@@ -62,15 +63,15 @@
 }
 
 .green-icon {
-    color: $green;
+    color: colors.$green;
 }
 
 .red-icon {
-    color: $red;
+    color: colors.$red;
 }
 
 .yellow-icon {
-    color: $yellow;
+    color: colors.$yellow;
 }
 
 </style>

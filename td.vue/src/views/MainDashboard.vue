@@ -23,8 +23,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
 .action-icon {
-    color: $orange;
+    color: colors.$orange;
     margin-bottom: 15px;
 }
 

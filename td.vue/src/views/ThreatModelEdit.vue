@@ -175,8 +175,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
 .add-diagram-link {
-    color: $orange;
+    color: colors.$orange;
     font-size: 14px;
 }
 

@@ -60,18 +60,20 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/colors.scss' as colors;
+@use '@/styles/sizes.scss' as sizes;
 $icon-height: 1.2rem;
 
 .navbar {
-  background-color: $orange;
-  border-color: $orange-alt;
-  height: $header-height+10;
+  background-color: colors.$orange;
+  border-color: colors.$orange-alt;
+  height: sizes.$header-height+10;
   font-size: 15px;
 }
 
 .nav-link,
 .logged-in-as {
-  color: $white !important;
+  color: colors.$white !important;
 }
 
 .logged-in-as {
@@ -85,25 +87,25 @@ $icon-height: 1.2rem;
 }
 
 .td-brand {
-  color: $white !important;
+  color: colors.$white !important;
   .td-brand-img {
-    max-height: ($header-height - 10);
+    max-height: (sizes.$header-height - 10);
   }
 }
 
 @media (max-width: 576px) { /* This is the typical breakpoint for phones */
   .nav-link {
-  color: red !important;
+  color: colors.$red !important;
   }
   .logged-in-as {
-    background-color: $orange;
+    background-color: colors.$orange;
     border-radius: 5px;
     padding:10px;
   }
 }
 @media (max-width: 576px) {
   .td-owasp-logo { /* Target the OWASP logo */
-    background-color: red;
+    background-color: colors.$red;
     border-radius: 50%;
     padding: 5px;
   }
