@@ -383,6 +383,7 @@ const ind = {
         threatStats: {
             total: 'Total Ancaman',
             mitigated: 'Total Diredam',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Belum Diredam',
             openCritical: 'Terbuka / Prioritas Kritis',
             openHigh: 'Terbuka / Prioritas Tinggi',

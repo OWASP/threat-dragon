@@ -383,6 +383,7 @@ const fin = {
         threatStats: {
             total: 'Uhkia yhteensä',
             mitigated: 'Hallittuja uhkia',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Hallitsemattomia uhkia',
             openCritical: 'Avoin / Kriittinen tärkeys',
             openHigh: 'Avoin / Korkea tärkeys',

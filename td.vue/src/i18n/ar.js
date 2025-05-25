@@ -385,6 +385,7 @@ const ara = {
         threatStats: {
             total: 'إجمالي التهديدات',
             mitigated: 'الإجمالي المُخفف',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'الإجمالي غير المُخفف',
             openCritical: 'مفتوح / الأولوية الحرجة',
             openHigh: 'مفتوح / أولوية عالية',

@@ -383,6 +383,7 @@ const por = {
         threatStats : {
             total: 'Ameaças totais',
             mitigated: 'Total Mitigado',
+            notApplicable: 'Total Not Applicable',
             notMitigated : 'Não atenuado',
             openCritical : 'Abrir / Crítica Prioridade',
             openHigh : 'Abrir / Alta Prioridade',

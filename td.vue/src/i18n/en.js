@@ -388,7 +388,8 @@ const eng = {
         threatStats: {
             total: 'Total Threats',
             mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
+            notApplicable: 'Total Not Applicable',
+            notMitigated: 'Total Open',
             openCritical: 'Open / Critical Priority',
             openHigh: 'Open / High Priority',
             openMedium: 'Open / Medium Priority',

@@ -383,6 +383,7 @@ const fra = {
         threatStats: {
             total: 'Menaces Totales',
             mitigated: 'Menaces Totales Mitigées',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Menaces Totales Non-Mitigées',
             openCritical:'Ouvert / Critique Priorité',
             openHigh: 'Ouvert / Haute Priorité',

@@ -382,6 +382,7 @@ const spa = {
         threatStats: {
             total: 'Total amenazas ',
             mitigated: 'Total amenazas mitigadas',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'No Mitigadas',
             openCritical: 'Abierto / Crítica Prioridad',
             openHigh: 'Abierto / Alta Prioridad',

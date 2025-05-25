@@ -383,6 +383,7 @@ const jpn = {
         threatStats: {
             total: '脅威総数',
             mitigated: '対策済みの脅威',
+            notApplicable: 'Total Not Applicable',
             notMitigated: '未対策の脅威',
             openCritical: '未対応 / 最優先事項',
             openHigh: '未対応 / 高優先度',
