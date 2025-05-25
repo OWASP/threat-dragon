@@ -88,7 +88,8 @@ const spa = {
         select: 'Seleccione un branch',
         from: 'de la lista a continuación o',
         chooseRepo: 'elija otro repositorio',
-        addNew: 'o añadir una nueva rama',
+        or: 'o',
+        addNew: 'añadir una nueva rama',
         protectedBranch: 'Rama protegida',
         nameRequired: 'El nombre de la rama es obligatorio',
         nameExists: 'El nombre de la rama ya existe',
@@ -96,6 +97,11 @@ const spa = {
         add: 'Añadir rama',
         cancel: 'Cancelar',
         name: 'Nombre de la sucursal',
+    },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Seleccione un modelo de amenazas (threat model) ',

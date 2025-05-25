@@ -98,6 +98,11 @@ const fin = {
         cancel: 'Peruuta',
         name: 'Sivuliikkeen nimi',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Valitse uhkamalli kohteesta',
         from: 'alla olevasta listasta, tai valitse toinen',

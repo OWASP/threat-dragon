@@ -98,6 +98,11 @@ const deu = {
         cancel: 'Abbrechen',
         name: 'Branch Name'
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Ein Bedrohungsmodell auswählen aus',
         from: 'aus folgenden Optionen, oder auswählen eines anderen',

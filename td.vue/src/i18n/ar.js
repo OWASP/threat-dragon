@@ -98,6 +98,11 @@ const ara = {
         cancel: 'إلغاء',
         name: 'اسم الفرع',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'حدد نموذج تهديد من',
         from: 'من القائمة أدناه ، أو اختر آخر',
@@ -273,8 +278,6 @@ const ara = {
         remove: 'إزالة',
         report: 'تقرير',
         save: 'حفظ',
-        savetd: 'تنسيق Threat Dragon',
-        saveotm: 'تنسيق OTM',
         saveAs: 'حفظ كـ',
         saveModel: 'حفظ النموذج',
         saveModelAs: 'حفظ النموذج كـ',

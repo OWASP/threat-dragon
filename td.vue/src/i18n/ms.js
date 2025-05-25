@@ -98,6 +98,11 @@ const ms = {
         cancel: 'Batal',
         nama: 'nama cawangan',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
         from: 'dari senarai di bawah, atau pilih yang lain',
@@ -348,7 +353,6 @@ const ms = {
             modelType: 'Jenis Model',
             number: 'Nombor',
             priority: 'Keutamaan',
-
             score: 'Skor',
             status: 'Status',
             title: 'Tajuk',

@@ -98,6 +98,11 @@ const zho = {
         cancel: '取消',
         name: '分支名称',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',
         from: '从下面列表中，或选择另一个',

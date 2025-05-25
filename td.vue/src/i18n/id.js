@@ -98,6 +98,11 @@ const ind = {
         cancel: 'Batal',
         name: 'Nama Cabang',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
         from: 'dari daftar di bawah, atau pilih lain',

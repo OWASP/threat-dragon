@@ -98,6 +98,11 @@ const jpn = {
         cancel: '取り消し',
         name: 'ブランチ名',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: '次のものから',
         from: '脅威モデルを選ぶか',

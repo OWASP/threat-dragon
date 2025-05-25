@@ -98,6 +98,11 @@ const por = {
         cancel: 'Cancelar',
         name: 'Nome da branch',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Selecion a Threat Model from',
         from: 'da lista abaixo, ou escolher outra',

@@ -98,6 +98,11 @@ const fra = {
         cancel: 'Annuler',
         name: 'Nom de la branche',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'Sélectionnez un modèle de menace parmi',
         from: 'parmi la liste ci-dessous, ou choisissez une autre',

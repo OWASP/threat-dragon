@@ -98,6 +98,11 @@ const hin = {
         cancel: 'रद्द करें',
         name: 'शाखा का नाम',
     },
+    folder: {
+	    select: 'Select a',
+	    from: 'folder from the list below',
+	    noneFound: 'This folder is empty, You can create a new threat model here.'
+    },
     threatmodelSelect: {
         select: 'से एक थ्रेट मॉडल का चयन करें',
         from: 'नीचे दी गई सूची से, या कोई अन्य चुनें',
