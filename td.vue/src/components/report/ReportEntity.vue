@@ -13,9 +13,9 @@
                 <p class="entity-description"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
             </b-col>
         </b-row>
-        <b-row>
+        <b-row v-if="entity.data.description || showProperties">
             <b-col>
-                <p class="entity-description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+                <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
                 <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>
@@ -89,8 +89,8 @@ export default {
                     [this.$t('threats.properties.number')]: threat.number,
                     [this.$t('threats.properties.title')]: threat.title,
                     [this.$t('threats.properties.type')]: threat.type,
-                    [this.$t('threats.properties.priority')]: threat.severity,
-                    [this.$t('threats.properties.status')]: threat.status,
+                    [this.$t('threats.properties.priority')]: this.translatePriority(threat.severity),
+                    [this.$t('threats.properties.status')]: this.translateStatus(threat.status),
                     [this.$t('threats.properties.score')]: threat.score,
                     [this.$t('threats.properties.description')]: threat.description,
                     [this.$t('threats.properties.mitigation')]: threat.mitigation
@@ -149,6 +149,22 @@ export default {
         toCamelCase(str) {
             // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
+        },
+        translatePriority(priority) {
+            return ({
+                'TBD': this.$t('threats.priority.tbd'),
+                'Low': this.$t('threats.priority.low'),
+                'Medium': this.$t('threats.priority.medium'),
+                'High': this.$t('threats.priority.high'),
+                'Critical': this.$t('threats.priority.critical')
+            })[priority] ?? 'Unknown';
+        },
+        translateStatus(status) {
+            return ({
+                'NotApplicable': this.$t('threats.status.notApplicable'),
+                'Open': this.$t('threats.status.open'),
+                'Mitigated': this.$t('threats.status.mitigated')
+            })[status] ?? 'Unknown';
         }
     }
 };

@@ -388,6 +388,7 @@ const deu = {
         threatStats: {
             total: 'Bedrohungen insgesamt',
             mitigated: 'Bedrohungen abgeschwächt',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Nicht abgeschwächt',
             openCritical: 'Offen / Kritische Priorität',
             openHigh: 'Offen / Hohe Priorität',

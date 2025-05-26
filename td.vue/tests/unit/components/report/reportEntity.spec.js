@@ -18,22 +18,32 @@ describe('components/report/ReportEntity.vue', () => {
                         number: '1',
                         title: 't1',
                         severity: 'High',
-                        score: '10',
+                        score: 'score10',
                         status: 'Open',
                         type: 'type1',
                         description: 'Threat 1',
-                        mitigation: 'We did things'
+                        mitigation: 'We have yet to do things'
                     },
                     {
                         number: '2',
                         title: 't2',
                         severity: 'Medium',
-                        score: '20',
+                        score: 'score5',
                         status: 'Mitigated',
                         type: 'type2',
                         description: 'Threat 2',
-                        mitigation: 'We did other things'
+                        mitigation: 'We did things'
                     },
+                    {
+                        number: '3',
+                        title: 't3',
+                        severity: 'Low',
+                        score: 'score1',
+                        status: 'NotApplicable',
+                        type: 'type3',
+                        description: 'Threat 3',
+                        mitigation: 'No need to do things'
+                    }
                 ]
             }
         }

@@ -91,11 +91,11 @@ describe('report', () => {
         it('displays the table data', () => {
             assertRowHasValue('Total Threats', 14);
             assertRowHasValue('Total Mitigated', 4);
-            assertRowHasValue('Not Mitigated', 10);
+            assertRowHasValue('Total Open', 10);
+            assertRowHasValue('Open / Critical Priority', 0);
             assertRowHasValue('Open / High Priority', 4);
             assertRowHasValue('Open / Medium Priority', 4);
             assertRowHasValue('Open / Low Priority', 2);
-            assertRowHasValue('Open / Unknown Priority', 0);
         });
     });
 });

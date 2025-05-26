@@ -14,17 +14,26 @@
         </div>
         <div class="mt-2">
             <table class="table td-summary-table">
+              <tbody>
                 <tr>
                     <th>{{ $t('report.threatStats.total') }}</th>
-                    <td class="td-summary-total">{{ total }}</td>
+                    <td class="td-summary-total">{{ threatsTotal }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.mitigated') }}</th>
-                    <td class="td-summary-mitigated">{{ mitigated }}</td>
+                    <td class="td-summary-mitigated">{{ threatsClosed }}</td>
+                </tr>
+                <tr v-if="threatsNa" >
+                    <th>{{ $t('report.threatStats.notApplicable') }}</th>
+                    <td class="td-summary-not-applicable">{{ threatsNa }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.notMitigated') }}</th>
-                    <td class="td-summary-not-mitigated">{{ notMitigated }}</td>
+                    <td class="td-summary-not-mitigated">{{ threatsOpen }}</td>
+                </tr>
+                <tr>
+                    <th>{{ $t('report.threatStats.openCritical') }}</th>
+                    <td class="td-summary-open-critical">{{ openCritical }}</td>
                 </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.openHigh') }}</th>
@@ -38,10 +47,15 @@
                     <th>{{ $t('report.threatStats.openLow') }}</th>
                     <td class="td-summary-open-low">{{ openLow }}</td>
                 </tr>
-                <tr>
+                <tr v-if="openTbd" >
+                    <th>{{ $t('report.threatStats.openTbd') }}</th>
+                    <td class="td-summary-open-tbd">{{ openTbd }}</td>
+                </tr>
+                <tr v-if="openUnknown" >
                     <th>{{ $t('report.threatStats.openUnknown') }}</th>
                     <td class="td-summary-open-unknown">{{ openUnknown }}</td>
                 </tr>
+              </tbody>
             </table>
         </div>
     </div>
@@ -69,32 +83,47 @@ export default {
         }
     },
     computed: {
-        total: function () {
+        threatsTotal: function () {
             return this.threats.length;
         },
-        mitigated: function () {
+        threatsClosed: function () {
             return this.threats
-                .filter(threat => threat.status.toLowerCase() === 'mitigated')
+                .filter(threat => threat.status === 'Mitigated')
                 .length;
         },
-        notMitigated: function () {
+        threatsNa: function () {
             return this.threats
-                .filter(threat => threat.status.toLowerCase() !== 'mitigated')
+                .filter(threat => threat.status === 'NotApplicable')
+                .length;
+        },
+        threatsOpen: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Open')
+                .length;
+        },
+        openCritical: function () {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity === 'Critical')
                 .length;
         },
         openHigh: function () {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'high')
+                .filter(threat => threat.severity === 'High')
                 .length;
         },
         openMedium: function() {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'medium')
+                .filter(threat => threat.severity === 'Medium')
                 .length;
         },
         openLow: function() {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'low')
+                .filter(threat => threat.severity === 'Low')
+                .length;
+        },
+        openTbd: function() {
+            return this.getOpenThreats()
+                .filter(threat => threat.severity === 'TBD')
                 .length;
         },
         openUnknown: function() {
@@ -106,7 +135,7 @@ export default {
     methods: {
         getOpenThreats() {
             return this.threats
-                .filter(threat => threat.status && threat.status.toLowerCase() === 'open');
+                .filter(threat => threat.status && threat.status === 'Open');
         }
     }
 };

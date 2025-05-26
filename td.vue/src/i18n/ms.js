@@ -388,6 +388,7 @@ const ms = {
         threatStats: {
             total: 'Jumlah Ancaman',
             mitigated: 'Jumlah Ditangani',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Belum Ditangani',
             openCritical: 'Buka / Keutamaan Kritikal',
             openHigh: 'Buka / Keutamaan Tinggi',

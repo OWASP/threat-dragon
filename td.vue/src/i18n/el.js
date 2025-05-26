@@ -388,6 +388,7 @@ const ell = {
         threatStats: {
             total: 'Σύνολο απειλών',
             mitigated: 'Σύνολο μετριασμένων',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Μη μετριασμένες',
             openCritical: 'Ανοιχτές / Κρίσιμη Προτεραιότητα',
             openHigh: 'Ανοιχτές / Υψηλής Προτεραιότητας',

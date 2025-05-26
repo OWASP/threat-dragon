@@ -12,9 +12,14 @@ describe('components/report/ExecutiveSummary.vue', () => {
             { status: 'Open', severity: 'High' },
             { status: 'Open', severity: 'Medium' },
             { status: 'NotApplicable', severity: 'Low' },
+            { status: 'NotApplicable', severity: 'Critical' },
+            { status: 'Open', severity: 'Critical' },
+            { status: 'Open', severity: 'Critical' },
             { status: 'Open', severity: 'Low' },
             { status: 'Open', severity: '' },
-            { status: 'Mitigated', severity: '' }
+            { status: 'Mitigated', severity: '' },
+            { status: 'Mitigated', severity: 'TBD' },
+            { status: 'Open', severity: 'TBD' }
         ]
     });
 
@@ -58,28 +63,33 @@ describe('components/report/ExecutiveSummary.vue', () => {
             .toEqual('report.summary');
     });
 
-    it('gets only the open threats', () => {
-        expect(wrapper.vm.getOpenThreats()).toHaveLength(4);
+    it('total of open threats', () => {
+        expect(wrapper.vm.getOpenThreats()).toHaveLength(7);
     });
 
     it('counts the total threats', () => {
-        expect(TdExecutiveSummary.computed.total.call(propsData))
-            .toEqual(6);
+        expect(TdExecutiveSummary.computed.threatsTotal.call(propsData))
+            .toEqual(11);
     });
 
     it('counts the mitigated threats', () => {
-        expect(TdExecutiveSummary.computed.mitigated.call(propsData))
-            .toEqual(1);
+        expect(TdExecutiveSummary.computed.threatsClosed.call(propsData))
+            .toEqual(2);
     });
 
     it('counts the unmitigated threats', () => {
-        expect(TdExecutiveSummary.computed.notMitigated.call(propsData))
-            .toEqual(5);
+        expect(TdExecutiveSummary.computed.threatsOpen.call(propsData))
+            .toEqual(7);
+    });
+
+    it('counts the not applicable threats', () => {
+        expect(TdExecutiveSummary.computed.threatsNa.call(propsData))
+            .toEqual(2);
     });
 
     it('gets the data test id from the row item', () => {
-        const item = { name: 'foo' };
+        const item = { metric: 'foo' };
         const res = wrapper.vm.getDataTestId(item);
-        expect(res['data-test-id']).toEqual(item.name);
+        expect(res['data-test-id']).toEqual(item.metric);
     });
 });

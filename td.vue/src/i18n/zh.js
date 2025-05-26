@@ -388,6 +388,7 @@ const zho = {
         threatStats: {
             total: '威胁总数',
             mitigated: '已缓解总数',
+            notApplicable: 'Total Not Applicable',
             notMitigated: '未缓解',
             openCritical: '未解决/关键优先级',
             openHigh: '未解决/高优先级',

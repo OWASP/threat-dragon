@@ -388,6 +388,7 @@ const hin = {
         threatStats: {
             total: 'कुल खतरे',
             mitigated: 'कुल शमन',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'कम नहीं किया गया',
             openCritical: 'ओपन / महत्वपूर्ण प्राथमिकता',
             openHigh: 'ओपन / हाई प्रायोरिटी',
