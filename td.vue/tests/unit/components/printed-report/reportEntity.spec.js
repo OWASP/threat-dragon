@@ -107,16 +107,16 @@ describe('components/printed-report/ReportEntity.vue', () => {
         expect(tableHasCellWithText('t2')).toEqual(true);
     });
 
-    it('shows the hgh severity', () => {
-        expect(tableHasCellWithText('threats.priority.high')).toEqual(true);
+    it('shows the high severity', () => {
+        expect(tableHasCellWithText('threats.severity.high')).toEqual(true);
     });
 
     it('shows the medium severity', () => {
-        expect(tableHasCellWithText('threats.priority.medium')).toEqual(true);
+        expect(tableHasCellWithText('threats.severity.medium')).toEqual(true);
     });
 
     it('shows the low severity', () => {
-        expect(tableHasCellWithText('threats.priority.low')).toEqual(true);
+        expect(tableHasCellWithText('threats.severity.low')).toEqual(true);
     });
 
     it('shows the first score', () => {

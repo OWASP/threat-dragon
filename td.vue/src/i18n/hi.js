@@ -352,7 +352,7 @@ const hin = {
             mitigation: 'शमन',
             modelType: 'मॉडल प्रकार',
             number: 'नंबर',
-            priority: 'प्राथमिकता',
+            severity: 'प्राथमिकता',
             score: 'स्कोर',
             status: 'स्थिति',
             title: 'शीर्षक',
@@ -363,7 +363,7 @@ const hin = {
             open: 'खुला',
             mitigated: 'शमन'
         },
-        priority: {
+        severity: {
             tbd: 'टीबीए',
             low: 'कम',
             medium: 'मध्यम',

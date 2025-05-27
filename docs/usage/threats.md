@@ -45,11 +45,13 @@ All threats have the following properties:
 * Type is a category selection determined by the diagram type (STRIDE / LINDDUN / PLOT4ai / CIA / CIA-DIE / Generic)
 * Status is one of N/A / Open / Mitigated
 * Score contains a free text field, often used to score the threat from 0.0 to 10.0 but can be any text or CVSS score
-* Priority is one of TBD / Low / Medium / High / Critical, similar to CVSS
+* Severity is one of TBD / Low / Medium / High / Critical, similar to CVSS
 * Description of the threat and possible impact
 * Mitigations for the threat, probably a remediation from TAME (Transfer / Accept / Mitigate / Evade)
 
-Here N/A stands for Not Applicable and TBD for To Be Defined (or Determined)
+Here N/A stands for Not Applicable and TBD for To Be Defined (or Determined).
+Threat severity is used instead of 'Priority' - this [has been discussed][issue#197]
+and 'Severity' is now used because this fits in with the [Mitre definitions][severity] of severity.
 
 ## Threat categories
 
@@ -113,4 +115,6 @@ If there is no suggestion available, usually when no properties have been select
 
 Threat Dragon: _making threat modeling less threatening_
 
+[issue#197]: https://github.com/OWASP/threat-dragon/issues/197
 [oats]: https://owasp.org/www-project-automated-threats-to-web-applications/
+[severity]: https://nvd.nist.gov/vuln-metrics/cvss

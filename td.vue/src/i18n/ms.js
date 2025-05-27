@@ -352,7 +352,7 @@ const ms = {
             mitigation: 'Pemulihan',
             modelType: 'Jenis Model',
             number: 'Nombor',
-            priority: 'Keutamaan',
+            severity: 'Keutamaan',
             score: 'Skor',
             status: 'Status',
             title: 'Tajuk',
@@ -363,7 +363,7 @@ const ms = {
             open: 'Buka',
             mitigated: 'Ditangani'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Rendah',
             medium: 'Sederhana',

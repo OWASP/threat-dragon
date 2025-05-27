@@ -352,7 +352,7 @@ const fra = {
             mitigation: 'Mesures de mitigation',
             modelType: 'Type de modèle',
             number: 'Numéro',
-            priority: 'Priorité',
+            severity: 'Priorité',
             score: 'Score',
             status: 'Status',
             title: 'Titre',
@@ -363,7 +363,7 @@ const fra = {
             open: 'Ouvrir',
             mitigated: 'Mitigé'
         },
-        priority: {
+        severity: {
             tbd: 'à venir',
             low: 'Faible',
             medium: 'Moyen',

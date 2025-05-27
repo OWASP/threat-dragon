@@ -352,7 +352,7 @@ const por = {
             mitigation: 'Mitigations',
             modelType: 'Model Type',
             number: 'Number',
-            priority: 'Priority',
+            severity: 'Severity',
             score: 'Score',
             status: 'Status',
             title: 'Title',
@@ -363,7 +363,7 @@ const por = {
             open: 'Open',
             mitigated: 'Mitigated'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Low',
             medium: 'Medium',

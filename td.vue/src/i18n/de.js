@@ -352,7 +352,7 @@ const deu = {
             mitigation: 'Minderungsmaßnahme',
             modelType: 'Modell Typ',
             number: 'Nummer',
-            priority: 'Priorität',
+            severity: 'Priorität',
             score: 'Ergebnis',
             status: 'Status',
             title: 'Titel',
@@ -363,7 +363,7 @@ const deu = {
             open: 'Offen',
             mitigated: 'Abgeschwächt'
         },
-        priority: {
+        severity: {
             tbd: '',
             low: 'Niedrig',
             medium: 'Mittel',

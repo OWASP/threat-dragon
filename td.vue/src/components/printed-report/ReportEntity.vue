@@ -13,7 +13,7 @@
                     <th>{{ $t('threats.properties.number') }}</th>
                     <th>{{ $t('threats.properties.title') }}</th>
                     <th>{{ $t('threats.properties.type') }}</th>
-                    <th>{{ $t('threats.properties.priority') }}</th>
+                    <th>{{ $t('threats.properties.severity') }}</th>
                     <th>{{ $t('threats.properties.status') }}</th>
                     <th>{{ $t('threats.properties.score') }}</th>
                     <th>{{ $t('threats.properties.description') }}</th>
@@ -28,7 +28,7 @@
                     <td>{{ threat.number }}</td>
                     <td>{{ threat.title }}</td>
                     <td>{{ threat.type }}</td>
-                    <td>{{ translatePriority(threat.severity) }}</td>
+                    <td>{{ translateSeverity(threat.severity) }}</td>
                     <td>{{ translateStatus(threat.status) }}</td>
                     <td>{{ threat.score }}</td>
                     <td>{{ threat.description }}</td>
@@ -146,14 +146,14 @@ export default {
             // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
         },
-        translatePriority(priority) {
+        translateSeverity(severity) {
             return ({
-                'TBD': this.$t('threats.priority.tbd'),
-                'Low': this.$t('threats.priority.low'),
-                'Medium': this.$t('threats.priority.medium'),
-                'High': this.$t('threats.priority.high'),
-                'Critical': this.$t('threats.priority.critical')
-            })[priority] ?? 'Unknown';
+                'TBD': this.$t('threats.severity.tbd'),
+                'Low': this.$t('threats.severity.low'),
+                'Medium': this.$t('threats.severity.medium'),
+                'High': this.$t('threats.severity.high'),
+                'Critical': this.$t('threats.severity.critical')
+            })[severity] ?? 'Unknown';
         },
         translateStatus(status) {
             return ({
