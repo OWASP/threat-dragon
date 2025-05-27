@@ -352,7 +352,7 @@ const zho = {
             mitigation: '缓解措施',
             modelType: '模型类型',
             number: '编号',
-            priority: '优先级',
+            severity: '优先级',
             score: '评分',
             status: '状态',
             title: '标题',
@@ -363,7 +363,7 @@ const zho = {
             open: '未解决',
             mitigated: '缓解'
         },
-        priority: {
+        severity: {
             tbd: '待定',
             low: '低',
             medium: '中',

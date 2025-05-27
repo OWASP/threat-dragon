@@ -352,7 +352,7 @@ const ell = {
             mitigation: 'Μέτρα Περιορισμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
             number: 'Αριθμός',
-            priority: 'Προτεραιότητα',
+            severity: 'Προτεραιότητα',
             score: 'Σκορ',
             status: 'Κατάσταση',
             title: 'Τίτλος',
@@ -363,7 +363,7 @@ const ell = {
             open: 'Ανοιχτή',
             mitigated: 'Καλύφθηκε'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Χαμηλή',
             medium: 'Μεσαία',

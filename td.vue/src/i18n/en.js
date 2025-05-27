@@ -352,7 +352,7 @@ const eng = {
             mitigation: 'Mitigations',
             modelType: 'Model Type',
             number: 'Number',
-            priority: 'Priority',
+            severity: 'Severity',
             score: 'Score',
             status: 'Status',
             title: 'Title',
@@ -363,7 +363,7 @@ const eng = {
             open: 'Open',
             mitigated: 'Mitigated'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Low',
             medium: 'Medium',
@@ -390,12 +390,12 @@ const eng = {
             mitigated: 'Total Mitigated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'Total Open',
-            openCritical: 'Open / Critical Priority',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openTbd: 'Open / TBD Priority',
-            openUnknown: 'Open / Unknown Priority'
+            openCritical: 'Open / Critical Severity',
+            openHigh: 'Open / High Severity',
+            openMedium: 'Open / Medium Severity',
+            openLow: 'Open / Low Severity',
+            openTbd: 'Open / TBD Severity',
+            openUnknown: 'Open / Unknown Severity'
         }
     },
     upgrade: {

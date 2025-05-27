@@ -352,7 +352,7 @@ const fin = {
             mitigation: 'Hallintakeinot',
             modelType: 'Uhkamallin Tyyppi',
             number: 'Numero',
-            priority: 'Tärkeys',
+            severity: 'Tärkeys',
             score: 'Pisteytys',
             status: 'Tila',
             title: 'Otsikko',
@@ -363,7 +363,7 @@ const fin = {
             open: 'Avoin',
             mitigated: 'Hallittu'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Alhainen',
             medium: 'Keskitaso',

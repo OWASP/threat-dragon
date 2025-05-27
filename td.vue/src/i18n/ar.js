@@ -352,7 +352,7 @@ const ara = {
             mitigation: 'التخفيف',
             modelType: 'نوع النموذج',
             number: 'الرقم',
-            priority: 'الأولوية',
+            severity: 'الأولوية',
             score: 'النقاط',
             status: 'الحالة',
             title: 'العنوان',
@@ -363,7 +363,7 @@ const ara = {
             open: 'مفتوح',
             mitigated: 'تم التخفيف'
         },
-        priority: {
+        severity: {
             tbd: 'سيتم الإعلان عنها',
             low: 'منخفض',
             medium: 'متوسط',

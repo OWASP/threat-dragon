@@ -352,7 +352,7 @@ const jpn = {
             mitigation: '解決策',
             modelType: 'モデル型',
             number: '番号',
-            priority: '優先度',
+            severity: '優先度',
             score: '結果',
             status: 'ステータス',
             title: 'タイトル',
@@ -363,7 +363,7 @@ const jpn = {
             open: '未対応',
             mitigated: '解決済み'
         },
-        priority: {
+        severity: {
             tbd: '未定',
             low: '低',
             medium: '中',

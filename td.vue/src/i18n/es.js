@@ -352,7 +352,7 @@ const spa = {
             mitigation: 'Mitigaciones',
             modelType: 'Tipo de Modelo',
             number: 'Número',
-            priority: 'Prioridad',
+            severity: 'Prioridad',
             score: 'Puntuación',
             status: 'Estado',
             title: 'Título',
@@ -363,7 +363,7 @@ const spa = {
             open: 'Abierto',
             mitigated: 'Mitigado'
         },
-        priority: {
+        severity: {
             tbd: 'Por confirmar',
             low: 'Baja',
             medium: 'Media',

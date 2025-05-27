@@ -102,9 +102,9 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(input.exists()).toEqual(true);
         });
 
-        it('has a priority input', () => {
+        it('has a severity input', () => {
             const input = wrapper.findAllComponents(BFormRadioGroup)
-                .filter(x => x.attributes('id') === 'priority')
+                .filter(x => x.attributes('id') === 'severity')
                 .at(0);
 
             expect(input.exists()).toEqual(true);

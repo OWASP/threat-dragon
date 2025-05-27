@@ -352,7 +352,7 @@ const ind = {
             mitigation: 'Remediasi',
             modelType: 'Jenis Model',
             number: 'Nomor',
-            priority: 'Prioritas',
+            severity: 'Prioritas',
             score: 'Skor',
             status: 'Status',
             title: 'Judul',
@@ -363,7 +363,7 @@ const ind = {
             open: 'Terbuka',
             mitigated: 'Diredam'
         },
-        priority: {
+        severity: {
             tbd: 'TBD',
             low: 'Rendah',
             medium: 'Sedang',
