@@ -78,7 +78,7 @@ The element properties will then be shown on the lower left side of the diagram 
 
 The properties vary according to the diagram element type.
 
-![data flow properties]({{ '/assets/images/dataflow-properties.png' | relative_url }})
+![data flow properties]({{ '/assets/images/dataflow-properties.png' | relative_url }}){: width="400" }
 
 For example the data flow has properties :
 
@@ -118,9 +118,9 @@ Note that threat boundary boxes and curves can not have threats associated with 
 
 ## Editing toolbar
 
-The toolbar on the diagram editing page supports some general diagramming features:
+![Toolbar image]({{ '/assets/images/toolbar.png' | relative_url }}){: width="400" }
 
-![Toolbar image]({{ '/assets/images/toolbar.png' | relative_url }})
+The toolbar on the diagram editing page supports some general diagramming features:
 
 * Delete the selected element(s)
 * Configure the keyboard shortcuts from the defaults
@@ -130,9 +130,9 @@ The toolbar on the diagram editing page supports some general diagramming featur
 * Close the diagram and return to the threat model details view
 * Save the threat model
 
-![Export diagram image]({{ '/assets/images/export.png' | relative_url }})
-
 The toolbar can be used to export the diagram in various image file formats; JPEG, SVG and PNG.
+
+![Export diagram image]({{ '/assets/images/export.png' | relative_url }}){: height="170" }
 
 ----
 
