@@ -4,6 +4,7 @@
 # allow github, workflows and templates
 !.github/
 !.github/*.yaml
+!.github/CODEOWNERS
 !.github/issue_template/
 !.github/issue_template/*.md
 !.github/workflows/
