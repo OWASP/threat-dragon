@@ -60,7 +60,7 @@ const actions = {
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
                 const res = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
                 dispatch(FOLDER_SELECTED, res.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
@@ -68,7 +68,7 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
@@ -152,7 +152,7 @@ const actions = {
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
-            Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName, { timeout: 1000 });
+            Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName, { timeout: 1000 });
         } catch (ex) {
             console.error('Failed to save threat model!');
             console.error(ex);

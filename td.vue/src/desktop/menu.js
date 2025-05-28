@@ -315,7 +315,7 @@ function saveModelData (modelData) {
             if (err) {
                 logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
             } else {
-                logger.log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
+                logger.log.debug(messages[language].threatmodel.prompts.saved + ': ' + model.filePath);
             }
         });
     } else {

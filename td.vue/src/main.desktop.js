@@ -78,7 +78,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     let params;
     // check for schema errors
     if(!isValidSchema(jsonModel)){
-        console.warn('Invalid threat model');
+        console.warn('Model does not strictly match schema');
     } else if (isValidOTM(jsonModel)) {
         // if threat model is in OTM format then convert OTM to dragon format
         jsonModel = openThreatModel.convertOTMtoTD(jsonModel);

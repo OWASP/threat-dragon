@@ -163,8 +163,13 @@ const ind = {
             open: 'Kesalahan membuka Model Ancaman ini. Periksa konsol pengembang untuk informasi lebih lanjut',
             save: 'Kesalahan menyimpan Model Ancaman. Periksa konsol pengembang untuk informasi lebih lanjut'
         },
-        opened: 'Model ancaman berhasil dibuka',
-        saved: 'Model ancaman berhasil disimpan',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Model ancaman berhasil dibuka',
+            saved: 'Model ancaman berhasil disimpan',
+        },
         properties: {
             title: 'Properti',
             emptyState: 'Pilih elemen pada grafik untuk diedit',

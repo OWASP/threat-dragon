@@ -163,8 +163,13 @@ const fin = {
             open: 'Virhe uhkamallin lukemisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.',
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
         },
-        opened: 'Uhkamallin avaaminen onnistui',
-        saved: 'Uhkamallin tallentaminen onnistui',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Uhkamallin avaaminen onnistui',
+            saved: 'Uhkamallin tallentaminen onnistui',
+        },
         properties: {
             title: 'Ominaisuudet',
             emptyState: 'Valitse kaavion osa muokataksesi',

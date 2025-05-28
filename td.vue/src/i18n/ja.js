@@ -163,8 +163,13 @@ const jpn = {
             open: '脅威モデルを開く時にエラーが発生しました。開発者コンソールを確認してください。',
             save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。'
         },
-        opened: '脅威モデルを読み込みました。',
-        saved: '脅威モデルを書き込みました。',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: '脅威モデルを読み込みました。',
+            saved: '脅威モデルを書き込みました。',
+        },
         properties: {
             title: 'プロパティー',
             emptyState: '図面から要素を選択してください',

@@ -163,8 +163,13 @@ const fra = {
             open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
-        opened: 'Modèle de menace ouvert avec succès',
-        saved: 'Modèle de menace sauvegardé avec succès',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Modèle de menace ouvert avec succès',
+            saved: 'Modèle de menace sauvegardé avec succès',
+        },
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',

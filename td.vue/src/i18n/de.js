@@ -163,8 +163,13 @@ const deu = {
             open: 'Fehler beim Öffnen des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen',
             save: 'Fehler beim Speichern des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen'
         },
-        opened: 'Bedrohungsmodell erfolgreich geöffnet',
-        saved: 'Bedrohungsmodell erfolgreich gespeichert',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Bedrohungsmodell erfolgreich geöffnet',
+            saved: 'Bedrohungsmodell erfolgreich gespeichert',
+        },
         properties: {
             title: 'Eigenschaften',
             emptyState: 'Wählen Sie ein Element im Diagramm zur Bearbeitung aus',

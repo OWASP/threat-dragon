@@ -163,8 +163,13 @@ const ms = {
             open: 'Ralat membuka Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut',
             save: 'Ralat menyimpan Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut'
         },
-        opened: 'Model ancaman berjaya dibuka',
-        saved: 'Model ancaman berjaya disimpan',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Model ancaman berjaya dibuka',
+            saved: 'Model ancaman berjaya disimpan',
+        },
         properties: {
             title: 'Ciri-ciri',
             emptyState: 'Pilih elemen pada graf untuk disunting',

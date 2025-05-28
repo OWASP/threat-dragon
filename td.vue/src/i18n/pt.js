@@ -163,8 +163,13 @@ const por = {
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Threat model successfully opened',
+            saved: 'Threat model successfully saved',
+        },
         properties: {
             title: 'Propriedades',
             emptyState: 'Selecione um elemento do diagrama para modificar suas propriedades',

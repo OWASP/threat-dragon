@@ -146,7 +146,7 @@ export default {
 
             // check for schema errors
             if(!isValidSchema(jsonModel)){
-                this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
+                this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
             }
 
             // Identify if threat model is in OTM format and if so, convert OTM to dragon format

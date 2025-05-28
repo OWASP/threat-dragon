@@ -163,8 +163,13 @@ const zho = {
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
-        opened: '成功打开威胁模型',
-        saved: '成功保存威胁模型',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: '成功打开威胁模型',
+            saved: '成功保存威胁模型',
+        },
         properties: {
             title: '组件',
             emptyState: '在图表上选择要编辑的元素',
