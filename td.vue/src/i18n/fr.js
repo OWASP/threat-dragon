@@ -159,12 +159,18 @@ const fra = {
         errors: {
             dropSingleFileOnly: 'Drag and drop requires a single file.',
             invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
-        opened: 'Modèle de menace ouvert avec succès',
-        saved: 'Modèle de menace sauvegardé avec succès',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Modèle de menace ouvert avec succès',
+            saved: 'Modèle de menace sauvegardé avec succès',
+        },
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',

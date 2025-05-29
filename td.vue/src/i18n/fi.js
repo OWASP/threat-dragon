@@ -159,12 +159,18 @@ const fin = {
         errors: {
             dropSingleFileOnly: 'Voit pudottaa vain yhden tiedoston.',
             invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Sovellus tukee vain .json -päätteisiä tiedostoja.',
             open: 'Virhe uhkamallin lukemisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.',
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
         },
-        opened: 'Uhkamallin avaaminen onnistui',
-        saved: 'Uhkamallin tallentaminen onnistui',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Uhkamallin avaaminen onnistui',
+            saved: 'Uhkamallin tallentaminen onnistui',
+        },
         properties: {
             title: 'Ominaisuudet',
             emptyState: 'Valitse kaavion osa muokataksesi',

@@ -159,12 +159,18 @@ const spa = {
         errors: {
             dropSingleFileOnly: 'Arrastrar y soltar funciona con un solo archivo.',
             invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Solamente archivos con extensión .json son soportados.',
             open: 'Error al abrir el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.',
             save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
         },
-        opened: 'El modelo de amenazas se abrió con éxito',
-        saved: 'El modelo de amenazas se guardó con éxito',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'El modelo de amenazas se abrió con éxito',
+            saved: 'El modelo de amenazas se guardó con éxito',
+        },
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',

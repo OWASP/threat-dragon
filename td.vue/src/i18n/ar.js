@@ -159,12 +159,18 @@ const ara = {
         errors: {
             dropSingleFileOnly: 'يتطلب السحب والإفلات ملفاً واحداً فقط.',
             invalidJson: 'ملف JSON غير صالح. يرجى التحقق من النموذج الخاص بك والمحاولة مرة أخرى.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'الملفات التي يمكن التعامل معها هي التي تنتهي بامتداد .json فقط.',
             open: 'حدث خطأ في فتح نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
             save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
         },
-        opened: 'تم فتح نموذج التهديد بنجاح',
-        saved: 'تم حفظ نموذج التهديد بنجاح',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'تم فتح نموذج التهديد بنجاح',
+            saved: 'تم حفظ نموذج التهديد بنجاح',
+        },
         properties: {
             title: 'الخصائص',
             emptyState: 'حدد عنصرًا على الرسم البياني للتحرير',

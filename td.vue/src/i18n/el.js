@@ -159,12 +159,18 @@ const ell = {
         errors: {
             dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
             invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Υποστηρίζονται μόνο αρχεία με κατάληξη .json.',
             open: 'Σφάλμα κατά το άνοιγμα αυτού του μοντέλου απειλών. Ελέγξτε την κονσόλα του προγραμματιστή για περισσότερες πληροφορίες',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
-        saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+        },
+        prompts: {
+            opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
+            saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
+        },
         properties: {
             title: 'Ιδιότητες',
             emptyState: 'Επιλέξτε ένα στοιχείο στο διάγραμμα για να το επεξεργαστείτε',

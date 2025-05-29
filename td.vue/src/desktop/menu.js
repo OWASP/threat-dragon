@@ -215,20 +215,37 @@ function openModelRequest (filename) {
     mainWindow.webContents.send('open-model-request', filename);
 }
 
-// request to the renderer for confirmation that it is OK to open a model file
+// open model file and send to renderer
 function openModelFile (filename) {
     logger.log.debug(messages[language].desktop.file.open + ': ' + filename);
+    var modelData;
+
+    if (!filename.endsWith('.json')) {
+        logger.log.warn(messages[language].threatmodel.errors.onlyJsonAllowed);
+        model.isOpen = false;
+        mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'onlyJsonAllowed'});
+        return;
+    }
+
     fs.readFile(filename, (err, data) => {
         if (!err) {
-            let modelData = JSON.parse(data);
+            try {
+                modelData = JSON.parse(data);
+            } catch (err) {
+                logger.log.warn(messages[language].threatmodel.errors.invalidJson + ' : ' + err.message);
+                model.isOpen = false;
+                mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'invalidJson'});
+                return;
+            }
+            model.isOpen = true;
             mainWindow.webContents.send('open-model', path.basename(filename), modelData);
             model.filePath = filename;
-            model.isOpen = true;
             model.fileDirectory = path.dirname(filename);
             app.addRecentDocument(filename);
         } else {
             logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
             model.isOpen = false;
+            mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'open'});
         }
     });
 }
@@ -315,7 +332,7 @@ function saveModelData (modelData) {
             if (err) {
                 logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
             } else {
-                logger.log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
+                logger.log.debug(messages[language].threatmodel.prompts.saved + ': ' + model.filePath);
             }
         });
     } else {

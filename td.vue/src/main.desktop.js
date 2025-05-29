@@ -76,12 +76,21 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     console.debug('Open model with file name : ' + fileName);
     let params;
-    // check for schema errors
-    if(!isValidSchema(jsonModel)){
-        console.warn('Invalid threat model');
-    } else if (isValidOTM(jsonModel)) {
-        // if threat model is in OTM format then convert OTM to dragon format
+
+    if (Object.prototype.hasOwnProperty.call(jsonModel, 'modelError')) {
+        app.$toast.error(app.$t('threatmodel.errors.' + jsonModel.modelError));
+        return;
+    }
+
+    if (isValidOTM(jsonModel)) {
+        console.debug('Convert OTM to dragon format');
         jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+    }
+
+    // schema errors are not fatal
+    if(!isValidSchema(jsonModel)){
+        console.warn('Model does not strictly match schema');
+        app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
     }
 
     // this will fail if the threat model does not have a title in the summary
@@ -90,14 +99,15 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             threatmodel: jsonModel.summary.title
         });
     } catch (e) {
-        app.$toast.error(app.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
-        app.$router.push({ name: 'HomePage' }).catch(error => {
+        app.$toast.error(app.$t('threatmodel.errors.invalidModel') + ' : ' + e.message);
+        app.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
                 throw error;
             }
         });
         return;
     }
+
     app.$store.dispatch(tmActions.update, { fileName: fileName });
     app.$store.dispatch(tmActions.selected, jsonModel);
     localAuth();
