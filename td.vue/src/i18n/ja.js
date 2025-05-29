@@ -159,6 +159,7 @@ const jpn = {
         errors: {
             dropSingleFileOnly: '単一のファイルをドロップしてください。',
             invalidJson: 'ファイルのJSONフォーマットに対応していません。モデルを確認したうえ、もう一度試してみてください。',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: '拡張子.jsonのファイルのみに対応しています。',
             open: '脅威モデルを開く時にエラーが発生しました。開発者コンソールを確認してください。',
             save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。'

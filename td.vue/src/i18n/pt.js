@@ -159,6 +159,7 @@ const por = {
         errors: {
             dropSingleFileOnly: 'Drag and drop requires a single file.',
             invalidJson: 'Invalid JSON. Please check your model and try again.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Error saving the Threat Model. Check the developer console for more information'

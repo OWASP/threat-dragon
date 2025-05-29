@@ -61,7 +61,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { isValidSchema } from '@/service/schema/ajv';
+import { isValidOTM, isValidSchema } from '@/service/schema/ajv';
 
 // only search for text files
 const pickerFileOptions = {
@@ -135,6 +135,7 @@ export default {
         },
         onImportClick(fileName) {
             let jsonModel;
+
             // check for JSON syntax errors, schema errors come later
             try {
                 jsonModel = JSON.parse(this.tmJson);
@@ -144,14 +145,14 @@ export default {
                 return;
             }
 
-            // check for schema errors
-            if(!isValidSchema(jsonModel)){
-                this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
+            // Identify if threat model is in OTM format and if so, convert OTM to dragon format
+            if (isValidOTM(jsonModel)) {
+                jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
             }
 
-            // Identify if threat model is in OTM format and if so, convert OTM to dragon format
-            if (Object.hasOwn(jsonModel, 'otmVersion')) {
-                jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+            // check for schema errors
+            if (!isValidSchema(jsonModel)) {
+                this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
             }
 
             // save the threat model in the store
@@ -169,7 +170,7 @@ export default {
                     threatmodel: jsonModel.summary.title
                 });
             } catch (e) {
-                this.$toast.error(this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
+                this.$toast.error(this.$t('threatmodel.errors.invalidModel') + ' : ' + e.message);
                 console.error(e);
                 return;
             }

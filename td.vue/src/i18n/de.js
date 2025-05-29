@@ -159,6 +159,7 @@ const deu = {
         errors: {
             dropSingleFileOnly: 'Ziehen und ablegen erfordert eine einzige Datei.',
             invalidJson: 'Ungültiges JSON. Bitte überprüfen Sie Ihr Modell und versuchen Sie es erneut.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Nur Datein mit .json Endung werden unterstützt.',
             open: 'Fehler beim Öffnen des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen',
             save: 'Fehler beim Speichern des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen'

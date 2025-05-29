@@ -159,6 +159,7 @@ const ms = {
         errors: {
             dropSingleFileOnly: 'Seret dan lepaskan memerlukan satu fail sahaja.',
             invalidJson: 'JSON tidak sah. Sila periksa model anda dan cuba lagi.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Hanya fail yang berakhir dengan .json yang disokong.',
             open: 'Ralat membuka Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut',
             save: 'Ralat menyimpan Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut'

@@ -159,6 +159,7 @@ const hin = {
         errors: {
             dropSingleFileOnly: 'ड्रैग एंड ड्रॉप के लिए एक फ़ाइल की आवश्यकता होती है।',
             invalidJson: 'अवैध JSON. कृपया अपने मॉडल की जाँच करें और पुनः प्रयास करें।',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'केवल .json के साथ समाप्त होने वाली फ़ाइलें समर्थित हैं।',
             open: 'इस थ्रेट मॉडल को खोलने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें',
             save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें'

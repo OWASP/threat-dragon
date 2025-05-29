@@ -159,6 +159,7 @@ const ell = {
         errors: {
             dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
             invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Υποστηρίζονται μόνο αρχεία με κατάληξη .json.',
             open: 'Σφάλμα κατά το άνοιγμα αυτού του μοντέλου απειλών. Ελέγξτε την κονσόλα του προγραμματιστή για περισσότερες πληροφορίες',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'

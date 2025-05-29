@@ -159,6 +159,7 @@ const ind = {
         errors: {
             dropSingleFileOnly: 'Seret dan lepas memerlukan satu file saja.',
             invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Hanya file yang berakhir dengan .json yang didukung.',
             open: 'Kesalahan membuka Model Ancaman ini. Periksa konsol pengembang untuk informasi lebih lanjut',
             save: 'Kesalahan menyimpan Model Ancaman. Periksa konsol pengembang untuk informasi lebih lanjut'

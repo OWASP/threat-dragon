@@ -159,6 +159,7 @@ const spa = {
         errors: {
             dropSingleFileOnly: 'Arrastrar y soltar funciona con un solo archivo.',
             invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez.',
+            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
             onlyJsonAllowed: 'Solamente archivos con extensión .json son soportados.',
             open: 'Error al abrir el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.',
             save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
