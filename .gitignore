@@ -125,8 +125,6 @@
 !td.vue/src/assets/
 !td.vue/src/assets/*.svg
 !td.vue/src/assets/*.jpg
-!td.vue/src/assets/schema/
-!td.vue/src/assets/schema/*.js
 !td.vue/src/components/
 !td.vue/src/components/*.vue
 !td.vue/src/components/printed-report/
@@ -161,6 +159,7 @@
 !td.vue/src/service/provider/*.js
 !td.vue/src/service/schema/
 !td.vue/src/service/schema/*.js
+!td.vue/src/service/schema/*.json
 !td.vue/src/service/threats/
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
