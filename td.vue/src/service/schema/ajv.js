@@ -24,7 +24,7 @@ export const isValidSchema = (jsonFile) => {
     valid = validateV1(jsonFile);
     if (valid) {
         console.debug('Schema validate success for V1.x model');
-        Vue.$toast.warning(i18n.get().t('nav.v2Warning'), { timeout: false });
+        Vue.$toast.warning(i18n.get().t('threatmodel.warnings.v2Warning'), { timeout: false });
         return true;
     }
 

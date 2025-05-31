@@ -3,7 +3,6 @@ const fin = {
         sessionExpired: 'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
     },
     nav: {
-        v2Warning: 'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
         loggedInAs: 'Kirjautunut käyttäjänä',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const fin = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.'
         },
         prompts: {
             opened: 'Uhkamallin avaaminen onnistui',

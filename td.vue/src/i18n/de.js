@@ -3,7 +3,6 @@ const deu = {
         sessionExpired: 'Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.'
     },
     nav: {
-        v2Warning: 'Version 2.0 Bedrohungsmodelle sind nicht Abwärtskompatibel mit Version 1.x Threat Dragon Modellen. Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben', //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         loggedInAs: 'Angemeldet als',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const deu = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         },
         prompts: {
             opened: 'Bedrohungsmodell erfolgreich geöffnet',

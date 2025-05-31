@@ -3,7 +3,6 @@ const spa = {
         sessionExpired: 'Su sesión ha expirado. Por favor inicie una nueva sesión para continuar.'
     },
     nav: {
-        v2Warning: 'Los modelos de amenazas(threat models) version 2.0 no son compatibles con los modelos de amenazas(threat model) de Threat Dragon versión 1.x. Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0',
         loggedInAs: 'Conectado como',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const spa = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0'
         },
         prompts: {
             opened: 'El modelo de amenazas se abrió con éxito',

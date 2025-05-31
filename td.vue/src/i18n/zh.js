@@ -3,7 +3,6 @@ const zho = {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
-        v2Warning: '2.0 版威胁模型与 1.x 版Threat Dragon模型不兼容。导入的 1.x 版模型将升级到 2.0 版本',
         loggedInAs: '登录身份为',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const zho = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {
             opened: '成功打开威胁模型',

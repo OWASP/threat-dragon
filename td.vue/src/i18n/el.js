@@ -3,7 +3,6 @@ const ell = {
         sessionExpired: 'Η συνεδρία σας έχει λήξει.  Παρακαλούμε συνδεθείτε εκ νέου για να συνεχίσετε.'
     },
     nav: {
-        v2Warning: 'Η έκδοση 2.0 των μοντέλων απειλών δεν είναι συμβατή με την έκδοση 1.x των μοντέλων του Threat Dragon. Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0',
         loggedInAs: 'Σύνδεση ως',
         logOut: 'Αποσύνδεση'
     },
@@ -166,6 +165,7 @@ const ell = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0'
         },
         prompts: {
             opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',

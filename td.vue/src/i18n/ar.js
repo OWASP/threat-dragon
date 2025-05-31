@@ -3,7 +3,6 @@ const ara = {
         sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.'
     },
     nav: {
-        v2Warning: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،',
         loggedInAs: 'تم تسجيل الدخول كـ ',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const ara = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،'
         },
         prompts: {
             opened: 'تم فتح نموذج التهديد بنجاح',

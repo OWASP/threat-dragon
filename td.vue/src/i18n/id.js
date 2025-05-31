@@ -3,7 +3,6 @@ const ind = {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
     nav: {
-        v2Warning: 'Model ancaman Versi 2.0 tidak kompatibel ke belakang dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0',
         loggedInAs: 'Masuk sebagai',
         logOut: 'Keluar'
     },
@@ -166,6 +165,7 @@ const ind = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0'
         },
         prompts: {
             opened: 'Model ancaman berhasil dibuka',

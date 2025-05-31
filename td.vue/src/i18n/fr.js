@@ -3,7 +3,6 @@ const fra = {
         sessionExpired: 'Votre session est expirée. Veuillez vous reconnecter pour continuer.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Connecté en tant que',
         logOut: 'Log out'
     },
@@ -166,6 +165,7 @@ const fra = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
             opened: 'Modèle de menace ouvert avec succès',

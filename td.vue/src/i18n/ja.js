@@ -3,7 +3,6 @@ const jpn = {
         sessionExpired: 'セッションの有効期限が切れました。再ログインしてください。'
     },
     nav: {
-        v2Warning: 'バージョン2.0の脅威モデルは、Threat Dragonバージョン1.xとの互換性を保っていません。バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。',
         loggedInAs: 'ユーザー名',
         logOut: 'ログアウト'
     },
@@ -166,6 +165,7 @@ const jpn = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。'
         },
         prompts: {
             opened: '脅威モデルを読み込みました。',

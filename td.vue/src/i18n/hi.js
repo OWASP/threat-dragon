@@ -3,7 +3,6 @@ const hin = {
         sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'लॉग-इन किया गया है भूमिका में',
         logOut: 'लॉगआउट'
     },
@@ -166,6 +165,7 @@ const hin = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            v2Warning: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
             opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
