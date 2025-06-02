@@ -87,7 +87,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
     }
 
-    // schema errors are not fatal
+    // any schema errors are not fatal
     if(!isValidSchema(jsonModel)){
         console.warn('Model does not strictly match schema');
         app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));

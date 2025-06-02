@@ -61,7 +61,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { isValidOTM, isValidSchema } from '@/service/schema/ajv';
+import { isValidV1, isValidOTM, isValidSchema } from '@/service/schema/ajv';
 
 // only search for text files
 const pickerFileOptions = {
@@ -150,7 +150,7 @@ export default {
                 jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
             }
 
-            // check for schema errors
+            // any schema errors are not fatal
             if (!isValidSchema(jsonModel)) {
                 this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
             }
