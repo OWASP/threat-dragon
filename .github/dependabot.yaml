@@ -8,3 +8,17 @@ updates:
       # ignore all (non-security) patch updates
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
+    groups:
+      update-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+      update-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
