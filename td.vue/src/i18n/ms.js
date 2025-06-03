@@ -157,15 +157,17 @@ const ms = {
         threats: 'Ancaman',
         errors: {
             dropSingleFileOnly: 'Seret dan lepaskan memerlukan satu fail sahaja.',
-            invalidJson: 'JSON tidak sah. Sila periksa model anda dan cuba lagi.',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidJson: 'JSON tidak sah. Sila periksa model anda dan cuba lagi',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Hanya fail yang berakhir dengan .json yang disokong.',
             open: 'Ralat membuka Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut',
             save: 'Ralat menyimpan Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
-            v2Warning: 'Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0'
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0'
         },
         prompts: {
             opened: 'Model ancaman berjaya dibuka',

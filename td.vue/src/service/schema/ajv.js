@@ -16,7 +16,7 @@ const validateV2 = ajv.compile(schemaV2);
 const validateTM = ajv.compile(schemaTM);
 const validateOTM = ajv.compile(schemaOTM);
 
-export const isValidSchema = (jsonFile) => {
+export const isValid = (jsonFile) => {
 
     // use the latest V2 schema, save errors for later if needed
     if (validateV2(jsonFile)) {
@@ -25,19 +25,18 @@ export const isValidSchema = (jsonFile) => {
     }
 
     // try the V1 schema
-    if (isValidV1(jsonFile)) {
+    if (isV1(jsonFile)) {
         console.debug('Schema validate success for V1.x model');
-        Vue.$toast.warning(i18n.get().t('threatmodel.warnings.v2Warning'), { timeout: false });
         return true;
     }
 
     // if it is not in either Threat Dragon formats, maybe it is TM-BOM format
-    if (isValidTM(jsonFile)) {
+    if (isTM(jsonFile)) {
 	    console.debug('Schema validate success for Threat Model in TM-BOM');
 	    return true;
     }
 
-    if (isValidOTM(jsonFile)) {
+    if (isOTM(jsonFile)) {
 	    console.debug('Schema validate success for Open Threat Model');
 	    return true;
     }
@@ -46,26 +45,26 @@ export const isValidSchema = (jsonFile) => {
     return false;
 };
 
-export const isValidV1 = (jsonFile) => {
+export const isV1 = (jsonFile) => {
     return validateV1(jsonFile);
 };
 
-export const isValidV2 = (jsonFile) => {
+export const isV2 = (jsonFile) => {
     return validateV2(jsonFile);
 };
 
-export const isValidTM = (jsonFile) => {
+export const isTM = (jsonFile) => {
     return validateTM(jsonFile);
 };
 
-export const isValidOTM = (jsonFile) => {
+export const isOTM = (jsonFile) => {
     return validateOTM(jsonFile);
 };
 
 export default {
-    isValidV1,
-    isValidV2,
-    isValidOTM,
-    isValidTM,
-    isValidSchema
+    isV1,
+    isV2,
+    isOTM,
+    isTM,
+    isValid
 };

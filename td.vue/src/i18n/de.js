@@ -158,14 +158,16 @@ const deu = {
         errors: {
             dropSingleFileOnly: 'Ziehen und ablegen erfordert eine einzige Datei.',
             invalidJson: 'Ungültiges JSON. Bitte überprüfen Sie Ihr Modell und versuchen Sie es erneut.',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Nur Datein mit .json Endung werden unterstützt.',
             open: 'Fehler beim Öffnen des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen',
             save: 'Fehler beim Speichern des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
-            v2Warning: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         },
         prompts: {
             opened: 'Bedrohungsmodell erfolgreich geöffnet',

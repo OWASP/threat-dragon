@@ -7,8 +7,7 @@ import i18nFactory from './i18n/index.js';
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
 
-import openThreatModel from './service/otm/openThreatModel.js';
-import { isValidOTM, isValidSchema } from './service/schema/ajv';
+import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
@@ -82,15 +81,22 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         return;
     }
 
-    if (isValidOTM(jsonModel)) {
-        console.debug('Convert OTM to dragon format');
-        jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
-    }
-
     // any schema errors are not fatal
-    if(!isValidSchema(jsonModel)){
+    if(!schema.isValid(jsonModel)){
         console.warn('Model does not strictly match schema');
         app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
+    } else if (schema.isV1(jsonModel)) {
+        console.debug('Version 1.x file will be translated to V2 format');
+        app.$toast.warning(app.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+    } else {
+        if (schema.isTM(jsonModel)) {
+            console.debug('Convert TM-BOM to internal TD format not yet supported');
+            app.$toast.warning(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+        } else if (schema.isOTM(jsonModel)) {
+            console.debug('Convert OTM to dragon format not yet supported');
+            app.$toast.warning(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+        }
+        return;
     }
 
     // this will fail if the threat model does not have a title in the summary
