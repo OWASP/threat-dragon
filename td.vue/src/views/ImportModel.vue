@@ -152,7 +152,7 @@ export default {
                 console.debug('Version 1.x file will be translated to V2 format');
                 this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
             } else {
-                if (schema.isTM(jsonModel)) {
+                if (schema.isTmBom(jsonModel)) {
                     console.debug('Convert TM-BOM to internal TD format not yet supported');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
                 } else if (schema.isOTM(jsonModel)) {

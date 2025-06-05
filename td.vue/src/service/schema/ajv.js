@@ -1,17 +1,16 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import otm from '@/service/otm/openThreatModel';
+import otm from '@/service/migration/otm/openThreatModel';
+import tmBom from '@/service/migration/tmBom/threatModelBom';
 
 const schemaV1 = require('./owasp-threat-dragon-v1.schema');
 const schemaV2 = require('./owasp-threat-dragon-v2.schema');
-const schemaTM = require('./threat-model.schema');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);
 
 const validateV1 = ajv.compile(schemaV1);
 const validateV2 = ajv.compile(schemaV2);
-const validateTM = ajv.compile(schemaTM);
 
 export const isValid = (jsonFile) => {
 
@@ -28,7 +27,7 @@ export const isValid = (jsonFile) => {
     }
 
     // if it is not in either Threat Dragon formats, maybe it is TM-BOM format
-    if (isTM(jsonFile)) {
+    if (isTmBom(jsonFile)) {
 	    console.debug('Schema validate success for Threat Model in TM-BOM');
 	    return true;
     }
@@ -50,8 +49,8 @@ export const isV2 = (jsonFile) => {
     return validateV2(jsonFile);
 };
 
-export const isTM = (jsonFile) => {
-    return validateTM(jsonFile);
+export const isTmBom = (jsonFile) => {
+    return tmBom.isValid(jsonFile);
 };
 
 export const isOTM = (jsonFile) => {
@@ -62,6 +61,6 @@ export default {
     isV1,
     isV2,
     isOTM,
-    isTM,
+    isTmBom,
     isValid
 };

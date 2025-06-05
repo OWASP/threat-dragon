@@ -1,6 +1,6 @@
-import { convert as convertOTMtoTD } from '@/service/otm/toTD';
+import { convert as convertOTMtoTD } from '@/service/migration/otm/toTD';
 
-describe('service/otm/toTD.js', () => {
+describe('service/migration/otm/toTD.js', () => {
     let tdModel;
     let mockOTM = new Object();
 
