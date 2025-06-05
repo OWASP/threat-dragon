@@ -1,12 +1,10 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import Vue from 'vue';
-import i18n from '@/i18n/index.js';
+import otm from '@/service/otm/openThreatModel';
 
 const schemaV1 = require('./owasp-threat-dragon-v1.schema');
 const schemaV2 = require('./owasp-threat-dragon-v2.schema');
 const schemaTM = require('./threat-model.schema');
-const schemaOTM = require('./open-threat-model.schema');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);
@@ -14,7 +12,6 @@ addFormats(ajv);
 const validateV1 = ajv.compile(schemaV1);
 const validateV2 = ajv.compile(schemaV2);
 const validateTM = ajv.compile(schemaTM);
-const validateOTM = ajv.compile(schemaOTM);
 
 export const isValid = (jsonFile) => {
 
@@ -58,7 +55,7 @@ export const isTM = (jsonFile) => {
 };
 
 export const isOTM = (jsonFile) => {
-    return validateOTM(jsonFile);
+    return otm.isValid(jsonFile);
 };
 
 export default {

@@ -155,6 +155,7 @@
 !td.vue/src/service/migration/*.js
 !td.vue/src/service/otm/
 !td.vue/src/service/otm/*.js
+!td.vue/src/service/otm/*.json
 !td.vue/src/service/provider/
 !td.vue/src/service/provider/*.js
 !td.vue/src/service/schema/

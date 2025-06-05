@@ -150,14 +150,14 @@ export default {
                 this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
             } else if (schema.isV1(jsonModel)) {
                 console.debug('Version 1.x file will be translated to V2 format');
-                Vue.$toast.warning(i18n.get().t('threatmodel.warnings.v1Translate'), { timeout: false });
+                this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
             } else {
                 if (schema.isTM(jsonModel)) {
                     console.debug('Convert TM-BOM to internal TD format not yet supported');
-                    Vue.$toast.warning(i18n.get().t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+                    this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
                 } else if (schema.isOTM(jsonModel)) {
                     console.debug('Convert OTM to internal TD format not yet supported');
-                    Vue.$toast.warning(i18n.get().t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+                    this.$toast.warning(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
                 }
                 return;
             }

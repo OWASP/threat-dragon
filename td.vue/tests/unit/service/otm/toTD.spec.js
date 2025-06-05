@@ -1,6 +1,6 @@
-import { convert as convertOTMtoTD } from '@/service/otm/OTMtoTD';
+import { convert as convertOTMtoTD } from '@/service/otm/toTD';
 
-describe('service/otm/OTMtoTD.js', () => {
+describe('service/otm/toTD.js', () => {
     let tdModel;
     let mockOTM = new Object();
 
@@ -16,7 +16,6 @@ describe('service/otm/OTMtoTD.js', () => {
             mockOTM.project.tags = [ 'test tag 1', 'test tag 2' ];
             mockOTM.project.attributes = { 'cmdbId': 'MyApp123' };
             tdModel = convertOTMtoTD(mockOTM);
-            console.log(mockOTM);
         });
 
         it('converts otm version', () => {
