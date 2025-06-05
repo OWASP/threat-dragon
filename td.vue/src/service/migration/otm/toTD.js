@@ -1,4 +1,4 @@
-const buildVersion = require('../../../package.json').version;
+const buildVersion = require('../../../../package.json').version;
 
 const convertSummary = (jsonModel) => {
     const noteText = 'Note that support for Open Threat Model is experimental and subject to large scale changes.\n';

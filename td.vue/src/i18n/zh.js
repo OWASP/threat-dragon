@@ -3,7 +3,6 @@ const zho = {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
-        v2Warning: '2.0 版威胁模型与 1.x 版Threat Dragon模型不兼容。导入的 1.x 版模型将升级到 2.0 版本',
         loggedInAs: '登录身份为',
         logOut: 'Log out'
     },
@@ -158,14 +157,17 @@ const zho = {
         threats: '威胁',
         errors: {
             dropSingleFileOnly: '只能拖放一个文件。',
-            invalidJson: '无效的JSON。请检查您的格式，然后重试。',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidJson: '无效的JSON。请检查您的格式，然后重试',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: '只支持以.json结尾的文件。',
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {
             opened: '成功打开威胁模型',

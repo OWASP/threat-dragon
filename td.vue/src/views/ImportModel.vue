@@ -58,10 +58,9 @@ import { mapState } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
-import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { isValidOTM, isValidSchema } from '@/service/schema/ajv';
+import schema from '@/service/schema/ajv';
 
 // only search for text files
 const pickerFileOptions = {
@@ -145,14 +144,22 @@ export default {
                 return;
             }
 
-            // Identify if threat model is in OTM format and if so, convert OTM to dragon format
-            if (isValidOTM(jsonModel)) {
-                jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
-            }
-
-            // check for schema errors
-            if (!isValidSchema(jsonModel)) {
+            // any schema errors are not fatal
+            if (!schema.isValid(jsonModel)) {
+                console.warn('Model does not strictly match schema');
                 this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
+            } else if (schema.isV1(jsonModel)) {
+                console.debug('Version 1.x file will be translated to V2 format');
+                this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+            } else {
+                if (schema.isTmBom(jsonModel)) {
+                    console.debug('Convert TM-BOM to internal TD format not yet supported');
+                    this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+                } else if (schema.isOTM(jsonModel)) {
+                    console.debug('Convert OTM to internal TD format not yet supported');
+                    this.$toast.warning(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+                }
+                return;
             }
 
             // save the threat model in the store

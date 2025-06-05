@@ -3,7 +3,6 @@ const fin = {
         sessionExpired: 'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
     },
     nav: {
-        v2Warning: 'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
         loggedInAs: 'Kirjautunut käyttäjänä',
         logOut: 'Log out'
     },
@@ -158,14 +157,17 @@ const fin = {
         threats: 'Uhat',
         errors: {
             dropSingleFileOnly: 'Voit pudottaa vain yhden tiedoston.',
-            invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen.',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Sovellus tukee vain .json -päätteisiä tiedostoja.',
             open: 'Virhe uhkamallin lukemisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.',
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.'
         },
         prompts: {
             opened: 'Uhkamallin avaaminen onnistui',
