@@ -330,7 +330,7 @@ export default {
             this.$store.dispatch(tmActions.modified);
         },
         onDuplicateDiagramClick(idx) {
-            let newDiagram = this.model.detail.diagrams[idx];
+            let newDiagram = JSON.parse(JSON.stringify(this.model.detail.diagrams[idx]));
             newDiagram.id = this.diagramTop;
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
