@@ -28,7 +28,7 @@ describe('service/migration/otm/fromTD.js', () => {
             otmModel = convertTDtoOTM(dragonModel);
         });
 
-        it('converts td format to otm', () => {
+        it('sets the otm version', () => {
             expect(otmModel.otmVersion).toEqual('0.2.0');
         });
     });
