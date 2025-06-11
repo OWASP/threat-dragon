@@ -81,21 +81,20 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         return;
     }
 
-    // any schema errors are not fatal
+    // schema errors are not fatal, but some formats are not supported yet
     if(!schema.isValid(jsonModel)){
         console.warn('Model does not strictly match schema');
         app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
     } else if (schema.isV1(jsonModel)) {
-        console.debug('Version 1.x file will be translated to V2 format');
+        console.warn('Version 1.x file will be translated to V2 format');
         app.$toast.warning(app.$t('threatmodel.warnings.v1Translate'), { timeout: false });
-    } else {
-        if (schema.isTmBom(jsonModel)) {
-            console.debug('Convert TM-BOM to internal TD format not yet supported');
-            app.$toast.warning(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
-        } else if (schema.isOTM(jsonModel)) {
-            console.debug('Convert OTM to dragon format not yet supported');
-            app.$toast.warning(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
-        }
+    } else if (schema.isTmBom(jsonModel)) {
+        console.error('Convert TM-BOM to internal TD format not yet supported');
+        app.$toast.error(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+        return;
+    } else if (schema.isOTM(jsonModel)) {
+        console.error('Convert OTM to dragon format not yet supported');
+        app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
         return;
     }
 
