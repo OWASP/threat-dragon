@@ -194,7 +194,7 @@ jobs:
       # platform manifests not (yet) supported, so split out architectures
       - name: Build  for amd64 and push latest
         id: docker_build_amd64
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./
           file: ./Dockerfile
@@ -208,7 +208,7 @@ jobs:
 
       - name: Build for arm64 and push latest-arm64
         id: docker_build_arm64
-        uses: docker/build-push-action@v6.17.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: ./
           file: ./Dockerfile
@@ -444,7 +444,7 @@ jobs:
         uses: actions/checkout@v4.2.0
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@0.31.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
