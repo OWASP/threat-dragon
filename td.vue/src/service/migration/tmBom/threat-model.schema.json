@@ -1,5 +1,5 @@
 {
-    "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.0/threat-model.schema.json",
+    "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
     "$comment": "When updating the schema `$id`, also update the value of the constant `$schema` property below.",
     "title": "OWASP Threat Model Library Schema",
 
@@ -630,6 +630,7 @@
                     }
                 },
                 "attack_mechanisms": {
+                    "type": "array",
                     "items": {
                         "title": "Attack mechanism per CAPEC taxonomy",
                         "$ref": "#/$defs/capec-ref"
