@@ -41,6 +41,11 @@ export const isValid = (jsonFile) => {
     return false;
 };
 
+export const checkV2 = (jsonFile) => {
+    validateV2(jsonFile);
+    return validateV2.errors;
+};
+
 export const isV1 = (jsonFile) => {
     return validateV1(jsonFile);
 };
@@ -58,6 +63,7 @@ export const isOtm = (jsonFile) => {
 };
 
 export default {
+    checkV2,
     isV1,
     isV2,
     isOtm,

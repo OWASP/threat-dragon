@@ -158,7 +158,7 @@ export default {
                     this.$toast.error(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
                     return;
                 } else {
-                    console.warn('Model does not strictly match schema');
+                    console.warn('Model does not strictly match schema: ' + JSON.stringify(schema.checkV2(jsonModel)));
                     this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
                 }
             }

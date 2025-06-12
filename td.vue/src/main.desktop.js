@@ -95,7 +95,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
             return;
         } else {
-            console.warn('Model does not strictly match possible schemas');
+            console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel)));
             app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
         }
     }
