@@ -32,7 +32,7 @@ export const isValid = (jsonFile) => {
 	    return true;
     }
 
-    if (isOTM(jsonFile)) {
+    if (isOtm(jsonFile)) {
 	    console.debug('Schema validate success for Open Threat Model');
 	    return true;
     }
@@ -53,14 +53,14 @@ export const isTmBom = (jsonFile) => {
     return tmBom.isValid(jsonFile);
 };
 
-export const isOTM = (jsonFile) => {
+export const isOtm = (jsonFile) => {
     return otm.isValid(jsonFile);
 };
 
 export default {
     isV1,
     isV2,
-    isOTM,
+    isOtm,
     isTmBom,
     isValid
 };

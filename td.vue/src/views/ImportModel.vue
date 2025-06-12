@@ -153,7 +153,7 @@ export default {
                     console.error('Convert TM-BOM to internal TD format not yet supported');
                     this.$toast.error(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
                     return;
-                } else if (schema.isOTM(jsonModel)) {
+                } else if (schema.isOtm(jsonModel)) {
                     console.error('Convert OTM to internal TD format not yet supported');
                     this.$toast.error(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
                     return;

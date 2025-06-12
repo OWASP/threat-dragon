@@ -90,7 +90,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             console.error('Convert TM-BOM to internal TD format not yet supported');
             app.$toast.error(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
             return;
-        } else if (schema.isOTM(jsonModel)) {
+        } else if (schema.isOtm(jsonModel)) {
             console.error('Convert OTM to dragon format not yet supported');
             app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
             return;

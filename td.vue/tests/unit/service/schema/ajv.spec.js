@@ -12,32 +12,112 @@ describe('service/schema/ajv.js', () => {
         });
 
         it('validates V2 models', () => {
-		    expect(schema.isValid(v2Model)).toBe(true);
+            expect(schema.isValid(v2Model)).toBe(true);
         });
 
         it('validates TM models', () => {
-		    expect(schema.isValid(tmModel)).toBe(true);
+            expect(schema.isValid(tmModel)).toBe(true);
         });
 
         it('validates OTM models', () => {
             expect(schema.isValid(otmModel)).toBe(true);
         });
+
+        it('detects no schema match', () => {
+            expect(schema.isValid({'invalidJson': 'made up'})).toBe(false);
+        });
+
+        it('rejects invalid JSON', () => {
+            expect(schema.isValid('invalidJson')).toBe(false);
+        });
+    });
+
+    describe('isV1', () => {
+        it('validates V1 Threat Dragon models', () => {
+            expect(schema.isV1(v1Model)).toBe(true);
+        });
+
+        it('rejects invalid V1 Threat Dragon models', () => {
+            let invalidModel = v1Model;
+            delete invalidModel.summary.title;
+            expect(schema.isV1(invalidModel)).toBe(false);
+        });
+
+        it('rejects other models', () => {
+            expect(schema.isV1(tmModel)).toBe(false);
+            expect(schema.isV1(otmModel)).toBe(false);
+            expect(schema.isV1(v2Model)).toBe(false);
+        });
+
+        it('rejects invalid JSON', () => {
+            expect(schema.isV1('invalidJson')).toBe(false);
+        });
+    });
+
+    describe('isV2', () => {
+        it('validates V2 Threat Dragon models', () => {
+            expect(schema.isV2(v2Model)).toBe(true);
+        });
+
+        it('rejects invalid V1 Threat Dragon models', () => {
+            let invalidModel = v2Model;
+            delete invalidModel.summary.title;
+            expect(schema.isV2(invalidModel)).toBe(false);
+        });
+
+        it('rejects other models', () => {
+            expect(schema.isV2(tmModel)).toBe(false);
+            expect(schema.isV2(otmModel)).toBe(false);
+            expect(schema.isV2(v1Model)).toBe(false);
+        });
+
+        it('rejects invalid JSON', () => {
+            expect(schema.isV2('invalidJson')).toBe(false);
+        });
     });
 
     describe('isTmBom', () => {
-	    it('validates TM models', () => {
-	        expect(schema.isTmBom(tmModel)).toBe(true);
-	    });
-
-        it('rejects invalid TM models', () => {
-            let invalidTmModel = tmModel;
-            invalidTmModel['version'] = 0;
-		    expect(schema.isTmBom(invalidTmModel)).toBe(false);
+        it('validates TM models', () => {
+            expect(schema.isTmBom(tmModel)).toBe(true);
         });
 
-	    it('rejects other models', () => {
-	        expect(schema.isTmBom(otmModel)).toBe(false);
-	    });
+        it('rejects invalid TM models', () => {
+            let invalidModel = tmModel;
+            invalidModel['version'] = 0;
+            expect(schema.isTmBom(invalidModel)).toBe(false);
+        });
+
+        it('rejects other models', () => {
+            expect(schema.isTmBom(otmModel)).toBe(false);
+            expect(schema.isTmBom(v1Model)).toBe(false);
+            expect(schema.isTmBom(v2Model)).toBe(false);
+        });
+
+        it('rejects invalid JSON', () => {
+            expect(schema.isTmBom('invalidJson')).toBe(false);
+        });
+    });
+
+    describe('isOtm', () => {
+        it('validates OTM models', () => {
+            expect(schema.isOtm(otmModel)).toBe(true);
+        });
+
+        it('rejects invalid OTM models', () => {
+            let invalidModel = otmModel;
+            invalidModel['otmVersion'] = 0;
+            expect(schema.isOtm(invalidModel)).toBe(false);
+        });
+
+        it('rejects other models', () => {
+            expect(schema.isOtm(tmModel)).toBe(false);
+            expect(schema.isOtm(v1Model)).toBe(false);
+            expect(schema.isOtm(v2Model)).toBe(false);
+        });
+
+        it('rejects invalid JSON', () => {
+            expect(schema.isOtm('invalidJson')).toBe(false);
+        });
     });
 
 });
