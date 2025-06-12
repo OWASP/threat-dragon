@@ -167,7 +167,7 @@ const por = {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
             tmUnsupported: 'Import of TM-BOM file format not yet supported',
-            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+            v1Translate: 'Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0''
         },
         prompts: {
             opened: 'Threat model successfully opened',

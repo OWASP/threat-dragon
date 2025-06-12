@@ -26,7 +26,7 @@ export const isValid = (jsonFile) => {
         return true;
     }
 
-    // if it is not in either Threat Dragon formats, maybe it is TM-BOM format
+    // if it is not in either Threat Dragon formats, maybe another format
     if (isTmBom(jsonFile)) {
 	    console.debug('Schema validate success for Threat Model in TM-BOM');
 	    return true;

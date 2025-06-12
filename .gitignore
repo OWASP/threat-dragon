@@ -240,6 +240,7 @@
 !td.vue/tests/unit/service/provider/*.spec.js
 !td.vue/tests/unit/service/schema/
 !td.vue/tests/unit/service/schema/*.spec.js
+!td.vue/tests/unit/service/schema/*.json
 !td.vue/tests/unit/service/threats/
 !td.vue/tests/unit/service/threats/*.spec.js
 !td.vue/tests/unit/service/threats/models/
