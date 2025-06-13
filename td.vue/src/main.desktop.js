@@ -7,8 +7,7 @@ import i18nFactory from './i18n/index.js';
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
 
-import openThreatModel from './service/otm/openThreatModel.js';
-import { isValidOTM, isValidSchema } from './service/schema/ajv';
+import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
@@ -82,15 +81,23 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         return;
     }
 
-    if (isValidOTM(jsonModel)) {
-        console.debug('Convert OTM to dragon format');
-        jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
-    }
-
-    // schema errors are not fatal
-    if(!isValidSchema(jsonModel)){
-        console.warn('Model does not strictly match schema');
-        app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
+    // schema errors are not fatal, but some formats are not supported yet
+    if(!schema.isV2(jsonModel)){
+        if (schema.isV1(jsonModel)) {
+            console.warn('Version 1.x file will be translated to V2 format');
+            app.$toast.warning(app.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+        } else if (schema.isTmBom(jsonModel)) {
+            console.error('Convert TM-BOM to internal TD format not yet supported');
+            app.$toast.error(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+            return;
+        } else if (schema.isOtm(jsonModel)) {
+            console.error('Convert OTM to dragon format not yet supported');
+            app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+            return;
+        } else {
+            console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel)));
+            app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
+        }
     }
 
     // this will fail if the threat model does not have a title in the summary

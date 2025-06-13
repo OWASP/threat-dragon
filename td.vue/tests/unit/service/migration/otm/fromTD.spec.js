@@ -1,6 +1,6 @@
-import { convert as convertTDtoOTM }  from '@/service/otm/TDtoOTM.js';
+import { convert as convertTDtoOTM }  from '@/service/migration/otm/fromTD.js';
 
-describe('service/otm/openThreatModel.js', () => {
+describe('service/migration/otm/fromTD.js', () => {
     var dragonModel = new Object();
     dragonModel.version = '2.0';
     dragonModel.summary = new Object();
@@ -28,7 +28,7 @@ describe('service/otm/openThreatModel.js', () => {
             otmModel = convertTDtoOTM(dragonModel);
         });
 
-        it('converts td format to otm', () => {
+        it('sets the otm version', () => {
             expect(otmModel.otmVersion).toEqual('0.2.0');
         });
     });

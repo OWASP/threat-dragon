@@ -3,7 +3,6 @@ const fra = {
         sessionExpired: 'Votre session est expirée. Veuillez vous reconnecter pour continuer.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Connecté en tant que',
         logOut: 'Log out'
     },
@@ -158,14 +157,17 @@ const fra = {
         threats: 'Menaces',
         errors: {
             dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
             opened: 'Modèle de menace ouvert avec succès',
