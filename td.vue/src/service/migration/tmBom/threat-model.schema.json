@@ -790,7 +790,7 @@
     "properties": {
         "$schema": {
             "title": "URI of JSON schema",
-            "const": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.0/threat-model.schema.json"
+            "const": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json"
         },
 
         "version": {

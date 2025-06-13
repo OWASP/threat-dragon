@@ -1,5 +1,5 @@
 {
-    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.0/threat-model.schema.json",
+    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
     "version": "1.0",
     "scope": {
       "title": "Husky AI",
