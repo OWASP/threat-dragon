@@ -1,7 +1,7 @@
-import labels from '@/service/migration/labels.js';
+import labels from '@/service/diagram/v1/labels.js';
 
 
-describe('service/migration/labels.js', () => {
+describe('service/diagram/v1/labels.js', () => {
     it('gets the text', () => {
         const lbl = {
             attrs: {

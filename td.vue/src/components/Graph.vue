@@ -50,7 +50,7 @@ import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 import TdThreatSuggestDialog from './ThreatSuggestDialog.vue';
 
 import { getProviderType } from '@/service/provider/providers.js';
-import diagramService from '@/service/migration/diagram.js';
+import diagramService from '@/service/diagram/diagram.js';
 import stencil from '@/service/x6/stencil.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
