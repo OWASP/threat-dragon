@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
-import diagramService from '@/service/migration/diagram.js';
+import diagramService from '@/service/diagram/diagram.js';
 import TdReadOnlyDiagram from '@/components/ReadOnlyDiagram.vue';
 
 describe('components/ReadOnlyDiagram.vue', () => {

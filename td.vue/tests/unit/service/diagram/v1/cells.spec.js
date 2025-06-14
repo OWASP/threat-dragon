@@ -1,10 +1,10 @@
-import cells from '@/service/migration/cells.js';
-import edges from '@/service/migration/edges.js';
-import data from '@/service/migration/data.js';
-import nodes from '@/service/migration/nodes.js';
+import cells from '@/service/diagram/v1/cells.js';
+import edges from '@/service/diagram/v1/edges.js';
+import data from '@/service/diagram/v1/data.js';
+import nodes from '@/service/diagram/v1/nodes.js';
 import shapes from '@/service/x6/shapes/index.js';
 
-describe('service/migration/cells.js', () => {
+describe('service/diagram/v1/cells.js', () => {
     let cell;
 
     const getEdge = (type) => ({
