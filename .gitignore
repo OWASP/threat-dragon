@@ -239,6 +239,7 @@
 !td.vue/tests/unit/service/migration/
 !td.vue/tests/unit/service/migration/tmBom/
 !td.vue/tests/unit/service/migration/tmBom/*.spec.js
+!td.vue/tests/unit/service/migration/tmBom/*.json
 !td.vue/tests/unit/service/otm/
 !td.vue/tests/unit/service/otm/*.spec.js
 !td.vue/tests/unit/service/provider/

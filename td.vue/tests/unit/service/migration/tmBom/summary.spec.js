@@ -3,7 +3,7 @@ import tmBomModel from './husky-ai-threat-model';
 import tdModel from './v2-threat-model';
 
 describe('service/migration/tmBom/summary.js', () => {
-    let testSummary;
+    let testSummary, testScope;
 
     describe('import TM-BOM scope', () => {
         beforeEach(() => {
@@ -28,20 +28,19 @@ describe('service/migration/tmBom/summary.js', () => {
 
     describe('export TM-BOM scope', () => {
 	    beforeEach(() => {
-	        testSummary = summary.write(tdModel);
-            console.debug(JSON.stringify(testSummary));
+	        testScope = summary.write(tdModel);
         });
 
         it('populates the scope values', () => {
-            expect(testSummary.title).toBe(tdModel.summary.title);
-            expect(testSummary.description).toBe(tdModel.summary.description);
+            expect(testScope.title).toBe(tdModel.summary.title);
+            expect(testScope.description).toBe(tdModel.summary.description);
         });
 
         it('reinstates the compatibility values to scope', () => {
-            expect(testSummary.business_criticality).toBe(tdModel.summary.compatibility.business_criticality);
-            expect(testSummary.data_sensitivity).toBe(tdModel.summary.compatibility.data_sensitivity);
-            expect(testSummary.exposure).toBe(tdModel.summary.compatibility.exposure);
-            expect(testSummary.tier).toBe(tdModel.summary.compatibility.tier);
+            expect(testScope.business_criticality).toBe(tdModel.summary.compatibility.business_criticality);
+            expect(testScope.data_sensitivity).toBe(tdModel.summary.compatibility.data_sensitivity);
+            expect(testScope.exposure).toBe(tdModel.summary.compatibility.exposure);
+            expect(testScope.tier).toBe(tdModel.summary.compatibility.tier);
         });
     });
 

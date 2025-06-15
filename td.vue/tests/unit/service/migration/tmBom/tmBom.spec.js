@@ -5,7 +5,7 @@ import tdModel from './v2-threat-model';
 describe('service/migration/tmBom/tmBom.js', () => {
     let testModel;
 
-    describe('import TM-BOM model', () => {
+    describe('read: import TM-BOM model', () => {
         beforeEach(() => {
             testModel = tmBom.read(tmBomModel);
         });
@@ -23,15 +23,25 @@ describe('service/migration/tmBom/tmBom.js', () => {
         });
     });
 
-    describe('export TM-BOM model', () => {
-	    beforeEach(() => {
-	        testModel = tmBom.write(tdModel);
-            console.debug(JSON.stringify(testModel));
-	    });
+    describe('version', () => {
+        let version;
+        beforeEach(() => {
+            version = tmBom.version;
+        });
 
-	    it('provides version', () => {
-	        expect(testModel.version).toBe(tdModel.compatibility.version);
-	    });
+        it('reports the version', () => {
+            expect(version).toBe('2.4.1');
+        });
+    });
+
+    describe('write: export TM-BOM model', () => {
+        beforeEach(() => {
+            testModel = tmBom.write(tdModel);
+        });
+
+        it('provides version', () => {
+            expect(testModel.version).toBe(tdModel.compatibility.version);
+        });
 
         it('reinstates the compatibility values', () => {
             expect(testModel.frozen).toBe(tdModel.compatibility.frozen);

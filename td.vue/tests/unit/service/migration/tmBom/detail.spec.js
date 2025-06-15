@@ -1,0 +1,20 @@
+import detail from '@/service/migration/tmBom/detail';
+import tmBomModel from './husky-ai-threat-model';
+
+describe('service/migration/tmBom/summary.js', () => {
+    let testDetail;
+
+    describe('import TM-BOM diagrams', () => {
+        beforeEach(() => {
+            testDetail = detail.read(tmBomModel);
+        });
+
+        it('provides detail', () => {
+            expect(testDetail.contributors).toHaveLength(1);
+            expect(testDetail.diagramTop).toBe(0);
+            expect(testDetail.reviewer).toBe('');
+            expect(testDetail.threatTop).toBe(8);
+
+        });
+    });
+});
