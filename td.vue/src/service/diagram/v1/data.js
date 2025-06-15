@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
 import edges from './edges.js';
-import threats from '../threats/index.js';
+import threats from '@/service/threats/index.js';
 
 const getName = (cell) => {
     if (cell.name) return cell.name;

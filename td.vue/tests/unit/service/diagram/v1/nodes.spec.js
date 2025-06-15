@@ -1,6 +1,6 @@
-import nodes from '@/service/migration/nodes.js';
+import nodes from '@/service/diagram/v1/nodes.js';
 
-describe('service/migration/nodes.js', () => {
+describe('service/diagram/v1/nodes.js', () => {
     let cell, constructor, mapFn;
 
     const getCell = () => ({

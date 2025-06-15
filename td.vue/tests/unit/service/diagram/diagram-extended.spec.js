@@ -2,9 +2,9 @@
  * Maybe this should be merged with diagram.spec.js
  * Because it's so different in the setup it is separated for now
  */
-import cells from '@/service/migration/cells.js';
+import cells from '@/service/diagram/v1/cells.js';
 
-describe('service/migration/diagram.js', () => {
+describe('service/diagram/diagram.js', () => {
     let diagramMock;
 
     beforeEach(() => {

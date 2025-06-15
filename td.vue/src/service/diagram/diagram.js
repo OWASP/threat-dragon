@@ -1,4 +1,4 @@
-import cells from './cells.js';
+import cells from './v1/cells.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import events from '@/service/x6/graph/events.js';
