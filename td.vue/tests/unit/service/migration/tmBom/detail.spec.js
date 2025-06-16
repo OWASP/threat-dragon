@@ -1,10 +1,10 @@
 import detail from '@/service/migration/tmBom/detail';
 import tmBomModel from './husky-ai-threat-model';
 
-describe('service/migration/tmBom/summary.js', () => {
+describe('service/migration/tmBom/detail.js', () => {
     let testDetail;
 
-    describe('import TM-BOM diagrams', () => {
+    describe('import TM-BOM diagram details', () => {
         beforeEach(() => {
             testDetail = detail.read(tmBomModel);
         });

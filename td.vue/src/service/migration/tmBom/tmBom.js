@@ -23,7 +23,7 @@ const read = (model) => {
 
     return {
         summary: summary.read(model),
-        detail: detail.read(model),
+        detail: detail.read(model, version),
         version: version,
         compatibility
     };

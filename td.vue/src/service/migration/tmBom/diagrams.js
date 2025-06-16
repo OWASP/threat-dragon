@@ -1,9 +1,22 @@
-const read = (model) => {
+const read = (model, version) => {
     const diagrams = new Array();
+    var id = 0;
+    var thumbnail = './public/content/images/thumbnail.generic.jpg';
     
     if (model.diagrams) {
-        diagrams.push({'title': model.diagrams[0].title});
+        let modelDiagrams = model.diagrams;
+
+        modelDiagrams.forEach((diagram) => {
+            diagrams.push({
+			    'version': version,
+			    'title': diagram.title,
+			    'thumbnail': thumbnail,
+			    'diagramType': diagram.type,
+			    'id': id });
+            id++;
+        });
     }
+
     return diagrams;
 };
 
