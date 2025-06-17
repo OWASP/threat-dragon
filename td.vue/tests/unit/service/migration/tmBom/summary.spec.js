@@ -13,9 +13,15 @@ describe('service/migration/tmBom/summary.js', () => {
         it('provides summary', () => {
             expect(testSummary.title).toBe(tmBomModel.scope.title);
             expect(testSummary.owner).toBe('');
-            expect(testSummary.description).toBe(tmBomModel.scope.description);
+            expect(testSummary.description).toContain(tmBomModel.scope.description);
             expect(testSummary.id).toBe(0);
 
+        });
+
+        it('adds assumptions', () => {
+            expect(testSummary.description).toContain(tmBomModel.assumptions[0].validity);
+            expect(testSummary.description).toContain('#1');
+            expect(testSummary.description).toContain(tmBomModel.assumptions[0].description);
         });
 
         it('stores the compatibility values', () => {
@@ -27,8 +33,8 @@ describe('service/migration/tmBom/summary.js', () => {
     });
 
     describe('export TM-BOM scope', () => {
-	    beforeEach(() => {
-	        testScope = summary.write(tdModel);
+        beforeEach(() => {
+            testScope = summary.write(tdModel);
         });
 
         it('populates the scope values', () => {

@@ -16,7 +16,7 @@ describe('service/migration/tmBom/diagrams.js', () => {
 
         it('provides the first diagram', () => {
 		    expect(testDiagrams[0].title).toBe(tmBomModel.diagrams[0].title);
-		    expect(testDiagrams[0].thumbnail).toContain('generic');
+		    expect(testDiagrams[0].thumbnail).toContain('thumbnail.jpg');
 		    expect(testDiagrams[0].diagramType).toBe(tmBomModel.diagrams[0].type);
 		    expect(testDiagrams[0].id).toBe(0);
 

@@ -7,7 +7,7 @@ const read = (model) => {
         summary.description = model.scope.description;
         summary.id = 0;
     
-        // not used (yet) by TD, but need to be preserved if present
+        // not editable/visible (yet) by TD, but need to be preserved if present
         summary.compatibility = {
             business_criticality: model.scope.business_criticality,
             data_sensitivity: model.scope.data_sensitivity,
@@ -16,6 +16,22 @@ const read = (model) => {
         };
     }
 
+    // add assumptions to the description
+    if (model.assumptions) {
+        let assumptions = model.assumptions;
+        let id = 1;
+        summary.description += '\n\n';
+
+        assumptions.forEach((assumption) => {
+            summary.description += assumption.validity + ' ' + 'assumption #' + id + ': ';
+            summary.description += assumption.description + '\n';
+            if (assumption.topics) {
+                summary.description += 'topics covered: ' + assumption.topics.join(', ') + '\n';
+            }
+            id++;
+        });
+    }
+    
     return summary;
 };
 
