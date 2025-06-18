@@ -1,0 +1,321 @@
+{
+  "otmVersion": "0.2.0",
+  "project": {
+    "name": "Test project",
+    "id": "test-project",
+    "description": "This is a test project for the OTM development",
+    "owner": "John Doe",
+    "ownerContact": "john.doe@example.com",
+    "tags": [ "test tag 1", "test tag 2" ],
+    "attributes": {
+      "cmdbId": "MyApp123"
+    }
+  },
+  "representations": [
+    {
+      "name": "Architecture Diagram",
+      "id": "architecture-diagram",
+      "type": "diagram",
+      "size": {
+        "width": 1000,
+        "height": 1100
+      },
+      "attributes": null
+    },
+    {
+      "name": "Application Code",
+      "id": "application-code",
+      "type": "code",
+      "repository": {
+        "url": "https://github.com/my-project"
+      },
+      "attributes": null
+    }
+  ],
+  "assets": [
+    {
+      "name": "Credit Card Data",
+      "id": "cc-data",
+      "description": "Credit card numbers used for payments in the platform",
+      "risk": {
+        "confidentiality": 100,
+        "integrity": 100,
+        "availability": 100,
+        "comment": "We have decided that the values are a 100 for all values since this highly sensitive information"
+      },
+      "attributes": null
+    },
+    {
+      "name": "Public Info",
+      "id": "public-info",
+      "description": "Public information meant to be seen by any interested customer",
+      "risk": {
+        "confidentiality": 0,
+        "integrity": 100,
+        "availability": 50,
+        "comment": "Public information has no confidentiality at all but it is quite important for it to be available and to not be changed by attakers"
+      },
+      "attributes": null
+    }
+  ],
+  "components": [
+    {
+      "name": "Web Client",
+      "id": "web-client",
+      "description": "It represent a connection from the internet to our ecosystem",
+      "parent": {
+        "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
+      },
+      "type": "web-client",
+      "tags": [
+        "external"
+      ],
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "web-client-box",
+          "position": {
+            "x": 100,
+            "y": 100
+          },
+          "size": {
+            "width": 50,
+            "height": 50
+          }
+        }
+      ],
+      "assets": null,
+      "threats": null,
+      "attributes": null
+    },
+    {
+      "name": "Web Service",
+      "id": "web-service",
+      "description": "Runs our web application",
+      "parent": {
+        "trustZone": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d"
+      },
+      "type": "web-service",
+      "tags": [
+        "tomcat"
+      ],
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "web-service-box",
+          "position": {
+            "x": 100,
+            "y": 100
+          },
+          "size": {
+            "width": 50,
+            "height": 50
+          }
+        }
+      ],
+      "assets": {
+        "processed": [
+          "cc-data",
+          "public-info"
+        ],
+        "stored": [
+          "public-info"
+        ]
+      },
+      "threats": [
+        {
+          "threat": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
+          "state": "exposed",
+          "mitigations": [
+            {
+              "mitigation": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+              "state": "implemented"
+            }
+          ]
+        }
+      ],
+      "attributes": null
+    },
+    {
+      "name": "Customer Database",
+      "id": "customer-database",
+      "description": "Postgres database",
+      "parent": {
+        "trustZone": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d"
+      },
+      "type": "database",
+      "tags": [
+        "postgres"
+      ],
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "box-for-postgress-DB",
+          "position": {
+            "x": 200,
+            "y": 100
+          },
+          "size": {
+            "width": 50,
+            "height": 50
+          }
+        }
+      ],
+      "attributes": null
+    },
+    {
+      "name": "Class CustomerDatabase",
+      "id": "class-customerdatabase",
+      "description": "Managages customer database",
+      "type": "code-class",
+      "parent": {
+        "trustZone": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d"
+      },
+      "representations": [
+        {
+          "representation": "application-code",
+          "id": "database class",
+          "package": "com.open.threat.model",
+          "file": "src/main/otm-file/OTMClass.java",
+          "line": 324,
+          "codeSnippet": "public void createOTM(String[] args) { Scanner reader = new Scanner(System.in); System.out.print(\"Enter a number: \"); int number = reader.nextInt() System.out.println(\"You entered: \" + number); }"
+        }
+      ],
+      "attributes": null
+    }
+  ],
+  "dataflows": [
+    {
+      "name": "Dataflow between webclient and webservice.",
+      "id": "webclient-to-webservice",
+      "bidirectional": true,
+      "source": "web-client",
+      "destination": "web-service",
+      "tags": null,
+      "assets": null,
+      "representations": null,
+      "threats": null,
+      "attributes": null
+    },
+    {
+      "name": "Dataflow between webservice and mongo.",
+      "id": "cc-store-in-db",
+      "bidirectional": true,
+      "source": "web-service",
+      "destination": "customer-database",
+      "tags": [
+        "tag1-df",
+        "tag2-df"
+      ],
+      "assets": [
+        "cc-data"
+      ],
+      "representations": null,
+      "threats": [
+        {
+          "threat": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
+          "state": "exposed",
+          "mitigations": [
+            {
+              "mitigation": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+              "state": "required"
+            }
+          ]
+        }
+      ],
+      "attributes": null
+    }
+  ],
+  "trustZones": [
+    {
+      "name": "Internet",
+      "id": "f0ba7722-39b6-4c81-8290-a30a248bb8d9",
+      "type": "internet",
+      "description": "This is the internet trust zone",
+      "risk": {
+        "trustRating": 20
+      },
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "internet-box-shape",
+          "position": {
+            "x": 600,
+            "y": 100
+          },
+          "size": {
+            "width": 100,
+            "height": 100
+          }
+        }
+      ],
+      "attributes": null
+    },
+    {
+      "name": "Private",
+      "id": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d",
+      "type": "private",
+      "description": "Private trustzone for protected components",
+      "risk": {
+        "trustRating": 100
+      },
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "private-box-shape",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 100,
+            "height": 100
+          }
+        }
+      ],
+      "attributes": null
+    }
+  ],
+  "threats": [
+    {
+      "name": "Threat 1",
+      "id": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
+      "description": "Description fo the threat number 1",
+      "categories": [
+        "Spoofing",
+        "Tampering"
+      ],
+      "cwes": [
+        "CWE-79",
+        "CWE-787"
+      ],
+      "risk": {
+        "likelihood": 50,
+        "likelihoodComment": "It is reasonable to think this might happen but it requires for the attaketr to have a deep cyprografy knowledge",
+        "impact": 100,
+        "impactComment": "If this threat becomes a rallity company will strruggle to keep customers and the monetory loss would jeopardise the whole company"
+      },
+      "attributes": null,
+      "tags": [
+        "sql",
+        "cwe-123"
+      ]
+    }
+  ],
+  "mitigations": [
+    {
+      "name": "This is the name of mitigation 1",
+      "id": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+      "description": "Description for mitigation 1",
+      "riskReduction": 50,
+      "attributes": null
+    },
+    {
+      "name": "Mitigation 2",
+      "id": "3b837730-e300-11eb-ba80-0242ac130004",
+      "description": "Description for mitigation 2",
+      "riskReduction": 100,
+      "attributes": null
+    }
+  ]
+}

@@ -3,7 +3,6 @@ const ind = {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
     nav: {
-        v2Warning: 'Model ancaman Versi 2.0 tidak kompatibel ke belakang dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0',
         loggedInAs: 'Masuk sebagai',
         logOut: 'Keluar'
     },
@@ -158,14 +157,17 @@ const ind = {
         threats: 'Ancaman',
         errors: {
             dropSingleFileOnly: 'Seret dan lepas memerlukan satu file saja.',
-            invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi.',
-            invalidModel: 'Threat Dragon can not understand this Threat Model. Please check your model and try again.',
+            invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Hanya file yang berakhir dengan .json yang didukung.',
             open: 'Kesalahan membuka Model Ancaman ini. Periksa konsol pengembang untuk informasi lebih lanjut',
             save: 'Kesalahan menyimpan Model Ancaman. Periksa konsol pengembang untuk informasi lebih lanjut'
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0'
         },
         prompts: {
             opened: 'Model ancaman berhasil dibuka',
