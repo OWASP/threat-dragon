@@ -3,7 +3,6 @@ const por = {
         sessionExpired: 'Sua sessão está expirada. Por favor, faça login novamente.'
     },
     nav: {
-        v2Warning: 'As modelagens de ameaça na versão 2.0 não são compatíveis com os modelos do Threat Dragon versão 1.x. Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0',
         loggedInAs: 'Logado como',
         logOut: 'Desconectar'
     },
@@ -157,15 +156,18 @@ const por = {
         },
         threats: 'Ameaças',
         errors: {
-            dropSingleFileOnly: 'Arrastar e soltar requer um arquivo único.',
-            invalidJson: 'JSON inválido. Por favor, confira seu modelo e tente novamente.',
-            invalidModel: 'Threat Dragon não consegue entender este Modelo de Ameaça. Por favor, configura seu modelo e tente novamente.',
-            onlyJsonAllowed: 'Apenar arquivos com extensão .json são suportados.',
-            open: 'Erro ao abrir este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações.',
-            save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações.'
+            dropSingleFileOnly: 'Arrastar e soltar requer um arquivo único',
+            invalidJson: 'JSON inválido. Por favor, confira seu modelo e tente novamente',
+            invalidModel: 'Threat Dragon não consegue entender este Modelo de Ameaça. Por favor, configura seu modelo e tente novamente',
+            onlyJsonAllowed: 'Apenar arquivos com extensão .json são suportados',
+            open: 'Erro ao abrir este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações',
+            save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações'
         },
         warnings: {
-            jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor.',
+            jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            v1Translate: 'Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0'
         },
         prompts: {
             opened: 'Modelo de Ameaça aberto com sucesso',
