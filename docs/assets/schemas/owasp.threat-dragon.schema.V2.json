@@ -412,7 +412,7 @@
                 }
               }
             },
-            "required": [ "cells", "diagramType", "id", "thumbnail", "title", "version" ]
+            "required": [ "diagramType", "id", "thumbnail", "title", "version" ]
           }
         },
         "diagramTop": {
