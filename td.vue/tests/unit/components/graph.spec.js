@@ -8,7 +8,7 @@ import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
-import diagramService from '@/service/migration/diagram.js';
+import diagramService from '@/service/diagram/diagram.js';
 import stencilService from '@/service/x6/stencil.js';
 import providerService from '@/service/provider/providers.js';
 import tmActions from '@/store/actions/threatmodel.js';

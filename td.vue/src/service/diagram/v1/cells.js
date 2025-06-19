@@ -1,8 +1,8 @@
 import edges from './edges.js';
 import data from './data.js';
 import nodes from './nodes.js';
-import shapes from '../x6/shapes/index.js';
-import models from '../threats/models/index.js';
+import shapes from '@/service/x6/shapes/index.js';
+import models from '@/service/threats/models/index.js';
 
 const getCellConverter = () => ({
     'tm.Actor': {
