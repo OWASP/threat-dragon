@@ -1,4 +1,4 @@
-import diagrams from './diagrams';
+import diagrams from './diagrams/diagrams';
 
 const read = (model, version) => {
     

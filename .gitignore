@@ -163,6 +163,8 @@
 !td.vue/src/service/migration/tmBom/
 !td.vue/src/service/migration/tmBom/*.js
 !td.vue/src/service/migration/tmBom/*.json
+!td.vue/src/service/migration/tmBom/diagrams
+!td.vue/src/service/migration/tmBom/diagrams/*.js
 !td.vue/src/service/provider/
 !td.vue/src/service/provider/*.js
 !td.vue/src/service/schema/
@@ -246,6 +248,8 @@
 !td.vue/tests/unit/service/migration/tmBom/
 !td.vue/tests/unit/service/migration/tmBom/*.spec.js
 !td.vue/tests/unit/service/migration/tmBom/*.json
+!td.vue/tests/unit/service/migration/tmBom/diagrams/
+!td.vue/tests/unit/service/migration/tmBom/diagrams/*.js
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/provider/*.spec.js
 !td.vue/tests/unit/service/schema/

@@ -13,14 +13,16 @@ const boundary = {
     type: 'tm.Boundary',
     name: 'Trust Boundary',
     description: '',
-    isTrustBoundary: true
+    isTrustBoundary: true,
+    hasOpenThreats: false
 };
 
 const boundaryBox = {
     type: 'tm.BoundaryBox',
     name: 'Trust Boundary',
     description: '',
-    isTrustBoundary: true
+    isTrustBoundary: true,
+    hasOpenThreats: false
 };
 
 const flow = {
