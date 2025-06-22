@@ -4,6 +4,7 @@ const read = (model, version) => {
     const diagrams = new Array();
     var thumbnail = './public/content/images/thumbnail.jpg';
     var offset = {'x': 100, 'y': 80};
+    const trustBoundaryBoxes = boxes.read(model, offset);
     
     if (model.diagrams) {
         let modelDiagrams = model.diagrams;
@@ -16,7 +17,7 @@ const read = (model, version) => {
                 'thumbnail': thumbnail,
                 'diagramType': diagram.type,
                 'id': id++,
-                'cells': boxes.read(model, offset)
+                'cells': trustBoundaryBoxes
             });
         });
     }

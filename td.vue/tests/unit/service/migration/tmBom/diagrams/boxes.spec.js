@@ -3,6 +3,15 @@ import tmBomModel from '../husky-ai-threat-model';
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
     const offset = {'x': 100, 'y': 80};
+    const boundaryBoxShape = {
+        visible: true,
+        shape: 'trust-boundary-box',
+        data: {
+            type: 'tm.BoundaryBox',
+            isTrustBoundary: true,
+            hasOpenThreats: false
+        }
+    };
     let testBoundaryBoxes = boxes.read(tmBomModel, offset);
 
     describe('import TM-BOM zones', () => {
@@ -11,23 +20,9 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         });
 
         it('provides the first boundary box', () => {
-            expect(testBoundaryBoxes[0]).toStrictEqual({
-                position: { x: 100, y: 80 },
-                size: { width: 480, height: 320 },
-                attrs: { label: { 'text': 'Production Trust Zone' } },
-                visible: true,
-                shape: 'trust-boundary-box',
-                id: 'prod-zone',
-                zIndex: -1,
-                data: {
-                    type: 'tm.BoundaryBox',
-                    name: 'Production Trust Zone',
-                    description: 'Internal VPC with the production deployment of HuskyAI',
-                    isTrustBoundary: true,
-                    hasOpenThreats: false
-                }
-            });
-
+            expect(testBoundaryBoxes[0]).toMatchObject(boundaryBoxShape);
+            expect(testBoundaryBoxes[1]).toMatchObject(boundaryBoxShape);
+            expect(testBoundaryBoxes[2]).toMatchObject(boundaryBoxShape);
         });
 
         it('creates the id strings', () => {
@@ -37,21 +32,36 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         });
 
         it('sizes the boundary boxes', () => {
-            expect(testBoundaryBoxes[0].size).toStrictEqual({ width: 480, height: 320 });
-            expect(testBoundaryBoxes[1].size).toStrictEqual({ width: 480, height: 320 });
-            expect(testBoundaryBoxes[2].size).toStrictEqual({ width: 240, height: 160});
+            expect(testBoundaryBoxes[0].size).toStrictEqual({ width: 520, height: 360 });
+            expect(testBoundaryBoxes[1].size).toStrictEqual({ width: 520, height: 360 });
+            expect(testBoundaryBoxes[2].size).toStrictEqual({ width: 260, height: 180});
         });
 
         it('places the boundary boxes', () => {
-		    expect(testBoundaryBoxes[0].position).toStrictEqual({ x: 100, y: 80 });
-		    expect(testBoundaryBoxes[1].position).toStrictEqual({ x: 620, y: 80 });
-		    expect(testBoundaryBoxes[2].position).toStrictEqual({ x: 100, y: 440 });
+            expect(testBoundaryBoxes[0].position).toStrictEqual({ x: 100, y: 80 });
+            expect(testBoundaryBoxes[1].position).toStrictEqual({ x: 670, y: 80 });
+            expect(testBoundaryBoxes[2].position).toStrictEqual({ x: 100, y: 490 });
         });
 
         it('names the boundary boxes', () => {
-		    expect(testBoundaryBoxes[0].data.name).toBe('Production Trust Zone');
-		    expect(testBoundaryBoxes[1].data.name).toBe('Experimental Trust Zone');
-		    expect(testBoundaryBoxes[2].data.name).toBe('Public Internet');
+            expect(testBoundaryBoxes[0].data.name).toBe('Production Trust Zone');
+            expect(testBoundaryBoxes[0].attrs.label.text).toBe('Production Trust Zone');
+            expect(testBoundaryBoxes[1].data.name).toBe('Experimental Trust Zone');
+            expect(testBoundaryBoxes[1].attrs.label.text).toBe('Experimental Trust Zone');
+            expect(testBoundaryBoxes[2].data.name).toBe('Public Internet');
+            expect(testBoundaryBoxes[2].attrs.label.text).toBe('Public Internet');
+        });
+
+        it('provides the description', () => {
+            expect(testBoundaryBoxes[0].data.description).toContain('Internal VPC');
+            expect(testBoundaryBoxes[1].data.description).toContain('Internal VPC');
+            expect(testBoundaryBoxes[2].data.description).toContain('The public internet');
+        });
+
+        it('sets the Z index', () => {
+            expect(testBoundaryBoxes[0].zIndex).toBe(-1);
+            expect(testBoundaryBoxes[1].zIndex).toBe(-2);
+            expect(testBoundaryBoxes[2].zIndex).toBe(-3);
         });
 
     });

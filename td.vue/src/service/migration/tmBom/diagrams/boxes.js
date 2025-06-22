@@ -1,9 +1,9 @@
 import defaultProperties from '@/service/entity/default-properties.js';
-const padding = 40;
+const padding = 50;
+const nodeSize = { 'width': 160 + (2 * padding), 'height': 80 + (2 * padding) };
 
 const findDimensions = (model, symbolic_name) => {
     let nodes = 0;
-    const nodeSize = { 'width': 160 + (2 * padding), 'height': 80 + (2 * padding) };
     let nodesPerSide = 1;
 
     if (model.actors) {
