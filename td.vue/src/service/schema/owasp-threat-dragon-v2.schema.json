@@ -251,7 +251,7 @@
                     "id": {
                       "description": "The component unique identifier (UUID)",
                       "type": "string",
-                      "minLength": 36
+                      "minLength": 2
                     },
                     "position": {
                       "description": "The component position",
@@ -363,7 +363,7 @@
                           "threatId": {
                             "description": "The threat ID as a UUID",
                             "type": "string",
-                            "minLength": 36
+                            "minLength": 2
                           },
                           "title": {
                             "description": "The threat title",
