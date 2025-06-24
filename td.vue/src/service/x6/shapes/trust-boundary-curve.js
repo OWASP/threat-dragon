@@ -21,7 +21,7 @@ export const TrustBoundaryCurve = Shape.Edge.define({
         }
     },
     connector: 'smooth',
-    data: defaultProperties.boundary
+    data: defaultProperties.defaultData('tm.Boundary')
 });
 
 TrustBoundaryCurve.prototype.type = 'tm.Boundary';

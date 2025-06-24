@@ -45,7 +45,7 @@ export const TrustBoundaryCurveStencil = Shape.Path.define({
             textVerticalAnchor: 'middle'
         }
     },
-    data: defaultProperties.boundary
+    data: defaultProperties.defaultData('tm.Boundary')
 });
 
 TrustBoundaryCurveStencil.prototype.type = 'tm.BoundaryStencil';
