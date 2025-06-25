@@ -1,10 +1,11 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
 import tmBomModel from '../husky-ai-threat-model';
+const padding = 50;
+const nodeSize = { width: 160 + (2 * padding), height: 80 + (2 * padding) };
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
     const offset = {'x': 100, 'y': 80};
     const boundaryBoxShape = {
-        visible: true,
         shape: 'trust-boundary-box',
         data: {
             type: 'tm.BoundaryBox',
@@ -12,7 +13,7 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
             hasOpenThreats: false
         }
     };
-    let testBoundaryBoxes = boxes.read(tmBomModel, offset);
+    let testBoundaryBoxes = boxes.read(tmBomModel, offset, nodeSize, padding);
 
     describe('import TM-BOM zones', () => {
         it('finds the boundary boxes', () => {
@@ -53,8 +54,8 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         });
 
         it('provides the description', () => {
-            expect(testBoundaryBoxes[0].data.description).toContain('Internal VPC');
-            expect(testBoundaryBoxes[1].data.description).toContain('Internal VPC');
+            expect(testBoundaryBoxes[0].data.description).toContain('production deployment');
+            expect(testBoundaryBoxes[1].data.description).toContain('experimental deployment');
             expect(testBoundaryBoxes[2].data.description).toContain('The public internet');
         });
 

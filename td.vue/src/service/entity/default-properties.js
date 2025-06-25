@@ -10,7 +10,7 @@ const actor = {
     zIndex: 0,
     data: {
         type: 'tm.Actor',
-        name: 'Actor',
+        name: tc('threatmodel.shapes.actor'),
         description: '',
         isTrustBoundary: false,
         outOfScope: false,
@@ -86,6 +86,16 @@ const process = {
         width: 100,
         height: 100
     },
+    attrs: {
+        text: {
+            text: tc('threatmodel.shapes.process'),
+        },
+        body: {
+            stroke: '#333333',
+            strokeWidth: 1.5,
+            strokeDasharray: null
+        }
+    },
     shape: 'process',
     zIndex: 0,
     data: {
@@ -156,17 +166,24 @@ const text = {
 };
 
 const propsByType = {
-    'tm.Actor': actor.data,
-    'tm.Boundary': boundary.data,
-    'tm.BoundaryBox': boundaryBox.data,
-    'tm.Flow': flow.data,
-    'tm.FlowStencil': flow.data,
-    'tm.Process': process.data,
-    'tm.Store': store.data,
-    'tm.Text': text.data
+    'tm.Actor': actor,
+    'tm.Boundary': boundary,
+    'tm.BoundaryBox': boundaryBox,
+    'tm.Flow': flow,
+    'tm.FlowStencil': flow,
+    'tm.Process': process,
+    'tm.Store': store,
+    'tm.Text': text
 };
 
 const defaultData = (type) => {
+    if (!Object.keys(propsByType).some(x => x === type)) {
+        throw new Error(`Unknown entity: ${type}`);
+    }
+    return JSON.parse(JSON.stringify(propsByType[type].data));
+};
+
+const defaultEntity = (type) => {
     if (!Object.keys(propsByType).some(x => x === type)) {
         throw new Error(`Unknown entity: ${type}`);
     }
@@ -174,5 +191,6 @@ const defaultData = (type) => {
 };
 
 export default {
-    defaultData
+    defaultData,
+    defaultEntity
 };

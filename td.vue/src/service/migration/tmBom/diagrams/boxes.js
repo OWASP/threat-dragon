@@ -1,8 +1,6 @@
 import defaultProperties from '@/service/entity/default-properties.js';
-const padding = 50;
-const nodeSize = { 'width': 160 + (2 * padding), 'height': 80 + (2 * padding) };
 
-const findDimensions = (model, symbolic_name) => {
+const findDimensions = (model, symbolic_name, nodeSize) => {
     let nodes = 0;
     let nodesPerSide = 1;
 
@@ -42,33 +40,32 @@ const findDimensions = (model, symbolic_name) => {
     return { 'width': nodesPerSide * nodeSize.width, 'height': nodesPerSide * nodeSize.height };
 };
 
-const read = (model, offset) => {
+const read = (model, offset, nodeSize, padding) => {
     let boundaryBoxes = new Array();
 
     if (model.trust_zones) {
         let modelTrustZones = model.trust_zones;
         let count = 1;
         let zIndex = -1;
-        let origin = { 'x': offset.x, 'y': offset.y };
+        let origin = { x: offset.x, y: offset.y };
 
         modelTrustZones.forEach((zone) => {
-            let dimensions = findDimensions(model, zone.symbolic_name);
-            let data = JSON.parse(JSON.stringify(defaultProperties.boundaryBox));
+            let dimensions = findDimensions(model, zone.symbolic_name, nodeSize);
+            let data = defaultProperties.defaultData('tm.BoundaryBox');
             data.name = zone.title;
             data.description = zone.description;
 
             boundaryBoxes.push({
-                'position': {
-                    'x': offset.x,
-                    'y': offset.y
+                position: {
+                    x: offset.x,
+                    y: offset.y
                 },
-                'size': dimensions,
-                'attrs': { 'label': { 'text': zone.title } },
-                'visible': true,
-                'shape': 'trust-boundary-box',
-                'id': zone.symbolic_name,
-                'zIndex': zIndex--,
-                'data': data
+                size: dimensions,
+                attrs: { label: { text: zone.title } },
+                shape: 'trust-boundary-box',
+                id: zone.symbolic_name,
+                zIndex: zIndex--,
+                data: data
             });
 
             // ready for next trust boundary box

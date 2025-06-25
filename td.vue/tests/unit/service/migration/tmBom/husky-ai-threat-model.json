@@ -30,7 +30,7 @@
         {
             "symbolic_name": "experimental-zone",
             "title": "Experimental Trust Zone",
-            "description": "Internal VPC with the production deployment of HuskyAI"
+            "description": "Internal VPC with the experimental deployment of HuskyAI"
         },
         {
             "symbolic_name": "public",
