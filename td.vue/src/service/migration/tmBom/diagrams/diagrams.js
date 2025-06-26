@@ -1,5 +1,6 @@
 import nodes from './nodes';
 import flows from './flows';
+import sets from './sets';
 
 const read = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
@@ -7,6 +8,7 @@ const read = (model, version) => {
     const nodeComponents = nodes.read(model);
     const flowComponents = flows.read(model);
     let components = nodeComponents.concat(flowComponents);
+    components = sets.merge(model, components);
 
     if (model.diagrams) {
         let modelDiagrams = model.diagrams;

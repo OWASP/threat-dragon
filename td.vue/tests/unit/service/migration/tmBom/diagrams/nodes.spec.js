@@ -43,7 +43,6 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
 
         it('finds the components', () => {
             expect(components).toHaveLength(21);
-            console.debug(components);
         });
     });
 

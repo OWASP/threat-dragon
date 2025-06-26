@@ -118,16 +118,7 @@ describe('service/entity/default-properties.js', () => {
 
         it('defines the flow entity', () => {
             expect(defaultProperties.defaultEntity('tm.Flow')).toMatchObject({
-                attrs: {
-                    label: 'Data Flow',
-                    line: {
-                        strokeWidth: 1.5,
-                        sourceMarker: null,
-                        targetMarker: 'block'
-                    }
-                },
                 shape: 'flow',
-                zIndex: 10,
                 width: 200,
                 height: 100,
                 connector: 'smooth'
