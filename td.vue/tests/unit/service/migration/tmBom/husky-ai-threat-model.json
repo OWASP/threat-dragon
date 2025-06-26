@@ -494,7 +494,7 @@
             "symbolic_name": "authorized-keys-bastion",
             "title": "Authorized Keys Storage to Bastion",
             "description": "Transfer sensitive data from Authorized Keys Storage to Bastion.",
-            "source": {"type": "data_store","object":"secret-keys"},
+            "source": {"type": "data_store","object":"secret-key-storage"},
             "destination": {"type": "data_store", "object": "bastion"},
             "has_sensitive_data": true,
             "encrypted": true

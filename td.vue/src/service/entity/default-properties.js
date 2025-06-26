@@ -53,17 +53,57 @@ const boundaryBox = {
 
 const flow = {
     attrs: {
-        label: tc('threatmodel.shapes.flow'),
         line: {
+            stroke: '#333333',
             strokeWidth: 1.5,
-            sourceMarker: null,
-            targetMarker: 'block'
+            targetMarker: {
+                name: 'block'
+            },
+            sourceMarker: {
+                name: ''
+            },
+            strokeDasharray: null
         }
     },
     shape: 'flow',
-    zIndex: 10,
     width: 200,
     height: 100,
+    labels: [
+	  {
+	    markup: [
+	      {
+	        tagName: 'ellipse',
+	        selector: 'labelBody'
+	      },
+	      {
+	        tagName: 'text',
+	        selector: 'labelText'
+	      }
+	    ],
+	    attrs: {
+	      labelText: {
+	        text: '',
+	        textAnchor: 'middle',
+	        textVerticalAnchor: 'middle'
+	      },
+	      labelBody: {
+	        ref: 'labelText',
+	        refRx: '50%',
+	        refRy: '60%',
+	        fill: '#fff',
+	        strokeWidth: 0
+	      }
+	    },
+	    position: {
+	      distance: 0.5,
+	      args: {
+	        keepGradient: true,
+	        ensureLegibility: true
+	      }
+	    }
+	  }
+    ],
+
     connector: 'smooth',
     data: {
         type: 'tm.Flow',
@@ -78,7 +118,10 @@ const flow = {
         isPublicNetwork: false,
         protocol: '',
         threats: []
-    }
+    },
+    source: {cell: '', port: ''},
+    target: {cell: '', port: ''},
+    vertices: []
 };
 
 const process = {

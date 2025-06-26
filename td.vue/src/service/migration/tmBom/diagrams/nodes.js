@@ -56,12 +56,12 @@ const findNodes = (model, zone) => {
         let components = model.components;
         components.forEach((component) => {
             if ((component.trust_zone === zone) || (!component.trust_zone && zone === null)) {
-                let node = defaultProperties.defaultEntity('tm.Process');
-                node.data.name = node.attrs.text.text = component.title;
-                node.data.description = component.description;
-                node.id = component.symbolic_name;
-                node.zIndex = zIndex++;
-                nodes.push(node);
+                let process = defaultProperties.defaultEntity('tm.Process');
+                process.data.name = process.attrs.text.text = component.title;
+                process.data.description = component.description;
+                process.id = component.symbolic_name;
+                process.zIndex = zIndex++;
+                nodes.push(process);
             }
         });
     }
@@ -70,12 +70,12 @@ const findNodes = (model, zone) => {
         let data_stores = model.data_stores;
         data_stores.forEach((data_store) => {
             if ((data_store.trust_zone === zone) || (!data_store.trust_zone && zone === null)) {
-                let node = defaultProperties.defaultEntity('tm.Store');
-                node.data.name = node.attrs.text.text = data_store.title;
-                node.data.description = data_store.description;
-                node.id = data_store.symbolic_name;
-                node.zIndex = zIndex++;
-                nodes.push(node);
+                let store = defaultProperties.defaultEntity('tm.Store');
+                store.data.name = store.attrs.text.text = data_store.title;
+                store.data.description = data_store.description;
+                store.id = data_store.symbolic_name;
+                store.zIndex = zIndex++;
+                nodes.push(store);
             }
         });
     }
@@ -88,10 +88,6 @@ const placeNodes = (nodes, zone) => {
     let origin = { x: zone.position.x + (padding / 2), y: zone.position.y + (padding / 2) };
     let place = { x: origin.x, y: origin.y };
     let count = 0;
-
-    /*let component = nodes[0];
-    component.position = { x: place.x, y: place.y };
-    components.push(component);*/
 
     if (nodes.length) {
         nodes.forEach((node) => {

@@ -1,9 +1,12 @@
 import nodes from './nodes';
+import flows from './flows';
 
 const read = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
     var diagrams = new Array();
-    let components = nodes.read(model);
+    const nodeComponents = nodes.read(model);
+    const flowComponents = flows.read(model);
+    let components = nodeComponents.concat(flowComponents);
 
     if (model.diagrams) {
         let modelDiagrams = model.diagrams;
