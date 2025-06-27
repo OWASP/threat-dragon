@@ -91,7 +91,7 @@ const nodes = [
     }
 ];
 
-describe('service/migration/tmBom/sets.js', () => {
+describe('service/migration/tmBom/diagrams/sets.js', () => {
     describe('updates component descriptions', () => {
         let components = sets.merge(tmBomModel, nodes);
 

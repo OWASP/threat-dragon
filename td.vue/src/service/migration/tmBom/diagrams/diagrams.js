@@ -1,6 +1,7 @@
 import nodes from './nodes';
 import flows from './flows';
 import sets from './sets';
+import assumptions from './assumptions';
 
 const read = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
@@ -8,7 +9,10 @@ const read = (model, version) => {
     const nodeComponents = nodes.read(model);
     const flowComponents = flows.read(model);
     let components = nodeComponents.concat(flowComponents);
+
+    // data sets and assumptions are merged into existing components
     components = sets.merge(model, components);
+    components = assumptions.merge(model, components);
 
     if (model.diagrams) {
         let modelDiagrams = model.diagrams;

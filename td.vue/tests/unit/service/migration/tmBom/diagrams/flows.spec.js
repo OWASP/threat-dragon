@@ -1,7 +1,7 @@
 import flows from '@/service/migration/tmBom/diagrams/flows';
 import tmBomModel from '../husky-ai-threat-model';
 
-describe('service/migration/tmBom/flows.js', () => {
+describe('service/migration/tmBom/diagrams/flows.js', () => {
     describe('finds the flows', () => {
         it('counts flows in model', () => {
             expect(flows.placeFlows(tmBomModel)).toHaveLength(23);

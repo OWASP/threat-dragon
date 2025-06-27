@@ -1,3 +1,5 @@
+import assumptions from './diagrams/assumptions';
+
 const read = (model) => {
     let summary = new Object();
 
@@ -17,17 +19,14 @@ const read = (model) => {
     }
 
     // add assumptions to the description
-    if (model.assumptions) {
-        let assumptions = model.assumptions;
+    let summaryAssumptions = assumptions.summary(model);
+    if (summaryAssumptions.length) {
         let id = 1;
         summary.description += '\n\n';
 
-        assumptions.forEach((assumption) => {
+        summaryAssumptions.forEach((assumption) => {
             summary.description += assumption.validity + ' ' + 'assumption #' + id + ': ';
             summary.description += assumption.description + '\n';
-            if (assumption.topics) {
-                summary.description += 'topics covered: ' + assumption.topics.join(', ') + '\n';
-            }
             id++;
         });
     }
