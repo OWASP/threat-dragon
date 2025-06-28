@@ -10,19 +10,19 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
             testDiagrams = diagrams.read(tmBomModel, version);
         });
 
-        it('finds the single diagram', () => {
-            expect(testDiagrams).toHaveLength(1);
+        it('finds both diagrams', () => {
+            expect(testDiagrams).toHaveLength(2);
         });
 
         it('versions the diagram', () => {
             expect(testDiagrams[0].version).toBe(version);
         });
 
-        it('provides the single diagram', () => {
-            expect(testDiagrams[0].title).toBe(tmBomModel.diagrams[0].title);
-            expect(testDiagrams[0].thumbnail).toContain('thumbnail.jpg');
-            expect(testDiagrams[0].diagramType).toBe(tmBomModel.diagrams[0].type);
-            expect(testDiagrams[0].id).toBe(0);
+        it('configures the diagram', () => {
+            expect(testDiagrams[1].title).toBe(tmBomModel.diagrams[0].title);
+            expect(testDiagrams[1].thumbnail).toContain('thumbnail.jpg');
+            expect(testDiagrams[1].diagramType).toBe(tmBomModel.diagrams[0].type);
+            expect(testDiagrams[1].id).toBe(1);
         });
     });
 
@@ -33,6 +33,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
 	        delete model.diagrams;
 	        testDiagrams = diagrams.read(model, version);
 
+            expect(testDiagrams).toHaveLength(1);
 	        expect(testDiagrams[0].title).toBe('TM-BOM diagram');
 	        expect(testDiagrams[0].diagramType).toBe('generic');
 	        expect(testDiagrams[0].id).toBe(0);
