@@ -5,7 +5,7 @@ const merge = (model, components) => {
     let tdThreats = findThreats(model);
     tdThreats = controls.merge(model, tdThreats);
     tdThreats = assumptions.merge(model, tdThreats);
-	components = placeThreats(tdThreats, components);
+    components = placeThreats(tdThreats, components);
     return components;
 };
 
@@ -83,8 +83,19 @@ const findPersonas = (model) => {
     return personas;
 };
 
-const placeThreats = (threats, components) => {
-    return true;
+const placeThreats = (tdThreats, components) => {
+    tdThreats.forEach((tdThreat) => {
+        if (tdThreat.components_affected) {
+            tdThreat.components_affected.forEach((affected) => {
+                components.forEach((component) => {
+	                if (affected === component.id) {
+	                    component.data.threats.push(tdThreat);
+	                }
+                });
+            });
+        }
+    });
+    return components;
 };
 
 export default {

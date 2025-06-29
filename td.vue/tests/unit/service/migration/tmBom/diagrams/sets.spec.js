@@ -1,4 +1,4 @@
-import sets from '@/service/migration/tmBom/diagrams/sets';
+import data_sets from '@/service/migration/tmBom/diagrams/sets';
 import tmBomModel from '../husky-ai-threat-model';
 
 const nodes = [
@@ -93,7 +93,7 @@ const nodes = [
 
 describe('service/migration/tmBom/diagrams/sets.js', () => {
     describe('updates component descriptions', () => {
-        let components = sets.merge(tmBomModel, nodes);
+        let components = data_sets.merge(tmBomModel, nodes);
 
         it('adds the data set title', () => {
             expect(components[0].data.description).not.toContain('Data set:');

@@ -1,17 +1,17 @@
-import flows from '@/service/migration/tmBom/diagrams/flows';
+import data_flows from '@/service/migration/tmBom/diagrams/flows';
 import tmBomModel from '../husky-ai-threat-model';
 
 describe('service/migration/tmBom/diagrams/flows.js', () => {
     describe('finds the flows', () => {
         it('counts flows in model', () => {
-            expect(flows.placeFlows(tmBomModel)).toHaveLength(23);
+            expect(data_flows.placeFlows(tmBomModel)).toHaveLength(23);
         });
     });
 
     describe('configures the flows', () => {
         let dataFlows;
         beforeEach(() => {
-            dataFlows = flows.placeFlows(tmBomModel);
+            dataFlows = data_flows.placeFlows(tmBomModel);
         });
 
         it('sets the name', () => {

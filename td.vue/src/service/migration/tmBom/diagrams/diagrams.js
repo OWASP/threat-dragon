@@ -1,7 +1,7 @@
 import assumptions from './assumptions';
-import flows from './flows';
+import data_flows from './flows';
 import nodes from './nodes';
-import sets from './sets';
+import data_sets from './sets';
 import threats from './threats';
 
 const read = (model, version) => {
@@ -9,11 +9,11 @@ const read = (model, version) => {
     var diagrams = new Array();
     let diagramId = 0;
     const nodeComponents = nodes.read(model);
-    const flowComponents = flows.read(model);
+    const flowComponents = data_flows.read(model);
     let components = nodeComponents.concat(flowComponents);
 
     // data sets and assumptions are merged into existing components
-    components = sets.merge(model, components);
+    components = data_sets.merge(model, components);
     components = assumptions.merge(model, components);
     components = threats.merge(model, components);
 
