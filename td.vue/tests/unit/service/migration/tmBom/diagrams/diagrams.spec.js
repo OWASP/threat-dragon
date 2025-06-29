@@ -27,17 +27,17 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     });
 
     describe('handle missing TM-BOM components', () => {
-	    let model;
-	    it('creates a default diagram', () => {
-	        model = JSON.parse(JSON.stringify(tmBomModel));
-	        delete model.diagrams;
-	        testDiagrams = diagrams.read(model, version);
+        let model;
+        it('creates a default diagram', () => {
+            model = JSON.parse(JSON.stringify(tmBomModel));
+            delete model.diagrams;
+            testDiagrams = diagrams.read(model, version);
 
             expect(testDiagrams).toHaveLength(1);
-	        expect(testDiagrams[0].title).toBe('TM-BOM diagram');
-	        expect(testDiagrams[0].diagramType).toBe('generic');
-	        expect(testDiagrams[0].id).toBe(0);
+            expect(testDiagrams[0].title).toBe('Husky AI');
+            expect(testDiagrams[0].diagramType).toBe('generic');
+            expect(testDiagrams[0].id).toBe(0);
 
-	    });
+        });
     });
 });

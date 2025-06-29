@@ -5,7 +5,6 @@ import tmBomModel from '../husky-ai-threat-model';
 describe('service/migration/tmBom/diagrams/assumptions.js', () => {
     describe('updates summary descriptions', () => {
         let summaryAssumptions = assumptions.summary(tmBomModel);
-        console.debug(summaryAssumptions);
 
         it('counts the assumptions in the summary', () => {
             expect(summaryAssumptions).toHaveLength(1);

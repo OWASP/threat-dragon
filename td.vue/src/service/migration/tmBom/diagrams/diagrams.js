@@ -1,7 +1,8 @@
-import nodes from './nodes';
-import flows from './flows';
-import sets from './sets';
 import assumptions from './assumptions';
+import flows from './flows';
+import nodes from './nodes';
+import sets from './sets';
+import threats from './threats';
 
 const read = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
@@ -14,11 +15,11 @@ const read = (model, version) => {
     // data sets and assumptions are merged into existing components
     components = sets.merge(model, components);
     components = assumptions.merge(model, components);
+    components = threats.merge(model, components);
 
-    console.debug('Create default diagram');
     diagrams.push({
 	    version: version,
-	    title: 'TM-BOM diagram',
+	    title: model.scope.title,
 	    thumbnail: thumbnail,
 	    diagramType: 'generic',
 	    id: diagramId++,
