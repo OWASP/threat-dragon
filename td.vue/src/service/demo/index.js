@@ -1,12 +1,12 @@
-import v2NewThreatModel from './v2-new-model.js';
-import threeTierWebApp from './three-tier-web-app.js';
-import rentingCar from './renting-car.js';
-import payment from './payment-online.js';
-import onlineGame from './online-game.js';
-import iotDevice from './iot-device.js';
-import genericCms from './generic-cms.js';
-import cryptoWallet from './cryptocurrency-wallet.js';
-import v2DemoThreatModel from './v2-threat-model.js';
+import v2NewThreatModel from './v2-new-model';
+import threeTierWebApp from './three-tier-web-app';
+import rentingCar from './renting-car';
+import payment from './payment-online';
+import onlineGame from './online-game';
+import iotDevice from './iot-device';
+import genericCms from './generic-cms';
+import cryptoWallet from './cryptocurrency-wallet';
+import v2DemoThreatModel from './v2-threat-model';
 
 const models = [
     { name: 'Demo Threat Model', model: v2DemoThreatModel },

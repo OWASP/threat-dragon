@@ -2,7 +2,7 @@ import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import demoThreatModel from '@/service/demo/v2-threat-model.js';
+import demoThreatModel from '@/service/demo/v2-threat-model';
 import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
 
 describe('views/demo/SelectDemoModel.vue', () => {

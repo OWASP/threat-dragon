@@ -246,7 +246,7 @@
                           "type": "boolean"
                         }
                       },
-                      "required": [ "hasOpenThreats", "name", "type" ]
+                      "required": [ "hasOpenThreats", "type" ]
                     },
                     "id": {
                       "description": "The component unique identifier (UUID)",
