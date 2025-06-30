@@ -1,7 +1,7 @@
-import edges from '@/service/migration/edges.js';
-import labels from '@/service/migration/labels.js';
+import edges from '@/service/diagram/v1/edges.js';
+import labels from '@/service/diagram/v1/labels.js';
 
-describe('service/migration/edges.js', () => {
+describe('service/diagram/v1/edges.js', () => {
     describe('applyData', () => {
         const getCell = () => ({
             protocol: 'foo',

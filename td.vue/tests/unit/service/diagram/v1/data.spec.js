@@ -1,9 +1,9 @@
-import data from '@/service/migration/data.js';
-import edges from '@/service/migration/edges.js';
+import data from '@/service/diagram/v1/data.js';
+import edges from '@/service/diagram/v1/edges.js';
 import threats from '@/service/threats/index.js';
-import store from '../../../../src/service/x6/shapes/store';
+import store from '@/service/x6/shapes/store';
 
-describe('service/migration/data.js', () => {
+describe('service/diagram/v1/data.js', () => {
     let cell, res;
 
     const getCell = () => ({

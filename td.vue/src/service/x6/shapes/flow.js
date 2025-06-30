@@ -20,7 +20,7 @@ export const Flow = Shape.Edge.define({
         }
     },
     connector: 'smooth',
-    data: defaultProperties.flow
+    data: defaultProperties.defaultData('tm.Flow')
 });
 
 Flow.prototype.type = 'tm.Flow';

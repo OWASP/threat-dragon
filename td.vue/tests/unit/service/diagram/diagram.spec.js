@@ -1,12 +1,12 @@
-import cells from '@/service/migration/cells.js';
-import diagram from '@/service/migration/diagram.js';
+import cells from '@/service/diagram/v1/cells.js';
+import diagram from '@/service/diagram/diagram.js';
 import events from '@/service/x6/graph/events.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import graphFactory from '@/service/x6/graph/graph.js';
 import store from '@/store/index.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
-describe('service/migration/diagram.js', () => {
+describe('service/diagram/diagram.js', () => {
     let diagramMock, graphMock, storeMock;
     const nodesMock = ['one', 'two'];
     const edgesMock = ['three'];

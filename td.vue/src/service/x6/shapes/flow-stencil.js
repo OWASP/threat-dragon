@@ -48,7 +48,7 @@ export const FlowStencil = Shape.Path.define({
             sourceMarker: ''
         }
     },
-    data: defaultProperties.flow
+    data: defaultProperties.defaultData('tm.Flow')
 });
 
 FlowStencil.prototype.type = 'tm.FlowStencil';

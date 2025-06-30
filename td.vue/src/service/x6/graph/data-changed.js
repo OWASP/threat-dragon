@@ -80,10 +80,10 @@ const updateProperties = (cell) => {
             console.debug('Updated properties for cell: ' + cell.getData().name);
         } else {
             if (cell.isEdge()) {
-                cell.type = defaultProperties.flow.type;
+                cell.type = 'tm.Flow';
                 console.debug('Edge cell given type: ' + cell.type);
             }
-            cell.setData(defaultProperties.getByType(cell.type));
+            cell.setData(defaultProperties.defaultData(cell.type));
             console.debug('Default properties for ' + cell.shape + ' cell: ' + cell.getData().name);
         }
         store.get().dispatch(CELL_DATA_UPDATED, cell.data);
