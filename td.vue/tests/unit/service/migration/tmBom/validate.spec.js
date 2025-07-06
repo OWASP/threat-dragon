@@ -1,5 +1,5 @@
 import validate from '@/service/migration/tmBom/validate';
-import tmBomModel from './husky-ai-threat-model';
+import tmBomModel from './test-model';
 import tdModel from './v2-threat-model';
 
 describe('service/migration/tmBom/validate.js', () => {

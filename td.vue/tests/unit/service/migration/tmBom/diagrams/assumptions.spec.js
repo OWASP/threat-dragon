@@ -1,5 +1,5 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
-import tmBomModel from '../husky-ai-threat-model';
+import tmBomModel from '../test-model';
 
 
 describe('service/migration/tmBom/diagrams/assumptions.js', () => {

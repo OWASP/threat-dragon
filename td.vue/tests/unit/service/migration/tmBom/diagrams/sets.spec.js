@@ -1,5 +1,5 @@
 import data_sets from '@/service/migration/tmBom/diagrams/sets';
-import tmBomModel from '../husky-ai-threat-model';
+import tmBomModel from '../test-model';
 
 const nodes = [
     {

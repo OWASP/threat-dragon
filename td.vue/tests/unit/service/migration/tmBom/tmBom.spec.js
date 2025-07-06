@@ -1,5 +1,5 @@
 import tmBom from '@/service/migration/tmBom/tmBom';
-import tmBomModel from './husky-ai-threat-model';
+import tmBomModel from './test-model';
 import tdModel from './v2-threat-model';
 
 describe('service/migration/tmBom/tmBom.js', () => {

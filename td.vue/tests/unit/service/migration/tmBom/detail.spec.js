@@ -1,5 +1,5 @@
 import detail from '@/service/migration/tmBom/detail';
-import tmBomModel from './husky-ai-threat-model';
+import tmBomModel from './test-model';
 
 describe('service/migration/tmBom/detail.js', () => {
     let testDetail;

@@ -12,7 +12,7 @@ const read = (model, version) => {
     const flowComponents = data_flows.read(model);
     let components = nodeComponents.concat(flowComponents);
 
-    // data sets and assumptions are merged into existing components
+    // data sets, threats and assumptions are merged into existing components
     components = data_sets.merge(model, components);
     components = assumptions.merge(model, components);
     components = threats.merge(model, components);
@@ -21,7 +21,7 @@ const read = (model, version) => {
 	    version: version,
 	    title: model.scope.title,
 	    thumbnail: thumbnail,
-	    diagramType: 'generic',
+	    diagramType: 'TM-BOM',
 	    id: diagramId++,
 	    cells: components
     });
@@ -36,7 +36,7 @@ const read = (model, version) => {
                 thumbnail: thumbnail,
                 diagramType: diagram.type,
                 id: diagramId++,
-                cells: components
+                cells: []
             });
         });
     }

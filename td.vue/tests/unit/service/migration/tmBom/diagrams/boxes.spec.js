@@ -1,5 +1,5 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
-import tmBomModel from '../husky-ai-threat-model';
+import tmBomModel from '../test-model';
 const padding = 50;
 const nodeSize = { width: 160 + (2 * padding), height: 80 + (2 * padding) };
 

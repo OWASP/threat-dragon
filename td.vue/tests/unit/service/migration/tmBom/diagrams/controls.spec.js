@@ -1,5 +1,5 @@
 import controls from '@/service/migration/tmBom/diagrams/controls';
-import tmBomModel from '../husky-ai-threat-model';
+import tmBomModel from '../test-model';
 
 const tdThreats = [
     {
