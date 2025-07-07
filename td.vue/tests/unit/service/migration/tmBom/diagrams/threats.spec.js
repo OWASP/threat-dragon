@@ -8,7 +8,6 @@ describe('service/migration/tmBom/diagrams/threats.js', () => {
 
         beforeEach(() => {
             tdThreats = threats.findThreats(tmBomModel);
-            console.debug(tdThreats);
         });
 
         it('finds the threats', () => {

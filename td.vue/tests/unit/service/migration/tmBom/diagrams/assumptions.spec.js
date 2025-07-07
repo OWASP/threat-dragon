@@ -1,7 +1,6 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import tmBomModel from '../test-model';
 
-
 describe('service/migration/tmBom/diagrams/assumptions.js', () => {
     describe('updates summary descriptions', () => {
         let summaryAssumptions = assumptions.summary(tmBomModel);

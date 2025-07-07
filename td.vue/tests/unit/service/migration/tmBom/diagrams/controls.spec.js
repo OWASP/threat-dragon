@@ -46,7 +46,6 @@ const tdThreats = [
 
 describe('service/migration/tmBom/diagrams/controls.js', () => {
     var threats = controls.merge(tmBomModel, tdThreats);
-    console.debug(threats);
 
     describe('updates the threats', () => {
 
