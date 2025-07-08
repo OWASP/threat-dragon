@@ -1,5 +1,5 @@
-import boundaries from '@/service/migration/tmBom/diagrams/boundaries';
-import tmBomModel from '../test-model';
+import boundaries from '@/service/migration/tmBom/diagrams/threats/boundaries';
+import tmBomModel from '../../test-model';
 
 const mockModel = {
     trust_boundaries: [
@@ -31,12 +31,12 @@ const missingBoundary = {
 
 var mockControl = {description: 'mock description', trust_boundary};
 
-describe('service/migration/tmBom/diagrams/boundaries.js', () => {
+describe('service/migration/tmBom/diagrams/threats/boundaries.js', () => {
 
     describe('finds boundaries', () => {
 
         it('finds an existing boundary', () => {
-            expect(boundaries.find(tmBomModel.trust_boundaries, trust_boundary)).toBeDefined();
+            expect(boundaries.find(tmBomModel.trust_boundaries, trust_boundary)).not.toBe(null);
         });
 
         it('returns null when boundaries are missing', () => {

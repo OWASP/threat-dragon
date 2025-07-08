@@ -11,7 +11,7 @@ const merge = (model, components) => {
                             component.data.description += '\n' + assumption.validity + ' ' + 'assumption : ';
                             component.data.description += assumption.description + '\n';
                         }
-                    });                
+                    });
                 });
             }
         });

@@ -1,7 +1,7 @@
-import threats from '@/service/migration/tmBom/diagrams/threats';
-import tmBomModel from '../test-model';
+import threats from '@/service/migration/tmBom/diagrams/threats/threats';
+import tmBomModel from '../../test-model';
 
-describe('service/migration/tmBom/diagrams/threats.js', () => {
+describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 
     describe('find TM-BOM threats', () => {
         let tdThreats;

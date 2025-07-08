@@ -2,7 +2,7 @@ import assumptions from './assumptions';
 import data_flows from './flows';
 import nodes from './nodes';
 import data_sets from './sets';
-import threats from './threats';
+import threats from './threats/threats';
 
 const read = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
