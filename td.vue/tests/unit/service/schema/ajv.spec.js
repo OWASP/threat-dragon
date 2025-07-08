@@ -1,5 +1,5 @@
 import schema from '@/service/schema/ajv';
-import tmModel from './husky-ai-threat-model';
+import tmModel from './test-threat-model';
 import otmModel from './otm_example';
 import v1Model from './test-v1-model';
 import v2Model from './test-v2-model';

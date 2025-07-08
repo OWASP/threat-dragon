@@ -1,5 +1,5 @@
 import data_flows from '@/service/migration/tmBom/diagrams/flows';
-import tmBomModel from '../husky-ai-threat-model';
+import tmBomModel from '../test-model';
 
 describe('service/migration/tmBom/diagrams/flows.js', () => {
     describe('finds the flows', () => {

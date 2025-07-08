@@ -1,5 +1,5 @@
-import controls from '@/service/migration/tmBom/diagrams/controls';
-import tmBomModel from '../husky-ai-threat-model';
+import controls from '@/service/migration/tmBom/diagrams/threats/controls';
+import tmBomModel from '../../test-model';
 
 const tdThreats = [
     {
@@ -44,9 +44,8 @@ const tdThreats = [
     }
 ];
 
-describe('service/migration/tmBom/diagrams/controls.js', () => {
+describe('service/migration/tmBom/diagrams/threats/controls.js', () => {
     var threats = controls.merge(tmBomModel, tdThreats);
-    console.debug(threats);
 
     describe('updates the threats', () => {
 

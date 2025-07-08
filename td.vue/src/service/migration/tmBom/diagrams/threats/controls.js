@@ -1,7 +1,10 @@
+import boundaries from './boundaries';
+
 const merge = (model, tdThreats) => {
     
     if (model.controls) {
         let controls = model.controls;
+
         controls.forEach((control) => {
             let threats = control.threats;
             if (threats) {
@@ -16,6 +19,7 @@ const merge = (model, tdThreats) => {
                     });
                 });
             }
+            control = boundaries.merge(model, control);
         });
     }
 
