@@ -1,14 +1,13 @@
-import threats from '@/service/migration/tmBom/diagrams/threats';
-import tmBomModel from '../husky-ai-threat-model';
+import threats from '@/service/migration/tmBom/diagrams/threats/threats';
+import tmBomModel from '../../test-model';
 
-describe('service/migration/tmBom/diagrams/threats.js', () => {
+describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 
     describe('find TM-BOM threats', () => {
         let tdThreats;
 
         beforeEach(() => {
             tdThreats = threats.findThreats(tmBomModel);
-            console.debug(tdThreats);
         });
 
         it('finds the threats', () => {

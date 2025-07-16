@@ -1,10 +1,12 @@
 import controls from './controls';
-import assumptions from './assumptions';
+import assumptions from '../assumptions';
+import risks from './risks';
 
 const merge = (model, components) => {
     let tdThreats = findThreats(model);
     tdThreats = controls.merge(model, tdThreats);
     tdThreats = assumptions.merge(model, tdThreats);
+    tdThreats = risks.merge(model, tdThreats);
     components = placeThreats(tdThreats, components);
     return components;
 };
