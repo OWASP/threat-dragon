@@ -144,9 +144,9 @@ const ara = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'مخطط DIE جديد',
-                defaultDescription: 'وصف مخطط DIE جديد',
-                select: 'DIE'
+                defaultTitle: 'مخطط CIA-DIE جديد',
+                defaultDescription: 'وصف مخطط CIA-DIE جديد',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'مخطط CIA جديد',
@@ -301,8 +301,11 @@ const ara = {
                 integrity: 'Integrity النزاهة',
                 availability: 'Availability التوفر'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality السرية',
+                integrity: 'Integrity النزاهة',
+                availability: 'Availability التوفر',
                 distributed: 'Distributed موزع',
                 immutable: 'Immutable لا يمكن تغييره',
                 ephemeral: 'Ephemeral زائل'
@@ -341,7 +344,7 @@ const ara = {
         generic: {
             default: 'تهديد عام جديد',
             cia: 'تهديد CIA جديد',
-            die: 'تهديد DIE جديد',
+            ciadie: 'تهديد CIA-DIE جديد',
             linddun: 'تهديد LINDDUN جديد',
             plot4ai: 'تهديد PLOT4ai جديد',
             stride: 'تهديد STRIDE جديد'

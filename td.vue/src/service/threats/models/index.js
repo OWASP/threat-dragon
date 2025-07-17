@@ -1,5 +1,5 @@
 import cia from './cia.js';
-import die from './die.js';
+import ciaDie from './ciadie.js';
 import linddun from './linddun.js';
 import plot4ai from './plot4ai.js';
 import stride from './stride.js';
@@ -21,7 +21,7 @@ const swapKeyValuePairs = (obj) => {
 const generic = Object.assign(
     Object.assign({ 'threats.model.stride.header': 'strideHeader' }, swapKeyValuePairs(stride.all)),
     Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
-    Object.assign({ 'threats.model.die.header': 'dieHeader' }, swapKeyValuePairs(die)),
+    Object.assign({ 'threats.model.ciedie.header': 'ciaDieHeader' }, swapKeyValuePairs(ciaDie)),
     Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
     Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
 );
@@ -36,8 +36,8 @@ const getByTranslationValue = (translation) => {
         return 'CIA';
     }
 
-    if (Object.values(die).find(x => x.toLowerCase() === translation.toLowerCase())) {
-        return 'DIE';
+    if (Object.values(ciaDie).find(x => x.toLowerCase() === translation.toLowerCase())) {
+        return 'CIADIE';
     }
 
     if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
@@ -64,8 +64,9 @@ const getThreatTypesByElement = (modelType, cellType) => {
         types = cia;
         break;
 
-    case 'DIE' :
-        types = die;
+    case 'DIE':
+    case 'CIADIE' :
+        types = ciaDie;
         break;
 
     case 'LINDDUN' :
@@ -126,10 +127,11 @@ const getFrequencyMapByElement = (modelType,cellType) => {
     let freqMap={};
     switch(modelType.toUpperCase()){
     case 'CIA':
-        freqMap = {confidentiality: 0,integrity: 0,availability:0};
+        freqMap = {confidentiality: 0,integrity: 0,availability: 0};
         break;
     case 'DIE':
-        freqMap = {distributed: 0,immutable: 0,ephemeral: 0};
+    case 'CIADIE':
+        freqMap = {confidentiality: 0, integrity: 0, availability: 0, distributed: 0, immutable: 0, ephemeral: 0};
         break;
     case 'LINDDUN':
         if(cellType==='tm.Actor')
@@ -177,7 +179,7 @@ const getFrequencyMapByElement = (modelType,cellType) => {
     return freqMap;
 };
 
-const allModels = ['CIA', 'DIE', 'LINDDUN', 'PLOT4ai', 'STRIDE'];
+const allModels = ['CIA', 'CIADIE', 'LINDDUN', 'PLOT4ai', 'STRIDE'];
 
 export default {
     getByTranslationValue,

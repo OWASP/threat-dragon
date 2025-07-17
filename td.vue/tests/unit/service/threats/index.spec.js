@@ -101,23 +101,23 @@ describe('service/threats/index.js', () => {
         });
     });
 
-    describe('create new DIE threat', () => {
+    describe('create new CIA-DIE threat', () => {
         let threat;
 
         beforeEach(() => {
-            threat = createNewTypedThreat('DIE');
+            threat = createNewTypedThreat('CIADIE');
         });
 
         it('has a typed title', () => {
-            expect(threat.title).toEqual('New DIE threat');
+            expect(threat.title).toEqual('New CIA-DIE threat');
         });
 
         it('has Distributed type', () => {
             expect(threat.type).toEqual('Distributed');
         });
 
-        it('has a DIE modelType', () => {
-            expect(threat.modelType).toEqual('DIE');
+        it('has a CIA-DIE modelType', () => {
+            expect(threat.modelType).toEqual('CIADIE');
         });
     });
 

@@ -34,9 +34,10 @@ const getDiagramType = (representation) => {
             diagram.placeholder = 'New CIA diagram description';
             break;
         case 'DIE':
-            diagram.diagramType = 'DIE';
+        case 'CIADIE':
+            diagram.diagramType = 'CIADIE';
             diagram.thumbnail = './public/content/images/thumbnail.die.jpg';
-            diagram.placeholder = 'New DIE diagram description';
+            diagram.placeholder = 'New CIA-DIE diagram description';
             break;
         case 'LINDDUN':
             diagram.diagramType = 'LINDDUN';

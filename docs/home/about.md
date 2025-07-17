@@ -16,7 +16,7 @@ This tool provides for the creation of threat model data-flow diagrams
 and entering of associated threats along with their remediations.
 
 Threat Dragon supports STRIDE<sup>[1](#footnote1)</sup>, LINDDUN<sup>[2](#footnote2)</sup>,
-CIA<sup>[3](#footnote3)</sup>, DIE<sup>[4](#footnote4)</sup> and PLOT4ai<sup>[5](#footnote5)</sup>
+CIA<sup>[3](#footnote3)</sup>, CIA-DIE<sup>[4](#footnote4)</sup> and PLOT4ai<sup>[5](#footnote5)</sup>
 
 Threat Dragon is an [OWASP Lab Project](https://owasp.org/projects/)
 and follows the values and principles of the threat modeling [manifesto](https://www.threatmodelingmanifesto.org/).

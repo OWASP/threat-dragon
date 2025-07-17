@@ -209,7 +209,7 @@ export default {
             threat: {},
             modelTypes: [
                 'CIA',
-                'DIE',
+                'CIADIE',
                 'LINDDUN',
                 'PLOT4ai',
                 'STRIDE'

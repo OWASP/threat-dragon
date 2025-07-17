@@ -98,9 +98,9 @@ const hin = {
         name: 'शाखा का नाम',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'से एक थ्रेट मॉडल का चयन करें',
@@ -144,9 +144,9 @@ const hin = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'नया DIE आरेख',
-                defaultDescription: 'नया DIE आरेख विवरण',
-                select: 'DIE'
+                defaultTitle: 'नया CIA-DIE आरेख',
+                defaultDescription: 'नया CIA-DIE आरेख विवरण',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'न्यू सीआईए डायग्राम',
@@ -301,8 +301,11 @@ const hin = {
                 integrity: 'ईमानदारी',
                 availability: 'उपलब्धता'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'गोपनीयता',
+                integrity: 'ईमानदारी',
+                availability: 'उपलब्धता',
                 distributed: 'वितरित',
                 immutable: 'अपरिवर्तनीय',
                 ephemeral: 'क्षणिक'
@@ -341,7 +344,7 @@ const hin = {
         generic: {
             default: 'नया सामान्य थ्रेट',
             cia: 'नया सीआईए थ्रेट',
-            die: 'नया DIE थ्रेट',
+            ciadie: 'नया CIA-DIE थ्रेट',
             linddun: 'न्यू लिंडडन थ्रेट',
             plot4ai: 'नया DPLOT4ai थ्रेट',
             stride: 'नया स्ट्राइड थ्रेट'

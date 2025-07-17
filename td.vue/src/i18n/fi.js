@@ -98,9 +98,9 @@ const fin = {
         name: 'Sivuliikkeen nimi',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Valitse uhkamalli kohteesta',
@@ -144,9 +144,9 @@ const fin = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Uusi DIE-kaavio',
-                defaultDescription: 'Uuden DIE-kaavion kuvaus',
-                select: 'DIE'
+                defaultTitle: 'Uusi CIA-DIE-kaavio',
+                defaultDescription: 'Uuden CIA-DIE-kaavion kuvaus',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Uusi CIA-kaavio',
@@ -301,8 +301,11 @@ const fin = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -341,7 +344,7 @@ const fin = {
         generic: {
             default: 'Uusi yleinen uhka',
             cia: 'Uusi CIA-uhka',
-            die: 'Uusi DIE-uhka',
+            ciadie: 'Uusi CIA-DIE-uhka',
             linddun: 'Uusi LINDDUN-uhka',
             plot4ai: 'Uusi PLOT4ai-uhka',
             stride: 'Uusi STRIDE-uhka'

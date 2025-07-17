@@ -144,9 +144,9 @@ const eng = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'New CIA-DIE diagram description',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'New CIA diagram',
@@ -301,8 +301,11 @@ const eng = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -341,7 +344,7 @@ const eng = {
         generic: {
             default: 'New generic threat',
             cia: 'New CIA threat',
-            die: 'New DIE threat',
+            ciadie: 'New CIA-DIE threat',
             linddun: 'New LINDDUN threat',
             plot4ai: 'New PLOT4ai threat',
             stride: 'New STRIDE threat'
