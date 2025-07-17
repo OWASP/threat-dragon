@@ -130,7 +130,7 @@ The toolbar on the diagram editing page supports some general diagramming featur
 * Close the diagram and return to the threat model details view
 * Save the threat model
 
-The toolbar can be used to export the diagram in various image file formats; JPEG, SVG and PNG.
+The toolbar can be used to export the diagram in either SVG or PNG image file formats.
 
 ![Export diagram image]({{ '/assets/images/export.png' | relative_url }}){: height="170" }
 

@@ -47,9 +47,6 @@
             <b-dropdown-item @click="exportPNG" id="export-graph-png">
                 PNG
             </b-dropdown-item>
-            <b-dropdown-item @click="exportJPEG" id="export-graph-jpeg">
-                JPEG
-            </b-dropdown-item>
             <b-dropdown-item @click="exportSVG" id="export-graph-svg">
                 SVG
             </b-dropdown-item>
@@ -142,11 +139,6 @@ export default {
         },
         exportPNG() {
             this.graph.exportPNG(`${this.diagram.title}.png`, {
-                padding: 50
-            });
-        },
-        exportJPEG() {
-            this.graph.exportJPEG(`${this.diagram.title}.jpeg`, {
                 padding: 50
             });
         },
