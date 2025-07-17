@@ -10,7 +10,7 @@ path: /
 Threat Dragon provides an environment to create threat models as
 data-flow diagrams, along with associated threats and remediations.
 The threats threats can be categorized using STRIDE, [LINDDUN][linddun],
-CIA, DIE and [PLOT4ai][plot4ai].
+CIA, CIA-DIE and [PLOT4ai][plot4ai].
 
 Threat Dragon can be run as a containerized web application or as a desktop application.
 

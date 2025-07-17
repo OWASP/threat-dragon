@@ -98,9 +98,9 @@ const zho = {
         name: '分支名称',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',
@@ -144,9 +144,9 @@ const zho = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: '新DIE图',
-                defaultDescription: '新DIE图描述',
-                select: 'DIE'
+                defaultTitle: '新CIA-DIE图',
+                defaultDescription: '新CIA-DIE图描述',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: '新CIA图',
@@ -301,8 +301,11 @@ const zho = {
                 integrity: '完整性',
                 availability: '可用性'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: '机密性',
+                integrity: '完整性',
+                availability: '可用性',
                 distributed: '分布式',
                 immutable: '不可变性',
                 ephemeral: '短暂性'
@@ -341,7 +344,7 @@ const zho = {
         generic: {
             default: '新通用威胁',
             cia: '新CIA威胁',
-            die: '新DIE威胁',
+            ciadie: '新CIA-DIE威胁',
             linddun: '新LINDDUN威胁',
             plot4ai: '新PLOT4ai威胁',
             stride: '新STRIDE威胁'

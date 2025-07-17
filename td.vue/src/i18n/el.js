@@ -144,9 +144,9 @@ const ell = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Νέο διάγραμμα DIE',
-                defaultDescription: 'Περιγραφή νέου διαγράμματος DIE',
-                select: 'DIE'
+                defaultTitle: 'Νέο διάγραμμα CIA-DIE',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος CIA-DIE',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Νέο διάγραμμα CIA',
@@ -301,8 +301,11 @@ const ell = {
                 integrity: 'Ακεραιότητα',
                 availability: 'Διαθεσιμότητα'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Εμπιστευτικότητα',
+                integrity: 'Ακεραιότητα',
+                availability: 'Διαθεσιμότητα',
                 distributed: 'Κατανεμημένο (Distributed)',
                 immutable: 'Αμετάβλητο (Immutable)',
                 ephemeral: 'Εφήμερο (Ephemeral)'
@@ -341,7 +344,7 @@ const ell = {
         generic: {
             default: 'Νέα γενική απειλή',
             cia: 'Νέα απειλή CIA',
-            die: 'Νέα απειλή DIE',
+            ciadie: 'Νέα απειλή CIA-DIE',
             linddun: 'Νέα απειλή LINDDUN',
             plot4ai: 'Νέα απειλή PLOT4ai',
             stride: 'Νέα απειλή STRIDE'

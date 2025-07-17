@@ -98,9 +98,9 @@ const deu = {
         name: 'Branch Name'
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Ein Bedrohungsmodell auswählen aus',
@@ -144,9 +144,9 @@ const deu = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'Neue DIE Diagramm Beschreibung',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'Neue CIA-DIE Diagramm Beschreibung',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Neues CIA Diagramm',
@@ -301,8 +301,11 @@ const deu = {
                 integrity: 'Integrität',
                 availability: 'Verfügbarkeit'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Vertraulichkeit',
+                integrity: 'Integrität',
+                availability: 'Verfügbarkeit',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -341,7 +344,7 @@ const deu = {
         generic: {
             default: 'Neue generische Bedrohung',
             cia: 'Neue CIA Bedrohung',
-            die: 'Neue DIE Bedrohung',
+            ciadie: 'Neue CIA-DIE Bedrohung',
             linddun: 'Neue LINDDUN Bedrohung',
             plot4ai: 'Neue PLOT4ai Bedrohung',
             stride: 'Neue STRIDE Bedrohung'

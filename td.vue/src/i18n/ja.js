@@ -98,9 +98,9 @@ const jpn = {
         name: 'ブランチ名',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: '次のものから',
@@ -144,9 +144,9 @@ const jpn = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'DIE図',
-                defaultDescription: '新しいDIE図の概要',
-                select: 'DIE'
+                defaultTitle: 'CIA-DIE図',
+                defaultDescription: '新しいCIA-DIE図の概要',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'CIA図',
@@ -301,8 +301,11 @@ const jpn = {
                 integrity: '完全性',
                 availability: '可用性'
             },
-            die: { // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
-                header: '--- DIE ---',
+            ciadie: { // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
+                header: '--- CIA-DIE ---',
+                confidentiality: '機密性',
+                integrity: '完全性',
+                availability: '可用性',
                 distributed: '分散化',
                 immutable: '不変',
                 ephemeral: '一時的'
@@ -341,7 +344,7 @@ const jpn = {
         generic: {
             default: '脅威を追加',
             cia: 'CIA脅威を追加',
-            die: 'DIE脅威を追加',
+            ciadie: 'CIA-DIE脅威を追加',
             linddun: 'LINDDUN脅威を追加',
             plot4ai: 'PLOT4ai脅威を追加',
             stride: 'STRIDE脅威を追加'

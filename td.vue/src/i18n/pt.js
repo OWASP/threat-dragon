@@ -98,9 +98,9 @@ const por = {
         name: 'Nome da branch',
     },
     folder: {
-	    select: 'Selecione uma',
-	    from: 'pasta da lista abaixo',
-	    noneFound: 'Esta pasta está vazia, você pode criar um novo modelo de ameaça (threat model) aqui.'
+        select: 'Selecione uma',
+        from: 'pasta da lista abaixo',
+        noneFound: 'Esta pasta está vazia, você pode criar um novo modelo de ameaça (threat model) aqui.'
     },
     threatmodelSelect: {
         select: 'Selecionar um modelo de ameaça (Threat Model)',
@@ -144,9 +144,9 @@ const por = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Novo diagrama DIE',
-                defaultDescription: 'Descrição de novo diagrama DIE',
-                select: 'DIE'
+                defaultTitle: 'Novo diagrama CIA-DIE',
+                defaultDescription: 'Descrição de novo diagrama CIA-DIE',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Novo diagrama CIA',
@@ -301,8 +301,11 @@ const por = {
                 integrity: 'Integridade',
                 availability: 'Disponibilidade'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidencialidade',
+                integrity: 'Integridade',
+                availability: 'Disponibilidade',
                 distributed: 'Distribuído',
                 immutable: 'Imutável',
                 ephemeral: 'Efêmero'
@@ -341,7 +344,7 @@ const por = {
         generic: {
             dafault: 'Nova ameaça genérica',
             cia : 'Nova ameaça CIA',
-            die : 'Nova ameaça DIE',
+            die : 'Nova ameaça CIA-DIE',
             linddun : 'Nova ameaça LINDDUN',
             plot4ai : 'Nova ameaça PLOT4ai',
             stride: 'Nova ameaça STRIDE'

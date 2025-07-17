@@ -75,7 +75,7 @@ The CIA triad is a basic and enduring threat categorization:
 
 #### CIA-DIE
 
-The DIE diagram type adds more categories to the CIA triad which can be used for cloud based threat modeling:
+The CIA-DIE diagram type adds more categories to the CIA triad which can be used for cloud based threat modeling:
 
 * Distributed
 * Immutable

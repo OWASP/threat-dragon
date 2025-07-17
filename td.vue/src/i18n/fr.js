@@ -98,9 +98,9 @@ const fra = {
         name: 'Nom de la branche',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Sélectionnez un modèle de menace parmi',
@@ -144,9 +144,9 @@ const fra = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'New CIA-DIE diagram description',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Nouveau diagramme CIA',
@@ -301,8 +301,11 @@ const fra = {
                 integrity: 'Intégrité',
                 availability: 'Disponibilité'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentialité',
+                integrity: 'Intégrité',
+                availability: 'Disponibilité',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -341,7 +344,7 @@ const fra = {
         generic: {
             default: 'Nouvelle menace générique',
             cia: 'Nouvelle menace CIA',
-            die: 'Nouvelle menace DIE',
+            ciadie: 'Nouvelle menace CIA-DIE',
             linddun: 'Nouvelle menace LINDDUN',
             plot4ai: 'Nouvelle menace PLOT4ai',
             stride: 'Nouvelle menace STRIDE'

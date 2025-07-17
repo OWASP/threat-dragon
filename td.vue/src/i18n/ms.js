@@ -98,9 +98,9 @@ const ms = {
         nama: 'nama cawangan',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
@@ -144,9 +144,9 @@ const ms = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Gambarajah DIE baru',
-                defaultDescription: 'Penerangan gambarajah DIE baru',
-                select: 'DIE'
+                defaultTitle: 'Gambarajah CIA-DIE baru',
+                defaultDescription: 'Penerangan gambarajah CIA-DIE baru',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Gambarajah CIA baru',
@@ -301,8 +301,11 @@ const ms = {
                 integrity: 'Integriti',
                 availability: 'Ketersediaan'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Kerahsiaan',
+                integrity: 'Integriti',
+                availability: 'Ketersediaan',
                 distributed: 'Teragih',
                 immutable: 'Tidak Berubah',
                 ephemeral: 'Efemeral'
@@ -341,7 +344,7 @@ const ms = {
         generic: {
             default: 'Ancaman generik baru',
             cia: 'Ancaman CIA baru',
-            die: 'Ancaman DIE baru',
+            ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
             stride: 'Ancaman STRIDE baru'

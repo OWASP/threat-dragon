@@ -98,9 +98,9 @@ const spa = {
         name: 'Nombre de la sucursal',
     },
     folder: {
-	    select: 'Select a',
-	    from: 'folder from the list below',
-	    noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Seleccione un modelo de amenazas (threat model) ',
@@ -144,9 +144,9 @@ const spa = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'Descripción de nuevo diagrama DIE',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'Descripción de nuevo diagrama CIA-DIE',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Nuevo diagrama CIA',
@@ -301,8 +301,11 @@ const spa = {
                 integrity: 'Integrity - Integridad',
                 availability: 'Availability - Disponibilidad'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality - Confidencialidad',
+                integrity: 'Integrity - Integridad',
+                availability: 'Availability - Disponibilidad',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -341,7 +344,7 @@ const spa = {
         generic: {
             default: 'Nueva amenaza genérica',
             cia: 'Nueva amenaza CIA',
-            die: 'Nueva amenaza DIE',
+            ciadie: 'Nueva amenaza CIA-DIE',
             linddun: 'Nueva amenaza LINDDUN',
             plot4ai: 'Nueva amenaza PLOT4ai',
             stride: 'Nueva amenaza STRIDE'
