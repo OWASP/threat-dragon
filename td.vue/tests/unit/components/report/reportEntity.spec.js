@@ -32,7 +32,7 @@ describe('components/report/ReportEntity.vue', () => {
                         status: 'Mitigated',
                         type: 'type2',
                         description: 'Threat 2',
-                        mitigation: 'We did things'
+                        mitigation: 'We [did things](https://things.and.stuff?value=probably&otherValue=maybe)'
                     },
                     {
                         number: '3',
@@ -42,7 +42,7 @@ describe('components/report/ReportEntity.vue', () => {
                         status: 'NotApplicable',
                         type: 'type3',
                         description: 'Threat 3',
-                        mitigation: 'No need to do things'
+                        mitigation: 'No [need](http://this.com) to do [things](https://that.com)'
                     }
                 ]
             }
@@ -69,21 +69,21 @@ describe('components/report/ReportEntity.vue', () => {
             propsData = getData();
             setup(propsData);
         });
-    
+
         it('converts things to camel case', () => {
             expect(wrapper.vm.toCamelCase('FooBar')).toEqual('fooBar');
         });
-    
+
         it('displays the name and data type', () => {
             expect(wrapper.find('.entity-title').text())
                 .toEqual(`${propsData.entity.data.name} (threatmodel.shapes.actor)`);
         });
-    
+
         it('displays the entity description', () => {
             expect(wrapper.find('.entity-description').text())
                 .toContain(propsData.entity.data.description);
         });
-        
+
         it('has a table with the threats', () => {
             expect(wrapper.findComponent(BTable).exists())
                 .toEqual(true);
@@ -96,7 +96,7 @@ describe('components/report/ReportEntity.vue', () => {
             propsData.outOfScope = true;
             setup(propsData);
         });
-        
+
         it('has a table with the threats', () => {
             expect(wrapper.findComponent(BTable).exists())
                 .toEqual(true);
