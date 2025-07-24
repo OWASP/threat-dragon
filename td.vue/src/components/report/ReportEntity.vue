@@ -92,8 +92,8 @@ export default {
                     [this.$t('threats.properties.severity')]: this.translateSeverity(threat.severity),
                     [this.$t('threats.properties.status')]: this.translateStatus(threat.status),
                     [this.$t('threats.properties.score')]: threat.score,
-                    [this.$t('threats.properties.description')]: threat.description,
-                    [this.$t('threats.properties.mitigation')]: threat.mitigation
+                    [this.$t('threats.properties.description')]: this.transformHyperlinks(threat.description),
+                    [this.$t('threats.properties.mitigation')]: this.transformHyperlinks(threat.mitigation)
 
                 };
             });
@@ -165,6 +165,9 @@ export default {
                 'Open': this.$t('threats.status.open'),
                 'Mitigated': this.$t('threats.status.mitigated')
             })[status] ?? 'Unknown';
+        },
+        transformHyperlinks(str) {
+            return str.replace(/\[([\w\s\d]+)\]\((https?:\/\/[\w\d.\/?=#]+)\)/g, '<b-link href="$2">$1</b-link>');
         }
     }
 };

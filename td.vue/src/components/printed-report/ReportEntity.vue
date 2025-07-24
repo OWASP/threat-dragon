@@ -31,8 +31,8 @@
                     <td>{{ translateSeverity(threat.severity) }}</td>
                     <td>{{ translateStatus(threat.status) }}</td>
                     <td>{{ threat.score }}</td>
-                    <td>{{ threat.description }}</td>
-                    <td>{{ threat.mitigation }}</td>
+                    <td>{{ transformHyperlinks(threat.description) }}</td>
+                    <td>{{ transformHyperlinks(threat.mitigation) }}</td>
                 </tr>
             </tbody>
         </table>
@@ -161,6 +161,9 @@ export default {
                 'Open': this.$t('threats.status.open'),
                 'Mitigated': this.$t('threats.status.mitigated')
             })[status] ?? 'Unknown';
+        },
+        transformHyperlinks(str) {
+            return str.replace(/\[([\w\s\d]+)\]\((https?:\/\/[\w\d.\/?=#]+)\)/g, '<a href="$2">$1</a>');
         }
     }
 };
