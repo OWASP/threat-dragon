@@ -167,6 +167,7 @@ export default {
             })[status] ?? 'Unknown';
         },
         transformHyperlinks(str) {
+            //eslint-disable-next-line
             return str.replace(/\[([\w\s\d]+)\]\((https?:\/\/[\w\d.\/?=#]+)\)/g, '<b-link href="$2">$1</b-link>');
         }
     }
