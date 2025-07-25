@@ -166,7 +166,7 @@ const ms = {
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0'
         },
         prompts: {

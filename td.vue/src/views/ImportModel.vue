@@ -61,6 +61,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
+import tmBom from '@/service/migration/tmBom/tmBom';
 
 // only search for text files
 const pickerFileOptions = {
@@ -150,9 +151,12 @@ export default {
                     console.warn('Version 1.x file will be translated to V2 format');
                     this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
                 } else if (schema.isTmBom(jsonModel)) {
-                    console.error('Convert TM-BOM to internal TD format not yet supported');
-                    this.$toast.error(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
-                    return;
+                    console.warn('Convert TM-BOM to internal TD format');
+                    this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+                    jsonModel = tmBom.read(jsonModel);
+                    console.debug('Force selection of file name for TM-BOM');
+                    fileName = '';
+                    this.$store.dispatch(tmActions.update, { fileName: fileName });
                 } else if (schema.isOtm(jsonModel)) {
                     console.error('Convert OTM to internal TD format not yet supported');
                     this.$toast.error(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });

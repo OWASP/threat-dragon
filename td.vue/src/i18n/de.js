@@ -166,7 +166,7 @@ const deu = {
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         },
         prompts: {

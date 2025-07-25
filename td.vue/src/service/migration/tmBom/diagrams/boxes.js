@@ -30,11 +30,11 @@ const findDimensions = (model, symbolic_name, nodeSize) => {
     }
 
     // a 'typical' node is width 160 and height 80
-    // the nodes are placed around the edges of the trust boundary box
-    // so that 0 or 1 component is side of 1, 2 to 4 is side of 2
-    // 5 to 8 is side of 3, 9 to 12 is side of 4, 13 to 16 is side of 5 and so on
+    // the nodes are placed around the top and lhs edges of the trust boundary box
+    // so that 0 or 1 component is side of 1, 2 & 3 is side of 2
+    // 4 & 5 is side of 3, 6 & 7 is side of 4, 8 & 9 is side of 5 and so on
     if (nodes > 1) {
-        nodesPerSide = Math.floor((nodes + 7) / 4);
+        nodesPerSide = Math.floor((nodes + 2) / 2);
     }
 
     return { 'width': nodesPerSide * nodeSize.width, 'height': nodesPerSide * nodeSize.height };

@@ -166,7 +166,7 @@ const jpn = {
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。'
         },
         prompts: {
