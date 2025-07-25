@@ -164,7 +164,7 @@ export default {
         },
         transformHyperlinks(str) {
             //eslint-disable-next-line
-            return str.replace(/\[([wsd]+)\]\((https?:\/\/[wd.\/?=#]+)\)/g, '<a href="$2">$1</a>');
+            return str.replace(/\[([\w\s\d]+)\]\((https?:\/\/[\w\d.\/?=#&]+)\)/g, '<a href="$2">$1</a>');
         }
     }
 };
