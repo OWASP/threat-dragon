@@ -166,7 +166,7 @@ const por = {
         warnings: {
             jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0'
         },
         prompts: {
