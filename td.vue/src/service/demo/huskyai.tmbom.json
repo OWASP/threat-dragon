@@ -23,14 +23,14 @@
     ],
     "trust_zones": [
         {
-            "symbolic_name": "prod-zone",
-            "title": "Production Trust Zone",
-            "description": "Internal VPC with the production deployment of HuskyAI"
-        },
-        {
             "symbolic_name": "experimental-zone",
             "title": "Experimental Trust Zone",
             "description": "Internal VPC with the experimental and development deployment for HuskyAI"
+        },
+        {
+            "symbolic_name": "prod-zone",
+            "title": "Production Trust Zone",
+            "description": "Internal VPC with the production deployment of HuskyAI"
         }
     ],
     "trust_boundaries": [
@@ -165,15 +165,6 @@
             "product": "Blob"
         },
         {
-            "symbolic_name": "source-code-config-storage",
-            "title": "Source Code\nand Configuration",
-            "description": "Stores source code and configuration files for deployment and production setup.",
-            "type": "object",
-            "trust_zone": "experimental-zone",
-            "vendor": "GitHub",
-            "product": "GitHub Repositories"
-        },
-        {
             "symbolic_name": "ml-models",
             "title": "Machine\nLearning Model",
             "description": "Contains the machine learning models in serialized format.",
@@ -181,6 +172,15 @@
             "trust_zone": "experimental-zone",
             "vendor": "Azure",
             "product": "Blob"
+        },
+        {
+            "symbolic_name": "source-code-config-storage",
+            "title": "Source Code\nand Configuration",
+            "description": "Stores source code and configuration files for deployment and production setup.",
+            "type": "object",
+            "trust_zone": "experimental-zone",
+            "vendor": "GitHub",
+            "product": "GitHub Repositories"
         },
         {
             "symbolic_name": "third-party-tools",

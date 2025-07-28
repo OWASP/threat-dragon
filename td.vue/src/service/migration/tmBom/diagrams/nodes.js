@@ -1,7 +1,7 @@
 import defaultProperties from '@/service/entity/default-properties.js';
 import boxes from './boxes';
 
-const padding = 100;
+const padding = 125;
 const nodeSize = { width: 160 + padding, height: 80 + padding };
 
 const read = (model) => {
