@@ -4,7 +4,6 @@ const merge = (model, tdThreats) => {
         for (const risk of model.risks) {
             // risks have a threats array, else the model would not pass the schema test
             for (const threat of risk.threats) {
-                console.debug(JSON.stringify(threat));
                 for (let tdThreat of tdThreats) {
                     if (tdThreat.id === threat) {
                         tdThreat.description += '\nRisk Identified: ' + risk.title;

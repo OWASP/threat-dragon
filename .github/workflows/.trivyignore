@@ -12,3 +12,7 @@ CVE-2023-28155
 # alpine 3.20.3 is pulling in a Low priority vuln for libcrypto3 version 3.3.2-r2,
 # ignore for now until alpine is updated
 CVE-2024-9143
+
+# https://avd.aquasec.com/nvd/2025/cve-2025-7783/
+# no fix available for MacOS
+CVE-2025-7783

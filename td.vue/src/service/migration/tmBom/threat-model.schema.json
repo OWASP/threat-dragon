@@ -1,6 +1,6 @@
 {
     "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
-    "$comment": "When updating the schema `$id`, also update the value of the constant `$schema` property below.",
+    "$comment": "When updating the schema `$id`, also update the value of the constant `$schema` property below. See <https://owasp.org/www-project-threat-model-library/#div-specification>.",
     "title": "OWASP Threat Model Library Schema",
 
     "$defs": {
@@ -74,6 +74,9 @@
             "type": "integer",
             "minimum": 0,
             "maximum": 25
+        },
+        "risk-level-band": {
+            "enum": ["very_low", "low", "medium", "high", "very_high", "critical"]
         },
         "tier": {
             "enum": ["mission_critical", "business_critical", "important", "non_critical"]
@@ -324,6 +327,10 @@
                 "permissions": {
                     "title": "Free-form description of permissions typically available to the actor",
                     "type": "string"
+                },
+                "trust_zone": {
+                    "title": "Trust zone in which the actor operates",
+                    "$ref": "#/$defs/symbolic-name"
                 }
             }
         },
@@ -333,8 +340,7 @@
             "required": [
                 "symbolic_name",
                 "title",
-                "description",
-                "trust_zone"
+                "description"
             ],
             "additionalProperties": false,
             "properties": {
@@ -399,6 +405,10 @@
                 "product": {
                     "title": "Product implementing the data store",
                     "type": "string"
+                },
+                "trust_zone": {
+                    "title": "Trust zone where the data store resides",
+                    "$ref": "#/$defs/symbolic-name"
                 }
             }
         },
@@ -738,13 +748,13 @@
                 },
                 "score": {
                     "title": "Risk score based on likelihood and impact",
-                    "$comment": "http://go/threat-modeling-risk-score",
+                    "$comment": "https://owasp.org/www-project-threat-model-library/#div-specification",
                     "$ref": "#/$defs/risk-score"
                 },
                 "level": {
                     "title": "Risk level band",
-                    "$comment": "http://go/threat-modeling-risk-score",
-                    "type": "string"
+                    "$comment": "https://owasp.org/www-project-threat-model-library/#div-specification",
+                    "$ref": "#/$defs/risk-level-band"
                 }
             }
         },

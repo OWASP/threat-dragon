@@ -166,7 +166,7 @@ const zho = {
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            tmUnsupported: 'Import of TM-BOM file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {

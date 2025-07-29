@@ -42,84 +42,93 @@ describe('views/demo/SelectDemoModel.vue', () => {
     });
 
     it('displays the Demo Threat Model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Demo Threat Model')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Demo Threat Model')
+                .at(0)
+                .exists()
+        ).toEqual(true);
+    });
+
+    it('displays the HuskyAI demo model', () => {
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Husky AI')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Cryptocurrency Wallet demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Cryptocurrency Wallet')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Cryptocurrency Wallet')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Generic CMS demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Generic CMS')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Generic CMS')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the IoT Device demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'IoT Device')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'IoT Device')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Online Game demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Online Game')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Online Game')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Payments Processing Platform demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Payments Processing Platform')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Payments Processing Platform')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Renting Car Startup demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Renting Car Startup')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Renting Car Startup')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the Three Tier Web Application demo model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'Three Tier Web Application')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Three Tier Web Application')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('displays the New Blank Model', () => {
-	    expect(
-	        wrapper.findAllComponents(BListGroupItem)
-	            .filter(x => x.text() === 'New Blank Model')
-	            .at(0)
-	            .exists()
-	    ).toEqual(true);
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'New Blank Model')
+                .at(0)
+                .exists()
+        ).toEqual(true);
     });
 
     it('clears the threatmodels', () => {

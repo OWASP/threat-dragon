@@ -6,6 +6,7 @@ import i18nFactory from './i18n/index.js';
 
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
+import tmBom from './service/migration/tmBom/tmBom';
 
 import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
@@ -81,15 +82,16 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         return;
     }
 
-    // schema errors are not fatal, but some formats are not supported yet
+    // schema errors are not fatal, and some formats are not supported yet
     if(!schema.isV2(jsonModel)){
         if (schema.isV1(jsonModel)) {
             console.warn('Version 1.x file will be translated to V2 format');
             app.$toast.warning(app.$t('threatmodel.warnings.v1Translate'), { timeout: false });
         } else if (schema.isTmBom(jsonModel)) {
-            console.error('Convert TM-BOM to internal TD format not yet supported');
-            app.$toast.error(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
-            return;
+            jsonModel = openTmBom(jsonModel);
+            console.debug('force re-selection of file name for TM-BOM');
+            fileName = '';
+            window.electronAPI.modelOpened(fileName);
         } else if (schema.isOtm(jsonModel)) {
             console.error('Convert OTM to dragon format not yet supported');
             app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
@@ -112,6 +114,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
                 throw error;
             }
         });
+        window.electronAPI.modelOpened('');
         return;
     }
 
@@ -163,6 +166,12 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
 const localAuth = () => {
     app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);
+};
+
+const openTmBom = (jsonModel) => {
+    console.warn('Convert TM-BOM to internal TD format');
+    app.$toast.warning(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+    return tmBom.read(jsonModel);
 };
 
 const app = new Vue({

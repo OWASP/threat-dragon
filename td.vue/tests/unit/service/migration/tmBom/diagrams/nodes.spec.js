@@ -79,10 +79,10 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         it('positions components along edge', () => {
-            expect(components[0].position).toStrictEqual({ x: 100, y: 150 });
-            expect(components[1].position).toStrictEqual({ x: 100, y: 330 });
-            expect(components[2].position).toStrictEqual({ x: 360, y: 150 });
-            expect(components[3].position).toStrictEqual({ x: 100, y: 510 });
+            expect(components[0].position).toStrictEqual({ x: 112.5, y: 162.5 });
+            expect(components[1].position).toStrictEqual({ x: 112.5, y: 367.5 });
+            expect(components[2].position).toStrictEqual({ x: 397.5, y: 162.5 });
+            expect(components[3].position).toStrictEqual({ x: 112.5, y: 572.5 });
         });
     });
 
@@ -102,9 +102,9 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         it('positions components within zone', () => {
-            expect(components[0].position).toStrictEqual({ x: 400, y: 300 });
-            expect(components[1].position).toStrictEqual({ x: 400, y: 480 });
-            expect(components[2].position).toStrictEqual({ x: 660, y: 300 });
+            expect(components[0].position).toStrictEqual({ x: 412.5, y: 312.5 });
+            expect(components[1].position).toStrictEqual({ x: 412.5, y: 517.5 });
+            expect(components[2].position).toStrictEqual({ x: 697.5, y: 312.5 });
         });
     });
 });
