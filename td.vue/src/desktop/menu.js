@@ -385,7 +385,8 @@ function savePDFReport (pdfPath) {
                 printBackground: false,
                 pageSize: 'A4',
                 margins: { top: 0, bottom: 0, left: 0, right: 0 },
-                preferCSSPageSize: true
+                preferCSSPageSize: true,
+                generateDocumentOutline: true
             }).then(data => {
                 fs.writeFile(pdfPath, data, (error) => {
                     if (error) throw error;
