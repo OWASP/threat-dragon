@@ -15,15 +15,16 @@
       
       <b-navbar-nav class="ml-auto">
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
-        <b-nav-item>
-          <b-button size="sm" variant="outline-light" @click="handleToggleDarkMode">Toggle Dark Mode</b-button>
-        </b-nav-item>
-        <b-nav-item>
-          <b-button size="sm" variant="outline-light" @click="handleSetSystemTheme">System Theme</b-button>
-        </b-nav-item>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon
             icon="sign-out-alt"
+            class="td-fa-nav"
+            v-b-tooltip.hover :title="$t('nav.logOut')"
+          ></font-awesome-icon>
+        </b-nav-item>
+        <b-nav-item @click="isDark = !isDark" id="dark-mode">
+          <font-awesome-icon
+            :icon="isDark ? 'moon' : 'sun'"
             class="td-fa-nav"
             v-b-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
@@ -128,6 +129,11 @@ export default {
     name: 'TdNavbar',
     components: {
         TdLocaleSelect
+    },
+    data() {
+        return {
+            isDark: false
+        };
     },
     computed: {
         ...mapGetters([

@@ -19,7 +19,6 @@ button {
 </style>
 
 <script>
-import { toggleDarkMode, setSystemTheme } from '@/plugins/dark-mode';
 export default {
     name: 'TdFormButton',
     props: {
@@ -45,10 +44,6 @@ export default {
             required: false,
             default: false
         }
-    },
-    methods: {
-        toggleDarkMode,
-        setSystemTheme
     }
 };
 </script>
