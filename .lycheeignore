@@ -17,6 +17,9 @@ BASE_URL
 github.com/OWASP/threat-dragon/releases/
 github.com/OWASP/threat-dragon/archive/
 
+# the OWASP github org seems sensitive to Too Many Requests
+github.com/OWASP/www-project-threat-dragon/
+
 # ignore LINDDUN site because it occasionally times out
 https://www.linddun.org/
 

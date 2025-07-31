@@ -32,9 +32,9 @@ module.exports = {
             plugins: ['jest'],
             'extends': ['plugin:jest/recommended'],
             rules: {
-                'jest/prefer-to-have-length': 'warn',
-                'jest/no-done-callback': 'warn',
-                'jest/valid-expect': 'warn'
+                'jest/prefer-to-have-length': 'error',
+                'jest/no-done-callback': 'error',
+                'jest/valid-expect': 'error'
             }
         }
     ],

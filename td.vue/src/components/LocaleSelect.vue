@@ -101,7 +101,7 @@ export default {
                 return 'Français'; // French
             case 'hin':
                 return 'हिंदी'; // Hindi
-            case 'id':
+            case 'ind':
                 return 'Bahasa Indonesia'; // Indonesia
             case 'jpn':
                 return '日本語'; // Japanese

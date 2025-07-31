@@ -3,7 +3,6 @@ const hin = {
         sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'लॉग-इन किया गया है भूमिका में',
         logOut: 'लॉगआउट'
     },
@@ -72,7 +71,11 @@ const hin = {
             sheets: 'OWASP चीट शीट्स',
             github: 'GitHub पर हमसे मिलें',
             submit: 'कोई समस्या सबमिट करें',
-            check: 'अपडेट के लिए जांचें ...'
+            check: 'अपडेट के लिए जांचें ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const hin = {
         add: 'शाखा जोडे',
         cancel: 'रद्द करें',
         name: 'शाखा का नाम',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'से एक थ्रेट मॉडल का चयन करें',
@@ -136,9 +144,9 @@ const hin = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'नया DIE आरेख',
-                defaultDescription: 'नया DIE आरेख विवरण',
-                select: 'DIE'
+                defaultTitle: 'नया CIA-DIE आरेख',
+                defaultDescription: 'नया CIA-DIE आरेख विवरण',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'न्यू सीआईए डायग्राम',
@@ -150,12 +158,21 @@ const hin = {
         errors: {
             dropSingleFileOnly: 'ड्रैग एंड ड्रॉप के लिए एक फ़ाइल की आवश्यकता होती है।',
             invalidJson: 'अवैध JSON. कृपया अपने मॉडल की जाँच करें और पुनः प्रयास करें।',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'केवल .json के साथ समाप्त होने वाली फ़ाइलें समर्थित हैं।',
             open: 'इस थ्रेट मॉडल को खोलने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें',
             save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें'
         },
-        opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
-        saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+        },
+        prompts: {
+            opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
+            saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया',
+        },
         properties: {
             title: 'गुण',
             emptyState: 'संपादित करने के लिए ग्राफ़ पर एक तत्व का चयन करें',
@@ -252,7 +269,9 @@ const hin = {
         delete: 'हटाएं',
         discardTitle: 'परिवर्तनों को त्यागें?',
         discardMessage: 'क्या आप सुनिश्चित हैं कि आप अपने परिवर्तनों को खारिज करना चाहते हैं?',
+        duplicate: 'डुप्लिकेट करना',
         edit: 'संपादित करें',
+        export: 'निर्यात करना',
         exportAs: 'मॉडल को निर्यात करें जैसे',
         exportHtml: 'HTML रिपोर्टें',
         exportPdf: 'पीडीएफ रिपोर्टें',
@@ -282,8 +301,11 @@ const hin = {
                 integrity: 'ईमानदारी',
                 availability: 'उपलब्धता'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'गोपनीयता',
+                integrity: 'ईमानदारी',
+                availability: 'उपलब्धता',
                 distributed: 'वितरित',
                 immutable: 'अपरिवर्तनीय',
                 ephemeral: 'क्षणिक'
@@ -322,7 +344,7 @@ const hin = {
         generic: {
             default: 'नया सामान्य थ्रेट',
             cia: 'नया सीआईए थ्रेट',
-            die: 'नया DIE थ्रेट',
+            ciadie: 'नया CIA-DIE थ्रेट',
             linddun: 'न्यू लिंडडन थ्रेट',
             plot4ai: 'नया DPLOT4ai थ्रेट',
             stride: 'नया स्ट्राइड थ्रेट'
@@ -341,7 +363,7 @@ const hin = {
             mitigation: 'शमन',
             modelType: 'मॉडल प्रकार',
             number: 'नंबर',
-            priority: 'प्राथमिकता',
+            severity: 'प्राथमिकता',
             score: 'स्कोर',
             status: 'स्थिति',
             title: 'शीर्षक',
@@ -352,8 +374,8 @@ const hin = {
             open: 'खुला',
             mitigated: 'शमन'
         },
-        priority: {
-            tba: 'टीबीए',
+        severity: {
+            tbd: 'टीबीए',
             low: 'कम',
             medium: 'मध्यम',
             high: 'ऊँचा',
@@ -377,12 +399,13 @@ const hin = {
         threatStats: {
             total: 'कुल खतरे',
             mitigated: 'कुल शमन',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'कम नहीं किया गया',
             openCritical: 'ओपन / महत्वपूर्ण प्राथमिकता',
             openHigh: 'ओपन / हाई प्रायोरिटी',
             openMedium: 'ओपन / मीडियम प्रायोरिटी',
             openLow: 'ओपन / लो प्रायोरिटी',
-            openTba: 'ओपन / टीबीए प्राथमिकता',
+            openTbd: 'ओपन / टीबीए प्राथमिकता',
             openUnknown: 'खुला / अज्ञात प्राथमिकता'
         }
     },

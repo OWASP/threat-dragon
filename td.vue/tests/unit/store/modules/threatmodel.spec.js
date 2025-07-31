@@ -91,7 +91,7 @@ describe('store/modules/threatmodel.js', () => {
                 };
                 mocks.state.data = {
                     summary: {
-                        title: 'New Threat Model'
+                        title: 'New Blank Model'
                     }
                 };
             });

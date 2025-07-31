@@ -240,7 +240,7 @@ module.exports = {
         "space-infix-ops": "off",
         "space-unary-ops": "error",
         "spaced-comment": "off",
-        "strict": "off",
+        "strict": "error",
         "switch-colon-spacing": "error",
         "symbol-description": "error",
         "template-curly-spacing": "error",

@@ -3,7 +3,6 @@ const fra = {
         sessionExpired: 'Votre session est expirée. Veuillez vous reconnecter pour continuer.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Connecté en tant que',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const fra = {
             sheets: 'OWASP Aide-mémoire',
             github: 'Visitez-nous sur GitHub',
             submit: 'Soumettre un problème',
-            check: 'Vérifier les mises à jour ...'
+            check: 'Vérifier les mises à jour ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const fra = {
         add: 'Ajouter une branche',
         cancel: 'Annuler',
         name: 'Nom de la branche',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Sélectionnez un modèle de menace parmi',
@@ -136,9 +144,9 @@ const fra = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'New CIA-DIE diagram description',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Nouveau diagramme CIA',
@@ -149,13 +157,22 @@ const fra = {
         threats: 'Menaces',
         errors: {
             dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer.',
+            invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Erreur lors de l\'ouverture de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations',
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
-        opened: 'Modèle de menace ouvert avec succès',
-        saved: 'Modèle de menace sauvegardé avec succès',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+        },
+        prompts: {
+            opened: 'Modèle de menace ouvert avec succès',
+            saved: 'Modèle de menace sauvegardé avec succès',
+        },
         properties: {
             title: 'Propriétés',
             emptyState: 'Sélectionnez un élément du graphique à modifier',
@@ -252,7 +269,9 @@ const fra = {
         delete: 'Supprimer',
         discardTitle: 'Annuler les modifications?',
         discardMessage: 'Êtes-vous sûr de vouloir abandonner vos modifications?',
+        duplicate: 'Dupliquer',
         edit: 'Modifier',
+        export: 'Exporter',
         exportAs: 'Export Model As',
         exportHtml: 'Rapport HTML',
         exportPdf: 'Rapport PDF',
@@ -282,8 +301,11 @@ const fra = {
                 integrity: 'Intégrité',
                 availability: 'Disponibilité'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentialité',
+                integrity: 'Intégrité',
+                availability: 'Disponibilité',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -322,7 +344,7 @@ const fra = {
         generic: {
             default: 'Nouvelle menace générique',
             cia: 'Nouvelle menace CIA',
-            die: 'Nouvelle menace DIE',
+            ciadie: 'Nouvelle menace CIA-DIE',
             linddun: 'Nouvelle menace LINDDUN',
             plot4ai: 'Nouvelle menace PLOT4ai',
             stride: 'Nouvelle menace STRIDE'
@@ -341,7 +363,7 @@ const fra = {
             mitigation: 'Mesures de mitigation',
             modelType: 'Type de modèle',
             number: 'Numéro',
-            priority: 'Priorité',
+            severity: 'Priorité',
             score: 'Score',
             status: 'Status',
             title: 'Titre',
@@ -352,8 +374,8 @@ const fra = {
             open: 'Ouvrir',
             mitigated: 'Mitigé'
         },
-        priority: {
-            tba: 'à venir',
+        severity: {
+            tbd: 'à venir',
             low: 'Faible',
             medium: 'Moyen',
             high: 'Élevé',
@@ -377,12 +399,13 @@ const fra = {
         threatStats: {
             total: 'Menaces Totales',
             mitigated: 'Menaces Totales Mitigées',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Menaces Totales Non-Mitigées',
             openCritical:'Ouvert / Critique Priorité',
             openHigh: 'Ouvert / Haute Priorité',
             openMedium: 'Ouvert / Moyenne Priorité',
             openLow: 'Ouvert / Faible Priorité',
-            openTba: 'Ouvert / Priorité à déterminer',
+            openTbd: 'Ouvert / Priorité à déterminer',
             openUnknown: 'Ouvert / Priorité Inconnue'
         }
     },

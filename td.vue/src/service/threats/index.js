@@ -11,7 +11,7 @@ const valuesToTranslations = {
     Confidentiality: 'threats.model.cia.confidentiality',
     Integrity: 'threats.model.cia.integrity',
     Availability: 'threats.model.cia.availability',
-    /* DIE */
+    /* CIADIE */
     Distributed: 'threats.model.die.distributed',
     Immutable: 'threats.model.die.immutable',
     Ephemeral: 'threats.model.die.ephemeral',
@@ -46,15 +46,20 @@ const valuesToTranslations = {
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
 export const createNewTypedThreat = function (modelType, cellType,number) {
+    let title, type;
+
     if (!modelType) {
         modelType = 'STRIDE';
+    } else if (modelType.toLowerCase() === 'generic') {
+        modelType = 'default';
+    } else if (modelType === 'DIE') {
+        modelType = 'CIADIE';
     }
-    let title, type;
-    if(modelType.toLowerCase()==='generic') modelType='default';
     title = tc(`threats.generic.${modelType.toLowerCase()}`);
+
     const freqMap = store.get().state.cell?.ref?.data.threatFrequency;
-    if(freqMap){
-        let min =freqMap[Object.keys(freqMap)[0]],choice=Object.keys(freqMap)[0];
+    if (freqMap) {
+        let min = freqMap[Object.keys(freqMap)[0]],choice=Object.keys(freqMap)[0];
         Object.keys(freqMap).forEach((k)=>{
             if(freqMap[k]<min)
             {
@@ -63,8 +68,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             }
         });
         type = tc(`threats.model.${modelType.toLowerCase()}.${choice}`);
-    }
-    else
+    } else {
         switch (modelType) {
 
         case 'CIA':
@@ -72,9 +76,9 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             type = tc('threats.model.cia.confidentiality');
             break;
 
-        case 'DIE':
-            title = tc('threats.generic.die');
-            type = tc('threats.model.die.distributed');
+        case 'CIADIE':
+            title = tc('threats.generic.ciadie');
+            type = tc('threats.model.ciadie.distributed');
             break;
 
         case 'LINDDUN':
@@ -105,12 +109,13 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             type = tc('threats.model.stride.spoofing');
             break;
         }
+    }
 
     return {
         id: v4(),
         title,
         status: 'Open',
-        severity: 'TBA',
+        severity: 'TBD',
         type,
         description: tc('threats.description'),
         mitigation: tc('threats.mitigation'),

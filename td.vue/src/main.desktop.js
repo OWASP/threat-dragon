@@ -6,9 +6,9 @@ import i18nFactory from './i18n/index.js';
 
 import router from './router/index.js';
 import { providerNames } from './service/provider/providers.js';
+import tmBom from './service/migration/tmBom/tmBom';
 
-import openThreatModel from './service/otm/openThreatModel.js';
-import { isValidOTM, isValidSchema } from './service/schema/ajv';
+import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
 import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
@@ -76,12 +76,30 @@ window.electronAPI.onNewModelRequest(async (_event, fileName) =>  {
 window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     console.debug('Open model with file name : ' + fileName);
     let params;
-    // check for schema errors
-    if(!isValidSchema(jsonModel)){
-        console.warn('Invalid threat model');
-    } else if (isValidOTM(jsonModel)) {
-        // if threat model is in OTM format then convert OTM to dragon format
-        jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+
+    if (Object.prototype.hasOwnProperty.call(jsonModel, 'modelError')) {
+        app.$toast.error(app.$t('threatmodel.errors.' + jsonModel.modelError));
+        return;
+    }
+
+    // schema errors are not fatal, and some formats are not supported yet
+    if(!schema.isV2(jsonModel)){
+        if (schema.isV1(jsonModel)) {
+            console.warn('Version 1.x file will be translated to V2 format');
+            app.$toast.warning(app.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+        } else if (schema.isTmBom(jsonModel)) {
+            jsonModel = openTmBom(jsonModel);
+            console.debug('force re-selection of file name for TM-BOM');
+            fileName = '';
+            window.electronAPI.modelOpened(fileName);
+        } else if (schema.isOtm(jsonModel)) {
+            console.error('Convert OTM to dragon format not yet supported');
+            app.$toast.error(app.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+            return;
+        } else {
+            console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel)));
+            app.$toast.warning(app.$t('threatmodel.warnings.jsonSchema'));
+        }
     }
 
     // this will fail if the threat model does not have a title in the summary
@@ -90,14 +108,16 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             threatmodel: jsonModel.summary.title
         });
     } catch (e) {
-        app.$toast.error(app.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
-        app.$router.push({ name: 'HomePage' }).catch(error => {
+        app.$toast.error(app.$t('threatmodel.errors.invalidModel') + ' : ' + e.message);
+        app.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
                 throw error;
             }
         });
+        window.electronAPI.modelOpened('');
         return;
     }
+
     app.$store.dispatch(tmActions.update, { fileName: fileName });
     app.$store.dispatch(tmActions.selected, jsonModel);
     localAuth();
@@ -146,6 +166,12 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
 const localAuth = () => {
     app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);
+};
+
+const openTmBom = (jsonModel) => {
+    console.warn('Convert TM-BOM to internal TD format');
+    app.$toast.warning(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+    return tmBom.read(jsonModel);
 };
 
 const app = new Vue({

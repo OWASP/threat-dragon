@@ -4,6 +4,7 @@
 # allow github, workflows and templates
 !.github/
 !.github/*.yaml
+!.github/CODEOWNERS
 !.github/issue_template/
 !.github/issue_template/*.md
 !.github/workflows/
@@ -13,6 +14,9 @@
 !.lycheeignore
 !.trivyignore
 !.markdownlint.yaml
+!.wordlist.txt
+!.spellcheck.yaml
+!CNAME
 
 # docker files
 !.dockerignore
@@ -25,6 +29,7 @@
 !cupcake/png/*.png
 !cupcake/png/*.gif
 !example.env
+!minimal.env
 !package.json
 !package-lock.json
 
@@ -35,7 +40,7 @@
 !ThreatDragonModels/test/*.json
 
 # documentation site
-!docs
+!docs/
 !docs/Gemfile
 !docs/Gemfile.lock
 !docs/*.md
@@ -43,6 +48,27 @@
 !docs/*.html
 !docs/_layouts/
 !docs/_layouts/*.html
+!docs/home/
+!docs/home/*.md
+!docs/testing/
+!docs/testing/*.md
+!docs/configure/
+!docs/configure/*.md
+!docs/install/
+!docs/install/*.md
+!docs/trust/
+!docs/trust/*.md
+!docs/development/
+!docs/development/*.md
+!docs/usage/
+!docs/usage/*.md
+!docs/assets/
+!docs/assets/icons
+!docs/assets/icons/*.ico
+!docs/assets/images
+!docs/assets/images/*.png
+!docs/assets/schemas
+!docs/assets/schemas/*.json
 
 # Express server
 !td.server
@@ -99,8 +125,6 @@
 !td.vue/src/assets/
 !td.vue/src/assets/*.svg
 !td.vue/src/assets/*.jpg
-!td.vue/src/assets/schema/
-!td.vue/src/assets/schema/*.js
 !td.vue/src/components/
 !td.vue/src/components/*.vue
 !td.vue/src/components/printed-report/
@@ -122,18 +146,32 @@
 !td.vue/src/service/*.js
 !td.vue/src/service/api/
 !td.vue/src/service/api/*.js
+!td.vue/src/service/diagram/
+!td.vue/src/service/diagram/*.js
+!td.vue/src/service/diagram/v1/
+!td.vue/src/service/diagram/v1/*.js
 !td.vue/src/service/demo/
 !td.vue/src/service/demo/*.js
+!td.vue/src/service/demo/*.json
 !td.vue/src/service/entity/
 !td.vue/src/service/entity/*.js
 !td.vue/src/service/migration/
 !td.vue/src/service/migration/*.js
-!td.vue/src/service/otm/
-!td.vue/src/service/otm/*.js
+!td.vue/src/service/migration/otm/
+!td.vue/src/service/migration/otm/*.js
+!td.vue/src/service/migration/otm/*.json
+!td.vue/src/service/migration/tmBom/
+!td.vue/src/service/migration/tmBom/*.js
+!td.vue/src/service/migration/tmBom/*.json
+!td.vue/src/service/migration/tmBom/diagrams/
+!td.vue/src/service/migration/tmBom/diagrams/*.js
+!td.vue/src/service/migration/tmBom/diagrams/threats/
+!td.vue/src/service/migration/tmBom/diagrams/threats/*.js
 !td.vue/src/service/provider/
 !td.vue/src/service/provider/*.js
 !td.vue/src/service/schema/
 !td.vue/src/service/schema/*.js
+!td.vue/src/service/schema/*.json
 !td.vue/src/service/threats/
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
@@ -196,18 +234,31 @@
 !td.vue/tests/unit/service/*.spec.js
 !td.vue/tests/unit/service/api/
 !td.vue/tests/unit/service/api/*.spec.js
+!td.vue/tests/unit/service/diagram/
+!td.vue/tests/unit/service/diagram/*.spec.js
+!td.vue/tests/unit/service/diagram/v1/
+!td.vue/tests/unit/service/diagram/v1/*.spec.js
 !td.vue/tests/unit/service/demo/
 !td.vue/tests/unit/service/demo/*.spec.js
 !td.vue/tests/unit/service/entity/
 !td.vue/tests/unit/service/entity/*.spec.js
 !td.vue/tests/unit/service/migration/
 !td.vue/tests/unit/service/migration/*.spec.js
-!td.vue/tests/unit/service/otm/
-!td.vue/tests/unit/service/otm/*.spec.js
+!td.vue/tests/unit/service/migration/otm/
+!td.vue/tests/unit/service/migration/otm/*.spec.js
+!td.vue/tests/unit/service/migration/otm/*.json
+!td.vue/tests/unit/service/migration/tmBom/
+!td.vue/tests/unit/service/migration/tmBom/*.spec.js
+!td.vue/tests/unit/service/migration/tmBom/*.json
+!td.vue/tests/unit/service/migration/tmBom/diagrams/
+!td.vue/tests/unit/service/migration/tmBom/diagrams/*.spec.js
+!td.vue/tests/unit/service/migration/tmBom/diagrams/threats/
+!td.vue/tests/unit/service/migration/tmBom/diagrams/threats/*.spec.js
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/provider/*.spec.js
 !td.vue/tests/unit/service/schema/
 !td.vue/tests/unit/service/schema/*.spec.js
+!td.vue/tests/unit/service/schema/*.json
 !td.vue/tests/unit/service/threats/
 !td.vue/tests/unit/service/threats/*.spec.js
 !td.vue/tests/unit/service/threats/models/

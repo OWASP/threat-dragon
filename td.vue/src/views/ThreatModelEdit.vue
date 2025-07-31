@@ -96,7 +96,7 @@
                     </b-form-row>
 
                     <b-form-row>
-                        <b-col md=8
+                        <b-col md=10
                             v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
                         >
@@ -108,7 +108,7 @@
                                 <b-input-group-prepend>
                                     <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'DIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIADIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'PLOT4ai')">{{ $t('threatmodel.diagram.plot4ai.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
@@ -127,6 +127,10 @@
                                     class="td-diagram-description"
                                 ></b-form-input>
                                 <b-input-group-append>
+                                    <b-button variant="primary" class="td-duplicate-diagram" @click="onDuplicateDiagramClick(idx)">
+                                        <font-awesome-icon icon="clone"></font-awesome-icon>
+                                        {{ $t('forms.duplicate') }}
+                                    </b-button>
                                     <b-button variant="secondary" class="td-remove-diagram" @click="onRemoveDiagramClick(idx)">
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
@@ -270,41 +274,42 @@ export default {
             let thumbnail;
             switch (type) {
 
-	            case 'CIA':
-	                thumbnail = './public/content/images/thumbnail.cia.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
-	                break;
+            case 'CIA':
+                thumbnail = './public/content/images/thumbnail.cia.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.cia.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.cia.defaultDescription');
+                break;
 
-	            case 'DIE':
-	                thumbnail = './public/content/images/thumbnail.die.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.die.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.die.defaultDescription');
-	                break;
+            case 'DIE':
+            case 'CIADIE':
+                thumbnail = './public/content/images/thumbnail.die.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.die.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.die.defaultDescription');
+                break;
 
-	            case 'LINDDUN':
-	                thumbnail = './public/content/images/thumbnail.linddun.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
-	                break;
+            case 'LINDDUN':
+                thumbnail = './public/content/images/thumbnail.linddun.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.linddun.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.linddun.defaultDescription');
+                break;
 
-	            case 'PLOT4ai':
-	                thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
-	                break;
+            case 'PLOT4ai':
+                thumbnail = './public/content/images/thumbnail.plot4ai.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.plot4ai.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.plot4ai.defaultDescription');
+                break;
 
-	            case 'STRIDE':
-	                thumbnail = './public/content/images/thumbnail.stride.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
-	                break;
+            case 'STRIDE':
+                thumbnail = './public/content/images/thumbnail.stride.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
+                break;
 
-	            default:
-	                thumbnail = './public/content/images/thumbnail.jpg';
-	                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
-	                placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
-	                type = this.$t('threatmodel.diagram.generic.select');
+            default:
+                thumbnail = './public/content/images/thumbnail.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.generic.defaultDescription');
+                type = this.$t('threatmodel.diagram.generic.select');
             }
             this.model.detail.diagrams[idx].diagramType = type;
             this.model.detail.diagrams[idx].placeholder = placeholder;
@@ -323,6 +328,13 @@ export default {
         },
         onRemoveDiagramClick(idx) {
             this.model.detail.diagrams.splice(idx, 1);
+            this.$store.dispatch(tmActions.modified);
+        },
+        onDuplicateDiagramClick(idx) {
+            let newDiagram = JSON.parse(JSON.stringify(this.model.detail.diagrams[idx]));
+            newDiagram.id = this.diagramTop;
+            this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
+            this.model.detail.diagrams.push(newDiagram);
             this.$store.dispatch(tmActions.modified);
         },
         onModifyModel() {

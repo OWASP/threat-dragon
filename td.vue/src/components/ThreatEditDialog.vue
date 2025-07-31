@@ -73,12 +73,12 @@
 
                     <b-col md=5>
                         <b-form-group
-                            id="priority-group"
+                            id="severity-group"
                             class="float-right"
-                            :label="$t('threats.properties.priority')"
-                            label-for="priority">
+                            :label="$t('threats.properties.severity')"
+                            label-for="severity">
                             <b-form-radio-group
-                                id="priority"
+                                id="severity"
                                 v-model="threat.severity"
                                 :options="priorities"
                                 buttons
@@ -195,11 +195,11 @@ export default {
         },
         priorities() {
             return [
-                { value: 'TBA', text: this.$t('threats.priority.tba') },
-                { value: 'Low', text: this.$t('threats.priority.low') },
-                { value: 'Medium', text: this.$t('threats.priority.medium') },
-                { value: 'High', text: this.$t('threats.priority.high') },
-                { value: 'Critical', text: this.$t('threats.priority.critical') }
+                { value: 'TBD', text: this.$t('threats.severity.tbd') },
+                { value: 'Low', text: this.$t('threats.severity.low') },
+                { value: 'Medium', text: this.$t('threats.severity.medium') },
+                { value: 'High', text: this.$t('threats.severity.high') },
+                { value: 'Critical', text: this.$t('threats.severity.critical') }
             ];
         },
         modalTitle() { return this.$t('threats.edit') + ' #' + this.number; }
@@ -209,7 +209,7 @@ export default {
             threat: {},
             modelTypes: [
                 'CIA',
-                'DIE',
+                'CIADIE',
                 'LINDDUN',
                 'PLOT4ai',
                 'STRIDE'

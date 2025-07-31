@@ -11,7 +11,6 @@ before(() => {
 
     const threatDragon = new ThreatDragonEnv();
     env.get().addProvider(threatDragon);
-    env.get().addProvider(threatDragon);
     env.get().hydrate();
     
     chai.use(sinonChai);

@@ -1,0 +1,364 @@
+{
+  "$id": "https://owasp.org/www-project-threat-dragon/assets/schemas/threat.model.format.schema.json",
+  "title": "Threat Model Format",
+  "description": "An open Threat Model Format (TMF) for threat models",
+  "type": "object",
+  "properties": {
+    "tmfVersion": {
+      "description": "The version of TMF using semantic versioning",
+      "type": "string",
+      "minLength": 5
+    },
+    "project": {
+      "description": "Threat Model metadata",
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "The title or name of the threat model project",
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "description": "The version of the threat model",
+          "type": "string"
+        },
+        "appVersion": {
+          "description": "The version of threat model program",
+          "type": "string"
+        },
+        "id": {
+          "description": "A unique identifier for the threat model project",
+          "type": "string"
+        },
+        "overview": {
+          "description": "An overview / description of the threat model",
+          "type": [ "object", "string" ],
+          "properties": {
+            "business": {
+              "description": "A business overview of the threat model",
+              "type": "string"
+            },
+            "technical": {
+              "description": "A technical overview of the threat model",
+              "type": "string"
+            }
+          }
+        },
+        "owner": {
+          "description": "The owner of the threat model project",
+          "type": [ "object", "string" ],
+          "properties": {
+            "name": {
+              "description": "The name of the owner",
+              "type": "string"
+            },
+            "contact": {
+              "description": "Contact details for the owner",
+              "type": "string"
+            }
+          }
+        },
+        "reviewers": {
+          "description": "The reviewers to the threat model project",
+          "type": [ "array", "string" ],
+          "items": {
+            "description": "The reviewer",
+            "type": [ "object", "string" ],
+            "properties": {
+              "name": {
+                "description": "The name of the reviewer",
+                "type": "string"
+              },
+              "contact": {
+                "description": "Contact details for the reviewer",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "contributors": {
+          "description": "The contributors to the threat model project",
+          "type": [ "array", "string" ],
+          "items": {
+            "description": "The contributor",
+            "type": [ "object", "string" ],
+            "properties": {
+              "name": {
+                "description": "The name of the contributor",
+                "type": "string"
+              },
+              "contact": {
+                "description": "Contact details for the contributor",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [ "title" ]
+      }
+    },
+    "representations": {
+      "description": "An array of representations of the threat model",
+      "type": "array",
+      "items": {
+        "description": "A representation of the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "overview": {
+            "description": "A description of the representation",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "requirements": {
+      "description": "An array of security requirements for the threat model",
+      "type": "array",
+      "items": {
+        "description": "A security requirement for the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the security requirement",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "actors": {
+      "description": "An array of actors in the threat model",
+      "type": "array",
+      "items": {
+        "description": "An actor described by the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the actor",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "assets": {
+      "description": "An array of assets in the threat model",
+      "type": "array",
+      "items": {
+        "description": "An asset described in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the asset",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "assumptions": {
+      "description": "An array of assumptions made in the threat model",
+      "type": "array",
+      "items": {
+        "description": "An assumption made in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the assumption",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "boundaries": {
+      "description": "An array of (trust) boundaries in the threat model",
+      "type": "array",
+      "items": {
+        "description": "A boundary described in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the boundary",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "data": {
+      "description": "An array of data descriptions in the threat model, at rest or in transit",
+      "type": "array",
+      "items": {
+        "description": "A data description included in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description for the data description",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "findings": {
+      "description": "An array of findings identified in the threat model",
+      "type": "array",
+      "items": {
+        "description": "A finding identified in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "exclude": {
+            "description": "The status of exclusion for the finding",
+            "type": "object",
+            "properties": {
+              "excluded": {
+                "description": "Mark the finding in the threat model as excluded",
+                "type": "boolean"
+              },
+              "reason": {
+                "description": "The reason for excluding the finding, such as false positive",
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "description": "A description of the finding",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "flows": {
+      "description": "An array of data flows for the threat model",
+      "type": "array",
+      "items": {
+        "description": "A data flow included in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the data flow",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "elements": {
+      "description": "An array of elements in the threat model",
+      "type": "array",
+      "items": {
+        "description": "An element included in the threat model such as processes, servers, functions etc",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the process",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "remediations": {
+      "description": "An array of remediations in the threat model",
+      "type": "array",
+      "items": {
+        "description": "A remediation included in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the remediation",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    },
+    "threats": {
+      "description": "An array of threats identified in the threat model",
+      "type": "array",
+      "items": {
+        "description": "A threat identified in the threat model",
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/title" },
+          "id": { "$ref": "#/$defs/id" },
+          "description": {
+            "description": "A description of the threat",
+            "type": "string"
+          }
+        },
+        "required": [ "title", "id" ]
+      }
+    }
+  },
+  "required": [ "project" ],
+  "$defs": {
+   "id": {
+     "description": "A unique identifier such as a UUID",
+       "type": "string",
+       "minLength": 1
+    },
+    "title": {
+      "description": "A title that may also be used as a label",
+      "type": "string",
+      "minLength": 1
+    },
+    "position": {
+      "description": "Diagram element position",
+      "type": "object",
+      "properties": {
+        "x": {
+          "description": "Element horizontal position that may be negative",
+          "type": "number"
+        },
+        "y": {
+          "description": "Element vertical position that may be negative",
+          "type": "number"
+        }
+      },
+      "required": ["x", "y"]
+    },
+    "size": {
+      "description": "Diagram element geometry",
+      "type": "object",
+      "properties": {
+        "width": {
+          "description": "Element width that cannot be negative",
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "description": "Element height that cannot be negative",
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": ["width", "height"]
+    }
+  }
+}

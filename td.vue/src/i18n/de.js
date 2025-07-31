@@ -3,7 +3,6 @@ const deu = {
         sessionExpired: 'Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.'
     },
     nav: {
-        v2Warning: 'Version 2.0 Bedrohungsmodelle sind nicht Abwärtskompatibel mit Version 1.x Threat Dragon Modellen. Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben', //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         loggedInAs: 'Angemeldet als',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const deu = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Besuchen Sie uns auf GitHub',
             submit: 'Ein Problem melden',
-            check: 'Nach Updates suchen ...'
+            check: 'Nach Updates suchen ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const deu = {
         add: 'Branch hinzufügen',
         cancel: 'Abbrechen',
         name: 'Branch Name'
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Ein Bedrohungsmodell auswählen aus',
@@ -136,9 +144,9 @@ const deu = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'Neue DIE Diagramm Beschreibung',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'Neue CIA-DIE Diagramm Beschreibung',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Neues CIA Diagramm',
@@ -150,12 +158,21 @@ const deu = {
         errors: {
             dropSingleFileOnly: 'Ziehen und ablegen erfordert eine einzige Datei.',
             invalidJson: 'Ungültiges JSON. Bitte überprüfen Sie Ihr Modell und versuchen Sie es erneut.',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Nur Datein mit .json Endung werden unterstützt.',
             open: 'Fehler beim Öffnen des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen',
             save: 'Fehler beim Speichern des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen'
         },
-        opened: 'Bedrohungsmodell erfolgreich geöffnet',
-        saved: 'Bedrohungsmodell erfolgreich gespeichert',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
+        },
+        prompts: {
+            opened: 'Bedrohungsmodell erfolgreich geöffnet',
+            saved: 'Bedrohungsmodell erfolgreich gespeichert',
+        },
         properties: {
             title: 'Eigenschaften',
             emptyState: 'Wählen Sie ein Element im Diagramm zur Bearbeitung aus',
@@ -252,7 +269,9 @@ const deu = {
         delete: 'Löschen',
         discardTitle: 'Änderung verwerfen?',
         discardMessage: 'Sind Sie sicher, dass Sie Ihre Änderungen verwerfen wollen?',
+        duplicate: 'Duplizieren',
         edit: 'Editieren',
+        export: 'Exportieren',
         exportAs: 'Export Model As',
         exportHtml: 'Speichern als HTML',
         exportPdf: 'Speichern als PDF',
@@ -282,8 +301,11 @@ const deu = {
                 integrity: 'Integrität',
                 availability: 'Verfügbarkeit'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Vertraulichkeit',
+                integrity: 'Integrität',
+                availability: 'Verfügbarkeit',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -322,7 +344,7 @@ const deu = {
         generic: {
             default: 'Neue generische Bedrohung',
             cia: 'Neue CIA Bedrohung',
-            die: 'Neue DIE Bedrohung',
+            ciadie: 'Neue CIA-DIE Bedrohung',
             linddun: 'Neue LINDDUN Bedrohung',
             plot4ai: 'Neue PLOT4ai Bedrohung',
             stride: 'Neue STRIDE Bedrohung'
@@ -341,7 +363,7 @@ const deu = {
             mitigation: 'Minderungsmaßnahme',
             modelType: 'Modell Typ',
             number: 'Nummer',
-            priority: 'Priorität',
+            severity: 'Priorität',
             score: 'Ergebnis',
             status: 'Status',
             title: 'Titel',
@@ -352,8 +374,8 @@ const deu = {
             open: 'Offen',
             mitigated: 'Abgeschwächt'
         },
-        priority: {
-            tba: '',
+        severity: {
+            tbd: '',
             low: 'Niedrig',
             medium: 'Mittel',
             high: 'Hoch',
@@ -377,12 +399,13 @@ const deu = {
         threatStats: {
             total: 'Bedrohungen insgesamt',
             mitigated: 'Bedrohungen abgeschwächt',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Nicht abgeschwächt',
             openCritical: 'Offen / Kritische Priorität',
             openHigh: 'Offen / Hohe Priorität',
             openMedium: 'Offen / Mittlere Priorität',
             openLow: 'Offen / Niedrige Priorität',
-            openTba: 'Offen / TBA-Priorität',
+            openTbd: 'Offen / TBD-Priorität',
             openUnknown: 'Offen / Unbekannte Priorität'
         }
     },

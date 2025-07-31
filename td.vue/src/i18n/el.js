@@ -3,7 +3,6 @@ const ell = {
         sessionExpired: 'Η συνεδρία σας έχει λήξει.  Παρακαλούμε συνδεθείτε εκ νέου για να συνεχίσετε.'
     },
     nav: {
-        v2Warning: 'Η έκδοση 2.0 των μοντέλων απειλών δεν είναι συμβατή με την έκδοση 1.x των μοντέλων του Threat Dragon. Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0',
         loggedInAs: 'Σύνδεση ως',
         logOut: 'Αποσύνδεση'
     },
@@ -72,7 +71,11 @@ const ell = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Επισκεφθείτε μας στο GitHub',
             submit: 'Υποβάλετε ένα πρόβλημα',
-            check: 'Έλεγχος για ενημερώσεις ...'
+            check: 'Έλεγχος για ενημερώσεις ...',
+            about: {
+                about: 'Σχετικά',
+                version: 'Έκδοση'
+            }
         }
     },
     repository: {
@@ -94,6 +97,11 @@ const ell = {
         cancel: 'Ακύρωση',
         name: 'Όνομα υποκαταστήματος',
     },
+    folder: {
+        select: 'Επιλέξτε ένα',
+        from: 'φάκελο από την παρακάτω λίστα',
+        noneFound: 'Αυτός ο φάκελος είναι κενός, μπορείτε να δημιουργήσετε ένα νέο μοντέλο απειλών εδώ.'
+    },
     threatmodelSelect: {
         select: 'Επιλέξτε ένα μοντέλο απειλών από',
         from: 'από την παρακάτω λίστα, ή επιλέξτε ένα άλλο',
@@ -106,7 +114,7 @@ const ell = {
         contributors: 'Συνεισφέροντες',
         contributorsPlaceholder: 'Προσθήκη ενός νέου συνεισφέροντος',
         description: 'Περιγραφή Συστήματος Υψηλού Επιπέδου',
-        dragAndDrop: 'Drag and drop or ',
+        dragAndDrop: 'Μεταφορά & απόθεση ή ',
         editing: 'Υπό επεξεργασία',
         jsonPaste: 'Κάντε επικόλληση (Paste) του JSON από το μοντέλο απειλών σας εδώ',
         owner: 'Ιδιοκτήτης',
@@ -118,7 +126,7 @@ const ell = {
             generic: {
                 defaultTitle: 'Νέο γενικό διάγραμμα',
                 defaultDescription: 'Περιγραφή νέου γενικού διαγράμματος',
-                select: 'Generic'
+                select: 'Γενικό'
             },
             stride: {
                 defaultTitle: 'Νέο διάγραμμα STRIDE',
@@ -136,9 +144,9 @@ const ell = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Νέο διάγραμμα DIE',
-                defaultDescription: 'Περιγραφή νέου διαγράμματος DIE',
-                select: 'DIE'
+                defaultTitle: 'Νέο διάγραμμα CIA-DIE',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος CIA-DIE',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Νέο διάγραμμα CIA',
@@ -149,13 +157,22 @@ const ell = {
         threats: 'Απειλές',
         errors: {
             dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
-            invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά.',
+            invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Υποστηρίζονται μόνο αρχεία με κατάληξη .json.',
             open: 'Σφάλμα κατά το άνοιγμα αυτού του μοντέλου απειλών. Ελέγξτε την κονσόλα του προγραμματιστή για περισσότερες πληροφορίες',
             save: 'Σφάλμα κατά την αποθήκευση του μοντέλου απειλών. Παρακαλούμε ελέγξτε την κονσόλα για περαιτέρω πληροφορίες'
         },
-        opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
-        saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0'
+        },
+        prompts: {
+            opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
+            saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
+        },
         properties: {
             title: 'Ιδιότητες',
             emptyState: 'Επιλέξτε ένα στοιχείο στο διάγραμμα για να το επεξεργαστείτε',
@@ -165,12 +182,12 @@ const ell = {
             outOfScope: 'Εκτός πεδίου εφαρμογής',
             bidirection: 'Αμφίδρομο',
             reasonOutOfScope: 'Λόγος εκτός πεδίου εφαρμογής',
-            handlesCardPayment: 'Card payment',
-            handlesGoodsOrServices: 'Goods or Services',
+            handlesCardPayment: 'Πληρωμή κάρτας',
+            handlesGoodsOrServices: 'Αγαθά ή υπηρεσίες',
             isALog: 'Είναι αρχείο καταγραφής',
             isEncrypted: 'Κρυπτογραφημένο',
             isSigned: 'Υπογεγραμμένο',
-            isWebApplication: 'Web Application',
+            isWebApplication: 'Web Εφαρμογή',
             privilegeLevel: 'Επίπεδο δικαιώματος',
             providesAuthentication: 'Παρέχει αυθεντικοποίηση',
             protocol: 'Πρωτόκολλο',
@@ -223,7 +240,7 @@ const ell = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Αποθήκευση'
             }
         },
         stencil: {
@@ -252,11 +269,13 @@ const ell = {
         delete: 'Διαγραφή',
         discardTitle: 'Απόρριψη αλλαγών;',
         discardMessage: 'Είστε σίγουροι ότι θέλετε να απορρίψετε τις αλλαγές;',
+        duplicate: 'Διπλότυπη',
         edit: 'Επεξεργασία',
-        exportAs: 'Export Model As',
+        export: 'Εξαγωγή',
+        exportAs: 'Εξαγωγή Μοντέλου Ως',
         exportHtml: 'Αναφορά HTML',
         exportPdf: 'Αναφορά PDF',
-        exportTd: 'Original (Threat Dragon)',
+        exportTd: 'Πρωτότυπο (Threat Dragon)',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Εισαγωγή',
         ok: 'OK',
@@ -282,8 +301,11 @@ const ell = {
                 integrity: 'Ακεραιότητα',
                 availability: 'Διαθεσιμότητα'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Εμπιστευτικότητα',
+                integrity: 'Ακεραιότητα',
+                availability: 'Διαθεσιμότητα',
                 distributed: 'Κατανεμημένο (Distributed)',
                 immutable: 'Αμετάβλητο (Immutable)',
                 ephemeral: 'Εφήμερο (Ephemeral)'
@@ -322,7 +344,7 @@ const ell = {
         generic: {
             default: 'Νέα γενική απειλή',
             cia: 'Νέα απειλή CIA',
-            die: 'Νέα απειλή DIE',
+            ciadie: 'Νέα απειλή CIA-DIE',
             linddun: 'Νέα απειλή LINDDUN',
             plot4ai: 'Νέα απειλή PLOT4ai',
             stride: 'Νέα απειλή STRIDE'
@@ -341,7 +363,7 @@ const ell = {
             mitigation: 'Μέτρα Περιορισμού Κινδύνου (mitigations)',
             modelType: 'Τύπος Μοντέλου',
             number: 'Αριθμός',
-            priority: 'Προτεραιότητα',
+            severity: 'Προτεραιότητα',
             score: 'Σκορ',
             status: 'Κατάσταση',
             title: 'Τίτλος',
@@ -352,12 +374,12 @@ const ell = {
             open: 'Ανοιχτή',
             mitigated: 'Καλύφθηκε'
         },
-        priority: {
-            tba: 'TBA',
+        severity: {
+            tbd: 'TBD',
             low: 'Χαμηλή',
             medium: 'Μεσαία',
             high: 'Υψηλή',
-            critical: 'Κρίσιμος'
+            critical: 'Κρίσιμη'
         }
     },
     report: {
@@ -366,7 +388,7 @@ const ell = {
             showMitigatedThreats: 'Εμφάνιση απειλών που έχουν μετριαστεί',
             showModelDiagrams: 'Εμφάνιση διαγραμμάτων μοντέλων',
             showEmpty: 'Προβολή κενών στοιχείων',
-            showProperties: 'Show element properties',
+            showProperties: 'Προβολή ιδιοτήτων στοιχείου',
             showBranding: 'Λογότυπο Threat Dragon'
         },
         title: 'Αναφορά μοντέλου απειλών για',
@@ -377,12 +399,13 @@ const ell = {
         threatStats: {
             total: 'Σύνολο απειλών',
             mitigated: 'Σύνολο μετριασμένων',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Μη μετριασμένες',
             openCritical: 'Ανοιχτές / Κρίσιμη Προτεραιότητα',
             openHigh: 'Ανοιχτές / Υψηλής Προτεραιότητας',
             openMedium: 'Ανοιχτές / Μέτριας Προτεραιότητας',
             openLow: 'Ανοιχτές / Χαμηλής Προτεραιότητας',
-            openTba: 'Ανοιχτές / TBA Προτεραιότητα',
+            openTbd: 'Ανοιχτές / TBD Προτεραιότητα',
             openUnknown: 'Ανοιχτές / Άγνωστης Προτεραιότητας'
         }
     },

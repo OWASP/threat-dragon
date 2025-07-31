@@ -2,8 +2,8 @@ describe('report', () => {
     beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
-        cy.get('a[data-model-name="Version 2 Demo Model"').click();
-        cy.url().should('contain', '/local/Version%202%20Demo%20Model');
+        cy.get('a[data-model-name="Demo Threat Model"').click();
+        cy.url().should('contain', '/local/Demo%20Threat%20Model');
         cy.get('#td-report-btn').trigger('click');
     });
 
@@ -91,11 +91,11 @@ describe('report', () => {
         it('displays the table data', () => {
             assertRowHasValue('Total Threats', 14);
             assertRowHasValue('Total Mitigated', 4);
-            assertRowHasValue('Not Mitigated', 10);
-            assertRowHasValue('Open / High Priority', 4);
-            assertRowHasValue('Open / Medium Priority', 4);
-            assertRowHasValue('Open / Low Priority', 2);
-            assertRowHasValue('Open / Unknown Priority', 0);
+            assertRowHasValue('Total Open', 10);
+            assertRowHasValue('Open / Critical Severity', 0);
+            assertRowHasValue('Open / High Severity', 4);
+            assertRowHasValue('Open / Medium Severity', 4);
+            assertRowHasValue('Open / Low Severity', 2);
         });
     });
 });

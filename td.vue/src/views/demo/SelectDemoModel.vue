@@ -29,6 +29,8 @@
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import tmActions from '@/store/actions/threatmodel.js';
+import schema from '@/service/schema/ajv';
+import tmBom from '@/service/migration/tmBom/tmBom';
 
 export default {
     name: 'SelectDemoModel',
@@ -43,7 +45,11 @@ export default {
     },
     methods: {
         onModelClick(model) {
-            this.$store.dispatch(tmActions.selected, model.model);
+            if (schema.isTmBom(model.model)) {
+                this.$store.dispatch(tmActions.selected, tmBom.read(model.model));
+            } else {
+                this.$store.dispatch(tmActions.selected, model.model);
+            }
             if (isElectron()) {
                 // tell any electron server that the model has changed
                 window.electronAPI.modelOpened(model.name);

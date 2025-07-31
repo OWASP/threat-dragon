@@ -250,10 +250,6 @@ describe('components/GraphButtons.vue', () => {
             expect(btn.find('#export-graph-png').exists()).toBe(true);
         });
 
-        it('has a dropdown item for JPEG', () => {
-            expect(btn.find('#export-graph-jpeg').exists()).toBe(true);
-        });
-
         it('has a dropdown item for SVG', () => {
             expect(btn.find('#export-graph-svg').exists()).toBe(true);
         });

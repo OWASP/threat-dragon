@@ -58,10 +58,10 @@ import { mapState } from 'vuex';
 
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
-import openThreatModel from '@/service/otm/openThreatModel.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import { isValidSchema } from '@/service/schema/ajv';
+import schema from '@/service/schema/ajv';
+import tmBom from '@/service/migration/tmBom/tmBom';
 
 // only search for text files
 const pickerFileOptions = {
@@ -135,6 +135,7 @@ export default {
         },
         onImportClick(fileName) {
             let jsonModel;
+
             // check for JSON syntax errors, schema errors come later
             try {
                 jsonModel = JSON.parse(this.tmJson);
@@ -144,14 +145,26 @@ export default {
                 return;
             }
 
-            // check for schema errors
-            if(!isValidSchema(jsonModel)){
-                this.$toast.warning(this.$t('threatmodel.errors.invalidJson'));
-            }
-
-            // Identify if threat model is in OTM format and if so, convert OTM to dragon format
-            if (Object.hasOwn(jsonModel, 'otmVersion')) {
-                jsonModel = openThreatModel.convertOTMtoTD(jsonModel);
+            // schema errors are not fatal, but some formats are not supported yet
+            if (!schema.isV2(jsonModel)) {
+                if (schema.isV1(jsonModel)) {
+                    console.warn('Version 1.x file will be translated to V2 format');
+                    this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+                } else if (schema.isTmBom(jsonModel)) {
+                    console.warn('Convert TM-BOM to internal TD format');
+                    this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+                    jsonModel = tmBom.read(jsonModel);
+                    console.debug('Force selection of file name for TM-BOM');
+                    fileName = '';
+                    this.$store.dispatch(tmActions.update, { fileName: fileName });
+                } else if (schema.isOtm(jsonModel)) {
+                    console.error('Convert OTM to internal TD format not yet supported');
+                    this.$toast.error(this.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+                    return;
+                } else {
+                    console.warn('Model does not strictly match schema: ' + JSON.stringify(schema.checkV2(jsonModel)));
+                    this.$toast.warning(this.$t('threatmodel.warnings.jsonSchema'));
+                }
             }
 
             // save the threat model in the store
@@ -169,7 +182,7 @@ export default {
                     threatmodel: jsonModel.summary.title
                 });
             } catch (e) {
-                this.$toast.error(this.$t('threatmodel.errors.invalidJson') + ' : ' + e.message);
+                this.$toast.error(this.$t('threatmodel.errors.invalidModel') + ' : ' + e.message);
                 console.error(e);
                 return;
             }

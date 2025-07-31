@@ -3,7 +3,6 @@ const jpn = {
         sessionExpired: 'セッションの有効期限が切れました。再ログインしてください。'
     },
     nav: {
-        v2Warning: 'バージョン2.0の脅威モデルは、Threat Dragonバージョン1.xとの互換性を保っていません。バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。',
         loggedInAs: 'ユーザー名',
         logOut: 'ログアウト'
     },
@@ -20,6 +19,10 @@ const jpn = {
         github: {
             displayName: 'GitHubで',
             loginWith: 'ログイン'
+        },
+        gitlab: {
+            displayName: 'GitLab',
+            loginWith: 'Login with'
         },
         bitbucket: {
             displayName: 'Bitbucketで',
@@ -68,7 +71,11 @@ const jpn = {
             sheets: 'OWASP Cheat Sheets',
             github: 'GitHubリポジトリ',
             submit: '問題を報告',
-            check: '更新を確認...'
+            check: '更新を確認...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -89,6 +96,11 @@ const jpn = {
         add: 'ブランチを追加する\n',
         cancel: '取り消し',
         name: 'ブランチ名',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: '次のものから',
@@ -132,9 +144,9 @@ const jpn = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'DIE図',
-                defaultDescription: '新しいDIE図の概要',
-                select: 'DIE'
+                defaultTitle: 'CIA-DIE図',
+                defaultDescription: '新しいCIA-DIE図の概要',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'CIA図',
@@ -145,13 +157,22 @@ const jpn = {
         threats: '脅威',
         errors: {
             dropSingleFileOnly: '単一のファイルをドロップしてください。',
-            invalidJson: 'ファイルのJSONフォーマットに対応していません。モデルを確認したうえ、もう一度試してみてください。',
+            invalidJson: 'ファイルのJSONフォーマットに対応していません。モデルを確認したうえ、もう一度試してみてください',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: '拡張子.jsonのファイルのみに対応しています。',
             open: '脅威モデルを開く時にエラーが発生しました。開発者コンソールを確認してください。',
             save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。'
         },
-        opened: '脅威モデルを読み込みました。',
-        saved: '脅威モデルを書き込みました。',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'バージョン1.xのモデルは、インポート時にバージョン2.0のフォーマットに変換されます。'
+        },
+        prompts: {
+            opened: '脅威モデルを読み込みました。',
+            saved: '脅威モデルを書き込みました。',
+        },
         properties: {
             title: 'プロパティー',
             emptyState: '図面から要素を選択してください',
@@ -248,7 +269,9 @@ const jpn = {
         delete: '削除',
         discardTitle: '変更を破棄',
         discardMessage: '変更を本当に破棄しますか？',
+        duplicate: ' 複製する',
         edit: '編集',
+        export: 'エクスポート',
         exportAs: '次としてエキスポート',
         exportHtml: 'HTMLとして保存',
         exportPdf: 'PDFとして保存',
@@ -278,8 +301,11 @@ const jpn = {
                 integrity: '完全性',
                 availability: '可用性'
             },
-            die: { // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
-                header: '--- DIE ---',
+            ciadie: { // Source: https://www.fastly.com/jp/blog/the-dept-of-know-live-sounil-yu-on-why-embracing-the-die-security-model-means-faster-innovation
+                header: '--- CIA-DIE ---',
+                confidentiality: '機密性',
+                integrity: '完全性',
+                availability: '可用性',
                 distributed: '分散化',
                 immutable: '不変',
                 ephemeral: '一時的'
@@ -318,7 +344,7 @@ const jpn = {
         generic: {
             default: '脅威を追加',
             cia: 'CIA脅威を追加',
-            die: 'DIE脅威を追加',
+            ciadie: 'CIA-DIE脅威を追加',
             linddun: 'LINDDUN脅威を追加',
             plot4ai: 'PLOT4ai脅威を追加',
             stride: 'STRIDE脅威を追加'
@@ -337,7 +363,7 @@ const jpn = {
             mitigation: '解決策',
             modelType: 'モデル型',
             number: '番号',
-            priority: '優先度',
+            severity: '優先度',
             score: '結果',
             status: 'ステータス',
             title: 'タイトル',
@@ -348,8 +374,8 @@ const jpn = {
             open: '未対応',
             mitigated: '解決済み'
         },
-        priority: {
-            tba: '未定',
+        severity: {
+            tbd: '未定',
             low: '低',
             medium: '中',
             high: '高',
@@ -373,12 +399,13 @@ const jpn = {
         threatStats: {
             total: '脅威総数',
             mitigated: '対策済みの脅威',
+            notApplicable: 'Total Not Applicable',
             notMitigated: '未対策の脅威',
             openCritical: '未対応 / 最優先事項',
             openHigh: '未対応 / 高優先度',
             openMedium: '未対応 / 中優先度',
             openLow: '未対応 / 低優先度',
-            openTba: '未対応 / 優先度は未定',
+            openTbd: '未対応 / 優先度は未定',
             openUnknown: '未対応 / 優先度不明'
         }
     },
