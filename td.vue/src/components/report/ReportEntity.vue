@@ -26,6 +26,19 @@
                     :items="tableData"
                     striped
                     responsive>
+                    <template #cell()="{field, value}">
+                        <span v-if="[$t(`threats.properties.description`), $t(`threats.properties.mitigation`)].includes(field.key)">
+                            <span v-for="(link, index) in value.split(/(\[[\w\s\d]+\]\(https?:\/\/[\w\d.\/?=#&]+\))/)" :key="index" >
+                                <span v-if="(index) % 2 === 0">{{ link }}</span>
+                                <span v-else>
+                                    <b-link :href="link.match(/\((https?:\/\/[\w\d.\/?=#&]+)\)/i)[1]">
+                                        {{ link.match(/\[([\w\s\d]+)\]/)[1] }}
+                                    </b-link>
+                                </span>
+                            </span>
+                        </span>
+                        <span v-else>{{ value }}</span>
+                    </template>
                 </b-table>
             </b-col>
         </b-row>
@@ -92,9 +105,8 @@ export default {
                     [this.$t('threats.properties.severity')]: this.translateSeverity(threat.severity),
                     [this.$t('threats.properties.status')]: this.translateStatus(threat.status),
                     [this.$t('threats.properties.score')]: threat.score,
-                    [this.$t('threats.properties.description')]: this.transformHyperlinks(threat.description),
-                    [this.$t('threats.properties.mitigation')]: this.transformHyperlinks(threat.mitigation)
-
+                    [this.$t('threats.properties.description')]: threat.description,
+                    [this.$t('threats.properties.mitigation')]: threat.mitigation
                 };
             });
         },
@@ -165,10 +177,6 @@ export default {
                 'Open': this.$t('threats.status.open'),
                 'Mitigated': this.$t('threats.status.mitigated')
             })[status] ?? 'Unknown';
-        },
-        transformHyperlinks(str) {
-            //eslint-disable-next-line
-            return str.replace(/\[([\w\s\d]+)\]\((https?:\/\/[\w\d.\/?=#&]+)\)/g, '<b-link href="$2">$1</b-link>');
         }
     }
 };
