@@ -16,8 +16,9 @@ describe('service/x6/graph/events.js', () => {
             evts: {},
             off: jest.fn(),
             on: function(evt, cb) { this.evts[evt] = cb; },
+            addEdge: jest.fn(),
             resetSelection: jest.fn(),
-            addEdge: jest.fn()
+            select: jest.fn()
         };
         jest.spyOn(graph, 'on');
         cell = {
@@ -34,7 +35,8 @@ describe('service/x6/graph/events.js', () => {
             data: {},
             id: 'foobar',
             position: jest.fn().mockReturnValue({ x: 1, y: 2 }),
-            setLabels: jest.fn()
+            setLabels: jest.fn(),
+            setName: jest.fn()
         };
         cell.getData.mockImplementation(() => ({ name: 'test' }));
         node = {
@@ -43,13 +45,12 @@ describe('service/x6/graph/events.js', () => {
         edge = {
             remove: jest.fn(),
             data: { name: 'edgeName' },
-            setLabels: jest.fn(),
             constructor: { name: 'Edge' }
         };
 
         // Mock shapes
         shapes.Flow = {
-            fromEdge: jest.fn().mockReturnValue({ data: { name: 'flowName' }, setLabels: jest.fn() })
+            fromEdge: jest.fn().mockReturnValue({ data: { name: 'flowName' }, setLabels: jest.fn(), setName: jest.fn() })
         };
 
         // Set up DOM
@@ -82,11 +83,6 @@ describe('service/x6/graph/events.js', () => {
         describe('new edge', () => {
             it('listens to the event', () => {
                 expect(graph.on).toHaveBeenCalledWith('edge:connected', expect.any(Function));
-            });
-
-            it('adds the smooth connector to the edge', () => {
-                graph.evts['edge:connected']({ isNew: true, edge, node, cell });
-                expect(edge.connector).toEqual('smooth');
             });
 
             it('replaces the edge with flow', () => {
@@ -182,8 +178,9 @@ describe('service/x6/graph/events.js', () => {
             events.listen(graph);
         });
 
-        describe('not a trust boundary curve', () => {
+        describe('not a flow or trust boundary curve', () => {
             beforeEach(() => {
+                cell.shape = 'actor';
                 cell.isNode.mockImplementation(() => true);
                 cell.convertToEdge = false;
             });
@@ -196,10 +193,16 @@ describe('service/x6/graph/events.js', () => {
                 graph.evts['cell:added']({ cell });
                 expect(graph.addEdge).not.toHaveBeenCalled();
             });
+
+            it('selects the cell', () => {
+                graph.evts['cell:added']({ cell });
+                expect(graph.select).toHaveBeenCalled();
+            });
         });
 
         describe('trust boundary curve', () => {
             beforeEach(() => {
+                cell.shape = 'path';
                 cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
                 cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
@@ -219,6 +222,11 @@ describe('service/x6/graph/events.js', () => {
                 graph.evts['cell:added']({ cell });
                 expect(cell.remove).toHaveBeenCalledTimes(1);
             });
+
+            it('does not select the cell', () => {
+                graph.evts['cell:added']({ cell });
+                expect(graph.select).not.toHaveBeenCalled();
+            });
         });
 
         describe('unknown edge', () => {
@@ -230,7 +238,7 @@ describe('service/x6/graph/events.js', () => {
 
             it('warns about unknown edge', () => {
                 graph.evts['cell:added']({ cell });
-                expect(console.warn).toHaveBeenCalledWith('Removed unknown edge');
+                expect(console.warn).toHaveBeenCalledWith('Unknown edge stencil');
             });
         });
     });
@@ -269,19 +277,7 @@ describe('service/x6/graph/events.js', () => {
                 cell.data = {};
             });
 
-            describe('cell is node', () => {
-                beforeEach(() => {
-                    cell.isNode.mockImplementation(() => true);
-                    cell.getLabel.mockReturnValue('Node Label');
-                });
-
-                it('sets the name from getLabel', () => {
-                    graph.evts['cell:selected']({ cell });
-                    expect(cell.data.name).toEqual('Node Label');
-                });
-            });
-
-            describe('cell is edge with data name', () => {
+            describe('cell has data name', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = 'Edge Name';
@@ -293,7 +289,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without data name but with labels', () => {
+            describe('cell does not have data name', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;
@@ -306,7 +302,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without data name or labels', () => {
+            describe('cell does not have data name nor labels', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;
@@ -319,7 +315,7 @@ describe('service/x6/graph/events.js', () => {
                 });
             });
 
-            describe('cell is edge without getLabels', () => {
+            describe('cell does not have getLabels', () => {
                 beforeEach(() => {
                     cell.isNode.mockImplementation(() => false);
                     cell.data.name = undefined;

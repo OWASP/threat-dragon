@@ -60,7 +60,7 @@ const actions = {
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
                 const res = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
                 dispatch(FOLDER_SELECTED, res.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.createAsync(
                     rootState.repo.selected,
@@ -68,7 +68,7 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
+                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
@@ -142,7 +142,6 @@ const actions = {
                 await window.electronAPI.modelSave(state.data, state.fileName);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
                 await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             } else {
                 await threatmodelApi.updateAsync(
                     rootState.repo.selected,
@@ -150,10 +149,10 @@ const actions = {
                     state.data.summary.title,
                     state.data
                 );
-                Vue.$toast.success(i18n.get().t('threatmodel.saved') + ' : ' + state.fileName);
             }
             dispatch(THREATMODEL_STASH);
             commit(THREATMODEL_NOT_MODIFIED);
+            Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName, { timeout: 1000 });
         } catch (ex) {
             console.error('Failed to save threat model!');
             console.error(ex);
@@ -186,10 +185,9 @@ const mutations = {
     },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
         if (diagram && Object.keys(state.modifiedDiagram).length !== 0) {
-            const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-            console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
+            // const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
+            // console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
             state.modifiedDiagram = diagram;
-            // console.debug('Threatmodel diagram modified diagram: ' + JSON.stringify(state.modifiedDiagram));
             if (state.modified === false) {
                 console.debug('model (diagram) now modified');
                 state.modified = true;
@@ -199,7 +197,9 @@ const mutations = {
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         console.debug('Threatmodel diagram saved: ' + diagram.id + ' at index: ' + idx);
+        // beware: this will trigger a redraw of the diagram, ?possibly to the wrong canvas size?
         Vue.set(state, 'selectedDiagram', diagram);
+        // beware ^^
         Vue.set(state.data.detail.diagrams, idx, diagram);
         Vue.set(state.data, 'version', diagram.version);
         stashThreatModel(state, state.data);
@@ -216,9 +216,6 @@ const mutations = {
         models.forEach((model, idx) => Vue.set(state.all, idx, model));
     },
     [THREATMODEL_MODIFIED]: (state) => {
-        if (state.modified === false) {
-            console.debug('model now modified');
-        }
         state.modified = true;
     },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => {
@@ -230,13 +227,9 @@ const mutations = {
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
-        console.debug('Threatmodel stashed');
         Vue.set(state, 'stash', JSON.stringify(state.data));
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
-        if (state.modified === true) {
-            console.debug('model now unmodified');
-        }
         state.modified = false;
     },
     [THREATMODEL_UPDATE]: (state, update) => {

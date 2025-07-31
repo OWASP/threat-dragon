@@ -3,7 +3,6 @@ const ara = {
         sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.'
     },
     nav: {
-        v2Warning: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،',
         loggedInAs: 'تم تسجيل الدخول كـ ',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const ara = {
             sheets: 'أوراق الغش OWASP',
             github: 'زيارتنا على GitHub',
             submit: 'تقديم مشكلة',
-            check: 'التحقق من وجود تحديثات ...'
+            check: 'التحقق من وجود تحديثات ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const ara = {
         add: 'إضافة فرع',
         cancel: 'إلغاء',
         name: 'اسم الفرع',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'حدد نموذج تهديد من',
@@ -136,9 +144,9 @@ const ara = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'مخطط DIE جديد',
-                defaultDescription: 'وصف مخطط DIE جديد',
-                select: 'DIE'
+                defaultTitle: 'مخطط CIA-DIE جديد',
+                defaultDescription: 'وصف مخطط CIA-DIE جديد',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'مخطط CIA جديد',
@@ -150,12 +158,21 @@ const ara = {
         errors: {
             dropSingleFileOnly: 'يتطلب السحب والإفلات ملفاً واحداً فقط.',
             invalidJson: 'ملف JSON غير صالح. يرجى التحقق من النموذج الخاص بك والمحاولة مرة أخرى.',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'الملفات التي يمكن التعامل معها هي التي تنتهي بامتداد .json فقط.',
             open: 'حدث خطأ في فتح نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
             save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
         },
-        opened: 'تم فتح نموذج التهديد بنجاح',
-        saved: 'تم حفظ نموذج التهديد بنجاح',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،'
+        },
+        prompts: {
+            opened: 'تم فتح نموذج التهديد بنجاح',
+            saved: 'تم حفظ نموذج التهديد بنجاح',
+        },
         properties: {
             title: 'الخصائص',
             emptyState: 'حدد عنصرًا على الرسم البياني للتحرير',
@@ -252,7 +269,9 @@ const ara = {
         delete: 'حذف',
         discardTitle: 'هل تريد تجاهل التغييرات؟',
         discardMessage: 'هل أنت متأكد من رغبتك في تجاهل التغييرات الخاصة بك؟',
+        duplicate: 'ينسخ',
         edit: 'تحرير',
+        export: 'يصدّر',
         exportAs: 'Export Model As',
         exportHtml: 'تقرير HTML',
         exportPdf: 'تقرير PDF',
@@ -267,8 +286,6 @@ const ara = {
         remove: 'إزالة',
         report: 'تقرير',
         save: 'حفظ',
-        savetd: 'تنسيق Threat Dragon',
-        saveotm: 'تنسيق OTM',
         saveAs: 'حفظ كـ',
         saveModel: 'حفظ النموذج',
         saveModelAs: 'حفظ النموذج كـ',
@@ -284,8 +301,11 @@ const ara = {
                 integrity: 'Integrity النزاهة',
                 availability: 'Availability التوفر'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality السرية',
+                integrity: 'Integrity النزاهة',
+                availability: 'Availability التوفر',
                 distributed: 'Distributed موزع',
                 immutable: 'Immutable لا يمكن تغييره',
                 ephemeral: 'Ephemeral زائل'
@@ -324,7 +344,7 @@ const ara = {
         generic: {
             default: 'تهديد عام جديد',
             cia: 'تهديد CIA جديد',
-            die: 'تهديد DIE جديد',
+            ciadie: 'تهديد CIA-DIE جديد',
             linddun: 'تهديد LINDDUN جديد',
             plot4ai: 'تهديد PLOT4ai جديد',
             stride: 'تهديد STRIDE جديد'
@@ -343,7 +363,7 @@ const ara = {
             mitigation: 'التخفيف',
             modelType: 'نوع النموذج',
             number: 'الرقم',
-            priority: 'الأولوية',
+            severity: 'الأولوية',
             score: 'النقاط',
             status: 'الحالة',
             title: 'العنوان',
@@ -354,8 +374,8 @@ const ara = {
             open: 'مفتوح',
             mitigated: 'تم التخفيف'
         },
-        priority: {
-            tba: 'سيتم الإعلان عنها لاحقا',
+        severity: {
+            tbd: 'سيتم الإعلان عنها',
             low: 'منخفض',
             medium: 'متوسط',
             high: 'عالي',
@@ -379,12 +399,13 @@ const ara = {
         threatStats: {
             total: 'إجمالي التهديدات',
             mitigated: 'الإجمالي المُخفف',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'الإجمالي غير المُخفف',
             openCritical: 'مفتوح / الأولوية الحرجة',
             openHigh: 'مفتوح / أولوية عالية',
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
-            openTba: 'مفتوح / الأولوية في TBA',
+            openTbd: 'مفتوح / الأولوية في TBD',
             openUnknown: 'مفتوح / أولوية غير معروفة'
         }
     },

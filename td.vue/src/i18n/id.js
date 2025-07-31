@@ -1,9 +1,8 @@
-const id = {
+const ind = {
     auth: {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
     nav: {
-        v2Warning: 'Model ancaman Versi 2.0 tidak kompatibel ke belakang dengan model Threat Dragon versi 1.x. Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0',
         loggedInAs: 'Masuk sebagai',
         logOut: 'Keluar'
     },
@@ -72,7 +71,11 @@ const id = {
             sheets: 'Lembaran Curang OWASP',
             github: 'Kunjungi kami di GitHub',
             submit: 'Kirim Isu',
-            check: 'Periksa pembaruan ...'
+            check: 'Periksa pembaruan ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const id = {
         add: 'Tambah cabang',
         cancel: 'Batal',
         name: 'Nama Cabang',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Pilih Model Ancaman dari',
@@ -136,9 +144,9 @@ const id = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Diagram DIE baru',
-                defaultDescription: 'Deskripsi diagram DIE baru',
-                select: 'DIE'
+                defaultTitle: 'Diagram CIA-DIE baru',
+                defaultDescription: 'Deskripsi diagram CIA-DIE baru',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Diagram CIA baru',
@@ -149,13 +157,22 @@ const id = {
         threats: 'Ancaman',
         errors: {
             dropSingleFileOnly: 'Seret dan lepas memerlukan satu file saja.',
-            invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi.',
+            invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Hanya file yang berakhir dengan .json yang didukung.',
             open: 'Kesalahan membuka Model Ancaman ini. Periksa konsol pengembang untuk informasi lebih lanjut',
             save: 'Kesalahan menyimpan Model Ancaman. Periksa konsol pengembang untuk informasi lebih lanjut'
         },
-        opened: 'Model ancaman berhasil dibuka',
-        saved: 'Model ancaman berhasil disimpan',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0'
+        },
+        prompts: {
+            opened: 'Model ancaman berhasil dibuka',
+            saved: 'Model ancaman berhasil disimpan',
+        },
         properties: {
             title: 'Properti',
             emptyState: 'Pilih elemen pada grafik untuk diedit',
@@ -252,7 +269,9 @@ const id = {
         delete: 'Hapus',
         discardTitle: 'Buang Perubahan?',
         discardMessage: 'Apakah Anda yakin ingin membuang perubahan Anda?',
+        duplicate: 'Dyblygu',
         edit: 'Edit',
+        export: 'Allforio',
         exportAs: 'Ekspor Model Sebagai',
         exportHtml: 'Laporan HTML',
         exportPdf: 'Laporan PDF',
@@ -282,8 +301,11 @@ const id = {
                 integrity: 'Integritas',
                 availability: 'Ketersediaan'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Kerahasiaan',
+                integrity: 'Integritas',
+                availability: 'Ketersediaan',
                 distributed: 'Didistribusikan',
                 immutable: 'Tidak dapat diubah',
                 ephemeral: 'Ephemeral'
@@ -322,7 +344,7 @@ const id = {
         generic: {
             default: 'Ancaman generik baru',
             cia: 'Ancaman CIA baru',
-            die: 'Ancaman DIE baru',
+            ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
             stride: 'Ancaman STRIDE baru'
@@ -341,7 +363,7 @@ const id = {
             mitigation: 'Remediasi',
             modelType: 'Jenis Model',
             number: 'Nomor',
-            priority: 'Prioritas',
+            severity: 'Prioritas',
             score: 'Skor',
             status: 'Status',
             title: 'Judul',
@@ -352,8 +374,8 @@ const id = {
             open: 'Terbuka',
             mitigated: 'Diredam'
         },
-        priority: {
-            tba: 'TBA',
+        severity: {
+            tbd: 'TBD',
             low: 'Rendah',
             medium: 'Sedang',
             high: 'Tinggi',
@@ -377,12 +399,13 @@ const id = {
         threatStats: {
             total: 'Total Ancaman',
             mitigated: 'Total Diredam',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Belum Diredam',
             openCritical: 'Terbuka / Prioritas Kritis',
             openHigh: 'Terbuka / Prioritas Tinggi',
             openMedium: 'Terbuka / Prioritas Sedang',
             openLow: 'Terbuka / Prioritas Rendah',
-            openTba: 'Terbuka / Prioritas TBA',
+            openTbd: 'Terbuka / Prioritas TBD',
             openUnknown: 'Terbuka / Prioritas Tidak Diketahui'
         }
     },
@@ -398,4 +421,4 @@ const id = {
     }
 };
 
-export default id;
+export default ind;

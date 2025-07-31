@@ -7,6 +7,7 @@ import { isMacOS } from './utils.js';
 
 const { shell } = require('electron');
 const fs = require('fs');
+const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
 var mainWindow;
@@ -19,7 +20,7 @@ import eng from '@/i18n/en.js';
 import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
-import id from '@/i18n/id.js';
+import ind from '@/i18n/id.js';
 import jpn from '@/i18n/ja.js';
 import ms from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
@@ -28,10 +29,7 @@ import spa from '@/i18n/es.js';
 // hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, fin, fra, hin, id, jpn, ms, por, spa, zho };
-// hide RUS & UKR for now: const messages = { ara, deu, ell, eng, fin, fra, hin, id, jpn, ms, por, rus, spa, ukr, zho };
-const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'jpn', 'ms', 'por', 'spa', 'zho' ];
-// hide RUS & UKR for now: const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'id', 'jpn', 'ms', 'por', 'rus', 'spa', 'ukr', 'zho' ];
+const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, ms, por, spa, zho };
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
@@ -118,7 +116,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.help.docs,
                     click: async () => {
-                        await shell.openExternal('https://owasp.org/www-project-threat-dragon/docs-2/');
+                        await shell.openExternal('https://www.threatdragon.com/docs/');
                     }
                 },
                 {
@@ -153,7 +151,12 @@ export function getMenuTemplate () {
                     }
                 },
                 { type: 'separator' },
-                { role: 'about' }
+                {
+                    label: messages[language].desktop.help.about.about,
+                    click () {
+                        showAboutBox();
+                    }
+                }
             ]
         }
     );
@@ -212,20 +215,37 @@ function openModelRequest (filename) {
     mainWindow.webContents.send('open-model-request', filename);
 }
 
-// request to the renderer for confirmation that it is OK to open a model file
+// open model file and send to renderer
 function openModelFile (filename) {
     logger.log.debug(messages[language].desktop.file.open + ': ' + filename);
+    var modelData;
+
+    if (!filename.endsWith('.json')) {
+        logger.log.warn(messages[language].threatmodel.errors.onlyJsonAllowed);
+        model.isOpen = false;
+        mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'onlyJsonAllowed'});
+        return;
+    }
+
     fs.readFile(filename, (err, data) => {
         if (!err) {
-            let modelData = JSON.parse(data);
+            try {
+                modelData = JSON.parse(data);
+            } catch (err) {
+                logger.log.warn(messages[language].threatmodel.errors.invalidJson + ' : ' + err.message);
+                model.isOpen = false;
+                mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'invalidJson'});
+                return;
+            }
+            model.isOpen = true;
             mainWindow.webContents.send('open-model', path.basename(filename), modelData);
             model.filePath = filename;
-            model.isOpen = true;
             model.fileDirectory = path.dirname(filename);
             app.addRecentDocument(filename);
         } else {
             logger.log.warn(messages[language].threatmodel.errors.open + ': ' + err);
             model.isOpen = false;
+            mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'open'});
         }
     });
 }
@@ -312,7 +332,7 @@ function saveModelData (modelData) {
             if (err) {
                 logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
             } else {
-                logger.log.debug(messages[language].threatmodel.saved + ': ' + model.filePath);
+                logger.log.debug(messages[language].threatmodel.prompts.saved + ': ' + model.filePath);
             }
         });
     } else {
@@ -384,6 +404,17 @@ function savePDFReport (pdfPath) {
     });
 }
 
+function showAboutBox () {
+    var dialogOptions = {
+        type: 'info',
+        title: messages[language].desktop.help.about.about + ' ' + messages[language].home.title,
+        icon: '../assets/threatdragon_logo_solid_image.svg',
+        message: messages[language].home.title,
+        detail: messages[language].desktop.help.about.version + ' ' + buildVersion
+    };
+    dialog.showMessageBoxSync(dialogOptions);
+}
+
 // the renderer has closeed / cleared out the model
 export const modelClosed = () => {
     model.filePath = '';
@@ -426,6 +457,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
+    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'ms', 'por', 'spa', 'zho' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 

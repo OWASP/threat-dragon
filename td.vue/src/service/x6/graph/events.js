@@ -21,23 +21,21 @@ const canvasResized = ({ width, height }) => {
     showPorts(false);
 };
 
-const edgeConnected = (graph) => ({ isNew, edge }) => {
-    if (isNew) {
-        edge.connector = 'smooth';
-        replaceEdgeWithFlow(graph, edge);
+const edgeChangeVertices = () => ({ edge }) => {
+    if (edge.constructor.name === 'Edge') {
+        console.debug('vertex for unformatted edge/flow');
     }
 };
 
-const replaceEdgeWithFlow = (graph, edge) => {
-    if (edge.constructor.name !== 'Edge') {
-        return;
+const edgeConnected = (graph) => ({ edge }) => {
+    if (edge.constructor.name === 'Edge') {
+        console.debug('connected unformatted edge/flow');
+        const flow = shapes.Flow.fromEdge(edge);
+        graph.addEdge(flow);
+        edge.remove();
+        edge = flow;
+        edge.setName(edge.data.name);
     }
-
-    const flow = shapes.Flow.fromEdge(edge);
-    graph.addEdge(flow);
-    edge.remove();
-    edge = flow;
-    edge.setLabels([edge.data.name]);
 };
 
 const mouseLeave = ({ cell }) => {
@@ -60,84 +58,97 @@ const mouseEnter = ({ cell }) => {
     showPorts(true);
 };
 
-const cellAdded =
-    (graph) =>
-        ({ cell }) => {
-            //graph.resetSelection(cell);
-            console.debug('cell added with shape: ', cell.shape);
+const cellAdded = (graph) => ({ cell }) => {
+    console.debug('cell added with shape: ', cell.shape);
+    // ensure selection of other components is removed
+    graph.resetSelection();
 
-            if (cell.convertToEdge) {
-                let edge = cell;
-                const position = cell.position();
-                const config = {
-                    source: position,
-                    target: {
-                        x: position.x + 100,
-                        y: position.y + 100
-                    },
-                    data: cell.getData()
-                };
-
-                if (cell.type === shapes.FlowStencil.prototype.type) {
-                    edge = graph.addEdge(new shapes.Flow(config));
-                } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
-                    edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
-                } else {
-                    console.warn('Removed unknown edge');
-                }
-                cell.remove();
-                cell = edge;
-            }
-
-            mouseLeave({ cell });
-
-            // boundary boxes must not overlap other diagram components
-            if (cell.shape === 'trust-boundary-box') {
-                cell.zIndex = -1;
-            }
-
-            store.get().dispatch(CELL_SELECTED, cell);
-            dataChanged.updateProperties(cell);
-            dataChanged.updateStyleAttrs(cell);
+    // Flow and trust boundary stencils need to be converted
+    if (cell.convertToEdge) {
+        let edge = cell;
+        const position = cell.position();
+        const config = {
+            source: position,
+            target: {
+                x: position.x + 100,
+                y: position.y + 100
+            },
+            data: cell.getData()
         };
+
+        if (cell.type === shapes.FlowStencil.prototype.type) {
+            edge = graph.addEdge(new shapes.Flow(config));
+        } else if (cell.type === shapes.TrustBoundaryCurveStencil.prototype.type) {
+            edge = graph.addEdge(new shapes.TrustBoundaryCurve(config));
+        } else {
+            console.warn('Unknown edge stencil');
+        }
+        cell.remove();
+        cell = edge;
+        cell.setName(cell.data.name);
+    }
+
+    mouseLeave({ cell });
+
+    // boundary boxes must not overlap other diagram components
+    if (cell.shape === 'trust-boundary-box') {
+        cell.zIndex = -1;
+    }
+
+    store.get().dispatch(CELL_SELECTED, cell);
+    dataChanged.updateProperties(cell);
+    dataChanged.updateStyleAttrs(cell);
+
+    if (cell.shape === 'edge') {
+        console.debug('added new edge (flow parent)');
+    }
+
+    // do not select new data flows or trust boundaries: it surprises the user
+    if (cell.shape !== 'path'
+        && cell.shape !== 'edge'
+        && cell.shape !== 'flow'
+        && cell.shape !== 'trust-boundary-curve') {
+        graph.select(cell);
+    }
+};
 
 const cellDeleted = () => {
     console.debug('cell deleted');
     store.get().dispatch(THREATMODEL_MODIFIED);
 };
 
-const cellSelected =
-    () =>
-        ({ cell }) => {
-            // try and get the cell name
-            if (cell.data) {
-                if (cell.isNode()) {
-                    cell.data.name = cell.getLabel();
-                    console.debug('node selected: ' + cell.data.name);
-                } else {
-                    if (cell.data.name) {
-                        console.debug('edge selected: ' + cell.data.name);
-                    } else if (cell.getLabels) {
-                        const labels = cell.getLabels();
-                        if (labels.length && labels[0].attrs.label) {
-                            cell.data.name = labels[0].attrs.label.text;
-                            console.debug('edge selected with label: ' + cell.data.name);
-                        } else {
-                            console.debug('edge selected with no label');
-                        }
-                    } else {
-                        console.debug('edge selected with no name');
-                    }
-                }
-            } else {
-                console.debug('cell selected with no name');
+const cellSelected = (graph) => ({ cell }) => {
+    // try and get the cell name
+    if (cell.data) {
+        if (cell.data.name) {
+            console.debug('Cell selected: ' + cell.data.name);
+        } else if (cell.getLabels) {
+            const labels = cell.getLabels();
+            if (labels.length && labels[0].attrs.label) {
+                cell.data.name = labels[0].attrs.label.text;
+                console.debug('Cell selected with label: ' + cell.data.name);
             }
+        } else {
+            console.warn('Cell selected with no name');
+        }
+    } else {
+        console.warn('cell selected with no data');
+    }
 
-            store.get().dispatch(CELL_SELECTED, cell);
-            dataChanged.updateProperties(cell);
-            dataChanged.updateStyleAttrs(cell);
-            dataChanged.upgradeProperties(cell);
-        };
+    if (cell.shape === 'edge') {
+        console.debug('selected unformatted edge/flow');
+        const flow = shapes.Flow.fromEdge(cell);
+        graph.addEdge(flow);
+        cell.remove();
+        cell = flow;
+        cell.setName(cell.data.name);
+    }
+
+    store.get().dispatch(CELL_SELECTED, cell);
+    dataChanged.updateProperties(cell);
+    dataChanged.updateStyleAttrs(cell);
+    dataChanged.setType(cell);
+};
 
 const cellUnselected = ({ cell }) => {
     console.debug('cell unselected');
@@ -153,6 +164,7 @@ const cellDataChanged = ({ cell }) => {
 
 const listen = (graph) => {
     graph.on('resize', canvasResized);
+    graph.on('edge:change:vertices', edgeChangeVertices(graph));
     graph.on('edge:connected', edgeConnected(graph));
     graph.on('edge:dblclick', cellSelected);
     graph.on('edge:move', cellSelected);
@@ -168,6 +180,7 @@ const listen = (graph) => {
 
 const removeListeners = (graph) => {
     graph.off('resize', canvasResized);
+    graph.off('edge:change:vertices', edgeChangeVertices(graph));
     graph.off('edge:connected', edgeConnected(graph));
     graph.off('edge:dblclick', cellSelected);
     graph.off('edge:move', cellSelected);

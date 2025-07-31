@@ -41,54 +41,70 @@ export default {
     },
     computed: {
         tableRows: function () {
-            return [
-                { name: this.$t('report.threatStats.total'), value: this.total },
-                { name: this.$t('report.threatStats.mitigated'), value: this.mitigated },
-                { name: this.$t('report.threatStats.notMitigated'), value: this.notMitigated },
-                { name: this.$t('report.threatStats.openCritical'), value: this.openCritical },
-                { name: this.$t('report.threatStats.openHigh'), value: this.openHigh },
-                { name: this.$t('report.threatStats.openMedium'), value: this.openMedium },
-                { name: this.$t('report.threatStats.openLow'), value: this.openLow },
-                { name: this.$t('report.threatStats.openTba'), value: this.openTba },
-                { name: this.$t('report.threatStats.openUnknown'), value: this.openUnknown }
+            let totalStats = [
+                { metric: this.$t('report.threatStats.total'), total: this.threatsTotal },
+                { metric: this.$t('report.threatStats.mitigated'), total: this.threatsClosed },
+                { metric: this.$t('report.threatStats.notMitigated'), total: this.threatsOpen }
             ];
+            let openStats = [
+                { metric: this.$t('report.threatStats.openCritical'), total: this.openCritical },
+                { metric: this.$t('report.threatStats.openHigh'), total: this.openHigh },
+                { metric: this.$t('report.threatStats.openMedium'), total: this.openMedium },
+                { metric: this.$t('report.threatStats.openLow'), total: this.openLow }
+            ];
+            // only report N/A, TBDs and unknowns if they exist
+            if (this.threatsNa) {
+                totalStats.push({ metric: this.$t('report.threatStats.notApplicable'), total: this.threatsNa });
+            }
+            if (this.openTbd) {
+                openStats.push({ metric: this.$t('report.threatStats.openTbd'), total: this.openTbd });
+            }
+            if (this.openUnknown) {
+                openStats.push({ metric: this.$t('report.threatStats.openUnknown'), total: this.openUnknown });
+            }
+            return totalStats.concat(openStats);
         },
-        total: function () {
+        threatsTotal: function () {
             return this.threats.length;
         },
-        mitigated: function () {
+        threatsClosed: function () {
             return this.threats
-                .filter(threat => threat.status.toLowerCase() === 'mitigated')
+                .filter(threat => threat.status === 'Mitigated')
                 .length;
         },
-        notMitigated: function () {
+        threatsNa: function () {
             return this.threats
-                .filter(threat => threat.status.toLowerCase() !== 'mitigated')
+                .filter(threat => threat.status === 'NotApplicable')
+                .length;
+        },
+        threatsOpen: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Open')
                 .length;
         },
         openCritical: function () {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'critical')
+                .filter(threat => threat.severity === 'Critical')
                 .length;
         },
         openHigh: function () {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'high')
+                .filter(threat => threat.severity === 'High')
                 .length;
         },
         openMedium: function() {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'medium')
+                .filter(threat => threat.severity === 'Medium')
                 .length;
         },
         openLow: function() {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'low')
+                .filter(threat => threat.severity === 'Low')
                 .length;
         },
-        openTba: function() {
+        openTbd: function() {
             return this.getOpenThreats()
-                .filter(threat => threat.severity.toLowerCase() === 'tba')
+                .filter(threat => threat.severity === 'TBD')
                 .length;
         },
         openUnknown: function() {
@@ -100,11 +116,11 @@ export default {
     methods: {
         getOpenThreats() {
             return this.threats
-                .filter(threat => threat.status && threat.status.toLowerCase() === 'open');
+                .filter(threat => threat.status && threat.status === 'Open');
         },
         getDataTestId(item) {
             return {
-                'data-test-id': item.name
+                'data-test-id': item.metric
             };
         }
     }

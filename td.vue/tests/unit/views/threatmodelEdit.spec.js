@@ -236,6 +236,20 @@ describe('views/ThreatmodelEdit.vue', () => {
             });
         });
 
+        describe('duplicate diagram', () => {
+            let diagramCount, link;
+
+            beforeEach(async () => {
+                diagramCount = diagrams.length;
+                link = wrapper.find('.td-duplicate-diagram');
+                await link.trigger('click', evt);
+            });
+
+            it('duplicates the diagram', () => {
+                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount + 1);
+            });
+        });
+
         describe('remove diagram', () => {
             let diagramCount, link;
 

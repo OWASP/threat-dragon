@@ -77,6 +77,7 @@ export default {
         newThreatModel() {
             this.$store.dispatch(tmActions.clear);
             const newTm = {
+                version: '2.3.0',
                 summary: {
                     title: 'New Threat Model',
                     owner: '',

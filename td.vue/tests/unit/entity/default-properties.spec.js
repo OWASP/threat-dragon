@@ -1,252 +1,209 @@
-import defaultProperties from '../../../src/service/entity/default-properties.js';
+import defaultProperties from '@/service/entity/default-properties.js';
 
 describe('service/entity/default-properties.js', () => {
-    describe('actor', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.actor.type).toEqual('tm.Actor');
+    describe('default properties', () => {
+        it('defines the actor', () => {
+            expect(defaultProperties.defaultData('tm.Actor')).toMatchObject({
+                name: 'Actor',
+                description: '',
+                isTrustBoundary: false,
+                outOfScope: false,
+                reasonOutOfScope: '',
+                hasOpenThreats: false,
+                providesAuthentication: false
+            });
         });
 
-        it('defines name', () => {
-            expect(defaultProperties.actor.name).toEqual('Actor');
+        it('defines the  trust boundary', () => {
+            expect(defaultProperties.defaultData('tm.Boundary')).toMatchObject({
+                name: 'Trust Boundary',
+                description: '',
+                isTrustBoundary: true,
+                hasOpenThreats: false
+            });
         });
 
-        it('defines description', () => {
-            expect(defaultProperties.actor.description).toEqual('');
+        it('defines the trust boundary box', () => {
+            expect(defaultProperties.defaultData('tm.BoundaryBox')).toMatchObject({
+                name: 'Trust Boundary',
+                description: '',
+                isTrustBoundary: true,
+                hasOpenThreats: false
+            });
         });
 
-        it('defines outOfScope', () => {
-            expect(defaultProperties.actor.outOfScope).toEqual(false);
+        it('defines the flow', () => {
+            expect(defaultProperties.defaultData('tm.Flow')).toMatchObject({
+                name: 'Data Flow',
+                description: '',
+                outOfScope: false,
+                isTrustBoundary: false,
+                reasonOutOfScope: '',
+                hasOpenThreats: false,
+                isBidirectional: false,
+                isEncrypted: false,
+                isPublicNetwork: false,
+                protocol: ''
+            });
         });
 
-        it('defines reasonOutOfScope', () => {
-            expect(defaultProperties.actor.reasonOutOfScope).toEqual('');
+        it('defines the process', () => {
+            expect(defaultProperties.defaultData('tm.Process')).toMatchObject({
+                name: 'Process',
+                description: '',
+                outOfScope: false,
+                isTrustBoundary: false,
+                reasonOutOfScope: '',
+                hasOpenThreats: false,
+                handlesCardPayment: false,
+                handlesGoodsOrServices: false,
+                isWebApplication: false,
+                privilegeLevel: ''
+            });
         });
 
-        it('defines providesAuthentication', () => {
-            expect(defaultProperties.actor.providesAuthentication).toEqual(false);
+        it('defines the data store', () => {
+            expect(defaultProperties.defaultData('tm.Store')).toMatchObject({
+                name: 'Store',
+                description: '',
+                outOfScope: false,
+                isTrustBoundary: false,
+                reasonOutOfScope: '',
+                hasOpenThreats: false,
+                isALog: false,
+                isEncrypted: false,
+                isSigned: false,
+                storesCredentials: false,
+                storesInventory: false
+            });
         });
 
-        it('defines hasOpenThreats', () => {
-            expect(defaultProperties.actor.hasOpenThreats).toEqual(false);
-        });
-
-        it('defines threats', () => {
-            expect(defaultProperties.actor.threats).toEqual([]);
-        });
-    });
-
-    describe('boundary', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.boundary.type).toEqual('tm.Boundary');
-        });
-
-        it('has a blank description', () => {
-            expect(defaultProperties.boundary.description).toEqual('');
-        });
-
-        it('is a trust boundary', () => {
-            expect(defaultProperties.boundary.isTrustBoundary).toEqual(true);
-        });
-    });
-
-    describe('boundaryBox', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.boundaryBox.type).toEqual('tm.BoundaryBox');
-        });
-
-        it('has a name', () => {
-            expect(defaultProperties.boundaryBox.name).toEqual('Trust Boundary');
-        });
-
-        it('has a blank description', () => {
-            expect(defaultProperties.boundaryBox.description).toEqual('');
-        });
-
-        it('is a trust boundary', () => {
-            expect(defaultProperties.boundaryBox.isTrustBoundary).toEqual(true);
-        });
-    });
-
-    describe('flow', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.flow.type).toEqual('tm.Flow');
-        });
-
-        it('has a name', () => {
-            expect(defaultProperties.flow.name).toEqual('Data Flow');
-        });
-
-        it('has a blank description', () => {
-            expect(defaultProperties.flow.description).toEqual('');
-        });
-
-        it('defines outOfScope', () => {
-            expect(defaultProperties.flow.outOfScope).toEqual(false);
-        });
-
-        it('defines bidirection', () => {
-            expect(defaultProperties.flow.isBidirectional).toEqual(false);
-        });
-
-        it('defines reasonOutOfScope', () => {
-            expect(defaultProperties.flow.reasonOutOfScope).toEqual('');
-        });
-
-        it('defines protocol', () => {
-            expect(defaultProperties.flow.protocol).toEqual('');
-        });
-
-        it('defines isEncrypted', () => {
-            expect(defaultProperties.flow.isEncrypted).toEqual(false);
-        });
-
-        it('defines isPublicNetwork', () => {
-            expect(defaultProperties.flow.isPublicNetwork).toEqual(false);
-        });
-
-        it('defines hasOpenThreats', () => {
-            expect(defaultProperties.flow.hasOpenThreats).toEqual(false);
-        });
-
-        it('defines threats', () => {
-            expect(defaultProperties.flow.threats).toEqual([]);
+        it('defines the text box', () => {
+            expect(defaultProperties.defaultData('tm.Text')).toMatchObject({ name: 'Descriptive text' });
         });
     });
 
-    describe('process', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.tmProcess.type).toEqual('tm.Process');
+    describe('default entities', () => {
+        it('defines the actor entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Actor')).toMatchObject({
+                size: {
+                    width: 150,
+                    height: 80
+                },
+                label: 'Actor',
+                shape: 'actor',
+                zIndex: 0
+            });
         });
 
-        it('defines the name', () => {
-            expect(defaultProperties.tmProcess.name).toEqual('Process');
+        it('defines the  trust boundary entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Boundary')).toMatchObject({
+                attrs: {
+                    label: 'Trust Boundary'
+                },
+                shape: 'trust-boundary',
+                zIndex: 10
+            });
         });
 
-        it('defines description', () => {
-            expect(defaultProperties.tmProcess.description).toEqual('');
+        it('defines the trust boundary box entity', () => {
+            expect(defaultProperties.defaultEntity('tm.BoundaryBox')).toMatchObject({
+                attrs: {
+                    label: 'Trust Boundary'
+                },
+                shape: 'trust-boundary-box',
+                zIndex: 10
+            });
         });
 
-        it('defines outOfScope', () => {
-            expect(defaultProperties.tmProcess.outOfScope).toEqual(false);
+        it('defines the flow entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Flow')).toMatchObject({
+                shape: 'flow',
+                width: 200,
+                height: 100,
+                connector: 'smooth'
+            });
         });
 
-        it('defines reasonOutOfScope', () => {
-            expect(defaultProperties.tmProcess.reasonOutOfScope).toEqual('');
+        it('defines the process entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Process')).toMatchObject({
+                size: {
+                    width: 100,
+                    height: 100
+                },
+                shape: 'process',
+                zIndex: 0
+            });
         });
 
-        it('defines hasOpenThreats', () => {
-            expect(defaultProperties.tmProcess.hasOpenThreats).toEqual(false);
+        it('defines the data store entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Store')).toMatchObject({
+                size: {
+                    width: 150,
+                    height: 75
+                },
+                attrs: {
+                    text: {
+                        text: 'Store',
+                    },
+                    topLine: {
+                        strokeWidth: 1.5,
+                        strokeDasharray: null
+                    },
+                    bottomLine: {
+                        strokeWidth: 1.5,
+                        strokeDasharray: null
+                    }
+                },
+                shape: 'store',
+                zIndex: 0
+            });
         });
 
-        it('defines handlesCardPayment', () => {
-            expect(defaultProperties.tmProcess.handlesCardPayment).toEqual(false);
-        });
-
-        it('defines handlesGoodsOrServices', () => {
-            expect(defaultProperties.tmProcess.handlesGoodsOrServices).toEqual(false);
-        });
-
-        it('defines isWebApplication', () => {
-            expect(defaultProperties.tmProcess.isWebApplication).toEqual(false);
-        });
-
-        it('defines privilegeLevel', () => {
-            expect(defaultProperties.tmProcess.privilegeLevel).toEqual('');
-        });
-
-        it('defines threats', () => {
-            expect(defaultProperties.tmProcess.threats).toEqual([]);
-        });
-    });
-
-    describe('store', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.store.type).toEqual('tm.Store');
-        });
-
-        it('defines name', () => {
-            expect(defaultProperties.store.name).toEqual('Store');
-        });
-
-        it('defines outOfScope', () => {
-            expect(defaultProperties.store.outOfScope).toEqual(false);
-        });
-
-        it('defines reasonOutOfScope', () => {
-            expect(defaultProperties.store.reasonOutOfScope).toEqual('');
-        });
-
-        it('defines hasOpenThreats', () => {
-            expect(defaultProperties.store.hasOpenThreats).toEqual(false);
-        });
-
-        it('defines isALog', () => {
-            expect(defaultProperties.store.isALog).toEqual(false);
-        });
-
-        it('defines isEncrypted', () => {
-            expect(defaultProperties.store.isEncrypted).toEqual(false);
-        });
-
-        it('defines isSigned', () => {
-            expect(defaultProperties.store.isSigned).toEqual(false);
-        });
-
-        it('defines storesCredentials', () => {
-            expect(defaultProperties.store.storesCredentials).toEqual(false);
-        });
-
-        it('defines storesInventory', () => {
-            expect(defaultProperties.store.storesInventory).toEqual(false);
-        });
-
-        it('defines threats', () => {
-            expect(defaultProperties.store.threats).toEqual([]);
+        it('defines the text box entity', () => {
+            expect(defaultProperties.defaultEntity('tm.Text')).toMatchObject({
+                size: {
+                    width: 190,
+                    height: 80
+                },
+                shape: 'td-text-block',
+                zIndex: 0
+            });
         });
     });
 
-    describe('text', () => {
-        it('defines the type', () => {
-            expect(defaultProperties.text.type).toEqual('tm.Text');
-        });
-
-        it('defines name', () => {
-            expect(defaultProperties.text.name).toEqual('Descriptive text');
-        });
-    });
-
-    describe('getByType', () => {
+    describe('defaultData', () => {
         it('throws an error for an unknown type', () => {
-            expect(() => defaultProperties.getByType('fake'))
+            expect(() => defaultProperties.defaultData('fake'))
                 .toThrowError('Unknown entity: fake');
         });
 
         it('gets actor', () => {
-            expect(defaultProperties.getByType('tm.Actor')).toEqual(defaultProperties.actor);
+            expect(defaultProperties.defaultData('tm.Actor').type).toEqual('tm.Actor');
         });
 
         it('gets boundary', () => {
-            expect(defaultProperties.getByType('tm.Boundary')).toEqual(defaultProperties.boundary);
+            expect(defaultProperties.defaultData('tm.Boundary').type).toEqual('tm.Boundary');
         });
 
         it('gets boundaryBox', () => {
-            expect(defaultProperties.getByType('tm.BoundaryBox')).toEqual(defaultProperties.boundaryBox);
+            expect(defaultProperties.defaultData('tm.BoundaryBox').type).toEqual('tm.BoundaryBox');
         });
 
         it('gets flow', () => {
-            expect(defaultProperties.getByType('tm.Flow')).toEqual(defaultProperties.flow);
+            expect(defaultProperties.defaultData('tm.Flow').type).toEqual('tm.Flow');
         });
 
         it('gets process', () => {
-            expect(defaultProperties.getByType('tm.Process')).toEqual(defaultProperties.tmProcess);
+            expect(defaultProperties.defaultData('tm.Process').type).toEqual('tm.Process');
         });
 
         it('gets store', () => {
-            expect(defaultProperties.getByType('tm.Store')).toEqual(defaultProperties.store);
+            expect(defaultProperties.defaultData('tm.Store').type).toEqual('tm.Store');
         });
 
         it('gets text', () => {
-            expect(defaultProperties.getByType('tm.Text')).toEqual(defaultProperties.text);
+            expect(defaultProperties.defaultData('tm.Text').type).toEqual('tm.Text');
         });
     });
 });

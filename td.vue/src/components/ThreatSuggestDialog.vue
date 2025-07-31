@@ -37,9 +37,9 @@
                     </b-col>
 
                     <b-col md=5>
-                        <b-form-group id="priority-group" class="float-right" :label="$t('threats.properties.priority')"
-                            label-for="priority">
-                            <b-form-radio-group id="priority" v-model="threat.severity" :options="priorities"
+                        <b-form-group id="severity-group" class="float-right" :label="$t('threats.properties.severity')"
+                            label-for="severity">
+                            <b-form-radio-group id="severity" v-model="threat.severity" :options="priorities"
                                 buttons></b-form-radio-group>
                         </b-form-group>
                     </b-col>
@@ -123,11 +123,11 @@ export default {
         },
         priorities() {
             return [
-                { value: 'TBA', text: this.$t('threats.priority.tba') },
-                { value: 'Low', text: this.$t('threats.priority.low') },
-                { value: 'Medium', text: this.$t('threats.priority.medium') },
-                { value: 'High', text: this.$t('threats.priority.high') },
-                { value: 'Critical', text: this.$t('threats.priority.critical') }
+                { value: 'TBD', text: this.$t('threats.severity.tbd') },
+                { value: 'Low', text: this.$t('threats.severity.low') },
+                { value: 'Medium', text: this.$t('threats.severity.medium') },
+                { value: 'High', text: this.$t('threats.severity.high') },
+                { value: 'Critical', text: this.$t('threats.severity.critical') }
             ];
         },
         modalTitle() { return this.$t('threats.newThreat') + ' #' + (this.threatTop + 1); }

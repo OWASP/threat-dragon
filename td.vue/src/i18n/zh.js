@@ -3,7 +3,6 @@ const zho = {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
-        v2Warning: '2.0 版威胁模型与 1.x 版Threat Dragon模型不兼容。导入的 1.x 版模型将升级到 2.0 版本',
         loggedInAs: '登录身份为',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const zho = {
             sheets: 'OWASP备忘录',
             github: 'GitHub项目页面',
             submit: '提交Issue',
-            check: '检查更新...'
+            check: '检查更新...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const zho = {
         add: '添加分支',
         cancel: '取消',
         name: '分支名称',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',
@@ -136,9 +144,9 @@ const zho = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: '新DIE图',
-                defaultDescription: '新DIE图描述',
-                select: 'DIE'
+                defaultTitle: '新CIA-DIE图',
+                defaultDescription: '新CIA-DIE图描述',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: '新CIA图',
@@ -149,13 +157,22 @@ const zho = {
         threats: '威胁',
         errors: {
             dropSingleFileOnly: '只能拖放一个文件。',
-            invalidJson: '无效的JSON。请检查您的格式，然后重试。',
+            invalidJson: '无效的JSON。请检查您的格式，然后重试',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: '只支持以.json结尾的文件。',
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
-        opened: '成功打开威胁模型',
-        saved: '成功保存威胁模型',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
+        },
+        prompts: {
+            opened: '成功打开威胁模型',
+            saved: '成功保存威胁模型',
+        },
         properties: {
             title: '组件',
             emptyState: '在图表上选择要编辑的元素',
@@ -252,7 +269,9 @@ const zho = {
         delete: '删除',
         discardTitle: '放弃更改？',
         discardMessage: '您确定要放弃您的更改吗？',
+        duplicate: '复制',
         edit: '编辑',
+        export: '导出',
         exportAs: '导出模型为',
         exportHtml: '导出HTML',
         exportPdf: '导出PDF',
@@ -282,8 +301,11 @@ const zho = {
                 integrity: '完整性',
                 availability: '可用性'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: '机密性',
+                integrity: '完整性',
+                availability: '可用性',
                 distributed: '分布式',
                 immutable: '不可变性',
                 ephemeral: '短暂性'
@@ -322,7 +344,7 @@ const zho = {
         generic: {
             default: '新通用威胁',
             cia: '新CIA威胁',
-            die: '新DIE威胁',
+            ciadie: '新CIA-DIE威胁',
             linddun: '新LINDDUN威胁',
             plot4ai: '新PLOT4ai威胁',
             stride: '新STRIDE威胁'
@@ -341,7 +363,7 @@ const zho = {
             mitigation: '缓解措施',
             modelType: '模型类型',
             number: '编号',
-            priority: '优先级',
+            severity: '优先级',
             score: '评分',
             status: '状态',
             title: '标题',
@@ -352,8 +374,8 @@ const zho = {
             open: '未解决',
             mitigated: '缓解'
         },
-        priority: {
-            tba: '待定',
+        severity: {
+            tbd: '待定',
             low: '低',
             medium: '中',
             high: '高',
@@ -377,12 +399,13 @@ const zho = {
         threatStats: {
             total: '威胁总数',
             mitigated: '已缓解总数',
+            notApplicable: 'Total Not Applicable',
             notMitigated: '未缓解',
             openCritical: '未解决/关键优先级',
             openHigh: '未解决/高优先级',
             openMedium: '未解决/中优先级',
             openLow: '未解决/低优先级',
-            openTba: '未解决/待定优先级',
+            openTbd: '未解决/待定优先级',
             openUnknown: '未解决/未知优先级'
         }
     },

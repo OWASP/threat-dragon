@@ -3,7 +3,6 @@ const fin = {
         sessionExpired: 'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
     },
     nav: {
-        v2Warning: 'Version 2.0 uhkamallit eivät ole taaksepäin yhteensopivia version 1.x kanssa. Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.',
         loggedInAs: 'Kirjautunut käyttäjänä',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const fin = {
             sheets: 'OWASP:n lunttilaput',
             github: 'Vieraile OWASP:n githubissa',
             submit: 'Ilmoita ongelmasta',
-            check: 'Tarkist päivitykset ...'
+            check: 'Tarkist päivitykset ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -93,6 +96,11 @@ const fin = {
         add: 'Lisää haara',
         cancel: 'Peruuta',
         name: 'Sivuliikkeen nimi',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Valitse uhkamalli kohteesta',
@@ -136,9 +144,9 @@ const fin = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'Uusi DIE-kaavio',
-                defaultDescription: 'Uuden DIE-kaavion kuvaus',
-                select: 'DIE'
+                defaultTitle: 'Uusi CIA-DIE-kaavio',
+                defaultDescription: 'Uuden CIA-DIE-kaavion kuvaus',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Uusi CIA-kaavio',
@@ -149,13 +157,22 @@ const fin = {
         threats: 'Uhat',
         errors: {
             dropSingleFileOnly: 'Voit pudottaa vain yhden tiedoston.',
-            invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen.',
+            invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Sovellus tukee vain .json -päätteisiä tiedostoja.',
             open: 'Virhe uhkamallin lukemisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.',
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
         },
-        opened: 'Uhkamallin avaaminen onnistui',
-        saved: 'Uhkamallin tallentaminen onnistui',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.'
+        },
+        prompts: {
+            opened: 'Uhkamallin avaaminen onnistui',
+            saved: 'Uhkamallin tallentaminen onnistui',
+        },
         properties: {
             title: 'Ominaisuudet',
             emptyState: 'Valitse kaavion osa muokataksesi',
@@ -252,7 +269,9 @@ const fin = {
         delete: 'Poista',
         discardTitle: 'Menetä muutokset?',
         discardMessage: 'Oletko varma, että haluat menettää muutokset?',
+        duplicate: 'Monistaa',
         edit: 'Muokkaa',
+        export: 'Viedä',
         exportAs: 'Export Model As',
         exportHtml: 'Raportti HTML',
         exportPdf: 'Raportti PDF',
@@ -282,8 +301,11 @@ const fin = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -322,7 +344,7 @@ const fin = {
         generic: {
             default: 'Uusi yleinen uhka',
             cia: 'Uusi CIA-uhka',
-            die: 'Uusi DIE-uhka',
+            ciadie: 'Uusi CIA-DIE-uhka',
             linddun: 'Uusi LINDDUN-uhka',
             plot4ai: 'Uusi PLOT4ai-uhka',
             stride: 'Uusi STRIDE-uhka'
@@ -341,7 +363,7 @@ const fin = {
             mitigation: 'Hallintakeinot',
             modelType: 'Uhkamallin Tyyppi',
             number: 'Numero',
-            priority: 'Tärkeys',
+            severity: 'Tärkeys',
             score: 'Pisteytys',
             status: 'Tila',
             title: 'Otsikko',
@@ -352,8 +374,8 @@ const fin = {
             open: 'Avoin',
             mitigated: 'Hallittu'
         },
-        priority: {
-            tba: 'TBA',
+        severity: {
+            tbd: 'TBD',
             low: 'Alhainen',
             medium: 'Keskitaso',
             high: 'Korkea',
@@ -377,12 +399,13 @@ const fin = {
         threatStats: {
             total: 'Uhkia yhteensä',
             mitigated: 'Hallittuja uhkia',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'Hallitsemattomia uhkia',
             openCritical: 'Avoin / Kriittinen tärkeys',
             openHigh: 'Avoin / Korkea tärkeys',
             openMedium: 'Avoin / Keskitason tärkeys',
             openLow: 'Avoin / Alhainen tärkeys',
-            openTba: 'Avoin / TBA tärkeys',
+            openTbd: 'Avoin / TBD tärkeys',
             openUnknown: 'Avoin / Tuntematon tärkeys'
         }
     },

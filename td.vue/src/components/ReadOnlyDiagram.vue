@@ -14,7 +14,7 @@
 
 <script>
 import debounce from '@/service/debounce.js';
-import diagramService from '@/service/migration/diagram.js';
+import diagramService from '@/service/diagram/diagram.js';
 
 const debounceTimeoutMs = 100;
 

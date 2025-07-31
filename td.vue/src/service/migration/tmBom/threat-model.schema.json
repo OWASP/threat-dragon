@@ -1,0 +1,965 @@
+{
+    "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
+    "$comment": "When updating the schema `$id`, also update the value of the constant `$schema` property below. See <https://owasp.org/www-project-threat-model-library/#div-specification>.",
+    "title": "OWASP Threat Model Library Schema",
+
+    "$defs": {
+        "version": {
+            "title": "Structured version number",
+            "type": "string",
+            "pattern": "^\\d+(\\.\\d+)*$"
+        },
+
+        "symbolic-name": {
+            "title": "Symbolic name of an object",
+            "type": "string",
+            "pattern": "^[0-9a-z-]+$"
+        },
+        "typed-symbolic-name": {
+            "title": "Symbolic name reference to an object of a specified type",
+            "type": "object",
+            "required": ["type", "object"],
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "title": "Type of the object being referenced",
+                    "description": "The type of the object being referenced, as a '#/$defs/...' or simple '...' type reference.",
+                    "type": "string"
+                },
+                "object": {
+                    "$ref": "#/$defs/symbolic-name"
+                }
+            }
+        },
+
+        "date-or-datetime": {
+            "title": "Date (YYYY-MM-DD) or datetime (YYYY-MM-DDThh:mm:ss)",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "date"
+                },
+                {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            ]
+        },
+
+        "business-criticality": {
+            "$ref": "#/$defs/degree"
+        },
+        "control-status": {
+            "enum": ["assumed", "active", "suggested", "under_review", "approved", "scheduled", "retired", "wont_do"]
+        },
+        "data-sensitivity": {
+            "enum": ["pii", "phi", "fin", "ip", "cred", "biz", "gov", "pci", "op"]
+        },
+        "degree": {
+            "enum": ["minimal", "low", "moderate", "high", "maximal"]
+        },
+        "exposure": {
+            "enum": ["internal", "external"]
+        },
+        "impact": {
+            "enum": ["negligible", "minor", "moderate", "major", "severe"]
+        },
+        "likelihood": {
+            "enum": ["rare", "unlikely", "possible", "likely", "certain"]
+        },
+        "priority": {
+            "enum": ["none", "low", "medium", "high", "critical"]
+        },
+        "risk-score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 25
+        },
+        "risk-level-band": {
+            "enum": ["very_low", "low", "medium", "high", "very_high", "critical"]
+        },
+        "tier": {
+            "enum": ["mission_critical", "business_critical", "important", "non_critical"]
+        },
+
+        "access-level": {
+            "enum": ["anonymous", "user", "admin"]
+        },
+        "access-control-method": {
+            "enum": ["none", "acl", "rbac", "mac", "dac", "abac"]
+        },
+        "authentication-method": {
+            "enum": ["none", "password", "otp", "challenge_response", "public_key", "token", "biometrics", "sso", "social"]
+        },
+
+        "data-store-type": {
+            "enum": ["sql", "key_value", "document", "object", "graph", "time_series"]
+        },
+
+        "trust-boundary-ref": {
+            "type": "object",
+            "required": ["trust_zone_a", "trust_zone_b"],
+            "additionalProperties": false,
+            "properties": {
+                "trust_zone_a": {
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "trust_zone_b": {
+                    "$ref": "#/$defs/symbolic-name"
+                }
+            }
+        },
+
+        "cwe-ref": {
+            "type": "object",
+            "required": ["cwe_id"],
+            "additionalProperties": false,
+            "properties": {
+                "cwe_id": {
+                    "type": "integer"
+                },
+                "cwe_title": {
+                    "type": "string"
+                }
+            }
+        },
+        "capec-ref": {
+            "type": "object",
+            "required": ["capec_id"],
+            "additionalProperties": false,
+            "properties": {
+                "capec_id": {
+                    "type": "integer"
+                },
+                "capec_title": {
+                    "type": "string"
+                }
+            }
+        },
+
+        "attacker-skill-and-knowledge": {
+            "enum": ["script_kid", "insider", "engineer", "expert_engineer", "oc_sponsored", "state_sponsored"]
+        },
+
+        "scope": {
+            "type": "object",
+            "required": [
+                "title",
+                "description",
+                "business_criticality",
+                "data_sensitivity",
+                "exposure",
+                "tier"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "title": "Short description of the scope of the threat model",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Definition of the scope of an application or service",
+                    "type": "string"
+                },
+                "business_criticality": {
+                    "title": "Business criticality of the application or service",
+                    "$ref": "#/$defs/business-criticality"
+                },
+                "data_sensitivity": {
+                    "title": "Types of sensitive data handled by the application or service",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/data-sensitivity"
+                    }
+                },
+                "exposure": {
+                    "$ref": "#/$defs/exposure"
+                },
+                "tier": {
+                    "title": "Tier of the application or service",
+                    "$ref": "#/$defs/tier"
+                }
+            }
+        },
+
+        "diagram": {
+            "type": "object",
+            "required": ["title", "type", "source"],
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "title": "Title of the diagram",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the diagram",
+                    "type": "string"
+                },
+                "link": {
+                    "title": "Link to the source of the diagram",
+                    "type": "string",
+                    "format": "uri"
+                },
+                "type": {
+                    "title": "MIME type of the diagram",
+                    "$comment": "ordered by prominence as a diagram format in a threat modeling context",
+                    "enum": [
+                        "graphviz",
+                        "mermaid",
+                        "plantuml",
+                        "svg"
+                    ]
+                },
+                "source": {
+                    "title": "Source code of the diagram",
+                    "type": "string"
+                }
+            }
+        },
+
+        "trust-zone": {
+            "type": "object",
+            "required": ["symbolic_name", "title", "description"],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the trust zone",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the trust zone",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the trust zone",
+                    "type": "string"
+                }
+            }
+        },
+
+        "trust-boundary": {
+            "type": "object",
+            "required": [
+                "trust_zone_a",
+                "trust_zone_b"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "trust_zone_a": {
+                    "title": "Symbolic name of the first trust zone",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "trust_zone_b": {
+                    "title": "Symbolic name of the second trust zone",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "access_control_methods": {
+                    "title": "Access control methods used between the two trust zones",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/access-control-method"
+                    }
+                },
+                "authentication_methods": {
+                    "title": "Authentication methods used between the two trust zones",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/authentication-method"
+                    }
+                },
+                "access_token_expires": {
+                    "title": "Whether access tokens ever expire",
+                    "type": "boolean"
+                },
+                "access_token_ttl": {
+                    "title": "TTL (Time To Live) in seconds of access tokens",
+                    "type": "integer"
+                },
+                "has_refresh_token": {
+                    "title": "Whether refresh tokens are used",
+                    "type": "boolean"
+                },
+                "refresh_token_expires": {
+                    "title": "Whether refresh tokens ever expire",
+                    "type": "boolean"
+                },
+                "refresh_token_ttl": {
+                    "title": "TTL (Time To Live) in seconds of refresh tokens",
+                    "type": "integer"
+                },
+                "can_user_logout": {
+                    "title": "Whether users can explicitly log out of the application or service",
+                    "type": "boolean"
+                },
+                "can_system_logout": {
+                    "title": "Whether the system ever logs out the user",
+                    "type": "boolean"
+                }
+            }
+        },
+
+        "actor": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "type"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the actor",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Name of the actor",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the actor and their role",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type of actor",
+                    "enum": ["system", "user", "power_user", "administrator", "engineer", "third_party"]
+                },
+                "permissions": {
+                    "title": "Free-form description of permissions typically available to the actor",
+                    "type": "string"
+                },
+                "trust_zone": {
+                    "title": "Trust zone in which the actor operates",
+                    "$ref": "#/$defs/symbolic-name"
+                }
+            }
+        },
+
+        "component": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the component",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the component",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the component and its purpose",
+                    "type": "string"
+                },
+                "parent_component": {
+                    "title": "Symbolic name of the parent component",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "trust_zone": {
+                    "title": "Symbolic name of the trust zone where the component is located",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "repo_link": {
+                    "title": "Link to the repository where the component is maintained (informational)",
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        },
+
+        "data-store": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "type"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the data store",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the data store",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the data store and its purpose",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type of data store",
+                    "$ref": "#/$defs/data-store-type"
+                },
+                "vendor": {
+                    "title": "Vendor of the data store product",
+                    "type": "string"
+                },
+                "product": {
+                    "title": "Product implementing the data store",
+                    "type": "string"
+                },
+                "trust_zone": {
+                    "title": "Trust zone where the data store resides",
+                    "$ref": "#/$defs/symbolic-name"
+                }
+            }
+        },
+
+        "data-set": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "placements",
+                "data_sensitivity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the data set",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the data set",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the data set and its purpose",
+                    "type": "string"
+                },
+                "placements": {
+                    "type": "array",
+                    "items": {
+                        "title": "Placement of the data set on a certain data store",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "data_store": {
+                                "title": "Symbolic name of the data store where the data set is placed",
+                                "$ref": "#/$defs/symbolic-name"
+                            },
+                            "encrypted": {
+                                "title": "Whether the data set is encrypted on this data store",
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "data_sensitivity": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/data-sensitivity"
+                    }
+                },
+                "access_control_methods": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/access-control-method"
+                    }
+                },
+                "record_count": {
+                    "title": "Estimated number of records in the data set",
+                    "type": "integer"
+                }
+            }
+        },
+
+        "data-flow": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "source",
+                "destination",
+                "has_sensitive_data",
+                "encrypted"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the data flow",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the data flow",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the data flow and its purpose",
+                    "type": "string"
+                },
+                "source": {
+                    "title": "Symbolic name of the source component of the data flow",
+                    "$ref": "#/$defs/typed-symbolic-name"
+                },
+                "destination": {
+                    "title": "Symbolic name of the destination component of the data flow",
+                    "$ref": "#/$defs/typed-symbolic-name"
+                },
+                "has_sensitive_data": {
+                    "title": "Whether the data flow includes sensitive data",
+                    "type": "boolean"
+                },
+                "encrypted": {
+                    "title": "Whether the data flow is encrypted",
+                    "type": "boolean"
+                }
+            }
+        },
+
+        "assumption": {
+            "type": "object",
+            "required": [
+                "description",
+                "validity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "title": "Statement of the assumption",
+                    "type": "string"
+                },
+                "topics": {
+                    "title": "Topics covered by the assumption",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/symbolic-name"
+                    }
+                },
+                "validity": {
+                    "title": "Validity of the assumption",
+                    "enum": ["unconfirmed", "confirmed", "rejected"],
+                    "default": "unconfirmed"
+                }
+            }
+        },
+
+        "threat-persona": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "is_person",
+                "skill_level",
+                "access_level",
+                "malicious_intent",
+                "applicability_to_org"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the threat persona",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Name of the person or system posing a threat",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the threat persona",
+                    "type": "string"
+                },
+                "is_person": {
+                    "title": "Whether the threat persona is a person or an automated system",
+                    "type": "boolean"
+                },
+                "skill_level": {
+                    "title": "Skill and knowledge level of the threat persona",
+                    "$ref": "#/$defs/attacker-skill-and-knowledge"
+                },
+                "access_level": {
+                    "title": "Access level of the threat persona",
+                    "$ref": "#/$defs/access-level"
+                },
+                "malicious_intent": {
+                    "title": "Whether the threat persona has malicious intent",
+                    "type": "boolean"
+                },
+                "applicability_to_org": {
+                    "title": "Likelihood for the threat persona to attack the organization",
+                    "$ref": "#/$defs/degree"
+                }
+            }
+        },
+
+        "threat": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "threat_persona",
+                "event",
+                "sources"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the threat",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the threat",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the threat",
+                    "type": "string"
+                },
+                "components_affected": {
+                    "title": "Components affected by the threat",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/symbolic-name"
+                    }
+                },
+                "threat_persona": {
+                    "title": "Symbolic name of the threat persona",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "event": {
+                    "title": "Event that triggers the threat",
+                    "type": "string"
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "$comment": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-30r1.pdf",
+                        "enum": ["adversary", "human_error", "failure", "events_beyond_org_control"]
+                    }
+                },
+                "attack_mechanisms": {
+                    "type": "array",
+                    "items": {
+                        "title": "Attack mechanism per CAPEC taxonomy",
+                        "$ref": "#/$defs/capec-ref"
+                    }
+                },
+                "weaknesses": {
+                    "type": "array",
+                    "items": {
+                        "title": "Weakness factoring into the threat per CWE taxonomy",
+                        "$ref": "#/$defs/cwe-ref"
+                    }
+                }
+            }
+        },
+
+        "control": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "threats",
+                "status",
+                "priority"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the control",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the control",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the control",
+                    "type": "string"
+                },
+                "threats": {
+                    "type": "array",
+                    "items": {
+                        "title": "Symbolic name of the threat addressed by the control",
+                        "$ref": "#/$defs/symbolic-name"
+                    }
+                },
+                "trust_boundary": {
+                    "title": "Trust boundary that the control protects, if any",
+                    "$ref": "#/$defs/trust-boundary-ref"
+                },
+                "status": {
+                    "$ref": "#/$defs/control-status"
+                },
+                "priority": {
+                    "$ref": "#/$defs/priority"
+                }
+            }
+        },
+
+        "risk": {
+            "type": "object",
+            "required": [
+                "symbolic_name",
+                "title",
+                "description",
+                "threats",
+                "likelihood",
+                "impact",
+                "impact_description",
+                "score",
+                "level"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "symbolic_name": {
+                    "title": "Symbolic name of the risk",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "title": {
+                    "title": "Title of the risk",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description of the risk",
+                    "type": "string"
+                },
+                "threats": {
+                    "type": "array",
+                    "items": {
+                        "title": "Symbolic name of threat factoring into the risk",
+                        "$ref": "#/$defs/symbolic-name"
+                    }
+                },
+                "likelihood": {
+                    "title": "Likelihood of the risk materializing",
+                    "$ref": "#/$defs/likelihood"
+                },
+                "impact": {
+                    "title": "Degree of the impact of the risk materializing",
+                    "$ref": "#/$defs/impact"
+                },
+                "impact_description": {
+                    "title": "Description of the impact of the risk materializing",
+                    "type": "string"
+                },
+                "score": {
+                    "title": "Risk score based on likelihood and impact",
+                    "$comment": "https://owasp.org/www-project-threat-model-library/#div-specification",
+                    "$ref": "#/$defs/risk-score"
+                },
+                "level": {
+                    "title": "Risk level band",
+                    "$comment": "https://owasp.org/www-project-threat-model-library/#div-specification",
+                    "$ref": "#/$defs/risk-level-band"
+                }
+            }
+        },
+
+        "mitigation-plan": {
+            "title": "Mitigation plan for a particular risk",
+            "description": "Mitigation plan consisting of a set of implementation tasks to mitigate a particular risk. Currently the only type of implementation task supported is security controls.",
+            "type": "object",
+            "required": [
+                "risk",
+                "controls"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "risk": {
+                    "title": "Risk addressed by the mitigation plan",
+                    "$ref": "#/$defs/symbolic-name"
+                },
+                "controls": {
+                    "type": "array",
+                    "items": {
+                        "title": "Security control chosen for implementation to mitigate the risk",
+                        "$ref": "#/$defs/symbolic-name"
+                    }
+                }
+            }
+        }
+    },
+
+    "type": "object",
+    "required": [
+        "version",
+        "scope",
+        "trust_zones",
+        "trust_boundaries",
+        "actors",
+        "components",
+        "data_stores",
+        "data_sets",
+        "data_flows"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "title": "URI of JSON schema",
+            "const": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json"
+        },
+
+        "version": {
+            "title": "Version of the threat model or security review",
+            "$ref": "#/$defs/version"
+        },
+
+        "scope": {
+            "title": "Scope of the threat model or security review",
+            "$ref": "#/$defs/scope"
+        },
+
+        "description": {
+            "title": "Comprehensive description of the application or service",
+            "description": "Free-form description of the application or service, including its business context and other unstructured information",
+            "type": "string"
+        },
+
+        "frozen": {
+            "title": "Whether the threat model or security review is frozen",
+            "description": "A frozen threat model or security review should not be updated or modified. If modifications are needed, a new version should be created.",
+            "type": "boolean",
+            "default": false
+        },
+        "released_at": {
+            "title": "The time the threat model or security review was released (and frozen), if so",
+            "$ref": "#/$defs/date-or-datetime"
+        },
+        "product_release_date": {
+            "title": "The time of the product release that includes the modeled features or changes",
+            "$ref": "#/$defs/date-or-datetime"
+        },
+        "release_docs_link": {
+            "title": "Link to documentation of the application or service release targeted by the threat model or security review",
+            "type": "string",
+            "format": "uri"
+        },
+        "reviewed_at": {
+            "title": "The time the threat model or security review was last reviewed",
+            "$ref": "#/$defs/date-or-datetime"
+        },
+        "repo_link": {
+            "title": "Link to the main repository associated with the application or service",
+            "type": "string",
+            "format": "uri"
+        },
+
+        "diagrams": {
+            "type": "array",
+            "items": {
+                "title": "Diagram of the application or service",
+                "$ref": "#/$defs/diagram"
+            }
+        },
+
+        "trust_zones": {
+            "type": "array",
+            "items": {
+                "title": "Trust zone of the application or service",
+                "$ref": "#/$defs/trust-zone"
+            }
+        },
+
+        "trust_boundaries": {
+            "type": "array",
+            "items": {
+                "title": "Boundary between two trust zones of the application or service",
+                "$ref": "#/$defs/trust-boundary"
+            }
+        },
+
+        "actors": {
+            "type": "array",
+            "items": {
+                "title": "External entity that interacts with the application or service",
+                "$ref": "#/$defs/actor"
+            }
+        },
+
+        "components": {
+            "type": "array",
+            "items": {
+                "title": "Component of the application or service",
+                "$ref": "#/$defs/component"
+            }
+        },
+
+        "data_stores": {
+            "type": "array",
+            "items": {
+                "title": "Data store used by the application or service",
+                "$ref": "#/$defs/data-store"
+            }
+        },
+
+        "data_sets": {
+            "type": "array",
+            "items": {
+                "title": "Data set used by the application or service",
+                "$ref": "#/$defs/data-set"
+            }
+        },
+
+        "data_flows": {
+            "type": "array",
+            "items": {
+                "title": "Data flow between components of the application or service",
+                "$ref": "#/$defs/data-flow"
+            }
+        },
+
+        "assumptions": {
+            "type": "array",
+            "items": {
+                "title": "Assumption inferred about the application or service",
+                "$ref": "#/$defs/assumption"
+            }
+        },
+
+        "threat_personas": {
+            "type": "array",
+            "items": {
+                "title": "Threat persona that poses a threat to the application or service",
+                "$ref": "#/$defs/threat-persona"
+            }
+        },
+
+        "threats": {
+            "type": "array",
+            "items": {
+                "title": "Threat identified in the application or service",
+                "$ref": "#/$defs/threat"
+            }
+        },
+
+        "controls": {
+            "type": "array",
+            "items": {
+                "title": "Security control to address specific threats to the application or service",
+                "$ref": "#/$defs/control"
+            }
+        },
+
+        "risks": {
+            "type": "array",
+            "items": {
+                "title": "Risk identified in the application or service",
+                "$ref": "#/$defs/risk"
+            }
+        },
+
+        "extensions": {
+            "title": "Non-standard information",
+            "description": "Additional non-standard information that may be relevant. Each property must be named like a domain name followed by a slash and a URL path; this may or may not be a requestable URL (with an assumed scheme of 'http', providing documentation on the structure and semantics of the extension) but must be globally unique.",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^([A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z]+(/[-$%'()*+,.:;=@^_~0-9A-Za-z]+)+$": {}
+            }
+        }
+    }
+}

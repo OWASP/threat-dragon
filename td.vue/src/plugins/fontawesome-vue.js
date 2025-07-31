@@ -32,6 +32,7 @@ import {
     faProjectDiagram,
     faDiagramProject,
     faLock,
+    faClone,
     faMoon,
     faSun
 } from '@fortawesome/free-solid-svg-icons';
@@ -73,6 +74,7 @@ library.add(
     faGoogle,
     faGoogleDrive,
     faLock,
+    faClone
     faMoon,
     faSun
 );

@@ -17,14 +17,10 @@ export const Flow = Shape.Edge.define({
             strokeWidth: 1.5,
             sourceMarker: null,
             targetMarker: 'block'
-        },
-        rect: {
-            fill: 'none',
-            stroke: 'none'
-        },
+        }
     },
     connector: 'smooth',
-    data: defaultProperties.flow
+    data: defaultProperties.defaultData('tm.Flow')
 });
 
 Flow.prototype.type = 'tm.Flow';
@@ -41,11 +37,14 @@ Flow.prototype.updateStyle = function(color, dash, strokeWidth, sourceMarker) {
     this.setAttrByPath('line/targetMarker/name', 'block');
 };
 
+// a new edge (not flow) is created by AntV/X6 from an existing node port
+// and then needs to be converted to a Flow
 Flow.fromEdge = function(edge) {
     return new Flow({
-        source: edge.getSourceCell(),
-        target: edge.getTargetCell(),
-        data: edge.getData()
+        source: edge.getSource(),
+        target: edge.getTarget(),
+        data: edge.getData(),
+        vertices: edge.getVertices()
     });
 };
 

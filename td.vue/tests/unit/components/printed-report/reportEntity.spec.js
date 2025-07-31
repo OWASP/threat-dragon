@@ -17,22 +17,32 @@ describe('components/printed-report/ReportEntity.vue', () => {
                         number: '1',
                         title: 't1',
                         severity: 'High',
-                        score: '10',
+                        score: 'score10',
                         status: 'Open',
                         type: 'type1',
                         description: 'Threat 1',
-                        mitigation: 'We did things'
+                        mitigation: 'We have yet to do things'
                     },
                     {
                         number: '2',
                         title: 't2',
                         severity: 'Medium',
-                        score: '20',
+                        score: 'score5',
                         status: 'Mitigated',
                         type: 'type2',
                         description: 'Threat 2',
-                        mitigation: 'We did other things'
+                        mitigation: 'We did things'
                     },
+                    {
+                        number: '3',
+                        title: 't3',
+                        severity: 'Low',
+                        score: 'score1',
+                        status: 'NotApplicable',
+                        type: 'type3',
+                        description: 'Threat 3',
+                        mitigation: 'No need to do things'
+                    }
                 ]
             }
         }
@@ -77,12 +87,16 @@ describe('components/printed-report/ReportEntity.vue', () => {
             .toContain(propsData.entity.data.description);
     });
 
-    it('shows the first threat', () => {
+    it('shows the High threat', () => {
         expect(tableHasCellWithText('1')).toEqual(true);
     });
 
-    it('shows the second threat', () => {
+    it('shows the Medium threat', () => {
         expect(tableHasCellWithText('2')).toEqual(true);
+    });
+
+    it('shows the Low threat', () => {
+        expect(tableHasCellWithText('3')).toEqual(true);
     });
 
     it('shows the first threat title', () => {
@@ -94,27 +108,35 @@ describe('components/printed-report/ReportEntity.vue', () => {
     });
 
     it('shows the high severity', () => {
-        expect(tableHasCellWithText('High')).toEqual(true);
+        expect(tableHasCellWithText('threats.severity.high')).toEqual(true);
     });
 
     it('shows the medium severity', () => {
-        expect(tableHasCellWithText('Medium')).toEqual(true);
+        expect(tableHasCellWithText('threats.severity.medium')).toEqual(true);
+    });
+
+    it('shows the low severity', () => {
+        expect(tableHasCellWithText('threats.severity.low')).toEqual(true);
     });
 
     it('shows the first score', () => {
-        expect(tableHasCellWithText('10')).toEqual(true);
+        expect(tableHasCellWithText('score10')).toEqual(true);
     });
 
     it('shows the second score', () => {
-        expect(tableHasCellWithText('20')).toEqual(true);
+        expect(tableHasCellWithText('score5')).toEqual(true);
+    });
+
+    it('shows the third score', () => {
+        expect(tableHasCellWithText('score1')).toEqual(true);
     });
 
     it('shows the open status', () => {
-        expect(tableHasCellWithText('Open')).toEqual(true);
+        expect(tableHasCellWithText('threats.status.open')).toEqual(true);
     });
 
     it('shows the mitigated status', () => {
-        expect(tableHasCellWithText('Mitigated')).toEqual(true);
+        expect(tableHasCellWithText('threats.status.mitigated')).toEqual(true);
     });
 
     it('shows the first type', () => {
@@ -138,6 +160,10 @@ describe('components/printed-report/ReportEntity.vue', () => {
     });
 
     it('shows the threat mitigation for t2', () => {
-        expect(tableHasCellWithText('We did other things')).toEqual(true);
+        expect(tableHasCellWithText('We have yet to do things')).toEqual(true);
+    });
+
+    it('shows the threat mitigation for t3', () => {
+        expect(tableHasCellWithText('No need to do things')).toEqual(true);
     });
 });

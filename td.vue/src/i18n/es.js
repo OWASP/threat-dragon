@@ -3,7 +3,6 @@ const spa = {
         sessionExpired: 'Su sesión ha expirado. Por favor inicie una nueva sesión para continuar.'
     },
     nav: {
-        v2Warning: 'Los modelos de amenazas(threat models) version 2.0 no son compatibles con los modelos de amenazas(threat model) de Threat Dragon versión 1.x. Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0',
         loggedInAs: 'Conectado como',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const spa = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Visítenos en GitHub',
             submit: 'Abrir nuevo issue',
-            check: 'Buscar actualizaciones ...'
+            check: 'Buscar actualizaciones ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -84,7 +87,8 @@ const spa = {
         select: 'Seleccione un branch',
         from: 'de la lista a continuación o',
         chooseRepo: 'elija otro repositorio',
-        addNew: 'o añadir una nueva rama',
+        or: 'o',
+        addNew: 'añadir una nueva rama',
         protectedBranch: 'Rama protegida',
         nameRequired: 'El nombre de la rama es obligatorio',
         nameExists: 'El nombre de la rama ya existe',
@@ -92,6 +96,11 @@ const spa = {
         add: 'Añadir rama',
         cancel: 'Cancelar',
         name: 'Nombre de la sucursal',
+    },
+    folder: {
+        select: 'Select a',
+        from: 'folder from the list below',
+        noneFound: 'This folder is empty, You can create a new threat model here.'
     },
     threatmodelSelect: {
         select: 'Seleccione un modelo de amenazas (threat model) ',
@@ -135,9 +144,9 @@ const spa = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'Descripción de nuevo diagrama DIE',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'Descripción de nuevo diagrama CIA-DIE',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'Nuevo diagrama CIA',
@@ -148,13 +157,22 @@ const spa = {
         threats: 'Amenazas',
         errors: {
             dropSingleFileOnly: 'Arrastrar y soltar funciona con un solo archivo.',
-            invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez.',
+            invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Solamente archivos con extensión .json son soportados.',
             open: 'Error al abrir el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.',
             save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
         },
-        opened: 'El modelo de amenazas se abrió con éxito',
-        saved: 'El modelo de amenazas se guardó con éxito',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0'
+        },
+        prompts: {
+            opened: 'El modelo de amenazas se abrió con éxito',
+            saved: 'El modelo de amenazas se guardó con éxito',
+        },
         properties: {
             title: 'Propiedades',
             emptyState: 'Seleccione un elemento del diagrama para modificar sus propiedades',
@@ -251,7 +269,9 @@ const spa = {
         delete: 'Eliminar',
         discardTitle: '¿Descartar los cambios?',
         discardMessage: '¿Está seguro de descartar sus cambios?',
+        duplicate: 'Duplicar',
         edit: 'Editar',
+        export: 'Exportar',
         exportAs: 'Export Model As',
         exportHtml: 'Reporte HTML',
         exportPdf: 'Reporte PDF',
@@ -281,8 +301,11 @@ const spa = {
                 integrity: 'Integrity - Integridad',
                 availability: 'Availability - Disponibilidad'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality - Confidencialidad',
+                integrity: 'Integrity - Integridad',
+                availability: 'Availability - Disponibilidad',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -321,7 +344,7 @@ const spa = {
         generic: {
             default: 'Nueva amenaza genérica',
             cia: 'Nueva amenaza CIA',
-            die: 'Nueva amenaza DIE',
+            ciadie: 'Nueva amenaza CIA-DIE',
             linddun: 'Nueva amenaza LINDDUN',
             plot4ai: 'Nueva amenaza PLOT4ai',
             stride: 'Nueva amenaza STRIDE'
@@ -340,7 +363,7 @@ const spa = {
             mitigation: 'Mitigaciones',
             modelType: 'Tipo de Modelo',
             number: 'Número',
-            priority: 'Prioridad',
+            severity: 'Prioridad',
             score: 'Puntuación',
             status: 'Estado',
             title: 'Título',
@@ -351,8 +374,8 @@ const spa = {
             open: 'Abierto',
             mitigated: 'Mitigado'
         },
-        priority: {
-            tba: 'Por confirmar',
+        severity: {
+            tbd: 'Por confirmar',
             low: 'Baja',
             medium: 'Media',
             high: 'Alta',
@@ -376,12 +399,13 @@ const spa = {
         threatStats: {
             total: 'Total amenazas ',
             mitigated: 'Total amenazas mitigadas',
+            notApplicable: 'Total Not Applicable',
             notMitigated: 'No Mitigadas',
             openCritical: 'Abierto / Crítica Prioridad',
             openHigh: 'Abierto / Alta Prioridad',
             openMedium: 'Abierto / Prioridad Media',
             openLow: 'Abierto / Baja Prioridad',
-            openTba: 'Abierto / Por confirmar Prioridad',
+            openTbd: 'Abierto / Por confirmar Prioridad',
             openUnknown: 'Abierto / Prioridad Desconocida'
         }
     },

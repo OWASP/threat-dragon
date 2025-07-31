@@ -18,13 +18,73 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-# title: Threat Dragon version 2.0 Documantation
+title: Threat Dragon version 2.4.1 Documentation
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
+# note that icons are loaded from
+# https://github.com/lreading/owasp-td-jekyll/tree/main/assets/webfonts
+
+brand: OWASP Threat Dragon Documentation
+faviconUrl: assets/icons/threatdragon.ico
+logo_src: assets/images/threatdragon_logo_image.svg
+
+header_links:
+  - text: Try the web app
+    fa_class: fa fa-flask
+    target: _blank
+    url: https://www.threatdragon.com/#/
+
+  - text: Desktop app download
+    fa_class: fa fa-cloud-download-alt
+    target: _blank
+    url: https://github.com/OWASP/threat-dragon/releases
+
+  - text: Visit us on GitHub
+    fa_class: fab fa-github
+    target: _blank
+    url: https://github.com/OWASP/threat-dragon
+
+homeLinks:
+  - relative_url: install/installation.html
+    description: Installing Threat Dragon
+    fa_class: fas fa-cloud-download-alt
+  - relative_url: /usage/getting-started.html
+    description: Getting started
+    fa_class: fas fa-play-circle
+  - relative_url: /usage/diagrams.html
+    description: How to create diagrams
+    fa_class: fas fa-project-diagram
+  - relative_url: /usage/threats.html
+    description: How to create threats
+    fa_class: fas fa-bolt
+
+nav:
+  categories:
+    - name: Home
+      groups:
+        - name: About
+          fa_class: fas fa-info-circle
+        - name: Install
+          fa_class: fas fa-power-off
+        - name: Configure
+          fa_class: fas fa-cog
+    - name: Usage
+      groups:
+        - name: Modeling
+          fa_class: fas fa-pencil-alt
+    - name: Open Source
+      groups:
+        - name: Development
+          fa_class: fas fa-code
+        - name: Testing
+          fa_class: fas fa-heartbeat
+        - name: Trust
+          fa_class: fas fa-shield-alt
+
 # Build settings
-theme: minima
+theme: owasp-td-jekyll
 
 # Exclude from processing.
 # The following items will not be processed, by default.

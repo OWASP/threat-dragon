@@ -3,7 +3,6 @@ const eng = {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
     nav: {
-        v2Warning: 'Version 2.0 threat models are not backwardly compatible with version 1.x Threat Dragon models. Imported version 1.x models will be upgraded to the version 2.0 schema',
         loggedInAs: 'Logged in as',
         logOut: 'Log out'
     },
@@ -72,7 +71,11 @@ const eng = {
             sheets: 'OWASP Cheat Sheets',
             github: 'Visit us on GitHub',
             submit: 'Submit an Issue',
-            check: 'Check for updates ...'
+            check: 'Check for updates ...',
+            about: {
+                about: 'About',
+                version: 'Version'
+            }
         }
     },
     repository: {
@@ -141,9 +144,9 @@ const eng = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New DIE diagram',
-                defaultDescription: 'New DIE diagram description',
-                select: 'DIE'
+                defaultTitle: 'New CIA-DIE diagram',
+                defaultDescription: 'New CIA-DIE diagram description',
+                select: 'CIADIE'
             },
             cia: {
                 defaultTitle: 'New CIA diagram',
@@ -154,13 +157,22 @@ const eng = {
         threats: 'Threats',
         errors: {
             dropSingleFileOnly: 'Drag and drop requires a single file.',
-            invalidJson: 'Invalid JSON. Please check your model and try again.',
+            invalidJson: 'Invalid JSON. Please check your model and try again',
+            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
             save: 'Error saving the Threat Model. Check the developer console for more information'
         },
-        opened: 'Threat model successfully opened',
-        saved: 'Threat model successfully saved',
+        warnings: {
+            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+        },
+        prompts: {
+            opened: 'Threat model successfully opened',
+            saved: 'Threat model successfully saved',
+        },
         properties: {
             title: 'Properties',
             emptyState: 'Select an element on the graph to edit',
@@ -257,6 +269,7 @@ const eng = {
         delete: 'Delete',
         discardTitle: 'Discard Changes?',
         discardMessage: 'Are you sure you want to discard your changes?',
+        duplicate: 'Duplicate',
         edit: 'Edit',
         export: 'Export',
         exportAs: 'Export Model As',
@@ -288,8 +301,11 @@ const eng = {
                 integrity: 'Integrity',
                 availability: 'Availability'
             },
-            die: {
-                header: '--- DIE ---',
+            ciadie: {
+                header: '--- CIA-DIE ---',
+                confidentiality: 'Confidentiality',
+                integrity: 'Integrity',
+                availability: 'Availability',
                 distributed: 'Distributed',
                 immutable: 'Immutable',
                 ephemeral: 'Ephemeral'
@@ -328,7 +344,7 @@ const eng = {
         generic: {
             default: 'New generic threat',
             cia: 'New CIA threat',
-            die: 'New DIE threat',
+            ciadie: 'New CIA-DIE threat',
             linddun: 'New LINDDUN threat',
             plot4ai: 'New PLOT4ai threat',
             stride: 'New STRIDE threat'
@@ -347,7 +363,7 @@ const eng = {
             mitigation: 'Mitigations',
             modelType: 'Model Type',
             number: 'Number',
-            priority: 'Priority',
+            severity: 'Severity',
             score: 'Score',
             status: 'Status',
             title: 'Title',
@@ -358,8 +374,8 @@ const eng = {
             open: 'Open',
             mitigated: 'Mitigated'
         },
-        priority: {
-            tba: 'TBA',
+        severity: {
+            tbd: 'TBD',
             low: 'Low',
             medium: 'Medium',
             high: 'High',
@@ -383,13 +399,14 @@ const eng = {
         threatStats: {
             total: 'Total Threats',
             mitigated: 'Total Mitigated',
-            notMitigated: 'Not Mitigated',
-            openCritical: 'Open / Critical Priority',
-            openHigh: 'Open / High Priority',
-            openMedium: 'Open / Medium Priority',
-            openLow: 'Open / Low Priority',
-            openTba: 'Open / TBA Priority',
-            openUnknown: 'Open / Unknown Priority'
+            notApplicable: 'Total Not Applicable',
+            notMitigated: 'Total Open',
+            openCritical: 'Open / Critical Severity',
+            openHigh: 'Open / High Severity',
+            openMedium: 'Open / Medium Severity',
+            openLow: 'Open / Low Severity',
+            openTbd: 'Open / TBD Severity',
+            openUnknown: 'Open / Unknown Severity'
         }
     },
     upgrade: {

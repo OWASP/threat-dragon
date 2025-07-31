@@ -9,9 +9,9 @@ describe('service/threats/models/index.js', () => {
                 .toEqual('CIA');
         });
 
-        it('identifies a DIE threat', () => {
-            expect(models.getByTranslationValue('threats.model.die.immutable'))
-                .toEqual('DIE');
+        it('identifies a CIA-DIE threat', () => {
+            expect(models.getByTranslationValue('threats.model.ciadie.immutable'))
+                .toEqual('CIADIE');
         });
 
         it('identifies a LINDDUN threat', () => {
@@ -58,20 +58,20 @@ describe('service/threats/models/index.js', () => {
             expect(Object.keys(models.getThreatTypesByElement('CIA', 'tm.Flow'))).toHaveLength(3);
         });
 
-        it('gets the DIE Actor threat types', () => {
-            expect(Object.keys(models.getThreatTypesByElement('DIE', 'tm.Actor'))).toHaveLength(3);
+        it('gets the CIA-DIE Actor threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('CIADIE', 'tm.Actor'))).toHaveLength(6);
         });
 
-        it('gets the DIE Process threat types', () => {
-            expect(Object.keys(models.getThreatTypesByElement('DIE', 'tm.Process'))).toHaveLength(3);
+        it('gets the CIA-DIE Process threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('CIADIE', 'tm.Process'))).toHaveLength(6);
         });
 
-        it('gets the DIE Store threat types', () => {
-            expect(Object.keys(models.getThreatTypesByElement('DIE', 'tm.Store'))).toHaveLength(3);
+        it('gets the CIA-DIE Store threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('CIADIE', 'tm.Store'))).toHaveLength(6);
         });
 
-        it('gets the DIE DataFlow threat types', () => {
-            expect(Object.keys(models.getThreatTypesByElement('DIE', 'tm.Flow'))).toHaveLength(3);
+        it('gets the CIA-DIE DataFlow threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('CIADIE', 'tm.Flow'))).toHaveLength(6);
         });
 
         it('gets the LINDDUN Actor threat types', () => {
@@ -124,7 +124,7 @@ describe('service/threats/models/index.js', () => {
 
         it('returns all threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(32);
+            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(35);
         });
     });
 });
