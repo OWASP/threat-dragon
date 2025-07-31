@@ -4,7 +4,6 @@ if (process.env.IS_TEST === 'true') {
     require('wdio-electron-service/preload');
 }
 
-// Expose Electron API methods to the renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
     // renderer to electron main
     appClose: () => ipcRenderer.send('close-app'),

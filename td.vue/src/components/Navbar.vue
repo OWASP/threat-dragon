@@ -22,7 +22,7 @@
             v-b-tooltip.hover :title="$t('nav.logOut')"
           ></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item @click="isDark = !isDark" id="dark-mode">
+        <b-nav-item @click="isDark = toggleDarkMode(isDark)" id="dark-mode">
           <font-awesome-icon
             :icon="isDark ? 'moon' : 'sun'"
             class="td-fa-nav"
@@ -121,7 +121,7 @@ $icon-height: 1.2rem;
 <script>
 import { mapGetters } from 'vuex';
 
-import { toggleDarkMode, setSystemTheme } from '../plugins/dark-mode';
+import { toggleDarkMode } from '../plugins/dark-mode';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
@@ -141,11 +141,9 @@ export default {
         ])
     },
     methods: {
-        async handleToggleDarkMode() {
-            await toggleDarkMode(); // Call the utility function
-        },
-        async handleSetSystemTheme() {
-            await setSystemTheme(); // Call the utility function
+        toggleDarkMode(mode) {
+            // await toggleDarkMode();
+            return !mode;
         },
         onLogOut(evt) {
             evt.preventDefault();
