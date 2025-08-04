@@ -17,7 +17,7 @@ Getting started with [Threat Dragon](http://owasp.org/www-project-threat-dragon)
 ![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-right }
 
 The Threat Dragon web applications stores its threat models on your local drive and, depending on configuration,
-it can also store the models in a source code repository such as GitHub.
+it can also store the models on drives or in source code repositories such as GitHub / GitLab  Bitbucket.
 When getting started with Threat Dragon it is useful to test access to the configured repository,
 in which case click on 'Login with Github' for example.
 
@@ -36,6 +36,10 @@ Again, if you have more than 30 branches you might need to page through.
 When you pick a branch you will be taken to the threat model edit page
 where you can enter general information about your model.
 The name that you provide for the model will be used as the file name within the repository.
+
+**Session timeout** : when logging in to an external drive or repository, be aware that sessions can time out.
+This timeout length can be different according to the repository / drive provider;
+if this is a problem then ensure the session is kept alive using a tab in the same browser window.
 
 ### Using the Desktop application
 
