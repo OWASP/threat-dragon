@@ -5,7 +5,7 @@
 
 import store from '@/store/index.js';
 
-import { THREATMODEL_SAVE } from '@/store/actions/threatmodel.js';
+import {THREATMODEL_DIAGRAM_APPLIED, THREATMODEL_SAVE} from '@/store/actions/threatmodel.js';
 
 
 const del = (graph) => () => graph.removeCells(graph.getSelectedCells());
@@ -43,6 +43,7 @@ const paste = (graph) => () => {
 
 const save = () => (evt) => {
     evt?.preventDefault();
+    store.get().dispatch(THREATMODEL_DIAGRAM_APPLIED);
     store.get().dispatch(THREATMODEL_SAVE);
 };
 
