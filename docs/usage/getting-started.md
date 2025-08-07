@@ -17,7 +17,7 @@ Getting started with [Threat Dragon](http://owasp.org/www-project-threat-dragon)
 ![Login image]({{ '/assets/images/start.png' | relative_url }}){: .float-right }
 
 The Threat Dragon web applications stores its threat models on your local drive and, depending on configuration,
-it can also store the models in a source code repository such as GitHub.
+it can also store the models on drives or in source code repositories such as GitHub / GitLab  Bitbucket.
 When getting started with Threat Dragon it is useful to test access to the configured repository,
 in which case click on 'Login with Github' for example.
 
@@ -36,6 +36,10 @@ Again, if you have more than 30 branches you might need to page through.
 When you pick a branch you will be taken to the threat model edit page
 where you can enter general information about your model.
 The name that you provide for the model will be used as the file name within the repository.
+
+**Session timeout** : when logging in to an external drive or repository, be aware that sessions can time out.
+This timeout length can be different according to the repository / drive provider;
+if this is a problem then ensure the session is kept alive using a tab in the same browser window.
 
 ### Using the Desktop application
 
@@ -98,11 +102,29 @@ mapping out your system [in a diagram]({{ '/usage/diagrams.html' | relative_url 
 
 ![Sample model image]({{ '/assets/images/sample-model.png' | relative_url }}){: .float-right }
 
-If you are wondering how to start you can explore some sample threat models.
-On the welcome page you can open an example model by clicking on the **sample model** area on the Welcome page.
+Threat Dragon supplies sample threat models that can be used as starting points.
+Click the **Explore a sample model** area on the Welcome page to browse the various models.
 
-These should give you some ideas on how to get started with your own model, and have
+Threat Dragon provides a range of sample threat models,
+many of them transcribed from the [Threat Model Cookbook][tmc] project :
+
+* Demo Threat Model, the classic web application model from the beginning of Threat Dragon
+* Husky AI, a direct import of a TM-BOM file displayed as though it was a Threat Dragon file
+* Cryptocurrency Wallet, threats and diagram for a wallet system
+* Generic CMS, a diagram for a Content Management System (CMS)
+* IoT Device, one perspective on an Internet of Things device and the threats
+* Online Game, a diagram to get you started
+* Payments Processing Platform, diagram only with no threats added
+* Renting Car Startup, a diagram for car rental based on the mobile / cell phone network
+* Three Tier Web Application for the classic client, server and database
+* New Blank Model is exactly that: a bare-bones empty model
+
+These models can provide ideas on how to get started and have
 diagrams, model details and threats as examples.
+
+The security community is adding threat models are also being added to
+the [Threat Model Library][tml] project in TM-BOM format.
+These models can be read directly by Threat Dragon and edited.
 
 ## Opening an existing model
 
@@ -126,8 +148,6 @@ under the directory 'ThreatDragonModels'.
 This directory structure has been carried over from Threat Dragon versions 1.x,
 and in future it may become less strict.
 
-The demo models should give you some ideas on how to get started with your own model.
-
 ### Desktop application
 
 ![Open model image]({{ '/assets/images/open-model.png' | relative_url }}){: .float-right }
@@ -136,8 +156,6 @@ If you have an existing model file saved locally, you can open it by clicking on
 the **open** area on the Welcome page.
 
 You will then be able to navigate to the model file in your local file system and open it.
-
-The demo models should give you some ideas on how to get started with your own model.
 
 ## Threat model report
 
@@ -163,3 +181,6 @@ Most browsers will also allow you to save the report as a PDF from this print di
 ----
 
 Threat Dragon: _making threat modeling less threatening_
+
+[tmc]: https://github.com/OWASP/threat-model-cookbook
+[tml]: https://owasp.org/www-project-threat-model-library/

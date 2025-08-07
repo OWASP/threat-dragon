@@ -466,7 +466,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "Push to Bucket",
+                    "text": "Unsecured mySQL\nconnection",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -548,7 +548,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "Push to Bucket",
+                    "text": "HTTP",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -630,7 +630,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "Push to Bucket",
+                    "text": "HTTPS",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -794,7 +794,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "Push to Bucket",
+                    "text": "",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
