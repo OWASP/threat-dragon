@@ -26,6 +26,19 @@
                     :items="tableData"
                     striped
                     responsive>
+                    <template #cell()="{field, value}">
+                        <span v-if="[$t(`threats.properties.description`), $t(`threats.properties.mitigation`)].includes(field.key)">
+                            <span v-for="(link, index) in value.split(/(\[[\w\s\d]+\]\(https?:\/\/[\w\d.\/?=#&]+\))/)" :key="index" >
+                                <span v-if="(index) % 2 === 0">{{ link }}</span>
+                                <span v-else>
+                                    <b-link :href="link.match(/\((https?:\/\/[\w\d.\/?=#&]+)\)/i)[1]">
+                                        {{ link.match(/\[([\w\s\d]+)\]/)[1] }}
+                                    </b-link>
+                                </span>
+                            </span>
+                        </span>
+                        <span v-else>{{ value }}</span>
+                    </template>
                 </b-table>
             </b-col>
         </b-row>
@@ -94,7 +107,6 @@ export default {
                     [this.$t('threats.properties.score')]: threat.score,
                     [this.$t('threats.properties.description')]: threat.description,
                     [this.$t('threats.properties.mitigation')]: threat.mitigation
-
                 };
             });
         },
