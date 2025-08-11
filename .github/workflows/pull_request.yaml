@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Lint markdown
         uses: DavidAnson/markdownlint-cli2-action@v20.0.0
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2.4.0
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Spell check EN language
         uses: rojopolis/spellcheck-github-actions@0.51.0
@@ -78,7 +78,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -112,7 +112,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -146,7 +146,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -183,7 +183,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.29.2
@@ -207,7 +207,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -248,7 +248,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -288,7 +288,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -328,7 +328,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Set up Docker Buildx
         id: buildx
@@ -386,7 +386,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Retrieve local docker image
         uses: actions/download-artifact@v4.3.0
