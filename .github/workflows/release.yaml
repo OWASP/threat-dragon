@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -101,7 +101,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -137,7 +137,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -194,7 +194,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -244,7 +244,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -297,7 +297,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v4.4.0
@@ -349,7 +349,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.6.0
@@ -475,7 +475,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v5.0.0
 
       - name: Fetch prepared SBOM artifacts
         uses: actions/download-artifact@v4.3.0
