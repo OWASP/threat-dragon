@@ -163,6 +163,19 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     app.$store.dispatch(tmActions.saveModel);
 });
 
+// advice from electron to renderer that the model has been saved
+window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
+    console.debug('Save model confirmed for file : ' + fileName);
+    app.$store.dispatch(tmActions.stash);
+    app.$store.dispatch(tmActions.notModified);
+    app.$toast.success(app.$t('threatmodel.prompts.saved'));
+});
+
+window.electronAPI.onSaveModelFailed((_event, fileName, message) =>  {
+    console.debug('Failed to save model file : ' + fileName);
+    app.$toast.warning(message);
+});
+
 const localAuth = () => {
     app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);

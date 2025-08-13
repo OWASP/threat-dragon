@@ -156,6 +156,7 @@ const ind = {
         },
         threats: 'Ancaman',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Seret dan lepas memerlukan satu file saja.',
             invalidJson: 'JSON tidak valid. Harap periksa model Anda dan coba lagi',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const ind = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Model versi 1.x yang diimpor akan ditingkatkan ke skema versi 2.0'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'Model ancaman berhasil dibuka',
-            saved: 'Model ancaman berhasil disimpan',
+            downloading: 'Downloading threat model',
+            saved: 'Model ancaman berhasil disimpan'
         },
         properties: {
             title: 'Properti',

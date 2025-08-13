@@ -156,6 +156,7 @@ const fin = {
         },
         threats: 'Uhat',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Voit pudottaa vain yhden tiedoston.',
             invalidJson: 'JSON-tiedoton muoto on virheellinen. Tarkista tiedosto ja yritä uudelleen',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const fin = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi.'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'Uhkamallin avaaminen onnistui',
-            saved: 'Uhkamallin tallentaminen onnistui',
+            downloading: 'Downloading threat model',
+            saved: 'Uhkamallin tallentaminen onnistui'
         },
         properties: {
             title: 'Ominaisuudet',

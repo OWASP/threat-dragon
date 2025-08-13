@@ -3,7 +3,6 @@ import Vue from 'vue';
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers';
-import i18n from '@/i18n/index.js';
 import { providerTypes } from '@/service/provider/providerTypes';
 import {
     THREATMODEL_CLEAR,
@@ -23,10 +22,10 @@ import {
     THREATMODEL_SELECTED,
     THREATMODEL_STASH,
     THREATMODEL_UPDATE
-} from '@/store/actions/threatmodel.js';
-import save from '@/service/save.js';
-import threatmodelApi from '@/service/api/threatmodelApi.js';
-import googleDriveApi from '../../service/api/googleDriveApi';
+} from '@/store/actions/threatmodel';
+import save from '@/service/save';
+import threatmodelApi from '@/service/api/threatmodelApi';
+import googleDriveApi from '@/service/api/googleDriveApi';
 import { FOLDER_SELECTED } from '../actions/folder';
 
 const state = {
@@ -49,33 +48,28 @@ const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
-        try {
+        console.debug('Create threat model action');
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            // desktop responds later with its own STASH and NOT_MODIFIED
+            window.electronAPI.modelSave(state.data, state.fileName);
+        } else {
+            let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
-            } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-                // desktop version always saves locally
-                console.debug('Desktop create action');
-                await window.electronAPI.modelSave(state.data, state.fileName);
+                result = await save.local(state);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-                const res = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
-                dispatch(FOLDER_SELECTED, res.data);
-                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
+                const folder = await save.googleCreate(rootState, state);
+                if (folder) {
+                    dispatch(FOLDER_SELECTED, folder.data);
+                    result = true;
+                }
             } else {
-                await threatmodelApi.createAsync(
-                    rootState.repo.selected,
-                    rootState.branch.selected,
-                    state.data.summary.title,
-                    state.data
-                );
-                Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName);
+                result = await save.repoCreate(rootState, state);
             }
-            dispatch(THREATMODEL_STASH);
-            commit(THREATMODEL_NOT_MODIFIED);
-        } catch (ex) {
-            console.error('Failed to save new threat model!');
-            console.error(ex);
-            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+            if (result) {
+                dispatch(THREATMODEL_STASH);
+                commit(THREATMODEL_NOT_MODIFIED);
+            }
         }
     },
     [THREATMODEL_DIAGRAM_APPLIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_APPLIED),
@@ -127,36 +121,22 @@ const actions = {
     },
     [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
         console.debug('Save threat model action');
-        // Identify if threat model is in OTM format
-        if (Object.hasOwn(state.data, 'otmVersion')) {
-            //  convert dragon to OTM format not yet available
-            Vue.$toast.warning('Saving in Open Threat Model format not yet supported');
-            // continue to saving in dragon format
-        }
-        try {
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            // desktop responds later with its own STASH and NOT_MODIFIED
+            window.electronAPI.modelSave(state.data, state.fileName);
+        } else {
+            let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
-                // save locally for web app when local login
-                save.local(state.data, `${state.data.summary.title}.json`);
-            } else if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-                // desktop version always saves locally
-                await window.electronAPI.modelSave(state.data, state.fileName);
+                result = await save.local(state);
             } else if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-                await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
+                result = await save.google(rootState, state);
             } else {
-                await threatmodelApi.updateAsync(
-                    rootState.repo.selected,
-                    rootState.branch.selected,
-                    state.data.summary.title,
-                    state.data
-                );
+                result = await save.repo(rootState, state);
             }
-            dispatch(THREATMODEL_STASH);
-            commit(THREATMODEL_NOT_MODIFIED);
-            Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved') + ' : ' + state.fileName, { timeout: 1000 });
-        } catch (ex) {
-            console.error('Failed to save threat model!');
-            console.error(ex);
-            Vue.$toast.error(i18n.get().t('threatmodel.errors.save'));
+            if (result) {
+                dispatch(THREATMODEL_STASH);
+                commit(THREATMODEL_NOT_MODIFIED);
+            }
         }
     },
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),

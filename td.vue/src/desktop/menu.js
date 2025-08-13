@@ -24,9 +24,7 @@ import ind from '@/i18n/id.js';
 import jpn from '@/i18n/ja.js';
 import ms from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
-// hide RUS & UKR for now: import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
-// hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
 const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, ms, por, spa, zho };
@@ -298,6 +296,7 @@ function saveModelDataAs (modelData, fileName) {
     }).catch(err => {
         logger.log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
         model.isOpen = false;
+        mainWindow.webContents.send('save-model-failed', messages[language].threatmodel.errors.save, fileName);
     });
 }
 
@@ -333,11 +332,13 @@ function saveModelData (modelData) {
                 logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
             } else {
                 logger.log.debug(messages[language].threatmodel.prompts.saved + ': ' + model.filePath);
+                mainWindow.webContents.send('save-model-confirmed', model.filePath);
             }
         });
     } else {
-        // quietly ignore
-        logger.log.debug(messages[language].desktop.file.save + ': ignored empty file');
+        // warn that no model is open
+        logger.log.warn(messages[language].threatmodel.warnings.noModelOpen);
+        mainWindow.webContents.send('save-model-failed', messages[language].threatmodel.warnings.noModelOpen, '');
     }
 }
 

@@ -156,6 +156,7 @@ const hin = {
         },
         threats: 'थ्रेटस',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'ड्रैग एंड ड्रॉप के लिए एक फ़ाइल की आवश्यकता होती है।',
             invalidJson: 'अवैध JSON. कृपया अपने मॉडल की जाँच करें और पुनः प्रयास करें।',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const hin = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
-            saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया',
+            downloading: 'Downloading threat model',
+            saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया'
         },
         properties: {
             title: 'गुण',

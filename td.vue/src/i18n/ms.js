@@ -156,6 +156,7 @@ const ms = {
         },
         threats: 'Ancaman',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Seret dan lepaskan memerlukan satu fail sahaja.',
             invalidJson: 'JSON tidak sah. Sila periksa model anda dan cuba lagi',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const ms = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'Model ancaman berjaya dibuka',
-            saved: 'Model ancaman berjaya disimpan',
+            downloading: 'Downloading threat model',
+            saved: 'Model ancaman berjaya disimpan'
         },
         properties: {
             title: 'Ciri-ciri',

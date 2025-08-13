@@ -156,6 +156,7 @@ const ukr = {
         },
         threats: 'Threats',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Drag and drop requires a single file.',
             invalidJson: 'Invalid JSON. Please check your model and try again',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const ukr = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'Threat model successfully opened',
-            saved: 'Threat model successfully saved',
+            downloading: 'Downloading threat model',
+            saved: 'Threat model successfully saved'
         },
         properties: {
             title: 'Properties',

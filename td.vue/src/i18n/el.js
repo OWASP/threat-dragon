@@ -156,6 +156,7 @@ const ell = {
         },
         threats: 'Απειλές',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Το Drag and drop απαιτεί ένα μοναδικό αρχείο.',
             invalidJson: 'Μη έγκυρο JSON.  Παρακαλούμε ελέγξτε το μοντέλο και προσπαθήστε ξανά',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const ell = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: 'Το μοντέλο απειλών άνοιξε επιτυχώς',
-            saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς',
+            downloading: 'Downloading threat model',
+            saved: 'Το μοντέλο απειλών αποθηκεύτηκε επιτυχώς'
         },
         properties: {
             title: 'Ιδιότητες',

@@ -156,6 +156,7 @@ const zho = {
         },
         threats: '威胁',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: '只能拖放一个文件。',
             invalidJson: '无效的JSON。请检查您的格式，然后重试',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -165,13 +166,17 @@ const zho = {
         },
         warnings: {
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {
+            created: 'Threat model successfully created',
             opened: '成功打开威胁模型',
-            saved: '成功保存威胁模型',
+            downloading: 'Downloading threat model',
+            saved: '成功保存威胁模型'
         },
         properties: {
             title: '组件',
