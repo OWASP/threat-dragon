@@ -165,6 +165,7 @@ const zho = {
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const zho = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: '成功打开威胁模型',
             downloading: 'Downloading threat model',
             saved: '成功保存威胁模型'

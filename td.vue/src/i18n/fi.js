@@ -165,6 +165,7 @@ const fin = {
             save: 'Virhe uhkamallin tallentamisessa. Yksityiskohtaisemmat tiedot virheestä löytyvät kehittäjän konsolista.'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const fin = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Uhkamallin avaaminen onnistui',
             downloading: 'Downloading threat model',
             saved: 'Uhkamallin tallentaminen onnistui'

@@ -165,6 +165,7 @@ const ara = {
             save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const ara = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'تم فتح نموذج التهديد بنجاح',
             downloading: 'Downloading threat model',
             saved: 'تم حفظ نموذج التهديد بنجاح'

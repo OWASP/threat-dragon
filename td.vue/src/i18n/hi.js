@@ -165,6 +165,7 @@ const hin = {
             save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const hin = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'थ्रेट मॉडल सफलतापूर्वक खोला गया',
             downloading: 'Downloading threat model',
             saved: 'थ्रेट मॉडल सफलतापूर्वक सहेजा गया'

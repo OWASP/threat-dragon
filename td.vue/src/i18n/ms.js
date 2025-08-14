@@ -165,6 +165,7 @@ const ms = {
             save: 'Ralat menyimpan Model Ancaman ini. Semak konsol pembangun untuk maklumat lanjut'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const ms = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Model ancaman berjaya dibuka',
             downloading: 'Downloading threat model',
             saved: 'Model ancaman berjaya disimpan'

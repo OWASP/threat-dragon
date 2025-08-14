@@ -165,6 +165,7 @@ const jpn = {
             save: '脅威モデルを保存時にエラーが発生しました。開発者コンソールを確認してください。'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const jpn = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: '脅威モデルを読み込みました。',
             downloading: 'Downloading threat model',
             saved: '脅威モデルを書き込みました。'

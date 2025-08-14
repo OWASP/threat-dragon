@@ -165,6 +165,7 @@ const spa = {
             save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const spa = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'El modelo de amenazas se abrió con éxito',
             downloading: 'Downloading threat model',
             saved: 'El modelo de amenazas se guardó con éxito'

@@ -165,6 +165,7 @@ const rus = {
             save: 'Error saving the Threat Model. Check the developer console for more information'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const rus = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Threat model successfully opened',
             downloading: 'Downloading threat model',
             saved: 'Threat model successfully saved'

@@ -4,7 +4,6 @@ import save from '@/service/save.js';
 
 describe('service/save.js', () => {
     const state = { data: { foo: 'bar', summary: { title: 'test title '}}};
-    var mainWindow;
     
     describe('local', () => {
         let mockAnchor;
@@ -13,9 +12,6 @@ describe('service/save.js', () => {
 			    success: jest.fn(),
 			    error: jest.fn(),
                 warning: jest.fn()
-            };
-            mainWindow.webContents = {
-			    send: jest.fn()
             };
             mockAnchor = {
                 click: jest.fn(),

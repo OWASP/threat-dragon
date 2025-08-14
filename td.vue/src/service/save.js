@@ -9,9 +9,9 @@ const google = async (rootState, state) => {
         await googleDriveApi.updateAsync(rootState.folder.selected, state.data);
         Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved'));
     } catch (ex) {
-	    console.error('Failed to save threat model!');
-	    console.error(ex);
-	    Vue.$toast.warning(i18n.get().t('threatmodel.warnings.save'));
+        console.error('Failed to save threat model!');
+        console.error(ex);
+        Vue.$toast.warning(i18n.get().t('threatmodel.warnings.save'));
         return false;
     }
     return true;
@@ -23,9 +23,9 @@ const googleCreate = async (rootState, state) => {
         folder = await googleDriveApi.createAsync(rootState.folder.selected, state.data, `${state.data.summary.title}.json`);
         Vue.$toast.success(i18n.get().t('threatmodel.prompts.created'));
     } catch (ex) {
-	    console.error('Failed to create threat model!');
-	    console.error(ex);
-	    Vue.$toast.warning(i18n.get().t('threatmodel.errors.create'));
+        console.error('Failed to create threat model!');
+        console.error(ex);
+        Vue.$toast.warning(i18n.get().t('threatmodel.errors.create'));
         return undefined;
     }
     return folder;
@@ -57,9 +57,9 @@ const repo = async (rootState, state) => {
         );
         Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved'));
     } catch (ex) {
-	    console.error('Failed to save threat model!');
-	    console.error(ex);
-	    Vue.$toast.error(i18n.get().t('threatmodel.warnings.save'));
+        console.error('Failed to save threat model!');
+        console.error(ex);
+        Vue.$toast.error(i18n.get().t('threatmodel.warnings.save'));
         return false;
     }
     return true;
@@ -75,9 +75,9 @@ const repoCreate = async (rootState, state) => {
         );
         Vue.$toast.success(i18n.get().t('threatmodel.prompts.created'));
     } catch (ex) {
-	    console.error('Failed to create threat model!');
-	    console.error(ex);
-	    Vue.$toast.error(i18n.get().t('threatmodel.errors.create'));
+        console.error('Failed to create threat model!');
+        console.error(ex);
+        Vue.$toast.error(i18n.get().t('threatmodel.errors.create'));
         return false;
     }
     return true;

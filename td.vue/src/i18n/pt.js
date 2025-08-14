@@ -165,6 +165,7 @@ const por = {
             save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor',
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
@@ -174,6 +175,7 @@ const por = {
         },
         prompts: {
             created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Modelo de Ameaça aberto com sucesso',
             downloading: 'Downloading threat model',
             saved: 'Modelo de Ameaça salvo com sucesso'
