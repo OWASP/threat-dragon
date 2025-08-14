@@ -122,13 +122,15 @@ describe('desktop/menu.js', () => {
 
         const mockData = { 'title': 'test title' };
         var mockFilename = 'test name';
+        var mockWindow = { webContents: { send: jest.fn() } };
 
-        describe('Server actions', () => {
+        describe('Electron server actions', () => {
 
             beforeEach(() => {
                 model.fileDirectory = 'test directory';
                 model.filePath = 'test path';
                 model.isOpen = undefined;
+                menu.setMainWindow(mockWindow);
             });
 
             it('openModel() should send open-model to renderer with file path', () => {
@@ -200,7 +202,7 @@ describe('desktop/menu.js', () => {
                 expect(model.isOpen).toBe(true);
             });
 
-            it('modelSave()should not save a closed model with a file path', () => {
+            it('modelSave() should not save a closed model with a file path', () => {
                 model.isOpen = false;
                 menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
@@ -210,7 +212,7 @@ describe('desktop/menu.js', () => {
             it('modelSave() should saveAs a model with a file name and without a file path', () => {
                 model.filePath = '';
                 // TODO: mock the fs
-                // menu.modelSavd(mockData, mockFilename);
+                // menu.modelSave(mockData, mockFilename);
                 expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
                 expect(true).toBe(true);
             });

@@ -156,6 +156,7 @@ const fra = {
         },
         threats: 'Menaces',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Drag and drop requires a single file.',
             invalidJson: 'JSON invalide. Veuillez vérifier votre modèle et réessayer',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -164,14 +165,20 @@ const fra = {
             save: 'Erreur lors de la sauvegarde de ce modèle de menace. Vérifiez la console de développement pour plus d\'informations'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
         },
         prompts: {
+            created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Modèle de menace ouvert avec succès',
-            saved: 'Modèle de menace sauvegardé avec succès',
+            downloading: 'Downloading threat model',
+            saved: 'Modèle de menace sauvegardé avec succès'
         },
         properties: {
             title: 'Propriétés',

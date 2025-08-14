@@ -168,7 +168,7 @@ describe('service/x6/graph/keys.js', () => {
                 keys.bind(graph);
             });
 
-            it('binds the ctrl+v keys', () => {
+            it('binds to the ctrl + v keys', () => {
                 expect(graph.bindKey).toHaveBeenCalledWith('ctrl+v', expect.any(Function));
             });
 
@@ -214,7 +214,7 @@ describe('service/x6/graph/keys.js', () => {
             keys.bind(graph);
         });
 
-        it('binds to the delete key', () => {
+        it('binds to the ctrl + s keys', () => {
             expect(graph.bindKey).toHaveBeenLastCalledWith('ctrl+s', expect.any(Function));
         });
     });

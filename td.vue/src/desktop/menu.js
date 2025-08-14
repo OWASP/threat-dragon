@@ -24,9 +24,7 @@ import ind from '@/i18n/id.js';
 import jpn from '@/i18n/ja.js';
 import ms from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
-// hide RUS & UKR for now: import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
-// hide RUS & UKR for now: import ukr from '@/i18n/uk.js';
 import zho from '@/i18n/zh.js';
 
 const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, ms, por, spa, zho };
@@ -254,6 +252,7 @@ function openModelFile (filename) {
 function saveModel () {
     if (model.isOpen === false) {
         logger.log.debug('Skip save request because no model is open');
+        mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
     logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
@@ -264,6 +263,7 @@ function saveModel () {
 function saveModelAs () {
     if (model.isOpen === false) {
         logger.log.debug('Skip saveAs request because no model is open');
+        mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
@@ -298,6 +298,7 @@ function saveModelDataAs (modelData, fileName) {
     }).catch(err => {
         logger.log.error(messages[language].desktop.file.saveAs + ': ' + messages[language].threatmodel.errors.save + ': ' + err);
         model.isOpen = false;
+        mainWindow.webContents.send('save-model-failed', newName, messages[language].threatmodel.errors.save);
     });
 }
 
@@ -312,6 +313,7 @@ function newModel () {
 function printModel (format) {
     if (model.isOpen === false) {
         logger.log.debug('Skip print request because no model open');
+        mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
     logger.log.debug(messages[language].forms.exportPdf+ ': ' + model.filePath);
@@ -331,13 +333,16 @@ function saveModelData (modelData) {
         fs.writeFile(model.filePath, JSON.stringify(modelData, undefined, 2), (err) => {
             if (err) {
                 logger.log.error(messages[language].threatmodel.errors.save + ': ' + err);
+                mainWindow.webContents.send('save-model-failed', model.filePath, messages[language].threatmodel.errors.save);
             } else {
                 logger.log.debug(messages[language].threatmodel.prompts.saved + ': ' + model.filePath);
+                mainWindow.webContents.send('save-model-confirmed', model.filePath);
             }
         });
     } else {
-        // quietly ignore
-        logger.log.debug(messages[language].desktop.file.save + ': ignored empty file');
+        // warn that no model is open
+        logger.log.warn(messages[language].threatmodel.warnings.noModelOpen);
+        mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
     }
 }
 
@@ -355,8 +360,10 @@ function saveHTMLReport (htmlPath) {
             htmlPath = result.filePath;
             mainWindow.webContents.savePage(htmlPath, 'HTMLComplete').then(() => {
                 logger.log.debug(messages[language].forms.saveAs + ' : ' + htmlPath);
+                mainWindow.webContents.send('print-model-confirmed', htmlPath);
             }).catch(error => {
                 logger.log.error(`Failed to write HTML to ${htmlPath}: `, error);
+                mainWindow.webContents.send('save-model-failed', htmlPath, messages[language].threatmodel.warnings.export);
             });
         } else {
             logger.log.debug(messages[language].forms.saveAs + ' : canceled');
@@ -390,9 +397,11 @@ function savePDFReport (pdfPath) {
                 fs.writeFile(pdfPath, data, (error) => {
                     if (error) throw error;
                     logger.log.debug(`Wrote PDF successfully to ` + pdfPath);
+                    mainWindow.webContents.send('print-model-confirmed', pdfPath);
                 });
             }).catch(error => {
                 logger.log.error(`Failed to write PDF to ${pdfPath}: `, error);
+                mainWindow.webContents.send('save-model-failed', pdfPath, messages[language].threatmodel.warnings.export);
             });
 
             logger.log.debug(messages[language].forms.exportPdf + ' : ' + pdfPath);

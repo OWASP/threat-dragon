@@ -27,15 +27,15 @@ are in place for any public accessible or sensitive use.
 There are various configuration parameters that need to be determined at the outset.
 
 The Node environment - is it 'test', 'production' or 'development'?
-Go with 'development' because using 'production' enforces secure cookies that is not needed here,
-and 'test' alters the functionality from what is being tested.
+Here 'development' is being used because 'production' enforces secure cookies that are not needed here,
+and 'test' alters the functionality in some subtle ways.
 
 - `NODE_ENV='development'`
 
 Server port number - this defaults to 3000, and it can be mapped to another port when running the docker command.
 So leave the server port at 3000 by not defining it, and it can then be mapped to external port 8080 using docker.
 
-Server API protocol - this would be set to HTTPS in production, but during development define it as HTTP.
+Server API protocol - this would be set to HTTPS in production, but during development define it as HTTP:
 
 - `SERVER_API_PROTOCOL='http'`
 
@@ -61,12 +61,13 @@ localhost, but in practice this may well be a different URL/URI:
 
 - `GOOGLE_REDIRECT_URI=http://localhost:3000/api/oauth/return`
 
-Threat Dragon is being set up to use OAuth 2.0 to access Google APIs,
+Threat Dragon will be configured to use OAuth 2.0 to access Google APIs,
 and so must have authorization credentials that identify it to Google's OAuth 2.0 server.
-To do this open the [Google Drive Clients][gclients] dashboard.
 
-- select the Google Drive project, if more than one
-- click on the `+ CREAT CLIENT` button
+To create these credentials open the [Google Drive Clients][gclients] dashboard:
+
+- select or create a Google Drive project
+- click on the 'Create OAuth Client' button
 - application type should be set to 'Web Application'
 - provide a name for the Google Drive client, anything that is indicative / memorable
 - after the 'Create' button, the dashboard will provide the client ID and secret
@@ -76,7 +77,7 @@ The client ID and secret can then used for the configuration :
 - `GOOGLE_CLIENT_ID=01234567890123456789`
 - `GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456`
 
-Clearly the secrets shown here are _not to be used_ for a real application,
+Clearly the secrets shown here are _could not be used_ for a real application,
 they are merely for illustrative purposes.
 
 ### Run from command line

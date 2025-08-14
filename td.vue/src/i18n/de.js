@@ -156,6 +156,7 @@ const deu = {
         },
         threats: 'Bedrohungen',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Ziehen und ablegen erfordert eine einzige Datei.',
             invalidJson: 'Ungültiges JSON. Bitte überprüfen Sie Ihr Modell und versuchen Sie es erneut.',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -164,14 +165,20 @@ const deu = {
             save: 'Fehler beim Speichern des Bedrohungsmodells. Prüfen Sie die Developer Konsole für mehr Informationen'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Importierte Version 1.x Modelle werden auf das Version 2.0 Schema gehoben' //in line with wording of BSI Leitfaden zur Entwicklung sicherer Webanwendungen
         },
         prompts: {
+            created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Bedrohungsmodell erfolgreich geöffnet',
-            saved: 'Bedrohungsmodell erfolgreich gespeichert',
+            downloading: 'Downloading threat model',
+            saved: 'Bedrohungsmodell erfolgreich gespeichert'
         },
         properties: {
             title: 'Eigenschaften',

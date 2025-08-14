@@ -1,13 +1,18 @@
+import Vue from 'vue';
+
 import save from '@/service/save.js';
 
 describe('service/save.js', () => {
-    const data = { foo: 'bar' };
-    const name = 'test.json';
+    const state = { data: { foo: 'bar', summary: { title: 'test title '}}};
     
     describe('local', () => {
-
         let mockAnchor;
         beforeEach(() => {
+            Vue.$toast = {
+			    success: jest.fn(),
+			    error: jest.fn(),
+                warning: jest.fn()
+            };
             mockAnchor = {
                 click: jest.fn(),
                 remove: jest.fn()
@@ -16,7 +21,7 @@ describe('service/save.js', () => {
                 createObjectURL: jest.fn()
             };
             document.createElement = jest.fn().mockReturnValue(mockAnchor);
-            save.local(data, name);
+            save.local(state);
         });
 
         it('creates the object url', () => {

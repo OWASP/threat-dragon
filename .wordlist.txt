@@ -22,6 +22,7 @@ chruby
 ci
 cli
 CN
+CMS
 CodeQL
 Config
 cron
@@ -69,6 +70,7 @@ hostname
 https
 HTTPS
 Identifiability
+IoT
 Javascript
 jekyll
 JointJS

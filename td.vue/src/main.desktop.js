@@ -156,11 +156,30 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
     }
 });
 
+// advice from electron to renderer that the model has been printed
+window.electronAPI.onPrintModelConfirmed((_event, fileName) =>  {
+    console.debug('Print model confirmed for file : ' + fileName);
+    app.$toast.success(app.$t('threatmodel.prompts.exported'));
+});
+
 // request from electron to renderer to provide the model data so that it can be saved
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
     app.$store.dispatch(tmActions.diagramApplied);
     app.$store.dispatch(tmActions.saveModel);
+});
+
+// advice from electron to renderer that the model has been saved
+window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
+    console.debug('Save model confirmed for file : ' + fileName);
+    app.$store.dispatch(tmActions.stash);
+    app.$store.dispatch(tmActions.notModified);
+    app.$toast.success(app.$t('threatmodel.prompts.saved'));
+});
+
+window.electronAPI.onSaveModelFailed((_event, fileName, message) =>  {
+    console.debug('Failed to save model file : ' + fileName);
+    app.$toast.warning(message);
 });
 
 const localAuth = () => {

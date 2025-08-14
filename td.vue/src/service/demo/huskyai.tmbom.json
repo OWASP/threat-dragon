@@ -14,13 +14,6 @@
     "release_docs_link": "https://github.com/wunderwuzzi23/huskyai",
     "reviewed_at": "2025-05-28",
     "repo_link": "https://github.com/wunderwuzzi23/huskyai",
-    "diagrams": [
-        {
-            "title": "System architecture",
-            "type": "plantuml",
-            "source": "@startuml ' External Entities card \"Azure Cognitive Services\" as ext1 card \"Third Party tools and ML libraries\" as ext5 actor \"User\" as ext2 actor \"Engineer\" as ext4 actor \"Infrastructure Admin\" as ext3 card \"Third Party tools and ML libraries\" as ext7 ' Package for Experimentation Boundary package \"Experimentation\" { ' Data Stores (Cylinders for storage) storage \"Training and Validation Images\" as ds1 storage \"API Key\" as ds2 storage \"Machine Learning Model\" as ds3 storage \"Source Code and Configuration\" as ds5 ' Processes (Circles for processes using skinparam) rectangle \"Gather Images Application - Python\" as p1 rectangle \"Jupyter Notebook\" as p2 rectangle \"Deployment\" as p3 ' Apply circle styling to processes skinparam rectangle { roundCorner 100 } ' Data Flows in Experimentation ext1 <--> p1 : Send Images via HTTPS ext5 --> p1 : imports ext5 --> p2 : imports ext4 --> p1 : VS Code (SSH) ext4 --> p2 : VS Code (SSH) ext4 --> p3 : SSH ext4 --> ds5 : stores (SSH) p1 --> ds1 : Store Images ds2 --> p1 : Loads ds1 <--> p2 : Processes p1 --> p2 : Processed Data p2 --> ds3 : Save Model as .h5 ds3 --> p3 : Package Model ds5 --> p3 : Source Code and Config via SSH } ' Package for Production Boundary package \"Production\" { ' Data Stores (Cylinders for storage) storage \"Stored Machine Learning Model\" as ds6 storage \"Bastion Logs\" as ds7 storage \"Authorized Keys\" as ds8 ' Processes (Circles for processes using skinparam) rectangle \"API Gateway\" as p4 rectangle \"Bastion\" as p5 rectangle \"Simple Python Web Server\" as p6 ' Data Flows in Production ext2 <--> p4 : Request via HTTPS p5 --> p4 : update p4 <--> p6 : HTTPS p5 --> p6 : update ds6 --> p6 : Load Model p3 --> p5 : SSH p5 --> ds7 : Update Logs ext3 --> p5 : SSH p5 --> ds6 : update ds8 --> p5 : Provide Access ext7 --> p6 : imports } @enduml"
-        }
-    ],
     "trust_zones": [
         {
             "symbolic_name": "experimental-zone",

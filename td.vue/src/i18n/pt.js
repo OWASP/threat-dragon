@@ -156,6 +156,7 @@ const por = {
         },
         threats: 'Ameaças',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Arrastar e soltar requer um arquivo único',
             invalidJson: 'JSON inválido. Por favor, confira seu modelo e tente novamente',
             invalidModel: 'Threat Dragon não consegue entender este Modelo de Ameaça. Por favor, configura seu modelo e tente novamente',
@@ -164,14 +165,20 @@ const por = {
             save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0'
         },
         prompts: {
+            created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'Modelo de Ameaça aberto com sucesso',
-            saved: 'Modelo de Ameaça salvo com sucesso',
+            downloading: 'Downloading threat model',
+            saved: 'Modelo de Ameaça salvo com sucesso'
         },
         properties: {
             title: 'Propriedades',

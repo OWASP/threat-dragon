@@ -156,6 +156,7 @@ const spa = {
         },
         threats: 'Amenazas',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'Arrastrar y soltar funciona con un solo archivo.',
             invalidJson: 'JSON erróneo. Compruebe su modelo e intente otra vez',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -164,14 +165,20 @@ const spa = {
             save: 'Error al guardar el modelo de amenazas. Consulte la consola de desarrollador para obtener más información.'
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'Los modelos importados de la versión 1.x serán actualizados acorde al esquema de la versión 2.0'
         },
         prompts: {
+            created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'El modelo de amenazas se abrió con éxito',
-            saved: 'El modelo de amenazas se guardó con éxito',
+            downloading: 'Downloading threat model',
+            saved: 'El modelo de amenazas se guardó con éxito'
         },
         properties: {
             title: 'Propiedades',

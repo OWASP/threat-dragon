@@ -156,6 +156,7 @@ const ara = {
         },
         threats: 'التهديدات',
         errors: {
+            create: 'Could not create the threat model file.  Check the developer console for more information',
             dropSingleFileOnly: 'يتطلب السحب والإفلات ملفاً واحداً فقط.',
             invalidJson: 'ملف JSON غير صالح. يرجى التحقق من النموذج الخاص بك والمحاولة مرة أخرى.',
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
@@ -164,14 +165,20 @@ const ara = {
             save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
         },
         warnings: {
+            export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
+            noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
             v1Translate: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،'
         },
         prompts: {
+            created: 'Threat model successfully created',
+            exported: 'Threat model exported',
             opened: 'تم فتح نموذج التهديد بنجاح',
-            saved: 'تم حفظ نموذج التهديد بنجاح',
+            downloading: 'Downloading threat model',
+            saved: 'تم حفظ نموذج التهديد بنجاح'
         },
         properties: {
             title: 'الخصائص',
