@@ -92,6 +92,7 @@ MacOS
 misconfigurations
 mitigations
 Mitigations
+msa
 nav
 npm
 NSIS

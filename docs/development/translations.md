@@ -25,7 +25,7 @@ The following translations are available:
 - Bahasa Indonesia (ind-ID)
 - 日本語 (jpn)
 - português (por-BR)
-- Malay (ms)
+- Malay (msa-MY)
 - 中文 (zho-CN)
 
 By default, if a translation key cannot be found, it will fall-back to the default locale (`eng-US`).

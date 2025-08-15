@@ -65,7 +65,7 @@ The following translations are built into the Threat Dragon application:
 * Bahasa Indonesia (ind-ID)
 * 日本語 (jpn)
 * português (por-BR)
-* Malay (ms)
+* Malay (msa-MY)
 * 中文 (zho-CN)
 
 ### Demonstration site
