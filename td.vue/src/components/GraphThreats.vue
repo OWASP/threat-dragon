@@ -16,9 +16,14 @@
                 <b-col>
                     <font-awesome-icon 
                         icon="check"
+                        class="threat-icon gray-icon"
+                        :title="status"
+                        v-if="status === 'NotApplicable'" />
+                    <font-awesome-icon 
+                        icon="check"
                         class="threat-icon green-icon"
                         :title="status"
-                        v-if="status !== 'Open'" />
+                        v-if="status === 'Mitigated'" />
                     <font-awesome-icon 
                         icon="exclamation-triangle"
                         class="threat-icon red-icon"
@@ -28,7 +33,7 @@
                         icon="circle"
                         class="threat-icon red-icon"
                         :title="severity"
-                        v-if="severity === 'High'" />
+                        v-if="severity === 'High' || severity === 'Critical'" />
                     <font-awesome-icon 
                         icon="circle"
                         class="threat-icon yellow-icon"
@@ -39,6 +44,11 @@
                         class="threat-icon green-icon"
                         :title="severity"
                         v-if="severity === 'Low'" />
+                    <font-awesome-icon 
+                        icon="circle"
+                        class="threat-icon gray-icon"
+                        :title="severity"
+                        v-if="severity === 'TBD'" />
                 </b-col>
                 <b-col align-h="end">
                     <b-badge :v-if="!!modelType">{{ modelType }}</b-badge>
@@ -71,6 +81,10 @@
 
 .yellow-icon {
     color: $yellow;
+}
+
+.gray-icon {
+    color: $gray;
 }
 
 </style>
