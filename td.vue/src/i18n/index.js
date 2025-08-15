@@ -14,7 +14,7 @@ import fra from './fr.js';
 import hin from './hi.js';
 import ind from './id.js';
 import jpn from './ja.js';
-import ms from './ms.js';
+import msa from './ms.js';
 import por from './pt.js';
 // hide RUS & UKR for now: import rus from './ru.js';
 import spa from './es.js';
@@ -28,7 +28,7 @@ const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
             locale: 'eng',
-            messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, ms, por, zho }
+            messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, zho }
         });
     }
     return i18n;

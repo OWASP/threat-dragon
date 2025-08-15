@@ -7,7 +7,7 @@ import fin from '@/i18n/fi.js';
 import fra from '@/i18n/fr.js';
 import hin from '@/i18n/hi.js';
 import ind from '@/i18n/id.js';
-import ms from '@/i18n/ms.js';
+import msa from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
 import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
@@ -302,8 +302,8 @@ describe('desktop/menu.js', () => {
             });
 
             it('should provide translation for Malay', () => {
-                menu.setLocale('ms');
-                const helpItems = menu.getMenuTemplate().find((item) => item.label === ms.desktop.help.heading);
+                menu.setLocale('msa');
+                const helpItems = menu.getMenuTemplate().find((item) => item.label === msa.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 

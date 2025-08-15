@@ -105,7 +105,7 @@ export default {
                 return 'Bahasa Indonesia'; // Indonesia
             case 'jpn':
                 return '日本語'; // Japanese
-            case 'ms':
+            case 'msa':
                 return 'Malay'; // Malay
             case 'por':
                 return 'Português'; // Portuguese
