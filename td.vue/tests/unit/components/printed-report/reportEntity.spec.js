@@ -31,7 +31,7 @@ describe('components/printed-report/ReportEntity.vue', () => {
                         status: 'Mitigated',
                         type: 'type2',
                         description: 'Threat 2',
-                        mitigation: 'We did things'
+                        mitigation: 'We [did things](https://things.and.stuff?value=probably&otherValue=maybe)'
                     },
                     {
                         number: '3',
@@ -41,7 +41,7 @@ describe('components/printed-report/ReportEntity.vue', () => {
                         status: 'NotApplicable',
                         type: 'type3',
                         description: 'Threat 3',
-                        mitigation: 'No need to do things'
+                        mitigation: 'No [need](http://this.com) to do [things](https://that.com)'
                     }
                 ]
             }
@@ -156,14 +156,14 @@ describe('components/printed-report/ReportEntity.vue', () => {
     });
 
     it('shows the threat mitigation for t1', () => {
-        expect(tableHasCellWithText('We did things')).toEqual(true);
-    });
-
-    it('shows the threat mitigation for t2', () => {
         expect(tableHasCellWithText('We have yet to do things')).toEqual(true);
     });
 
+    it('shows the threat mitigation for t2', () => {
+        expect(tableHasCellWithText('We <a href="https://things.and.stuff?value=probably&otherValue=maybe">did things</a>')).toEqual(true);
+    });
+
     it('shows the threat mitigation for t3', () => {
-        expect(tableHasCellWithText('No need to do things')).toEqual(true);
+        expect(tableHasCellWithText('No <a href="http://this.com">need</a> to do <a href="https://that.com">things</a>')).toEqual(true);
     });
 });
