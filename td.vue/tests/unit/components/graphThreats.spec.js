@@ -88,13 +88,24 @@ describe('components/GraphThreats.vue', () => {
             expect(icon.exists()).toEqual(true);
         });
 
-        it('displays a green check for not applicable', () => {
+        it('displays a gray check for not applicable', () => {
             const propsData = getDefaultPropsData();
             propsData.status = 'NotApplicable';
             wrapper = getWrapper(propsData);
             const icon = wrapper.findAllComponents(FontAwesomeIcon)
                 .filter(x => x.attributes('icon') === 'check')
-                .filter(x => x.classes('green-icon'))
+                .filter(x => x.classes('gray-icon'))
+                .at(0);
+            expect(icon.exists()).toEqual(true);
+        });
+
+        it('displays a red circle for critical severity', () => {
+            const propsData = getDefaultPropsData();
+            propsData.severity = 'Critical';
+            wrapper = getWrapper(propsData);
+            const icon = wrapper.findAllComponents(FontAwesomeIcon)
+                .filter(x => x.attributes('icon') === 'circle')
+                .filter(x => x.classes('red-icon'))
                 .at(0);
             expect(icon.exists()).toEqual(true);
         });
@@ -128,6 +139,17 @@ describe('components/GraphThreats.vue', () => {
             const icon = wrapper.findAllComponents(FontAwesomeIcon)
                 .filter(x => x.attributes('icon') === 'circle')
                 .filter(x => x.classes('green-icon'))
+                .at(0);
+            expect(icon.exists()).toEqual(true);
+        });
+
+        it('displays a gray circle for TBD severity', () => {
+            const propsData = getDefaultPropsData();
+            propsData.severity = 'TBD';
+            wrapper = getWrapper(propsData);
+            const icon = wrapper.findAllComponents(FontAwesomeIcon)
+                .filter(x => x.attributes('icon') === 'circle')
+                .filter(x => x.classes('gray-icon'))
                 .at(0);
             expect(icon.exists()).toEqual(true);
         });
