@@ -38,7 +38,7 @@ and any other relevant channels
 Reset the build state to 'latest'; this is displayed on the demo site:
 
 1. revert `buildState` in `td.vue/package.json` back to `-latest`
-2. revert version, for example `"version": "2.3.0",`, in `td.vue/package.json`,
+2. revert version, for example `"version": "2.5.0",`, in `td.vue/package.json`,
     in `package.json` and `td.server/package.json`
 3. ensure that the package-lock files are up to date using `npm install`
 4. `git add --all; git status`
@@ -54,17 +54,18 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 1. `git clone git@github.com:OWASP/threat-dragon.git`
 2. `cd threat-dragon`
 3. update version eg `"version": "2.5.0",`, in `package.json`, `td.vue/package.json` and `td.server/package.json`
-4. update `buildState` in `td.vue/package.json` away from `-latest` to "" (empty)
+4. update `buildState` in `td.vue/package.json` away from `"-latest"` to `""` (empty)
 5. update package lock files: `npm install`
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
-9. ensure that the package-lock files are up to date using `npm install`
-10. `git add --all; git status`
-11. `git commit -m"release version 2.5.0"`
-12. `git push`
-13. tag the release `git tag v2.5.0`
-14. `git push origin v2.5.0`
+9. ensure documentation is clean: `pyspelling --config .spellcheck.yaml` and `markdownlint-cli2  docs/**/*.md`
+10. ensure that the package-lock files are up to date using `npm install`
+11. `git add --all; git status`
+12. `git commit -m"release version 2.5.0"`
+13. `git push`
+14. tag the release `git tag v2.5.0`
+15. `git push origin v2.5.0`
 
 The github release workflow then creates the draft release and the install images
 
