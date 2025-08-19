@@ -1,0 +1,54 @@
+name: Release Linux installers
+
+on:
+  workflow_dispatch:
+
+# for security reasons the github actions are pinned to specific release versions
+jobs:
+  desktop_linux:
+    name: Linux installers
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4.2.0
+
+      - name: Use node LTS 20.14.0
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '20.14.0'
+
+      - name: Cache NPM dir
+        uses: actions/cache@v4.2.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Publish Linux app images
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:desktop -- --linux AppImage deb rpm --publish always
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: sboms-desktop-linux-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error

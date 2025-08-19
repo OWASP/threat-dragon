@@ -64,8 +64,8 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 11. ensure all package-lock files are up to date using `npm install`
 12. `git add --all; git status`
 13. `git commit -m"release version 2.5.0"`
-14. `git push` and wait for commit pipepline actions to complete
-145. tag the release `git tag v2.5.0`
+14. `git push` and wait for commit pipeline actions to complete
+15. tag the release `git tag v2.5.0`
 16. `git push origin v2.5.0`
 
 The github release workflow automatically creates the draft release and the install images
@@ -90,11 +90,6 @@ to dockerhub `OWASP/threat-dragon/v2.5.0` and `OWASP/threat-dragon/v2.5.0-arm64`
 There is _no going back_ on these steps, so they are deliberately left as manual tasks:
 
 ```text
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.5.0
-docker tag threatdragon/owasp-threat-dragon:v2.5.0 owasp/threat-dragon:v2.5.0
-docker push owasp/threat-dragon:v2.5.0
-docker pull owasp/threat-dragon:v2.5.0
-
 docker tag owasp/threat-dragon:v2.5.0 owasp/threat-dragon:stable
 docker push owasp/threat-dragon:stable
 docker pull owasp/threat-dragon:stable
@@ -103,9 +98,15 @@ docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.5.0-arm64
 docker tag threatdragon/owasp-threat-dragon:v2.5.0-arm64 owasp/threat-dragon:v2.5.0-arm64
 docker push owasp/threat-dragon:v2.5.0-arm64
 docker pull owasp/threat-dragon:v2.5.0-arm64
+
+docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.5.0
+docker tag threatdragon/owasp-threat-dragon:v2.5.0 owasp/threat-dragon:v2.5.0
+docker push owasp/threat-dragon:v2.5.0
+docker pull owasp/threat-dragon:v2.5.0
 ```
 
-ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
+Ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
+Do the (x86_64) `v2.5.0` last so that is shown as the latest one
 
 ### Check demo site
 
