@@ -60,14 +60,15 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 7. `npm test`
 8. `npm run test:vue`
 9. ensure documentation is clean: `pyspelling --config .spellcheck.yaml` and `markdownlint-cli2  docs/**/*.md`
-10. ensure that the package-lock files are up to date using `npm install`
-11. `git add --all; git status`
-12. `git commit -m"release version 2.5.0"`
-13. `git push`
-14. tag the release `git tag v2.5.0`
-15. `git push origin v2.5.0`
+10. update the version in `title:` for the docs in file `docs/_config.yml`
+11. ensure all package-lock files are up to date using `npm install`
+12. `git add --all; git status`
+13. `git commit -m"release version 2.5.0"`
+14. `git push` and wait for commit pipepline actions to complete
+145. tag the release `git tag v2.5.0`
+16. `git push origin v2.5.0`
 
-The github release workflow then creates the draft release and the install images
+The github release workflow automatically creates the draft release and the install images
 
 ### Publish docker image
 
