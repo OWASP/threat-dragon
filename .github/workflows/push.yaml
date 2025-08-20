@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -85,7 +85,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -119,7 +119,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -282,7 +282,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: BrowserStack Env Setup
@@ -333,7 +333,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: Run e2e tests
@@ -385,7 +385,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: Run e2e tests
@@ -483,8 +483,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm install
+      - name: Install clean packages
+        run: npm clean-install
 
       - name: Build Windows executable
         run: npm run build:desktop -- --windows --publish never
@@ -565,8 +565,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm install
+      - name: Install clean packages
+        run: npm clean-install
 
       - name: Build Linux app images
         shell: bash
@@ -612,8 +612,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm install
+      - name: Install clean packages
+        run: npm clean-install
 
       - name: Build Linux snap
         shell: bash

@@ -94,7 +94,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -128,7 +128,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: Site lint
@@ -162,7 +162,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: Desktop lint

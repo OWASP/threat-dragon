@@ -1,15 +1,21 @@
-name: Release Linux
+name: Release MacOS
 
 on:
   workflow_dispatch:
 
 # for security reasons the github actions are pinned to specific release versions
 jobs:
-  desktop_linux:
-    name: Linux installers
-    runs-on: ubuntu-24.04
+  desktop_macos:
+    name: MacOS installers
+    runs-on: macos-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # MacOS signing: certificate and password, see electron.build/code-signing
+      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+      CSC_LINK:  ${{ secrets.MAC_CERTS }}
+      # MacOS notarization: see github.com/electron/notarize#readme
+      API_KEY_ID: ${{ secrets.API_KEY_ID }}
+      API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
     defaults:
       run:
         working-directory: td.vue
@@ -32,14 +38,17 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install clean packages
-        run: npm clean-install
+      - name: Install packages
+        run: npm install
 
-      - name: Publish Linux app images
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --linux AppImage deb rpm --publish always
+      - name: Prepare for MacOS notarization
+        # Import Apple API key to support signing of app
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
+
+      - name: Publish MacOS disk image
+        run: npm run build:desktop -- --mac --publish always
 
       - name: Print logs on error
         if: ${{ failure() }}
@@ -48,7 +57,7 @@ jobs:
       - name: Save SBOM artifact
         uses: actions/upload-artifact@v4.6.0
         with:
-          name: sboms-desktop-linux-site
+          name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
           include-hidden-files: true
           if-no-files-found: error

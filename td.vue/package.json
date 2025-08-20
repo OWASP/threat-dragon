@@ -151,6 +151,9 @@
     "webdriverio": "^8.3.3",
     "webpack": "^5.94.0"
   },
+  "optionalDependencies": {
+    "dmg-license": "^1.0.11"
+  },
   "overrides": {
     "@achrinza/node-ipc": ">=10.1.11",
     "@babel/traverse": ">=7.27.0",

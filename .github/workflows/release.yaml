@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -73,7 +73,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -117,7 +117,7 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
+      - name: Install clean packages
         run: npm clean-install
 
       - name: lint
@@ -210,8 +210,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install clean packages
-        run: npm clean-install
+      - name: Install packages
+        run: npm install
 
       - name: Prepare for MacOS notarization
         # Import Apple API key to support signing of app
