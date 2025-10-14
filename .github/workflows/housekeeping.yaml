@@ -37,7 +37,7 @@ jobs:
       issues: write
     steps:
       - name: Tidy stale PRs and issues
-        uses: actions/stale@v9
+        uses: actions/stale@v10.1.0
         with:
           days-before-issue-stale: 183
           days-before-issue-close: -1
@@ -62,7 +62,7 @@ jobs:
           ref: main
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.32.0
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
