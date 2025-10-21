@@ -4,7 +4,7 @@ const zho = {
     },
     nav: {
         loggedInAs: '登录身份为',
-        logOut: 'Log out'
+        logOut: '登出'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -58,7 +58,7 @@ const zho = {
             clearRecentDocs: '清除菜单',
             close: '关闭模型',
             closeWindow: '关闭窗口',
-            new: 'New Model',
+            new: '新模型',
             open: '打开模型',
             recentDocs: '最近打开',
             save: '保存模型',
@@ -73,8 +73,8 @@ const zho = {
             submit: '提交Issue',
             check: '检查更新...',
             about: {
-                about: 'About',
-                version: 'Version'
+                about: '关于',
+                version: '版本'
             }
         }
     },
@@ -98,9 +98,9 @@ const zho = {
         name: '分支名称',
     },
     folder: {
-        select: 'Select a',
-        from: 'folder from the list below',
-        noneFound: 'This folder is empty, You can create a new threat model here.'
+        select: '选择一个',
+        from: '下方列表中的文件夹',
+        noneFound: '这个目录是空的, 你可以在这创建一个新的威胁模型。'
     },
     threatmodelSelect: {
         select: '从中选择一个威胁模型',
@@ -118,7 +118,7 @@ const zho = {
         editing: '编辑',
         jsonPaste: '在此处粘贴威胁模型的JSON',
         owner: '所有者',
-        reviewer: '审稿人',
+        reviewer: '审核人',
         title: '标题',
         diagram: {
             diagrams: '图表',
@@ -156,28 +156,28 @@ const zho = {
         },
         threats: '威胁',
         errors: {
-            create: 'Could not create the threat model file.  Check the developer console for more information',
+            create: '无法创建威胁模型文件。检查开发者控制台查阅更多信息',
             dropSingleFileOnly: '只能拖放一个文件。',
             invalidJson: '无效的JSON。请检查您的格式，然后重试',
-            invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
+            invalidModel: '威胁模型验证不正确。请检查你的模型并重试',
             onlyJsonAllowed: '只支持以.json结尾的文件。',
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
             save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
         },
         warnings: {
-            export: 'Could not export the Threat Model. Check the developer console for more information',
-            jsonSchema: 'Model does not strictly match schema. Details from the developer console',
-            noModelOpen: 'No model open',
-            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            save: 'Could not save the Threat Model. Check the developer console for more information',
-            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            export: '无法导出威胁模型。检查开发者控制台查阅更多信息',
+            jsonSchema: '模型与模式不完全匹配。详情请参见开发者控制台。',
+            noModelOpen: '没有打开的模型',
+            otmUnsupported: '目前尚不支持导入开放威胁模型文件格式',
+            save: '无法保存威胁模型。请查看开发者控制台以获取更多信息。',
+            tmUnsupported: 'TM-BOM文件格式的导入功能尚处于实验阶段，可能随时变更，此类变更可能导致模型损坏。',
             v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {
-            created: 'Threat model successfully created',
-            exported: 'Threat model exported',
+            created: '威胁模型创建成功',
+            exported: '威胁模型已导出',
             opened: '成功打开威胁模型',
-            downloading: 'Downloading threat model',
+            downloading: '威胁模型下载',
             saved: '成功保存威胁模型'
         },
         properties: {
@@ -395,7 +395,7 @@ const zho = {
             showMitigatedThreats: '显示已缓解的威胁',
             showModelDiagrams: '显示模型图',
             showEmpty: '显示空元素',
-            showProperties: 'Show element properties',
+            showProperties: '显示元素属性',
             showBranding: '显示Threat Dragon形象'
         },
         title: '威胁模型报告来自',
@@ -406,7 +406,7 @@ const zho = {
         threatStats: {
             total: '威胁总数',
             mitigated: '已缓解总数',
-            notApplicable: 'Total Not Applicable',
+            notApplicable: '不适用总计',
             notMitigated: '未缓解',
             openCritical: '未解决/关键优先级',
             openHigh: '未解决/高优先级',
