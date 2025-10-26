@@ -25,7 +25,7 @@ jobs:
           keep_minimum_runs: 10
 
       - name: Delete unused workflows
-        uses: otto-de/purge-deprecated-workflow-runs@v3.0.1
+        uses: otto-de/purge-deprecated-workflow-runs@v4.0.1
         with:
           token: ${{ github.token }}
 
@@ -37,7 +37,7 @@ jobs:
       issues: write
     steps:
       - name: Tidy stale PRs and issues
-        uses: actions/stale@v9
+        uses: actions/stale@v10.1.0
         with:
           days-before-issue-stale: 183
           days-before-issue-close: -1
@@ -62,7 +62,7 @@ jobs:
           ref: main
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.32.0
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
@@ -71,7 +71,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3.29.2
+        uses: github/codeql-action/upload-sarif@v4.30.9
         with:
           sarif_file: 'trivy-results.sarif'
 
@@ -89,7 +89,7 @@ jobs:
           ref: main
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.29.2
+        uses: github/codeql-action/init@v4.30.9
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -98,10 +98,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v3.29.2
+        uses: github/codeql-action/autobuild@v4.30.9
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v3.29.2
+        uses: github/codeql-action/analyze@v4.30.9
 
   link_checker:
     name: Link checker
