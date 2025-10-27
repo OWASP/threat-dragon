@@ -188,8 +188,7 @@
       "electron-builder": "^24.13.3"
     },
     "webpack-dev-middleware": ">=7.4.2",
-    "ws": ">=8.18.0",
-    "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
+    "ws": ">=8.18.0"
   },
   "main": "background.js",
   "resolutions": {
