@@ -64,6 +64,11 @@ const ell = {
             save: 'Αποθήκευση Μοντέλου',
             saveAs: 'Αποθήκευση Μοντέλου ως'
         },
+        aiTools: {
+            heading: 'Εργαλεία ΤΝ',
+            generateThreats: 'Δημιουργία απειλών και μετριασμών',
+            settings: 'Ρυθμίσεις'
+        },
         help: {
             heading: 'Βοήθεια',
             docs: 'Τεκμηρίωση',

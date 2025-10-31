@@ -64,6 +64,11 @@ const fra = {
             save: 'Sauvegarder',
             saveAs: 'Sauvergarder en tant que'
         },
+        aiTools: {
+            heading: 'Outils IA',
+            generateThreats: 'Générer des menaces et atténuations',
+            settings: 'Paramètres'
+        },
         help: {
             heading: 'Aide',
             docs: 'Documentation',

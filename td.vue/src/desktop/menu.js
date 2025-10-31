@@ -109,6 +109,23 @@ export function getMenuTemplate () {
         { role: 'viewMenu' },
         { role: 'windowMenu' },
         {
+            label: messages[language].desktop.aiTools.heading,
+            submenu: [
+                {
+                    label: messages[language].desktop.aiTools.generateThreats,
+                    click () {
+                        generateThreatsAndMitigations();
+                    }
+                },
+                {
+                    label: messages[language].desktop.aiTools.settings,
+                    click () {
+                        openAISettings();
+                    }
+                }
+            ]
+        },
+        {
             label: messages[language].desktop.help.heading,
             submenu: [
                 {
@@ -473,6 +490,19 @@ export const setLocale = (locale) => {
 export const setMainWindow = (window) => {
     mainWindow = window;
 };
+
+// AI Tools menu handlers
+function generateThreatsAndMitigations() {
+    logger.log.debug('Generate Threats & Mitigations clicked');
+    // TODO: Implement AI-powered threat generation
+    mainWindow.webContents.send('ai-generate-threats-request');
+}
+
+function openAISettings() {
+    logger.log.debug('AI Settings clicked');
+    // TODO: Implement AI settings dialog
+    mainWindow.webContents.send('ai-settings-request');
+}
 
 export default {
     getMenuTemplate,
