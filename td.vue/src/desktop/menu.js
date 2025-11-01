@@ -1,16 +1,17 @@
 'use strict';
 
-import { app, dialog } from 'electron';
+import { app, dialog, BrowserWindow } from 'electron';
 import path from 'path';
 import logger from './logger.js';
 import { isMacOS } from './utils.js';
 
-const { shell } = require('electron');
+const { shell, ipcMain } = require('electron');
 const fs = require('fs');
 const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
 var mainWindow;
+var aiSettingsWindow = null;
 
 // access the i18n message strings
 import ara from '@/i18n/ar.js';
@@ -498,10 +499,261 @@ function generateThreatsAndMitigations() {
     mainWindow.webContents.send('ai-generate-threats-request');
 }
 
+// Get the path to ai-settings.json in user data directory
+function getAISettingsPath() {
+    const userDataPath = app.getPath('userData');
+    return path.join(userDataPath, 'ai-settings.json');
+}
+
+// Load API key from credential manager using keytar
+async function loadAPIKey() {
+    try {
+        const keytar = require('keytar');
+        const service = 'org.owasp.threatdragon';
+        const account = 'ai-api-key';
+        
+        const apiKey = await keytar.getPassword(service, account);
+        return apiKey || '';
+    } catch (err) {
+        logger.log.warn('Error loading API key from credential manager: ' + err.message);
+        if (err.message.includes('Cannot find module')) {
+            logger.log.error('keytar module not found. Please install it: npm install keytar');
+        }
+        return '';
+    }
+}
+
+// Save API key to credential manager using keytar
+async function saveAPIKey(apiKey) {
+    try {
+        const keytar = require('keytar');
+        const service = 'org.owasp.threatdragon';
+        const account = 'ai-api-key';
+        
+        if (apiKey && apiKey.trim() !== '') {
+            await keytar.setPassword(service, account, apiKey);
+            logger.log.debug('API key saved to credential manager');
+            return true;
+        } else {
+            // If API key is empty, delete it from credential manager
+            try {
+                await keytar.deletePassword(service, account);
+                logger.log.debug('API key removed from credential manager');
+            } catch (deleteErr) {
+                // Ignore error if password doesn't exist
+                logger.log.debug('API key not found in credential manager (already removed)');
+            }
+            return true;
+        }
+    } catch (err) {
+        logger.log.error('Error saving API key to credential manager: ' + err.message);
+        if (err.message.includes('Cannot find module')) {
+            logger.log.error('keytar module not found. Please install it: npm install keytar');
+        }
+        return false;
+    }
+}
+
+// Load AI settings from file (excluding API key which is stored in credential manager)
+async function loadAISettings() {
+    const settingsPath = getAISettingsPath();
+    let settings = {
+        llmModel: '',
+        temperature: 0.1,
+        responseFormat: false,
+        apiBase: '',
+        logLevel: 'INFO'
+    };
+    
+    try {
+        if (fs.existsSync(settingsPath)) {
+            const data = fs.readFileSync(settingsPath, 'utf8');
+            const fileSettings = JSON.parse(data);
+            // Merge file settings, but exclude apiKey (it's stored in credential manager)
+            settings = {
+                llmModel: fileSettings.llmModel || '',
+                temperature: fileSettings.temperature !== undefined ? fileSettings.temperature : 0.1,
+                responseFormat: fileSettings.responseFormat === true,
+                apiBase: fileSettings.apiBase || '',
+                logLevel: fileSettings.logLevel || 'INFO'
+            };
+        }
+    } catch (err) {
+        logger.log.warn('Error loading AI settings: ' + err.message);
+    }
+    
+    // Load API key from credential manager (async)
+    settings.apiKey = await loadAPIKey();
+    
+    return settings;
+}
+
+// Save AI settings to file (excluding API key which is stored in credential manager)
+async function saveAISettings(settings) {
+    const settingsPath = getAISettingsPath();
+    
+    // Extract API key from settings before saving to JSON
+    const apiKey = settings.apiKey || '';
+    const settingsWithoutApiKey = {
+        llmModel: settings.llmModel || '',
+        temperature: settings.temperature !== undefined ? settings.temperature : 0.1,
+        responseFormat: settings.responseFormat === true,
+        apiBase: settings.apiBase || '',
+        logLevel: settings.logLevel || 'INFO'
+    };
+    
+    try {
+        // Save non-sensitive settings to JSON file
+        fs.writeFileSync(settingsPath, JSON.stringify(settingsWithoutApiKey, null, 2), 'utf8');
+        logger.log.debug('AI settings saved to: ' + settingsPath);
+        
+        // Save API key separately to credential manager (async)
+        const apiKeySaved = await saveAPIKey(apiKey);
+        if (!apiKeySaved) {
+            logger.log.warn('Failed to save API key to credential manager');
+            // Continue anyway - other settings were saved successfully
+        }
+        
+        return true;
+    } catch (err) {
+        logger.log.error('Error saving AI settings: ' + err.message);
+        return false;
+    }
+}
+
 function openAISettings() {
     logger.log.debug('AI Settings clicked');
-    // TODO: Implement AI settings dialog
-    mainWindow.webContents.send('ai-settings-request');
+    
+    // If window already exists, focus it instead of creating a new one
+    if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+        aiSettingsWindow.focus();
+        return;
+    }
+
+    // Create the settings window
+    aiSettingsWindow = new BrowserWindow({
+        width: 620,
+        height: 660,
+        minWidth: 100,
+        minHeight: 100,
+        maxWidth: 620,
+        maxHeight: 660,
+        resizable: true,
+        parent: mainWindow,
+        modal: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        },
+        show: false
+    });
+
+    // Completely remove the menu bar
+    aiSettingsWindow.setMenuBarVisibility(false);
+
+    // Handle IPC messages from the settings window - set up BEFORE loading
+    // Load settings request - set up listener for this window instance
+    const loadHandler = () => {
+        if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+            // Use async IIFE to properly await the async function
+            (async () => {
+                try {
+                    const settings = await loadAISettings();
+                    if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+                        aiSettingsWindow.webContents.send('ai-settings-loaded', settings);
+                    }
+                } catch (err) {
+                    logger.log.error('Error loading settings: ' + err.message);
+                    if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+                        aiSettingsWindow.webContents.send('ai-settings-loaded', {
+                            apiKey: '',
+                            llmModel: '',
+                            temperature: 0.1,
+                            responseFormat: false,
+                            apiBase: '',
+                            logLevel: 'INFO'
+                        });
+                    }
+                }
+            })();
+        }
+    };
+    ipcMain.on('ai-settings-load-request', loadHandler);
+
+    // Save settings request
+    const saveHandler = async (event, settings) => {
+        if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+            if (await saveAISettings(settings)) {
+                aiSettingsWindow.webContents.send('ai-settings-saved');
+            } else {
+                aiSettingsWindow.webContents.send('ai-settings-save-error', 'Failed to save settings');
+            }
+        }
+    };
+    ipcMain.on('ai-settings-save-request', saveHandler);
+
+    // Check for unsaved changes request
+    const checkUnsavedChangesHandler = (event) => {
+        if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+            // Send request to renderer to check for unsaved changes
+            aiSettingsWindow.webContents.send('ai-settings-check-changes');
+        }
+    };
+    ipcMain.on('ai-settings-check-changes-request', checkUnsavedChangesHandler);
+
+    // Close window request (will be called after confirmation)
+    const closeHandler = () => {
+        if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+            aiSettingsWindow.close();
+        }
+    };
+    ipcMain.on('ai-settings-window-close', closeHandler);
+
+    // Handle window close event to check for unsaved changes (for X button)
+    aiSettingsWindow.on('close', (event) => {
+        // Prevent default close behavior
+        event.preventDefault();
+        // Check if there are unsaved changes by asking the renderer
+        // The renderer will show the same confirm dialog as the Close button
+        aiSettingsWindow.webContents.send('ai-settings-close-check');
+        
+        // Wait for response from renderer about whether to proceed with close
+        const closeResponseHandler = (e, shouldClose) => {
+            ipcMain.removeListener('ai-settings-should-close', closeResponseHandler);
+            if (shouldClose) {
+                // User confirmed to close, destroy the window
+                aiSettingsWindow.destroy();
+            }
+            // If shouldClose is false, user cancelled, so don't close
+        };
+        ipcMain.once('ai-settings-should-close', closeResponseHandler);
+    });
+
+    // Clean up IPC handlers when window is closed
+    aiSettingsWindow.once('closed', () => {
+        // Remove IPC handlers
+        ipcMain.removeListener('ai-settings-load-request', loadHandler);
+        ipcMain.removeListener('ai-settings-save-request', saveHandler);
+        ipcMain.removeListener('ai-settings-window-close', closeHandler);
+        ipcMain.removeListener('ai-settings-check-changes-request', checkUnsavedChangesHandler);
+        // Clear window reference
+        aiSettingsWindow = null;
+    });
+
+    // Load the settings HTML file (after IPC listeners are set up)
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+        aiSettingsWindow.loadURL('http://localhost:8080/ai-settings.html');
+    } else {
+        // Use app protocol for production (same as main window)
+        aiSettingsWindow.loadURL('app://./ai-settings.html');
+    }
+
+    // Show window when ready
+    aiSettingsWindow.once('ready-to-show', () => {
+        aiSettingsWindow.show();
+    });
 }
 
 export default {
