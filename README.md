@@ -90,7 +90,7 @@ The web application variant of Threat Dragon requires some environment variables
 follow [the documentation][config] on how to set these variables.
 
 If access to external repositories is required, such as Bitbucket / GitHub  / GitLab,
-then you need to go to your to the repository account and register the application.
+then you need to go to your repository account and register the application.
 There are step by step guides on how to do this for [Bitbucket][bitbucket], [GitHub][github] and [GitLab][gitlab].
 
 ### Run the application
