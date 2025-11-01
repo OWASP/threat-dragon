@@ -193,7 +193,7 @@
                     <span class="help-icon" data-help="apiKey">i</span>
                     <span class="label-text">API KEY</span>
                 </label>
-                <div class="description" id="apiKeyDescription">API key for accessing the LLM service (max 256 characters)</div>
+                <div class="description" id="apiKeyDescription">API key for accessing the LLM service</div>
                 <div class="input-with-toggle">
                     <input type="password" id="apiKey" name="apiKey" maxlength="256" />
                     <button type="button" class="toggle-visibility" id="toggleApiKey" title="Show/Hide API Key">
@@ -208,7 +208,7 @@
                     <span class="help-icon" data-help="llmModel">i</span>
                     <span class="label-text">LLM MODEL</span>
                 </label>
-                <div class="description" id="llmModelDescription">Model name to use for LLM requests (max 100 characters)</div>
+                <div class="description" id="llmModelDescription">LLM model identifier (e.g., "openai/gpt-5", "anthropic/claude-sonnet-4-5", "xai/grok-4")</div>
                 <input type="text" id="llmModel" name="llmModel" maxlength="100" />
                 <div class="error-message" id="llmModelError"></div>
             </div>
@@ -218,7 +218,7 @@
                     <span class="help-icon" data-help="temperature">i</span>
                     <span class="label-text">TEMPERATURE</span>
                 </label>
-                <div class="description" id="temperatureDescription">Temperature parameter for LLM (float from 0 to 2)</div>
+                <div class="description" id="temperatureDescription">Temperature parameter for LLM - lower values make output more deterministic, higher values increase creativity and randomness (range: 0-2)</div>
                 <input type="number" id="temperature" name="temperature" min="0" max="2" step="0.1" value="0.1" />
                 <div class="error-message" id="temperatureError"></div>
             </div>
@@ -228,7 +228,7 @@
                     <span class="help-icon" data-help="responseFormat">i</span>
                     <span class="label-text">RESPONSE FORMAT</span>
                 </label>
-                <div class="description" id="responseFormatDescription">Format of the response from the LLM</div>
+                <div class="description" id="responseFormatDescription">Enable structured JSON response format (recomended for supported LLMs)</div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="responseFormat" name="responseFormat" />
                     <label for="responseFormat" class="checkbox-label">Structured format (JSON)</label>
@@ -240,7 +240,7 @@
                     <span class="help-icon" data-help="apiBase">i</span>
                     <span class="label-text">API BASE</span>
                 </label>
-                <div class="description" id="apiBaseDescription">Base URL for the API endpoint (max 256 characters)</div>
+                <div class="description" id="apiBaseDescription">Custom API base URL</div>
                 <input type="text" id="apiBase" name="apiBase" maxlength="256" />
                 <div class="error-message" id="apiBaseError"></div>
             </div>
@@ -250,7 +250,7 @@
                     <span class="help-icon" data-help="logLevel">i</span>
                     <span class="label-text">LOG LEVEL</span>
                 </label>
-                <div class="description" id="logLevelDescription">Logging level for AI operations</div>
+                <div class="description" id="logLevelDescription">Logging level (INFO or DEBUG)</div>
                 <select id="logLevel" name="logLevel">
                     <option value="INFO">INFO</option>
                     <option value="DEBUG">DEBUG</option>
