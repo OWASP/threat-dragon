@@ -12,6 +12,7 @@ const buildVersion = require('../../package.json').version;
 // provided by electron server bootstrap
 var mainWindow;
 var aiSettingsWindow = null;
+var aiThreatsWarningWindow = null;
 
 // access the i18n message strings
 import ara from '@/i18n/ar.js';
@@ -495,8 +496,77 @@ export const setMainWindow = (window) => {
 // AI Tools menu handlers
 function generateThreatsAndMitigations() {
     logger.log.debug('Generate Threats & Mitigations clicked');
+    
+    // Open warning dialog first
+    openAIThreatsWarning();
+}
+
+// Function to actually proceed with threat generation (called after user confirms)
+function proceedWithThreatGeneration() {
+    logger.log.debug('Proceeding with AI threat generation');
     // TODO: Implement AI-powered threat generation
     mainWindow.webContents.send('ai-generate-threats-request');
+}
+
+function openAIThreatsWarning() {
+    logger.log.debug('Opening AI Threats Warning dialog');
+    
+    // If window already exists, focus it instead of creating a new one
+    if (aiThreatsWarningWindow && !aiThreatsWarningWindow.isDestroyed()) {
+        aiThreatsWarningWindow.focus();
+        return;
+    }
+
+    // Create the warning window
+    aiThreatsWarningWindow = new BrowserWindow({
+        width: 620,
+        height: 500,
+        minWidth: 100,
+        minHeight: 100,
+        maxWidth: 620,
+        maxHeight: 500,
+        resizable: true,
+        parent: mainWindow,
+        modal: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        },
+        show: false
+    });
+
+    // Completely remove the menu bar
+    aiThreatsWarningWindow.setMenuBarVisibility(false);
+
+    // Handle IPC messages from the warning window - set up BEFORE loading
+    const okHandler = () => {
+        logger.log.debug('AI Threats Warning: User clicked OK, proceeding with threat generation');
+        if (aiThreatsWarningWindow && !aiThreatsWarningWindow.isDestroyed()) {
+            aiThreatsWarningWindow.close();
+        }
+        // Proceed with threat generation
+        proceedWithThreatGeneration();
+    };
+    ipcMain.on('ai-threats-warning-ok', okHandler);
+
+    // Clean up IPC listeners when window is closed
+    aiThreatsWarningWindow.once('closed', () => {
+        ipcMain.removeListener('ai-threats-warning-ok', okHandler);
+        aiThreatsWarningWindow = null;
+    });
+
+    // Load the warning HTML file
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+        aiThreatsWarningWindow.loadURL('http://localhost:8080/ai-threats-warning.html');
+    } else {
+        aiThreatsWarningWindow.loadURL('app://./ai-threats-warning.html');
+    }
+
+    aiThreatsWarningWindow.once('ready-to-show', () => {
+        aiThreatsWarningWindow.show();
+    });
 }
 
 // Get the path to ai-settings.json in user data directory
