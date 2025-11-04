@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain, globalShortcut } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -92,7 +92,22 @@ app.on('ready', async () => {
     logger.log.debug('Building the menu system for the default language');
     let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    // Register global shortcuts
+    globalShortcut.register('CommandOrControl+O', () => {
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+            logger.log.debug('Ctrl+O pressed — triggering open model');
+            focusedWindow.webContents.send('open-model-shortcut');
+        }
+    });
 
+    globalShortcut.register('CommandOrControl+S', () => {
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+            logger.log.debug('Ctrl+S pressed — triggering save model');
+            focusedWindow.webContents.send('save-model-shortcut');
+        }
+    });
     // Install Vue Devtools
     if (isDevelopment && !isTest) {
         try {
@@ -126,7 +141,10 @@ app.on('open-file', function(event, path) {
     logger.log.debug('Request to open file from recent documents: ' + path);
     menu.openModelRequest(path);
 });
-
+//Unregister shortcuts when app quits:
+app.on(`will-quit`, () => {
+    globalShortcut.unregisterAll();
+});
 function handleCloseApp() {
     logger.log.debug('Close application request from renderer ');
     runApp = false;
