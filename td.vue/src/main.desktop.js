@@ -182,6 +182,26 @@ window.electronAPI.onSaveModelFailed((_event, fileName, message) =>  {
     app.$toast.warning(message);
 });
 
+//adding shortcut registration from main process
+window.addEventListener(`keydown`, (event) => {
+    // Handle Save shortcut (Ctrl+S or Cmd+S)
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === `s`) {
+        event.preventDefault();
+        console.debug(`Keyboard shortcut: Save`);
+        const fileName = app.$store.getters[`threatmodel/fileName`] || ``;
+        app.$store.dispatch(tmActions.diagramApplied);
+        app.$store.dispatch(tmActions.saveModel);
+        window.electronAPI.onSaveModelRequest({}, fileName); // Notify electron to save
+    }
+
+    // Handle Open shortcut (Ctrl+O or Cmd+O)
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === `o`) {
+        event.preventDefault();
+        console.debug(`Keyboard shortcut: Open`);
+        window.electronAPI.onOpenModelRequest({}, ``);// Ask Electron to open file
+    }
+});
+
 const localAuth = () => {
     app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);
@@ -199,3 +219,4 @@ const app = new Vue({
     render: h => h(App),
     i18n: i18nFactory.get()
 }).$mount('#app');
+
