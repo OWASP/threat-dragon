@@ -284,6 +284,13 @@
 !td.vue/README.md
 !td.vue/browserstack.nightly.json
 !td.vue/browserstack.smokes.json
+!td.vue/scripts/
+!td.vue/scripts/*.js
+!td.vue/ai-tools/*.txt
+!td.vue/ai-tools/*.py
+!td.vue/ai-tools/src/
+!td.vue/ai-tools/src/*.py
+
 
 # utility scripts
 !utils
