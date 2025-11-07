@@ -286,6 +286,7 @@
 !td.vue/browserstack.smokes.json
 !td.vue/scripts/
 !td.vue/scripts/*.js
+!td.vue/ai-tools/
 !td.vue/ai-tools/*.txt
 !td.vue/ai-tools/*.py
 !td.vue/ai-tools/src/
