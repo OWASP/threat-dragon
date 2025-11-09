@@ -3,10 +3,70 @@
 import json
 import uuid
 import logging
+import sys
+import os
+import platform
+import re
+import keyring
 from pathlib import Path
 from typing import Union
 
 logger = logging.getLogger(__name__)
+
+def _windows_lookups(service: str, account: str):
+    # Normal split fields
+    yield (service, account)
+    # Windows "target name" variants seen with some backends
+    yield (f"{service}/{account}", account)
+    yield (f"{service}/{account}", "")
+    yield (f"{service}:{account}", account)
+
+def _looks_like_backslash_u_stream(s: str) -> bool:
+    # One or more \uXXXX sequences, no other chars
+    return bool(re.fullmatch(r"(\\u[0-9a-fA-F]{4})+", s))
+
+def _fix_backslash_u_utf16le_stream(s: str) -> str:
+
+    # Step 1: turn literal backslash-u escapes into real codepoints
+    chars = s.encode("utf-8").decode("unicode_escape")
+    # Step 2: convert each 16-bit unit to bytes (little-endian)
+    data = bytearray()
+    for ch in chars:
+        data.extend(ord(ch).to_bytes(2, "little"))
+    # Step 3: decode to text (ASCII/UTF-8 API keys work here)
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError:
+        # Fallback: most API keys are ASCII; latin1 keeps bytes 0–255 as-is
+        return data.decode("latin1")
+
+def get_api_key(service: str, account: str) -> str | None:
+    # Try platform-appropriate lookups
+    tried = set()
+    for svc, acc in (_windows_lookups(service, account) if platform.system() == "Windows"
+                     else [(service, account)]):
+        if (svc, acc) in tried:
+            continue
+        tried.add((svc, acc))
+        pw = keyring.get_password(svc, acc)
+        if pw:
+            # Auto-repair the common Windows mojibake form
+            if _looks_like_backslash_u_stream(pw):
+                pw = _fix_backslash_u_utf16le_stream(pw)
+            else:
+                # Secondary heuristic: if result is mostly CJK/private-use, it's likely the same issue
+                cjkish = sum(1 for ch in pw if 0x3400 <= ord(ch) <= 0x9FFF or 0xE000 <= ord(ch) <= 0xF8FF)
+                if cjkish > max(8, len(pw)//2):
+                    # Convert code units -> bytes -> text
+                    data = bytearray()
+                    for ch in pw:
+                        data.extend(ord(ch).to_bytes(2, "little"))
+                    try:
+                        pw = data.decode("utf-8")
+                    except UnicodeDecodeError:
+                        pw = data.decode("latin1")
+            return pw
+    return None
 
 
 def handle_user_friendly_error(error: Exception, error_type: str, logger_instance: logging.Logger = None) -> str:

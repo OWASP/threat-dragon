@@ -22,8 +22,8 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
     prompt_template = PROMPT_FILE.read_text(encoding='utf-8')
     
     system_prompt = prompt_template.format(
-        schema_json=json.dumps(schema, indent=2),
-        model_json=json.dumps(model, indent=2),
+        schema_json=json.dumps(schema, indent=2, ensure_ascii=False).encode("utf-8"),
+        model_json=json.dumps(model, indent=2, ensure_ascii=False).encode("utf-8"),
     )
     
 

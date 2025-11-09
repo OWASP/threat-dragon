@@ -7,6 +7,7 @@ import { isMacOS } from './utils.js';
 
 const { shell, ipcMain } = require('electron');
 const fs = require('fs');
+const { spawn } = require('child_process');
 const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
@@ -483,6 +484,11 @@ export const modelSave = (modelData, fileName) => {
     }
 };
 
+// the renderer has sent model data for AI threat generation
+export const aiThreatGeneration = (modelData) => {
+    runPythonThreatGeneration(modelData);
+};
+
 // the renderer has changed the language
 export const setLocale = (locale) => {
     const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'msa', 'por', 'spa', 'zho' ];
@@ -501,11 +507,109 @@ function generateThreatsAndMitigations() {
     openAIThreatsWarning();
 }
 
-// Function to actually proceed with threat generation (called after user confirms)
+function getPythonExecutable() {
+    const packageJsonPath = require.resolve('../../package.json');
+    const tdVuePath = path.dirname(packageJsonPath);
+    const venvPath = path.join(tdVuePath, 'venv');
+    const pythonPath = process.platform === 'win32' 
+        ? path.join(venvPath, 'Scripts', 'python.exe')
+        : path.join(venvPath, 'bin', 'python');
+    return path.resolve(pythonPath);
+}
+
+function getMainPyPath() {
+    const packageJsonPath = require.resolve('../../package.json');
+    const tdVuePath = path.dirname(packageJsonPath);
+    return path.resolve(path.join(tdVuePath, 'ai-tools', 'src', 'main.py'));
+}
+
 function proceedWithThreatGeneration() {
-    logger.log.debug('Proceeding with AI threat generation');
-    // TODO: Implement AI-powered threat generation
-    mainWindow.webContents.send('ai-generate-threats-request');
+    if (model.isOpen === false) {
+        mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
+        return;
+    }
+    
+    // Request model data from renderer
+    logger.log.debug('Requesting model data from renderer for AI threat generation');
+    mainWindow.webContents.send('ai-threat-generation-request');
+}
+
+function runPythonThreatGeneration(modelData) {
+    const pythonExecutable = getPythonExecutable();
+    const mainPyPath = getMainPyPath();
+    
+    if (!fs.existsSync(pythonExecutable)) {
+        dialog.showErrorBox('Python Not Found', `Python executable not found at:\n${pythonExecutable}`);
+        return;
+    }
+    
+    if (!fs.existsSync(mainPyPath)) {
+        dialog.showErrorBox('Script Not Found', `main.py not found at:\n${mainPyPath}`);
+        return;
+    }
+    
+    // Load schema JSON - use fs.readFileSync for npm build compatibility
+    let schema;
+    try {
+        // Get the schema file path relative to the package.json location
+        const packageJsonPath = require.resolve('../../package.json');
+        const tdVuePath = path.dirname(packageJsonPath);
+        const schemaPath = path.join(tdVuePath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+        
+        // Read and parse the schema JSON file
+        const schemaContent = fs.readFileSync(schemaPath, 'utf8');
+        schema = JSON.parse(schemaContent);
+        
+        logger.log.debug(`Schema loaded from: ${schemaPath}`);
+    } catch (err) {
+        logger.log.error(`Failed to load schema: ${err.message}`);
+        dialog.showErrorBox('Schema Error', `Failed to load schema JSON:\n${err.message}`);
+        return;
+    }
+    
+    // Get paths for arguments
+    const aiSettingsPath = getAISettingsPath();
+    const logsFolderPath = app.getPath('logs');
+    
+    // Build arguments array
+    const args = [
+        mainPyPath,
+        '--settings-json', aiSettingsPath,
+        '--logs-folder', logsFolderPath
+    ];
+    
+    const pythonProcess = spawn(pythonExecutable, args, {
+        cwd: path.dirname(mainPyPath),
+        stdio: ['pipe', 'pipe', 'pipe']
+    });
+    
+    // Write model and schema to stdin as JSON strings with UTF-8 encoding
+    // Python expects: first line = model JSON, second line = schema JSON
+    try {
+        const modelJson = JSON.stringify(modelData);
+        const schemaJson = JSON.stringify(schema);
+        
+        // Write both JSON strings as separate lines with newline separators
+        pythonProcess.stdin.setDefaultEncoding('utf8');
+        pythonProcess.stdin.write(modelJson + '\n');
+        pythonProcess.stdin.write(schemaJson + '\n');
+        pythonProcess.stdin.end();
+        
+        logger.log.debug('Model and schema data written to Python stdin');
+    } catch (err) {
+        logger.log.error(`Failed to write data to Python stdin: ${err.message}`);
+        dialog.showErrorBox('Data Error', `Failed to prepare data for Python:\n${err.message}`);
+        pythonProcess.kill();
+        return;
+    }
+    
+    pythonProcess.stderr.on('data', (data) => {
+        logger.log.error(`Python error: ${data.toString()}`);
+    });
+    
+    pythonProcess.on('error', (error) => {
+        dialog.showErrorBox('Execution Error', `Failed to start Python process:\n${error.message}`);
+    });
 }
 
 function openAIThreatsWarning() {
@@ -832,6 +936,7 @@ export default {
     modelOpened,
     modelPrint,
     modelSave,
+    aiThreatGeneration,
     openModel,
     openModelRequest,
     setLocale,

@@ -108,6 +108,7 @@ app.on('ready', async () => {
     ipcMain.on('model-opened', handleModelOpened);
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
+    ipcMain.on('ai-threat-generation', handleAIThreatGeneration);
     ipcMain.on('update-menu', handleUpdateMenu);
 
     createWindow();
@@ -156,6 +157,11 @@ function handleModelPrint (_event, format) {
 function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
+}
+
+function handleAIThreatGeneration (_event, modelData) {
+    logger.log.debug('AI threat generation request from renderer');
+    menu.aiThreatGeneration(modelData);
 }
 
 function handleUpdateMenu (_event, locale) {

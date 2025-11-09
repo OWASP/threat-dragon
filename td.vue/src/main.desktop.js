@@ -169,6 +169,15 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     app.$store.dispatch(tmActions.saveModel);
 });
 
+// request from electron to renderer to provide the model data for AI threat generation
+window.electronAPI.onAIThreatGenerationRequest((_event) =>  {
+    console.debug('AI threat generation request');
+    app.$store.dispatch(tmActions.diagramApplied);
+    // Send model data directly to main process
+    const modelData = app.$store.state.threatmodel.data;
+    window.electronAPI.aiThreatGeneration(modelData);
+});
+
 // advice from electron to renderer that the model has been saved
 window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
     console.debug('Save model confirmed for file : ' + fileName);

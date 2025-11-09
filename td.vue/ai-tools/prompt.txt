@@ -15,11 +15,11 @@ CONTEXT ABOUT THE DIAGRAMS (READ CAREFULLY)
   and (for flows) source.cell and target.cell.
   Other fields may exist (e.g., data.*, ports, labels). They are descriptive/configuration only.
 
-- For each diagram, you must interpret its data-flow diagram layout — do NOT render or describe a picture.
+- For each diagram, you must interpret its data-flow diagram layout - do NOT render or describe a picture.
   Use:
     * Positions & sizes to infer adjacency, proximity, containment, and potential trust boundary crossing (compute bounding boxes from position + size).
     * Shapes to understand element roles: "actor", "process", "store", "flow", and "trust boundaries" (trust-boundary-box, trust-boundary-curve).
-    * Connections/Edges (flows) via source.cell → target.cell to determine direction, ingress/egress, and boundary traversal.
+    * Connections/Edges (flows) via source.cell -> target.cell to determine direction, ingress/egress, and boundary traversal.
     * Flags such as data.isPublicNetwork, data.isEncrypted, data.isBidirectional, and data.protocol to judge exposure and confidentiality.
 
   Use the layout and connections to inform STRIDE findings: for example, flows crossing from public/unknown zones to privileged zones (ingress), flows leaving zones (egress), elements straddling or adjacent to trust boundaries, unencrypted flows over public networks, etc.
@@ -37,12 +37,12 @@ TASK
 
 3. Do NOT add threats to elements with shape "trust-boundary-curve" or "trust-boundary-box".
 
-4. CRITICAL — ID HANDLING
+4. CRITICAL - ID HANDLING
    - Treat cell.id as the ONLY valid identifier for any element.
    - When referencing or updating an element, copy the id exactly as it appears in the source JSON.
    - Never generate, modify, reformat, truncate, or guess an id.
    - Never use data.name, attrs.label.text, or any other field as an id.
-   - For flows, use the flow’s own id and don't use source.cell aor target.cell values.
+   - For flows, use the flow's own id and don't use source.cell aor target.cell values.
    - If an element has no id (invalid model), skip it instead of inventing one.
 
 5. If existing threats and mitigations are present, evaluate them:
@@ -70,22 +70,22 @@ LAYOUT-AWARE PROCEDURE (FOLLOW STEP-BY-STEP)
 - Within each diagram: identify trust zones: any cell.shape in {{trust-boundary-box, trust-boundary-curve}} defines a boundary.
   For boxes, infer the rectangle from position + size.
   For curves, use vertices as the path.
-- Compute containment: an element is “inside” a boundary if its bounding box lies within the boundary shape; otherwise it’s outside.
+- Compute containment: an element is "inside" a boundary if its bounding box lies within the boundary shape; otherwise it's outside.
 - Find flows: iterate cells with shape = "flow". Use source.cell and target.cell to bind endpoints.
-- Detect boundary crossings: a flow “crosses” if source and target reside in different trust zones (or one is outside all and the other is inside).
+- Detect boundary crossings: a flow "crosses" if source and target reside in different trust zones (or one is outside all and the other is inside).
 - Assess exposure: a flow is exposed if data.isPublicNetwork = true, or protocol indicates public transport (e.g., http, smtp across internet) and/or data.isEncrypted = false.
 - Ingress/Egress:
     * Ingress: flow targets a more trusted zone from less trusted/untrusted/external.
     * Egress: flow leaves a trusted zone to less trusted/external.
 - Adjacency/Proximity: elements whose bounding boxes touch/overlap or are very close may share implicit attack surfaces (e.g., shared host, same subnet). Use this only to inform threats; do not alter data.
 
-Use these signals to propose STRIDE threats with precise, layout-informed rationales (e.g., “Unencrypted public network flow crossing from external actor to web app process”, “Boundary-crossing API request into admin zone”, etc.).
+Use these signals to propose STRIDE threats with precise, layout-informed rationales (e.g., "Unencrypted public network flow crossing from external actor to web app process", "Boundary-crossing API request into admin zone", etc.).
 
 
 ------------------------------------------------------------
 OUTPUT RULES
 
-Return **ONLY** a single JSON object with this exact shape (matches the system’s model):
+Return **ONLY** a single JSON object with this exact shape (matches the system's model):
 
 {{
   "items": [
@@ -110,6 +110,6 @@ Return **ONLY** a single JSON object with this exact shape (matches the system�
 - Each element can have zero, one or **multiple threats** in its "threats" array.
 - Include only elements with shape in {{actor, process, store, flow}} and where data.outOfScope=false.
 - Exclude trust-boundary-box / trust-boundary-curve.
-- **Use the element’s exact "id"** in the "id" field.
+- **Use the element's exact "id"** in the "id" field.
 - Output JSON only (no markdown fences, no prose).
 ------------------------------------------------------------

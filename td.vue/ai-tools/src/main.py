@@ -3,9 +3,12 @@
 import json
 import logging
 import argparse
+import keyring
+import io
+import sys
 from datetime import datetime
 from pathlib import Path
-from utils import load_json, update_threats_in_file, handle_user_friendly_error
+from utils import load_json, update_threats_in_file, handle_user_friendly_error, get_api_key
 from ai_client import generate_threats
 from validator import ThreatValidator
 
@@ -44,26 +47,34 @@ def parse_arguments():
 
 
 def read_json_from_stdin():
-    """Read JSON objects from stdin (model JSON on first line, schema JSON on second line)."""
-    import sys
+    """Read JSON objects from stdin (model JSON on first line, schema JSON on second line), safely handling UTF-8."""
+ 
     try:
-        # Read model JSON from first line of stdin
+        # Ensure stdin is read as UTF-8 regardless of system locale
+        if sys.stdin.encoding.lower() != "utf-8":
+            sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8")
+
+        # Read model JSON from first line
         model_json_line = sys.stdin.readline()
         if not model_json_line:
             raise ValueError("No model JSON data provided in stdin")
         model = json.loads(model_json_line.strip())
-        
-        # Read schema JSON from second line of stdin
+
+        # Read schema JSON from second line
         schema_json_line = sys.stdin.readline()
         if not schema_json_line:
             raise ValueError("No schema JSON data provided in stdin")
         schema = json.loads(schema_json_line.strip())
-        
+
         return model, schema
+
+    except UnicodeDecodeError as e:
+        raise ValueError(f"Unicode decoding error reading stdin: {str(e)}")
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON in stdin: {str(e)}")
     except Exception as e:
         raise ValueError(f"Error reading from stdin: {str(e)}")
+
 
 
 def load_settings(settings_json_path: str) -> dict:
@@ -99,14 +110,14 @@ def load_settings(settings_json_path: str) -> dict:
         raise ImportError("keyring module is not installed. Please install it: pip install keyring")
     
     # Use the same service and account names as keytar in Node.js
-    service_name = "threatdragon/ai-api-key"
+    service_name = "org.owasp.threatdragon/ai-api-key"
     account_name = "ai-api-key"
     
     try:
-        api_key = keyring.get_password(service_name, account_name)
+        api_key = get_api_key(service_name, account_name)
         if not api_key:
             raise ValueError("API key not found in credential manager. Please set it in AI Settings.")
-        result['api_key'] = api_key
+        result['api_key'] = api_key        
     except Exception as e:
         raise ValueError(f"Failed to retrieve API key from credential manager: {str(e)}")
     
@@ -165,6 +176,7 @@ def main():
     
     # Display configuration
     logger.info("Configuration:")
+    logger.info(f"  API Key: {settings['api_key']}")
     logger.info(f"  LLM Model: {settings['llm_model']}")
     logger.info(f"  Temperature: {settings['temperature']}")
     logger.info(f"  Response Format: {settings['response_format']}")
