@@ -17,7 +17,7 @@ jobs:
       actions: write
     steps:
       - name: Delete stale workflow runs
-        uses: Mattraks/delete-workflow-runs@v2.0.6
+        uses: Mattraks/delete-workflow-runs@v2.1.0
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
@@ -71,7 +71,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4.30.9
+        uses: github/codeql-action/upload-sarif@v4.31.2
         with:
           sarif_file: 'trivy-results.sarif'
 
@@ -89,7 +89,7 @@ jobs:
           ref: main
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.30.9
+        uses: github/codeql-action/init@v4.31.2
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -98,10 +98,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v4.30.9
+        uses: github/codeql-action/autobuild@v4.31.2
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v4.30.9
+        uses: github/codeql-action/analyze@v4.31.2
 
   link_checker:
     name: Link checker
@@ -111,7 +111,7 @@ jobs:
         uses: actions/checkout@v5.0.0
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.6.1
+        uses: lycheeverse/lychee-action@v2.7.0
         with:
           args: >-
             --no-progress
