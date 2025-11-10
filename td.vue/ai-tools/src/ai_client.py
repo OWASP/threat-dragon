@@ -25,19 +25,15 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
     prompt_template = PROMPT_FILE.read_text(encoding='utf-8')
     
     system_prompt = prompt_template.format(
-        schema_json=json.dumps(schema, indent=2, ensure_ascii=False).encode("utf-8"),
-        model_json=json.dumps(model, indent=2, ensure_ascii=False).encode("utf-8"),
+        schema_json=json.dumps(schema, indent=2, ensure_ascii=False),
+        model_json=json.dumps(model, indent=2, ensure_ascii=False)
     )
     
 
     logger.info(f"Calling LLM: {model_name}")
 
-    # Configure JSON schema validation based on provider support
-    if response_format:
-        litellm.enable_json_schema_validation = True
-    else:
-        litellm.enable_json_schema_validation = False
-    
+    # Configure JSON schema validation
+    litellm.enable_json_schema_validation = response_format
     litellm.drop_params = True
 
     # Prepare messages for LLM API call
@@ -62,15 +58,9 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
         "timeout": 14400,
         "max_tokens": max_tokens,
         "api_key": api_key,
+        "response_format": AIThreatsResponseList if response_format else None
     }
     
-    # Add structured output format if enabled
-    if response_format:
-        completion_params["response_format"] = AIThreatsResponseList
-    else:
-        completion_params["response_format"] = None
-    
-    # Add custom API base URL if provided
     if api_base:
         completion_params["api_base"] = api_base
     

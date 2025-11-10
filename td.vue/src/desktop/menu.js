@@ -506,8 +506,6 @@ export const setMainWindow = (window) => {
 // AI Tools menu handlers
 function generateThreatsAndMitigations() {
     logger.log.debug('Generate Threats & Mitigations clicked');
-    
-    // Open warning dialog first
     openAIThreatsWarning();
 }
 
@@ -532,8 +530,6 @@ function proceedWithThreatGeneration() {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
-    
-    // Request model data from renderer
     logger.log.debug('Requesting model data from renderer for AI threat generation');
     mainWindow.webContents.send('ai-threat-generation-request');
 }
@@ -582,7 +578,7 @@ function runPythonThreatGeneration(modelData) {
         '--logs-folder', logsFolderPath
     ];
     
-    // Open progress window right before starting Python process
+    // Open progress window before starting Python process
     openAIThreatsProgress();
     
     // Reset cancellation flag
@@ -593,16 +589,14 @@ function runPythonThreatGeneration(modelData) {
         stdio: ['pipe', 'pipe', 'pipe']
     });
     
-    // Store process globally so it can be killed when window is closed
+    // Store process globally for cancellation handling
     currentPythonProcess = pythonProcess;
     
-    // Write model and schema to stdin as JSON strings with UTF-8 encoding
-    // Python expects: first line = model JSON, second line = schema JSON
+    // Write model and schema to stdin as JSON strings
     try {
         const modelJson = JSON.stringify(modelData);
         const schemaJson = JSON.stringify(schema);
         
-        // Write both JSON strings as separate lines with newline separators
         pythonProcess.stdin.setDefaultEncoding('utf8');
         pythonProcess.stdin.write(modelJson + '\n');
         pythonProcess.stdin.write(schemaJson + '\n');
@@ -611,11 +605,9 @@ function runPythonThreatGeneration(modelData) {
         logger.log.debug('Model and schema data written to Python stdin');
     } catch (err) {
         logger.log.error(`Failed to write data to Python stdin: ${err.message}`);
-        // Close progress window on error
         closeAIThreatsProgress();
         dialog.showErrorBox('Data Error', `Failed to prepare data for Python:\n${err.message}`);
         pythonProcess.kill();
-        // Clean up process reference
         currentPythonProcess = null;
         return;
     }
@@ -631,54 +623,41 @@ function runPythonThreatGeneration(modelData) {
     pythonProcess.stderr.on('data', (data) => {
         const errorText = data.toString();
         stderrData += errorText;
-        // Log errors but don't show dialog yet - wait for process to complete
         logger.log.error(`Python stderr: ${errorText}`);
     });
     
     pythonProcess.on('error', (error) => {
-        // Close progress window
         closeAIThreatsProgress();
-        
-        // Clean up process reference
         currentPythonProcess = null;
-        
         dialog.showErrorBox('Execution Error', `Failed to start Python process:\n${error.message}`);
     });
     
     pythonProcess.on('close', (code) => {
-        // Clean up process reference
         currentPythonProcess = null;
         
-        // If process was cancelled by user, don't show error dialogs
         if (isPythonProcessCancelled) {
             logger.log.debug('Python process was cancelled by user');
             return;
         }
         
         if (code !== 0) {
-            // Process exited with error
             logger.log.error(`Python process exited with code ${code}`);
             if (stderrData) {
                 logger.log.error(`Python stderr output: ${stderrData}`);
             }
             
-            // Close progress window
             closeAIThreatsProgress();
             
-            // Extract full error message from stderr or stdout
+            // Extract error message from stderr or stdout
             let errorMessage = `The AI threat generation process failed with exit code ${code}.`;
-            
-            // Look for ERROR: messages in output (check both stderr and stdout)
             const allOutput = (stderrData || '') + '\n' + (stdoutData || '');
             const errorMatch = allOutput.match(/ERROR:[^\n]*/);
             if (errorMatch) {
-                // Extract the error message (remove "ERROR:" prefix and trim)
                 const fullError = errorMatch[0].replace(/^ERROR:\s*/, '').trim();
                 if (fullError) {
                     errorMessage = fullError;
                 }
             } else if (stderrData) {
-                // If no ERROR: prefix found, use the last line of stderr
                 const stderrLines = stderrData.trim().split('\n').filter(line => line.trim());
                 if (stderrLines.length > 0) {
                     errorMessage = stderrLines[stderrLines.length - 1];
@@ -699,15 +678,12 @@ function runPythonThreatGeneration(modelData) {
                 throw new Error('Could not find JSON markers in Python output');
             }
             
-            // Extract the JSON string (between markers, excluding the markers themselves)
             const jsonString = stdoutData.substring(
                 jsonStartIndex + '<<JSON_START>>'.length,
                 jsonEndIndex
             ).trim();
             
-            // Parse the updated model
             const updatedModel = JSON.parse(jsonString);
-            
             logger.log.debug('Successfully parsed updated model from Python output');
             
             // Extract metadata (cost and validation info) if available
@@ -728,13 +704,9 @@ function runPythonThreatGeneration(modelData) {
                 }
             }
             
-            // Close progress window
             closeAIThreatsProgress();
-            
-            // Send updated model back to renderer
             mainWindow.webContents.send('ai-threat-generation-complete', updatedModel);
             
-            // Show results window with cost and validation info
             if (metadata) {
                 openAIThreatsResults(metadata);
             }
@@ -742,10 +714,7 @@ function runPythonThreatGeneration(modelData) {
         } catch (err) {
             logger.log.error(`Failed to parse Python output: ${err.message}`);
             logger.log.error(`Python stdout: ${stdoutData}`);
-            
-            // Close progress window
             closeAIThreatsProgress();
-            
             dialog.showErrorBox('Parse Error', 
                 `Failed to parse the updated model from Python output:\n${err.message}\n\n` +
                 `Check the logs for more details.`);
@@ -756,13 +725,11 @@ function runPythonThreatGeneration(modelData) {
 function openAIThreatsWarning() {
     logger.log.debug('Opening AI Threats Warning dialog');
     
-    // If window already exists, focus it instead of creating a new one
     if (aiThreatsWarningWindow && !aiThreatsWarningWindow.isDestroyed()) {
         aiThreatsWarningWindow.focus();
         return;
     }
 
-    // Create the warning window
     aiThreatsWarningWindow = new BrowserWindow({
         width: 620,
         height: 550,
@@ -781,27 +748,22 @@ function openAIThreatsWarning() {
         show: false
     });
 
-    // Completely remove the menu bar
     aiThreatsWarningWindow.setMenuBarVisibility(false);
 
-    // Handle IPC messages from the warning window - set up BEFORE loading
     const okHandler = () => {
         logger.log.debug('AI Threats Warning: User clicked OK, proceeding with threat generation');
         if (aiThreatsWarningWindow && !aiThreatsWarningWindow.isDestroyed()) {
             aiThreatsWarningWindow.close();
         }
-        // Proceed with threat generation
         proceedWithThreatGeneration();
     };
     ipcMain.on('ai-threats-warning-ok', okHandler);
 
-    // Clean up IPC listeners when window is closed
     aiThreatsWarningWindow.once('closed', () => {
         ipcMain.removeListener('ai-threats-warning-ok', okHandler);
         aiThreatsWarningWindow = null;
     });
 
-    // Load the warning HTML file
     const isDev = process.env.NODE_ENV === 'development';
     if (isDev) {
         aiThreatsWarningWindow.loadURL('http://localhost:8080/ai-threats-warning.html');
@@ -817,13 +779,11 @@ function openAIThreatsWarning() {
 function openAIThreatsProgress() {
     logger.log.debug('Opening AI Threats Progress dialog');
     
-    // If window already exists, focus it instead of creating a new one
     if (aiThreatsProgressWindow && !aiThreatsProgressWindow.isDestroyed()) {
         aiThreatsProgressWindow.focus();
         return;
     }
 
-    // Create the progress window - sized to fit content with configuration
     aiThreatsProgressWindow = new BrowserWindow({
         width: 600,
         height: 450,
@@ -842,39 +802,33 @@ function openAIThreatsProgress() {
         show: false
     });
 
-    // Completely remove the menu bar
     aiThreatsProgressWindow.setMenuBarVisibility(false);
 
-    // Handle window close event to show confirmation dialog
+    // Handle window close event with confirmation
     aiThreatsProgressWindow.on('close', (event) => {
-        // Only show confirmation if Python process is still running
         if (currentPythonProcess && !currentPythonProcess.killed) {
-            // Prevent default close behavior
             event.preventDefault();
             
-            // Show confirmation dialog
             const response = dialog.showMessageBoxSync(aiThreatsProgressWindow, {
                 type: 'question',
                 buttons: ['Yes', 'No'],
-                defaultId: 1, // Default to "No"
-                cancelId: 1, // ESC key cancels
+                defaultId: 1,
+                cancelId: 1,
                 title: 'Confirm Cancel',
                 message: 'Are you sure?',
                 detail: 'The threat generation process is still running. Do you want to cancel it?'
             });
             
             if (response === 0) {
-                // User confirmed - kill the Python process
                 logger.log.debug('User confirmed cancellation, killing Python process');
                 isPythonProcessCancelled = true;
-                
                 const processToKill = currentPythonProcess;
                 
                 try {
                     processToKill.kill('SIGINT');
                     logger.log.debug('Python process sent SIGINT signal');
                     
-                    // Set timeout to force kill with SIGKILL after 5 seconds if still running
+                    // Force kill after 5 seconds if still running
                     const forceKillTimeout = setTimeout(() => {
                         if (processToKill && !processToKill.killed) {
                             try {
@@ -886,7 +840,6 @@ function openAIThreatsProgress() {
                         }
                     }, 5000);
                     
-                    // Clear timeout if process exits before 5 seconds
                     processToKill.once('close', () => {
                         clearTimeout(forceKillTimeout);
                         logger.log.debug('Python process exited, cleared force kill timeout');
@@ -894,7 +847,6 @@ function openAIThreatsProgress() {
                     
                 } catch (err) {
                     logger.log.error(`Error sending SIGINT to Python process: ${err.message}`);
-                    // Try force kill immediately if SIGINT fails
                     try {
                         processToKill.kill('SIGKILL');
                         logger.log.debug('Python process force killed with SIGKILL after SIGINT failed');
@@ -903,22 +855,16 @@ function openAIThreatsProgress() {
                     }
                 }
                 
-                // Clean up process reference
                 currentPythonProcess = null;
-                
-                // Close the window
                 aiThreatsProgressWindow.destroy();
             }
-            // If response === 1 (No), do nothing - window stays open
         }
     });
 
-    // Clean up when window is closed
     aiThreatsProgressWindow.once('closed', () => {
         aiThreatsProgressWindow = null;
     });
 
-    // Load the progress HTML file
     const isDev = process.env.NODE_ENV === 'development';
     if (isDev) {
         aiThreatsProgressWindow.loadURL('http://localhost:8080/ai-threats-progress.html');
@@ -958,13 +904,11 @@ function closeAIThreatsProgress() {
 function openAIThreatsResults(metadata) {
     logger.log.debug('Opening AI Threats Results dialog');
     
-    // If window already exists, focus it instead of creating a new one
     if (aiThreatsResultsWindow && !aiThreatsResultsWindow.isDestroyed()) {
         aiThreatsResultsWindow.focus();
         return;
     }
 
-    // Create the results window - sized to fit content without scrolling
     aiThreatsResultsWindow = new BrowserWindow({
         width: 600,
         height: 600,
@@ -983,15 +927,12 @@ function openAIThreatsResults(metadata) {
         show: false
     });
 
-    // Completely remove the menu bar
     aiThreatsResultsWindow.setMenuBarVisibility(false);
 
-    // Clean up when window is closed
     aiThreatsResultsWindow.once('closed', () => {
         aiThreatsResultsWindow = null;
     });
 
-    // Load the results HTML file
     const isDev = process.env.NODE_ENV === 'development';
     if (isDev) {
         aiThreatsResultsWindow.loadURL('http://localhost:8080/ai-threats-results.html');
@@ -1001,7 +942,6 @@ function openAIThreatsResults(metadata) {
 
     aiThreatsResultsWindow.once('ready-to-show', () => {
         aiThreatsResultsWindow.show();
-        // Send metadata to the window after it's ready
         aiThreatsResultsWindow.webContents.send('ai-threats-results-data', metadata);
     });
 }

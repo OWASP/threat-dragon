@@ -3,8 +3,6 @@
 import json
 import uuid
 import logging
-import sys
-import os
 import platform
 import re
 import keyring
@@ -41,7 +39,7 @@ def _fix_backslash_u_utf16le_stream(s: str) -> str:
         return data.decode("latin1")
 
 def get_api_key(service: str, account: str) -> str | None:
-    # Try platform-appropriate lookups
+    """Retrieve API key from credential manager with Windows compatibility."""
     tried = set()
     for svc, acc in (_windows_lookups(service, account) if platform.system() == "Windows"
                      else [(service, account)]):
@@ -50,14 +48,13 @@ def get_api_key(service: str, account: str) -> str | None:
         tried.add((svc, acc))
         pw = keyring.get_password(svc, acc)
         if pw:
-            # Auto-repair the common Windows mojibake form
+            # Auto-repair Windows mojibake encoding issues
             if _looks_like_backslash_u_stream(pw):
                 pw = _fix_backslash_u_utf16le_stream(pw)
             else:
-                # Secondary heuristic: if result is mostly CJK/private-use, it's likely the same issue
+                # Check for CJK/private-use characters (likely encoding issue)
                 cjkish = sum(1 for ch in pw if 0x3400 <= ord(ch) <= 0x9FFF or 0xE000 <= ord(ch) <= 0xF8FF)
                 if cjkish > max(8, len(pw)//2):
-                    # Convert code units -> bytes -> text
                     data = bytearray()
                     for ch in pw:
                         data.extend(ord(ch).to_bytes(2, "little"))
@@ -122,13 +119,12 @@ def update_threats_in_memory(model: dict, threats_data: dict) -> dict:
 
 
 def _add_red_stroke(cell: dict) -> None:
-    """Add red stroke visual indicator to threat-bearing cells (different shapes need different attributes)."""
+    """Add red stroke visual indicator to threat-bearing cells."""
     if 'attrs' not in cell:
         cell['attrs'] = {'stroke': 'red'}
         return
     
     attrs = cell['attrs']
-    
     # Different cell shapes store stroke in different locations
     if 'line' in attrs:
         attrs['line']['stroke'] = 'red'

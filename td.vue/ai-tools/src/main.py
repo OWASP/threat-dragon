@@ -47,8 +47,7 @@ def parse_arguments():
 
 
 def read_json_from_stdin():
-    """Read JSON objects from stdin (model JSON on first line, schema JSON on second line), safely handling UTF-8."""
- 
+    """Read JSON objects from stdin (model JSON on first line, schema JSON on second line)."""
     try:
         # Ensure stdin is read as UTF-8 regardless of system locale
         if sys.stdin.encoding and sys.stdin.encoding.lower() != "utf-8":
@@ -156,10 +155,9 @@ def setup_logging(logs_folder: Path, log_level: str = 'INFO'):
 
 def main():
     """Main application entry point."""
-    global sys  # Explicitly declare sys as global to avoid UnboundLocalError
+    global sys
     
-    # Set UTF-8 encoding for stdout/stderr to handle Unicode characters across all platforms
-    # This is especially important on Windows but also ensures consistency on Linux/Mac
+    # Set UTF-8 encoding for stdout/stderr (important for Windows)
     if hasattr(sys.stdout, 'buffer') and not isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
     if hasattr(sys.stderr, 'buffer') and not isinstance(sys.stderr, io.TextIOWrapper):
@@ -168,7 +166,7 @@ def main():
     # Parse command-line arguments
     args = parse_arguments()
     
-    # Load settings from JSON file (includes API key from keyring)
+    # Load settings from JSON file
     try:
         settings = load_settings(args.settings_json)
     except Exception as e:
@@ -251,14 +249,12 @@ def main():
     logger.info("THREAT MODELING PROCESS COMPLETED")
     logger.info("="*60)
     
-    # Output updated model as JSON string to stdout (single line, no pretty printing for parsing)
-    # Use a marker to separate JSON from log messages
-
+    # Output updated model as JSON to stdout
     sys.stdout.write("<<JSON_START>>\n")
     json.dump(updated_model, sys.stdout, separators=(',', ':'), ensure_ascii=False)
     sys.stdout.write("\n<<JSON_END>>\n")
     
-    # Output cost and validation info after JSON
+    # Output cost and validation metadata
     sys.stdout.write("<<METADATA_START>>\n")
     metadata = {
         "cost": response_cost,

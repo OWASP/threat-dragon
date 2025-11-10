@@ -2,10 +2,6 @@
 Threat Model Validation Module
 
 Validates AI-generated threat models against original specifications.
-Validation categories:
-- INFO: Missing elements (in scope but no threats generated)
-- WARNINGS: Quality issues (empty mitigations, out-of-scope elements)
-- ERRORS: No overlap with model elements
 """
 
 from datetime import datetime
