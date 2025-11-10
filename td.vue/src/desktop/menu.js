@@ -15,6 +15,7 @@ var mainWindow;
 var aiSettingsWindow = null;
 var aiThreatsWarningWindow = null;
 var aiThreatsProgressWindow = null;
+var aiThreatsResultsWindow = null;
 var currentPythonProcess = null;
 var isPythonProcessCancelled = false;
 
@@ -664,9 +665,27 @@ function runPythonThreatGeneration(modelData) {
             // Close progress window
             closeAIThreatsProgress();
             
-            dialog.showErrorBox('AI Threat Generation Failed', 
-                `The AI threat generation process failed with exit code ${code}.\n\n` +
-                `Check the logs for more details.`);
+            // Extract full error message from stderr or stdout
+            let errorMessage = `The AI threat generation process failed with exit code ${code}.`;
+            
+            // Look for ERROR: messages in output (check both stderr and stdout)
+            const allOutput = (stderrData || '') + '\n' + (stdoutData || '');
+            const errorMatch = allOutput.match(/ERROR:[^\n]*/);
+            if (errorMatch) {
+                // Extract the error message (remove "ERROR:" prefix and trim)
+                const fullError = errorMatch[0].replace(/^ERROR:\s*/, '').trim();
+                if (fullError) {
+                    errorMessage = fullError;
+                }
+            } else if (stderrData) {
+                // If no ERROR: prefix found, use the last line of stderr
+                const stderrLines = stderrData.trim().split('\n').filter(line => line.trim());
+                if (stderrLines.length > 0) {
+                    errorMessage = stderrLines[stderrLines.length - 1];
+                }
+            }
+            
+            dialog.showErrorBox('AI Threat Generation Failed', errorMessage);
             return;
         }
         
@@ -691,11 +710,34 @@ function runPythonThreatGeneration(modelData) {
             
             logger.log.debug('Successfully parsed updated model from Python output');
             
+            // Extract metadata (cost and validation info) if available
+            let metadata = null;
+            const metadataStartIndex = stdoutData.indexOf('<<METADATA_START>>');
+            const metadataEndIndex = stdoutData.indexOf('<<METADATA_END>>');
+            
+            if (metadataStartIndex !== -1 && metadataEndIndex !== -1) {
+                const metadataString = stdoutData.substring(
+                    metadataStartIndex + '<<METADATA_START>>'.length,
+                    metadataEndIndex
+                ).trim();
+                try {
+                    metadata = JSON.parse(metadataString);
+                    logger.log.debug('Successfully parsed metadata from Python output');
+                } catch (metadataErr) {
+                    logger.log.warn(`Failed to parse metadata: ${metadataErr.message}`);
+                }
+            }
+            
             // Close progress window
             closeAIThreatsProgress();
             
             // Send updated model back to renderer
             mainWindow.webContents.send('ai-threat-generation-complete', updatedModel);
+            
+            // Show results window with cost and validation info
+            if (metadata) {
+                openAIThreatsResults(metadata);
+            }
             
         } catch (err) {
             logger.log.error(`Failed to parse Python output: ${err.message}`);
@@ -781,14 +823,14 @@ function openAIThreatsProgress() {
         return;
     }
 
-    // Create the progress window - sized to fit content without scrolling
+    // Create the progress window - sized to fit content with configuration
     aiThreatsProgressWindow = new BrowserWindow({
-        width: 500,
-        height: 250,
+        width: 600,
+        height: 450,
         minWidth: 500,
-        minHeight: 250,
-        maxWidth: 500,
-        maxHeight: 250,
+        minHeight: 300,
+        maxWidth: 600,
+        maxHeight: 450,
         resizable: false,
         parent: mainWindow,
         modal: true,
@@ -886,6 +928,23 @@ function openAIThreatsProgress() {
 
     aiThreatsProgressWindow.once('ready-to-show', () => {
         aiThreatsProgressWindow.show();
+        // Load and send configuration to the progress window
+        (async () => {
+            try {
+                const settings = await loadAISettings();
+                if (aiThreatsProgressWindow && !aiThreatsProgressWindow.isDestroyed()) {
+                    aiThreatsProgressWindow.webContents.send('ai-threats-progress-config', {
+                        llmModel: settings.llmModel || '',
+                        temperature: settings.temperature !== undefined ? settings.temperature : 0.1,
+                        responseFormat: settings.responseFormat === true,
+                        apiBase: settings.apiBase || '',
+                        logLevel: settings.logLevel || 'INFO'
+                    });
+                }
+            } catch (err) {
+                logger.log.error(`Error loading settings for progress window: ${err.message}`);
+            }
+        })();
     });
 }
 
@@ -894,6 +953,57 @@ function closeAIThreatsProgress() {
         aiThreatsProgressWindow.close();
         aiThreatsProgressWindow = null;
     }
+}
+
+function openAIThreatsResults(metadata) {
+    logger.log.debug('Opening AI Threats Results dialog');
+    
+    // If window already exists, focus it instead of creating a new one
+    if (aiThreatsResultsWindow && !aiThreatsResultsWindow.isDestroyed()) {
+        aiThreatsResultsWindow.focus();
+        return;
+    }
+
+    // Create the results window - sized to fit content without scrolling
+    aiThreatsResultsWindow = new BrowserWindow({
+        width: 600,
+        height: 600,
+        minWidth: 500,
+        minHeight: 400,
+        maxWidth: 800,
+        maxHeight: 600,
+        resizable: true,
+        parent: mainWindow,
+        modal: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        },
+        show: false
+    });
+
+    // Completely remove the menu bar
+    aiThreatsResultsWindow.setMenuBarVisibility(false);
+
+    // Clean up when window is closed
+    aiThreatsResultsWindow.once('closed', () => {
+        aiThreatsResultsWindow = null;
+    });
+
+    // Load the results HTML file
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+        aiThreatsResultsWindow.loadURL('http://localhost:8080/ai-threats-results.html');
+    } else {
+        aiThreatsResultsWindow.loadURL('app://./ai-threats-results.html');
+    }
+
+    aiThreatsResultsWindow.once('ready-to-show', () => {
+        aiThreatsResultsWindow.show();
+        // Send metadata to the window after it's ready
+        aiThreatsResultsWindow.webContents.send('ai-threats-results-data', metadata);
+    });
 }
 
 // Get the path to ai-settings.json in user data directory

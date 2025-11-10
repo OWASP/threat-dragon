@@ -8,7 +8,7 @@ import io
 import sys
 from datetime import datetime
 from pathlib import Path
-from utils import load_json, update_threats_in_memory, handle_user_friendly_error, get_api_key
+from utils import load_json, update_threats_in_memory, get_api_key
 from ai_client import generate_threats
 from validator import ThreatValidator
 
@@ -197,14 +197,14 @@ def main():
         model, schema = read_json_from_stdin()
         logger.debug(f"Loaded threat model with {len(model.get('detail', {}).get('diagrams', []))} diagram(s)")
     except Exception as e:
-        error_msg = handle_user_friendly_error(e, "model_file", logger)
-        logger.error(error_msg)
+        logger.error(f"ERROR: {str(e)}", exc_info=True)
         raise SystemExit(1)
     
     # Generate threats using AI
     logger.info("Generating threats...")
+    response_cost = 0.0
     try:
-        threats_data = generate_threats(
+        threats_data, response_cost = generate_threats(
             schema, 
             model, 
             settings['llm_model'], 
@@ -214,25 +214,7 @@ def main():
             settings['api_base'] if settings['api_base'] else None
         )
     except Exception as e:
-        # Determine error type based on the exception
-        error_str = str(e).lower()
-
-        if "litellm.AuthenticationError".lower() in error_str:
-            error_type = "api_key"
-        elif "litellm.NotFoundError".lower() in error_str or "litellm.BadRequestError".lower() in error_str:
-            error_type = "llm_model"
-        elif "temperature" in error_str:
-            error_type = "temperature"
-        elif "litellm.InternalServerError".lower() in error_str:
-            error_type = "api_base"
-        elif "litellm.JSONSchemaValidationError".lower() in error_str:
-            error_type = "response_format"
-        else:
-            error_type = "unknown"
- 
-        
-        error_msg = handle_user_friendly_error(e, error_type, logger)
-        logger.error(error_msg)
+        logger.error(f"ERROR: {str(e)}", exc_info=True)
         raise SystemExit(1)
     
     # Log detailed threat information (DEBUG only)
@@ -275,6 +257,25 @@ def main():
     sys.stdout.write("<<JSON_START>>\n")
     json.dump(updated_model, sys.stdout, separators=(',', ':'), ensure_ascii=False)
     sys.stdout.write("\n<<JSON_END>>\n")
+    
+    # Output cost and validation info after JSON
+    sys.stdout.write("<<METADATA_START>>\n")
+    metadata = {
+        "cost": response_cost,
+        "validation": None
+    }
+    
+    if validation_result:
+        metadata["validation"] = {
+            "is_valid": validation_result.is_valid,
+            "stats": validation_result.stats,
+            "warnings": validation_result.warnings,
+            "info": validation_result.info,
+            "has_errors": not validation_result.is_valid
+        }
+    
+    json.dump(metadata, sys.stdout, separators=(',', ':'), ensure_ascii=False)
+    sys.stdout.write("\n<<METADATA_END>>\n")
     sys.stdout.flush()
     
     return validation_result

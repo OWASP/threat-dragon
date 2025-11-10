@@ -4,17 +4,20 @@ import json
 import re
 import logging
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 import litellm
 from models import AIThreatsResponseList
-from utils import handle_user_friendly_error
 
 PROJECT_ROOT = Path(__file__).parent.parent
 PROMPT_FILE = PROJECT_ROOT / "prompt.txt"
 
 
-def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, temperature: float = 0.1, response_format: bool = False, api_base: str = None) -> Dict[str, List[Dict]]:
-    """Generate AI-powered threats for all in-scope components."""
+def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, temperature: float = 0.1, response_format: bool = False, api_base: str = None) -> Tuple[Dict[str, List[Dict]], float]:
+    """Generate AI-powered threats for all in-scope components.
+    
+    Returns:
+        tuple: (threats_data, response_cost)
+    """
     logger = logging.getLogger("threat_modeling.ai_client")
     logger.info("Starting threat generation...")
     
@@ -74,7 +77,9 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
     # Call LLM API
     response = litellm.completion(**completion_params)
 
-    logger.info(f"Response cost: {response._hidden_params["response_cost"]}")
+    # Extract response cost
+    response_cost = response._hidden_params.get("response_cost", 0.0)
+    logger.info(f"Response cost: {response_cost}")
     logger.debug(f"/\n\nResponse: {response}")
     
     # Parse and validate AI response
@@ -100,6 +105,6 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
     total_threats = sum(len(threats) for threats in threats_data.values())
     logger.info(f"Generated {total_threats} threats for {len(threats_data)} elements")
     
-    return threats_data
+    return threats_data, response_cost
 
 

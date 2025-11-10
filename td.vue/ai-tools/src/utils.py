@@ -69,50 +69,6 @@ def get_api_key(service: str, account: str) -> str | None:
     return None
 
 
-def handle_user_friendly_error(error: Exception, error_type: str, logger_instance: logging.Logger = None) -> str:
-    """Convert technical errors into user-friendly messages while logging full details."""
-    if logger_instance is None:
-        logger_instance = logger
-    
-    # Log full error details as DEBUG
-    logger_instance.debug(f"Full error details for {error_type}: {str(error)}", exc_info=True)
-    
-    # Return user-friendly messages
-    error_str = str(error).lower()
-    
-    if error_type == "api_key":
-            return "ERROR: API key error. Please verify your API key is correct."
-    
-    elif error_type == "llm_model":
-        if "litellm.NotFoundError".lower() in error_str:
-            return "ERROR: Model not found or no access. Please check if the model exists and you have access to it."
-        elif "litellm.BadRequestError".lower() in error_str:
-            return "ERROR: LLM provider not recognized. Please use the correct format (e.g., 'openai/gpt-4', 'anthropic/claude-3')"
-    
-    elif error_type == "model_file":
-        if "not found" in error_str or "no such file" in error_str:
-            return "ERROR: Threat Dragon model file not found. Please check the file path."
-        elif "permission" in error_str or "access" in error_str:
-            return "ERROR: Cannot access Threat Dragon model file. Please check file permissions."
-        elif "invalid" in error_str or "malformed" in error_str:
-            return "ERROR: Invalid Threat Dragon model file format. Please ensure it's a valid JSON file."
-        else:
-            return "ERROR: Threat Dragon model file error. Please verify the file path and format."
-    
-    elif error_type == "temperature":
-        if "range" in error_str or "invalid" in error_str:
-            return "ERROR: Invalid temperature value. Please use a value between 0 and 2."
-    
-    elif error_type == "api_base":
-            return "ERROR: InternalServerError. Please verify the API base URL is correct or enable DEBUG logging for more details and check log files."
-    
-    elif error_type == "response_format":
-            return "ERROR: Response format error. Please try again or disable response format."
-    
-    else:
-        return "ERROR: Unknown error occurred. Please enable DEBUG logging for more details and check log files."
-
-
 def load_json(path: Union[str, Path]) -> dict:
     """Load and parse a JSON file."""
     logger.info(f"Loading JSON from {path}")
