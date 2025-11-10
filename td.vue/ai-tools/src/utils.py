@@ -120,18 +120,14 @@ def load_json(path: Union[str, Path]) -> dict:
         return json.load(f)
 
 
-def update_threats_in_file(file_path: Union[str, Path], threats_data: dict) -> None:
-    """Update threat model file with AI-generated threats and visual indicators."""
-    logger.info(f"Updating threats in file: {file_path}")
-    
-    # Load existing threat model
-    with open(str(file_path), 'r', encoding='utf-8') as f:
-        data = json.load(f)
+def update_threats_in_memory(model: dict, threats_data: dict) -> dict:
+    """Update threat model in memory with AI-generated threats and visual indicators."""
+    logger.info("Updating threats in memory")
     
     updated_count = 0
     
     # Iterate through all diagrams and cells
-    for diagram in data.get('detail', {}).get('diagrams', []):
+    for diagram in model.get('detail', {}).get('diagrams', []):
         for cell in diagram.get('cells', []):
             cell_id = cell.get('id')
             
@@ -165,11 +161,8 @@ def update_threats_in_file(file_path: Union[str, Path], threats_data: dict) -> N
                 _add_red_stroke(cell)
                 updated_count += 1
     
-    # Save updated model back to file
-    with open(str(file_path), 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2, separators=(',', ': '), ensure_ascii=False)
-    
     logger.info(f"Updated {updated_count} cells with threats")
+    return model
 
 
 def _add_red_stroke(cell: dict) -> None:

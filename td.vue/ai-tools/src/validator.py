@@ -141,7 +141,7 @@ VALIDATION NOTES:
 - Only completely different IDs (no overlap with model) are validation errors
 
 VALIDATION SUMMARY:
-Overall Status: {'✅ VALID' if result.is_valid else '❌ INVALID'}
+Overall Status: {'[VALID]' if result.is_valid else '[INVALID]'}
 Elements in Scope: {result.stats['in_scope_elements']}
 Elements with Threats: {result.stats['elements_with_threats']}
 Total Threats Generated: {result.stats['total_threats']}
@@ -151,16 +151,16 @@ VALIDATION RESULTS:
 """
         
         if not result.is_valid:
-            content += f"\n❌ VALIDATION ERRORS:\n"
+            content += f"\n[ERROR] VALIDATION ERRORS:\n"
             content += f"  • AI response contains completely different IDs with no overlap to model elements\n"
         
         if result.warnings:
-            content += f"\n⚠️  WARNINGS ({len(result.warnings)}):\n"
+            content += f"\n[WARNING] WARNINGS ({len(result.warnings)}):\n"
             for warning in result.warnings:
                 content += f"  • {warning}\n"
         
         if result.info:
-            content += f"\nℹ️  INFO ({len(result.info)}):\n"
+            content += f"\n[INFO] INFO ({len(result.info)}):\n"
             for info_item in result.info:
                 content += f"  • {info_item}\n"
         
@@ -185,23 +185,23 @@ VALIDATION RESULTS:
         print("Note: Invalid IDs (out of scope) are warnings, not errors")
         print("Note: Only completely different IDs are validation errors")
         
-        print(f"Overall Status: {'✅ VALID' if result.is_valid else '❌ INVALID'}")
+        print(f"Overall Status: {'[VALID]' if result.is_valid else '[INVALID]'}")
         print(f"Elements in Scope: {result.stats['in_scope_elements']}")
         print(f"Elements with Threats: {result.stats['elements_with_threats']}")
         print(f"Coverage: {result.stats['coverage_percent']}%")
         print(f"Total Threats Generated: {result.stats['total_threats']}")
         
         if not result.is_valid:
-            print(f"\n❌ VALIDATION ERRORS:")
+            print(f"\n[ERROR] VALIDATION ERRORS:")
             print(f"  • AI response contains completely different IDs with no overlap to model elements")
         
         if result.warnings:
-            print(f"\n⚠️  WARNINGS ({len(result.warnings)}):")
+            print(f"\n[WARNING] WARNINGS ({len(result.warnings)}):")
             for warning in result.warnings:
                 print(f"  • {warning}")
         
         if result.info:
-            print(f"\nℹ️  INFO ({len(result.info)}):")
+            print(f"\n[INFO] INFO ({len(result.info)}):")
             for info_item in result.info:
                 print(f"  • {info_item}")
         

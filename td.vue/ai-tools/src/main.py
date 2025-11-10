@@ -8,7 +8,7 @@ import io
 import sys
 from datetime import datetime
 from pathlib import Path
-from utils import load_json, update_threats_in_file, handle_user_friendly_error, get_api_key
+from utils import load_json, update_threats_in_memory, handle_user_friendly_error, get_api_key
 from ai_client import generate_threats
 from validator import ThreatValidator
 
@@ -51,7 +51,7 @@ def read_json_from_stdin():
  
     try:
         # Ensure stdin is read as UTF-8 regardless of system locale
-        if sys.stdin.encoding.lower() != "utf-8":
+        if sys.stdin.encoding and sys.stdin.encoding.lower() != "utf-8":
             sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8")
 
         # Read model JSON from first line
@@ -156,6 +156,15 @@ def setup_logging(logs_folder: Path, log_level: str = 'INFO'):
 
 def main():
     """Main application entry point."""
+    global sys  # Explicitly declare sys as global to avoid UnboundLocalError
+    
+    # Set UTF-8 encoding for stdout/stderr to handle Unicode characters across all platforms
+    # This is especially important on Windows but also ensures consistency on Linux/Mac
+    if hasattr(sys.stdout, 'buffer') and not isinstance(sys.stdout, io.TextIOWrapper):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    if hasattr(sys.stderr, 'buffer') and not isinstance(sys.stderr, io.TextIOWrapper):
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    
     # Parse command-line arguments
     args = parse_arguments()
     
@@ -262,7 +271,7 @@ def main():
     
     # Output updated model as JSON string to stdout (single line, no pretty printing for parsing)
     # Use a marker to separate JSON from log messages
-    import sys
+
     sys.stdout.write("<<JSON_START>>\n")
     json.dump(updated_model, sys.stdout, separators=(',', ':'), ensure_ascii=False)
     sys.stdout.write("\n<<JSON_END>>\n")

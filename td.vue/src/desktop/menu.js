@@ -603,12 +603,69 @@ function runPythonThreatGeneration(modelData) {
         return;
     }
     
+    // Collect stdout data
+    let stdoutData = '';
+    let stderrData = '';
+    
+    pythonProcess.stdout.on('data', (data) => {
+        stdoutData += data.toString();
+    });
+    
     pythonProcess.stderr.on('data', (data) => {
-        logger.log.error(`Python error: ${data.toString()}`);
+        const errorText = data.toString();
+        stderrData += errorText;
+        // Log errors but don't show dialog yet - wait for process to complete
+        logger.log.error(`Python stderr: ${errorText}`);
     });
     
     pythonProcess.on('error', (error) => {
         dialog.showErrorBox('Execution Error', `Failed to start Python process:\n${error.message}`);
+    });
+    
+    pythonProcess.on('close', (code) => {
+        if (code !== 0) {
+            // Process exited with error
+            logger.log.error(`Python process exited with code ${code}`);
+            if (stderrData) {
+                logger.log.error(`Python stderr output: ${stderrData}`);
+            }
+            dialog.showErrorBox('AI Threat Generation Failed', 
+                `The AI threat generation process failed with exit code ${code}.\n\n` +
+                `Check the logs for more details.`);
+            return;
+        }
+        
+        // Process completed successfully - parse the output
+        try {
+            // Extract JSON between JSON_START and JSON_END markers
+            const jsonStartIndex = stdoutData.indexOf('<<JSON_START>>');
+            const jsonEndIndex = stdoutData.indexOf('<<JSON_END>>');
+            
+            if (jsonStartIndex === -1 || jsonEndIndex === -1) {
+                throw new Error('Could not find JSON markers in Python output');
+            }
+            
+            // Extract the JSON string (between markers, excluding the markers themselves)
+            const jsonString = stdoutData.substring(
+                jsonStartIndex + '<<JSON_START>>'.length,
+                jsonEndIndex
+            ).trim();
+            
+            // Parse the updated model
+            const updatedModel = JSON.parse(jsonString);
+            
+            logger.log.debug('Successfully parsed updated model from Python output');
+            
+            // Send updated model back to renderer
+            mainWindow.webContents.send('ai-threat-generation-complete', updatedModel);
+            
+        } catch (err) {
+            logger.log.error(`Failed to parse Python output: ${err.message}`);
+            logger.log.error(`Python stdout: ${stdoutData}`);
+            dialog.showErrorBox('Parse Error', 
+                `Failed to parse the updated model from Python output:\n${err.message}\n\n` +
+                `Check the logs for more details.`);
+        }
     });
 }
 

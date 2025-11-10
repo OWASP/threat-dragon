@@ -26,5 +26,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback),
     onSaveModelConfirmed: (callback) => ipcRenderer.on('save-model-confirmed', callback),
     onSaveModelFailed: (callback) => ipcRenderer.on('save-model-failed', callback),
-    onAIThreatGenerationRequest: (callback) => ipcRenderer.on('ai-threat-generation-request', callback)
+    onAIThreatGenerationRequest: (callback) => ipcRenderer.on('ai-threat-generation-request', callback),
+    onAIThreatGenerationComplete: (callback) => ipcRenderer.on('ai-threat-generation-complete', callback)
 });

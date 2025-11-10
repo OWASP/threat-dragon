@@ -178,6 +178,16 @@ window.electronAPI.onAIThreatGenerationRequest((_event) =>  {
     window.electronAPI.aiThreatGeneration(modelData);
 });
 
+// receive updated model from electron after AI threat generation completes
+window.electronAPI.onAIThreatGenerationComplete((_event, updatedModel) =>  {
+    console.debug('AI threat generation complete, updating model');
+    // Update the model in the store with the AI-generated threats
+    app.$store.dispatch(tmActions.selected, updatedModel);
+    // Mark model as modified since it has been updated
+    app.$store.dispatch(tmActions.modified);
+    app.$toast.success('Threats and mitigations successfully generated');
+});
+
 // advice from electron to renderer that the model has been saved
 window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
     console.debug('Save model confirmed for file : ' + fileName);

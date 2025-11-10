@@ -44,7 +44,12 @@ def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, t
         ]
 
     logger.info(f"System token count: {litellm.token_counter(model=model_name, messages=messages)}")
-    max_tokens = litellm.get_max_tokens(model=model_name)
+
+    try:
+        max_tokens = litellm.get_max_tokens(model=model_name)
+    except Exception as e:
+        logger.error(f"Problem with getting max tokens: Using default value of 100000.")
+        max_tokens = 100000
 
     # Build API completion parameters
     completion_params = {
