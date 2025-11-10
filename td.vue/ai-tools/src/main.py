@@ -176,7 +176,6 @@ def main():
     
     # Display configuration
     logger.info("Configuration:")
-    logger.info(f"  API Key: {settings['api_key']}")
     logger.info(f"  LLM Model: {settings['llm_model']}")
     logger.info(f"  Temperature: {settings['temperature']}")
     logger.info(f"  Response Format: {settings['response_format']}")

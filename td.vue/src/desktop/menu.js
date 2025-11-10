@@ -624,11 +624,11 @@ function openAIThreatsWarning() {
     // Create the warning window
     aiThreatsWarningWindow = new BrowserWindow({
         width: 620,
-        height: 500,
+        height: 550,
         minWidth: 100,
         minHeight: 100,
         maxWidth: 620,
-        maxHeight: 500,
+        maxHeight: 550,
         resizable: true,
         parent: mainWindow,
         modal: true,
