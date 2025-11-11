@@ -6,6 +6,7 @@ import argparse
 import keyring
 import io
 import sys
+import platform
 from datetime import datetime
 from pathlib import Path
 from utils import load_json, update_threats_in_memory, get_api_key
@@ -109,7 +110,11 @@ def load_settings(settings_json_path: str) -> dict:
         raise ImportError("keyring module is not installed. Please install it: pip install keyring")
     
     # Use the same service and account names as keytar in Node.js
-    service_name = "org.owasp.threatdragon/ai-api-key"
+    # Windows uses different service name format than Mac/Linux
+    if platform.system() == 'Windows':
+        service_name = "org.owasp.threatdragon/ai-api-key"
+    else:
+        service_name = "org.owasp.threatdragon"
     account_name = "ai-api-key"
     
     try:
