@@ -510,9 +510,18 @@ function generateThreatsAndMitigations() {
 }
 
 function getPythonExecutable() {
-    const packageJsonPath = require.resolve('../../package.json');
-    const tdVuePath = path.dirname(packageJsonPath);
-    const venvPath = path.join(tdVuePath, 'venv');
+    let venvPath;
+    
+    if (app.isPackaged) {
+        // In production build, extraResources are in process.resourcesPath
+        venvPath = path.join(process.resourcesPath, 'venv');
+    } else {
+        // In development, use relative path from package.json
+        const packageJsonPath = require.resolve('../../package.json');
+        const tdVuePath = path.dirname(packageJsonPath);
+        venvPath = path.join(tdVuePath, 'venv');
+    }
+    
     const pythonPath = process.platform === 'win32' 
         ? path.join(venvPath, 'Scripts', 'python.exe')
         : path.join(venvPath, 'bin', 'python');
@@ -520,9 +529,19 @@ function getPythonExecutable() {
 }
 
 function getMainPyPath() {
-    const packageJsonPath = require.resolve('../../package.json');
-    const tdVuePath = path.dirname(packageJsonPath);
-    return path.resolve(path.join(tdVuePath, 'ai-tools', 'src', 'main.py'));
+    let aiToolsPath;
+    
+    if (app.isPackaged) {
+        // In production build, extraResources are in process.resourcesPath
+        aiToolsPath = path.join(process.resourcesPath, 'ai-tools', 'src', 'main.py');
+    } else {
+        // In development, use relative path from package.json
+        const packageJsonPath = require.resolve('../../package.json');
+        const tdVuePath = path.dirname(packageJsonPath);
+        aiToolsPath = path.join(tdVuePath, 'ai-tools', 'src', 'main.py');
+    }
+    
+    return path.resolve(aiToolsPath);
 }
 
 function proceedWithThreatGeneration() {
@@ -551,10 +570,22 @@ function runPythonThreatGeneration(modelData) {
     // Load schema JSON - use fs.readFileSync for npm build compatibility
     let schema;
     try {
-        // Get the schema file path relative to the package.json location
-        const packageJsonPath = require.resolve('../../package.json');
-        const tdVuePath = path.dirname(packageJsonPath);
-        const schemaPath = path.join(tdVuePath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+        let schemaPath;
+        if (app.isPackaged) {
+            // In production build, try to resolve from app path
+            // Schema should be accessible via require.resolve or in resources
+            const appPath = app.getAppPath();
+            schemaPath = path.join(appPath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            // If not found, try resources path (if schema was included as extraResource)
+            if (!fs.existsSync(schemaPath)) {
+                schemaPath = path.join(process.resourcesPath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            }
+        } else {
+            // In development, use relative path from package.json
+            const packageJsonPath = require.resolve('../../package.json');
+            const tdVuePath = path.dirname(packageJsonPath);
+            schemaPath = path.join(tdVuePath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+        }
         
         // Read and parse the schema JSON file
         const schemaContent = fs.readFileSync(schemaPath, 'utf8');
