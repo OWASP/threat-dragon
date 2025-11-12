@@ -32,7 +32,14 @@ class ThreatValidator:
         self.log_level = log_level
         self.logs_dir = logs_dir
         if self.log_level.upper() == 'DEBUG':
-            self.logs_dir.mkdir(parents=True, exist_ok=True)
+            try:
+                self.logs_dir.mkdir(parents=True, exist_ok=True)
+            except (OSError, PermissionError) as e:
+                # If we can't create the logs directory (e.g., read-only filesystem),
+                # disable logging but continue validation
+                print(f"Warning: Cannot create logs directory {self.logs_dir}: {e}")
+                print("Validation will continue but detailed logs will not be saved.")
+                self.log_level = 'INFO'  # Disable file logging
     
     def validate_ai_response(self, model: dict, ai_response: List[dict], filename: str) -> ValidationResult:
         """Validate AI-generated threats against the original threat model."""

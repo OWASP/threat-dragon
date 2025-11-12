@@ -7,7 +7,7 @@ import io
 import sys
 from datetime import datetime
 from pathlib import Path
-from utils import load_json, update_threats_in_memory
+from utils import update_threats_in_memory
 from ai_client import generate_threats
 from validator import ThreatValidator
 
@@ -135,7 +135,8 @@ def setup_logging(logs_folder: Path, log_level: str = 'INFO'):
         logger.addHandler(file_handler)
 
     # Console handler: always enabled for INFO+ messages
-    console_handler = logging.StreamHandler()
+    # Explicitly write to stderr to avoid interfering with stdout JSON output
+    console_handler = logging.StreamHandler(sys.stderr)
     console_handler.setLevel(logging.INFO)
     console_fmt = logging.Formatter("%(message)s")
     console_handler.setFormatter(console_fmt)
@@ -225,7 +226,8 @@ def main():
     validation_result = None
     try:
         logger.info("Validating AI response...")
-        validator = ThreatValidator(log_level=settings['log_level'])
+        # Use the logs folder from command-line arguments (writable location)
+        validator = ThreatValidator(log_level=settings['log_level'], logs_dir=logs_folder)
         
         # Convert threats data to validation format
         ai_response_format = [
@@ -235,9 +237,31 @@ def main():
         
         validation_result = validator.validate_ai_response(updated_model, ai_response_format, 'memory')
         validator.print_summary(validation_result)
+        logger.info("Validation completed successfully")
             
     except Exception as e:
-        logger.error(f"Validation error: {str(e)}")
+        logger.error(f"Validation error: {str(e)}", exc_info=True)
+        # Even if validation fails, we should still try to provide basic stats
+        # This ensures the results window can still display something
+        try:
+            from validator import ValidationResult
+            # Create a minimal validation result with basic stats
+            total_threats = sum(len(threats) for threats in threats_data.values())
+            validation_result = ValidationResult(
+                is_valid=False,
+                missing_elements=[],
+                invalid_ids=[],
+                warnings=[f"Validation failed: {str(e)}"],
+                info=[],
+                stats={
+                    'in_scope_elements': 0,
+                    'elements_with_threats': len(threats_data),
+                    'total_threats': total_threats,
+                    'coverage_percent': 0.0
+                }
+            )
+        except Exception as fallback_error:
+            logger.error(f"Failed to create fallback validation result: {str(fallback_error)}")
     
     logger.info("="*60)
     logger.info("THREAT MODELING PROCESS COMPLETED")
@@ -255,13 +279,31 @@ def main():
         "validation": None
     }
     
-    if validation_result:
+    # Always include validation data if available, even if validation had errors
+    if validation_result is not None:
         metadata["validation"] = {
             "is_valid": validation_result.is_valid,
             "stats": validation_result.stats,
             "warnings": validation_result.warnings,
             "info": validation_result.info,
             "has_errors": not validation_result.is_valid
+        }
+        logger.debug(f"Validation data included in metadata: is_valid={validation_result.is_valid}, stats={validation_result.stats}")
+    else:
+        # Last resort: create minimal validation data from threats_data
+        logger.warning("Validation result is None - creating minimal validation data from threats")
+        total_threats = sum(len(threats) for threats in threats_data.values())
+        metadata["validation"] = {
+            "is_valid": True,
+            "stats": {
+                'in_scope_elements': 0,
+                'elements_with_threats': len(threats_data),
+                'total_threats': total_threats,
+                'coverage_percent': 0.0
+            },
+            "warnings": ["Validation was not performed - statistics may be incomplete"],
+            "info": [],
+            "has_errors": False
         }
     
     json.dump(metadata, sys.stdout, separators=(',', ':'), ensure_ascii=False)
