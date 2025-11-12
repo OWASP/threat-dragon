@@ -12,7 +12,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 PROMPT_FILE = PROJECT_ROOT / "prompt.txt"
 
 
-def generate_threats(schema: Dict, model: Dict, model_name: str, api_key: str, temperature: float = 0.1, response_format: bool = False, api_base: str = None) -> Tuple[Dict[str, List[Dict]], float]:
+def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, temperature: float = 0.1, response_format: bool = False, api_base: str = None) -> Tuple[Dict[str, List[Dict]], float]:
     """Generate AI-powered threats for all in-scope components.
     
     Returns:

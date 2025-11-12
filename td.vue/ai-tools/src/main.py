@@ -3,13 +3,11 @@
 import json
 import logging
 import argparse
-import keyring
 import io
 import sys
-import platform
 from datetime import datetime
 from pathlib import Path
-from utils import load_json, update_threats_in_memory, get_api_key
+from utils import load_json, update_threats_in_memory
 from ai_client import generate_threats
 from validator import ThreatValidator
 
@@ -47,26 +45,32 @@ def parse_arguments():
     return args
 
 
-def read_json_from_stdin():
-    """Read JSON objects from stdin (model JSON on first line, schema JSON on second line)."""
+def read_data_from_stdin():
+    """Read data from stdin: API key on first line, model JSON on second line, schema JSON on third line."""
     try:
         # Ensure stdin is read as UTF-8 regardless of system locale
         if sys.stdin.encoding and sys.stdin.encoding.lower() != "utf-8":
             sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8")
 
-        # Read model JSON from first line
+        # Read API key from first line (never log this)
+        api_key_line = sys.stdin.readline()
+        if not api_key_line:
+            raise ValueError("No API key provided in stdin")
+        api_key = api_key_line.rstrip('\n')
+
+        # Read model JSON from second line
         model_json_line = sys.stdin.readline()
         if not model_json_line:
             raise ValueError("No model JSON data provided in stdin")
         model = json.loads(model_json_line.strip())
 
-        # Read schema JSON from second line
+        # Read schema JSON from third line
         schema_json_line = sys.stdin.readline()
         if not schema_json_line:
             raise ValueError("No schema JSON data provided in stdin")
         schema = json.loads(schema_json_line.strip())
 
-        return model, schema
+        return api_key, model, schema
 
     except UnicodeDecodeError as e:
         raise ValueError(f"Unicode decoding error reading stdin: {str(e)}")
@@ -78,7 +82,7 @@ def read_json_from_stdin():
 
 
 def load_settings(settings_json_path: str) -> dict:
-    """Load AI settings from JSON file and API key from keyring."""
+    """Load AI settings from JSON file (API key is passed via stdin, not stored here)."""
     settings_path = Path(settings_json_path)
     
     if not settings_path.exists():
@@ -105,25 +109,7 @@ def load_settings(settings_json_path: str) -> dict:
     if result['log_level'] not in ['INFO', 'DEBUG']:
         raise ValueError(f"Log level must be INFO or DEBUG, got: {result['log_level']}")
     
-    # Load API key from keyring (credential manager)
-    if keyring is None:
-        raise ImportError("keyring module is not installed. Please install it: pip install keyring")
-    
-    # Use the same service and account names as keytar in Node.js
-    # Windows uses different service name format than Mac/Linux
-    if platform.system() == 'Windows':
-        service_name = "org.owasp.threatdragon/ai-api-key"
-    else:
-        service_name = "org.owasp.threatdragon"
-    account_name = "ai-api-key"
-    
-    try:
-        api_key = get_api_key(service_name, account_name)
-        if not api_key:
-            raise ValueError("API key not found in credential manager. Please set it in AI Settings.")
-        result['api_key'] = api_key        
-    except Exception as e:
-        raise ValueError(f"Failed to retrieve API key from credential manager: {str(e)}")
+    # Note: API key is not loaded here - it's passed via stdin
     
     return result
 
@@ -194,10 +180,13 @@ def main():
     logger.info(f"  API Base: {settings['api_base'] if settings['api_base'] else 'None'}")
     logger.info(f"  Log Level: {settings['log_level']}")
     
-    # Load threat model and schema from stdin (JSON strings)
-    logger.info("Loading threat model and schema from stdin...")
+    # Load API key, threat model and schema from stdin
+    # API key on first line, model JSON on second line, schema JSON on third line
+    logger.info("Loading API key, threat model and schema from stdin...")
     try:
-        model, schema = read_json_from_stdin()
+        api_key, model, schema = read_data_from_stdin()
+        if not api_key or api_key.strip() == '':
+            raise ValueError("API key is empty")
         logger.debug(f"Loaded threat model with {len(model.get('detail', {}).get('diagrams', []))} diagram(s)")
     except Exception as e:
         logger.error(f"ERROR: {str(e)}", exc_info=True)
@@ -210,10 +199,10 @@ def main():
         threats_data, response_cost = generate_threats(
             schema, 
             model, 
-            settings['llm_model'], 
-            settings['api_key'], 
-            settings['temperature'], 
-            settings['response_format'], 
+            api_key,
+            settings['llm_model'],            
+            settings['temperature'],
+            settings['response_format'],
             settings['api_base'] if settings['api_base'] else None
         )
     except Exception as e:

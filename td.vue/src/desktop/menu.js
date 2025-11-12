@@ -489,8 +489,8 @@ export const modelSave = (modelData, fileName) => {
 };
 
 // the renderer has sent model data for AI threat generation
-export const aiThreatGeneration = (modelData) => {
-    runPythonThreatGeneration(modelData);
+export const aiThreatGeneration = async (modelData) => {
+    await runPythonThreatGeneration(modelData);
 };
 
 // the renderer has changed the language
@@ -553,7 +553,7 @@ function proceedWithThreatGeneration() {
     mainWindow.webContents.send('ai-threat-generation-request');
 }
 
-function runPythonThreatGeneration(modelData) {
+async function runPythonThreatGeneration(modelData) {
     const pythonExecutable = getPythonExecutable();
     const mainPyPath = getMainPyPath();
     
@@ -564,6 +564,20 @@ function runPythonThreatGeneration(modelData) {
     
     if (!fs.existsSync(mainPyPath)) {
         dialog.showErrorBox('Script Not Found', `main.py not found at:\n${mainPyPath}`);
+        return;
+    }
+    
+    // Load API key from credential manager
+    let apiKey;
+    try {
+        apiKey = await loadAPIKey();
+        if (!apiKey || apiKey.trim() === '') {
+            dialog.showErrorBox('API Key Not Found', 'API key not found. Please set it in AI Settings.');
+            return;
+        }
+    } catch (err) {
+        logger.log.error(`Failed to load API key: ${err.message}`);
+        dialog.showErrorBox('API Key Error', `Failed to load API key:\n${err.message}`);
         return;
     }
     
@@ -623,17 +637,20 @@ function runPythonThreatGeneration(modelData) {
     // Store process globally for cancellation handling
     currentPythonProcess = pythonProcess;
     
-    // Write model and schema to stdin as JSON strings
+    // Write API key, model and schema to stdin
+    // API key first, then model JSON, then schema JSON
     try {
         const modelJson = JSON.stringify(modelData);
         const schemaJson = JSON.stringify(schema);
         
         pythonProcess.stdin.setDefaultEncoding('utf8');
+        // Write API key first (never log this)
+        pythonProcess.stdin.write(apiKey + '\n');
         pythonProcess.stdin.write(modelJson + '\n');
         pythonProcess.stdin.write(schemaJson + '\n');
         pythonProcess.stdin.end();
         
-        logger.log.debug('Model and schema data written to Python stdin');
+        logger.log.debug('API key, model and schema data written to Python stdin');
     } catch (err) {
         logger.log.error(`Failed to write data to Python stdin: ${err.message}`);
         closeAIThreatsProgress();
