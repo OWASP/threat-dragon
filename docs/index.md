@@ -39,8 +39,8 @@ where you can also ask for changes or report any issues.
 
 Threat Dragon: _making threat modeling less threatening_
 
-[linddun]: https://www.linddun.org/
-[owasp]: https://www.owasp.org
+[linddun]: https://linddun.org/
+[owasp]: https://owasp.org/
 [plot4ai]: https://plot4.ai/
 [repo]: https://github.com/OWASP/threat-dragon
 [td]: http://owasp.org/www-project-threat-dragon

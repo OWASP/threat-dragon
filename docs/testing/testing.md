@@ -8,10 +8,22 @@ group: Testing
 
 ## Testing
 
-During development it can be convenient to manually check functionality of the
-front and back ends which is not part of the unit and end-to-end tests.
+### Automated testing
 
-### Backend server
+There are various test scripts in place to help with testing both front and back ends:
+
+* [End to end testing]({{ '/testing/e2e.html' | relative_url }})
+* [Unit testing]({{ '/testing/unit.html' | relative_url }})
+
+In addition there are pipeline / workflow tests that are applied on pull requests, commits to the main branch and others.
+For these refer to the [Pipeline actions]({{ '/testing/actions.html' | relative_url }}).
+
+### Manual testing
+
+During development it can be convenient to manually check functionality of the
+front and back ends which is not yet part of the unit or end-to-end tests.
+
+#### Backend server
 
 The web application express server can be run locally using command `npm run start:server` from the top level directory.
 The server will need access to environment variables as shown in
@@ -33,13 +45,13 @@ curl -v http://localhost:3000/api/threatmodel/organisation  \
      -H "Accept: application/json"
 ```
 
-### Desktop server
+#### Desktop server
 
 The desktop application uses electron as the back-end server.
 Use command `npm run start:desktop` to run the application in development mode,
 it will rebuild and launch when source files are changed.
 
-### Frontend application
+#### Frontend application
 
 The front end application can be tested in most browsers along with the browser supplied developer tools.
 If the application is being tested in the desktop environment then electron uses

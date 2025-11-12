@@ -47,7 +47,21 @@ and include as much information as you can so that we can fully understand your 
 
 ## Coding
 
-There is always lots of coding to be done! Threat Dragon welcomes contributions and issues: [TD github repo][issues]
+There is lots of coding to be done! Threat Dragon welcomes contributions and issues: [TD github repo][issues]
+
+Having said that, Threat Dragon is an open-source project run by volunteers in our spare time;
+we may not be able to respond quickly nor provide support to any great extent.
+
+The best chance of success for a pull request to be reviewed and accepted:
+
+1. make sure there is an an issue that it is solving / fixing
+2. provide a short but informative title
+3. provide enough description to explain how Threat Dragon worked before and works after the change
+4. extend the unit tests and functional tests to show the change working as expected
+5. the pull request must provide one change only, if there are further changes use further pull requests
+6. be cautious when coding using generative AI, please understand fully the changes and keep sprawl to a minimum
+
+We appreciate contributions always.
 
 ----
 
