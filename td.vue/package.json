@@ -29,7 +29,7 @@
     "test:e2e-ci": "vue-cli-service test:e2e  -C e2e.ci.config.js --browser chromium --headless --url http://localhost:3000/",
     "test:e2e-ci-smokes": "vue-cli-service test:e2e -C e2e.smokes.ci.config.js --browser chromium --headless --url http://localhost:3000/",
     "test:e2e-pr": "vue-cli-service test:e2e  -C e2e.ci.config.js --browser chromium --headless --url http://localhost:8080/",
-    "test:e2e-pr-smokes": "vue-cli-service test:e2e -C e2e.smokes.ci.config.js --browser chrome --headless --url http://localhost:8080/",
+    "test:e2e-pr-smokes": "vue-cli-service test:e2e -C e2e.smokes.ci.config.js --browser chromium --headless --url http://localhost:8080/",
     "test:e2e-smokes": "browserstack-cypress run --cf browserstack.smokes.json --sync",
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C e2e.smokes.local.config.js --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
