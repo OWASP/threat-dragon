@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v5.0.0
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.6.1
+        uses: lycheeverse/lychee-action@v2.7.0
         with:
           args: >-
             --no-progress
@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@v5.0.0
 
       - name: Spell check EN language
-        uses: rojopolis/spellcheck-github-actions@0.52.0
+        uses: rojopolis/spellcheck-github-actions@0.54.0
         with:
           config_path: .spellcheck.yaml
 
@@ -186,7 +186,7 @@ jobs:
         uses: actions/checkout@v5.0.0
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.30.9
+        uses: github/codeql-action/init@v4.31.2
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -195,10 +195,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v4.30.9
+        uses: github/codeql-action/autobuild@v4.31.2
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v4.30.9
+        uses: github/codeql-action/analyze@v4.31.2
 
   e2e_smokes:
     name: Local site e2e smokes
@@ -235,7 +235,7 @@ jobs:
           npm run test:e2e-pr-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -275,7 +275,7 @@ jobs:
           npm run test:e2e-pr
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -310,7 +310,7 @@ jobs:
         run: npm start
 
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.12.0
+        uses: zaproxy/action-full-scan@v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:8080'
@@ -360,7 +360,7 @@ jobs:
           load: true
 
       - name: Upload docker local image
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp/${{ env.IMAGE_NAME }}.tar
@@ -389,7 +389,7 @@ jobs:
         uses: actions/checkout@v5.0.0
 
       - name: Retrieve local docker image
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v6.0.0
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp
