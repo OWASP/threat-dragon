@@ -51,7 +51,6 @@ threat-dragon/
     │   │   ├── utils.py             # Threat model updates and manipulation
     │   │   ├── validator.py         # Response validation and quality checks
     │   │   └── models.py             # Pydantic data models for structured responses
-    │   ├── logs/                     # Log files (created at runtime)
     │   ├── prompt.txt               # System prompt template for LLM
     │   ├── requirements.txt         # Python dependencies
     │   └── README.md               # This file
