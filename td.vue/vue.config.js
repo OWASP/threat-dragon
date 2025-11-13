@@ -5,12 +5,28 @@ const fs = require('fs');
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
 const serverApiProtocol = process.env.SERVER_API_PROTOCOL || 'http';
 const serverApiPort = process.env.SERVER_API_PORT || process.env.PORT || '3000';
-const PORT = process.env.APP_PORT || '8080';
+const PORT = parseInt(process.env.APP_PORT || '8080', 10);
 const appHostname = process.env.APP_HOSTNAME || 'localhost';
+const proxyTarget = `${serverApiProtocol}://localhost:${serverApiPort}`;
 console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + serverApiPort);
 
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
+
+// Create proxy configuration - using object format for vue-cli-service prepareProxy
+// Ensure target is explicitly set as a string
+// Note: Adding 'path' property as webpack-dev-server 4.x prefers it over 'context' function
+const proxyConfig = {
+    '/api': {
+        target: String(proxyTarget), // Explicitly convert to string
+        path: '/api', // Add path for webpack-dev-server 4.x compatibility
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+    }
+};
+
+
 let port;
 // Configure dev server to use HTTPS with env.port if TLS credentials are available, otherwise use HTTP with port 8080
 const devServerConfig = hasTlsCredentials
@@ -20,26 +36,14 @@ const devServerConfig = hasTlsCredentials
             cert: fs.readFileSync(process.env.APP_TLS_CERT_PATH),
         },
         port: PORT,
-        proxy: {
-            '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
-                ws: true, // Proxy WebSocket connections
-                changeOrigin: true,
-            },
-        },
-        allowedHosts: [appHostname],
+        proxy: proxyConfig,
+        allowedHosts: 'all'
     }
     : {
         // note that client webSocketURL config has been removed, as it was incompatible with desktop version
-        port: 8080,
-        proxy: {
-            '^/api': {
-                target: `${serverApiProtocol}://localhost:${serverApiPort}`, // Backend server
-                ws: true, // Proxy WebSocket connections
-                changeOrigin: true,
-            },
-        },
-        allowedHosts: [appHostname],
+        port: PORT,
+        proxy: proxyConfig,
+        allowedHosts: 'all'
     };
 port = devServerConfig.port;
 
