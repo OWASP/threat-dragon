@@ -109,6 +109,26 @@ app.on('ready', async () => {
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
+    ipcMain.on('update-title', (_event, newTitle) => {
+        try {
+            if(isMacOS) {
+                // macOs: set app name (menu) and represented filename (document)
+                if(typeof newTitle === 'string' && newTitle.length > 0) {
+                    app.setName(newTitle);
+                    // setRepresentedFilename expects a path _ but passing a name is ok to show it
+                    mainWindow.setRepresentedFilename(newTitle);
+                } else {
+                    //Clear the filename representation if empty 
+                    mainWindow.setRepresentedFilename('');
+                }
+            } else {
+                // For Windows/Linux the handling works directly
+                mainWindow.setTitle(newTitle || 'Threat Dragon');
+            }
+        } catch(err) {
+            console.error('Failed to update title : ', err);
+        }
+    });
 
     createWindow();
 
