@@ -189,24 +189,36 @@ or if using Windows:
 
 - `docker run -d -p 8080:3000 -v %CD%/test.env:/app/.env owasp/threat-dragon:stable`
 
-## Production Environment Requirements
+## Running Threat Dragon in Production
 
-When running Threat Dragon in **production mode**, the following environment variables **must** be defined.
-This section expands on issue #1365 and formally documents the production configuration requirements.
+When deploying Threat Dragon in a production environment, a few environment variables typically need to be configured to match your deployment architecture. Below are the variables that are most commonly adjusted, along with guidance on when and why they should be set.
 
-### **Required Environment Variables for Production**
+### Required Environment Variables
 
-```bash
-ENCRYPTION_JWT_REFRESH_SIGNING_KEY=`your-refresh-signing-key`
-ENCRYPTION_JWT_SIGNING_KEY=`your-signing-key`
-ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "your-encryption-key"}]'
-GITHUB_CLIENT_ID=`your-github-client-id`
-GITHUB_CLIENT_SECRET=`your-github-client-secret`
-GITHUB_SCOPE=`public_repo`
-NODE_ENV=`production`
-PROTOCOL=`https`
-SERVER_API_PROTOCOL=`https`
-```
+| Variable | Description | When to Change |
+|---------|-------------|----------------|
+| `NODE_ENV` | Should be set to `production` to enable production optimizations. | Always in production. |
+| `TD_DATA_DIR` | Filesystem path where Threat Dragon stores model data. | When storing data outside the default working directory. |
+| `TD_PORT` | The port that the application listens on. | When hosting behind a reverse proxy or when the default port is not available. |
+| `TD_HOST` | The network interface for the server to bind to. | When deploying in containerized or cloud environments. |
+| `TD_LOG_LEVEL` | Controls logging verbosity (`info`, `warn`, `error`). | When adjusting log verbosity for production monitoring. |
+
+### Optional Environment Variables
+
+| Variable | Description | When to Change |
+|---------|-------------|----------------|
+| `TD_SESSION_SECRET` | Secret key used for session signing. | Recommended for all production deployments to secure sessions. |
+| `TD_ALLOW_REGISTRATION` | Enables or disables local account creation. | Change if you want to restrict registration in production. |
+| `TD_CORS_ORIGIN` | Allowed origins for cross-origin requests. | When the UI/frontend is hosted on a separate domain. |
+
+### Notes for Production Deployments
+
+- Threat Dragon is typically run **behind a reverse proxy** (e.g., NGINX, Traefik). Ensure that `TD_PORT` and proxy configuration match.
+- Always provide a **strong value** for `TD_SESSION_SECRET` in production.
+- If storing models on mounted volumes or external disk, ensure that `TD_DATA_DIR` is writable by the application.
+- Logging can be adjusted using `TD_LOG_LEVEL` depending on operational requirements.
+
+This guidance covers the most common changes needed for deploying Threat Dragon in a production setting.
 
 ### Github environment variables
 
