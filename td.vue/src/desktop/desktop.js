@@ -56,7 +56,6 @@ async function createWindow() {
                     }
                 } else {
                     // For Windows/Linux the handling works directly
-                    console.log("Setting Linux/Windows title now...");
                     mainWindow.setTitle(newTitle || 'OWASP Threat Dragon');
                 }
             } catch (err) {

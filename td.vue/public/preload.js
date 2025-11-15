@@ -26,7 +26,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onSaveModelConfirmed: (callback) => ipcRenderer.on('save-model-confirmed', callback),
     onSaveModelFailed: (callback) => ipcRenderer.on('save-model-failed', callback),
     updateTitle: (newTitle) => {
-        console.log("Preload Received Title: ", newTitle);
         ipcRenderer.send('update-title', newTitle);
     } 
 });
