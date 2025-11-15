@@ -23,6 +23,27 @@ or testing purposes,
 if it is in a production environment then ensure that full security controls
 are in place for any public accessible or sensitive use.
 
+## Production Environment Requirements
+
+When running Threat Dragon in **production mode**, the following environment variables **must** be defined.
+This section expands on issue #1365 and formally documents the production configuration requirements.
+
+### **Required Environment Variables for Production**
+
+```bash
+ENCRYPTION_JWT_REFRESH_SIGNING_KEY=xxxxxxx
+ENCRYPTION_JWT_SIGNING_KEY=xxxxxxx
+ENCRYPTION_KEYS=[{"isPrimary": true, "id": 0, "value": "xxxxxxx"}]
+
+GITHUB_CLIENT_ID=xxxxxxx
+GITHUB_CLIENT_SECRET=xxxxxxx
+GITHUB_SCOPE=public_repo
+
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
+```
+
 ### Decide on configuration
 
 There are various configuration parameters that need to be determined at the outset.
