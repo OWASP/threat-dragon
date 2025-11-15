@@ -226,13 +226,22 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: Build and run locally
-        run: npm start
+      - name: Install wait-on
+        run: npm install -g wait-on
+
+      - name: Build and run locally (background)
+        run: |
+          npm start &
+          wait-on http://localhost:8080
+
+      - name: Wait for server
+        run: wait-on http://localhost:8080
 
       - name: Run e2e tests
         run: |
           cd td.vue
           npm run test:e2e-pr-smokes
+
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v5.0.0
@@ -370,9 +379,9 @@ jobs:
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
           docker image ls -a
 
-      - # Temp fix for large cache bug
+        # Temp fix for large cache bug
         # https://github.com/docker/build-push-action/issues/252
-        name: Move cache
+      - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
