@@ -14,15 +14,13 @@ if (isTest) {
     require('wdio-electron-service/main');
 }
 
-// Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ]);
 
 let runApp = true;
-async function createWindow () {
 
-    // Create the browser window
+async function createWindow () {
     const mainWindow = new BrowserWindow({
         width: 1400,
         height: 1000,
@@ -35,11 +33,9 @@ async function createWindow () {
         }
     });
 
-    // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.show();
         mainWindow.focus();
-        // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
     });
 
@@ -52,22 +48,16 @@ async function createWindow () {
 
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
-        // Load the url of the dev server when in development mode
         await mainWindow.loadURL(electronURL);
-        if (!isTest) {
-            mainWindow.webContents.openDevTools();
-        }
+        if (!isTest) mainWindow.webContents.openDevTools();
     } else {
         createProtocol('app');
-        // Load the index.html when not in development mode
         mainWindow.loadURL('app://./index.html');
     }
+    return mainWindow;
 }
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
     if (!isMacOS) {
         logger.log.debug('Quit application');
         app.quit();
@@ -77,43 +67,37 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     logger.log.debug('Activate application');
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
 });
 
-// This method will be called when Electron has finished initialization
-// and is ready to create browser windows
-// Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
     logger.log.debug('Building the menu system for the default language');
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-    // Register global shortcuts
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.getMenuTemplate()));
+
     globalShortcut.register('CommandOrControl+O', () => {
-        const focusedWindow = BrowserWindow.getFocusedWindow();
-        if (focusedWindow) {
-            logger.log.debug('Ctrl+O pressed — triggering open model');
-            focusedWindow.webContents.send('open-model-shortcut');
+        const window = BrowserWindow.getFocusedWindow();
+        if (window) {
+            logger.log.debug('Ctrl+O → open model');
+            window.webContents.send('open-model-shortcut');
         }
     });
 
     globalShortcut.register('CommandOrControl+S', () => {
-        const focusedWindow = BrowserWindow.getFocusedWindow();
-        if (focusedWindow) {
-            logger.log.debug('Ctrl+S pressed — triggering save model');
-            focusedWindow.webContents.send('save-model-shortcut');
+        const window = BrowserWindow.getFocusedWindow();
+        if (window) {
+            logger.log.debug('Ctrl+S → save model');
+            window.webContents.send('save-model-shortcut');
         }
     });
-    // Install Vue Devtools
+
     if (isDevelopment && !isTest) {
         try {
             await installExtension(VUEJS_DEVTOOLS);
         } catch (e) {
-            logger.log.error('Vue Devtools failed to install:', e.toString());
+            logger.log.error('Vue Devtools failed:', e.toString());
         }
     }
 
@@ -125,75 +109,66 @@ app.on('ready', async () => {
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
 
-    createWindow();
+    await createWindow();
 
-    // check for updates from github releases site
     autoUpdater.autoInstallOnAppQuit = true;
-    // require user to agree to download
     autoUpdater.autoDownload = false;
     autoUpdater.checkForUpdatesAndNotify();
 });
 
-// this is emitted when a 'recent document' is opened
 app.on('open-file', function(event, path) {
-    // apply custom handler to this event
     event.preventDefault();
-    logger.log.debug('Request to open file from recent documents: ' + path);
+    logger.log.debug('Opening recent document: ' + path);
     menu.openModelRequest(path);
 });
-//Unregister shortcuts when app quits:
-app.on(`will-quit`, () => {
+
+app.on('will-quit', () => {
     globalShortcut.unregisterAll();
 });
+
 function handleCloseApp() {
-    logger.log.debug('Close application request from renderer ');
+    logger.log.debug('Renderer requested close');
     runApp = false;
     app.quit();
 }
 
 function handleModelClosed (_event, fileName) {
-    logger.log.debug('Close model notification from renderer for file name: ' + fileName);
+    logger.log.debug('Renderer says model closed: ' + fileName);
     menu.modelClosed();
 }
 
 function handleModelOpenConfirmed (_event, fileName) {
-    logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
+    logger.log.debug('Renderer confirms open: ' + fileName);
     menu.openModel(fileName);
 }
 
 function handleModelOpened (_event, fileName) {
-    logger.log.debug('Open model notification from renderer for file name: ' + fileName);
+    logger.log.debug('Renderer opened model: ' + fileName);
     menu.modelOpened();
 }
 
 function handleModelPrint (_event, format) {
-    logger.log.debug('Model print request from renderer with printer : ' + format);
+    logger.log.debug('Print request: ' + format);
     menu.modelPrint(format);
 }
 
-function handleModelSave (_event, modelData, fileName) {
-    logger.log.debug('Model save request from renderer with file name : ' + fileName);
-    menu.modelSave(modelData, fileName);
+function handleModelSave (_event, data, fileName) {
+    logger.log.debug('Save request for: ' + fileName);
+    menu.modelSave(data, fileName);
 }
 
 function handleUpdateMenu (_event, locale) {
-    logger.log.debug('Re-labeling the menu system for: ' + locale);
+    logger.log.debug('Updating menu for: ' + locale);
     menu.setLocale(locale);
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu.getMenuTemplate()));
 }
 
-// Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
     if (isWin) {
-        process.on('message', (data) => {
-            if (data === 'graceful-exit') {
-                app.quit();
-            }
+        process.on('message', data => {
+            if (data === 'graceful-exit') app.quit();
         });
     } else {
-        process.on('SIGTERM', () => {
-            app.quit();
-        });
+        process.on('SIGTERM', () => app.quit());
     }
 }
