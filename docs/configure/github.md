@@ -87,7 +87,7 @@ then the domain will probably be 'localhost'.
     4. Authorization callback URL: for localhost and port 8080 use `http://localhost:8080/api/oauth/return`
 3. Proceed by agreeing to Register the application
 4. Initially there will be no Client secret; create a client secret via the 'Generate a new client secret' button
-5. Note the values for both the Client ID and the Client Secret, __save these somewhere secure__
+5. Note the values for both the Client ID and the Client Secret, **save these somewhere secure**
     1. Client ID will be 20 hexadecimal (10 byte) characters, for example `deadbeef0123456789aa`
     2. Client Secret will be 40 hexadecimal characters, for example `deadbeef0123456789abcdef01234567deadbeef`
     3. Treat these values with the same security as a password; they provide access to your GitHub account
