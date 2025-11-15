@@ -39,6 +39,7 @@ import { mapState } from 'vuex';
 
 import TdDashboardAction from '@/components/DashboardAction.vue';
 import { getDashboardActions } from '@/service/provider/providers.js';
+import { setPageTitle } from '../utils/title';
 
 export default {
     name: 'MainDashboard',
@@ -47,6 +48,10 @@ export default {
     },
     computed: mapState({
         actions: (state) => getDashboardActions(state.provider.selected)
-    })
+    }),
+    mounted () {
+        // When Dashboard loads, reset to default title
+        setPageTitle();
+    }
 };
 </script>
