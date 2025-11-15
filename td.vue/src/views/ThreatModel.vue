@@ -146,6 +146,13 @@ export default {
         this.$store.dispatch(tmActions.update, update);
         // if a diagram has just been closed, the history insists on marking the model as modified
         this.$store.dispatch(tmActions.notModified);
+
+        
+        if (this.model?.summary?.title && window.electronAPI) {
+            console.log("RENDERER: Setting title from ThreatModel view:", this.model.summary.title);
+            window.electronAPI.updateTitle(this.model.summary.title);
+        }
+
     }
 };
 </script>

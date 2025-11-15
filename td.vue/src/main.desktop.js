@@ -118,6 +118,12 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
         return;
     }
 
+    try {
+        window.electronAPI.updateTitle(jsonModel.summary.title);
+    } catch (err) {
+        console.err("Title update Failed : ", err);
+    }
+
     app.$store.dispatch(tmActions.update, { fileName: fileName });
     app.$store.dispatch(tmActions.selected, jsonModel);
     localAuth();
@@ -192,6 +198,39 @@ const openTmBom = (jsonModel) => {
     app.$toast.warning(app.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
     return tmBom.read(jsonModel);
 };
+
+// --- Sync title with route changes (handles UI navigation) ---
+try {
+    const vueRouter = router.get();
+    const vueStore = storeFactory.get();
+
+    vueRouter.afterEach((to) => {
+        try {
+            const isThreatModelPage =
+                to.name && to.name.toLowerCase().includes("threatmodel");
+
+            if (isThreatModelPage) {
+                // Prefer Vuex model title
+                const s = vueStore.state.threatmodel?.data;
+                const titleFromStore = s?.summary?.title;
+
+                const title =
+                    titleFromStore ||
+                    to.params.threatmodel ||
+                    "OWASP Threat Dragon";
+
+                window.electronAPI.updateTitle(title);
+            } else {
+                window.electronAPI.updateTitle("OWASP Threat Dragon");
+            }
+        } catch (err) {
+            console.error("Title update via route failed:", err);
+        }
+    });
+} catch (err) {
+    console.warn("Router not ready for title sync:", err);
+}
+
 
 const app = new Vue({
     router: router.get(),

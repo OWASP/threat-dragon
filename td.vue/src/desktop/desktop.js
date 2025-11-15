@@ -20,10 +20,11 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 let runApp = true;
-async function createWindow () {
+let mainWindow = null;
+async function createWindow() {
 
     // Create the browser window
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1400,
         height: 1000,
         show: false,
@@ -41,6 +42,28 @@ async function createWindow () {
         mainWindow.focus();
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
+        ipcMain.on('update-title', (_event, newTitle) => {
+            try {
+                if (isMacOS) {
+                    // macOs: set app name (menu) and represented filename (document)
+                    if (typeof newTitle === 'string' && newTitle.length > 0) {
+                        app.setName(newTitle);
+                        // setRepresentedFilename expects a path _ but passing a name is ok to show it
+                        mainWindow.setRepresentedFilename(newTitle);
+                    } else {
+                        //Clear the filename representation if empty 
+                        mainWindow.setRepresentedFilename('');
+                    }
+                } else {
+                    // For Windows/Linux the handling works directly
+                    console.log("Setting Linux/Windows title now...");
+                    mainWindow.setTitle(newTitle || 'OWASP Threat Dragon');
+                }
+            } catch (err) {
+                // Throws an Error if the title can't be updated for some reason
+                console.error('Failed to update title : ', err);
+            }
+        });
     });
 
     mainWindow.on('close', (event) => {
@@ -109,26 +132,7 @@ app.on('ready', async () => {
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
-    ipcMain.on('update-title', (_event, newTitle) => {
-        try {
-            if(isMacOS) {
-                // macOs: set app name (menu) and represented filename (document)
-                if(typeof newTitle === 'string' && newTitle.length > 0) {
-                    app.setName(newTitle);
-                    // setRepresentedFilename expects a path _ but passing a name is ok to show it
-                    mainWindow.setRepresentedFilename(newTitle);
-                } else {
-                    //Clear the filename representation if empty 
-                    mainWindow.setRepresentedFilename('');
-                }
-            } else {
-                // For Windows/Linux the handling works directly
-                mainWindow.setTitle(newTitle || 'Threat Dragon');
-            }
-        } catch(err) {
-            console.error('Failed to update title : ', err);
-        }
-    });
+    ipcMain.on('update-title', handleModelRenameTitle);
 
     createWindow();
 
@@ -140,7 +144,7 @@ app.on('ready', async () => {
 });
 
 // this is emitted when a 'recent document' is opened
-app.on('open-file', function(event, path) {
+app.on('open-file', function (event, path) {
     // apply custom handler to this event
     event.preventDefault();
     logger.log.debug('Request to open file from recent documents: ' + path);
@@ -153,32 +157,61 @@ function handleCloseApp() {
     app.quit();
 }
 
-function handleModelClosed (_event, fileName) {
+function handleModelClosed(_event, fileName) {
     logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
+    try {
+        if (isMacOS) {
+            app.setName("OWASP Threat Dragon");
+            if (mainWindow) {
+                mainWindow.setRepresentedFilename("");
+            }
+        } else {
+            if (mainWindow) {
+                mainWindow.setTitle("OWASP Threat Dragon");
+            }
+        }
+    } catch (err) {
+        console.error("Failed to reset title on model close:", err);
+    }
 }
 
-function handleModelOpenConfirmed (_event, fileName) {
+// Makes the title change after the rename.
+
+function handleModelRenameTitle(_event, newTitle) {
+    try {
+        if(isMacOS) {
+            app.setName(newTitle || "OWASP Threat Dragon");
+            mainWindow.setRepresentedFilename(newTitle || "");
+        } else {
+            mainWindow.setTitle(newTitle || "OWASP Threat Dragon");
+        }
+    } catch (err) {
+        console.error("Failed to update title : ", err);
+    }
+}
+
+function handleModelOpenConfirmed(_event, fileName) {
     logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
     menu.openModel(fileName);
 }
 
-function handleModelOpened (_event, fileName) {
+function handleModelOpened(_event, fileName) {
     logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 
-function handleModelPrint (_event, format) {
+function handleModelPrint(_event, format) {
     logger.log.debug('Model print request from renderer with printer : ' + format);
     menu.modelPrint(format);
 }
 
-function handleModelSave (_event, modelData, fileName) {
+function handleModelSave(_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
 }
 
-function handleUpdateMenu (_event, locale) {
+function handleUpdateMenu(_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
     let template = menu.getMenuTemplate();

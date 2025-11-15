@@ -242,6 +242,15 @@ export default {
             }
             // stop the save button from leaving the threat model edit view
             // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
+
+            try {
+                if (window.electronAPI && this.model?.summary?.title) {
+                    window.electronAPI.updateTitle(this.model.summary.title);
+                }
+            } catch (err) {
+                console.err("Failed to update title on save: ", err);
+            }
+
         },
         async onReloadClick(evt) {
             evt.preventDefault();
