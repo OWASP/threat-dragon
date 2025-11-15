@@ -191,7 +191,9 @@ or if using Windows:
 
 ## Running Threat Dragon in Production
 
-When deploying Threat Dragon in a production environment, a few environment variables typically need to be configured to match your deployment architecture. Below are the variables that are most commonly adjusted, along with guidance on when and why they should be set.
+When deploying Threat Dragon in a production environment, a few environment variables typically
+need to be configured to match your deployment architecture. Below are the variables that are most
+commonly adjusted, along with guidance on when and why they should be set.
 
 ### Required Environment Variables
 
