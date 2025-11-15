@@ -161,17 +161,17 @@ function handleModelClosed(_event, fileName) {
     menu.modelClosed();
     try {
         if (isMacOS) {
-            app.setName("OWASP Threat Dragon");
+            app.setName('OWASP Threat Dragon');
             if (mainWindow) {
-                mainWindow.setRepresentedFilename("");
+                mainWindow.setRepresentedFilename('');
             }
         } else {
             if (mainWindow) {
-                mainWindow.setTitle("OWASP Threat Dragon");
+                mainWindow.setTitle('OWASP Threat Dragon');
             }
         }
     } catch (err) {
-        console.error("Failed to reset title on model close:", err);
+        console.error('Failed to reset title on model close:', err);
     }
 }
 
@@ -180,13 +180,13 @@ function handleModelClosed(_event, fileName) {
 function handleModelRenameTitle(_event, newTitle) {
     try {
         if(isMacOS) {
-            app.setName(newTitle || "OWASP Threat Dragon");
-            mainWindow.setRepresentedFilename(newTitle || "");
+            app.setName(newTitle || 'OWASP Threat Dragon');
+            mainWindow.setRepresentedFilename(newTitle || '');
         } else {
-            mainWindow.setTitle(newTitle || "OWASP Threat Dragon");
+            mainWindow.setTitle(newTitle || 'OWASP Threat Dragon');
         }
     } catch (err) {
-        console.error("Failed to update title : ", err);
+        console.error('Failed to update title : ', err);
     }
 }
 

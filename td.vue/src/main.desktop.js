@@ -121,7 +121,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     try {
         window.electronAPI.updateTitle(jsonModel.summary.title);
     } catch (err) {
-        console.err("Title update Failed : ", err);
+        console.err('Title update Failed : ', err);
     }
 
     app.$store.dispatch(tmActions.update, { fileName: fileName });
@@ -207,7 +207,7 @@ try {
     vueRouter.afterEach((to) => {
         try {
             const isThreatModelPage =
-                to.name && to.name.toLowerCase().includes("threatmodel");
+                to.name && to.name.toLowerCase().includes('threatmodel');
 
             if (isThreatModelPage) {
                 // Prefer Vuex model title
@@ -217,18 +217,18 @@ try {
                 const title =
                     titleFromStore ||
                     to.params.threatmodel ||
-                    "OWASP Threat Dragon";
+                    'OWASP Threat Dragon';
 
                 window.electronAPI.updateTitle(title);
             } else {
-                window.electronAPI.updateTitle("OWASP Threat Dragon");
+                window.electronAPI.updateTitle('OWASP Threat Dragon');
             }
         } catch (err) {
-            console.error("Title update via route failed:", err);
+            console.error('Title update via route failed:', err);
         }
     });
 } catch (err) {
-    console.warn("Router not ready for title sync:", err);
+    console.warn('Router not ready for title sync:', err);
 }
 
 
