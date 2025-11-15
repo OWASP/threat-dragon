@@ -215,7 +215,7 @@ commonly adjusted, along with guidance on when and why they should be set.
 
 ### Notes for Production Deployments
 
-- Threat Dragon is typically run **behind a reverse proxy** (e.g., NGINX, Traefik). Ensure that `TD_PORT` and proxy configuration match.
+- Threat Dragon is typically run **behind reverse proxy**.Ensure that `TD_PORT` and proxy configuration match.
 - Always provide a **strong value** for `TD_SESSION_SECRET` in production.
 - If storing models on mounted volumes or external disk, ensure that `TD_DATA_DIR` is writable by the application.
 - Logging can be adjusted using `TD_LOG_LEVEL` depending on operational requirements.
