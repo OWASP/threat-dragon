@@ -49,12 +49,13 @@ async function createWindow () {
     if (electronURL) {
         logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
         await mainWindow.loadURL(electronURL);
-        if (!isTest) mainWindow.webContents.openDevTools();
+        if (!isTest) {
+            mainWindow.webContents.openDevTools();
+        }
     } else {
         createProtocol('app');
         mainWindow.loadURL('app://./index.html');
     }
-    return mainWindow;
 }
 
 app.on('window-all-closed', () => {
@@ -78,27 +79,23 @@ app.on('ready', async () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu.getMenuTemplate()));
 
     globalShortcut.register('CommandOrControl+O', () => {
-        const window = BrowserWindow.getFocusedWindow();
-        if (window) {
-            logger.log.debug('Ctrl+O → open model');
-            window.webContents.send('open-model-shortcut');
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+            focusedWindow.webContents.send('open-model-shortcut');
         }
     });
 
     globalShortcut.register('CommandOrControl+S', () => {
-        const window = BrowserWindow.getFocusedWindow();
-        if (window) {
-            logger.log.debug('Ctrl+S → save model');
-            window.webContents.send('save-model-shortcut');
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+            focusedWindow.webContents.send('save-model-shortcut');
         }
     });
 
     if (isDevelopment && !isTest) {
         try {
             await installExtension(VUEJS_DEVTOOLS);
-        } catch (e) {
-            logger.log.error('Vue Devtools failed:', e.toString());
-        }
+        } catch (e) {}
     }
 
     ipcMain.on('close-app', handleCloseApp);
@@ -109,7 +106,7 @@ app.on('ready', async () => {
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
 
-    await createWindow();
+    createWindow();
 
     autoUpdater.autoInstallOnAppQuit = true;
     autoUpdater.autoDownload = false;
@@ -118,7 +115,7 @@ app.on('ready', async () => {
 
 app.on('open-file', function(event, path) {
     event.preventDefault();
-    logger.log.debug('Opening recent document: ' + path);
+    logger.log.debug('Request to open file from recent documents: ' + path);
     menu.openModelRequest(path);
 });
 
@@ -127,48 +124,53 @@ app.on('will-quit', () => {
 });
 
 function handleCloseApp() {
-    logger.log.debug('Renderer requested close');
+    logger.log.debug('Close application request from renderer ');
     runApp = false;
     app.quit();
 }
 
 function handleModelClosed (_event, fileName) {
-    logger.log.debug('Renderer says model closed: ' + fileName);
+    logger.log.debug('Close model notification from renderer for file name: ' + fileName);
     menu.modelClosed();
 }
 
 function handleModelOpenConfirmed (_event, fileName) {
-    logger.log.debug('Renderer confirms open: ' + fileName);
+    logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
     menu.openModel(fileName);
 }
 
 function handleModelOpened (_event, fileName) {
-    logger.log.debug('Renderer opened model: ' + fileName);
+    logger.log.debug('Open model notification from renderer for file name: ' + fileName);
     menu.modelOpened();
 }
 
 function handleModelPrint (_event, format) {
-    logger.log.debug('Print request: ' + format);
+    logger.log.debug('Model print request from renderer with printer : ' + format);
     menu.modelPrint(format);
 }
 
-function handleModelSave (_event, data, fileName) {
-    logger.log.debug('Save request for: ' + fileName);
-    menu.modelSave(data, fileName);
+function handleModelSave (_event, modelData, fileName) {
+    logger.log.debug('Model save request from renderer with file name : ' + fileName);
+    menu.modelSave(modelData, fileName);
 }
 
 function handleUpdateMenu (_event, locale) {
-    logger.log.debug('Updating menu for: ' + locale);
+    logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu.getMenuTemplate()));
 }
 
 if (isDevelopment) {
     if (isWin) {
-        process.on('message', data => {
-            if (data === 'graceful-exit') app.quit();
+        process.on('message', (data) => {
+            if (data === 'graceful-exit') {
+                app.quit();
+            }
         });
     } else {
-        process.on('SIGTERM', () => app.quit());
+        process.on('SIGTERM', () => {
+            app.quit();
+        });
     }
 }
+
