@@ -231,7 +231,7 @@ jobs:
 
       - name: Start dev server in background
         run: |
-          npm start --silent &
+          npm run dev:vue &
           echo "Frontend server starting..."
 
       - name: Wait for server readiness
@@ -279,7 +279,7 @@ jobs:
 
       - name: Start dev server in background
         run: |
-          npm start --silent &
+          npm run dev:vue &
 
       - name: Wait for server
         run: npx wait-on http-get://localhost:8080 http-get://127.0.0.1:8080 http-get://0.0.0.0:8080 --timeout 120000 --log
@@ -327,7 +327,7 @@ jobs:
 
       - name: Build and run locally
         run: |
-         npm start --silent &
+         npm run dev:vue &
 
       - name: Wait for server
         run: npx wait-on http-get://localhost:8080 http-get://127.0.0.1:8080 http-get://0.0.0.0:8080 --timeout 120000 --log
