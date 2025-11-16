@@ -231,7 +231,6 @@ jobs:
 
       - name: Start dev server in background
         run: |
-          cd td.vue
           npm start --silent &
           echo "Frontend server starting..."
 
@@ -280,7 +279,6 @@ jobs:
 
       - name: Start dev server in background
         run: |
-          cd td.vue
           npm start --silent &
 
       - name: Wait for server
@@ -329,7 +327,6 @@ jobs:
 
       - name: Build and run locally
         run: |
-         cd td.vue
          npm start --silent &
 
       - name: Wait for server
