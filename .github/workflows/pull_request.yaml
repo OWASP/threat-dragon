@@ -229,19 +229,20 @@ jobs:
       - name: Install wait-on
         run: npm install -g wait-on
 
-      - name: Build and run locally (background)
+      - name: Start dev server in background
         run: |
-          npm start &
-          wait-on http://localhost:8080
+          cd td.vue
+          npm start --silent &
+          echo "Frontend server starting..."
 
-      - name: Wait for server
-        run: wait-on http://localhost:8080
+      - name: Wait for server readiness
+        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
+
 
       - name: Run e2e tests
         run: |
           cd td.vue
           npm run test:e2e-pr-smokes
-
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v5.0.0
@@ -275,8 +276,17 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
-      - name: Build and run locally
-        run: npm start
+      - name: Install wait-on
+        run: npm install -g wait-on
+
+      - name: Start dev server in background
+        run: |
+          cd td.vue
+          npm start --silent &
+
+      - name: Wait for server
+        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
+
 
       - name: Run e2e tests
         run: |
@@ -315,8 +325,17 @@ jobs:
       - name: Install packages
         run: npm clean-install
 
+      - name: Install wait-on
+        run: npm install -g wait-on
+
       - name: Build and run locally
-        run: npm start
+        run: |
+         cd td.vue
+         npm start --silent &
+
+      - name: Wait for server
+        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
+
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.13.0
