@@ -236,8 +236,7 @@ jobs:
           echo "Frontend server starting..."
 
       - name: Wait for server readiness
-        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
-
+        run: npx wait-on http-get://localhost:8080 http-get://127.0.0.1:8080 http-get://0.0.0.0:8080 --timeout 120000 --log
 
       - name: Run e2e tests
         run: |
@@ -285,7 +284,7 @@ jobs:
           npm start --silent &
 
       - name: Wait for server
-        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
+        run: npx wait-on http-get://localhost:8080 http-get://127.0.0.1:8080 http-get://0.0.0.0:8080 --timeout 120000 --log
 
 
       - name: Run e2e tests
@@ -334,7 +333,12 @@ jobs:
          npm start --silent &
 
       - name: Wait for server
-        run: wait-on http://127.0.0.1:8080 --timeout 60000 --log
+        run: npx wait-on http-get://localhost:8080 http-get://127.0.0.1:8080 http-get://0.0.0.0:8080 --timeout 120000 --log
+
+      - name: Show server output
+        run: |
+          echo "Checking if anything is running on port 8080"
+          lsof -i :8080 || true
 
 
       - name: ZAP Scan
