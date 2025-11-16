@@ -7,7 +7,7 @@
 [![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg?event=push)][build]
 [![GitHub release](https://img.shields.io/github/release/owasp/threat-dragon.svg)][latest]
 [![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://owasp.org/projects)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)](https://www.bestpractices.dev/en/projects/9266)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)][practices]
 
 # OWASP Threat Dragon
 
@@ -182,6 +182,7 @@ Threat Dragon: _making threat modeling less threatening_
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [notes]: https://www.threatdragon.com/docs/development/development.html
 [owasp]: https://owasp.org/
+[practices]: https://www.bestpractices.dev/en/projects/9266
 [project]: https://owasp.org/www-project-threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
 [subscribe]: https://owasp.org/slack/invite

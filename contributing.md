@@ -11,6 +11,7 @@ When contributing:
 ## Ground rules
 
 * follow our [Code of Conduct](code_of_conduct.md)
+* follow our restrictions on the use of (generative) AI
 * ensure that [unit tests][unit] have been extended or created for any code changes
 * if the contribution changes the functionality then ensure that the [functional tests][e2e] are created or modified
 * the use of generative AI is not prohibited but must be declared in the pull request
@@ -54,7 +55,7 @@ we may not be able to respond quickly nor provide support to any great extent.
 
 The best chance of success for a pull request to be reviewed and accepted:
 
-1. make sure there is an an issue that it is solving / fixing
+1. make sure there is an existing issue that the pull request is solving / fixing
 2. provide a short but informative title
 3. provide enough description to explain how Threat Dragon worked before and works after the change
 4. extend the unit tests and functional tests to show the change working as expected
@@ -62,6 +63,23 @@ The best chance of success for a pull request to be reviewed and accepted:
 6. be cautious when coding using generative AI, please understand fully the changes and keep sprawl to a minimum
 
 We appreciate contributions always.
+
+### Use of AI
+
+You must declare any use of generative or agentic AI in pull requests or when creating / commenting on issues.
+Failure to do this may result in the pull request or issue being closed or even deleted.
+
+There are various reasons why the project leaders have had to adopt this robust approach, some of them are:
+
+* when used to generate documentation pages the content is often verbose and incorrect; documentation has to be correct
+* generative AI code often just does not work.
+  For example it can refer to functions that do not exist and can use an incompatible coding style
+* AI assisted pull requests often do not split out changes into individual pull requests
+* issues created with AI assistance are often verbose and of low priority
+
+Be mindful that the leaders and maintainers of Threat Dragon are volunteers with their own day jobs;
+we do this on our own time for the benefit of the open source community and OWASP in particular.
+Please make sure your issues and pull requests are well thought out and actually work, you will then get a better response.
 
 ----
 
