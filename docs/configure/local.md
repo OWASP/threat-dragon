@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure local access
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) can be run as a web application.
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) can be run as a web application.
 The threat models can be stored on the file system local to the client / browser,
 and some configuration of environment variables is needed to do this.
 These environment variables are described in

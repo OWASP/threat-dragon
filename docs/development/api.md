@@ -8,7 +8,7 @@ group: Development
 
 ## Application Programming Interface (API)
 
-At present it there is a minimal API for [Threat Dragon](http://owasp.org/www-project-threat-dragon) .
+At present it there is a minimal API for [Threat Dragon](https://owasp.org/www-project-threat-dragon/) .
 This API is used to access threat models stored by repository providers such as github, bitbucket or gitlab
 and on Google Drives.
 

@@ -164,7 +164,7 @@ This is not a problem with the BrowserStack tests because a specific browser is 
 ## Writing e2e tests
 
 If you are new to cypress, we strongly suggest reading through the
-[Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress).
+[Introduction to Cypress](https://docs.cypress.io/app/core-concepts/introduction-to-cypress).
 The introduction document is a bit lengthy,
 but does a good job of preparing you to begin writing tests using cypress.
 

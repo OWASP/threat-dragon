@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure GitLab access
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) can be run as a web application and
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) can be run as a web application and
 if GitLab repository access is required then some configuration is needed
 for the necessary environment variables.
 The GitLab specific environment variables are listed at the [end of this page](#gitlab-environment-variables),
@@ -25,7 +25,7 @@ but there are some parts that are different:
 
 ### 1. Web App GitLab Access
 
-It is recommended to follow the [gitlab official guide](https://docs.gitlab.com/ee/integration/oauth_provider.html)
+It is recommended to follow the [gitlab official guide](https://docs.gitlab.com/integration/oauth_provider/)
 to set up the OAuth Application.
 
 The recommended configuration is similar to below:
