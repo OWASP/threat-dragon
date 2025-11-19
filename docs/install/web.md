@@ -8,7 +8,7 @@ group: Install
 
 ## Web application installation
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) comes in two variants,
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) comes in two variants,
 a desktop application and a web application.
 
 The web application can be run locally or from a server.
@@ -76,6 +76,6 @@ Install dependencies, configure and run the web application as above.
 
 Threat Dragon: _making threat modeling less threatening_
 
-[git]: https://git-scm.com/downloads
+[git]: https://git-scm.com/downloads/
 [node]: https://nodejs.org/en/download/package-manager
 [releases]: https://github.com/OWASP/threat-dragon/releases/

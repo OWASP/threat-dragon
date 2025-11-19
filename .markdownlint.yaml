@@ -3,6 +3,7 @@ no-trailing-punctuation: false
 no-inline-html: false
 first-line-heading: false
 link-fragments: false
+table-column-style: false
 
 # MD013 - Line length
 MD013:
@@ -14,4 +15,3 @@ MD013:
   stern: true
   strict: false
   tables: false
-

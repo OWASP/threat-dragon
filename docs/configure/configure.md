@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure environment
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) comes in two variants,
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) comes in two variants,
 a desktop application and a web application.
 If the web application variant is being used then some configuration is needed
 to provide the necessary environment variables.

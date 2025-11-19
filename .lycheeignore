@@ -5,7 +5,7 @@ http://localhost
 http://127.0.0.1
 
 # incorrectly get 'Network error: Forbidden'
-https://www.deviantart.com
+www.deviantart.com
 
 # trips up on the redirect page scripts
 docs/_layouts/%7B%7B%20page.redirect_to%20%7D%7D
@@ -21,7 +21,13 @@ github.com/OWASP/threat-dragon/archive/
 github.com/OWASP/www-project-threat-dragon/
 
 # ignore LINDDUN site because it occasionally times out
-https://www.linddun.org/
+www.linddun.org/
 
 # Too many redirects: error following redirect for docker tags
-https://hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon/tags
+hub.docker.com/repository/docker/threatdragon/owasp-threat-dragon/tags
+
+# not intended as a link in itself
+console.developers.google.com/
+
+# needs login to actually check snapcraft
+snapcraft.io/

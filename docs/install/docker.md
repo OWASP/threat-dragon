@@ -8,7 +8,7 @@ group: Install
 
 ## Running the Docker container
 
-The [Threat Dragon](http://owasp.org/www-project-threat-dragon) web application can be run as a Docker container.
+The [Threat Dragon](https://owasp.org/www-project-threat-dragon/) web application can be run as a Docker container.
 
 The web application can be run from a Docker container which can either be pulled from [dockerhub][docker] or built locally.
 

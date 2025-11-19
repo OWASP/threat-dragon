@@ -8,7 +8,7 @@ group: Modeling
 
 ## Getting started
 
-Getting started with [Threat Dragon](http://owasp.org/www-project-threat-dragon) models.
+Getting started with [Threat Dragon](https://owasp.org/www-project-threat-dragon/) models.
 
 ## Create a new model
 

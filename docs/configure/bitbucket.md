@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure Bitbucket access
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) can be run as a web application and
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) can be run as a web application and
 if Bitbucket repository access is required then some configuration is needed
 of the necessary environment variables.
 The Bitbucket specific environment variables are listed at the [end of this page](#bitbucket-environment-variables),

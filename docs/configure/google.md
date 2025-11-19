@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure Google Drive access
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) can be run as a web application and
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) can be run as a web application and
 if Google Drive access is required then some configuration is needed
 for the necessary environment variables.
 The Google Drive specific environment variables are listed at the [end of this page](#google-drive-environment-variables),

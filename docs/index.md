@@ -43,4 +43,4 @@ Threat Dragon: _making threat modeling less threatening_
 [owasp]: https://owasp.org/
 [plot4ai]: https://plot4.ai/
 [repo]: https://github.com/OWASP/threat-dragon
-[td]: http://owasp.org/www-project-threat-dragon
+[td]: https://owasp.org/www-project-threat-dragon/

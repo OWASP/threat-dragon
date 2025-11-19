@@ -8,7 +8,7 @@ group: Install
 
 ## Desktop install
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) comes in two variants,
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) comes in two variants,
 a desktop application and a web application.
 
 To install the desktop application, use the installers available for download from the [OWASP GitHub area][releases]:

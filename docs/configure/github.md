@@ -8,7 +8,7 @@ group: Configure
 
 ## Configure Github access
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) can be run as a web application and
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) can be run as a web application and
 if Github repository access is required then some configuration is needed
 for the necessary environment variables.
 The Github specific environment variables are listed at the [end of this page](#github-environment-variables),

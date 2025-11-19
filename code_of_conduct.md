@@ -145,5 +145,5 @@ and translations are available of this [contributor covenant][translate].
 [diversity]: https://github.com/mozilla/inclusion
 [faq]: https://www.contributor-covenant.org/faq/
 [license]: https://creativecommons.org/licenses/by-sa/4.0/
-[resources]: https://www.contributor-covenant.org/resources
+[resources]: https://www.contributor-covenant.org/resources/
 [translate]: https://www.contributor-covenant.org/translations/

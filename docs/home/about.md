@@ -10,7 +10,7 @@ group: About
 
 ## About
 
-[Threat Dragon](http://owasp.org/www-project-threat-dragon) is a free, open-source,
+[Threat Dragon](https://owasp.org/www-project-threat-dragon/) is a free, open-source,
 cross-platform [threat modeling](https://owasp.org/www-community/Threat_Modeling) application.
 This tool provides for the creation of threat model data-flow diagrams
 and entering of associated threats along with their remediations.
