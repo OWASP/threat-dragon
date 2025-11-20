@@ -70,7 +70,7 @@
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "passport-local": "1.0.0",
-    "pm2": "^5.3.0",
+    "pm2": "^6.0.13",
     "rimraf": "^4.4.1",
     "sinon": "^10.0.0",
     "sinon-chai": "^3.7.0",
@@ -78,7 +78,6 @@
   },
   "overrides": {
     "@babel/traverse": ">=7.23.2",
-    "@pm2/agent": ">=2.0.4",
     "body-parser": ">=1.20.3",
     "braces": ">=3.0.3",
     "cookie": ">=0.7.0",
