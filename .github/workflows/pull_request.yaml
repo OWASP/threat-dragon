@@ -223,8 +223,11 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm clean-install
+      - name: Install front-end
+        run: |
+          npm clean-install --ignore-scripts
+          cd td.vue
+          npm clean-install
 
       - name: Build and run locally
         run: npm start
@@ -263,8 +266,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
-        run: npm clean-install
+      - name: Install front-end
+        run: |
+          npm clean-install --ignore-scripts
+          cd td.vue
+          npm clean-install
 
       - name: Build and run locally
         run: npm start
