@@ -16,3 +16,7 @@ CVE-2024-9143
 # https://avd.aquasec.com/nvd/2025/cve-2025-7783/
 # no fix available for MacOS
 CVE-2025-7783
+
+# no vulnerable versions used in the code / dependencies
+CVE-2025-64756
+
