@@ -204,6 +204,9 @@ jobs:
     name: Local site e2e smokes
     runs-on: ubuntu-24.04
     needs: [site_unit_tests, server_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
 
     steps:
       - name: Checkout
@@ -224,30 +227,28 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install front-end
-        run: |
-          npm clean-install --ignore-scripts
-          cd td.vue
-          npm clean-install
+        run: npm clean-install
 
       - name: Build and run locally
-        run: npm start
+        run: npm run start:serve
 
       - name: Run e2e tests
-        run: |
-          cd td.vue
-          npm run test:e2e-pr-smokes
+        run: npm run test:e2e-pr-smokes
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v5.0.0
         with:
           name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+          path: tests/e2e/videos
+        if: ${{ failure() && hashFiles('tests/e2e/videos/') != '' }}
 
   e2e_tests:
     name: Local site e2e tests
     runs-on: ubuntu-24.04
     needs: e2e_smokes
+    defaults:
+      run:
+        working-directory: td.vue
 
     steps:
       - name: Checkout
@@ -267,25 +268,20 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install front-end
-        run: |
-          npm clean-install --ignore-scripts
-          cd td.vue
-          npm clean-install
+        run: npm clean-install
 
       - name: Build and run locally
-        run: npm start
+        run: npm run start:serve
 
       - name: Run e2e tests
-        run: |
-          cd td.vue
-          npm run test:e2e-pr
+        run: npm run test:e2e-pr
 
       - name: Upload e2e videos
         uses: actions/upload-artifact@v5.0.0
         with:
           name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+          path: tests/e2e/videos
+        if: ${{ failure() && hashFiles('tests/e2e/videos/') != '' }}
 
   zap_scan_web_app:
     name: Local site zap scan
