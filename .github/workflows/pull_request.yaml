@@ -305,8 +305,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install packages
-        run: npm clean-install
+      - name: Clean install
+        run: |
+          npm clean-install --ignore-scripts
+          cd td.server
+          npm clean-install
+          cd td.vue
+          npm clean-install
 
       - name: Build and run locally
         run: npm start
