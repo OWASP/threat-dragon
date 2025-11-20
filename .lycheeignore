@@ -31,3 +31,6 @@ console.developers.google.com/
 
 # needs login to actually check snapcraft
 snapcraft.io/
+
+# don't irritate the US government
+nvd.nist.gov/
