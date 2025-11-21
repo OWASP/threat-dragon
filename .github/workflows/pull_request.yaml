@@ -310,7 +310,7 @@ jobs:
           npm clean-install --ignore-scripts
           cd td.server
           npm clean-install
-          cd td.vue
+          cd ../td.vue
           npm clean-install
 
       - name: Build and run locally
