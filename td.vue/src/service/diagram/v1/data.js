@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import edges from './edges.js';
 import threats from '@/service/threats/index.js';
@@ -33,7 +33,7 @@ const applyThreatData = (cell, data) => {
                     );
                 }
                 if (!threat.id) {
-                    threat.id = v4();
+                    threat.id = uuidv4();
                 }
             });
         }

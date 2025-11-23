@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
@@ -112,7 +112,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
     }
 
     return {
-        id: v4(),
+        id: uuidv4(),
         title,
         status: 'Open',
         severity: 'TBD',
