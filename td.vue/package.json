@@ -80,7 +80,7 @@
     "is-electron": "^2.2.1",
     "jquery": "^3.7.1",
     "passive-events-support": "^1.1.0",
-    "uuid": "^13.0.0",
+    "uuid": "11.1.0",
     "vue": "^2.7.3",
     "vue-i18n": "^8.27.2",
     "vue-router": "^3.5.4",
