@@ -14,15 +14,25 @@ describe('service/x6/graph/graph.js', () => {
         use = jest.fn().mockReturnThis();
     }
 
+    function createMockContainer() {
+        return {
+            foo: 'bar',
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
+            dispatchEvent: jest.fn(),
+        };
+    }
+
     describe('getReadonlyGraph', () => {
         beforeEach(() => {
-            container = { foo: 'bar' };
+            container = createMockContainer();
             events.listen = jest.fn();
             graph.getReadonlyGraph(container, GraphMock);
         });
 
         it('does not add the event listeners', () => {
             expect(events.listen).not.toHaveBeenCalled();
+            expect(container.addEventListener).not.toHaveBeenCalled();
         });
     });
 
@@ -30,7 +40,7 @@ describe('service/x6/graph/graph.js', () => {
         let graphRes;
 
         beforeEach(() => {
-            container = { foo: 'bar' };
+            container = createMockContainer();
             events.listen = jest.fn();
             keys.bind = jest.fn();
             graphRes = graph.getEditGraph(container, GraphMock);
@@ -126,9 +136,9 @@ describe('service/x6/graph/graph.js', () => {
 
         it('enables the mouse wheel', () => {
             expect(graphRes.mousewheel).toEqual({
-                enabled: true,
-                global: true,
-                modifiers: ['ctrl', 'meta']
+                enabled: false,
+                global: undefined,
+                modifiers: undefined
             });
         });
 
@@ -157,6 +167,15 @@ describe('service/x6/graph/graph.js', () => {
 
         it('uses the export plugin', () => {
             expect(graphRes.use).toHaveBeenCalledWith(new Export());
+        });
+
+        // NEW TEST: wheel event listener added by your feature
+        it('adds the wheel listener for zooming', () => {
+            expect(container.addEventListener).toHaveBeenCalledWith(
+                'wheel',
+                expect.any(Function),
+                { passive: false }
+            );
         });
     });
 });

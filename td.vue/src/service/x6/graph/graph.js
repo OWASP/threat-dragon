@@ -20,9 +20,7 @@ const getEditGraph = (container, ctor = Graph) => {
             visible: true
         },
         mousewheel: {
-            enabled: true,
-            global: true,
-            modifiers: ['ctrl', 'meta']
+            enabled: false
         },
         panning: {
             enabled: false // use Scroller plugin instead
@@ -70,6 +68,32 @@ const getEditGraph = (container, ctor = Graph) => {
             }
         }
     });
+    let currentScale = 1;
+
+    container.addEventListener(
+        'wheel',
+        (e) => {
+            // macOS pinch → ctrlKey = true
+            // Windows/Linux pinch → huge deltaY spikes (usually > 40)
+            const isPinch = e.ctrlKey || Math.abs(e.deltaY) > 40;
+
+            if (!isPinch) return; // ignore normal scrolling
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const zoomSpeed = 0.015;
+            const factor = e.deltaY < 0 ? 1 + zoomSpeed : 1 - zoomSpeed;
+
+            currentScale *= factor;
+
+            // clamp zoom
+            currentScale = Math.min(Math.max(currentScale, 0.5), 3);
+
+            graph.scale(currentScale);
+        },
+        { passive: false }
+    );
     graph
         .use(new Clipboard())
         .use(
