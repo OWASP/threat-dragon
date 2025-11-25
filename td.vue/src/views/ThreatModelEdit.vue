@@ -245,7 +245,7 @@ export default {
 
             try {
                 if (window.electronAPI && this.model?.summary?.title) {
-                    window.electronAPI.updateTitle(this.model.summary.title);
+                    window.electronAPI.modelOpened(this.model.summary.title);
                 }
             } catch (err) {
                 console.err('Failed to update title on save: ', err);

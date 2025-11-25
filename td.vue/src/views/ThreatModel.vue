@@ -150,7 +150,7 @@ export default {
         
         if (this.model?.summary?.title && window.electronAPI) {
             console.log('RENDERER: Setting title from ThreatModel view:', this.model.summary.title);
-            window.electronAPI.updateTitle(this.model.summary.title);
+            window.electronAPI.modelOpened(this.model.summary.title);
         }
 
     }

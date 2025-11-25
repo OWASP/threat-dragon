@@ -42,27 +42,6 @@ async function createWindow() {
         mainWindow.focus();
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
-        ipcMain.on('update-title', (_event, newTitle) => {
-            try {
-                if (isMacOS) {
-                    // macOs: set app name (menu) and represented filename (document)
-                    if (typeof newTitle === 'string' && newTitle.length > 0) {
-                        app.setName(newTitle);
-                        // setRepresentedFilename expects a path _ but passing a name is ok to show it
-                        mainWindow.setRepresentedFilename(newTitle);
-                    } else {
-                        //Clear the filename representation if empty 
-                        mainWindow.setRepresentedFilename('');
-                    }
-                } else {
-                    // For Windows/Linux the handling works directly
-                    mainWindow.setTitle(newTitle || 'OWASP Threat Dragon');
-                }
-            } catch (err) {
-                // Throws an Error if the title can't be updated for some reason
-                console.error('Failed to update title : ', err);
-            }
-        });
     });
 
     mainWindow.on('close', (event) => {
@@ -196,9 +175,25 @@ function handleModelOpenConfirmed(_event, fileName) {
 }
 
 function handleModelOpened(_event, fileName) {
-    logger.log.debug('Open model notification from renderer for file name: ' + fileName);
+    logger.log.debug('Open model notification from renderer with title: ' + fileName);
     menu.modelOpened();
+
+    try {
+        if (isMacOS) {
+            app.setName(fileName || 'OWASP Threat Dragon');
+            if (mainWindow) {
+                mainWindow.setRepresentedFilename(fileName || '');
+            }
+        } else {
+            if (mainWindow) {
+                mainWindow.setTitle(fileName || 'OWASP Threat Dragon');
+            }
+        }
+    } catch (err) {
+        console.error('Failed to update title : ', err);
+    }
 }
+
 
 function handleModelPrint(_event, format) {
     logger.log.debug('Model print request from renderer with printer : ' + format);
