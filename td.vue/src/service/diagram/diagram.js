@@ -5,6 +5,10 @@ import events from '@/service/x6/graph/events.js';
 import store from '@/store/index.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import { passiveSupport } from 'passive-events-support/src/utils';
+import {
+    getElementsInsideBoundary,
+    doesFlowCrossBoundary
+} from './boundary-utils';
 
 const appVersion = require('../../../package.json').version;
 
@@ -33,10 +37,32 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.id = diagram.id;
     updated.diagramType = diagram.diagramType;
     graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
+
+    //before returning the JSON model, inject new boundary element data
+    const cellsJSON = updated.cells || [];
+
+    cellsJSON.forEach(boundary => {
+        if (boundary.shape === 'trust-boundary-box' ||
+            boundary.shape === 'trust-boundary-curve') {
+
+            // Find elements inside this boundary
+            const contained = getElementsInsideBoundary(boundary, cellsJSON);
+
+            // Store the list on the boundary object
+            boundary.containedElements = contained.map(el => el.id);
+        }
+    });
+
+    //detect flows crossing boundaries 
+    cellsJSON.forEach(flow => {
+        if (flow.shape === 'flow') {
+            flow.crossesBoundaries = doesFlowCrossBoundary(flow, cellsJSON);
+        }
+    });
+
     store.get().dispatch(tmActions.diagramSaved, updated);
     store.get().dispatch(tmActions.stash);
     store.get().dispatch(tmActions.notModified);
-
 };
 
 const drawGraph = (diagram, graph) => {
