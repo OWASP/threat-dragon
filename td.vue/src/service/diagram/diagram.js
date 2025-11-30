@@ -7,8 +7,9 @@ import tmActions from '@/store/actions/threatmodel.js';
 import { passiveSupport } from 'passive-events-support/src/utils';
 import {
     getElementsInsideBoundary,
-    doesFlowCrossBoundary
-} from './boundary-utils';
+    getBoundariesCrossedByFlow,
+    getFlowsCrossedByBoundary
+} from '../boundary-utils.js';
 
 const appVersion = require('../../../package.json').version;
 
@@ -29,6 +30,33 @@ const drawV1 = (diagram, graph) => {
 const upgradeAndDraw = (diagram, graph) => {
     drawV1(diagram, graph);
 
+    // Update any style attributes on cells first
+    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
+
+    // before serializing the graph to JSON, inject boundary/flow relationship data
+    graph.getCells().forEach(boundary => {
+        if (boundary.shape === 'trust-boundary-box' ||
+            boundary.shape === 'trust-boundary-curve') {
+
+            // Find elements inside this boundary
+            const contained = getElementsInsideBoundary(graph.getCells(), boundary);
+
+            // Store the list inside the cell's data so it will be present in toJSON()
+            boundary.data = boundary.data || {};
+            boundary.data.containedElements = contained.map(el => el.id);
+            boundary.data.crossingFlows = getFlowsCrossedByBoundary(boundary, graph.getCells());
+        }
+    });
+
+    // For flows, attach any crossed boundary ids to the flow cell's data
+    graph.getCells().forEach(flow => {
+        if (flow.shape === 'flow') {
+            flow.data = flow.data || {};
+            flow.data.trustBoundaryIds = getBoundariesCrossedByFlow(flow, graph.getCells());
+        }
+    });
+
+    // Now serialize the graph (after injecting the new data)
     const updated = graph.toJSON();
     updated.version = appVersion;
     updated.title = diagram.title;
@@ -36,29 +64,6 @@ const upgradeAndDraw = (diagram, graph) => {
     updated.thumbnail = diagram.thumbnail;
     updated.id = diagram.id;
     updated.diagramType = diagram.diagramType;
-    graph.getCells().forEach((cell) => dataChanged.updateStyleAttrs(cell));
-
-    //before returning the JSON model, inject new boundary element data
-    const cellsJSON = updated.cells || [];
-
-    cellsJSON.forEach(boundary => {
-        if (boundary.shape === 'trust-boundary-box' ||
-            boundary.shape === 'trust-boundary-curve') {
-
-            // Find elements inside this boundary
-            const contained = getElementsInsideBoundary(boundary, cellsJSON);
-
-            // Store the list on the boundary object
-            boundary.containedElements = contained.map(el => el.id);
-        }
-    });
-
-    //detect flows crossing boundaries 
-    cellsJSON.forEach(flow => {
-        if (flow.shape === 'flow') {
-            flow.crossesBoundaries = doesFlowCrossBoundary(flow, cellsJSON);
-        }
-    });
 
     store.get().dispatch(tmActions.diagramSaved, updated);
     store.get().dispatch(tmActions.stash);

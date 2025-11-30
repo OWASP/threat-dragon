@@ -9,46 +9,52 @@ export function isElementInsideBoundary(elementBBox, boundaryBBox) {
     );
 }
 
-export function getElementsInsideBoundary(graph, boundaryCell) {
+export function getElementsInsideBoundary(cells, boundaryCell) {
     const inside = [];
     //x6 built-in
     const boundaryBBox = boundaryCell.getBBox();
 
-    graph.getCells().forEach(cell => {
-        if (cell.id === boundaryCell.id) return;
-        //ignore edges
-        if (!cell.isNode?.()) return; 
+    cells.forEach(cell => {
+        //ignore edges and this trust boundary itself
+        if (!(cell.id === boundaryCell.id) && !(cell.shape === 'flow')){
+            if (!cell.isNode?.()) return; 
 
-        const elBBox = cell.getBBox();
+            const elBBox = cell.getBBox();
 
-        if (isElementInsideBoundary(elBBox, boundaryBBox)) {
-            inside.push(cell);
+            if (isElementInsideBoundary(elBBox, boundaryBBox)) {
+                inside.push(cell);
+            }
         }
     });
-
     return inside;
 }
 
-export function doesFlowCrossBoundary(flowCell, boundaryCell) {
-    const boundaryBBox = boundaryCell.getBBox();
-    //start to end (X6 API)
-    const points = flowCell.getPoints(); 
+export function doesFlowCrossBoundary(flowCell, boundaryCell, cells) {
+    const includedEndpoints = getElementsInsideBoundary(cells, boundaryCell);
 
-    const [start, end] = points;
-
-    const startInside =
-        start.x >= boundaryBBox.x &&
-        start.y >= boundaryBBox.y &&
-        start.x <= boundaryBBox.x + boundaryBBox.width &&
-        start.y <= boundaryBBox.y + boundaryBBox.height;
-
-    const endInside =
-        end.x >= boundaryBBox.x &&
-        end.y >= boundaryBBox.y &&
-        end.x <= boundaryBBox.x + boundaryBBox.width &&
-        end.y <= boundaryBBox.y + boundaryBBox.height;
-
-    //one inside + one outside means crosses boundary
-    return startInside !== endInside;
+    return includedEndpoints.includes(flowCell.getSourceCell()) !== includedEndpoints.includes(flowCell.getTargetCell());
 }
 
+export function getBoundariesCrossedByFlow(flowCell, cells){
+    const crossedBoundaries = [];
+    cells.forEach(boundary => {
+        if (boundary.shape === 'trust-boundary-box' || boundary.shape === 'trust-boundary-curve') {
+            if(doesFlowCrossBoundary(flowCell, boundary, cells)){
+                crossedBoundaries.push(boundary.id);
+            };
+        }
+    });
+    return crossedBoundaries;
+}
+
+export function getFlowsCrossedByBoundary(boundaryCell, cells){
+    const crossedFlows = [];
+    cells.forEach(flow => {
+        if (flow.shape === 'flow') {
+            if(doesFlowCrossBoundary(flow, boundaryCell, cells)){
+                crossedFlows.push(flow.id);
+            };
+        }
+    });
+    return crossedFlows;
+}
