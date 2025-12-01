@@ -78,7 +78,7 @@
   },
   "overrides": {
     "@babel/traverse": ">=7.23.2",
-    "body-parser": ">=1.20.3",
+    "body-parser": ">=2.2.1",
     "braces": ">=3.0.3",
     "cookie": ">=0.7.0",
     "cross-spawn@<7.0.0": "6.0.6",
