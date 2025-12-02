@@ -1,157 +1,180 @@
-# AI Tools Integration with Threat Dragon
+## AI Tools – Integration with Threat Dragon
 
-This document provides a comprehensive explanation of how the Python AI tools integrate with Threat Dragon to enable AI-powered threat generation using Large Language Models (LLMs).
+This document explains **how the Python AI tools integrate with Threat Dragon** and **how the end‑to‑end AI threat generation flow works** (architecture, data flow, configuration, and runtime behavior).
 
-## Overview
+---
 
-The AI tools module is a Python-based service that generates security threats for Threat Dragon threat models using LLM APIs. The integration allows Threat Dragon users to automatically analyze their threat models and generate comprehensive threat lists based on the STRIDE framework, leveraging advanced language models to identify potential security vulnerabilities.
+## High‑Level Overview
 
-The integration follows a client-server architecture where Threat Dragon (the Electron desktop application) acts as the client, invoking the Python service as a subprocess and communicating through standard input/output streams.
+The `ai-tools` module is a **Python service** that generates STRIDE‑based security threats for Threat Dragon models using **LLM APIs via LiteLLM**.
 
-## First Steps
+- **Threat Dragon desktop app (Electron + Vue)**:
+  - Hosts the user interface, AI settings screens, progress/warning/results dialogs, and threat model editor.
+  - Orchestrates the AI workflow and owns the model data and schema.
+- **AI tools (Python, this folder)**:
+  - Run as a **subprocess** of the Electron main process.
+  - Read the API key, model JSON, and schema JSON from **stdin**.
+  - Call the configured LLM, generate threats, update the model in memory, validate coverage/quality, and return results over **stdout**.
 
-Before using the AI threat generation feature, the following must be configured in Settings window:
+End users only ever interact with Threat Dragon; the Python tools are an internal implementation detail.
 
-1. **AI Settings and API Key**: Configure your AI settings through Threat Dragon's AI Settings interface. This includes:
-   - API Key: An API key for your chosen LLM provider
-   - LLM model name (e.g., "gpt-4", "claude-3-opus")
-   - Temperature setting
-   - Response format preferences
-   - API base URL (if using a custom endpoint)
-   - Log level preference
+---
 
-**Note on Python Requirements**: 
-- **Developer Mode**: If you are running Threat Dragon from source code in development mode, Python 3.8 or higher must be installed. All Python dependencies (including `LiteLLM`) are installed with `npm install`, and the Python virtual environment with all dependencies is automatically bundled when building the desktop application with `npm run build:desktop`.
-- **Compiled/Release Builds**: For end users running the compiled Threat Dragon installer, Python is not required. The Python virtual environment and all dependencies are bundled within the installer, so the AI tools work out of the box without any additional Python setup.
+## Folder Structure
 
-Without these settings configured, the AI threat generation process will fail with appropriate error messages guiding you to complete the setup.
-
-## Architecture
-
-### Components
-
-The integration consists of several key components:
-
-**Threat Dragon Side (Electron/Node.js):**
-- Menu handler (`menu.js`) - Orchestrates the threat generation workflow
-- UI components - Progress dialogs, warning dialogs, and results windows
-- IPC communication - Bridges between main process and renderer process
-
-### Folder Structure
-
-The `ai-tools` folder is located within the Threat Dragon project structure:
-
-```
-threat-dragon/
-└── td.vue/
-    ├── ai-tools/                    # AI threat generation tools
-    │   ├── src/
-    │   │   ├── main.py              # Entry point, orchestrates threat generation
-    │   │   ├── ai_client.py         # LLM API communication via LiteLLM
-    │   │   ├── utils.py             # Threat model updates and manipulation
-    │   │   ├── validator.py         # Response validation and quality checks
-    │   │   └── models.py             # Pydantic data models for structured responses
-    │   ├── prompt.txt               # System prompt template for LLM
-    │   ├── requirements.txt         # Python dependencies
-    │   └── README.md               # This file
-    ├── src/
-    │   └── desktop/
-    │       └── menu.js              # Threat Dragon menu handler (invokes ai-tools)
-    └── ...
+```text
+td.vue/
+└─ ai-tools/                     # Python AI threat generation tooling, bundled with the desktop app
+   ├─ src/
+   │  ├─ main.py                 # Entry point: args + logging + stdin, orchestrates generation and validation
+   │  ├─ ai_client.py            # LiteLLM client, prompt handling, and response parsing
+   │  ├─ utils.py                # Updates the in‑memory Threat Dragon model and visual indicators
+   │  ├─ validator.py            # Validates AI output and computes coverage/quality statistics
+   │  └─ models.py               # Pydantic models describing the AI response format
+   ├─ prompt.txt                 # STRIDE‑focused system prompt template
+   └─ requirements.txt           # Python dependencies (LiteLLM, Pydantic)
 ```
 
-## Data Flow
+On the Threat Dragon side, the main integration points are:
 
-### Initialization Phase
+```text
+td.vue/
+├─ src/
+│  ├─ desktop/
+│  │  ├─ menu.js                 # Desktop menu handlers and Python subprocess orchestration
+│  │  └─ desktop.js              # Bridges Electron IPC events to the menu handlers
+│  └─ main.desktop.js            # Renderer integration: sends model data, receives updated models
+├─ public/
+│  └─ ai-*.html                  # AI warning, progress, and results windows
+├─ scripts/
+│  └─ setup-venv.js              # Creates Python venv and installs ai-tools/requirements.txt on npm install
+└─ vue.config.js                 # Copies ai-tools and the Python venv into the Electron build
+```
 
-1. User initiates threat generation from Threat Dragon's menu
-2. Threat Dragon validates that a threat model is open
-3. A warning dialog is displayed to inform users about AI-generated content
-4. Upon confirmation, the process begins
+---
 
-### Process Invocation
+## Integration Architecture
 
-1. Threat Dragon locates Python executable and `main.py` script
-2. API key retrieved from system credential manager via `keytar`
-3. Threat model schema JSON loaded from Threat Dragon's resources
-4. AI settings loaded from `ai-settings.json` (excluding API key)
-5. Python subprocess spawned with `--settings-json` and `--logs-folder` arguments
+### Desktop App ↔ Python Subprocess
 
-### Processing Phase
+- **Trigger**:
+  - User selects **“Generate Threats & Mitigations”** from the Threat Dragon desktop menu.
+  - `menu.js` (`generateThreatsAndMitigations`) opens a warning dialog; on confirmation it calls `proceedWithThreatGeneration`.
+- **Requesting model data**:
+  - `proceedWithThreatGeneration` checks that a model is open and then sends the IPC event **`ai-threat-generation-request`** to the renderer.
+  - In `main.desktop.js`, `window.electronAPI.onAIThreatGenerationRequest`:
+    - Verifies the current view (diagram/report/edit views are disallowed).
+    - Calls `tmActions.diagramApplied` to ensure the latest diagram state is reflected.
+    - Reads `app.$store.state.threatmodel.data` and calls `window.electronAPI.aiThreatGeneration(modelData)`.
+- **Desktop main process**:
+  - `desktop.js` receives the renderer event and forwards it to `menu.aiThreatGeneration(modelData)`.
+  - `menu.aiThreatGeneration` invokes `runPythonThreatGeneration(modelData)` which:
+    - Resolves the **Python executable** in the bundled venv via `getPythonExecutable()`.
+    - Resolves `ai-tools/src/main.py` via `getMainPyPath()`.
+    - Loads the **AI settings JSON** path via `getAISettingsPath()`.
+    - Loads the **Threat Dragon v2 schema JSON** from `src/service/schema/owasp-threat-dragon-v2.schema.json`.
+    - Retrieves the **API key** from the system credential store via `loadAPIKey()` (using `keytar` under the hood).
+    - Spawns the Python process using `spawn(pythonExecutable, [mainPyPath, '--settings-json', aiSettingsPath, '--logs-folder', app.getPath('logs')])`.
+    - Opens the **AI Threats Progress** dialog.
+- **Data exchange with Python (stdin / stdout / stderr)**:
+  - **stdin (UTF‑8, newline‑delimited)**:
+    1. First line – API key (never logged by Python).
+    2. Second line – Threat model JSON (single‑line stringified).
+    3. Third line – Threat model schema JSON (single‑line stringified).
+  - **stdout (structured payloads)**:
+    - `<<JSON_START>> ... <<JSON_END>>` – Updated threat model JSON.
+    - `<<METADATA_START>> ... <<METADATA_END>>` – Metadata JSON (LLM cost, validation results).
+  - **stderr (logs)**:
+    - All diagnostic/logging output goes to stderr to avoid corrupting the structured stdout markers.
+- **Result handling**:
+  - `menu.js` collects all stdout/stderr, handles non‑zero exit codes, and parses the model JSON and metadata.
+  - On success it:
+    - Sends **`ai-threat-generation-complete`** with the updated model to the renderer.
+    - Closes the progress dialog.
+    - Opens the **AI Threats Results** window, passing cost and validation stats.
 
-The Python script performs the following steps:
+### Renderer‑Side Integration
 
-1. **Configuration Loading**: Reads AI settings from the JSON file, including:
-   - LLM model name
-   - Temperature setting (0-2 range)
-   - Response format flag (enables JSON schema validation)
-   - API base URL (for custom endpoints)
-   - Log level (INFO or DEBUG)
+- `main.desktop.js` listens for **`onAIThreatGenerationComplete`** and updates the Vuex store with the updated model, ensuring the UI reflects newly attached threats and visual indicators.
+- The renderer is responsible for:
+  - Showing toast messages if the user attempts generation from unsupported views.
+  - Persisting changes using the existing Threat Dragon save flows.
 
-2. **Logging Setup**: Configures dual logging:
-   - Console handler: Always enabled for INFO+ messages to stderr
-   - File handler: Only enabled in DEBUG mode, writes to timestamped log files
+---
 
-3. **Data Reception**: Reads API key, threat model, and schema from stdin
+## Python Components and Responsibilities
 
-4. **Threat Generation**: 
-   - Loads the prompt template from `prompt.txt`
-   - Injects the schema and model JSON into the prompt
-   - Constructs a system message with the formatted prompt
-   - Calls the LLM API using LiteLLM with configured parameters
-   - Parses the JSON response using Pydantic models
+- **`main.py`**
+  - Parses CLI arguments: `--settings-json` and `--logs-folder`.
+  - Ensures stdout/stderr use UTF‑8 (important on Windows).
+  - Loads AI settings JSON (model, temperature, response format flag, API base, log level).
+  - Configures logging (console always; additional file logging when `logLevel=DEBUG`).
+  - Reads API key, model JSON, and schema JSON from stdin.
+  - Calls `ai_client.generate_threats(...)` to obtain threats + cost.
+  - Calls `update_threats_in_memory(...)` to inject threats into the threat model and apply visual markers.
+  - Runs `ThreatValidator` to measure coverage and quality; prints a summary and provides structured validation metadata.
+  - Writes:
+    - Updated model JSON between `<<JSON_START>>` / `<<JSON_END>>`.
+    - Metadata JSON (cost + validation stats) between `<<METADATA_START>>` / `<<METADATA_END>>`.
 
-5. **Response Processing**:
-   - Validates the response structure against Pydantic models
-   - Handles fallback parsing if JSON is wrapped in markdown
-   - Extracts cost information from the API response
-   - Converts Pydantic models to dictionaries
+- **`ai_client.py`**
+  - Reads `prompt.txt` and injects:
+    - `schema_json` – the full Threat Dragon v2 schema.
+    - `model_json` – the full threat model (may contain multiple diagrams).
+  - Constructs a **STRIDE‑focused system prompt** plus a brief user message requesting threats and mitigations.
+  - Configures LiteLLM:
+    - Enables optional JSON schema validation when `responseFormat` is `true`.
+    - Computes `max_tokens` based on the selected model (with a safe fallback).
+    - Supports optional custom `api_base` endpoints.
+  - Calls `litellm.completion`, tracks `response_cost`, and parses the response:
+    - First attempts strict JSON parsing into `AIThreatsResponseList`.
+    - Falls back to extracting an embedded JSON block when the model returns markdown or additional text.
+  - Returns a dictionary mapping **cell IDs → arrays of threat objects**, plus `response_cost`.
 
-6. **Threat Model Update**:
-   - Iterates through all diagrams and cells in the model
-   - Matches generated threats to elements by cell ID
-   - Adds unique UUIDs to threats that lack them
-   - Updates the `hasOpenThreats` flag based on threat status
-   - Adds visual indicators (red stroke) to cells with threats
-   - Skips out-of-scope elements and trust boundaries
+- **`models.py`**
+  - Defines Pydantic models for the expected AI response:
+    - `Threats` – individual threat (title, status, severity, type, description, mitigation, `modelType`).
+    - `AIThreatsResponse` – threats for a single element (`id`, `threats`).
+    - `AIThreatsResponseList` – top‑level response (`items: List[AIThreatsResponse]`).
+  - Enforces:
+    - `status` ∈ `{NA, Open, Mitigated}`.
+    - `severity` ∈ `{High, Medium, Low}`.
+    - `modelType` ∈ `{STRIDE, LINDDUN, CIA, DIEF, RANSOM, PLOT4ai, Generic}` (the STRIDE‑focused prompt currently uses `"STRIDE"`).
 
-7. **Validation**: Validates threat quality, element coverage, and calculates statistics (see Validation section)
+- **`utils.py`**
+  - Iterates over all diagrams and cells in `model.detail.diagrams[]`.
+  - Matches threats by **cell `id`** and:
+    - Skips out‑of‑scope elements (`data.outOfScope=true`) and trust boundaries (`trust-boundary-box`, `trust-boundary-curve`).
+    - Ensures each threat has a unique `id` (UUID) if one is missing.
+    - Assigns threats to `cell.data.threats`.
+    - Updates `cell.data.hasOpenThreats` when present.
+    - Calls `_add_red_stroke` to visually mark elements with threats in the diagram view.
 
-### Response Transmission
+- **`validator.py`**
+  - Computes the set of **in‑scope elements** (not out‑of‑scope, not trust boundaries) and the set of all model element IDs.
+  - Compares AI response IDs to:
+    - Detect missing in‑scope elements.
+    - Detect threats attached to out‑of‑scope/unknown elements.
+    - Detect completely unrelated responses (no ID overlap with the model).
+  - Performs quality checks (e.g. empty mitigations) and calculates statistics:
+    - Number of in‑scope elements.
+    - Number of elements with threats.
+    - Total threats generated.
+    - Coverage percentage.
+  - In `DEBUG` mode writes detailed logs into `logs/validation_log_*.log`, and always prints a concise summary to stdout.
 
-The Python script outputs data to standard output using marker-based delimiters:
+---
 
-- `<<JSON_START>>` / `<<JSON_END>>` - Encloses the updated threat model JSON
-- `<<METADATA_START>>` / `<<METADATA_END>>` - Encloses metadata (cost, validation results)
+## Configuration and Security
 
-Threat Dragon extracts the JSON and metadata, sends the updated model to the renderer via IPC, and displays results. Log messages are written to stderr to avoid interfering with structured output.
-
-## Communication Protocol Details
-
-### Input Format
-
-Data is transmitted via stdin as UTF-8 encoded, newline-delimited text:
-1. First line: API key (never logged)
-2. Second line: Complete threat model JSON (single line, no pretty-printing)
-3. Third line: Threat model schema JSON (single line, no pretty-printing)
-
-### Output Format
-
-The stdout protocol uses marker-based delimiters to separate structured data from log messages. This allows Threat Dragon to reliably extract the updated threat model and metadata while Python can write log messages to stderr.
-
-## Security Considerations
-
-### API Key Management
-
-The API key is stored securely in the system credential manager using the `keytar` library (Windows Credential Manager, macOS Keychain, or Linux Secret Service), separate from other settings. It is retrieved by Threat Dragon's Node.js process before invoking Python, transmitted only through stdin (never as command-line arguments), and never logged or written to files. The Python tools do not access the credential manager directly.
-
-## Configuration
-
-AI settings must be configured through Threat Dragon's AI Settings interface before generating threats. The settings (excluding the API key) are stored in `ai-settings.json` in Threat Dragon's user data directory:
+- **AI settings (excluding API key)**:
+  - Managed through Threat Dragon’s **AI Settings** UI.
+  - Persisted as `ai-settings.json` under the app’s user data directory.
+  - Example structure:
 
 ```json
 {
-  "llmModel": "gpt-4",
+  "llmModel": "openai/gpt-5",
   "temperature": 0.1,
   "responseFormat": true,
   "apiBase": "",
@@ -159,110 +182,55 @@ AI settings must be configured through Threat Dragon's AI Settings interface bef
 }
 ```
 
-- `llmModel`: LLM model identifier (e.g., "gpt-4", "claude-3-opus")
-- `temperature`: Randomness control (0.0 = deterministic, 2.0 = very random)
-- `responseFormat`: Enables JSON schema validation when true
-- `apiBase`: Custom API endpoint URL (empty for default providers)
-- `logLevel`: "INFO" for console output, "DEBUG" for detailed file logs
+- **API key handling**:
+  - Stored securely using **`keytar`** (Windows Credential Manager, macOS Keychain, or Linux Secret Service).
+  - Retrieved by the **Node/Electron main process** only.
+  - Passed to Python **via stdin only**, never as a command‑line argument and never written to logs or files.
+  - The Python tools do not interact with the credential manager directly.
 
-The API key is stored separately in the system credential manager (see Security Considerations).
+- **Logging**:
+  - Console logging (INFO level) is always enabled and written to **stderr**.
+  - When `logLevel` is `DEBUG`, Python writes additional detailed logs to the directory provided via `--logs-folder` (Electron uses `app.getPath('logs')`).
 
-## Threat Generation Process
+---
 
-### STRIDE Framework
+## Development vs Packaged Builds
 
-The AI tools use the STRIDE threat modeling framework:
+- **Development mode (`npm run start:desktop`)**:
+  - Requires **Python 3.8+** installed on the developer machine.
+  - `npm install` runs `scripts/setup-venv.js`, which:
+    - Creates a local `venv` in the `td.vue` project directory.
+    - Installs dependencies from `ai-tools/requirements.txt` into that venv.
+  - `menu.js` resolves both the venv and `ai-tools/src/main.py` relative to the `td.vue` source tree.
 
+- **Packaged/installer builds (`npm run build:desktop`)**:
+  - The Electron build process (see `vue.config.js`) copies:
+    - The **`ai-tools`** folder.
+    - The pre‑created **Python `venv`**.
+  - `menu.js` resolves both the Python interpreter and `main.py` from `process.resourcesPath`.
+  - **End users do not need Python installed**; the installer ships a self‑contained venv and AI tools bundle.
 
-### Element Analysis
+---
 
-The system analyzes threat model elements based on:
+## End‑User Workflow in Threat Dragon
 
-- **Shape**: Determines element type (actor, process, store, flow)
-- **Position and Size**: Infers adjacency, containment, and trust boundary crossings
-- **Connections**: Analyzes data flows and their directions
-- **Properties**: Considers encryption, public networks, protocols, and bidirectional flows
-- **Trust Boundaries**: Identifies security zones and boundary crossings
+- **Prerequisites**:
+  - Configure AI settings in **AI Settings** (model, temperature, response format, optional API base, log level).
+  - Provide and save a valid API key (stored via `keytar`).
 
-### Threat Attributes
+- **Generating threats with AI**:
+  - Open a Threat Dragon model and ensure diagrams are saved/closed.
+  - From the desktop menu, choose **“Generate Threats & Mitigations”**.
+  - Review and acknowledge the AI warning dialog.
+  - Watch the **AI Threats Progress** dialog while the Python tools run.
+  - When complete, the editor is updated with:
+    - New or adjusted threats on in‑scope elements.
+    - Visual red strokes on elements with threats.
+  - The **AI Threats Results** window displays:
+    - LLM cost.
+    - Coverage and threat statistics.
+    - Validation warnings and informational notes.
 
-Each generated threat includes:
-
-- **Title**: Short descriptive name
-- **Status**: "Open", "Mitigated", or "NA"
-- **Severity**: "High", "Medium", or "Low" (based on exposure and exploitability)
-- **Type**: One of the six STRIDE categories
-- **Description**: Detailed explanation referencing element names and layout facts
-- **Mitigation**: Specific recommendations for addressing the threat
-- **Model Type**: Always "STRIDE" for this implementation
-
-## Validation and Quality Assurance
-
-### Validation Process
-
-The `ThreatValidator` class performs comprehensive validation:
-
-1. **Element Coverage**: Checks that all in-scope elements received threats
-2. **ID Validation**: Verifies that threat IDs match actual model elements
-3. **Scope Validation**: Identifies threats assigned to out-of-scope elements
-4. **Quality Checks**: Detects empty mitigations and other quality issues
-5. **Statistics Calculation**: Computes coverage percentages and threat counts
-
-### Validation Results
-
-Validation produces:
-
-- **Overall Status**: Valid or invalid (based on ID overlap)
-- **Statistics**: Coverage, threat counts, element counts
-- **Warnings**: Quality issues and scope violations
-- **Info Messages**: Missing elements (informational, not errors)
-
-### Logging
-
-Two logging modes are supported:
-
-- **INFO Mode**: Console output only, minimal logging
-- **DEBUG Mode**: Detailed file logs with timestamps, includes:
-  - Configuration details
-  - Threat generation progress
-  - Individual threat details
-  - Validation results
-  - Full AI responses
-
-Log files are stored in the logs directory with timestamped filenames.
-
-## Error Handling
-
-Errors are handled at multiple levels: process-level errors (missing Python, script, or API key) display error dialogs; runtime errors (JSON parsing, LLM API failures) are caught and reported with context; validation errors are included in metadata but don't stop the process; encoding errors are handled automatically with UTF-8 fallbacks. Users can cancel the process, which terminates the Python subprocess and cleans up resources.
-
-## Integration Points
-
-Threat Dragon locates files via helper functions (`getAISettingsPath()`, `getPythonExecutable()`), resolves paths for development vs production builds, and uses Electron's `app.getPath('logs')` for log storage. The Python subprocess runs with UTF-8 encoding and working directory set to the script location. IPC communication uses `ai-threat-generation-request` and `ai-threat-generation-complete` events between main and renderer processes.
-
-## Dependencies
-
-All Python dependencies are installed with `npm install` and automatically bundled when building the desktop application with `npm run build:desktop`.
-
-### Python Dependencies
-
-- `litellm`: Unified interface for multiple LLM providers
-- `pydantic`: Data validation and parsing
-
-### Node.js Dependencies
-
-- `child_process`, `fs`, `path`: Standard Node.js modules for process and file management
-- `keytar`: Secure credential storage in system credential manager
-- Electron APIs: `app`, `BrowserWindow`, `dialog`, `ipcMain`
-
-## Usage Workflow
-
-User opens a threat model, selects "Generate Threats with AI" from the menu, confirms the warning dialog, and monitors progress. The Python process generates threats, and results are displayed with cost and validation statistics. The threat model is automatically updated, and users can review and edit the generated threats.
+At this point, users can review, edit, and save the AI‑generated threats as part of their normal Threat Dragon workflow.
 
 
-## Technical Notes
-
-### Compatibility
-
-- Cross-platform: Windows, macOS, Linux
-- Python 3.8+ required only for development mode (compiled builds include Python venv)
-- Works with most LLM providers through the LiteLLM library
