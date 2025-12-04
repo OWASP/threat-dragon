@@ -199,6 +199,11 @@
           "type": "array",
           "items": { "type": "string" },
           "description": "IDs of data flows that cross this trust boundary"
+          },
+          "containedElements": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs of elements contained within this trust boundary"
           }
         },
         "required": [ "title", "id" ]
