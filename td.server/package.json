@@ -45,9 +45,9 @@
     "dotenv": "^16.0.3",
     "express": "^5.0.1",
     "express-rate-limit": "^8.2.1",
-    "googleapis": "^166.0.0",
+    "googleapis": ">=167.0.0",
     "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.3",
     "octonode": "^0.10.2",
     "serve-favicon": "^2.5.0",
     "winston": "^3.8.2"
@@ -78,7 +78,7 @@
   },
   "overrides": {
     "@babel/traverse": ">=7.23.2",
-    "body-parser": ">=1.20.3",
+    "body-parser": ">=2.2.1",
     "braces": ">=3.0.3",
     "cookie": ">=0.7.0",
     "cross-spawn@<7.0.0": "6.0.6",

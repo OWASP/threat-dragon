@@ -6,6 +6,7 @@
 !.github/*.yaml
 !.github/CODEOWNERS
 !.github/issue_template/
+!.github/issue_template/*.yaml
 !.github/issue_template/*.md
 !.github/workflows/
 !.github/workflows/*.yaml
