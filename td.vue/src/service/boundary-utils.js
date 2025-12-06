@@ -41,7 +41,7 @@ export function getBoundariesCrossedByFlow(flowCell, cells){
         if (boundary.shape === 'trust-boundary-box' || boundary.shape === 'trust-boundary-curve') {
             if(doesFlowCrossBoundary(flowCell, boundary, cells)){
                 crossedBoundaries.push(boundary.id);
-            };
+            }
         }
     });
     return crossedBoundaries;
@@ -53,7 +53,7 @@ export function getFlowsCrossedByBoundary(boundaryCell, cells){
         if (flow.shape === 'flow') {
             if(doesFlowCrossBoundary(flow, boundaryCell, cells)){
                 crossedFlows.push(flow.id);
-            };
+            }
         }
     });
     return crossedFlows;
