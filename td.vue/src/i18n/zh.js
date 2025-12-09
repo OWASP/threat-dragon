@@ -64,6 +64,11 @@ const zho = {
             save: '保存模型',
             saveAs: '模型另存为'
         },
+        aiTools: {
+            heading: 'AI工具',
+            generateThreats: '生成威胁和缓解措施',
+            settings: '设置'
+        },
         help: {
             heading: '帮助',
             docs: '文档',

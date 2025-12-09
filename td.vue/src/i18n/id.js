@@ -64,6 +64,11 @@ const ind = {
             save: 'Simpan Model',
             saveAs: 'Simpan Model Sebagai'
         },
+        aiTools: {
+            heading: 'Alat AI',
+            generateThreats: 'Buat ancaman dan mitigasi',
+            settings: 'Pengaturan'
+        },
         help: {
             heading: 'Bantuan',
             docs: 'Dokumentasi',

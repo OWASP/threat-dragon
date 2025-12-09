@@ -34,7 +34,8 @@
     "test:e2e-smokes:local": "vue-cli-service test:e2e -C e2e.smokes.local.config.js --url http://localhost:8080/",
     "test:e2e-nightly": "browserstack-cypress run --cf browserstack.nightly.json --sync",
     "test:unit": "vue-cli-service test:unit --testPathIgnorePatterns tests/unit/desktop/",
-    "test:vue": "vue-cli-service test:e2e -C e2e.local.config.js --headless --browser chrome"
+    "test:vue": "vue-cli-service test:e2e -C e2e.local.config.js --headless --browser chrome",
+    "postinstall": "node scripts/setup-venv.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
@@ -79,6 +80,7 @@
     "electron-updater": "^6.3.0",
     "is-electron": "^2.2.1",
     "jquery": "^3.7.1",
+    "keytar": "^7.9.0",
     "passive-events-support": "^1.1.0",
     "uuid": "11.1.0",
     "vue": "^2.7.3",

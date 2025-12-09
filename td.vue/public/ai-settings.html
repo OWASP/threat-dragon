@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>AI Settings</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 15px;
+            background-color: #f5f5f5;
+            overflow: auto;
+            overflow-x: auto;
+            overflow-y: auto;
+            min-width: 100px;
+            min-height: 100px;
+        }
+        .container {
+            max-width: 600px;
+            min-width: 550px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 22px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        .label-text {
+            display: inline-block;
+            order: 2;
+        }
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 2px;
+            background-color: #888;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+            order: 1;
+        }
+        .help-icon:hover {
+            background-color: #666;
+        }
+        .description {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #4a90e2;
+            border-radius: 4px;
+            display: none;
+        }
+        .description.show {
+            display: block;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        .input-with-toggle {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-with-toggle input {
+            padding-right: 40px;
+        }
+        .toggle-visibility {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .toggle-visibility:hover {
+            background-color: #f0f0f0;
+        }
+        .toggle-visibility.active {
+            color: #999;
+        }
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox-label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-save {
+            background-color: #888;
+            color: white;
+        }
+        .btn-save:hover {
+            background-color: #666;
+        }
+        .btn-close {
+            background-color: #ccc;
+            color: #333;
+        }
+        .btn-close:hover {
+            background-color: #bbb;
+        }
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Settings</h1>
+        <form id="aiSettingsForm">
+            <div class="form-group">
+                <label for="apiKey">
+                    <span class="help-icon" data-help="apiKey">i</span>
+                    <span class="label-text">API KEY</span>
+                </label>
+                <div class="description" id="apiKeyDescription">API key for accessing the LLM service</div>
+                <div class="input-with-toggle">
+                    <input type="password" id="apiKey" name="apiKey" maxlength="256" />
+                    <button type="button" class="toggle-visibility" id="toggleApiKey" title="Show/Hide API Key">
+                        <span id="toggleApiKeyIcon">👁</span>
+                    </button>
+                </div>
+                <div class="error-message" id="apiKeyError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="llmModel">
+                    <span class="help-icon" data-help="llmModel">i</span>
+                    <span class="label-text">LLM MODEL</span>
+                </label>
+                <div class="description" id="llmModelDescription">LLM model identifier (e.g., "openai/gpt-5", "anthropic/claude-sonnet-4-5", "xai/grok-4")</div>
+                <input type="text" id="llmModel" name="llmModel" maxlength="100" />
+                <div class="error-message" id="llmModelError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="temperature">
+                    <span class="help-icon" data-help="temperature">i</span>
+                    <span class="label-text">TEMPERATURE</span>
+                </label>
+                <div class="description" id="temperatureDescription">Temperature parameter for LLM - lower values make output more deterministic, higher values increase creativity and randomness (range: 0-2)</div>
+                <input type="number" id="temperature" name="temperature" min="0" max="2" step="0.1" value="0.1" />
+                <div class="error-message" id="temperatureError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="responseFormat">
+                    <span class="help-icon" data-help="responseFormat">i</span>
+                    <span class="label-text">RESPONSE FORMAT</span>
+                </label>
+                <div class="description" id="responseFormatDescription">Enable structured JSON response format (recomended for supported LLMs)</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="responseFormat" name="responseFormat" />
+                    <label for="responseFormat" class="checkbox-label">Structured format (JSON)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="apiBase">
+                    <span class="help-icon" data-help="apiBase">i</span>
+                    <span class="label-text">API BASE</span>
+                </label>
+                <div class="description" id="apiBaseDescription">Custom API base URL</div>
+                <input type="text" id="apiBase" name="apiBase" maxlength="256" />
+                <div class="error-message" id="apiBaseError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="logLevel">
+                    <span class="help-icon" data-help="logLevel">i</span>
+                    <span class="label-text">LOG LEVEL</span>
+                </label>
+                <div class="description" id="logLevelDescription">Logging level (INFO or DEBUG)</div>
+                <select id="logLevel" name="logLevel">
+                    <option value="INFO">INFO</option>
+                    <option value="DEBUG">DEBUG</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="closeBtn" class="btn-close">Close</button>
+                <button type="button" id="saveBtn" class="btn-save">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        let originalSettings = {};
+        let formChanged = false;
+
+        // Track form changes
+        function trackFormChanges() {
+            const inputs = ['apiKey', 'llmModel', 'temperature', 'responseFormat', 'apiBase', 'logLevel'];
+            inputs.forEach(fieldId => {
+                const element = document.getElementById(fieldId);
+                if (element) {
+                    element.addEventListener('input', () => {
+                        formChanged = true;
+                    });
+                    element.addEventListener('change', () => {
+                        formChanged = true;
+                    });
+                }
+            });
+        }
+
+        // Check if form has been modified
+        function hasFormChanged() {
+            const currentSettings = {
+                apiKey: document.getElementById('apiKey').value || '',
+                llmModel: document.getElementById('llmModel').value || '',
+                temperature: parseFloat(document.getElementById('temperature').value) || 0.1,
+                responseFormat: document.getElementById('responseFormat').checked,
+                apiBase: document.getElementById('apiBase').value || '',
+                logLevel: document.getElementById('logLevel').value || 'INFO'
+            };
+
+            return JSON.stringify(currentSettings) !== JSON.stringify(originalSettings);
+        }
+
+        // Show confirmation dialog
+        function showCloseConfirmation() {
+            return confirm('You have unsaved changes. Are you sure you want to close without saving?');
+        }
+
+        // Toggle API key visibility
+        function setupToggleVisibility() {
+            const toggleButton = document.getElementById('toggleApiKey');
+            const apiKeyInput = document.getElementById('apiKey');
+            const toggleIcon = document.getElementById('toggleApiKeyIcon');
+            
+            if (toggleButton && apiKeyInput) {
+                toggleButton.addEventListener('click', () => {
+                    const isPassword = apiKeyInput.type === 'password';
+                    apiKeyInput.type = isPassword ? 'text' : 'password';
+                    // Change icon: eye with slash when visible (lighter gray), plain eye when hidden (darker gray)
+                    toggleIcon.textContent = isPassword ? '👁' : '👁';
+                    // Toggle active class for lighter gray color
+                    toggleButton.classList.toggle('active', !isPassword);
+                });
+            }
+        }
+
+        // Help icon toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const helpIcons = document.querySelectorAll('.help-icon');
+            helpIcons.forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const helpId = icon.getAttribute('data-help');
+                    const description = document.getElementById(helpId + 'Description');
+                    if (description) {
+                        description.classList.toggle('show');
+                    }
+                });
+            });
+            trackFormChanges();
+            setupToggleVisibility();
+        });
+
+        // Listen for check changes request from main process
+        ipcRenderer.on('ai-settings-check-changes', () => {
+            const hasChanges = hasFormChanged();
+            ipcRenderer.send('ai-settings-has-changes', hasChanges);
+        });
+
+        // Listen for close check request from main process (for X button)
+        ipcRenderer.on('ai-settings-close-check', () => {
+            let shouldClose = true;
+            if (hasFormChanged()) {
+                shouldClose = showCloseConfirmation();
+            }
+            ipcRenderer.send('ai-settings-should-close', shouldClose);
+        });
+
+        // Load settings when window opens
+        ipcRenderer.send('ai-settings-load-request');
+
+        // Listen for settings data from main process
+        ipcRenderer.on('ai-settings-loaded', (event, settings) => {
+            if (settings) {
+                originalSettings = {
+                    apiKey: settings.apiKey || '',
+                    llmModel: settings.llmModel || '',
+                    temperature: settings.temperature !== undefined ? settings.temperature : 0.1,
+                    responseFormat: settings.responseFormat === true,
+                    apiBase: settings.apiBase || '',
+                    logLevel: settings.logLevel || 'INFO'
+                };
+                
+                document.getElementById('apiKey').value = originalSettings.apiKey;
+                document.getElementById('llmModel').value = originalSettings.llmModel;
+                document.getElementById('temperature').value = originalSettings.temperature;
+                document.getElementById('responseFormat').checked = originalSettings.responseFormat;
+                document.getElementById('apiBase').value = originalSettings.apiBase;
+                document.getElementById('logLevel').value = originalSettings.logLevel;
+                
+                formChanged = false;
+            }
+        });
+
+        // Validate form
+        function validateForm() {
+            let isValid = true;
+            const errors = {};
+
+            // API Key validation
+            const apiKey = document.getElementById('apiKey').value;
+            if (apiKey && apiKey.length > 256) {
+                errors.apiKey = 'API Key must be 256 characters or less';
+                isValid = false;
+            }
+
+            // LLM Model validation
+            const llmModel = document.getElementById('llmModel').value;
+            if (llmModel && llmModel.length > 100) {
+                errors.llmModel = 'LLM Model must be 100 characters or less';
+                isValid = false;
+            }
+
+            // Temperature validation
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            if (isNaN(temperature) || temperature < 0 || temperature > 2) {
+                errors.temperature = 'Temperature must be a number between 0 and 2';
+                isValid = false;
+            }
+
+            // API Base validation
+            const apiBase = document.getElementById('apiBase').value;
+            if (apiBase && apiBase.length > 256) {
+                errors.apiBase = 'API Base must be 256 characters or less';
+                isValid = false;
+            }
+
+            // Show/hide errors
+            Object.keys(errors).forEach(field => {
+                const errorElement = document.getElementById(field + 'Error');
+                if (errorElement) {
+                    errorElement.textContent = errors[field];
+                    errorElement.style.display = 'block';
+                }
+            });
+
+            // Clear errors for fields without issues
+            ['apiKey', 'llmModel', 'temperature', 'apiBase'].forEach(field => {
+                if (!errors[field]) {
+                    const errorElement = document.getElementById(field + 'Error');
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        // Save button handler
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            if (!validateForm()) {
+                return;
+            }
+
+            const settings = {
+                apiKey: document.getElementById('apiKey').value,
+                llmModel: document.getElementById('llmModel').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                responseFormat: document.getElementById('responseFormat').checked,
+                apiBase: document.getElementById('apiBase').value,
+                logLevel: document.getElementById('logLevel').value
+            };
+
+            ipcRenderer.send('ai-settings-save-request', settings);
+        });
+
+        // Close button handler
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            if (hasFormChanged()) {
+                if (showCloseConfirmation()) {
+                    ipcRenderer.send('ai-settings-window-close');
+                }
+            } else {
+                ipcRenderer.send('ai-settings-window-close');
+            }
+        });
+
+        // Listen for save confirmation
+        ipcRenderer.on('ai-settings-saved', () => {
+            // Update original settings after save
+            originalSettings = {
+                apiKey: document.getElementById('apiKey').value,
+                llmModel: document.getElementById('llmModel').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                responseFormat: document.getElementById('responseFormat').checked,
+                apiBase: document.getElementById('apiBase').value,
+                logLevel: document.getElementById('logLevel').value
+            };
+            formChanged = false;
+            alert('Settings saved successfully');
+            // Window stays open - removed the close call
+        });
+
+        ipcRenderer.on('ai-settings-save-error', (event, error) => {
+            alert('Error saving settings: ' + error);
+        });
+    </script>
+</body>
+</html>
+

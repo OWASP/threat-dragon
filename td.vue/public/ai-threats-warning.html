@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Warning</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 15px;
+            background-color: #f5f5f5;
+            overflow: auto;
+            overflow-x: auto;
+            overflow-y: auto;
+            min-width: 100px;
+            min-height: 100px;
+        }
+        .container {
+            max-width: 600px;
+            min-width: 550px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #d32f2f;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .warning-content {
+            margin-bottom: 25px;
+        }
+        .warning-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .warning-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .warning-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            min-width: 80px;
+        }
+        .btn-ok {
+            background-color: #888;
+            color: white;
+        }
+        .btn-ok:hover {
+            background-color: #666;
+        }
+        .btn-cancel {
+            background-color: #ccc;
+            color: #333;
+        }
+        .btn-cancel:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Warning</h1>
+        <div class="warning-content">
+            <div class="warning-text">
+                <ul class="warning-list">
+                    <li>Generating Threats and Mitigations sends the entire Threat Model to the selected AI for analysis as part of the prompt. Please review any security or privacy implications.</li>
+                    <li>Currently, only the STRIDE methodology is supported. Using this tool with threat models based on other methodologies may lead to unexpected results.</li>
+                    <li>Existing Threats and Mitigations will be reviewed and may be kept, updated, or removed by the AI. Consider taking a backup of your Threat Model file before continuing.</li>
+                    <li>You can run the Generating Threats and Mitigations process multiple times with the same or different AI service. Each run will re-evaluate current items and may add new ones.</li>
+                </ul>
+            </div>
+            <div class="warning-text">
+                Click <strong>Cancel</strong> to exit or <strong>OK</strong> to continue.
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            <button class="btn-ok" id="okBtn">OK</button>
+        </div>
+    </div>
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cancelBtn = document.getElementById('cancelBtn');
+            const okBtn = document.getElementById('okBtn');
+
+            // Handle Cancel button
+            cancelBtn.addEventListener('click', () => {
+                window.close();
+            });
+
+            // Handle OK button
+            okBtn.addEventListener('click', () => {
+                ipcRenderer.send('ai-threats-warning-ok');
+                window.close();
+            });
+
+            // Handle Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    window.close();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
