@@ -304,6 +304,12 @@ export default {
                 defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
                 placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
                 break;
+            
+            case 'EoP':
+                thumbnail = './public/content/images/thumbnail.stride.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.eop.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.eop.defaultDescription');
+                break;
 
             default:
                 thumbnail = './public/content/images/thumbnail.jpg';
@@ -321,6 +327,7 @@ export default {
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.plot4ai.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.stride.defaultTitle')
                 || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.generic.defaultTitle')
+                || this.model.detail.diagrams[idx].title === this.$t('threatmodel.diagram.eop.defaultTitle')
             ) {
                 this.model.detail.diagrams[idx].title = defaultTitle;
             }
