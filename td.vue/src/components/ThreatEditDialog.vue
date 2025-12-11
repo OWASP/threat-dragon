@@ -47,29 +47,34 @@
                 <!-- END ROW BELU - CATEGORY AND CARD-->
 
                 <!-- BEGINNING ROW GASPI - INFO CARD AND LINK TO THE CARD-->
-                <!-- Redirect only available on EoP (for now on Stride)-->
+                <!-- Redirect ONLY for CORNUCOPIA cards (for now testing on STRIDE)-->
                 <b-form-row
                     v-if="threat && threat.modelType === 'STRIDE'"
                     style="margin-bottom: 16px"
                 >
                     <b-col>
-                        <!-- Text is a link to the card (owasp for now) -->
+                        <!-- Text is a link to each card from cornucopia -->
                         <a
-                            href="https://owasp.org/Top10/2021/es/index.html"
+                            :href="cornucopiaCardUrl"
                             target="_blank"
                             rel="noopener noreferrer"
-                            title="View card details"
+                            :title="'View ' + cornucopiaCardName + ' details'"
                             style="
                                 font-size: 16px;
                                 font-weight: normal;
                                 color: red;
-                                
+
                                 padding: 6px 10px;
                                 border-radius: 4px;
                                 display: inline-block;
                             "
                         >
-                            Card details: Data Validation & Encoding 9
+                            Card details: {{ cornucopiaCardName
+                            }}{{
+                                cornucopiaCardDetails
+                                    ? ` ${cornucopiaCardDetails.sectionID}`
+                                    : ""
+                            }}
                         </a>
                     </b-col>
                 </b-form-row>
@@ -203,6 +208,7 @@ import { CELL_DATA_UPDATED } from "@/store/actions/cell.js";
 import tmActions from "@/store/actions/threatmodel.js";
 import dataChanged from "@/service/x6/graph/data-changed.js";
 import threatModels from "@/service/threats/models/index.js";
+import cornucopiaData from "@/service/schema/cornucopia.json"; // Import cornucopia info from the json
 
 export default {
     name: "TdThreatEditDialog",
@@ -254,6 +260,48 @@ export default {
         },
         modalTitle() {
             return this.$t("threats.edit") + " #" + this.number;
+        },
+        //CORNUCOPIA DATA SECTION
+        cornucopiaCardDetails() {
+            return this.threat.cardId
+                ? cornucopiaData.standards.find(
+                      (card) => card.id === this.threat.cardId
+                  )
+                : null;
+        },
+        cornucopiaCardName() {
+            return this.cornucopiaCardDetails
+                ? this.cornucopiaCardDetails.name
+                : this.threat.type
+                ? this.threat.type.split(": ")[1]
+                : "Unknown";
+        },
+        cornucopiaCardUrl() {
+            return this.cornucopiaCardDetails
+                ? this.cornucopiaCardDetails.hyperlink
+                : this.cornucopiaCardName &&
+                  this.cornucopiaCardName !== "Unknown"
+                ? "https://cornucopia.owasp.org/cards/" +
+                  this.cornucopiaCardName
+                      .toLowerCase()
+                      .replace(/ /g, "-")
+                      .replace(/&/g, "and")
+                : "#";
+        },
+        //CORNUCOPIA DATA SECTION
+        cardName() {
+            return this.threat.type
+                ? this.threat.type.split(": ")[1]
+                : "Unknown";
+        },
+        cardUrl() {
+            return this.cardName && this.cardName !== "Unknown"
+                ? "https://cornucopia.owasp.org/cards/" +
+                      this.cardName
+                          .toLowerCase()
+                          .replace(/ /g, "-")
+                          .replace(/&/g, "and")
+                : "#";
         },
     },
     data() {
@@ -313,6 +361,7 @@ export default {
                 threatRef.new = false;
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
+                threatRef.cardId = this.threat.cardId;
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 this.$store.dispatch(tmActions.modified);
                 dataChanged.updateStyleAttrs(this.cellRef);
