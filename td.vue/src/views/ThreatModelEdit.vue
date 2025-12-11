@@ -305,7 +305,13 @@ export default {
                 defaultTitle = this.$t('threatmodel.diagram.stride.defaultTitle');
                 placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
                 break;
-            
+
+            case 'EOP':
+                thumbnail = './public/content/images/thumbnail.eop.jpg';
+                defaultTitle = this.$t('threatmodel.diagram.eop.defaultTitle');
+                placeholder = this.$t('threatmodel.diagram.eop.defaultDescription');
+                break;
+
             default:
                 thumbnail = './public/content/images/thumbnail.jpg';
                 defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
