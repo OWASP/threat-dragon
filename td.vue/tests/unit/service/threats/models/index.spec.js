@@ -29,6 +29,11 @@ describe('service/threats/models/index.js', () => {
                 .toEqual('STRIDE');
         });
 
+        it('identifies an EoP threat', () => {
+            expect(models.getByTranslationValue('threats.model.eop.authentication'))
+                .toEqual('EoP');
+        });
+
         it('returns an empty string for an unknown type', () => {
             expect(models.getByTranslationValue('threats.models.fake'))
                 .toEqual('');
@@ -120,6 +125,22 @@ describe('service/threats/models/index.js', () => {
 
         it('gets the STRIDE DataFlow threat types', () => {
             expect(Object.keys(models.getThreatTypesByElement('Stride', 'tm.Flow'))).toHaveLength(3);
+        });
+
+        it('gets the EoP Actor threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('eop', 'tm.Actor'))).toHaveLength(7);
+        });
+
+        it('gets the EoP Process threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('eop', 'tm.Process'))).toHaveLength(7);
+        });
+
+        it('gets the EoP Store threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('eop', 'tm.Store'))).toHaveLength(7);
+        });
+
+        it('gets the EoP DataFlow threat types', () => {
+            expect(Object.keys(models.getThreatTypesByElement('eop', 'tm.Flow'))).toHaveLength(7);
         });
 
         it('returns all threat types when the model type is not found', () => {
