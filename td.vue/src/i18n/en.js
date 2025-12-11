@@ -354,7 +354,9 @@ const eng = {
             },
             eop: {
                 header: '--- EoP ---',
-                dataValidationAndEncoding: 'DATA VALIDATION & ENCODING',
+                dataValidationAndEncoding: 'Data Validation & Encoding',
+                authentication: 'Authentication',
+                sessionManagement: 'Session Management'
             }
         },
         generic: {
