@@ -112,7 +112,7 @@
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'PLOT4ai')">{{ $t('threatmodel.diagram.plot4ai.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'EoP')">{{ $t('threatmodel.diagram.eop.select') }}</b-dropdown-item-button>
+                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'EOP')">{{ $t('threatmodel.diagram.eop.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
                                 </b-input-group-prepend>
@@ -306,12 +306,6 @@ export default {
                 placeholder = this.$t('threatmodel.diagram.stride.defaultDescription');
                 break;
             
-            case 'EoP':
-                thumbnail = './public/content/images/thumbnail.stride.jpg';
-                defaultTitle = this.$t('threatmodel.diagram.eop.defaultTitle');
-                placeholder = this.$t('threatmodel.diagram.eop.defaultDescription');
-                break;
-
             default:
                 thumbnail = './public/content/images/thumbnail.jpg';
                 defaultTitle = this.$t('threatmodel.diagram.generic.defaultTitle');
