@@ -290,3 +290,7 @@
 # utility scripts
 !utils
 !utils/**/*
+
+
+minimal.env
+td.vue/src/service/schema/cornucopia.json
