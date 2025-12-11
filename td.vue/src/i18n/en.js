@@ -351,6 +351,10 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'DATA VALIDATION & ENCODING',
             }
         },
         generic: {
@@ -359,7 +363,8 @@ const eng = {
             ciadie: 'New CIA-DIE threat',
             linddun: 'New LINDDUN threat',
             plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            stride: 'New STRIDE threat',
+            eop: 'New EoP threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
