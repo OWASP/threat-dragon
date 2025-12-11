@@ -356,7 +356,11 @@ const eng = {
                 header: '--- EoP ---',
                 dataValidationAndEncoding: 'Data Validation & Encoding',
                 authentication: 'Authentication',
-                sessionManagement: 'Session Management'
+                sessionManagement: 'Session Management',
+                authorization: 'Authorization',
+                cryptography: 'Cryptography',
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {

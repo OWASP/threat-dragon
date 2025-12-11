@@ -124,7 +124,7 @@ describe('service/threats/models/index.js', () => {
 
         it('returns all threat types when the model type is not found', () => {
             console.error = jest.fn();
-            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(39);
+            expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(43);
         });
     });
 });
