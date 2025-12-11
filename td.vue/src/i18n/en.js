@@ -152,7 +152,7 @@ const eng = {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
-            },
+            }
         },
         threats: 'Threats',
         errors: {
