@@ -40,7 +40,16 @@ const valuesToTranslations = {
     Repudiation: 'threats.model.stride.repudiation',
     'Information disclosure': 'threats.model.stride.informationDisclosure',
     'Denial of service': 'threats.model.stride.denialOfService',
-    'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege'
+    'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
+
+    /* EoP */
+    'Data Validation & Encoding': 'threats.model.eop.dataValidationAndEncoding',
+    Authentication: 'threats.model.eop.authentication',
+    'Session Management': 'threats.model.eop.sessionManagement',
+    Authorization: 'threats.model.eop.authorization',
+    Cryptography: 'threats.model.eop.cryptography',
+    Cornucopia: 'threats.model.eop.cornucopia',
+    'Wild Card':'threats.model.eop.wildCard'
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
