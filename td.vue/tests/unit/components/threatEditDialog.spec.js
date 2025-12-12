@@ -193,4 +193,57 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(1);
         });
     });
+
+    describe('cornucopia link', () => {
+// test creado por guille:muestra link de cornucopia cuando es STRIDE con cardId
+        it('renders link for STRIDE with cardId', async () => {
+        const store=new Vuex.Store({
+            state:{
+                cell:{ref:{getData:jest.fn(),data:{
+                    threatFrequency:{availability: 0,confidentiality: 0,integrity: 0},
+                    threats:[{...getThreatData(),modelType:'STRIDE',type:'STRIDE: VE2',cardId:'https://cornucopia.owasp.org/cards/VE2'}]}}}
+            },
+            actions:{CELL_DATA_UPDATED:()=>{}}
+        });
+            wrapper = shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:key=>key},store});
+            wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
+            wrapper.vm.editThreat(threatId);
+            await wrapper.vm.$nextTick();
+            const link=wrapper.find('a');
+            expect(link.exists()).toBe(true);
+            expect(link.attributes('href')).toBe('https://cornucopia.owasp.org/cards/VE2');
+            expect(link.text()).toContain('Card details');
+        });
+
+// test creado por guille:no muestra link si el modelo no es STRIDE
+        it('hides link when model is not STRIDE', () => {
+            const store=new Vuex.Store({
+                state:{cell:{ref:{getData:jest.fn(),data:{
+                    threatFrequency:{availability:0,confidentiality:0,integrity:0},
+                    threats:[ getThreatData() ]
+                }}}},
+                actions:{CELL_DATA_UPDATED:()=>{}}
+            });
+            wrapper = shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:key=>key},store});
+            wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
+            wrapper.vm.editThreat(threatId);
+            const link=wrapper.find('a');
+            expect(link.exists()).toBe(false);
+        });
+
+// test creado por guille: modal title usa numero del threat
+        it('modal title uses threat number', () => {
+            wrapper = getWrapper();
+            wrapper.vm.$refs.editModal = { show: jest.fn(), hide: jest.fn() };
+            wrapper.vm.editThreat(threatId);
+            expect(wrapper.vm.modalTitle).toBe('threats.edit #0');
+        });
+
+// test creado por guille: threatTypes vacio si no hay threat
+        it('returns empty threatTypes when no threat', () => {
+            wrapper = getWrapper();
+            wrapper.vm.threat = null;
+            expect(wrapper.vm.threatTypes).toEqual([]);
+        });
+    });
 });
