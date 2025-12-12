@@ -152,6 +152,11 @@ const eng = {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'New EOP diagram',
+                defaultDescription: 'New EOP diagram description',
+                select: 'EOP'
             }
         },
         threats: 'Threats',
@@ -346,7 +351,8 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
-            }
+        
+            },
         },
         generic: {
             default: 'New generic threat',
