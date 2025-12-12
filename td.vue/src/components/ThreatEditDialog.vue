@@ -75,21 +75,19 @@
                         </b-form-group>
                     </b-col>
                 </b-form-row>
-                <!-- END ROW BELU - CATEGORY AND CARD-->
+                
 
                 <!-- BEGINNING ROW GASPI - INFO CARD AND LINK TO THE CARD-->
-                <!-- Redirect to Cornucopia ONLY for EOP type diagrams-->
                 <b-form-row
-                    v-if="threat && threat.modelType === 'EOP'"
+                    v-if="threat && threat.modelType === 'EOP' && card.number && filteredCardNumbers.some(option => option.value === card.number)"
                     style="margin-bottom: 16px"
                 >
                     <b-col>
-                        <!-- Text is a clickable link to each card from cornucopia -->
                         <a
                             :href="cornucopiaCardUrl"
                             target="_blank"
                             rel="noopener noreferrer"
-                            :title="'View ' + cornucopiaCardName + ' details'"
+                            :title="'View ' + cornucopiaCardSection + ' ' + cornucopiaCardDetails.sectionID + ' details'"
                             style="
                                 font-size: 16px;
                                 font-weight: normal;
@@ -100,11 +98,11 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardName}}
+                            Card details: {{ cornucopiaCardSection}}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
-                                    : "Sorry, no details available"
+                                    : ", no details available"
                             }}
                         </a>
                     </b-col>
@@ -302,6 +300,23 @@ export default {
                     text: carta.sectionID,
                 }));
         },
+        cornucopiaCardDetails() {
+            return this.card.number
+                ? cornucopiaCardsData.standards.find(
+                      (card) => card.sectionID === this.card.number
+                  )
+                : null;
+        },
+        cornucopiaCardSection() {
+            return this.cornucopiaCardDetails
+                ? this.cornucopiaCardDetails.section
+                : "Unknown";
+        },
+        cornucopiaCardUrl() {
+            return this.cornucopiaCardDetails
+                ? this.cornucopiaCardDetails.hyperlink
+                : "https://cornucopia.owasp.org/cards";
+        },
     },
     data() {
         return {
@@ -332,6 +347,7 @@ export default {
             ],
         };
     },
+     
     methods: {
         editThreat(threatId, state) {
             const crnthreat = this.cellRef.data.threats.find(
