@@ -27,13 +27,44 @@
                         </b-form-group>
                     </b-col>
                 </b-form-row>
-                <!-- BEGINNING ROW BELU - CATEGORY AND CARD-->
+
+                <b-form-row v-if="threat.modelType == 'EOP'">
+                    <b-col>
+                        <b-form-group
+                            id="card-suit-group"
+                            :label="$t('cards.properties.suit')"
+                            label-for="card-suit"
+                        >
+                            <b-form-select
+                                id="card-suit"
+                                v-model="card.suit"
+                                :options="cardSuits"
+                            >
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+                    <b-col>
+                        <b-form-group
+                            id="card-number-group"
+                            :label="$t('cards.properties.number')"
+                            label-for="card-number"
+                        >
+                            <b-form-select
+                                id="card-number"
+                                v-model="card.number"
+                                :options="filteredCardNumbers"
+                            >
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
                 <b-form-row>
                     <b-col>
                         <b-form-group
                             id="threat-type-group"
                             :label="$t('threats.properties.type')"
                             label-for="threat-type"
+                            v-if="threat.modelType !== 'EOP'"
                         >
                             <b-form-select
                                 id="threat-type"
@@ -44,21 +75,19 @@
                         </b-form-group>
                     </b-col>
                 </b-form-row>
-                <!-- END ROW BELU - CATEGORY AND CARD-->
+                
 
                 <!-- BEGINNING ROW GASPI - INFO CARD AND LINK TO THE CARD-->
-                <!-- Redirect to Cornucopia ONLY for EOP type diagrams-->
                 <b-form-row
-                    v-if="threat && threat.modelType === 'EOP'"
+                    v-if="threat && threat.modelType === 'EOP' && card.number && filteredCardNumbers.some(option => option.value === card.number)"
                     style="margin-bottom: 16px"
                 >
                     <b-col>
-                        <!-- Text is a clickable link to each card from cornucopia -->
                         <a
                             :href="cornucopiaCardUrl"
                             target="_blank"
                             rel="noopener noreferrer"
-                            :title="'View ' + cornucopiaCardName + ' details'"
+                            :title="'View ' + cornucopiaCardSection + ' ' + cornucopiaCardDetails.sectionID + ' details'"
                             style="
                                 font-size: 16px;
                                 font-weight: normal;
@@ -69,11 +98,11 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardName}}
+                            Card details: {{ cornucopiaCardSection}}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
-                                    : "Sorry, no details available"
+                                    : ", no details available"
                             }}
                         </a>
                     </b-col>
@@ -208,7 +237,7 @@ import { CELL_DATA_UPDATED } from "@/store/actions/cell.js";
 import tmActions from "@/store/actions/threatmodel.js";
 import dataChanged from "@/service/x6/graph/data-changed.js";
 import threatModels from "@/service/threats/models/index.js";
-import cornucopiaData from "@/service/schema/cornucopia.json"; // Import cornucopia info from the json
+import cornucopiaCardsData from "@/service/schema/cornucopia.json";
 
 export default {
     name: "TdThreatEditDialog",
@@ -252,6 +281,7 @@ export default {
                 { value: "Low", text: this.$t("threats.severity.low") },
                 { value: "Medium", text: this.$t("threats.severity.medium") },
                 { value: "High", text: this.$t("threats.severity.high") },
+
                 {
                     value: "Critical",
                     text: this.$t("threats.severity.critical"),
@@ -261,19 +291,25 @@ export default {
         modalTitle() {
             return this.$t("threats.edit") + " #" + this.number;
         },
-        //CORNUCOPIA DATA SECTION
+        filteredCardNumbers() {
+            if (!this.card.suit) return [];
+            return this.cardNumbers
+                .filter((carta) => carta.section === this.card.suit)
+                .map((carta) => ({
+                    value: carta.sectionID,
+                    text: carta.sectionID,
+                }));
+        },
         cornucopiaCardDetails() {
-            return this.threat.cardId
-                ? cornucopiaData.standards.find(
-                      (card) => card.id === this.threat.cardId
+            return this.card.number
+                ? cornucopiaCardsData.standards.find(
+                      (card) => card.sectionID === this.card.number
                   )
                 : null;
         },
-        cornucopiaCardName() {
+        cornucopiaCardSection() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.section
-                : this.threat.type
-                ? this.threat.type.split(": ")[1]
                 : "Unknown";
         },
         cornucopiaCardUrl() {
@@ -281,15 +317,37 @@ export default {
                 ? this.cornucopiaCardDetails.hyperlink
                 : "https://cornucopia.owasp.org/cards";
         },
-        //CORNUCOPIA DATA SECTION
     },
     data() {
         return {
             threat: {},
-            modelTypes: ["CIA", "CIADIE", "LINDDUN", "PLOT4ai", "STRIDE"],
+            modelTypes: [
+                "CIA",
+                "CIADIE",
+                "LINDDUN",
+                "PLOT4ai",
+                "STRIDE",
+                "EoP",
+            ],
             number: 0,
+            card: {
+                suit: null,
+                number: null,
+            },
+            cardSuits: [
+                ...new Set(
+                    cornucopiaCardsData.standards.map((carta) => carta.section)
+                ),
+            ],
+            cardNumbers: [
+                ...cornucopiaCardsData.standards.map((carta) => ({
+                    section: carta.section,
+                    sectionID: carta.sectionID,
+                })),
+            ],
         };
     },
+     
     methods: {
         editThreat(threatId, state) {
             const crnthreat = this.cellRef.data.threats.find(
