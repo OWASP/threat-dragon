@@ -47,13 +47,13 @@
                 <!-- END ROW BELU - CATEGORY AND CARD-->
 
                 <!-- BEGINNING ROW GASPI - INFO CARD AND LINK TO THE CARD-->
-                <!-- Redirect ONLY for CORNUCOPIA cards (for now testing on STRIDE)-->
+                <!-- Redirect to Cornucopia ONLY for EOP type diagrams-->
                 <b-form-row
-                    v-if="threat && threat.modelType === 'STRIDE'"
+                    v-if="threat && threat.modelType === 'EOP'"
                     style="margin-bottom: 16px"
                 >
                     <b-col>
-                        <!-- Text is a link to each card from cornucopia -->
+                        <!-- Text is a clickable link to each card from cornucopia -->
                         <a
                             :href="cornucopiaCardUrl"
                             target="_blank"
@@ -69,11 +69,11 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardName
-                            }}{{
+                            Card details: {{ cornucopiaCardName}}
+                            {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
-                                    : ""
+                                    : "Sorry, no details available"
                             }}
                         </a>
                     </b-col>
@@ -271,7 +271,7 @@ export default {
         },
         cornucopiaCardName() {
             return this.cornucopiaCardDetails
-                ? this.cornucopiaCardDetails.name
+                ? this.cornucopiaCardDetails.section
                 : this.threat.type
                 ? this.threat.type.split(": ")[1]
                 : "Unknown";
@@ -279,30 +279,9 @@ export default {
         cornucopiaCardUrl() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.hyperlink
-                : this.cornucopiaCardName &&
-                  this.cornucopiaCardName !== "Unknown"
-                ? "https://cornucopia.owasp.org/cards/" +
-                  this.cornucopiaCardName
-                      .toLowerCase()
-                      .replace(/ /g, "-")
-                      .replace(/&/g, "and")
-                : "#";
+                : "https://cornucopia.owasp.org/cards";
         },
         //CORNUCOPIA DATA SECTION
-        cardName() {
-            return this.threat.type
-                ? this.threat.type.split(": ")[1]
-                : "Unknown";
-        },
-        cardUrl() {
-            return this.cardName && this.cardName !== "Unknown"
-                ? "https://cornucopia.owasp.org/cards/" +
-                      this.cardName
-                          .toLowerCase()
-                          .replace(/ /g, "-")
-                          .replace(/&/g, "and")
-                : "#";
-        },
     },
     data() {
         return {
