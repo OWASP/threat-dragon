@@ -28,7 +28,7 @@
                     </b-col>
                 </b-form-row>
 
-                <b-form-row v-if="threat.modelType == 'EoP'">
+                <b-form-row v-if="threat.modelType == 'EOP'">
                     <b-col>
                         <b-form-group
                             id="card-suit-group"
@@ -52,7 +52,7 @@
                             <b-form-select
                                 id="card-number"
                                 v-model="card.number"
-                                :options="cardNumbers"
+                                :options="filteredCardNumbers"
                             >
                             </b-form-select>
                         </b-form-group>
@@ -64,7 +64,7 @@
                             id="threat-type-group"
                             :label="$t('threats.properties.type')"
                             label-for="threat-type"
-                            v-if="threat.modelType !== 'EoP'"
+                            v-if="threat.modelType !== 'EOP'"
                         >
                             <b-form-select
                                 id="threat-type"
@@ -205,7 +205,7 @@ import { CELL_DATA_UPDATED } from "@/store/actions/cell.js";
 import tmActions from "@/store/actions/threatmodel.js";
 import dataChanged from "@/service/x6/graph/data-changed.js";
 import threatModels from "@/service/threats/models/index.js";
-import cornucopiaCardsData from "@/service/cornucopia/cards.json";
+import cornucopiaCardsData from "@/service/schema/cornucopia.json";
 
 export default {
     name: "TdThreatEditDialog",
@@ -259,6 +259,15 @@ export default {
         modalTitle() {
             return this.$t("threats.edit") + " #" + this.number;
         },
+        filteredCardNumbers() {
+            if (!this.card.suit) return [];
+            return this.cardNumbers
+                .filter((carta) => carta.section === this.card.suit)
+                .map((carta) => ({
+                    value: carta.sectionID,
+                    text: carta.sectionID,
+                }));
+        },
     },
     data() {
         return {
@@ -272,9 +281,21 @@ export default {
                 "EoP",
             ],
             number: 0,
-            card: {},
-            cardSuits: ["DATA VALIDATION & ENCODING", "AUTHENTICATION", ""], // esto se tiene que leer del json
-            cardNumbers: ["Carta1", "Carta2", "Carta3"], // esto tb
+            card: {
+                suit: null,
+                number: null,
+            },
+            cardSuits: [
+                ...new Set(
+                    cornucopiaCardsData.standards.map((carta) => carta.section)
+                ),
+            ],
+            cardNumbers: [
+                ...cornucopiaCardsData.standards.map((carta) => ({
+                    section: carta.section,
+                    sectionID: carta.sectionID,
+                })),
+            ],
         };
     },
     methods: {
