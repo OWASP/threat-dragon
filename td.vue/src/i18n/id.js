@@ -152,6 +152,11 @@ const ind = {
                 defaultTitle: 'Diagram CIA baru',
                 defaultDescription: 'Deskripsi diagram CIA baru',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Diagram EoP baru',
+                defaultDescription: 'Deskripsi diagram EoP baru',
+                select: 'EoP'
             }
         },
         threats: 'Ancaman',
@@ -304,6 +309,10 @@ const ind = {
         details: 'Detail kartu',
         noDetails: 'tidak ada detail yang tersedia',
         unknown: 'Tidak diketahui'
+        properties: {
+            suit: 'Kategori',
+            number: 'Nomor'
+        },
     },
     threats: {
         model: {
@@ -359,7 +368,8 @@ const ind = {
             ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
-            stride: 'Ancaman STRIDE baru'
+            stride: 'Ancaman STRIDE baru',
+            eop: 'Ancaman EoP baru'
         },
         edit: 'Edit Ancaman',
         confirmDeleteTitle: 'Konfirmasi Hapus',

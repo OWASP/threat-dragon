@@ -309,6 +309,10 @@ const eng = {
         details: 'Card details',
         noDetails: 'no details available',
         unknown: 'Unknown'
+        properties: {
+            suit: 'Category',
+            number: 'Number'
+        },
     },
     threats: {
         model: {
@@ -356,16 +360,6 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
-            },
-            eop: {
-                header: '--- EoP ---',
-                dataValidationAndEncoding: 'Data Validation & Encoding',
-                authentication: 'Authentication',
-                sessionManagement: 'Session Management',
-                authorization: 'Authorization',
-                cryptography: 'Cryptography',
-                cornucopia: 'Cornucopia',
-                wildCard: 'Wild Card'
             }
         },
         generic: {

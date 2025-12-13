@@ -152,6 +152,11 @@ const ukr = {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'New EoP diagram',
+                defaultDescription: 'New EoP diagram description',
+                select: 'EoP'
             }
         },
         threats: 'Threats',
@@ -304,6 +309,10 @@ const ukr = {
         details: 'Деталі картки',
         noDetails: 'деталі недоступні',
         unknown: 'Невідомо'
+        properties: {
+            suit: 'Category',
+            number: 'Number'
+        },
     },
     threats: {
         model: {
@@ -359,7 +368,8 @@ const ukr = {
             ciadie: 'New CIA-DIE threat',
             linddun: 'New LINDDUN threat',
             plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            stride: 'New STRIDE threat',
+            eop: 'New EoP threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
