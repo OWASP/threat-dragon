@@ -5,6 +5,7 @@
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
+    "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
     "prebuild:desktop": "ts-node ./src/plugins/generate-cornucopia.ts",
     "audit": "npm audit",
     "build": "vue-cli-service build --no-unsafe-inline",

@@ -1,3 +1,5 @@
+# IgnoreCornucopiaJson
+src/service/schema/cornucopia-*.json
 # uses allow-list, so ignore everything
 *
 
