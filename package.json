@@ -4,6 +4,7 @@
   "appBundleId": "org.owasp.threatdragon",
   "private": true,
   "scripts": {
+    "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
     "audit": "npm-run-all -c audit:server audit:site",
     "audit:server": "cd td.server && npm run audit",
     "audit:site": "cd td.vue && npm run audit",
@@ -63,6 +64,7 @@
   },
   "devDependencies": {
     "@wdio/cli": "^9.12.2",
+    "axios": "^1.13.2",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.1.2"
   },

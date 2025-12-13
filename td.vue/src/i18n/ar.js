@@ -152,6 +152,11 @@ const ara = {
                 defaultTitle: 'مخطط CIA جديد',
                 defaultDescription: 'وصف مخطط CIA جديد',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'مخطط EoP جديد',
+                defaultDescription: 'وصف مخطط EoP جديد',
+                select: 'EoP'
             }
         },
         threats: 'التهديدات',
@@ -300,6 +305,15 @@ const ara = {
         next: 'التالي',
         previous: 'السابق'
     },
+    cards: {
+        details: 'تفاصيل البطاقة',
+        noDetails: 'لا توجد تفاصيل متاحة',
+        unknown: 'مفتوح / أولوية غير معروفةF',
+        properties: {
+            suit:'فئة',
+            number:'رقم'
+        }
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,8 @@ const ara = {
             ciadie: 'تهديد CIA-DIE جديد',
             linddun: 'تهديد LINDDUN جديد',
             plot4ai: 'تهديد PLOT4ai جديد',
-            stride: 'تهديد STRIDE جديد'
+            stride: 'تهديد STRIDE جديد',
+            eop: 'تهديد EoP جديد'
         },
         edit: 'تحرير التهديد',
         confirmDeleteTitle: 'تأكيد الحذف',
@@ -413,7 +428,7 @@ const ara = {
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
             openTbd: 'مفتوح / الأولوية في TBD',
-            openUnknown: 'مفتوح / أولوية غير معروفة'
+            openunknown: 'مفتوح / أولوية غير معروفة'
         }
     },
     upgrade: {

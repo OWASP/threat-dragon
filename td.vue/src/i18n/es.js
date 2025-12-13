@@ -305,6 +305,15 @@ const spa = {
         next: 'próximo',
         previous: 'Previo'
     },
+    cards: {
+        details: 'Detalles de la carta',
+        noDetails: 'sin detalles disponibles',
+        unknown: 'Desconocido',
+        properties: {
+            suit: 'Categoría',
+            number: 'Número'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -370,7 +379,8 @@ const spa = {
             linddun: 'Nueva amenaza LINDDUN',
             plot4ai: 'Nueva amenaza PLOT4ai',
             stride: 'Nueva amenaza STRIDE',
-            eop: 'Nueva amaneza EoP'
+            eop: 'Nueva amenaza EoP'
+
         },
         edit: 'Editar amenaza',
         confirmDeleteTitle: 'Confirmación de eliminación',

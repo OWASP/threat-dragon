@@ -144,7 +144,7 @@ const deu = {
                 select: 'PLOT4ai'
             },
             die: {
-                defaultTitle: 'New CIA-DIE diagram',
+                defaultTitle: 'Neues CIA-DIE Diagramm',
                 defaultDescription: 'Neue CIA-DIE Diagramm Beschreibung',
                 select: 'CIADIE'
             },
@@ -152,7 +152,13 @@ const deu = {
                 defaultTitle: 'Neues CIA Diagramm',
                 defaultDescription: 'Neue CIA Diagramm Beschreibung',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Neues EoP Diagramm',
+                defaultDescription: 'Neue EoP Diagramm Beschreibung',
+                select: 'EoP'
             }
+            
         },
         threats: 'Bedrohungen',
         errors: {
@@ -300,6 +306,15 @@ const deu = {
         next: 'nächste',
         previous: 'vorherige'
     },
+    cards: {
+        details: 'Kartendetails',
+        noDetails: 'keine Details verfügbar',
+        unknown: 'Unbekannt',
+        properties: {
+            suit: 'Kategorie',
+            number: 'Nummer'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +369,8 @@ const deu = {
             ciadie: 'Neue CIA-DIE Bedrohung',
             linddun: 'Neue LINDDUN Bedrohung',
             plot4ai: 'Neue PLOT4ai Bedrohung',
-            stride: 'Neue STRIDE Bedrohung'
+            stride: 'Neue STRIDE Bedrohung',
+            eop: 'Neue EoP Bedrohung'
         },
         edit: 'Bedrohung bearbeiten',
         confirmDeleteTitle: 'Löschen bestätigen',
