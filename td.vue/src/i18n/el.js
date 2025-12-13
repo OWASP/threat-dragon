@@ -152,6 +152,11 @@ const ell = {
                 defaultTitle: 'Νέο διάγραμμα CIA',
                 defaultDescription: 'Περιγραφή νέου διαγράμματος CIA',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Νέο διάγραμμα EOP',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος EOP',
+                select: 'EOP'
             }
         },
         threats: 'Απειλές',
@@ -300,6 +305,12 @@ const ell = {
         next: 'Επόμενο',
         previous: 'προηγούμενος'
     },
+    cards: {
+        properties: {
+            suit: 'Κατηγορία',
+            number: 'Αριθμός'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +365,8 @@ const ell = {
             ciadie: 'Νέα απειλή CIA-DIE',
             linddun: 'Νέα απειλή LINDDUN',
             plot4ai: 'Νέα απειλή PLOT4ai',
-            stride: 'Νέα απειλή STRIDE'
+            stride: 'Νέα απειλή STRIDE',
+            eop: 'Νέα απειλή EOP'
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',

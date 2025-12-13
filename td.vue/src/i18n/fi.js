@@ -152,6 +152,11 @@ const fin = {
                 defaultTitle: 'Uusi CIA-kaavio',
                 defaultDescription: 'Uuden CIA-kaavion kuvaus',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Uusi EOP-kaavio',
+                defaultDescription: 'Uuden EOP-kaavion kuvaus',
+                select: 'EOP'
             }
         },
         threats: 'Uhat',
@@ -300,6 +305,12 @@ const fin = {
         next: 'Seuraava',
         previous: 'Edellinen'
     },
+    cards: {
+        properties: {
+            suit: 'Luokka',
+            number: 'Numero'
+        }
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +365,8 @@ const fin = {
             ciadie: 'Uusi CIA-DIE-uhka',
             linddun: 'Uusi LINDDUN-uhka',
             plot4ai: 'Uusi PLOT4ai-uhka',
-            stride: 'Uusi STRIDE-uhka'
+            stride: 'Uusi STRIDE-uhka',
+            eop: 'Uusi EOP-uhka'
         },
         edit: 'Muokkaa Uhkaa',
         confirmDeleteTitle: 'Vahvista Poistaminen',
