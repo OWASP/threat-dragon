@@ -307,6 +307,9 @@ const deu = {
         previous: 'vorherige'
     },
     cards: {
+        details: 'Kartendetails',
+        noDetails: 'keine Details verfügbar',
+        unknown: 'Unbekannt',
         properties: {
             suit: 'Kategorie',
             number: 'Nummer'

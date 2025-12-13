@@ -306,6 +306,9 @@ const fra = {
         previous: 'précédent'
     },
     cards: {
+        details: 'Détails de la carte',
+        noDetails: 'aucun détail disponible',
+        unknown: 'Inconnu',
         properties: {
             suit: 'Catégorie',
             number: 'Numéro'

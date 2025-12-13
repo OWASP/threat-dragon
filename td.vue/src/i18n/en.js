@@ -306,6 +306,9 @@ const eng = {
         previous:'Previous'
     },
     cards: {
+        details: 'Card details',
+        noDetails: 'no details available',
+        unknown: 'Unknown',
         properties: {
             suit: 'Category',
             number: 'Number'

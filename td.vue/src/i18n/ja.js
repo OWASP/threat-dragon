@@ -306,6 +306,9 @@ const jpn = {
         previous: '前の'
     },
     cards: {
+        details: 'カードの詳細',
+        noDetails: '詳細はありません',
+        unknown: '不明',
         properties: {
             suit: 'カテゴリ',
             number: '番号'

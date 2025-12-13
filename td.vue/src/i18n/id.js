@@ -306,6 +306,9 @@ const ind = {
         previous: 'sebelumnya'
     },
     cards: {
+        details: 'Detail kartu',
+        noDetails: 'tidak ada detail yang tersedia',
+        unknown: 'Tidak diketahui',
         properties: {
             suit: 'Kategori',
             number: 'Nomor'

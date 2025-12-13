@@ -306,6 +306,9 @@ const por = {
         previous: 'anterior'
     },
     cards: {
+        details: 'Detalhes do cartão',
+        noDetails: 'nenhum detalhe disponível',
+        unknown: 'Desconhecido',
         properties: {
             suit: 'Categoria',
             number: 'Número'

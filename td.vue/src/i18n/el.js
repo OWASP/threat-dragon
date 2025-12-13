@@ -306,6 +306,9 @@ const ell = {
         previous: 'προηγούμενος'
     },
     cards: {
+        details: 'Λεπτομέρειες κάρτας',
+        noDetails: 'δεν υπάρχουν διαθέσιμες λεπτομέρειες',
+        unknown: 'Άγνωστο',
         properties: {
             suit: 'Κατηγορία',
             number: 'Αριθμός'
