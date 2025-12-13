@@ -76,16 +76,8 @@
                     </b-col>
                 </b-form-row>
 
-                <!-- BEGINNING ROW GASPI - INFO CARD AND LINK TO THE CARD-->
                 <b-form-row
-                    v-if="
-                        threat &&
-                        threat.modelType === 'EOP' &&
-                        card.number &&
-                        filteredCardNumbers.some(
-                            (option) => option.value === card.number
-                        )
-                    "
+                   v-if="threat && threat.modelType === 'EOP' && card.number && filteredCardNumbers.some(option => option.value === card.number)"
                     style="margin-bottom: 16px"
                 >
                     <b-col>
@@ -110,7 +102,7 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardSection }}
+                            Card details: {{ cornucopiaCardSection.charAt(0) + cornucopiaCardSection.slice(1).toLowerCase() }}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
@@ -119,7 +111,7 @@
                         </a>
                     </b-col>
                 </b-form-row>
-                <!-- END ROW GASPI - CARD AND LINK TO THE CARD-->
+
                 <b-form-row>
                     <b-col md="5">
                         <b-form-group

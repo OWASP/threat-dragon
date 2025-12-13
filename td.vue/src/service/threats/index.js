@@ -104,6 +104,11 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             }
             break;
 
+        case 'EoP':
+            title = tc('threats.generic.eop');
+            type = tc('threats.model.eop.dataValidationAndEncoding');
+            break;
+
         default:
             title = tc('threats.generic.default');
             type = tc('threats.model.stride.spoofing');
