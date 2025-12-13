@@ -154,9 +154,9 @@ const deu = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Neues EOP Diagramm',
-                defaultDescription: 'Neue EOP Diagramm Beschreibung',
-                select: 'EOP'
+                defaultTitle: 'Neues EoP Diagramm',
+                defaultDescription: 'Neue EoP Diagramm Beschreibung',
+                select: 'EoP'
             }
             
         },
@@ -367,7 +367,7 @@ const deu = {
             linddun: 'Neue LINDDUN Bedrohung',
             plot4ai: 'Neue PLOT4ai Bedrohung',
             stride: 'Neue STRIDE Bedrohung',
-            eop: 'Neue EOP Bedrohung'
+            eop: 'Neue EoP Bedrohung'
         },
         edit: 'Bedrohung bearbeiten',
         confirmDeleteTitle: 'Löschen bestätigen',

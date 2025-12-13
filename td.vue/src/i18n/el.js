@@ -154,9 +154,9 @@ const ell = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Νέο διάγραμμα EOP',
-                defaultDescription: 'Περιγραφή νέου διαγράμματος EOP',
-                select: 'EOP'
+                defaultTitle: 'Νέο διάγραμμα EoP',
+                defaultDescription: 'Περιγραφή νέου διαγράμματος EoP',
+                select: 'EoP'
             }
         },
         threats: 'Απειλές',
@@ -366,7 +366,7 @@ const ell = {
             linddun: 'Νέα απειλή LINDDUN',
             plot4ai: 'Νέα απειλή PLOT4ai',
             stride: 'Νέα απειλή STRIDE',
-            eop: 'Νέα απειλή EOP'
+            eop: 'Νέα απειλή EoP'
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',

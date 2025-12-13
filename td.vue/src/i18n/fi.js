@@ -154,9 +154,9 @@ const fin = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Uusi EOP-kaavio',
-                defaultDescription: 'Uuden EOP-kaavion kuvaus',
-                select: 'EOP'
+                defaultTitle: 'Uusi EoP-kaavio',
+                defaultDescription: 'Uuden EoP-kaavion kuvaus',
+                select: 'EoP'
             }
         },
         threats: 'Uhat',
@@ -366,7 +366,7 @@ const fin = {
             linddun: 'Uusi LINDDUN-uhka',
             plot4ai: 'Uusi PLOT4ai-uhka',
             stride: 'Uusi STRIDE-uhka',
-            eop: 'Uusi EOP-uhka'
+            eop: 'Uusi EoP-uhka'
         },
         edit: 'Muokkaa Uhkaa',
         confirmDeleteTitle: 'Vahvista Poistaminen',

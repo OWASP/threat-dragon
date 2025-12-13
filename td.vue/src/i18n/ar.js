@@ -154,9 +154,9 @@ const ara = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'مخطط EOP جديد',
-                defaultDescription: 'وصف مخطط EOP جديد',
-                select: 'EOP'
+                defaultTitle: 'مخطط EoP جديد',
+                defaultDescription: 'وصف مخطط EoP جديد',
+                select: 'EoP'
             }
         },
         threats: 'التهديدات',
@@ -366,7 +366,7 @@ const ara = {
             linddun: 'تهديد LINDDUN جديد',
             plot4ai: 'تهديد PLOT4ai جديد',
             stride: 'تهديد STRIDE جديد',
-            eop: 'تهديد EOP جديد'
+            eop: 'تهديد EoP جديد'
         },
         edit: 'تحرير التهديد',
         confirmDeleteTitle: 'تأكيد الحذف',
