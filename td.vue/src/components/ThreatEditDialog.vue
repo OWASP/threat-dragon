@@ -351,14 +351,14 @@ export default {
                 (x) => x.id === threatId
             );
             this.threat = { ...crnthreat };
-            this.card.suit = this.threat.cardSuit || null;
-            this.card.number = this.threat.cardNumber || null;
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn(
                     "Trying to access a non-existent threatId: " + threatId
                 );
-            } else {
+            } else {    
+                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section;
+                this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === "new";
                 this.$refs.editModal.show();
