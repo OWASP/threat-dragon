@@ -300,6 +300,11 @@ const rus = {
         next: 'Next',
         previous: 'Previous'
     },
+    cards: {
+        details: 'Данные карты',
+        noDetails: 'детали недоступны',
+        unknown: 'Неизвестно'
+    },
     threats: {
         model: {
             cia: {

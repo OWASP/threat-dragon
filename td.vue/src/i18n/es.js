@@ -300,6 +300,11 @@ const spa = {
         next: 'próximo',
         previous: 'Previo'
     },
+    cards: {
+        details: 'Detalles de la carta',
+        noDetails: 'sin detalles disponibles',
+        unknown: 'Desconocido'
+    },
     threats: {
         model: {
             cia: {

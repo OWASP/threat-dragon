@@ -86,7 +86,7 @@
                             :href="cornucopiaCardUrl"
                             target="_blank"
                             rel="noopener noreferrer"
-                            :title="'View ' + cornucopiaCardSection + ' ' + cornucopiaCardDetails.sectionID + ' details'"
+                            :title="cornucopiaCardSection + ': ' + cornucopiaCardDetails.sectionID"
                             style="
                                 font-size: 16px;
                                 font-weight: normal;
@@ -97,11 +97,11 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardSection.charAt(0) + cornucopiaCardSection.slice(1).toLowerCase() }}
+                            {{ $t("cards.details") }}: {{ cornucopiaCardSection}}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
-                                    : ", no details available"
+                                    : `, ${$t("cards.noDetails")}`
                             }}
                         </a>
                     </b-col>
@@ -309,7 +309,7 @@ export default {
         cornucopiaCardSection() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.section
-                : "Unknown";
+                : this.$t("cards.unknown");
         },
         cornucopiaCardUrl() {
             return this.cornucopiaCardDetails

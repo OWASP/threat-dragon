@@ -300,6 +300,11 @@ const msa = {
         next: 'seterusnya',
         previous: 'sebelumnya'
     },
+    cards: {
+        details: 'Butiran kad',
+        noDetails: 'tiada butiran tersedia',
+        unknown: 'Tidak diketahui'
+    },
     threats: {
         model: {
             cia: {

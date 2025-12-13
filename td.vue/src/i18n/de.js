@@ -300,6 +300,11 @@ const deu = {
         next: 'nächste',
         previous: 'vorherige'
     },
+    cards: {
+        details: 'Kartendetails',
+        noDetails: 'keine Details verfügbar',
+        unknown: 'Unbekannt'
+    },
     threats: {
         model: {
             cia: {

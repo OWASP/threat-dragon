@@ -300,6 +300,11 @@ const ukr = {
         next:'Next',
         previous:'Previous'
     },
+    cards: {
+        details: 'Деталі картки',
+        noDetails: 'деталі недоступні',
+        unknown: 'Невідомо'
+    },
     threats: {
         model: {
             cia: {

@@ -300,6 +300,11 @@ const ell = {
         next: 'Επόμενο',
         previous: 'προηγούμενος'
     },
+    cards: {
+        details: 'Λεπτομέρειες κάρτας',
+        noDetails: 'δεν υπάρχουν διαθέσιμες λεπτομέρειες',
+        unknown: 'Άγνωστο'
+    },
     threats: {
         model: {
             cia: {

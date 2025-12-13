@@ -300,6 +300,11 @@ const hin = {
         next: 'अगला',
         previous: 'पहले का'
     },
+    cards: {
+        details: 'कार्ड विवरण',
+        noDetails: 'कोई विवरण उपलब्ध नहीं',
+        unknown: 'अज्ञात'
+    },
     threats: {
         model: {
             cia: {

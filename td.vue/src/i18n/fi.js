@@ -300,6 +300,11 @@ const fin = {
         next: 'Seuraava',
         previous: 'Edellinen'
     },
+    cards: {
+        details: 'Kortin tiedot',
+        noDetails: 'ei tietoja saatavilla',
+        unknown: 'Tuntematon'
+    },
     threats: {
         model: {
             cia: {

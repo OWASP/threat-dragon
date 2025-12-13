@@ -300,6 +300,11 @@ const jpn = {
         next: '次',
         previous: '前の'
     },
+    cards: {
+        details: 'カードの詳細',
+        noDetails: '詳細はありません',
+        unknown: '不明'
+    },
     threats: {
         model: {
             cia: {

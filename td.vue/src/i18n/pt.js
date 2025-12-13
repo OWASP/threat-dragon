@@ -300,6 +300,11 @@ const por = {
         next: 'próximo',
         previous: 'anterior'
     },
+    cards: {
+        details: 'Detalhes do cartão',
+        noDetails: 'nenhum detalhe disponível',
+        unknown: 'Desconhecido'
+    },
     threats: {
         model: {
             cia: {

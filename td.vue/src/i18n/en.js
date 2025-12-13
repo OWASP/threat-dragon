@@ -305,6 +305,11 @@ const eng = {
         next:'Next',
         previous:'Previous'
     },
+    cards: {
+        details: 'Card details',
+        noDetails: 'no details available',
+        unknown: 'Unknown'
+    },
     threats: {
         model: {
             cia: {

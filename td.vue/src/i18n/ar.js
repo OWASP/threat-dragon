@@ -300,6 +300,11 @@ const ara = {
         next: 'التالي',
         previous: 'السابق'
     },
+    cards: {
+        details: 'تفاصيل البطاقة',
+        noDetails: 'لا توجد تفاصيل متاحة',
+        unknown: 'غير معروف'
+    },
     threats: {
         model: {
             cia: {

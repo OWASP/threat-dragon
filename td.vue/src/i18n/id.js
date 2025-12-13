@@ -300,6 +300,11 @@ const ind = {
         next: 'Berikutnya',
         previous: 'sebelumnya'
     },
+    cards: {
+        details: 'Detail kartu',
+        noDetails: 'tidak ada detail yang tersedia',
+        unknown: 'Tidak diketahui'
+    },
     threats: {
         model: {
             cia: {

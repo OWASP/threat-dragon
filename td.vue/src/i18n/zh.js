@@ -300,6 +300,11 @@ const zho = {
         next: '下一个',
         previous: '上一个'
     },
+    cards: {
+        details: '卡片详情',
+        noDetails: '暂无详情',
+        unknown: '未知'
+    },
     threats: {
         model: {
             cia: {

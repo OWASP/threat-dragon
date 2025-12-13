@@ -300,6 +300,11 @@ const fra = {
         next: 'suivant',
         previous: 'précédent'
     },
+    cards: {
+        details: 'Détails de la carte',
+        noDetails: 'aucun détail disponible',
+        unknown: 'Inconnu'
+    },
     threats: {
         model: {
             cia: {
