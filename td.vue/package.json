@@ -6,7 +6,6 @@
   "private": true,
   "scripts": {
     "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
-    "prebuild:desktop": "ts-node ./src/plugins/generate-cornucopia.ts",
     "audit": "npm audit",
     "build": "vue-cli-service build --no-unsafe-inline",
     "build:desktop": "vue-cli-service electron:build",

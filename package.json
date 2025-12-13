@@ -7,8 +7,6 @@
 
     "prebuild:desktop": "node td.vue/src/plugins/generate-cornucopia.js",
     "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
-    
-    
     "audit": "npm-run-all -c audit:server audit:site",
     "audit:server": "cd td.server && npm run audit",
     "audit:site": "cd td.vue && npm run audit",
@@ -69,9 +67,7 @@
   "devDependencies": {
     "@wdio/cli": "^9.12.2",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^6.1.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "rimraf": "^6.1.2"
   },
   "overrides": {
     "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
