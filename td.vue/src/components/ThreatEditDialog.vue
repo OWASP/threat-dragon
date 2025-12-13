@@ -109,7 +109,11 @@
                                 display: inline-block;
                             "
                         >
-                            {{ $t("cards.details") }}: {{ cornucopiaCardSection }}
+                            {{ $t("cards.details") }}:
+                            {{
+                                cornucopiaCardSection.charAt(0) +
+                                cornucopiaCardSection.slice(1).toLowerCase()
+                            }}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
