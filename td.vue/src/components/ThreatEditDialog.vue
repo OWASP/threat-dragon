@@ -380,6 +380,20 @@ export default {
             }
         },
         updateThreat() {
+            if (this.threat.modelType === 'EOP' && this.card.suit && !this.card.number) {
+                this.$bvModal.msgBoxOk(
+                    this.$t('threats.validation.cardNumberRequired'),
+                    {
+                        title: this.$t('threats.validation.error'),
+                        okVariant: 'danger',
+                        headerBgVariant: 'danger',
+                        headerTextVariant: 'light',
+                        centered: true
+                    }
+                );
+                return;
+            }
+
             const threatRef = this.cellRef.data.threats.find(
                 (x) => x.id === this.threat.id
             );
