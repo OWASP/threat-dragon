@@ -195,28 +195,23 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     describe('cornucopia link', () => {
-// test creado por guille:muestra link de cornucopia cuando es STRIDE con cardId
-        it('renders link for STRIDE with cardId', async () => {
-        const store=new Vuex.Store({
-            state:{
-                cell:{ref:{getData:jest.fn(),data:{
-                    threatFrequency:{availability: 0,confidentiality: 0,integrity: 0},
-                    threats:[{...getThreatData(),modelType:'STRIDE',type:'STRIDE: VE2',cardId:'https://cornucopia.owasp.org/cards/VE2'}]}}}
-            },
-            actions:{CELL_DATA_UPDATED:()=>{}}
-        });
-            wrapper = shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:key=>key},store});
+// test creado por guille:muestra link de cornucopia cuando es EOP con suit y number
+        it('renders link for EOP with suit and number', async () => {
+            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(),data:{threatFrequency:{availability:0,confidentiality:0,integrity:0},threats:[{...getThreatData(),modelType:'EOP'}]}}}},actions:{CELL_DATA_UPDATED:()=>{}}});
+            wrapper=shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:k=>k},store});
             wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
+            wrapper.vm.card.suit='DATA VALIDATION & ENCODING';
+            wrapper.vm.card.number='VE2';
             await wrapper.vm.$nextTick();
             const link=wrapper.find('a');
             expect(link.exists()).toBe(true);
             expect(link.attributes('href')).toBe('https://cornucopia.owasp.org/cards/VE2');
-            expect(link.text()).toContain('Card details');
+            expect(link.text()).toContain('VE2');
         });
 
-// test creado por guille:no muestra link si el modelo no es STRIDE
-        it('hides link when model is not STRIDE', () => {
+// test creado por guille:no muestra link si el modelo no es EOP
+        it('hides link when model is not EOP', () => {
             const store=new Vuex.Store({
                 state:{cell:{ref:{getData:jest.fn(),data:{
                     threatFrequency:{availability:0,confidentiality:0,integrity:0},
@@ -239,11 +234,15 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(wrapper.vm.modalTitle).toBe('threats.edit #0');
         });
 
-// test creado por guille: threatTypes vacio si no hay threat
+//test creado por guille: threatTypes vacio si no hay threat
         it('returns empty threatTypes when no threat', () => {
             wrapper = getWrapper();
             wrapper.vm.threat = null;
             expect(wrapper.vm.threatTypes).toEqual([]);
         });
+    });
+
+    describe('cornucopia selects', () => {
+
     });
 });
