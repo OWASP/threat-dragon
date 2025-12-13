@@ -154,9 +154,9 @@ const eng = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'New EOP diagram',
-                defaultDescription: 'New EOP diagram description',
-                select: 'EOP'
+                defaultTitle: 'New EoP diagram',
+                defaultDescription: 'New EoP diagram description',
+                select: 'EoP'
             }
         },
         threats: 'Threats',
