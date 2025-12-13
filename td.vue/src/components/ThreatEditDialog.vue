@@ -405,7 +405,7 @@ export default {
             this.hideModal();
         },
         deleteThreat() {
-            if (!this.threat.new) {
+            if (!this.threat.new && this.cellRef.data.threatFrequency) {
                 const threatMap = this.cellRef.data.threatFrequency;
                 Object.keys(threatMap).forEach((k) => {
                     if (
