@@ -90,7 +90,7 @@
 
             <b-col align-h="end">
                 <b-badge v-if="modelTypeResolved">
-                    {{ modelTypeResolved }}
+                    {{ modelTypeResolved === 'EOP' ? 'EoP' : modelTypeResolved }}
                 </b-badge>
             </b-col>
         </b-row>
