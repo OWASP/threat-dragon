@@ -195,7 +195,6 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     describe('cornucopia link', () => {
-// test creado por guille:muestra link de cornucopia cuando es EOP con suit y number
         it('renders link for EOP with suit and number', async () => {
             const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(),data:{threatFrequency:{availability:0,confidentiality:0,integrity:0},threats:[{...getThreatData(),modelType:'EOP'}]}}}},actions:{CELL_DATA_UPDATED:()=>{}}});
             wrapper=shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:k=>k},store});
@@ -210,7 +209,6 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(link.text()).toContain('VE2');
         });
 
-// test creado por guille:no muestra link si el modelo no es EOP
         it('hides link when model is not EOP', () => {
             const store=new Vuex.Store({
                 state:{cell:{ref:{getData:jest.fn(),data:{
@@ -226,7 +224,6 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(link.exists()).toBe(false);
         });
 
-// test creado por guille: modal title usa numero del threat
         it('modal title uses threat number', () => {
             wrapper = getWrapper();
             wrapper.vm.$refs.editModal = { show: jest.fn(), hide: jest.fn() };
@@ -234,7 +231,6 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(wrapper.vm.modalTitle).toBe('threats.edit #0');
         });
 
-//test creado por guille: threatTypes vacio si no hay threat
         it('returns empty threatTypes when no threat', () => {
             wrapper = getWrapper();
             wrapper.vm.threat = null;
