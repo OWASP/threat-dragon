@@ -42,14 +42,14 @@ const valuesToTranslations = {
     'Denial of service': 'threats.model.stride.denialOfService',
     'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
 
-    /* EoP */
-    'Data Validation & Encoding': 'threats.model.eop.dataValidationAndEncoding',
-    Authentication: 'threats.model.eop.authentication',
-    'Session Management': 'threats.model.eop.sessionManagement',
-    Authorization: 'threats.model.eop.authorization',
-    Cryptography: 'threats.model.eop.cryptography',
-    Cornucopia: 'threats.model.eop.cornucopia',
-    'Wild Card':'threats.model.eop.wildCard'
+    /* EOP */
+    'DATA VALIDATION & ENCODING': 'threats.model.eop.dataValidationAndEncoding',
+    AUTHENTICATION: 'threats.model.eop.authentication',
+    'SESSION MANAGEMENT': 'threats.model.eop.sessionManagement',
+    AUTHORIZATION: 'threats.model.eop.authorization',
+    CRYPTOGRAPHY: 'threats.model.eop.cryptography',
+    CORNUCOPIA: 'threats.model.eop.cornucopia',
+    'WILD CARD':'threats.model.eop.wildCard'
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
@@ -113,7 +113,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             }
             break;
 
-        case 'EoP':
+        case 'EOP':
             title = tc('threats.generic.eop');
             type = tc('threats.model.eop.dataValidationAndEncoding');
             break;

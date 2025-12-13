@@ -305,6 +305,12 @@ const eng = {
         next:'Next',
         previous:'Previous'
     },
+    cards: {
+        properties: {
+            suit: 'Category',
+            number: 'Number'
+        }
+    },
     threats: {
         model: {
             cia: {

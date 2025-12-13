@@ -55,7 +55,7 @@ const getByTranslationValue = (translation) => {
     }
 
     if (Object.values(eop.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
-        return 'EoP';
+        return 'EOP';
     }
 
     return '';
@@ -192,7 +192,7 @@ const getFrequencyMapByElement = (modelType,cellType) => {
     return freqMap;
 };
 
-const allModels = ['CIA', 'CIADIE', 'LINDDUN', 'PLOT4ai', 'STRIDE', 'EoP'];
+const allModels = ['CIA', 'CIADIE', 'LINDDUN', 'PLOT4ai', 'STRIDE', 'EOP'];
 
 export default {
     getByTranslationValue,
