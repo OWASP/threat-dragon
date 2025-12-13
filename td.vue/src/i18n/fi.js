@@ -308,7 +308,7 @@ const fin = {
     cards: {
         details: 'Kortin tiedot',
         noDetails: 'ei tietoja saatavilla',
-        unknown: 'Tuntematon'
+        unknown: 'Tuntematon',
         properties: {
             suit: 'Luokka',
             number: 'Numero'

@@ -308,7 +308,7 @@ const zho = {
     cards: {
         details: '卡片详情',
         noDetails: '暂无详情',
-        unknown: '未知'
+        unknown: '未知',
         properties: {
             suit: '类别',
             number: '编号'

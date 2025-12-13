@@ -308,7 +308,7 @@ const rus = {
     cards: {
         details: 'Данные карты',
         noDetails: 'детали недоступны',
-        unknown: 'Неизвестно'
+        unknown: 'Неизвестно',
         properties: {
             suit: 'Категория',
             number: 'Номер'

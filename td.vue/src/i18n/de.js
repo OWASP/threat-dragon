@@ -309,7 +309,7 @@ const deu = {
     cards: {
         details: 'Kartendetails',
         noDetails: 'keine Details verfügbar',
-        unknown: 'Unbekannt'
+        unknown: 'Unbekannt',
         properties: {
             suit: 'Kategorie',
             number: 'Nummer'

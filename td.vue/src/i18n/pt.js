@@ -308,7 +308,7 @@ const por = {
     cards: {
         details: 'Detalhes do cartão',
         noDetails: 'nenhum detalhe disponível',
-        unknown: 'Desconhecido'
+        unknown: 'Desconhecido',
         properties: {
             suit: 'Categoria',
             number: 'Número'

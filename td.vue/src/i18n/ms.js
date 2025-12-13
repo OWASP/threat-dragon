@@ -309,7 +309,7 @@ const msa = {
     cards: {
         details: 'Butiran kad',
         noDetails: 'tiada butiran tersedia',
-        unknown: 'Tidak diketahui'
+        unknown: 'Tidak diketahui',
         properties: {
             suit: 'Kategori',
             number: 'Nombor'

@@ -308,7 +308,7 @@ const ara = {
     cards: {
         details: 'تفاصيل البطاقة',
         noDetails: 'لا توجد تفاصيل متاحة',
-        unknown: 'غير معروف'
+        unknown: '??? ?????',
         properties: {
             suit:'فئة',
             number:'رقم'
@@ -428,7 +428,7 @@ const ara = {
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
             openTbd: 'مفتوح / الأولوية في TBD',
-            openUnknown: 'مفتوح / أولوية غير معروفة'
+            openunknown: '??? ?????',
         }
     },
     upgrade: {

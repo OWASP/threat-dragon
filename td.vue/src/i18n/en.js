@@ -308,7 +308,7 @@ const eng = {
     cards: {
         details: 'Card details',
         noDetails: 'no details available',
-        unknown: 'Unknown'
+        unknown: 'Unknown',
         properties: {
             suit: 'Category',
             number: 'Number'
