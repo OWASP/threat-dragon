@@ -305,6 +305,12 @@ const eng = {
         next:'Next',
         previous:'Previous'
     },
+    cards: {
+        properties: {
+            suit: 'Category',
+            number: 'Number'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -351,16 +357,6 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
-            },
-            eop: {
-                header: '--- EoP ---',
-                dataValidationAndEncoding: 'Data Validation & Encoding',
-                authentication: 'Authentication',
-                sessionManagement: 'Session Management',
-                authorization: 'Authorization',
-                cryptography: 'Cryptography',
-                cornucopia: 'Cornucopia',
-                wildCard: 'Wild Card'
             }
         },
         generic: {
