@@ -77,7 +77,14 @@
                 </b-form-row>
 
                 <b-form-row
-                   v-if="threat && threat.modelType === 'EOP' && card.number && filteredCardNumbers.some(option => option.value === card.number)"
+                    v-if="
+                        threat &&
+                        threat.modelType === 'EOP' &&
+                        card.number &&
+                        filteredCardNumbers.some(
+                            (option) => option.value === card.number
+                        )
+                    "
                     style="margin-bottom: 16px"
                 >
                     <b-col>
@@ -102,7 +109,11 @@
                                 display: inline-block;
                             "
                         >
-                            Card details: {{ cornucopiaCardSection.charAt(0) + cornucopiaCardSection.slice(1).toLowerCase() }}
+                            Card details:
+                            {{
+                                cornucopiaCardSection.charAt(0) +
+                                cornucopiaCardSection.slice(1).toLowerCase()
+                            }}
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
@@ -372,15 +383,19 @@ export default {
             }
         },
         updateThreat() {
-            if (this.threat.modelType === 'EOP' && this.card.suit && !this.card.number) {
+            if (
+                this.threat.modelType === "EOP" &&
+                this.card.suit &&
+                !this.card.number
+            ) {
                 this.$bvModal.msgBoxOk(
-                    this.$t('threats.validation.cardNumberRequired'),
+                    this.$t("threats.validation.cardNumberRequired"),
                     {
-                        title: this.$t('threats.validation.error'),
-                        okVariant: 'danger',
-                        headerBgVariant: 'danger',
-                        headerTextVariant: 'light',
-                        centered: true
+                        title: this.$t("threats.validation.error"),
+                        okVariant: "danger",
+                        headerBgVariant: "danger",
+                        headerTextVariant: "light",
+                        centered: true,
                     }
                 );
                 return;
@@ -417,10 +432,12 @@ export default {
                 threatRef.new = false;
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
-                threatRef.cardId = this.threat.cardId;
                 if (threatRef.modelType === "EOP") {
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
+                    threatRef.cardId = this.cornucopiaCardDetails
+                        ? this.cornucopiaCardDetails.id
+                        : null;
                     threatRef.type = null;
                 } else {
                     threatRef.type = this.threat.type;
