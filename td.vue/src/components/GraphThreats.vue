@@ -1,68 +1,103 @@
 <template>
 <b-card class="threat-card">
-        <b-card-text>
-            <b-row>
-                <b-col>
-                    <a href="javascript:void(0)" @click="threatSelected()" v-if="!!number">#{{ number }} {{ title || 'Unknown Threat' }}</a>
-                    <a href="javascript:void(0)" @click="threatSelected()" v-else>{{ title || 'Unknown Threat' }}</a>
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col>
-                    {{ type }}
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col>
-                    <font-awesome-icon 
-                        icon="check"
-                        class="threat-icon gray-icon"
-                        :title="status"
-                        v-if="status === 'NotApplicable'" />
-                    <font-awesome-icon 
-                        icon="check"
-                        class="threat-icon green-icon"
-                        :title="status"
-                        v-if="status === 'Mitigated'" />
-                    <font-awesome-icon 
-                        icon="exclamation-triangle"
-                        class="threat-icon red-icon"
-                        :title="status"
-                        v-if="status === 'Open'" />
+    <b-card-text>
+        <b-row>
+            <b-col>
+                <a
+                    href="javascript:void(0)"
+                    @click="threatSelected()"
+                    v-if="!!numberResolved"
+                >
+                    #{{ numberResolved }} {{ titleResolved || 'Unknown Threat' }}
+                </a>
+                <a
+                    href="javascript:void(0)"
+                    @click="threatSelected()"
+                    v-else
+                >
+                    {{ titleResolved || 'Unknown Threat' }}
+                </a>
+            </b-col>
+        </b-row>
 
-                    <font-awesome-icon
-                        icon="circle"
-                        class="threat-icon darkred-icon"
-                        :title="severity"
-                        v-if="severity === 'Critical'" />
-                    <font-awesome-icon 
-                        icon="circle"
-                        class="threat-icon red-icon"
-                        :title="severity"
-                        v-if="severity === 'High'" />
-                    <font-awesome-icon 
-                        icon="circle"
-                        class="threat-icon orange-icon"
-                        :title="severity"
-                        v-if="severity === 'Medium'" />
-                    <font-awesome-icon 
-                        icon="circle"
-                        class="threat-icon yellow-icon"
-                        :title="severity"
-                        v-if="severity === 'Low'" />
-                    <font-awesome-icon 
-                        icon="circle"
-                        class="threat-icon gray-icon"
-                        :title="severity"
-                        v-if="severity === 'TBD'" />
-                </b-col>
-                <b-col align-h="end">
-                    <b-badge :v-if="!!modelType">{{ modelType }}</b-badge>
-                </b-col>
-            </b-row>
-        </b-card-text>
-    </b-card>
+        <b-row v-if="modelTypeResolved !== 'EOP' && typeResolved">
+            <b-col>{{ typeResolved }}</b-col>
+        </b-row>
+
+        <b-row v-if="modelTypeResolved === 'EOP' && (cardSuitResolved || cardNumberResolved)">
+            <b-col>
+                <b-row v-if="cardSuitResolved">
+                    <b-col>{{ cardSuitResolved }}</b-col>
+                </b-row>
+                <b-row v-if="cardNumberResolved">
+                    <b-col>{{ cardNumberResolved }}</b-col>
+                </b-row>
+            </b-col>
+        </b-row>
+
+        <b-row>
+            <b-col>
+                <font-awesome-icon
+                    v-if="statusResolved === 'NotApplicable'"
+                    icon="check"
+                    class="threat-icon gray-icon"
+                    :title="statusResolved"
+                />
+                <font-awesome-icon
+                    v-if="statusResolved === 'Mitigated'"
+                    icon="check"
+                    class="threat-icon green-icon"
+                    :title="statusResolved"
+                />
+                <font-awesome-icon
+                    v-if="statusResolved === 'Open'"
+                    icon="exclamation-triangle"
+                    class="threat-icon red-icon"
+                    :title="statusResolved"
+                />
+
+                <font-awesome-icon
+                    v-if="severityResolved === 'Critical'"
+                    icon="circle"
+                    class="threat-icon darkred-icon"
+                    :title="severityResolved"
+                />
+                <font-awesome-icon
+                    v-if="severityResolved === 'High'"
+                    icon="circle"
+                    class="threat-icon red-icon"
+                    :title="severityResolved"
+                />
+                <font-awesome-icon
+                    v-if="severityResolved === 'Medium'"
+                    icon="circle"
+                    class="threat-icon orange-icon"
+                    :title="severityResolved"
+                />
+                <font-awesome-icon
+                    v-if="severityResolved === 'Low'"
+                    icon="circle"
+                    class="threat-icon yellow-icon"
+                    :title="severityResolved"
+                />
+                <font-awesome-icon
+                    v-if="severityResolved === 'TBD'"
+                    icon="circle"
+                    class="threat-icon gray-icon"
+                    :title="severityResolved"
+                />
+            </b-col>
+
+            <b-col align-h="end">
+                <b-badge v-if="modelTypeResolved">
+                    {{ modelTypeResolved }}
+                </b-badge>
+            </b-col>
+        </b-row>
+    </b-card-text>
+</b-card>
 </template>
+
 
 <style lang="scss" scoped>
 .threat-card {
@@ -100,13 +135,18 @@
 .gray-icon {
     color: $gray;
 }
-
 </style>
 
 <script>
 export default {
     name: 'TdGraphThreats',
+
     props: {
+        threat: {
+            type: Object,
+            required: false,
+            default: null
+        },
         id: { type: String },
         status: { type: String },
         severity: { type: String },
@@ -115,13 +155,46 @@ export default {
         type: { type: String },
         mitigation: { type: String },
         modelType: { type: String },
-        number: { type: Number }
+        number: { type: Number },
+        cardSuit: { type: String },
+        cardNumber: { type: String }
     },
+
+    computed: {
+        threatData() {
+            const t = this.threat || {};
+            return {
+                id: t.id || this.id || '',
+                status: t.status || this.status || '',
+                severity: t.severity || this.severity || '',
+                description: t.description || this.description || '',
+                title: t.title || this.title || '',
+                type: t.type || this.type || '',
+                mitigation: t.mitigation || this.mitigation || '',
+                modelType: t.modelType || this.modelType || '',
+                number: t.number || this.number || null,
+                cardSuit: t.cardSuit || this.cardSuit || '',
+                cardNumber: t.cardNumber || this.cardNumber || ''
+            };
+        },
+
+        idResolved() { return this.threatData.id; },
+        statusResolved() { return this.threatData.status; },
+        severityResolved() { return this.threatData.severity; },
+        descriptionResolved() { return this.threatData.description; },
+        titleResolved() { return this.threatData.title; },
+        typeResolved() { return this.threatData.type; },
+        mitigationResolved() { return this.threatData.mitigation; },
+        modelTypeResolved() { return this.threatData.modelType; },
+        numberResolved() { return this.threatData.number; },
+        cardSuitResolved() { return this.threatData.cardSuit; },
+        cardNumberResolved() { return this.threatData.cardNumber; }
+    },
+
     methods: {
         threatSelected() {
-            this.$emit('threatSelected', this.id,'old');
+            this.$emit('threatSelected', this.idResolved, 'old');
         }
     }
 };
-
 </script>

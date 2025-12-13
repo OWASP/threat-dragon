@@ -398,6 +398,10 @@ export default {
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
                 threatRef.cardId = this.threat.cardId;
+                if (this.threat.modelType === 'EOP') {
+                    this.$set(threatRef, 'cardSuit', this.card.suit);
+                    this.$set(threatRef, 'cardNumber', this.card.number);
+                }
                 this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
                 this.$store.dispatch(tmActions.modified);
                 dataChanged.updateStyleAttrs(this.cellRef);
