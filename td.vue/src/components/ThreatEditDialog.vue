@@ -252,7 +252,7 @@ import { CELL_DATA_UPDATED } from "@/store/actions/cell.js";
 import tmActions from "@/store/actions/threatmodel.js";
 import dataChanged from "@/service/x6/graph/data-changed.js";
 import threatModels from "@/service/threats/models/index.js";
-import cornucopiaCardsData from "@/service/schema/cornucopia.json";
+import { eopCards } from "../service/threats/models/eopCards";
 
 export default {
     name: "TdThreatEditDialog",
@@ -307,20 +307,10 @@ export default {
             return this.$t("threats.edit") + " #" + this.number;
         },
         filteredCardNumbers() {
-            if (!this.card.suit) return [];
-            return this.cardNumbers
-                .filter((card) => card.section === this.card.suit)
-                .map((card) => ({
-                    value: card.sectionID,
-                    text: card.sectionID,
-                }));
+            return eopCards.getCardsByDeck(this.card.suit)
         },
         cornucopiaCardDetails() {
-            return this.card.number
-                ? cornucopiaCardsData.standards.find(
-                      (card) => card.sectionID === this.card.number
-                  )
-                : null;
+            return eopCards.getCardDetails(this.card.number)
         },
         cornucopiaCardSection() {
             return this.cornucopiaCardDetails
@@ -332,6 +322,9 @@ export default {
                 ? this.cornucopiaCardDetails.hyperlink
                 : "https://cornucopia.owasp.org/cards";
         },
+        cardSuits() {
+            return eopCards.getDecks();
+        }
     },
     data() {
         return {
@@ -349,17 +342,6 @@ export default {
                 suit: null,
                 number: null,
             },
-            cardSuits: [
-                ...new Set(
-                    cornucopiaCardsData.standards.map((card) => card.section)
-                ),
-            ],
-            cardNumbers: [
-                ...cornucopiaCardsData.standards.map((card) => ({
-                    section: card.section,
-                    sectionID: card.sectionID,
-                })),
-            ],
         };
     },
 

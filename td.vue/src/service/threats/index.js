@@ -43,13 +43,13 @@ const valuesToTranslations = {
     'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
 
     /* EOP */
-    'DATA VALIDATION & ENCODING': 'threats.model.eop.dataValidationAndEncoding',
-    AUTHENTICATION: 'threats.model.eop.authentication',
-    'SESSION MANAGEMENT': 'threats.model.eop.sessionManagement',
-    AUTHORIZATION: 'threats.model.eop.authorization',
-    CRYPTOGRAPHY: 'threats.model.eop.cryptography',
-    CORNUCOPIA: 'threats.model.eop.cornucopia',
-    'WILD CARD':'threats.model.eop.wildCard'
+    'Data Validation & Encoding': 'threats.model.eop.dataValidationAndEncoding',
+    Authentication: 'threats.model.eop.authentication',
+    'Session Management': 'threats.model.eop.sessionManagement',
+    Authorization: 'threats.model.eop.authorization',
+    Cryptography: 'threats.model.eop.cryptography',
+    Cornucopia: 'threats.model.eop.cornucopia',
+    'Wild Card':'threats.model.eop.wildCard'
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
