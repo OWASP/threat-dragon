@@ -152,6 +152,11 @@ const ara = {
                 defaultTitle: 'مخطط CIA جديد',
                 defaultDescription: 'وصف مخطط CIA جديد',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'مخطط EoP جديد',
+                defaultDescription: 'وصف مخطط EoP جديد',
+                select: 'EoP'
             }
         },
         threats: 'التهديدات',
@@ -304,6 +309,10 @@ const ara = {
         details: 'تفاصيل البطاقة',
         noDetails: 'لا توجد تفاصيل متاحة',
         unknown: 'غير معروف'
+        properties: {
+            suit:'فئة',
+            number:'رقم'
+        }
     },
     threats: {
         model: {
@@ -359,7 +368,8 @@ const ara = {
             ciadie: 'تهديد CIA-DIE جديد',
             linddun: 'تهديد LINDDUN جديد',
             plot4ai: 'تهديد PLOT4ai جديد',
-            stride: 'تهديد STRIDE جديد'
+            stride: 'تهديد STRIDE جديد',
+            eop: 'تهديد EoP جديد'
         },
         edit: 'تحرير التهديد',
         confirmDeleteTitle: 'تأكيد الحذف',

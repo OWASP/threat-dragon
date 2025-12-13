@@ -152,6 +152,11 @@ const zho = {
                 defaultTitle: '新CIA图',
                 defaultDescription: '新CIA图描述',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: '新EoP图',
+                defaultDescription: '新EoP图描述',
+                select: 'EoP'
             }
         },
         threats: '威胁',
@@ -304,6 +309,10 @@ const zho = {
         details: '卡片详情',
         noDetails: '暂无详情',
         unknown: '未知'
+        properties: {
+            suit: '类别',
+            number: '编号'
+        },
     },
     threats: {
         model: {
@@ -359,7 +368,8 @@ const zho = {
             ciadie: '新CIA-DIE威胁',
             linddun: '新LINDDUN威胁',
             plot4ai: '新PLOT4ai威胁',
-            stride: '新STRIDE威胁'
+            stride: '新STRIDE威胁',
+            eop:'新EoP威胁'
         },
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',

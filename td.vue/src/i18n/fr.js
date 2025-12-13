@@ -152,6 +152,11 @@ const fra = {
                 defaultTitle: 'Nouveau diagramme CIA',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Nouveau diagramme EoP',
+                defaultDescription: 'New EoP diagram description',
+                select: 'EoP'
             }
         },
         threats: 'Menaces',
@@ -304,6 +309,10 @@ const fra = {
         details: 'Détails de la carte',
         noDetails: 'aucun détail disponible',
         unknown: 'Inconnu'
+        properties: {
+            suit: 'Catégorie',
+            number: 'Numéro'
+        }
     },
     threats: {
         model: {
@@ -359,7 +368,8 @@ const fra = {
             ciadie: 'Nouvelle menace CIA-DIE',
             linddun: 'Nouvelle menace LINDDUN',
             plot4ai: 'Nouvelle menace PLOT4ai',
-            stride: 'Nouvelle menace STRIDE'
+            stride: 'Nouvelle menace STRIDE',
+            eop: 'Nouvelle menace EoP'
         },
         edit: 'Modifier la menace',
         confirmDeleteTitle: 'Confirmer Supprimer',

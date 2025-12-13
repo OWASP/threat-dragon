@@ -152,7 +152,13 @@ const msa = {
                 defaultTitle: 'Gambarajah CIA baru',
                 defaultDescription: 'Penerangan gambarajah CIA baru',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Gambarajah EoP baru',
+                defaultDescription: 'Penerangan gambarajah EoP baru',
+                select: 'EoP'
             }
+
         },
         threats: 'Ancaman',
         errors: {
@@ -304,6 +310,10 @@ const msa = {
         details: 'Butiran kad',
         noDetails: 'tiada butiran tersedia',
         unknown: 'Tidak diketahui'
+        properties: {
+            suit: 'Kategori',
+            number: 'Nombor'
+        },
     },
     threats: {
         model: {
@@ -359,7 +369,8 @@ const msa = {
             ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
-            stride: 'Ancaman STRIDE baru'
+            stride: 'Ancaman STRIDE baru',
+            eop: 'Ancaman EoP baru'
         },
         edit: 'Sunting Ancaman',
         confirmDeleteTitle: 'Sahkan Padam',

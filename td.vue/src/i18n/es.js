@@ -152,6 +152,11 @@ const spa = {
                 defaultTitle: 'Nuevo diagrama CIA',
                 defaultDescription: 'Descripción de Nuevo diagrama CIA',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Nuevo diagrama EoP',
+                defaultDescription: 'Descripción de Nuevo diagrama EoP',
+                select: 'EoP'
             }
         },
         threats: 'Amenazas',
@@ -304,6 +309,10 @@ const spa = {
         details: 'Detalles de la carta',
         noDetails: 'sin detalles disponibles',
         unknown: 'Desconocido'
+        properties: {
+            suit: 'Categoría',
+            number: 'Número'
+        },
     },
     threats: {
         model: {
@@ -359,7 +368,9 @@ const spa = {
             ciadie: 'Nueva amenaza CIA-DIE',
             linddun: 'Nueva amenaza LINDDUN',
             plot4ai: 'Nueva amenaza PLOT4ai',
-            stride: 'Nueva amenaza STRIDE'
+            stride: 'Nueva amenaza STRIDE',
+            eop: 'Nueva amenaza EoP'
+
         },
         edit: 'Editar amenaza',
         confirmDeleteTitle: 'Confirmación de eliminación',
