@@ -27,7 +27,7 @@ COPY        ./td.vue/*.config.js ./td.vue/
 
 RUN         npm clean-install --ignore-scripts
 RUN         cd td.server && npm clean-install
-RUN         cd td.vue && npm clean-install
+RUN         cd td.vue && TD_SKIP_SETUP_VENV=1 npm clean-install
 RUN         npm run build
 RUN         cd td.server && npm run make-sbom
 RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && \

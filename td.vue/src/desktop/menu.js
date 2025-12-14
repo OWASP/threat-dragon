@@ -1144,6 +1144,9 @@ function openAISettings() {
         show: false
     });
 
+    // Preventing the X-button close confirmation when the renderer has already shown the "unsaved changes" confirm
+    let allowCloseWithoutPrompt = false;
+
     // Completely remove the menu bar
     aiSettingsWindow.setMenuBarVisibility(false);
 
@@ -1189,7 +1192,7 @@ function openAISettings() {
     ipcMain.on('ai-settings-save-request', saveHandler);
 
     // Check for unsaved changes request
-    const checkUnsavedChangesHandler = (event) => {
+    const checkUnsavedChangesHandler = () => {
         if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
             // Send request to renderer to check for unsaved changes
             aiSettingsWindow.webContents.send('ai-settings-check-changes');
@@ -1200,6 +1203,7 @@ function openAISettings() {
     // Close window request (will be called after confirmation)
     const closeHandler = () => {
         if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
+            allowCloseWithoutPrompt = true;
             aiSettingsWindow.close();
         }
     };
@@ -1207,6 +1211,10 @@ function openAISettings() {
 
     // Handle window close event to check for unsaved changes (for X button)
     aiSettingsWindow.on('close', (event) => {
+        if (allowCloseWithoutPrompt) {
+            allowCloseWithoutPrompt = false;
+            return;
+        }
         // Prevent default close behavior
         event.preventDefault();
         // Check if there are unsaved changes by asking the renderer
@@ -1217,8 +1225,9 @@ function openAISettings() {
         const closeResponseHandler = (e, shouldClose) => {
             ipcMain.removeListener('ai-settings-should-close', closeResponseHandler);
             if (shouldClose) {
-                // User confirmed to close, destroy the window
-                aiSettingsWindow.destroy();
+                // User confirmed to close, close window without prompting again
+                allowCloseWithoutPrompt = true;
+                aiSettingsWindow.close();
             }
             // If shouldClose is false, user cancelled, so don't close
         };

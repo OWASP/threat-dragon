@@ -170,7 +170,7 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
 });
 
 // request from electron to renderer to provide the model data for AI threat generation
-window.electronAPI.onAIThreatGenerationRequest((_event) =>  {
+window.electronAPI.onAIThreatGenerationRequest(() =>  {
     console.debug('AI threat generation request');
     
     // Check if user is currently viewing a diagram, report, or threat model edit
