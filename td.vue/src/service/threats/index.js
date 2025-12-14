@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
 import store from '@/store/index.js';
-
+import { eopCards } from './models/eopCards.js';
 
 
 const valuesToTranslations = {
@@ -115,7 +115,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
 
         case 'EOP':
             title = tc('threats.generic.eop');
-            type = tc('threats.model.eop.dataValidationAndEncoding');
+            type = eopCards.getDecks()[0].text;
             break;
 
         default:

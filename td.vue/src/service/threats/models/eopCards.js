@@ -1,17 +1,22 @@
-import { reactive } from "vue";
 import i18n from "../../../i18n";
 import cornucopiaEN from '@/service/schema/cornucopia-en.json';
 import cornucopiaES from '@/service/schema/cornucopia-es.json';
+import cornucopiaFR from '@/service/schema/cornucopia-fr.json';
+import cornucopiaRU from '@/service/schema/cornucopia-ru.json';
 
-export const eopCards = reactive({
-    get lang() {
+export const eopCards = {
+    getLang() {
         return i18n.get().locale;
     },
 
     getData() {
-        switch (this.lang) {
+        switch (this.getLang()) {
             case 'spa':
                 return cornucopiaES;
+            case 'fra':
+                return cornucopiaFR;
+            case 'rus':
+                return cornucopiaRU;
             case 'eng':
             default:
                 return cornucopiaEN;
@@ -46,4 +51,4 @@ export const eopCards = reactive({
                 card => card.sectionID === sectionID)
             : null;
     },
-});
+};
