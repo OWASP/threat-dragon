@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import models from './models/index.js';
 import { tc } from '../../i18n/index.js';
 import store from '@/store/index.js';
-import { eopCards } from './models/eopCards.js';
 
 
 const valuesToTranslations = {
@@ -42,14 +41,6 @@ const valuesToTranslations = {
     'Denial of service': 'threats.model.stride.denialOfService',
     'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
 
-    /* EOP */
-    'Data Validation & Encoding': 'threats.model.eop.dataValidationAndEncoding',
-    Authentication: 'threats.model.eop.authentication',
-    'Session Management': 'threats.model.eop.sessionManagement',
-    Authorization: 'threats.model.eop.authorization',
-    Cryptography: 'threats.model.eop.cryptography',
-    Cornucopia: 'threats.model.eop.cornucopia',
-    'Wild Card':'threats.model.eop.wildCard'
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
@@ -115,7 +106,6 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
 
         case 'EOP':
             title = tc('threats.generic.eop');
-            type = eopCards.getDecks()[0].text;
             break;
 
         default:

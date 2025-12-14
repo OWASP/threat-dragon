@@ -1,4 +1,4 @@
-import i18n from "../../../i18n";
+import i18n from '../../../i18n';
 import cornucopiaEN from '@/service/schema/cornucopia-en.json';
 import cornucopiaES from '@/service/schema/cornucopia-es.json';
 import cornucopiaFR from '@/service/schema/cornucopia-fr.json';
@@ -11,15 +11,15 @@ export const eopCards = {
 
     getData() {
         switch (this.getLang()) {
-            case 'spa':
-                return cornucopiaES;
-            case 'fra':
-                return cornucopiaFR;
-            case 'rus':
-                return cornucopiaRU;
-            case 'eng':
-            default:
-                return cornucopiaEN;
+        case 'spa':
+            return cornucopiaES;
+        case 'fra':
+            return cornucopiaFR;
+        case 'rus':
+            return cornucopiaRU;
+        case 'eng':
+        default:
+            return cornucopiaEN;
         }
     },
 

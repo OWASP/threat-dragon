@@ -246,16 +246,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
-import { CELL_DATA_UPDATED } from "@/store/actions/cell.js";
-import tmActions from "@/store/actions/threatmodel.js";
-import dataChanged from "@/service/x6/graph/data-changed.js";
-import threatModels from "@/service/threats/models/index.js";
-import { eopCards } from "../service/threats/models/eopCards";
+import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
+import tmActions from '@/store/actions/threatmodel.js';
+import dataChanged from '@/service/x6/graph/data-changed.js';
+import threatModels from '@/service/threats/models/index.js';
+import { eopCards } from '../service/threats/models/eopCards';
 
 export default {
-    name: "TdThreatEditDialog",
+    name: 'TdThreatEditDialog',
     computed: {
         ...mapState({
             cellRef: (state) => state.cell.ref,
@@ -280,47 +280,47 @@ export default {
         statuses() {
             return [
                 {
-                    value: "NotApplicable",
-                    text: this.$t("threats.status.notApplicable"),
+                    value: 'NotApplicable',
+                    text: this.$t('threats.status.notApplicable'),
                 },
-                { value: "Open", text: this.$t("threats.status.open") },
+                { value: 'Open', text: this.$t('threats.status.open') },
                 {
-                    value: "Mitigated",
-                    text: this.$t("threats.status.mitigated"),
+                    value: 'Mitigated',
+                    text: this.$t('threats.status.mitigated'),
                 },
             ];
         },
         priorities() {
             return [
-                { value: "TBD", text: this.$t("threats.severity.tbd") },
-                { value: "Low", text: this.$t("threats.severity.low") },
-                { value: "Medium", text: this.$t("threats.severity.medium") },
-                { value: "High", text: this.$t("threats.severity.high") },
+                { value: 'TBD', text: this.$t('threats.severity.tbd') },
+                { value: 'Low', text: this.$t('threats.severity.low') },
+                { value: 'Medium', text: this.$t('threats.severity.medium') },
+                { value: 'High', text: this.$t('threats.severity.high') },
 
                 {
-                    value: "Critical",
-                    text: this.$t("threats.severity.critical"),
+                    value: 'Critical',
+                    text: this.$t('threats.severity.critical'),
                 },
             ];
         },
         modalTitle() {
-            return this.$t("threats.edit") + " #" + this.number;
+            return this.$t('threats.edit') + ' #' + this.number;
         },
         filteredCardNumbers() {
-            return eopCards.getCardsByDeck(this.card.suit)
+            return eopCards.getCardsByDeck(this.card.suit);
         },
         cornucopiaCardDetails() {
-            return eopCards.getCardDetails(this.card.number)
+            return eopCards.getCardDetails(this.card.number);
         },
         cornucopiaCardSection() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.section
-                : this.$t("cards.unknown");
+                : this.$t('cards.unknown');
         },
         cornucopiaCardUrl() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.hyperlink
-                : "https://cornucopia.owasp.org/cards";
+                : 'https://cornucopia.owasp.org/cards';
         },
         cardSuits() {
             return eopCards.getDecks();
@@ -330,12 +330,12 @@ export default {
         return {
             threat: {},
             modelTypes: [
-                "CIA",
-                "CIADIE",
-                "LINDDUN",
-                "PLOT4ai",
-                "STRIDE",
-                "EOP",
+                'CIA',
+                'CIADIE',
+                'LINDDUN',
+                'PLOT4ai',
+                'STRIDE',
+                'EOP',
             ],
             number: 0,
             card: {
@@ -354,29 +354,29 @@ export default {
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn(
-                    "Trying to access a non-existent threatId: " + threatId
+                    'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {    
-                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section;
+                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section || eopCards.getDecks()[0].text;
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
-                this.newThreat = state === "new";
+                this.newThreat = state === 'new';
                 this.$refs.editModal.show();
             }
         },
         updateThreat() {
             if (
-                this.threat.modelType === "EOP" &&
+                this.threat.modelType === 'EOP' &&
                 this.card.suit &&
                 !this.card.number
             ) {
                 this.$bvModal.msgBoxOk(
-                    this.$t("threats.validation.cardNumberRequired"),
+                    this.$t('threats.validation.cardNumberRequired'),
                     {
-                        title: this.$t("threats.validation.error"),
-                        okVariant: "danger",
-                        headerBgVariant: "danger",
-                        headerTextVariant: "light",
+                        title: this.$t('threats.validation.error'),
+                        okVariant: 'danger',
+                        headerBgVariant: 'danger',
+                        headerTextVariant: 'light',
                         centered: true,
                     }
                 );
@@ -414,7 +414,7 @@ export default {
                 threatRef.new = false;
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
-                if (threatRef.modelType === "EOP") {
+                if (threatRef.modelType === 'EOP') {
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
                     threatRef.cardId = this.cornucopiaCardDetails
@@ -456,12 +456,12 @@ export default {
         },
         async confirmDelete() {
             const confirmed = await this.$bvModal.msgBoxConfirm(
-                this.$t("threats.confirmDeleteMessage"),
+                this.$t('threats.confirmDeleteMessage'),
                 {
-                    title: this.$t("threats.confirmDeleteTitle"),
-                    okTitle: this.$t("forms.delete"),
-                    cancelTitle: this.$t("forms.cancel"),
-                    okVariant: "danger",
+                    title: this.$t('threats.confirmDeleteTitle'),
+                    okTitle: this.$t('forms.delete'),
+                    cancelTitle: this.$t('forms.cancel'),
+                    okVariant: 'danger',
                 }
             );
 
