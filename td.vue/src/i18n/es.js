@@ -360,6 +360,16 @@ const spa = {
                 informationDisclosure: 'Information disclosure / Brecha de información',
                 denialOfService: 'Denial of service / Denegación de servicio',
                 elevationOfPrivilege: 'Elevation of privilege / Elevación de privilegios'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding / Validación y codificación de datos',
+                authentication: 'Authentication / Autenticación',
+                sessionManagement: 'Session Management / Gestión de Sesión',
+                authorization: 'Authorization / Autorización',
+                cryptography: 'Cryptography / Criptografía',
+                cornucopia: 'Cornucopia / Cornucopia',
+                wildCard: 'Wild Card / Comodín'
             }
         },
         generic: {
@@ -403,6 +413,10 @@ const spa = {
             medium: 'Media',
             high: 'Alta',
             critical: 'Crítica'
+        },
+        validation: {
+            error: 'El número de la carta es obligatorio.',
+            cardNumberRequired: 'Debe seleccionar un número de carta antes de guardar.'
         }
     },
     report: {

@@ -402,6 +402,10 @@ const ara = {
             medium: 'متوسط',
             high: 'عالي',
             critical: 'شديد الأهمية'
+        },
+        validation: {
+            error: 'رقم البطاقة مطلوب',
+            cardNumberRequired: 'يجب عليك اختيار رقم البطاقة قبل الحفظ'
         }
     },
     report: {

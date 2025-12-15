@@ -252,7 +252,7 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-import cornucopiaCardsData from '@/service/schema/cornucopia.json';
+import { eopCards } from '../service/threats/models/eopCards';
 
 export default {
     name: 'TdThreatEditDialog',
@@ -307,31 +307,24 @@ export default {
             return this.$t('threats.edit') + ' #' + this.number;
         },
         filteredCardNumbers() {
-            if (!this.card.suit) return [];
-            return this.cardNumbers
-                .filter((card) => card.section === this.card.suit)
-                .map((card) => ({
-                    value: card.sectionID,
-                    text: card.sectionID,
-                }));
+            return eopCards.getCardsByDeck(this.card.suit);
         },
         cornucopiaCardDetails() {
-            return this.card.number
-                ? cornucopiaCardsData.standards.find(
-                    (card) => card.sectionID === this.card.number
-                )
-                : null;
+            return eopCards.getCardDetails(this.card.number);
         },
         cornucopiaCardSection() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.section
-                : this.$t("cards.unknown");
+                : this.$t('cards.unknown');
         },
         cornucopiaCardUrl() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.hyperlink
                 : 'https://cornucopia.owasp.org/cards';
         },
+        cardSuits() {
+            return eopCards.getDecks();
+        }
     },
     data() {
         return {
@@ -349,18 +342,6 @@ export default {
                 suit: null,
                 number: null,
             },
-            cardSuits: [
-                ...new Set(
-                    cornucopiaCardsData.standards.map((card) => card.section)
-                ),
-            ],
-            cardNumbers: [
-                ...cornucopiaCardsData.standards.map((card) => ({
-                    section: card.section,
-                    sectionID: card.sectionID,
-                })),
-            ],
-            isLoadingThreat: false,
         };
     },
 
@@ -380,8 +361,6 @@ export default {
                 (x) => x.id === threatId
             );
             this.threat = { ...crnthreat };
-            this.card.suit = this.threat.cardSuit || null;
-            this.card.number = this.threat.cardNumber || null;
 
             this.$nextTick(() => {
                 this.isLoadingThreat = false;
@@ -393,6 +372,8 @@ export default {
                     'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {
+                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section;
+                this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === 'new';
                 this.$refs.editModal.show();
@@ -405,13 +386,13 @@ export default {
                 !this.card.number
             ) {
                 this.$bvModal.msgBoxOk(
-                    this.$t('threats.cardNumberRequiredMessage'),
+                    this.$t('threats.validation.cardNumberRequired'),
                     {
-                        title: this.$t('threats.cardNumberRequiredTitle'),
+                        title: this.$t('threats.validation.error'),
                         okVariant: 'danger',
                         headerBgVariant: 'danger',
                         headerTextVariant: 'light',
-                        centered: true
+                        centered: true,
                     }
                 );
                 return;

@@ -1,6 +1,5 @@
 import cia from './cia.js';
 import ciaDie from './ciadie.js';
-import eop from './eop.js';
 import linddun from './linddun.js';
 import plot4ai from './plot4ai.js';
 import stride from './stride.js';
@@ -24,8 +23,7 @@ const generic = Object.assign(
     Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
     Object.assign({ 'threats.model.ciedie.header': 'ciaDieHeader' }, swapKeyValuePairs(ciaDie)),
     Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
-    Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all)),
-    Object.assign({ 'threats.model.eop.header': 'eopHeader' }, swapKeyValuePairs(eop.all))
+    Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
 );
 
 
@@ -52,10 +50,6 @@ const getByTranslationValue = (translation) => {
 
     if (Object.values(stride.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
         return 'STRIDE';
-    }
-
-    if (Object.values(eop.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
-        return 'EoP';
     }
 
     return '';
@@ -119,10 +113,6 @@ const getThreatTypesByElement = (modelType, cellType) => {
         }
         break;
 
-    case 'EOP':
-        types = eop.default;
-        break;
-
     default:
         return generic;
     }
@@ -184,15 +174,12 @@ const getFrequencyMapByElement = (modelType,cellType) => {
             break;
         }
         break;
-    case 'EoP':
-        Object.keys(eop.default).map((k)=>{freqMap[k]=0;});
-        break;
     default: return null;
     }
     return freqMap;
 };
 
-const allModels = ['CIA', 'CIADIE', 'LINDDUN', 'PLOT4ai', 'STRIDE', 'EoP'];
+const allModels = ['CIA', 'CIADIE', 'LINDDUN', 'PLOT4ai', 'STRIDE', 'EOP'];
 
 export default {
     getByTranslationValue,

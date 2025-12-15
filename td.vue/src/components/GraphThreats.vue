@@ -138,6 +138,8 @@
 </style>
 
 <script>
+import { eopCards } from '../service/threats/models/eopCards';
+
 export default {
     name: 'TdGraphThreats',
 
@@ -187,7 +189,7 @@ export default {
         mitigationResolved() { return this.threatData.mitigation; },
         modelTypeResolved() { return this.threatData.modelType; },
         numberResolved() { return this.threatData.number; },
-        cardSuitResolved() { return this.threatData.cardSuit; },
+        cardSuitResolved() { return eopCards.getCardDetails(this.threatData.cardNumber)?.section; },
         cardNumberResolved() { return this.threatData.cardNumber; }
     },
 

@@ -5,7 +5,6 @@ import { tc } from '../../i18n/index.js';
 import store from '@/store/index.js';
 
 
-
 const valuesToTranslations = {
     /* CIA */
     Confidentiality: 'threats.model.cia.confidentiality',
@@ -40,7 +39,8 @@ const valuesToTranslations = {
     Repudiation: 'threats.model.stride.repudiation',
     'Information disclosure': 'threats.model.stride.informationDisclosure',
     'Denial of service': 'threats.model.stride.denialOfService',
-    'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege'
+    'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
+
 };
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
@@ -104,9 +104,8 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
             }
             break;
 
-        case 'EoP':
+        case 'EOP':
             title = tc('threats.generic.eop');
-            type = tc('threats.model.eop.dataValidationAndEncoding');
             break;
 
         default:

@@ -402,6 +402,10 @@ const zho = {
             medium: '中',
             high: '高',
             critical: '批判的'
+        },
+        validation: {
+            error: '卡片编号是必需的。',
+            cardNumberRequired: '在保存之前，您必须选择一个卡片编号。'
         }
     },
     report: {

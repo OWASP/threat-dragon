@@ -402,6 +402,10 @@ const hin = {
             medium: 'मध्यम',
             high: 'ऊँचा',
             critical: 'गंभीर'
+        },
+        validation: {
+            error: 'कार्ड नंबर आवश्यक है।',
+            cardNumberRequired: 'सहेजने से पहले आपको एक कार्ड नंबर चुनना होगा।'
         }
     },
     report: {

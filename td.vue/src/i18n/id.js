@@ -402,6 +402,10 @@ const ind = {
             medium: 'Sedang',
             high: 'Tinggi',
             critical: 'Kritis'
+        },
+        validation: {
+            error: 'Nomor kartu wajib diisi.',
+            cardNumberRequired: 'Anda harus memilih nomor kartu sebelum menyimpan.'
         }
     },
     report: {

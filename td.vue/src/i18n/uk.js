@@ -402,6 +402,10 @@ const ukr = {
             medium: 'Medium',
             high: 'High',
             critical: 'Critical'
+        },
+        validation: {
+            error: 'Card number is required',
+            cardNumberRequired: 'You must select a card number before saving.'
         }
     },
     report: {
