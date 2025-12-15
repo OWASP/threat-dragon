@@ -372,7 +372,7 @@ export default {
                     'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {
-                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section || eopCards.getDecks()[0].text;
+                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section;
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === 'new';
