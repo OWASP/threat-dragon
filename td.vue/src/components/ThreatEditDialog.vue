@@ -387,8 +387,6 @@ export default {
                 this.isLoadingThreat = false;
             });
 
-            //this.isLoadingThreat = false;
-
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn(
