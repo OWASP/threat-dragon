@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v6.0.1
 
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v21.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v22.0.0
         with:
           config: '.markdownlint.yaml'
           globs: |
@@ -86,7 +86,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -120,7 +120,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -154,7 +154,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -218,7 +218,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -260,7 +260,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -298,7 +298,7 @@ jobs:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -344,7 +344,7 @@ jobs:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -396,7 +396,7 @@ jobs:
         uses: actions/checkout@v6.0.1
 
       - name: Retrieve local docker image
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp

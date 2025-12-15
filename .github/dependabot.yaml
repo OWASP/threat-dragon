@@ -5,10 +5,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
-      semver-major-days: 14
-      semver-minor-days: 7
-      semver-patch-days: 7
+      default-days: 10
     groups:
       update-version:
         applies-to: version-updates
