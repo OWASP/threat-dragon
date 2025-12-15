@@ -1,8 +1,8 @@
 import i18n from '../../../i18n';
-import cornucopiaEN from '@/service/schema/cornucopia-en.json';
-import cornucopiaES from '@/service/schema/cornucopia-es.json';
-import cornucopiaFR from '@/service/schema/cornucopia-fr.json';
-import cornucopiaRU from '@/service/schema/cornucopia-ru.json';
+import cornucopiaEN from '@/service/schema/api_json/cornucopia-en.json';
+import cornucopiaES from '@/service/schema/api_json/cornucopia-es.json';
+import cornucopiaFR from '@/service/schema/api_json/cornucopia-fr.json';
+import cornucopiaRU from '@/service/schema/api_json/cornucopia-ru.json';
 
 export const eopCards = {
     getLang() {
