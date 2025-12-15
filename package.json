@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
+    "prestart:desktop": "node td.vue/src/plugins/generate-cornucopia.js",
     "audit": "npm-run-all -c audit:server audit:site",
     "audit:server": "cd td.server && npm run audit",
     "audit:site": "cd td.vue && npm run audit",
