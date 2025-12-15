@@ -172,6 +172,7 @@
 !td.vue/src/service/provider/
 !td.vue/src/service/provider/*.js
 !td.vue/src/service/schema/
+!td.vue/src/service/schema/api_json
 !td.vue/src/service/schema/*.js
 !td.vue/src/service/schema/*.json
 !td.vue/src/service/threats/
@@ -292,5 +293,3 @@
 !utils/**/*
 
 
-minimal.env
-td.vue/src/service/schema/cornucopia.json
