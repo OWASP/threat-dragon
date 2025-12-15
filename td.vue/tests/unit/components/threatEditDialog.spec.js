@@ -239,6 +239,146 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     describe('cornucopia selects', () => {
+        describe('when modelType is EOP', () => {
+            beforeEach(() => {
+                wrapper = getWrapper();
+                wrapper.vm.$refs.editModal.show = jest.fn();
+                wrapper.vm.$refs.editModal.hide = jest.fn();
+                    
+                const cornucopiaThreat = getThreatData();
+                cornucopiaThreat.modelType = 'EOP';
+                mockStore.state.cell.ref.data.threats = [cornucopiaThreat];
+                    
+                wrapper.vm.editThreat(threatId);
+            });
 
+            it('has a card suit input', () => {
+                const input = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'card-suit')
+                    .at(0);
+
+                expect(input.exists()).toBe(true);
+            });
+
+            it('has a card number input', () => {
+                const input = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'card-number')
+                    .at(0);
+
+                expect(input.exists()).toBe(true);
+            });
+
+            it('does not show a threat type input', () => {
+                const inputs = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'threat-type');
+
+                expect(inputs).toHaveLength(0);
+            });
+        });
+
+        describe('when modelType is not EOP', () => {
+            beforeEach(() => {
+                wrapper = getWrapper();
+                wrapper.vm.$refs.editModal.show = jest.fn();
+                wrapper.vm.$refs.editModal.hide = jest.fn();
+                wrapper.vm.editThreat(threatId);
+            });
+
+            it('has a threat type input', () => {
+                const input = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'threat-type')
+                    .at(0);
+
+                expect(input.exists()).toEqual(true);
+            });
+
+            it('does not show card suit input', () => {
+                const inputs = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'card-suit');
+
+                expect(inputs).toHaveLength(0);
+            });
+
+            it('does not show card number input', () => {
+                const inputs = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'card-number');
+
+                expect(inputs).toHaveLength(0);
+            });
+        });
+    });
+
+    describe('updateThreat card validation', () => {
+        beforeEach(() => {
+            wrapper = getWrapper();
+            wrapper.vm.$refs.editModal.show = jest.fn();
+            wrapper.vm.$refs.editModal.hide = jest.fn();
+            mockStore.dispatch = jest.fn();
+            dataChanged.updateStyleAttrs = jest.fn();
+        });
+        describe('when modelType is EOP and card suit is selected but card number is not', () => {
+            beforeEach(async () => {
+                const eopThreat = getThreatData();
+                eopThreat.modelType = 'EOP';
+                mockStore.state.cell.ref.data.threats = [eopThreat];
+                
+                wrapper.vm.editThreat(threatId);
+                wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
+                wrapper.vm.card.number = null;
+                wrapper.vm.$bvModal.msgBoxOk = jest.fn().mockResolvedValue(true);
+                
+                await wrapper.vm.updateThreat();
+            });
+
+            it('shows error modal', () => {
+                expect(wrapper.vm.$bvModal.msgBoxOk).toHaveBeenCalledWith(
+                    'threats.cardNumberRequiredMessage',
+                    expect.objectContaining({
+                        title: 'threats.cardNumberRequiredTitle',
+                        okVariant: 'danger',
+                        headerBgVariant: 'danger',
+                        headerTextVariant: 'light',
+                        centered: true
+                    })
+                );
+            });
+
+            it('does not update the threat', () => {
+                expect(mockStore.dispatch).not.toHaveBeenCalled();
+            });
+
+            it('does not hide the modal', () => {
+                expect(wrapper.vm.$refs.editModal.hide).not.toHaveBeenCalled();
+            });
+
+            it('does not update style attributes', () => {
+                expect(dataChanged.updateStyleAttrs).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('when modelType is EOP and both card suit and number are selected', () => {
+            beforeEach(() => {
+                const eopThreat = getThreatData();
+                eopThreat.modelType = 'EOP';
+                mockStore.state.cell.ref.data.threats = [eopThreat];
+                
+                wrapper.vm.editThreat(threatId);
+                wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
+                wrapper.vm.card.number = 'VE2';
+                wrapper.vm.updateThreat();
+            });
+
+            it('updates the threat successfully', () => {
+                expect(mockStore.dispatch).toHaveBeenCalled();
+            });
+
+            it('hides the modal', () => {
+                expect(wrapper.vm.$refs.editModal.hide).toHaveBeenCalled();
+            });
+
+            it('updates the style attributes', () => {
+                expect(dataChanged.updateStyleAttrs).toHaveBeenCalled();
+            });
+        });
     });
 });

@@ -345,18 +345,33 @@ export default {
         };
     },
 
+    watch: {
+        'card.suit'(newSuit, oldSuit) {
+            if (!this.isLoadingThreat && newSuit !== oldSuit) {
+                this.card.number = null;
+            }
+        }
+    },
+
     methods: {
         editThreat(threatId, state) {
+            this.isLoadingThreat = true;
+
             const crnthreat = this.cellRef.data.threats.find(
                 (x) => x.id === threatId
             );
             this.threat = { ...crnthreat };
+
+            this.$nextTick(() => {
+                this.isLoadingThreat = false;
+            });
+
             if (!this.threat) {
                 // this should never happen with a valid threatId
                 console.warn(
                     'Trying to access a non-existent threatId: ' + threatId
                 );
-            } else {    
+            } else {
                 this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section || eopCards.getDecks()[0].text;
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
