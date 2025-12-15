@@ -286,7 +286,7 @@ jobs:
         run: npm clean-install
 
       - name: BrowserStack Env Setup
-        uses: browserstack/github-actions/setup-env@v1.0.1
+        uses: browserstack/github-actions/setup-env@v1.0.4
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
