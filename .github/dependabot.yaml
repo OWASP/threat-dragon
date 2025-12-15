@@ -4,10 +4,8 @@ updates:
     directory: ".github/workflows"
     schedule:
       interval: "weekly"
-    ignore:
-      # ignore all (non-security) patch updates
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
+    cooldown:
+      default-days: 10
     groups:
       update-version:
         applies-to: version-updates

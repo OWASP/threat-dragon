@@ -34,3 +34,6 @@ snapcraft.io/
 
 # don't irritate the US government
 nvd.nist.gov/
+
+# not interested in certum docs
+certum.eu

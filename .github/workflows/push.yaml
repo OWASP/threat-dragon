@@ -25,15 +25,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -69,15 +69,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -103,15 +103,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -140,7 +140,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.31.2
@@ -165,7 +165,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.7.0
@@ -177,7 +177,7 @@ jobs:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -246,7 +246,7 @@ jobs:
     needs: build_docker_image
 
     steps:
-      - uses: actions/checkout@v5.0.0
+      - uses: actions/checkout@v6.0.1
       - uses: akhileshns/heroku-deploy@v3.14.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -266,15 +266,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -304,7 +304,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Run Threat Dragon
         run: |
@@ -320,12 +320,12 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -356,7 +356,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Run Threat Dragon
         run: |
@@ -372,12 +372,12 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -418,7 +418,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.13.0
@@ -441,7 +441,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.33.1
@@ -467,15 +467,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -507,15 +507,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -549,15 +549,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -596,15 +596,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -645,7 +645,7 @@ jobs:
       - build_docker_image
     steps:
       - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           pattern: 'sboms-*'
           merge-multiple: false
