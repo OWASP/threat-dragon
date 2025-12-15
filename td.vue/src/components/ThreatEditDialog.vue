@@ -109,7 +109,7 @@
                                 display: inline-block;
                             "
                         >
-                            Card details:
+                            {{ $t("cards.details") }}:
                             {{
                                 cornucopiaCardSection.charAt(0) +
                                 cornucopiaCardSection.slice(1).toLowerCase()
@@ -117,7 +117,7 @@
                             {{
                                 cornucopiaCardDetails
                                     ? ` ${cornucopiaCardDetails.sectionID}`
-                                    : ", no details available"
+                                    : `, ${$t("cards.noDetails")}`
                             }}
                         </a>
                     </b-col>
@@ -325,7 +325,7 @@ export default {
         cornucopiaCardSection() {
             return this.cornucopiaCardDetails
                 ? this.cornucopiaCardDetails.section
-                : 'Unknown';
+                : this.$t("cards.unknown");
         },
         cornucopiaCardUrl() {
             return this.cornucopiaCardDetails

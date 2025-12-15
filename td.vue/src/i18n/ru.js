@@ -306,6 +306,9 @@ const rus = {
         previous: 'Previous'
     },
     cards: {
+        details: 'Данные карты',
+        noDetails: 'детали недоступны',
+        unknown: 'Неизвестно',
         properties: {
             suit: 'Категория',
             number: 'Номер'

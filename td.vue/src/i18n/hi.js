@@ -306,6 +306,9 @@ const hin = {
         previous: 'पहले का'
     },
     cards: {
+        details: 'कार्ड विवरण',
+        noDetails: 'कोई विवरण उपलब्ध नहीं',
+        unknown: 'अज्ञात',
         properties: {
             suit: 'श्रेणी',
             number: 'संख्या'

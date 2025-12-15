@@ -306,6 +306,9 @@ const spa = {
         previous: 'Previo'
     },
     cards: {
+        details: 'Detalles de la carta',
+        noDetails: 'sin detalles disponibles',
+        unknown: 'Desconocido',
         properties: {
             suit: 'Categoría',
             number: 'Número'

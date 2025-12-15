@@ -306,6 +306,9 @@ const ukr = {
         previous:'Previous'
     },
     cards: {
+        details: 'Деталі картки',
+        noDetails: 'деталі недоступні',
+        unknown: 'Невідомо',
         properties: {
             suit: 'Category',
             number: 'Number'
