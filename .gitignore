@@ -158,7 +158,6 @@
 !td.vue/src/service/entity/
 !td.vue/src/service/entity/*.js
 !td.vue/src/service/migration/
-!td.vue/src/service/schema/api_json/
 !td.vue/src/service/migration/*.js
 !td.vue/src/service/migration/otm/
 !td.vue/src/service/migration/otm/*.js
