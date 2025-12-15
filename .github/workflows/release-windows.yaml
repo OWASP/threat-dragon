@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
         uses: actions/setup-node@v6.0.0
