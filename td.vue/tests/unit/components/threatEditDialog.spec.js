@@ -332,9 +332,9 @@ describe('components/ThreatEditDialog.vue', () => {
 
             it('shows error modal', () => {
                 expect(wrapper.vm.$bvModal.msgBoxOk).toHaveBeenCalledWith(
-                    'threats.cardNumberRequiredMessage',
+                    'threats.validation.cardNumberRequired',
                     expect.objectContaining({
-                        title: 'threats.cardNumberRequiredTitle',
+                        title: 'threats.validation.error',
                         okVariant: 'danger',
                         headerBgVariant: 'danger',
                         headerTextVariant: 'light',
