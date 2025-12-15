@@ -402,6 +402,10 @@ const por = {
             medium: 'Média',
             high: 'Alta',
             critical: 'Crítica'
+        },
+        validation: {
+            error: 'O número do cartão é obrigatório.',
+            cardNumberRequired: 'Você deve selecionar um número de cartão antes de salvar.'
         }
     },
     report: {

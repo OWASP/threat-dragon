@@ -402,6 +402,10 @@ const fin = {
             medium: 'Keskitaso',
             high: 'Korkea',
             critical: 'Kriittinen'
+        },
+        validation: {
+            error: 'Kortin numero on pakollinen.',
+            cardNumberRequired: 'Sinun on valittava kortin numero ennen tallentamista.'
         }
     },
     report: {

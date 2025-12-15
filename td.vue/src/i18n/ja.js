@@ -403,6 +403,10 @@ const jpn = {
             medium: '中',
             high: '高',
             critical: '致命的'
+        },
+        validation: {
+            error: 'カード番号は必須です。',
+            cardNumberRequired: '保存する前にカード番号を選択する必要があります。'
         }
     },
     report: {

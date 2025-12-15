@@ -402,6 +402,10 @@ const ell = {
             medium: 'Μεσαία',
             high: 'Υψηλή',
             critical: 'Κρίσιμη'
+        },
+        validation: {
+            error: 'Απαιτείται αριθμός κάρτας.',
+            cardNumberRequired: 'Πρέπει να επιλέξετε έναν αριθμό κάρτας πριν από την αποθήκευση.'
         }
     },
     report: {

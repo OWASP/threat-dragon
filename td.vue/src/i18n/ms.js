@@ -403,6 +403,10 @@ const msa = {
             medium: 'Sederhana',
             high: 'Tinggi',
             critical: 'kritikal'
+        },
+        validation: {
+            error: 'Nombor kad diperlukan.',
+            cardNumberRequired: 'Anda mesti memilih nombor kad sebelum menyimpan.'
         }
     },
     report: {

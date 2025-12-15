@@ -403,6 +403,10 @@ const deu = {
             medium: 'Mittel',
             high: 'Hoch',
             critical: 'Kritisch'
+        },
+        validation: {
+            error: 'Die Kartennummer ist erforderlich.',
+            cardNumberRequired: 'Sie müssen vor dem Speichern eine Kartennummer auswählen.'
         }
     },
     report: {

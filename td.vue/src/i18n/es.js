@@ -413,6 +413,10 @@ const spa = {
             medium: 'Media',
             high: 'Alta',
             critical: 'Crítica'
+        },
+        validation: {
+            error: 'El número de la carta es obligatorio.',
+            cardNumberRequired: 'Debe seleccionar un número de carta antes de guardar.'
         }
     },
     report: {

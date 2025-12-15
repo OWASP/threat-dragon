@@ -402,6 +402,10 @@ const fra = {
             medium: 'Moyen',
             high: 'Élevé',
             critical: 'Critique'
+        },
+        validation: {
+            error: 'Le numéro de la carte est requis.',
+            cardNumberRequired: 'Vous devez sélectionner un numéro de carte avant de sauvegarder.'
         }
     },
     report: {
