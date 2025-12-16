@@ -1000,51 +1000,66 @@ function getAISettingsPath() {
     return path.join(userDataPath, 'ai-settings.json');
 }
 
-// Load API key from credential manager using keytar
+// Get the path to the encrypted API key file
+function getAPIKeyPath() {
+    const userDataPath = app.getPath('userData');
+    return path.join(userDataPath, '.api-key.enc');
+}
+
+// Load API key using Electron's safeStorage API
 async function loadAPIKey() {
     try {
-        const keytar = require('keytar');
-        const service = 'org.owasp.threatdragon';
-        const account = 'ai-api-key';
+        const { safeStorage } = require('electron');
+        const keyPath = getAPIKeyPath();
         
-        const apiKey = await keytar.getPassword(service, account);
+        if (!fs.existsSync(keyPath)) {
+            return '';
+        }
+        
+        if (!safeStorage.isEncryptionAvailable()) {
+            logger.log.warn('Encryption is not available on this system');
+            return '';
+        }
+        
+        const encryptedData = fs.readFileSync(keyPath);
+        const apiKey = safeStorage.decryptString(encryptedData);
         return apiKey || '';
     } catch (err) {
-        logger.log.warn('Error loading API key from credential manager: ' + err.message);
-        if (err.message.includes('Cannot find module')) {
-            logger.log.error('keytar module not found. Please install it: npm install keytar');
-        }
+        logger.log.warn('Error loading API key: ' + err.message);
         return '';
     }
 }
 
-// Save API key to credential manager using keytar
+// Save API key using Electron's safeStorage API
 async function saveAPIKey(apiKey) {
     try {
-        const keytar = require('keytar');
-        const service = 'org.owasp.threatdragon';
-        const account = 'ai-api-key';
+        const { safeStorage } = require('electron');
+        const keyPath = getAPIKeyPath();
         
         if (apiKey && apiKey.trim() !== '') {
-            await keytar.setPassword(service, account, apiKey);
-            logger.log.debug('API key saved to credential manager');
+            if (!safeStorage.isEncryptionAvailable()) {
+                logger.log.error('Encryption is not available on this system');
+                return false;
+            }
+            
+            const encryptedData = safeStorage.encryptString(apiKey);
+            fs.writeFileSync(keyPath, encryptedData);
+            logger.log.debug('API key saved securely');
             return true;
         } else {
-            // If API key is empty, delete it from credential manager
+            // If API key is empty, delete the encrypted file
             try {
-                await keytar.deletePassword(service, account);
-                logger.log.debug('API key removed from credential manager');
+                if (fs.existsSync(keyPath)) {
+                    fs.unlinkSync(keyPath);
+                    logger.log.debug('API key removed');
+                }
             } catch (deleteErr) {
-                // Ignore error if password doesn't exist
-                logger.log.debug('API key not found in credential manager (already removed)');
+                logger.log.debug('API key file not found (already removed)');
             }
             return true;
         }
     } catch (err) {
-        logger.log.error('Error saving API key to credential manager: ' + err.message);
-        if (err.message.includes('Cannot find module')) {
-            logger.log.error('keytar module not found. Please install it: npm install keytar');
-        }
+        logger.log.error('Error saving API key: ' + err.message);
         return false;
     }
 }

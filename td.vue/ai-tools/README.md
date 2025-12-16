@@ -73,7 +73,7 @@ td.vue/
     - Resolves `ai-tools/src/main.py` via `getMainPyPath()`.
     - Loads the **AI settings JSON** path via `getAISettingsPath()`.
     - Loads the **Threat Dragon v2 schema JSON** from `src/service/schema/owasp-threat-dragon-v2.schema.json`.
-    - Retrieves the **API key** from the system credential store via `loadAPIKey()` (using `keytar` under the hood).
+    - Retrieves the **API key** from secure storage via `loadAPIKey()` (using Electron's `safeStorage` API).
     - Spawns the Python process using `spawn(pythonExecutable, [mainPyPath, '--settings-json', aiSettingsPath, '--logs-folder', app.getPath('logs')])`.
     - Opens the **AI Threats Progress** dialog.
 - **Data exchange with Python (stdin / stdout / stderr)**:
@@ -183,7 +183,7 @@ td.vue/
 ```
 
 - **API key handling**:
-  - Stored securely using **`keytar`** (Windows Credential Manager, macOS Keychain, or Linux Secret Service).
+  - Stored securely using **Electron's `safeStorage` API** (uses OS-level encryption: DPAPI on Windows, Keychain on macOS, Secret Service on Linux).
   - Retrieved by the **Node/Electron main process** only.
   - Passed to Python **via stdin only**, never as a command‑line argument and never written to logs or files.
   - The Python tools do not interact with the credential manager directly.
@@ -216,7 +216,7 @@ td.vue/
 
 - **Prerequisites**:
   - Configure AI settings in **AI Settings** (model, temperature, response format, optional API base, log level).
-  - Provide and save a valid API key (stored via `keytar`).
+  - Provide and save a valid API key (stored securely via Electron's `safeStorage`).
 
 - **Generating threats with AI**:
   - Open a Threat Dragon model and ensure diagrams are saved/closed.

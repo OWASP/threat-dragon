@@ -80,7 +80,6 @@
     "electron-updater": "^6.3.0",
     "is-electron": "^2.2.1",
     "jquery": "^3.7.1",
-    "keytar": "^7.9.0",
     "passive-events-support": "^1.1.0",
     "uuid": "11.1.0",
     "vue": "^2.7.3",
