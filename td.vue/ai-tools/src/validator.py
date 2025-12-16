@@ -114,11 +114,13 @@ class ThreatValidator:
     def _calculate_stats(self, in_scope_elements: List[str], ai_element_ids: set, ai_response: List[dict]) -> Dict[str, int]:
         """Calculate validation statistics (coverage, threats count, etc.)."""
         total_threats = sum(len(item.get('threats', [])) for item in ai_response)
-        coverage = (len(ai_element_ids) / len(in_scope_elements) * 100) if in_scope_elements else 0
+        # Calculate coverage using only elements that are both in AI response AND in scope
+        valid_elements_with_threats = len(ai_element_ids.intersection(set(in_scope_elements)))
+        coverage = (valid_elements_with_threats / len(in_scope_elements) * 100) if in_scope_elements else 0
         
         return {
             'in_scope_elements': len(in_scope_elements),
-            'elements_with_threats': len(ai_element_ids),
+            'elements_with_threats': valid_elements_with_threats,
             'total_threats': total_threats,
             'coverage_percent': round(coverage, 1)
         }

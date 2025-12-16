@@ -671,7 +671,7 @@ async function runPythonThreatGeneration(modelData) {
     pythonProcess.stderr.on('data', (data) => {
         const errorText = data.toString();
         stderrData += errorText;
-        logger.log.error(`Python stderr: ${errorText}`);
+       logger.log.debug(`Python stderr: ${errorText}`);
     });
     
     pythonProcess.on('error', (error) => {

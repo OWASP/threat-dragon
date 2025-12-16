@@ -38,10 +38,9 @@ def update_threats_in_memory(model: dict, threats_data: dict) -> dict:
                 cell['data']['threats'] = threats_with_ids
                 
                 # Update hasOpenThreats flag based on threat status
-                if 'hasOpenThreats' in cell['data']:
-                    cell['data']['hasOpenThreats'] = any(
-                        t.get('status', 'Open') == 'Open' for t in threats_data[cell_id]
-                    )
+                cell['data']['hasOpenThreats'] = any(
+                    t.get('status', 'Open') == 'Open' for t in threats_data[cell_id]
+                )
                 
                 # Add visual indicator (red stroke) for cells with threats
                 _add_red_stroke(cell)

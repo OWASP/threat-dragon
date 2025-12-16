@@ -45,7 +45,7 @@ def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, t
     logger.info(f"System token count: {litellm.token_counter(model=model_name, messages=messages)}")
 
     try:
-        max_tokens = litellm.get_max_tokens(model=model_name)
+        max_tokens = int(litellm.get_max_tokens(model=model_name))
     except Exception as e:
         logger.error(f"Problem with getting max tokens: Using default value of 100000.")
         max_tokens = 100000
@@ -70,7 +70,7 @@ def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, t
     # Extract response cost
     response_cost = response._hidden_params.get("response_cost", 0.0)
     logger.info(f"Response cost: {response_cost}")
-    logger.debug(f"/\n\nResponse: {response}")
+    logger.debug(f"\n\nResponse: {response}")
     
     # Parse and validate AI response
     try:
@@ -78,13 +78,14 @@ def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, t
     except Exception:
         # Fallback: try to extract JSON from markdown or plain text
         logger.warning("LLM returned invalid JSON. Trying to extract JSON...")
-        match = re.search(r"\{.*\}", response.choices[0].message.content, re.S)
+        # Look for JSON object containing "items" key (our expected format)
+        match = re.search(r'\{\s*"items"\s*:\s*\[.*?\]\s*\}', response.choices[0].message.content, re.S)
         if match:
             ai_response = AIThreatsResponseList.model_validate_json(match.group())
         else:
             raise
     
-    logger.debug(f"/\n\nAI Response: {ai_response}")
+    logger.debug(f"\n\nAI Response: {ai_response}")
     
     # Convert Pydantic models to dictionaries
     threats_data = {
@@ -96,5 +97,3 @@ def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, t
     logger.info(f"Generated {total_threats} threats for {len(threats_data)} elements")
     
     return threats_data, response_cost
-
-

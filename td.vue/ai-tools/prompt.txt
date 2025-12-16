@@ -42,7 +42,7 @@ TASK
    - When referencing or updating an element, copy the id exactly as it appears in the source JSON.
    - Never generate, modify, reformat, truncate, or guess an id.
    - Never use data.name, attrs.label.text, or any other field as an id.
-   - For flows, use the flow's own id and don't use source.cell aor target.cell values.
+   - For flows, use the flow's own id and don't use source.cell or target.cell values.
    - If an element has no id (invalid model), skip it instead of inventing one.
 
 5. If existing threats and mitigations are present, evaluate them:
@@ -52,7 +52,7 @@ TASK
    After evaluation, add any new valid threats to the corresponding element in the output.
    Preserve all other fields and data outside of threats as they are.
 
-6. Output STRICTLY as a JSON object where keys are cell 'id' values, and values are arrays of threat objects. Each threat object must include:
+6. Output STRICTLY as a JSON object with "items" array containing objects with element "id" and "threats" array. Each threat object must include:
   - title: str (short title).
   - status: str ("Open").
   - severity: str ("High", "Medium", or "Low") - justify via exposure, boundary crossing, data sensitivity, and exploitability.

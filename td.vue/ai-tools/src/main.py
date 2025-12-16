@@ -38,10 +38,7 @@ def parse_arguments():
     if not Path(args.settings_json).exists():
         print(f"ERROR: Settings JSON file not found: {args.settings_json}")
         raise SystemExit(1)
-    
-    if not Path(args.logs_folder).exists():
-        Path(args.logs_folder).mkdir(parents=True, exist_ok=True)
-    
+   
     return args
 
 
@@ -147,7 +144,6 @@ def setup_logging(logs_folder: Path, log_level: str = 'INFO'):
 
 def main():
     """Main application entry point."""
-    global sys
     
     # Set UTF-8 encoding for stdout/stderr (important for Windows)
     if hasattr(sys.stdout, 'buffer') and not isinstance(sys.stdout, io.TextIOWrapper):
@@ -294,7 +290,7 @@ def main():
         logger.warning("Validation result is None - creating minimal validation data from threats")
         total_threats = sum(len(threats) for threats in threats_data.values())
         metadata["validation"] = {
-            "is_valid": True,
+            "is_valid": False,
             "stats": {
                 'in_scope_elements': 0,
                 'elements_with_threats': len(threats_data),
@@ -303,14 +299,13 @@ def main():
             },
             "warnings": ["Validation was not performed - statistics may be incomplete"],
             "info": [],
-            "has_errors": False
+            "has_errors": True
         }
     
     json.dump(metadata, sys.stdout, separators=(',', ':'), ensure_ascii=False)
     sys.stdout.write("\n<<METADATA_END>>\n")
     sys.stdout.flush()
     
-    return validation_result
 
 
 if __name__ == "__main__":
