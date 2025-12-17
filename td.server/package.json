@@ -3,7 +3,6 @@
   "version": "2.5.0",
   "private": true,
   "scripts": {
-    "predev:vue": "node td.vue/src/plugins/generate-cornucopia.js",
     "audit": "npm audit",
     "build": "npm-run-all clean:dist transpile",
     "make-sbom": "npm-run-all -lp --aggregate-output make-sbom:\\*",
