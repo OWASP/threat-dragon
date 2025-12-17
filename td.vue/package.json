@@ -113,6 +113,7 @@
     "@wdio/mocha-framework": "^8.36.0",
     "@wdio/spec-reporter": "^8.36.0",
     "ansi-regex": "5.0.1",
+    "axios": "^1.13.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.5.1",
     "bootstrap": "^4.6.1",
