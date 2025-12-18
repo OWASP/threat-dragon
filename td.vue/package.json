@@ -20,7 +20,6 @@
     "lint:desktop": "vue-cli-service lint src/desktop tests/unit/desktop",
     "pretest": "npm run lint && npm run lint:desktop && node ./src/plugins/generate-cornucopia.js",
     "serve": "vue-cli-service serve",
-    "prestart": "node ./src/plugins/generate-cornucopia.js",
     "start": "echo 'Please run the start command from the root of this repository' && exit 1",
     "start:desktop": "vue-cli-service electron:serve",
     "prestart:serve": "node ./src/plugins/generate-cornucopia.js",
