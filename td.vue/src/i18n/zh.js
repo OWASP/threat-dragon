@@ -154,9 +154,9 @@ const zho = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: '新EoP图',
-                defaultDescription: '新EoP图描述',
-                select: 'EoP'
+                defaultTitle: '新EoP游戏图',
+                defaultDescription: '新EoP游戏图描述',
+                select: 'EoP游戏'
             }
         },
         threats: '威胁',
@@ -369,7 +369,7 @@ const zho = {
             linddun: '新LINDDUN威胁',
             plot4ai: '新PLOT4ai威胁',
             stride: '新STRIDE威胁',
-            eop:'新EoP威胁'
+            eop:'新EoP游戏威胁'
         },
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',

@@ -154,9 +154,9 @@ const msa = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Gambarajah EoP baru',
-                defaultDescription: 'Penerangan gambarajah EoP baru',
-                select: 'EoP'
+                defaultTitle: 'Gambarajah EoP permainan baru',
+                defaultDescription: 'Penerangan gambarajah EoP permainan baru',
+                select: 'EoP permainan'
             }
 
         },
@@ -370,7 +370,7 @@ const msa = {
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
             stride: 'Ancaman STRIDE baru',
-            eop: 'Ancaman EoP baru'
+            eop: 'Ancaman EoP permainan baru'
         },
         edit: 'Sunting Ancaman',
         confirmDeleteTitle: 'Sahkan Padam',

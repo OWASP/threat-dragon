@@ -154,9 +154,9 @@ const ind = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Diagram EoP baru',
-                defaultDescription: 'Deskripsi diagram EoP baru',
-                select: 'EoP'
+                defaultTitle: 'Diagram EoP permainan baru',
+                defaultDescription: 'Deskripsi diagram EoP permainan baru',
+                select: 'EoP permainan'
             }
         },
         threats: 'Ancaman',
@@ -369,7 +369,7 @@ const ind = {
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
             stride: 'Ancaman STRIDE baru',
-            eop: 'Ancaman EoP baru'
+            eop: 'Ancaman EoP permainan baru'
         },
         edit: 'Edit Ancaman',
         confirmDeleteTitle: 'Konfirmasi Hapus',
