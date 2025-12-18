@@ -154,9 +154,9 @@ const fin = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Uusi EoP-kaavio',
-                defaultDescription: 'Uuden EoP-kaavion kuvaus',
-                select: 'EoP'
+                defaultTitle: 'Uusi EoP-pelikaavio',
+                defaultDescription: 'Uuden EoP-pelikaavion kuvaus',
+                select: 'EoP-pelit'
             }
         },
         threats: 'Uhat',

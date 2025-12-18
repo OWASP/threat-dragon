@@ -154,9 +154,9 @@ const deu = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Neues EoP Diagramm',
-                defaultDescription: 'Neue EoP Diagramm Beschreibung',
-                select: 'EoP'
+                defaultTitle: 'Neues EoP-Spielediagramm',
+                defaultDescription: 'Beschreibung des neuen EoP-Spielediagramms',
+                select: 'EoP-Spiele'
             }
             
         },
