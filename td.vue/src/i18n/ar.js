@@ -154,9 +154,9 @@ const ara = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'مخطط EoP جديد',
-                defaultDescription: 'وصف مخطط EoP جديد',
-                select: 'EoP'
+                defaultTitle: 'مخطط ألعاب EoP جديد',
+                defaultDescription: 'وصف مخطط ألعاب EoP الجديد',
+                select: 'ألعاب EoP'
             }
         },
         threats: 'التهديدات',

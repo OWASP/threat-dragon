@@ -154,9 +154,9 @@ const ell = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Νέο διάγραμμα EoP',
-                defaultDescription: 'Περιγραφή νέου διαγράμματος EoP',
-                select: 'EoP'
+                defaultTitle: 'Νέο διάγραμμα παιχνιδιών EoP',
+                defaultDescription: 'Νέο διάγραμμα παιχνιδιών EoP',
+                select: 'Παιχνίδια EoP'
             }
         },
         threats: 'Απειλές',

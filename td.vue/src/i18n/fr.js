@@ -154,9 +154,9 @@ const fra = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Nouveau diagramme EoP',
-                defaultDescription: 'New EoP diagram description',
-                select: 'EoP'
+                defaultTitle: 'Description du nouveau diagramme de jeux EoP',
+                defaultDescription: 'Description du nouveau diagramme de jeux EoP',
+                select: 'Jeux EoP'
             }
         },
         threats: 'Menaces',

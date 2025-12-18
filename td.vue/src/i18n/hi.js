@@ -154,9 +154,9 @@ const hin = {
                 select: 'सीआईए'
             },
             eop: {
-                defaultTitle: 'नया EoP आरेख',
-                defaultDescription: 'नया EoP आरेख विवरण',
-                select: 'EoP'
+                defaultTitle: 'नया EoP गेम्स आरेख',
+                defaultDescription: 'नए EoP गेम्स आरेख का विवरण',
+                select: 'EoP गेम्स'
             },
         },
         threats: 'थ्रेटस',

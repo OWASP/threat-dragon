@@ -154,9 +154,9 @@ const spa = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Nuevo diagrama EoP',
-                defaultDescription: 'Descripción de Nuevo diagrama EoP',
-                select: 'EoP'
+                defaultTitle: 'Nuevo diagrama de juegos EoP',
+                defaultDescription: 'Descripción de nuevo diagrama de juegos EoP',
+                select: 'Juegos EoP'
             }
         },
         threats: 'Amenazas',

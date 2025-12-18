@@ -106,7 +106,7 @@
                                 class="mb-3"
                             >
                                 <b-input-group-prepend>
-                                    <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? 'EoP' : model.detail.diagrams[idx].diagramType">
+                                    <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? $t('threatmodel.diagram.eop.select') : model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIADIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
