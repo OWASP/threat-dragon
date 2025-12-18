@@ -154,9 +154,9 @@ const por = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'Novo diagrama EoP',
-                defaultDescription: 'Descrição de novo diagrama EoP',
-                select: 'EoP'
+                defaultTitle: 'Novo diagrama EoP jogos',
+                defaultDescription: 'Descrição de novo diagrama EoP jogos',
+                select: 'EoP jogos'
             }
         },
         threats: 'Ameaças',
@@ -369,7 +369,7 @@ const por = {
             linddun : 'Nova ameaça LINDDUN',
             plot4ai : 'Nova ameaça PLOT4ai',
             stride: 'Nova ameaça STRIDE',
-            eop: 'Nova ameaça EoP'
+            eop: 'Nova ameaça EoP jogos'
         },
         edit: 'Editar Ameaça',
         confirmDeleteTitle: 'Confirma Exclusão',

@@ -154,9 +154,9 @@ const jpn = {
                 select: 'CIA'
             },
             eop: {
-                defaultTitle: 'EoP図',
-                defaultDescription: '新しいEoP図の概要',
-                select: 'EoP'
+                defaultTitle: 'EoP ゲーム 図',
+                defaultDescription: '新しいEoP ゲーム 図の概要',
+                select: 'EoP ゲーム'
             }
         },
         threats: '脅威',
@@ -369,7 +369,7 @@ const jpn = {
             linddun: 'LINDDUN脅威を追加',
             plot4ai: 'PLOT4ai脅威を追加',
             stride: 'STRIDE脅威を追加',
-            eop: 'EoP脅威を追加',
+            eop: 'EoPゲーム脅威を追加',
 
         },
         edit: '脅威を編集',
