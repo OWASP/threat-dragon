@@ -45,7 +45,7 @@
                 </b-card-body>
             </b-card>
             <a href="javascript:void(0)"
-                v-if="!disableNewThreat"
+                v-if="!disableNewThreat && diagram.diagramType !== 'EOP'"
                 @click="AddThreatByType()"
                 class="new-threat-by-type m-2"
             >
@@ -53,7 +53,7 @@
                     {{ $t('threats.newThreatByType') }}
             </a>
             <a href="javascript:void(0)"
-                v-if="!disableNewThreat"
+                v-if="!disableNewThreat && diagram.diagramType !== 'EOP'"
                 @click="AddThreatByContext()"
                 class="new-threat-by-type m-2"
             >
