@@ -30,6 +30,20 @@
 
                 <b-form-row v-if="threat.modelType == 'EOP'">
                     <b-col>
+                        <b-form-group 
+                            id="eop-game"
+                            :label="$t('threatmodel.diagram.eop.select')"
+                            label-for="eop-game"
+                        >
+                            <b-form-select
+                            v-model="selectedGameId"
+                            :options="eopGames"
+                            />
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
+                <b-form-row v-if="threat.modelType == 'EOP'">
+                    <b-col>
                         <b-form-group
                             id="card-suit-group"
                             :label="$t('cards.properties.suit')"
@@ -89,14 +103,14 @@
                 >
                     <b-col>
                         <a
-                            :href="cornucopiaCardUrl"
+                            :href="cardUrl"
                             target="_blank"
                             rel="noopener noreferrer"
                             :title="
                                 'View ' +
-                                cornucopiaCardSection +
+                                cardCategory +
                                 ' ' +
-                                cornucopiaCardDetails.sectionID +
+                                card.number +
                                 ' details'
                             "
                             style="
@@ -111,12 +125,12 @@
                         >
                             {{ $t("cards.details") }}:
                             {{
-                                cornucopiaCardSection.charAt(0) +
-                                cornucopiaCardSection.slice(1).toLowerCase()
+                                cardCategory.charAt(0) +
+                                cardCategory.slice(1).toLowerCase()
                             }}
                             {{
-                                cornucopiaCardDetails
-                                    ? ` ${cornucopiaCardDetails.sectionID}`
+                                card.number
+                                    ? ` ${card.number}`
                                     : `, ${$t("cards.noDetails")}`
                             }}
                         </a>
@@ -252,7 +266,7 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-import { eopCards } from '../service/threats/models/eopCards';
+import { getGame, getAllGames } from '../service/threats/models/eop';
 
 export default {
     name: 'TdThreatEditDialog',
@@ -306,24 +320,29 @@ export default {
         modalTitle() {
             return this.$t('threats.edit') + ' #' + this.number;
         },
-        filteredCardNumbers() {
-            return eopCards.getCardsByDeck(this.card.suit);
+        eopGames() {
+            return getAllGames().map(g => ({
+                value: g.id,
+                text: g.name
+            }));
         },
-        cornucopiaCardDetails() {
-            return eopCards.getCardDetails(this.card.number);
-        },
-        cornucopiaCardSection() {
-            return this.cornucopiaCardDetails
-                ? this.cornucopiaCardDetails.section
-                : this.$t('cards.unknown');
-        },
-        cornucopiaCardUrl() {
-            return this.cornucopiaCardDetails
-                ? this.cornucopiaCardDetails.hyperlink
-                : 'https://cornucopia.owasp.org/cards';
+        activeGame() {
+            return getGame(this.selectedGameId);
         },
         cardSuits() {
-            return eopCards.getDecks();
+            return this.activeGame?.getSuits() ?? [];
+        },
+        filteredCardNumbers() {
+            return this.activeGame?.getCardsBySuit(this.card.suit) ?? [];
+        },
+        cardDetails() {
+            return this.activeGame?.getCardDetails(this.card.number);
+        },
+        cardCategory() {
+            return this.activeGame?.getCardCategory(this.card.number);
+        },
+        cardUrl() {
+            return this.activeGame?.getCardUrl(this.card.number)
         }
     },
     data() {
@@ -338,6 +357,7 @@ export default {
                 'EOP',
             ],
             number: 0,
+            selectedGameId: null,
             card: {
                 suit: null,
                 number: null,
@@ -372,7 +392,8 @@ export default {
                     'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {
-                this.card.suit = eopCards.getCardDetails(this.threat.cardNumber)?.section;
+                this.selectedGameId = this.threat.eopGameId;
+                this.card.suit = this.activeGame?.getCardCategory(this.threat.cardNumber);;
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === 'new';
@@ -430,11 +451,9 @@ export default {
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
                 if (threatRef.modelType === 'EOP') {
+                    threatRef.eopGameId = this.selectedGameId;
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
-                    threatRef.cardId = this.cornucopiaCardDetails
-                        ? this.cornucopiaCardDetails.id
-                        : null;
                     threatRef.type = null;
                 } else {
                     threatRef.type = this.threat.type;

@@ -178,6 +178,8 @@
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
 !td.vue/src/service/threats/models/*.js
+!td.vue/src/service/threats/models/eop/
+!td.vue/src/service/threats/models/eop/*.js
 !td.vue/src/service/threats/oats/
 !td.vue/src/service/threats/oats/*.js
 !td.vue/src/service/x6/
