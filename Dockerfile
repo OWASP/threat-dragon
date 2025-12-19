@@ -6,6 +6,7 @@ RUN         apk -U upgrade
 WORKDIR     /app
 RUN         npm i -g npm@latest
 RUN         mkdir -p td.server td.vue
+RUN         mkdir -p td.vue/src/service/schema/api_json
 RUN         chown -R node:node /app
 USER        node
 
