@@ -152,7 +152,13 @@ const msa = {
                 defaultTitle: 'Gambarajah CIA baru',
                 defaultDescription: 'Penerangan gambarajah CIA baru',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Gambarajah EoP permainan baru',
+                defaultDescription: 'Penerangan gambarajah EoP permainan baru',
+                select: 'EoP permainan'
             }
+
         },
         threats: 'Ancaman',
         errors: {
@@ -300,6 +306,15 @@ const msa = {
         next: 'seterusnya',
         previous: 'sebelumnya'
     },
+    cards: {
+        details: 'Butiran kad',
+        noDetails: 'tiada butiran tersedia',
+        unknown: 'Tidak diketahui',
+        properties: {
+            suit: 'Kategori',
+            number: 'Nombor'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +369,8 @@ const msa = {
             ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
-            stride: 'Ancaman STRIDE baru'
+            stride: 'Ancaman STRIDE baru',
+            eop: 'Ancaman EoP permainan baru'
         },
         edit: 'Sunting Ancaman',
         confirmDeleteTitle: 'Sahkan Padam',
@@ -387,6 +403,10 @@ const msa = {
             medium: 'Sederhana',
             high: 'Tinggi',
             critical: 'kritikal'
+        },
+        validation: {
+            error: 'Nombor kad diperlukan.',
+            cardNumberRequired: 'Anda mesti memilih nombor kad sebelum menyimpan.'
         }
     },
     report: {

@@ -152,6 +152,11 @@ const por = {
                 defaultTitle: 'Novo diagrama CIA',
                 defaultDescription: 'Descrição de novo diagrama CIA',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Novo diagrama EoP jogos',
+                defaultDescription: 'Descrição de novo diagrama EoP jogos',
+                select: 'EoP jogos'
             }
         },
         threats: 'Ameaças',
@@ -300,6 +305,15 @@ const por = {
         next: 'próximo',
         previous: 'anterior'
     },
+    cards: {
+        details: 'Detalhes do cartão',
+        noDetails: 'nenhum detalhe disponível',
+        unknown: 'Desconhecido',
+        properties: {
+            suit: 'Categoria',
+            number: 'Número'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,8 @@ const por = {
             die : 'Nova ameaça CIA-DIE',
             linddun : 'Nova ameaça LINDDUN',
             plot4ai : 'Nova ameaça PLOT4ai',
-            stride: 'Nova ameaça STRIDE'
+            stride: 'Nova ameaça STRIDE',
+            eop: 'Nova ameaça EoP jogos'
         },
         edit: 'Editar Ameaça',
         confirmDeleteTitle: 'Confirma Exclusão',
@@ -387,6 +402,10 @@ const por = {
             medium: 'Média',
             high: 'Alta',
             critical: 'Crítica'
+        },
+        validation: {
+            error: 'O número do cartão é obrigatório.',
+            cardNumberRequired: 'Você deve selecionar um número de cartão antes de salvar.'
         }
     },
     report: {

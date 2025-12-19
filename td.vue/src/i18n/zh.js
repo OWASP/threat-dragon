@@ -152,6 +152,11 @@ const zho = {
                 defaultTitle: '新CIA图',
                 defaultDescription: '新CIA图描述',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: '新EoP游戏图',
+                defaultDescription: '新EoP游戏图描述',
+                select: 'EoP游戏'
             }
         },
         threats: '威胁',
@@ -300,6 +305,15 @@ const zho = {
         next: '下一个',
         previous: '上一个'
     },
+    cards: {
+        details: '卡片详情',
+        noDetails: '暂无详情',
+        unknown: '未知',
+        properties: {
+            suit: '类别',
+            number: '编号'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,8 @@ const zho = {
             ciadie: '新CIA-DIE威胁',
             linddun: '新LINDDUN威胁',
             plot4ai: '新PLOT4ai威胁',
-            stride: '新STRIDE威胁'
+            stride: '新STRIDE威胁',
+            eop:'新EoP游戏威胁'
         },
         edit: '编辑威胁',
         confirmDeleteTitle: '确认删除',
@@ -387,6 +402,10 @@ const zho = {
             medium: '中',
             high: '高',
             critical: '批判的'
+        },
+        validation: {
+            error: '卡片编号是必需的。',
+            cardNumberRequired: '在保存之前，您必须选择一个卡片编号。'
         }
     },
     report: {
