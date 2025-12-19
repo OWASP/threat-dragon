@@ -86,10 +86,9 @@ export default {
             this.$router.push({ name: `${this.providerType}Repository` });
         },
         onBranchClick(branch) {
-            this.$store.dispatch(branchActions.selected, branch);
-            const params = Object.assign({}, this.$route.params, {
-                branch
-            });
+            const branchName = typeof branch === 'object' ? branch.value : branch;
+            this.$store.dispatch(branchActions.selected, branchName);
+            const params = Object.assign({}, this.$route.params, { branch: branchName });
 
             const routeName = `${this.providerType}${this.$route.query.action === 'create' ? 'NewThreatModel' : 'ThreatModelSelect'}`;
 
