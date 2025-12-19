@@ -8,6 +8,7 @@
     "prebuild:desktop": "node ./src/plugins/generate-cornucopia.js",
     "prestart:desktop": "node ./src/plugins/generate-cornucopia.js",
     "audit": "npm audit",
+    "prebuild": "node ./src/plugins/generate-cornucopia.js",
     "build": "vue-cli-service build --no-unsafe-inline",
     "build:desktop": "vue-cli-service electron:build",
     "make-sbom": "node -e 'console.log(`SBOMs are build automatically during build process - see build result folder: .sbom`)'",
