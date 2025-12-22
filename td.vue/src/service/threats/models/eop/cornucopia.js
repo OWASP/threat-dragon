@@ -1,8 +1,8 @@
 import i18n from '../../../../i18n';
-import cornucopiaEN from '@/service/schema/api_json/cornucopia-en.json';
-import cornucopiaES from '@/service/schema/api_json/cornucopia-es.json';
-import cornucopiaFR from '@/service/schema/api_json/cornucopia-fr.json';
-import cornucopiaRU from '@/service/schema/api_json/cornucopia-ru.json';
+import cornucopiaEN from '@/service/schema/api_json/cornucopia-webapp-en.json';
+import cornucopiaES from '@/service/schema/api_json/cornucopia-webapp-es.json';
+import cornucopiaFR from '@/service/schema/api_json/cornucopia-webapp-fr.json';
+import cornucopiaRU from '@/service/schema/api_json/cornucopia-webapp-ru.json';
 
 export default {
 
@@ -46,14 +46,6 @@ export default {
                 value: card.sectionID,
                 text: card.sectionID,
             }));
-    },
-
-    getCardDetails(cardNumber) {
-        const data = this.getData();
-        return cardNumber
-            ? data.standards.find(
-                card => card.sectionID === cardNumber)
-            : null;
     },
 
     getCardCategory(cardNumber) {

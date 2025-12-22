@@ -36,8 +36,9 @@
                             label-for="eop-game"
                         >
                             <b-form-select
-                            v-model="selectedGameId"
-                            :options="eopGames"
+                                id="eop-game-select"
+                                v-model="selectedGameId"
+                                :options="eopGames"
                             />
                         </b-form-group>
                     </b-col>
@@ -334,9 +335,6 @@ export default {
         },
         filteredCardNumbers() {
             return this.activeGame?.getCardsBySuit(this.card.suit) ?? [];
-        },
-        cardDetails() {
-            return this.activeGame?.getCardDetails(this.card.number);
         },
         cardCategory() {
             return this.activeGame?.getCardCategory(this.card.number);

@@ -24,7 +24,7 @@ const BYPASS = process.argv.includes('--bypass');
         fs.mkdirSync(OUT_DIR, { recursive: true });
         fs.mkdirSync(API_JSON_DIR, { recursive: true });
         for (const { lang, url } of API_LANGS) {
-            const outFile = path.join(API_JSON_DIR, `cornucopia-${lang}.json`);
+            const outFile = path.join(API_JSON_DIR, `cornucopia-webapp-${lang}.json`);
             try {
                 const res = await axios.get(url, { timeout: 15000, headers: { Accept: 'application/json' } });
                 if (res.status !== 200) {

@@ -253,6 +253,15 @@ describe('components/ThreatEditDialog.vue', () => {
                 wrapper.vm.editThreat(threatId);
             });
 
+            it('has an eop game input', () => {
+                const input = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'eop-game-select')
+                    .at(0);
+
+                expect(input.exists()).toBe(true);
+            });
+
+
             it('has a card suit input', () => {
                 const input = wrapper.findAllComponents(BFormSelect)
                     .filter(x => x.attributes('id') === 'card-suit')
