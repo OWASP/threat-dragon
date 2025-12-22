@@ -9,12 +9,8 @@ export default {
     id: 'cornucopia',
     name: 'OWASP Cornucopia',
 
-    getLang() {
-        return i18n.get().locale;
-    },
-
     getData() {
-        switch (this.getLang()) {
+        switch (i18n.get().locale) {
             case 'spa':
                 return cornucopiaES;
             case 'fra':
