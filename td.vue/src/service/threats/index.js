@@ -46,7 +46,7 @@ const valuesToTranslations = {
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
 export const createNewTypedThreat = function (modelType, cellType,number) {
-    let title, type;
+    let title, type, eopGameId;
 
     if (!modelType) {
         modelType = 'STRIDE';
@@ -106,6 +106,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
 
         case 'EOP':
             title = tc('threats.generic.eop');
+            eopGameId = 'cornucopia';
             break;
 
         default:
@@ -121,6 +122,7 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
         status: 'Open',
         severity: 'TBD',
         type,
+        eopGameId,
         description: tc('threats.description'),
         mitigation: tc('threats.mitigation'),
         modelType,

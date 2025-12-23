@@ -200,6 +200,7 @@ describe('components/ThreatEditDialog.vue', () => {
             wrapper=shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:k=>k},store});
             wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
+            wrapper.vm.selectedGameId='cornucopia';
             wrapper.vm.card.suit='DATA VALIDATION & ENCODING';
             wrapper.vm.card.number='VE2';
             await wrapper.vm.$nextTick();
@@ -251,6 +252,15 @@ describe('components/ThreatEditDialog.vue', () => {
                     
                 wrapper.vm.editThreat(threatId);
             });
+
+            it('has an eop game input', () => {
+                const input = wrapper.findAllComponents(BFormSelect)
+                    .filter(x => x.attributes('id') === 'eop-game-select')
+                    .at(0);
+
+                expect(input.exists()).toBe(true);
+            });
+
 
             it('has a card suit input', () => {
                 const input = wrapper.findAllComponents(BFormSelect)
