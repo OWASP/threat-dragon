@@ -188,6 +188,35 @@ describe('views/BranchAccess.vue', () => {
         });
     });
 
+    describe('onBranchClick - protected branch object', () => {
+        const protectedBranch = {
+            value: 'protectedBranchName',
+            icon: 'lock',
+            iconTooltip: 'branch.protectedBranch'
+        };
+        let routeParams;
+        beforeEach(() => {
+            routeParams = {
+                provider: mockStore.state.provider.selected,
+                repository: mockStore.state.repo.selected
+            };
+            getLocalVue({
+                params: routeParams,
+                query: {}
+            });
+            wrapper.vm.onBranchClick(protectedBranch);
+        });
+
+        it('extracts the branch name from the object', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, 'protectedBranchName');
+        });
+
+        it('navigates with the correct branch name', () => {
+            routeParams.branch = 'protectedBranchName';
+            expect(mockRouter.push).toHaveBeenCalledWith({ name: 'gitThreatModelSelect', params: routeParams });
+        });
+    });
+
     describe('open add branch dialog', () => {
         beforeEach(() => {
             getLocalVue({
