@@ -32,7 +32,9 @@ const boundary = {
         name: tc('threatmodel.shapes.trustBoundary'),
         description: '',
         isTrustBoundary: true,
-        hasOpenThreats: false
+        hasOpenThreats: false,
+        crossingFlows: [],
+        containedElements: []
     }
 };
 
@@ -47,7 +49,9 @@ const boundaryBox = {
         name: tc('threatmodel.shapes.trustBoundary'),
         description: '',
         isTrustBoundary: true,
-        hasOpenThreats: false
+        hasOpenThreats: false,
+        crossingFlows: [],
+        containedElements: []
     }
 };
 
@@ -117,7 +121,8 @@ const flow = {
         isEncrypted: false,
         isPublicNetwork: false,
         protocol: '',
-        threats: []
+        threats: [],
+        trustBoundaryIds: []
     },
     source: {cell: '', port: ''},
     target: {cell: '', port: ''},
