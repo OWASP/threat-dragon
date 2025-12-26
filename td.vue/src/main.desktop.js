@@ -193,6 +193,8 @@ const openTmBom = (jsonModel) => {
     return tmBom.read(jsonModel);
 };
 
+
+
 const app = new Vue({
     router: router.get(),
     store: storeFactory.get(),

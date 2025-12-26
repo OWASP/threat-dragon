@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
-    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
+    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand" @click="onLogoClick">
       <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{this.$store.state.packageBuildVersion}}{{this.$store.state.packageBuildState}}
     </b-navbar-brand>
@@ -136,7 +136,17 @@ export default {
                     throw error;
                 }
             });
+        },
+        // To reset the title when clicked on the logo.
+        onLogoClick() {
+        try {
+            if (window.electronAPI) {
+                window.electronAPI.modelClosed('');
+            }
+        } catch (err) {
+            console.error('Failed to reset title on logo click:', err);
         }
+    }
     }
 };
 </script>
