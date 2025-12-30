@@ -47,6 +47,46 @@ Do not actually use these keys as shown, but here are examples:
 - `ENCRYPTION_JWT_SIGNING_KEY='deadbeef112233445566778899aabbcc'`
 - `ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'`
 
+### Running in production
+
+When running Threat Dragon in a production environment, these variables are required
+for encryption and GitHub access.
+
+- `NODE_ENV`  
+  Must be set to `production`.
+
+- `PROTOCOL`  
+  Protocol used by the server, typically `https` in production.
+
+- `SERVER_API_PROTOCOL`  
+  Protocol used by the API server, typically `https`.
+
+- `ENCRYPTION_JWT_REFRESH_SIGNING_KEY`  
+  Key used to sign JWT refresh tokens.
+
+- `ENCRYPTION_JWT_SIGNING_KEY`  
+  Key used to sign JWT access tokens.
+
+- `ENCRYPTION_KEYS`  
+  JSON array defining encryption keys used by the server.
+
+- `GITHUB_CLIENT_ID`  
+  Client ID from the GitHub OAuth application.
+
+- `GITHUB_CLIENT_SECRET`  
+  Client secret from the GitHub OAuth application.
+
+- `GITHUB_SCOPE`  
+  Scope requested from GitHub, defaults to `public_repo`.
+
+  Example:
+
+```bash
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
+
+
 ### GitHub Access
 
 The Threat Dragon web application uses [GitHub OAuth Applications][githuboauth] as the mechanism to access
