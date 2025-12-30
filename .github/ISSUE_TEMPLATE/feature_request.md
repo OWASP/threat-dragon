@@ -19,7 +19,7 @@ assignees: ''
 
 By submitting this issue you have:  
 
-- [ ] read the [contribution guide](../contributing.md) and agree to the [Code of Conduct](../code_of_conduct.md)
+- [ ] read the [contribution guide](../blob/main/contributing.md) and agree to the [Code of Conduct](../blob/main/code_of_conduct.md)
 - [ ] not used agentic or generative AI in creating this feature request
 
 **Additional context**:  

@@ -14,11 +14,11 @@ If this closes an existing issue then add "closes #xxxx", where xxxx is the issu
 
 Thanks for submitting a pull request, please make sure:  
 
-- [ ] content meets the [license](../license.txt) for this project
+- [ ] content meets the [license](../blob/main/license.txt) for this project
 - [ ] appropriate unit tests have been created / modified
 - [ ] functional tests created / modified for changes in functionality
-- [ ] you have read the [contribution guide](../contributing.md) and agree to the [Code of Conduct](../code_of_conduct.md)
-- [ ] any use of AI has been declared in this pull request
+- [ ] you have read the [contribution guide](../blob/main/contributing.md) and agree to the [Code of Conduct](../blob/main/code_of_conduct.md)
+- [ ] any [use of AI](../blob/main/contributing.md#use-of-ai) has been declared in this pull request
 
 **Other info**:  
 
