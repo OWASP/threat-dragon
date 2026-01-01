@@ -137,15 +137,40 @@ export default {
                 this.gridShowing = true;
             }
         },
-        exportPNG() {
-            this.graph.exportPNG(`${this.diagram.title}.png`, {
-                padding: 50
+        async exportPNG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportPNG(`${this.diagram.title}.png`, {
+                    padding: 50
+                });
             });
         },
-        exportSVG() {
-            this.graph.exportSVG(`${this.diagram.title}.svg`);
+        async exportSVG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportSVG(`${this.diagram.title}.svg`);
+            });
+        },
+        async withSelectionCleared(fn) {
+            // Store currently selected cells
+            const selectedCells = this.graph.getSelectedCells();
+            
+            // Clear the selection to remove visual highlights
+            this.graph.cleanSelection();
+            
+            // Wait for next tick and a small delay to ensure rendering completes
+            await this.$nextTick();
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            try {
+                // Perform the export
+                fn();
+            } finally {
+                // Restore the selection after a brief delay
+                await new Promise(resolve => setTimeout(resolve, 50));
+                if (selectedCells.length > 0) {
+                    this.graph.select(selectedCells);
+                }
+            }
         }
     }
 };
-
 </script>
