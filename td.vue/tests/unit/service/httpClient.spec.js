@@ -52,6 +52,10 @@ describe('service/httpClient.js', () => {
             client = httpClient.createClient();
         });
     
+        it('sets the timeout on the client', () => {
+            expect(client.defaults.timeout).toEqual(5000);
+        });
+
         it('adds the accept header to everything', () => {
             expect(client.defaults.headers.common.Accept).toEqual('application/json');
         });

@@ -19,6 +19,7 @@ const get = () => {
 
 const createClient = () => {
     const client = axios.create();
+    client.defaults.timeout = 5000;
     client.defaults.headers.common.Accept = 'application/json';
     client.defaults.headers.post['Content-Type'] = 'application/json';
 
