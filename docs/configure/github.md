@@ -43,6 +43,8 @@ Server API protocol - this would be set to HTTPS in production, but during devel
 Create three new and different keys for encryption, JWT and JWT-refresh using `openssl rand -hex 16` for 128 bit keys.
 Do not actually use these keys as shown, but here are examples:
 
+If any of these variables are not set, the Threat Dragon server will fail to start and log an explicit startup error.
+
 - `ENCRYPTION_JWT_REFRESH_SIGNING_KEY='00112233445566778899aabbccddeeff'`
 - `ENCRYPTION_JWT_SIGNING_KEY='deadbeef112233445566778899aabbcc'`
 - `ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'`
