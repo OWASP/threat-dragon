@@ -270,6 +270,8 @@
 !td.vue/tests/unit/entity/*.spec.js
 !td.vue/tests/unit/helpers/
 !td.vue/tests/unit/helpers/*.js
+!td.vue/tests/unit/i18n/
+!td.vue/tests/unit/i18n/*.spec.js
 !td.vue/tests/unit/router/
 !td.vue/tests/unit/router/*.spec.js
 !td.vue/tests/unit/service/
