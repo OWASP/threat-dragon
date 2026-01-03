@@ -122,7 +122,24 @@ module.exports = {
                     summary: 'OWASP Threat Dragon, desktop version',
                     description: 'OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application',
                     title: 'OWASP Threat Dragon'
-                }
+                },
+                extraResources: [
+                    {
+                        from: 'venv',
+                        to: 'venv',
+                        filter: ['**/*']
+                    },
+                    {
+                        from: 'ai-tools',
+                        to: 'ai-tools',
+                        filter: ['**/*']
+                    },
+                    {
+                        from: 'src/service/schema',
+                        to: 'src/service/schema',
+                        filter: ['**/*']
+                    }
+                ]
             }
         }
     },

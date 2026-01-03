@@ -64,6 +64,11 @@ const por = {
             save: 'Salvar Modelo',
             saveAs: 'Salvar Modelo como'
         },
+        aiTools: {
+            heading: 'Ferramentas de IA',
+            generateThreats: 'Gerar ameaças e mitigações',
+            settings: 'Configurações'
+        },
         help: {
             heading: 'Ajuda',
             docs: 'Documentação',
