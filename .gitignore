@@ -324,6 +324,7 @@
 !td.vue/tests/unit/service/x6/graph/*.spec.js
 !td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/service/x6/shapes/*.spec.js
+!td.vue/tests/unit/store/
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/actions/*.spec.js
 !td.vue/tests/unit/store/modules/
