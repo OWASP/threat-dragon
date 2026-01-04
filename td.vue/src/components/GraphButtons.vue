@@ -62,13 +62,11 @@
             :onBtnClick="save"
             icon="save"
             :text="$t('forms.save')" />
-
     </b-btn-group>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
@@ -137,15 +135,44 @@ export default {
                 this.gridShowing = true;
             }
         },
-        exportPNG() {
-            this.graph.exportPNG(`${this.diagram.title}.png`, {
-                padding: 50
+
+        /*UPDATED EXPORT METHODS */
+
+        async exportPNG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportPNG(`${this.diagram.title}.png`, {
+                    padding: 50
+                });
             });
         },
-        exportSVG() {
-            this.graph.exportSVG(`${this.diagram.title}.svg`);
+
+        async exportSVG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportSVG(`${this.diagram.title}.svg`);
+            });
+        },
+
+        async withSelectionCleared(fn) {
+            // Store currently selected cells
+            const selectedCells = this.graph.getSelectedCells();
+
+            // Clear selection to remove visual decorations
+            this.graph.cleanSelection();
+
+            // Wait for DOM/rendering to settle
+            await this.$nextTick();
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            try {
+                fn();
+            } finally {
+                // Restore selection after export
+                await new Promise(resolve => setTimeout(resolve, 50));
+                if (selectedCells.length > 0) {
+                    this.graph.select(selectedCells);
+                }
+            }
         }
     }
 };
-
 </script>
