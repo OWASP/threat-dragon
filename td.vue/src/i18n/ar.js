@@ -10,7 +10,10 @@ const messages = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'شعار Threat Dragon',
-        description: 'OWASP Threat Dragon هو تطبيق مجاني ومفتوح المصدر وقابل للتشغيل على مختلف الأنظمة لإنشاء نماذج تهديد. استخدمه لرسم مخططات تهديد وتحديد التهديدات لنظامك. مع التركيز على المرونة والبساطة ، يُعد سهل الوصول لجميع أنواع المستخدمين.'
+        description: 'OWASP Threat Dragon هو تطبيق مجاني ومفتوح المصدر وقابل للتشغيل على مختلف الأنظمة لإنشاء نماذج تهديد. استخدمه لرسم مخططات تهديد وتحديد التهديدات لنظامك. مع التركيز على المرونة والبساطة ، يُعد سهل الوصول لجميع أنواع المستخدمين.',
+        errors: {
+            configLoadFailed: 'Failed to load server configuration. Only local login is available.'
+        }
     },
     providers: {
         desktop: {
