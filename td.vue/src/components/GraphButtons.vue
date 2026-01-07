@@ -150,22 +150,21 @@ export default {
             });
         },
         async withSelectionCleared(fn) {
-            // Store currently selected cells
+            
             const selectedCells = this.graph.getSelectedCells();
             
-            // Clear the selection to remove visual highlights
-            this.graph.cleanSelection();
-            
-            // Wait for next tick and a small delay to ensure rendering completes
-            await this.$nextTick();
-            await new Promise(resolve => setTimeout(resolve, 100));
             
             try {
-                // Perform the export
+                this.graph.cleanSelection();
+
+                //Rendering is not immediate. Without this pause the export may include
+                //the previous selection highlight.
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
                 fn();
             } finally {
-                // Restore the selection after a brief delay
-                await new Promise(resolve => setTimeout(resolve, 50));
+                
+                
                 if (selectedCells.length > 0) {
                     this.graph.select(selectedCells);
                 }
