@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@v6.0.1
 
       - name: Spell check EN language
-        uses: rojopolis/spellcheck-github-actions@0.55.0
+        uses: rojopolis/spellcheck-github-actions@0.56.0
         with:
           config_path: .spellcheck.yaml
 
