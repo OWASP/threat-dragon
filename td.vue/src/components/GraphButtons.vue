@@ -137,15 +137,39 @@ export default {
                 this.gridShowing = true;
             }
         },
-        exportPNG() {
-            this.graph.exportPNG(`${this.diagram.title}.png`, {
-                padding: 50
+        async exportPNG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportPNG(`${this.diagram.title}.png`, {
+                    padding: 50
+                });
             });
         },
-        exportSVG() {
-            this.graph.exportSVG(`${this.diagram.title}.svg`);
+        async exportSVG() {
+            await this.withSelectionCleared(() => {
+                this.graph.exportSVG(`${this.diagram.title}.svg`);
+            });
+        },
+        async withSelectionCleared(fn) {
+            
+            const selectedCells = this.graph.getSelectedCells();
+            
+            
+            try {
+                this.graph.cleanSelection();
+
+                //Rendering is not immediate. Without this pause the export may include
+                //the previous selection highlight.
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                fn();
+            } finally {
+                
+                
+                if (selectedCells.length > 0) {
+                    this.graph.select(selectedCells);
+                }
+            }
         }
     }
 };
-
 </script>
