@@ -9,6 +9,8 @@ import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import Navbar from '@/components/Navbar.vue';
 import TdOverlay from '@/components/Overlay.vue';
 
+jest.mock('is-electron', () => () => false);
+
 describe('App.vue', () => {
     let wrapper, localVue, mockStore;
 
