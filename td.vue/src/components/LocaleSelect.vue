@@ -30,6 +30,7 @@
 <script>
 import { mapState } from 'vuex';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import { isSupportedLocale } from '@/service/locale/locale-resolver';
 import isElectron from 'is-electron';
 import TdDropdown from './Dropdown.vue';
 
@@ -46,29 +47,35 @@ export default {
     },
     created() {
         // Initialize filteredLocales with all available locales
-        this.filteredLocales = [...this.$i18n.availableLocales]; 
+        this.filteredLocales = [...this.availableLocales];
+    },
+    watch: {
+        availableLocales: {
+            handler(newLocales) {
+                this.filteredLocales = [...newLocales];
+            },
+            immediate: false
+        }
     },
     computed: {
         ...mapState({
-            locale: function (state) {
-                if (this.$i18n.locale !== state.locale.locale) {
-                    this.$i18n.locale = state.locale.locale;
-                }
-                return state.locale.locale;
-            }
-        })
+            locale: (state) => state.locale.locale
+        }),
+        availableLocales() {
+            return this.$store.getters.availableLocales || [...this.$i18n.availableLocales];
+        }
     },
     methods: {
         filterLocales() {
             const query = this.searchQuery.toLowerCase().trim();
 
             if (!query) {
-                this.filteredLocales = [...this.$i18n.availableLocales];
+                this.filteredLocales = [...this.availableLocales];
                 return;
             }
 
             // Sort and filter locales
-            this.filteredLocales = [...this.$i18n.availableLocales]
+            this.filteredLocales = [...this.availableLocales]
                 .sort((a, b) => {
                     const nameA = this.getLanguageName(a).toLowerCase();
                     const nameB = this.getLanguageName(b).toLowerCase();
@@ -92,9 +99,15 @@ export default {
                 });
         },
         updateLocale(locale, closeDropdown) {
+            if (!this.availableLocales.includes(locale)) {
+                return;
+            }
             this.$store.dispatch(LOCALE_SELECTED, locale);
             if (isElectron()) {
-                window.electronAPI.updateMenu(locale);
+                // Confirm locale is known before IPC call to prevent injection
+                if (isSupportedLocale(locale)) {
+                    window.electronAPI.updateMenu(locale);
+                }
             }
             this.searchQuery = ''; // Clear search after selection
             this.filterLocales(); // Reset the filtered list
@@ -135,9 +148,10 @@ export default {
             }
         },
         getSearchableText(name) {
+            // name arrives lowercased (from filterLocales), so map keys must match
             const searchMapping = {
                 'العربية': 'arabic',
-                'Ελληνικά': 'greek',
+                'ελληνικά': 'greek',
                 'हिंदी': 'hindi',
                 '日本語': 'japanese',
                 '中文': 'chinese'
@@ -147,3 +161,4 @@ export default {
     }
 };
 </script>
+
