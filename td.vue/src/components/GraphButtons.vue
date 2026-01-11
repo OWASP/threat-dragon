@@ -139,14 +139,26 @@ export default {
         },
         async exportPNG() {
             await this.withSelectionCleared(() => {
-                this.graph.exportPNG(`${this.diagram.title}.png`, {
-                    padding: 50
-                });
+                const currentZoom = this.graph.zoom();
+                try {
+                    this.graph.zoomTo(1);
+                    this.graph.exportPNG(`${this.diagram.title}.png`, {
+                        padding: 50
+                    });
+                }finally{
+                    this.graph.zoomTo(currentZoom);
+                }
             });
         },
         async exportSVG() {
             await this.withSelectionCleared(() => {
-                this.graph.exportSVG(`${this.diagram.title}.svg`);
+                const currentZoom = this.graph.zoom();
+                try{
+                    this.graph.zoomTo(1);
+                    this.graph.exportSVG(`${this.diagram.title}.svg`);
+                }finally{
+                    this.graph.zoomTo(currentZoom);
+                }
             });
         },
         async withSelectionCleared(fn) {
