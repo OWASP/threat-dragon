@@ -1,4 +1,8 @@
 describe('editing threat models', () => {
+    beforeEach(() => {
+        cy.launchThreatDragon();
+    });
+
     describe('editing a new model', () => {
         beforeEach(() => {
             cy.get('#local-login-btn').click();
