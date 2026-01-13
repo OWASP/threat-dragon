@@ -62,6 +62,7 @@
       "onFail": "error"
     }
   },
+  "packageManager": "npm@11.10.0",
   "homepage": "https://owasp.org/www-project-threat-dragon/",
   "buildState": "-latest",
   "repository": {
