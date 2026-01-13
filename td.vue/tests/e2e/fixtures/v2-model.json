@@ -16,6 +16,7 @@
         "diagramType": "STRIDE",
         "thumbnail": "./public/content/images/thumbnail.stride.jpg",
         "version": "2.0.0",
+        "id": 0,
         "cells": [
           {
             "position": {
@@ -227,7 +228,7 @@
         ]
       }
     ],
-    "diagramTop": 0,
+    "diagramTop": 1,
     "reviewer": "Jane Smith",
     "threatTop": 1
   }
