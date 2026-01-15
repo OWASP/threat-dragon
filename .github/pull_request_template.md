@@ -2,13 +2,17 @@
 
 <!--
 What existing issue does the pull request solve?
-Please provide enough information so that others can review your pull request
-If this closes an existing issue then add "closes #xxxx", where xxxx is the issue number
+Add "closes #xxxx", where xxxx is the issue number
+You must have been assigned the issue before submitting the pull request
+and provide enough information so that others can review your changes
 -->
 
 **Description for the changelog**:  
 
-<!-- A short (one line) summary that describes the changes in this pull request for inclusion in the change log -->
+<!--
+A short (one line) summary that describes the changes in this pull request
+for inclusion in the change log
+-->
 
 **Declaration**:  
 
@@ -26,4 +30,7 @@ Thanks for submitting a pull request, please make sure:
 
 **Other info**:  
 
-<!-- Add here any other information that may be of help to the reviewer -->
+<!--
+Add here any other information that may be of help to the reviewer
+Automated tests are run which must pass before the pull request can be merged
+-->

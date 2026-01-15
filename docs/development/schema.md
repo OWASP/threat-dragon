@@ -8,13 +8,10 @@ group: Development
 
 ## Threat Model Schema
 
-The original [https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V1.json)
-for Threat Dragon models conforms to [JSON Schema](https://json-schema.org/).
+The [original schema][td-v1-schema] for Threat Dragon models conforms to [JSON Schema][json-schema] standard.
 
-There were some changes, mainly in the diagram component properties for version 2 Threat Dragon
-threat models, and so there is a
-[different schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V2.json)
-for these threat models - also conforming to JSON Schema.
+There were some changes, mainly in the diagram component properties for version 2 Threat Dragon threat models,
+and so there is a [different schema][td-v2-schema] for these threat models - also conforming to JSON Schema.
 
 Threat Dragon will check a threat model against the schema when it is loading and warn if there is a problem,
 but it will not stop the threat model from loading.
@@ -84,6 +81,7 @@ The [TM-BOM schema][tm-library-schema] defines various object that make up a TM-
 
 Threat Dragon: _making threat modeling less threatening_
 
+[json-schema]: https://json-schema.org/
 [otm-schema]: https://github.com/iriusrisk/OpenThreatModel/blob/main/otm_schema.json
 [td-v1-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V1.json
 [td-v2-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V2.json

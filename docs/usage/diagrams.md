@@ -11,8 +11,7 @@ group: Modeling
 Once you have [created or opened]({{ '/usage/getting-started.html' | relative_url }})
 a threat model file the next step is to edit the threat model diagrams.
 
-From the threat model main page, click on the diagram you wish to edit 
-and you will then be taken to the diagram editor.
+Click on the diagram to be edited on the threat model main page to be taken to the diagram editor.
 
 ## Processes, data stores and actors
 
