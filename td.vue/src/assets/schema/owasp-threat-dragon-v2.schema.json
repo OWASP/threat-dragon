@@ -246,7 +246,7 @@
                           "type": "boolean"
                         }
                       },
-                      "required": [ "hasOpenThreats", "name", "type" ]
+                      "required": [ "hasOpenThreats", "type" ]
                     },
                     "id": {
                       "description": "The component unique identifier (UUID)",
@@ -416,7 +416,7 @@
           }
         },
         "diagramTop": {
-          "description": "The highest diagram number in the threat model",
+          "description": "The next diagram number for the threat model, not reused if deleted",
           "type": "integer",
           "minimum": 0
         },
@@ -425,7 +425,7 @@
           "type": "string"
         },
         "threatTop": {
-          "description": "The highest threat number in the threat model",
+          "description": "The highest threat number in the threat model, not reused if deleted",
           "type": "integer",
           "minimum": 0
         }
