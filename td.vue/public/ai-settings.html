@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';">
     <title>AI Settings</title>
     <style>
         * {
@@ -265,7 +266,7 @@
     </div>
 
     <script>
-        const { ipcRenderer } = require('electron');
+        // Use secure API exposed via preload script
 
         let originalSettings = {};
         let formChanged = false;
@@ -341,25 +342,36 @@
         });
 
         // Listen for check changes request from main process
-        ipcRenderer.on('ai-settings-check-changes', () => {
-            const hasChanges = hasFormChanged();
-            ipcRenderer.send('ai-settings-has-changes', hasChanges);
-        });
+        if (window.electronAPI && window.electronAPI.onSettingsCheckChanges) {
+            window.electronAPI.onSettingsCheckChanges(() => {
+                const hasChanges = hasFormChanged();
+                if (window.electronAPI && window.electronAPI.sendHasChanges) {
+                    window.electronAPI.sendHasChanges(hasChanges);
+                }
+            });
+        }
 
         // Listen for close check request from main process (for X button)
-        ipcRenderer.on('ai-settings-close-check', () => {
-            let shouldClose = true;
-            if (hasFormChanged()) {
-                shouldClose = showCloseConfirmation();
-            }
-            ipcRenderer.send('ai-settings-should-close', shouldClose);
-        });
+        if (window.electronAPI && window.electronAPI.onSettingsCloseCheck) {
+            window.electronAPI.onSettingsCloseCheck(() => {
+                let shouldClose = true;
+                if (hasFormChanged()) {
+                    shouldClose = showCloseConfirmation();
+                }
+                if (window.electronAPI && window.electronAPI.sendShouldClose) {
+                    window.electronAPI.sendShouldClose(shouldClose);
+                }
+            });
+        }
 
         // Load settings when window opens
-        ipcRenderer.send('ai-settings-load-request');
+        if (window.electronAPI && window.electronAPI.sendLoadRequest) {
+            window.electronAPI.sendLoadRequest();
+        }
 
         // Listen for settings data from main process
-        ipcRenderer.on('ai-settings-loaded', (event, settings) => {
+        if (window.electronAPI && window.electronAPI.onSettingsLoaded) {
+            window.electronAPI.onSettingsLoaded((event, settings) => {
             if (settings) {
                 originalSettings = {
                     apiKey: settings.apiKey || '',
@@ -379,7 +391,8 @@
                 
                 formChanged = false;
             }
-        });
+            });
+        }
 
         // Validate form
         function validateForm() {
@@ -451,22 +464,29 @@
                 logLevel: document.getElementById('logLevel').value
             };
 
-            ipcRenderer.send('ai-settings-save-request', settings);
+            if (window.electronAPI && window.electronAPI.sendSaveRequest) {
+                window.electronAPI.sendSaveRequest(settings);
+            }
         });
 
         // Close button handler
         document.getElementById('closeBtn').addEventListener('click', () => {
             if (hasFormChanged()) {
                 if (showCloseConfirmation()) {
-                    ipcRenderer.send('ai-settings-window-close');
+                    if (window.electronAPI && window.electronAPI.sendWindowClose) {
+                        window.electronAPI.sendWindowClose();
+                    }
                 }
             } else {
-                ipcRenderer.send('ai-settings-window-close');
+                if (window.electronAPI && window.electronAPI.sendWindowClose) {
+                    window.electronAPI.sendWindowClose();
+                }
             }
         });
 
         // Listen for save confirmation
-        ipcRenderer.on('ai-settings-saved', () => {
+        if (window.electronAPI && window.electronAPI.onSettingsSaved) {
+            window.electronAPI.onSettingsSaved(() => {
             // Update original settings after save
             originalSettings = {
                 apiKey: document.getElementById('apiKey').value,
@@ -479,11 +499,14 @@
             formChanged = false;
             alert('Settings saved successfully');
             // Window stays open - removed the close call
-        });
+            });
+        }
 
-        ipcRenderer.on('ai-settings-save-error', (event, error) => {
-            alert('Error saving settings: ' + error);
-        });
+        if (window.electronAPI && window.electronAPI.onSettingsSaveError) {
+            window.electronAPI.onSettingsSaveError((event, error) => {
+                alert('Error saving settings: ' + error);
+            });
+        }
     </script>
 </body>
 </html>

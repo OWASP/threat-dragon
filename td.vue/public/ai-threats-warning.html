@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';">
     <title>Warning</title>
     <style>
         * {
@@ -109,27 +110,40 @@
         </div>
     </div>
     <script>
-        const { ipcRenderer } = require('electron');
-
+        // Use secure API exposed via preload script
         document.addEventListener('DOMContentLoaded', () => {
             const cancelBtn = document.getElementById('cancelBtn');
             const okBtn = document.getElementById('okBtn');
 
             // Handle Cancel button
             cancelBtn.addEventListener('click', () => {
-                window.close();
+                if (window.electronAPI && window.electronAPI.closeWindow) {
+                    window.electronAPI.closeWindow();
+                } else {
+                    window.close();
+                }
             });
 
             // Handle OK button
             okBtn.addEventListener('click', () => {
-                ipcRenderer.send('ai-threats-warning-ok');
-                window.close();
+                if (window.electronAPI && window.electronAPI.sendWarningOk) {
+                    window.electronAPI.sendWarningOk();
+                }
+                if (window.electronAPI && window.electronAPI.closeWindow) {
+                    window.electronAPI.closeWindow();
+                } else {
+                    window.close();
+                }
             });
 
             // Handle Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    window.close();
+                    if (window.electronAPI && window.electronAPI.closeWindow) {
+                        window.electronAPI.closeWindow();
+                    } else {
+                        window.close();
+                    }
                 }
             });
         });

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';">
     <title>Generation Results</title>
     <style>
         * {
@@ -187,15 +188,14 @@
             </div>
             
             <div class="close-button">
-                <button class="close-btn" onclick="window.close()">Close</button>
+                <button class="close-btn" onclick="if (window.electronAPI && window.electronAPI.closeWindow) { window.electronAPI.closeWindow(); } else { window.close(); }">Close</button>
             </div>
         </div>
     </div>
     <script>
-        const { ipcRenderer } = require('electron');
-        
-        // Listen for results data from main process
-        ipcRenderer.on('ai-threats-results-data', (event, data) => {
+        // Use secure API exposed via preload script
+        if (window.electronAPI && window.electronAPI.onResultsData) {
+            window.electronAPI.onResultsData((event, data) => {
             // Display cost
             const costValue = data.cost || 0;
             document.getElementById('costValue').textContent = `$${costValue.toFixed(4)}`;
@@ -241,12 +241,17 @@
                     });
                 }
             }
-        });
+            });
+        }
         
         // Handle Escape key to close window
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                window.close();
+                if (window.electronAPI && window.electronAPI.closeWindow) {
+                    window.electronAPI.closeWindow();
+                } else {
+                    window.close();
+                }
             }
         });
     </script>

@@ -544,6 +544,24 @@ function getMainPyPath() {
     return path.resolve(aiToolsPath);
 }
 
+function getPreloadPath() {
+    // __static is provided by vue-cli-plugin-electron-builder
+    if (typeof __static !== 'undefined') {
+        return path.join(__static, 'preload-ai.js');
+    }
+    
+    // Fallback for development
+    if (app.isPackaged) {
+        // In production, preload is in the app resources
+        return path.join(process.resourcesPath, 'preload-ai.js');
+    } else {
+        // In development, use relative path
+        const packageJsonPath = require.resolve('../../package.json');
+        const tdVuePath = path.dirname(packageJsonPath);
+        return path.join(tdVuePath, 'public', 'preload-ai.js');
+    }
+}
+
 function proceedWithThreatGeneration() {
     if (model.isOpen === false) {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
@@ -790,15 +808,20 @@ function openAIThreatsWarning() {
         modal: true,
         autoHideMenuBar: true,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
         },
         show: false
     });
 
     aiThreatsWarningWindow.setMenuBarVisibility(false);
 
-    const okHandler = () => {
+    const okHandler = (event) => {
+        // Verify sender is the warning window
+        if (event.sender !== aiThreatsWarningWindow.webContents) {
+            return;
+        }
         logger.log.debug('AI Threats Warning: User clicked OK, proceeding with threat generation');
         if (aiThreatsWarningWindow && !aiThreatsWarningWindow.isDestroyed()) {
             aiThreatsWarningWindow.close();
@@ -806,9 +829,17 @@ function openAIThreatsWarning() {
         proceedWithThreatGeneration();
     };
     ipcMain.on('ai-threats-warning-ok', okHandler);
+    
+    const closeHandler = (event) => {
+        if (event.sender === aiThreatsWarningWindow.webContents) {
+            aiThreatsWarningWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeHandler);
 
     aiThreatsWarningWindow.once('closed', () => {
         ipcMain.removeListener('ai-threats-warning-ok', okHandler);
+        ipcMain.removeListener('ai-window-close', closeHandler);
         aiThreatsWarningWindow = null;
     });
 
@@ -844,8 +875,9 @@ function openAIThreatsProgress() {
         modal: true,
         autoHideMenuBar: true,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
         },
         show: false
     });
@@ -909,7 +941,15 @@ function openAIThreatsProgress() {
         }
     });
 
+    const closeProgressHandler = (event) => {
+        if (event.sender === aiThreatsProgressWindow.webContents) {
+            aiThreatsProgressWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeProgressHandler);
+
     aiThreatsProgressWindow.once('closed', () => {
+        ipcMain.removeListener('ai-window-close', closeProgressHandler);
         aiThreatsProgressWindow = null;
     });
 
@@ -969,15 +1009,24 @@ function openAIThreatsResults(metadata) {
         modal: true,
         autoHideMenuBar: true,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
         },
         show: false
     });
 
     aiThreatsResultsWindow.setMenuBarVisibility(false);
 
+    const closeResultsHandler = (event) => {
+        if (event.sender === aiThreatsResultsWindow.webContents) {
+            aiThreatsResultsWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeResultsHandler);
+
     aiThreatsResultsWindow.once('closed', () => {
+        ipcMain.removeListener('ai-window-close', closeResultsHandler);
         aiThreatsResultsWindow = null;
     });
 
@@ -1153,8 +1202,9 @@ function openAISettings() {
         modal: true,
         autoHideMenuBar: true,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
         },
         show: false
     });
@@ -1216,13 +1266,25 @@ function openAISettings() {
     ipcMain.on('ai-settings-check-changes-request', checkUnsavedChangesHandler);
 
     // Close window request (will be called after confirmation)
-    const closeHandler = () => {
+    const closeHandler = (event) => {
+        // Verify sender is the settings window
+        if (event.sender !== aiSettingsWindow.webContents) {
+            return;
+        }
         if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
             allowCloseWithoutPrompt = true;
             aiSettingsWindow.close();
         }
     };
     ipcMain.on('ai-settings-window-close', closeHandler);
+    
+    const closeWindowHandler = (event) => {
+        if (event.sender === aiSettingsWindow.webContents) {
+            allowCloseWithoutPrompt = true;
+            aiSettingsWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeWindowHandler);
 
     // Handle window close event to check for unsaved changes (for X button)
     aiSettingsWindow.on('close', (event) => {
@@ -1256,6 +1318,7 @@ function openAISettings() {
         ipcMain.removeListener('ai-settings-save-request', saveHandler);
         ipcMain.removeListener('ai-settings-window-close', closeHandler);
         ipcMain.removeListener('ai-settings-check-changes-request', checkUnsavedChangesHandler);
+        ipcMain.removeListener('ai-window-close', closeWindowHandler);
         // Clear window reference
         aiSettingsWindow = null;
     });

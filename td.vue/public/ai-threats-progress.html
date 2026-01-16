@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';">
     <title>Generating Threats and Mitigations</title>
     <style>
         * {
@@ -131,19 +132,19 @@
         </div>
     </div>
     <script>
-        const { ipcRenderer } = require('electron');
-        
-        // Listen for configuration data from main process
-        ipcRenderer.on('ai-threats-progress-config', (event, config) => {
-            if (config) {
-                document.getElementById('configurationSection').style.display = 'block';
-                document.getElementById('llmModelValue').textContent = config.llmModel || '-';
-                document.getElementById('temperatureValue').textContent = config.temperature !== undefined ? config.temperature.toString() : '-';
-                document.getElementById('responseFormatValue').textContent = config.responseFormat !== undefined ? (config.responseFormat ? 'True' : 'False') : '-';
-                document.getElementById('apiBaseValue').textContent = config.apiBase || 'None';
-                document.getElementById('logLevelValue').textContent = config.logLevel || '-';
-            }
-        });
+        // Use secure API exposed via preload script
+        if (window.electronAPI && window.electronAPI.onProgressConfig) {
+            window.electronAPI.onProgressConfig((event, config) => {
+                if (config) {
+                    document.getElementById('configurationSection').style.display = 'block';
+                    document.getElementById('llmModelValue').textContent = config.llmModel || '-';
+                    document.getElementById('temperatureValue').textContent = config.temperature !== undefined ? config.temperature.toString() : '-';
+                    document.getElementById('responseFormatValue').textContent = config.responseFormat !== undefined ? (config.responseFormat ? 'True' : 'False') : '-';
+                    document.getElementById('apiBaseValue').textContent = config.apiBase || 'None';
+                    document.getElementById('logLevelValue').textContent = config.logLevel || '-';
+                }
+            });
+        }
     </script>
 </body>
 </html>
