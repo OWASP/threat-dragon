@@ -4,7 +4,7 @@ import addFormats from 'ajv-formats';
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);
 
-const schema = require('./open-threat-model.schema');
+const schema = require('@/assets/schema/open-threat-model.schema');
 const validate = ajv.compile(schema);
 
 export const isValid = (jsonFile) => {

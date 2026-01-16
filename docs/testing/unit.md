@@ -21,7 +21,7 @@ navigating to the `td.vue` directory and running `npm run test:unit -- --watch`
 ### Mocha backend testing
 
 Unit testing for the server application `td.server` is done using [Mocha](https://mochajs.org/),
-with a little help from our friends [Sinon.JS](https://sinonjs.org/) and [chai](https://www.chaijs.com/).
+with a little help from our friends Sinon.JS and [chai](https://www.chaijs.com/).
 To run the tests locally navigate to the `td.server` directory and run: `npm run test:unit`
 
 ## Code Coverage
