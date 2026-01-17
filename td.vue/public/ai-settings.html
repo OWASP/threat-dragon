@@ -258,6 +258,16 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="timeout">
+                    <span class="help-icon" data-help="timeout">i</span>
+                    <span class="label-text">TIMEOUT</span>
+                </label>
+                <div class="description" id="timeoutDescription">Request timeout in seconds for LLM API calls (default: 900 seconds = 15 minutes)</div>
+                <input type="number" id="timeout" name="timeout" min="1" step="1" value="900" />
+                <div class="error-message" id="timeoutError"></div>
+            </div>
+
             <div class="button-group">
                 <button type="button" id="closeBtn" class="btn-close">Close</button>
                 <button type="button" id="saveBtn" class="btn-save">Save</button>
@@ -273,7 +283,7 @@
 
         // Track form changes
         function trackFormChanges() {
-            const inputs = ['apiKey', 'llmModel', 'temperature', 'responseFormat', 'apiBase', 'logLevel'];
+            const inputs = ['apiKey', 'llmModel', 'temperature', 'responseFormat', 'apiBase', 'logLevel', 'timeout'];
             inputs.forEach(fieldId => {
                 const element = document.getElementById(fieldId);
                 if (element) {
@@ -295,7 +305,8 @@
                 temperature: parseFloat(document.getElementById('temperature').value) || 0.1,
                 responseFormat: document.getElementById('responseFormat').checked,
                 apiBase: document.getElementById('apiBase').value || '',
-                logLevel: document.getElementById('logLevel').value || 'INFO'
+                logLevel: document.getElementById('logLevel').value || 'INFO',
+                timeout: parseInt(document.getElementById('timeout').value) || 900
             };
 
             return JSON.stringify(currentSettings) !== JSON.stringify(originalSettings);
@@ -379,7 +390,8 @@
                     temperature: settings.temperature !== undefined ? settings.temperature : 0.1,
                     responseFormat: settings.responseFormat === true,
                     apiBase: settings.apiBase || '',
-                    logLevel: settings.logLevel || 'INFO'
+                    logLevel: settings.logLevel || 'INFO',
+                    timeout: settings.timeout !== undefined ? settings.timeout : 900
                 };
                 
                 document.getElementById('apiKey').value = originalSettings.apiKey;
@@ -388,6 +400,7 @@
                 document.getElementById('responseFormat').checked = originalSettings.responseFormat;
                 document.getElementById('apiBase').value = originalSettings.apiBase;
                 document.getElementById('logLevel').value = originalSettings.logLevel;
+                document.getElementById('timeout').value = originalSettings.timeout;
                 
                 formChanged = false;
             }
@@ -427,6 +440,13 @@
                 isValid = false;
             }
 
+            // Timeout validation
+            const timeout = parseInt(document.getElementById('timeout').value);
+            if (isNaN(timeout) || timeout < 1) {
+                errors.timeout = 'Timeout must be a positive integer (at least 1 second)';
+                isValid = false;
+            }
+
             // Show/hide errors
             Object.keys(errors).forEach(field => {
                 const errorElement = document.getElementById(field + 'Error');
@@ -437,7 +457,7 @@
             });
 
             // Clear errors for fields without issues
-            ['apiKey', 'llmModel', 'temperature', 'apiBase'].forEach(field => {
+            ['apiKey', 'llmModel', 'temperature', 'apiBase', 'timeout'].forEach(field => {
                 if (!errors[field]) {
                     const errorElement = document.getElementById(field + 'Error');
                     if (errorElement) {
@@ -461,7 +481,8 @@
                 temperature: parseFloat(document.getElementById('temperature').value),
                 responseFormat: document.getElementById('responseFormat').checked,
                 apiBase: document.getElementById('apiBase').value,
-                logLevel: document.getElementById('logLevel').value
+                logLevel: document.getElementById('logLevel').value,
+                timeout: parseInt(document.getElementById('timeout').value)
             };
 
             if (window.electronAPI && window.electronAPI.sendSaveRequest) {
@@ -494,7 +515,8 @@
                 temperature: parseFloat(document.getElementById('temperature').value),
                 responseFormat: document.getElementById('responseFormat').checked,
                 apiBase: document.getElementById('apiBase').value,
-                logLevel: document.getElementById('logLevel').value
+                logLevel: document.getElementById('logLevel').value,
+                timeout: parseInt(document.getElementById('timeout').value)
             };
             formChanged = false;
             alert('Settings saved successfully');

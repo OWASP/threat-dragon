@@ -607,16 +607,16 @@ async function runPythonThreatGeneration(modelData) {
             // In production build, try to resolve from app path
             // Schema should be accessible via require.resolve or in resources
             const appPath = app.getAppPath();
-            schemaPath = path.join(appPath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            schemaPath = path.join(appPath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
             // If not found, try resources path (if schema was included as extraResource)
             if (!fs.existsSync(schemaPath)) {
-                schemaPath = path.join(process.resourcesPath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+                schemaPath = path.join(process.resourcesPath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
             }
         } else {
             // In development, use relative path from package.json
             const packageJsonPath = require.resolve('../../package.json');
             const tdVuePath = path.dirname(packageJsonPath);
-            schemaPath = path.join(tdVuePath, 'src', 'service', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            schemaPath = path.join(tdVuePath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
         }
         
         // Read and parse the schema JSON file
@@ -1121,7 +1121,8 @@ async function loadAISettings() {
         temperature: 0.1,
         responseFormat: false,
         apiBase: '',
-        logLevel: 'INFO'
+        logLevel: 'INFO',
+        timeout: 900
     };
     
     try {
@@ -1134,7 +1135,8 @@ async function loadAISettings() {
                 temperature: fileSettings.temperature !== undefined ? fileSettings.temperature : 0.1,
                 responseFormat: fileSettings.responseFormat === true,
                 apiBase: fileSettings.apiBase || '',
-                logLevel: fileSettings.logLevel || 'INFO'
+                logLevel: fileSettings.logLevel || 'INFO',
+                timeout: fileSettings.timeout !== undefined ? fileSettings.timeout : 900
             };
         }
     } catch (err) {
@@ -1158,7 +1160,8 @@ async function saveAISettings(settings) {
         temperature: settings.temperature !== undefined ? settings.temperature : 0.1,
         responseFormat: settings.responseFormat === true,
         apiBase: settings.apiBase || '',
-        logLevel: settings.logLevel || 'INFO'
+        logLevel: settings.logLevel || 'INFO',
+        timeout: settings.timeout !== undefined ? settings.timeout : 900
     };
     
     try {
@@ -1192,11 +1195,11 @@ function openAISettings() {
     // Create the settings window
     aiSettingsWindow = new BrowserWindow({
         width: 620,
-        height: 660,
+        height: 730,
         minWidth: 100,
         minHeight: 100,
         maxWidth: 620,
-        maxHeight: 660,
+        maxHeight: 730,
         resizable: true,
         parent: mainWindow,
         modal: true,

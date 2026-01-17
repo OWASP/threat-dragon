@@ -72,7 +72,7 @@ td.vue/
     - Resolves the **Python executable** in the bundled venv via `getPythonExecutable()`.
     - Resolves `ai-tools/src/main.py` via `getMainPyPath()`.
     - Loads the **AI settings JSON** path via `getAISettingsPath()`.
-    - Loads the **Threat Dragon v2 schema JSON** from `src/service/schema/owasp-threat-dragon-v2.schema.json`.
+    - Loads the **Threat Dragon v2 schema JSON** from `src/assets/schema/owasp-threat-dragon-v2.schema.json`.
     - Retrieves the **API key** from secure storage via `loadAPIKey()` (using Electron's `safeStorage` API).
     - Spawns the Python process using `spawn(pythonExecutable, [mainPyPath, '--settings-json', aiSettingsPath, '--logs-folder', app.getPath('logs')])`.
     - Opens the **AI Threats Progress** dialog.

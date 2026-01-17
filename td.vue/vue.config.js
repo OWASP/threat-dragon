@@ -135,8 +135,8 @@ module.exports = {
                         filter: ['**/*']
                     },
                     {
-                        from: 'src/service/schema',
-                        to: 'src/service/schema',
+                        from: 'src/assets/schema',
+                        to: 'src/assets/schema',
                         filter: ['**/*']
                     }
                 ]

@@ -95,7 +95,8 @@ def load_settings(settings_json_path: str) -> dict:
         'temperature': settings.get('temperature', 0.1),
         'response_format': settings.get('responseFormat', False),
         'api_base': settings.get('apiBase', ''),
-        'log_level': settings.get('logLevel', 'INFO')
+        'log_level': settings.get('logLevel', 'INFO'),
+        'timeout': settings.get('timeout', 900)
     }
     
     # Validate temperature range
@@ -105,6 +106,10 @@ def load_settings(settings_json_path: str) -> dict:
     # Validate log level
     if result['log_level'] not in ['INFO', 'DEBUG']:
         raise ValueError(f"Log level must be INFO or DEBUG, got: {result['log_level']}")
+    
+    # Validate timeout
+    if not isinstance(result['timeout'], int) or result['timeout'] < 1:
+        raise ValueError(f"Timeout must be a positive integer, got: {result['timeout']}")
     
     # Note: API key is not loaded here - it's passed via stdin
     
@@ -200,7 +205,8 @@ def main():
             settings['llm_model'],            
             settings['temperature'],
             settings['response_format'],
-            settings['api_base'] if settings['api_base'] else None
+            settings['api_base'] if settings['api_base'] else None,
+            settings['timeout']
         )
     except Exception as e:
         logger.error(f"ERROR: {str(e)}", exc_info=True)
