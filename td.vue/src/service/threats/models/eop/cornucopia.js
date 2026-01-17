@@ -11,15 +11,15 @@ export default {
 
     getData() {
         switch (i18n.get().locale) {
-            case 'spa':
-                return cornucopiaES;
-            case 'fra':
-                return cornucopiaFR;
-            case 'rus':
-                return cornucopiaRU;
-            case 'eng':
-            default:
-                return cornucopiaEN;
+        case 'spa':
+            return cornucopiaES;
+        case 'fra':
+            return cornucopiaFR;
+        case 'rus':
+            return cornucopiaRU;
+        case 'eng':
+        default:
+            return cornucopiaEN;
         }
     },
 

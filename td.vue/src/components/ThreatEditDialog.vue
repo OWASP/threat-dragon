@@ -340,7 +340,7 @@ export default {
             return this.activeGame?.getCardCategory(this.card.number);
         },
         cardUrl() {
-            return this.activeGame?.getCardUrl(this.card.number)
+            return this.activeGame?.getCardUrl(this.card.number);
         }
     },
     data() {
@@ -391,7 +391,7 @@ export default {
                 );
             } else {
                 this.selectedGameId = this.threat.eopGameId;
-                this.card.suit = this.activeGame?.getCardCategory(this.threat.cardNumber);;
+                this.card.suit = this.activeGame?.getCardCategory(this.threat.cardNumber);
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === 'new';

@@ -17,17 +17,19 @@ Threat Dragon will check a threat model against the schema when it is loading an
 but it will not stop the threat model from loading.
 
 If there is doubt about a threat model then ajv (Another JSON Validator) can be run from the
-command line to provide details of any discrepancy:
+command line to provide detail for most errors or omissions:
 
 ```text
 sudo npm install -g ajv-cli
 # if validating a version 1.x threat model
-ajv validate -s ~/owasp.threat-dragon.schema.V1.json  --all-errors  --verbose \
+ajv validate -s ~/threat-dragon-v1.schema.json  --all-errors  --verbose \
     -d ThreatDragonModels/demo-threat-model.json
 # or if validating a version 2.x threat model
-ajv validate --allow-union-types -s ~/owasp.threat-dragon.schema.V2.json  --all-errors  --verbose \
+ajv validate --allow-union-types -s ~/threat-dragon-v2.schema.json  --all-errors  --verbose \
     -d ThreatDragonModels/v2-threat-model.json
 ```
+
+The commands use a schema downloaded from either [version 1][td-v1-schema] or [version 2][td-v2-schema] schema files.
 
 ### TM-BOM
 
@@ -83,7 +85,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [json-schema]: https://json-schema.org/
 [otm-schema]: https://github.com/iriusrisk/OpenThreatModel/blob/main/otm_schema.json
-[td-v1-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V1.json
-[td-v2-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/owasp.threat-dragon.schema.V2.json
+[td-v1-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json
+[td-v2-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v2.schema.json
 [tm-library]: https://github.com/OWASP/www-project-threat-model-library
 [tm-library-schema]: https://github.com/OWASP/www-project-threat-model-library/blob/main/threat-model.schema.json
