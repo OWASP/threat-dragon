@@ -607,16 +607,16 @@ async function runPythonThreatGeneration(modelData) {
             // In production build, try to resolve from app path
             // Schema should be accessible via require.resolve or in resources
             const appPath = app.getAppPath();
-            schemaPath = path.join(appPath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            schemaPath = path.join(appPath, 'src', 'assets', 'schema', 'threat-dragon-v2.schema.json');
             // If not found, try resources path (if schema was included as extraResource)
             if (!fs.existsSync(schemaPath)) {
-                schemaPath = path.join(process.resourcesPath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
+                schemaPath = path.join(process.resourcesPath, 'src', 'assets', 'schema', 'threat-dragon-v2.schema.json');
             }
         } else {
             // In development, use relative path from package.json
             const packageJsonPath = require.resolve('../../package.json');
             const tdVuePath = path.dirname(packageJsonPath);
-            schemaPath = path.join(tdVuePath, 'src', 'assets', 'schema', 'owasp-threat-dragon-v2.schema.json');
+            schemaPath = path.join(tdVuePath, 'src', 'assets', 'schema', 'threat-dragon-v2.schema.json');
         }
         
         // Read and parse the schema JSON file
