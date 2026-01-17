@@ -25,3 +25,6 @@ CVE-2025-15284
 
 # ignore diff vulnerability as used in development package only
 GHSA-73rr-hh4g-fpgx
+
+#  tar is used during development/build only, not runtime
+CVE-2026-23745 
