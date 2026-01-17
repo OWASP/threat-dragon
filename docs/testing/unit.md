@@ -21,13 +21,12 @@ navigating to the `td.vue` directory and running `npm run test:unit -- --watch`
 ### Mocha backend testing
 
 Unit testing for the server application `td.server` is done using [Mocha](https://mochajs.org/),
-with a little help from our friends Sinon.JS and [chai](https://www.chaijs.com/).
-To run the tests locally navigate to the `td.server` directory and run: `npm run test:unit`
+with a little help from our friends [Sinon.JS][sinon] and [chai][chai].
+To run the tests locally navigate to the `td.server` directory and run `npm run test:unit` or `npm test`.
 
 ## Code Coverage
 
-When you run unit tests for both the front-end and back-end application,
-you will be presented with a code coverage report.
+Run unit tests with `npm test` for either the front-end and back-end application to obtain the code coverage report.
 There will be an HTML report generated as well that you can view to
 dig deeper into what sections may be missing coverage.
 
@@ -36,3 +35,6 @@ We hope to keep the code coverage as high as possible.  If you need help writing
 ----
 
 Threat Dragon: _making threat modeling less threatening_
+
+[chai]: https://www.chaijs.com/
+[sinon]: https://sinonjs.org/
