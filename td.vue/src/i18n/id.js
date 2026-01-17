@@ -157,6 +157,11 @@ const ind = {
                 defaultTitle: 'Diagram CIA baru',
                 defaultDescription: 'Deskripsi diagram CIA baru',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Diagram EoP permainan baru',
+                defaultDescription: 'Deskripsi diagram EoP permainan baru',
+                select: 'EoP permainan'
             }
         },
         threats: 'Ancaman',
@@ -305,6 +310,15 @@ const ind = {
         next: 'Berikutnya',
         previous: 'sebelumnya'
     },
+    cards: {
+        details: 'Detail kartu',
+        noDetails: 'tidak ada detail yang tersedia',
+        unknown: 'Tidak diketahui',
+        properties: {
+            suit: 'Kategori',
+            number: 'Nomor'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -359,7 +373,8 @@ const ind = {
             ciadie: 'Ancaman CIA-DIE baru',
             linddun: 'Ancaman LINDDUN baru',
             plot4ai: 'Ancaman PLOT4ai baru',
-            stride: 'Ancaman STRIDE baru'
+            stride: 'Ancaman STRIDE baru',
+            eop: 'Ancaman EoP permainan baru'
         },
         edit: 'Edit Ancaman',
         confirmDeleteTitle: 'Konfirmasi Hapus',
@@ -392,6 +407,10 @@ const ind = {
             medium: 'Sedang',
             high: 'Tinggi',
             critical: 'Kritis'
+        },
+        validation: {
+            error: 'Nomor kartu wajib diisi.',
+            cardNumberRequired: 'Anda harus memilih nomor kartu sebelum menyimpan.'
         }
     },
     report: {

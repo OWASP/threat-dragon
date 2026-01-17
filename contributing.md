@@ -11,10 +11,24 @@ When contributing:
 
 ## Ground rules
 
+Please make sure your issues and pull requests are well thought out
+and actually work, you will then get a better response.
+
 * follow our [Code of Conduct](code_of_conduct.md)
 * ensure that [unit tests][unit] have been extended or created for any code changes
 * if the contribution changes the functionality then ensure that the [functional tests][e2e] are created or modified
 * the use of generative AI is not prohibited but must be declared in the [pull request](#use-of-ai-for-coding)
+
+### Contributor etiquette
+
+Github issues are used to coordinate contributions and keep track of progress towards each milestone:
+
+* select an issue from the project board for the section you want to work on
+* if this issue is free ask for it to be assigned to you
+* if the issue has already been assigned then coordinate with the existing owner
+* if there is not an existing issue that describes your content then [suggest one][issues]
+* provide your contributed content as a [pull request][request]
+* you **must** be assigned the issue before submitting a pull request
 
 ## Got a Question or Problem?
 
@@ -31,7 +45,8 @@ You must use the bug-report template provided, otherwise it will be regarded as 
 
 It is worth checking to see if its [already been reported][issues],
 and including as much information as you can to help us diagnose your problem.
-Note that you **must** follow the conduct for any [use of AI](#use-of-ai-for-issues) in the bug report.
+
+Note that you **must** follow the rules for any [use of AI](#use-of-ai-for-issues) in the bug report.
 
 ## Found a Vulnerability?
 
@@ -48,7 +63,8 @@ You must use the feature template provided, otherwise it will be regarded as AI-
 
 Worth checking to see if its [already been reported][issues],
 and include as much information as you can so that we can fully understand your requirements.
-Note that you **must** follow the conduct for any [use of AI](#use-of-ai-for-issues) in the feature request.
+
+Note that you **must** follow the rules for any [use of AI](#use-of-ai-for-issues) in the feature request.
 
 ## Coding
 
@@ -61,20 +77,28 @@ The best chance of success for a pull request to be reviewed and accepted:
 
 1. make sure there is an existing issue that the pull request is solving / fixing
 2. request that you are assigned this issue first
-3. Once the pull request is ready, provide a short but informative title
+3. once the pull request is ready, provide a short but informative title
 4. provide enough description to explain how Threat Dragon worked before and works after the change
 5. extend the unit tests and functional tests to show the change working as expected
 6. the pull request must provide one change only, if there are further changes use further pull requests
-7. be cautious when coding using [generative AI](#use-of-ai-for-coding);
-  understand fully the changes and keep sprawl to a minimum
+7. avoid coding using [generative AI](#use-of-ai-for-coding);
+  if you must then understand fully the changes and keep sprawl to a minimum
 
-We appreciate contributions always, but make sure you have been **assigned the issue** before you submit any pull request.
+We appreciate contributions always,
+but make sure you have been **assigned the issue** before you submit any pull request
+otherwise the pull request is very likely to be discarded.
 
-Also you must use the pull request template provided, otherwise the contribution will be regarded as AI-slop and discarded.
+Note that you **must** follow the rules for any [use of AI](#use-of-ai-for-issues) in the pull request.
+This includes using the pull request template provided, otherwise the contribution will be regarded as AI-slop and discarded.
 
 ### Use of AI
 
-You must declare any use of generative or agentic AI in pull requests or when creating / commenting on issues.
+Threat Dragon is a project that is used globally by many organizations;
+therefore the code base has to be coherent and functional.
+Avoid using generative AI for any issues, pull requests, comments and discussions.
+
+If it is genuinely helpful to use generative AI
+then it **must** be declared for pull requests or when creating / commenting on issues.
 Failure to do this may result in the pull request or issue being closed or even deleted.
 
 There are various reasons why the project leaders have had to adopt this robust approach, some of them are:
@@ -87,7 +111,7 @@ There are various reasons why the project leaders have had to adopt this robust 
 
 Be mindful that the leaders and maintainers of Threat Dragon are volunteers with their own day jobs;
 we do this on our own time for the benefit of the open source community and OWASP in particular.
-Please make sure your issues and pull requests are well thought out and actually work, you will then get a better response.
+AI slop drains maintainers' time and is actively harmful to this project.
 
 #### Use of AI for coding
 

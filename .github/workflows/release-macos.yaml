@@ -22,15 +22,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -55,7 +55,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'

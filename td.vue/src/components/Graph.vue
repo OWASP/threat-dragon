@@ -51,6 +51,11 @@ import TdThreatSuggestDialog from './ThreatSuggestDialog.vue';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import diagramService from '@/service/diagram/diagram.js';
+import {
+    getElementsInsideBoundary,
+    getBoundariesCrossedByFlow,
+    getFlowsCrossedByBoundary
+} from '@/service/boundary-utils.js';
 import stencil from '@/service/x6/stencil.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -94,8 +99,43 @@ export default {
         },
         saved() {
             console.debug('Save diagram');
+            // Ensure boundary/flow relationship data is attached to each cell's data
+            try {
+                if (this.graph && typeof this.graph.getCells === 'function') {
+                    this.graph.getCells().forEach(boundary => {
+                        try {
+                            if (boundary && (boundary.shape === 'trust-boundary-box' || boundary.shape === 'trust-boundary-curve')) {
+                                boundary.data = boundary.data || {};
+                                const contained = getElementsInsideBoundary(this.graph.getCells(), boundary);
+                                boundary.data.containedElements = contained.map(el => el.id);
+                                boundary.data.crossingFlows = getFlowsCrossedByBoundary(boundary, this.graph.getCells());
+                            }
+                        } catch (innerErr) {
+                            // continue processing other cells even if one fails
+                            // eslint-disable-next-line no-console
+                            console.warn('Failed computing boundary data for a cell', innerErr);
+                        }
+                    });
+
+                    this.graph.getCells().forEach(flow => {
+                        try {
+                            if (flow && flow.shape === 'flow') {
+                                flow.data = flow.data || {};
+                                flow.data.trustBoundaryIds = getBoundariesCrossedByFlow(flow, this.graph.getCells());
+                            }
+                        } catch (innerErr) {
+                            console.warn('Failed computing flow boundary ids for a cell', innerErr);
+                        }
+                    });
+                }
+            } catch (err) {
+                // If anything goes wrong computing relationships, don't block saving — log and continue
+                // eslint-disable-next-line no-console
+                console.error('Error while attaching boundary/flow data before save', err);
+            }
+
             const updated = Object.assign({}, this.diagram);
-            updated.cells = this.graph.toJSON().cells;
+            updated.cells = (this.graph && typeof this.graph.toJSON === 'function') ? this.graph.toJSON().cells : this.diagram.cells || [];
             this.$store.dispatch(tmActions.diagramSaved, updated);
             this.$store.dispatch(tmActions.saveModel);
         },

@@ -21,6 +21,7 @@ const applyData = (cell, data) => {
         data.protocol = cell.protocol || '';
         data.isEncrypted = !!cell.isEncrypted;
         data.isPublicNetwork = !!cell.isPublicNetwork;
+        data.trustBoundaryIds = cell.trustBoundaryIds || [];
     }
 };
 
@@ -31,7 +32,8 @@ const map = (constructor) => (cell) => {
         vertices: cell.vertices,
         connector: 'smooth',
         attrs: {},
-        labels: getEdgeLabels(cell)
+        labels: getEdgeLabels(cell),
+        trustBoundaryIds: cell.trustBoundaryIds || []
     });
 };
 

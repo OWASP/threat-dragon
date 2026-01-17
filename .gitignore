@@ -1,9 +1,13 @@
 # uses allow-list, so ignore everything
 *
 
+!*.md
+!license.txt
+
 # allow github, workflows and templates
 !.github/
 !.github/*.yaml
+!.github/*.md
 !.github/CODEOWNERS
 !.github/ISSUE_TEMPLATE/
 !.github/ISSUE_TEMPLATE/*.yml
@@ -11,10 +15,11 @@
 !.github/ISSUE_TEMPLATE/*.md
 !.github/workflows/
 !.github/workflows/*.yaml
+!.github/workflows/.trivyignore
+!.github/workflows/.zap-rules-web.tsv
 !.gitignore
 !.gitattributes
 !.lycheeignore
-!.trivyignore
 !.markdownlint.yaml
 !.wordlist.txt
 !.spellcheck.yaml
@@ -25,8 +30,6 @@
 !Dockerfile
 
 # allow build system and artwork
-!*.md
-!license.txt
 !cupcake/icons/*.ico
 !cupcake/png/*.png
 !cupcake/png/*.gif
@@ -34,12 +37,6 @@
 !minimal.env
 !package.json
 !package-lock.json
-
-# sample threat models
-!ThreatDragonModels
-!ThreatDragonModels/*model.json
-!ThreatDragonModels/test/
-!ThreatDragonModels/test/*.json
 
 # documentation site
 !docs/
@@ -178,6 +175,8 @@
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
 !td.vue/src/service/threats/models/*.js
+!td.vue/src/service/threats/models/eop/
+!td.vue/src/service/threats/models/eop/*.js
 !td.vue/src/service/threats/oats/
 !td.vue/src/service/threats/oats/*.js
 !td.vue/src/service/x6/
@@ -295,6 +294,8 @@
 !td.vue/ai-tools/src/*.py
 
 
-# utility scripts
-!utils
-!utils/**/*
+# sample threat models
+!ThreatDragonModels
+!ThreatDragonModels/*model.json
+!ThreatDragonModels/test/
+!ThreatDragonModels/test/*.json

@@ -157,6 +157,11 @@ const spa = {
                 defaultTitle: 'Nuevo diagrama CIA',
                 defaultDescription: 'Descripción de Nuevo diagrama CIA',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Nuevo diagrama de juegos EoP',
+                defaultDescription: 'Descripción de nuevo diagrama de juegos EoP',
+                select: 'Juegos EoP'
             }
         },
         threats: 'Amenazas',
@@ -305,6 +310,15 @@ const spa = {
         next: 'próximo',
         previous: 'Previo'
     },
+    cards: {
+        details: 'Detalles de la carta',
+        noDetails: 'sin detalles disponibles',
+        unknown: 'Desconocido',
+        properties: {
+            suit: 'Categoría',
+            number: 'Número'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -351,6 +365,16 @@ const spa = {
                 informationDisclosure: 'Information disclosure / Brecha de información',
                 denialOfService: 'Denial of service / Denegación de servicio',
                 elevationOfPrivilege: 'Elevation of privilege / Elevación de privilegios'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding / Validación y codificación de datos',
+                authentication: 'Authentication / Autenticación',
+                sessionManagement: 'Session Management / Gestión de Sesión',
+                authorization: 'Authorization / Autorización',
+                cryptography: 'Cryptography / Criptografía',
+                cornucopia: 'Cornucopia / Cornucopia',
+                wildCard: 'Wild Card / Comodín'
             }
         },
         generic: {
@@ -359,7 +383,9 @@ const spa = {
             ciadie: 'Nueva amenaza CIA-DIE',
             linddun: 'Nueva amenaza LINDDUN',
             plot4ai: 'Nueva amenaza PLOT4ai',
-            stride: 'Nueva amenaza STRIDE'
+            stride: 'Nueva amenaza STRIDE',
+            eop: 'Nueva amenaza EoP'
+
         },
         edit: 'Editar amenaza',
         confirmDeleteTitle: 'Confirmación de eliminación',
@@ -392,6 +418,10 @@ const spa = {
             medium: 'Media',
             high: 'Alta',
             critical: 'Crítica'
+        },
+        validation: {
+            error: 'El número de la carta es obligatorio.',
+            cardNumberRequired: 'Debe seleccionar un número de carta antes de guardar.'
         }
     },
     report: {

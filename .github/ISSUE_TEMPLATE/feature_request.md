@@ -1,22 +1,27 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
+title: 'Feature'
 labels: 'enhancement'
 assignees: ''
 
 ---
 
-**Describe what problem your feature request solves**:
+**Describe what problem your feature request solves**:  
+
 <!-- Describe below what the problem is -->
 
-**Describe the solution you'd like**:
+**Describe the solution you'd like**:  
+
 <!-- Describe below what you want to happen -->
 
-**Code of Conduct**:
+**Declaration**:  
 
-By submitting this issue, you agree to follow our [Code of Conduct](../code_of_conduct.md)
-and have read the [contributing guidelines](../contributing.md)
+By submitting this issue you have:  
 
-**Additional context**:
-<!-- Add below any other context or screenshots about the feature request -->
+- [ ] read the [contribution guide](../blob/main/contributing.md) and agree to the [Code of Conduct](../blob/main/code_of_conduct.md)
+- [ ] not used agentic or generative AI in creating this feature request
+
+**Additional context**:  
+
+<!-- Add below any other context or screenshots for this feature request -->

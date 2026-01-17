@@ -157,6 +157,11 @@ const fin = {
                 defaultTitle: 'Uusi CIA-kaavio',
                 defaultDescription: 'Uuden CIA-kaavion kuvaus',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Uusi EoP-pelikaavio',
+                defaultDescription: 'Uuden EoP-pelikaavion kuvaus',
+                select: 'EoP-pelit'
             }
         },
         threats: 'Uhat',
@@ -305,6 +310,15 @@ const fin = {
         next: 'Seuraava',
         previous: 'Edellinen'
     },
+    cards: {
+        details: 'Kortin tiedot',
+        noDetails: 'ei tietoja saatavilla',
+        unknown: 'Tuntematon',
+        properties: {
+            suit: 'Luokka',
+            number: 'Numero'
+        }
+    },
     threats: {
         model: {
             cia: {
@@ -359,7 +373,8 @@ const fin = {
             ciadie: 'Uusi CIA-DIE-uhka',
             linddun: 'Uusi LINDDUN-uhka',
             plot4ai: 'Uusi PLOT4ai-uhka',
-            stride: 'Uusi STRIDE-uhka'
+            stride: 'Uusi STRIDE-uhka',
+            eop: 'Uusi EoP-uhka'
         },
         edit: 'Muokkaa Uhkaa',
         confirmDeleteTitle: 'Vahvista Poistaminen',
@@ -392,6 +407,10 @@ const fin = {
             medium: 'Keskitaso',
             high: 'Korkea',
             critical: 'Kriittinen'
+        },
+        validation: {
+            error: 'Kortin numero on pakollinen.',
+            cardNumberRequired: 'Sinun on valittava kortin numero ennen tallentamista.'
         }
     },
     report: {

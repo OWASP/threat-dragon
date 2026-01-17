@@ -157,6 +157,11 @@ const ell = {
                 defaultTitle: 'Νέο διάγραμμα CIA',
                 defaultDescription: 'Περιγραφή νέου διαγράμματος CIA',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Νέο διάγραμμα παιχνιδιών EoP',
+                defaultDescription: 'Νέο διάγραμμα παιχνιδιών EoP',
+                select: 'Παιχνίδια EoP'
             }
         },
         threats: 'Απειλές',
@@ -305,6 +310,15 @@ const ell = {
         next: 'Επόμενο',
         previous: 'προηγούμενος'
     },
+    cards: {
+        details: 'Λεπτομέρειες κάρτας',
+        noDetails: 'δεν υπάρχουν διαθέσιμες λεπτομέρειες',
+        unknown: 'Άγνωστο',
+        properties: {
+            suit: 'Κατηγορία',
+            number: 'Αριθμός'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -359,7 +373,8 @@ const ell = {
             ciadie: 'Νέα απειλή CIA-DIE',
             linddun: 'Νέα απειλή LINDDUN',
             plot4ai: 'Νέα απειλή PLOT4ai',
-            stride: 'Νέα απειλή STRIDE'
+            stride: 'Νέα απειλή STRIDE',
+            eop: 'Νέα απειλή EoP'
         },
         edit: 'Επεξεργασία Απειλής',
         confirmDeleteTitle: 'Επιβεβαίωση Διαγραφής',
@@ -392,6 +407,10 @@ const ell = {
             medium: 'Μεσαία',
             high: 'Υψηλή',
             critical: 'Κρίσιμη'
+        },
+        validation: {
+            error: 'Απαιτείται αριθμός κάρτας.',
+            cardNumberRequired: 'Πρέπει να επιλέξετε έναν αριθμό κάρτας πριν από την αποθήκευση.'
         }
     },
     report: {

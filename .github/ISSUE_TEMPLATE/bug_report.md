@@ -1,32 +1,38 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: 'Bug'
 labels: 'bug'
 assignees: ''
 
 ---
 
-**Describe the bug**:
+**Describe the bug**:  
+
 <!-- Describe below what the problem is -->
 
-**Expected behaviour**:
+**Expected behaviour**:  
+
 <!-- Describe below what you expected to happen -->
 
-**Environment**:
+**Environment**:  
 
 - Version: (e.g. 1.3.1)
 - Platform: (Web App / Desktop App)
 - OS: (MacOS / Windows / Linux)
 - Browser: (e.g. chrome, firefox, safari)
 
-**To Reproduce**:
+**To Reproduce**:  
+
 <!-- List below the steps to reproduce the behaviour -->
 
-**Code of Conduct**:
+**Declaration**:  
 
-By submitting this issue, you agree to follow our [Code of Conduct](../code_of_conduct.md)
-and have read the [contributing guidelines](../contributing.md)
+By submitting this issue you have:  
 
-**Any additional context, screenshots, etc**:
+- [ ] read the [contribution guide](../blob/main/contributing.md) and agree to the [Code of Conduct](../blob/main/code_of_conduct.md)
+- [ ] not used agentic or generative AI in creating this bug report
+
+**Any additional context, screenshots, etc**:  
+
 <!-- Add below any other context or screenshots about this bug -->
