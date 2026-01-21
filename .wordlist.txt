@@ -95,6 +95,7 @@ Mitigations
 msa
 nav
 npm
+npx
 NSIS
 nvm
 OAuth
@@ -119,6 +120,7 @@ sast
 SAST
 SCA
 Sinon
+schemas
 snapcraft
 sudo
 Suomi
