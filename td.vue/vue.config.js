@@ -124,11 +124,18 @@ module.exports = {
                     title: 'OWASP Threat Dragon'
                 },
                 extraResources: [
-                    {
+                    // Windows uses embedded Python
+                    ...(process.platform === 'win32' ? [{
+                        from: 'python-embedded',
+                        to: 'python-embedded',
+                        filter: ['**/*']
+                    }] : []),
+                    // macOS and Linux use venv
+                    ...(process.platform !== 'win32' ? [{
                         from: 'venv',
                         to: 'venv',
                         filter: ['**/*']
-                    },
+                    }] : []),
                     {
                         from: 'ai-tools',
                         to: 'ai-tools',

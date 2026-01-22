@@ -7,6 +7,13 @@ import io
 import sys
 from datetime import datetime
 from pathlib import Path
+
+# Ensure the script's directory is in sys.path for local imports
+# This is required for Windows embedded Python which doesn't add cwd to path
+_script_dir = str(Path(__file__).parent.resolve())
+if _script_dir not in sys.path:
+    sys.path.insert(0, _script_dir)
+
 from utils import update_threats_in_memory
 from ai_client import generate_threats
 from validator import ThreatValidator

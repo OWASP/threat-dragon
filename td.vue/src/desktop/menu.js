@@ -7,7 +7,7 @@ import { isMacOS } from './utils.js';
 
 const { shell, ipcMain } = require('electron');
 const fs = require('fs');
-const { spawn } = require('child_process');
+const { spawn, execSync } = require('child_process');
 const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
@@ -16,6 +16,7 @@ var aiSettingsWindow = null;
 var aiThreatsWarningWindow = null;
 var aiThreatsProgressWindow = null;
 var aiThreatsResultsWindow = null;
+var aiPythonRequiredWindow = null;
 var currentPythonProcess = null;
 var isPythonProcessCancelled = false;
 
@@ -506,26 +507,94 @@ export const setMainWindow = (window) => {
 // AI Tools menu handlers
 function generateThreatsAndMitigations() {
     logger.log.debug('Generate Threats & Mitigations clicked');
+    
+    // Check if Python is installed before proceeding
+    if (!isPythonInstalled()) {
+        logger.log.warn('Python is not installed - showing Python Required dialog');
+        showPythonRequiredDialog();
+        return;
+    }
+    
     openAIThreatsWarning();
 }
 
-function getPythonExecutable() {
-    let venvPath;
-    
-    if (app.isPackaged) {
-        // In production build, extraResources are in process.resourcesPath
-        venvPath = path.join(process.resourcesPath, 'venv');
-    } else {
-        // In development, use relative path from package.json
-        const packageJsonPath = require.resolve('../../package.json');
-        const tdVuePath = path.dirname(packageJsonPath);
-        venvPath = path.join(tdVuePath, 'venv');
+/**
+ * Check if Python is installed by trying to execute it
+ * Returns true if Python can be executed, false otherwise
+ */
+function isPythonInstalled() {
+    const pythonExe = getPythonExecutable();
+    try {
+        // Try to execute Python with --version to check if it's available
+        execSync(`"${pythonExe}" --version`, { stdio: 'ignore' });
+        return true;
+    } catch {
+        return false;
     }
+}
+
+function getPythonExecutable() {
+    const isWindows = process.platform === 'win32';
+    const baseDir = app.isPackaged 
+        ? process.resourcesPath 
+        : path.dirname(require.resolve('../../package.json'));
     
-    const pythonPath = process.platform === 'win32' 
-        ? path.join(venvPath, 'Scripts', 'python.exe')
-        : path.join(venvPath, 'bin', 'python');
-    return path.resolve(pythonPath);
+    if (isWindows) {
+        return path.join(baseDir, 'python-embedded', 'python.exe');
+    }
+    return path.join(baseDir, 'venv', 'bin', 'python');
+}
+
+/**
+ * Show Python Required dialog when Python is not found
+ */
+function showPythonRequiredDialog() {
+    logger.log.debug('Opening Python Required dialog');
+    
+    if (aiPythonRequiredWindow && !aiPythonRequiredWindow.isDestroyed()) {
+        aiPythonRequiredWindow.focus();
+        return;
+    }
+
+    aiPythonRequiredWindow = new BrowserWindow({
+        width: 450,
+        height: 350,
+        resizable: false,
+        parent: mainWindow,
+        modal: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
+        },
+        show: false
+    });
+
+    aiPythonRequiredWindow.setMenuBarVisibility(false);
+
+    const closeHandler = (event) => {
+        if (event.sender === aiPythonRequiredWindow.webContents) {
+            aiPythonRequiredWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeHandler);
+
+    aiPythonRequiredWindow.once('closed', () => {
+        ipcMain.removeListener('ai-window-close', closeHandler);
+        aiPythonRequiredWindow = null;
+    });
+
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+        aiPythonRequiredWindow.loadURL('http://localhost:8080/ai-python-required.html');
+    } else {
+        aiPythonRequiredWindow.loadURL('app://./ai-python-required.html');
+    }
+
+    aiPythonRequiredWindow.once('ready-to-show', () => {
+        aiPythonRequiredWindow.show();
+    });
 }
 
 function getMainPyPath() {
@@ -575,10 +644,8 @@ async function runPythonThreatGeneration(modelData) {
     const pythonExecutable = getPythonExecutable();
     const mainPyPath = getMainPyPath();
     
-    if (!fs.existsSync(pythonExecutable)) {
-        dialog.showErrorBox('Python Not Found', `Python executable not found at:\n${pythonExecutable}`);
-        return;
-    }
+    // Note: We don't pre-check if Python exists - we let it fail and handle the error
+    // This provides a better user experience with the Python Required dialog
     
     if (!fs.existsSync(mainPyPath)) {
         dialog.showErrorBox('Script Not Found', `main.py not found at:\n${mainPyPath}`);
@@ -695,7 +762,14 @@ async function runPythonThreatGeneration(modelData) {
     pythonProcess.on('error', (error) => {
         closeAIThreatsProgress();
         currentPythonProcess = null;
-        dialog.showErrorBox('Execution Error', `Failed to start Python process:\n${error.message}`);
+        
+        // Check if this is a "file not found" error (Python not installed/available)
+        if (error.code === 'ENOENT') {
+            logger.log.warn('Python executable not found - showing Python Required dialog');
+            showPythonRequiredDialog();
+        } else {
+            dialog.showErrorBox('Execution Error', `Failed to start Python process:\n${error.message}`);
+        }
     });
     
     pythonProcess.on('close', (code) => {
@@ -866,10 +940,6 @@ function openAIThreatsProgress() {
     aiThreatsProgressWindow = new BrowserWindow({
         width: 600,
         height: 450,
-        minWidth: 500,
-        minHeight: 300,
-        maxWidth: 600,
-        maxHeight: 450,
         resizable: false,
         parent: mainWindow,
         modal: true,

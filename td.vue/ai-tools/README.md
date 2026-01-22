@@ -47,8 +47,8 @@ td.vue/
 ├─ public/
 │  └─ ai-*.html                  # AI warning, progress, and results windows
 ├─ scripts/
-│  └─ setup-venv.js              # Creates Python venv and installs ai-tools/requirements.txt on npm install
-└─ vue.config.js                 # Copies ai-tools and the Python venv into the Electron build
+│  └─ setup-python.js            # Sets up Python environment (embedded Python on Windows, venv on macOS/Linux)
+└─ vue.config.js                 # Copies ai-tools and Python environment into the Electron build
 ```
 
 ---
@@ -196,25 +196,54 @@ td.vue/
 
 ## Development vs Packaged Builds
 
+### Windows (No Python Installation Required)
+
 - **Development mode (`npm run start:desktop`)**:
-  - Requires **Python 3.8+** installed on the developer machine.
-  - `npm install` runs `scripts/setup-venv.js`, which:
+  - `npm install` runs `scripts/setup-python.js`, which:
+    - Automatically downloads the latest embedded Python from python.org.
+    - Sets up pip and installs dependencies from `ai-tools/requirements.txt`.
+    - Creates a self-contained `python-embedded` directory.
+  - **No system Python installation is required** on Windows.
+  - `menu.js` resolves the embedded Python and `ai-tools/src/main.py` relative to the `td.vue` source tree.
+
+- **Packaged/installer builds (`npm run build:desktop`)**:
+  - The Electron build process (see `vue.config.js`) copies:
+    - The **`ai-tools`** folder.
+    - The pre‑created **`python-embedded`** directory.
+  - `menu.js` resolves both the Python interpreter and `main.py` from `process.resourcesPath`.
+  - **End users do not need Python installed**; the installer ships a self‑contained embedded Python and AI tools bundle.
+
+### macOS and Linux (Python Installation Required)
+
+- **Development mode (`npm run start:desktop`)**:
+  - Requires **Python 3.10+** installed on the developer machine.
+  - `npm install` runs `scripts/setup-python.js`, which:
     - Creates a local `venv` in the `td.vue` project directory.
     - Installs dependencies from `ai-tools/requirements.txt` into that venv.
-  - `menu.js` resolves both the venv and `ai-tools/src/main.py` relative to the `td.vue` source tree.
+  - If Python is not installed, the setup will show a warning but allow npm install to continue.
+  - When the user tries to use AI Tools without Python, a helpful dialog appears with installation instructions.
 
 - **Packaged/installer builds (`npm run build:desktop`)**:
   - The Electron build process (see `vue.config.js`) copies:
     - The **`ai-tools`** folder.
     - The pre‑created **Python `venv`**.
   - `menu.js` resolves both the Python interpreter and `main.py` from `process.resourcesPath`.
-  - **End users do not need Python installed**; the installer ships a self‑contained venv and AI tools bundle.
+  - **Note**: For packaged builds on macOS/Linux, Python must be available during the build process to create the venv. End users of the packaged app do not need Python installed separately.
+
+### Python Requirement Check
+
+- On **macOS and Linux**, when the user selects "Generate Threats & Mitigations" without Python/venv available:
+  - A dialog appears explaining that Python is required.
+  - Platform-specific installation instructions are provided (Homebrew for macOS, apt/dnf/pacman for Linux).
+  - After installing Python and restarting Threat Dragon, the setup will complete automatically.
 
 ---
 
 ## End‑User Workflow in Threat Dragon
 
 - **Prerequisites**:
+  - **Windows**: No additional software required – embedded Python is bundled with the app.
+  - **macOS/Linux**: Python 3.10+ must be installed on the system. If not available, the app will show installation instructions when AI Tools is accessed.
   - Configure AI settings in **AI Settings** (model, temperature, response format, optional API base, log level).
   - Provide and save a valid API key (stored securely via Electron's `safeStorage`).
 
