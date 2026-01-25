@@ -17,6 +17,7 @@ var aiThreatsWarningWindow = null;
 var aiThreatsProgressWindow = null;
 var aiThreatsResultsWindow = null;
 var aiPythonRequiredWindow = null;
+var aiSafeStorageWarningWindow = null;
 var currentPythonProcess = null;
 var isPythonProcessCancelled = false;
 
@@ -1160,6 +1161,67 @@ async function loadAPIKey() {
     }
 }
 
+function openSafeStorageWarning() {
+    logger.log.debug('Opening safeStorage warning window');
+    
+    if (aiSafeStorageWarningWindow && !aiSafeStorageWarningWindow.isDestroyed()) {
+        aiSafeStorageWarningWindow.focus();
+        return;
+    }
+
+    aiSafeStorageWarningWindow = new BrowserWindow({
+        width: 600,
+        height: 500,
+        minWidth: 500,
+        minHeight: 400,
+        resizable: true,
+        parent: mainWindow,
+        modal: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: getPreloadPath()
+        },
+        show: false
+    });
+
+    aiSafeStorageWarningWindow.setMenuBarVisibility(false);
+
+    const closeHandler = (event) => {
+        if (event.sender === aiSafeStorageWarningWindow.webContents) {
+            aiSafeStorageWarningWindow.close();
+        }
+    };
+    ipcMain.on('ai-window-close', closeHandler);
+
+    const snapStatusHandler = (event) => {
+        if (event.sender === aiSafeStorageWarningWindow.webContents) {
+            const isSnap = !!process.env.SNAP || !!process.env.SNAP_NAME;
+            const platform = process.platform;
+            event.returnValue = { isSnap, platform };
+        }
+    };
+    ipcMain.on('ai-safestorage-get-snap-status', snapStatusHandler);
+
+    aiSafeStorageWarningWindow.once('closed', () => {
+        ipcMain.removeListener('ai-window-close', closeHandler);
+        ipcMain.removeListener('ai-safestorage-get-snap-status', snapStatusHandler);
+        aiSafeStorageWarningWindow = null;
+    });
+
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+        aiSafeStorageWarningWindow.loadURL('http://localhost:8080/ai-safestorage-warning.html');
+    } else {
+        aiSafeStorageWarningWindow.loadURL('app://./ai-safestorage-warning.html');
+    }
+
+    aiSafeStorageWarningWindow.once('ready-to-show', () => {
+        aiSafeStorageWarningWindow.show();
+    });
+}
+
 // Save API key using Electron's safeStorage API
 async function saveAPIKey(apiKey) {
     try {
@@ -1169,6 +1231,7 @@ async function saveAPIKey(apiKey) {
         if (apiKey && apiKey.trim() !== '') {
             if (!safeStorage.isEncryptionAvailable()) {
                 logger.log.error('Encryption is not available on this system');
+                openSafeStorageWarning();
                 return false;
             }
             
@@ -1252,15 +1315,15 @@ async function saveAISettings(settings) {
         
         // Save API key separately to credential manager (async)
         const apiKeySaved = await saveAPIKey(apiKey);
-        if (!apiKeySaved) {
+        if (!apiKeySaved && apiKey && apiKey.trim() !== '') {
             logger.log.warn('Failed to save API key to credential manager');
-            // Continue anyway - other settings were saved successfully
+            return { success: true, hasWarning: true };
         }
         
-        return true;
+        return { success: true, hasWarning: false };
     } catch (err) {
         logger.log.error('Error saving AI settings: ' + err.message);
-        return false;
+        return { success: false, hasWarning: false };
     }
 }
 
@@ -1331,8 +1394,13 @@ function openAISettings() {
     // Save settings request
     const saveHandler = async (event, settings) => {
         if (aiSettingsWindow && !aiSettingsWindow.isDestroyed()) {
-            if (await saveAISettings(settings)) {
-                aiSettingsWindow.webContents.send('ai-settings-saved');
+            const result = await saveAISettings(settings);
+            if (result.success) {
+                if (result.hasWarning) {
+                    aiSettingsWindow.webContents.send('ai-settings-saved-with-warning');
+                } else {
+                    aiSettingsWindow.webContents.send('ai-settings-saved');
+                }
             } else {
                 aiSettingsWindow.webContents.send('ai-settings-save-error', 'Failed to save settings');
             }
