@@ -38,7 +38,7 @@ The following settings are available:
 | `LLM Model` | N/A | Yes | A [litellm provider/model](https://docs.litellm.ai/docs/providers) string. For example, `openai/gpt-5` is a valid model. Model validation runs when generating threats, not when saving settings. |
 | `Temperature` | 0.1 | Yes | The model [temperature](https://docs.litellm.ai/docs/proxy/cli#--temperature), typically between 0 and 1, with lower values resulting in more deterministic responses. Each model can have its own thresholds for valid temperatures. |
 | `Structured Format (JSON)` | False | No | Some models support [structured outputs](https://docs.litellm.ai/docs/completion/json_mode). **Enabling this setting [greatly improves](https://github.com/OWASP/threat-dragon/pull/1404/#issuecomment-3764388800) the accuracy and consistency of generated threats and mitigations**. |
-| `API Base` | N/A | No | If your LLM provider does not use a shared base URL, enter the base url here. For example, Azure gives users unique endpoints to use, or if you are using a local LLM option like Ollama, you will need to set the endpoint here. |
+| `API Base` | N/A | No | If your LLM provider does not use a shared base URL, enter the base URL here. For example, Azure gives users unique endpoints to use, or if you are using a local LLM option like Ollama, you will need to set the endpoint here. |
 | `Log Level` | Info | Yes | Set to `DEBUG` for additional context and logging. Please see the "Logging" section below. |
 | `Timeout` | 900 | Yes | The amount of time, in seconds, before aborting LLM calls. If using smaller LLMs or ones with deep reasoning, you may need to increase this. |
 
@@ -112,7 +112,7 @@ sudo snap connect threat-dragon-ng:password-manager-service
 You should only need to do this once, and it should persist across upgrades. Once this is done, if your window manager exposes a supported secret store, the AI tools plugin will now work as expected. There is a snap specific warning, similar to the unsupported display manager, if snap is detected and the plugin is unable to find a secret store implementation.
 
 ### Local LLMs
-Some testing was done with local LLMs. While models larger than 30b parameters shows future promise, the test results were consistently lower quality than when using larger, flagship/cloud models. At this time, we recommend proceeding with caution if you want to explore implementation with local LLMs or smaller models. It is likely that you will get multiple valiation errors. Some testing showed that these smaller models did a poor job reasoning about trust boundaries, data flow directions, and how different components interact, leading to fewer identified threats and inaccurate threats and mitigations.
+Some testing was done with local LLMs. While models larger than 30b parameters shows future promise, the test results were consistently lower quality than when using larger, flagship/cloud models. At this time, we recommend proceeding with caution if you want to explore implementation with local LLMs or smaller models. It is likely that you will get multiple validation errors. Some testing showed that these smaller models did a poor job reasoning about trust boundaries, data flow directions, and how different components interact, leading to fewer identified threats and inaccurate threats and mitigations.
 
 Please see:
 - [InfosecOTB's research](https://infosecotb.com/ai-powered-threat-modeling-with-owasp-threat-dragon-part-2-generating-threats-with-artificial-intelligence/)
