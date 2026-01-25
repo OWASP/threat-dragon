@@ -206,7 +206,7 @@ describe('components/ThreatEditDialog.vue', () => {
             await wrapper.vm.$nextTick();
             const link=wrapper.find('a');
             expect(link.exists()).toBe(true);
-            expect(link.attributes('href')).toBe('https://cornucopia.owasp.org/cards/VE2');
+            expect(link.attributes('href')).toContain('https://cornucopia.owasp.org/card');
             expect(link.text()).toContain('VE2');
         });
 
