@@ -57,10 +57,12 @@ def generate_threats(schema: Dict, model: Dict, api_key: str, model_name: str, t
         "temperature": temperature,
         "timeout": timeout,
         "max_tokens": max_tokens,
-        "api_key": api_key,
         "response_format": AIThreatsResponseList if response_format else None
     }
     
+    if api_key:
+        completion_params["api_key"] = api_key
+
     if api_base:
         completion_params["api_base"] = api_base
     

@@ -58,8 +58,6 @@ def read_data_from_stdin():
 
         # Read API key from first line (never log this)
         api_key_line = sys.stdin.readline()
-        if not api_key_line:
-            raise ValueError("No API key provided in stdin")
         api_key = api_key_line.rstrip('\n')
 
         # Read model JSON from second line
@@ -194,8 +192,6 @@ def main():
     logger.info("Loading API key, threat model and schema from stdin...")
     try:
         api_key, model, schema = read_data_from_stdin()
-        if not api_key or api_key.strip() == '':
-            raise ValueError("API key is empty")
         logger.debug(f"Loaded threat model with {len(model.get('detail', {}).get('diagrams', []))} diagram(s)")
     except Exception as e:
         logger.error(f"ERROR: {str(e)}", exc_info=True)

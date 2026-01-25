@@ -535,15 +535,19 @@ function isPythonInstalled() {
 
 function getPythonExecutable() {
     const isWindows = process.platform === 'win32';
-    const baseDir = app.isPackaged 
-        ? process.resourcesPath 
-        : path.dirname(require.resolve('../../package.json'));
-    
-    if (isWindows) {
-        return path.join(baseDir, 'python-embedded', 'python.exe');
+  
+    if (app.isPackaged) {
+      const baseDir = process.resourcesPath;
+      return isWindows
+        ? path.join(baseDir, 'python-embedded', 'python.exe')
+        : path.join(baseDir, 'venv', 'bin', 'python');
     }
-    return path.join(baseDir, 'venv', 'bin', 'python');
-}
+
+    const baseDir = process.cwd();
+    return isWindows
+      ? path.join(baseDir, 'python-embedded', 'python.exe')
+      : path.join(baseDir, 'venv', 'bin', 'python');
+  }
 
 /**
  * Show Python Required dialog when Python is not found
@@ -643,7 +647,10 @@ function proceedWithThreatGeneration() {
 async function runPythonThreatGeneration(modelData) {
     const pythonExecutable = getPythonExecutable();
     const mainPyPath = getMainPyPath();
-    
+    logger.log.debug(`Python executable resolved to: ${pythonExecutable}`);
+    logger.log.debug(`Exists? ${fs.existsSync(pythonExecutable)}`);
+
+
     // Note: We don't pre-check if Python exists - we let it fail and handle the error
     // This provides a better user experience with the Python Required dialog
     
@@ -656,7 +663,11 @@ async function runPythonThreatGeneration(modelData) {
     let apiKey;
     try {
         apiKey = await loadAPIKey();
-        if (!apiKey || apiKey.trim() === '') {
+        // Load settings to check API base
+        const settings = await loadAISettings();
+        const apiBase = settings.apiBase || '';
+        
+        if ((!apiKey || apiKey.trim() === '') && (!apiBase || apiBase.trim() === '')) {
             dialog.showErrorBox('API Key Not Found', 'API key not found. Please set it in AI Settings.');
             return;
         }
