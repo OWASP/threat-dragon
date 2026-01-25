@@ -524,6 +524,23 @@
             });
         }
 
+        if (window.electronAPI && window.electronAPI.onSettingsSavedWithWarning) {
+            window.electronAPI.onSettingsSavedWithWarning(() => {
+            // Update original settings after save (API key may not be saved)
+            originalSettings = {
+                apiKey: document.getElementById('apiKey').value,
+                llmModel: document.getElementById('llmModel').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                responseFormat: document.getElementById('responseFormat').checked,
+                apiBase: document.getElementById('apiBase').value,
+                logLevel: document.getElementById('logLevel').value,
+                timeout: parseInt(document.getElementById('timeout').value)
+            };
+            formChanged = false;
+            alert('Your API key could not be saved securely, all other settings have been saved.');
+            });
+        }
+
         if (window.electronAPI && window.electronAPI.onSettingsSaveError) {
             window.electronAPI.onSettingsSaveError((event, error) => {
                 alert('Error saving settings: ' + error);

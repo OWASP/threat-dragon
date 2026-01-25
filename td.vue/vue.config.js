@@ -121,7 +121,8 @@ module.exports = {
                     grade: 'stable',
                     summary: 'OWASP Threat Dragon, desktop version',
                     description: 'OWASP Threat Dragon is a free, open-source, cross-platform threat modelling application',
-                    title: 'OWASP Threat Dragon'
+                    title: 'OWASP Threat Dragon',
+                    plugs: ['default', 'password-manager-service']
                 },
                 extraResources: [
                     // Windows uses embedded Python

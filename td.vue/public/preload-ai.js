@@ -30,6 +30,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onSettingsSaved: (callback) => {
         ipcRenderer.on('ai-settings-saved', (event, ...args) => callback(event, ...args));
     },
+    onSettingsSavedWithWarning: (callback) => {
+        ipcRenderer.on('ai-settings-saved-with-warning', (event, ...args) => callback(event, ...args));
+    },
     onSettingsSaveError: (callback) => {
         ipcRenderer.on('ai-settings-save-error', (event, ...args) => callback(event, ...args));
     },
@@ -44,5 +47,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     closeWindow: () => {
         // Use IPC to close window safely
         ipcRenderer.send('ai-window-close');
+    },
+    
+    getSnapStatus: () => {
+        return ipcRenderer.sendSync('ai-safestorage-get-snap-status');
     }
 });
