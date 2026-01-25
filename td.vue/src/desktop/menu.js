@@ -281,6 +281,8 @@ function saveModel () {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
+    mainWindow.webContents.send('apply-diagram-request');
+
     logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
     mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
@@ -292,6 +294,8 @@ function saveModelAs () {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
+    mainWindow.webContents.send('apply-diagram-request');
+    
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
     // clear any existing filename to force a SaveAs
     model.filePath = '';
