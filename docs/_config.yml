@@ -51,13 +51,13 @@ homeLinks:
     description: Installing Threat Dragon
     fa_class: fas fa-cloud-download-alt
   - relative_url: /usage/getting-started.html
-    description: Getting Started
+    description: Getting started
     fa_class: fas fa-play-circle
   - relative_url: /usage/diagrams.html
-    description: How to Create Diagrams
+    description: How to create diagrams
     fa_class: fas fa-project-diagram
   - relative_url: /usage/threats.html
-    description: How to Create Threats
+    description: How to create threats
     fa_class: fas fa-bolt
 
 nav:

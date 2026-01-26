@@ -197,7 +197,7 @@
     "ws": ">=8.18.0",
     "yargs-parser@>=6.0.0 <13.1.2": ">=13.1.2"
   },
-  "main": "index.js",
+  "main": "background.js",
   "resolutions": {
     "ansi-regex": "^6.0.1"
   }
