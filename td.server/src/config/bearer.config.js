@@ -16,19 +16,25 @@ const getBearerToken = (authHeader) => {
         return null;
     }
 
-    if (authHeader.indexOf('Bearer ') === -1) {
+    if (!authHeader.startsWith('Bearer ')) {
         logger.warn('Bearer token key word not found in auth header');
         return null;
     }
 
-    return authHeader.split(' ')[1];
+    const parts = authHeader.split(' ');
+    if (parts.length !== 2) {
+        logger.warn('Malformed Authorization header');
+        return null;
+    }
+
+    return parts[1];
 };
 
 const middleware = (req, res, next) => {
     const token = getBearerToken(req.headers.authorization);
 
     if (!token) {
-        logger.warn(`Bearer token not found for resource that requires authentication: ${req.url}`);
+        logger.warn('Bearer token not found for resource that requires authentication');
         return errors.unauthorized(res, logger);
     }
 
@@ -45,7 +51,7 @@ const middleware = (req, res, next) => {
 
         logger.audit('Error decoding JWT');
         logger.error(e);
-        return errors.badRequest('Invalid JWT', res, logger);
+        return errors.unauthorized(res, logger);
     }
 };
 
