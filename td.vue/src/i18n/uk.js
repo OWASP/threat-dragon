@@ -64,6 +64,11 @@ const ukr = {
             save: 'Save Model',
             saveAs: 'Save Model As'
         },
+        aiTools: {
+            heading: 'ІІ-інструменти',
+            generateThreats: 'Генерувати загрози та заходи захисту',
+            settings: 'Налаштування'
+        },
         help: {
             heading: 'Help',
             docs: 'Documentation',

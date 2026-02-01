@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     modelOpened: (fileName) => ipcRenderer.send('model-opened', fileName),
     modelPrint: (format) => ipcRenderer.send('model-print', format),
     modelSave: (modelData, fileName) => ipcRenderer.send('model-save', modelData, fileName),
+    aiThreatGeneration: (modelData) => ipcRenderer.send('ai-threat-generation', modelData),
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
 
     // electron main to renderer
@@ -25,5 +26,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback),
     onSaveModelConfirmed: (callback) => ipcRenderer.on('save-model-confirmed', callback),
     onSaveModelFailed: (callback) => ipcRenderer.on('save-model-failed', callback),
+    onAIThreatGenerationRequest: (callback) => ipcRenderer.on('ai-threat-generation-request', callback),
+    onAIThreatGenerationComplete: (callback) => ipcRenderer.on('ai-threat-generation-complete', callback),
     onApplyDiagramRequest: (callback) => ipcRenderer.on('apply-diagram-request', callback)
 });

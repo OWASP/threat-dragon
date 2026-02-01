@@ -1,0 +1,2 @@
+litellm>=1.77.0
+pydantic>=2.12.0

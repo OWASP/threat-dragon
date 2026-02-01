@@ -64,6 +64,11 @@ const fin = {
             save: 'Tallenna Uhkamalli',
             saveAs: 'Tallenna Uhkamalli Nimellä'
         },
+        aiTools: {
+            heading: 'AI-työkalut',
+            generateThreats: 'Luo uhkia ja lievennyksiä',
+            settings: 'Asetukset'
+        },
         help: {
             heading: 'OHje',
             docs: 'Dokumentaatio',
