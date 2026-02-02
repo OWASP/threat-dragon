@@ -186,7 +186,7 @@ describe('components/ThreatEditDialog.vue', () => {
 
         it('updates the data', () => {
             expect(mockStore.dispatch).toHaveBeenNthCalledWith(1,'CELL_DATA_UPDATED',{threatFrequency:{availability: 0,confidentiality: 0,integrity: 0}, threats: [ getThreatData() ] });
-            expect(mockStore.dispatch).toHaveBeenNthCalledWith(2,'THREATMODEL_MODIFIED;');
+            expect(mockStore.dispatch).toHaveBeenNthCalledWith(2,'THREATMODEL_MODIFIED');
         });
 
         it('updates the styles', () => {

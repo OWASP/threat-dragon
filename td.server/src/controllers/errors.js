@@ -65,8 +65,18 @@ export const unauthorized = (res, logger) => sendError('You must login to contin
  */
 export const forbidden = (res, logger) => sendError('Forbidden', 403, 'Forbidden', res, logger);
 
+/**
+ * Returns a 422 status / error
+ * @param {String} error
+ * @param {Object} res
+ * @param {*} logger
+ * @returns {Object}
+ */
+export const conflict = (error, res, logger) => sendError(error, 422, 'Conflict', res, logger);
+
 export default {
     badRequest,
+    conflict,
     forbidden,
     notFound,
     serverError,

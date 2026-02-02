@@ -12,7 +12,9 @@ describe('NewThreatModel.vue', () => {
             localVue.use(Vuex);
             mockStore = new Vuex.Store({
                 state: {
-                    provider: { selected: 'local' }
+                    provider: { selected: 'local' },
+                    threatmodel: { data: {} },
+                    packageBuildVersion: '2.0.0'
                 },
                 actions: {
                     'THREATMODEL_CLEAR': () => {},
@@ -58,7 +60,9 @@ describe('NewThreatModel.vue', () => {
             localVue.use(Vuex);
             mockStore = new Vuex.Store({
                 state: {
-                    provider: { selected: 'github' }
+                    provider: { selected: 'github' },
+                    threatmodel: { data: {} },
+                    packageBuildVersion: '2.0.0'
                 },
                 actions: {
                     'THREATMODEL_CLEAR': () => {},

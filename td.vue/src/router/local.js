@@ -1,8 +1,10 @@
 import { providerTypes } from '../service/provider/providerTypes.js';
+import { getTemplateRoutes } from './template.js';
 
 const providerType = providerTypes.local;
 
 export const localRoutes = [
+    ...getTemplateRoutes(providerType, `/${providerType}`),
     {
         path: `/${providerType}/:threatmodel`,
         name: `${providerType}ThreatModel`,
