@@ -5,12 +5,14 @@ import tmBom from '@/service/migration/tmBom/threatModelBom';
 
 const schemaV1 = require('@/assets/schema/threat-dragon-v1.schema');
 const schemaV2 = require('@/assets/schema/threat-dragon-v2.schema');
+const schemaTemplate = require('@/assets/schema/owasp-threat-dragon-template.schema.json');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);
 
 const validateV1 = ajv.compile(schemaV1);
 const validateV2 = ajv.compile(schemaV2);
+const validateTemplate = ajv.compile(schemaTemplate);
 
 export const isValid = (jsonFile) => {
 
@@ -62,11 +64,26 @@ export const isOtm = (jsonFile) => {
     return otm.isValid(jsonFile);
 };
 
+export const isTemplate = (jsonFile) => {
+    return validateTemplate(jsonFile);
+};
+
+export const validateTemplateFormat = (jsonFile) => {
+    if (validateTemplate(jsonFile)) {
+        console.debug('Schema validate success for Template format');
+        return { valid: true, errors: null };
+    }
+    console.warn('Failed to validate template', validateTemplate.errors);
+    return { valid: false, errors: validateTemplate.errors };
+};
+
 export default {
     checkV2,
     isV1,
     isV2,
     isOtm,
     isTmBom,
-    isValid
+    isValid,
+    isTemplate,
+    validateTemplateFormat
 };

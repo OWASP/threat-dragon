@@ -1,5 +1,6 @@
 <template>
     <td-selection-page
+        :filter.sync="searchQuery"
         :items="branches"
         :page="page"
         :pageNext="pageNext"
@@ -47,6 +48,8 @@ export default {
     },
     data() {
         return {
+            searchQuery: '',
+            searchTimeout: null,
             showNewBranchDialog: false,
         };
     },
@@ -69,6 +72,18 @@ export default {
         pageNext: (state) => state.branch.pageNext,
         pagePrev: (state) => state.branch.pagePrev,
     }),
+    watch: {
+        searchQuery(newQuery) {
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                console.log('Suche nach:', newQuery);
+                this.$store.dispatch(branchActions.fetch, {
+                    page: 1,
+                    searchQuery: newQuery,
+                });
+            }, 500);
+        },
+    },
     mounted() {
         if (this.provider !== this.$route.params.provider) {
             this.$store.dispatch(providerActions.selected, this.$route.params.provider);
@@ -95,7 +110,7 @@ export default {
             this.$router.push({ name: routeName, params });
         },
         paginate(page) {
-            this.$store.dispatch(branchActions.fetch, page);
+            this.$store.dispatch(branchActions.fetch, page, this.searchQuery);
         },
         toggleNewBranchDialog(){
             this.showNewBranchDialog = !this.showNewBranchDialog;

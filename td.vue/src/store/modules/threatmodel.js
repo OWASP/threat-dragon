@@ -21,12 +21,16 @@ import {
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_STASH,
-    THREATMODEL_UPDATE
+    THREATMODEL_UPDATE,
+    THREATMODEL_TEMPLATE_DOWNLOAD,
+    THREATMODEL_TEMPLATE_LOAD,
+    THREATMODEL_LOAD_DEMOS
 } from '@/store/actions/threatmodel';
 import save from '@/service/save';
 import threatmodelApi from '@/service/api/threatmodelApi';
 import googleDriveApi from '@/service/api/googleDriveApi';
 import { FOLDER_SELECTED } from '../actions/folder';
+import { v4 } from 'uuid';
 
 const state = {
     all: [],
@@ -52,6 +56,7 @@ const actions = {
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
             window.electronAPI.modelSave(state.data, state.fileName);
+            return true;
         } else {
             let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
@@ -70,6 +75,7 @@ const actions = {
                 dispatch(THREATMODEL_STASH);
                 commit(THREATMODEL_NOT_MODIFIED);
             }
+            return result;
         }
     },
     [THREATMODEL_DIAGRAM_APPLIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_APPLIED),
@@ -103,6 +109,9 @@ const actions = {
             );
             commit(THREATMODEL_FETCH_ALL, resp.data);
         }
+    },
+    [THREATMODEL_LOAD_DEMOS]: ({ commit }) => {
+        commit(THREATMODEL_FETCH_ALL, demo.models);
     },
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
@@ -146,7 +155,110 @@ const actions = {
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
     [THREATMODEL_STASH]: ({ commit }) => commit(THREATMODEL_STASH),
     [THREATMODEL_NOT_MODIFIED]: ({ commit }) => commit(THREATMODEL_NOT_MODIFIED),
-    [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
+    [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update),
+    [THREATMODEL_TEMPLATE_DOWNLOAD]: async ({ state }, templateMetadata) => {
+        console.debug('Download template action');
+
+        const model = JSON.parse(JSON.stringify(state.data));
+
+        // Blank out instance-specific fields
+        model.summary.id = '';
+        model.summary.owner = '';
+        model.summary.title = templateMetadata.name || '';
+        model.summary.description = templateMetadata.description || '';
+
+        if (model.detail.reviewer !== undefined) {
+            model.detail.reviewer = '';
+        }
+
+        if (model.detail.contributors) {
+            model.detail.contributors = [];
+        }
+
+        // Create the template structure
+        const templateData = {
+            templateMetadata: {
+                id: v4(), // Don't forget the GUID!
+                name: templateMetadata.name,
+                description: templateMetadata.description,
+                tags: templateMetadata.tags,
+                modelRef: v4()
+            },
+            model: model
+        };
+
+        // Calculate filename once
+        const fileName = `${templateMetadata.name}.json`;
+
+        // CALL THE NEW FUNCTION
+        // Pass data and filename explicitly. No confusing 'state' wrapper needed.
+        return await save.template(templateData, fileName);
+
+
+    },
+
+    /**
+     * Loads a template into the threat model state, regenerating cell and port IDs
+     * 
+     * Creates a new threat model from a template by deep cloning the model data and
+     * regenerating UUIDs for all diagram cells and ports to ensure uniqueness.
+     * Diagram IDs are preserved as they are model-scoped.
+     * 
+     * @async
+     * @param {Object} context - Vuex action context
+     * @param {Function} context.commit - Vuex commit function
+     * @param {Object} templateData - Template model data (threat model JSON structure)
+     * @returns {Promise<void>}
+     */
+    [THREATMODEL_TEMPLATE_LOAD]: async ({ commit }, { templateData }) => {
+        console.debug('Load template action');
+
+        // Convert template → model
+        const model = JSON.parse(JSON.stringify(templateData)); // deep clone
+
+        // Regenerate all cell and port IDs (diagram IDs stay as-is)
+        const idMap = {};
+
+        model.detail.diagrams.forEach(diagram => {
+
+            // First pass: map all cell and port IDs
+            if (diagram.cells && Array.isArray(diagram.cells)) {
+                diagram.cells.forEach(cell => {
+                    idMap[cell.id] = v4();
+
+                    if (cell.ports?.items) {
+                        cell.ports.items.forEach(port => {
+                            idMap[port.id] = v4();
+                        });
+                    }
+                });
+
+                // Second pass: apply new IDs and update references
+                diagram.cells.forEach(cell => {
+                    cell.id = idMap[cell.id];
+
+                    if (cell.ports?.items) {
+                        cell.ports.items.forEach(port => {
+                            port.id = idMap[port.id];
+                        });
+                    }
+
+                    if (cell.source?.cell) {
+                        cell.source.cell = idMap[cell.source.cell];
+                        cell.source.port = idMap[cell.source.port];
+                    }
+
+                    if (cell.target?.cell) {
+                        cell.target.cell = idMap[cell.target.cell];
+                        cell.target.port = idMap[cell.target.port];
+                    }
+                });
+            }
+        });
+
+        commit(THREATMODEL_SELECTED, model);
+
+    }
 };
 
 const mutations = {

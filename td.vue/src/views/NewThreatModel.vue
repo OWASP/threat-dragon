@@ -13,28 +13,40 @@ export default {
     name: 'NewThreatModel',
     computed: mapState({
         providerType: (state) => getProviderType(state.provider.selected),
-        version: (state) => state.packageBuildVersion
+        version: (state) => state.packageBuildVersion,
+        currentModel: (state) => state.threatmodel.data
     }),
     mounted() {
-        this.$store.dispatch(tmActions.clear);
-        const newTm = {
-            version: this.version,
-            summary: {
-                title: 'New Threat Model',
-                owner: '',
-                description: '',
-                id: 0
-            },
-            detail: {
-                contributors: [],
-                diagrams: [],
-                diagramTop: 0,
-                reviewer: '',
-                threatTop: 0
-            }
-        };
+        let newTm;
 
+        // Check if there's already a model loaded (from template/demo selection)
+        if (this.currentModel && Object.keys(this.currentModel).length > 0) {
+            newTm = this.currentModel;
+            console.debug('Using existing model from state');
+        } else {
+            this.$store.dispatch(tmActions.clear);
+            // Create blank model
+            newTm = {
+                version: this.version,
+                summary: {
+                    title: 'New Threat Model',
+                    owner: '',
+                    description: '',
+                    id: 0
+                },
+                detail: {
+                    contributors: [],
+                    diagrams: [],
+                    diagramTop: 0,
+                    reviewer: '',
+                    threatTop: 0
+                }
+            };
+        }
+
+        // select the model
         this.$store.dispatch(tmActions.selected, newTm);
+
         const params = Object.assign({}, this.$route.params, {
             threatmodel: newTm.summary.title
         });

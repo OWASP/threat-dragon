@@ -6,7 +6,9 @@ import configController from "../controllers/configcontroller";
 import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
+import templateController from '../controllers/templateController.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
+
 
 /**
  * Routes that do **NOT** require authentication
@@ -20,6 +22,7 @@ const unauthRoutes = (router) => {
     router.get('/healthz', healthcheck.healthz);
     router.get('/api/config', configController.config);
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
+    
 
     router.get('/api/login/:provider', auth.login);
     router.get('/api/logout', auth.logout);
@@ -36,6 +39,13 @@ const unauthRoutes = (router) => {
 const routes = (router) => {
     router.post('/api/logout', auth.logout);
     router.post('/api/token/refresh', auth.refresh);
+   // Template routes
+    router.post('/api/templates/bootstrap', templateController.bootstrapTemplateRepository);// bootstrap template repo
+    router.get('/api/templates/', templateController.listTemplates);// list all templates
+    router.post('/api/templates/import', templateController.importTemplate);// import a new template
+    router.delete('/api/templates/:id', templateController.deleteTemplate);// delete a template
+    router.put('/api/templates/:id', templateController.updateTemplate);// update template metadata
+    router.get('/api/templates/:id/content', templateController.getTemplateContent);// get template content by id
 
     router.get('/api/threatmodel/repos', threatmodelController.repos);
     router.get('/api/threatmodel/:organisation/:repo/branches', threatmodelController.branches);
