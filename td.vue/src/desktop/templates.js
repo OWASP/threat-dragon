@@ -129,13 +129,13 @@ async function bootstrapTemplates(basePath) {
     await fs.promises.writeFile(indexPath, '{"templates":[]}', 'utf-8');
 
     logger.log.debug('Bootstrapped templates folder at: ' + templatesFolder);
-} 
+}
 
 //import template file
 async function importTemplate(template) {
     const templatePath = await getTemplatesPath();
     const { templateMetadata, model } = template;
-    
+
     try {
         // Append metadata to index
         const currentTemplates = await listTemplates(templatePath) || [];
@@ -144,19 +144,19 @@ async function importTemplate(template) {
             mainWindow.webContents.send('import-template-error', messages[language].template.errors.duplicateTemplate);
             return;
         }
-        
+
         const newTemplates = [...currentTemplates, templateMetadata];
         const indexPath = getIndexPath(templatePath);
         await fs.promises.writeFile(indexPath, JSON.stringify({ templates: newTemplates }, null, 2), 'utf-8');
-        
+
         // Save model file
         const modelPath = path.join(templatePath, TEMPLATES_FOLDER, templateMetadata.modelRef + '.json');
         await fs.promises.writeFile(modelPath, JSON.stringify(model, null, 2), 'utf-8');
         mainWindow.webContents.send('import-template-success', messages[language].template.importSuccess);
-        
+
         // Refresh template list (sends updated list to frontend)
         await getTemplates();
-        
+
         logger.log.debug('Template imported: ' + templateMetadata.name);
     } catch (err) {
         logger.log.error('Error importing template: ' + err);
@@ -166,7 +166,7 @@ async function importTemplate(template) {
 
 async function fetchModelById(templateId) {
     const templatePath = await getTemplatesPath();
-    try{
+    try {
         const templates = await listTemplates(templatePath);
         const template = templates.find(t => t.id === templateId);
         const modelPath = path.join(templatePath, TEMPLATES_FOLDER, template.modelRef + '.json');
@@ -176,10 +176,10 @@ async function fetchModelById(templateId) {
         });
     } catch (err) {
         logger.log.error('Error fetching model by ID: ' + err);
-        };
-    }
+    };
+}
 
-    async function exportTemplate(data, filename) {
+async function exportTemplate(data, filename) {
     const dialogOptions = {
         title: 'Export Template',  // TODO: i18n
         defaultPath: filename,
@@ -192,7 +192,7 @@ async function fetchModelById(templateId) {
             logger.log.debug('Export template canceled');
             return;
         }
-        
+
         await fs.promises.writeFile(result.filePath, JSON.stringify(data, null, 2), 'utf-8');
         mainWindow.webContents.send('export-template-success', messages[language].template.prompts.templateSaved);
         logger.log.debug('Template exported: ' + result.filePath);
@@ -206,43 +206,120 @@ async function fetchModelById(templateId) {
 
 
 
-// open folder picker and save selected path
-async function setTemplateFolder() {
-    logger.log.debug('Request to select template folder');
+// Helper: save path to config and bootstrap if needed
+async function savePathToConfig(folderPath) {
+    await fs.promises.writeFile(getConfigPath(), folderPath, 'utf-8');
+    logger.log.debug('Template folder path saved: ' + folderPath);
+}
 
+// Helper: save path, create folder if needed, and bootstrap
+async function saveAndBootstrap(folderPath) {
     try {
-        const result = await dialog.showOpenDialog(mainWindow,{
-            title: 'Select Templates Folder',  // TODO: add to i18n
+        // Create the folder if it doesn't exist
+        if (!await folderExists(folderPath)) {
+            await fs.promises.mkdir(folderPath, { recursive: true });
+        }
+
+        // Check write access
+        const canWrite = await hasWriteAccess(folderPath);
+        if (!canWrite) {
+            mainWindow.webContents.send('set-template-folder-result', {
+                success: false,
+                error: 'noWriteAccess'
+            });
+            return;
+        }
+
+        // Save path to config
+        await savePathToConfig(folderPath);
+
+        // Bootstrap if no template index exists
+        if (!await hasTemplateIndex(folderPath)) {
+            await bootstrapTemplates(folderPath);
+        }
+
+        // Refresh template list
+        await getTemplates();
+
+        mainWindow.webContents.send('set-template-folder-result', { success: true });
+    } catch (err) {
+        logger.log.error('Error setting up template folder: ' + err);
+        mainWindow.webContents.send('set-template-folder-result', {
+            success: false,
+            error: 'setupFailed'
+        });
+    }
+}
+
+// Set template folder to default location (userData/templates)
+async function setTemplateFolderDefault() {
+    logger.log.debug('Setting template folder to default location');
+    const defaultPath = path.join(app.getPath('userData'), 'templates');
+    await saveAndBootstrap(defaultPath);
+}
+
+// Set template folder to custom location (user picks folder)
+async function setTemplateFolderCustom() {
+    logger.log.debug('Setting template folder to custom location');
+    try {
+        const result = await dialog.showOpenDialog(mainWindow, {
+            title: messages[language].template.desktop.selectFolder,
             properties: ['openDirectory'],
             defaultPath: app.getPath('documents')
         });
 
         if (result.canceled) {
-            logger.log.debug('Select template folder: canceled');
+            logger.log.debug('Custom folder selection canceled');
             return;
         }
 
-        // Save the selected path
-        const selectedPath = result.filePaths[0];
-        const canWrite = await hasWriteAccess(selectedPath);
-        await fs.promises.writeFile(getConfigPath(), selectedPath, 'utf-8');
-
-        // Auto-bootstrap if templates/template_info.json doesn't exist
-        if (!await hasTemplateIndex(selectedPath) && canWrite) {
-            await bootstrapTemplates(selectedPath);
-        }
-
-        await getTemplates();
-        logger.log.debug('Template folder set to: ' + selectedPath);
-
+        await saveAndBootstrap(result.filePaths[0]);
     } catch (err) {
-        logger.log.warn('Error selecting template folder: ' + err);
-        mainWindow.webContents.send('templates-result', {
-            status: 'ERROR',
-            error: err.message
+        logger.log.error('Error selecting custom folder: ' + err);
+        mainWindow.webContents.send('set-template-folder-result', {
+            success: false,
+            error: 'setupFailed'
         });
     }
 }
+
+// Set template folder to existing location (must have template_info.json)
+async function setTemplateFolderExisting() {
+    logger.log.debug('Selecting existing template folder');
+    try {
+        const result = await dialog.showOpenDialog(mainWindow, {
+            title: messages[language].template.desktop.selectFolder,
+            properties: ['openDirectory'],
+            defaultPath: app.getPath('documents')
+        });
+
+        if (result.canceled) {
+            logger.log.debug('Existing folder selection canceled');
+            return;
+        }
+
+        const selectedPath = result.filePaths[0];
+
+        // Validate folder has template_info.json
+        if (await hasTemplateIndex(selectedPath)) {
+            await savePathToConfig(selectedPath);
+            await getTemplates();
+            mainWindow.webContents.send('set-template-folder-result', { success: true });
+        } else {
+            mainWindow.webContents.send('set-template-folder-result', {
+                success: false,
+                error: 'noTemplatesFound'
+            });
+        }
+    } catch (err) {
+        logger.log.error('Error selecting existing folder: ' + err);
+        mainWindow.webContents.send('set-template-folder-result', {
+            success: false,
+            error: 'setupFailed'
+        });
+    }
+}
+
 
 // pipeline function to get templates and send state to renderer
 async function getTemplates() {
@@ -272,7 +349,7 @@ async function getTemplates() {
 
     // Read template metadata from index file
     const templates = await listTemplates(templatePath);
-     if (templates === null) {
+    if (templates === null) {
         mainWindow.webContents.send('templates-result', {
             status: 'NOT_INITIALIZED',
             canWrite: canWrite,
@@ -281,7 +358,7 @@ async function getTemplates() {
         return;
     }
 
-    
+
     mainWindow.webContents.send('templates-result', {
         status: canWrite ? 'READ_WRITE' : 'READ_ONLY',
         templates: templates
@@ -341,7 +418,9 @@ export const setMainWindow = (window) => {
 
 export default {
     setMainWindow,
-    setTemplateFolder,
+    setTemplateFolderDefault,
+    setTemplateFolderCustom,
+    setTemplateFolderExisting,
     getTemplates,
     importTemplate,
     fetchModelById,

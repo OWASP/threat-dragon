@@ -111,7 +111,9 @@ app.on('ready', async () => {
     ipcMain.on('model-print', handleModelPrint);
     ipcMain.on('model-save', handleModelSave);
     ipcMain.on('update-menu', handleUpdateMenu);
-    ipcMain.on('set-template-folder', handleSetTemplateFolder);
+    ipcMain.on('set-template-folder-default', handleSetTemplateFolderDefault);
+    ipcMain.on('set-template-folder-custom', handleSetTemplateFolderCustom);
+    ipcMain.on('set-template-folder-existing', handleSetTemplateFolderExisting);
     ipcMain.on('get-templates', handleGetTemplates);
     ipcMain.on('import-template',handleImportTemplate);
     ipcMain.on('fetch-model-by-id', handleFetchModelById);
@@ -133,9 +135,19 @@ app.on('open-file', function(event, path) {
     menu.openModelRequest(path);
 });
 
-function handleSetTemplateFolder(_event) {
-    logger.log.debug('Set template folder request from renderer');
-    template.setTemplateFolder();
+function handleSetTemplateFolderDefault(_event) {
+    logger.log.debug('Set template folder to default location');
+    template.setTemplateFolderDefault();
+}
+
+function handleSetTemplateFolderCustom(_event) {
+    logger.log.debug('Set template folder to custom location');
+    template.setTemplateFolderCustom();
+}
+
+function handleSetTemplateFolderExisting(_event) {
+    logger.log.debug('Select existing template folder');
+    template.setTemplateFolderExisting();
 }
 
 function handleGetTemplates(_event) {

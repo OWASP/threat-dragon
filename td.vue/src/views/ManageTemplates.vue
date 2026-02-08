@@ -25,20 +25,21 @@
             </b-col>
         </b-row>
 
-        <b-row v-if="contentStoreStatus === 'NOT_CONFIGURED'">
+        <b-row v-else-if="contentStoreStatus === 'NOT_CONFIGURED'">
             <b-col md="6" offset-md="3">
                 <b-alert show variant="info" class="text-center">
                     <h5>{{ $t(`template.desktop.notConfigured.title`) }}</h5>
                     <p>{{ $t(`template.desktop.notConfigured.pickALocation`) }}</p>
 
-                    <b-button variant="primary" @click="onSetTemplateFolder">
+                    <b-button variant="primary" @click="showSetupModal">
                         <font-awesome-icon icon="folder-open" class="mr-2"></font-awesome-icon>
                         {{ $t('template.desktop.selectFolder') }}
                     </b-button>
                 </b-alert>
             </b-col>
         </b-row>
-        <!-- Normal operation (status === null) -->
+
+        <!-- Normal operation -->
         <template v-else>
             <!-- Read-only notice -->
             <b-row v-if="!canWriteStore" class="mb-3">
@@ -105,6 +106,7 @@
                 </b-col>
             </b-row>
         </template>
+        <!-- Edit Template Modal -->
         <b-modal id="edit-template-modal" :title="$t('template.editTemplate')" @ok="onSaveEdit">
             <b-form>
                 <b-form-group :label="$t('template.name')" label-for="edit-name">
@@ -119,6 +121,50 @@
                     <b-form-tags id="edit-tags" v-model="editForm.tags" :placeholder="$t('template.addTagsPlaceholder')"
                         separator=",;"></b-form-tags>
                 </b-form-group>
+            </b-form>
+        </b-modal>
+
+        <!-- Template Folder Setup Modal -->
+        <b-modal id="setup-template-modal" :title="$t('template.desktop.setupDialog.title')"
+            hide-footer centered>
+            <b-form>
+                <!-- Option 1: Create new folder -->
+                <b-form-group>
+                    <b-form-radio v-model="setupMode" value="create" class="mb-2">
+                        <strong>{{ $t('template.desktop.setupDialog.createNew') }}</strong>
+                    </b-form-radio>
+
+                    <div v-if="setupMode === 'create'" class="ml-4 mt-2">
+                        <b-form-radio v-model="createLocation" value="default" class="mb-2">
+                            {{ $t('template.desktop.setupDialog.useDefault') }}
+                            <br>
+                            <small class="text-muted">{{ $t('template.desktop.setupDialog.defaultPath') }}</small>
+                        </b-form-radio>
+                        <b-form-radio v-model="createLocation" value="custom">
+                            {{ $t('template.desktop.setupDialog.chooseCustom') }}
+                        </b-form-radio>
+                    </div>
+                </b-form-group>
+
+                <hr>
+
+                <!-- Option 2: Select existing folder -->
+                <b-form-group>
+                    <b-form-radio v-model="setupMode" value="existing">
+                        <strong>{{ $t('template.desktop.setupDialog.selectExisting') }}</strong>
+                        <br>
+                        <small class="text-muted">{{ $t('template.desktop.setupDialog.selectExistingHint') }}</small>
+                    </b-form-radio>
+                </b-form-group>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <b-button variant="secondary" @click="$bvModal.hide('setup-template-modal')" class="mr-2">
+                        {{ $t('forms.cancel') }}
+                    </b-button>
+                    <b-button variant="primary" @click="onSetupConfirm">
+                        {{ $t('template.desktop.setupDialog.setUp') }}
+                    </b-button>
+                </div>
             </b-form>
         </b-modal>
     </b-container>
@@ -143,7 +189,10 @@ export default {
                 description: '',
                 tags: []
             },
-            isBootstrapping: false
+            isBootstrapping: false,
+            // Setup modal state
+            setupMode: 'create',
+            createLocation: 'default'
         };
     },
     computed: {
@@ -192,8 +241,24 @@ export default {
             }
         },
 
-        onSetTemplateFolder() {
-            window.electronAPI.setTemplateFolder();
+        showSetupModal() {
+            // Reset form state
+            this.setupMode = 'create';
+            this.createLocation = 'default';
+            this.$bvModal.show('setup-template-modal');
+        },
+
+        onSetupConfirm() {
+            if (this.setupMode === 'create') {
+                if (this.createLocation === 'default') {
+                    window.electronAPI.setTemplateFolderDefault();
+                } else {
+                    window.electronAPI.setTemplateFolderCustom();
+                }
+            } else {
+                window.electronAPI.setTemplateFolderExisting();
+            }
+            this.$bvModal.hide('setup-template-modal');
         },
 
         onEditTemplate(template) {

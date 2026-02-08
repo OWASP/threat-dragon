@@ -248,6 +248,16 @@ window.electronAPI.onUpdateTemplateError((_event, message) => {
     app.$toast.error(message);
 });
 
+window.electronAPI.onSetTemplateFolderResult((_event, result) => {
+    console.debug('Set template folder result:', result);
+
+    if (!result.success) {
+        app.$toast.error(app.$t('template.desktop.errors.' + result.error));
+    } else {
+        app.$toast.success(app.$t('template.desktop.setFolderSuccess'));
+    }
+});
+
 const localAuth = () => {
     app.$store.dispatch(providerActions.selected, providerNames.desktop);
     app.$store.dispatch(authActions.setLocal);

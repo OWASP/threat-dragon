@@ -13,7 +13,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     modelPrint: (format) => ipcRenderer.send('model-print', format),
     modelSave: (modelData, fileName) => ipcRenderer.send('model-save', modelData, fileName),
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
-    setTemplateFolder: () => ipcRenderer.send('set-template-folder'),
+    setTemplateFolderDefault: () => ipcRenderer.send('set-template-folder-default'),
+    setTemplateFolderCustom: () => ipcRenderer.send('set-template-folder-custom'),
+    setTemplateFolderExisting: () => ipcRenderer.send('set-template-folder-existing'),
     getTemplates: () => ipcRenderer.send('get-templates'),
     importTemplate: (templateData) => ipcRenderer.send('import-template', templateData),
     fetchModelById: (templateId) => ipcRenderer.send('fetch-model-by-id', templateId),
@@ -41,5 +43,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onDeleteTemplateSuccess: (callback) => ipcRenderer.on('delete-template-success', callback),
     onDeleteTemplateError: (callback) => ipcRenderer.on('delete-template-error', callback),
     onUpdateTemplateSuccess: (callback) => ipcRenderer.on('update-template-success', callback),
-    onUpdateTemplateError: (callback) => ipcRenderer.on('update-template-error', callback)
+    onUpdateTemplateError: (callback) => ipcRenderer.on('update-template-error', callback),
+    onSetTemplateFolderResult: (callback) => ipcRenderer.on('set-template-folder-result', callback)
 });

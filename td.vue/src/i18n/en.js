@@ -153,10 +153,27 @@ const eng = {
         },
         desktop: {
             selectFolder: 'Select a folder to store templates',
+            setFolderSuccess: 'Template folder successfully set',
             notConfigured: {
                 title: 'Template Folder Not Configured',
                 userMessage: 'The template folder is not configured. Please navigate to manage templates and set the folder.',
                 pickALocation: 'Please pick a location to store templates.'
+            },
+            setupDialog: {
+                title: 'Set Up Template Storage',
+                createNew: 'Create a new template folder',
+                useDefault: 'Use default location',
+                defaultPath: 'AppData/Roaming/Threat Dragon/templates',
+                chooseCustom: 'Choose custom location',
+                selectExisting: 'Select existing template folder',
+                selectExistingHint: 'Pick a folder that already contains templates',
+                browse: 'Browse...',
+                setUp: 'Set Up'
+            },
+            errors: {
+                noTemplatesFound: 'Selected folder does not contain a valid template index',
+                noWriteAccess: 'Cannot write to the selected folder. Please choose a different location.',
+                setupFailed: 'Failed to set up template folder. Please try again.'
             }
         },
         repo: {
