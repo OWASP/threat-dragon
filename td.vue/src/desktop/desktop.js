@@ -4,7 +4,7 @@ import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
-import templates from './templates.js';
+import template from './templates.js';
 import logger from './logger.js';
 import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
 
@@ -42,7 +42,7 @@ async function createWindow () {
         mainWindow.focus();
         // menu system needs to access the main window
         menu.setMainWindow(mainWindow);
-        templates.setMainWindow(mainWindow);
+        template.setMainWindow(mainWindow);
     });
 
     mainWindow.on('close', (event) => {
@@ -113,6 +113,11 @@ app.on('ready', async () => {
     ipcMain.on('update-menu', handleUpdateMenu);
     ipcMain.on('set-template-folder', handleSetTemplateFolder);
     ipcMain.on('get-templates', handleGetTemplates);
+    ipcMain.on('import-template',handleImportTemplate);
+    ipcMain.on('fetch-model-by-id', handleFetchModelById);
+    ipcMain.on('export-template', handleExportTemplate);
+    ipcMain.on('delete-template', handleDeleteTemplate);
+    ipcMain.on('update-template', handleUpdateTemplate);
 
     createWindow();
 
@@ -130,12 +135,12 @@ app.on('open-file', function(event, path) {
 
 function handleSetTemplateFolder(_event) {
     logger.log.debug('Set template folder request from renderer');
-    templates.setTemplateFolder();
+    template.setTemplateFolder();
 }
 
 function handleGetTemplates(_event) {
     logger.log.debug('Get templates request from renderer');
-    templates.getTemplates();
+    template.getTemplates();
 }
 
 function handleCloseApp() {
@@ -168,12 +173,35 @@ function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
 }
+function handleImportTemplate(_event,templateData) {
+    logger.log.debug('Import template - not implemented yet');
+    template.importTemplate(templateData);
+}
 
+function handleFetchModelById(_event, templateId) {
+    logger.log.debug('Fetch model by ID request from renderer for template ID: ' + templateId);
+    template.fetchModelById(templateId);
+}
 function handleUpdateMenu (_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
     let template = menu.getMenuTemplate();
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
+function handleExportTemplate(_event, data, filename) {
+    logger.log.debug('Export template request from renderer with filename: ' + filename);
+    template.exportTemplate(data, filename);
+}
+
+function handleDeleteTemplate(_event, templateId) {
+    logger.log.debug('Delete template request from renderer for template ID: ' + templateId);
+    template.deleteTemplate(templateId);
+}
+
+function handleUpdateTemplate(_event, templateMetadata) {
+    logger.log.debug('Update template request from renderer for template ID: ' + templateMetadata.id);
+    template.updateTemplate(templateMetadata);
 }
 
 // Exit cleanly on request from parent process in development mode.

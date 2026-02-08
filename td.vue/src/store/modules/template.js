@@ -37,7 +37,11 @@ const actions = {
      * @param {Object} template - The full template object(including metadata and content) from local file
      * @returns {Promise}
      */
-    [TEMPLATE_CREATE]: async ({ dispatch }, { template }) => {
+    [TEMPLATE_CREATE]: async ({ dispatch, rootState }, { template }) => {
+         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                window.electronAPI.importTemplate(template);
+                return;
+            }
         await templateApi.importTemplateAsync(template);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
@@ -48,12 +52,20 @@ const actions = {
      * @param {Object} templateMetadata - name,description,tags,id of template to update
      * @returns {Promise}
      */
-    [TEMPLATE_UPDATE]: async ({ dispatch }, templateMetadata) => {
+    [TEMPLATE_UPDATE]: async ({ dispatch, rootState }, templateMetadata) => {
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            window.electronAPI.updateTemplate(templateMetadata);
+            return;
+        }
         await templateApi.updateTemplateAsync(templateMetadata);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
 
-    [TEMPLATE_DELETE]: async ({ dispatch }, id) => {
+    [TEMPLATE_DELETE]: async ({ dispatch, rootState }, id) => {
+        if(rootState.provider.selected === providerTypes.desktop) {
+            window.electronAPI.deleteTemplate(id);
+            return;
+        }
         await templateApi.deleteTemplateAsync(id);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
@@ -114,7 +126,11 @@ const actions = {
         }
     },
 
-    [TEMPLATE_FETCH_MODEL_BY_ID]: async (_, templateId) => {
+    [TEMPLATE_FETCH_MODEL_BY_ID]: async ({rootState}, templateId) => {
+         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                window.electronAPI.fetchModelById(templateId);
+                return;
+            }
         const response = await templateApi.fetchModelByIdAsync(templateId);
         return response.data;
     },

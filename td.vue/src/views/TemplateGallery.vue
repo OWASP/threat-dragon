@@ -20,18 +20,18 @@
         </b-row>
 
         <b-row v-if="contentStoreStatus === 'NOT_CONFIGURED'">
-    <b-col md="6" offset-md="3">
-        <b-alert show variant="info" class="text-center">
-            <h5>{{ $t(`template.${providerType}.notConfigured.title`) }}</h5>
-            <p>{{ $t(`template.${providerType}.notConfigured.userMessage`) }}</p>
-            <!-- Desktop only: let user pick folder -->
-            <b-button v-if="isDesktopProvider" variant="primary" @click="onSetTemplateFolder">
-                <font-awesome-icon icon="folder-open" class="mr-2"></font-awesome-icon>
-                {{ $t('template.desktop.selectFolder') }}
-            </b-button>
-        </b-alert>
-    </b-col>
-</b-row>
+            <b-col md="6" offset-md="3">
+                <b-alert show variant="info" class="text-center">
+                    <h5>{{ $t(`template.${providerType}.notConfigured.title`) }}</h5>
+                    <p>{{ $t(`template.${providerType}.notConfigured.userMessage`) }}</p>
+
+                    <b-button v-if="isDesktopProvider" variant="success" :to="{ name: 'ManageTemplates' }">
+                        <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
+                        {{ $t('template.manage') }}
+                    </b-button>
+                </b-alert>
+            </b-col>
+        </b-row>
 
 
 
@@ -226,10 +226,7 @@ export default {
                 this.$toast.error('File picker not supported on this browser');
             }
         },
-        
-        onSetTemplateFolder() {
-        window.electronAPI.setTemplateFolder();
-    },
+
         async onTemplateClick(template) {
             try {
                 // Fetch the  threat model part of the template from backend
@@ -237,6 +234,10 @@ export default {
                     templateActions.fetchModelById,
                     template.id
                 );
+
+                if (this.isDesktopProvider) {
+                    return;
+                }
 
                 // Load template (regenerates IDs and sets as current model, current model set in the action)
                 await this.$store.dispatch(tmActions.templateLoad, {

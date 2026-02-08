@@ -9,10 +9,33 @@ const fs = require('fs');
 // provided by electron server bootstrap
 var mainWindow;
 
+// access the i18n message strings
+import ara from '@/i18n/ar.js';
+import deu from '@/i18n/de.js';
+import ell from '@/i18n/el.js';
+import eng from '@/i18n/en.js';
+import fin from '@/i18n/fi.js';
+import fra from '@/i18n/fr.js';
+import hin from '@/i18n/hi.js';
+import ind from '@/i18n/id.js';
+import jpn from '@/i18n/ja.js';
+import msa from '@/i18n/ms.js';
+import por from '@/i18n/pt.js';
+import spa from '@/i18n/es.js';
+import zho from '@/i18n/zh.js';
+
+
+const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, msa, por, spa, zho };
+const defaultLanguage = 'eng';
+var language = defaultLanguage;
+
 // Constants
 const CONFIG_FILE = 'templates-path.txt';
 const TEMPLATES_FOLDER = 'templates';
 const TEMPLATE_INDEX = 'template_info.json';
+
+
+
 
 // get path to config file
 function getConfigPath() {
@@ -29,12 +52,16 @@ async function getTemplatesPath() {
     }
 }
 
-// check if folder has write access
+// check if folder has write access by attempting a test write
+// (fs.access W_OK is unreliable on Windows for NTFS ACL permissions)
 async function hasWriteAccess(folderPath) {
+    const testFile = path.join(folderPath, `.write_test_${Date.now()}`);
     try {
-        await fs.promises.access(folderPath, fs.constants.W_OK);
+        await fs.promises.writeFile(testFile, '');
+        await fs.promises.unlink(testFile);
         return true;
-    } catch {
+    } catch (err) {
+        logger.log.debug('Write access denied for ' + folderPath + ': ' + err.code);
         return false;
     }
 }
@@ -104,6 +131,80 @@ async function bootstrapTemplates(basePath) {
     logger.log.debug('Bootstrapped templates folder at: ' + templatesFolder);
 } 
 
+//import template file
+async function importTemplate(template) {
+    const templatePath = await getTemplatesPath();
+    const { templateMetadata, model } = template;
+    
+    try {
+        // Append metadata to index
+        const currentTemplates = await listTemplates(templatePath) || [];
+        const duplicate = currentTemplates.find(t => t.name === templateMetadata.name);
+        if (duplicate) {
+            mainWindow.webContents.send('import-template-error', messages[language].template.errors.duplicateTemplate);
+            return;
+        }
+        
+        const newTemplates = [...currentTemplates, templateMetadata];
+        const indexPath = getIndexPath(templatePath);
+        await fs.promises.writeFile(indexPath, JSON.stringify({ templates: newTemplates }, null, 2), 'utf-8');
+        
+        // Save model file
+        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, templateMetadata.modelRef + '.json');
+        await fs.promises.writeFile(modelPath, JSON.stringify(model, null, 2), 'utf-8');
+        mainWindow.webContents.send('import-template-success', messages[language].template.importSuccess);
+        
+        // Refresh template list (sends updated list to frontend)
+        await getTemplates();
+        
+        logger.log.debug('Template imported: ' + templateMetadata.name);
+    } catch (err) {
+        logger.log.error('Error importing template: ' + err);
+        mainWindow.webContents.send('import-template-error', messages[language].template.errors.importFailed);
+    }
+}
+
+async function fetchModelById(templateId) {
+    const templatePath = await getTemplatesPath();
+    try{
+        const templates = await listTemplates(templatePath);
+        const template = templates.find(t => t.id === templateId);
+        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, template.modelRef + '.json');
+        const modelData = await fs.promises.readFile(modelPath, 'utf-8');
+        mainWindow.webContents.send('fetch-model-by-id-result', {
+            model: JSON.parse(modelData)
+        });
+    } catch (err) {
+        logger.log.error('Error fetching model by ID: ' + err);
+        };
+    }
+
+    async function exportTemplate(data, filename) {
+    const dialogOptions = {
+        title: 'Export Template',  // TODO: i18n
+        defaultPath: filename,
+        filters: [{ name: 'Template', extensions: ['json'] }]
+    };
+
+    try {
+        const result = await dialog.showSaveDialog(mainWindow, dialogOptions);
+        if (result.canceled) {
+            logger.log.debug('Export template canceled');
+            return;
+        }
+        
+        await fs.promises.writeFile(result.filePath, JSON.stringify(data, null, 2), 'utf-8');
+        mainWindow.webContents.send('export-template-success', messages[language].template.prompts.templateSaved);
+        logger.log.debug('Template exported: ' + result.filePath);
+    } catch (err) {
+        logger.log.error('Error exporting template: ' + err);
+        mainWindow.webContents.send('export-template-error', messages[language].template.warnings.templateSave);
+    }
+}
+
+
+
+
 
 // open folder picker and save selected path
 async function setTemplateFolder() {
@@ -113,7 +214,7 @@ async function setTemplateFolder() {
         const result = await dialog.showOpenDialog(mainWindow,{
             title: 'Select Templates Folder',  // TODO: add to i18n
             properties: ['openDirectory'],
-            defaultPath: app.getPath('userData')
+            defaultPath: app.getPath('documents')
         });
 
         if (result.canceled) {
@@ -167,6 +268,7 @@ async function getTemplates() {
 
     // check if folder has write access
     const canWrite = await hasWriteAccess(templatePath);
+    console.log('getTemplates - canWrite result:', canWrite, 'for path:', templatePath);
 
     // Read template metadata from index file
     const templates = await listTemplates(templatePath);
@@ -186,6 +288,53 @@ async function getTemplates() {
     });
 }
 
+async function deleteTemplate(templateId) {
+    const templatePath = await getTemplatesPath();
+    try {
+        const templates = await listTemplates(templatePath);
+        const newTemplates = templates.filter(t => t.id !== templateId);
+        const indexPath = getIndexPath(templatePath);
+        await fs.promises.writeFile(indexPath, JSON.stringify({ templates: newTemplates }, null, 2), 'utf-8');
+        // Also delete the model file
+        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, templates.find(t => t.id === templateId).modelRef + '.json');
+        await fs.promises.unlink(modelPath);
+        mainWindow.webContents.send('delete-template-success', messages[language].template.deleteSuccess);
+        // Refresh template list (sends updated list to frontend)
+        await getTemplates();
+        logger.log.debug('Template deleted: ' + templateId);
+    } catch (err) {
+        logger.log.error('Error deleting template: ' + err);
+        mainWindow.webContents.send('delete-template-error', messages[language].template.errors.deleteFailed);
+    }
+}
+
+async function updateTemplate(templateMetadata) {
+    const templatePath = await getTemplatesPath();
+    try {
+        const templates = await listTemplates(templatePath);
+        const templateIndex = templates.findIndex(t => t.id === templateMetadata.id);
+        if (templateIndex === -1) {
+            throw new Error('Template not found');
+        }
+        // Update metadata in index
+        templates[templateIndex] = {
+            ...templates[templateIndex],
+            name: templateMetadata.name,
+            description: templateMetadata.description,
+            tags: templateMetadata.tags
+        };
+        const indexPath = getIndexPath(templatePath);
+        await fs.promises.writeFile(indexPath, JSON.stringify({ templates }, null, 2), 'utf-8');
+        mainWindow.webContents.send('update-template-success', messages[language].template.updateSuccess);
+        // Refresh template list
+        await getTemplates();
+        logger.log.debug('Template updated: ' + templateMetadata.id);
+    } catch (err) {
+        logger.log.error('Error updating template: ' + err);
+        mainWindow.webContents.send('update-template-error', messages[language].template.errors.updateFailed);
+    }
+}
+
 export const setMainWindow = (window) => {
     mainWindow = window;
 };
@@ -193,5 +342,10 @@ export const setMainWindow = (window) => {
 export default {
     setMainWindow,
     setTemplateFolder,
-    getTemplates
+    getTemplates,
+    importTemplate,
+    fetchModelById,
+    exportTemplate,
+    deleteTemplate,
+    updateTemplate
 };

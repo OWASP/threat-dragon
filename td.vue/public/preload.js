@@ -15,6 +15,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     updateMenu: (locale) => ipcRenderer.send('update-menu', locale),
     setTemplateFolder: () => ipcRenderer.send('set-template-folder'),
     getTemplates: () => ipcRenderer.send('get-templates'),
+    importTemplate: (templateData) => ipcRenderer.send('import-template', templateData),
+    fetchModelById: (templateId) => ipcRenderer.send('fetch-model-by-id', templateId),
+    exportTemplate: (data, filename) => ipcRenderer.send('export-template', data, filename),
+    deleteTemplate: (templateId) => ipcRenderer.send('delete-template', templateId),
+    updateTemplate: (templateMetadata) => ipcRenderer.send('update-template', templateMetadata),
 
     // electron main to renderer
     onTemplatesResult: (callback) => ipcRenderer.on('templates-result', callback),
@@ -27,5 +32,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onPrintModelConfirmed: (callback) => ipcRenderer.on('print-model-confirmed', callback),
     onSaveModelRequest: (callback) => ipcRenderer.on('save-model-request', callback),
     onSaveModelConfirmed: (callback) => ipcRenderer.on('save-model-confirmed', callback),
-    onSaveModelFailed: (callback) => ipcRenderer.on('save-model-failed', callback)
+    onSaveModelFailed: (callback) => ipcRenderer.on('save-model-failed', callback),
+    onImportTemplateSuccess: (callback) => ipcRenderer.on('import-template-success', callback),
+    onImportTemplateError: (callback) => ipcRenderer.on('import-template-error', callback),
+    onFetchModelByIdResult: (callback) => ipcRenderer.on('fetch-model-by-id-result', callback),
+    onExportTemplateSuccess: (callback) => ipcRenderer.on('export-template-success', callback),
+    onExportTemplateError: (callback) => ipcRenderer.on('export-template-error', callback),
+    onDeleteTemplateSuccess: (callback) => ipcRenderer.on('delete-template-success', callback),
+    onDeleteTemplateError: (callback) => ipcRenderer.on('delete-template-error', callback),
+    onUpdateTemplateSuccess: (callback) => ipcRenderer.on('update-template-success', callback),
+    onUpdateTemplateError: (callback) => ipcRenderer.on('update-template-error', callback)
 });

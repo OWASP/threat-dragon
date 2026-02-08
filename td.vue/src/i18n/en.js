@@ -134,6 +134,7 @@ const eng = {
         deleteSuccess: 'Template deleted successfully',
         deleteTitle: 'Confirm Delete',
         deleteConfirm: 'Are you sure you want to delete "{name}"?',
+        readOnlyNotice: 'You have read-only access. You can view and search templates but cannot add, edit, or delete them.',
         errors: {
             invalidJson: 'Invalid JSON. Please check your template file and try again',
             invalidTemplate: 'Invalid template format. Please check your template file and try again',
@@ -154,7 +155,8 @@ const eng = {
             selectFolder: 'Select a folder to store templates',
             notConfigured: {
                 title: 'Template Folder Not Configured',
-                userMessage: 'The template folder is not configured. Please set up the folder to access templates.'
+                userMessage: 'The template folder is not configured. Please navigate to manage templates and set the folder.',
+                pickALocation: 'Please pick a location to store templates.'
             }
         },
         repo: {
