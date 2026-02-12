@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     setTemplateFolderCustom: () => ipcRenderer.send('set-template-folder-custom'),
     setTemplateFolderExisting: () => ipcRenderer.send('set-template-folder-existing'),
     getTemplates: () => ipcRenderer.send('get-templates'),
+    bootstrapTemplates: () => ipcRenderer.send('bootstrap-templates'),
     importTemplate: (templateData) => ipcRenderer.send('import-template', templateData),
     fetchModelById: (templateId) => ipcRenderer.send('fetch-model-by-id', templateId),
     exportTemplate: (data, filename) => ipcRenderer.send('export-template', data, filename),
@@ -44,5 +45,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onDeleteTemplateError: (callback) => ipcRenderer.on('delete-template-error', callback),
     onUpdateTemplateSuccess: (callback) => ipcRenderer.on('update-template-success', callback),
     onUpdateTemplateError: (callback) => ipcRenderer.on('update-template-error', callback),
-    onSetTemplateFolderResult: (callback) => ipcRenderer.on('set-template-folder-result', callback)
+    onBootstrapTemplatesSuccess: (callback) => ipcRenderer.on('bootstrap-templates-success', callback),
+    onBootstrapTemplatesError: (callback) => ipcRenderer.on('bootstrap-templates-error', callback),
+    onSetTemplateFolderSuccess: (callback) => ipcRenderer.on('set-template-folder-success', callback),
+    onSetTemplateFolderError: (callback) => ipcRenderer.on('set-template-folder-error', callback)
 });

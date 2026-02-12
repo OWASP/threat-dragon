@@ -19,13 +19,13 @@
             </b-col>
         </b-row>
 
+        <!-- Status: NOT_CONFIGURED -->
         <b-row v-if="contentStoreStatus === 'NOT_CONFIGURED'">
             <b-col md="6" offset-md="3">
                 <b-alert show variant="info" class="text-center">
-                    <h5>{{ $t(`template.${providerType}.notConfigured.title`) }}</h5>
-                    <p>{{ $t(`template.${providerType}.notConfigured.userMessage`) }}</p>
-
-                    <b-button v-if="isDesktopProvider" variant="success" :to="{ name: 'ManageTemplates' }">
+                    <h5>{{ $t('template.status.notConfigured.title') }}</h5>
+                    <p>{{ $t(`template.status.notConfigured.${isDesktop ? 'desktop' : 'web'}`) }}</p>
+                    <b-button v-if="isDesktop" variant="success" :to="{ name: 'ManageTemplates' }">
                         <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
                         {{ $t('template.manage') }}
                     </b-button>
@@ -33,42 +33,27 @@
             </b-col>
         </b-row>
 
-
-
-
-        <!-- Scenario: REPO_NOT_FOUND -->
-        <b-row v-else-if="contentStoreStatus === 'REPO_NOT_FOUND'">
+        <!-- Status: NOT_FOUND -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_FOUND'">
             <b-col md="6" offset-md="3">
                 <b-alert show variant="danger" class="text-center">
-                    <h5>{{ $t('template.repo.notFound.title') }}</h5>
-                    <p>{{ $t('template.repo.notFound.userMessage') }}</p>
+                    <h5>{{ $t('template.status.notFound.title') }}</h5>
+                    <p>{{ $t(`template.status.notFound.${isDesktop ? 'desktop' : 'web'}`) }}</p>
                 </b-alert>
             </b-col>
         </b-row>
 
-        <!-- Scenario: NOT_INITIALIZED - Regular User (no write access) -->
-        <b-row v-else-if="contentStoreStatus === 'NOT_INITIALIZED' && !canWriteStore">
+        <!-- Status: NOT_INITIALIZED -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_INITIALIZED'">
             <b-col md="6" offset-md="3">
-                <b-alert show variant="warning" class="text-center">
-                    <h5>{{ $t('template.repo.notInitialized.title') }}</h5>
-                    <p>{{ $t('template.repo.notInitialized.userMessage') }}</p>
-                </b-alert>
-
-            </b-col>
-        </b-row>
-
-        <!-- Scenario: NOT_INITIALIZED - Admin (has write access) -->
-        <b-row v-else-if="contentStoreStatus === 'NOT_INITIALIZED' && canWriteStore">
-            <b-col md="6" offset-md="3">
-                <b-alert show variant="info" class="text-center">
-                    <h5>{{ $t('template.repo.notInitialized.title') }}</h5>
-                    <p>{{ $t('template.repo.notInitialized.adminMessage') }}</p>
-                    <b-button variant="success" :to="{ name: 'ManageTemplates' }">
+                <b-alert show :variant="canWriteStore ? 'info' : 'warning'" class="text-center">
+                    <h5>{{ $t('template.status.notInitialized.title') }}</h5>
+                    <p>{{ $t(`template.status.notInitialized.${canWriteStore ? 'admin' : 'user'}`) }}</p>
+                    <b-button v-if="canWriteStore" variant="success" :to="{ name: 'ManageTemplates' }">
                         <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
                         {{ $t('template.manage') }}
                     </b-button>
                 </b-alert>
-
             </b-col>
         </b-row>
 
@@ -114,6 +99,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv.js';
 import { getProviderType } from '@/service/provider/providers';
 import { providerTypes } from '@/service/provider/providerTypes';
+import isElectron from 'is-electron';
 
 export default {
     name: 'TemplateGallery',
@@ -135,12 +121,11 @@ export default {
             return getProviderType(this.selectedProvider);
         },
         isLocalProvider() {
-            return this.providerType === providerTypes.local
+            return this.providerType === providerTypes.local;
         },
-        isDesktopProvider() {
-            return this.providerType === providerTypes.desktop;
+        isDesktop(){
+            return isElectron()
         },
-
         filteredTemplates() {
             if (!this.searchQuery) return this.templates;
             const search = this.searchQuery.toLowerCase();
@@ -156,9 +141,7 @@ export default {
         // Only fetch templates for git providers (requires authentication)
         // Local/desktop providers use file picker only
         if (!this.isLocalProvider) {
-
-            this.$store.dispatch(templateActions.fetchAll)
-
+            this.$store.dispatch(templateActions.fetchAll);
         }
     },
     methods: {
@@ -235,7 +218,7 @@ export default {
                     template.id
                 );
 
-                if (this.isDesktopProvider) {
+                if (this.isDesktop) {
                     return;
                 }
 

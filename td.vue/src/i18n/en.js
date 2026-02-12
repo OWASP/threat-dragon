@@ -112,97 +112,111 @@ const eng = {
         repo: 'repo',
         newThreatModel: 'Create a New Threat Model'
     },
-    template:{
-        startFromLocalTemplate: 'Start from a Local Template',
-        select: 'Select a Template from the list below',
+
+
+    
+    template: {
+        // Gallery & selection
+        select: 'Select a Template',
         selectDescription: 'Templates provide a starting point for new threat models, pre-populated with relevant components and threats.',
+        startFromLocalTemplate: 'Start from a Local Template',
         noTemplates: 'No templates found',
         templatesLocalSession: 'Remote templates are not available for local sessions.',
         search: 'Search templates...',
-        exportTemplate: 'Export as Template',
-        tags: 'Tags',
-        name: 'Template Name',
-        description: 'Template Description',
-        saveTemplate: 'Save Template',
-        addNew: 'Add New Template',
+
+        // Management
         manage: 'Manage Templates',
         manageDescription: 'Import, export, and manage your threat model templates here.',
+        addNew: 'Add New Template',
         editTemplate: 'Edit Template',
-        addTagsPlaceholder: 'Add tags...',
-        updateSuccess: 'Template updated successfully',
-        importSuccess: 'Template imported successfully',
-        deleteSuccess: 'Template deleted successfully',
-        deleteTitle: 'Confirm Delete',
+        exportTemplate: 'Export as Template',
+        saveTemplate: 'Save Template',
         deleteConfirm: 'Are you sure you want to delete "{name}"?',
-        readOnlyNotice: 'You have read-only access. You can view and search templates but cannot add, edit, or delete them.',
-        errors: {
-            invalidJson: 'Invalid JSON. Please check your template file and try again',
-            invalidTemplate: 'Invalid template format. Please check your template file and try again',
-            loadFailed: 'Failed to load templates. Please try again',
-            duplicateTemplate: 'A template with this name already exists. Please use a different name',
-            updateFailed: 'Failed to update template',
-            deleteFailed: 'Failed to delete template'
-        },
-        warnings: {
-            templateSave: 'Could not save the template. Check the developer console for more information',
-            invalidSchema: 'Template does not strictly match schema. Details in the developer console'
-        },
-        prompts: {
-            templateSaved: 'Template successfully saved',
-            templateDownloading: 'Downloading template'
-        },
-        desktop: {
-            selectFolder: 'Select a folder to store templates',
-            setFolderSuccess: 'Template folder successfully set',
+        deleteTitle: 'Delete Template',
+
+        // Form fields
+        name: 'Template Name',
+        description: 'Template Description',
+        tags: 'Tags',
+        addTagsPlaceholder: 'Add tags...',
+
+        // Permissions
+        readOnlyNotice: 'You have read-only access. You can view templates but cannot modify them.',
+
+        // Unified status messages (desktop vs web, admin vs user)
+        status: {
             notConfigured: {
-                title: 'Template Folder Not Configured',
-                userMessage: 'The template folder is not configured. Please navigate to manage templates and set the folder.',
-                pickALocation: 'Please pick a location to store templates.'
-            },
-            setupDialog: {
-                title: 'Set Up Template Storage',
-                createNew: 'Create a new template folder',
-                useDefault: 'Use default location',
-                defaultPath: 'AppData/Roaming/Threat Dragon/templates',
-                chooseCustom: 'Choose custom location',
-                selectExisting: 'Select existing template folder',
-                selectExistingHint: 'Pick a folder that already contains templates',
-                browse: 'Browse...',
-                setUp: 'Set Up'
-            },
-            errors: {
-                noTemplatesFound: 'Selected folder does not contain a valid template index',
-                noWriteAccess: 'Cannot write to the selected folder. Please choose a different location.',
-                setupFailed: 'Failed to set up template folder. Please try again.'
-            }
-        },
-        repo: {
-            
-            notInitialized: {
-                title: 'Template Repository Not Initialized',
-                userMessage: 'The template repository has not been initialized. Please contact your administrator.',
-                adminMessage: 'Please go to the Manage Templates page to initialize the template repository.'
-            },
-            notConfigured: {
-                title: 'Template Repository Not Configured',
-                userMessage: 'The template repository is not configured. Please set up the repository to access templates.'
+                title: 'Template Storage Not Configured',
+                desktop: 'Please set up a folder to store templates.',
+                web: 'Template repository not configured. Contact your administrator.'
             },
             notFound: {
-                title: 'Template Repository Not Found',
-                userMessage: 'The repository {repoName} is not a valid repository. Please check your configuration.'
+                title: 'Template Storage Not Found',
+                desktop: 'The configured template folder no longer exists.',
+                web: 'The configured template repository could not be found.'
             },
-            bootstrap:{
-                bootstrapping:'Initializing..',
-                title: 'Initialize Template Repository',
-                description: 'This will create the necessary folder structure within the repository if it does not already exist.',
-                action: 'Initialize',
-                success: 'Template repository successfully initialized.',
-                error: 'Could not initialize the template repository. Check the developer console for more information.'
-
-
+            notInitialized: {
+                title: 'Template Storage Not Initialized',
+                user: 'No templates available yet. Contact your administrator.',
+                admin: 'Initialize the template storage to get started.'
             }
         },
+
+        // Actions (buttons, loading states)
+        actions: {
+            configure: 'Set Up Templates',
+            selectFolder: 'Select Folder',
+            initialize: 'Initialize',
+            initializing: 'Initializing...',
+            save: 'Save Template',
+            delete: 'Delete'
+        },
+
+        // Desktop-only: setup dialog
+        setupDialog: {
+            title: 'Set Up Template Storage',
+            createNew: 'Create a new template folder',
+            useDefault: 'Use default location',
+            defaultPath: 'AppData/Roaming/Threat Dragon/templates',
+            chooseCustom: 'Choose custom location',
+            selectExisting: 'Select existing template folder',
+            selectExistingHint: 'Pick a folder that already contains templates',
+            confirm: 'Set Up'
+        },
+
+        // Bootstrap
+        bootstrap: {
+            title: 'Initialize Template Repository',
+            description: 'Create the template index in the repository.'
+        },
+
+        // Toast messages (success notifications)
+        toast: {
+            importSuccess: 'Template imported successfully',
+            updateSuccess: 'Template updated successfully',
+            deleteSuccess: 'Template deleted successfully',
+            configureSuccess: 'Template storage configured successfully',
+            initializeSuccess: 'Template storage initialized successfully',
+            exportSuccess: 'Template exported successfully'
+        },
+
+        // Errors
+        errors: {
+            invalidJson: 'Invalid JSON format',
+            invalidTemplate: 'Invalid template format',
+            duplicate: 'A template with this name already exists',
+            loadFailed: 'Failed to load templates',
+            importFailed: 'Failed to import template',
+            updateFailed: 'Failed to update template',
+            deleteFailed: 'Failed to delete template',
+            exportFailed: 'Failed to export template',
+            noWriteAccess: 'Cannot write to selected location',
+            setupFailed: 'Failed to set up template storage',
+            initializeFailed: 'Failed to initialize template storage',
+            folderInvalid: 'Selected folder does not contain valid templates'
+        }
     },
+
     threatmodel: {
         contributors: 'Contributors',
         contributorsPlaceholder: 'Start typing to add a contributor',

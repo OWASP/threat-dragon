@@ -17,7 +17,7 @@ import { getProviderType } from '@/service/provider/providers';
 const state = {
     templates: [],// list of templates
     contentStore: {
-        status: null,   // null | 'NOT_CONFIGURED' | 'REPO_NOT_FOUND' | 'NOT_INITIALIZED' | 'FOLDER_NOT_FOUND' | 'READ_ONLY' | 'READ_WRITE'
+        status: null,   // null (READY) | 'NOT_CONFIGURED' | 'NOT_FOUND' | 'NOT_INITIALIZED'
         canWrite: false // user has write permissions (web: repo push access, desktop: folder write access)
     }
 };
@@ -37,11 +37,7 @@ const actions = {
      * @param {Object} template - The full template object(including metadata and content) from local file
      * @returns {Promise}
      */
-    [TEMPLATE_CREATE]: async ({ dispatch, rootState }, { template }) => {
-         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-                window.electronAPI.importTemplate(template);
-                return;
-            }
+    [TEMPLATE_CREATE]: async ({ dispatch }, { template }) => {
         await templateApi.importTemplateAsync(template);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
@@ -52,20 +48,12 @@ const actions = {
      * @param {Object} templateMetadata - name,description,tags,id of template to update
      * @returns {Promise}
      */
-    [TEMPLATE_UPDATE]: async ({ dispatch, rootState }, templateMetadata) => {
-        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-            window.electronAPI.updateTemplate(templateMetadata);
-            return;
-        }
+    [TEMPLATE_UPDATE]: async ({ dispatch }, templateMetadata) => {
         await templateApi.updateTemplateAsync(templateMetadata);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
 
-    [TEMPLATE_DELETE]: async ({ dispatch, rootState }, id) => {
-        if(rootState.provider.selected === providerTypes.desktop) {
-            window.electronAPI.deleteTemplate(id);
-            return;
-        }
+    [TEMPLATE_DELETE]: async ({ dispatch }, id) => {
         await templateApi.deleteTemplateAsync(id);
         await dispatch(TEMPLATE_FETCH_ALL);
     },
@@ -73,20 +61,14 @@ const actions = {
 
     /**
      * Fetches all templates from the backend
-     * 
-     * Handles multiple repository states:
-     * - Normal operation: Returns templates array
-     * - NOT_CONFIGURED: Template repository URL not configured
-     * - NOT_INITIALIZED: Repository exists but folder structure not bootstrapped
-     * - REPO_NOT_FOUND: Repository doesn't exist (404 - not an error)
-     * - FOLDER_NOT_FOUND: Repository exists but template folder missing
-     * - READ_ONLY / READ_WRITE: Desktop only - folder access permissions
-     * 
-     * 
-     * @async
-     * @param {Object} context - Vuex action context
-     * @param {Function} context.commit - Vuex commit function
-     * @returns {Promise<void>}
+     *
+     * Handles unified statuses (desktop + web):
+     * - null (READY): Normal operation, templates available
+     * - NOT_CONFIGURED: Storage location not set up
+     * - NOT_FOUND: Storage was configured but no longer exists (404)
+     * - NOT_INITIALIZED: Storage exists but no template index
+     *
+     * canWrite flag indicates write permissions (repo push / folder write access)
      */
     [TEMPLATE_FETCH_ALL]: async ({ commit, rootState }) => {
         try {
@@ -114,11 +96,10 @@ const actions = {
                 commit(TEMPLATE_SET_TEMPLATES, response.data.templates);
             }
         } catch (error) {
-            // Handle 404 (REPO_NOT_FOUND) - it's a STATE, not an error
+            // Handle 404 (NOT_FOUND) - it's a STATE, not an error
             if (error.response?.status === 404) {
                 commit(TEMPLATE_SET_CONTENT_STORE_STATUS, {
-                    status: 'REPO_NOT_FOUND',
-                    canWrite: false
+                    status: 'NOT_FOUND',
                 });
                 console.log('Template repository not found');
                 commit(TEMPLATE_SET_TEMPLATES, []);

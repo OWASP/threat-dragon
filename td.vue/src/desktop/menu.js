@@ -234,7 +234,7 @@ function openModelFile (filename) {
                 logger.log.warn(messages[language].threatmodel.errors.invalidJson + ' : ' + err.message);
                 model.isOpen = false;
                 mainWindow.webContents.send('open-model', path.basename(filename), {modelError: 'invalidJson'});
-                retumrn;
+                return;
             }
             model.isOpen = true;
             mainWindow.webContents.send('open-model', path.basename(filename), modelData);

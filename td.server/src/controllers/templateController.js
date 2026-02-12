@@ -26,7 +26,6 @@ const fetchTemplateMetadata = async (repository, accessToken) => {
  * - Normal operation: Returns array of template metadata
  * - NOT_CONFIGURED: GITHUB_CONTENT_REPO environment variable not set
  * - NOT_INITIALIZED: Repository exists but metadata file not created (admin can initialize, non-admins informed)
- * - REPO_NOT_FOUND: Repository doesn't exist or is inaccessible (404)
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  * @returns {Promise<void>}

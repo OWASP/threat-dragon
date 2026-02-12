@@ -40,7 +40,7 @@ window.electronAPI.onTemplatesResult((_event, result) => {
     // Commit to store
     app.$store.commit(TEMPLATE_SET_CONTENT_STORE_STATUS, {
         status: result.status,
-        canWrite: result.status === 'READ_WRITE'
+        canWrite: result.canWrite || false
     });
     app.$store.commit(TEMPLATE_SET_TEMPLATES, result.templates || []);
 });
@@ -248,14 +248,24 @@ window.electronAPI.onUpdateTemplateError((_event, message) => {
     app.$toast.error(message);
 });
 
-window.electronAPI.onSetTemplateFolderResult((_event, result) => {
-    console.debug('Set template folder result:', result);
+window.electronAPI.onBootstrapTemplatesSuccess((_event, message) => {
+    console.debug('Templates bootstrapped successfully');
+    app.$toast.success(message);
+});
 
-    if (!result.success) {
-        app.$toast.error(app.$t('template.desktop.errors.' + result.error));
-    } else {
-        app.$toast.success(app.$t('template.desktop.setFolderSuccess'));
-    }
+window.electronAPI.onBootstrapTemplatesError((_event, message) => {
+    console.debug('Templates bootstrap failed');
+    app.$toast.error(message);
+});
+
+window.electronAPI.onSetTemplateFolderSuccess((_event, message) => {
+    console.debug('Template folder set successfully');
+    app.$toast.success(message);
+});
+
+window.electronAPI.onSetTemplateFolderError((_event, message) => {
+    console.debug('Template folder setup failed');
+    app.$toast.error(message);
 });
 
 const localAuth = () => {

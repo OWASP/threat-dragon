@@ -115,7 +115,8 @@ app.on('ready', async () => {
     ipcMain.on('set-template-folder-custom', handleSetTemplateFolderCustom);
     ipcMain.on('set-template-folder-existing', handleSetTemplateFolderExisting);
     ipcMain.on('get-templates', handleGetTemplates);
-    ipcMain.on('import-template',handleImportTemplate);
+    ipcMain.on('bootstrap-templates', handleBootstrapTemplates);
+    ipcMain.on('import-template', handleImportTemplate);
     ipcMain.on('fetch-model-by-id', handleFetchModelById);
     ipcMain.on('export-template', handleExportTemplate);
     ipcMain.on('delete-template', handleDeleteTemplate);
@@ -155,6 +156,11 @@ function handleGetTemplates(_event) {
     template.getTemplates();
 }
 
+function handleBootstrapTemplates(_event) {
+    logger.log.debug('Bootstrap templates request from renderer');
+    template.bootstrapTemplates();
+}
+
 function handleCloseApp() {
     logger.log.debug('Close application request from renderer ');
     runApp = false;
@@ -185,8 +191,8 @@ function handleModelSave (_event, modelData, fileName) {
     logger.log.debug('Model save request from renderer with file name : ' + fileName);
     menu.modelSave(modelData, fileName);
 }
-function handleImportTemplate(_event,templateData) {
-    logger.log.debug('Import template - not implemented yet');
+function handleImportTemplate(_event, templateData) {
+    logger.log.debug('Import template request from renderer');
     template.importTemplate(templateData);
 }
 
@@ -197,8 +203,9 @@ function handleFetchModelById(_event, templateId) {
 function handleUpdateMenu (_event, locale) {
     logger.log.debug('Re-labeling the menu system for: ' + locale);
     menu.setLocale(locale);
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    template.setLocale(locale);
+    let menuTemplate = menu.getMenuTemplate();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 }
 
 function handleExportTemplate(_event, data, filename) {

@@ -31,7 +31,6 @@ var language = defaultLanguage;
 
 // Constants
 const CONFIG_FILE = 'templates-path.txt';
-const TEMPLATES_FOLDER = 'templates';
 const TEMPLATE_INDEX = 'template_info.json';
 
 
@@ -78,20 +77,15 @@ async function folderExists(folderPath) {
 
 
 
-// get full path to templates subfolder
-function getTemplatesSubfolder(basePath) {
-    return path.join(basePath, TEMPLATES_FOLDER);
-}
-
 // get full path to template index file
-function getIndexPath(basePath) {
-    return path.join(basePath, TEMPLATES_FOLDER, TEMPLATE_INDEX);
+function getIndexPath(folderPath) {
+    return path.join(folderPath, TEMPLATE_INDEX);
 }
 
-// check if template index file exists in templates subfolder
-async function hasTemplateIndex(basePath) {
+// check if template index file exists in folder
+async function hasTemplateIndex(folderPath) {
     try {
-        const indexPath = getIndexPath(basePath);
+        const indexPath = getIndexPath(folderPath);
         const stats = await fs.promises.stat(indexPath);
         return stats.isFile();
     } catch {
@@ -109,7 +103,6 @@ async function listTemplates(basePath) {
         const indexFilePath = getIndexPath(basePath);
         const data = await fs.promises.readFile(indexFilePath, 'utf-8');
         const parsed = JSON.parse(data);
-        // Handle both array and {templates: [...]} formats
         return parsed.templates || [];
     } catch (err) {
         logger.log.warn('Error reading template index: ' + err);
@@ -117,19 +110,26 @@ async function listTemplates(basePath) {
     }
 }
 
-// Bootstrap: create templates folder and empty index file
-async function bootstrapTemplates(basePath) {
-    const templatesFolder = getTemplatesSubfolder(basePath);
-    const indexPath = getIndexPath(basePath);
-
-    // Create templates subfolder if it doesn't exist
-    await fs.promises.mkdir(templatesFolder, { recursive: true });
-
-    // Create empty index file
+// Creates template index file in the given folder
+async function createTemplateIndex(folderPath) {
+    const indexPath = path.join(folderPath, TEMPLATE_INDEX);
     await fs.promises.writeFile(indexPath, '{"templates":[]}', 'utf-8');
-
-    logger.log.debug('Bootstrapped templates folder at: ' + templatesFolder);
+    logger.log.debug('Created template index at: ' + folderPath);
 }
+
+// IPC-callable: bootstrap templates for configured folder
+async function bootstrapTemplates() {
+    const templatePath = await getTemplatesPath();
+    try {
+        await createTemplateIndex(templatePath);
+        await getTemplates();
+        mainWindow.webContents.send('bootstrap-templates-success', messages[language].template.toast.configureSuccess);
+    } catch (err) {
+        logger.log.error('Error bootstrapping templates: ' + err);
+        mainWindow.webContents.send('bootstrap-templates-error', messages[language].template.errors.setupFailed);
+    }
+}
+
 
 //import template file
 async function importTemplate(template) {
@@ -141,7 +141,7 @@ async function importTemplate(template) {
         const currentTemplates = await listTemplates(templatePath) || [];
         const duplicate = currentTemplates.find(t => t.name === templateMetadata.name);
         if (duplicate) {
-            mainWindow.webContents.send('import-template-error', messages[language].template.errors.duplicateTemplate);
+            mainWindow.webContents.send('import-template-error', messages[language].template.errors.duplicate);
             return;
         }
 
@@ -150,9 +150,9 @@ async function importTemplate(template) {
         await fs.promises.writeFile(indexPath, JSON.stringify({ templates: newTemplates }, null, 2), 'utf-8');
 
         // Save model file
-        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, templateMetadata.modelRef + '.json');
+        const modelPath = path.join(templatePath, templateMetadata.modelRef + '.json');
         await fs.promises.writeFile(modelPath, JSON.stringify(model, null, 2), 'utf-8');
-        mainWindow.webContents.send('import-template-success', messages[language].template.importSuccess);
+        mainWindow.webContents.send('import-template-success', messages[language].template.toast.importSuccess);
 
         // Refresh template list (sends updated list to frontend)
         await getTemplates();
@@ -169,19 +169,19 @@ async function fetchModelById(templateId) {
     try {
         const templates = await listTemplates(templatePath);
         const template = templates.find(t => t.id === templateId);
-        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, template.modelRef + '.json');
+        const modelPath = path.join(templatePath, template.modelRef + '.json');
         const modelData = await fs.promises.readFile(modelPath, 'utf-8');
         mainWindow.webContents.send('fetch-model-by-id-result', {
             model: JSON.parse(modelData)
         });
     } catch (err) {
         logger.log.error('Error fetching model by ID: ' + err);
-    };
+    }
 }
 
 async function exportTemplate(data, filename) {
     const dialogOptions = {
-        title: 'Export Template',  // TODO: i18n
+        title: messages[language].template.exportTemplate,
         defaultPath: filename,
         filters: [{ name: 'Template', extensions: ['json'] }]
     };
@@ -194,11 +194,11 @@ async function exportTemplate(data, filename) {
         }
 
         await fs.promises.writeFile(result.filePath, JSON.stringify(data, null, 2), 'utf-8');
-        mainWindow.webContents.send('export-template-success', messages[language].template.prompts.templateSaved);
+        mainWindow.webContents.send('export-template-success', messages[language].template.toast.exportSuccess);
         logger.log.debug('Template exported: ' + result.filePath);
     } catch (err) {
         logger.log.error('Error exporting template: ' + err);
-        mainWindow.webContents.send('export-template-error', messages[language].template.warnings.templateSave);
+        mainWindow.webContents.send('export-template-error', messages[language].template.errors.exportFailed);
     }
 }
 
@@ -212,42 +212,31 @@ async function savePathToConfig(folderPath) {
     logger.log.debug('Template folder path saved: ' + folderPath);
 }
 
-// Helper: save path, create folder if needed, and bootstrap
+// Helper: validate folder, save path, and bootstrap if needed
 async function saveAndBootstrap(folderPath) {
     try {
-        // Create the folder if it doesn't exist
-        if (!await folderExists(folderPath)) {
-            await fs.promises.mkdir(folderPath, { recursive: true });
-        }
-
         // Check write access
         const canWrite = await hasWriteAccess(folderPath);
         if (!canWrite) {
-            mainWindow.webContents.send('set-template-folder-result', {
-                success: false,
-                error: 'noWriteAccess'
-            });
+            mainWindow.webContents.send('set-template-folder-error', messages[language].template.errors.noWriteAccess);
             return;
         }
 
         // Save path to config
         await savePathToConfig(folderPath);
 
-        // Bootstrap if no template index exists
+        // Create template index if it doesn't exist
         if (!await hasTemplateIndex(folderPath)) {
-            await bootstrapTemplates(folderPath);
+            await createTemplateIndex(folderPath);
         }
 
         // Refresh template list
         await getTemplates();
 
-        mainWindow.webContents.send('set-template-folder-result', { success: true });
+        mainWindow.webContents.send('set-template-folder-success', messages[language].template.toast.configureSuccess);
     } catch (err) {
         logger.log.error('Error setting up template folder: ' + err);
-        mainWindow.webContents.send('set-template-folder-result', {
-            success: false,
-            error: 'setupFailed'
-        });
+        mainWindow.webContents.send('set-template-folder-error', messages[language].template.errors.setupFailed);
     }
 }
 
@@ -255,6 +244,7 @@ async function saveAndBootstrap(folderPath) {
 async function setTemplateFolderDefault() {
     logger.log.debug('Setting template folder to default location');
     const defaultPath = path.join(app.getPath('userData'), 'templates');
+    await fs.promises.mkdir(defaultPath, { recursive: true });
     await saveAndBootstrap(defaultPath);
 }
 
@@ -263,7 +253,7 @@ async function setTemplateFolderCustom() {
     logger.log.debug('Setting template folder to custom location');
     try {
         const result = await dialog.showOpenDialog(mainWindow, {
-            title: messages[language].template.desktop.selectFolder,
+            title: messages[language].template.actions.selectFolder,
             properties: ['openDirectory'],
             defaultPath: app.getPath('documents')
         });
@@ -276,10 +266,7 @@ async function setTemplateFolderCustom() {
         await saveAndBootstrap(result.filePaths[0]);
     } catch (err) {
         logger.log.error('Error selecting custom folder: ' + err);
-        mainWindow.webContents.send('set-template-folder-result', {
-            success: false,
-            error: 'setupFailed'
-        });
+        mainWindow.webContents.send('set-template-folder-error', messages[language].template.errors.setupFailed);
     }
 }
 
@@ -288,7 +275,7 @@ async function setTemplateFolderExisting() {
     logger.log.debug('Selecting existing template folder');
     try {
         const result = await dialog.showOpenDialog(mainWindow, {
-            title: messages[language].template.desktop.selectFolder,
+            title: messages[language].template.actions.selectFolder,
             properties: ['openDirectory'],
             defaultPath: app.getPath('documents')
         });
@@ -304,19 +291,13 @@ async function setTemplateFolderExisting() {
         if (await hasTemplateIndex(selectedPath)) {
             await savePathToConfig(selectedPath);
             await getTemplates();
-            mainWindow.webContents.send('set-template-folder-result', { success: true });
+            mainWindow.webContents.send('set-template-folder-success', messages[language].template.toast.configureSuccess);
         } else {
-            mainWindow.webContents.send('set-template-folder-result', {
-                success: false,
-                error: 'noTemplatesFound'
-            });
+            mainWindow.webContents.send('set-template-folder-error', messages[language].template.errors.folderInvalid);
         }
     } catch (err) {
         logger.log.error('Error selecting existing folder: ' + err);
-        mainWindow.webContents.send('set-template-folder-result', {
-            success: false,
-            error: 'setupFailed'
-        });
+        mainWindow.webContents.send('set-template-folder-error', messages[language].template.errors.setupFailed);
     }
 }
 
@@ -337,7 +318,7 @@ async function getTemplates() {
     const exists = await folderExists(templatePath);
     if (!exists) {
         mainWindow.webContents.send('templates-result', {
-            status: 'FOLDER_NOT_FOUND',
+            status: 'NOT_FOUND',
             templates: []
         });
         return;
@@ -345,7 +326,7 @@ async function getTemplates() {
 
     // check if folder has write access
     const canWrite = await hasWriteAccess(templatePath);
-    console.log('getTemplates - canWrite result:', canWrite, 'for path:', templatePath);
+    logger.log.debug('getTemplates - canWrite result:', canWrite, 'for path:', templatePath);
 
     // Read template metadata from index file
     const templates = await listTemplates(templatePath);
@@ -360,7 +341,7 @@ async function getTemplates() {
 
 
     mainWindow.webContents.send('templates-result', {
-        status: canWrite ? 'READ_WRITE' : 'READ_ONLY',
+        canWrite: canWrite,
         templates: templates
     });
 }
@@ -373,9 +354,9 @@ async function deleteTemplate(templateId) {
         const indexPath = getIndexPath(templatePath);
         await fs.promises.writeFile(indexPath, JSON.stringify({ templates: newTemplates }, null, 2), 'utf-8');
         // Also delete the model file
-        const modelPath = path.join(templatePath, TEMPLATES_FOLDER, templates.find(t => t.id === templateId).modelRef + '.json');
+        const modelPath = path.join(templatePath, templates.find(t => t.id === templateId).modelRef + '.json');
         await fs.promises.unlink(modelPath);
-        mainWindow.webContents.send('delete-template-success', messages[language].template.deleteSuccess);
+        mainWindow.webContents.send('delete-template-success', messages[language].template.toast.deleteSuccess);
         // Refresh template list (sends updated list to frontend)
         await getTemplates();
         logger.log.debug('Template deleted: ' + templateId);
@@ -402,7 +383,7 @@ async function updateTemplate(templateMetadata) {
         };
         const indexPath = getIndexPath(templatePath);
         await fs.promises.writeFile(indexPath, JSON.stringify({ templates }, null, 2), 'utf-8');
-        mainWindow.webContents.send('update-template-success', messages[language].template.updateSuccess);
+        mainWindow.webContents.send('update-template-success', messages[language].template.toast.updateSuccess);
         // Refresh template list
         await getTemplates();
         logger.log.debug('Template updated: ' + templateMetadata.id);
@@ -412,16 +393,23 @@ async function updateTemplate(templateMetadata) {
     }
 }
 
-export const setMainWindow = (window) => {
+const setMainWindow = (window) => {
     mainWindow = window;
+};
+
+const setLocale = (locale) => {
+    const languages = ['ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'msa', 'por', 'spa', 'zho'];
+    language = languages.includes(locale) ? locale : defaultLanguage;
 };
 
 export default {
     setMainWindow,
+    setLocale,
     setTemplateFolderDefault,
     setTemplateFolderCustom,
     setTemplateFolderExisting,
     getTemplates,
+    bootstrapTemplates,
     importTemplate,
     fetchModelById,
     exportTemplate,
