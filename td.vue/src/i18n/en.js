@@ -4,7 +4,8 @@ const eng = {
     },
     nav: {
         loggedInAs: 'Logged in as',
-        logOut: 'Log out'
+        logOut: 'Log out',
+        contentManagement: 'Content Management'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -46,7 +47,8 @@ const eng = {
             openExisting: 'Open an existing threat model',
             createNew: 'Create a new, empty threat model',
             readDemo: 'Explore a sample threat model',
-            importExisting: 'Import a threat model via JSON'
+            importExisting: 'Import a threat model via JSON',
+            createFromTemplate: 'Create model from a Template'
         }
     },
     demo: {
@@ -80,7 +82,7 @@ const eng = {
     },
     repository: {
         select: 'Select a',
-        from: 'repository from the list below',
+        from: 'repository from the list below to store the new Threat Model / pick an existing Threat Model',
         noneFound: 'No repositories found. To get started, create a new repository on'
     },
     branch: {
@@ -109,6 +111,71 @@ const eng = {
         or: 'or',
         repo: 'repo',
         newThreatModel: 'Create a New Threat Model'
+    },
+    template:{
+        startFromLocalTemplate: 'Start from a Local Template',
+        select: 'Select a Template from the list below',
+        selectDescription: 'Templates provide a starting point for new threat models, pre-populated with relevant components and threats.',
+        noTemplates: 'No templates found',
+        templatesLocalSession: 'Remote templates are not available for local sessions.',
+        search: 'Search templates...',
+        exportTemplate: 'Export as Template',
+        tags: 'Tags',
+        name: 'Template Name',
+        description: 'Template Description',
+        saveTemplate: 'Save Template',
+        addNew: 'Add New Template',
+        manage: 'Manage Templates',
+        manageDescription: 'Import, export, and manage your threat model templates here.',
+        editTemplate: 'Edit Template',
+        addTagsPlaceholder: 'Add tags...',
+        updateSuccess: 'Template updated successfully',
+        importSuccess: 'Template imported successfully',
+        deleteSuccess: 'Template deleted successfully',
+        deleteTitle: 'Confirm Delete',
+        deleteConfirm: 'Are you sure you want to delete "{name}"?',
+        errors: {
+            invalidJson: 'Invalid JSON. Please check your template file and try again',
+            invalidTemplate: 'Invalid template format. Please check your template file and try again',
+            loadFailed: 'Failed to load templates. Please try again',
+            duplicateTemplate: 'A template with this name already exists. Please use a different name',
+            updateFailed: 'Failed to update template',
+            deleteFailed: 'Failed to delete template'
+        },
+        warnings: {
+            templateSave: 'Could not save the template. Check the developer console for more information',
+            invalidSchema: 'Template does not strictly match schema. Details in the developer console'
+        },
+        prompts: {
+            templateSaved: 'Template successfully saved',
+            templateDownloading: 'Downloading template'
+        },
+        repo: {
+            
+            notInitialized: {
+                title: 'Template Repository Not Initialized',
+                userMessage: 'The template repository has not been initialized. Please contact your administrator.',
+                adminMessage: 'Please go to the Manage Templates page to initialize the template repository.'
+            },
+            notConfigured: {
+                title: 'Template Repository Not Configured',
+                userMessage: 'The template repository is not configured. Please set up the repository to access templates.'
+            },
+            notFound: {
+                title: 'Template Repository Not Found',
+                userMessage: 'The repository {repoName} is not a valid repository. Please check your configuration.'
+            },
+            bootstrap:{
+                bootstrapping:'Initializing..',
+                title: 'Initialize Template Repository',
+                description: 'This will create the necessary folder structure within the repository if it does not already exist.',
+                action: 'Initialize',
+                success: 'Template repository successfully initialized.',
+                error: 'Could not initialize the template repository. Check the developer console for more information.'
+
+
+            }
+        },
     },
     threatmodel: {
         contributors: 'Contributors',
@@ -167,7 +234,8 @@ const eng = {
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'Only files that end with .json are supported.',
             open: 'Error opening this Threat Model. Check the developer console for more information',
-            save: 'Error saving the Threat Model. Check the developer console for more information'
+            save: 'Error saving the Threat Model. Check the developer console for more information',
+            createConflict: 'A threat model with this name already exists. Please use a different name.'
         },
         warnings: {
             export: 'Could not export the Threat Model. Check the developer console for more information',
@@ -303,7 +371,10 @@ const eng = {
         saveModelAs: 'Save Model As',
         search: 'Search',
         next:'Next',
-        previous:'Previous'
+        previous:'Previous',
+        manage : 'Manage...',
+
+        exportTemplate: 'Export As Template',
     },
     cards: {
         details: 'Card details',

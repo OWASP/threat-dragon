@@ -35,8 +35,14 @@ const putAsync = async (url, body) => {
     return res.data;
 };
 
+const deleteAsync = async (url, body) => {
+    const res = await clientFactory.get().delete(url, body);
+    return res.data;
+};
 export default {
     getAsync,
     postAsync,
-    putAsync
+    putAsync,
+    deleteAsync
+
 };

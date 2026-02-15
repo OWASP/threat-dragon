@@ -8,6 +8,7 @@ APIs
 AppImage
 ara
 Atlassian
+auth
 backend
 Backend
 Bahasa
@@ -92,9 +93,12 @@ MacOS
 misconfigurations
 mitigations
 Mitigations
+modelRef
+ModelRef
 msa
 nav
 npm
+npx
 NSIS
 nvm
 OAuth
@@ -109,6 +113,7 @@ pnpm
 por
 português
 postfix
+pre
 PRs
 PWD
 remediations
@@ -119,6 +124,7 @@ sast
 SAST
 SCA
 Sinon
+schemas
 snapcraft
 sudo
 Suomi
@@ -135,10 +141,12 @@ trivy
 Trivy
 TSV
 UI
+Uncheck
 unpatched
 uptime
 URI
 URLEncoded
+UUID
 Validator
 vue
 Vue

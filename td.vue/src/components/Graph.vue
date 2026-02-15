@@ -79,6 +79,18 @@ export default {
     },
     async mounted() {
         this.init();
+        if (window.electronAPI?.onApplyDiagramRequest) {
+            window.electronAPI.onApplyDiagramRequest(() => {
+                if (!this.graph) return;
+
+                const updated = Object.assign({}, this.diagram);
+                updated.cells = this.graph.toJSON().cells;
+
+                this.$store.dispatch(tmActions.diagramSaved, updated);
+                this.$store.dispatch(tmActions.notModified);
+            });
+
+        }
     },
     methods: {
         init() {

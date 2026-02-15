@@ -39,6 +39,7 @@ import { mapState } from 'vuex';
 
 import TdDashboardAction from '@/components/DashboardAction.vue';
 import { getDashboardActions } from '@/service/provider/providers.js';
+import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'MainDashboard',
@@ -47,6 +48,11 @@ export default {
     },
     computed: mapState({
         actions: (state) => getDashboardActions(state.provider.selected)
-    })
+    }),
+    mounted() {
+        // Clear any stale threatmodel state when returning to dashboard
+        // This ensures "New Threat Model" starts fresh, not with leftover template data
+        this.$store.dispatch(tmActions.clear);
+    }
 };
 </script>

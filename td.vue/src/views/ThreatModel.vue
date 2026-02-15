@@ -9,8 +9,7 @@
         <!-- Description -->
         <b-row class="mb-4">
             <b-col>
-                <b-card
-                    :header="$t('threatmodel.description')">
+                <b-card :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
                             <p id="tm_description">{{ model.summary.description }}</p>
@@ -22,12 +21,7 @@
 
         <!-- Diagrams -->
         <b-row class="mb-4">
-            <b-col
-                class="tm_diagram"
-                lg="3"
-                v-for="(diagram, idx) in model.detail.diagrams"
-                :key="idx"
-            >
+            <b-col class="tm_diagram" lg="3" v-for="(diagram, idx) in model.detail.diagrams" :key="idx">
                 <b-card>
                     <template #header>
                         <h6 class="diagram-header-text">
@@ -37,7 +31,7 @@
                         </h6>
                     </template>
                     <a href="javascript:void(0)" @click="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", -->                        <b-img-lazy
+                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <b-img-lazy
                             class="m-auto d-block td-diagram-thumb"
                             :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
                             :alt="diagram.title" />
@@ -51,21 +45,18 @@
         <b-row>
             <b-col class="text-right">
                 <b-btn-group>
-                    <td-form-button
-                        id="td-edit-btn"
-                        :isPrimary="true"
-                        :onBtnClick="onEditClick"
-                        icon="edit"
+                    <td-form-button id="td-edit-btn" :isPrimary="true" :onBtnClick="onEditClick" icon="edit"
                         :text="$t('forms.edit')" />
-                    <td-form-button
-                        id="td-report-btn"
-                        :onBtnClick="onReportClick"
-                        icon="file-alt"
+                    <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
-                    <td-form-button
-                        id="td-close-btn"
-                        :onBtnClick="onCloseClick"
-                        icon="times"
+                    <!-- REPLACE the export template button with dropdown -->
+                    <b-dropdown right :text="$t('forms.manage')" id="manage-model-btn">
+                        <b-dropdown-item @click="onExportTemplateClick" id="export-template-option">
+                            <font-awesome-icon icon="file-import" ></font-awesome-icon>
+                            {{ $t('forms.exportTemplate') }}
+                        </b-dropdown-item>
+                    </b-dropdown>
+                    <td-form-button id="td-close-btn" :onBtnClick="onCloseClick" icon="times"
                         :text="$t('forms.closeModel')" />
                 </b-btn-group>
             </b-col>
@@ -78,6 +69,7 @@
     font-size: 14px;
     white-space: pre-wrap;
 }
+
 .diagram-header-text a {
     color: $black;
 }
@@ -124,6 +116,15 @@ export default {
             evt.preventDefault();
             this.$store.dispatch(tmActions.clear);
             this.$router.push('/dashboard');
+        },
+        onExportTemplateClick(evt) {
+            evt.preventDefault();
+            // Demo models live on the local route; use the matching export route to avoid missing params
+            const isLocalRoute = this.$route.name && this.$route.name.startsWith('local');
+            const routeName = isLocalRoute
+                ? 'localThreatModelExportTemplate'
+                : `${this.providerType}ThreatModelExportTemplate`;
+            this.$router.push({ name: routeName, params: this.$route.params });
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {

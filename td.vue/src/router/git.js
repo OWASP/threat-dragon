@@ -1,4 +1,5 @@
 import { providerTypes } from '@/service/provider/providerTypes';
+import { getTemplateRoutes,adminTemplateRoutes } from './template';
 
 const providerType = providerTypes.git;
 
@@ -9,6 +10,10 @@ export const gitRoutes = [
         name: `${providerType}Repository`,
         component: () => import(/* webpackChunkName: "repository-access" */ '../views/git/RepositoryAccess.vue')
     },
+
+    ...getTemplateRoutes(providerType, `/${providerType}/:provider`),  
+    
+
     {
         path: `/${providerType}/:provider/:repository/branch`,
         name: `${providerType}Branch`,
@@ -48,5 +53,7 @@ export const gitRoutes = [
         path: `/${providerType}/:provider/:repository/:branch/:threatmodel/report`,
         name: `${providerType}Report`,
         component: () => import(/* webpackChunkName: "report-model" */ '../views/ReportModel.vue')
-    }
+    },
+    ...adminTemplateRoutes,  // /admin/templates
+
 ];

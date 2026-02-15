@@ -2,57 +2,50 @@
   <b-navbar toggleable="lg" fixed="top" id="navbar">
     <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
       <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
-      Threat Dragon v{{this.$store.state.packageBuildVersion}}{{this.$store.state.packageBuildState}}
+      Threat Dragon v{{ this.$store.state.packageBuildVersion }}{{ this.$store.state.packageBuildState }}
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item>
-            <td-locale-select />
+          <td-locale-select />
         </b-nav-item>
       </b-navbar-nav>
-      
+
       <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs')}} {{ username }}</b-nav-text>
+        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs') }} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
-          <font-awesome-icon
-            icon="sign-out-alt"
-            class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('nav.logOut')"
-          ></font-awesome-icon>
+          <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" v-b-tooltip.hover
+            :title="$t('nav.logOut')"></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item
-          href="https://www.threatdragon.com/docs/"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-docs"
-        >
-          <font-awesome-icon
-            icon="question-circle"
-            class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('desktop.help.docs')"
-          ></font-awesome-icon>
+        <!-- This is the dropdown from admin actions(manage tempaltes) -->
+        <b-nav-item-dropdown v-if="isAdmin" id="my-nav-dropdown" toggle-class="nav-link-custom" right >
+          <!-- Custom toggle content -->
+          <template #button-content>
+            <font-awesome-icon icon="cog" class="td-fa-nav text-white" v-b-tooltip.hover
+              :title="$t('nav.contentManagement')" />
+          </template>
+
+          <!-- Dropdown items -->
+          <b-dropdown-item @click="onManageTemplates">
+            Manage Templates
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+
+
+        <b-nav-item href="https://www.threatdragon.com/docs/" target="_blank" rel="noopener noreferrer" id="nav-docs">
+          <font-awesome-icon icon="question-circle" class="td-fa-nav" v-b-tooltip.hover
+            :title="$t('desktop.help.docs')"></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item
-          href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-tm-cheat-sheet"
-        >
-          <font-awesome-icon
-            icon="gift"
-            class="td-fa-nav"
-            v-b-tooltip.hover :title="$t('desktop.help.sheets')"
-          ></font-awesome-icon>
+        <b-nav-item href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+          target="_blank" rel="noopener noreferrer" id="nav-tm-cheat-sheet">
+          <font-awesome-icon icon="gift" class="td-fa-nav" v-b-tooltip.hover
+            :title="$t('desktop.help.sheets')"></font-awesome-icon>
         </b-nav-item>
-        <b-nav-item
-          href="https://owasp.org/www-project-threat-dragon/"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="nav-owasp-td"
-        >
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')"/>
+        <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank" rel="noopener noreferrer"
+          id="nav-owasp-td">
+          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -86,29 +79,34 @@ $icon-height: 1.2rem;
 
 .td-brand {
   color: $white !important;
+
   .td-brand-img {
     max-height: ($header-height - 10);
   }
 }
 
-@media (max-width: 576px) { /* This is the typical breakpoint for phones */
+@media (max-width: 576px) {
+
+  /* This is the typical breakpoint for phones */
   .nav-link {
-  color: red !important;
+    color: red !important;
   }
+
   .logged-in-as {
     background-color: $orange;
     border-radius: 5px;
-    padding:10px;
+    padding: 10px;
   }
 }
+
 @media (max-width: 576px) {
-  .td-owasp-logo { /* Target the OWASP logo */
+  .td-owasp-logo {
+    /* Target the OWASP logo */
     background-color: red;
     border-radius: 50%;
     padding: 5px;
   }
-  }
-
+}
 </style>
 
 <script>
@@ -124,7 +122,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'username'
+            'username',
+            'isAdmin'
         ])
     },
     methods: {
@@ -132,6 +131,13 @@ export default {
             evt.preventDefault();
             this.$store.dispatch(LOGOUT);
             this.$router.push('/').catch(error => {
+                if (error.name != 'NavigationDuplicated') {
+                    throw error;
+                }
+            });
+        },
+        onManageTemplates() {
+            this.$router.push('/admin/templates').catch(error => {
                 if (error.name != 'NavigationDuplicated') {
                     throw error;
                 }
