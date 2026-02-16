@@ -29,7 +29,7 @@ const findThreats = (model) => {
                 let mechanisms = threat.attack_mechanisms;
                 description += '\nUsing attack mechanism : ';
                 mechanisms.forEach((mechanism) => {
-                    description += '\n' + ' CAPEC-' + mechanism.capec_id + ' : ' + mechanism.capec_title;                    
+                    description += '\n' + ' CAPEC-' + mechanism.capec_id + ' : ' + mechanism.capec_title;
                 });
             }
 
@@ -37,7 +37,7 @@ const findThreats = (model) => {
                 let weaknesses = threat.weaknesses;
                 description += '\nExploiting weakness : ';
                 weaknesses.forEach((weakness) => {
-                    description += '\n' + ' CWE-' + weakness.cwe_id + ' : ' + weakness.cwe_title;                    
+                    description += '\n' + ' CWE-' + weakness.cwe_id + ' : ' + weakness.cwe_title;
                 });
             }
 
