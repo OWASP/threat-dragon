@@ -23,15 +23,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -57,15 +57,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -101,15 +101,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -137,15 +137,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -194,15 +194,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -244,15 +244,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -297,15 +297,15 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 20.14.0
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.2.0
         with:
           node-version: '20.14.0'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -349,7 +349,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.7.0
@@ -361,7 +361,7 @@ jobs:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.2
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -370,7 +370,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3.6.0
+        uses: docker/login-action@v3.7.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -475,7 +475,7 @@ jobs:
 
     steps:
       - name: Check out
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       - name: Fetch prepared SBOM artifacts
         uses: actions/download-artifact@v7.0.0
