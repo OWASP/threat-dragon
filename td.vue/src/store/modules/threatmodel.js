@@ -123,6 +123,10 @@ const actions = {
         console.debug('Save threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
+            if (Object.keys(state.selectedDiagram).length !== 0) {
+                commit(THREATMODEL_DIAGRAM_SAVED, state.selectedDiagram);
+            }
+
             window.electronAPI.modelSave(state.data, state.fileName);
         } else {
             let result = false;
