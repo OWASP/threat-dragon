@@ -26,6 +26,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { getProviderType } from '@/service/provider/providers.js';
+import { providerTypes } from '@/service/provider/providerTypes.js';
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -39,9 +42,13 @@ export default {
             models: demo.models
         };
     },
+    computed: mapState({
+        providerType: (state) => getProviderType(state.provider.selected),
+        selectedProvider: (state) => state.provider.selected
+    }),
     mounted() {
         this.$store.dispatch(tmActions.clear);
-        this.$store.dispatch(tmActions.fetchAll);
+        this.$store.dispatch(tmActions.loadDemos);
     },
     methods: {
         onModelClick(model) {
@@ -54,8 +61,22 @@ export default {
                 // tell any electron server that the model has changed
                 window.electronAPI.modelOpened(model.name);
             }
-            const params = Object.assign({}, this.$route.params, { threatmodel: model.name });
-            this.$router.push({ name: 'localThreatModel' , params });
+            if (this.providerType === providerTypes.local) {
+                const params = Object.assign({}, this.$route.params, { threatmodel: model.name });
+                this.$router.push({ name: 'localThreatModel' , params });}
+
+            else{
+                // Git providers: Navigate through repo/branch selection (same flow as creating new model)
+                // Google Drive: Navigate through folder selection (same flow as creating new model)
+                // Model data is already stored in state via tmActions.selected above
+                this.$store.dispatch(tmActions.stash);
+
+                this.$router.push({
+                    name: this.providerType === providerTypes.git ? `${this.providerType}Repository` : `${this.providerType}Folder`,
+                    params: { provider: this.selectedProvider },
+                    query: { action: 'create' }});
+
+            }
         }
     }
 };
