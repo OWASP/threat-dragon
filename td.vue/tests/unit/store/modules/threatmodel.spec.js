@@ -8,6 +8,7 @@ import {
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
+    THREATMODEL_LOAD_DEMOS,
     THREATMODEL_MODIFIED,
     THREATMODEL_NOT_MODIFIED,
     THREATMODEL_SAVE,
@@ -170,11 +171,16 @@ describe('store/modules/threatmodel.js', () => {
             );
         });
 
-        it('does not do a fetch all if using a local provider', async () => {
+        it('commits the load demos action without calling the API', async () => {
             jest.spyOn(threatmodelApi, 'modelsAsync');
-            mocks.rootState.provider.selected = 'local';
-            await threatmodelModule.actions[THREATMODEL_FETCH_ALL](mocks);
+            await threatmodelModule.actions[THREATMODEL_LOAD_DEMOS](mocks);
             expect(threatmodelApi.modelsAsync).not.toHaveBeenCalled();
+            expect(mocks.commit).toHaveBeenCalledWith(
+                THREATMODEL_FETCH_ALL,
+                expect.arrayContaining([
+                    expect.objectContaining({ name: expect.any(String) })
+                ])
+            );
         });
 
         it('commits the selected action', () => {

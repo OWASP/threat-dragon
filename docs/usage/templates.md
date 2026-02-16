@@ -11,6 +11,10 @@ group: Modeling
 [Threat Dragon](https://owasp.org/www-project-threat-dragon/) supports templates that allow you to
 quickly create new threat models based on pre-defined structures.
 
+**Note**: The template feature is currently only available for GitHub repositories
+and local users (if they have templates in the local file system).
+Support for Atlassian Bitbucket, GitLab, Google Drive and desktop is not yet implemented.
+
 ## Create a new model from a template
 
 ### Using the Web application

@@ -17,7 +17,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
         mockStore = new Vuex.Store({
             actions: {
                 THREATMODEL_CLEAR: () => {},
-                THREATMODEL_FETCH_ALL: () => {},
+                THREATMODEL_LOAD_DEMOS: () => {},
                 THREATMODEL_SELECTED: () => {}
             }
         });
@@ -135,14 +135,37 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
     });
 
-    it('fetches the demo models', () => {
-        expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_FETCH_ALL');
+    it('loads the demo models', () => {
+        expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_LOAD_DEMOS');
     });
 
-    describe('selecting a demo model', () => {
+    describe('selecting a demo model with local provider', () => {
         let demoModelItem;
 
         beforeEach(async () => {
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'local' }
+                },
+                actions: {
+                    THREATMODEL_CLEAR: () => {},
+                    THREATMODEL_LOAD_DEMOS: () => {},
+                    THREATMODEL_SELECTED: () => {},
+                    THREATMODEL_STASH: () => {}
+                }
+            });
+            mockStore.dispatch = jest.fn();
+
+            wrapper = shallowMount(SelectDemoModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $route: { params: {} },
+                    $router: mockRouter
+                }
+            });
+
             demoModelItem = await wrapper.findAllComponents(BListGroupItem)
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
@@ -153,10 +176,117 @@ describe('views/demo/SelectDemoModel.vue', () => {
             expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
         });
 
-        it('navigates to the threat model page', () => {
+        it('navigates to the local threat model page', () => {
             expect(mockRouter.push).toHaveBeenCalledWith(
                 { name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' }}
             );
+        });
+
+        it('does not stash the model', () => {
+            expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
+        });
+    });
+
+
+     
+    describe('selecting a demo model with github provider', () => {
+        let demoModelItem;
+
+        beforeEach(async () => {
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'github' }
+                },
+                actions: {
+                    THREATMODEL_CLEAR: () => {},
+                    THREATMODEL_LOAD_DEMOS: () => {},
+                    THREATMODEL_SELECTED: () => {},
+                    THREATMODEL_STASH: () => {}
+                }
+            });
+            mockStore.dispatch = jest.fn();
+
+            wrapper = shallowMount(SelectDemoModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $route: { params: {} },
+                    $router: mockRouter
+                }
+            });
+
+            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Demo Threat Model')
+                .at(0);
+            await demoModelItem.trigger('click');
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
+        });
+
+        it('stashes the model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_STASH');
+        });
+
+        it('navigates to the repository selection page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'gitRepository',
+                params: { provider: 'github' },
+                query: { action: 'create' }
+            });
+        });
+    });
+
+
+    describe('selecting a demo model with google provider', () => {
+        let demoModelItem;
+
+        beforeEach(async () => {
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'google' }
+                },
+                actions: {
+                    THREATMODEL_CLEAR: () => {},
+                    THREATMODEL_LOAD_DEMOS: () => {},
+                    THREATMODEL_SELECTED: () => {},
+                    THREATMODEL_STASH: () => {}
+                }
+            });
+            mockStore.dispatch = jest.fn();
+
+            wrapper = shallowMount(SelectDemoModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $route: { params: {} },
+                    $router: mockRouter
+                }
+            });
+
+            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Demo Threat Model')
+                .at(0);
+            await demoModelItem.trigger('click');
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
+        });
+
+        it('stashes the model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_STASH');
+        });
+
+        it('navigates to the folder selection page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'googleFolder',
+                params: { provider: 'google' },
+                query: { action: 'create' }
+            });
         });
     });
 });
