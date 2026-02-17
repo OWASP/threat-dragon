@@ -8,6 +8,7 @@ APIs
 AppImage
 ara
 Atlassian
+auth
 backend
 Backend
 Bahasa
@@ -92,6 +93,8 @@ MacOS
 misconfigurations
 mitigations
 Mitigations
+modelRef
+ModelRef
 msa
 nav
 npm
@@ -110,6 +113,7 @@ pnpm
 por
 português
 postfix
+pre
 PRs
 PWD
 remediations
@@ -137,10 +141,12 @@ trivy
 Trivy
 TSV
 UI
+Uncheck
 unpatched
 uptime
 URI
 URLEncoded
+UUID
 Validator
 vue
 Vue
