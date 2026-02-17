@@ -65,7 +65,8 @@ const mutations = {
 };
 
 const getters = {
-    username: (state) => state.user.username || ''
+    username: (state) => state.user.username || '',
+    isAdmin: (state) => state.user.isAdmin || false
 };
 
 export default {

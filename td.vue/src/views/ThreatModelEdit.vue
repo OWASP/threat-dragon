@@ -236,13 +236,27 @@ export default {
         },
         async onSaveClick(evt) {
             evt.preventDefault();
-            if (this.$route.name === 'gitThreatModelCreate' || this.$route.name === 'googleThreatModelCreate') {
-                await this.$store.dispatch(tmActions.create);
+
+            // Validate title exists before creating/saving
+            if (!this.model.summary.title || this.model.summary.title.trim() === '') {
+                this.$toast.error('Threat model must have a title');
+                return;
+            }
+
+            const isCreating = this.$route.name === 'gitThreatModelCreate' || this.$route.name === 'googleThreatModelCreate';
+
+            if (isCreating) {
+                const result = await this.$store.dispatch(tmActions.create);
+                // Only navigate to edit route if create was successful
+                if (result) {
+                    const params = Object.assign({}, this.$route.params, {
+                        threatmodel: this.model.summary.title
+                    });
+                    this.$router.replace({ name: `${this.providerType}ThreatModelEdit`, params });
+                }
             } else {
                 await this.$store.dispatch(tmActions.saveModel);
             }
-            // stop the save button from leaving the threat model edit view
-            // this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
         },
         async onReloadClick(evt) {
             evt.preventDefault();

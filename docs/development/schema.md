@@ -33,7 +33,113 @@ npx ajv validate --allow-union-types -s ~/threat-dragon-v2.schema.json  --all-er
     -d ThreatDragonModels/v2-threat-model.json
 ```
 
-These commands use a schema file downloaded from either [version 1][td-v1-schema] or [version 2][td-v2-schema] schemas.
+## Template Schema
+
+Threat Dragon templates use a specific format that combines threat model content with template metadata.
+Templates consist of two parts:
+
+### Template Metadata
+
+The template metadata contains information for browsing and managing templates:
+
+```json
+{
+  "id": "uuid-v4-string",
+  "modelRef": "uuid-v4-string", 
+  "name": "Template Display Name",
+  "description": "Brief description of the template purpose",
+  "tags": ["web", "api", "microservices"]
+}
+```
+
+### Template Content
+
+The template content is a complete threat model that follows the
+[Version 2.x schema]({{ '/assets/schemas/owasp.threat-dragon.schema.V2.json' | relative_url }}).
+
+### Template File Format
+
+When imported or exported locally, templates combine both parts:
+
+```json
+{
+  "templateMetadata": {
+    "id": "uuid-v4-string",
+    "modelRef": "uuid-v4-string",
+    "name": "Web Application Template",
+    "description": "Basic template for web applications",
+    "tags": ["web", "basic"]
+  },
+  "model": {
+    "summary": {
+      "title": "Template Title",
+      "owner": "Template Owner"
+    },
+    "detail": {
+      "contributors": [],
+      "diagrams": []
+    }
+  }
+}
+```
+
+### Template Storage and the ModelRef Relationship
+
+When templates are stored in the organization's template repository (configured via `GITHUB_CONTENT_REPO`),
+the metadata and content are stored separately for efficient indexing and retrieval.
+
+**Field definitions:**
+
+| Field | Purpose |
+| ----- | ------- |
+| `id` | Unique identifier for the template metadata record itself |
+| `modelRef` | Reference UUID that links the metadata to its corresponding template content file |
+
+**Repository structure:**
+
+```text
+templates/
+├── template_info.json          # Index file containing all template metadata
+├── a1b2c3d4-e5f6-7890-abcd-ef1234567890.json   # Template content file
+├── b2c3d4e5-f6a7-8901-bcde-f12345678901.json   # Another template content
+└── ...
+```
+
+**How it works:**
+
+1. `template_info.json` contains an object with a `templates` array of metadata objects
+   (id, modelRef, name, description, tags)
+2. Each metadata object's `modelRef` value corresponds to a content file named
+   `{modelRef}.json`
+3. When listing templates, only `template_info.json` is fetched (lightweight operation)
+4. When a user selects a template, the full content is fetched using the `modelRef` to
+   locate the file
+
+**Example `template_info.json`:**
+
+```json
+{
+  "templates": [
+    {
+      "id": "meta-uuid-1",
+      "modelRef": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Web Application Template",
+      "description": "Basic web app architecture",
+      "tags": ["web", "basic"]
+    },
+    {
+      "id": "meta-uuid-2",
+      "modelRef": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "name": "Microservices Template",
+      "description": "Distributed microservices pattern",
+      "tags": ["microservices", "api"]
+    }
+  ]
+}
+```
+
+The corresponding content file `a1b2c3d4-e5f6-7890-abcd-ef1234567890.json` contains the full threat model
+that will be used as the starting point when creating a new model from this template.
 
 ### TM-BOM
 
