@@ -64,6 +64,11 @@ const ara = {
             save: 'حفظ النموذج',
             saveAs: 'حفظ النموذج كـ '
         },
+        aiTools: {
+            heading: 'أدوات الذكاء الاصطناعي',
+            generateThreats: 'توليد التهديدات والتخفيفات',
+            settings: 'الإعدادات'
+        },
         help: {
             heading: 'مساعدة',
             docs: 'التوثيق',

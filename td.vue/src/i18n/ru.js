@@ -64,6 +64,11 @@ const rus = {
             save: 'Save Model',
             saveAs: 'Save Model As'
         },
+        aiTools: {
+            heading: 'ИИ-инструменты',
+            generateThreats: 'Генерировать угрозы и меры защиты',
+            settings: 'Настройки'
+        },
         help: {
             heading: 'Help',
             docs: 'Documentation',

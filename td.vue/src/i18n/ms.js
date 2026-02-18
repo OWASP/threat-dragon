@@ -64,6 +64,11 @@ const msa = {
             save: 'Simpan Model',
             saveAs: 'Simpan Model Sebagai'
         },
+        aiTools: {
+            heading: 'Alat AI',
+            generateThreats: 'Jana ancaman dan mitigasi',
+            settings: 'Tetapan'
+        },
         help: {
             heading: 'Bantuan',
             docs: 'Dokumentasi',

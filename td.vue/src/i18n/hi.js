@@ -64,6 +64,11 @@ const hin = {
             save: 'मॉडल सहेजें',
             saveAs: 'मॉडल को इस रूप में सहेजें'
         },
+        aiTools: {
+            heading: 'AI उपकरण',
+            generateThreats: 'खतरे और शमन उत्पन्न करें',
+            settings: 'सेटिंग्स'
+        },
         help: {
             heading: 'सहायता',
             docs: 'दस्तावेज़ीकरण',

@@ -64,6 +64,11 @@ const spa = {
             save: 'Guardar modelo',
             saveAs: 'Guardar modelo como'
         },
+        aiTools: {
+            heading: 'Herramientas de IA',
+            generateThreats: 'Generar amenazas y mitigaciones',
+            settings: 'Configuración'
+        },
         help: {
             heading: 'Ayuda',
             docs: 'Documentación',

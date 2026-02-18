@@ -74,6 +74,8 @@ nav:
       groups:
         - name: Modeling
           fa_class: fas fa-pencil-alt
+        - name: Plugins
+          fa_class: fas fa-plug
     - name: Open Source
       groups:
         - name: Development

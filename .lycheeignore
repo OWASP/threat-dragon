@@ -37,3 +37,7 @@ nvd.nist.gov/
 
 # not interested in certum docs
 certum.eu
+
+# getting a 403, but the site / blog posts exist and are available
+https://infosecotb.com/using-owasp-threat-dragon-and-artificial-intelligence-ai-for-threat-modelling-part-1-creating-a-data-flow-diagram/
+https://infosecotb.com/ai-powered-threat-modeling-with-owasp-threat-dragon-part-2-generating-threats-with-artificial-intelligence/

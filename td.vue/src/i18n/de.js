@@ -64,6 +64,11 @@ const deu = {
             save: 'Modell speichern',
             saveAs: 'Modell speichern als'
         },
+        aiTools: {
+            heading: 'KI-Tools',
+            generateThreats: 'Bedrohungen und Minderungen generieren',
+            settings: 'Einstellungen'
+        },
         help: {
             heading: 'Hilfe',
             docs: 'Dokumentation',
