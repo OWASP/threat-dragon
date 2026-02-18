@@ -75,28 +75,9 @@ export default {
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         },
         newThreatModel() {
-            this.$store.dispatch(tmActions.clear);
-            const newTm = {
-                version: '2.3.0',
-                summary: {
-                    title: 'New Threat Model',
-                    owner: '',
-                    description: '',
-                    id: 0
-                },
-                detail: {
-                    contributors: [],
-                    diagrams: [],
-                    diagramTop: 0,
-                    reviewer: '',
-                    threatTop: 0
-                }
-            };
-            this.$store.dispatch(tmActions.create, newTm);
-            const params = Object.assign({}, this.$route.params, {
-                threatmodel: newTm.summary.title
-            });
-            this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params });
+            const routeName = `${this.providerType}NewThreatModel`;
+            const params = Object.assign({}, this.$route.params);
+            this.$router.push({ name: routeName, params });
         }
     }
 };

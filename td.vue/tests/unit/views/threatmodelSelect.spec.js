@@ -209,27 +209,20 @@ describe('views/ThreatModelSelect.vue', () => {
             getLocalVue({
                 params: {
                     provider: mockStore.state.provider.selected,
-                    repository: mockStore.state.repo.selected
+                    repository: mockStore.state.repo.selected,
+                    branch : mockStore.state.branch.selected
                 }
             });
             wrapper.vm.newThreatModel();
         });
 
-        it('clears the threat model', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
-        });
-
-        it('creates the threat model', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_CREATE, expect.anything()); 
-        });
-
-        it('navigates to the edit page', () => {
+        it('navigates to the new threat model page', () => {
             expect(mockRouter.push).toHaveBeenCalledWith({
-                name: 'gitThreatModelEdit',
+                name: `${wrapper.vm.providerType}NewThreatModel`,
                 params: {
                     provider: mockStore.state.provider.selected,
                     repository: mockStore.state.repo.selected,
-                    threatmodel: 'New Threat Model'
+                    branch: mockStore.state.branch.selected
                 }
             });
         });
