@@ -66,6 +66,11 @@ const eng = {
             save: 'Save Model',
             saveAs: 'Save Model As'
         },
+        aiTools: {
+            heading: 'AI Tools',
+            generateThreats: 'Generate Threats and Mitigations',
+            settings: 'Settings'
+        },
         help: {
             heading: 'Help',
             docs: 'Documentation',

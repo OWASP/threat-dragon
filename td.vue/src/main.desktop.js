@@ -169,6 +169,50 @@ window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     app.$store.dispatch(tmActions.saveModel);
 });
 
+// request from electron to renderer to provide the model data for AI threat generation
+window.electronAPI.onAIThreatGenerationRequest(() =>  {
+    console.debug('AI threat generation request');
+    
+    // Check if user is currently viewing a diagram, report, or threat model edit
+    const currentRouteName = app.$route.name;
+    const isDiagramEdit = currentRouteName && currentRouteName.endsWith('DiagramEdit');
+    const isReport = currentRouteName && currentRouteName.endsWith('Report');
+    const isThreatModelEdit = currentRouteName && currentRouteName.endsWith('ThreatModelEdit');
+    
+    if (isDiagramEdit) {
+        console.debug('Cannot generate threats while diagram is open');
+        app.$toast.warning('Please close the diagram to generate Threats and Mitigations');
+        return;
+    }
+    
+    if (isReport) {
+        console.debug('Cannot generate threats while report is open');
+        app.$toast.warning('Please close the report to generate Threats and Mitigations');
+        return;
+    }
+    
+    if (isThreatModelEdit) {
+        console.debug('Cannot generate threats while threat model is in edit mode');
+        app.$toast.warning('Please close the threat model edit view to generate Threats and Mitigations');
+        return;
+    }
+    
+    app.$store.dispatch(tmActions.diagramApplied);
+    // Send model data directly to main process
+    const modelData = app.$store.state.threatmodel.data;
+    window.electronAPI.aiThreatGeneration(modelData);
+});
+
+// receive updated model from electron after AI threat generation completes
+window.electronAPI.onAIThreatGenerationComplete((_event, updatedModel) =>  {
+    console.debug('AI threat generation complete, updating model');
+    // Update the model in the store with the AI-generated threats
+    app.$store.dispatch(tmActions.selected, updatedModel);
+    // Mark model as modified since it has been updated
+    app.$store.dispatch(tmActions.modified);
+    app.$toast.success('Threats and mitigations successfully generated');
+});
+
 // advice from electron to renderer that the model has been saved
 window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
     console.debug('Save model confirmed for file : ' + fileName);

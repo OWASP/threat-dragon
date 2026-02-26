@@ -64,6 +64,11 @@ const jpn = {
             save: 'モデルを保存',
             saveAs: '名前を付けてモデルを保存'
         },
+        aiTools: {
+            heading: 'AIツール',
+            generateThreats: '脅威と軽減策を生成',
+            settings: '設定'
+        },
         help: {
             heading: 'ヘルプ',
             docs: 'ドキュメンテーション',
