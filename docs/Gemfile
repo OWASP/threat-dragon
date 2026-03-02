@@ -9,6 +9,12 @@ source "https://rubygems.org"
 # Happy Jekylling!
 gem "jekyll", "~> 4.3.4"
 
+# Ruby 4.0 removed these from stdlib - required by Jekyll 4.x
+gem "logger"
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+
 # Theme
 gem "owasp-td-jekyll", "~> 0.2.14"
 
