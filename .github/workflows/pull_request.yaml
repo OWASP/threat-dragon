@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.7.0
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: >-
             --no-progress
@@ -354,7 +354,7 @@ jobs:
 
       - name: Build for amd64
         id: docker_build
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: ./
           file: ./Dockerfile
