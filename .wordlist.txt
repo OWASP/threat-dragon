@@ -108,6 +108,7 @@ OSX
 owasp
 OWASP
 pdf
+px
 PNG
 pnpm
 por
