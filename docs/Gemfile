@@ -7,7 +7,7 @@ source "https://rubygems.org"
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "~> 4.3.4"
+gem "jekyll", "~> 4.4.1"
 
 # Theme
 gem "owasp-td-jekyll", "~> 0.2.14"
@@ -36,3 +36,8 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 # HTTP server toolkit
 gem "webrick", "~> 1.9"
+
+# In Ruby 4+, these are no longer bundled with Ruby, so we need to add them as dependencies.
+gem "csv", "~> 3.3"
+gem "base64", "~> 0.3.0"
+gem "erb", "~> 6.0"
