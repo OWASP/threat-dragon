@@ -17,8 +17,8 @@
     "start:server": "pm2 --name td.server start 'nodemon dev.js --exec babel-node'",
     "stop:server": "pm2 delete td.server",
     "transpile": "babel ./src --out-dir dist",
-    "test": "cross-env NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js",
-    "test:unit": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js"
+    "test": "cross-env NODE_OPTIONS=--no-experimental-detect-module NODE_ENV=test nyc mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js",
+    "test:unit": "cross-env NODE_OPTIONS=--no-experimental-detect-module NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --require @babel/register --all true --timeout=900 test/*.spec.js test/**/*.spec.js"
   },
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
