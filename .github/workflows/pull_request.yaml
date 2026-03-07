@@ -43,13 +43,25 @@ jobs:
       - name: Checkout markdown
         uses: actions/checkout@v6.0.2
 
+      # https://github.com/lycheeverse/lychee-action?tab=readme-ov-file#utilising-the-cache-feature
+      # Using a cache helps prevent rate-limiting and other failures
+      # This is cached only per-commit, and is intended to help
+      # with re-runs
+      - name: Restore lychee cache
+        uses: actions/cache@v5.0.3
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.7.0
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: >-
             --no-progress
             --max-retries 1
             --retry-wait-time 10
+            --cache
             'docs/**/*.md'
             'docs/*.md'
             '*.md'
