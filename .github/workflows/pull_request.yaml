@@ -43,13 +43,25 @@ jobs:
       - name: Checkout markdown
         uses: actions/checkout@v6.0.2
 
+      # https://github.com/lycheeverse/lychee-action?tab=readme-ov-file#utilising-the-cache-feature
+      # Using a cache helps prevent rate-limiting and other failures
+      # This is cached only per-commit, and is intended to help
+      # with re-runs
+      - name: Restore lychee cache
+        uses: actions/cache@v5.0.3
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.7.0
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: >-
             --no-progress
             --max-retries 1
             --retry-wait-time 10
+            --cache
             'docs/**/*.md'
             'docs/*.md'
             '*.md'
@@ -80,10 +92,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -114,10 +126,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -148,10 +160,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -212,10 +224,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -254,10 +266,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -292,10 +304,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
