@@ -80,10 +80,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -114,10 +114,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -148,10 +148,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -212,10 +212,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -254,10 +254,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
@@ -292,10 +292,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
 
-      - name: Use node LTS 20.14.0
+      - name: Use node LTS 24.14
         uses: actions/setup-node@v6.2.0
         with:
-          node-version: '20.14.0'
+          node-version: '24.14'
 
       - name: Cache NPM dir
         uses: actions/cache@v5.0.3
