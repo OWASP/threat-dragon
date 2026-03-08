@@ -23,7 +23,7 @@ and this will also install `npx` which is bundled with `npm`.
 
 Install `ajv` using `npm` and then run `ajv` for the model using `npx`:
 
-```text
+```sh
 sudo npm install -g ajv-cli
 # if validating a version 1.x threat model
 npx ajv validate -s ~/threat-dragon-v1.schema.json  --all-errors  --verbose \

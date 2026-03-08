@@ -25,7 +25,7 @@ then run command `npm install -g @vue/cli` from the root directory of the Threat
 
 To run the e2e tests locally, navigate to the `td.vue` directory and run:
 
-```text
+```sh
 npm install
 npm run test:e2e
 ```
@@ -133,7 +133,7 @@ for example `owasp/threat-dragon:stable` or `threatdragon/owasp-threat-dragon:PR
 - from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 or if not using an environment variable file then run a docker container using:
 
-```text
+```sh
 docker run -d --rm \
     -p 3000:3000 \
     -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='***' \

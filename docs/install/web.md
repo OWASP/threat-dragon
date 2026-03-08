@@ -62,7 +62,7 @@ is available within the browser as a single page application.
 As an alternative to using a released version of the the Threat Dragon web application,
 `git` can be used to clone the latest version of the source code
 
-```text
+```sh
 git init
 git clone https://github.com/owasp/threat-dragon.git
 cd threat-dragon
