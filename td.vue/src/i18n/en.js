@@ -130,7 +130,6 @@ const eng = {
         addNew: 'Add New Template',
         editTemplate: 'Edit Template',
         exportTemplate: 'Export as Template',
-        saveTemplate: 'Save Template',
         deleteConfirm: 'Are you sure you want to delete "{name}"?',
         deleteTitle: 'Delete Template',
 
@@ -164,12 +163,10 @@ const eng = {
 
         // Actions (buttons, loading states)
         actions: {
-            configure: 'Set Up Templates',
             selectFolder: 'Select Folder',
             initialize: 'Initialize',
             initializing: 'Initializing...',
             save: 'Save Template',
-            delete: 'Delete'
         },
 
         // Desktop-only: setup dialog
@@ -186,8 +183,7 @@ const eng = {
 
         // Bootstrap
         bootstrap: {
-            title: 'Initialize Template Repository',
-            description: 'Create the template index in the repository.'
+            description: 'Create the template index at the configured storage location'
         },
 
         // Toast messages (success notifications)

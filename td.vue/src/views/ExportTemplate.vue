@@ -61,7 +61,7 @@
                                     :isPrimary="true" 
                                     :onBtnClick="onSaveClick" 
                                     icon="save"
-                                    :text="$t('template.saveTemplate')" 
+                                    :text="$t('template.actions.save')" 
                                 />
                                 <td-form-button 
                                     id="td-cancel-btn" 

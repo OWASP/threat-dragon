@@ -126,7 +126,7 @@ async function bootstrapTemplates() {
         mainWindow.webContents.send('bootstrap-templates-success', messages[language].template.toast.configureSuccess);
     } catch (err) {
         logger.log.error('Error bootstrapping templates: ' + err);
-        mainWindow.webContents.send('bootstrap-templates-error', messages[language].template.errors.setupFailed);
+        mainWindow.webContents.send('bootstrap-templates-error', messages[language].template.errors.initializeFailed);
     }
 }
 
