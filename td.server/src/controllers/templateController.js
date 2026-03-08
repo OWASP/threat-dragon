@@ -1,4 +1,4 @@
-import { badRequest, forbidden, notFound, serverError } from "./errors.js";
+import { badRequest, notFound, serverError } from "./errors.js";
 
 import env from "../env/Env.js";
 import loggerHelper from "../helpers/logger.helper.js";
@@ -67,11 +67,6 @@ const listTemplates = (req, res) => responseWrapper.sendResponseAsync(async () =
 }, req, res, logger);
 
 const importTemplate = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    logger.warn(`Non-admin user attempted to import template: ${req.user?.username}`);
-    return forbidden(res, logger);
-  }
-
   const repository = repositories.get();
   const accessToken = req.provider.access_token;
   const { templateMetadata, model } = req.body;
@@ -103,11 +98,6 @@ const importTemplate = async (req, res) => {
 };
 
 const deleteTemplate = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    logger.warn(`Non-admin user attempted to delete template: ${req.user?.username}`);
-    return forbidden(res, logger);
-  }
-
   const repository = repositories.get();
   const accessToken = req.provider.access_token;
   const { id } = req.params;
@@ -137,11 +127,6 @@ const deleteTemplate = async (req, res) => {
 };
 
 const updateTemplate = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    logger.warn(`Non-admin user attempted to update template: ${req.user?.username}`);
-    return forbidden(res, logger);
-  }
-
   const repository = repositories.get();
   const accessToken = req.provider.access_token;
   const { id } = req.params;
@@ -220,11 +205,6 @@ const getTemplateContent = (req, res) => {
 
 
 const bootstrapTemplateRepository = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    logger.warn(`Non-admin user attempted to bootstrap template repository: ${req.user?.username}`);
-    return forbidden(res, logger);
-  }
-
   const repository = repositories.get();
   const accessToken = req.provider.access_token;
   const contentRepo = env.get().config.GITHUB_CONTENT_REPO;
