@@ -154,4 +154,5 @@ Vue
 Webapp
 webrick
 www
+yaml
 zho
