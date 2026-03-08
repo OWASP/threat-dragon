@@ -99,7 +99,7 @@ To use the docker command the [Docker daemon][dockerinstall] must be installed a
 During development it is useful to be able to stop the docker container from the command line,
 and also have the server logs printed to the console, so the docker parameters `-it --rm` are used.
 
-```text
+```sh
 docker run -it --rm \
 -p 8080:3000 \
 -e GOOGLE_CLIENT_ID='01234567890123456789' \
@@ -144,7 +144,7 @@ The Threat Dragon web server is now running correctly.
 Once the parameters are correct for running the Threat Dragon server,
 it is useful to provide a file for (most) of the parameters. Here a test environment file `test.env` has been created:
 
-```text
+```sh
 GOOGLE_CLIENT_ID=01234567890123456789
 GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456
 GOOGLE_SCOPE=openid email profile
@@ -182,17 +182,17 @@ Ensure that Threat Dragon is running on `http://localhost:8080/#/` as expected, 
 
 Important: this example file contains test values, do not use these values for anything other than short-term tests.
 
-```text
-ENCRYPTION_JWT_REFRESH_SIGNING_KEY: 00112233445566778899aabbccddeeff
-ENCRYPTION_JWT_SIGNING_KEY: deadbeef112233445566778899aabbcc
-ENCRYPTION_KEYS: [{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]
-GOOGLE_CLIENT_ID: 01234567890123456789
-GOOGLE_CLIENT_SECRET: 0123456789abcdef0123456789abcdef0123456
-GOOGLE_SCOPE: openid email profile
-GOOGLE_REDIRECT_URI: https://secure-google-instance:3000/api/oauth/return
-NODE_ENV: production
-PROTOCOL: https
-SERVER_API_PROTOCOL: https
+```sh
+ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
+ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
+ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
+GOOGLE_CLIENT_ID=01234567890123456789
+GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456
+GOOGLE_SCOPE=openid email profile
+GOOGLE_REDIRECT_URI=https://secure-google-instance:3000/api/oauth/return
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
 ```
 
 Note the use of HTTPS in production deployments in this _minimal_ environment.

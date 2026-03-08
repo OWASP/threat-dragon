@@ -42,7 +42,7 @@ Run the installer and invoke the application from the shortcut.
 As an alternative to using a released version of the the Threat Dragon desktop application,
 `npm` can be used to install and run Threat Dragon locally:
 
-```text
+```sh
 git clone https://github.com/owasp/threat-dragon
 cd threat-dragon
 npm install

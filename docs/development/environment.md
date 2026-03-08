@@ -63,7 +63,7 @@ The `dotenv` package will automatically export the variables for you.
 
 Here is an example of a minimal DotEnv file, note that keys would need to be generated for it :
 
-```text
+```sh
 NODE_ENV=development
 ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
 ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc

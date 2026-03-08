@@ -80,7 +80,7 @@ GEM
       sass-embedded (~> 1.75)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    json (2.18.1)
+    json (2.19.0)
     kramdown (2.5.2)
       rexml (>= 3.4.4)
     kramdown-parser-gfm (1.1.0)
@@ -92,8 +92,8 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
     mercenary (0.4.0)
-    owasp-td-jekyll (0.2.14)
-      jekyll (~> 4.2)
+    owasp-td-jekyll (2.0.2)
+      jekyll (~> 4.4)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (7.0.5)
@@ -170,7 +170,7 @@ DEPENDENCIES
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.4.1)
   jekyll-feed (~> 0.17)
-  owasp-td-jekyll (~> 0.2.14)
+  owasp-td-jekyll (~> 2.0.2)
   tzinfo (>= 1, < 3)
   tzinfo-data
   wdm (~> 0.2.0)
@@ -213,14 +213,14 @@ CHECKSUMS
   jekyll-feed (0.17.0) sha256=689aab16c877949bb9e7a5c436de6278318a51ecb974792232fd94d8b3acfcc3
   jekyll-sass-converter (3.1.0) sha256=83925d84f1d134410c11d0c6643b0093e82e3a3cf127e90757a85294a3862443
   jekyll-watch (2.2.1) sha256=bc44ed43f5e0a552836245a54dbff3ea7421ecc2856707e8a1ee203a8387a7e1
-  json (2.18.1) sha256=fe112755501b8d0466b5ada6cf50c8c3f41e897fa128ac5d263ec09eedc9f986
+  json (2.19.0) sha256=bc5202f083618b3af7aba3184146ec9d820f8f6de261838b577173475e499d9a
   kramdown (2.5.2) sha256=1ba542204c66b6f9111ff00dcc26075b95b220b07f2905d8261740c82f7f02fa
   kramdown-parser-gfm (1.1.0) sha256=fb39745516427d2988543bf01fc4cf0ab1149476382393e0e9c48592f6581729
   liquid (4.0.4) sha256=4fcfebb1a045e47918388dbb7a0925e7c3893e58d2bd6c3b3c73ec17a2d8fdb3
   listen (3.10.0) sha256=c6e182db62143aeccc2e1960033bebe7445309c7272061979bb098d03760c9d2
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   mercenary (0.4.0) sha256=b25a1e4a59adca88665e08e24acf0af30da5b5d859f7d8f38fba52c28f405138
-  owasp-td-jekyll (0.2.14) sha256=b69400b43a75e6828820fa5aca40b3ad35b5da2cb2a1aeb7adc186157498a3fa
+  owasp-td-jekyll (2.0.2) sha256=023ef2b80d5f05f87c38189dd730db7657387d3630ade2d5ac9da58c8ed5df3a
   pathutil (0.16.2) sha256=e43b74365631cab4f6d5e4228f812927efc9cb2c71e62976edcb252ee948d589
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
@@ -249,4 +249,4 @@ CHECKSUMS
   webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
 
 BUNDLED WITH
-   4.0.7
+  4.0.7
