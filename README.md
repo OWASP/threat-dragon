@@ -107,6 +107,60 @@ With both front and back end running, access with a browser at `http://localhost
 If using `npm start`, stop both the back-end server and the front-end application
 from the top directory with command `npm stop`. Otherwise break out of both the server and vue front-end.
 
+### Quick start (Windows, local development)
+
+For a simple local development setup on Windows:
+1.Install [Git](https://git-scm.com/downloads/) and [Node.js LTS][node].
+
+2.Clone the repository and install the dependencies:
+   git clone https://github.com/OWASP/threat-dragon.git
+   cd threat-dragon
+   npm install
+
+3.Create a .env file in the project root based on the provided minimal.env:
+    copy  the minimal.env to .env
+
+4.Ensure that ENCRYPTION_KEYS is set in .env. The default value from minimal.env is suitable for local development:
+
+       ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "11223344556677889900aabbccddeeff"}]'
+
+5.In one terminal, start the backend:
+      npm run dev:server
+
+6.In a second terminal, start the frontend:
+      npm run dev:vue
+
+7.Open http://localhost:8080/ in your browser
+
+### Troubleshooting (common startup issues):
+
+#### `ENCRYPTION_KEYS is a required property, Threat Dragon server cannot start without it`
+
+**Cause**: The backend could not find a valid `ENCRYPTION_KEYS` value in the environment. This is required to encrypt sensitive data.
+
+**Fix**:
+
+- Ensure there is a `.env` file in the repository root (the same directory as `package.json`).
+- If you have not created one yet, copy the template:
+
+  copy minimal.env .env
+
+-Open .env and verify that the ENCRYPTION_KEYS variable is present and non-empty. The default value from minimal.env is sufficient for local development.
+-Restart the backend with: npm run dev:server
+
+Unable to find .env file, falling back to environment variables
+**Cause**
+ The server could not find a .env file at startup and is relying solely on environment variables.
+
+**Fix** 
+For local development, it is recommended to create a .env in the project root:
+    copy minimal.env .env
+
+Alternatively, ensure all required environment variables (such as ENCRYPTION_KEYS) are set in your shell or system environment.
+
+After updating the configuration, restart the backend:
+  npm run dev:server
+
 ## Docker (from dockerhub)
 
 Threat Dragon maintains docker images within the OWASP organisation area on Dockerhub.
