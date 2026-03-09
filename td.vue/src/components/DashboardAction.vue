@@ -1,5 +1,5 @@
 <template>    
-    <b-col lg="6" md="12">
+    <b-col lg="4">
     <router-link :to="to" class="action-pane-link">
         <b-jumbotron class="text-center action-pane">
                 <font-awesome-icon

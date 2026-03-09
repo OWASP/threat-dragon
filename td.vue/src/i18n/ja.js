@@ -152,6 +152,11 @@ const jpn = {
                 defaultTitle: 'CIA図',
                 defaultDescription: '新しいCIA図の概要',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'EoP ゲーム 図',
+                defaultDescription: '新しいEoP ゲーム 図の概要',
+                select: 'EoP ゲーム'
             }
         },
         threats: '脅威',
@@ -300,6 +305,15 @@ const jpn = {
         next: '次',
         previous: '前の'
     },
+    cards: {
+        details: 'カードの詳細',
+        noDetails: '詳細はありません',
+        unknown: '不明',
+        properties: {
+            suit: 'カテゴリ',
+            number: '番号'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,9 @@ const jpn = {
             ciadie: 'CIA-DIE脅威を追加',
             linddun: 'LINDDUN脅威を追加',
             plot4ai: 'PLOT4ai脅威を追加',
-            stride: 'STRIDE脅威を追加'
+            stride: 'STRIDE脅威を追加',
+            eop: 'EoPゲーム脅威を追加',
+
         },
         edit: '脅威を編集',
         confirmDeleteTitle: '削除の確認',
@@ -387,6 +403,10 @@ const jpn = {
             medium: '中',
             high: '高',
             critical: '致命的'
+        },
+        validation: {
+            error: 'カード番号は必須です。',
+            cardNumberRequired: '保存する前にカード番号を選択する必要があります。'
         }
     },
     report: {

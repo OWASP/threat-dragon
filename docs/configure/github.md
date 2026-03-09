@@ -103,7 +103,7 @@ To use the docker command the [Docker daemon][dockerinstall] must be installed a
 During development it is useful to be able to stop the docker container from the command line,
 and also have the server logs printed to the console, so the docker parameters `-it --rm` are used.
 
-```text
+```sh
 docker run -it --rm \
 -p 8080:3000 \
 -e GITHUB_CLIENT_ID='deadbeef0123456789ab' \
@@ -154,11 +154,11 @@ The Threat Dragon web server is now running correctly.
 Once the parameters are correct for running the Threat Dragon server,
 it is useful to provide a file for (most) of the parameters. Here a test environment file `test.env` has been created:
 
-```text
+```sh
 GITHUB_CLIENT_ID=deadbeef0123456789ab
 GITHUB_CLIENT_SECRET=deadbeef0123456789abcdef01234567deadbeef
 ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
-ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc'
+ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
 ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
 NODE_ENV=development
 SERVER_API_PROTOCOL=http
@@ -200,14 +200,14 @@ Templates are stored in a dedicated GitHub repository and managed by administrat
 2. The repository can be public or private (users must have read access)
 3. Add the environment variable to your configuration:
 
-```text
+```sh
 GITHUB_CONTENT_REPO=my-org/threat-dragon-templates
 ```
 
 #### Administrator Access
 
 Template management (import, update, delete, bootstrap) requires administrator privileges.
-A user is considered an administrator if they have **push** or **admin** permissions on the `GITHUB_CONTENT_REPO`.
+A user is considered an administrator if they have __push__ or __admin__ permissions on the `GITHUB_CONTENT_REPO`.
 
 #### Branch Protection Requirements
 
@@ -220,7 +220,7 @@ If you have branch protection enabled on `main`:
    - Uncheck "Do not allow bypassing the above settings" to allow admin bypass, OR
    - Add template administrators to "Allow specific actors to bypass required pull requests"
 
-**Note**: Without bypass permissions, administrators will receive 403 errors when attempting to manage templates.
+__Note__: Without bypass permissions, administrators will receive 403 errors when attempting to manage templates.
 
 #### Template Repository Structure
 
@@ -248,6 +248,25 @@ templates/
 | `GITHUB_SEARCH_QUERY` | Optionally specifies the search query to use when searching for Threat Dragon github repos | |
 | `GITHUB_REPO_ROOT_DIRECTORY` | Optional path where saved models are stored in a Github repo | |
 | `GITHUB_CONTENT_REPO` | Optional GitHub repository for organization-wide templates (e.g., `org/templates-repo`) | |
+
+### Example production github environment
+
+Important: this example file contains test values, do not use these values for anything other than short-term tests.
+
+```sh
+ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
+ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
+ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
+GITHUB_CLIENT_ID=deadbeef0123456789ab
+GITHUB_CLIENT_SECRET=deadbeef0123456789abcdef01234567deadbeef
+GITHUB_SCOPE=repo
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
+```
+
+Note the use of HTTPS in production deployments in this _minimal_ environment.
+
 ----
 
 Threat Dragon: _making threat modeling less threatening_

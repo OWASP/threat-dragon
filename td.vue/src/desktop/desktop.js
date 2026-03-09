@@ -136,27 +136,27 @@ app.on('open-file', function(event, path) {
     menu.openModelRequest(path);
 });
 
-function handleSetTemplateFolderDefault(_event) {
+function handleSetTemplateFolderDefault() {
     logger.log.debug('Set template folder to default location');
     template.setTemplateFolderDefault();
 }
 
-function handleSetTemplateFolderCustom(_event) {
+function handleSetTemplateFolderCustom() {
     logger.log.debug('Set template folder to custom location');
     template.setTemplateFolderCustom();
 }
 
-function handleSetTemplateFolderExisting(_event) {
+function handleSetTemplateFolderExisting() {
     logger.log.debug('Select existing template folder');
     template.setTemplateFolderExisting();
 }
 
-function handleGetTemplates(_event) {
+function handleGetTemplates() {
     logger.log.debug('Get templates request from renderer');
     template.getTemplates();
 }
 
-function handleBootstrapTemplates(_event) {
+function handleBootstrapTemplates() {
     logger.log.debug('Bootstrap templates request from renderer');
     template.bootstrapTemplates();
 }

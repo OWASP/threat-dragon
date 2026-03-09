@@ -1,5 +1,5 @@
 {
-  "$id": "https://owasp.org/www-project-threat-dragon/assets/schemas/threat.model.format.schema.json",
+  "$id": "https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/assets/schema/threat-model-format.schema.json",
   "title": "Threat Model Format",
   "description": "An open Threat Model Format (TMF) for threat models",
   "type": "object",
@@ -194,6 +194,16 @@
           "description": {
             "description": "A description of the boundary",
             "type": "string"
+          },
+          "crossingFlows": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs of data flows that cross this trust boundary"
+          },
+          "containedElements": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs of elements contained within this trust boundary"
           }
         },
         "required": [ "title", "id" ]
@@ -259,6 +269,11 @@
           "description": {
             "description": "A description of the data flow",
             "type": "string"
+          },
+          "trustBoundaryIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs of trust boundaries that this data flow crosses"
           }
         },
         "required": [ "title", "id" ]

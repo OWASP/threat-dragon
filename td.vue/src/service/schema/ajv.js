@@ -3,9 +3,9 @@ import addFormats from 'ajv-formats';
 import otm from '@/service/migration/otm/openThreatModel';
 import tmBom from '@/service/migration/tmBom/threatModelBom';
 
-const schemaV1 = require('./owasp-threat-dragon-v1.schema');
-const schemaV2 = require('./owasp-threat-dragon-v2.schema');
-const schemaTemplate = require('./owasp-threat-dragon-template.schema');
+const schemaV1 = require('@/assets/schema/threat-dragon-v1.schema');
+const schemaV2 = require('@/assets/schema/threat-dragon-v2.schema');
+const schemaTemplate = require('@/assets/schema/owasp-threat-dragon-template.schema.json');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);

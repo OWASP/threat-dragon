@@ -80,7 +80,7 @@ Alternatively the environment variables can be set using the [command line](#con
 
 Here is an example of a minimal DotEnv file, note that real keys would need to be generated :
 
-```text
+```sh
 ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "11223344556677889900aabbccddeeff"}]'
 ENCRYPTION_JWT_SIGNING_KEY=asdfasdfasdf
 ENCRYPTION_JWT_REFRESH_SIGNING_KEY=fljasdlfkjadf
@@ -114,7 +114,7 @@ An example using docker secrets:
 
 Example compose file:
 
-```text
+```yaml
 version: '3.1'
 services:
   threatdragon:
@@ -206,7 +206,7 @@ for example `http://localhost:3000/`, but not in 'production' mode.
 __Note__ : the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as the refresh token because it is tamper resistant and provides user context.
 
-### Remote environments
+### Remote repository environments
 
 Refer to the step by step guide pages for setting the environment variables specific for these technologies:
 

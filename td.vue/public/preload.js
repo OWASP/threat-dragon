@@ -48,5 +48,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onBootstrapTemplatesSuccess: (callback) => ipcRenderer.on('bootstrap-templates-success', callback),
     onBootstrapTemplatesError: (callback) => ipcRenderer.on('bootstrap-templates-error', callback),
     onSetTemplateFolderSuccess: (callback) => ipcRenderer.on('set-template-folder-success', callback),
-    onSetTemplateFolderError: (callback) => ipcRenderer.on('set-template-folder-error', callback)
+    onSetTemplateFolderError: (callback) => ipcRenderer.on('set-template-folder-error', callback),
+    onApplyDiagramRequest: (callback) => ipcRenderer.on('apply-diagram-request', callback)
 });
+   

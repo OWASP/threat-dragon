@@ -1,5 +1,5 @@
 {
-  "$id": "https://owasp.org/www-project-threat-dragon/assets/schemas/owasp.threat-dragon.schema.V2.json",
+  "$id": "https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/assets/schema/threat-dragon-v2.schema.json",
   "title": "Threat Dragon model schema",
   "description": "The threat models used by OWASP Threat Dragon",
   "type": "object",
@@ -246,7 +246,7 @@
                           "type": "boolean"
                         }
                       },
-                      "required": [ "hasOpenThreats", "name", "type" ]
+                      "required": [ "hasOpenThreats", "type" ]
                     },
                     "id": {
                       "description": "The component unique identifier (UUID)",
@@ -416,7 +416,7 @@
           }
         },
         "diagramTop": {
-          "description": "The highest diagram number in the threat model",
+          "description": "The next diagram number for the threat model, not reused if deleted",
           "type": "integer",
           "minimum": 0
         },
@@ -425,7 +425,7 @@
           "type": "string"
         },
         "threatTop": {
-          "description": "The highest threat number in the threat model",
+          "description": "The highest threat number in the threat model, not reused if deleted",
           "type": "integer",
           "minimum": 0
         }

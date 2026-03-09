@@ -1,22 +1,16 @@
-# ignoring these vulnerabilities in zlib,
-# there are no updates to zlib and so these are unlikely to be fixed
-CVE-2018-25032
-CVE-2022-37434
-
 # https://avd.aquasec.com/nvd/cve-2023-28155
 # request version prior to 2.88.2
 # this vulnerability is for the build system, not run time, so ignore
 CVE-2023-28155
 
-# https://avd.aquasec.com/nvd/cve-2024-9143 
-# alpine 3.20.3 is pulling in a Low priority vuln for libcrypto3 version 3.3.2-r2,
-# ignore for now until alpine is updated
-CVE-2024-9143
+# ignore until Vue2 to Vue3 upgrade
+CVE-2025-15284
 
-# https://avd.aquasec.com/nvd/2025/cve-2025-7783/
-# no fix available for MacOS
-CVE-2025-7783
+# minimatch is used by npm in the base image and has no fix available in latest npm release
+# TODO: Revist after npm 11.9.1 is released
+CVE-2026-27903
+CVE-2026-27904
 
-# no vulnerable versions used in the code / dependencies
-CVE-2025-64756
-
+# tar is used by npm in the base image and has no fix available in latest npm release
+# TODO: Revist after npm 11.9.1 is released
+CVE-2026-29786

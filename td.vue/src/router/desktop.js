@@ -1,5 +1,5 @@
 import { providerTypes } from '../service/provider/providerTypes.js';
-import { getTemplateRoutes, adminTemplateRoutes } from './template.js';
+import { getTemplateRoutes} from './template.js';
 const providerType = providerTypes.desktop;
 
 export const desktopRoutes = [

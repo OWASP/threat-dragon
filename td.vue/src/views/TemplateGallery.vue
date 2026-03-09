@@ -124,7 +124,7 @@ export default {
             return this.providerType === providerTypes.local;
         },
         isDesktop(){
-            return isElectron()
+            return isElectron();
         },
         filteredTemplates() {
             if (!this.searchQuery) return this.templates;
@@ -209,7 +209,6 @@ export default {
                 this.$toast.error('File picker not supported on this browser');
             }
         },
-
         async onTemplateClick(template) {
             try {
                 // Fetch the  threat model part of the template from backend
@@ -217,10 +216,6 @@ export default {
                     templateActions.fetchModelById,
                     template.id
                 );
-
-                if (this.isDesktop) {
-                    return;
-                }
 
                 // Load template (regenerates IDs and sets as current model, current model set in the action)
                 await this.$store.dispatch(tmActions.templateLoad, {

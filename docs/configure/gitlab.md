@@ -85,6 +85,25 @@ a similar example of setting up Github step by step.
 | `GITLAB_REDIRECT_URI` | The redirect provided to the GitLab OAuth app | |
 | `GITLAB_REPO_ROOT_DIRECTORY` | Optional path where saved models are stored in a GitLab repo | |
 
+### Example production GitLab environment
+
+Important: this example file contains test values, do not use these values for anything other than short-term tests.
+
+```sh
+ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
+ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
+ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
+GITLAB_CLIENT_ID=00112233445566778899aabbccddeeff
+GITLAB_CLIENT_SECRET=gloas-deadbeef0123456789abcdefdeadbeef
+GITLAB_SCOPE=read_user read_repository write_repository profile read_api api
+GITLAB_HOST=https://secure-gitlab-instance
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
+```
+
+Note the use of HTTPS in production deployments in this _minimal_ environment.
+
 ----
 
 Threat Dragon: _making threat modeling less threatening_

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Threat Dragon Community
+    url: https://github.com/OWASP/threat-dragon/discussions
+    about: Please ask and answer questions on the discussion pages
+  - name: Threat Dragon security vulnerability disclosure
+    url: https://github.com/OWASP/threat-dragon/security/advisories/new
+    about: Please report security vulnerabilities directly to the maintainers

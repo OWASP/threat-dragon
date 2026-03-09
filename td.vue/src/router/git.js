@@ -14,7 +14,7 @@ export const gitRoutes = [
     ...getTemplateRoutes(providerType, `/${providerType}/:provider`),  
     
 
- {
+    {
         path: `/${providerType}/:provider/:repository/branch`,
         name: `${providerType}Branch`,
         component: () => import(/* webpackChunkName: "branch-access" */ '../views/git/BranchAccess.vue')

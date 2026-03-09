@@ -181,7 +181,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';

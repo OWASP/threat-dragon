@@ -255,6 +255,11 @@ const eng = {
                 defaultTitle: 'New CIA diagram',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'New EoP games diagram',
+                defaultDescription: 'New EoP games diagram description',
+                select: 'EoP Games'
             }
         },
         threats: 'Threats',
@@ -407,6 +412,15 @@ const eng = {
 
         exportTemplate: 'Export As Template',
     },
+    cards: {
+        details: 'Card details',
+        noDetails: 'no details available',
+        unknown: 'Unknown',
+        properties: {
+            suit: 'Category',
+            number: 'Number'
+        },
+    },
     threats: {
         model: {
             cia: {
@@ -461,7 +475,8 @@ const eng = {
             ciadie: 'New CIA-DIE threat',
             linddun: 'New LINDDUN threat',
             plot4ai: 'New PLOT4ai threat',
-            stride: 'New STRIDE threat'
+            stride: 'New STRIDE threat',
+            eop: 'New EoP threat'
         },
         edit: 'Edit Threat',
         confirmDeleteTitle: 'Confirm Delete',
@@ -494,6 +509,10 @@ const eng = {
             medium: 'Medium',
             high: 'High',
             critical: 'Critical'
+        },
+        validation: {
+            error: 'Card number is required.',
+            cardNumberRequired: 'You must select a card number before saving.'
         }
     },
     report: {

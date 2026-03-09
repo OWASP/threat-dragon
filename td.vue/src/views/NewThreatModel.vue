@@ -24,6 +24,7 @@ export default {
             newTm = this.currentModel;
             console.debug('Using existing model from state');
         } else {
+            this.$store.dispatch(tmActions.clear);
             // Create blank model
             newTm = {
                 version: this.version,
@@ -43,8 +44,7 @@ export default {
             };
         }
 
-        // Clear old state and select the model
-        this.$store.dispatch(tmActions.clear);
+        // select the model
         this.$store.dispatch(tmActions.selected, newTm);
 
         const params = Object.assign({}, this.$route.params, {

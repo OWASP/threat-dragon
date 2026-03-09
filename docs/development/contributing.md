@@ -19,7 +19,7 @@ to help you get started with this project.
 
 Clone and install the Threat Dragon repo:
 
-```text
+```sh
 git clone git@github.com:OWASP/threat-dragon.git
 cd threat-dragon
 npm install
@@ -27,7 +27,7 @@ npm install
 
 After making any changes be sure to test them:
 
-```text
+```sh
 npm start
 npm test
 npm run test:vue

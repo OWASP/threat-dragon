@@ -152,6 +152,11 @@ const fra = {
                 defaultTitle: 'Nouveau diagramme CIA',
                 defaultDescription: 'New CIA diagram description',
                 select: 'CIA'
+            },
+            eop: {
+                defaultTitle: 'Description du nouveau diagramme de jeux EoP',
+                defaultDescription: 'Description du nouveau diagramme de jeux EoP',
+                select: 'Jeux EoP'
             }
         },
         threats: 'Menaces',
@@ -300,6 +305,15 @@ const fra = {
         next: 'suivant',
         previous: 'précédent'
     },
+    cards: {
+        details: 'Détails de la carte',
+        noDetails: 'aucun détail disponible',
+        unknown: 'Inconnu',
+        properties: {
+            suit: 'Catégorie',
+            number: 'Numéro'
+        }
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,8 @@ const fra = {
             ciadie: 'Nouvelle menace CIA-DIE',
             linddun: 'Nouvelle menace LINDDUN',
             plot4ai: 'Nouvelle menace PLOT4ai',
-            stride: 'Nouvelle menace STRIDE'
+            stride: 'Nouvelle menace STRIDE',
+            eop: 'Nouvelle menace EoP'
         },
         edit: 'Modifier la menace',
         confirmDeleteTitle: 'Confirmer Supprimer',
@@ -387,6 +402,10 @@ const fra = {
             medium: 'Moyen',
             high: 'Élevé',
             critical: 'Critique'
+        },
+        validation: {
+            error: 'Le numéro de la carte est requis.',
+            cardNumberRequired: 'Vous devez sélectionner un numéro de carte avant de sauvegarder.'
         }
     },
     report: {

@@ -116,33 +116,33 @@ import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
-  name: 'TdNavbar',
-  components: {
-    TdLocaleSelect
-  },
-  computed: {
-    ...mapGetters([
-      'username',
-      'isAdmin'
-    ])
-  },
-  methods: {
-    onLogOut(evt) {
-      evt.preventDefault();
-      this.$store.dispatch(LOGOUT);
-      this.$router.push('/').catch(error => {
-        if (error.name != 'NavigationDuplicated') {
-          throw error;
-        }
-      });
+    name: 'TdNavbar',
+    components: {
+        TdLocaleSelect
     },
-     onManageTemplates() {
+    computed: {
+        ...mapGetters([
+            'username',
+            'isAdmin'
+        ])
+    },
+    methods: {
+        onLogOut(evt) {
+            evt.preventDefault();
+            this.$store.dispatch(LOGOUT);
+            this.$router.push('/').catch(error => {
+                if (error.name != 'NavigationDuplicated') {
+                    throw error;
+                }
+            });
+        },
+        onManageTemplates() {
             this.$router.push('/admin/templates').catch(error => {
                 if (error.name != 'NavigationDuplicated') {
                     throw error;
                 }
             });
-  }
-}
+        }
+    }
 };
 </script>

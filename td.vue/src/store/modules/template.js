@@ -108,10 +108,10 @@ const actions = {
     },
 
     [TEMPLATE_FETCH_MODEL_BY_ID]: async ({rootState}, templateId) => {
-         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
-                window.electronAPI.fetchModelById(templateId);
-                return;
-            }
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            window.electronAPI.fetchModelById(templateId);
+            return;
+        }
         const response = await templateApi.fetchModelByIdAsync(templateId);
         return response.data;
     },

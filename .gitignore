@@ -1,18 +1,25 @@
 # uses allow-list, so ignore everything
 *
 
+!*.md
+!license.txt
+
 # allow github, workflows and templates
 !.github/
 !.github/*.yaml
+!.github/*.md
 !.github/CODEOWNERS
-!.github/issue_template/
-!.github/issue_template/*.md
+!.github/ISSUE_TEMPLATE/
+!.github/ISSUE_TEMPLATE/*.yml
+!.github/ISSUE_TEMPLATE/*.yaml
+!.github/ISSUE_TEMPLATE/*.md
 !.github/workflows/
 !.github/workflows/*.yaml
+!.github/workflows/.trivyignore
+!.github/workflows/.zap-rules-web.tsv
 !.gitignore
 !.gitattributes
 !.lycheeignore
-!.trivyignore
 !.markdownlint.yaml
 !.wordlist.txt
 !.spellcheck.yaml
@@ -23,8 +30,6 @@
 !Dockerfile
 
 # allow build system and artwork
-!*.md
-!license.txt
 !cupcake/icons/*.ico
 !cupcake/png/*.png
 !cupcake/png/*.gif
@@ -32,12 +37,6 @@
 !minimal.env
 !package.json
 !package-lock.json
-
-# sample threat models
-!ThreatDragonModels
-!ThreatDragonModels/*model.json
-!ThreatDragonModels/test/
-!ThreatDragonModels/test/*.json
 
 # documentation site
 !docs/
@@ -125,6 +124,8 @@
 !td.vue/src/assets/
 !td.vue/src/assets/*.svg
 !td.vue/src/assets/*.jpg
+!td.vue/src/assets/schema/
+!td.vue/src/assets/schema/*.json
 !td.vue/src/components/
 !td.vue/src/components/*.vue
 !td.vue/src/components/printed-report/
@@ -176,6 +177,8 @@
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
 !td.vue/src/service/threats/models/*.js
+!td.vue/src/service/threats/models/eop/
+!td.vue/src/service/threats/models/eop/*.js
 !td.vue/src/service/threats/oats/
 !td.vue/src/service/threats/oats/*.js
 !td.vue/src/service/x6/
@@ -285,6 +288,8 @@
 !td.vue/browserstack.nightly.json
 !td.vue/browserstack.smokes.json
 
-# utility scripts
-!utils
-!utils/**/*
+# sample threat models
+!ThreatDragonModels
+!ThreatDragonModels/*model.json
+!ThreatDragonModels/test/
+!ThreatDragonModels/test/*.json

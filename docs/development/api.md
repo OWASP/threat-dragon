@@ -31,8 +31,8 @@ APIs protected by authorisation, including threat model Create, Read, Update (bu
 | `/api/threatmodel/:organisation/:repo/:branch/:model/update` | PUT | Update a model in the branch and repository |
 | `/api/threatmodel/:organisation/:repo/:branch/createBranch` | POST | Create a new branch in the repository |
 
-
-APIs for managing organization-wide templates. Write operations require administrator privileges (push/admin permissions on `GITHUB_CONTENT_REPO`)(all routes require git auth in the current implementation).
+APIs for managing organization-wide templates. Write operations require administrator privileges
+(push/admin permissions on `GITHUB_CONTENT_REPO`)(all routes require git auth in the current implementation).
 
 | Path | Action | Description |
 | ---- | ---- | ---- |

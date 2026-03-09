@@ -63,6 +63,16 @@ describe('components/GraphMeta.vue', () => {
                             data: entityData
                         },
                         threats: entityData.threats
+                    },
+                    threatmodel: {
+                        selectedDiagram: {
+                            diagramType: 'LINDDUN'
+                        },
+                        data:{
+                            detail:{
+                                threatTop:0,
+                            },
+                        }
                     }
                 }
             });
@@ -106,6 +116,16 @@ describe('components/GraphMeta.vue', () => {
                             data: entityData
                         },
                         threats: entityData.threats
+                    },
+                    threatmodel: {
+                        selectedDiagram: {
+                            diagramType: 'LINDDUN'
+                        },
+                        data:{
+                            detail:{
+                                threatTop:0,
+                            },
+                        }
                     }
                 }
             });

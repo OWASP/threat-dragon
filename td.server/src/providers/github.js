@@ -112,5 +112,6 @@ export default {
     getOauthReturnUrl,
     getOauthRedirectUrl,
     isConfigured,
+    getGithubUrl,
     name
 };

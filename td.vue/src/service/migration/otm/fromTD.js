@@ -1,3 +1,10 @@
+import {
+    getElementsInsideBoundary,
+    getBoundariesCrossedByFlow,
+    getFlowsCrossedByBoundary
+} from '../../boundary-utils.js';
+import graphFactory from '@/service/x6/graph/graph.js';
+
 export const convert = function (data) {
     const jsonData = JSON.stringify(data, null, 2);
 
@@ -45,6 +52,9 @@ export const convert = function (data) {
                 zone.representations.push(rep);
                 counter += 1;
             });
+
+            zone.crossingFlows = getFlowsCrossedByBoundary(cell, graphFactory.getReadonlyGraph().getCells());
+            zone.containedElements = getElementsInsideBoundary(graphFactory.getReadonlyGraph().getCells(), cell);
 
             otm.trustZones.push(zone);
         }
@@ -213,6 +223,8 @@ export const convert = function (data) {
             flowRep.id = cell.id;
             flowRep.name = cell.data.type;
             flow.representations.push(flowRep);
+
+            flow.trustBoundaryIds = getBoundariesCrossedByFlow(cell, graphFactory.getReadonlyGraph().getCells());
 
             otm.dataflows.push(flow);
         }

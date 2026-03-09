@@ -152,7 +152,12 @@ const hin = {
                 defaultTitle: 'न्यू सीआईए डायग्राम',
                 defaultDescription: 'नई सीआईए डायग्राम डिस्क्रिप्शन',
                 select: 'सीआईए'
-            }
+            },
+            eop: {
+                defaultTitle: 'नया EoP गेम्स आरेख',
+                defaultDescription: 'नए EoP गेम्स आरेख का विवरण',
+                select: 'EoP गेम्स'
+            },
         },
         threats: 'थ्रेटस',
         errors: {
@@ -300,6 +305,15 @@ const hin = {
         next: 'अगला',
         previous: 'पहले का'
     },
+    cards: {
+        details: 'कार्ड विवरण',
+        noDetails: 'कोई विवरण उपलब्ध नहीं',
+        unknown: 'अज्ञात',
+        properties: {
+            suit: 'श्रेणी',
+            number: 'संख्या'
+        }
+    },
     threats: {
         model: {
             cia: {
@@ -354,7 +368,8 @@ const hin = {
             ciadie: 'नया CIA-DIE थ्रेट',
             linddun: 'न्यू लिंडडन थ्रेट',
             plot4ai: 'नया DPLOT4ai थ्रेट',
-            stride: 'नया स्ट्राइड थ्रेट'
+            stride: 'नया स्ट्राइड थ्रेट',
+            eop: 'नया EoP थ्रेट',
         },
         edit: 'थ्रेट संपादित करें',
         confirmDeleteTitle: 'हटाने की पुष्टि करें',
@@ -387,6 +402,10 @@ const hin = {
             medium: 'मध्यम',
             high: 'ऊँचा',
             critical: 'गंभीर'
+        },
+        validation: {
+            error: 'कार्ड नंबर आवश्यक है।',
+            cardNumberRequired: 'सहेजने से पहले आपको एक कार्ड नंबर चुनना होगा।'
         }
     },
     report: {
