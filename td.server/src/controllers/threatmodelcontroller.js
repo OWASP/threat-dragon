@@ -1,7 +1,8 @@
-import { conflict, serverError } from './errors.js';
+import { conflict, notFound, serverError } from './errors.js';
 
 import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
+import providers from '../providers';
 import repositories from "../repositories";
 import responseWrapper from './responseWrapper.js';
 
@@ -213,10 +214,27 @@ const getPaginationFromHeaders = (headers, page) => {
 };
 
 const organisation = (req, res) => {
+    const provider = providers.get(req.query.provider);
+    let fullUrl;
+    switch (provider.name) {
+        case 'github':
+            fullUrl = provider.getGithubUrl();
+            break;
+        case 'gitlab':
+            fullUrl = provider.getGitlabUrl();
+            break;
+        case 'bitbucket':
+            fullUrl = provider.getBitbucketUrl();
+            break;
+        default:
+            return notFound(`Unknown provider`, res, logger);
+    }
+
+    const parsed = new URL(fullUrl);
     const organisation = {
-        protocol: env.get().config.ENTERPRISE_PROTOCOL || 'https',
-        hostname: env.get().config.GITHUB_ENTERPRISE_HOSTNAME || 'www.github.com',
-        port: env.get().config.GITHUB_ENTERPRISE_PORT || '',
+        protocol: parsed.protocol.replace(':', ''),
+        hostname: parsed.hostname,
+        port: parsed.port || '',
     };
     logger.debug(`API organisation request: ${logger.transformToString(req)}`);
 

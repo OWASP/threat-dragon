@@ -38,7 +38,7 @@ Note that these 'latest' builds are not guaranteed to be stable.
 To rebuild the docker image start by cloning the Threat Dragon github project.
 Note that this provides the latest source code, rather than a released version:
 
-```text
+```sh
 git init
 git clone https://github.com/owasp/threat-dragon.git
 cd threat-dragon

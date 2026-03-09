@@ -50,7 +50,7 @@
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
                     <!-- REPLACE the export template button with dropdown -->
-                    <b-dropdown right :text="$t('forms.manage')" id="manage-model-btn">
+                    <b-dropdown right :text="$t('forms.manage')" id="manage-model-btn" v-if="enableTemplates">
                         <b-dropdown-item @click="onExportTemplateClick" id="export-template-option">
                             <font-awesome-icon icon="file-import" ></font-awesome-icon>
                             {{ $t('forms.exportTemplate') }}
@@ -99,6 +99,7 @@ export default {
         TdThreatModelSummaryCard
     },
     computed: mapState({
+        enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
         model: (state) => state.threatmodel.data,
         providerType: (state) => getProviderType(state.provider.selected),
         version: (state) => state.packageBuildVersion

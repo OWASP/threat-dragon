@@ -1,12 +1,10 @@
-ARG         NODE_VERSION=20.17
+ARG         NODE_VERSION=24.14
 
 # The base image with updates applied
 FROM        node:$NODE_VERSION-alpine AS base-node
 RUN         apk -U upgrade
 WORKDIR     /app
 RUN         npm i -g npm@latest
-RUN         mkdir -p td.server td.vue
-RUN         mkdir -p td.vue/src/service/schema/api_json
 RUN         chown -R node:node /app
 USER        node
 
@@ -14,7 +12,7 @@ USER        node
 # Build the front and back-end.  This needs devDependencies which do not
 # need to be included in the final image
 FROM        base-node AS build
-RUN         mkdir boms
+RUN         mkdir -p boms td.server td.vue td.vue/src/service/schema/api_json
 
 COPY        package-lock.json package.json /app/
 COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
@@ -37,7 +35,7 @@ RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && 
             cp td.vue/dist/.sbom/bom.xml  boms/threat-dragon-site-bom.xml
 
 
-FROM        ruby:3.2-slim-bullseye AS build-docs
+FROM        ruby:4.0-slim-bookworm AS build-docs
 RUN         apt-get update \
             && apt-get install -y --no-install-recommends \
             build-essential \
@@ -52,14 +50,14 @@ RUN         bundle exec jekyll build -b docs/
 
 # Build the final, production image.
 FROM        base-node
-COPY        --from=build-docs /td.docs/_site /app/docs
-COPY        --from=build /app/boms /app/boms
+COPY        --chown=node:node --from=build-docs /td.docs/_site /app/docs
+COPY        --chown=node:node --from=build /app/boms /app/boms
 
-COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
+COPY        --chown=node:node ./td.server/package-lock.json ./td.server/package.json ./td.server/
 RUN         cd td.server && npm clean-install --omit dev --ignore-scripts
-COPY        --from=build /app/td.server/dist ./td.server/dist
-COPY        --from=build /app/td.vue/dist ./dist
-COPY        ./td.server/index.js ./td.server/index.js
+COPY        --chown=node:node --from=build /app/td.server/dist ./td.server/dist
+COPY        --chown=node:node --from=build /app/td.vue/dist ./dist
+COPY        --chown=node:node ./td.server/index.js ./td.server/index.js
 
 HEALTHCHECK --interval=10s --timeout=2s --start-period=2s CMD ["/nodejs/bin/node", "./td.server/dist/healthcheck.js"]
 CMD         ["td.server/index.js"]

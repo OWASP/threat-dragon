@@ -88,5 +88,6 @@ export default {
     getOauthReturnUrl,
     getOauthRedirectUrl,
     isConfigured,
+    getGitlabUrl,
     name
 };

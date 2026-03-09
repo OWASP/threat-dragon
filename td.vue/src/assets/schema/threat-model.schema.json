@@ -1,5 +1,5 @@
 {
-    "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
+    "$id": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.2/threat-model.schema.json",
     "$comment": "When updating the schema `$id`, also update the value of the constant `$schema` property below. See <https://owasp.org/www-project-threat-model-library/#div-specification>.",
     "title": "OWASP Threat Model Library Schema",
 
@@ -800,7 +800,8 @@
     "properties": {
         "$schema": {
             "title": "URI of JSON schema",
-            "const": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json"
+            "type": "string",
+            "pattern": "https://github\\.com/OWASP/www-project-threat-model-library/blob/v[1-9][0-9]*\\.[0-9]+\\.[0-9]+/threat-model.schema.json"
         },
 
         "version": {

@@ -32,7 +32,7 @@ The server will need access to environment variables as shown in
 When running locally it may be that HTTPS certificates are not present,
 so consider using these environment variables that use HTTP:
 
-```text
+```sh
 NODE_ENV=development
 LOG_LEVEL=debug
 SERVER_API_PROTOCOL=http
@@ -40,7 +40,7 @@ SERVER_API_PROTOCOL=http
 
 A browser can be used to access the server, or other command line tools such as curl:
 
-```text
+```sh
 curl -v http://localhost:3000/api/threatmodel/organisation  \
      -H "Accept: application/json"
 ```

@@ -8,12 +8,13 @@ describe('service/threatmodelApi.js', () => {
     });
 
     describe('organisationAsync', () => {
+        const providerName = 'github';
         beforeEach(async () => {
-            await threatmodelApi.organisationAsync();
+            await threatmodelApi.organisationAsync(providerName);
         });
 
         it('calls the organisation endpoint', () => {
-            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/organisation');
+            expect(api.getAsync).toHaveBeenCalledWith('/api/threatmodel/organisation', { 'params': { 'provider': providerName } });
         });
     });
 

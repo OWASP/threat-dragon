@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import isElectron from 'is-electron';
 
-import {
+import{
     PROVIDER_CLEAR,
     PROVIDER_FETCH,
     PROVIDER_SELECTED
@@ -36,7 +36,7 @@ const actions = {
         } else if (providerName === 'local') {
             commit(PROVIDER_SELECTED, { 'providerName': 'local', 'providerUri': 'threat-dragon-local' });
         } else {
-            const resp = await threatmodelApi.organisationAsync();
+            const resp = await threatmodelApi.organisationAsync(providerName);
             const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
             commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': providerUri });
         }

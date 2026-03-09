@@ -11,9 +11,9 @@ const merge = (model, components) => {
                         if (placement.encrypted) {
                             component.data.isEncrypted = true;
                         }
-                        component.data.description += '\n Record count maximum of ' +  data_set.record_count;
+                        component.data.description += '\n Record count maximum of ' +  data_set?.record_count;
                         component.data.description += ' with data sensitivity of ' +  data_set.data_sensitivity.toString();
-                        component.data.description += ' and access control methods of ' +  data_set.access_control_methods.toString();
+                        component.data.description += ' and access control methods of ' +  data_set.access_control_methods?.toString();
                     }
                 });
             });

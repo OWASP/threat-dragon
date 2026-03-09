@@ -16,7 +16,7 @@ const encodeUrlComponents = (... uriComponents) => {
  * Gets the organisation data configured for the express server
  * @returns {Promise}
  */
-const organisationAsync = () => api.getAsync(`${resource}/organisation`);
+const organisationAsync = (providerName) => api.getAsync(`${resource}/organisation`, { params: { provider: providerName } });
 
 /**
  * Gets the repos for the given user

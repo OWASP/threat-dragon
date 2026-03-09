@@ -64,7 +64,7 @@ To use the docker command the [Docker daemon][dockerinstall] must be installed a
 During development it is useful to be able to stop the docker container from the command line,
 and also have the server logs printed to the console, so the docker parameters `-it --rm` are used.
 
-```text
+```sh
 docker run -it --rm \
 -p 8080:3000 \
 -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='00112233445566778899aabbccddeeff' \
@@ -96,7 +96,7 @@ Login to Threat Dragon and access files to and from the local filesystem to ensu
 Once the parameters are correct for running the Threat Dragon server,
 it is useful to provide a file for (most) of the parameters. Here a test environment file `test.env` has been created:
 
-```text
+```sh
 ENCRYPTION_JWT_REFRESH_SIGNING_KEY='00112233445566778899aabbccddeeff'
 ENCRYPTION_JWT_SIGNING_KEY='deadbeef112233445566778899aabbcc'
 ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
@@ -126,6 +126,21 @@ This is achieved using docker parameter `-d` :
 or if using Windows:
 
 - `docker run -d -p 8080:3000 -v %CD%/test.env:/app/.env owasp/threat-dragon:stable`
+
+### Example production local environment
+
+Important: this example file contains test values, do not use these values for anything other than short-term tests.
+
+```sh
+ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
+ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
+ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
+NODE_ENV=production
+PROTOCOL=https
+SERVER_API_PROTOCOL=https
+```
+
+Note the use of HTTPS in production environments.
 
 ----
 

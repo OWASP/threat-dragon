@@ -108,6 +108,7 @@ OSX
 owasp
 OWASP
 pdf
+px
 PNG
 pnpm
 por
@@ -153,4 +154,5 @@ Vue
 Webapp
 webrick
 www
+yaml
 zho

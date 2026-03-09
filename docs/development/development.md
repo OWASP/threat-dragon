@@ -22,7 +22,7 @@ Local development will need node installed :
 
 Use Node Version Manager (nvm) to get to the right version for Linux:
 
-```text
+```sh
 # Download and install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # follow the on-screen instructions, usually just restart the terminal
@@ -34,7 +34,7 @@ node --version
 
 Alternatively for MacOS:
 
-```text
+```sh
 brew install nvm
 nvm install 20.12.2
 nvm use 20.12.2

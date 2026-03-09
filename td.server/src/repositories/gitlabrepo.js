@@ -62,9 +62,19 @@ export const branchesAsync = async (repoInfo, accessToken) => {
 };
 
 export const modelsAsync = async (branchInfo, accessToken) => {
-    const models = await getClient(accessToken).Repositories.allRepositoryTrees(getRepoFullName(branchInfo), {path: repoRootDirectory(), ref:branchInfo.branch });
-    return [models];
+    try {
+        const models = await getClient(accessToken).Repositories.allRepositoryTrees(
+            getRepoFullName(branchInfo), {path: repoRootDirectory(), ref: branchInfo.branch}
+        );
+        return [models];
+    } catch (e) {
+        if (e.name === 'GitbeakerRequestError' && e.cause.description.includes('Not Found')) {
+            return [[]];
+        }
+        throw e;
+    }
 };
+
 
 export const modelAsync = async (modelInfo, accessToken) => {
     const model = await getClient(accessToken).RepositoryFiles.show(getRepoFullName(modelInfo), getModelPath(modelInfo), modelInfo.branch);
