@@ -1,12 +1,16 @@
 function getElectronMock () {
     return {
-        app: {},
+        app: { addRecentDocument: jest.fn() },
         protocol: {},
         BrowserWindow: function () {},
         Menu: {},
         ipcMain: {},
-        dialog: {},
-        shell: {}
+        dialog: {
+            showOpenDialog: jest.fn(),
+            showSaveDialog: jest.fn(),
+            showMessageBoxSync: jest.fn()
+        },
+        shell: { openExternal: jest.fn() }
     };
 }
 
