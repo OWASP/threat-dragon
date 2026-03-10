@@ -7,6 +7,7 @@ module.exports = async () => {
             '.*\\.(js)$': 'babel-jest'
         },
         moduleNameMapper: {
+            '^vue$': require.resolve('@vue/compat'),
             '^@/(.*)$': '<rootDir>/src/$1',
             '^lodash-es$': 'lodash'
         },

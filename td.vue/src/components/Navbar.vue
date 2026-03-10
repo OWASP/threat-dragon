@@ -75,6 +75,7 @@ $icon-height: 1.2rem;
   font-size: $icon-height;
   max-height: $icon-height;
   margin: 0 5px 0 5px;
+  color: $white;
 }
 
 .td-brand {

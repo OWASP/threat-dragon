@@ -127,6 +127,8 @@ module.exports = {
         }
     },
     chainWebpack: config => {
+        config.resolve.alias.set('vue', '@vue/compat');
+
         config.module
             .rule('vue')
             .use('vue-loader')
@@ -136,6 +138,10 @@ module.exports = {
                 options.image = 'xlink:href';
                 options['b-img'] = 'src';
                 options['b-img-lazy'] = ['src', 'blank-src'];
+                options.compilerOptions = {
+                    ...options.compilerOptions,
+                    compatConfig: { MODE: 2 }
+                };
                 return options;
             });
     },
