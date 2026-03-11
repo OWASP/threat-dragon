@@ -1,3 +1,5 @@
+// TODO: Revisit whether mutationobserver-shim is still required under Vue 3
+// after removing compat
 import 'mutationobserver-shim';
 import { createApp } from 'vue';
 
@@ -48,6 +50,8 @@ window.electronAPI.onCloseModelRequest(async (_event, fileName) =>  {
         console.debug('Closing model and diagram');
         appProxy.$store.dispatch(tmActions.diagramClosed);
         localAuth();
+        // TODO: Revisit when fully on Vue Router 4
+        // Router 4 may allow avoiding this catch or handling duplicates differently.
         appProxy.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
                 throw error;

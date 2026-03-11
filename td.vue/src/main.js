@@ -1,3 +1,5 @@
+// TODO: Revisit whether mutationobserver-shim is still required under Vue 3
+// after removing compat
 import 'mutationobserver-shim';
 import { createApp } from 'vue';
 

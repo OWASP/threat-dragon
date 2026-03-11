@@ -25,6 +25,9 @@ let i18nInstance = null;
 const get = () => {
     if (i18nInstance === null) {
         i18nInstance = createI18n({
+            // Preserves Options API and get().global.tc() compatibility with vue-i18n v8
+            // Legacy mode is deprecated and will be removed in vue-i18n v12.
+            // TODO: remove after refactoring i18n usage
             legacy: true,
             locale: 'eng',
             messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, zho }
