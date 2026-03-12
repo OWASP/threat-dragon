@@ -127,6 +127,50 @@ or if using Windows:
 
 - `docker run -d -p 8080:3000 -v %CD%/test.env:/app/.env owasp/threat-dragon:stable`
 
+## Configuring Templates for Desktop
+
+Navigate to the cog icon in the navigation bar and click **Manage Templates**.
+
+![Manage template image]({{ '/assets/images/manage-template.png'
+ | relative_url }}){: style="max-width: 400px; width: 100%;" }
+
+If templates have not been configured before, you will be presented with a setup dialog offering three options:
+
+![Folder Setup Dialog Box]({{ '/assets/images/folder-setup-dialog.png'
+ | relative_url }}){: style="max-width: 400px; width: 100%;" }
+
+- **Use default location** — creates a `templates` folder in the application data directory (`AppData/Roaming/Threat Dragon/templates` on Windows)
+- **Choose custom location** — opens a folder browser so you can select any folder on your filesystem
+- **Select existing template folder** — point to a folder that already contains a `template_info.json` index file
+
+
+For the default and custom location options, Threat Dragon will automatically create a `template_info.json`
+index file in the selected folder if one does not already exist.
+
+For the existing folder option, the folder must already contain a valid `template_info.json` file.
+If the file is not found, setup will fail with an error.
+
+### Folder Structure
+
+All template files are stored flat in the configured folder alongside the index file:
+
+```
+templates/
+├── template_info.json       ← index file listing all templates
+├── my-template-abc123.json  ← template model file
+└── another-template-xyz.json
+```
+
+The `template_info.json` file is managed automatically by Threat Dragon — you do not need to edit it manually.
+
+### Reconfiguring the Template Folder
+
+The configured template folder path is persisted in `AppData/Roaming/Threat Dragon/templates-path.txt`.
+To change the template storage location, delete this file and restart Threat Dragon and
+you will be prompted to configure a new location on next launch.
+
+Note that templates from the previous folder will not be migrated automatically.
+
 ### Example production local environment
 
 Important: this example file contains test values, do not use these values for anything other than short-term tests.

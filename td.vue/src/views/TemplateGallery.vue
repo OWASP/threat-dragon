@@ -217,10 +217,14 @@ export default {
                     template.id
                 );
 
+                if (this.isDesktop) return;
+
                 // Load template (regenerates IDs and sets as current model, current model set in the action)
                 await this.$store.dispatch(tmActions.templateLoad, {
                     templateData: templateData.content
                 });
+
+               
 
                 // Route to repository/folder selection based on provider type, repo for git and folder for google drive
                 const routeName = this.providerType === providerTypes.google
