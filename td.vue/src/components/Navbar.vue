@@ -128,14 +128,14 @@ export default {
         ])
     },
     methods: {
-        onLogOut(evt) {
+        async onLogOut(evt) {
             evt.preventDefault();
-            this.$store.dispatch(LOGOUT);
-            this.$router.push('/').catch(error => {
+            await Promise.resolve(this.$router.push('/')).catch(error => {
                 if (error.name != 'NavigationDuplicated') {
                     throw error;
                 }
             });
+            await this.$store.dispatch(LOGOUT);
         },
         onManageTemplates() {
             this.$router.push('/admin/templates').catch(error => {
