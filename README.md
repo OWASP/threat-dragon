@@ -176,7 +176,7 @@ Threat Dragon: _making threat modeling less threatening_
 [config]: https://www.threatdragon.com/docs/configure/configure.html
 [github]: https://www.threatdragon.com/docs/configure/github.html
 [gitlab]: https://www.threatdragon.com/docs/configure/gitlab.html
-[latest]: https://github.com/owasp/threat-dragon/releases/latest
+[latest]: https://github.com/owasp/threat-dragon/releases/latest/
 [license]: https://github.com/OWASP/threat-dragon/blob/v2.2.0/license.txt
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [node]: https://nodejs.org/en/download

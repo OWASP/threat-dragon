@@ -62,5 +62,5 @@ To build an installer:
 
 Threat Dragon: _making threat modeling less threatening_
 
-[releases]: https://github.com/OWASP/threat-dragon/releases/
+[releases]: https://github.com/OWASP/threat-dragon/releases/latest/
 [snap]: https://snapcraft.io/threat-dragon
