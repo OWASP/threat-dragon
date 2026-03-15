@@ -230,6 +230,8 @@
 !td.vue/tests/unit/components/report/*.spec.js
 !td.vue/tests/unit/desktop/
 !td.vue/tests/unit/desktop/*.spec.js
+!td.vue/tests/unit/desktop/helpers/
+!td.vue/tests/unit/desktop/helpers/*.js
 !td.vue/tests/unit/entity/
 !td.vue/tests/unit/entity/*.spec.js
 !td.vue/tests/unit/router/
