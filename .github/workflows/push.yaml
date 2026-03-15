@@ -504,7 +504,7 @@ jobs:
   desktop_windows_test:
     name: Windows desktop build test
     runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
     defaults:
       run:
         working-directory: td.vue
@@ -544,7 +544,7 @@ jobs:
   desktop_macos_test:
     name: MacOS desktop build test
     runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
     defaults:
       run:
         working-directory: td.vue
@@ -586,7 +586,7 @@ jobs:
   desktop_linux_test:
     name: Linux desktop build test
     runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
     defaults:
       run:
         working-directory: td.vue
@@ -633,7 +633,7 @@ jobs:
   desktop_linux_snap_test:
     name: Linux snap build test
     runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests]
+    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
     defaults:
       run:
         working-directory: td.vue
