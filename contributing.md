@@ -8,6 +8,7 @@ When contributing:
 * see if there is [already an issue][issues] for what you want to do
 * get started by following the [developer notes][dev]
 * keep the test coverage high with unit tests and functional tests
+* manually test your changes for basic functionality and regressions
 
 ## Ground rules
 
