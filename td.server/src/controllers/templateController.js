@@ -147,8 +147,8 @@ const updateTemplate = async (req, res) => {
       name: name.trim(),
       ...(description && { description: description.trim() }),
       ...(Array.isArray(tags) && { tags }),
-      id: id,  // Preserve original ID
-      modelRef: templates[templateIndex].modelRef  // Preserve content file reference
+      id: id, // Preserve original ID
+      modelRef: templates[templateIndex].modelRef // Preserve content file reference
     };
 
     await repository.updateMetadataAsync(accessToken, templates, sha);

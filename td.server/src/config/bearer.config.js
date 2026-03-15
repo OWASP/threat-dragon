@@ -55,7 +55,7 @@ const adminMiddleware = (req, res, next) => {
         return errors.forbidden(res, logger);
       }
         return next();
-}
+};
 
 export default {
     middleware,

@@ -1,4 +1,9 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '@/store/actions/auth.js';
+import {
+    AUTH_CLEAR,
+    AUTH_SET_JWT,
+    AUTH_SET_LOCAL,
+    LOGOUT,
+} from '@/store/actions/auth.js';
 import authModule, { clearState } from '@/store/modules/auth.js';
 import { BRANCH_CLEAR } from '@/store/actions/branch.js';
 import loginApi from '@/service/api/loginApi.js';
@@ -10,12 +15,13 @@ describe('store/modules/auth.js', () => {
     const getMocks = () => ({
         commit: () => {},
         dispatch: () => {},
-        rootState: {}
+        rootState: {},
     });
-    const jwtBody = { foo: 'bar', user: { username: 'whatever' }};
+    const jwtBody = { foo: 'bar', user: { username: 'whatever' } };
     const apiResp = {
-        accessToken: 'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah',
-        refreshToken: 'howrefreshing'
+        accessToken:
+            'blah.eyJmb28iOiJiYXIiLCJ1c2VyIjp7InVzZXJuYW1lIjoid2hhdGV2ZXIifX0.blah',
+        refreshToken: 'howrefreshing',
     };
     let mocks;
 
@@ -64,14 +70,26 @@ describe('store/modules/auth.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_JWT, apiResp);
         });
 
-        it('commits set local', () => {
-            authModule.actions[AUTH_SET_LOCAL](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL);
-        });
-        
-        describe('logout', () => {
+        describe('set local', () => {
+            it('commits set local with isDesktop true when desktop provider', () => {
+                mocks.rootState.provider = { selected: 'desktop' };
+                authModule.actions[AUTH_SET_LOCAL](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL, {
+                    isDesktop: true,
+                });
+            });
 
-            describe('local provider', () => {     
+            it('commits set local with isDesktop false when web provider', () => {
+                mocks.rootState.provider = { selected: 'local' };
+                authModule.actions[AUTH_SET_LOCAL](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(AUTH_SET_LOCAL, {
+                    isDesktop: false,
+                });
+            });
+        });
+
+        describe('logout', () => {
+            describe('local provider', () => {
                 beforeEach(() => {
                     mocks.rootState.provider = { selected: 'local' };
                     authModule.actions[LOGOUT](mocks);
@@ -94,15 +112,19 @@ describe('store/modules/auth.js', () => {
                 });
 
                 it('dispatches the REPOSITORY_CLEAR action', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                    expect(mocks.dispatch).toHaveBeenCalledWith(
+                        REPOSITORY_CLEAR
+                    );
                 });
 
                 it('dispatches the THREATMODEL_CLEAR action', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                    expect(mocks.dispatch).toHaveBeenCalledWith(
+                        THREATMODEL_CLEAR
+                    );
                 });
             });
 
-            describe('remote provider', () => {  
+            describe('remote provider', () => {
                 describe('without error', () => {
                     beforeEach(() => {
                         mocks.rootState.provider = { selected: 'github' };
@@ -111,27 +133,37 @@ describe('store/modules/auth.js', () => {
                     });
 
                     it('calls the API', () => {
-                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(mocks.state.refreshToken);
+                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(
+                            mocks.state.refreshToken
+                        );
                     });
-    
+
                     it('dispatches the AUTH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
                     });
-    
+
                     it('dispatches the BRANCH_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            BRANCH_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the PROVIDER_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            PROVIDER_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the REPOSITORY_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            REPOSITORY_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the THREATMODEL_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            THREATMODEL_CLEAR
+                        );
                     });
                 });
 
@@ -147,31 +179,44 @@ describe('store/modules/auth.js', () => {
                     });
 
                     it('calls the API', () => {
-                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(mocks.state.refreshToken);
+                        expect(loginApi.logoutAsync).toHaveBeenCalledWith(
+                            mocks.state.refreshToken
+                        );
                     });
 
                     it('logs the error', () => {
-                        expect(console.error).toHaveBeenCalledWith('Error calling logout api', err);
+                        expect(console.error).toHaveBeenCalledWith(
+                            'Error calling logout api',
+                            err
+                        );
                     });
-    
+
                     it('dispatches the AUTH_CLEAR action', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(AUTH_CLEAR);
                     });
-    
+
                     it('dispatches the BRANCH_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            BRANCH_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the PROVIDER_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            PROVIDER_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the REPOSITORY_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            REPOSITORY_CLEAR
+                        );
                     });
-    
+
                     it('dispatches the THREATMODEL_CLEAR action', () => {
-                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+                        expect(mocks.dispatch).toHaveBeenCalledWith(
+                            THREATMODEL_CLEAR
+                        );
                     });
                 });
             });
@@ -208,21 +253,26 @@ describe('store/modules/auth.js', () => {
         describe('set jwt', () => {
             describe('happy path', () => {
                 beforeEach(() => {
-                    authModule.mutations[AUTH_SET_JWT](authModule.state, apiResp);
+                    authModule.mutations[AUTH_SET_JWT](
+                        authModule.state,
+                        apiResp
+                    );
                 });
-    
+
                 it('sets the jwt', () => {
                     expect(authModule.state.jwt).toEqual(apiResp.accessToken);
                 });
-    
+
                 it('sets the refreshToken', () => {
-                    expect(authModule.state.refreshToken).toEqual(apiResp.refreshToken);
+                    expect(authModule.state.refreshToken).toEqual(
+                        apiResp.refreshToken
+                    );
                 });
-    
+
                 it('sets the user', () => {
                     expect(authModule.state.user).toEqual(jwtBody.user);
                 });
-    
+
                 it('sets the jwtBody', () => {
                     expect(authModule.state.jwtBody).toEqual(jwtBody);
                 });
@@ -231,7 +281,10 @@ describe('store/modules/auth.js', () => {
             describe('with error', () => {
                 it('re-throws the error', () => {
                     expect(() => {
-                        authModule.mutations[AUTH_SET_JWT](authModule.state, 'someBadData');
+                        authModule.mutations[AUTH_SET_JWT](
+                            authModule.state,
+                            'someBadData'
+                        );
                     }).toThrow();
                 });
             });
@@ -239,7 +292,35 @@ describe('store/modules/auth.js', () => {
 
         describe('set local', () => {
             beforeEach(() => {
-                authModule.mutations[AUTH_SET_LOCAL](authModule.state);
+                authModule.mutations[AUTH_SET_LOCAL](authModule.state, {
+                    isDesktop: false,
+                });
+            });
+
+            describe('set local', () => {
+                describe('when desktop', () => {
+                    beforeEach(() => {
+                        authModule.mutations[AUTH_SET_LOCAL](authModule.state, {
+                            isDesktop: true,
+                        });
+                    });
+
+                    it('sets isAdmin to true', () => {
+                        expect(authModule.state.user.isAdmin).toBe(true);
+                    });
+                });
+
+                describe('when web local session', () => {
+                    beforeEach(() => {
+                        authModule.mutations[AUTH_SET_LOCAL](authModule.state, {
+                            isDesktop: false,
+                        });
+                    });
+
+                    it('sets isAdmin to false', () => {
+                        expect(authModule.state.user.isAdmin).toBe(false);
+                    });
+                });
             });
 
             it('sets the username to "local-user"', () => {
@@ -266,12 +347,14 @@ describe('store/modules/auth.js', () => {
             authModule.state.user = { username: 'foo' };
             authModule.state.jwtBody = {
                 exp: now + 5000,
-                iat: now - 1000
+                iat: now - 1000,
             };
         });
 
         it('gets the username', () => {
-            expect(authModule.getters.username(authModule.state)).toEqual('foo');
+            expect(authModule.getters.username(authModule.state)).toEqual(
+                'foo'
+            );
         });
 
         it('gets an empty string when there is no username', () => {
