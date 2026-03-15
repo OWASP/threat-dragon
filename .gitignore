@@ -113,6 +113,7 @@
 
 # Vue front end
 !td.vue
+!td.vue/.npmrc
 !td.vue/**/*.vue
 !td.vue/*config.js
 !td.vue/**/*.scss

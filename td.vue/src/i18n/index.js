@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
 // the language codes follow
 // Internet Engineering Task Force (IETF) Best Current Practice (BCP) 47
@@ -21,20 +20,23 @@ import spa from './es.js';
 // hide RUS & UKR for now: import ukr from './uk.js';
 import zho from './zh.js';
 
-Vue.use(VueI18n);
-let i18n = null;
+let i18nInstance = null;
 
 const get = () => {
-    if (i18n === null) {
-        i18n = new VueI18n({
+    if (i18nInstance === null) {
+        i18nInstance = createI18n({
+            // Preserves Options API and get().global.tc() compatibility with vue-i18n v8
+            // Legacy mode is deprecated and will be removed in vue-i18n v12.
+            // TODO: remove after refactoring i18n usage
+            legacy: true,
             locale: 'eng',
             messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, zho }
         });
     }
-    return i18n;
+    return i18nInstance;
 };
 
-export const tc = (key) => get().tc(key);
+export const tc = (key) => get().global.tc(key);
 
 export default {
     get

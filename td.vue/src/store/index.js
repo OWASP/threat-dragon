@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 import auth from './modules/auth.js';
 import branch from './modules/branch.js';
@@ -20,8 +19,7 @@ const buildState = require('../../package.json').buildState;
 
 const get = () => {
     if (store === null) {
-        Vue.use(Vuex);
-        store = new Vuex.Store({
+        store = createStore({
             state: {
                 packageBuildVersion: buildVersion,
                 packageBuildState: buildState

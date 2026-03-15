@@ -1,4 +1,4 @@
-import { BootstrapVue, BFormTextarea, BFormGroup, BFormCheckbox } from 'bootstrap-vue';
+import { BootstrapVue, BFormTextarea, BFormGroup } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -54,7 +54,11 @@ describe('components/GraphProperties.vue', () => {
                 state: {
                     cell: {
                         ref: {
-                            data: entityData
+                            data: entityData,
+                            getData: () => entityData,
+                            updateStyle: jest.fn(),
+                            isEdge: () => false,
+                            setData: jest.fn()
                         }
                     }
                 }
@@ -90,10 +94,9 @@ describe('components/GraphProperties.vue', () => {
         });
 
         it('has an out of scope checkbox', () => {
-            const input = wrapper.findAllComponents(BFormCheckbox)
-                .filter(x => x.attributes('id') === 'flowoutofscope')
-                .at(0);
-            expect(input.attributes('value')).toEqual(entityData.outOfScope.toString());
+            const input = wrapper.find('#flowoutofscope');
+            expect(input.exists()).toEqual(true);
+            expect(input.element.checked).toEqual(true);
         });
 
         it('has a reason for out of scope', () => {
@@ -104,10 +107,29 @@ describe('components/GraphProperties.vue', () => {
         });
 
         it('has a bidirectional checkbox', () => {
-            const input = wrapper.findAllComponents(BFormCheckbox)
-                .filter(x => x.attributes('id') === 'bidirection')
-                .at(0);
-            expect(input.attributes('value')).toEqual(entityData.isBidirectional.toString());
+            const input = wrapper.find('#bidirection');
+            expect(input.exists()).toEqual(true);
+            expect(input.element.checked).toEqual(true);
+        });
+
+        it('updates out of scope when toggled', async () => {
+            jest.spyOn(wrapper.vm, 'onChangeScope').mockImplementation(() => {});
+
+            const input = wrapper.find('#flowoutofscope');
+            await input.setChecked(false);
+
+            expect(entityData.outOfScope).toEqual(false);
+            expect(wrapper.vm.onChangeScope).toHaveBeenCalledTimes(1);
+        });
+
+        it('updates bidirectional when toggled', async () => {
+            jest.spyOn(wrapper.vm, 'onChangeBidirection').mockImplementation(() => {});
+
+            const input = wrapper.find('#bidirection');
+            await input.setChecked(false);
+
+            expect(entityData.isBidirectional).toEqual(false);
+            expect(wrapper.vm.onChangeBidirection).toHaveBeenCalledTimes(1);
         });
     });
 

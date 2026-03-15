@@ -127,6 +127,9 @@ module.exports = {
         }
     },
     chainWebpack: config => {
+        // TODO: Removevv after fully migrated to Vue 3 and the compat dependency is removed
+        config.resolve.alias.set('vue', '@vue/compat');
+
         config.module
             .rule('vue')
             .use('vue-loader')
@@ -136,6 +139,14 @@ module.exports = {
                 options.image = 'xlink:href';
                 options['b-img'] = 'src';
                 options['b-img-lazy'] = ['src', 'blank-src'];
+                options.compilerOptions = {
+                    ...options.compilerOptions,
+                    // Sets the compatability mode to 2, meaning "vue 2"
+                    // TODO: Once TODOs and additional warnings are sorted, we should
+                    // set this to 3 and address any new warnings or issues that arise
+                    // before removing the compat dependency entirely
+                    compatConfig: { MODE: 2 }
+                };
                 return options;
             });
     },
