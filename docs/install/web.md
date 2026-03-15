@@ -78,4 +78,4 @@ Threat Dragon: _making threat modeling less threatening_
 
 [git]: https://git-scm.com/downloads/
 [node]: https://nodejs.org/en/download
-[releases]: https://github.com/OWASP/threat-dragon/releases/
+[releases]: https://github.com/OWASP/threat-dragon/releases/latest/
