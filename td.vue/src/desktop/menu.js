@@ -24,10 +24,11 @@ import ind from '@/i18n/id.js';
 import jpn from '@/i18n/ja.js';
 import msa from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
+import bra from '@/i18n/pt-br.js';
 import spa from '@/i18n/es.js';
 import zho from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, msa, por, spa, zho };
+const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, msa, por, bra, spa, zho };
 const defaultLanguage = 'eng';
 var language = defaultLanguage;
 
@@ -470,7 +471,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
-    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'msa', 'por', 'spa', 'zho' ];
+    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'msa', 'por', 'bra', 'spa', 'zho' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 

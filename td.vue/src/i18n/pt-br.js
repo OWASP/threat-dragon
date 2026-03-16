@@ -1,4 +1,4 @@
-const por = {
+const bra = {
     auth: {
         sessionExpired: 'Sua sessão está expirada. Por favor, faça login novamente.'
     },
@@ -514,4 +514,4 @@ const por = {
     }
 };
 
-export default por;
+export default bra;
