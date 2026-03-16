@@ -276,9 +276,7 @@ Once everything is in place promote the release from 'draft' to 'public' and 'la
 
 ### Announce
 
-Update the [releases tab][releases] and the [info pane][td-info] on the OWASP Threat Dragon project pages.
-
-Finally ensure Threat Dragon announces the new release on the [OWASP Threat Dragon][td-slack] slack channel
+Announce (as Threat Dragon) the new release on the [OWASP Threat Dragon][td-slack] slack channel
 and any other relevant channels such as [Blue Sky](https://bsky.app/profile/threatdragon.bsky.social)
 
 ### Tidy up
@@ -302,11 +300,9 @@ Revert the build state back to 'latest'; this build state is displayed on the de
 [herokudash]: https://dashboard.heroku.com/apps
 [notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
 [owasp-dock]: https://hub.docker.com/r/owasp/threat-dragon/tags
-[releases]: https://github.com/OWASP/www-project-threat-dragon/blob/main/tab_releases.md
 [smartsign]: https://support.certum.eu/en/software/procertum-smartsign/
 [snapcraft]: https://snapcraft.io/install/threat-dragon/arch
 [snapdash]: https://snapcraft.io/threat-dragon/releases
 [td-dock]: https://hub.docker.com/r/threatdragon/owasp-threat-dragon/tags
-[td-info]: https://github.com/OWASP/www-project-threat-dragon/blob/main/info.md
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
 [ubuntu]: https://login.ubuntu.com/

@@ -15,94 +15,113 @@ if (isTest) {
     require('wdio-electron-service/main');
 }
 
-// Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([
-    { scheme: 'app', privileges: { secure: true, standard: true } }
-]);
+export function registerDesktop (deps) {
+    const {
+        app,
+        protocol,
+        BrowserWindow: BrowserWindowCtor,
+        Menu: MenuApi,
+        ipcMain: ipcMainApi,
+        menu: menuApi,
+        logger: loggerApi,
+        utils,
+        createProtocol: createProtocolFn,
+        installExtension: installExtensionFn,
+        VUEJS_DEVTOOLS: devtoolsId,
+        autoUpdater: autoUpdaterApi,
+        path: pathModule
+    } = deps;
 
-let runApp = true;
-async function createWindow () {
+    const { electronURL: url, isDevelopment: isDev, isTest: testMode, isMacOS: macos, isWin: win } = utils;
 
-    // Create the browser window
-    const mainWindow = new BrowserWindow({
-        width: 1400,
-        height: 1000,
-        show: false,
-        webPreferences: {
-            enableRemoteModule: false,
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__static, 'preload.js')
-        }
-    });
+    let runApp = true;
+
+    async function createWindow () {
+        const mainWindow = new BrowserWindowCtor({
+            width: 1400,
+            height: 1000,
+            show: false,
+            webPreferences: {
+                enableRemoteModule: false,
+                nodeIntegration: false,
+                contextIsolation: true,
+                preload: pathModule.join(__static, 'preload.js')
+            }
+        });
+
 
     // Event listeners on the window
     mainWindow.webContents.on('did-finish-load', () => {
-        mainWindow.show();
-        mainWindow.focus();
-        // menu system needs to access the main window
-        menu.setMainWindow(mainWindow);
-        template.setMainWindow(mainWindow);
-    });
+            mainWindow.show();
+            mainWindow.focus();
+            // menu system needs to access the main window
+            menuApi.setMainWindow(mainWindow);
+            template.setMainWindow(mainWindow);
+
+        });
 
     mainWindow.on('close', (event) => {
-        if (runApp) {
-            event.preventDefault();
-            mainWindow.webContents.send('close-app-request');
+            if (runApp) {
+                event.preventDefault();
+                mainWindow.webContents.send('close-app-request');
+            }
+        });
+
+    if (url) {
+            loggerApi.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + url);
+            // Load the url of the dev server when in development mode
+            await mainWindow.loadURL(url);
+            if (!testMode) {
+                mainWindow.webContents.openDevTools();
+            }
+        } else {
+            createProtocolFn('app');
+            // Load the index.html when not in development mode
+            mainWindow.loadURL('app://./index.html');
+        }
+    }
+// Scheme must be registered before the app is ready
+    protocol.registerSchemesAsPrivileged([
+        { scheme: 'app', privileges: { secure: true, standard: true } }
+    ]);
+
+    // Quit when all windows are closed.
+    app.on('window-all-closed', () => {
+        // On macOS it is common for applications and their menu bar
+        // to stay active until the user quits explicitly with Cmd + Q
+        if (!macos) {
+            loggerApi.log.debug('Quit application');
+            app.quit();
+        } else {
+            loggerApi.log.debug('Ignoring window-all-closed for MacOS');
         }
     });
 
-    if (electronURL) {
-        logger.log.info('Running in development mode with WEBPACK_DEV_SERVER_URL: ' + electronURL);
-        // Load the url of the dev server when in development mode
-        await mainWindow.loadURL(electronURL);
-        if (!isTest) {
-            mainWindow.webContents.openDevTools();
-        }
-    } else {
-        createProtocol('app');
-        // Load the index.html when not in development mode
-        mainWindow.loadURL('app://./index.html');
-    }
-}
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (!isMacOS) {
-        logger.log.debug('Quit application');
-        app.quit();
-    } else {
-        logger.log.debug('Ignoring window-all-closed for MacOS');
-    }
-});
-
 app.on('activate', () => {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    logger.log.debug('Activate application');
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
-    }
-});
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        loggerApi.log.debug('Activate application');
+        if (BrowserWindowCtor.getAllWindows().length === 0) {
+            createWindow();
+        }
+    });
 
 // This method will be called when Electron has finished initialization
 // and is ready to create browser windows
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    logger.log.debug('Building the menu system for the default language');
-    let template = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+        loggerApi.log.debug('Building the menu system for the default language');
+        let template = menuApi.getMenuTemplate();
+        MenuApi.setApplicationMenu(MenuApi.buildFromTemplate(template));
 
     // Install Vue Devtools
-    if (isDevelopment && !isTest) {
-        try {
-            await installExtension(VUEJS_DEVTOOLS);
-        } catch (e) {
-            logger.log.error('Vue Devtools failed to install:', e.toString());
+        if (isDev && !testMode) {
+            try {
+                await installExtensionFn(devtoolsId);
+            } catch (e) {
+                loggerApi.log.error('Vue Devtools failed to install:', e.toString());
+            }
         }
-    }
 
     ipcMain.on('close-app', handleCloseApp);
     ipcMain.on('model-closed', handleModelClosed);
@@ -125,115 +144,135 @@ app.on('ready', async () => {
     createWindow();
 
     // check for updates from github releases site
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdaterApi.checkForUpdatesAndNotify();
 });
 
-// this is emitted when a 'recent document' is opened
-app.on('open-file', function(event, path) {
-    // apply custom handler to this event
-    event.preventDefault();
-    logger.log.debug('Request to open file from recent documents: ' + path);
-    menu.openModelRequest(path);
-});
+  // this is emitted when a 'recent document' is opened
+    app.on('open-file', function (event, filePath) {
+        // apply custom handler to this event
+        event.preventDefault();
+        loggerApi.log.debug('Request to open file from recent documents: ' + filePath);
+        menuApi.openModelRequest(filePath);
+    });
 
 function handleSetTemplateFolderDefault() {
-    logger.log.debug('Set template folder to default location');
+    loggerApi.log.debug('Set template folder to default location');
     template.setTemplateFolderDefault();
 }
 
 function handleSetTemplateFolderCustom() {
-    logger.log.debug('Set template folder to custom location');
+    loggerApi.log.debug('Set template folder to custom location');
     template.setTemplateFolderCustom();
 }
 
 function handleSetTemplateFolderExisting() {
-    logger.log.debug('Select existing template folder');
+    loggerApi.log.debug('Select existing template folder');
     template.setTemplateFolderExisting();
 }
 
 function handleGetTemplates() {
-    logger.log.debug('Get templates request from renderer');
+    loggerApi.log.debug('Get templates request from renderer');
     template.getTemplates();
 }
 
 function handleBootstrapTemplates() {
-    logger.log.debug('Bootstrap templates request from renderer');
+    loggerApi.log.debug('Bootstrap templates request from renderer');
     template.bootstrapTemplates();
 }
 
-function handleCloseApp() {
-    logger.log.debug('Close application request from renderer ');
-    runApp = false;
-    app.quit();
-}
+function handleCloseApp () {
+        loggerApi.log.debug('Close application request from renderer ');
+        runApp = false;
+        app.quit();
+    }
 
-function handleModelClosed (_event, fileName) {
-    logger.log.debug('Close model notification from renderer for file name: ' + fileName);
-    menu.modelClosed();
-}
+    function handleModelClosed (_event, fileName) {
+        loggerApi.log.debug('Close model notification from renderer for file name: ' + fileName);
+        menuApi.modelClosed();
+    }
 
 function handleModelOpenConfirmed (_event, fileName) {
-    logger.log.debug('Open model confirmation from renderer for file name: ' + fileName);
-    menu.openModel(fileName);
-}
+        loggerApi.log.debug('Open model confirmation from renderer for file name: ' + fileName);
+        menuApi.openModel(fileName);
+    }
 
-function handleModelOpened (_event, fileName) {
-    logger.log.debug('Open model notification from renderer for file name: ' + fileName);
-    menu.modelOpened();
-}
+    function handleModelOpened (_event, fileName) {
+        loggerApi.log.debug('Open model notification from renderer for file name: ' + fileName);
+        menuApi.modelOpened();
+    }
+
 
 function handleModelPrint (_event, format) {
-    logger.log.debug('Model print request from renderer with printer : ' + format);
-    menu.modelPrint(format);
-}
+        loggerApi.log.debug('Model print request from renderer with printer : ' + format);
+        menuApi.modelPrint(format);
+    }
 
-function handleModelSave (_event, modelData, fileName) {
-    logger.log.debug('Model save request from renderer with file name : ' + fileName);
-    menu.modelSave(modelData, fileName);
-}
+    function handleModelSave (_event, modelData, fileName) {
+        loggerApi.log.debug('Model save request from renderer with file name : ' + fileName);
+        menuApi.modelSave(modelData, fileName);
+    }
 function handleImportTemplate(_event, templateData) {
-    logger.log.debug('Import template request from renderer');
+    loggerApi.log.debug('Import template request from renderer');
     template.importTemplate(templateData);
 }
 
 function handleFetchModelById(_event, templateId) {
-    logger.log.debug('Fetch model by ID request from renderer for template ID: ' + templateId);
+    loggerApi.log.debug('Fetch model by ID request from renderer for template ID: ' + templateId);
     template.fetchModelById(templateId);
 }
 function handleUpdateMenu (_event, locale) {
-    logger.log.debug('Re-labeling the menu system for: ' + locale);
-    menu.setLocale(locale);
-    template.setLocale(locale);
-    let menuTemplate = menu.getMenuTemplate();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
-}
+        loggerApi.log.debug('Re-labeling the menu system for: ' + locale);
+        menuApi.setLocale(locale);
+        let template = menuApi.getMenuTemplate();
+        MenuApi.setApplicationMenu(MenuApi.buildFromTemplate(template));
+    }
 
 function handleExportTemplate(_event, data, filename) {
-    logger.log.debug('Export template request from renderer with filename: ' + filename);
+    loggerApi.log.debug('Export template request from renderer with filename: ' + filename);
     template.exportTemplate(data, filename);
 }
 
 function handleDeleteTemplate(_event, templateId) {
-    logger.log.debug('Delete template request from renderer for template ID: ' + templateId);
+    loggerApi.log.debug('Delete template request from renderer for template ID: ' + templateId);
     template.deleteTemplate(templateId);
 }
 
 function handleUpdateTemplate(_event, templateMetadata) {
-    logger.log.debug('Update template request from renderer for template ID: ' + templateMetadata.id);
+    loggerApi.log.debug('Update template request from renderer for template ID: ' + templateMetadata.id);
     template.updateTemplate(templateMetadata);
 }
 
-// Exit cleanly on request from parent process in development mode.
-if (isDevelopment) {
-    if (isWin) {
-        process.on('message', (data) => {
-            if (data === 'graceful-exit') {
+ // Exit cleanly on request from parent process in development mode.
+    if (isDev) {
+        if (win) {
+            process.on('message', (data) => {
+                if (data === 'graceful-exit') {
+                    app.quit();
+                }
+            });
+        } else {
+            process.on('SIGTERM', () => {
                 app.quit();
-            }
-        });
-    } else {
-        process.on('SIGTERM', () => {
-            app.quit();
-        });
+            });
+        }
     }
 }
+
+if (!isTest) {
+    registerDesktop({
+        app,
+        protocol,
+        BrowserWindow,
+        Menu,
+        ipcMain,
+        menu,
+        logger,
+        utils: { electronURL, isDevelopment, isTest, isMacOS, isWin },
+        createProtocol,
+        installExtension,
+        VUEJS_DEVTOOLS,
+        autoUpdater,
+        path
+    });
+}
+

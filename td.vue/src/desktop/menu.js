@@ -146,7 +146,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.help.check,
                     click: async () => {
-                        await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/');
+                        await shell.openExternal('https://github.com/OWASP/threat-dragon/releases/latest/');
                     }
                 },
                 { type: 'separator' },
