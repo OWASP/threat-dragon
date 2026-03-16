@@ -4,7 +4,8 @@ const por = {
     },
     nav: {
         loggedInAs: 'Logado como',
-        logOut: 'Desconectar'
+        logOut: 'Desconectar',
+        contentManagement: 'Gestor de Conteudos'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -46,7 +47,8 @@ const por = {
             openExisting: 'Abrir um modelo de ameaça (threat model) existente',
             createNew: 'Criar um novo modelo de ameaça (threat model) do zero',
             readDemo: 'Baixar e explorar um exemplo de modelo de ameaça (threat model)',
-            importExisting: 'Importar um modelo de ameaça (threat model) via JSON'
+            importExisting: 'Importar um modelo de ameaça (threat model) via JSON',
+            createFromTemplate: 'Criar um novo modelo de ameaça (threat model) apartir de um template'
         }
     },
     demo: {
@@ -110,6 +112,68 @@ const por = {
         repo: 'repositório',
         newThreatModel: 'Criar um novo Modelo de Ameaça (Threat Model)'
     },
+    template: {
+        startFromLocalTemplate: 'Começar de um modelo base (template) local',
+        select: 'Selecione um modelo base (template) da lista abaixo',
+        selectDescription: 'Os modelos base (templates) fornecem um ponto de partida para novos modelos de ameaça (threat models), pré-preenchidos com componentes e ameaças relevantes.',
+        noTemplates: 'Nenhum modelo base (template) encontrado',
+        templatesLocalSession: 'Modelos base (templates) remotos não estão disponíveis para sessões locais.',
+        search: 'Pesquisar modelos base (templates)...',
+        exportTemplate: 'Exportar como modelo base (template)',
+        tags: 'Etiquetas (Tags)',
+        name: 'Nome do modelo base (template)',
+        description: 'Descrição do modelo base (template)',
+        saveTemplate: 'Salvar modelo base (template)',
+        addNew: 'Adicionar novo modelo base (template)',
+        manage: 'Gerenciar modelos base (templates)',
+        manageDescription: 'Importe, exporte e gerencie seus modelos base (template) de ameaça aqui.',
+        editTemplate: 'Editar modelo base (template)',
+        addTagsPlaceholder: 'Adicionar etiquetas (tags)...',
+        updateSuccess: 'Modelo base (template) atualizado com sucesso',
+        importSuccess: 'Modelo base (template) importado com sucesso',
+        deleteSuccess: 'Modelo base (template) excluído com sucesso',
+        deleteTitle: 'Confirmar exclusão',
+        deleteConfirm: 'Tem certeza de que deseja excluir "{name}"?',
+        errors: {
+            invalidJson: 'JSON inválido. Verifique seu arquivo de modelo base (template) e tente novamente.',
+            invalidTemplate: 'Formato de modelo base inválido. Verifique seu arquivo de modelo base (template) e tente novamente.',
+            loadFailed: 'Falha ao carregar modelos base (templates). Tente novamente.',
+            duplicateTemplate: 'Já existe um modelo base (template) com este nome. Use um nome diferente.',
+            updateFailed: 'Falha ao atualizar modelo base (template)',
+            deleteFailed: 'Falha ao excluir modelo base (template)'
+        },
+        warnings: {
+            templateSave: 'Não foi possível salvar o modelo base (template). Verifique o console do desenvolvedor para mais informações.',
+            invalidSchema: 'O modelo base (template) não corresponde estritamente ao esquema. Detalhes no console do desenvolvedor.'
+        },
+        prompts: {
+            templateSaved: 'Modelo base (template) salvo com sucesso',
+            templateDownloading: 'Baixando modelo base (template)'
+        },
+        repo: {
+            notInitialized: {
+                title: 'Repositório de modelos base (templates) não inicializado',
+                userMessage: 'O repositório de modelos base (templates) não foi inicializado. Entre em contato com o administrador.',
+                adminMessage: 'Acesse a página Gerenciar Modelos Base para inicializar o repositório de modelos base (templates).'
+            },
+            notConfigured: {
+                title: 'Repositório de modelos base (templates) não configurado',
+                userMessage: 'O repositório de modelos base (templates) não está configurado. Configure o repositório para acessar os modelos base.'
+            },
+            notFound: {
+                title: 'Repositório de modelos base (templates) não encontrado',
+                userMessage: 'O repositório {repoName} não é um repositório válido. Verifique sua configuração.'
+            },
+            bootstrap: {
+                bootstrapping:'Inicializando..',
+                title: 'Inicializar repositório de modelos base (templates)',
+                description: 'Isso criará a estrutura de pastas necessária dentro do repositório, se ela ainda não existir.',
+                action: 'Inicializar',
+                success: 'Repositório de modelos base (templates) inicializado com sucesso.',
+                error: 'Não foi possível inicializar o repositório de modelos base (templates). Verifique o console do desenvolvedor para mais informações.'
+            }
+        },
+    },
     threatmodel: {
         contributors: 'Contribuidores',
         contributorsPlaceholder: 'Adicionar um novo contribuidor',
@@ -161,28 +225,29 @@ const por = {
         },
         threats: 'Ameaças',
         errors: {
-            create: 'Could not create the threat model file.  Check the developer console for more information',
+            create: 'Não foi possível criar o arquivo de modelo de ameaça. Verifique o console do desenvolvedor para mais informações.',
             dropSingleFileOnly: 'Arrastar e soltar requer um arquivo único',
             invalidJson: 'JSON inválido. Por favor, confira seu modelo e tente novamente',
             invalidModel: 'Threat Dragon não consegue entender este Modelo de Ameaça. Por favor, configura seu modelo e tente novamente',
             onlyJsonAllowed: 'Apenar arquivos com extensão .json são suportados',
             open: 'Erro ao abrir este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações',
-            save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações'
+            save: 'Erro ao salvar este Modelo de Ameaça. Confira o console do desenvolvedor para mais informações',
+            createConflict: 'Já existe um modelo de ameaça com este nome. Use um nome diferente.'
         },
         warnings: {
-            export: 'Could not export the Threat Model. Check the developer console for more information',
+            export: 'Não foi possível exportar o modelo de ameaça. Verifique o console do desenvolvedor para mais informações.',
             jsonSchema: 'Modelo não corresponde estritamente com o esquema. Detalhes no console do desenvolvedor',
-            noModelOpen: 'No model open',
-            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
-            save: 'Could not save the Threat Model. Check the developer console for more information',
-            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            noModelOpen: 'Nenhum modelo aberto',
+            otmUnsupported: 'A importação do formato de arquivo Open Threat Model ainda não é suportada.',
+            save: 'Não foi possível salvar o modelo de ameaça. Verifique o console do desenvolvedor para mais informações.',
+            tmUnsupported: 'A importação do formato de arquivo TM-BOM é experimental e está sujeita a alterações que podem quebrar modelos.',
             v1Translate: 'Importar modelos versão 1.x serão atualizadas para os esquemas versão 2.0'
         },
         prompts: {
-            created: 'Threat model successfully created',
-            exported: 'Threat model exported',
+            created: 'Modelo de ameaça criado com sucesso',
+            exported: 'Modelo de ameaça exportado',
             opened: 'Modelo de Ameaça aberto com sucesso',
-            downloading: 'Downloading threat model',
+            downloading: 'Baixando modelo de ameaça',
             saved: 'Modelo de Ameaça salvo com sucesso'
         },
         properties: {
@@ -192,14 +257,14 @@ const por = {
             text: 'Texto',
             description: 'Descrição',
             outOfScope: 'Fora do Escopo',
-            bidirection: 'Bidirectional',
+            bidirection: 'Bidirecional',
             reasonOutOfScope: 'Razão por estar fora de escopo',
             handlesCardPayment: 'Pagamento com cartão',
             handlesGoodsOrServices: 'Bens ou serviços',
             isALog: 'É um Log',
             isEncrypted: 'Criptografado',
             isSigned: 'Assinado',
-            isWebApplication: 'Web Application',
+            isWebApplication: 'Aplicação Web',
             privilegeLevel: 'Nível de Privilégio',
             providesAuthentication: 'Fornecimento de Autenticação',
             protocol: 'Protocolo',
@@ -252,12 +317,12 @@ const por = {
             },
             save: {
                 shortcut: '(ctrl/cmd) + s',
-                action: 'Save'
+                action: 'Salvar'
             }
         },
         stencil: {
             boundaries: 'Limites',
-            components: 'Components',
+            components: 'Componentes',
             entities: 'Entidades',
             metadata: 'Metadados',
             search: 'Pesquisar',
@@ -303,7 +368,9 @@ const por = {
         saveModelAs: 'Salvar Modelo como',
         search: 'Buscar',
         next: 'próximo',
-        previous: 'anterior'
+        previous: 'anterior',
+        manage: 'Gerenciar...',
+        exportTemplate: 'Exportar como modelo base'
     },
     cards: {
         details: 'Detalhes do cartão',
@@ -334,7 +401,7 @@ const por = {
             linddun: {
                 header: '--- LINDDUN ---',
                 linkability: 'Ligabilidade',
-                identifiability: 'Identifiability',
+                identifiability: 'Identificabilidade',
                 nonRepudiation: 'Não-repúdio',
                 detectability: 'Detectabilidade',
                 disclosureOfInformation: 'Divulgação de informações',
