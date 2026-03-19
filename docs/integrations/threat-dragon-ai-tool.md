@@ -1,5 +1,9 @@
 ---
+layout: page
 title: Threat Dragon AI Tool
+nav_order: 0
+path: /usage/integrations
+group: Integrations
 ---
 
 # Threat Dragon AI Tool
@@ -8,11 +12,30 @@ The Threat Dragon AI Tool integrates AI assistance into the OWASP Threat Dragon 
 
 It helps generate potential threats and mitigations automatically based on system architecture and inputs.
 
+## Purpose
+
+This integration demonstrates how AI-assisted tooling can support threat modeling workflows.
+It helps security practitioners and developers identify potential threats earlier in the design phase,
+improving both coverage and efficiency of threat analysis.
+
+## How the AI Assistance Works
+
+The Threat Dragon AI Tool uses large language models (LLMs) to analyze system descriptions
+and suggest possible threats and mitigations.
+
+Based on the provided inputs, the tool can:
+
+- generate threat scenarios based on common attack patterns
+- suggest mitigation strategies aligned with security best practices
+- assist in structuring threat models during early design stages
+
+The AI-generated suggestions should always be reviewed and validated by security professionals.
+
 ## Repository
 
 The source code and documentation for the project are available on GitHub:
 
-[Threat-Dragon-AI-Tool_Github_](https://github.com/InfosecOTB/threat-dragon-ai-tool)
+[Threat Dragon AI Tool GitHub Repository Repository ](https://github.com/InfosecOTB/threat-dragon-ai-tool)
 
 
 ## AI-Powered Threat Modeling Research
