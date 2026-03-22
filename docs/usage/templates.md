@@ -73,7 +73,6 @@ the shared template gallery.
 
 ### Exporting an existing model as a template
 
-
 If you have created a threat model that would be useful as a template for others,
 you can export it as a template file that can be shared or imported later.
 
@@ -178,10 +177,7 @@ template are not affected, but the template will no longer be available for crea
 can time out. This timeout length varies by provider; if this is a problem, keep the session
 alive using a tab in the same browser window.
 
-
 ## Using the Desktop application
-
-
 
 ![Start Button]({{ '/assets/images/start.png'| relative_url }})
 
@@ -196,7 +192,6 @@ For information on how to configure tempaltes in your desktop deployment, see th
 To create a new threat model from a template, go to the Welcome page and click the
 **Create model from a Template** button.
 
-
 You will then be presented with the Template Gallery showing all available templates.
 Browse or search for a template that fits your needs, then click on the template card to select it.
 
@@ -210,7 +205,8 @@ but metadata fields such as owner, reviewer, and contributors will be empty for 
 ### Loading a template from a file
 
 In addition to templates stored in your configured folder, you can also load a template directly
-from any file on your filesystem. This is useful when you have received a template file from a colleague that you want to use as a one-off starting point without adding it to your gallery.
+from any file on your filesystem. This is useful when you have received a template file from a colleague
+that you want to use as a one-off starting point without adding it to your gallery.
 
 **Note**: Template files use a different schema to standard threat model files and are not interchangeable.
 To use an existing model as a starting point, first export it as a template using the **Export as Template** option.
@@ -220,14 +216,13 @@ From the Template Gallery, click the **Start from a Local Template** button to b
  | relative_url }}){: style="max-width: 500px; width: 100%;" }
 
 The file will be validated to ensure it is a properly formatted Threat Dragon template.
-Once loaded, you will be taken to the threat model edit screen with the template's diagrams, components, and threats pre-populated.
+Once loaded, you will be taken to the threat model edit screen with the template's diagrams,
+components,and threats pre-populated.
 
 **Note**: This creates a new model based on the selected file. It does not add the template
 to your configured template folder.
 
-
-### Exporting an existing model as a template
-
+### Exporting an existing model as a template on Desktop
 
 If you have created a threat model that would be useful as a template for others,
 you can export it as a template file that can be shared or imported later.
@@ -255,16 +250,15 @@ The exported template file can then be:
 - Imported into your own template gallery using the 'Manage Templates' portal.
 - Used as a local backup or starting point for future models
 
-**Note**: The export removes any model-specific information and generates new unique identifiers, 
+**Note**: The export removes any model-specific information and generates new unique identifiers,
 making it suitable for use as a reusable template.
-
 
 ### Managing Templates
 
 On the desktop application, all users have full administrator access to the template gallery.
 
-Click the **cog icon** in the navigation bar and select **Manage Templates** to open the Manage Templates page,
-where you can add, edit, and delete templates.
+Click the **cog icon** in the navigation bar and select **Manage Templates** to open the
+Manage Templates page,where you can add, edit, and delete templates.
 
 ![Manage template image]({{ '/assets/images/manage-template.png'
  | relative_url }}){: style="max-width: 400px; width: 100%;" }
@@ -272,26 +266,21 @@ where you can add, edit, and delete templates.
 **Note**: You can only add, edit, or delete templates if you have write access to the configured template folder.
 If the folder is read-only, the Manage Templates page will open in read-only mode and modification options will be hidden.
 
-
 ![Manage template image]({{ '/assets/images/read-only-templates-portal.png'
  | relative_url }}){: style="max-width: 700px; width: 100%;"}
-
-
-
-
 
 For information on configuring the template folder, see the
 [Desktop Template Configuration Guide]({{ '/configure/local.html#configuring-templates-for-desktop' | relative_url }}).
 
-### Bootstrapping the Template Repository
+### Bootstrapping the Template Folder
 
-On the desktop application, template storage is initialised automatically when you configure a folder location. Simply navigate to Manage Templates, select a setup option, and Threat Dragon will create the template_info.json index file in the chosen folder automatically.
+On the desktop application, template storage is initialised automatically when you configure a folder location.
+Simply navigate to Manage Templates, select a setup option, and Threat Dragon will create the template_info.json
+index file in the chosen folder automatically.
 
 No separate initialisation step is required.
 
-
-
-### Importing Templates to the Gallery
+### Importing Templates to the Gallery on Desktop
 
 1. Obtain a template file (either exported from an existing model or received from a colleague)
 2. Navigate to the Manage Templates portal
@@ -302,7 +291,7 @@ No separate initialisation step is required.
 
 The template will now appear in the Template Gallery.
 
-### Updating Template Metadata
+### Updating Template Metadata on Desktop
 
 You can update a template's name, description, or tags without modifying the template content.
 
@@ -316,7 +305,7 @@ You can update a template's name, description, or tags without modifying the tem
 ![Edit-Template]({{ '/assets/images/edit-template.png'
  | relative_url }}){: style="max-width: 400px; width: 100%;" }
 
-### Deleting Templates
+### Deleting Templates on Desktop
 
 You can delete templates from your template gallery.
 
@@ -327,6 +316,3 @@ You can delete templates from your template gallery.
 
 **Warning**: Deleting a template cannot be undone. Existing threat models created from the
 template are not affected, but the template will no longer be available for creating new models.
-
-
-

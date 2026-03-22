@@ -139,10 +139,10 @@ If templates have not been configured before, you will be presented with a setup
 ![Folder Setup Dialog Box]({{ '/assets/images/folder-setup-dialog.png'
  | relative_url }}){: style="max-width: 400px; width: 100%;" }
 
-- **Use default location** — creates a `templates` folder in the application data directory (`AppData/Roaming/Threat Dragon/templates` on Windows)
+- **Use default location** — creates a `templates` folder in the application data directory
+(`AppData/Roaming/Threat Dragon/templates` on Windows)
 - **Choose custom location** — opens a folder browser so you can select any folder on your filesystem
 - **Select existing template folder** — point to a folder that already contains a `template_info.json` index file
-
 
 For the default and custom location options, Threat Dragon will automatically create a `template_info.json`
 index file in the selected folder if one does not already exist.
@@ -154,7 +154,7 @@ If the file is not found, setup will fail with an error.
 
 All template files are stored flat in the configured folder alongside the index file:
 
-```
+```plaintext
 templates/
 ├── template_info.json       ← index file listing all templates
 ├── my-template-abc123.json  ← template model file
