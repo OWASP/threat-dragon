@@ -183,7 +183,7 @@ alive using a tab in the same browser window.
 
 The threat dragon desktop application can be configured with templates stored in local file system.
 
-For information on how to configure tempaltes in your desktop deployment, see the
+For information on how to configure templates in your desktop deployment, see the
 [Local configuration guide]({{ '/configure/local.html#configuring-templates-for-desktop' | relative_url }})
 
 ![Template button image]({{ '/assets/images/template-button.png'

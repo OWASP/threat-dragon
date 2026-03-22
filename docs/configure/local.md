@@ -163,7 +163,7 @@ templates/
 
 The `template_info.json` file is managed automatically by Threat Dragon — you do not need to edit it manually.
 
-### Reconfiguring the Template Folder
+### Changing the Template Folder Location
 
 The configured template folder path is persisted in `AppData/Roaming/Threat Dragon/templates-path.txt`.
 To change the template storage location, delete this file and restart Threat Dragon and
