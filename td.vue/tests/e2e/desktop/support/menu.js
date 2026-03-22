@@ -100,7 +100,7 @@ helpMenu.links = [
     },
     { label: helpMenu.labels.github, url: 'https://github.com/owasp/threat-dragon/' },
     { label: helpMenu.labels.submit, url: 'https://github.com/owasp/threat-dragon/issues/new/choose/' },
-    { label: helpMenu.labels.check, url: 'https://github.com/OWASP/threat-dragon/releases/' }
+    { label: helpMenu.labels.check, url: 'https://github.com/OWASP/threat-dragon/releases/latest/' }
 ];
 
 const waitForToast = async (text) => {
