@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -72,7 +72,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -106,7 +106,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -269,7 +269,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -307,7 +307,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -364,7 +364,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -416,7 +416,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -515,7 +515,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -555,7 +555,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -597,7 +597,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -644,7 +644,7 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: '24.14'
 
@@ -690,7 +690,7 @@ jobs:
       - build_docker_image
     steps:
       - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           pattern: 'sboms-*'
           merge-multiple: false
