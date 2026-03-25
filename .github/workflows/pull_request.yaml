@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v22.0.0
+        uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101
         with:
           config: '.markdownlint.yaml'
           globs: |
@@ -41,21 +41,21 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       # https://github.com/lycheeverse/lychee-action?tab=readme-ov-file#utilising-the-cache-feature
       # Using a cache helps prevent rate-limiting and other failures
       # This is cached only per-commit, and is intended to help
       # with re-runs
       - name: Restore lychee cache
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: .lycheecache
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2.8.0
+        uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411
         with:
           args: >-
             --no-progress
@@ -74,10 +74,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout markdown
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Spell check EN language
-        uses: rojopolis/spellcheck-github-actions@0.58.0
+        uses: rojopolis/spellcheck-github-actions@e3cd8e9aec4587ec73bc0e60745aafd45c37aa2e
         with:
           config_path: .spellcheck.yaml
 
@@ -90,15 +90,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -124,15 +124,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -158,15 +158,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -195,10 +195,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.31.9
+        uses: github/codeql-action/init@38697555549f1db7851b81482ff19f1fa5c4fedc
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -207,10 +207,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@v4.31.9
+        uses: github/codeql-action/autobuild@38697555549f1db7851b81482ff19f1fa5c4fedc
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@v4.31.9
+        uses: github/codeql-action/analyze@38697555549f1db7851b81482ff19f1fa5c4fedc
 
   e2e_smokes:
     name: Local site e2e smokes
@@ -222,15 +222,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -248,7 +248,7 @@ jobs:
         run: npm run test:e2e-pr-smokes
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: e2e_vids.zip
           path: tests/e2e/videos
@@ -264,15 +264,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -289,7 +289,7 @@ jobs:
         run: npm run test:e2e-pr
 
       - name: Upload e2e videos
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: e2e_vids.zip
           path: tests/e2e/videos
@@ -302,15 +302,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -329,7 +329,7 @@ jobs:
         run: npm start
 
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.13.0
+        uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'http://localhost:8080'
@@ -347,16 +347,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v3.12.0
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd
         with:
           install: true
 
       - name: Cache Docker layers
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
@@ -366,7 +366,7 @@ jobs:
 
       - name: Build for amd64
         id: docker_build
-        uses: docker/build-push-action@v6.19.2
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294
         with:
           context: ./
           file: ./Dockerfile
@@ -379,7 +379,7 @@ jobs:
           load: true
 
       - name: Upload docker local image
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp/${{ env.IMAGE_NAME }}.tar
@@ -405,10 +405,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Retrieve local docker image
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: ${{ env.IMAGE_NAME }}
           path: /tmp
@@ -418,7 +418,7 @@ jobs:
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
