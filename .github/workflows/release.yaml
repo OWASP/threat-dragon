@@ -12,7 +12,7 @@ env:
   # owasp/threat-dragon is the final release area so DO NOT use that
   IMAGE_NAME: threatdragon/owasp-threat-dragon
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   site_unit_tests:
     name: Site unit tests

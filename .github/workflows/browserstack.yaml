@@ -6,7 +6,7 @@ on:
     - cron: '40 8 * * *'
   workflow_dispatch:
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   browserstack_e2e:
     name: Browserstack e2e

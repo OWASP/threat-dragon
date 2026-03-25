@@ -14,7 +14,7 @@ env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
   ZAP_FILE: zap-scan-push
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   server_unit_tests:
     name: Server unit tests

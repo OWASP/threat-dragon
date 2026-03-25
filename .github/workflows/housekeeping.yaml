@@ -8,7 +8,7 @@ on:
 env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   chores:
     name: Tidy workflows
@@ -114,6 +114,7 @@ jobs:
         uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411
         with:
           args: >-
+            --verbose
             --no-progress
             --max-retries 1
             --retry-wait-time 10

@@ -16,7 +16,7 @@ env:
   NODE_ENV: development
   SERVER_API_PROTOCOL: http
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   md_linter:
     name: Lint docs
@@ -58,6 +58,7 @@ jobs:
         uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411
         with:
           args: >-
+            --verbose
             --no-progress
             --max-retries 1
             --retry-wait-time 10
