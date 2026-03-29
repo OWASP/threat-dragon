@@ -6,7 +6,7 @@ on:
     - cron: '40 8 * * *'
   workflow_dispatch:
 
-# for security reasons the github actions are pinned to specific release versions
+# for security reasons the github actions are pinned to specific SHAs
 jobs:
   browserstack_e2e:
     name: Browserstack e2e
@@ -18,15 +18,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Use node LTS 24.14
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -39,7 +39,7 @@ jobs:
           npm clean-install
 
       - name: BrowserStack Env Setup
-        uses: browserstack/github-actions/setup-env@v1.0.4
+        uses: browserstack/github-actions/setup-env@93aebce225b754566349151c0676b26b005e591b # v1.0.4
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
