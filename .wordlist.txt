@@ -129,6 +129,7 @@ schemas
 snapcraft
 sudo
 Suomi
+SHA
 SVG
 SY
 TBC
