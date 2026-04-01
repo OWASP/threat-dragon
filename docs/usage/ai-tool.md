@@ -56,4 +56,3 @@ locations:
    - [AI-Powered Threat Modelling with OWASP Threat Dragon – Part 2: Generating Threats with Artificial Intelligence](https://infosecotb.com/ai-powered-threat-modeling-with-owasp-threat-dragon-part-2-generating-threats-with-artificial-intelligence/)
    <!-- markdownlint-disable-next-line MD013 -->
    - [AI-Powered Threat Modelling with OWASP Threat Dragon – Part 3: Threat Dragon AI Tool](https://infosecotb.com/ai-powered-threat-modelling-with-owasp-threat-dragon-part-3-threat-dragon-ai-tool/)
-
