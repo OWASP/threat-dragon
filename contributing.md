@@ -19,6 +19,7 @@ and actually work, you will then get a better response.
 * ensure that [unit tests][unit] have been extended or created for any code changes
 * if the contribution changes the functionality then ensure that the [functional tests][e2e] are created or modified
 * the use of generative AI is not prohibited but must be declared in the [pull request](#use-of-ai-for-coding)
+* the main repository only accepts [signed commits][signed-commits], otherwise the contribution will be rejected
 
 ### Contributor etiquette
 
@@ -151,4 +152,5 @@ Threat Dragon: _making threat modeling less threatening_
 [project]: https://owasp.org/www-project-threat-dragon/
 [raise]: https://github.com/OWASP/threat-dragon/issues/new?assignees=&labels=bug&template=bug_report.md&title=
 [request]: https://github.com/OWASP/threat-dragon/issues/new/choose
+[signed-commits]: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification
 [unit]: https://www.threatdragon.com/docs/testing/unit.html
