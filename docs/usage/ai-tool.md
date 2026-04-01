@@ -21,17 +21,16 @@ models using LLMs, then adds them to the model’s `.json` file.
 2. Move the downloaded compressed file to a folder of your choice and extract it.
 3. Run the `td-ai-tool` executable.
 4. Configure the settings:
-   - **API Key** - API key for accessing the LLM service.
-   - **LLM Model** - LLM model identifier, for example `openai/gpt-5`,
-     `anthropic/claude-sonnet-4-5`, or `xai/grok-4`.
-   - **Temperature** - Lower values make output more deterministic; higher values increase creativity
-     and randomness. Valid range: `0` to `2`.
-   - **Response Format** - Enables structured JSON output. Recommended for supported models such as
-     `openai/gpt-5` or `xai/grok-4`. If enabled for an unsupported model, the request may fail.
-   - **API Base URL** - Custom API base URL. Most hosted AI providers do not require this because
-     LiteLLM handles it automatically.
-   - **Log Level** - Logging level: `INFO` or `DEBUG`.
-   - **Timeout** - Request timeout in seconds for LLM API calls. Default: `900` seconds (`15 minutes`).
+   - **Required**
+     - **API Key** - API key for accessing the LLM service.
+     - **LLM Model** - LLM model identifier, for example `openai/gpt-5`, `anthropic/claude-sonnet-4-5`, or `xai/grok-4`.
+     - **Response Format** - Enables structured JSON output. Should be enabled for supported models such as `openai/gpt-5` or `xai/grok-4`. If it is 
+     enabled for an unsupported model, or disabled for a supported model, the request may fail.
+   - **Optional** (defaults are usually fine)
+     - **Temperature** - Lower values make output more deterministic; higher values increase creativity and randomness. Valid range: `0` to `2`.
+     - **API Base URL** - Custom API base URL. Most hosted AI providers do not require this because LiteLLM handles it automatically.
+     - **Log Level** - Logging level: `INFO` or `DEBUG`.
+     - **Timeout** - Request timeout in seconds for LLM API calls. Default: `900` seconds (`15 minutes`).
 5. Click **Save Config** to persist the settings.
    - Non-secret settings are saved to `config.json` in the same folder as the executable.
    - The API key is saved separately in the OS secure credential store (via `keyring`) and is not
