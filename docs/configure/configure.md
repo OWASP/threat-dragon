@@ -223,4 +223,4 @@ Refer to the step by step guide pages for setting the environment variables spec
 
 Threat Dragon: _making threat modeling less threatening_
 
-[releases]: https://github.com/OWASP/threat-dragon/releases/
+[releases]: https://github.com/OWASP/threat-dragon/releases/latest/
