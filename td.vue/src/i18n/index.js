@@ -22,6 +22,25 @@ import zho from './zh.js';
 
 let i18nInstance = null;
 
+const installLegacyCompat = (instance) => {
+    if (typeof instance.t !== 'function') {
+        instance.t = instance.global.t.bind(instance.global);
+    }
+
+    if (!Object.getOwnPropertyDescriptor(instance, 'locale')) {
+        Object.defineProperty(instance, 'locale', {
+            get() {
+                return instance.global.locale;
+            },
+            set(value) {
+                instance.global.locale = value;
+            }
+        });
+    }
+
+    return instance;
+};
+
 const get = () => {
     if (i18nInstance === null) {
         i18nInstance = createI18n({
@@ -32,6 +51,7 @@ const get = () => {
             locale: 'eng',
             messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, zho }
         });
+        installLegacyCompat(i18nInstance);
     }
     return i18nInstance;
 };
