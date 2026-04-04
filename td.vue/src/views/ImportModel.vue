@@ -153,6 +153,8 @@ export default {
                 if (schema.isV1(jsonModel)) {
                     console.warn('Version 1.x file will be translated to V2 format');
                     this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+                    // temporarily reject TD v1.x models
+                    return;
                 } else if (schema.isTmBom(jsonModel)) {
                     console.warn('Convert TM-BOM to internal TD format');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
