@@ -89,7 +89,7 @@ Install from the top directory of the project using : `npm install`
 The web application variant of Threat Dragon requires some environment variables;
 follow [the documentation][config] on how to set these variables.
 
-If access to external repositories is required, such as Bitbucket / GitHub  / GitLab,
+If access to external repositories is required, such as Bitbucket / GitHub / GitLab,
 then you need to go to your repository account and register the application.
 There are step by step guides on how to do this for [Bitbucket][bitbucket], [GitHub][github] and [GitLab][gitlab].
 
@@ -163,7 +163,7 @@ For secure disclosure, please see the [security policy](security.md).
 - [Jon Gadsden](mailto:jon.gadsden@owasp.org)
 - [Leo Reading](mailto:leo.reading@owasp.org)
 
-----
+---
 
 Threat Dragon: _making threat modeling less threatening_
 
@@ -187,3 +187,10 @@ Threat Dragon: _making threat modeling less threatening_
 [releases]: https://github.com/OWASP/threat-dragon/releases
 [subscribe]: https://owasp.org/slack/invite
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
+
+---
+
+### Other Threat Modeling Tools
+
+- [pytm](https://github.com/OWASP/pytm) A Pythonic framework for threat modeling
+- [tmi](https://github.com/ericfitz/tmi/wiki) An agent-enabled platform for threat modeling and security review
