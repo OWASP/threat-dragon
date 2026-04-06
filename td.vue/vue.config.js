@@ -127,7 +127,7 @@ module.exports = {
         }
     },
     chainWebpack: config => {
-        // TODO: Removevv after fully migrated to Vue 3 and the compat dependency is removed
+        // TODO: Remove after fully migrated to Vue 3 and the compat dependency is removed
         config.resolve.alias.set('vue', '@vue/compat');
 
         config.module
