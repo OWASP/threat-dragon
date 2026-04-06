@@ -13,21 +13,16 @@
       "description": "Threat model project meta-data",
       "type": "object",
       "properties": {
-        "description": {
-          "description": "Description of the threat model used for report outputs",
+        "title": {
+          "description": "Threat model title",
           "type": "string"
-        },
-        "id": {
-          "description": "A unique identifier for this main threat model object",
-          "type": "integer",
-          "minimum": 0
         },
         "owner": {
           "description": "The original creator or overall owner of the model",
           "type": "string"
         },
-        "title": {
-          "description": "Threat model title",
+        "description": {
+          "description": "Description of the threat model used for report outputs",
           "type": "string"
         }
       },
@@ -408,19 +403,9 @@
             "required": [ "diagramType", "id", "size", "thumbnail", "title", "diagramJson" ]
           }
         },
-        "diagramTop": {
-          "description": "The highest diagram number in the threat model",
-          "type": "integer",
-          "minimum": 0
-        },
         "reviewer": {
           "description": "The reviewer of the overall threat model",
           "type": "string"
-        },
-        "threatTop": {
-          "description": "The highest threat number in the threat model",
-          "type": "integer",
-          "minimum": 0
         }
       },
       "required": [ "contributors", "diagrams" ]

@@ -28,7 +28,6 @@ describe('service/diagram/diagram.js', () => {
         graphFactory.getReadonlyGraph = jest.fn().mockReturnValue(graphMock);
         graphFactory.getEditGraph = jest.fn().mockReturnValue(graphMock);
         dataChanged.updateStyleAttrs = jest.fn();
-        //cells.map = jest.fn().mockReturnValue({ nodes: nodesMock, edges: edgesMock });
         store.get = jest.fn().mockReturnValue(storeMock);
     });
 
