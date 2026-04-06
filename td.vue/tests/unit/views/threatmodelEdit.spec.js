@@ -1,4 +1,4 @@
-import { BootstrapVue, BCard, BCardHeader, BFormTags } from 'bootstrap-vue';
+import { BootstrapVue, BCard, BFormTags } from 'bootstrap-vue';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -74,8 +74,8 @@ describe('views/ThreatmodelEdit.vue', () => {
 
     describe('layout', () => {
         it('displays the title in the header', () => {
-            const header = wrapper.findComponent(BCard).findComponent(BCardHeader);
-            expect(header.text()).toEqual(`threatmodel.editing: ${title}`);
+            const header = wrapper.findComponent(BCard);
+            expect(header.attributes('header')).toEqual(`threatmodel.editing: ${title}`);
         });
 
         it('has a title input', () => {

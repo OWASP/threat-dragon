@@ -147,11 +147,8 @@ jobs:
       - name: Site lint
         run: npm run lint
 
-      # TODO: Reinstate tests as part of build
-      # I am disabling this for now to see how the rest of the build pipeline works
-      # with the Vue 3 upgrade.  
-      # - name: Run unit tests
-      #   run: npm run test:unit
+      - name: Run unit tests
+        run: npm run test:unit
 
   desktop_unit_tests:
     name: Desktop unit tests
