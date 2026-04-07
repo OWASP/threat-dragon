@@ -22,12 +22,14 @@ import Toast, { toastOptions, installToastGlobalProperties } from './plugins/toa
 
 let appProxy;
 
+const t = (...args) => i18nFactory.get().t(...args);
+
 const getConfirmModal = () => {
-    return appProxy.$bvModal.msgBoxConfirm(appProxy.$t('forms.discardMessage'), {
-        title: appProxy.$t('forms.discardTitle'),
+    return appProxy.$bvModal.msgBoxConfirm(t('forms.discardMessage'), {
+        title: t('forms.discardTitle'),
         okVariant: 'danger',
-        okTitle: appProxy.$t('forms.ok'),
-        cancelTitle: appProxy.$t('forms.cancel'),
+        okTitle: t('forms.ok'),
+        cancelTitle: t('forms.cancel'),
         hideHeaderClose: true,
         centered: true
     });
@@ -82,7 +84,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     let params;
 
     if (Object.prototype.hasOwnProperty.call(jsonModel, 'modelError')) {
-        appProxy.$toast.error(appProxy.$t('threatmodel.errors.' + jsonModel.modelError));
+        appProxy.$toast.error(t('threatmodel.errors.' + jsonModel.modelError));
         return;
     }
 
@@ -90,7 +92,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     if(!schema.isV2(jsonModel)){
         if (schema.isV1(jsonModel)) {
             console.warn('Version 1.x file will be translated to V2 format');
-            appProxy.$toast.warning(appProxy.$t('threatmodel.warnings.v1Translate'), { timeout: false });
+            appProxy.$toast.warning(t('threatmodel.warnings.v1Translate'), { timeout: false });
         } else if (schema.isTmBom(jsonModel)) {
             jsonModel = openTmBom(jsonModel);
             console.debug('force re-selection of file name for TM-BOM');
@@ -98,11 +100,11 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             window.electronAPI.modelOpened(fileName);
         } else if (schema.isOtm(jsonModel)) {
             console.error('Convert OTM to dragon format not yet supported');
-            appProxy.$toast.error(appProxy.$t('threatmodel.warnings.otmUnsupported'), { timeout: false });
+            appProxy.$toast.error(t('threatmodel.warnings.otmUnsupported'), { timeout: false });
             return;
         } else {
             console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel)));
-            appProxy.$toast.warning(appProxy.$t('threatmodel.warnings.jsonSchema'));
+            appProxy.$toast.warning(t('threatmodel.warnings.jsonSchema'));
         }
     }
 
@@ -112,7 +114,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             threatmodel: jsonModel.summary.title
         });
     } catch (e) {
-        appProxy.$toast.error(appProxy.$t('threatmodel.errors.invalidModel') + ' : ' + e.message);
+        appProxy.$toast.error(t('threatmodel.errors.invalidModel') + ' : ' + e.message);
         appProxy.$router.push({ name: 'MainDashboard' }).catch(error => {
             if (error.name != 'NavigationDuplicated') {
                 throw error;
@@ -163,7 +165,7 @@ window.electronAPI.onPrintModelRequest(async (_event, format) =>  {
 // advice from electron to renderer that the model has been printed
 window.electronAPI.onPrintModelConfirmed((_event, fileName) =>  {
     console.debug('Print model confirmed for file : ' + fileName);
-    appProxy.$toast.success(appProxy.$t('threatmodel.prompts.exported'));
+    appProxy.$toast.success(t('threatmodel.prompts.exported'));
 });
 
 // request from electron to renderer to provide the model data so that it can be saved
@@ -178,7 +180,7 @@ window.electronAPI.onSaveModelConfirmed((_event, fileName) =>  {
     console.debug('Save model confirmed for file : ' + fileName);
     appProxy.$store.dispatch(tmActions.stash);
     appProxy.$store.dispatch(tmActions.notModified);
-    appProxy.$toast.success(appProxy.$t('threatmodel.prompts.saved'));
+    appProxy.$toast.success(t('threatmodel.prompts.saved'));
 });
 
 window.electronAPI.onSaveModelFailed((_event, fileName, message) =>  {
@@ -193,7 +195,7 @@ const localAuth = () => {
 
 const openTmBom = (jsonModel) => {
     console.warn('Convert TM-BOM to internal TD format');
-    appProxy.$toast.warning(appProxy.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+    appProxy.$toast.warning(t('threatmodel.warnings.tmUnsupported'), { timeout: false });
     return tmBom.read(jsonModel);
 };
 

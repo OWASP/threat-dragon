@@ -127,9 +127,12 @@ export default {
             const routeName = isLocalRoute
                 ? 'localThreatModel'
                 : `${this.providerType}ThreatModel`;
+            const params = Object.assign({}, this.$route.params, {
+                threatmodel: this.model?.summary?.title
+            });
             this.$router.push({
                 name: routeName,
-                params: this.$route.params
+                params
             });
         },
         onCancelClick(evt) {
@@ -138,9 +141,12 @@ export default {
             const routeName = isLocalRoute
                 ? 'localThreatModel'
                 : `${this.providerType}ThreatModel`;
+            const params = Object.assign({}, this.$route.params, {
+                threatmodel: this.model?.summary?.title
+            });
             this.$router.push({
                 name: routeName,
-                params: this.$route.params
+                params
             });
         }
     }
