@@ -11,7 +11,6 @@ describe('service/migration/tmBom/tmBom.js', () => {
         });
 
         it('provides version', () => {
-            console.debug(JSON.stringify(testModel));
             expect(testModel.version).toBe('2.4.1');
         });
 

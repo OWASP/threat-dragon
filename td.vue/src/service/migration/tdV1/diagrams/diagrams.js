@@ -1,14 +1,32 @@
+import cells from './cells.js';
+import eng from '@/i18n/en.js';
+
+const getPlaceholder = (diagramType) => {
+    let type = diagramType.toLowerCase();
+
+    // v1.x only had STRIDE, LINDDUN and CIA
+    // so no fixups needed for types 'CIADIE' and 'EoP Games'
+
+    return eng.threatmodel.diagram[type].defaultDescription;
+};
+
 const read = (v1Diagrams, version) => {
-    var v2diagrams = new Array();
+    let v2diagrams = new Array();
 
     v1Diagrams?.forEach((v1Diagram) => {
-	    v2diagrams.push({
-		    version: version,
-		    title: v1Diagram.title,
-		    thumbnail: v1Diagram.thumbnail,
-		    diagramType: v1Diagram.diagramType,
-		    id: v1Diagram.id
-	    });
+        let elements = cells.map(v1Diagram);
+
+        v2diagrams.push({
+            description: '',
+            diagramType: v1Diagram.diagramType,
+            id: v1Diagram.id,
+            placeholder: getPlaceholder(v1Diagram.diagramType),
+            thumbnail: v1Diagram.thumbnail,
+            title: v1Diagram.title,
+            version: version,
+            cells: elements.nodes.concat(elements.edges)
+        });
+
     });
 
     return v2diagrams;

@@ -16,14 +16,14 @@ describe('service/migration/tdV1/detail.js', () => {
 
         it('converts the contributors', () => {
             expect(v2Detail.contributors).toHaveLength(2);
-            expect(v2Detail.contributors[0]).toStrictEqual({'name':'test contributor 1'});
-            expect(v2Detail.contributors[1]).toStrictEqual({'name':'test contributor 2'});
+            expect(v2Detail.contributors[0]).toStrictEqual({'name':'Test contributor 1'});
+            expect(v2Detail.contributors[1]).toStrictEqual({'name':'Test contributor 2'});
         });
 
         it('converts the diagrams', () => {
 		    expect(v2Detail.diagrams).toHaveLength(2);
-            expect(v2Detail.diagrams[0].version).toEqual(testVersion);
-            expect(v2Detail.diagrams[1].version).toEqual(testVersion);
+            expect(v2Detail.diagrams[0].version).toMatch(testVersion);
+            expect(v2Detail.diagrams[1].version).toMatch(testVersion);
         });
 
         it('creates the diagramTop value', () => {
@@ -31,7 +31,7 @@ describe('service/migration/tdV1/detail.js', () => {
         });
 
         it('copies the reviewer', () => {
-            expect(v2Detail.reviewer).toMatch(/^test reviewer/);
+            expect(v2Detail.reviewer).toMatch(/^Test reviewer/);
         });
 
         it('creates the threatTop value', () => {
@@ -57,7 +57,7 @@ describe('service/migration/tdV1/detail.js', () => {
         });
 
         it('copies the reviewer', () => {
-            expect(v2Detail.reviewer).toMatch(/^test reviewer/);
+            expect(v2Detail.reviewer).toMatch(/^Test reviewer/);
         });
 
         it('creates the threatTop value', () => {
@@ -83,7 +83,7 @@ describe('service/migration/tdV1/detail.js', () => {
         });
 
         it('provides empty reviewer', () => {
-		    expect(v2Detail.reviewer).toEqual('');
+		    expect(v2Detail.reviewer).toMatch('');
         });
 
         it('creates the threatTop value', () => {

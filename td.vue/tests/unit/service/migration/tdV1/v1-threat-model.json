@@ -1,23 +1,23 @@
 {
   "summary": {
-    "title": "Empty diagram",
-    "owner": "test owner",
-    "description": "test description"
+    "title": "Test model",
+    "owner": "Test owner",
+    "description": "Test description"
   },
   "detail": {
     "contributors": [
       {
-        "name": "test contributor 1",
+        "name": "Test contributor 1",
         "$$hashKey": "object:14"
       },
       {
-        "name": "test contributor 2",
+        "name": "Test contributor 2",
         "$$hashKey": "object:20"
       }
     ],
     "diagrams": [
       {
-        "title": "Empty diagram 1",
+        "title": "Test diagram 1",
         "thumbnail": "./public/content/images/thumbnail.stride.jpg",
         "diagramType": "STRIDE",
         "id": 0,
@@ -185,7 +185,7 @@
         }
       },
       {
-        "title": "Empty diagram 2",
+        "title": "Test diagram 2",
         "thumbnail": "./public/content/images/thumbnail.linddun.jpg",
         "diagramType": "LINDDUN",
         "id": 1,
@@ -226,6 +226,6 @@
         }
       }
     ],
-    "reviewer": "test reviewer"
+    "reviewer": "Test reviewer"
   }
 }

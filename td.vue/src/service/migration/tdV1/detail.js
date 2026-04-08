@@ -15,7 +15,7 @@ const read = (detail, version) => {
         contributors: convertContributors(detail.contributors),
         diagrams: diagrams.read(detail.diagrams, version),
         diagramTop: detail?.diagrams ? detail.diagrams.length : 0,
-	    reviewer: detail?.reviewer ? detail.reviewer : '',
+	    reviewer: detail.reviewer || '',
         threatTop: 1000
     };
 };

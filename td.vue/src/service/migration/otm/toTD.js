@@ -110,7 +110,6 @@ export const convert = function (jsonModel) {
     dragonModel.summary = convertSummary(jsonModel);
     dragonModel.detail = convertDetail(jsonModel);
 
-    console.log(dragonModel);
     /*
     jsonModel.components.forEach(function(comp) {
         var cell = new Object();

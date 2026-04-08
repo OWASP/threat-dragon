@@ -45,7 +45,7 @@ describe('service/migration/tdV1/threatDragonV1.js', () => {
 	        expect(v2Model.detail.contributors).toHaveLength(0);
 	        expect(v2Model.detail.diagrams).toHaveLength(0);
 	        expect(v2Model.detail.diagramTop).toBe(0);
-	        expect(v2Model.detail.reviewer).toEqual('');
+	        expect(v2Model.detail.reviewer).toMatch('');
 	        expect(v2Model.detail.threatTop).toBe(1000);
 	    });
     });

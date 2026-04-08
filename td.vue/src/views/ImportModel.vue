@@ -62,6 +62,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
 import tmBom from '@/service/migration/tmBom/tmBom';
+import threatDragonV1 from '@/service/migration/tdV1/threatDragonV1';
 
 // only search for text files
 const pickerFileOptions = {
@@ -151,10 +152,9 @@ export default {
             // schema errors are not fatal, but some formats are not supported yet
             if (!schema.isV2(jsonModel)) {
                 if (schema.isV1(jsonModel)) {
-                    console.warn('Version 1.x file will be translated to V2 format');
+                    console.warn('Convert TD V1.x to TD V2.x format');
                     this.$toast.warning(this.$t('threatmodel.warnings.v1Translate'), { timeout: false });
-                    // temporarily reject TD v1.x models
-                    return;
+                    jsonModel = threatDragonV1.read(jsonModel);
                 } else if (schema.isTmBom(jsonModel)) {
                     console.warn('Convert TM-BOM to internal TD format');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
