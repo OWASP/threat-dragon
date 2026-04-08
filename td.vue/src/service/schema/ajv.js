@@ -6,6 +6,7 @@ import tmBom from '@/service/migration/tmBom/threatModelBom';
 const schemaV1 = require('@/assets/schema/threat-dragon-v1.schema');
 const schemaV2 = require('@/assets/schema/threat-dragon-v2.schema');
 const schemaTemplate = require('@/assets/schema/owasp-threat-dragon-template.schema.json');
+const schemaThreatLibrary = require('@/assets/schema/owasp-threat-dragon-threatLibrary.schema.json');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
 addFormats(ajv);
@@ -13,6 +14,7 @@ addFormats(ajv);
 const validateV1 = ajv.compile(schemaV1);
 const validateV2 = ajv.compile(schemaV2);
 const validateTemplate = ajv.compile(schemaTemplate);
+const validateThreatLibrary = ajv.compile(schemaThreatLibrary);
 
 export const isValid = (jsonFile) => {
 
@@ -77,6 +79,15 @@ export const validateTemplateFormat = (jsonFile) => {
     return { valid: false, errors: validateTemplate.errors };
 };
 
+export const validateThreatLibraryFormat = (jsonFile) => {
+    if (validateThreatLibrary(jsonFile)) {
+        console.debug('Schema validate success for Threat Library format');
+        return { valid: true, errors: null };
+    }
+    console.warn('Failed to validate threat library', validateThreatLibrary.errors);
+    return { valid: false, errors: validateThreatLibrary.errors };
+};
+
 export default {
     checkV2,
     isV1,
@@ -85,5 +96,6 @@ export default {
     isTmBom,
     isValid,
     isTemplate,
-    validateTemplateFormat
+    validateTemplateFormat,
+    validateThreatLibraryFormat
 };
