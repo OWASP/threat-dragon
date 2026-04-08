@@ -15,6 +15,7 @@ import hin from '@/i18n/hi.js';
 import ind from '@/i18n/id.js';
 import msa from '@/i18n/ms.js';
 import por from '@/i18n/pt.js';
+import bra from '@/i18n/pt-br.js';
 import rus from '@/i18n/ru.js';
 import spa from '@/i18n/es.js';
 import ukr from '@/i18n/uk.js';
@@ -668,6 +669,12 @@ describe('desktop/menu.js', () => {
             it('should provide translation for Portuguese', () => {
                 menu.setLocale('por');
                 const helpItems = menu.getMenuTemplate().find((item) => item.label === por.desktop.help.heading);
+                expect(helpItems).toBeDefined();
+            });
+
+            it('should provide translation for Brazilian Portuguese', () => {
+                menu.setLocale('bra');
+                const helpItems = menu.getMenuTemplate().find((item) => item.label === bra.desktop.help.heading);
                 expect(helpItems).toBeDefined();
             });
 
