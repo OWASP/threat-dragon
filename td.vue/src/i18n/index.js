@@ -16,6 +16,7 @@ import ind from './id.js';
 import jpn from './ja.js';
 import msa from './ms.js';
 import por from './pt.js';
+import bra from './pt-br.js';
 // hide RUS & UKR for now: import rus from './ru.js';
 import spa from './es.js';
 // hide RUS & UKR for now: import ukr from './uk.js';
@@ -28,7 +29,12 @@ const get = () => {
     if (i18n === null) {
         i18n = new VueI18n({
             locale: 'eng',
-            messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, zho }
+            fallbackLocale: {
+                'por': ['bra'],
+                'bra': ['por'],
+                'default':  'eng'
+            },
+            messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, bra, zho }
         });
     }
     return i18n;
