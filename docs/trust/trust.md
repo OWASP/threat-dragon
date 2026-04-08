@@ -8,6 +8,13 @@ group: Trust
 
 ## Trust
 
+The Threat Dragon development team build security into the application and the supply chain.
+Some examples of this are:
+
+* the code repository enforces signed commits which helps filter out malicious activity
+* the supply chain actions are identified using a full-length SHA
+* the desktop installer releases are signed and notarized where possible
+
 ### Continual testing
 
 The automated security scans of Threat Dragon are run on every commit:

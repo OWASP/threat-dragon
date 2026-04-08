@@ -15,6 +15,10 @@ We are trying to keep the test coverage relatively high, so please try to update
 There are some [developer notes]({{ '/development/development.html' | relative_url }})
 to help you get started with this project.
 
+The Threat Dragon main branch only accepts signed commits, otherwise the contribution will be rejected.
+Signed commits help to filter out malicious activity,
+see the Github documentation on [commit signature verification][signed-commits].
+
 ### Quick start
 
 Clone and install the Threat Dragon repo:
@@ -41,3 +45,5 @@ For secure disclosure, please see the [security policy](https://github.com/OWASP
 ----
 
 Threat Dragon: _making threat modeling less threatening_
+
+[signed-commits]: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification

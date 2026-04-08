@@ -50,6 +50,10 @@ for example the dropping of 'unnecessary' semicolons is not to be adopted.
 
 Indents are generally set to 4, but this may change and it might go to a 2 space indentation sometime in the future.
 
+To contribute to the Threat Dragon main branch you must provide signed commits, otherwise they will be rejected.
+Signed commits help to filter out malicious activity,
+see the Github documentation on [commit signature verification][signed-commits].
+
 ### Running Locally
 
 The local environment is split into different parts: `td.server` and `td.vue`.
@@ -112,3 +116,5 @@ The notarization status of the MacOS `.app` file can be checked with command:
 ----
 
 Threat Dragon: _making threat modeling less threatening_
+
+[signed-commits]: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification
