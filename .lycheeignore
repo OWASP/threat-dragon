@@ -6,6 +6,7 @@ http://127.0.0.1
 
 # incorrectly get 'Network error: Forbidden'
 www.deviantart.com
+www.infosecotb.com
 
 # trips up on the redirect page scripts
 docs/_layouts/%7B%7B%20page.redirect_to%20%7D%7D
