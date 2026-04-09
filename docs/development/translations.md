@@ -24,7 +24,8 @@ The following translations are available:
 - मानक हिन्दी (hin-IN)
 - Bahasa Indonesia (ind-ID)
 - 日本語 (jpn)
-- português (por-BR)
+- Português (por-PT)
+- Português do Brazil (por-BR)
 - Malay (msa-MY)
 - 中文 (zho-CN)
 

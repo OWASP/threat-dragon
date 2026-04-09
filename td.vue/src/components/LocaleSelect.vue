@@ -109,6 +109,8 @@ export default {
                 return 'Malay'; // Malay
             case 'por':
                 return 'Português'; // Portuguese
+            case 'bra':
+                return 'Português (Brasil)'; // Brazilian Portuguese
             case 'zho':
                 return '中文'; // Chinese
             default:
