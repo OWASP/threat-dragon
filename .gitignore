@@ -154,6 +154,8 @@
 !td.vue/src/service/demo/
 !td.vue/src/service/demo/*.js
 !td.vue/src/service/demo/*.json
+!td.vue/src/service/desktop/
+!td.vue/src/service/desktop/*.js
 !td.vue/src/service/entity/
 !td.vue/src/service/entity/*.js
 !td.vue/src/service/migration/
@@ -248,6 +250,8 @@
 !td.vue/tests/unit/service/diagram/v1/*.spec.js
 !td.vue/tests/unit/service/demo/
 !td.vue/tests/unit/service/demo/*.spec.js
+!td.vue/tests/unit/service/desktop/
+!td.vue/tests/unit/service/desktop/*.spec.js
 !td.vue/tests/unit/service/entity/
 !td.vue/tests/unit/service/entity/*.spec.js
 !td.vue/tests/unit/service/migration/

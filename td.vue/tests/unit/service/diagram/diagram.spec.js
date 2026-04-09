@@ -15,8 +15,11 @@ describe('service/diagram/diagram.js', () => {
     beforeEach(() => {
         diagramMock = {
             title: 'Test',
+            description: 'Description',
             thumbnail: 'foo.png',
-            id: '12345'
+            id: '12345',
+            diagramType: 'STRIDE',
+            legacyField: true
         };
         graphMock = {
             fromJSON: jest.fn(),
@@ -76,7 +79,26 @@ describe('service/diagram/diagram.js', () => {
 
             it('dispatches the diagramSaved event to the store', () => {
                 expect(storeMock.dispatch)
-                    .toHaveBeenCalledWith(tmActions.diagramSaved, diagramMock);
+                    .toHaveBeenCalledWith(
+                        tmActions.diagramSaved,
+                        expect.objectContaining({
+                            title: diagramMock.title,
+                            description: diagramMock.description,
+                            thumbnail: diagramMock.thumbnail,
+                            id: diagramMock.id,
+                            diagramType: diagramMock.diagramType,
+                            cells: [],
+                            version: expect.any(String)
+                        })
+                    );
+            });
+
+            it('does not leak unknown v1 properties into the upgraded diagram', () => {
+                const savedDiagram = storeMock.dispatch.mock.calls.find(
+                    ([action]) => action === tmActions.diagramSaved
+                )[1];
+
+                expect(savedDiagram.legacyField).toBeUndefined();
             });
         });
 
