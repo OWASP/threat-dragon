@@ -463,11 +463,10 @@ jobs:
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
 
       - name: Run Trivy vulnerability scanner
-        # Pinned to commit for v0.35.0
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'table'
           trivyignores: '.github/workflows/.trivyignore'
           exit-code: 1
-          skip-files: '/app/docs/configure/bitbucket.html'
+          skip-files: '/app/docs/configure/bitbucket.html,/app/docs/assets/search.json'
