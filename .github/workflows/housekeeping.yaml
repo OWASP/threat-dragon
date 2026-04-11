@@ -62,8 +62,7 @@ jobs:
           ref: main
 
       - name: Run Trivy vulnerability scanner
-        # Pinned to commit for v0.35.0
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: '${{ env.IMAGE_NAME }}'
           format: 'template'
@@ -72,7 +71,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
+        uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
         with:
           sarif_file: 'trivy-results.sarif'
 
@@ -90,7 +89,7 @@ jobs:
           ref: main
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
+        uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
         with:
           languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
@@ -99,10 +98,10 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
 
       - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
+        uses: github/codeql-action/autobuild@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
 
       - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
+        uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
 
   link_checker:
     name: Link checker
