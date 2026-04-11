@@ -207,8 +207,6 @@ const BootstrapCardTextCompat = createBootstrapCompat('BCardText');
 const BootstrapJumbotronCompat = createBootstrapCompat('BJumbotron');
 const BootstrapModalCompat = createBootstrapCompat('BModal');
 const BootstrapFormInputCompat = createBootstrapCompat('BFormInput', 'input');
-const BootstrapFormSelectCompat = createBootstrapCompat('BFormSelect', 'select');
-const BootstrapFormRadioGroupCompat = createBootstrapCompat('BFormRadioGroup');
 const BootstrapFormTextareaCompat = createBootstrapCompat('BFormTextarea', 'textarea');
 const BootstrapTableCompat = createBootstrapCompat('BTable', 'table');
 const BootstrapCardCompat = createBootstrapCompat('BCard');
@@ -219,8 +217,6 @@ const bootstrapComponentStubs = {
     BButton: BootstrapButtonCompat,
     BDropdownItem: BootstrapDropdownItemCompat,
     BFormInput: BootstrapFormInputCompat,
-    BFormRadioGroup: BootstrapFormRadioGroupCompat,
-    BFormSelect: BootstrapFormSelectCompat,
     BFormTextarea: BootstrapFormTextareaCompat,
     BJumbotron: BootstrapJumbotronCompat,
     BListGroupItem: BootstrapListGroupItemCompat,

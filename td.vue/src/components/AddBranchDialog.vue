@@ -34,8 +34,8 @@
             <b-row>
                 <b-col lg="12" class="pb-2">
                     <b-form-group id="input-group-2" :label="$t('branch.refBranch')" label-for="refBranch">
-                        <b-form-select id="refBranch" v-model="refBranch" :options="branchNames" size="md"
-                                       required/>
+                        <td-form-select id="refBranch" v-model="refBranch" :options="branchNames" size="md"
+                            required />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -56,10 +56,14 @@
     </b-modal>
 </template>
 <script>
+import TdFormSelect from '@/components/FormSelect.vue';
 import branchActions from '@/store/actions/branch.js';
 
 export default {
     name: 'AddBranchModal',
+    components: {
+        TdFormSelect
+    },
     props: {
         branches: {
             type: Array,

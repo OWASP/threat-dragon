@@ -51,6 +51,11 @@ describe('components/SelectionPage.vue', () => {
             expect(wrapper.findComponent(BListGroupItem).text()).toEqual('four');
         });
 
+        it('emits filter updates from the search bar model', async () => {
+            await wrapper.setData({ localFilter: 'two' });
+            expect(wrapper.emitted('update:filter').at(-1)).toEqual(['two']);
+        });
+
         it('calls the action on click', async () => {
             await wrapper.findComponent(BListGroupItem).trigger('click');
             expect(onItemClick).toHaveBeenCalledTimes(1);
@@ -125,4 +130,3 @@ describe('components/SelectionPage.vue', () => {
     });
 
 });
-

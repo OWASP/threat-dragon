@@ -1,6 +1,6 @@
 <template>
     <td-selection-page
-        :filter.sync="searchQuery"
+        v-model:filter="searchQuery"
         :items="branches"
         :page="page"
         :pageNext="pageNext"
@@ -17,11 +17,11 @@
             rel="noopener noreferrer"
         >{{ repoName }}</a>
         {{ $t('branch.from') }}
-        <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">
+        <a href="#" id="return-to-repo" @click.prevent="selectRepoClick">
             {{ $t('branch.chooseRepo') }}
         </a>
         {{ $t('branch.or') }}
-        <a href="javascript:void(0)" id="new-branch" @click="toggleNewBranchDialog()">{{ $t('branch.addNew') }}</a>
+        <a href="#" id="new-branch" @click.prevent="toggleNewBranchDialog()">{{ $t('branch.addNew') }}</a>
 
         <add-branch-modal
             v-if="showNewBranchDialog"

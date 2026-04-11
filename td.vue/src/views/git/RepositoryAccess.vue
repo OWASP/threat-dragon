@@ -1,6 +1,6 @@
 <template>
     <td-selection-page
-        :filter.sync="searchQuery"
+        v-model:filter="searchQuery"
         :items="repositories"
         :page="page"
         :pageNext="pageNext"

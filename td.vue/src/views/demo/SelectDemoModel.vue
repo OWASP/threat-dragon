@@ -15,8 +15,8 @@
                     <b-list-group-item
                         v-for="(model, idx) in models"
                         :key="idx"
-                        href="javascript:void(0)"
-                        @click="onModelClick(model)"
+                        href="#"
+                        @click.prevent="onModelClick(model)"
                         :data-model-name="model.name"
                     >{{ model.name }}</b-list-group-item>
                 </b-list-group>

@@ -1,6 +1,7 @@
-import { BootstrapVue, BModal, BFormInput, BFormSelect, BButton } from 'bootstrap-vue';
+import { BootstrapVue, BModal, BFormInput, BButton } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import AddBranchDialog from '@/components/AddBranchDialog.vue';
+import TdFormSelect from '@/components/FormSelect.vue';
 
 describe('components/AddBranchDialog.vue', () => {
     let localVue, wrapper;
@@ -34,7 +35,7 @@ describe('components/AddBranchDialog.vue', () => {
         });
 
         it('displays the reference branch select', () => {
-            expect(wrapper.findComponent(BFormSelect).exists()).toBe(true);
+            expect(wrapper.findComponent(TdFormSelect).exists()).toBe(true);
         });
 
         it('displays the add button', () => {

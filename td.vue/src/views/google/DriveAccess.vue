@@ -12,7 +12,7 @@
         :emptyStateText="`${$t('folder.noneFound')}`">
         {{ $t('folder.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('folder.from') }}
         {{ $t('threatmodelSelect.or') }}
-        <a href="javascript:void(0)" id="new-threat-model" @click="newThreatModel(selected)">{{ $t('threatmodelSelect.newThreatModel') }}</a>
+        <a href="#" id="new-threat-model" @click.prevent="newThreatModel(selected)">{{ $t('threatmodelSelect.newThreatModel') }}</a>
     </td-selection-page>
 </template>
 
