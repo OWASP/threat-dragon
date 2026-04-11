@@ -168,7 +168,7 @@ export default {
             });
         }
     },
-    destroyed() {
+    unmounted() {
         diagramService.dispose(this.graph);
     }
 };
