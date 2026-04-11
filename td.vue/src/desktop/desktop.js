@@ -4,6 +4,7 @@ import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
+import template from './templates.js';
 import logger from './logger.js';
 import { electronURL, isDevelopment, isTest, isMacOS, isWin } from './utils.js';
 
@@ -48,12 +49,15 @@ export function registerDesktop (deps) {
             }
         });
 
+
         // Event listeners on the window
         mainWindow.webContents.on('did-finish-load', () => {
             mainWindow.show();
             mainWindow.focus();
             // menu system needs to access the main window
             menuApi.setMainWindow(mainWindow);
+            template.setMainWindow(mainWindow);
+
         });
 
         mainWindow.on('close', (event) => {
@@ -76,7 +80,6 @@ export function registerDesktop (deps) {
             mainWindow.loadURL('app://./index.html');
         }
     }
-
     // Scheme must be registered before the app is ready
     protocol.registerSchemesAsPrivileged([
         { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -127,6 +130,16 @@ export function registerDesktop (deps) {
         ipcMainApi.on('model-print', handleModelPrint);
         ipcMainApi.on('model-save', handleModelSave);
         ipcMainApi.on('update-menu', handleUpdateMenu);
+        ipcMainApi.on('set-template-folder-default', handleSetTemplateFolderDefault);
+        ipcMainApi.on('set-template-folder-custom', handleSetTemplateFolderCustom);
+        ipcMainApi.on('set-template-folder-existing', handleSetTemplateFolderExisting);
+        ipcMainApi.on('get-templates', handleGetTemplates);
+        ipcMainApi.on('bootstrap-templates', handleBootstrapTemplates);
+        ipcMainApi.on('import-template', handleImportTemplate);
+        ipcMainApi.on('fetch-model-by-id', handleFetchModelById);
+        ipcMainApi.on('export-template', handleExportTemplate);
+        ipcMainApi.on('delete-template', handleDeleteTemplate);
+        ipcMainApi.on('update-template', handleUpdateTemplate);
 
         createWindow();
 
@@ -141,6 +154,31 @@ export function registerDesktop (deps) {
         loggerApi.log.debug('Request to open file from recent documents: ' + filePath);
         menuApi.openModelRequest(filePath);
     });
+
+    function handleSetTemplateFolderDefault() {
+        loggerApi.log.debug('Set template folder to default location');
+        template.setTemplateFolderDefault();
+    }
+
+    function handleSetTemplateFolderCustom() {
+        loggerApi.log.debug('Set template folder to custom location');
+        template.setTemplateFolderCustom();
+    }
+
+    function handleSetTemplateFolderExisting() {
+        loggerApi.log.debug('Select existing template folder');
+        template.setTemplateFolderExisting();
+    }
+
+    function handleGetTemplates() {
+        loggerApi.log.debug('Get templates request from renderer');
+        template.getTemplates();
+    }
+
+    function handleBootstrapTemplates() {
+        loggerApi.log.debug('Bootstrap templates request from renderer');
+        template.bootstrapTemplates();
+    }
 
     function handleCloseApp () {
         loggerApi.log.debug('Close application request from renderer ');
@@ -163,6 +201,7 @@ export function registerDesktop (deps) {
         menuApi.modelOpened();
     }
 
+
     function handleModelPrint (_event, format) {
         loggerApi.log.debug('Model print request from renderer with printer : ' + format);
         menuApi.modelPrint(format);
@@ -172,12 +211,35 @@ export function registerDesktop (deps) {
         loggerApi.log.debug('Model save request from renderer with file name : ' + fileName);
         menuApi.modelSave(modelData, fileName);
     }
+    function handleImportTemplate(_event, templateData) {
+        loggerApi.log.debug('Import template request from renderer');
+        template.importTemplate(templateData);
+    }
 
+    function handleFetchModelById(_event, templateId) {
+        loggerApi.log.debug('Fetch model by ID request from renderer for template ID: ' + templateId);
+        template.fetchModelById(templateId);
+    }
     function handleUpdateMenu (_event, locale) {
         loggerApi.log.debug('Re-labeling the menu system for: ' + locale);
         menuApi.setLocale(locale);
         let template = menuApi.getMenuTemplate();
         MenuApi.setApplicationMenu(MenuApi.buildFromTemplate(template));
+    }
+
+    function handleExportTemplate(_event, data, filename) {
+        loggerApi.log.debug('Export template request from renderer with filename: ' + filename);
+        template.exportTemplate(data, filename);
+    }
+
+    function handleDeleteTemplate(_event, templateId) {
+        loggerApi.log.debug('Delete template request from renderer for template ID: ' + templateId);
+        template.deleteTemplate(templateId);
+    }
+
+    function handleUpdateTemplate(_event, templateMetadata) {
+        loggerApi.log.debug('Update template request from renderer for template ID: ' + templateMetadata.id);
+        template.updateTemplate(templateMetadata);
     }
 
     // Exit cleanly on request from parent process in development mode.
@@ -213,3 +275,4 @@ if (!isTest) {
         path
     });
 }
+

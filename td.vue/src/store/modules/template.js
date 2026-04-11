@@ -6,18 +6,19 @@ import {
     TEMPLATE_DELETE,
     TEMPLATE_FETCH_MODEL_BY_ID,
     TEMPLATE_SET_TEMPLATES,
-    TEMPLATE_SET_CONTENT_REPO_STATUS,
+    TEMPLATE_SET_CONTENT_STORE_STATUS,
     TEMPLATE_BOOTSTRAP
 } from '@/store/actions/template';
 
 import templateApi from '@/service/api/templateApi.js';
+import { providerTypes } from '@/service/provider/providerTypes';
+import { getProviderType } from '@/service/provider/providers';
 
 const state = {
     templates: [],// list of templates
-    contentRepo: {
-        status: null,        // null (initialized & working) | 'NOT_CONFIGURED' | 'REPO_NOT_FOUND' | 'NOT_INITIALIZED'
-        canInitialize: false,// determined by the permissions of the current user in context of the repo
-        repoName: null,      // Only populated for 'REPO_NOT_FOUND' scenario
+    contentStore: {
+        status: null,   // null (READY) | 'NOT_CONFIGURED' | 'NOT_FOUND' | 'NOT_INITIALIZED'
+        canWrite: false // user has write permissions (web: repo push access, desktop: folder write access)
     }
 };
 
@@ -60,57 +61,57 @@ const actions = {
 
     /**
      * Fetches all templates from the backend
-     * 
-     * Handles multiple repository states:
-     * - Normal operation: Returns templates array
-     * - NOT_CONFIGURED: Template repository URL not configured
-     * - NOT_INITIALIZED: Repository exists but folder structure not bootstrapped
-     * - REPO_NOT_FOUND: Repository doesn't exist (404 - not an error)
-     * 
-     * @async
-     * @param {Object} context - Vuex action context
-     * @param {Function} context.commit - Vuex commit function
-     * @returns {Promise<void>}
+     *
+     * Handles unified statuses (desktop + web):
+     * - null (READY): Normal operation, templates available
+     * - NOT_CONFIGURED: Storage location not set up
+     * - NOT_FOUND: Storage was configured but no longer exists (404)
+     * - NOT_INITIALIZED: Storage exists but no template index
+     *
+     * canWrite flag indicates write permissions (repo push / folder write access)
      */
-    [TEMPLATE_FETCH_ALL]: async ({ commit }) => {
+    [TEMPLATE_FETCH_ALL]: async ({ commit, rootState }) => {
         try {
+            // Desktop: fire IPC request, result comes via onTemplatesResult listener
+            if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+                window.electronAPI.getTemplates();
+                return;
+            }
+
             const response = await templateApi.fetchAllAsync();
 
             // Handle special statuses (NOT_CONFIGURED, NOT_INITIALIZED)
-            if (response.data.repoStatus) {
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
-                    status: response.data.repoStatus,
-                    canInitialize: response.data.canInitialize,
-                    repoName: null
+            if (response.data.status) {
+                commit(TEMPLATE_SET_CONTENT_STORE_STATUS, {
+                    status: response.data.status,
+                    canWrite: response.data.canWrite
                 });
                 commit(TEMPLATE_SET_TEMPLATES, []);
             } else {
-                // Normal operation
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
+                // Normal operation - templates exist, user has write access
+                commit(TEMPLATE_SET_CONTENT_STORE_STATUS, {
                     status: null,
-                    canInitialize: false,
-                    repoName: null
+                    canWrite: true
                 });
                 commit(TEMPLATE_SET_TEMPLATES, response.data.templates);
             }
         } catch (error) {
-            // Handle 404 (REPO_NOT_FOUND) - it's a STATE, not an error
+            // Handle 404 (NOT_FOUND) - it's a STATE, not an error
             if (error.response?.status === 404) {
-                const errorDetails = error.response.data?.details || '';
-                const repoMatch = errorDetails.match(/Template repository '([^']+)'/);
-
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
-                    status: 'REPO_NOT_FOUND',
-                    canInitialize: false,
-                    repoName: repoMatch ? repoMatch[1] : null
+                commit(TEMPLATE_SET_CONTENT_STORE_STATUS, {
+                    status: 'NOT_FOUND',
                 });
-                console.log('Template repository not found:', repoMatch ? repoMatch[1] : 'unknown');
+                console.log('Template repository not found');
                 commit(TEMPLATE_SET_TEMPLATES, []);
             }
         }
     },
 
-    [TEMPLATE_FETCH_MODEL_BY_ID]: async (_, templateId) => {
+    [TEMPLATE_FETCH_MODEL_BY_ID]: async ({rootState}, templateId) => {
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            window.electronAPI.fetchModelById(templateId);
+            return;
+        }
         const response = await templateApi.fetchModelByIdAsync(templateId);
         return response.data;
     },
@@ -121,11 +122,10 @@ const actions = {
 };
 
 const mutations = {
-    [TEMPLATE_SET_CONTENT_REPO_STATUS]: (state, { status, canInitialize, repoName }) => {
-        state.contentRepo = {
+    [TEMPLATE_SET_CONTENT_STORE_STATUS]: (state, { status, canWrite }) => {
+        state.contentStore = {
             status: status || null,
-            canInitialize: canInitialize || false,
-            repoName: repoName || null
+            canWrite: canWrite || false
         };
     },
 
@@ -134,10 +134,9 @@ const mutations = {
     },
     [TEMPLATE_CLEAR]: (state) => {
         state.templates = [];
-        state.contentRepo = {
+        state.contentStore = {
             status: null,
-            canInitialize: false,
-            repoName: null
+            canWrite: false
         };
     }
 };
@@ -145,9 +144,8 @@ const mutations = {
 const getters = {
     templates: (state) => state.templates,
     hasTemplates: (state) => state.templates.length > 0,
-    contentRepoStatus: (state) => state.contentRepo.status,
-    canInitializeRepo: (state) => state.contentRepo.canInitialize,
-    contentRepoName: (state) => state.contentRepo.repoName
+    contentStoreStatus: (state) => state.contentStore.status,
+    canWriteStore: (state) => state.contentStore.canWrite
 };
 
 export default {

@@ -23,7 +23,11 @@ const state = {
 const actions = {
     [AUTH_CLEAR]: ({ commit }) => commit(AUTH_CLEAR),
     [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens),
-    [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL),
+    // Have a precheck to differentiate desktop vs local(server deployment)
+    [AUTH_SET_LOCAL]: ({ commit, rootState }) => {
+        const isDesktop = rootState.provider.selected === providers.allProviders.desktop.key; // flg to indicate desktop login
+        commit(AUTH_SET_LOCAL, { isDesktop });
+    },
     [LOGOUT]: async ({ dispatch, state, rootState }) => {
         try {
             if (rootState.provider.selected !== providers.allProviders.local.key && rootState.provider.selected !== providers.allProviders.desktop.key) {
@@ -57,9 +61,10 @@ const mutations = {
             throw e;
         }
     },
-    [AUTH_SET_LOCAL]: (state) => {
+    [AUTH_SET_LOCAL]: (state, { isDesktop }) => {
         state.user = {
-            username: 'local-user'
+            username: 'local-user',
+            isAdmin: isDesktop
         };
     }
 };

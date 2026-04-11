@@ -6,7 +6,7 @@ export const TEMPLATE_DELETE = 'TEMPLATE_DELETE';
 export const TEMPLATE_FETCH_MODEL_BY_ID = 'TEMPLATE_FETCH_MODEL_BY_ID';
 export const TEMPLATE_SET_TEMPLATES = 'TEMPLATE_SET_TEMPLATES';// mutation ot set templates fetched from backend
 export const TEMPLATE_BOOTSTRAP = 'TEMPLATE_BOOTSTRAP';
-export const TEMPLATE_SET_CONTENT_REPO_STATUS = 'TEMPLATE_SET_CONTENT_REPO_STATUS';// mutation to set content repo status
+export const TEMPLATE_SET_CONTENT_STORE_STATUS = 'TEMPLATE_SET_CONTENT_STORE_STATUS';// mutation to set content repo status
 
 export default {
     fetchAll: TEMPLATE_FETCH_ALL,

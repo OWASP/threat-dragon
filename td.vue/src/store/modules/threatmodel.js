@@ -152,7 +152,7 @@ const actions = {
     [THREATMODEL_STASH]: ({ commit }) => commit(THREATMODEL_STASH),
     [THREATMODEL_NOT_MODIFIED]: ({ commit }) => commit(THREATMODEL_NOT_MODIFIED),
     [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update),
-    [THREATMODEL_TEMPLATE_DOWNLOAD]: async ({ state }, templateMetadata) => {
+    [THREATMODEL_TEMPLATE_DOWNLOAD]: async ({ state,rootState}, templateMetadata) => {
         console.debug('Download template action');
 
         const model = JSON.parse(JSON.stringify(state.data));
@@ -188,6 +188,10 @@ const actions = {
 
         // CALL THE NEW FUNCTION
         // Pass data and filename explicitly. No confusing 'state' wrapper needed.
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            window.electronAPI.exportTemplate(templateData, fileName);
+            return;
+        }
         return await save.template(templateData, fileName);
 
 

@@ -19,49 +19,41 @@
             </b-col>
         </b-row>
 
-        <!-- Scenario: NOT_CONFIGURED -->
-        <b-row v-if="contentRepoStatus === 'NOT_CONFIGURED'">
+        <!-- Status: NOT_CONFIGURED -->
+        <b-row v-if="contentStoreStatus === 'NOT_CONFIGURED'">
             <b-col md="6" offset-md="3">
                 <b-alert show variant="info" class="text-center">
-                    <h5>{{ $t('template.repo.notConfigured.title') }}</h5>
-                    <p>{{ $t('template.repo.notConfigured.userMessage') }}</p>
-                </b-alert>
-            </b-col>
-        </b-row>
-
-        <!-- Scenario: REPO_NOT_FOUND -->
-        <b-row v-else-if="contentRepoStatus === 'REPO_NOT_FOUND'">
-            <b-col md="6" offset-md="3">
-                <b-alert show variant="danger" class="text-center">
-                    <h5>{{ $t('template.repo.notFound.title') }}</h5>
-                    <p>{{ $t('template.repo.notFound.userMessage', { repoName: contentRepoName }) }}</p>
-                </b-alert>
-            </b-col>
-        </b-row>
-
-        <!-- Scenario: NOT_INITIALIZED - Regular User -->
-        <b-row v-else-if="contentRepoStatus === 'NOT_INITIALIZED' && !canInitializeRepo">
-            <b-col md="6" offset-md="3">
-                <b-alert show variant="warning" class="text-center">
-                    <h5>{{ $t('template.repo.notInitialized.title') }}</h5>
-                    <p>{{ $t('template.repo.notInitialized.userMessage') }}</p>
-                </b-alert>
-
-            </b-col>
-        </b-row>
-
-        <!-- Scenario: NOT_INITIALIZED - Admin -->
-        <b-row v-else-if="contentRepoStatus === 'NOT_INITIALIZED' && canInitializeRepo">
-            <b-col md="6" offset-md="3">
-                <b-alert show variant="info" class="text-center">
-                    <h5>{{ $t('template.repo.notInitialized.title') }}</h5>
-                    <p>{{ $t('template.repo.notInitialized.adminMessage') }}</p>
-                    <b-button variant="success" :to="{ name: 'ManageTemplates' }">
+                    <h5>{{ $t('template.status.notConfigured.title') }}</h5>
+                    <p>{{ $t(`template.status.notConfigured.${isDesktop ? 'desktop' : 'web'}`) }}</p>
+                    <b-button v-if="isDesktop" variant="success" :to="{ name: 'ManageTemplates' }">
                         <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
                         {{ $t('template.manage') }}
                     </b-button>
                 </b-alert>
+            </b-col>
+        </b-row>
 
+        <!-- Status: NOT_FOUND -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_FOUND'">
+            <b-col md="6" offset-md="3">
+                <b-alert show variant="danger" class="text-center">
+                    <h5>{{ $t('template.status.notFound.title') }}</h5>
+                    <p>{{ $t(`template.status.notFound.${isDesktop ? 'desktop' : 'web'}`) }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+
+        <!-- Status: NOT_INITIALIZED -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_INITIALIZED'">
+            <b-col md="6" offset-md="3">
+                <b-alert show :variant="canWriteStore ? 'info' : 'warning'" class="text-center">
+                    <h5>{{ $t('template.status.notInitialized.title') }}</h5>
+                    <p>{{ $t(`template.status.notInitialized.${canWriteStore ? 'admin' : 'user'}`) }}</p>
+                    <b-button v-if="canWriteStore" variant="success" :to="{ name: 'ManageTemplates' }">
+                        <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
+                        {{ $t('template.manage') }}
+                    </b-button>
+                </b-alert>
             </b-col>
         </b-row>
 
@@ -72,8 +64,7 @@
                 <b-col md="6" offset-md="3">
                     <div class="d-flex mb-3">
                         <!-- Search bar -->
-                        <b-form-input v-model="searchQuery" :placeholder="$t('template.search')"
-                            class="flex-grow-1" />
+                        <b-form-input v-model="searchQuery" :placeholder="$t('template.search')" class="flex-grow-1" />
                     </div>
                 </b-col>
             </b-row>
@@ -82,7 +73,7 @@
             <b-row>
                 <b-col md="6" offset-md="3">
                     <b-list-group v-if="templates.length > 0">
-                        <b-list-group-item v-for="template in filteredTemplates" :key="template.id" 
+                        <b-list-group-item v-for="template in filteredTemplates" :key="template.id"
                             @click="onTemplateClick(template)" :data-template-id="template.id">
                             <h5>{{ template.name }}</h5>
                             <p class="mb-1 text-muted">{{ template.description }}</p>
@@ -108,6 +99,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv.js';
 import { getProviderType } from '@/service/provider/providers';
 import { providerTypes } from '@/service/provider/providerTypes';
+import isElectron from 'is-electron';
 
 export default {
     name: 'TemplateGallery',
@@ -119,9 +111,8 @@ export default {
     computed: {
         ...mapGetters({
             templates: 'templates',
-            contentRepoStatus: 'contentRepoStatus',
-            canInitializeRepo: 'canInitializeRepo',
-            contentRepoName: 'contentRepoName'
+            contentStoreStatus: 'contentStoreStatus',
+            canWriteStore: 'canWriteStore'
         }),
         ...mapState({
             selectedProvider: state => state.provider.selected
@@ -130,7 +121,10 @@ export default {
             return getProviderType(this.selectedProvider);
         },
         isLocalProvider() {
-            return this.providerType === providerTypes.local || this.providerType === providerTypes.desktop;
+            return this.providerType === providerTypes.local;
+        },
+        isDesktop(){
+            return isElectron();
         },
         filteredTemplates() {
             if (!this.searchQuery) return this.templates;
@@ -147,9 +141,7 @@ export default {
         // Only fetch templates for git providers (requires authentication)
         // Local/desktop providers use file picker only
         if (!this.isLocalProvider) {
-
             this.$store.dispatch(templateActions.fetchAll);
-           
         }
     },
     methods: {
@@ -225,10 +217,14 @@ export default {
                     template.id
                 );
 
+                if (this.isDesktop) return;
+
                 // Load template (regenerates IDs and sets as current model, current model set in the action)
                 await this.$store.dispatch(tmActions.templateLoad, {
                     templateData: templateData.content
                 });
+
+               
 
                 // Route to repository/folder selection based on provider type, repo for git and folder for google drive
                 const routeName = this.providerType === providerTypes.google

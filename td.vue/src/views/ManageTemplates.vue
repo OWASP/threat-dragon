@@ -9,34 +9,65 @@
             </b-col>
         </b-row>
 
-        <!-- Scenario: NOT_INITIALIZED - Show Bootstrap -->
-        <b-row v-if="contentRepoStatus === 'NOT_INITIALIZED'">
+        <!-- Status: NOT_CONFIGURED (desktop only - web can't reach this page) -->
+        <b-row v-if="contentStoreStatus === 'NOT_CONFIGURED'">
+            <b-col md="6" offset-md="3">
+                <b-alert show variant="info" class="text-center">
+                    <h5>{{ $t('template.status.notConfigured.title') }}</h5>
+                    <p>{{ $t('template.status.notConfigured.desktop') }}</p>
+                    <b-button variant="primary" @click="showSetupModal">
+                        <font-awesome-icon icon="folder-open" class="mr-2"></font-awesome-icon>
+                        {{ $t('template.setupDialog.confirm') }}
+                    </b-button>
+                </b-alert>
+            </b-col>
+        </b-row>
+
+        <!-- Status: NOT_FOUND (desktop only - web can't reach this page) -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_FOUND'">
+            <b-col md="6" offset-md="3">
+                <b-alert show variant="danger" class="text-center">
+                    <h5>{{ $t('template.status.notFound.title') }}</h5>
+                    <p>{{ $t('template.status.notFound.desktop') }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+
+        <!-- Status: NOT_INITIALIZED - bootstrap storage -->
+        <b-row v-else-if="contentStoreStatus === 'NOT_INITIALIZED'">
             <b-col md="6" offset-md="3">
                 <b-card class="bootstrap-card text-center p-4">
                     <font-awesome-icon icon="cloud-upload" size="3x" class="text-primary mb-3"></font-awesome-icon>
-                    <h4>{{ $t('template.repo.bootstrap.title') }}</h4>
-                    <p class="text-muted">{{ $t('template.repo.bootstrap.description') }}</p>
-                    <b-button
-                        variant="primary"
-                        size="lg"
-                        @click="handleBootstrap"
-                        :disabled="isBootstrapping"
-                    >
+                    <h4>{{ $t('template.status.notInitialized.title') }}</h4>
+                    <p class="text-muted">{{ $t('template.bootstrap.description') }}</p>
+                    <b-button variant="primary" size="lg" @click="handleBootstrap" :disabled="isBootstrapping">
                         <b-spinner small v-if="isBootstrapping" class="mr-2"></b-spinner>
-                        {{ isBootstrapping ? $t('template.repo.bootstrap.bootstrapping') : $t('template.repo.bootstrap.action') }}
+                        {{ isBootstrapping ? $t('template.actions.initializing') :
+                            $t('template.actions.initialize') }}
                     </b-button>
                 </b-card>
             </b-col>
         </b-row>
 
-        <!-- Normal operation (status === null) -->
+        <!-- Normal operation -->
         <template v-else>
+            <!-- Read-only notice -->
+            <b-row v-if="!canWriteStore" class="mb-3">
+                <b-col md="6" offset-md="3">
+                    <b-alert show variant="warning">
+                        <font-awesome-icon icon="lock" class="mr-2"></font-awesome-icon>
+                        {{ $t('template.readOnlyNotice') }}
+                    </b-alert>
+                </b-col>
+            </b-row>
+
             <b-row>
                 <b-col md="6" offset-md="3">
                     <b-form-group>
                         <b-input-group>
                             <b-input-group-prepend>
-                                <b-button variant="primary" @click="onAddTemplateClick" id="add-template-btn" class="mr-3">
+                                <b-button variant="primary" @click="onAddTemplateClick" id="add-template-btn"
+                                    class="mr-3" :disabled="!canWriteStore">
                                     <font-awesome-icon icon="plus" class="mr-2"></font-awesome-icon>
                                     {{ $t('template.addNew') }}
                                 </b-button>
@@ -51,8 +82,8 @@
             <b-row>
                 <b-col md="6" offset-md="3">
                     <b-list-group v-if="templates.length > 0">
-                        <b-list-group-item v-for="template in filteredTemplates" :key="template.id" :data-template-id="template.id"
-                            class="d-flex justify-content-between align-items-start">
+                        <b-list-group-item v-for="template in filteredTemplates" :key="template.id"
+                            :data-template-id="template.id" class="d-flex justify-content-between align-items-start">
                             <div class="flex-grow-1">
                                 <h5>{{ template.name }}</h5>
                                 <p class="mb-1 text-muted">{{ template.description }}</p>
@@ -66,12 +97,13 @@
                                 <template #button-content>
                                     <font-awesome-icon icon="ellipsis-v"></font-awesome-icon>
                                 </template>
-                                <b-dropdown-item @click="onEditTemplate(template)">
+                                <b-dropdown-item @click="onEditTemplate(template)" :disabled="!canWriteStore">
                                     <font-awesome-icon icon="edit" class="mr-2"></font-awesome-icon>
                                     {{ $t('forms.edit') }}
                                 </b-dropdown-item>
                                 <b-dropdown-divider></b-dropdown-divider>
-                                <b-dropdown-item @click="onDeleteTemplate(template)" variant="danger">
+                                <b-dropdown-item @click="onDeleteTemplate(template)" variant="danger"
+                                    :disabled="!canWriteStore">
                                     <font-awesome-icon icon="trash" class="mr-2"></font-awesome-icon>
                                     {{ $t('forms.delete') }}
                                 </b-dropdown-item>
@@ -85,6 +117,7 @@
                 </b-col>
             </b-row>
         </template>
+        <!-- Edit Template Modal -->
         <b-modal id="edit-template-modal" :title="$t('template.editTemplate')" @ok="onSaveEdit">
             <b-form>
                 <b-form-group :label="$t('template.name')" label-for="edit-name">
@@ -101,6 +134,49 @@
                 </b-form-group>
             </b-form>
         </b-modal>
+
+        <!-- Template Folder Setup Modal -->
+        <b-modal id="setup-template-modal" :title="$t('template.setupDialog.title')" hide-footer centered>
+            <b-form>
+                <!-- Option 1: Create new folder -->
+                <b-form-group>
+                    <b-form-radio v-model="setupMode" value="create" class="mb-2">
+                        <strong>{{ $t('template.setupDialog.createNew') }}</strong>
+                    </b-form-radio>
+
+                    <div v-if="setupMode === 'create'" class="ml-4 mt-2">
+                        <b-form-radio v-model="createLocation" value="default" class="mb-2">
+                            {{ $t('template.setupDialog.useDefault') }}
+                            <br>
+                            <small class="text-muted">{{ $t('template.setupDialog.defaultPath') }}</small>
+                        </b-form-radio>
+                        <b-form-radio v-model="createLocation" value="custom">
+                            {{ $t('template.setupDialog.chooseCustom') }}
+                        </b-form-radio>
+                    </div>
+                </b-form-group>
+
+                <hr>
+
+                <!-- Option 2: Select existing folder -->
+                <b-form-group>
+                    <b-form-radio v-model="setupMode" value="existing">
+                        <strong>{{ $t('template.setupDialog.selectExisting') }}</strong>
+                        <br>
+                        <small class="text-muted">{{ $t('template.setupDialog.selectExistingHint') }}</small>
+                    </b-form-radio>
+                </b-form-group>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <b-button variant="secondary" @click="$bvModal.hide('setup-template-modal')" class="mr-2">
+                        {{ $t('forms.cancel') }}
+                    </b-button>
+                    <b-button variant="primary" @click="onSetupConfirm">
+                        {{ $t('template.setupDialog.confirm') }}
+                    </b-button>
+                </div>
+            </b-form>
+        </b-modal>
     </b-container>
 </template>
 
@@ -109,6 +185,7 @@ import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';
+import isElectron from 'is-electron';
 
 export default {
     name: 'ManageTemplates',
@@ -121,16 +198,21 @@ export default {
                 description: '',
                 tags: []
             },
-            isBootstrapping: false
+            isBootstrapping: false,
+            // Setup modal state
+            setupMode: 'create',
+            createLocation: 'default'
         };
     },
     computed: {
         ...mapGetters({
             templates: 'templates',
-            contentRepoStatus: 'contentRepoStatus',
-            canInitializeRepo: 'canInitializeRepo',
-            contentRepoName: 'contentRepoName'
+            contentStoreStatus: 'contentStoreStatus',
+            canWriteStore: 'canWriteStore'
         }),
+        isDesktop() {
+            return isElectron();
+        },
         filteredTemplates() {
             if (!this.searchQuery) return this.templates;
             const search = this.searchQuery.toLowerCase();
@@ -142,24 +224,47 @@ export default {
         }
     },
     mounted() {
-    
         this.$store.dispatch(templateActions.fetchAll);
-          
-          
     },
     methods: {
         async handleBootstrap() {
             this.isBootstrapping = true;
 
+            if (isElectron()) {
+                window.electronAPI.bootstrapTemplates();
+                this.isBootstrapping = false;
+                return;
+            }
+
             try {
                 await this.$store.dispatch(templateActions.bootstrap);
-                this.$toast.success(this.$t('template.repo.bootstrap.success'));
+                this.$toast.success(this.$t('template.toast.initializeSuccess'));
             } catch (error) {
                 console.error('Bootstrap failed:', error);
-                this.$toast.error(error.message || this.$t('template.repo.bootstrap.error'));
+                this.$toast.error(error.message || this.$t('template.errors.initializeFailed'));
             } finally {
                 this.isBootstrapping = false;
             }
+        },
+
+        showSetupModal() {
+            // Reset form state
+            this.setupMode = 'create';
+            this.createLocation = 'default';
+            this.$bvModal.show('setup-template-modal');
+        },
+
+        onSetupConfirm() {
+            if (this.setupMode === 'create') {
+                if (this.createLocation === 'default') {
+                    window.electronAPI.setTemplateFolderDefault();
+                } else {
+                    window.electronAPI.setTemplateFolderCustom();
+                }
+            } else {
+                window.electronAPI.setTemplateFolderExisting();
+            }
+            this.$bvModal.hide('setup-template-modal');
         },
 
         onEditTemplate(template) {
@@ -175,6 +280,15 @@ export default {
 
         async onSaveEdit() {
             try {
+                if (isElectron()) {
+                    await window.electronAPI.updateTemplate({
+                        id: this.editingTemplate.id,
+                        name: this.editForm.name,
+                        description: this.editForm.description,
+                        tags: this.editForm.tags
+                    });
+                    return; // Skip the rest since desktop handles it differently
+                }
                 await this.$store.dispatch(templateActions.update, {
                     name: this.editForm.name,
                     description: this.editForm.description,
@@ -182,8 +296,8 @@ export default {
                     id: this.editingTemplate.id
                 });
 
-                this.$toast.success(this.$t('template.updateSuccess'));
 
+                this.$toast.success(this.$t('template.toast.updateSuccess'));
                 this.$bvModal.hide('edit-template-modal');
             } catch (error) {
                 console.error('Error updating template:', error);
@@ -243,18 +357,23 @@ export default {
             try {
                 templateData.templateMetadata.id = v4();
                 templateData.templateMetadata.modelRef = v4();
+                if (isElectron()) {
+                    // For desktop, we need to save the template files to the filesystem
+                    await window.electronAPI.importTemplate(templateData);
+                    return; // Skip the rest since desktop handles it differently
+                }
                 await this.$store.dispatch(templateActions.create, {
                     template: templateData
                 });
-                this.$toast.success(this.$t('template.importSuccess'));
+                this.$toast.success(this.$t('template.toast.importSuccess'));
             } catch (error) {
                 console.error('Error saving template:', error);
-                
+
                 // Check for duplicate template error
-                if (error.response?.status === 400 ) {
-                    this.$toast.error(this.$t('template.errors.duplicateTemplate'));
+                if (error.response?.status === 400) {
+                    this.$toast.error(this.$t('template.errors.duplicate'));
                 } else {
-                    this.$toast.error(this.$t('template.warnings.templateSave'));
+                    this.$toast.error(this.$t('template.errors.importFailed'));
                 }
             }
         },
@@ -274,8 +393,12 @@ export default {
 
             if (confirmed) {
                 try {
+                    if (isElectron()) {
+                        await window.electronAPI.deleteTemplate(template.id);
+                        return; // Skip the rest since desktop handles it differently
+                    }
                     await this.$store.dispatch(templateActions.delete, template.id);
-                    this.$toast.success(this.$t('template.deleteSuccess'));
+                    this.$toast.success(this.$t('template.toast.deleteSuccess'));
                 } catch (error) {
                     this.$toast.error(this.$t('template.errors.deleteFailed'));
                 }
